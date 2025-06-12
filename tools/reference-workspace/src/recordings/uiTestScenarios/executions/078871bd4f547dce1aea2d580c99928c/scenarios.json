@@ -1,0 +1,242 @@
+[
+    {
+        "n2oMap": {
+            "m_6aea7862cb864bcedb6ff97fce8fbfae": "m_bcdd81258b0ce21b10427b91dcf600af",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050_1": "custom_amount_local_id"
+        },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Custom Amount",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "custom_amount_local_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "secondary_measures"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "arithmeticMeasure": {
+                                        "measureIdentifiers": [
+                                            "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                            "custom_amount_local_id"
+                                        ],
+                                        "operator": "ratio"
+                                    },
+                                    "virtual": true
+                                },
+                                "localIdentifier": "m_bcdd81258b0ce21b10427b91dcf600af"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "comparison_virtual_arithmetic_bucket"
+                }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Custom Amount",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "custom_amount_local_id"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "arithmeticMeasure": {
+                                "measureIdentifiers": [
+                                    "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                    "custom_amount_local_id"
+                                ],
+                                "operator": "ratio"
+                            },
+                            "virtual": true
+                        },
+                        "localIdentifier": "m_bcdd81258b0ce21b10427b91dcf600af"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "comparison with equals arrow",
+        "vis": "Headline"
+    },
+    {
+        "n2oMap": {
+            "m_6aea7862cb864bcedb6ff97fce8fbfae": "m_bcdd81258b0ce21b10427b91dcf600af",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050_1": "custom_amount_local_id"
+        },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Custom Amount",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "custom_amount_local_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "secondary_measures"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "arithmeticMeasure": {
+                                        "measureIdentifiers": [
+                                            "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                            "custom_amount_local_id"
+                                        ],
+                                        "operator": "ratio"
+                                    },
+                                    "virtual": true
+                                },
+                                "localIdentifier": "m_bcdd81258b0ce21b10427b91dcf600af"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "comparison_virtual_arithmetic_bucket"
+                }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Custom Amount",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "custom_amount_local_id"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "arithmeticMeasure": {
+                                "measureIdentifiers": [
+                                    "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                    "custom_amount_local_id"
+                                ],
+                                "operator": "ratio"
+                            },
+                            "virtual": true
+                        },
+                        "localIdentifier": "m_bcdd81258b0ce21b10427b91dcf600af"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "comparison with equals arrow and color",
+        "vis": "Headline"
+    }
+]

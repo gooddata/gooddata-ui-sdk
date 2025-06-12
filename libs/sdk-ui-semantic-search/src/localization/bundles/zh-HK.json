@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "我哋嘅搜索服務暫時關閉。",
+    "semantic-search.error.text": "我哋正在努力解決此問題。",
+    "semantic-search.no-results": "未搵到與“{query}”相關嘅結果。",
+    "semantic-search.placeholder": "搜索儀錶板或可視化…",
+    "semantic-search.id": "身份證",
+    "semantic-search.tags": "標籤",
+    "semantic-search.match": "{score}％ 匹配",
+    "semantic-search.previous-search": "上一頁搜索",
+    "semantic-search.date.at": "係",
+    "gs.date.today": "今日",
+    "gs.date.yesterday": "琴日",
+    "semantic-search.label": "搜索儀錶板或可視化"
+}

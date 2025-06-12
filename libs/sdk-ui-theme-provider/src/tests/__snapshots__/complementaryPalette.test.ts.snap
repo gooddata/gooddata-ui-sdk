@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`complementaryPalette > getComplementaryPalette > should generate missing colors in complementary palette 1`] = `
+{
+  "c0": "#001122",
+  "c1": "#01191f",
+  "c2": "#02221d",
+  "c3": "#032b1b",
+  "c4": "#043319",
+  "c5": "#053c17",
+  "c6": "#064515",
+  "c7": "#074d13",
+  "c8": "#085611",
+  "c9": "#095f0f",
+}
+`;
+
+exports[`complementaryPalette > getComplementaryPalette > should generate missing colors in complementary palette 2`] = `
+{
+  "c0": "#001122",
+  "c1": "#32321b",
+  "c2": "#645415",
+  "c3": "#97760f",
+  "c4": "#c99809",
+  "c5": "#fcba03",
+  "c6": "#bfa306",
+  "c7": "#828c09",
+  "c8": "#45750c",
+  "c9": "#095f0f",
+}
+`;
+
+exports[`complementaryPalette > getComplementaryPalette > should generate missing colors in complementary palette 3`] = `
+{
+  "c0": "#001122",
+  "c1": "#01191f",
+  "c2": "#02221d",
+  "c3": "#032b1b",
+  "c4": "#043319",
+  "c5": "#053c17",
+  "c6": "#064515",
+  "c7": "#074d13",
+  "c8": "#085611",
+  "c9": "#095f0f",
+}
+`;
+
+exports[`complementaryPalette > getComplementaryPalette > should generate missing colors in complementary palette even the input not in order 1`] = `
+{
+  "c0": "#001122",
+  "c1": "#32321b",
+  "c2": "#645415",
+  "c3": "#97760f",
+  "c4": "#c99809",
+  "c5": "#fcba03",
+  "c6": "#bfa306",
+  "c7": "#828c09",
+  "c8": "#45750c",
+  "c9": "#095f0f",
+}
+`;

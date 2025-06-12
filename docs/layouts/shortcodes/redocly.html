@@ -1,0 +1,24 @@
+{{ $src := .Get "src" }}
+{{ $id := .Get "id" | default "header" }}
+<redoc id="redoc-instance" spec-url="{{ $src }}" ></redoc>
+
+
+<script>
+      var header = document.querySelector('{{ $id }}');
+      if (header) {
+        let _totalHeight = header.offsetHeight;
+        for (let i = 0; i < header.children.length; i++) {
+          _totalHeight += header.children[i].offsetHeight;
+        }
+        var redocInstance = document.getElementById("redoc-instance");
+        if (redocInstance) {
+          redocInstance.setAttribute("scroll-y-offset", _totalHeight);
+        } else {
+          console.error("Redoc instance element not found");
+        }
+      } else {
+        console.error("Header element not found");
+      }
+</script>
+
+<script src="https://sdk.gooddata.com/API-doc--production/redoc.standalone.js"></script>

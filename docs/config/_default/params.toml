@@ -1,0 +1,12 @@
+# Put document versions here for every major or minor release
+# Every TOML list item contains the following properties:
+# - "version"   - text that appears in versions menu
+# - "dirpath"   - directory name (relative to contentDir) where documentation
+#                 for given version resides
+# - "url"       - url for link in version menu. May be absolute URL.
+# - "latestTag" - docker image tag for the latest patch version. Must be changed
+#                 on every patch release of respective branch
+[[versions]]
+    version = "local"
+    dirpath = "latest"
+    url = "/latest/"

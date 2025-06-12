@@ -1,0 +1,90 @@
+name: Set up rush with cache
+description: This action sets up rush with cache
+
+inputs:
+    install-dependencies:
+        description: 'Whether to call install-run-rush.js install; useful in situation where you need to call rush operations (rush bump, rush list) but not need to install dependencies (node_modules)'
+        required: false
+        default: 'true'
+runs:
+  using: 'composite'
+  steps:
+    - name: init node Node.js
+      uses: ./.github/actions/node/set-up-node
+      id: node-init
+
+    # This is temporary solution to disable zstd before cached operation on runners see readme in zstd action directory
+    - name: detect zstd
+      uses: ./.github/actions/zstd/detect-zstd
+    - name: disbale zstd
+      uses: ./.github/actions/zstd/disable-zstd
+
+    # The runner is set up to assume a role using a web identity token, which is only possible for runners in the infra1-runners-arc group.
+    # Region and role ARN and token file are passed as environment variables from the runner.
+    - name: Fetch AWS env variables
+      run: |
+        echo "AWS_REGION=$(echo $AWS_REGION)" >> $GITHUB_ENV
+        echo "AWS_ROLE_ARN=$(echo $AWS_ROLE_ARN)" >> $GITHUB_ENV
+        echo "AWS_WEB_IDENTITY_TOKEN_FILE=$(echo $AWS_WEB_IDENTITY_TOKEN_FILE )" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Configure AWS credentials
+      id: aws-credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ env.AWS_REGION }}
+        role-to-assume: ${{ env.AWS_ROLE_ARN }}
+        web-identity-token-file: ${{ env.AWS_WEB_IDENTITY_TOKEN_FILE }}
+
+    - name: Set up rush build cache credentials
+      run: |
+        RUSH_BUILD_CACHE_CREDENTIAL="$AWS_ACCESS_KEY_ID:$AWS_SECRET_ACCESS_KEY:$AWS_SESSION_TOKEN"
+        echo "RUSH_BUILD_CACHE_CREDENTIAL=$RUSH_BUILD_CACHE_CREDENTIAL" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Enable rush build cache via environment variable and set rush home dirs
+      run: |
+        echo "RUSH_BUILD_CACHE_ENABLED=1" >> $GITHUB_ENV
+
+        # Set path to global rush folder
+        echo "RUSH_GLOBAL_FOLDER=$GITHUB_WORKSPACE/common/.rush" >> $GITHUB_ENV
+
+      shell: bash
+
+    # Restore cache for global rush installation
+    # We need defined unified home folder for rush on runners and different docker images
+    - name: Cache Rush
+      uses: runs-on/cache/restore@v4
+      env:
+        RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache
+      with:
+        path: |
+          common/temp/install-run
+          common/.rush
+        key: rush-cache-${{ hashFiles('rush.json') }}
+
+    - name: Cache pnpm
+      if: ${{ inputs.install-dependencies == 'true' }}
+      id: cache-pnpm
+      uses: runs-on/cache/restore@v4
+      env:
+        RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache
+      with:
+        path: |
+          common/temp/pnpm-store
+        key: pnpm-cache-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}-${{ hashFiles('rush.json') }}
+
+
+    # All cached operation done enable zstd back
+    # This is temporary solution to disable zstd before cached operation on runners see readme in zstd action directory
+    - name: enable zstd
+      uses: ./.github/actions/zstd/enable-zstd
+
+    # Install rush
+    - name: Install rush
+      if: ${{ inputs.install-dependencies == 'true' }}
+      env:
+        NPM_AUTH_TOKEN: ${{ env.NPM_AUTH_TOKEN }}
+      run: |
+        node common/scripts/install-run-rush.js install
+      shell: bash

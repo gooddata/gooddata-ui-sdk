@@ -1,0 +1,20 @@
+{
+    "name": "@gooddata/sdk-interactive-examples",
+    "version": "10.31.0-alpha.32",
+    "description": "GoodData React interactive examples",
+    "license": "LicenseRef-LICENSE",
+    "author": "GoodData Corporation",
+    "type": "module",
+    "private": false,
+    "scripts": {
+        "build": "echo Build of sdk-interactive-examples is skipped by default. See build of each example.",
+        "create-example": "node ./scripts/createExample.mjs && node ./scripts/updateRootReadme.mjs",
+        "update-examples-template": "node ./scripts/updateTemplate.mjs && node ./scripts/updateRootReadme.mjs",
+        "update-root-readme": "node ./scripts/updateRootReadme.mjs",
+        "validate": "node ./scripts/validateExamples.mjs",
+        "validate-ci": "node ./scripts/validateExamples.mjs"
+    },
+    "devDependencies": {
+        "validate-npm-package-name": "^5.0.0"
+    }
+}

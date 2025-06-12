@@ -1,0 +1,78 @@
+{{/* (C) 2023 GoodData Corporation */}}
+<input type="checkbox" id="gd-docs-menu__mobile-trigger" class="gd-docs-menu__mobile-trigger" />
+<label for="gd-docs-menu__mobile-trigger" class="gd-docs-menu__mobile-icon"></label>
+<div class="gd-docs-menu__mobile-bg"></div>
+<nav class="gd-docs-menu init">
+
+    {{ if .Site.Params.versions }}
+        {{ partial "navbar-version-selector.html" . }}
+    {{ end }}
+
+    {{ partial "sidebar-tree.html" . }}
+</nav>
+
+{{ define "root-link" }}
+    {{ $isCurrent := eq .currentPage .root.FirstSection }}
+    {{ $active := .active }}
+    {{ with .root }}
+        <ul class="gd-docs-menu-section gd-docs-menu-section__root">
+        <li class="gd-docs-menu-page{{ if or $isCurrent $active }} active{{ end }}">
+            <div class="gd-docs-menu-page__title">
+            <a href="{{ .RelPermalink }}" class="gd-docs-menu-page__link">{{ .LinkTitle }}</a>
+            </div>
+        </li>
+        </ul>
+    {{ end }}
+{{ end }}
+
+{{ define "section-tree-nav-sections" }}
+    {{ $root := .root }}
+    {{ $site := .site }}
+    {{ $currentPage := .currentPage }}
+    {{ $firstInSection := (index $root 0) }}
+    {{ $isRootSection := eq $firstInSection.Parent .site.Home }}
+
+    {{ if gt (len (where $root.ByWeight "Params.toc_hide" "ne" true)) 0 }}
+
+    <ul class="gd-docs-menu-section{{ if .activeSection }} active{{ end }}">
+        {{ range $page := $root.ByWeight }}
+        {{ $page := $page.Page }}
+        {{ $pageId := replace (replaceRE "^/|/$" "" $page.RelPermalink) "/" "_" }}
+
+        {{ if and (not (eq $page.Params.toc_hide true)) (not (eq $page $site.Home)) }}
+            {{ $activePage := eq $page $currentPage }}
+            {{ $activeSection := or $activePage ($currentPage.IsDescendant $page) }}
+            {{ $pageId := replace (replaceRE "^/|/$" "" $page.RelPermalink) "/" "_" }}
+
+            <li class="gd-docs-menu-page{{ if $activePage }} active{{ end }}{{ if $page.Params.navSeparator }} gd-docs-menu-page__separator{{ end }}">
+            {{ if $page.Params.navigationLabel }}
+                <span class="gd-docs-menu-page__label">{{ $page.LinkTitle }}</span>
+            {{ else }}
+                {{ if $page.Pages }}
+                <input type="checkbox" id="gd-docs-menu-page__{{ $pageId }}" class="gd-docs-menu-page__toggle"{{ if $activeSection }} checked{{ end }} />
+                {{ end }}
+
+                <div class="gd-docs-menu-page__title">
+                {{ if $page.Params.externalLink }}
+                    <a href ="{{ $page.Params.externalLink }}" class="gd-docs-menu-page__link" target="_blank">{{ $page.LinkTitle }}</a>
+                {{ else }}
+                    <a href ="{{ $page.Permalink }}" class="gd-docs-menu-page__link">{{ $page.LinkTitle }}</a>
+                {{ end }}
+
+                {{ if $page.Pages }}
+                    <label for="gd-docs-menu-page__{{ $pageId }}" class="gd-docs-menu-page__chevron">
+                    {{ with resources.Get "icons/chevron-menu.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}
+                    </label>
+                {{ end }}
+                </div>
+            {{ end }}
+
+            {{ if $page.Pages }}
+                {{ template "section-tree-nav-sections" (dict "root" $page.Pages "currentPage" $currentPage "activeSection" $activeSection "site" $site)  }}
+            {{ end }}
+            </li>
+        {{ end }}
+        {{ end }}
+        </ul>
+    {{ end }}
+{{ end }}

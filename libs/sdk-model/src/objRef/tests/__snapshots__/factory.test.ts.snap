@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`idRef > creates a simple id ref 1`] = `
+{
+  "identifier": "foo",
+}
+`;
+
+exports[`localIdRef > creates a simple local id ref 1`] = `
+{
+  "localIdentifier": "foo",
+}
+`;
+
+exports[`uriRef > creates a simple URI ref 1`] = `
+{
+  "uri": "foo",
+}
+`;

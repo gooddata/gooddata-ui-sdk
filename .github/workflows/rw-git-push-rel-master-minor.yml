@@ -1,0 +1,71 @@
+name: rw ~ Git ~ Port and push rel branch to master
+
+on:
+  workflow_call:
+    inputs:
+      source-branch:
+        required: true
+        type: string
+
+jobs:
+  perform:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+          fetch-depth: 0
+          ref: master
+
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+
+      - name: Add rel chages to master
+        uses: nick-fields/retry@v3
+        env:
+          TARGET_BRANCH: master
+          SOURCE_BRANCH: ${{ inputs.source-branch }}
+        with:
+            timeout_minutes: 10
+            max_attempts: 4
+            retry_on: error
+            retry_wait_seconds: 2
+            command: |
+                set -e
+                git fetch origin
+                git reset --hard origin/$TARGET_BRANCH
+
+                # cherry-pick hugo changes
+                PICK_HASH=$(git log -n 1 --pretty=format:"%H" origin/$SOURCE_BRANCH)
+                echo "Backporting $PICK_HASH (hugo) and changelog from origin/$TARGET_BRANCH to master"
+                git show $PICK_HASH
+                git cherry-pick $PICK_HASH
+
+                # find out deleted changelog records and delete them and commit
+                git checkout origin/$SOURCE_BRANCH -- libs/sdk-ui-all/CHANGELOG.json libs/sdk-ui-all/CHANGELOG.md
+                git add libs/sdk-ui-all/CHANGELOG.json libs/sdk-ui-all/CHANGELOG.md
+
+                CHANGELOG_HASH=$(git log -n 2 --pretty=format:"%H" origin/$SOURCE_BRANCH  | tail -n 1)
+                FILES_TO_REMOVE=$(git diff-tree --no-commit-id --name-only -r $CHANGELOG_HASH -- common/changes/@gooddata/sdk-ui-all/)
+                if [ -n "$FILES_TO_REMOVE" ]; then
+                  echo "$FILES_TO_REMOVE" | while read -r file; do
+                      git rm "$file"
+                  done
+                fi
+
+                git commit -m "feat: add changelog changes" -m 'risk: nonprod'
+
+                # now rebase all parts and push directly
+                git fetch origin
+                git rebase origin/$TARGET_BRANCH
+                git push origin $TARGET_BRANCH
+
+                # Wait for changes to propagate through GitHub's infrastructure
+                echo "Waiting for changes to propagate..."
+                sleep 10

@@ -1,0 +1,161 @@
+# (C) 2024 GoodData Corporation
+
+name: Release ~ Release minor version (complete)
+on:
+  workflow_dispatch:
+
+jobs:
+  gate-approval:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - run: echo "Initiating approval"
+
+  get-version:
+    needs: gate-approval
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      branch: ${{ steps.branch.outputs.branch }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: 'master'
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+      - name: Setup node
+        uses: ./.github/actions/node/set-up-node
+        id: node-init
+      - name: Get version
+        uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
+        id: version
+      - name: Get branch
+        run: |
+          BRANCH=$(echo $VERSION | sed 's/^\([0-9]*\.[0-9]*\).*/\1/')
+          REL_BRANCH="rel/$BRANCH"
+          echo "preparing branch $REL_BRANCH for version $VERSION"
+          echo "branch=$REL_BRANCH" >> $GITHUB_OUTPUT
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        id: branch
+
+  # PREPARE REL BRANCH
+
+  prepare-branch:
+    needs: get-version
+    runs-on: [ubuntu-latest]
+    permissions:
+      contents: write
+
+    steps:
+      - name: Run copy branch action
+        uses: gooddata/gooddata-ui-sdk/.github/actions/branch-cutoff-action@master
+        with:
+          source-branch: 'master'
+          target-branch: ${{ needs.get-version.outputs.branch }}
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+
+  prepare-versions-release:
+    needs: [get-version, prepare-branch]
+    uses: ./.github/workflows/rw-bump-version.yml
+    secrets: inherit
+    permissions:
+      contents: write
+    with:
+        source-branch: ${{ needs.get-version.outputs.branch }}
+        bump: 'prerelease'
+        prerelease-id: 'beta'
+
+  prepare-versions-master:
+    needs: [get-version, prepare-branch]
+    uses: ./.github/workflows/rw-bump-version.yml
+    secrets: inherit
+    permissions:
+      contents: write
+    with:
+        source-branch: 'master'
+        bump: 'preminor'
+        prerelease-id: 'alpha'
+
+  # RELEASE
+
+  publish-release:
+    needs: [prepare-versions-release, prepare-versions-master, get-version]
+    uses: ./.github/workflows/rw-publish-release.yml
+    permissions:
+      contents: write
+      id-token: write
+    secrets: inherit
+    with:
+      bump: 'minor'
+      source-branch: ${{ needs.get-version.outputs.branch }}
+
+  update-hugo-version:
+    needs: [publish-release, get-version]
+    uses: ./.github/workflows/rw-doc-update-hugo-version.yml
+    permissions:
+      contents: write
+    secrets: inherit
+    with:
+      source-branch: ${{ needs.get-version.outputs.branch }}
+      version: ${{ needs.publish-release.outputs.version }}
+
+  add-release-tag:
+    needs: [publish-release, update-hugo-version, get-version]
+    uses: ./.github/workflows/rw-git-create-tag.yml
+    permissions:
+      contents: write
+    with:
+      source-branch: ${{ needs.get-version.outputs.branch }}
+      version: ${{ needs.publish-release.outputs.version }}
+      is-latest: ${{ needs.publish-release.outputs.is-latest}}
+
+  port-rel-branch-to-master:
+    needs: [add-release-tag, update-hugo-version, get-version]
+    uses: ./.github/workflows/rw-git-push-rel-master-minor.yml
+    permissions:
+      contents: write
+      pull-requests: write
+    secrets: inherit
+    with:
+      source-branch: ${{ needs.get-version.outputs.branch }}
+
+  # DOCS
+
+  update-apidocs-version:
+    needs: [get-version, port-rel-branch-to-master, publish-release]
+    uses: ./.github/workflows/rw-doc-release-apidocs.yml
+    permissions:
+      contents: write
+      id-token: write
+    secrets: inherit
+    with:
+      source-branch: ${{ needs.get-version.outputs.branch }}
+      version: ${{ needs.publish-release.outputs.version }}
+      is-new-latest: true
+
+  publish-netlify:
+    needs: port-rel-branch-to-master
+    uses: ./.github/workflows/rw-doc-netlify-deploy.yml
+    permissions:
+      contents: write
+      id-token: write
+    secrets: inherit
+
+  slack-notification:
+      strategy:
+          matrix:
+            channels: ["#javascript-notifications", "#releases"]
+      runs-on: [ubuntu-latest]
+      needs: [publish-netlify, update-apidocs-version, publish-release]
+      steps:
+        - name: Notify to slack
+          uses: slackapi/slack-github-action@v1.25.0
+          with:
+              channel-id: ${{ matrix.channels }}
+              slack-message: "The release of *gooddata-ui-sdk@${{ needs.publish-release.outputs.version }}*, has been successful. :tada:"
+          env:
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

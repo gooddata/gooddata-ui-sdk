@@ -1,0 +1,446 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter from model to AFM with all attributes 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": "2019-08-06",
+    "localIdentifier": undefined,
+    "to": "2019-08-12",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter without 'from' attribute 1`] = `null`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter without 'to' attribute 1`] = `null`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return absolute date filter 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": "2019-08-06",
+    "localIdentifier": undefined,
+    "to": "2019-08-12",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return comparison measure value filter 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "localIdentifier": undefined,
+    "measure": {
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 128,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return comparison measure value filter with treatNullValueAs 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "localIdentifier": undefined,
+    "measure": {
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": 0,
+    "value": 128,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return negative attribute filter 1`] = `
+{
+  "negativeAttributeFilter": {
+    "label": {
+      "identifier": {
+        "id": "label.f_product.product.name",
+        "type": "label",
+      },
+    },
+    "localIdentifier": undefined,
+    "notIn": {
+      "values": [
+        "value 2",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return negative attribute filter with applyOnResult false 1`] = `
+{
+  "negativeAttributeFilter": {
+    "applyOnResult": false,
+    "label": {
+      "identifier": {
+        "id": "label.f_product.product.name",
+        "type": "label",
+      },
+    },
+    "localIdentifier": undefined,
+    "notIn": {
+      "values": [
+        "value 2",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return negative attribute filter with uri attribute elements 1`] = `
+{
+  "negativeAttributeFilter": {
+    "label": {
+      "identifier": {
+        "id": "label.f_product.product.name",
+        "type": "label",
+      },
+    },
+    "localIdentifier": undefined,
+    "notIn": {
+      "values": [
+        "value",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return positive attribute filter 1`] = `
+{
+  "positiveAttributeFilter": {
+    "in": {
+      "values": [
+        "value",
+      ],
+    },
+    "label": {
+      "identifier": {
+        "id": "label.f_product.product.name",
+        "type": "label",
+      },
+    },
+    "localIdentifier": undefined,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return positive attribute filter with applyOnResult true 1`] = `
+{
+  "positiveAttributeFilter": {
+    "applyOnResult": true,
+    "in": {
+      "values": [
+        "value",
+      ],
+    },
+    "label": {
+      "identifier": {
+        "id": "label.f_product.product.name",
+        "type": "label",
+      },
+    },
+    "localIdentifier": undefined,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return positive attribute filter with uri attribute elements 1`] = `
+{
+  "positiveAttributeFilter": {
+    "in": {
+      "values": [
+        "value",
+      ],
+    },
+    "label": {
+      "identifier": {
+        "id": "label.f_product.product.name",
+        "type": "label",
+      },
+    },
+    "localIdentifier": undefined,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return range measure value filter 1`] = `
+{
+  "rangeMeasureValueFilter": {
+    "from": 64,
+    "measure": {
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    },
+    "operator": "BETWEEN",
+    "to": 128,
+    "treatNullValuesAs": undefined,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return range measure value filter with crossed boundaries 1`] = `
+{
+  "rangeMeasureValueFilter": {
+    "from": 64,
+    "measure": {
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    },
+    "operator": "BETWEEN",
+    "to": 128,
+    "treatNullValuesAs": undefined,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return range measure value filter with treatNullValueAs 1`] = `
+{
+  "rangeMeasureValueFilter": {
+    "from": 64,
+    "measure": {
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    },
+    "operator": "BETWEEN",
+    "to": 128,
+    "treatNullValuesAs": 0,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return ranking filter 1`] = `
+{
+  "rankingFilter": {
+    "localIdentifier": undefined,
+    "measures": [
+      {
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      },
+    ],
+    "operator": "BOTTOM",
+    "value": 3,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return ranking filter with attributes 1`] = `
+{
+  "rankingFilter": {
+    "dimensionality": [
+      {
+        "identifier": {
+          "id": "f_stage.isactive_id",
+          "type": "label",
+        },
+      },
+    ],
+    "localIdentifier": undefined,
+    "measures": [
+      {
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      },
+    ],
+    "operator": "TOP",
+    "value": 3,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return relative date filter 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": 20,
+    "granularity": "DAY",
+    "localIdentifier": undefined,
+    "to": 30,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using id of metric 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "localIdentifier": undefined,
+    "measure": {
+      "identifier": {
+        "id": "measureId",
+        "type": "metric",
+      },
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 10,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using id of metric 2`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "localIdentifier": undefined,
+    "measure": {
+      "identifier": {
+        "id": "factId",
+        "type": "fact",
+      },
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 10,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using localId of metric specified as string 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "localIdentifier": undefined,
+    "measure": {
+      "localIdentifier": "localId",
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 10,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using localId of metric specified by value 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "localIdentifier": undefined,
+    "measure": {
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 10,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert measure value filter > should throw exception if filter has idRef without type 1`] = `[Error: Incomplete object specification in {"identifier":"ambiguous"}. You must provide both id and type of object you want to reference.]`;
+
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with date granularity 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": -11,
+    "granularity": "DAY",
+    "localIdentifier": undefined,
+    "to": 0,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with missing 'to' parameter 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": 5,
+    "granularity": "DAY",
+    "localIdentifier": undefined,
+    "to": NaN,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with mission 'from' parameter 1`] = `null`;
+
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with month granularity 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": -3,
+    "granularity": "MONTH",
+    "localIdentifier": undefined,
+    "to": 9,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with quarter granularity 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": 25,
+    "granularity": "QUARTER",
+    "localIdentifier": undefined,
+    "to": -2,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with week granularity 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": 50,
+    "granularity": "WEEK",
+    "localIdentifier": undefined,
+    "to": 100,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with year granularity 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": 2,
+    "granularity": "YEAR",
+    "localIdentifier": undefined,
+    "to": 7,
+  },
+}
+`;

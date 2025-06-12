@@ -1,0 +1,58 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Sum Velocity",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Sum Duration",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Sum Density",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_density", "type": "fact" }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_f_density_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.c08e3835b21aa55adfa17f2c4fa49ed4",
+        "properties": { "controls": { "total": { "measures": ["m_f_density_sum"] } } },
+        "sorts": [],
+        "title": "WaterfallChart - multi measures with a total measure",
+        "uri": "WaterfallChart.c08e3835b21aa55adfa17f2c4fa49ed4",
+        "visualizationUrl": "local:waterfall"
+    }
+}

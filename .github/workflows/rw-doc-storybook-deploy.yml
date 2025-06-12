@@ -1,0 +1,52 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ Doc ~ Storybook deploy
+on:
+  workflow_call:
+    inputs:
+      source-branch:
+        required: true
+        description: "The name of the source branch"
+        type: string
+
+jobs:
+  storybook-deploy:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+            ref: ${{inputs.source-branch}}
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: |
+          node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests
+      - name: Build storybook
+        run: |
+            cd libs/sdk-ui-tests && node ../../common/scripts/install-run-rushx.js build-storybook
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+            aws-access-key-id: ${{ secrets.STORYBOOK_S3_CREDENTIALS_ACCESS_KEY }}
+            aws-secret-access-key: ${{ secrets.STORYBOOK_S3_CREDENTIALS_SECRET_KEY }}
+            aws-region: "us-east-1"
+      - name: Deploy storybook
+        env:
+            BUCKET: "gdc-storybook-static-site"
+        run: |
+            LAST_COMMIT_HASH=$(git rev-parse HEAD)
+            aws s3 cp --recursive libs/sdk-ui-tests/dist-storybook s3://${BUCKET}
+            echo $LAST_COMMIT_HASH | aws s3 cp - s3://${BUCKET}/.current_version

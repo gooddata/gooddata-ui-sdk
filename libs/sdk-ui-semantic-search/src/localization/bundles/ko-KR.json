@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "저희 검색 서비스가 일시적으로 중단되었습니다.",
+    "semantic-search.error.text": "문제를 해결하기 위해 노력하고 있습니다.",
+    "semantic-search.no-results": "“{query}”에 대한 결과가 없습니다.",
+    "semantic-search.placeholder": "대시보드 또는 시각화 검색…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "태그",
+    "semantic-search.match": "{score}% 일치",
+    "semantic-search.previous-search": "이전 검색",
+    "semantic-search.date.at": "(시각/장소)",
+    "gs.date.today": "오늘",
+    "gs.date.yesterday": "어제",
+    "semantic-search.label": "대시보드 또는 시각화 검색"
+}

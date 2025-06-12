@@ -1,0 +1,1211 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`coordinates > findItem > should find nested item (insight4) in the layout 1`] = `
+{
+  "size": {
+    "xl": {
+      "gridWidth": 4,
+    },
+  },
+  "type": "IDashboardLayoutItem",
+  "widget": {
+    "description": undefined,
+    "drills": [],
+    "identifier": "insight4",
+    "ignoreDashboardFilters": [],
+    "ignoredDrillDownHierarchies": [],
+    "insight": {
+      "identifier": "insight4",
+    },
+    "ref": {
+      "identifier": "insight4",
+    },
+    "title": "insight4",
+    "type": "insight",
+    "uri": "/insight4",
+  },
+}
+`;
+
+exports[`coordinates > findItem > should find root item (insight1) in the layout 1`] = `
+{
+  "size": {
+    "xl": {
+      "gridWidth": 8,
+    },
+  },
+  "type": "IDashboardLayoutItem",
+  "widget": {
+    "description": undefined,
+    "drills": [],
+    "identifier": "insight1",
+    "ignoreDashboardFilters": [],
+    "ignoredDrillDownHierarchies": [],
+    "insight": {
+      "identifier": "insight1",
+    },
+    "ref": {
+      "identifier": "insight1",
+    },
+    "title": "insight1",
+    "type": "insight",
+    "uri": "/insight1",
+  },
+}
+`;
+
+exports[`coordinates > findSection > layout item path > should find nested section (section 4) in the layout 1`] = `
+{
+  "header": {
+    "title": "Section 4",
+  },
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 4,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": {
+        "description": undefined,
+        "drills": [],
+        "identifier": "insight4",
+        "ignoreDashboardFilters": [],
+        "ignoredDrillDownHierarchies": [],
+        "insight": {
+          "identifier": "insight4",
+        },
+        "ref": {
+          "identifier": "insight4",
+        },
+        "title": "insight4",
+        "type": "insight",
+        "uri": "/insight4",
+      },
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`coordinates > findSection > layout item path > should find root section (section 1) in the layout 1`] = `
+{
+  "header": {
+    "title": "Section 1",
+  },
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 8,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": {
+        "description": undefined,
+        "drills": [],
+        "identifier": "insight1",
+        "ignoreDashboardFilters": [],
+        "ignoredDrillDownHierarchies": [],
+        "insight": {
+          "identifier": "insight1",
+        },
+        "ref": {
+          "identifier": "insight1",
+        },
+        "title": "insight1",
+        "type": "insight",
+        "uri": "/insight1",
+      },
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 4,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": {
+        "identifier": "layout2",
+        "ref": {
+          "identifier": "layout2",
+        },
+        "sections": [
+          {
+            "header": {
+              "title": "Section 3",
+            },
+            "items": [
+              {
+                "size": {
+                  "xl": {
+                    "gridWidth": 2,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": {
+                  "description": undefined,
+                  "drills": [],
+                  "identifier": "insight2",
+                  "ignoreDashboardFilters": [],
+                  "ignoredDrillDownHierarchies": [],
+                  "insight": {
+                    "identifier": "insight2",
+                  },
+                  "ref": {
+                    "identifier": "insight2",
+                  },
+                  "title": "insight2",
+                  "type": "insight",
+                  "uri": "/insight2",
+                },
+              },
+              {
+                "size": {
+                  "xl": {
+                    "gridWidth": 2,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": {
+                  "description": undefined,
+                  "drills": [],
+                  "identifier": "insight3",
+                  "ignoreDashboardFilters": [],
+                  "ignoredDrillDownHierarchies": [],
+                  "insight": {
+                    "identifier": "insight3",
+                  },
+                  "ref": {
+                    "identifier": "insight3",
+                  },
+                  "title": "insight3",
+                  "type": "insight",
+                  "uri": "/insight3",
+                },
+              },
+            ],
+            "type": "IDashboardLayoutSection",
+          },
+          {
+            "header": {
+              "title": "Section 4",
+            },
+            "items": [
+              {
+                "size": {
+                  "xl": {
+                    "gridWidth": 4,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": {
+                  "description": undefined,
+                  "drills": [],
+                  "identifier": "insight4",
+                  "ignoreDashboardFilters": [],
+                  "ignoredDrillDownHierarchies": [],
+                  "insight": {
+                    "identifier": "insight4",
+                  },
+                  "ref": {
+                    "identifier": "insight4",
+                  },
+                  "title": "insight4",
+                  "type": "insight",
+                  "uri": "/insight4",
+                },
+              },
+            ],
+            "type": "IDashboardLayoutSection",
+          },
+        ],
+        "type": "IDashboardLayout",
+        "uri": "/layout2",
+      },
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`coordinates > findSection > layout section path > should find nested section (section 4) in the layout 1`] = `
+{
+  "header": {
+    "title": "Section 4",
+  },
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 4,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": {
+        "description": undefined,
+        "drills": [],
+        "identifier": "insight4",
+        "ignoreDashboardFilters": [],
+        "ignoredDrillDownHierarchies": [],
+        "insight": {
+          "identifier": "insight4",
+        },
+        "ref": {
+          "identifier": "insight4",
+        },
+        "title": "insight4",
+        "type": "insight",
+        "uri": "/insight4",
+      },
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`coordinates > findSection > layout section path > should find root section (section 1) in the layout 1`] = `
+{
+  "header": {
+    "title": "Section 1",
+  },
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 8,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": {
+        "description": undefined,
+        "drills": [],
+        "identifier": "insight1",
+        "ignoreDashboardFilters": [],
+        "ignoredDrillDownHierarchies": [],
+        "insight": {
+          "identifier": "insight1",
+        },
+        "ref": {
+          "identifier": "insight1",
+        },
+        "title": "insight1",
+        "type": "insight",
+        "uri": "/insight1",
+      },
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 4,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": {
+        "identifier": "layout2",
+        "ref": {
+          "identifier": "layout2",
+        },
+        "sections": [
+          {
+            "header": {
+              "title": "Section 3",
+            },
+            "items": [
+              {
+                "size": {
+                  "xl": {
+                    "gridWidth": 2,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": {
+                  "description": undefined,
+                  "drills": [],
+                  "identifier": "insight2",
+                  "ignoreDashboardFilters": [],
+                  "ignoredDrillDownHierarchies": [],
+                  "insight": {
+                    "identifier": "insight2",
+                  },
+                  "ref": {
+                    "identifier": "insight2",
+                  },
+                  "title": "insight2",
+                  "type": "insight",
+                  "uri": "/insight2",
+                },
+              },
+              {
+                "size": {
+                  "xl": {
+                    "gridWidth": 2,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": {
+                  "description": undefined,
+                  "drills": [],
+                  "identifier": "insight3",
+                  "ignoreDashboardFilters": [],
+                  "ignoredDrillDownHierarchies": [],
+                  "insight": {
+                    "identifier": "insight3",
+                  },
+                  "ref": {
+                    "identifier": "insight3",
+                  },
+                  "title": "insight3",
+                  "type": "insight",
+                  "uri": "/insight3",
+                },
+              },
+            ],
+            "type": "IDashboardLayoutSection",
+          },
+          {
+            "header": {
+              "title": "Section 4",
+            },
+            "items": [
+              {
+                "size": {
+                  "xl": {
+                    "gridWidth": 4,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": {
+                  "description": undefined,
+                  "drills": [],
+                  "identifier": "insight4",
+                  "ignoreDashboardFilters": [],
+                  "ignoredDrillDownHierarchies": [],
+                  "insight": {
+                    "identifier": "insight4",
+                  },
+                  "ref": {
+                    "identifier": "insight4",
+                  },
+                  "title": "insight4",
+                  "type": "insight",
+                  "uri": "/insight4",
+                },
+              },
+            ],
+            "type": "IDashboardLayoutSection",
+          },
+        ],
+        "type": "IDashboardLayout",
+        "uri": "/layout2",
+      },
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`coordinates > findSections > layout item path > should find nested sections (section 3 and 4) in the layout 1`] = `
+[
+  {
+    "header": {
+      "title": "Section 3",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 2,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight2",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight2",
+          },
+          "ref": {
+            "identifier": "insight2",
+          },
+          "title": "insight2",
+          "type": "insight",
+          "uri": "/insight2",
+        },
+      },
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 2,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight3",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight3",
+          },
+          "ref": {
+            "identifier": "insight3",
+          },
+          "title": "insight3",
+          "type": "insight",
+          "uri": "/insight3",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+  {
+    "header": {
+      "title": "Section 4",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 4,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight4",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight4",
+          },
+          "ref": {
+            "identifier": "insight4",
+          },
+          "title": "insight4",
+          "type": "insight",
+          "uri": "/insight4",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+]
+`;
+
+exports[`coordinates > findSections > layout item path > should find root sections (section 1 and 2) in the layout 1`] = `
+[
+  {
+    "header": {
+      "title": "Section 1",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 8,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight1",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight1",
+          },
+          "ref": {
+            "identifier": "insight1",
+          },
+          "title": "insight1",
+          "type": "insight",
+          "uri": "/insight1",
+        },
+      },
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 4,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "identifier": "layout2",
+          "ref": {
+            "identifier": "layout2",
+          },
+          "sections": [
+            {
+              "header": {
+                "title": "Section 3",
+              },
+              "items": [
+                {
+                  "size": {
+                    "xl": {
+                      "gridWidth": 2,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "description": undefined,
+                    "drills": [],
+                    "identifier": "insight2",
+                    "ignoreDashboardFilters": [],
+                    "ignoredDrillDownHierarchies": [],
+                    "insight": {
+                      "identifier": "insight2",
+                    },
+                    "ref": {
+                      "identifier": "insight2",
+                    },
+                    "title": "insight2",
+                    "type": "insight",
+                    "uri": "/insight2",
+                  },
+                },
+                {
+                  "size": {
+                    "xl": {
+                      "gridWidth": 2,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "description": undefined,
+                    "drills": [],
+                    "identifier": "insight3",
+                    "ignoreDashboardFilters": [],
+                    "ignoredDrillDownHierarchies": [],
+                    "insight": {
+                      "identifier": "insight3",
+                    },
+                    "ref": {
+                      "identifier": "insight3",
+                    },
+                    "title": "insight3",
+                    "type": "insight",
+                    "uri": "/insight3",
+                  },
+                },
+              ],
+              "type": "IDashboardLayoutSection",
+            },
+            {
+              "header": {
+                "title": "Section 4",
+              },
+              "items": [
+                {
+                  "size": {
+                    "xl": {
+                      "gridWidth": 4,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "description": undefined,
+                    "drills": [],
+                    "identifier": "insight4",
+                    "ignoreDashboardFilters": [],
+                    "ignoredDrillDownHierarchies": [],
+                    "insight": {
+                      "identifier": "insight4",
+                    },
+                    "ref": {
+                      "identifier": "insight4",
+                    },
+                    "title": "insight4",
+                    "type": "insight",
+                    "uri": "/insight4",
+                  },
+                },
+              ],
+              "type": "IDashboardLayoutSection",
+            },
+          ],
+          "type": "IDashboardLayout",
+          "uri": "/layout2",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+  {
+    "header": {
+      "title": "Section 2",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 12,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight5",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight5",
+          },
+          "ref": {
+            "identifier": "insight5",
+          },
+          "title": "insight5",
+          "type": "insight",
+          "uri": "/insight5",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+]
+`;
+
+exports[`coordinates > findSections > layout section path > should find nested section (section 3 and 4) in the layout 1`] = `
+[
+  {
+    "header": {
+      "title": "Section 3",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 2,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight2",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight2",
+          },
+          "ref": {
+            "identifier": "insight2",
+          },
+          "title": "insight2",
+          "type": "insight",
+          "uri": "/insight2",
+        },
+      },
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 2,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight3",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight3",
+          },
+          "ref": {
+            "identifier": "insight3",
+          },
+          "title": "insight3",
+          "type": "insight",
+          "uri": "/insight3",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+  {
+    "header": {
+      "title": "Section 4",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 4,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight4",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight4",
+          },
+          "ref": {
+            "identifier": "insight4",
+          },
+          "title": "insight4",
+          "type": "insight",
+          "uri": "/insight4",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+]
+`;
+
+exports[`coordinates > findSections > layout section path > should find root section (section 1 and 2) in the layout 1`] = `
+[
+  {
+    "header": {
+      "title": "Section 1",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 8,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight1",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight1",
+          },
+          "ref": {
+            "identifier": "insight1",
+          },
+          "title": "insight1",
+          "type": "insight",
+          "uri": "/insight1",
+        },
+      },
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 4,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "identifier": "layout2",
+          "ref": {
+            "identifier": "layout2",
+          },
+          "sections": [
+            {
+              "header": {
+                "title": "Section 3",
+              },
+              "items": [
+                {
+                  "size": {
+                    "xl": {
+                      "gridWidth": 2,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "description": undefined,
+                    "drills": [],
+                    "identifier": "insight2",
+                    "ignoreDashboardFilters": [],
+                    "ignoredDrillDownHierarchies": [],
+                    "insight": {
+                      "identifier": "insight2",
+                    },
+                    "ref": {
+                      "identifier": "insight2",
+                    },
+                    "title": "insight2",
+                    "type": "insight",
+                    "uri": "/insight2",
+                  },
+                },
+                {
+                  "size": {
+                    "xl": {
+                      "gridWidth": 2,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "description": undefined,
+                    "drills": [],
+                    "identifier": "insight3",
+                    "ignoreDashboardFilters": [],
+                    "ignoredDrillDownHierarchies": [],
+                    "insight": {
+                      "identifier": "insight3",
+                    },
+                    "ref": {
+                      "identifier": "insight3",
+                    },
+                    "title": "insight3",
+                    "type": "insight",
+                    "uri": "/insight3",
+                  },
+                },
+              ],
+              "type": "IDashboardLayoutSection",
+            },
+            {
+              "header": {
+                "title": "Section 4",
+              },
+              "items": [
+                {
+                  "size": {
+                    "xl": {
+                      "gridWidth": 4,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "description": undefined,
+                    "drills": [],
+                    "identifier": "insight4",
+                    "ignoreDashboardFilters": [],
+                    "ignoredDrillDownHierarchies": [],
+                    "insight": {
+                      "identifier": "insight4",
+                    },
+                    "ref": {
+                      "identifier": "insight4",
+                    },
+                    "title": "insight4",
+                    "type": "insight",
+                    "uri": "/insight4",
+                  },
+                },
+              ],
+              "type": "IDashboardLayoutSection",
+            },
+          ],
+          "type": "IDashboardLayout",
+          "uri": "/layout2",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+  {
+    "header": {
+      "title": "Section 2",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 12,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight5",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight5",
+          },
+          "ref": {
+            "identifier": "insight5",
+          },
+          "title": "insight5",
+          "type": "insight",
+          "uri": "/insight5",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+]
+`;
+
+exports[`coordinates > findSections > layout section path > should return nested sections event when leaf section does not exist 1`] = `
+[
+  {
+    "header": {
+      "title": "Section 3",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 2,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight2",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight2",
+          },
+          "ref": {
+            "identifier": "insight2",
+          },
+          "title": "insight2",
+          "type": "insight",
+          "uri": "/insight2",
+        },
+      },
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 2,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight3",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight3",
+          },
+          "ref": {
+            "identifier": "insight3",
+          },
+          "title": "insight3",
+          "type": "insight",
+          "uri": "/insight3",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+  {
+    "header": {
+      "title": "Section 4",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 4,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight4",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight4",
+          },
+          "ref": {
+            "identifier": "insight4",
+          },
+          "title": "insight4",
+          "type": "insight",
+          "uri": "/insight4",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+]
+`;
+
+exports[`coordinates > findSections > layout section path > should return root sections if there's no parent set and leaf section does not exist 1`] = `
+[
+  {
+    "header": {
+      "title": "Section 1",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 8,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight1",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight1",
+          },
+          "ref": {
+            "identifier": "insight1",
+          },
+          "title": "insight1",
+          "type": "insight",
+          "uri": "/insight1",
+        },
+      },
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 4,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "identifier": "layout2",
+          "ref": {
+            "identifier": "layout2",
+          },
+          "sections": [
+            {
+              "header": {
+                "title": "Section 3",
+              },
+              "items": [
+                {
+                  "size": {
+                    "xl": {
+                      "gridWidth": 2,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "description": undefined,
+                    "drills": [],
+                    "identifier": "insight2",
+                    "ignoreDashboardFilters": [],
+                    "ignoredDrillDownHierarchies": [],
+                    "insight": {
+                      "identifier": "insight2",
+                    },
+                    "ref": {
+                      "identifier": "insight2",
+                    },
+                    "title": "insight2",
+                    "type": "insight",
+                    "uri": "/insight2",
+                  },
+                },
+                {
+                  "size": {
+                    "xl": {
+                      "gridWidth": 2,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "description": undefined,
+                    "drills": [],
+                    "identifier": "insight3",
+                    "ignoreDashboardFilters": [],
+                    "ignoredDrillDownHierarchies": [],
+                    "insight": {
+                      "identifier": "insight3",
+                    },
+                    "ref": {
+                      "identifier": "insight3",
+                    },
+                    "title": "insight3",
+                    "type": "insight",
+                    "uri": "/insight3",
+                  },
+                },
+              ],
+              "type": "IDashboardLayoutSection",
+            },
+            {
+              "header": {
+                "title": "Section 4",
+              },
+              "items": [
+                {
+                  "size": {
+                    "xl": {
+                      "gridWidth": 4,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "description": undefined,
+                    "drills": [],
+                    "identifier": "insight4",
+                    "ignoreDashboardFilters": [],
+                    "ignoredDrillDownHierarchies": [],
+                    "insight": {
+                      "identifier": "insight4",
+                    },
+                    "ref": {
+                      "identifier": "insight4",
+                    },
+                    "title": "insight4",
+                    "type": "insight",
+                    "uri": "/insight4",
+                  },
+                },
+              ],
+              "type": "IDashboardLayoutSection",
+            },
+          ],
+          "type": "IDashboardLayout",
+          "uri": "/layout2",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+  {
+    "header": {
+      "title": "Section 2",
+    },
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridWidth": 12,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "description": undefined,
+          "drills": [],
+          "identifier": "insight5",
+          "ignoreDashboardFilters": [],
+          "ignoredDrillDownHierarchies": [],
+          "insight": {
+            "identifier": "insight5",
+          },
+          "ref": {
+            "identifier": "insight5",
+          },
+          "title": "insight5",
+          "type": "insight",
+          "uri": "/insight5",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+]
+`;

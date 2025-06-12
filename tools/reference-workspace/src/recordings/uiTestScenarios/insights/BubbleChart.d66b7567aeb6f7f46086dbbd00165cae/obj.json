@@ -1,0 +1,81 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa"
+                        }
+                    }
+                ],
+                "localIdentifier": "tertiary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "BubbleChart.d66b7567aeb6f7f46086dbbd00165cae",
+        "properties": { "controls": { "legend": { "position": "right" } } },
+        "sorts": [],
+        "title": "BubbleChart - legend position - legend on right",
+        "uri": "BubbleChart.d66b7567aeb6f7f46086dbbd00165cae",
+        "visualizationUrl": "local:bubble"
+    }
+}

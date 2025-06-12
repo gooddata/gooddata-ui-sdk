@@ -1,0 +1,751 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ComparisonProvider > createExecution > Should build execution with change (difference) operator when provided calculation is change_difference 1`] = `
+{
+  "definition": {
+    "attributes": [],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "aggregation": "sum",
+                  "item": {
+                    "identifier": "f_opportunitysnapshot.f_amount",
+                    "type": "fact",
+                  },
+                },
+              },
+              "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+            },
+          },
+        ],
+        "localIdentifier": "secondary_measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "arithmeticMeasure": {
+                  "measureIdentifiers": [
+                    "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                    "m_f_opportunitysnapshot.f_amount_sum",
+                  ],
+                  "operator": "change",
+                },
+                "virtual": true,
+              },
+              "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf_change",
+            },
+          },
+          {
+            "measure": {
+              "definition": {
+                "arithmeticMeasure": {
+                  "measureIdentifiers": [
+                    "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                    "m_f_opportunitysnapshot.f_amount_sum",
+                  ],
+                  "operator": "difference",
+                },
+                "virtual": true,
+              },
+              "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf_difference",
+            },
+          },
+        ],
+        "localIdentifier": "comparison_virtual_arithmetic_bucket",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.f_account.account.name",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [],
+          },
+        },
+      },
+    ],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "aggregation": "sum",
+              "item": {
+                "identifier": "f_opportunitysnapshot.f_amount",
+                "type": "fact",
+              },
+            },
+          },
+          "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "arithmeticMeasure": {
+              "measureIdentifiers": [
+                "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                "m_f_opportunitysnapshot.f_amount_sum",
+              ],
+              "operator": "change",
+            },
+            "virtual": true,
+          },
+          "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf_change",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "arithmeticMeasure": {
+              "measureIdentifiers": [
+                "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                "m_f_opportunitysnapshot.f_amount_sum",
+              ],
+              "operator": "difference",
+            },
+            "virtual": true,
+          },
+          "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf_difference",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "PROJECTID",
+  },
+  "equals": [Function],
+  "execute": [Function],
+  "explain": [Function],
+  "fingerprint": [Function],
+  "withBuckets": [Function],
+  "withDateFormat": [Function],
+  "withDimensions": [Function],
+  "withExecConfig": [Function],
+  "withSignal": [Function],
+  "withSorting": [Function],
+}
+`;
+
+exports[`ComparisonProvider > createExecution > Should build execution with change operator when provided calculation is change 1`] = `
+{
+  "definition": {
+    "attributes": [],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "aggregation": "sum",
+                  "item": {
+                    "identifier": "f_opportunitysnapshot.f_amount",
+                    "type": "fact",
+                  },
+                },
+              },
+              "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+            },
+          },
+        ],
+        "localIdentifier": "secondary_measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "arithmeticMeasure": {
+                  "measureIdentifiers": [
+                    "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                    "m_f_opportunitysnapshot.f_amount_sum",
+                  ],
+                  "operator": "change",
+                },
+                "virtual": true,
+              },
+              "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf",
+            },
+          },
+        ],
+        "localIdentifier": "comparison_virtual_arithmetic_bucket",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.f_account.account.name",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [],
+          },
+        },
+      },
+    ],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "aggregation": "sum",
+              "item": {
+                "identifier": "f_opportunitysnapshot.f_amount",
+                "type": "fact",
+              },
+            },
+          },
+          "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "arithmeticMeasure": {
+              "measureIdentifiers": [
+                "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                "m_f_opportunitysnapshot.f_amount_sum",
+              ],
+              "operator": "change",
+            },
+            "virtual": true,
+          },
+          "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "PROJECTID",
+  },
+  "equals": [Function],
+  "execute": [Function],
+  "explain": [Function],
+  "fingerprint": [Function],
+  "withBuckets": [Function],
+  "withDateFormat": [Function],
+  "withDimensions": [Function],
+  "withExecConfig": [Function],
+  "withSignal": [Function],
+  "withSorting": [Function],
+}
+`;
+
+exports[`ComparisonProvider > createExecution > Should build execution with change operator when provided calculation is undefined 1`] = `
+{
+  "definition": {
+    "attributes": [],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "aggregation": "sum",
+                  "item": {
+                    "identifier": "f_opportunitysnapshot.f_amount",
+                    "type": "fact",
+                  },
+                },
+              },
+              "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+            },
+          },
+        ],
+        "localIdentifier": "secondary_measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "arithmeticMeasure": {
+                  "measureIdentifiers": [
+                    "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                    "m_f_opportunitysnapshot.f_amount_sum",
+                  ],
+                  "operator": "ratio",
+                },
+                "virtual": true,
+              },
+              "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf",
+            },
+          },
+        ],
+        "localIdentifier": "comparison_virtual_arithmetic_bucket",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.f_account.account.name",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [],
+          },
+        },
+      },
+    ],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "aggregation": "sum",
+              "item": {
+                "identifier": "f_opportunitysnapshot.f_amount",
+                "type": "fact",
+              },
+            },
+          },
+          "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "arithmeticMeasure": {
+              "measureIdentifiers": [
+                "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                "m_f_opportunitysnapshot.f_amount_sum",
+              ],
+              "operator": "ratio",
+            },
+            "virtual": true,
+          },
+          "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "PROJECTID",
+  },
+  "equals": [Function],
+  "execute": [Function],
+  "explain": [Function],
+  "fingerprint": [Function],
+  "withBuckets": [Function],
+  "withDateFormat": [Function],
+  "withDimensions": [Function],
+  "withExecConfig": [Function],
+  "withSignal": [Function],
+  "withSorting": [Function],
+}
+`;
+
+exports[`ComparisonProvider > createExecution > Should build execution with difference operator when provided calculation is difference 1`] = `
+{
+  "definition": {
+    "attributes": [],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "aggregation": "sum",
+                  "item": {
+                    "identifier": "f_opportunitysnapshot.f_amount",
+                    "type": "fact",
+                  },
+                },
+              },
+              "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+            },
+          },
+        ],
+        "localIdentifier": "secondary_measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "arithmeticMeasure": {
+                  "measureIdentifiers": [
+                    "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                    "m_f_opportunitysnapshot.f_amount_sum",
+                  ],
+                  "operator": "difference",
+                },
+                "virtual": true,
+              },
+              "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf",
+            },
+          },
+        ],
+        "localIdentifier": "comparison_virtual_arithmetic_bucket",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.f_account.account.name",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [],
+          },
+        },
+      },
+    ],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "aggregation": "sum",
+              "item": {
+                "identifier": "f_opportunitysnapshot.f_amount",
+                "type": "fact",
+              },
+            },
+          },
+          "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "arithmeticMeasure": {
+              "measureIdentifiers": [
+                "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                "m_f_opportunitysnapshot.f_amount_sum",
+              ],
+              "operator": "difference",
+            },
+            "virtual": true,
+          },
+          "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "PROJECTID",
+  },
+  "equals": [Function],
+  "execute": [Function],
+  "explain": [Function],
+  "fingerprint": [Function],
+  "withBuckets": [Function],
+  "withDateFormat": [Function],
+  "withDimensions": [Function],
+  "withExecConfig": [Function],
+  "withSignal": [Function],
+  "withSorting": [Function],
+}
+`;
+
+exports[`ComparisonProvider > createExecution > Should build execution with ratio operator when provided calculation is ratio 1`] = `
+{
+  "definition": {
+    "attributes": [],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "aggregation": "sum",
+                  "item": {
+                    "identifier": "f_opportunitysnapshot.f_amount",
+                    "type": "fact",
+                  },
+                },
+              },
+              "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+            },
+          },
+        ],
+        "localIdentifier": "secondary_measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "arithmeticMeasure": {
+                  "measureIdentifiers": [
+                    "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                    "m_f_opportunitysnapshot.f_amount_sum",
+                  ],
+                  "operator": "ratio",
+                },
+                "virtual": true,
+              },
+              "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf",
+            },
+          },
+        ],
+        "localIdentifier": "comparison_virtual_arithmetic_bucket",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.f_account.account.name",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [],
+          },
+        },
+      },
+    ],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "aggregation": "sum",
+              "item": {
+                "identifier": "f_opportunitysnapshot.f_amount",
+                "type": "fact",
+              },
+            },
+          },
+          "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "arithmeticMeasure": {
+              "measureIdentifiers": [
+                "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                "m_f_opportunitysnapshot.f_amount_sum",
+              ],
+              "operator": "ratio",
+            },
+            "virtual": true,
+          },
+          "localIdentifier": "m_c2feb33b3cc449f383e2a5e62b6d25bf",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "PROJECTID",
+  },
+  "equals": [Function],
+  "execute": [Function],
+  "explain": [Function],
+  "fingerprint": [Function],
+  "withBuckets": [Function],
+  "withDateFormat": [Function],
+  "withDimensions": [Function],
+  "withExecConfig": [Function],
+  "withSignal": [Function],
+  "withSorting": [Function],
+}
+`;

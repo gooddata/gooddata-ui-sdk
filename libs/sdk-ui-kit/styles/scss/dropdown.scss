@@ -1,0 +1,130 @@
+// (C) 2007-2025 GoodData Corporation
+@use "variables";
+
+.gd-dropdown.overlay {
+    // reset overlays padding
+    padding: 0;
+}
+
+.gd-dropdown-search {
+    margin: 8px;
+    vertical-align: baseline;
+}
+
+.gd-dropdown-buttons {
+    padding: 8px;
+    text-align: right;
+
+    .gd-button {
+        margin-left: 10px;
+    }
+}
+
+.gd-dropdown {
+    .gd-input-label {
+        margin-bottom: 5px;
+    }
+}
+
+.gd-dropdown,
+.dropdown-body {
+    .gd-list,
+    .gd-list-view,
+    .gd-infinite-list {
+        margin: 6px 0;
+
+        @media #{variables.$small-only} {
+            margin: 0;
+        }
+    }
+
+    .gd-async-list {
+        margin: 6px 0;
+
+        @media #{variables.$small-only} {
+            margin: 6px 0;
+        }
+    }
+}
+
+.gd-dropdown,
+.gd-dropdown-small {
+    .gd-list-view {
+        font-size: 12px;
+    }
+
+    .gd-list-view-item,
+    .gd-list-view-item-header {
+        height: 25px;
+
+        & > div {
+            line-height: 25px;
+        }
+    }
+}
+
+.gd-dropdown-normal {
+    .gd-list-view {
+        font-size: 14px;
+    }
+
+    .gd-list-view-item,
+    .gd-list-view-item-header {
+        height: 28px;
+
+        & > div {
+            line-height: 28px;
+        }
+    }
+}
+
+.gd-list-searchfield,
+.gd-dropdown-searchfield {
+    margin: 10px;
+}
+
+.gd-list-title {
+    padding: 10px;
+    background: variables.$is-focused-background;
+    color: variables.$gd-color-state-blank;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.gd-dropdown-tabs {
+    margin: 0 10px;
+}
+
+.gd-mobile-dropdown-overlay {
+    height: 100%;
+    background-color: var(--gd-palette-complementary-0-from-theme, #f8fafb);
+
+    .gd-mobile-dropdown-header {
+        .gd-button,
+        .gd-header-project {
+            margin: 0;
+            box-shadow: 0 1px 2px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1));
+            color: var(--gd-palette-complementary-8-from-theme, variables.$default-gd-color-dark);
+            border-bottom: 1px solid var(--gd-palette-complementary-4-from-theme, #c9d5e0);
+
+            &.is-expanded,
+            &.is-collapsed {
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                &::after {
+                    right: 10px;
+                    color: variables.$gd-color-text;
+                    opacity: 1;
+                }
+
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                &,
+                &:hover {
+                    background-color: variables.$gd-color-white;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,71 @@
+// (C) 2007-2018 GoodData Corporation
+@use "sass:math";
+.loading-mask {
+    position: relative;
+
+    .gd-spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        &.small {
+            margin-top: -8px;
+            margin-left: -8px;
+        }
+
+        &.large {
+            margin-top: -16px;
+            margin-left: -16px;
+        }
+    }
+}
+
+.gd-spinner {
+    display: inline-block;
+    background-image: url("~@gooddata/sdk-ui-kit/esm/assets/loading.svg");
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: contain;
+    animation: loadingSpinner 1s infinite linear;
+
+    &.small {
+        width: 16px;
+        height: 16px;
+    }
+
+    &.middle {
+        width: 24px;
+        height: 24px;
+    }
+
+    &.large {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+@keyframes loadingSpinner {
+    $steps: 12;
+    $step-duration: 0.5;
+    $step-increment-progress: calc(1 / $steps);
+    $step-increment-deg: calc(360 / $steps);
+
+    0% {
+        transform: rotate(0deg) translateZ(-0.1px);
+    }
+
+    @for $i from 1 through $steps {
+        $animation-start-progress: $i * $step-increment-progress - calc($step-duration / 100);
+        $animation-end-progress: $animation-start-progress + calc($step-duration / 100);
+        $start-rotation: ($i - 1) * $step-increment-deg;
+        $end-rotation: $i * $step-increment-deg;
+
+        #{math.percentage($animation-start-progress)} {
+            transform: rotate(#{$start-rotation}deg) translateZ(0.1px);
+        }
+
+        #{math.percentage($animation-end-progress)} {
+            transform: rotate(#{$end-rotation}deg) translateZ(0);
+        }
+    }
+}

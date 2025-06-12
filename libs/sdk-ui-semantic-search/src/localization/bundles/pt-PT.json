@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "O nosso serviço de pesquisa está temporariamente indisponível.",
+    "semantic-search.error.text": "Estamos a trabalhar para resolver o problema.",
+    "semantic-search.no-results": "Não foram encontrados resultados para ”{query}”.",
+    "semantic-search.placeholder": "Pesquisar painéis de controlo ou de visualização…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Tags",
+    "semantic-search.match": "{score}% de correspondência",
+    "semantic-search.previous-search": "Pesquisa anterior",
+    "semantic-search.date.at": "em",
+    "gs.date.today": "Hoje",
+    "gs.date.yesterday": "Ontem",
+    "semantic-search.label": "Pesquisar painéis de controlo ou de visualização"
+}

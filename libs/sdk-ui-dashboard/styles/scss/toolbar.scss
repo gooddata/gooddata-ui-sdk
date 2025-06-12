@@ -1,0 +1,56 @@
+// (C) 2022 GoodData Corporation
+@use "sass:map";
+@use "zIndexes";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-dashboard-toolbar {
+    z-index: zIndexes.$toolbar-basic;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    background-color: #fcfcfd;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ebeff4;
+    border-radius: 3px;
+
+    .gd-toolbar-button-wrapper {
+        margin: 0;
+    }
+
+    .gd-toolbar-button-wrapper ~ .gd-toolbar-button-wrapper {
+        margin-left: 10px;
+    }
+
+    button {
+        width: 31px;
+        height: 28px;
+        // stylelint-disable-next-line declaration-no-important
+        padding: 5px 5px 5px 33px !important; // override the default icon padding to center the icon
+
+        &::before {
+            margin: 0;
+        }
+    }
+
+    .gd-toolbar-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .gd-toolbar-group + .gd-toolbar-group {
+        margin-left: 10px;
+    }
+
+    .gd-toolbar-group-title {
+        font-size: 11px;
+        font-weight: map.get(map.get(kit-variables.$gd-typo, font-weights), bold);
+        text-transform: uppercase;
+        color: kit-variables.$gd-color-state-blank;
+        margin-right: 10px;
+    }
+}

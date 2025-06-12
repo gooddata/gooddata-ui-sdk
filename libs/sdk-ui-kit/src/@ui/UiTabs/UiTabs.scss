@@ -1,0 +1,77 @@
+// (C) 2025 GoodData Corporation
+
+.gd-ui-kit-tabs {
+    $root: &;
+
+    border-bottom: 1px solid var(--gd-palette-complementary-3);
+    font-family: var(--gd-font-family);
+
+    &__item {
+        appearance: none;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        font-family: inherit;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: var(--gd-spacing-5px);
+        flex-shrink: 0;
+        box-sizing: border-box;
+        border-bottom: 3px solid transparent;
+        margin: 0 0 -1px 0;
+        color: var(--gd-palette-complementary-7);
+
+        &:hover {
+            border-bottom: 3px solid var(--gd-palette-complementary-3);
+            color: var(--gd-palette-complementary-8);
+        }
+
+        &--selected {
+            border-bottom: 3px solid var(--gd-palette-primary-base);
+            color: var(--gd-palette-complementary-8);
+            font-weight: 700;
+
+            &:hover {
+                border-bottom: 3px solid var(--gd-palette-primary-base);
+            }
+        }
+    }
+
+    &--size {
+        &-large {
+            #{$root}__item {
+                height: var(--gd-tabs-height-L, 56px);
+                padding: var(--gd-spacing-16px) var(--gd-spacing-10px) var(--gd-spacing-14px)
+                    var(--gd-spacing-10px);
+            }
+            #{$root}__label {
+                font-size: 14px;
+                line-height: normal;
+            }
+        }
+        &-medium {
+            #{$root}__item {
+                height: var(--gd-tabs-height-M, 27px);
+                padding: var(--gd-spacing-3px) var(--gd-spacing-6px) var(--gd-spacing-3px)
+                    var(--gd-spacing-6px);
+            }
+            #{$root}__label {
+                font-size: 14px;
+                line-height: 18px;
+            }
+        }
+        &-small {
+            #{$root}__item {
+                height: var(--gd-tabs-height-S, 23px);
+                padding: var(--gd-spacing-3px) var(--gd-spacing-6px) var(--gd-spacing-3px)
+                    var(--gd-spacing-6px);
+            }
+            #{$root}__label {
+                font-size: 12px;
+                line-height: 14px;
+            }
+        }
+    }
+}

@@ -1,0 +1,65 @@
+// (C) 2020 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+@use "item-states-mixin";
+
+// allow custom indentation
+// stylelint-disable indentation, at-rule-empty-line-before
+@include item-states-mixin.item-state(
+    "has-set-alert",
+    kit-variables.$gd-palette-primary-base,
+    transparent,
+    kit-variables.$gd-color-text-light,
+    kit-variables.$gd-palette-primary-base,
+    kit-variables.$gd-palette-primary-base,
+    kit-variables.$gd-palette-primary-dimmed
+);
+
+@include item-states-mixin.item-state(
+    "is-alert-dialog",
+    transparent,
+    transparent,
+    kit-variables.$gd-color-text-light,
+    kit-variables.$gd-palette-primary-base,
+    kit-variables.$gd-color-text-light,
+    kit-variables.$gd-palette-primary-base
+);
+
+@include item-states-mixin.item-state(
+    "is-alert-highlighted",
+    kit-variables.$gd-color-text-light,
+    kit-variables.$gd-palette-primary-base,
+    kit-variables.$gd-color-text-light,
+    kit-variables.$gd-palette-primary-base,
+    kit-variables.$gd-color-text-light,
+    kit-variables.$gd-palette-primary-base
+);
+
+@include item-states-mixin.item-state(
+    "is-alert-triggered",
+    kit-variables.$gd-color-warning-label-dimmed,
+    kit-variables.$gd-palette-warning-base-t50,
+    kit-variables.$gd-color-warning-label,
+    kit-variables.$gd-palette-warning-base,
+    kit-variables.$gd-color-warning-label-dimmed,
+    kit-variables.$gd-palette-warning-base-t50
+);
+
+@include item-states-mixin.item-state(
+    "is-alert-broken",
+    kit-variables.$gd-palette-error-base,
+    transparent,
+    kit-variables.$gd-color-white,
+    kit-variables.$gd-palette-error-base,
+    kit-variables.$gd-palette-error-base,
+    kit-variables.$gd-palette-error-dimmed
+);
+
+@include item-states-mixin.item-state(
+    "is-alert-evaluating",
+    kit-variables.$gd-color-disabled,
+    kit-variables.$gd-color-white
+);
+
+// allow custom indentation
+// stylelint-enable indentation, at-rule-empty-line-before

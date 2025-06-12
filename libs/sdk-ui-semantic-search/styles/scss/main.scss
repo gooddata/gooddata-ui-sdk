@@ -1,0 +1,143 @@
+// (C) 2024-2025 GoodData Corporation
+@use "sass:color";
+@use "sass:meta";
+@use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+@mixin icon($icon_size) {
+    width: $icon_size;
+    height: $icon_size;
+    display: flex;
+    align-items: center;
+
+    > svg {
+        // dashboard icon needs explicit size
+        width: $icon_size;
+        height: $icon_size;
+    }
+}
+
+.gd-semantic-search {
+    &__results-item {
+        $line-height: 50px;
+        cursor: pointer;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: $line-height;
+
+        &--active {
+            color: kit-variables.$is-focused-color;
+            background: kit-variables.$is-focused-background;
+        }
+
+        &__content {
+            width: 100%;
+            height: calc($line-height - 2px);
+            margin: 1px 0;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1em;
+            padding: 0 1em;
+            text-decoration: none;
+
+            &:hover,
+            &:focus,
+            &:active,
+            &:visited {
+                text-decoration: none;
+            }
+            &:focus-visible {
+                outline: revert;
+            }
+        }
+
+        &__icon {
+            @include icon(26px);
+        }
+
+        &__text {
+            flex: 1;
+            min-width: 0; // A hack to make ellipsis work in flexbox
+            display: flex;
+            flex-direction: column;
+            font-weight: 400;
+            color: kit-variables.$gd-color-text;
+            font-size: 14px;
+            line-height: 20px;
+
+            &__row {
+                display: flex;
+                flex-direction: row;
+                gap: 5px;
+            }
+
+            &__row:not(:first-child) {
+                color: kit-variables.$gd-color-state-blank;
+            }
+
+            &__ellipsis {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                flex-shrink: 1;
+            }
+        }
+
+        &__details {
+            width: 16px;
+            height: 16px;
+            align-items: center;
+
+            & .gd-ellipsis-text {
+                margin: 10px 0 0;
+            }
+        }
+
+        &__details__contents {
+            width: 190px;
+            padding: 5px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+
+            h3 {
+                font-size: 14px;
+                margin: 0;
+            }
+
+            .gd-ellipsis-text-content {
+                font-size: 12px;
+            }
+
+            h4 {
+                margin: 10px 0 0;
+                text-transform: uppercase;
+                font-size: 10px;
+                font-weight: 400;
+                color: kit-variables.$gd-color-state-blank;
+            }
+
+            hr {
+                margin: 10px 0;
+                border: 0;
+                border-top: 1px solid kit-variables.$gd-border-color;
+            }
+
+            &__match h4 {
+                text-transform: none;
+                font-size: 12px;
+            }
+        }
+    }
+
+    &__bubble.bubble.bubble-light {
+        background: kit-variables.$gd-color-white;
+    }
+
+    &__bubble_trigger {
+        display: flex;
+    }
+}

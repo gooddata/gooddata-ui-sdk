@@ -1,0 +1,187 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getBulletChartSeries > should return expected bullet chart series 1`] = `
+[
+  {
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(255,0,0)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 100,
+    "name": "Won",
+    "pointPadding": 0.1,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+]
+`;
+
+exports[`getBulletChartSeries > should return expected bullet chart series 2`] = `
+[
+  {
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(0,0,255)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+  {
+    "bulletChartMeasureType": "comparative",
+    "color": "rgb(217,220,226)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "y": 116625456.54,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "seriesIndex": 1,
+    "zIndex": 0,
+  },
+]
+`;
+
+exports[`getBulletChartSeries > should return expected bullet chart series 3`] = `
+[
+  {
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(255,0,0)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+  {
+    "bulletChartMeasureType": "target",
+    "color": "rgb(179,0,0)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "target": 116625456.54,
+        "y": 0,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "seriesIndex": 1,
+    "targetOptions": {
+      "width": "100%",
+    },
+    "type": "bullet",
+    "zIndex": 2,
+  },
+]
+`;
+
+exports[`getBulletChartSeries > should return expected bullet chart series 4`] = `
+[
+  {
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(0,0,255)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+  {
+    "bulletChartMeasureType": "target",
+    "color": "rgb(0,0,179)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "target": 116625456.54,
+        "y": 0,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "seriesIndex": 1,
+    "targetOptions": {
+      "width": "100%",
+    },
+    "type": "bullet",
+    "zIndex": 2,
+  },
+  {
+    "bulletChartMeasureType": "comparative",
+    "color": "rgb(217,220,226)",
+    "data": [
+      {
+        "format": "#,#.##",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Calculated 'Lost' measure",
+        "y": 78314703.09,
+      },
+    ],
+    "legendIndex": 2,
+    "name": "Calculated 'Lost' measure",
+    "pointPadding": 0,
+    "seriesIndex": 2,
+    "zIndex": 0,
+  },
+]
+`;

@@ -1,0 +1,42 @@
+# (C) 2024 GoodData Corporation
+
+name: Test ~ Backstop screen tests
+on:
+  workflow_dispatch:
+    inputs:
+      keep-passing-screenshots:
+        description: Keep screenshots for passing tests
+        type: boolean
+        required: false
+        default: false
+  schedule:
+    - cron: '0 4 * * 1-5'
+
+jobs:
+  e2e-backstop:
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+    uses: ./.github/workflows/rw-rush-build-e2e-tests-backstop.yml
+    with:
+      keep-passing-screenshots: ${{ github.event_name == 'workflow_dispatch' && inputs.keep-passing-screenshots || false }}
+    secrets: inherit
+
+  slack-notification:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    if: ${{ !cancelled() }}
+    needs: [e2e-backstop]
+    steps:
+      - name: Notify to slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: "#javascript-notifications"
+          slack-message: "${{env.ICON}} The scheduled backstop tests for *gooddata-ui-sdk* dispatched by *${{env.DISPATCHED_BY}}* finished with result *${{env.TEST_RESULT_BACKSTOP}}*. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>*"
+        env:
+          TEST_RESULT_BACKSTOP: ${{ needs.e2e-backstop.result }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          ICON: ${{ needs.e2e-backstop.result == 'success' && '✅' || '❌' }}
+          DISPATCHED_BY: ${{ github.event_name == 'workflow_dispatch' && github.actor || 'cron scheduler' }}

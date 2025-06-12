@@ -1,0 +1,308 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`measure converter > should return converted alias 1`] = `
+{
+  "alias": "alias",
+  "definition": {
+    "measure": {
+      "item": {
+        "identifier": {
+          "id": "foo",
+          "type": "fact",
+        },
+      },
+    },
+  },
+  "localIdentifier": "m_627f0f0a_foo",
+}
+`;
+
+exports[`measure converter > should return converted arithmetic measure definition from model to AFM 1`] = `
+{
+  "definition": {
+    "arithmeticMeasure": {
+      "measureIdentifiers": [
+        {
+          "localIdentifier": "foo",
+        },
+        {
+          "localIdentifier": "bar",
+        },
+      ],
+      "operator": "SUM",
+    },
+  },
+  "localIdentifier": "m_3858f62230ac3c915f300c664312c63f",
+}
+`;
+
+exports[`measure converter > should return converted pop measure definition from model to AFM 1`] = `
+{
+  "definition": {
+    "overPeriodMeasure": {
+      "dateAttributes": [
+        {
+          "attribute": {
+            "identifier": {
+              "id": "attr",
+              "type": "attribute",
+            },
+          },
+          "periodsAgo": 1,
+        },
+      ],
+      "measureIdentifier": {
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      },
+    },
+  },
+  "localIdentifier": "m_m_e519fa2a_86c3_4e32_8313_0c03062348j3_attr",
+}
+`;
+
+exports[`measure converter > should return converted previous period measure from model to AFM 1`] = `
+{
+  "definition": {
+    "previousPeriodMeasure": {
+      "dateDatasets": [
+        {
+          "dataset": {
+            "identifier": {
+              "id": "bar",
+              "type": "dataset",
+            },
+          },
+          "periodsAgo": 3,
+        },
+      ],
+      "measureIdentifier": {
+        "localIdentifier": "foo",
+      },
+    },
+  },
+  "localIdentifier": "m_foo_previous_period",
+}
+`;
+
+exports[`measure converter > should return converted simple measure from model to AFM 1`] = `
+{
+  "definition": {
+    "measure": {
+      "item": {
+        "identifier": {
+          "id": "foo",
+          "type": "fact",
+        },
+      },
+    },
+  },
+  "localIdentifier": "m_foo",
+}
+`;
+
+exports[`measure converter > should return format of measure: avg 1`] = `
+{
+  "definition": {
+    "measure": {
+      "aggregation": "AVG",
+      "item": {
+        "identifier": {
+          "id": "foo",
+          "type": "fact",
+        },
+      },
+    },
+  },
+  "localIdentifier": "m_foo_avg",
+}
+`;
+
+exports[`measure converter > should return format of measure: change 1`] = `
+{
+  "definition": {
+    "arithmeticMeasure": {
+      "measureIdentifiers": [
+        {
+          "localIdentifier": "foo",
+        },
+        {
+          "localIdentifier": "bar",
+        },
+      ],
+      "operator": "CHANGE",
+    },
+  },
+  "format": "#,##0.00%",
+  "localIdentifier": "m_3858f62230ac3c915f300c664312c63f",
+}
+`;
+
+exports[`measure converter > should return format of measure: count 1`] = `
+{
+  "definition": {
+    "measure": {
+      "aggregation": "COUNT",
+      "item": {
+        "identifier": {
+          "id": "foo",
+          "type": "fact",
+        },
+      },
+    },
+  },
+  "format": "#,##0",
+  "localIdentifier": "m_foo_count",
+}
+`;
+
+exports[`measure converter > should return format of measure: max 1`] = `
+{
+  "definition": {
+    "measure": {
+      "aggregation": "MAX",
+      "item": {
+        "identifier": {
+          "id": "foo",
+          "type": "fact",
+        },
+      },
+    },
+  },
+  "localIdentifier": "m_foo_max",
+}
+`;
+
+exports[`measure converter > should return format of measure: median 1`] = `
+{
+  "definition": {
+    "measure": {
+      "aggregation": "MEDIAN",
+      "item": {
+        "identifier": {
+          "id": "foo",
+          "type": "fact",
+        },
+      },
+    },
+  },
+  "localIdentifier": "m_foo_median",
+}
+`;
+
+exports[`measure converter > should return format of measure: min 1`] = `
+{
+  "definition": {
+    "measure": {
+      "aggregation": "MIN",
+      "item": {
+        "identifier": {
+          "id": "foo",
+          "type": "fact",
+        },
+      },
+    },
+  },
+  "localIdentifier": "m_foo_min",
+}
+`;
+
+exports[`measure converter > should return format of measure: ratio 1`] = `
+{
+  "definition": {
+    "measure": {
+      "computeRatio": true,
+      "item": {
+        "identifier": {
+          "id": "foo",
+          "type": "fact",
+        },
+      },
+    },
+  },
+  "format": "#,##0.00%",
+  "localIdentifier": "m_foo_ratio",
+}
+`;
+
+exports[`measure converter > should return format of measure: runsum 1`] = `
+{
+  "definition": {
+    "measure": {
+      "aggregation": "RUNSUM",
+      "item": {
+        "identifier": {
+          "id": "foo",
+          "type": "fact",
+        },
+      },
+    },
+  },
+  "localIdentifier": "m_foo_runsum",
+}
+`;
+
+exports[`measure converter > should return format of measure: sum 1`] = `
+{
+  "definition": {
+    "measure": {
+      "aggregation": "SUM",
+      "item": {
+        "identifier": {
+          "id": "foo",
+          "type": "fact",
+        },
+      },
+    },
+  },
+  "localIdentifier": "m_foo_sum",
+}
+`;
+
+exports[`measure converter > should return measure with two filters 1`] = `
+{
+  "definition": {
+    "measure": {
+      "filters": [
+        {
+          "absoluteDateFilter": {
+            "dataset": {
+              "identifier": {
+                "id": "dt_closedate_timestamp",
+                "type": "dataset",
+              },
+            },
+            "from": "2019-08-06",
+            "localIdentifier": undefined,
+            "to": "2019-08-12",
+          },
+        },
+        {
+          "relativeDateFilter": {
+            "dataset": {
+              "identifier": {
+                "id": "dt_closedate_timestamp",
+                "type": "dataset",
+              },
+            },
+            "from": 5,
+            "granularity": "DAY",
+            "localIdentifier": undefined,
+            "to": 22,
+          },
+        },
+      ],
+      "item": {
+        "identifier": {
+          "id": "foo",
+          "type": "fact",
+        },
+      },
+    },
+  },
+  "localIdentifier": "m_foo_d8ac502a",
+}
+`;
+
+exports[`measure converter > should throw an error when measure definition is not supported 1`] = `[Error: The measure definition is not supported: {}]`;
+
+exports[`measure converter > should throw an error when toObjQualifier gets an URI ref 1`] = `[Error: Tiger backend does not allow referencing objects by URI.]`;

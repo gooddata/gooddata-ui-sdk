@@ -1,0 +1,52 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "dt_timeline_timestamp.year", "type": "displayForm" },
+                "localIdentifier": "a_dt_timeline_timestamp.year"
+            }
+        }
+    ],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "sample_xirr", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_sample_xirr"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "dt_timeline_timestamp.year", "type": "displayForm" },
+                        "localIdentifier": "a_dt_timeline_timestamp.year"
+                    }
+                }
+            ],
+            "localIdentifier": "attribute"
+        }
+    ],
+    "dimensions": [{ "itemIdentifiers": ["measureGroup", "a_dt_timeline_timestamp.year"] }],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "sample_xirr", "type": "measure" } }
+                },
+                "localIdentifier": "m_sample_xirr"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

@@ -1,0 +1,62 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getWebComponentsCodeGenerator > display the custom insight title 1`] = `
+"<!-- Load the library... -->
+<script type="module" src="https://localhost/components/workspaceId.js?auth=sso"></script>
+<!-- ...and embed visualization -->
+
+<gd-insight
+    insight="insightId"
+    title="Custom insight title"
+    style="height: 400px"
+></gd-insight>"
+`;
+
+exports[`getWebComponentsCodeGenerator > display the insight title 1`] = `
+"<!-- Load the library... -->
+<script type="module" src="https://localhost/components/workspaceId.js?auth=sso"></script>
+<!-- ...and embed visualization -->
+
+<gd-insight
+    insight="insightId"
+    title="Insight title"
+    style="height: 400px"
+></gd-insight>"
+`;
+
+exports[`getWebComponentsCodeGenerator > with the custom height 1`] = `
+"<!-- Load the library... -->
+<script type="module" src="https://localhost/components/workspaceId.js?auth=sso"></script>
+<!-- ...and embed visualization -->
+
+<gd-insight
+    insight="insightId"
+    title="Custom insight title"
+    locale="en-US"
+    style="height: 600px"
+></gd-insight>"
+`;
+
+exports[`getWebComponentsCodeGenerator > with the locale 1`] = `
+"<!-- Load the library... -->
+<script type="module" src="https://localhost/components/workspaceId.js?auth=sso"></script>
+<!-- ...and embed visualization -->
+
+<gd-insight
+    insight="insightId"
+    title="Custom insight title"
+    locale="en-US"
+    style="height: 400px"
+></gd-insight>"
+`;
+
+exports[`getWebComponentsCodeGenerator > without any configuration 1`] = `
+"<!-- Load the library... -->
+<script type="module" src="https://localhost/components/workspaceId.js?auth=sso"></script>
+<!-- ...and embed visualization -->
+
+<gd-insight
+    insight="insightId"
+    style="height: 400px"
+></gd-insight>"
+`;

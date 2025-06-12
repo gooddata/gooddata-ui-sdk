@@ -1,0 +1,11 @@
+{
+    "executionResult": {
+        "data": [["80406324.96", "36219131.58"]],
+        "headerItems": [[], []],
+        "paging": {
+            "count": [0, 0],
+            "offset": [0, 0],
+            "total": [0, 0]
+        }
+    }
+}

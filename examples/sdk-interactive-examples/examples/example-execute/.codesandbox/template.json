@@ -1,0 +1,11 @@
+{
+  "title": "Execute",
+  "description": "This example demonstrates using Execute component and build custom visualization.",
+  "iconUrl": "https://www.gooddata.com/favicon.ico",
+  "tags": [
+    "react",
+    "typescript",
+    "gooddata-ui-sdk"
+  ],
+  "published": true
+}

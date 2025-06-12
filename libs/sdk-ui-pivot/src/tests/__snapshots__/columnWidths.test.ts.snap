@@ -1,0 +1,212 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`newWidthForAllColumnsForMeasure > should create width item when measure as localId and without grow to fit prop 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locator": {
+      "measureLocatorItem": {
+        "measureIdentifier": "localId",
+      },
+    },
+    "width": {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAllColumnsForMeasure > should create width item when measure as value and without grow to fit prop 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locator": {
+      "measureLocatorItem": {
+        "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+    "width": {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAllColumnsForMeasure > should create width item with grow to fit prop false 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locator": {
+      "measureLocatorItem": {
+        "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+    "width": {
+      "allowGrowToFit": false,
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAllColumnsForMeasure > should create width item with grow to fit prop true 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locator": {
+      "measureLocatorItem": {
+        "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+    "width": {
+      "allowGrowToFit": true,
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAllMeasureColumns > should create width item without grow to fit prop if not specified on factory call 1`] = `
+{
+  "measureColumnWidthItem": {
+    "width": {
+      "value": 1,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAttributeColumn > should create width item when attribute as localId and without grow to fit prop 1`] = `
+{
+  "attributeColumnWidthItem": {
+    "attributeIdentifier": "localId",
+    "width": {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAttributeColumn > should create width item when attribute as value and without grow to fit prop 1`] = `
+{
+  "attributeColumnWidthItem": {
+    "attributeIdentifier": "a_label.f_product.product.name",
+    "width": {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAttributeColumn > should create width item with grow to fit prop false 1`] = `
+{
+  "attributeColumnWidthItem": {
+    "attributeIdentifier": "a_label.f_product.product.name",
+    "width": {
+      "allowGrowToFit": false,
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAttributeColumn > should create width item with grow to fit prop true 1`] = `
+{
+  "attributeColumnWidthItem": {
+    "attributeIdentifier": "a_label.f_product.product.name",
+    "width": {
+      "allowGrowToFit": true,
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`setNewWidthForSelectedColumns > should create width item when measure as localId and without grow to fit prop 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locators": [
+      {
+        "measureLocatorItem": {
+          "measureIdentifier": "localId",
+        },
+      },
+    ],
+    "width": {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`setNewWidthForSelectedColumns > should create width item when measure as value and without grow to fit prop 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locators": [
+      {
+        "measureLocatorItem": {
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        },
+      },
+    ],
+    "width": {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`setNewWidthForSelectedColumns > should create width item with attr locators in front of measure locator 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locators": [
+      {
+        "attributeLocatorItem": {
+          "attributeIdentifier": "a_label.f_product.product.name",
+          "element": "uri",
+        },
+      },
+      {
+        "measureLocatorItem": {
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        },
+      },
+    ],
+    "width": {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`setNewWidthForSelectedColumns > should create width item with grow to fit prop false 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locators": [
+      {
+        "measureLocatorItem": {
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        },
+      },
+    ],
+    "width": {
+      "allowGrowToFit": false,
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`setNewWidthForSelectedColumns > should create width item with grow to fit prop true 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locators": [
+      {
+        "measureLocatorItem": {
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        },
+      },
+    ],
+    "width": {
+      "allowGrowToFit": true,
+      "value": 10,
+    },
+  },
+}
+`;

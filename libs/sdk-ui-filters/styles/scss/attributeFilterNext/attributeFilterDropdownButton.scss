@@ -1,0 +1,418 @@
+// (C) 2022-2025 GoodData Corporation
+@use "sass:list";
+@use "sass:map";
+@use "attributeFilterVariables";
+@use "@gooddata/sdk-ui-kit/styles/scss/button";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.gd-attribute-filter-dropdown-button__next {
+    @include typo-mixins.gd-font-base;
+
+    position: relative;
+    max-width: 185px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 3px;
+
+    &.gd-is-draggable {
+        padding-left: 23px;
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        transition: all attributeFilterVariables.$transition-length;
+    }
+
+    &::before {
+        z-index: 1;
+        top: 8px;
+        left: 9px;
+        width: 7px;
+        height: 26px;
+        background: url(attributeFilterVariables.$separator-icon) no-repeat;
+        opacity: 0;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 1px solid transparent;
+        background: attributeFilterVariables.$gd-dashboards-filterBar-filterButton-backgroundColor;
+        transform: translateZ(-1px);
+        border-radius: 3px;
+    }
+
+    &:hover {
+        &.gd-is-draggable {
+            &:not(.gd-is-active, .gd-is-filtering) {
+                box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
+                    0 2px 9px 0 button-variables.$button-shadow-darker;
+            }
+            &::before {
+                opacity: 1;
+            }
+        }
+
+        &::after {
+            border-color: button-variables.$button-normal-hover-border-color;
+        }
+    }
+
+    &.gd-is-filtering {
+        &:not(.gd-is-active) {
+            background: variables.$gd-palette-primary-dimmed;
+            border-radius: 3px;
+
+            &::before,
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+    &:active,
+    &.gd-is-active {
+        &.gd-is-draggable {
+            &::before {
+                opacity: 1;
+            }
+        }
+        &::after {
+            &,
+            .edit-mode-on & {
+                box-shadow: inset 0 1px 0 0 button-variables.$button-normal-active-shadow;
+                border-color: var(
+                    --gd-palette-complementary-5-from-theme,
+                    button-variables.$button-normal-hover-border-color
+                );
+
+                // refactor
+                // stylelint-disable-next-line max-line-length
+                @include mixins.gradient-linear(
+                    button-variables.$button-normal-active-gradient-top,
+                    button-variables.$button-normal-active-gradient-bottom
+                );
+            }
+        }
+
+        .gd-attribute-filter-dropdown-button-title__next,
+        .gd-attribute-filter-dropdown-button-subtitle__next {
+            &::after {
+                content: "\e613";
+            }
+        }
+    }
+
+    &.gd-message {
+        font-size: 12px;
+    }
+}
+
+.gd-attribute-filter-dropdown-button-icon__next {
+    position: relative;
+    z-index: 1;
+    float: left;
+    padding-right: 5px;
+}
+
+.gd-attribute-filter-dropdown-button-content__next {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
+}
+
+.gd-attribute-filter-dropdown_button-title-content__next {
+    display: flex;
+    justify-content: space-between;
+
+    .gd-list-item-tooltip {
+        line-height: 15px;
+    }
+}
+
+.gd-is-mobile {
+    .gd-attribute-filter-dropdown-button-content__next {
+        padding-right: 20px;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .gd-attribute-filter-dropdown-button__next.gd-is-active {
+        width: 100%;
+        height: 47px;
+        max-width: none;
+        margin: 0;
+        font-size: 14px;
+
+        &::after {
+            background-color: #fff;
+            background-image: none;
+        }
+
+        .gd-attribute-filter-dropdown-button-subtitle__next {
+            &::after {
+                right: 0;
+            }
+        }
+    }
+}
+
+.gd-mobile-dropdown-overlay .gd-attribute-filter-button-mobile__next {
+    display: none;
+}
+
+.gd-mobile-dropdown-header .gd-attribute-filter-button-mobile__next {
+    display: block;
+    width: auto;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    padding: 10px;
+    box-shadow: 0 1px 2px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1));
+    line-height: 25px;
+    border-width: 1px 0;
+    border-top: 1px solid variables.$gd-border-color;
+    border-bottom: 1px solid variables.$gd-border-color;
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 4);
+    text-align: left;
+    background-color: variables.$gd-color-white;
+
+    &::after {
+        display: none;
+    }
+
+    &::before {
+        right: 4px;
+    }
+}
+
+.gd-attribute-filter-button-mobile__next.gd-is-active {
+    .gd-attribute-filter-dropdown-button-title__next,
+    .gd-attribute-filter-dropdown-button-subtitle__next {
+        &::after {
+            content: "\e613";
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            display: inline-block;
+            font-size: 18px;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+.gd-attribute-filter-details {
+    width: 220px;
+    word-wrap: break-word;
+    padding: 0;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--gd-palette-complementary-3-from-theme, #c9d5e0);
+    box-shadow: 0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
+        0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+    background: var(--gd-palette-complementary-0, #fff);
+}
+
+.gd-attribute-filter-dropdown-button-title__next {
+    overflow: hidden;
+    color: variables.$gd-color-link;
+    margin-right: auto;
+
+    .gd-bubble-trigger,
+    .shortened {
+        display: inline-flex;
+    }
+
+    .shortened {
+        max-width: 100%;
+    }
+
+    .overlay & {
+        flex: 0 0 auto;
+        max-width: 100%;
+        margin-right: 5px;
+        color: variables.$gd-color-label;
+
+        &::after {
+            content: ":";
+        }
+    }
+}
+
+.gd-attribute-filter-dropdown-button-title__next,
+.gd-attribute-filter-dropdown-button-subtitle__next {
+    max-width: 100%;
+    white-space: nowrap;
+
+    &::after {
+        content: "\e612";
+        display: none;
+        margin-left: 0.5em;
+        font-family: "Indigo", sans-serif;
+        font-weight: normal;
+        font-size: inherit;
+        vertical-align: top;
+        color: variables.$gd-color-state-blank;
+        transition: attributeFilterVariables.$transition-length;
+    }
+
+    .drag-preview &::after {
+        display: none;
+    }
+}
+
+.gd-attribute-filter-dropdown-button-subtitle__next {
+    display: inline-flex;
+    overflow: hidden;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    color: variables.$gd-color-dark;
+
+    &:only-child::after {
+        display: inline-block;
+    }
+
+    .overlay & {
+        flex: 1 1 auto;
+        max-width: none;
+
+        &::after {
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            font-size: 18px;
+            transform: translateY(-50%);
+        }
+    }
+
+    &::after {
+        display: inline-block;
+    }
+}
+
+.gd-attribute-filter-dropdown-button-selected-items__next {
+    display: inline-block;
+    flex: 0 1 auto;
+    overflow: hidden;
+    max-width: 120px;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    color: var(--gd-palette-complementary-8, variables.$default-gd-color-text);
+
+    .overlay & {
+        max-width: none;
+    }
+}
+
+.gd-attribute-filter-dropdown-button-selected-items-count__next {
+    display: inline-block;
+    flex: 0 0 auto;
+    vertical-align: bottom;
+    color: var(--gd-palette-complementary-8, variables.$default-gd-color-text);
+}
+
+.gd-attribute-filter-dropdown-simple-button__next {
+    max-width: 285px;
+
+    .is-active {
+        @media only screen and (max-width: 640px) {
+            max-width: 100vw;
+        }
+    }
+
+    .gd-attribute-filter-dropdown-simple-button-text {
+        display: flex;
+    }
+
+    .gd-attribute-filter-dropdown-simple-button-selection {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .gd-attribute-filter-dropdown-simple-button-selection-count {
+        flex: 1 0 auto;
+        padding-left: 5px;
+    }
+}
+
+.gd-attribute-filter-tooltip-content {
+    display: block;
+    overflow: hidden;
+    max-width: 100%;
+    word-wrap: break-word;
+    word-break: break-word;
+    pointer-events: auto;
+    padding: 12px 0 12px 12px;
+
+    h3 {
+        font-weight: 500;
+        line-height: 23px;
+        margin: 0;
+        font-size: 14px;
+        color: variables.$gd-color-text;
+    }
+    p {
+        text-transform: capitalize;
+        color: variables.$gd-color-text;
+    }
+
+    h4 {
+        margin: 13px 0 0;
+        padding-right: 5px;
+        font-size: 10px;
+        font-weight: normal;
+        text-transform: uppercase;
+        color: variables.$gd-color-state-blank;
+    }
+}
+
+.gd-attribute-filter__next {
+    .gd-attribute-filter-dropdown-button__next.disabled {
+        &:hover,
+        &:focus,
+        &:active,
+        &:hover::after,
+        &:focus::after,
+        &:active::after {
+            cursor: default;
+            user-select: auto;
+            box-shadow: none;
+            background: transparent;
+            border-color: transparent;
+            text-decoration: none;
+        }
+
+        .gd-attribute-filter-dropdown-button-subtitle__next::after {
+            content: none;
+        }
+    }
+
+    .gd-attribute-filter-dropdown-button__next.gd-virtual-attribute-filter-dropdown-button {
+        background: variables.$gd-palette-primary-dimmed;
+
+        &:hover,
+        &:focus,
+        &:active,
+        &:hover::after,
+        &:focus::after,
+        &:active::after {
+            background: variables.$gd-palette-primary-dimmed;
+        }
+    }
+}

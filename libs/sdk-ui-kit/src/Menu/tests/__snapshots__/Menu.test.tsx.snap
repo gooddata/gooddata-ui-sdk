@@ -1,0 +1,162 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Menu snapshot > should match snapshot of menu with config 1`] = `
+<body>
+  <div>
+    <div>
+      <div
+        class="gd-menuOpenedByClick-togglerWrapped"
+      >
+        <button>
+          toggler
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>
+      <div
+        style="position: absolute; left: -16px; top: 8px;"
+      >
+        <div
+          class="gd-menuOpener"
+        >
+          <ul
+            role="content"
+          >
+            <li>
+              1
+            </li>
+            <li>
+              2
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Menu snapshot > should match snapshot of menu with no config 1`] = `
+<body>
+  <div>
+    <div>
+      <div
+        class="gd-menuOpenedByClick-togglerWrapped"
+      >
+        <button>
+          toggler
+        </button>
+      </div>
+    </div>
+  </div>
+  <div />
+</body>
+`;
+
+exports[`Menu snapshot > should match snapshot of menu with portalTarget 1`] = `
+<body>
+  <section
+    class="portal-target"
+  >
+    <div>
+      <div>
+        <div
+          style="position: absolute; left: 0px; top: 0px;"
+        >
+          <div
+            class="gd-menuOpener"
+          >
+            <ul
+              role="content"
+            >
+              <li>
+                1
+              </li>
+              <li>
+                2
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div>
+    <div>
+      <div
+        class="gd-menuOpenedByClick-togglerWrapped"
+      >
+        <button>
+          toggler
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Menu snapshot > should match snapshot of nested menus 1`] = `
+<body>
+  <div>
+    <div>
+      <div
+        class="gd-menuOpenedByClick-togglerWrapped"
+      >
+        <button>
+          toggler
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>
+      <div
+        style="position: absolute; left: 0px; top: 0px;"
+      >
+        <div
+          class="gd-menuOpener"
+        >
+          <p>
+            Menu Item
+          </p>
+          <p>
+            Menu Item
+          </p>
+          <div
+            class="gd-menuPosition-wrapper"
+          >
+            <div>
+              <div>
+                <button>
+                  toggler
+                </button>
+              </div>
+            </div>
+            <div
+              style="position: absolute; left: 0px; top: 0px;"
+            >
+              <div>
+                <div
+                  class="gd-menuOpener"
+                >
+                  <p>
+                    Menu Item
+                  </p>
+                  <p>
+                    Menu Item
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>
+            Menu Item
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

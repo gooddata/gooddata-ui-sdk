@@ -1,0 +1,223 @@
+// (C) 2020-2024 GoodData Corporation
+
+$goodstrap-fontFamily: gdcustomfont, "Helvetica Neue", "Helvetica", helvetica, arial, sans-serif;
+
+$goodstrap-sideMenuTrigger: 40em;
+$goodstrap-bg-color: var(--gd-palette-complementary-0, #fff);
+
+// stylelint-disable value-no-vendor-prefix, declaration-block-no-duplicate-properties, max-line-length
+@mixin gradient-linear($topColor, $bottomColor) {
+    background: $bottomColor; /* Old browsers */
+    background-image: -webkit-gradient(linear, left top, left bottom, from($topColor), to($bottomColor));
+    background-image: -webkit-linear-gradient(top, $topColor, $bottomColor); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient(top, $topColor, $bottomColor); /* FF3.6 */
+    background-image: -ms-linear-gradient(top, $topColor, $bottomColor); /* IE10 */
+    background-image: -o-linear-gradient(top, $topColor, $bottomColor); /* Opera 11.10+ */
+    background-image: linear-gradient(to top, $topColor, $bottomColor);
+    // stylelint-disable-next-line function-name-case
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$topColor}', EndColorStr='#{$bottomColor}'); /* IE6-IE9 */
+}
+
+@mixin transition-property($property) {
+    -webkit-transition-property: $property;
+    -moz-transition-property: $property;
+    transition-property: $property;
+}
+
+@mixin transition-duration($duration) {
+    -webkit-transition-duration: $duration;
+    -moz-transition-duration: $duration;
+    transition-duration: $duration;
+}
+
+@mixin transition-timing-function($easing) {
+    -webkit-transition-timing-function: $easing;
+    -moz-transition-timing-function: $easing;
+    transition-timing-function: $easing;
+}
+
+@mixin transition-delay($delay) {
+    -webkit-transition-delay: $delay;
+    -moz-transition-delay: $delay;
+    transition-delay: $delay;
+}
+// stylelint-enable value-no-vendor-prefix, declaration-block-no-duplicate-properties
+
+@mixin transition($property, $duration, $easing: blank, $delay: blank) {
+    @include transition-property($property);
+    @include transition-duration($duration);
+    @if $easing != blank {
+        @include transition-timing-function($easing);
+    }
+    @if $delay != blank {
+        @include transition-delay($delay);
+    }
+}
+
+.example {
+    position: relative;
+    margin: 15px 0;
+    padding: 20px 20px 0;
+    border: 1px solid var(--gd-palette-complementary-3-from-theme, #ccc);
+    background: var(--gd-palette-complementary-0, #fff);
+    min-height: 20px;
+    border-radius: 4px 4px 4px 0;
+}
+
+.showCode {
+    position: relative;
+    right: 0;
+    left: 0;
+    display: block;
+    margin: 20px -20px 0;
+    padding: 5px 7px;
+    color: var(--gd-palette-complementary-7-from-theme, #555);
+    cursor: pointer;
+    border-top: 1px dotted var(--gd-palette-complementary-2-from-theme, #eee);
+    font-size: 12px;
+    @include gradient-linear(
+        var(--gd-palette-complementary-0, #fff),
+        var(--gd-palette-complementary-3-from-theme, #ccc)
+    );
+}
+
+pre.prettyprint,
+code.prettyprint {
+    background-color: var(--gd-palette-complementary-2-from-theme, #eee);
+    @include transition("background-color", 0.8s);
+
+    &.flash {
+        background-color: #ff9;
+    }
+}
+
+pre.prettyprint {
+    padding: 1em 1.5em;
+    border: 1px solid var(--gd-palette-complementary-4-from-theme, #ddd);
+    white-space: pre-wrap;
+    border-radius: 5px;
+}
+
+.example pre.prettyprint {
+    margin: 0 -21px 0;
+}
+
+.library-component {
+    margin-bottom: 90px;
+
+    .library-item-title {
+        margin: 0.5em 0;
+        line-height: 1.4rem;
+        font-size: 34px;
+        color: var(--gd-palette-complementary-9, #000);
+
+        .title-bg {
+            position: relative;
+            z-index: 2;
+            padding-right: 25px;
+            background: $goodstrap-bg-color;
+        }
+
+        &.guide {
+            &::after {
+                content: "";
+                position: absolute;
+                z-index: 1;
+                top: 50%;
+                right: 0;
+                left: 50px;
+                height: 1px;
+                background: var(--gd-palette-complementary-4-from-theme, #ddd);
+            }
+        }
+    }
+
+    .componentLinks {
+        line-height: 4.5em;
+
+        > a {
+            margin-left: 15px;
+            vertical-align: middle;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    }
+
+    .guidelines {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+
+        > div > li,
+        > li {
+            float: left;
+            list-style-type: none;
+        }
+    }
+
+    .example-table {
+        border-spacing: 0;
+        border-collapse: collapse;
+        margin-top: 20px;
+
+        tr th {
+            padding: 10px;
+        }
+        tr td {
+            padding: 10px;
+            border-top: 1px solid var(--gd-palette-complementary-3-from-theme, #ccc);
+        }
+    }
+
+    > div > h1,
+    > h1 {
+        font-size: 34px;
+    }
+
+    > div > h3,
+    > h3 {
+        margin: 1.5em 0;
+        font-size: 20px;
+    }
+
+    > div > h4,
+    > h4 {
+        margin: 1em 0;
+        font-size: 16px;
+    }
+
+    > div > p,
+    > p {
+        margin: 1em 0;
+    }
+
+    .info {
+        padding: 20px 0;
+    }
+
+    pre,
+    code {
+        font-size: 12px;
+        font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    }
+
+    > h5 {
+        margin: 2em 0 1em;
+        font-size: 1.25em;
+    }
+
+    code {
+        padding: 2px 4px;
+        border: 1px solid var(--gd-palette-complementary-3-from-theme, #ccc);
+        white-space: nowrap;
+        background: var(--gd-palette-complementary-0, #fff);
+        font-size: 90%;
+    }
+
+    > p,
+    > ul,
+    > ol {
+        line-height: 1.6em;
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0",
+                                    "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                                    "localIdentifier": "m_6b1411d5_e253_418e_8fd3_137a9f56ea92",
+                                    "name": "_Timeline [EOP]"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "dt_timeline_timestamp.year",
+                            "name": "Timeline - Year",
+                            "uri": ""
+                        },
+                        "format": { "locale": "en-US", "pattern": "y" },
+                        "granularity": "YEAR",
+                        "identifier": "dt_timeline_timestamp.year",
+                        "localIdentifier": "a_dt_timeline_timestamp.year",
+                        "name": "Timeline - Year",
+                        "primaryLabel": { "identifier": "dt_timeline_timestamp.year", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,42 @@
+// (C) 2023 GoodData Corporation
+
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "sharedFilterConfig";
+
+.date-filter-dropdown-configuration {
+    .configuration-panel-header {
+        justify-content: space-between;
+        background: kit-variables.$is-focused-background;
+    }
+
+    .configuration-panel-header-title {
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    .configuration-category {
+        margin-bottom: -5px;
+        padding: 10px 10px 0;
+    }
+
+    .configuration-item-title {
+        display: flex;
+        flex-grow: 0;
+
+        .addon {
+            flex-shrink: 0;
+            color: kit-variables.$gd-color-state-blank;
+            margin-right: 3px;
+            text-overflow: initial;
+        }
+    }
+
+    .configuration-item-mode {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 10px 10px;
+        font-size: 12px;
+    }
+}

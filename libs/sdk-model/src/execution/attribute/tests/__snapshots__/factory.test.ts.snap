@@ -1,0 +1,76 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`modifyAttribute > should keep localId if one not provided during modification 1`] = `
+{
+  "attribute": {
+    "alias": "My Account Name",
+    "displayForm": {
+      "identifier": "label.account.id.name",
+      "type": "displayForm",
+    },
+    "localIdentifier": "a_label.account.id.name",
+  },
+}
+`;
+
+exports[`modifyAttribute > should use localId provided during modification 1`] = `
+{
+  "attribute": {
+    "alias": "My Account Name",
+    "displayForm": {
+      "identifier": "label.account.id.name",
+      "type": "displayForm",
+    },
+    "localIdentifier": "my_custom_id",
+  },
+}
+`;
+
+exports[`newAttribute > should return a simple attribute 1`] = `
+{
+  "attribute": {
+    "displayForm": {
+      "identifier": "foo",
+      "type": "displayForm",
+    },
+    "localIdentifier": "a_foo",
+  },
+}
+`;
+
+exports[`newAttribute > should return an attribute with a custom localId 1`] = `
+{
+  "attribute": {
+    "displayForm": {
+      "identifier": "foo",
+      "type": "displayForm",
+    },
+    "localIdentifier": "custom",
+  },
+}
+`;
+
+exports[`newAttribute > should return an attribute with an alias 1`] = `
+{
+  "attribute": {
+    "alias": "alias",
+    "displayForm": {
+      "identifier": "foo",
+      "type": "displayForm",
+    },
+    "localIdentifier": "a_724874d1_foo",
+  },
+}
+`;
+
+exports[`newAttribute > should sanitize automatically generated localId 1`] = `
+{
+  "attribute": {
+    "displayForm": {
+      "identifier": "id:with:colons",
+      "type": "displayForm",
+    },
+    "localIdentifier": "a_id_with_colons",
+  },
+}
+`;

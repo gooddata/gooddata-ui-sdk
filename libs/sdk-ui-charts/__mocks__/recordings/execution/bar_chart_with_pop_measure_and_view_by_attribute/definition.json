@@ -1,0 +1,54 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158"
+                },
+                "localIdentifier": "yearCreatedAttribute"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "amountPopMeasure",
+                "alias": "Amount previous year",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "amountMeasure",
+                        "popAttribute": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountMeasure",
+                "alias": "Amount current year",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["yearCreatedAttribute"]
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

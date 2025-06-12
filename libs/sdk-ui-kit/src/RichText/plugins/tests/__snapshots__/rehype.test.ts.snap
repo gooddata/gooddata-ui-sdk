@@ -1,0 +1,195 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`testing rehype plugin to extract references > replace references ids for not formatted values in text 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "type": "text",
+          "value": "Hello, there are some ",
+        },
+        {
+          "children": [
+            {
+              "type": "text",
+              "value": 100,
+            },
+          ],
+          "position": undefined,
+          "properties": {
+            "className": "gd-rich-text-metric-value",
+            "style": {},
+          },
+          "tagName": "span",
+          "type": "element",
+        },
+        {
+          "type": "text",
+          "value": " and ",
+        },
+        {
+          "children": [
+            {
+              "type": "text",
+              "value": 200,
+            },
+          ],
+          "position": undefined,
+          "properties": {
+            "className": "gd-rich-text-metric-value",
+            "style": {},
+          },
+          "tagName": "span",
+          "type": "element",
+        },
+        {
+          "type": "text",
+          "value": " references.",
+        },
+      ],
+      "properties": {},
+      "tagName": "p",
+      "type": "element",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`testing rehype plugin to extract references > replace references ids for real formatted values in image 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "type": "text",
+          "value": "Hello, there is image ",
+        },
+        {
+          "properties": {
+            "alt": "This is 100.00 alt",
+            "src": "https://www.100.00.com",
+            "title": "Link to 100.00",
+          },
+          "tagName": "img",
+          "type": "element",
+        },
+        {
+          "type": "text",
+          "value": " references.",
+        },
+      ],
+      "properties": {},
+      "tagName": "p",
+      "type": "element",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`testing rehype plugin to extract references > replace references ids for real formatted values in links 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "type": "text",
+          "value": "Hello, there are some ",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "type": "text",
+                  "value": "100.00",
+                },
+              ],
+              "position": undefined,
+              "properties": {
+                "className": "gd-rich-text-metric-value",
+                "style": {},
+              },
+              "tagName": "span",
+              "type": "element",
+            },
+          ],
+          "properties": {
+            "href": "https://www.100.00.com",
+            "title": "Link to 100.00",
+          },
+          "tagName": "a",
+          "type": "element",
+        },
+        {
+          "type": "text",
+          "value": " references.",
+        },
+      ],
+      "properties": {},
+      "tagName": "p",
+      "type": "element",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`testing rehype plugin to extract references > replace references ids for real formatted values in text 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "type": "text",
+          "value": "Hello, there are some ",
+        },
+        {
+          "children": [
+            {
+              "type": "text",
+              "value": "100.00",
+            },
+          ],
+          "position": undefined,
+          "properties": {
+            "className": "gd-rich-text-metric-value",
+            "style": {},
+          },
+          "tagName": "span",
+          "type": "element",
+        },
+        {
+          "type": "text",
+          "value": " and ",
+        },
+        {
+          "children": [
+            {
+              "type": "text",
+              "value": "200.00",
+            },
+          ],
+          "position": undefined,
+          "properties": {
+            "className": "gd-rich-text-metric-value",
+            "style": {},
+          },
+          "tagName": "span",
+          "type": "element",
+        },
+        {
+          "type": "text",
+          "value": " references.",
+        },
+      ],
+      "properties": {},
+      "tagName": "p",
+      "type": "element",
+    },
+  ],
+  "type": "root",
+}
+`;

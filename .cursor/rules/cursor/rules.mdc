@@ -1,0 +1,20 @@
+---
+description: Writing new cursor rules in .cursor/rules folder
+globs: 
+alwaysApply: false
+---
+You are responsible for generating cursor rule .mdc files into .cursor/rules folder.
+Based on user requests, you define a prompt for LLM into the relevant markdown file.
+The prompt must help developers to implement changes into this repository.
+You must analyze the code base relevant to the user request and build the prompt based on this.
+Prompts must guide LLMs where to put changes based on developer requests.
+
+You must put the rule files into these sub-folders:
+- "general" - general rules attached to each conversation
+- "guides" - specific coding conventions and details about the repository usage
+- "packages" - package / library specific guides and details
+
+Examples:
+- analyze readmes, developer readmes, config files. Define shell commands in the prompt which must be executed before/after code changes
+- analyze the architecture of the related source code. Define a section in the markdown file which forces LLM to follow the current architecture.
+- analyze existing tests. Define a section in the markdown file which forces LLM to write tests, run tests, etc.

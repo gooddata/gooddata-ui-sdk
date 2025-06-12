@@ -1,0 +1,225 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`converts execution definition to AFM Execution > should remove empty negative attribute filters and not cause RAIL-2083 1`] = `
+[
+  {
+    "positiveAttributeFilter": {
+      "in": {
+        "values": [],
+      },
+      "label": {
+        "identifier": {
+          "id": "label.f_product.product.name",
+          "type": "label",
+        },
+      },
+      "localIdentifier": undefined,
+    },
+  },
+  {
+    "positiveAttributeFilter": {
+      "in": {
+        "values": [
+          "value 1",
+        ],
+      },
+      "label": {
+        "identifier": {
+          "id": "label.f_product.product.name",
+          "type": "label",
+        },
+      },
+      "localIdentifier": undefined,
+    },
+  },
+  {
+    "negativeAttributeFilter": {
+      "label": {
+        "identifier": {
+          "id": "label.f_product.product.name",
+          "type": "label",
+        },
+      },
+      "localIdentifier": undefined,
+      "notIn": {
+        "values": [
+          "value 2",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`converts execution definition to AFM Execution > should return AFM Execution with definition that has filters 1`] = `
+{
+  "execution": {
+    "attributes": [
+      {
+        "label": {
+          "identifier": {
+            "id": "label.f_account.account.name",
+            "type": "label",
+          },
+        },
+        "localIdentifier": "a_label.f_account.account.name",
+      },
+      {
+        "label": {
+          "identifier": {
+            "id": "label.f_activity.subject",
+            "type": "label",
+          },
+        },
+        "localIdentifier": "a_label.f_activity.subject",
+      },
+    ],
+    "auxMeasures": [],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "in": {
+            "values": [
+              "myAccount",
+            ],
+          },
+          "label": {
+            "identifier": {
+              "id": "label.f_account.account.name",
+              "type": "label",
+            },
+          },
+          "localIdentifier": undefined,
+        },
+      },
+    ],
+    "measures": [
+      {
+        "definition": {
+          "measure": {
+            "item": {
+              "identifier": {
+                "id": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                "type": "metric",
+              },
+            },
+          },
+        },
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      },
+    ],
+  },
+  "resultSpec": {
+    "dimensions": [],
+    "totals": [],
+  },
+  "settings": {},
+}
+`;
+
+exports[`converts execution definition to AFM Execution > should return AFM Execution with definition that has no filter 1`] = `
+{
+  "execution": {
+    "attributes": [],
+    "auxMeasures": [],
+    "filters": [],
+    "measures": [],
+  },
+  "resultSpec": {
+    "dimensions": [],
+    "totals": [],
+  },
+  "settings": {},
+}
+`;
+
+exports[`converts execution definition to AFM Execution > should return AFM Execution with definition that has one attribute with alias and one attribute without localId 1`] = `
+{
+  "execution": {
+    "attributes": [
+      {
+        "alias": "alias",
+        "label": {
+          "identifier": {
+            "id": "attribute1",
+            "type": "label",
+          },
+        },
+        "localIdentifier": "a_724874d1_attribute1",
+      },
+      {
+        "label": {
+          "identifier": {
+            "id": "attribute2",
+            "type": "label",
+          },
+        },
+        "localIdentifier": "a_attribute2",
+      },
+    ],
+    "auxMeasures": [],
+    "filters": [],
+    "measures": [],
+  },
+  "resultSpec": {
+    "dimensions": [],
+    "totals": [],
+  },
+  "settings": {},
+}
+`;
+
+exports[`converts execution definition to AFM Execution > should return AFM Execution with dimensions 1`] = `
+{
+  "execution": {
+    "attributes": [],
+    "auxMeasures": [],
+    "filters": [],
+    "measures": [],
+  },
+  "resultSpec": {
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "localId1",
+        ],
+        "localIdentifier": "dim_0",
+      },
+    ],
+    "totals": [],
+  },
+  "settings": {},
+}
+`;
+
+exports[`converts execution definition to AFM Execution > should return AFM Execution with empty definition 1`] = `
+{
+  "execution": {
+    "attributes": [],
+    "auxMeasures": [],
+    "filters": [],
+    "measures": [],
+  },
+  "resultSpec": {
+    "dimensions": [],
+    "totals": [],
+  },
+  "settings": {},
+}
+`;
+
+exports[`converts execution definition to AFM Execution > should return AFM Execution with sorts 1`] = `
+{
+  "execution": {
+    "attributes": [],
+    "auxMeasures": [],
+    "filters": [],
+    "measures": [],
+  },
+  "resultSpec": {
+    "dimensions": [],
+    "totals": [],
+  },
+  "settings": {},
+}
+`;

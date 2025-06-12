@@ -1,0 +1,31 @@
+name: Check if package and version exists in npm
+description: This action performs checking if given package and version exist in npm
+inputs:
+  package:
+    required: true
+    description: package
+  version:
+    required: true
+    description: version
+
+outputs:
+  exists:
+    description: true if package@version exists, false otherwise
+    value: ${{ steps.check.outputs.exists }}
+
+runs:
+  using: 'composite'
+  steps:
+    - id: check
+      run: |
+        # Use curl instead of `if npm view "${PACKAGE}@${VERSION}" version >/dev/null 2>&1; then`
+        # as it does not have dependency on installed nodejs/npm
+        if curl --silent --fail "https://registry.npmjs.org/${PACKAGE}/${VERSION}" >/dev/null; then
+          echo "exists=true" >> $GITHUB_OUTPUT
+        else
+          echo "exists=false" >> $GITHUB_OUTPUT
+        fi
+      shell: bash
+      env:
+        PACKAGE: ${{ inputs.package }}
+        VERSION: ${{ inputs.version }}

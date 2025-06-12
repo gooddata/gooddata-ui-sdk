@@ -1,0 +1,183 @@
+// (C) 2020 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/form";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+$dropdown_max_height: 300px;
+$ranking_filter_dropdown_width: 250px;
+$operator_dropdown_width: 100px;
+$value_dropdown_width: 80px;
+$attribute_dropdown_width: $ranking_filter_dropdown_width - 20px;
+$measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
+
+.gd-rf-dropdown-body {
+    width: $ranking_filter_dropdown_width;
+    margin-top: 2px;
+
+    .gd-rf-value-section {
+        display: flex;
+        align-items: center;
+
+        .gd-rf-value-tooltip-icon {
+            padding: 0 1px;
+            color: variables.$gd-color-text-dimmed;
+        }
+    }
+
+    .gd-rf-dropdown-header {
+        padding: 6px 6px 6px 10px;
+        color: variables.$gd-color-state-blank;
+        background: variables.$is-focused-background;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .gd-rf-dropdown-section {
+        padding: 10px;
+
+        .gd-rf-dropdown-section-title {
+            padding-top: 10px;
+            font-size: 12px;
+        }
+
+        .gd-rf-preview {
+            font-size: 12px;
+            line-height: 16px;
+        }
+    }
+
+    .gd-rf-dropdown-footer {
+        margin: 0 10px;
+        padding: 10px 0;
+        border-top: 1px solid variables.$gd-border-color;
+        text-align: right;
+    }
+}
+
+.gd-rf-operator-dropdown-button {
+    width: $operator_dropdown_width;
+}
+
+.gd-rf-operator-dropdown-body {
+    width: $operator_dropdown_width;
+
+    .gd-button-link {
+        width: 100%;
+        text-align: left;
+        font-size: 12px;
+        color: variables.$gd-color-text;
+    }
+
+    .gd-button-link.is-selected {
+        color: variables.$gd-palette-primary-base;
+    }
+}
+
+.gd-rf-value-dropdown-button {
+    position: static;
+    display: inline-block;
+    width: $value_dropdown_width;
+    margin: 0 10px;
+
+    .gd-input-field {
+        height: 27px;
+        font-size: 12px;
+        border-radius: 3px;
+    }
+
+    .List {
+        min-height: 32px;
+    }
+
+    .gd-select-menu {
+        padding: 0;
+    }
+
+    .gd-select-heading {
+        // stylelint-disable-next-line declaration-no-important
+        position: relative !important;
+    }
+}
+
+.gd-rf-attribute-dropdown-button {
+    width: 100%;
+
+    .gd-button-icon {
+        width: 18px;
+        margin-right: 7px;
+    }
+}
+
+.gd-rf-attribute-dropdown-body {
+    width: $attribute_dropdown_width;
+    max-height: $dropdown_max_height;
+    overflow-x: auto;
+
+    .gd-button-link {
+        width: 100%;
+        text-align: left;
+        font-size: 12px;
+        color: variables.$gd-color-text;
+    }
+
+    .gd-button-link.is-selected {
+        color: variables.$gd-palette-primary-base;
+    }
+
+    .gd-rf-attribute-all-records-icon {
+        padding: 0 1px;
+        color: variables.$gd-color-text;
+    }
+
+    .gd-button-link.disabled {
+        color: variables.$gd-color-text;
+    }
+
+    .gd-button-link.disabled:hover {
+        background-color: variables.$is-focused-background;
+        color: variables.$gd-color-text;
+    }
+}
+
+.gd-rf-attribute-dropdown-separator {
+    border-top: 1px solid variables.$gd-border-color;
+}
+
+.gd-rf-measure-dropdown-button {
+    width: 100%;
+}
+
+.gd-rf-measure-dropdown-body {
+    width: $measure_dropdown_width;
+    max-height: $dropdown_max_height;
+    overflow-x: auto;
+
+    .gd-button-link {
+        display: flex;
+        width: 100%;
+        text-align: left;
+        font-size: 12px;
+        color: variables.$gd-color-text;
+    }
+
+    .gd-button-link.is-selected {
+        color: variables.$gd-palette-primary-base;
+    }
+
+    .gd-rf-measure-title {
+        flex-grow: 1;
+    }
+
+    .gd-rf-sequence-number {
+        flex-grow: 0;
+        flex-shrink: 0;
+        font-size: 10px;
+        line-height: 10px;
+        color: variables.$gd-color-state-blank;
+        margin-left: 3px;
+        font-family: variables.$measure_sequence_number_font;
+    }
+}
+
+.gd-rf-tooltip-bubble.gd-bubble {
+    max-width: 200px;
+}

@@ -1,0 +1,89 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "attr.f_product.product", "name": "Product", "uri": "" },
+                        "granularity": null,
+                        "identifier": "label.f_product.product.name",
+                        "localIdentifier": "a_label.f_product.product.name",
+                        "name": "Product Name",
+                        "primaryLabel": { "identifier": "attr.f_product.product", "type": "displayForm" },
+                        "totalItems": [{ "totalHeaderItem": { "name": "sum" } }],
+                        "uri": ""
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "f_owner.department_id", "name": "Department", "uri": "" },
+                        "granularity": null,
+                        "identifier": "f_owner.department_id",
+                        "localIdentifier": "a_f_owner.department_id",
+                        "name": "Department",
+                        "primaryLabel": { "identifier": "f_owner.department_id", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                            "name": "Forecast Category",
+                            "uri": ""
+                        },
+                        "granularity": null,
+                        "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                        "localIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
+                        "name": "Forecast Category",
+                        "primaryLabel": {
+                            "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                            "type": "displayForm"
+                        },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "f_owner.region_id", "name": "Region", "uri": "" },
+                        "granularity": null,
+                        "identifier": "f_owner.region_id",
+                        "localIdentifier": "a_f_owner.region_id",
+                        "name": "Region",
+                        "primaryLabel": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                },
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                    "name": "Amount"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                                    "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+                                    "name": "Won"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

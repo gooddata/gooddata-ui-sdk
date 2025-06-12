@@ -1,0 +1,46 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.0%",
+                                    "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                                    "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+                                    "name": "Win Rate"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "dt_oppcreated_timestamp.quarter",
+                            "name": "Created - Quarter/Year",
+                            "uri": ""
+                        },
+                        "format": { "locale": "en-US", "pattern": "QQQ y" },
+                        "granularity": "QUARTER",
+                        "identifier": "dt_oppcreated_timestamp.quarter",
+                        "localIdentifier": "a_dt_oppcreated_timestamp.quarter",
+                        "name": "Created - Quarter/Year",
+                        "primaryLabel": {
+                            "identifier": "dt_oppcreated_timestamp.quarter",
+                            "type": "displayForm"
+                        },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

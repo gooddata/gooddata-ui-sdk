@@ -1,0 +1,416 @@
+// (C) 2020-2024 GoodData Corporation
+@use "Bubble/_variables" as bubble-variables;
+@use "mixins";
+@use "variables";
+
+/* ==========================================================================
+   Bubble
+   ========================================================================== */
+
+.bubbleArrowShift {
+    width: 7px;
+    height: 12px;
+}
+
+// TODO: rename after removing of silver theme
+.inlineBubbleHelp {
+    display: inline-block;
+    font: 14px/1 variables.$gd-font-indigo;
+    vertical-align: middle;
+    color: bubble-variables.$bubble-help-color;
+
+    &::before {
+        content: "\E60B"; // icon-circle-question
+    }
+
+    @include mixins.active-states-and-self {
+        text-decoration: none;
+    }
+
+    @include mixins.active-states {
+        color: bubble-variables.$bubble-help-color-hover;
+        cursor: help;
+    }
+}
+
+.bubble {
+    position: absolute;
+    max-width: bubble-variables.$bubble-max-width;
+
+    @include mixins.transition(opacity, 0.2s, ease-in-out);
+
+    &.bubble-small {
+        max-width: bubble-variables.$bubble-small-max-width;
+    }
+
+    &.gd-bubble {
+        position: relative;
+    }
+
+    &.isActive {
+        opacity: 1;
+    }
+
+    .helper {
+        position: absolute;
+        background: white;
+
+        @include mixins.opacity(0.01);
+    }
+
+    .bubble-content {
+        position: relative;
+        overflow: visible;
+        padding: 7px 10px;
+        border-radius: 3px;
+        pointer-events: none;
+
+        .content {
+            display: block;
+            overflow: hidden;
+            max-width: 100%;
+            word-wrap: break-word;
+            word-break: break-word;
+            pointer-events: auto;
+
+            a {
+                color: variables.$gd-color-text-light;
+                opacity: 0.8;
+                text-decoration: underline;
+
+                @include mixins.transition(all, 0.25s, ease-in-out);
+
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            &,
+            p,
+            a {
+                font: 400 12px/18px variables.$gd-font-primary;
+            }
+
+            p {
+                margin: 0;
+            }
+
+            p + p {
+                margin-top: 0.5em;
+            }
+        }
+    }
+
+    @each $skin in bubble-variables.$bubble-skins {
+        $bubble-borderWidth: bubble-variables.$bubble-primary-borderWidth;
+        $bubble-color: bubble-variables.$bubble-primary-color;
+        $bubble-borderColor: bubble-variables.$bubble-primary-borderColor;
+        $bubble-arrowColor: bubble-variables.$bubble-primary-arrowColor;
+        $bubble-arrowBorderColor: bubble-variables.$bubble-primary-arrowBorderColor;
+        $bubble-bgcolor: bubble-variables.$bubble-primary-bgcolor;
+
+        @if $skin == negative {
+            $bubble-borderWidth: bubble-variables.$bubble-negative-borderWidth;
+            $bubble-color: bubble-variables.$bubble-negative-color;
+            $bubble-borderColor: bubble-variables.$bubble-negative-borderColor;
+            $bubble-arrowColor: bubble-variables.$bubble-negative-arrowColor;
+            $bubble-arrowBorderColor: bubble-variables.$bubble-negative-arrowBorderColor;
+            $bubble-bgcolor: bubble-variables.$bubble-negative-bgcolor;
+        } @else if $skin == secondary {
+            $bubble-borderWidth: bubble-variables.$bubble-secondary-borderWidth;
+            $bubble-color: bubble-variables.$bubble-secondary-color;
+            $bubble-borderColor: bubble-variables.$bubble-secondary-borderColor;
+            $bubble-arrowColor: bubble-variables.$bubble-secondary-arrowColor;
+            $bubble-arrowBorderColor: bubble-variables.$bubble-secondary-arrowBorderColor;
+            $bubble-bgcolor: bubble-variables.$bubble-secondary-bgcolor;
+        } @else if $skin == light {
+            $bubble-borderWidth: bubble-variables.$bubble-light-borderWidth;
+            $bubble-color: bubble-variables.$bubble-light-color;
+            $bubble-borderColor: bubble-variables.$bubble-light-borderColor;
+            $bubble-arrowColor: bubble-variables.$bubble-light-arrowColor;
+            $bubble-arrowBorderColor: bubble-variables.$bubble-light-arrowBorderColor;
+            $bubble-bgcolor: bubble-variables.$bubble-light-bgcolor;
+        } @else if $skin == warning {
+            $bubble-borderWidth: bubble-variables.$bubble-warning-borderWidth;
+            $bubble-color: bubble-variables.$bubble-warning-color;
+            $bubble-borderColor: bubble-variables.$bubble-warning-borderColor;
+            $bubble-arrowColor: bubble-variables.$bubble-warning-arrowColor;
+            $bubble-arrowBorderColor: bubble-variables.$bubble-warning-arrowBorderColor;
+            $bubble-bgcolor: bubble-variables.$bubble-warning-bgcolor;
+        }
+
+        &.bubble-#{$skin} {
+            padding: 0;
+            border-radius: 3px;
+            border-style: solid;
+            border-width: $bubble-borderWidth;
+            border-color: $bubble-borderColor;
+
+            @include mixins.box-shadow(bubble-variables.$bubble-boxShadow);
+        }
+
+        // do not wanna to touch it
+        // stylelint-disable-next-line no-duplicate-selectors
+        &.bubble-#{$skin} {
+            @if $bubble-borderWidth == 0 {
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                .arrow-border {
+                    display: none;
+                }
+            }
+        }
+
+        // do not wanna to touch it
+        // stylelint-disable-next-line no-duplicate-selectors
+        &.bubble-#{$skin} {
+            color: $bubble-color;
+            background: $bubble-bgcolor;
+
+            .arrow-border,
+            .arrow {
+                border-color: transparent;
+            }
+        }
+
+        &.bubble-#{$skin}.arrow-bottom-direction {
+            .arrow-border {
+                border-top-color: $bubble-arrowBorderColor;
+            }
+
+            .arrow {
+                border-top-color: $bubble-arrowColor;
+            }
+        }
+
+        &.bubble-#{$skin}.arrow-top-direction {
+            .arrow-border {
+                border-bottom-color: $bubble-arrowBorderColor;
+            }
+
+            .arrow {
+                border-bottom-color: $bubble-arrowColor;
+            }
+        }
+
+        &.bubble-#{$skin}.arrow-left-direction {
+            .arrow-border {
+                border-right-color: $bubble-arrowBorderColor;
+            }
+
+            .arrow {
+                border-right-color: $bubble-arrowColor;
+            }
+        }
+
+        &.bubble-#{$skin}.arrow-right-direction {
+            .arrow-border {
+                border-left-color: $bubble-arrowBorderColor;
+            }
+
+            .arrow {
+                border-left-color: $bubble-arrowColor;
+            }
+        }
+    }
+    // end of for
+    .arrow-position,
+    .arrow-border,
+    .arrow {
+        position: absolute;
+        z-index: 2;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 7px;
+    }
+
+    .arrow-position {
+        border-width: 0;
+    }
+
+    .arrow {
+        z-index: 4;
+        border-width: 6px;
+    }
+
+    &.arrow-top-direction,
+    &.arrow-bottom-direction {
+        .arrow-position {
+            margin: 0 12px;
+        }
+
+        .arrow {
+            left: -6px;
+        }
+
+        .arrow-border {
+            top: 1px;
+            left: -7px;
+        }
+
+        .helper {
+            right: 0;
+            left: 0;
+            height: bubble-variables.$bubble-helper-size;
+        }
+
+        &.arrow-tl,
+        &.arrow-bl {
+            .arrow-position {
+                left: 0;
+            }
+        }
+
+        &.arrow-tr,
+        &.arrow-br {
+            .arrow-position {
+                right: 0;
+            }
+        }
+
+        &.arrow-tc,
+        &.arrow-bc {
+            .arrow-position {
+                right: 0;
+                left: 0;
+                margin: 0 auto;
+            }
+        }
+    }
+
+    &.arrow-top-direction {
+        .arrow-position {
+            top: -15px;
+        }
+
+        .arrow {
+            top: 3px;
+        }
+
+        .helper {
+            top: -(bubble-variables.$bubble-helper-size);
+        }
+    }
+
+    &.arrow-bottom-direction {
+        .arrow-position {
+            bottom: 0;
+        }
+
+        .arrow-border {
+            top: 0;
+        }
+
+        .helper {
+            bottom: -(bubble-variables.$bubble-helper-size);
+        }
+    }
+
+    &.arrow-left-direction,
+    &.arrow-right-direction {
+        .arrow-position {
+            margin: 10px 0;
+        }
+
+        .arrow {
+            top: -5px;
+        }
+
+        .arrow-border {
+            top: -6px;
+            left: 2px;
+        }
+
+        .helper {
+            top: 0;
+            bottom: 0;
+            width: bubble-variables.$bubble-helper-size;
+        }
+
+        &.arrow-tl,
+        &.arrow-tr {
+            .arrow-position {
+                top: 0;
+            }
+        }
+
+        &.arrow-bl,
+        &.arrow-br {
+            .arrow-position {
+                bottom: 3px;
+            }
+        }
+
+        &.arrow-cl,
+        &.arrow-cr {
+            .arrow-position {
+                top: 0;
+                bottom: 0;
+                margin: auto 0;
+            }
+        }
+    }
+
+    &.arrow-left-direction {
+        .arrow-position {
+            left: -16px;
+        }
+
+        .arrow {
+            left: 4px;
+        }
+
+        .helper {
+            left: -(bubble-variables.$bubble-helper-size);
+        }
+    }
+
+    &.arrow-right-direction {
+        .arrow-position {
+            right: 0;
+        }
+
+        .arrow-border {
+            left: 0;
+        }
+
+        .helper {
+            right: -(bubble-variables.$bubble-helper-size);
+        }
+    }
+
+    &.arrow-none .arrow-position {
+        display: none;
+    }
+}
+
+.gecko .bubble-chart,
+.chrome .bubble-chart,
+.safari .bubble-chart {
+    @include mixins.opacity(0);
+}
+
+.gecko .bubble-anim,
+.chrome .bubble-anim,
+.safari .bubble-anim {
+    @include mixins.opacity(1);
+    @include mixins.transition((opacity, transform), 0.2s, ease-in-out);
+}
+
+.gecko .bubble-anim.yui3-overlay-hidden,
+.chrome .bubble-anim.yui3-overlay-hidden,
+.safari .bubble-anim.yui3-overlay-hidden {
+    // overwrite
+    // stylelint-disable-next-line declaration-no-important
+    visibility: visible !important;
+    -moz-transition-duration: 0s;
+
+    @include mixins.opacity(0);
+}
+
+.bubble-none {
+    display: none;
+}

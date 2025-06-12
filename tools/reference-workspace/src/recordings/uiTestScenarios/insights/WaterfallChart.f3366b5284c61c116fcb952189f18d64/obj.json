@@ -1,0 +1,67 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Sum Velocity",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Sum Duration",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Sum Density",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_density", "type": "fact" }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_f_density_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.f3366b5284c61c116fcb952189f18d64",
+        "properties": {
+            "controls": {
+                "colorMapping": [
+                    { "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 0 } } },
+                    { "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 255 } } },
+                    { "color": { "type": "guid", "value": "05" } }
+                ],
+                "total": { "enabled": true, "name": "Total" }
+            }
+        },
+        "sorts": [],
+        "title": "WaterfallChart - assign color to measures",
+        "uri": "WaterfallChart.f3366b5284c61c116fcb952189f18d64",
+        "visualizationUrl": "local:waterfall"
+    }
+}

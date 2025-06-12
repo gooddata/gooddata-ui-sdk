@@ -1,0 +1,1194 @@
+{
+    "root": "/dev/gooddata-ui-sdk",
+    "packages": {
+        "@gooddata/applink": {
+            "packageName": "@gooddata/applink",
+            "installDir": ["@gooddata", "applink"],
+            "directory": "/dev/gooddata-ui-sdk/tools/applink",
+            "rushPackage": {
+                "packageName": "@gooddata/applink",
+                "projectFolder": "tools/applink",
+                "reviewCategory": "tools",
+                "shouldPublish": false
+            }
+        },
+        "@gooddata/experimental-workspace": {
+            "packageName": "@gooddata/experimental-workspace",
+            "installDir": ["@gooddata", "experimental-workspace"],
+            "directory": "/dev/gooddata-ui-sdk/tools/experimental-workspace",
+            "rushPackage": {
+                "packageName": "@gooddata/experimental-workspace",
+                "projectFolder": "tools/experimental-workspace",
+                "reviewCategory": "tools",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/util": {
+            "packageName": "@gooddata/util",
+            "installDir": ["@gooddata", "util"],
+            "directory": "/dev/gooddata-ui-sdk/libs/util",
+            "rushPackage": {
+                "packageName": "@gooddata/util",
+                "projectFolder": "libs/util",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-embedding": {
+            "packageName": "@gooddata/sdk-embedding",
+            "installDir": ["@gooddata", "sdk-embedding"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-embedding",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-embedding",
+                "projectFolder": "libs/sdk-embedding",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-ui-kit": {
+            "packageName": "@gooddata/sdk-ui-kit",
+            "installDir": ["@gooddata", "sdk-ui-kit"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-kit",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-kit",
+                "projectFolder": "libs/sdk-ui-kit",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/live-examples-workspace": {
+            "packageName": "@gooddata/live-examples-workspace",
+            "installDir": ["@gooddata", "live-examples-workspace"],
+            "directory": "/dev/gooddata-ui-sdk/tools/live-examples-workspace",
+            "rushPackage": {
+                "packageName": "@gooddata/live-examples-workspace",
+                "projectFolder": "tools/live-examples-workspace",
+                "reviewCategory": "tools",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-ui-vis-commons": {
+            "packageName": "@gooddata/sdk-ui-vis-commons",
+            "installDir": ["@gooddata", "sdk-ui-vis-commons"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-vis-commons",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-vis-commons",
+                "projectFolder": "libs/sdk-ui-vis-commons",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-ui-geo": {
+            "packageName": "@gooddata/sdk-ui-geo",
+            "installDir": ["@gooddata", "sdk-ui-geo"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-geo",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-geo",
+                "projectFolder": "libs/sdk-ui-geo",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-ui-all": {
+            "packageName": "@gooddata/sdk-ui-all",
+            "installDir": ["@gooddata", "sdk-ui-all"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-all",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-all",
+                "projectFolder": "libs/sdk-ui-all",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-backend-base": {
+            "packageName": "@gooddata/sdk-backend-base",
+            "installDir": ["@gooddata", "sdk-backend-base"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-base",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-backend-base",
+                "projectFolder": "libs/sdk-backend-base",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-ui-charts": {
+            "packageName": "@gooddata/sdk-ui-charts",
+            "installDir": ["@gooddata", "sdk-ui-charts"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-charts",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-charts",
+                "projectFolder": "libs/sdk-ui-charts",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-ui-filters": {
+            "packageName": "@gooddata/sdk-ui-filters",
+            "installDir": ["@gooddata", "sdk-ui-filters"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-filters",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-filters",
+                "projectFolder": "libs/sdk-ui-filters",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-ui-pivot": {
+            "packageName": "@gooddata/sdk-ui-pivot",
+            "installDir": ["@gooddata", "sdk-ui-pivot"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-pivot",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-pivot",
+                "projectFolder": "libs/sdk-ui-pivot",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-ui-ext": {
+            "packageName": "@gooddata/sdk-ui-ext",
+            "installDir": ["@gooddata", "sdk-ui-ext"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-ext",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-ext",
+                "projectFolder": "libs/sdk-ui-ext",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/reference-workspace-mgmt": {
+            "packageName": "@gooddata/reference-workspace-mgmt",
+            "installDir": ["@gooddata", "reference-workspace-mgmt"],
+            "directory": "/dev/gooddata-ui-sdk/tools/reference-workspace-mgmt",
+            "rushPackage": {
+                "packageName": "@gooddata/reference-workspace-mgmt",
+                "projectFolder": "tools/reference-workspace-mgmt",
+                "reviewCategory": "tools",
+                "shouldPublish": false
+            }
+        },
+        "@gooddata/sdk-ui-tests": {
+            "packageName": "@gooddata/sdk-ui-tests",
+            "installDir": ["@gooddata", "sdk-ui-tests"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-tests",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-tests",
+                "projectFolder": "libs/sdk-ui-tests",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": false
+            }
+        },
+        "@gooddata/reference-workspace": {
+            "packageName": "@gooddata/reference-workspace",
+            "installDir": ["@gooddata", "reference-workspace"],
+            "directory": "/dev/gooddata-ui-sdk/tools/reference-workspace",
+            "rushPackage": {
+                "packageName": "@gooddata/reference-workspace",
+                "projectFolder": "tools/reference-workspace",
+                "reviewCategory": "tools",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/catalog-export": {
+            "packageName": "@gooddata/catalog-export",
+            "installDir": ["@gooddata", "catalog-export"],
+            "directory": "/dev/gooddata-ui-sdk/tools/catalog-export",
+            "rushPackage": {
+                "packageName": "@gooddata/catalog-export",
+                "projectFolder": "tools/catalog-export",
+                "reviewCategory": "tools",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/mock-handling": {
+            "packageName": "@gooddata/mock-handling",
+            "installDir": ["@gooddata", "mock-handling"],
+            "directory": "/dev/gooddata-ui-sdk/tools/mock-handling",
+            "rushPackage": {
+                "packageName": "@gooddata/mock-handling",
+                "projectFolder": "tools/mock-handling",
+                "reviewCategory": "tools",
+                "versionPolicyName": "sdk",
+                "shouldPublish": false
+            }
+        },
+        "@gooddata/sdk-backend-mockingbird": {
+            "packageName": "@gooddata/sdk-backend-mockingbird",
+            "installDir": ["@gooddata", "sdk-backend-mockingbird"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-mockingbird",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-backend-mockingbird",
+                "projectFolder": "libs/sdk-backend-mockingbird",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-backend-tiger": {
+            "packageName": "@gooddata/sdk-backend-tiger",
+            "installDir": ["@gooddata", "sdk-backend-tiger"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-tiger",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-backend-tiger",
+                "projectFolder": "libs/sdk-backend-tiger",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-model": {
+            "packageName": "@gooddata/sdk-model",
+            "installDir": ["@gooddata", "sdk-model"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-model",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-model",
+                "projectFolder": "libs/sdk-model",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-backend-spi": {
+            "packageName": "@gooddata/sdk-backend-spi",
+            "installDir": ["@gooddata", "sdk-backend-spi"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-spi",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-backend-spi",
+                "projectFolder": "libs/sdk-backend-spi",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/api-client-tiger": {
+            "packageName": "@gooddata/api-client-tiger",
+            "installDir": ["@gooddata", "api-client-tiger"],
+            "directory": "/dev/gooddata-ui-sdk/libs/api-client-tiger",
+            "rushPackage": {
+                "packageName": "@gooddata/api-client-tiger",
+                "projectFolder": "libs/api-client-tiger",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "@gooddata/sdk-ui": {
+            "packageName": "@gooddata/sdk-ui",
+            "installDir": ["@gooddata", "sdk-ui"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui",
+                "projectFolder": "libs/sdk-ui",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        }
+    },
+    "packagesByDir": {
+        "tools/applink": {
+            "packageName": "@gooddata/applink",
+            "installDir": ["@gooddata", "applink"],
+            "directory": "/dev/gooddata-ui-sdk/tools/applink",
+            "rushPackage": {
+                "packageName": "@gooddata/applink",
+                "projectFolder": "tools/applink",
+                "reviewCategory": "tools",
+                "shouldPublish": false
+            }
+        },
+        "tools/experimental-workspace": {
+            "packageName": "@gooddata/experimental-workspace",
+            "installDir": ["@gooddata", "experimental-workspace"],
+            "directory": "/dev/gooddata-ui-sdk/tools/experimental-workspace",
+            "rushPackage": {
+                "packageName": "@gooddata/experimental-workspace",
+                "projectFolder": "tools/experimental-workspace",
+                "reviewCategory": "tools",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/util": {
+            "packageName": "@gooddata/util",
+            "installDir": ["@gooddata", "util"],
+            "directory": "/dev/gooddata-ui-sdk/libs/util",
+            "rushPackage": {
+                "packageName": "@gooddata/util",
+                "projectFolder": "libs/util",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-embedding": {
+            "packageName": "@gooddata/sdk-embedding",
+            "installDir": ["@gooddata", "sdk-embedding"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-embedding",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-embedding",
+                "projectFolder": "libs/sdk-embedding",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-ui-kit": {
+            "packageName": "@gooddata/sdk-ui-kit",
+            "installDir": ["@gooddata", "sdk-ui-kit"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-kit",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-kit",
+                "projectFolder": "libs/sdk-ui-kit",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "tools/live-examples-workspace": {
+            "packageName": "@gooddata/live-examples-workspace",
+            "installDir": ["@gooddata", "live-examples-workspace"],
+            "directory": "/dev/gooddata-ui-sdk/tools/live-examples-workspace",
+            "rushPackage": {
+                "packageName": "@gooddata/live-examples-workspace",
+                "projectFolder": "tools/live-examples-workspace",
+                "reviewCategory": "tools",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-ui-vis-commons": {
+            "packageName": "@gooddata/sdk-ui-vis-commons",
+            "installDir": ["@gooddata", "sdk-ui-vis-commons"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-vis-commons",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-vis-commons",
+                "projectFolder": "libs/sdk-ui-vis-commons",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-ui-geo": {
+            "packageName": "@gooddata/sdk-ui-geo",
+            "installDir": ["@gooddata", "sdk-ui-geo"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-geo",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-geo",
+                "projectFolder": "libs/sdk-ui-geo",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-ui-all": {
+            "packageName": "@gooddata/sdk-ui-all",
+            "installDir": ["@gooddata", "sdk-ui-all"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-all",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-all",
+                "projectFolder": "libs/sdk-ui-all",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-backend-base": {
+            "packageName": "@gooddata/sdk-backend-base",
+            "installDir": ["@gooddata", "sdk-backend-base"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-base",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-backend-base",
+                "projectFolder": "libs/sdk-backend-base",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-ui-charts": {
+            "packageName": "@gooddata/sdk-ui-charts",
+            "installDir": ["@gooddata", "sdk-ui-charts"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-charts",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-charts",
+                "projectFolder": "libs/sdk-ui-charts",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-ui-filters": {
+            "packageName": "@gooddata/sdk-ui-filters",
+            "installDir": ["@gooddata", "sdk-ui-filters"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-filters",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-filters",
+                "projectFolder": "libs/sdk-ui-filters",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-ui-pivot": {
+            "packageName": "@gooddata/sdk-ui-pivot",
+            "installDir": ["@gooddata", "sdk-ui-pivot"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-pivot",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-pivot",
+                "projectFolder": "libs/sdk-ui-pivot",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-ui-ext": {
+            "packageName": "@gooddata/sdk-ui-ext",
+            "installDir": ["@gooddata", "sdk-ui-ext"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-ext",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-ext",
+                "projectFolder": "libs/sdk-ui-ext",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "tools/reference-workspace-mgmt": {
+            "packageName": "@gooddata/reference-workspace-mgmt",
+            "installDir": ["@gooddata", "reference-workspace-mgmt"],
+            "directory": "/dev/gooddata-ui-sdk/tools/reference-workspace-mgmt",
+            "rushPackage": {
+                "packageName": "@gooddata/reference-workspace-mgmt",
+                "projectFolder": "tools/reference-workspace-mgmt",
+                "reviewCategory": "tools",
+                "shouldPublish": false
+            }
+        },
+        "libs/sdk-ui-tests": {
+            "packageName": "@gooddata/sdk-ui-tests",
+            "installDir": ["@gooddata", "sdk-ui-tests"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-tests",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui-tests",
+                "projectFolder": "libs/sdk-ui-tests",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": false
+            }
+        },
+        "tools/reference-workspace": {
+            "packageName": "@gooddata/reference-workspace",
+            "installDir": ["@gooddata", "reference-workspace"],
+            "directory": "/dev/gooddata-ui-sdk/tools/reference-workspace",
+            "rushPackage": {
+                "packageName": "@gooddata/reference-workspace",
+                "projectFolder": "tools/reference-workspace",
+                "reviewCategory": "tools",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "tools/catalog-export": {
+            "packageName": "@gooddata/catalog-export",
+            "installDir": ["@gooddata", "catalog-export"],
+            "directory": "/dev/gooddata-ui-sdk/tools/catalog-export",
+            "rushPackage": {
+                "packageName": "@gooddata/catalog-export",
+                "projectFolder": "tools/catalog-export",
+                "reviewCategory": "tools",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "tools/mock-handling": {
+            "packageName": "@gooddata/mock-handling",
+            "installDir": ["@gooddata", "mock-handling"],
+            "directory": "/dev/gooddata-ui-sdk/tools/mock-handling",
+            "rushPackage": {
+                "packageName": "@gooddata/mock-handling",
+                "projectFolder": "tools/mock-handling",
+                "reviewCategory": "tools",
+                "versionPolicyName": "sdk",
+                "shouldPublish": false
+            }
+        },
+        "libs/sdk-backend-mockingbird": {
+            "packageName": "@gooddata/sdk-backend-mockingbird",
+            "installDir": ["@gooddata", "sdk-backend-mockingbird"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-mockingbird",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-backend-mockingbird",
+                "projectFolder": "libs/sdk-backend-mockingbird",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-backend-tiger": {
+            "packageName": "@gooddata/sdk-backend-tiger",
+            "installDir": ["@gooddata", "sdk-backend-tiger"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-tiger",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-backend-tiger",
+                "projectFolder": "libs/sdk-backend-tiger",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-model": {
+            "packageName": "@gooddata/sdk-model",
+            "installDir": ["@gooddata", "sdk-model"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-model",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-model",
+                "projectFolder": "libs/sdk-model",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-backend-spi": {
+            "packageName": "@gooddata/sdk-backend-spi",
+            "installDir": ["@gooddata", "sdk-backend-spi"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-spi",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-backend-spi",
+                "projectFolder": "libs/sdk-backend-spi",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/api-client-tiger": {
+            "packageName": "@gooddata/api-client-tiger",
+            "installDir": ["@gooddata", "api-client-tiger"],
+            "directory": "/dev/gooddata-ui-sdk/libs/api-client-tiger",
+            "rushPackage": {
+                "packageName": "@gooddata/api-client-tiger",
+                "projectFolder": "libs/api-client-tiger",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        },
+        "libs/sdk-ui": {
+            "packageName": "@gooddata/sdk-ui",
+            "installDir": ["@gooddata", "sdk-ui"],
+            "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui",
+            "rushPackage": {
+                "packageName": "@gooddata/sdk-ui",
+                "projectFolder": "libs/sdk-ui",
+                "reviewCategory": "production",
+                "versionPolicyName": "sdk",
+                "shouldPublish": true
+            }
+        }
+    },
+    "dependencyGraph": {
+        "nodes": [
+            "@gooddata/applink",
+            "@gooddata/experimental-workspace",
+            "@gooddata/util",
+            "@gooddata/sdk-embedding",
+            "@gooddata/sdk-ui-kit",
+            "@gooddata/live-examples-workspace",
+            "@gooddata/sdk-ui-vis-commons",
+            "@gooddata/sdk-ui-geo",
+            "@gooddata/sdk-ui-all",
+            "@gooddata/sdk-backend-base",
+            "@gooddata/sdk-ui-charts",
+            "@gooddata/sdk-ui-filters",
+            "@gooddata/sdk-ui-pivot",
+            "@gooddata/sdk-ui-ext",
+            "@gooddata/reference-workspace-mgmt",
+            "@gooddata/sdk-ui-tests",
+            "@gooddata/reference-workspace",
+            "@gooddata/catalog-export",
+            "@gooddata/mock-handling",
+            "@gooddata/sdk-backend-mockingbird",
+            "@gooddata/sdk-backend-tiger",
+            "@gooddata/sdk-model",
+            "@gooddata/sdk-backend-spi",
+            "@gooddata/api-client-tiger",
+            "@gooddata/sdk-ui"
+        ],
+        "edges": [
+            {
+                "from": "@gooddata/experimental-workspace",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/experimental-workspace",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/experimental-workspace",
+                "to": "@gooddata/catalog-export",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/experimental-workspace",
+                "to": "@gooddata/mock-handling",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-embedding",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-kit",
+                "to": "@gooddata/sdk-ui",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-kit",
+                "to": "@gooddata/util",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/live-examples-workspace",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/live-examples-workspace",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/live-examples-workspace",
+                "to": "@gooddata/catalog-export",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/live-examples-workspace",
+                "to": "@gooddata/mock-handling",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-vis-commons",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-vis-commons",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-vis-commons",
+                "to": "@gooddata/sdk-ui",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-vis-commons",
+                "to": "@gooddata/reference-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-vis-commons",
+                "to": "@gooddata/sdk-backend-mockingbird",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-geo",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-geo",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-geo",
+                "to": "@gooddata/sdk-ui",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-geo",
+                "to": "@gooddata/sdk-ui-vis-commons",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-geo",
+                "to": "@gooddata/live-examples-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-geo",
+                "to": "@gooddata/sdk-backend-mockingbird",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-all",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-all",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-all",
+                "to": "@gooddata/sdk-ui",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-all",
+                "to": "@gooddata/sdk-ui-charts",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-all",
+                "to": "@gooddata/sdk-ui-ext",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-all",
+                "to": "@gooddata/sdk-ui-filters",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-all",
+                "to": "@gooddata/sdk-ui-geo",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-all",
+                "to": "@gooddata/sdk-ui-pivot",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-backend-base",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-backend-base",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-backend-base",
+                "to": "@gooddata/reference-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-charts",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-charts",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-charts",
+                "to": "@gooddata/sdk-ui",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-charts",
+                "to": "@gooddata/sdk-ui-vis-commons",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-charts",
+                "to": "@gooddata/util",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-charts",
+                "to": "@gooddata/reference-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-charts",
+                "to": "@gooddata/sdk-backend-mockingbird",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-filters",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-filters",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-filters",
+                "to": "@gooddata/sdk-ui",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-filters",
+                "to": "@gooddata/util",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-filters",
+                "to": "@gooddata/reference-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-filters",
+                "to": "@gooddata/sdk-backend-mockingbird",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-pivot",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-pivot",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-pivot",
+                "to": "@gooddata/sdk-ui",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-pivot",
+                "to": "@gooddata/sdk-ui-vis-commons",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-pivot",
+                "to": "@gooddata/reference-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-pivot",
+                "to": "@gooddata/sdk-backend-mockingbird",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/sdk-backend-base",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/sdk-embedding",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/sdk-ui",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/sdk-ui-charts",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/sdk-ui-geo",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/sdk-ui-pivot",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/sdk-ui-vis-commons",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/util",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/live-examples-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/reference-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-ext",
+                "to": "@gooddata/sdk-backend-mockingbird",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/reference-workspace-mgmt",
+                "to": "@gooddata/catalog-export",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/reference-workspace-mgmt",
+                "to": "@gooddata/mock-handling",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/experimental-workspace",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/live-examples-workspace",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/mock-handling",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/reference-workspace",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-backend-base",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-backend-mockingbird",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-charts",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-ext",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-filters",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-geo",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-kit",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-pivot",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui",
+                "type": "peer"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-charts",
+                "type": "peer"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-ext",
+                "type": "peer"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-filters",
+                "type": "peer"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-geo",
+                "type": "peer"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-kit",
+                "type": "peer"
+            },
+            {
+                "from": "@gooddata/sdk-ui-tests",
+                "to": "@gooddata/sdk-ui-pivot",
+                "type": "peer"
+            },
+            {
+                "from": "@gooddata/reference-workspace",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/reference-workspace",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/catalog-export",
+                "to": "@gooddata/api-client-tiger",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/mock-handling",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/mock-handling",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-backend-mockingbird",
+                "to": "@gooddata/sdk-backend-base",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-backend-mockingbird",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-backend-mockingbird",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-backend-mockingbird",
+                "to": "@gooddata/reference-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-backend-tiger",
+                "to": "@gooddata/api-client-tiger",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-backend-tiger",
+                "to": "@gooddata/sdk-backend-base",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-backend-tiger",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-backend-tiger",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-backend-tiger",
+                "to": "@gooddata/reference-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-backend-spi",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/api-client-tiger",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/api-client-tiger",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/api-client-tiger",
+                "to": "@gooddata/reference-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui",
+                "to": "@gooddata/sdk-backend-spi",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui",
+                "to": "@gooddata/sdk-model",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui",
+                "to": "@gooddata/util",
+                "type": "prod"
+            },
+            {
+                "from": "@gooddata/sdk-ui",
+                "to": "@gooddata/reference-workspace",
+                "type": "dev"
+            },
+            {
+                "from": "@gooddata/sdk-ui",
+                "to": "@gooddata/sdk-backend-mockingbird",
+                "type": "dev"
+            }
+        ]
+    }
+}

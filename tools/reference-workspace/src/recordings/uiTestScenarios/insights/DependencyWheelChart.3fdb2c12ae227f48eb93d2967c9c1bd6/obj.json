@@ -1,0 +1,46 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_from"
+            },
+            { "items": [], "localIdentifier": "attribute_to" }
+        ],
+        "filters": [],
+        "identifier": "DependencyWheelChart.3fdb2c12ae227f48eb93d2967c9c1bd6",
+        "properties": { "controls": { "legend": {} } },
+        "sorts": [],
+        "title": "DependencyWheelChart - legend position - 1 measure and 1 attribute - default legend",
+        "uri": "DependencyWheelChart.3fdb2c12ae227f48eb93d2967c9c1bd6",
+        "visualizationUrl": "local:dependencywheel"
+    }
+}

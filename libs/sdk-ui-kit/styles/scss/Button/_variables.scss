@@ -1,0 +1,143 @@
+// (C) 2007-2024 GoodData Corporation
+@use "sass:color";
+@use "../variables.scss";
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+$button-icon-width: 18px;
+$button-small-icon-width: 16px;
+
+// Gray colors
+$button-action-color-hover: variables.$gd-color-text;
+
+$default-button-normal-border-color: #ccd8e2;
+
+$button-normal-bg: variables.$gd-color-light;
+$button-normal-color: var(--gd-palette-complementary-7-from-theme, #778491);
+$button-normal-border-color: var(--gd-palette-complementary-4, $default-button-normal-border-color);
+$button-normal-hover-bg: var(--gd-palette-complementary-1, #f5f8fa);
+$button-normal-hover-border-color: var(
+    --gd-palette-complementary-4-from-theme,
+    color.adjust(#1f3449, $alpha: -0.8)
+);
+$button-normal-active-gradient-top: var(--gd-palette-complementary-2-from-theme, #dee6ef);
+$button-normal-active-gradient-bottom: var(--gd-palette-complementary-2-from-theme, #ecf0f5);
+$default-button-normal-active-border-color: #b1c1d1;
+$button-normal-active-border-color: var(
+    --gd-palette-complementary-5-from-theme,
+    $default-button-normal-active-border-color
+);
+$button-normal-active-shadow: var(
+    --gd-shadow-color-from-theme,
+    color.adjust($default-button-normal-active-border-color, $alpha: -0.35)
+);
+$button-normal-hover-box-shadow: var(
+    --gd-shadow-color-from-theme,
+    color.adjust($default-button-normal-active-border-color, $alpha: -0.4)
+);
+
+$default-button-shadow-color: #14385d;
+$button-shadow-color: var(--gd-shadow-color-from-theme, $default-button-shadow-color);
+$button-shadow-lighter: var(
+    --gd-shadow-color-from-theme,
+    color.adjust($default-button-shadow-color, $alpha: -0.91)
+);
+$button-shadow-darker: var(
+    --gd-shadow-color-from-theme,
+    color.adjust($default-button-shadow-color, $alpha: -0.85)
+);
+
+// Branded colors calculation
+// primary color
+$button-action-color: variables.$gd-palette-primary-base;
+$button-action-bg: variables.$gd-palette-primary-base;
+
+$button-action-color-t25: var(
+    --gd-palette-primary-base-t25,
+    color.adjust(variables.$gd-color-highlight, $alpha: -0.25)
+);
+$button-action-color-t80: variables.$gd-palette-primary-base-t80;
+$button-action-color-t70: var(
+    --gd-palette-primary-base-t70,
+    color.adjust(variables.$gd-color-highlight, $alpha: -0.7)
+);
+
+$button-action-color-d12: var(
+    --gd-palette-primary-base-d12,
+    color.adjust(variables.$gd-color-highlight, $lightness: -12%)
+);
+
+$button-action-disabled-color: color.adjust(
+    color.adjust(variables.$gd-color-highlight, $lightness: 12%),
+    $alpha: -0.4
+);
+$button-action-disabled-bg: var(--gd-palette-primary-disabled, $button-action-disabled-color);
+$button-action-hover-bg: variables.$gd-palette-primary-base-darken06;
+$button-action-focus-shadow: var(
+    --gd-palette-primary-focus,
+    color.adjust(color.adjust(variables.$gd-color-highlight, $lightness: 6%), $alpha: -0.4)
+);
+$button-action-active-gradient-top: $button-action-color-d12;
+$button-action-active-gradient-bottom: $button-action-hover-bg;
+
+$button-normal-focus-shadow: color.adjust($button-action-disabled-color, $alpha: -0.7);
+
+// positive color
+$button-positive-disabled-bg: var(
+    --gd-palette-success-disabled,
+    color.adjust(color.adjust(variables.$gd-color-positive, $lightness: 6%), $alpha: -0.5)
+);
+$button-positive-hover-bg: var(
+    --gd-palette-success-base-d06,
+    color.adjust(variables.$gd-color-positive, $lightness: -6%)
+);
+$button-positive-focus-shadow: var(
+    --gd-palette-success-focus,
+    color.adjust(color.adjust(variables.$gd-color-positive, $lightness: 6%), $alpha: -0.5)
+);
+
+$button-positive-active-gradient-top: var(
+    --gd-palette-success-base-d12,
+    color.adjust(variables.$gd-color-positive, $lightness: -12%)
+);
+$button-positive-active-gradient-bottom: $button-positive-hover-bg;
+
+// negative color
+$button-negative-disabled-bg: var(
+    --gd-palette-error-disabled,
+    color.adjust(color.adjust(variables.$gd-color-negative, $lightness: 20%), $alpha: -0.4)
+);
+$button-negative-hover-bg: var(
+    --gd-palette-error-base-d10,
+    color.adjust(variables.$gd-color-negative, $lightness: -10%)
+);
+$button-negative-focus-shadow: var(
+    --gd-palette-error-focus,
+    color.adjust(color.adjust(variables.$gd-color-negative, $lightness: 10%), $alpha: -0.4)
+);
+$button-negative-active-gradient-top: var(
+    --gd-palette-error-base-d20,
+    color.adjust(variables.$gd-color-negative, $lightness: -20%)
+);
+
+$button-negative-active-gradient-bottom: $button-negative-hover-bg;
+
+// border-radius
+$button-border-radius: var(--gd-button-borderRadius, 3px);
+$button-group-border-radius: 0;
+
+// text-capitalization
+$button-text-capitalization: var(--gd-button-textCapitalization, none);
+
+// box-shadow - remove it from all states except 'hover' if customer specifies
+
+$button-box-shadow-x-offset: var(--gd-button-dropShadow, 0 1px 1px 0);
+$button-box-shadow-focus-x-offset: var(--gd-button-dropShadow, 0 0 3px 1px);
+$button-box-shadow-focus-y-offset: var(--gd-button-dropShadow, 0 1px 2px 0);
+$button-action-box-shadow-x-offset: var(--gd-button-dropShadow, 1px 1px 0);
+$button-link-box-shadow-x-offset: var(--gd-button-dropShadow, 0 0 3px 0);
+$button-positive-box-shadow-focus-y-offset: var(--gd-button-dropShadow, 0 1px 1px 0);
+$button-negative-box-shadow-focus-y-offset: var(--gd-button-dropShadow, 0 1px 1px 0);
+$button-action-box-shadow-focus-y-offset: var(--gd-button-dropShadow, 0 1px 1px 0);

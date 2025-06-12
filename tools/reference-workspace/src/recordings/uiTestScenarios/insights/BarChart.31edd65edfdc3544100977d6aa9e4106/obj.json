@@ -1,0 +1,108 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "view" },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_account.account.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_account.account.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "stack"
+            }
+        ],
+        "filters": [
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": { "identifier": "label.f_account.account.name", "type": "displayForm" },
+                    "in": {
+                        "uris": [
+                            "(blank)",
+                            "(mt) Media Temple",
+                            ".decimal",
+                            "(add)ventures",
+                            "1-800 Postcards",
+                            "1-800 We Answer",
+                            "1-888-OhioComp",
+                            "1000Bulbs.com",
+                            "101 Financial",
+                            "123 Exteriors",
+                            "14 West",
+                            "1Source International",
+                            "1st Choice Staffing & Consulting",
+                            "1st in Video - Music World",
+                            "2 Wheel Bikes",
+                            "2HB Software Designs",
+                            "352 Media Group",
+                            "3Degrees",
+                            "3dCart Shopping Cart Software",
+                            "49er Communications",
+                            "3E",
+                            "3balls.com",
+                            "4Wall Entertainment",
+                            "5LINX Enterprises",
+                            "4th Source",
+                            "614 Media Group",
+                            "6K Systems",
+                            "7 Medical Systems",
+                            "7 Simple Machines",
+                            "7-Eleven",
+                            "720 Strategies",
+                            "90octane",
+                            "919 Marketing",
+                            "@properties",
+                            "1 Source Consulting",
+                            "A Main Hobbies",
+                            "A Place for Mom",
+                            "A Squared Group",
+                            "A White Orchid Wedding",
+                            "A-Life Medical",
+                            "A-T Solutions",
+                            "A. Pomerantz & Co.",
+                            "A.B. Data",
+                            "A.R.M. Solutions",
+                            "A&C Plastics",
+                            "A&P Consulting Transportation Engineers",
+                            "A&R Tarpaulins",
+                            "A+ Mortgage Services",
+                            "A+ Tutor U",
+                            "A-1 Textiles"
+                        ]
+                    }
+                }
+            }
+        ],
+        "identifier": "BarChart.31edd65edfdc3544100977d6aa9e4106",
+        "properties": {
+            "controls": { "legend": { "position": "auto", "responsive": "autoPositionWithPopup" } }
+        },
+        "sorts": [],
+        "title": "BarChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend",
+        "uri": "BarChart.31edd65edfdc3544100977d6aa9e4106",
+        "visualizationUrl": "local:bar"
+    }
+}

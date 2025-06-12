@@ -1,0 +1,1166 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PluggableAreaChart > Sort config > should return expected sort config for 0 M + 0 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
+  "disabled": true,
+  "disabledExplanation": "Sorting is not possible for this visualization configuration.",
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart > Sort config > should return expected sort config for 0 M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
+  "disabled": true,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart > Sort config > should return expected sort config for 1 M + 0 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
+  "disabled": true,
+  "disabledExplanation": "Sorting is not possible for this visualization configuration.",
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart > Sort config > should return expected sort config for 1 M + 1 VB + 1 ST 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart > Sort config > should return expected sort config for 1 M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart > Sort config > should return expected sort config for 1 M + 2 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart > Sort config > should return expected sort config for 2 M + 1 VB + 1 ST 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart > Sort config > should return expected sort config for 2 M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart > Sort config > should return expected sort config for 2 M + 2 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
+  "disabled": true,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart > Sort config > should return expected sort config for 2 stacked M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart > Sort config > should return expected sort config for 2 stacked M + 2 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
+  "disabled": true,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart > optional stacking > should return reference point with Date in categories even it was as third item 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.datedataset",
+          "dateDatasetRef": {
+            "identifier": "ds1",
+          },
+          "localIdentifier": "a1",
+          "showInPercent": null,
+          "type": "date",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:area/bucket-title-measures.svg",
+        "isShowInPercentEnabled": true,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> or <span class="date-field-icon" /> from <span class="stack-by">view by</span>",
+      },
+      "stack": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:area/bucket-title-stack.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Stack by",
+        "warningMessage": "To stack by, an visualization can have only one attribute in view by",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:area/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": true,
+    },
+    "optionalStacking": {
+      "stackMeasures": true,
+      "supported": true,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableAreaChart > optional stacking > should reuse all measures, only one category and no stacks 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "acfWntEMcom0",
+          "localIdentifier": "m4",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "filters": {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": [
+          {
+            "attribute": "attr.owner.department",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:area/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Metrics",
+      },
+      "stack": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:area/bucket-title-stack.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Stack by",
+        "warningMessage": "To stack by an attribute, an visualization can have only one metric",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:area/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+        "warningMessage": "To view by another attribute, an visualization can have only one metric",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": true,
+    },
+    "optionalStacking": {
+      "stackMeasures": true,
+      "supported": true,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableAreaChart > optional stacking > should reuse one measure, only one category and one category as stack 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": "attr.owner.region",
+          "dfRef": {
+            "uri": "a3/df",
+          },
+          "localIdentifier": "a3",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "filters": {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": [
+          {
+            "attribute": "attr.owner.department",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+      {
+        "attribute": "attr.owner.region",
+        "filters": [
+          {
+            "attribute": "attr.owner.region",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": true,
+            "selectedElements": [],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a3",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:area/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
+      },
+      "stack": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:area/bucket-title-stack.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Stack by",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:area/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+        "warningMessage": "To add additional attribute, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": true,
+    },
+    "optionalStacking": {
+      "stackMeasures": true,
+      "supported": true,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableAreaChart > optional stacking > should reuse one measure, two categories and no category as stack 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "filters": {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": [
+          {
+            "attribute": "attr.owner.department",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+      {
+        "aggregation": null,
+        "attribute": "attr.stage.iswon",
+        "filters": [
+          {
+            "attribute": "attr.stage.iswon",
+            "displayFormRef": {
+              "uri": "iswon/attribute/df/uri",
+            },
+            "isInverted": true,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a2",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:area/bucket-title-measures.svg",
+        "isShowInPercentEnabled": true,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>",
+      },
+      "stack": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:area/bucket-title-stack.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Stack by",
+        "warningMessage": "To stack by, an visualization can have only one attribute in view by",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:area/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": true,
+    },
+    "optionalStacking": {
+      "stackMeasures": true,
+      "supported": true,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1Sb 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:area/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
+      },
+      "stack": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:area/bucket-title-stack.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Stack by",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:area/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": true,
+    },
+    "optionalStacking": {
+      "stackMeasures": true,
+      "supported": true,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableAreaChart > should return reference point when no categories and only stacks 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:area/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
+      },
+      "stack": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:area/bucket-title-stack.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Stack by",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:area/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": true,
+    },
+    "optionalStacking": {
+      "stackMeasures": true,
+      "supported": true,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;

@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Attribute Filter customizer > should fallback to rendering default component 1`] = `"<div id="default"></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should decorate dashboard content component when decorator is registered 1`] = `"<div id="decorator1"><div id="default"></div></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should decorate if dashboard content matches criteria 1`] = `"<div id="decorator1"><div id="default"></div></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should not decorate if dashboard content does not match criteria 1`] = `"<div id="default"></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should use multiple decorators if attribute filter matches criteria 1`] = `"<div id="decorator2"><div id="decorator1"><div id="default"></div></div></div>"`;

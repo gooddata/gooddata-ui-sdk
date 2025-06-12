@@ -1,0 +1,23 @@
+# (C) 2019 GoodData Corporation
+
+# Extensions not supporting copyright
+*.csv
+*.dia
+*.hash
+*.json
+*.md
+*.png
+*.svg
+*.tmpl
+*.xsd
+*.zip
+*.ini
+*.lst
+*.lock
+*.sh
+*.snap
+
+# Excluded files
+.github/*
+common/*
+tools/mock-handling/src/index.ts

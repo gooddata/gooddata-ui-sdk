@@ -1,0 +1,98 @@
+name: rw ~ rush ~ e2e tests backstop
+on:
+  workflow_call:
+    inputs:
+      source-ref:
+          required: false
+          description: "source ref of the current code"
+          type: string
+      keep-passing-screenshots:
+          required: false
+          description: "whether to keep all backstop output as artifacts, even for passing tests (large)"
+          type: boolean
+          default: false
+
+jobs:
+  warm-up-cache:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-ref }}
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Warmup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/warm-up-rush
+  build:
+    needs: [warm-up-cache]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-ref }}
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Debug
+        run: git log -1
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests
+
+  e2e-backstop:
+    needs: [warm-up-cache,build]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-mxa-2xlarge # bigger runner as backstop sometimes cannot launch the browser
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-ref }}
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: |
+          node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests
+      - name: Run backstop tests
+        run: |
+          export EXECUTOR_NUMBER=$GH_RUN_ID
+          ./common/scripts/ci/run_backstop_tests.sh
+        env:
+          GH_RUN_ID: ${{ github.run_id }}
+      - name: Cleanup backstop artifacts
+        if: ${{ !cancelled() && (failure() || inputs.keep-passing-screenshots == true) }}
+        run: |
+          node libs/sdk-ui-tests/backstop/backstop-cleanup-artifacts.cjs
+        env:
+          KEEP_ALL_ARTIFACTS: ${{ inputs.keep-passing-screenshots }}
+      - name: Archive the cypress test artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() && (failure() || inputs.keep-passing-screenshots == true) }}
+        with:
+          name: backstop-test-artifacts-failed
+          path: |
+            libs/sdk-ui-tests/backstop/output/**/*

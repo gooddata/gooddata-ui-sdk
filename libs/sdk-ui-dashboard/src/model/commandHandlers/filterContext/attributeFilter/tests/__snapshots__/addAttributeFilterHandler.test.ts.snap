@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`addAttributeFilterHandler > should emit the appropriate events for added attribute filter 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+  },
+]
+`;
+
+exports[`addAttributeFilterHandler > should set the attribute filter in state when it is added 1`] = `
+{
+  "attributeFilter": {
+    "attributeElements": {
+      "uris": [],
+    },
+    "displayForm": {
+      "identifier": "label.f_product.product.name",
+      "type": "displayForm",
+    },
+    "filterElementsBy": undefined,
+    "localIdentifier": Any<String>,
+    "negativeSelection": true,
+    "title": undefined,
+  },
+}
+`;

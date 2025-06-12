@@ -1,0 +1,126 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ChartTransformation > Legend config > should be always disabled for single series and push this info out 1`] = `
+[MockFunction spy] {
+  "calls": [
+    [
+      {
+        "colors": {
+          "colorAssignments": [
+            {
+              "color": {
+                "type": "guid",
+                "value": "1",
+              },
+              "headerItem": {
+                "measureHeaderItem": {
+                  "format": "$#,##0.00",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                  "name": "Amount",
+                  "ref": undefined,
+                },
+              },
+            },
+          ],
+          "colorPalette": undefined,
+        },
+        "propertiesMeta": {
+          "isFilteringRecommended": false,
+          "legend_enabled": false,
+        },
+      },
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`ChartTransformation > Legend config > should be enabled & on the top by default and push this info out 1`] = `
+[MockFunction spy] {
+  "calls": [
+    [
+      {
+        "colors": {
+          "colorAssignments": [
+            {
+              "color": {
+                "type": "guid",
+                "value": "1",
+              },
+              "headerItem": {
+                "measureHeaderItem": {
+                  "format": "$#,##0.00",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                  "name": "Amount",
+                  "ref": undefined,
+                },
+              },
+            },
+            {
+              "color": {
+                "type": "guid",
+                "value": "2",
+              },
+              "headerItem": {
+                "measureHeaderItem": {
+                  "format": "$#,##0.00",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                  "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+                  "name": "Won",
+                  "ref": undefined,
+                },
+              },
+            },
+            {
+              "color": {
+                "type": "guid",
+                "value": "3",
+              },
+              "headerItem": {
+                "measureHeaderItem": {
+                  "format": "#,#.##",
+                  "localIdentifier": "m_358184a8_9fa7cb9ce4d2947059b490e24a925317",
+                  "name": "Calculated 'Lost' measure",
+                  "ref": undefined,
+                },
+              },
+            },
+            {
+              "color": {
+                "type": "guid",
+                "value": "4",
+              },
+              "headerItem": {
+                "measureHeaderItem": {
+                  "format": "#,#.##",
+                  "localIdentifier": "m_7ff816a7_82e019308ff681db5738ce5040bc533d",
+                  "name": "Ratio of Won and Lost",
+                  "ref": undefined,
+                },
+              },
+            },
+          ],
+          "colorPalette": undefined,
+        },
+        "propertiesMeta": {
+          "isFilteringRecommended": false,
+          "legend_enabled": true,
+        },
+      },
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;

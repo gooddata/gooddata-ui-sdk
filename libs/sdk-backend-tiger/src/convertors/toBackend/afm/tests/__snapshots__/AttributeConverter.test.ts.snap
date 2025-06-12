@@ -1,0 +1,53 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`attribute converter > should return attribute with alias 1`] = `
+{
+  "alias": "alias",
+  "label": {
+    "identifier": {
+      "id": "label.f_account.account.name",
+      "type": "label",
+    },
+  },
+  "localIdentifier": "a_724874d1_label.f_account.account.name",
+}
+`;
+
+exports[`attribute converter > should return attribute with empty localId 1`] = `
+{
+  "label": {
+    "identifier": {
+      "id": "label.f_account.account.name",
+      "type": "label",
+    },
+  },
+  "localIdentifier": "a_label.f_account.account.name",
+}
+`;
+
+exports[`attribute converter > should return attribute with show all values 1`] = `
+{
+  "label": {
+    "identifier": {
+      "id": "label.f_account.account.name",
+      "type": "label",
+    },
+  },
+  "localIdentifier": "a_label.f_account.account.name",
+  "showAllValues": true,
+}
+`;
+
+exports[`attribute converter > should return simple attribute 1`] = `
+{
+  "label": {
+    "identifier": {
+      "id": "label.f_account.account.name",
+      "type": "label",
+    },
+  },
+  "localIdentifier": "a_label.f_account.account.name",
+}
+`;
+
+exports[`attribute converter > should throw an error when toObjQualifier gets an URI ref 1`] = `[Error: Tiger backend does not allow referencing objects by URI.]`;

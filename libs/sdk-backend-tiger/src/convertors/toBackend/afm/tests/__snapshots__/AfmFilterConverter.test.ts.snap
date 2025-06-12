@@ -1,0 +1,87 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`convertAfmFilters > should keep non-measure based filter 1`] = `
+{
+  "auxMeasures": [],
+  "filters": [
+    {
+      "positiveAttributeFilter": {
+        "in": {
+          "values": [
+            "value",
+          ],
+        },
+        "label": {
+          "identifier": {
+            "id": "label.f_product.product.name",
+            "type": "label",
+          },
+        },
+        "localIdentifier": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`convertAfmFilters > should not transform measure based filter of non-ratio measure 1`] = `
+{
+  "auxMeasures": [],
+  "filters": [
+    {
+      "rankingFilter": {
+        "dimensionality": [
+          {
+            "identifier": {
+              "id": "f_stage.isactive_id",
+              "type": "label",
+            },
+          },
+        ],
+        "localIdentifier": undefined,
+        "measures": [
+          {
+            "localIdentifier": "nonRatio",
+          },
+        ],
+        "operator": "TOP",
+        "value": 3,
+      },
+    },
+  ],
+}
+`;
+
+exports[`convertAfmFilters > should transform measure based filter of ratio measure 1`] = `
+{
+  "auxMeasures": [
+    {
+      "definition": {
+        "measure": {
+          "item": {
+            "identifier": {
+              "id": "test",
+              "type": "fact",
+            },
+          },
+        },
+      },
+      "localIdentifier": "m_test",
+    },
+  ],
+  "filters": [
+    {
+      "comparisonMeasureValueFilter": {
+        "applyOnResult": false,
+        "localIdentifier": undefined,
+        "measure": {
+          "localIdentifier": "m_test",
+        },
+        "operator": "GREATER_THAN",
+        "treatNullValuesAs": undefined,
+        "value": 128,
+      },
+    },
+  ],
+}
+`;

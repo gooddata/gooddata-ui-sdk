@@ -1,0 +1,601 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "Form/_mixins" as form-mixins;
+@use "variables";
+@use "mixins";
+
+/* ==========================================================================
+   General styles for inputs & selects
+   ========================================================================== */
+.gd-input {
+    position: relative;
+    display: block;
+}
+
+.gd-input-wrapper,
+.gd-input-field,
+.input-text {
+    width: 100%;
+    max-width: 100%;
+}
+
+.gd-input-wrapper {
+    position: relative;
+}
+
+.gd-input-field,
+.input-text {
+    @include form-mixins.gd-input-base;
+    @include mixins.border-radius(3px);
+    @include mixins.box-shadow(
+        inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
+    );
+
+    @include mixins.placeholder {
+        color: var(
+            --gd-palette-complementary-6-from-theme,
+            color.adjust(variables.$default-gd-color-link, $alpha: -0.25)
+        );
+
+        @include mixins.transition(color, 0.25s, ease-in-out);
+    }
+
+    &:hover {
+        border-color: variables.$gd-input-text-hover-border;
+
+        @include mixins.placeholder {
+            color: variables.$gd-color-link;
+        }
+    }
+
+    &:focus {
+        @include mixins.box-shadow(
+            inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.8)
+        );
+    }
+
+    &:focus-visible {
+        box-shadow: none;
+        outline-color: variables.$gd-input-text-border-outline;
+    }
+
+    &:disabled,
+    &.disabled {
+        &,
+        &:hover {
+            color: variables.$gd-color-disabled;
+            border-color: variables.$gd-input-text-border;
+            background-color: variables.$gd-color-light;
+
+            @include mixins.box-shadow(none);
+        }
+    }
+
+    &.gd-input-field-small,
+    &.small {
+        @include form-mixins.gd-input-small-base;
+    }
+}
+
+textarea {
+    &.gd-input,
+    &.input-text {
+        height: auto;
+    }
+}
+
+/* Searchfield
+   ========================================================================== */
+
+.gd-input-search,
+.searchfield {
+    position: relative;
+
+    &.gd-input-small,
+    &.small {
+        .gd-input-field,
+        .searchfield-input {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .gd-input-icon,
+        .searchfield-icon {
+            left: 8px;
+        }
+
+        .gd-input-icon-clear,
+        .searchfield-clear {
+            right: 8px;
+        }
+
+        .gd-input-icon,
+        .gd-input-icon-clear,
+        .searchfield-icon,
+        .searchfield-clear {
+            line-height: 29px;
+            font-size: 14px;
+        }
+    }
+}
+
+.gd-input-search .gd-input-field,
+.searchfield-input {
+    padding-left: 36px;
+    padding-right: 36px;
+}
+
+.gd-input-icon,
+.searchfield-icon {
+    left: 10px;
+    color: variables.$gd-color-disabled;
+
+    @include form-mixins.gd-searchfield-base;
+    @include mixins.transition(all, 0.25s, ease-in-out);
+
+    :focus + & {
+        color: variables.$gd-palette-primary-base;
+    }
+}
+
+.gd-input-icon-clear,
+.searchfield-clear {
+    right: 10px;
+    color: variables.$gd-color-link;
+    cursor: pointer;
+
+    @include form-mixins.gd-searchfield-base;
+    @include mixins.transition(all, 0.25s, ease-in-out);
+
+    &:hover {
+        color: variables.$gd-palette-primary-base;
+    }
+}
+
+/* Input states
+   ========================================================================== */
+
+.has-error {
+    .gd-input-field,
+    .input-text {
+        color: variables.$gd-color-text;
+        border-color: variables.$gd-input-text-border-error;
+        box-shadow: none;
+
+        &:focus-visible {
+            outline-color: variables.$gd-input-text-border-error-outline;
+        }
+    }
+
+    .gd-input-icon {
+        color: variables.$gd-palette-error-base;
+    }
+}
+
+.has-warning {
+    .gd-input-field,
+    .input-text {
+        border-color: variables.$gd-input-text-border-warning;
+        box-shadow: none;
+
+        &:focus-visible {
+            outline-color: variables.$gd-input-text-border-warning-outline;
+        }
+    }
+}
+
+/* Input label
+   ========================================================================== */
+.gd-input-with-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .gd-input-wrapper {
+        flex: 1 1 auto;
+    }
+
+    &.is-disabled {
+        .gd-input-label {
+            color: variables.$gd-color-disabled;
+            user-select: none;
+        }
+    }
+
+    &.has-error {
+        .gd-input-label {
+            color: variables.$gd-palette-error-base;
+        }
+    }
+}
+
+.gd-input-label {
+    flex: 0 0 auto;
+    margin-right: 20px;
+    white-space: nowrap;
+    color: variables.$gd-color-label;
+    font-size: 14px;
+}
+
+.gd-input-label-top {
+    flex-wrap: wrap;
+
+    .gd-input-label {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 5px;
+        font-size: 10px;
+        text-transform: uppercase;
+    }
+}
+
+/* Input prefixes and suffixes
+   ========================================================================== */
+
+.gd-input-with-prefix,
+.gd-input-with-suffix {
+    .gd-input-wrapper {
+        display: flex;
+    }
+
+    &:hover {
+        .gd-input-field,
+        .gd-input-prefix,
+        .gd-input-suffix {
+            border-color: variables.$gd-input-text-hover-border;
+        }
+
+        .gd-input-field:disabled {
+            @include form-mixins.gd-input-and-prefix {
+                border-color: variables.$gd-input-text-border;
+            }
+        }
+    }
+
+    .gd-input-prefix {
+        order: 0;
+    }
+
+    .gd-input-field {
+        flex: 1 1 100%;
+
+        // Fixing flexbox bug:
+        // http://stackoverflow.com/questions/27424831/firefox-flexbox-overflow
+        min-width: 0;
+
+        &:focus {
+            @include form-mixins.gd-input-and-prefix {
+                border-color: variables.$gd-palette-primary-base;
+            }
+        }
+
+        &.gd-input-field-small,
+        &.small {
+            @include form-mixins.gd-input-and-prefix {
+                @include form-mixins.gd-input-small-base;
+            }
+
+            @include form-mixins.gd-input-prefix {
+                min-width: 27px;
+            }
+        }
+    }
+
+    .gd-input-field,
+    .gd-input-suffix {
+        order: 1;
+    }
+
+    &.has-error .gd-input-field {
+        @include form-mixins.gd-input-and-prefix {
+            border-color: variables.$gd-input-text-border-error;
+        }
+    }
+}
+
+.gd-input-with-prefix {
+    .gd-input-field {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}
+
+.gd-input-with-suffix {
+    .gd-input-field {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+.gd-input-prefix,
+.gd-input-suffix {
+    display: block;
+    flex: 0 0 auto;
+    @include form-mixins.gd-input-base;
+
+    color: var(--gd-palette-complementary-6-from-theme, variables.$default-gd-color-disabled);
+    min-width: 30px;
+    text-align: center;
+    background-color: var(--gd-palette-complementary-1-from-theme, variables.$default-gd-color-light);
+}
+
+.gd-input-prefix {
+    border-right: none;
+    border-radius: 3px 0 0 3px;
+}
+
+.gd-input-suffix {
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+}
+
+/* Checkbox and radio
+   ========================================================================== */
+
+.input-radio-label,
+.input-checkbox-label {
+    position: relative;
+    display: inline-block;
+    height: 20px;
+    padding: 0 10px 0 23px;
+    line-height: 20px;
+    margin-left: -3px;
+
+    .input-label-text {
+        line-height: inherit;
+        vertical-align: middle;
+        color: variables.$gd-color-text;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            box-sizing: content-box;
+            cursor: pointer;
+        }
+
+        &::before {
+            top: 3px;
+            left: 3px;
+            width: 12px;
+            height: 12px;
+            border: 1px solid variables.$gd-input-text-hover-border;
+            transition: all 0.2s;
+            background-color: variables.$gd-color-text-light;
+        }
+
+        &::after {
+            transform: scale(0);
+            transition: transform 0.2s;
+        }
+    }
+
+    .gd-checkbox-label-small {
+        line-height: inherit;
+        vertical-align: inherit;
+    }
+
+    &,
+    &:hover,
+    &:active {
+        input:disabled,
+        input.disabled {
+            ~ .input-label-text::before {
+                box-shadow: none;
+                border-color: var(
+                    --gd-palette-complementary-3-from-theme,
+                    color.adjust(variables.$default-gd-input-text-border, $alpha: -0.3)
+                );
+                background-color: variables.$gd-color-light;
+            }
+        }
+    }
+
+    &:hover,
+    &:active {
+        .input-label-text::before {
+            box-shadow: inset 0 1px 2px 0
+                color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.75);
+        }
+
+        input:checked ~ .input-label-text::before {
+            box-shadow: none;
+            border-color: transparent;
+        }
+    }
+
+    &:hover .input-label-text::before {
+        border-color: variables.$gd-color-state-blank;
+    }
+
+    &:active .input-label-text::before {
+        border-color: variables.$gd-palette-primary-base;
+        background-color: variables.$gd-palette-primary-dimmed;
+    }
+
+    input {
+        position: absolute;
+        opacity: 0;
+
+        &:checked ~ .input-label-text {
+            &::before {
+                border-color: transparent;
+                background-color: variables.$gd-palette-primary-base;
+            }
+
+            &::after {
+                transform: scale(1);
+            }
+        }
+
+        &:disabled,
+        &.disabled {
+            ~ .input-label-text {
+                color: variables.$gd-color-disabled;
+            }
+
+            ~ .input-label-text::before,
+            ~ .input-label-text::after {
+                cursor: default;
+            }
+
+            &:checked ~ .input-label-text::before {
+                background-color: variables.$gd-input-text-border;
+            }
+        }
+    }
+}
+
+.input-radio-label,
+.input-checkbox-label,
+.input-checkbox-toggle {
+    input[type="checkbox"]:focus-visible + ::before,
+    input[type="radio"]:focus-visible + ::before {
+        outline: 2px solid variables.$gd-input-text-border-outline;
+        outline-offset: 2px;
+        transition: none;
+    }
+}
+
+.input-radio-label {
+    .input-label-text {
+        &::before {
+            border-radius: 50%;
+        }
+
+        &::after {
+            top: 7px;
+            left: 7px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: variables.$gd-color-text-light;
+        }
+    }
+}
+
+.input-checkbox-label {
+    .input-label-text {
+        &::before {
+            border-radius: 2px;
+        }
+
+        &::after {
+            top: 7px;
+            left: 4px;
+            width: 7px;
+            height: 3px;
+            transform: scale(0) rotate(315deg) skew(-2deg);
+            transform-origin: top;
+            border-left: 2px solid variables.$gd-color-text-light;
+            border-bottom: 2px solid variables.$gd-color-text-light;
+        }
+    }
+
+    input:checked ~ .input-label-text::after {
+        transform: scale(1) rotate(315deg) skew(-2deg);
+    }
+
+    .checkbox-indefinite {
+        ~ .input-label-text::after {
+            top: 9px;
+            left: 6px;
+            width: 8px;
+            height: 0;
+            transform: scale(0);
+            border-left: none;
+        }
+
+        &:checked ~ .input-label-text::after {
+            transform: scale(1);
+        }
+    }
+}
+
+.input-checkbox-toggle {
+    input {
+        position: absolute;
+        opacity: 0;
+
+        &:disabled,
+        &.disabled {
+            ~ .input-label-text {
+                color: variables.$gd-color-disabled;
+            }
+        }
+    }
+
+    .input-label-text {
+        position: relative;
+        height: 14px;
+        line-height: 14px;
+        padding-right: 35px;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            box-sizing: content-box;
+            background: var(--gd-palette-complementary-0-from-theme, #f3f6f7);
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        &::before {
+            top: 1px;
+            right: 0;
+            width: 28px;
+            height: 12px;
+            border: 1px solid var(--gd-palette-complementary-4-from-theme, #c9d5e0);
+            border-radius: 7px;
+        }
+
+        &::after {
+            top: 3px;
+            right: 18px;
+            width: 8px;
+            height: 8px;
+            border: 1px solid variables.$gd-color-disabled;
+            border-radius: 50%;
+        }
+    }
+
+    input:checked {
+        ~ .input-label-text::after {
+            right: 2px;
+            border: 1px solid variables.$gd-palette-primary-base-darken06;
+            background: variables.$gd-palette-primary-base;
+        }
+    }
+
+    &:hover,
+    &:active {
+        .input-label-text::after {
+            border: 1px solid
+                var(--gd-palette-complementary-5-from-theme, variables.$default-gd-color-state-blank);
+            background: var(--gd-palette-complementary-3-from-theme, #d7dfe5);
+        }
+
+        input:checked ~ .input-label-text::after {
+            background: variables.$gd-palette-primary-base-darken06;
+        }
+    }
+
+    &,
+    &:hover,
+    &:active {
+        input:disabled,
+        input.disabled {
+            ~ .input-label-text::before,
+            ~ .input-label-text::after {
+                box-shadow: none;
+                cursor: default;
+                border-color: var(
+                    --gd-palette-complementary-3-from-theme,
+                    color.adjust(variables.$default-gd-input-text-border, $alpha: -0.5)
+                );
+                background-color: variables.$gd-color-light;
+            }
+        }
+    }
+}

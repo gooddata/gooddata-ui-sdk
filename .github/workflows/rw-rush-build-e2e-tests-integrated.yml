@@ -1,0 +1,100 @@
+name: rw ~ rush ~ e2e tests integrated
+on:
+  workflow_call:
+    inputs:
+      filter:
+          required: false
+          description: "List of spec files to filter"
+          type: string
+      source-ref:
+          required: false
+          description: "source ref of the current code"
+          type: string
+
+jobs:
+  warm-up-cache:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-ref }}
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Warmup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/warm-up-rush
+  build:
+    needs: [warm-up-cache]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-ref }}
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Debug
+        run: git log -1
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
+
+  e2e:
+    needs: [warm-up-cache,build]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-ref }}
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: |
+          node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
+      - name: Run e2e tests
+        run: |
+          export TEST_BACKEND=https://staging-automation.dev-latest.stg11.panther.intgdc.com
+          export TIGER_DATASOURCES_NAME=pg_staging-goodsales
+          export EXECUTOR_NUMBER=$GH_RUN_ID
+          export CYPRESS_TEST_TAGS=post-merge_integrated_tiger
+          if [ -n "$USER_FILTER" ]; then
+            export FILTER=$USER_FILTER
+          fi
+          echo "Running with FILTER=$FILTER"
+          ./common/scripts/ci/run_cypress_integrated_tests.sh
+        env:
+          GH_RUN_ID: ${{ github.run_id }}
+          TIGER_API_TOKEN: ${{ secrets.AWS_STAGING_TEST_API_TOKEN }}
+          USER_FILTER: ${{ inputs.filter }}
+      - name: Archive the cypress test artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: cypress-test-artifacts
+          path: |
+            libs/sdk-ui-tests-e2e/cypress/videos/**/*.mp4

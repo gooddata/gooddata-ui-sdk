@@ -1,0 +1,103 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ Release ~ Release apidocs
+on:
+  workflow_call:
+    inputs:
+      source-branch:
+          required: true
+          description: "The name of the source branch"
+          type: string
+      is-new-latest:
+        required: true
+        description: "Whether this is the latest release"
+        type: boolean
+      version:
+        required: true
+        description: "The version which was released, or Next"
+        type: string
+
+jobs:
+  build-apidocs:
+    runs-on:
+        group: infra1-runners-arc
+        labels: runners-rxa-xlarge
+    permissions:
+      contents: write
+    steps:
+      - name: Check version
+        run: |
+            echo "Checking version $VERSION"
+            if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ && $VERSION != "Next" ]]; then
+                echo "The version \"$VERSION\" does not match <number>.<number>.<number> or Next"
+                exit 1
+            fi
+        env:
+          VERSION: ${{ inputs.version }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+            ref: ${{ inputs.source-branch }}
+            token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+
+      - name: Add repository to git safe directories to avoid dubious ownership issue
+        run: git config --global --add safe.directory $GITHUB_WORKSPACE
+
+      - name: Config user
+        run: |
+            git config --global user.email "git-action@gooddata.com"
+            git config --global user.name "git-action"
+
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+
+      - name: Build sdk
+        run: |
+          node common/scripts/install-run-rush.js build
+
+          #run api-extractor to make sure we have the api jsons generated in case the build is restored from the cache
+          node common/scripts/install-run-rush.js api-extractor
+
+      # checkout gooddata-ui-apidocs only after full root of the repo is built with rush, otherwise rush commands fail when something is present in a subdirectory
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'gooddata/gooddata-ui-apidocs'
+          ref: 'master'
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+          path: "gooddata-ui-apidocs"
+
+      - name: Build apidocs
+        run: |
+            symlinks=$([ "$IS_NEW_LATEST" = true ] && echo "--update-symlink" || echo "")
+            echo "updating symlinks: $symlinks"
+            echo node common/scripts/build-docs.js -v $VERSION $symlinks
+            node common/scripts/build-docs.js -v $VERSION $symlinks
+        env:
+          VERSION: ${{ inputs.version }}
+          IS_NEW_LATEST: ${{ inputs.is-new-latest }}
+
+        # find oldest version and remove it -- as we're running this twice, once
+        # for Next and once for latest version, do it only when is-new-latest=true
+      - name: Remove oldest version
+        if: ${{ inputs.is-new-latest == true }}
+        run: |
+          cd gooddata-ui-apidocs
+          ./remove-old-versions.sh
+          cd ..
+
+      - name: Publish apidocs
+        run: |
+          cd gooddata-ui-apidocs
+          git add --all
+          git commit -m "chore: create a new api docs version $VERSION" -m "risk: nonprod"
+          git show --stat
+
+          echo "Going to push to gooddata-ui-apidocs"
+          git push origin master
+          cd ..
+        env:
+          VERSION: ${{ inputs.version }}
+          IS_NEW_LATEST: ${{ inputs.is-new-latest }}

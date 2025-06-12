@@ -1,0 +1,80 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`catalogSelectors > should return adhoc date hierarchies 1`] = `
+[
+  {
+    "attributes": [
+      {
+        "identifier": "order_date.year",
+        "type": "attribute",
+      },
+      {
+        "identifier": "order_date.quarter",
+        "type": "attribute",
+      },
+      {
+        "identifier": "order_date.month",
+        "type": "attribute",
+      },
+      {
+        "identifier": "order_date.day",
+        "type": "attribute",
+      },
+      {
+        "identifier": "order_date.minute",
+        "type": "attribute",
+      },
+    ],
+    "dateDatasetRef": {
+      "identifier": "order_date",
+      "type": "dataSet",
+    },
+    "ref": {
+      "identifier": "default/order_date",
+      "type": "dateAttributeHierarchy",
+    },
+    "templateId": "default",
+    "title": "Order date",
+    "type": "dateAttributeHierarchy",
+  },
+  {
+    "attributes": [
+      {
+        "identifier": "return_date.year",
+        "type": "attribute",
+      },
+      {
+        "identifier": "return_date.quarter",
+        "type": "attribute",
+      },
+      {
+        "identifier": "return_date.month",
+        "type": "attribute",
+      },
+      {
+        "identifier": "return_date.day",
+        "type": "attribute",
+      },
+      {
+        "identifier": "return_date.hour",
+        "type": "attribute",
+      },
+      {
+        "identifier": "return_date.minute",
+        "type": "attribute",
+      },
+    ],
+    "dateDatasetRef": {
+      "identifier": "return_date",
+      "type": "dataSet",
+    },
+    "ref": {
+      "identifier": "default/return_date",
+      "type": "dateAttributeHierarchy",
+    },
+    "templateId": "default",
+    "title": "Return date",
+    "type": "dateAttributeHierarchy",
+  },
+]
+`;

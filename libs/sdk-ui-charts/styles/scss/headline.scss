@@ -1,0 +1,222 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/layout";
+@use "@gooddata/sdk-ui-vis-commons/styles/scss/headlinePagination";
+
+.headline {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+
+    .primary-section {
+        &.gd-flex-container {
+            justify-content: center;
+        }
+
+        .comparison-headline-value-wrapper {
+            align-items: baseline;
+
+            i {
+                font-size: 60%;
+            }
+        }
+    }
+
+    .headline-primary-item {
+        @include typo-mixins.gd-heading-1;
+
+        overflow: hidden;
+        height: 60px;
+        line-height: 60px;
+        white-space: nowrap;
+        color: var(--gd-kpi-primaryMeasureColor, kit-variables.$gd-color-dark);
+        font-size: 50px;
+
+        .headline-value-wrapper {
+            display: inline-block;
+            -webkit-backface-visibility: hidden;
+        }
+
+        &.is-drillable,
+        .is-drillable {
+            .headline-value-wrapper {
+                cursor: pointer;
+                transition: opacity 0.4s;
+            }
+
+            .headline-value-wrapper:hover {
+                opacity: 0.6;
+            }
+        }
+        .headline-value--empty {
+            color: var(
+                --gd-kpi-secondaryInfoColor-from-theme,
+                var(--gd-palette-complementary-6-from-theme, kit-variables.$default-gd-color-disabled)
+            );
+        }
+
+        &.gd-flex-item {
+            overflow: hidden;
+            flex-shrink: 1;
+
+            .headline-value-wrapper {
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+    .headline-secondary-item,
+    .headline-compare-item {
+        flex-shrink: 1;
+        padding-right: 0;
+
+        &.is-drillable,
+        .is-drillable {
+            cursor: pointer;
+
+            .headline-value-wrapper,
+            .headline-title-wrapper {
+                transition: opacity 0.4s;
+            }
+
+            &:hover .headline-value-wrapper,
+            &:hover .headline-title-wrapper {
+                opacity: 0.6;
+            }
+        }
+
+        .headline-item-link .headline-value {
+            &.headline-link-style-underline::after {
+                border-bottom: 1px solid;
+            }
+            &.headline-value--empty::after {
+                border-bottom: none;
+            }
+        }
+    }
+
+    .headline-secondary-item,
+    .headline-compare-item:nth-child(2) {
+        border-left: 1px dashed
+            var(
+                --gd-kpi-secondaryInfoColor,
+                var(
+                    --gd-palette-complementary-3-from-theme,
+                    color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5)
+                )
+            );
+    }
+
+    .headline-primary-item,
+    .headline-secondary-item,
+    .headline-compare-item {
+        .headline-value {
+            position: relative;
+            display: inline-block;
+            line-height: 115%;
+        }
+    }
+
+    .headline-value--empty {
+        color: var(
+            --gd-kpi-secondaryInfoColor-from-theme,
+            var(--gd-palette-complementary-6-from-theme, kit-variables.$default-gd-color-disabled)
+        );
+    }
+
+    .headline-item-link {
+        .headline-value {
+            &::after {
+                content: "";
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                display: block;
+            }
+            &:not(.headline-value--empty).headline-link-style-underline::after {
+                border-bottom: 2px solid;
+            }
+        }
+    }
+
+    .headline-compare-section {
+        @include typo-mixins.gd-font-base;
+
+        position: relative;
+        justify-content: center;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        color: var(--gd-kpi-secondaryInfoColor-from-theme, kit-variables.$gd-color-state-blank);
+    }
+
+    .headline-paginated-compare-section {
+        height: 40px;
+
+        .headline-compare-section-item {
+            margin: 0 10px;
+        }
+
+        .headline-secondary-item,
+        .headline-compare-item {
+            border-left: 0;
+        }
+
+        .kpi-pop-section-item {
+            padding: 0;
+
+            &:last-child {
+                text-align: center;
+            }
+        }
+    }
+
+    .headline-compare-section-item {
+        overflow: hidden;
+        margin: 0;
+        padding: 0 15px;
+        color: var(--gd-kpi-secondaryInfoColor-from-theme, kit-variables.$gd-color-state-blank);
+
+        .headline-title-wrapper,
+        .headline-value-wrapper {
+            line-height: 16px;
+        }
+
+        .headline-value-wrapper {
+            overflow: hidden;
+            height: 20px;
+            margin-bottom: 0.25em;
+            font-size: 17px;
+            font-weight: bold;
+            line-height: 20px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .headline-title-wrapper {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+    }
+
+    .comparison-headline-value-wrapper {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        padding: 0 3px;
+
+        i {
+            font-weight: 900;
+        }
+    }
+}

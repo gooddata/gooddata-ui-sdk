@@ -1,0 +1,24 @@
+# (C) 2021 GoodData Corporation
+version: "3.7"
+services:
+    isolated-tests:
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/library/node:22.13.0-bullseye
+        entrypoint: ./scripts/isolated-test-record-entrypoint.sh
+        volumes:
+            - ../../:/workspace:rw
+        working_dir: /workspace/libs/sdk-backend-tiger
+        user: "$USER_UID:$USER_GID"
+        environment:
+            - HOST=https://backend-mock:8442
+            - TIGER_API_TOKEN
+            - UPDATE_SNAPSHOTS
+        depends_on:
+            - backend-mock
+
+    backend-mock:
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/wiremock/wiremock:3.4.0
+        command: "--https-port 8442 --enable-browser-proxying  --verbose --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
+        user: "$USER_UID:$USER_GID"
+        volumes:
+            - ./tests/wiremock/wiremock_extension/:/var/wiremock/extensions
+            - ./tests/wiremock/recordings:/home/wiremock

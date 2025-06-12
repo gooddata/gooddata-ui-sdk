@@ -1,0 +1,111 @@
+// (C) 2022 GoodData Corporation
+
+.gd-styling-picker-list-header {
+    padding: 0;
+}
+
+.gd-styling-picker-body {
+    display: flex;
+    flex-direction: column;
+    height: 260px;
+
+    & > * > * {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @media only screen and (max-width: 1280px) {
+        height: fit-content;
+    }
+}
+
+.gd-styling-picker-body-loading {
+    min-height: 100px;
+}
+
+.gd-styling-picker-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1 auto;
+    padding-top: 20px;
+    overflow: hidden;
+}
+
+.gd-styling-picker-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+
+    .gd-styling-picker-list-item {
+        min-height: 35px;
+
+        &:last-child {
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.gd-styling-picker-list-empty {
+    padding-bottom: 10px;
+    min-height: 100px;
+}
+
+.gd-styling-picker-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 10px;
+
+    &.is-selected > .gd-styling-picker-list-item-content {
+        font-weight: bold;
+    }
+
+    .gd-styling-picker-list-item-color {
+        width: 15px;
+        height: 14px;
+    }
+
+    .gd-styling-picker-list-item-colors {
+        width: 90px;
+        height: 14px;
+        margin: 0 10px 0 4px;
+        align-self: center;
+    }
+
+    .gd-styling-picker-list-item-content {
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        flex-grow: 1;
+        cursor: pointer;
+    }
+
+    .gd-styling-picker-list-item-text {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .gd-styling-picker-list-item-text-shortened {
+        display: inline-block;
+        width: 100%;
+        white-space: nowrap;
+    }
+
+    .gd-styling-item-menu .gd-button-text {
+        text-decoration: none;
+        font-size: large;
+    }
+}
+
+.gd-styling-item-menu {
+    padding-bottom: 3px;
+}
+
+.gd-styling-picker-footer-message {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}

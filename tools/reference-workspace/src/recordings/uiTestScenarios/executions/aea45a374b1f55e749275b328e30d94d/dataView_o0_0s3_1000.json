@@ -1,0 +1,103 @@
+{
+    "count": [3, 16],
+    "data": [
+        [
+            199908.86, 905327.23, 233620.37, 499747.52, 324710.2, 1109331.81, 18000, 156977.43, 16998.12,
+            189099.26, 51042.07, 126753.1, 1701549.3, 4410258.72, 1618042.88, 4021328.82
+        ],
+        [
+            49974.66,
+            437144.77,
+            15765.07,
+            354403.39,
+            86386.36,
+            361476.9,
+            null,
+            null,
+            null,
+            61693.01,
+            33826.28,
+            87510.91,
+            413922.7,
+            2712239.15,
+            335562.67,
+            6690298.08
+        ],
+        [
+            770602.99, 146333.2, 245096.79, 600367.83, 134950.42, 298415.72, 124243.02, 3792.6, 627304.21,
+            176954.41, 36746.55, 117761.51, 1915470.06, 3962077.3, 1621567.97, 5406453.66
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } }
+            ]
+        ],
+        [
+            [
+                { "attributeHeaderItem": { "name": "Interest", "uri": "Interest" } },
+                { "attributeHeaderItem": { "name": "Interest", "uri": "Interest" } },
+                { "attributeHeaderItem": { "name": "Discovery", "uri": "Discovery" } },
+                { "attributeHeaderItem": { "name": "Discovery", "uri": "Discovery" } },
+                { "attributeHeaderItem": { "name": "Short List", "uri": "Short List" } },
+                { "attributeHeaderItem": { "name": "Short List", "uri": "Short List" } },
+                { "attributeHeaderItem": { "name": "Risk Assessment", "uri": "Risk Assessment" } },
+                { "attributeHeaderItem": { "name": "Risk Assessment", "uri": "Risk Assessment" } },
+                { "attributeHeaderItem": { "name": "Conviction", "uri": "Conviction" } },
+                { "attributeHeaderItem": { "name": "Conviction", "uri": "Conviction" } },
+                { "attributeHeaderItem": { "name": "Negotiation", "uri": "Negotiation" } },
+                { "attributeHeaderItem": { "name": "Negotiation", "uri": "Negotiation" } },
+                { "attributeHeaderItem": { "name": "Closed Won", "uri": "Closed Won" } },
+                { "attributeHeaderItem": { "name": "Closed Won", "uri": "Closed Won" } },
+                { "attributeHeaderItem": { "name": "Closed Lost", "uri": "Closed Lost" } },
+                { "attributeHeaderItem": { "name": "Closed Lost", "uri": "Closed Lost" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [12, 16]
+}

@@ -1,0 +1,253 @@
+// (C) 2007-2025 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
+@use "mapbox-gl/dist/mapbox-gl.css";
+@use "sass:meta";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-vis-commons/styles/scss/legend";
+@use "tooltip";
+@use "charts";
+
+//
+//
+//
+
+.gd-geo-component {
+    // position: top & bottom
+    &.flex-direction-column {
+        .geo-legend {
+            display: flex;
+            flex: unset;
+            flex-flow: row wrap;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .pushpin-size-legend {
+            display: flex;
+            flex: 0 auto;
+            margin-left: 30px;
+        }
+
+        .is-small-container {
+            justify-content: flex-end;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .pushpin-size-legend-circle {
+            display: inline-block;
+
+            &::after {
+                content: "...";
+                display: inline-block;
+                margin-left: 6px;
+                margin-right: 6px;
+                margin-top: -6px;
+                vertical-align: middle;
+            }
+        }
+
+        .is-small-circles {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    // position: left & right
+    &.flex-direction-row {
+        .geo-legend {
+            .viz-legend.static + .pushpin-size-legend {
+                padding-top: 20px;
+            }
+        }
+
+        .pushpin-size-legend {
+            line-height: 1.4;
+            margin-left: 20px;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .pushpin-size-legend-circle {
+            &::after {
+                content: "\22EE";
+                display: block;
+                margin-left: 6px;
+                text-align: center;
+                width: 20px;
+            }
+
+            .circle-min-icon {
+                margin-left: 10px;
+            }
+
+            .circle-average-icon {
+                margin-left: 5px;
+            }
+        }
+    }
+
+    // Adjust the Mapbox logo to be smaller
+    .mapboxgl-ctrl-logo {
+        background-size: 65px 20px;
+        width: 65px;
+        height: 20px;
+    }
+}
+
+.geo-legend {
+    &.position-top,
+    &.position-bottom {
+        margin: 5px 0;
+    }
+
+    &.viz-legend.static {
+        margin-left: 0;
+
+        &.position-top,
+        &.position-bottom {
+            align-items: center;
+        }
+
+        &.position-left,
+        &.position-right {
+            max-width: 210px;
+        }
+    }
+
+    .viz-static-legend-wrap {
+        display: flex;
+        flex: 1 auto;
+        margin-right: 20px;
+        flex-flow: row wrap;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .viz-legend.position-right,
+    .viz-legend.position-left {
+        flex-basis: 0;
+    }
+
+    &.has-size-legend .color-legend {
+        margin-right: 10px;
+    }
+
+    > .paging {
+        margin-left: 20px;
+    }
+}
+
+.pushpin-size-legend {
+    font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+
+    .metric-name {
+        overflow: hidden;
+        font-size: 12px;
+        line-height: 30px;
+        white-space: nowrap;
+        color: kit-variables.$gd-color-link;
+        margin-right: 6px;
+        text-overflow: ellipsis;
+        max-width: 250px;
+        min-width: 50px;
+    }
+
+    .pushpin-size-legend-circle {
+        span:first-child {
+            box-sizing: content-box;
+            display: inline-block;
+            border: 1px solid variables.$border-color-circle-legend;
+            border-radius: 50%;
+        }
+
+        span {
+            font-size: 11px;
+            vertical-align: middle;
+            color: kit-variables.$gd-color-link;
+        }
+
+        &::after {
+            color: variables.$border-color-circle-legend;
+            font-family: kit-variables.$gd-font-primary;
+        }
+
+        &:last-child {
+            &::after {
+                content: "";
+            }
+        }
+    }
+
+    .circle-value {
+        margin-left: 6px;
+    }
+
+    .circle-max-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .circle-average-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .circle-min-icon {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+.geo-legend-paging .pushpin-size-legend {
+    margin-bottom: 20px;
+}
+
+.mapboxgl-map {
+    flex: 1;
+    // If the outer container have scroll bar, the chart can be showed by scrolling.
+    // stylelint-disable-next-line declaration-no-important
+    overflow: visible !important;
+}
+
+// always show Mapbox wordmark
+.mapboxgl-ctrl {
+    // stylelint-disable-next-line declaration-no-important
+    display: block !important;
+}
+
+// move AttributionControl to the left of NavigationControl
+.mapboxgl-ctrl-bottom-right {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row-reverse;
+}
+
+/* Overwrite Mapbox CSS */
+.mapboxgl-popup-tip {
+    display: none;
+}
+
+.mapboxgl-popup-content {
+    padding: 0;
+    pointer-events: none;
+}
+
+/* Partially overwrite Mapbox blocker CSS */
+.mapboxgl-scroll-zoom-blocker,
+.mapboxgl-touch-pan-blocker {
+    font-family: variables.$font-stack-roman;
+    // stylelint-disable-next-line declaration-no-important
+    font-size: 16px !important;
+    color: kit-variables.$default-gd-color-text;
+    background: rgba(kit-variables.$gd-outside-background-color, 0.9);
+}
+
+// this will fix the scale problem of mapbox canvas when exporting
+.isExportMode .mapboxgl-canvas {
+    // stylelint-disable-next-line declaration-no-important
+    width: 100% !important;
+    // stylelint-disable-next-line declaration-no-important
+    height: 100% !important;
+}

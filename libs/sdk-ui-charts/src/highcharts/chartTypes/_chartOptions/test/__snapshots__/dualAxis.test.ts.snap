@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`setMeasuresToSecondaryAxis > should  add measures to secondary axis when dualAxis=true 1`] = `
+{
+  "dualAxis": true,
+  "secondary_yaxis": {
+    "measures": [
+      "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    ],
+    "rotation": "90",
+  },
+  "type": "combo2",
+}
+`;
+
+exports[`setMeasuresToSecondaryAxis > should  add measures to secondary axis when dualAxis=undefined 1`] = `
+{
+  "dualAxis": undefined,
+  "secondary_yaxis": {
+    "measures": [
+      "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    ],
+    "rotation": "90",
+  },
+  "type": "combo2",
+}
+`;

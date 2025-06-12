@@ -1,0 +1,90 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1027"
+                },
+                "localIdentifier": "0e3388d37e444c369731afe398740572"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1024"
+                },
+                "localIdentifier": "6af145960f4145efbe4ace7504b0f1de"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "c2fa878519934f39aefe9325638f2beb",
+                "alias": "_Close [BOP]",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/9211"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "8a1a34106a8a41c8b0a8da816600802e",
+                "alias": "_Close [EOP]",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/9203"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "3b4fc6113ff9452da677ef7842e2302c",
+                "alias": "_Timeline [BOP]",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1277"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "26843260d95c4c9fa0aecc996ffd7829",
+                "alias": "_Timeline [EOP]",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1276"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["0e3388d37e444c369731afe398740572", "6af145960f4145efbe4ace7504b0f1de"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

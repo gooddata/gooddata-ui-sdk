@@ -1,0 +1,314 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AttributeFilterHandler > getAttribute() should return the attribute after successful initialization 1`] = `
+{
+  "description": "Product",
+  "displayForms": [
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "Product",
+      "id": "attr.f_product.product",
+      "isDefault": false,
+      "isPrimary": true,
+      "ref": {
+        "identifier": "attr.f_product.product",
+        "type": "displayForm",
+      },
+      "title": "Product",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
+    },
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "",
+      "id": "label.f_product.product.name",
+      "isDefault": true,
+      "isPrimary": false,
+      "ref": {
+        "identifier": "label.f_product.product.name",
+        "type": "displayForm",
+      },
+      "title": "Product Name",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+    },
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "",
+      "displayFormType": "GDC.image",
+      "id": "label.f_product.product.image",
+      "isDefault": false,
+      "isPrimary": false,
+      "ref": {
+        "identifier": "label.f_product.product.image",
+        "type": "displayForm",
+      },
+      "title": "Product Image",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
+    },
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "",
+      "displayFormType": "GDC.link",
+      "id": "label.f_product.product.link",
+      "isDefault": false,
+      "isPrimary": false,
+      "ref": {
+        "identifier": "label.f_product.product.link",
+        "type": "displayForm",
+      },
+      "title": "Product Link",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",
+    },
+  ],
+  "id": "attr.f_product.product",
+  "production": false,
+  "ref": {
+    "identifier": "attr.f_product.product",
+    "type": "attribute",
+  },
+  "title": "Product",
+  "type": "attribute",
+  "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_product.product",
+}
+`;
+
+exports[`AttributeFilterHandler > getAttribute() should return the attribute after successful loadAttribute() call 1`] = `
+{
+  "description": "Product",
+  "displayForms": [
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "Product",
+      "id": "attr.f_product.product",
+      "isDefault": false,
+      "isPrimary": true,
+      "ref": {
+        "identifier": "attr.f_product.product",
+        "type": "displayForm",
+      },
+      "title": "Product",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
+    },
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "",
+      "id": "label.f_product.product.name",
+      "isDefault": true,
+      "isPrimary": false,
+      "ref": {
+        "identifier": "label.f_product.product.name",
+        "type": "displayForm",
+      },
+      "title": "Product Name",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+    },
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "",
+      "displayFormType": "GDC.image",
+      "id": "label.f_product.product.image",
+      "isDefault": false,
+      "isPrimary": false,
+      "ref": {
+        "identifier": "label.f_product.product.image",
+        "type": "displayForm",
+      },
+      "title": "Product Image",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
+    },
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "",
+      "displayFormType": "GDC.link",
+      "id": "label.f_product.product.link",
+      "isDefault": false,
+      "isPrimary": false,
+      "ref": {
+        "identifier": "label.f_product.product.link",
+        "type": "displayForm",
+      },
+      "title": "Product Link",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",
+    },
+  ],
+  "id": "attr.f_product.product",
+  "production": false,
+  "ref": {
+    "identifier": "attr.f_product.product",
+    "type": "attribute",
+  },
+  "title": "Product",
+  "type": "attribute",
+  "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_product.product",
+}
+`;
+
+exports[`AttributeFilterHandler > getAttributeError() should return error 1`] = `[Error: NOT_FOUND]`;
+
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for failed load > after the load 1`] = `"canceled"`;
+
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for failed load > before the load 1`] = `"pending"`;
+
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for failed load > during the load 1`] = `"loading"`;
+
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for successful load > after the load 1`] = `"success"`;
+
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for successful load > before the load 1`] = `"pending"`;
+
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for successful load > during the load 1`] = `"loading"`;
+
+exports[`AttributeFilterHandler > loadAttribute() should trigger onLoadAttributeStart() callback > with parameters 1`] = `
+[
+  {
+    "correlation": "start",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadAttribute() that failed should trigger onLoadAttributeError() callback > with parameters 1`] = `
+[
+  {
+    "correlation": "error",
+    "error": [Error: NOT_FOUND],
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadAttribute() that was canceled by another loadAttribute() call should trigger onLoadAttributeCancel() callback > with parameters 1`] = `
+[
+  {
+    "correlation": "cancel",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadAttribute() that was canceled by cancelAttributeLoad() call should trigger onLoadAttributeCancel() callback > with parameters 1`] = `
+[
+  {
+    "correlation": "cancel",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadAttribute() that was successful should trigger onLoadAttributeSuccess() callback > with parameters 1`] = `
+[
+  {
+    "attribute": {
+      "description": "Product",
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "Product",
+          "id": "attr.f_product.product",
+          "isDefault": false,
+          "isPrimary": true,
+          "ref": {
+            "identifier": "attr.f_product.product",
+            "type": "displayForm",
+          },
+          "title": "Product",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "label.f_product.product.name",
+          "isDefault": true,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.name",
+            "type": "displayForm",
+          },
+          "title": "Product Name",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.image",
+          "id": "label.f_product.product.image",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.image",
+            "type": "displayForm",
+          },
+          "title": "Product Image",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "label.f_product.product.link",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.link",
+            "type": "displayForm",
+          },
+          "title": "Product Link",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",
+        },
+      ],
+      "id": "attr.f_product.product",
+      "production": false,
+      "ref": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "title": "Product",
+      "type": "attribute",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_product.product",
+    },
+    "correlation": "success",
+  },
+]
+`;

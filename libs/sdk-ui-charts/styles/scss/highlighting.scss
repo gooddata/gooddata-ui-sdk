@@ -1,0 +1,30 @@
+// (C) 2024 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-highlighting {
+    opacity: 1;
+
+    .highcharts-point,
+    path {
+        opacity: 0.2;
+    }
+
+    .highcharts-point-hover,
+    path:hover {
+        opacity: 1;
+    }
+
+    .gd-point-highlighted {
+        opacity: 1;
+
+        /**
+         * This is only used on some charts that need more obvious highlighting.
+         * For example heatmap.
+         */
+        &-border {
+            stroke: kit-variables.$gd-palette-primary-base;
+            stroke-width: 2px;
+            stroke-opacity: 1;
+        }
+    }
+}

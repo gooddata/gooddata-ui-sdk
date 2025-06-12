@@ -1,0 +1,853 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DashboardLayoutSectionBuilder > .addItem() > should add item at the end of the section by default > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Initial item",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Added item",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .addItem() > should add item at the end of the section by default > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Initial item",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .addItem() > should create item at the provided index > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item 1",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Added item",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item 2",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .addItem() > should create item at the provided index > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item 1",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item 2",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .createItem() > should create item at the end of the section by default > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Added item",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .createItem() > should create item at the end of the section by default > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .createItem() > should create item at the provided index > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Added item",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .createItem() > should create item at the provided index > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .header() > should update header by callback 1`] = `
+{
+  "header": {
+    "description": "Section description",
+    "title": "Section title",
+  },
+  "items": [],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .header() > should update header by callback returning undefined 1`] = `
+{
+  "header": undefined,
+  "items": [],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .header() > should update header by undefined 1`] = `
+{
+  "header": undefined,
+  "items": [],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .header() > should update header by value 1`] = `
+{
+  "header": {
+    "description": "Section description",
+    "title": "Section title",
+  },
+  "items": [],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .modifyItem() > should modify the item > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Modified item",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .modifyItem() > should modify the item > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Original item",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .modifyItem() > should throw error, when the item at provided index does not exist 1`] = `[Invariant Violation: Cannot modify the item - item at index 0 does not exist.]`;
+
+exports[`DashboardLayoutSectionBuilder > .modifyItems() > should modify all items by default > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Modified item 0",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Modified item 1",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .modifyItems() > should modify all items by default > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .modifyItems() > should modify selected item only > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Modified item",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .modifyItems() > should modify selected item only > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Original item",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .modifyItems() > should modify selected items only > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": {
+        "title": "Modified section 0",
+      },
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": {
+        "title": "Modified section 2",
+      },
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .modifyItems() > should modify selected items only > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Original item",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Original item",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .modifyItems() > should not modify any item, when selection result is undefined > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .modifyItems() > should not modify any item, when selection result is undefined > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .moveItem() > should move the item > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Widget 1",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Widget 0",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Widget 2",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .moveItem() > should move the item > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Widget 0",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Widget 1",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Widget 2",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .moveItem() > should throw error, when the item at provided index does not exist 1`] = `[Invariant Violation: Cannot move the item - item at index 0 does not exist.]`;
+
+exports[`DashboardLayoutSectionBuilder > .removeItem() > should remove the item from the section > after 1`] = `
+{
+  "items": [],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .removeItem() > should remove the item from the section > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item to remove",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .removeItem() > should throw error, when the item at provided index does not exist 1`] = `[Invariant Violation: Cannot remove the item - item at index 0 does not exist.]`;
+
+exports[`DashboardLayoutSectionBuilder > .removeItems() > should not remove any item, when selection result is undefined > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .removeItems() > should not remove any item, when selection result is undefined > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .removeItems() > should remove all items by default > after 1`] = `
+{
+  "items": [],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .removeItems() > should remove all items by default > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .removeItems() > should remove selected item only > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .removeItems() > should remove selected item only > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item to remove",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .removeItems() > should remove selected items only > after 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item to keep 1",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item to keep 2",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > .removeItems() > should remove selected items only > before 1`] = `
+{
+  "items": [
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item to keep 1",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item to keep 2",
+    },
+    {
+      "size": {
+        "xl": {
+          "gridWidth": 12,
+          "heightAsRatio": 50,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder > constructors > .for() > should throw error, when the section is damaged 1`] = `[Invariant Violation: Provided data must be IDashboardLayoutSection.]`;

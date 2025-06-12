@@ -1,0 +1,67 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`transformToTypescript > creates new catalog 1`] = `
+"import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition, idRef } from "@gooddata/sdk-model";
+
+/**
+ * Attribute Title: attribute1
+ * Attribute ID: identifier-attribute1
+ */
+export const Attribute1 = {  };
+/**
+ * Metric Title: metric1
+ * Metric ID: identifier-metric1
+ * Metric Type: MAQL Metric
+ */
+export const Metric1: IMeasure<IMeasureDefinition> = newMeasure(idRef('identifier-metric1', "measure"));
+/**
+ * Metric Title: metric2
+ * Metric ID: identifier-metric2
+ * Metric Type: MAQL Metric
+ */
+export const Metric2: IMeasure<IMeasureDefinition> = newMeasure(idRef('identifier-metric2', "measure"));
+/**
+ * Fact Title: fact1
+ * Fact ID: identifier-fact1
+ */
+export const Fact1 = { /** 
+    * Fact Title: fact1  
+    * Fact ID: identifier-fact1
+     * Fact Aggregation: sum
+    */
+    Sum: newMeasure(idRef('identifier-fact1', "fact"), m => m.aggregation('sum')),/** 
+    * Fact Title: fact1  
+    * Fact ID: identifier-fact1
+     * Fact Aggregation: avg
+    */
+    Avg: newMeasure(idRef('identifier-fact1', "fact"), m => m.aggregation('avg')),/** 
+    * Fact Title: fact1  
+    * Fact ID: identifier-fact1
+     * Fact Aggregation: min
+    */
+    Min: newMeasure(idRef('identifier-fact1', "fact"), m => m.aggregation('min')),/** 
+    * Fact Title: fact1  
+    * Fact ID: identifier-fact1
+     * Fact Aggregation: max
+    */
+    Max: newMeasure(idRef('identifier-fact1', "fact"), m => m.aggregation('max')),/** 
+    * Fact Title: fact1  
+    * Fact ID: identifier-fact1
+     * Fact Aggregation: median
+    */
+    Median: newMeasure(idRef('identifier-fact1', "fact"), m => m.aggregation('median')),/** 
+    * Fact Title: fact1  
+    * Fact ID: identifier-fact1
+     * Fact Aggregation: runsum
+    */
+    Runsum: newMeasure(idRef('identifier-fact1', "fact"), m => m.aggregation('runsum')) } ;
+/** Available Date Data Sets */
+export const DateDatasets = {  };
+export const Insights = { /** 
+    * Insight Title: insight1  
+    * Insight ID: identifier-insight1
+    */
+    Insight1: 'identifier-insight1' };
+export const Dashboards = {  };
+"
+`;

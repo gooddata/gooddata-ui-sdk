@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BuildScheduler > should build only single package if it is root 1`] = `
+[
+  "@gooddata/sdk-ui-ext",
+]
+`;
+
+exports[`BuildScheduler > should build single package if the package change is marked as independent 1`] = `
+[
+  "@gooddata/sdk-model",
+]
+`;
+
+exports[`BuildScheduler > should build the entire subtree if leaf changes 1`] = `
+[
+  "@gooddata/sdk-model",
+  "@gooddata/sdk-embedding",
+  "@gooddata/sdk-backend-spi",
+  "@gooddata/reference-workspace",
+  "@gooddata/sdk-backend-base",
+  "@gooddata/api-client-tiger",
+  "@gooddata/sdk-backend-mockingbird",
+  "@gooddata/sdk-backend-tiger",
+  "@gooddata/sdk-ui",
+  "@gooddata/sdk-ui-kit",
+  "@gooddata/sdk-ui-vis-commons",
+  "@gooddata/sdk-ui-filters",
+  "@gooddata/sdk-ui-geo",
+  "@gooddata/sdk-ui-charts",
+  "@gooddata/sdk-ui-pivot",
+  "@gooddata/sdk-ui-ext",
+]
+`;

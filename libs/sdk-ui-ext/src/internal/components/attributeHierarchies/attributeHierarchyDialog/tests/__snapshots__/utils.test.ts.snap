@@ -1,0 +1,1302 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`utils > appendEmptyAttribute > should append item correctly when existing uncompleted above 1`] = `
+[
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_account.account",
+      "type": "attribute",
+    },
+    "title": "Account",
+    "type": "attribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.year",
+      "type": "attribute",
+    },
+    "title": "Created - Year",
+    "type": "dateAttribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_opportunity.opportunity",
+      "type": "attribute",
+    },
+    "title": "Opportunity",
+    "type": "attribute",
+  },
+  {},
+  {
+    "completed": true,
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.hourOfDay",
+      "type": "attribute",
+    },
+    "title": "Created - Hour of Day",
+    "type": "dateAttribute",
+  },
+]
+`;
+
+exports[`utils > appendEmptyAttribute > should append item correctly when existing uncompleted below 1`] = `
+[
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_account.account",
+      "type": "attribute",
+    },
+    "title": "Account",
+    "type": "attribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.year",
+      "type": "attribute",
+    },
+    "title": "Created - Year",
+    "type": "dateAttribute",
+  },
+  {},
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_opportunity.opportunity",
+      "type": "attribute",
+    },
+    "title": "Opportunity",
+    "type": "attribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.hourOfDay",
+      "type": "attribute",
+    },
+    "title": "Created - Hour of Day",
+    "type": "dateAttribute",
+  },
+]
+`;
+
+exports[`utils > appendEmptyAttribute > should append new item after base item 1`] = `
+[
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_account.account",
+      "type": "attribute",
+    },
+    "title": "Account",
+    "type": "attribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.year",
+      "type": "attribute",
+    },
+    "title": "Created - Year",
+    "type": "dateAttribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_opportunity.opportunity",
+      "type": "attribute",
+    },
+    "title": "Opportunity",
+    "type": "attribute",
+  },
+  {},
+  {
+    "completed": true,
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.hourOfDay",
+      "type": "attribute",
+    },
+    "title": "Created - Hour of Day",
+    "type": "dateAttribute",
+  },
+]
+`;
+
+exports[`utils > appendEmptyAttribute > should append new item after base item 2`] = `
+[
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_account.account",
+      "type": "attribute",
+    },
+    "title": "Account",
+    "type": "attribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.year",
+      "type": "attribute",
+    },
+    "title": "Created - Year",
+    "type": "dateAttribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_opportunity.opportunity",
+      "type": "attribute",
+    },
+    "title": "Opportunity",
+    "type": "attribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.hourOfDay",
+      "type": "attribute",
+    },
+    "title": "Created - Hour of Day",
+    "type": "dateAttribute",
+  },
+  {},
+]
+`;
+
+exports[`utils > appendEmptyAttribute > should append new item in the first of array 1`] = `
+[
+  {},
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_account.account",
+      "type": "attribute",
+    },
+    "title": "Account",
+    "type": "attribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.year",
+      "type": "attribute",
+    },
+    "title": "Created - Year",
+    "type": "dateAttribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_opportunity.opportunity",
+      "type": "attribute",
+    },
+    "title": "Opportunity",
+    "type": "attribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.hourOfDay",
+      "type": "attribute",
+    },
+    "title": "Created - Hour of Day",
+    "type": "dateAttribute",
+  },
+]
+`;
+
+exports[`utils > appendEmptyAttribute > should append new item in the first of array when attributes is empty 1`] = `
+[
+  {},
+]
+`;
+
+exports[`utils > convertToCatalogAttributeData > should return correct catalog attributes map 1`] = `
+Map {
+  "{"identifier":"attr.f_account.account","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_account.account",
+      "type": "attribute",
+    },
+    "title": "Account",
+    "type": "attribute",
+  },
+  "{"identifier":"f_account.id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_account.id",
+      "type": "attribute",
+    },
+    "title": "Account Id",
+    "type": "attribute",
+  },
+  "{"identifier":"attr.f_activity.activity","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_activity.activity",
+      "type": "attribute",
+    },
+    "title": "Activity",
+    "type": "attribute",
+  },
+  "{"identifier":"f_activity.id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_activity.id",
+      "type": "attribute",
+    },
+    "title": "Activity Id",
+    "type": "attribute",
+  },
+  "{"identifier":"f_activity.activitytype_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_activity.activitytype_id",
+      "type": "attribute",
+    },
+    "title": "Activity Type",
+    "type": "attribute",
+  },
+  "{"identifier":"f_city.id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_city.id",
+      "type": "attribute",
+    },
+    "title": "City",
+    "type": "attribute",
+  },
+  "{"identifier":"county_name","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "county_name",
+      "type": "attribute",
+    },
+    "title": "County name",
+    "type": "attribute",
+  },
+  "{"identifier":"f_owner.department_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_owner.department_id",
+      "type": "attribute",
+    },
+    "title": "Department",
+    "type": "attribute",
+  },
+  "{"identifier":"f_opportunitysnapshot.forecastcategory_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_opportunitysnapshot.forecastcategory_id",
+      "type": "attribute",
+    },
+    "title": "Forecast Category",
+    "type": "attribute",
+  },
+  "{"identifier":"f_stage.isactive_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_stage.isactive_id",
+      "type": "attribute",
+    },
+    "title": "Is Active?",
+    "type": "attribute",
+  },
+  "{"identifier":"f_activity.isclosed_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_activity.isclosed_id",
+      "type": "attribute",
+    },
+    "title": "Is Closed?",
+    "type": "attribute",
+  },
+  "{"identifier":"f_stage.isclosed_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_stage.isclosed_id",
+      "type": "attribute",
+    },
+    "title": "Is Closed?",
+    "type": "attribute",
+  },
+  "{"identifier":"f_activity.istask_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_activity.istask_id",
+      "type": "attribute",
+    },
+    "title": "Is Task?",
+    "type": "attribute",
+  },
+  "{"identifier":"f_stage.iswon_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_stage.iswon_id",
+      "type": "attribute",
+    },
+    "title": "Is Won?",
+    "type": "attribute",
+  },
+  "{"identifier":"attr.f_opportunitysnapshot.oppsnapshot","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_opportunitysnapshot.oppsnapshot",
+      "type": "attribute",
+    },
+    "title": "Opp. Snapshot",
+    "type": "attribute",
+  },
+  "{"identifier":"f_opportunitysnapshot.id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_opportunitysnapshot.id",
+      "type": "attribute",
+    },
+    "title": "Opp. Snapshot Id",
+    "type": "attribute",
+  },
+  "{"identifier":"attr.f_opportunity.opportunity","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_opportunity.opportunity",
+      "type": "attribute",
+    },
+    "title": "Opportunity",
+    "type": "attribute",
+  },
+  "{"identifier":"f_opportunity.id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_opportunity.id",
+      "type": "attribute",
+    },
+    "title": "Opportunity Id",
+    "type": "attribute",
+  },
+  "{"identifier":"f_owner.id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_owner.id",
+      "type": "attribute",
+    },
+    "title": "Owner Id",
+    "type": "attribute",
+  },
+  "{"identifier":"f_activity.priority_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_activity.priority_id",
+      "type": "attribute",
+    },
+    "title": "Priority",
+    "type": "attribute",
+  },
+  "{"identifier":"attr.f_product.product","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_product.product",
+      "type": "attribute",
+    },
+    "title": "Product",
+    "type": "attribute",
+  },
+  "{"identifier":"f_product.id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_product.id",
+      "type": "attribute",
+    },
+    "title": "Product Id",
+    "type": "attribute",
+  },
+  "{"identifier":"productthatisrenamedtotestthelongattributename","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "productthatisrenamedtotestthelongattributename",
+      "type": "attribute",
+    },
+    "title": "Product that is renamed to test the long attribute name",
+    "type": "attribute",
+  },
+  "{"identifier":"f_owner.region_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_owner.region_id",
+      "type": "attribute",
+    },
+    "title": "Region",
+    "type": "attribute",
+  },
+  "{"identifier":"attr.f_owner.salesrep","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_owner.salesrep",
+      "type": "attribute",
+    },
+    "title": "Sales Rep",
+    "type": "attribute",
+  },
+  "{"identifier":"attr.f_stagehistory.stagehistory","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_stagehistory.stagehistory",
+      "type": "attribute",
+    },
+    "title": "Stage History",
+    "type": "attribute",
+  },
+  "{"identifier":"f_stagehistory.id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_stagehistory.id",
+      "type": "attribute",
+    },
+    "title": "Stage History Id",
+    "type": "attribute",
+  },
+  "{"identifier":"f_stage.id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_stage.id",
+      "type": "attribute",
+    },
+    "title": "Stage Id",
+    "type": "attribute",
+  },
+  "{"identifier":"attr.f_stage.stagename","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_stage.stagename",
+      "type": "attribute",
+    },
+    "title": "Stage Name",
+    "type": "attribute",
+  },
+  "{"identifier":"state_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "state_id",
+      "type": "attribute",
+    },
+    "title": "State",
+    "type": "attribute",
+  },
+  "{"identifier":"f_activity.status_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_activity.status_id",
+      "type": "attribute",
+    },
+    "title": "Status",
+    "type": "attribute",
+  },
+  "{"identifier":"f_stage.status_id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_stage.status_id",
+      "type": "attribute",
+    },
+    "title": "Status",
+    "type": "attribute",
+  },
+  "{"identifier":"f_timeline.id","type":"attribute"}" => {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "f_timeline.id",
+      "type": "attribute",
+    },
+    "title": "Timeline",
+    "type": "attribute",
+  },
+  "{"identifier":"dt_activity_timestamp.day","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.day",
+      "type": "attribute",
+    },
+    "title": "Activity - Date",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.dayOfMonth","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.dayOfMonth",
+      "type": "attribute",
+    },
+    "title": "Activity - Day of Month",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.dayOfWeek","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.dayOfWeek",
+      "type": "attribute",
+    },
+    "title": "Activity - Day of Week",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.dayOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.dayOfYear",
+      "type": "attribute",
+    },
+    "title": "Activity - Day of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.hour","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.hour",
+      "type": "attribute",
+    },
+    "title": "Activity - Hour",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.hourOfDay","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.hourOfDay",
+      "type": "attribute",
+    },
+    "title": "Activity - Hour of Day",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.minute","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.minute",
+      "type": "attribute",
+    },
+    "title": "Activity - Minute",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.minuteOfHour","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.minuteOfHour",
+      "type": "attribute",
+    },
+    "title": "Activity - Minute of Hour",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.month","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.month",
+      "type": "attribute",
+    },
+    "title": "Activity - Month/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.monthOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.monthOfYear",
+      "type": "attribute",
+    },
+    "title": "Activity - Month of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.quarter","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.quarter",
+      "type": "attribute",
+    },
+    "title": "Activity - Quarter/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.quarterOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.quarterOfYear",
+      "type": "attribute",
+    },
+    "title": "Activity - Quarter of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.week","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.week",
+      "type": "attribute",
+    },
+    "title": "Activity - Week/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.weekOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.weekOfYear",
+      "type": "attribute",
+    },
+    "title": "Activity - Week of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_activity_timestamp.year","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.year",
+      "type": "attribute",
+    },
+    "title": "Activity - Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.day","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.day",
+      "type": "attribute",
+    },
+    "title": "Closed - Date",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.dayOfMonth","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.dayOfMonth",
+      "type": "attribute",
+    },
+    "title": "Closed - Day of Month",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.dayOfWeek","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.dayOfWeek",
+      "type": "attribute",
+    },
+    "title": "Closed - Day of Week",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.dayOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.dayOfYear",
+      "type": "attribute",
+    },
+    "title": "Closed - Day of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.hour","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.hour",
+      "type": "attribute",
+    },
+    "title": "Closed - Hour",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.hourOfDay","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.hourOfDay",
+      "type": "attribute",
+    },
+    "title": "Closed - Hour of Day",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.minute","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.minute",
+      "type": "attribute",
+    },
+    "title": "Closed - Minute",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.minuteOfHour","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.minuteOfHour",
+      "type": "attribute",
+    },
+    "title": "Closed - Minute of Hour",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.month","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.month",
+      "type": "attribute",
+    },
+    "title": "Closed - Month/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.monthOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.monthOfYear",
+      "type": "attribute",
+    },
+    "title": "Closed - Month of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.quarter","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.quarter",
+      "type": "attribute",
+    },
+    "title": "Closed - Quarter/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.quarterOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.quarterOfYear",
+      "type": "attribute",
+    },
+    "title": "Closed - Quarter of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.week","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.week",
+      "type": "attribute",
+    },
+    "title": "Closed - Week/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.weekOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.weekOfYear",
+      "type": "attribute",
+    },
+    "title": "Closed - Week of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_closedate_timestamp.year","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_closedate_timestamp.year",
+      "type": "attribute",
+    },
+    "title": "Closed - Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.day","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.day",
+      "type": "attribute",
+    },
+    "title": "Created - Date",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.dayOfMonth","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.dayOfMonth",
+      "type": "attribute",
+    },
+    "title": "Created - Day of Month",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.dayOfWeek","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.dayOfWeek",
+      "type": "attribute",
+    },
+    "title": "Created - Day of Week",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.dayOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.dayOfYear",
+      "type": "attribute",
+    },
+    "title": "Created - Day of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.hour","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.hour",
+      "type": "attribute",
+    },
+    "title": "Created - Hour",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.hourOfDay","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.hourOfDay",
+      "type": "attribute",
+    },
+    "title": "Created - Hour of Day",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.minute","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.minute",
+      "type": "attribute",
+    },
+    "title": "Created - Minute",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.minuteOfHour","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.minuteOfHour",
+      "type": "attribute",
+    },
+    "title": "Created - Minute of Hour",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.month","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.month",
+      "type": "attribute",
+    },
+    "title": "Created - Month/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.monthOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.monthOfYear",
+      "type": "attribute",
+    },
+    "title": "Created - Month of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.quarter","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.quarter",
+      "type": "attribute",
+    },
+    "title": "Created - Quarter/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.quarterOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.quarterOfYear",
+      "type": "attribute",
+    },
+    "title": "Created - Quarter of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.week","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.week",
+      "type": "attribute",
+    },
+    "title": "Created - Week/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.weekOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.weekOfYear",
+      "type": "attribute",
+    },
+    "title": "Created - Week of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_oppcreated_timestamp.year","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_oppcreated_timestamp.year",
+      "type": "attribute",
+    },
+    "title": "Created - Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.day","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.day",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Date",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.dayOfMonth","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.dayOfMonth",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Day of Month",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.dayOfWeek","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.dayOfWeek",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Day of Week",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.dayOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.dayOfYear",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Day of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.hour","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.hour",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Hour",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.hourOfDay","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.hourOfDay",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Hour of Day",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.minute","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.minute",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Minute",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.minuteOfHour","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.minuteOfHour",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Minute of Hour",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.month","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.month",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Month/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.monthOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.monthOfYear",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Month of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.quarter","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.quarter",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Quarter/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.quarterOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.quarterOfYear",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Quarter of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.week","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.week",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Week/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.weekOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.weekOfYear",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Week of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_snapshotdate_timestamp.year","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_snapshotdate_timestamp.year",
+      "type": "attribute",
+    },
+    "title": "Snapshot - Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.day","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.day",
+      "type": "attribute",
+    },
+    "title": "Timeline - Date",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.dayOfMonth","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.dayOfMonth",
+      "type": "attribute",
+    },
+    "title": "Timeline - Day of Month",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.dayOfWeek","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.dayOfWeek",
+      "type": "attribute",
+    },
+    "title": "Timeline - Day of Week",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.dayOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.dayOfYear",
+      "type": "attribute",
+    },
+    "title": "Timeline - Day of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.hour","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.hour",
+      "type": "attribute",
+    },
+    "title": "Timeline - Hour",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.hourOfDay","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.hourOfDay",
+      "type": "attribute",
+    },
+    "title": "Timeline - Hour of Day",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.minute","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.minute",
+      "type": "attribute",
+    },
+    "title": "Timeline - Minute",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.minuteOfHour","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.minuteOfHour",
+      "type": "attribute",
+    },
+    "title": "Timeline - Minute of Hour",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.month","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.month",
+      "type": "attribute",
+    },
+    "title": "Timeline - Month/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.monthOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.monthOfYear",
+      "type": "attribute",
+    },
+    "title": "Timeline - Month of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.quarter","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.quarter",
+      "type": "attribute",
+    },
+    "title": "Timeline - Quarter/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.quarterOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.quarterOfYear",
+      "type": "attribute",
+    },
+    "title": "Timeline - Quarter of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.week","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.week",
+      "type": "attribute",
+    },
+    "title": "Timeline - Week/Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.weekOfYear","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.weekOfYear",
+      "type": "attribute",
+    },
+    "title": "Timeline - Week of Year",
+    "type": "dateAttribute",
+  },
+  "{"identifier":"dt_timeline_timestamp.year","type":"attribute"}" => {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_timeline_timestamp.year",
+      "type": "attribute",
+    },
+    "title": "Timeline - Year",
+    "type": "dateAttribute",
+  },
+}
+`;
+
+exports[`utils > convertToCatalogAttributeData > should return empty map when catalog is empty 1`] = `Map {}`;
+
+exports[`utils > convertToCatalogAttributeDataByRefs > should return correct catalog attributes 1`] = `
+[
+  {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.day",
+      "type": "attribute",
+    },
+    "title": "Activity - Date",
+    "type": "dateAttribute",
+  },
+  {
+    "icon": "gd-icon-date",
+    "ref": {
+      "identifier": "dt_activity_timestamp.month",
+      "type": "attribute",
+    },
+    "title": "Activity - Month/Year",
+    "type": "dateAttribute",
+  },
+  {
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_account.account",
+      "type": "attribute",
+    },
+    "title": "Account",
+    "type": "attribute",
+  },
+]
+`;
+
+exports[`utils > findCatalogAttributeByRef > should return correct catalog attribute 1`] = `
+{
+  "icon": "gd-icon-date",
+  "ref": {
+    "identifier": "dt_activity_timestamp.day",
+    "type": "attribute",
+  },
+  "title": "Activity - Date",
+  "type": "dateAttribute",
+}
+`;
+
+exports[`utils > searchAttributes > should return correct array when search string is empty 1`] = `
+[
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_account.account",
+      "type": "attribute",
+    },
+    "title": "Account",
+    "type": "attribute",
+  },
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_opportunity.opportunity",
+      "type": "attribute",
+    },
+    "title": "Opportunity",
+    "type": "attribute",
+  },
+]
+`;
+
+exports[`utils > searchAttributes > should return correct array when search string is not empty 1`] = `
+[
+  {
+    "completed": true,
+    "icon": "gd-icon-attribute",
+    "ref": {
+      "identifier": "attr.f_account.account",
+      "type": "attribute",
+    },
+    "title": "Account",
+    "type": "attribute",
+  },
+]
+`;
+
+exports[`utils > searchAttributes > should return correct array when search string is not empty 2`] = `[]`;

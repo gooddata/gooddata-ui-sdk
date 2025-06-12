@@ -1,0 +1,160 @@
+// (C) 2007-2025 GoodData Corporation
+@use "../mixins.scss";
+@use "_variables" as button-variables;
+@use "../variables";
+
+/* ==========================================================================
+   Silent classes - more clever mixins
+   ========================================================================== */
+
+%btn {
+    position: relative;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 14px;
+    border: 1px solid transparent;
+    font: 400 14px/20px variables.$gd-font-primary;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    text-align: left;
+    border-radius: button-variables.$button-border-radius;
+    text-transform: button-variables.$button-text-capitalization;
+
+    @include mixins.transition(all, 0.25s, ease-in-out);
+
+    &::before,
+    &::after {
+        position: absolute;
+        top: 50%;
+        height: 20px;
+        line-height: 20px;
+        color: variables.$gd-color-text-dimmed;
+        transform: translateY(-50%);
+        font-size: 18px;
+        text-align: center;
+
+        @include mixins.transition(color, 0.25s, ease-in-out);
+    }
+
+    &::before {
+        left: 10px;
+        margin-right: 0.5em;
+    }
+
+    &::after {
+        right: 7px;
+        margin-left: 0.5em;
+    }
+
+    .gd-button-text,
+    .gd-button-icon {
+        position: relative;
+        display: block;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .gd-button-text {
+        top: 1px;
+        flex: 1 1 auto;
+        overflow: hidden;
+        width: 100%;
+        text-overflow: ellipsis;
+    }
+
+    .gd-button-icon {
+        flex: 0 0 auto;
+        width: button-variables.$button-icon-width;
+        height: button-variables.$button-icon-width;
+        margin: 0 0.5em;
+        line-height: button-variables.$button-icon-width;
+        color: variables.$gd-color-text-dimmed;
+        font-size: button-variables.$button-icon-width;
+        text-align: center;
+        text-decoration: none;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        &::before,
+        &::after {
+            color: inherit;
+
+            @include mixins.transition(color, 0.25s, ease-in-out);
+        }
+    }
+
+    &:not(.gd-button-link) .gd-button-icon {
+        &:first-child {
+            margin-left: -4px;
+        }
+
+        &:last-child {
+            margin-right: -4px;
+        }
+
+        &:only-child {
+            width: 19px;
+            height: 17px;
+            line-height: 17px;
+            margin-right: -9px;
+            margin-left: -9px;
+            font-size: 16px;
+        }
+    }
+
+    &:not(.disabled):not(.gd-button-link) {
+        &:active {
+            &::before,
+            &::after {
+                top: calc(50% + 1px);
+            }
+
+            .gd-button-text {
+                top: 2px;
+            }
+
+            .gd-button-icon {
+                margin-top: 2px;
+            }
+        }
+
+        .gd-button-icon {
+            &:only-child {
+                color: button-variables.$button-normal-color;
+            }
+        }
+    }
+
+    &:hover {
+        &::before,
+        &::after,
+        .gd-button-icon {
+            color: button-variables.$button-action-color;
+        }
+    }
+
+    &:focus-visible {
+        transition: none;
+    }
+
+    &[class*="gd-icon-"] {
+        padding-left: 37px;
+
+        &.gd-icon-right {
+            padding-left: 11px;
+            padding-right: 32px;
+        }
+    }
+}
+
+// Temporary:
+// refactor
+// stylelint-disable-next-line no-duplicate-selectors
+%btn {
+    .ss-icon {
+        vertical-align: middle;
+    }
+}

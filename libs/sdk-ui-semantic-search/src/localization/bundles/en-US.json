@@ -1,0 +1,62 @@
+{
+    "semantic-search.error.title": {
+        "value": "Our search service is temporarily down.",
+        "comment": "Title for the error message shown when semantic search failed.",
+        "limit": 0
+    },
+    "semantic-search.error.text": {
+        "value": "We are working to resolve the issue.",
+        "comment": "Body for the error message shown when semantic search failed.",
+        "limit": 0
+    },
+    "semantic-search.no-results": {
+        "value": "No results found for “{query}”.",
+        "comment": "Message shown when semantic search did not return any results. Do not translate placeholder {query}.",
+        "limit": 0
+    },
+    "semantic-search.label": {
+        "value": "Search dashboards or visualization",
+        "comment": "Label for the input box that is used in semantic search.",
+        "limit": 0
+    },
+    "semantic-search.placeholder": {
+        "value": "Search dashboards or visualization…",
+        "comment": "Placeholder in the input box that is used in semantic search.",
+        "limit": 0
+    },
+    "semantic-search.id": {
+        "value": "ID",
+        "comment": "Label of column that contains ID of the search results object.",
+        "limit": 0
+    },
+    "semantic-search.tags": {
+        "value": "Tags",
+        "comment": "Label of column that contains tags of the search results object.",
+        "limit": 0
+    },
+    "semantic-search.match": {
+        "value": "{score}% match",
+        "comment": "Label of column that contains match score of the search results object. Do not translate placeholder {score}.",
+        "limit": 0
+    },
+    "semantic-search.previous-search": {
+        "value": "Previous search",
+        "comment": "Area-label for the search history icon.",
+        "limit": 0
+    },
+    "semantic-search.date.at": {
+        "value": "at",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.date.today": {
+        "value": "Today",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.date.yesterday": {
+        "value": "Yesterday",
+        "comment": "",
+        "limit": 0
+    }
+}

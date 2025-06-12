@@ -1,0 +1,44 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "lostMetric",
+                "alias": "Lost",
+                "format": "#,##0.00",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "af2Ewj9Re2vK"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "wonMetric",
+                "alias": "Won",
+                "format": "#,##0.00",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "afSEwRwdbMeQ"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

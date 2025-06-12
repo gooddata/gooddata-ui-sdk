@@ -1,0 +1,136 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "localIdentifier": "784a5018a51049078e8f7e86247e08a3",
+                        "title": "_Snapshot [EOP-2]",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "secondary_measures",
+            "items": [
+                {
+                    "measure": {
+                        "localIdentifier": "9e5c3cd9a93f4476a93d3494cedc6010",
+                        "title": "# of Open Opps.",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "tertiary_measures",
+            "items": [
+                {
+                    "measure": {
+                        "localIdentifier": "71d50cf1d13746099b7f506576d78e4a",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543"
+                                }
+                            }
+                        },
+                        "title": "Remaining Quota"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "attribute",
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028"
+                        },
+                        "localIdentifier": "49a659fbd7c541a69284769d53a2be7f"
+                    }
+                }
+            ]
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028"
+                },
+                "localIdentifier": "49a659fbd7c541a69284769d53a2be7f"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "784a5018a51049078e8f7e86247e08a3",
+                "alias": "_Snapshot [EOP-2]",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "9e5c3cd9a93f4476a93d3494cedc6010",
+                "alias": "# of Open Opps.",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "71d50cf1d13746099b7f506576d78e4a",
+                "alias": "Remaining Quota",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["49a659fbd7c541a69284769d53a2be7f"]
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

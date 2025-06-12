@@ -1,0 +1,61 @@
+// (C) 2007-2020 GoodData Corporation
+@use "variables";
+
+$class-slug: gd-dot-spinner !default;
+$spinner-items: 8;
+$spinner-item-size: 6px;
+$spinner-dimension: 34px;
+$spinner-item-background-color: variables.$gd-color-state-blank;
+
+.gd-dot-spinner {
+    position: relative;
+    width: $spinner-dimension;
+    height: $spinner-dimension;
+
+    &-centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    div {
+        position: absolute;
+        top: 50%;
+        width: $spinner-item-size;
+        height: $spinner-item-size;
+        background: $spinner-item-background-color;
+        opacity: 0.3;
+        transform: translate(0, -50%) rotate(0);
+        border-radius: 50%;
+        transform-origin: #{calc($spinner-dimension / 2)} center;
+    }
+
+    @for $spinner from 1 through $spinner-items {
+        $rotate: calc(360 / $spinner-items) * $spinner;
+
+        .#{$class-slug}-#{$spinner} {
+            transform: translate(0, -50%) rotate(#{$rotate}deg);
+            animation-name: spinner-animation;
+            animation-duration: #{calc(#{$spinner-items} * 1) / 15}s;
+            animation-timing-function: #{calc(#{$spinner} / 15)}s;
+            animation-iteration-count: infinite;
+        }
+    }
+
+    @at-root {
+        @keyframes spinner-animation {
+            0% {
+                opacity: 0.2;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.2;
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.7941b886918b959b397db68b6b1d0744",
+        "properties": {
+            "controls": {
+                "legend": { "enabled": true, "position": "auto", "responsive": "autoPositionWithPopup" }
+            }
+        },
+        "sorts": [],
+        "title": "WaterfallChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend",
+        "uri": "WaterfallChart.7941b886918b959b397db68b6b1d0744",
+        "visualizationUrl": "local:waterfall"
+    }
+}

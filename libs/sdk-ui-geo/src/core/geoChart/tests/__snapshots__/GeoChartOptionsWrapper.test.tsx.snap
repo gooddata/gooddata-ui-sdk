@@ -1,0 +1,424 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeoChartOptionsWrapper > should return geoChartOptions in props with location bucket 1`] = `
+{
+  "categoryItems": [],
+  "colorPalette": [
+    {
+      "fill": {
+        "b": 226,
+        "g": 178,
+        "r": 20,
+      },
+      "guid": "1",
+    },
+    {
+      "fill": {
+        "b": 141,
+        "g": 193,
+        "r": 0,
+      },
+      "guid": "2",
+    },
+  ],
+  "colorStrategy": GeoChartColorStrategy {
+    "fullColorAssignment": [
+      {
+        "color": {
+          "type": "guid",
+          "value": "1",
+        },
+        "headerItem": {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "attr.uscities.city",
+              "name": "City",
+              "ref": {
+                "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
+              },
+              "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
+            },
+            "identifier": "label.uscities.city.location",
+            "localIdentifier": "a_label.uscities.city.location",
+            "name": "location",
+            "ref": {
+              "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
+            },
+            "type": "GDC.geo.pin",
+            "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
+          },
+        },
+      },
+    ],
+    "outputColorAssignment": [
+      {
+        "color": {
+          "type": "guid",
+          "value": "1",
+        },
+        "headerItem": {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "attr.uscities.city",
+              "name": "City",
+              "ref": {
+                "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
+              },
+              "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
+            },
+            "identifier": "label.uscities.city.location",
+            "localIdentifier": "a_label.uscities.city.location",
+            "name": "location",
+            "ref": {
+              "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
+            },
+            "type": "GDC.geo.pin",
+            "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
+          },
+        },
+      },
+    ],
+    "palette": [
+      "rgb(20,178,226)",
+    ],
+    "theme": undefined,
+  },
+  "geoData": {
+    "location": {
+      "data": [
+        {
+          "lat": 18.0722,
+          "lng": -66.7458,
+        },
+        {
+          "lat": 18.0727,
+          "lng": -66.6077,
+        },
+        {
+          "lat": 18.0729,
+          "lng": -65.8976,
+        },
+        {
+          "lat": 21.2975,
+          "lng": -157.7211,
+        },
+        {
+          "lat": 21.3294,
+          "lng": -157.846,
+        },
+        {
+          "lat": 21.4031,
+          "lng": -157.9566,
+        },
+        {
+          "lat": 25.7839,
+          "lng": -80.2102,
+        },
+        {
+          "lat": 26.2181,
+          "lng": -98.418,
+        },
+        {
+          "lat": 26.2585,
+          "lng": -97.695,
+        },
+        {
+          "lat": 26.3024,
+          "lng": -98.6425,
+        },
+      ],
+      "index": 0,
+      "name": "City",
+    },
+  },
+}
+`;
+
+exports[`GeoChartOptionsWrapper > should return geoChartOptions with full buckets 1`] = `
+{
+  "categoryItems": [
+    {
+      "color": "rgb(20,178,226)",
+      "isVisible": true,
+      "legendIndex": 0,
+      "name": "Florida",
+      "uri": "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340105",
+    },
+    {
+      "color": "rgb(0,193,141)",
+      "isVisible": true,
+      "legendIndex": 1,
+      "name": "Texas",
+      "uri": "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=4436534",
+    },
+    {
+      "color": "rgb(229,77,66)",
+      "isVisible": true,
+      "legendIndex": 2,
+      "name": "California",
+      "uri": "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340116",
+    },
+  ],
+  "colorPalette": [
+    {
+      "fill": {
+        "b": 226,
+        "g": 178,
+        "r": 20,
+      },
+      "guid": "1",
+    },
+    {
+      "fill": {
+        "b": 141,
+        "g": 193,
+        "r": 0,
+      },
+      "guid": "2",
+    },
+    {
+      "fill": {
+        "b": 66,
+        "g": 77,
+        "r": 229,
+      },
+      "guid": "3",
+    },
+    {
+      "fill": {
+        "b": 0,
+        "g": 134,
+        "r": 241,
+      },
+      "guid": "4",
+    },
+    {
+      "fill": {
+        "b": 163,
+        "g": 85,
+        "r": 171,
+      },
+      "guid": "5",
+    },
+  ],
+  "colorStrategy": GeoChartColorStrategy {
+    "fullColorAssignment": [
+      {
+        "color": {
+          "type": "guid",
+          "value": "1",
+        },
+        "headerItem": {
+          "attributeHeaderItem": {
+            "name": "Florida",
+            "uri": "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340105",
+          },
+        },
+      },
+      {
+        "color": {
+          "type": "guid",
+          "value": "2",
+        },
+        "headerItem": {
+          "attributeHeaderItem": {
+            "name": "Texas",
+            "uri": "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=4436534",
+          },
+        },
+      },
+      {
+        "color": {
+          "type": "guid",
+          "value": "3",
+        },
+        "headerItem": {
+          "attributeHeaderItem": {
+            "name": "California",
+            "uri": "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340116",
+          },
+        },
+      },
+    ],
+    "outputColorAssignment": [
+      {
+        "color": {
+          "type": "guid",
+          "value": "1",
+        },
+        "headerItem": {
+          "attributeHeaderItem": {
+            "name": "Florida",
+            "uri": "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340105",
+          },
+        },
+      },
+      {
+        "color": {
+          "type": "guid",
+          "value": "2",
+        },
+        "headerItem": {
+          "attributeHeaderItem": {
+            "name": "Texas",
+            "uri": "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=4436534",
+          },
+        },
+      },
+      {
+        "color": {
+          "type": "guid",
+          "value": "3",
+        },
+        "headerItem": {
+          "attributeHeaderItem": {
+            "name": "California",
+            "uri": "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340116",
+          },
+        },
+      },
+    ],
+    "palette": [
+      "rgb(20,178,226)",
+      "rgb(0,193,141)",
+      "rgb(229,77,66)",
+    ],
+    "theme": undefined,
+  },
+  "geoData": {
+    "color": {
+      "data": [
+        4969,
+        256,
+        56,
+        0,
+        1856,
+        1305,
+        628,
+        982,
+        1683,
+        3295,
+        7286,
+      ],
+      "format": "#,##0.00",
+      "index": 1,
+      "name": "Density",
+    },
+    "location": {
+      "data": [
+        {
+          "lat": 25.7839,
+          "lng": -80.2102,
+        },
+        {
+          "lat": 26.2181,
+          "lng": -98.418,
+        },
+        {
+          "lat": 26.2585,
+          "lng": -97.695,
+        },
+        {
+          "lat": 26.3024,
+          "lng": -98.6425,
+        },
+        {
+          "lat": 26.5281,
+          "lng": -80.0811,
+        },
+        {
+          "lat": 27.9942,
+          "lng": -82.4451,
+        },
+        {
+          "lat": 28.2405,
+          "lng": -82.1796,
+        },
+        {
+          "lat": 28.4772,
+          "lng": -81.3369,
+        },
+        {
+          "lat": 32.8312,
+          "lng": -117.1225,
+        },
+        {
+          "lat": 34.1139,
+          "lng": -118.4068,
+        },
+        {
+          "lat": 37.7562,
+          "lng": -122.443,
+        },
+      ],
+      "index": 0,
+      "name": "City",
+    },
+    "segment": {
+      "data": [
+        "Florida",
+        "Texas",
+        "Texas",
+        "Texas",
+        "Florida",
+        "Florida",
+        "Florida",
+        "Florida",
+        "California",
+        "California",
+        "California",
+      ],
+      "index": 1,
+      "name": "State Name",
+      "uris": [
+        "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340105",
+        "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=4436534",
+        "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=4436534",
+        "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=4436534",
+        "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340105",
+        "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340105",
+        "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340105",
+        "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340105",
+        "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340116",
+        "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340116",
+        "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340116",
+      ],
+    },
+    "size": {
+      "data": [
+        6381966,
+        2228,
+        121,
+        0,
+        77702,
+        2804240,
+        76416,
+        1776841,
+        3210314,
+        1.28,
+        3603761,
+      ],
+      "format": "#,##0.00",
+      "index": 0,
+      "name": "Population",
+    },
+    "tooltipText": {
+      "data": [
+        "Miami",
+        "Abram",
+        "Lasana",
+        "Longoria",
+        "Boynton Beach",
+        "Tampa",
+        "Zephyrhills",
+        "Orlando",
+        "San Diego",
+        "Los Angeles",
+        "San Francisco",
+      ],
+      "index": 2,
+      "name": "City",
+    },
+  },
+}
+`;

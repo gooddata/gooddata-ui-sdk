@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AttributeFilterHandler > hiddenElements option should hide element in getAllElements() 1`] = `
+[
+  {
+    "title": "Educationly",
+    "uri": "Educationly",
+  },
+  {
+    "title": "Grammar Plus",
+    "uri": "Grammar Plus",
+  },
+  {
+    "title": "TouchAll",
+    "uri": "TouchAll",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > hiddenElements option should work properly with loadNextElementsPage() call 1`] = `
+[
+  {
+    "title": "Educationly",
+    "uri": "Educationly",
+  },
+  {
+    "title": "Grammar Plus",
+    "uri": "Grammar Plus",
+  },
+]
+`;

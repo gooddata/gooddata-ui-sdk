@@ -1,0 +1,857 @@
+// (C) 2022-2025 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "zIndexes";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as kit-button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
+
+.drag-layer {
+    @include kit-mixins.default-styles();
+
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+}
+
+.date-filter-button,
+.attribute-filter-button {
+    &.is-draggable,
+    &.is-dragging {
+        cursor: grab;
+
+        &::after {
+            left: -10px;
+        }
+    }
+
+    &.is-dragging {
+        display: inline-block;
+        padding: 0 10px;
+
+        &::after {
+            border-color: kit-variables.$gd-border-color;
+            background: var(
+                --gd-palette-complementary-0-from-theme,
+                color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
+            );
+        }
+    }
+
+    &:hover,
+    &.is-dragging {
+        .drag-handle-icon {
+            opacity: 1;
+        }
+    }
+
+    .drag-handle-icon {
+        content: "";
+        position: absolute;
+        z-index: zIndexes.$drag-and-drop-basic;
+        top: 8px;
+        left: -4px;
+        width: 7px;
+        height: 26px;
+        opacity: 0;
+        transition: all variables.$transition-length;
+    }
+}
+
+.attr-filter-dropzone {
+    position: absolute;
+    z-index: zIndexes.$drag-and-drop-drop-zone;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    .drop-hint {
+        width: 0;
+        height: 100%;
+        border-left: 2px dashed kit-variables.$gd-palette-primary-base;
+    }
+
+    &.next,
+    &.outside {
+        right: 0;
+        margin-right: 0;
+
+        .drop-hint {
+            float: right;
+            margin-left: 2px;
+        }
+    }
+
+    &.prev {
+        left: 0;
+        margin-left: 0;
+
+        .drop-hint {
+            float: left;
+            margin-left: -2px;
+        }
+    }
+
+    &.hidden {
+        display: none;
+    }
+
+    &.outside {
+        width: 100%;
+    }
+}
+
+.gd-dropzone {
+    position: relative;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        display: block;
+    }
+
+    &-message {
+        text-align: center;
+    }
+}
+
+.gd-dropzone-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: kit-variables.$gd-color-white;
+
+    &::before {
+        top: 10px;
+        right: 10px;
+        bottom: 10px;
+        left: 10px;
+        border: 3px dashed kit-variables.$gd-palette-primary-base;
+        border-radius: 15px;
+        background-color: kit-variables.$gd-palette-primary-dimmed;
+    }
+
+    &::after {
+        top: 23px;
+        right: 23px;
+        bottom: 23px;
+        left: 23px;
+        border-radius: 7px;
+    }
+
+    .gd-dropzone-message {
+        z-index: zIndexes.$drag-and-drop-basic;
+        flex: 1 1 auto;
+        margin: 0 23px;
+        color: kit-variables.$gd-color-text;
+        font-size: 14px;
+
+        &::before {
+            content: "\E61A";
+            display: block;
+            line-height: 80px;
+            color: kit-variables.$gd-palette-primary-base;
+            font-family: Indigo, sans-serif;
+            font-size: 50px;
+        }
+    }
+
+    &.gd-dropzone-over {
+        &::after {
+            background-color: kit-variables.$gd-palette-primary-base;
+        }
+
+        .gd-dropzone-message {
+            &,
+            &::before {
+                color: kit-variables.$gd-color-text-light;
+            }
+        }
+    }
+}
+
+.add-kpi-placeholder::before,
+.move-kpi-placeholder::before {
+    background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-kpi-placeholder.svg");
+}
+
+.add-attribute-filter-placeholder::before {
+    background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-attribute-filter-placeholder.svg");
+
+    &:disabled {
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-attribute-filter-placeholder-disabled.svg");
+    }
+}
+
+.dropzone {
+    z-index: zIndexes.$drag-and-drop-drop-zone;
+    &.next,
+    &.prev {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+    }
+
+    &.next {
+        right: 0;
+
+        .drop-hint {
+            float: right;
+            margin-left: 3px;
+        }
+
+        &.full {
+            width: 100%;
+        }
+    }
+
+    &.prev {
+        left: 0;
+
+        .drop-hint {
+            float: left;
+            margin-left: -3px;
+        }
+
+        &.full {
+            width: 100%;
+        }
+    }
+
+    &.hidden {
+        display: none;
+    }
+
+    &.extended {
+        width: 100%;
+    }
+}
+
+.widget-dropzone,
+.new-row-dropzone {
+    width: 100%;
+    height: 100%;
+
+    .widget-dropzone-box {
+        position: relative;
+        box-sizing: border-box;
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+
+        .can-drop {
+            margin: 0;
+
+            .drag-info-placeholder-drop-target {
+                display: block;
+            }
+        }
+
+        .drop-target-message {
+            font-weight: normal;
+        }
+    }
+
+    .over-widget-dropzone {
+        position: relative;
+        box-sizing: border-box;
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.new-row-dropzone {
+    height: 80px;
+
+    .drag-info-placeholder.type-kpi .kpi-drop-target {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+            margin-right: 10px;
+        }
+    }
+
+    background-color: var(--gd-palette-complementary-0, #fff);
+}
+
+.row-hotspot-container {
+    position: relative;
+    z-index: zIndexes.$drag-and-drop-drop-zone;
+    width: 100%;
+    height: 0;
+
+    .row-hotspot {
+        position: absolute;
+        z-index: zIndexes.$drag-and-drop-drop-zone;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        visibility: visible;
+        width: 100%;
+        height: 100px;
+
+        &.hidden {
+            visibility: hidden;
+        }
+    }
+
+    &.last {
+        top: 16px;
+        height: 100px;
+        margin: 0;
+    }
+}
+
+.gd-fluid-layout-row-header {
+    .row-hotspot-container {
+        position: absolute;
+        top: 0;
+        height: 100%;
+
+        &.hidden {
+            height: 0;
+        }
+
+        .row-hotspot {
+            height: 100%;
+        }
+    }
+}
+
+.drag-info-placeholder {
+    position: relative;
+    text-align: center;
+
+    &.type-none,
+    &.type-attribute-filter {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+
+    &.type-kpi {
+        text-align: left;
+
+        .kpi-drop-target {
+            display: block;
+        }
+    }
+
+    &.type-visualization {
+        .visualization-drop-target {
+            display: block;
+        }
+
+        .drag-info-placeholder-drop-target {
+            width: 100%;
+        }
+    }
+
+    .drop-target-message {
+        display: block;
+    }
+
+    &.type-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .can-drop {
+        margin: 0;
+
+        .drag-info-placeholder-box {
+            display: none;
+        }
+
+        .drag-info-placeholder-drop-target {
+            display: block;
+        }
+
+        &.is-over {
+            .drop-target-inner {
+                background-color: kit-variables.$gd-palette-primary-base;
+            }
+
+            .drop-target-message {
+                color: kit-variables.$gd-color-text-light;
+            }
+        }
+    }
+}
+
+.gd-fluidlayout-layout {
+    .drag-info-placeholder {
+        &.type-visualization {
+            .drag-info-placeholder-drop-target {
+                width: auto;
+            }
+        }
+    }
+}
+
+.drag-info-placeholder-inner {
+    width: 100%;
+}
+
+.drag-info-placeholder-box {
+    width: 420px;
+    margin: 110px auto 0;
+    padding: 40px;
+    border-radius: 15px;
+    border: 2px dashed
+        var(
+            --gd-palette-complementary-3-from-theme,
+            color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.55)
+        );
+    background: var(
+        --gd-palette-complementary-1-from-theme,
+        color.adjust(variables.$dialog-border, $alpha: -0.95)
+    );
+    text-align: center;
+
+    h2 {
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 28px;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    p {
+        margin-top: 5px;
+        font-size: 18px;
+        line-height: 28px;
+        font-weight: normal;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    .gd-icon-insight {
+        &::before {
+            content: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-insight-placeholder.svg");
+            display: inline-block;
+            margin-right: 10px;
+        }
+    }
+}
+
+.gd-dashboard-nested-layout-widget-visualization-content {
+    .drag-info-placeholder-box p {
+        margin-top: 0;
+    }
+
+    .drop-target-message {
+        line-height: 28px;
+    }
+}
+
+.drag-info-placeholder-drop-target,
+.drop-target-inner {
+    position: absolute;
+}
+
+.drag-info-placeholder-drop-target {
+    $outter-padding: 10px;
+
+    top: $outter-padding;
+    right: $outter-padding;
+    bottom: $outter-padding;
+    left: $outter-padding;
+    border: variables.$item-border dashed kit-variables.$gd-palette-primary-base;
+    border-radius: 15px;
+    background-color: kit-variables.$gd-palette-primary-dimmed;
+}
+
+.drop-target-inner {
+    $inner-padding: 8px;
+
+    top: $inner-padding;
+    right: $inner-padding;
+    bottom: $inner-padding;
+    left: $inner-padding;
+    border-radius: 7px;
+}
+
+.drop-target-message {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    display: inline-block;
+    padding: 0 10px;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    vertical-align: middle;
+    color: variables.$info-text-color;
+    transform: translateY(-50%);
+}
+
+.drop-target-message,
+.drag-info-placeholder-drop-target {
+    display: none;
+}
+
+.gd-fluidlayout-row-separator {
+    position: absolute;
+    right: 10px;
+    left: 10px;
+    height: 2px;
+    background-color: kit-variables.$gd-color-disabled;
+
+    &-icon {
+        position: absolute;
+        top: -9px;
+        width: 20px;
+        height: 20px;
+
+        &-left {
+            left: -25px;
+        }
+
+        &-right {
+            right: -25px;
+            transform: rotate(180deg);
+        }
+    }
+
+    .new-row-dropzone &.bottom {
+        bottom: 20px;
+    }
+
+    &.top {
+        top: 0;
+    }
+
+    &.bottom {
+        bottom: -18px;
+    }
+
+    &.active {
+        background-color: kit-variables.$gd-palette-primary-base;
+    }
+}
+
+.gd-fluid-layout-row-header .new-row-dropzone .gd-fluidlayout-row-separator.bottom {
+    bottom: -23px;
+}
+
+.kpi-placeholder {
+    $padding: 10px;
+
+    position: absolute;
+    top: $padding;
+    right: $padding;
+    bottom: $padding;
+    left: $padding;
+    text-align: center;
+    cursor: pointer;
+
+    &.select-measure {
+        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/dummy-kpi-simple.svg") no-repeat center center;
+        background-size: 130px;
+    }
+}
+
+.attributes-list {
+    .dropdown-body {
+        flex-direction: column;
+    }
+}
+.move-kpi-placeholder {
+    display: flex;
+    align-items: center;
+    width: 151px;
+    height: 42px;
+    padding: 0 10px 0 50px;
+    font-size: 12px;
+    border: 1px solid transparentize(variables.$dialog-border, 1);
+    border-color: var(--gd-palette-complementary-5-from-theme, transparentize(variables.$dialog-border, 0.5));
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 kit-button-variables.$button-shadow-lighter,
+        0 2px 9px 0 kit-button-variables.$button-shadow-darker;
+    line-height: 14px;
+    color: variables.$gd-color-text;
+    background: var(
+        --gd-palette-complementary-0-t10,
+        transparentize(kit-variables.$default-gd-color-white, 0.05)
+    );
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        display: block;
+        flex: 0 0 auto;
+        width: 50px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .shortened {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
+.move-insight-placeholder {
+    width: 215px;
+    height: 42px;
+    border: 1px solid transparentize(variables.$dialog-border, 1);
+    border-color: var(--gd-palette-complementary-5-from-theme, transparentize(variables.$dialog-border, 0.5));
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 kit-button-variables.$button-shadow-lighter,
+        0 2px 9px 0 kit-button-variables.$button-shadow-darker;
+    color: variables.$gd-color-text;
+    background: var(
+        --gd-palette-complementary-0-t10,
+        transparentize(kit-variables.$default-gd-color-white, 0.05)
+    );
+
+    .shortened {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
+.dashboard-widget-draggable-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: zIndexes.$drag-and-drop-draggable-wrapper;
+}
+
+.current-dragging-item {
+    width: 0;
+    display: none;
+}
+
+.gd-fluidlayout-column-row-end-hotspot {
+    flex-grow: 1;
+    min-height: 60px;
+    position: relative;
+    align-self: stretch;
+}
+
+.sdk-edit-mode-on {
+    .highcharts-container {
+        // no pointer events for charts in edit mode,
+        // this kills tooltips but allows dragging
+        pointer-events: none;
+    }
+}
+
+.gd-grid-layout {
+    .new-row-dropzone {
+        position: absolute;
+        height: unset;
+
+        .widget-dropzone-box {
+            position: unset;
+            height: unset;
+            padding: unset;
+
+            .can-drop {
+                margin: unset;
+            }
+        }
+    }
+
+    .widget-dropzone {
+        height: 100%;
+
+        .widget-dropzone-box {
+            position: relative;
+            height: 100%;
+            padding: 10px;
+            .can-drop {
+                margin: 0;
+            }
+        }
+
+        .drag-info-placeholder-drop-target,
+        .drop-target-inner {
+            position: absolute;
+        }
+
+        .drag-info-placeholder-drop-target {
+            $outter-padding: 10px;
+
+            top: $outter-padding;
+            right: $outter-padding;
+            bottom: $outter-padding;
+            left: $outter-padding;
+        }
+        .drop-target-inner {
+            $inner-padding: 10px;
+
+            top: $inner-padding;
+            right: $inner-padding;
+            bottom: $inner-padding;
+            left: $inner-padding;
+            align-content: center;
+        }
+    }
+
+    .dropzone {
+        &.next {
+            .drop-hint {
+                float: unset;
+            }
+        }
+    }
+
+    .row-hotspot-container {
+        .row-hotspot {
+            top: -20px; // move active dropzone over the section hotspot row
+            right: unset;
+            bottom: unset;
+            left: unset;
+            height: 100%;
+        }
+
+        &.last {
+            top: unset;
+            height: 70px;
+        }
+    }
+
+    .gd-fluid-layout-row-header {
+        .row-hotspot-container {
+            z-index: zIndexes.$drag-and-drop-drop-zone;
+        }
+    }
+
+    .drag-info-placeholder {
+        position: unset;
+
+        .can-drop {
+            margin: unset;
+        }
+    }
+
+    .drag-info-placeholder-inner {
+        padding: 0 20px;
+    }
+
+    .drag-info-placeholder-drop-target {
+        top: unset;
+        right: unset;
+        bottom: unset;
+        left: unset;
+        padding: 10px;
+    }
+
+    .drag-info-placeholder-drop-target,
+    .drop-target-inner {
+        position: unset;
+    }
+
+    .drop-target-inner {
+        top: unset;
+        right: unset;
+        bottom: unset;
+        left: unset;
+        padding: 10px;
+    }
+
+    .drop-target-message {
+        position: unset;
+        top: unset;
+        right: unset;
+        left: unset;
+        transform: unset;
+    }
+
+    .gd-fluidlayout-row-separator {
+        position: unset;
+        right: unset;
+        left: unset;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        height: 20px;
+        background-color: unset;
+
+        &-icon {
+            position: unset;
+            top: unset;
+
+            &-left {
+                left: unset;
+            }
+
+            &-right {
+                right: 0;
+            }
+        }
+
+        &-line {
+            flex-grow: 1;
+            height: 2px;
+            background-color: kit-variables.$gd-color-disabled;
+        }
+
+        &.active {
+            background-color: unset;
+
+            .gd-fluidlayout-row-separator-line {
+                height: 2px;
+                background-color: kit-variables.$gd-palette-primary-base;
+            }
+        }
+    }
+
+    .dashboard-widget-draggable-wrapper {
+        z-index: auto;
+    }
+
+    // fix for grid layout after some classes at the top were removed
+    .dashboard-widget-draggable-wrapper:not(.gd-nested-layout-widget-wrapper) {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gd-fluidlayout-column-row-end-hotspot {
+        min-height: unset;
+        .widget-dropzone-box {
+            padding: 10px 0;
+        }
+        .drag-info-placeholder-inner {
+            padding: 0;
+        }
+        &.gd-first-container-row-dropzone .widget-dropzone-box {
+            padding-top: 0;
+        }
+        .drag-info-placeholder-drop-target,
+        .drop-target-inner {
+            position: unset;
+            height: 100%;
+        }
+    }
+
+    .gd-fluidlayout-column-row-end-hotspot.gd-fluidlayout-column-dropzone__text--hidden {
+        .drop-target-message.kpi-drop-target {
+            display: none;
+        }
+    }
+}

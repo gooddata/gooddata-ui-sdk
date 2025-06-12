@@ -1,0 +1,31 @@
+/* (C) 2007-2020 GoodData Corporation */
+
+.shortened-text-wrapper {
+    color: var(--gd-palette-complementary-8, inherit);
+}
+
+.example-wrapper-small {
+    position: relative;
+    height: 20px;
+    padding: 2px;
+    border: 1px solid var(--gd-palette-complementary-2, #dedede);
+    white-space: nowrap;
+
+    width: 40px;
+}
+
+.example-wrapper-large {
+    position: relative;
+    height: 20px;
+    padding: 2px;
+    border: 1px solid var(--gd-palette-complementary-2, #dedede);
+    white-space: nowrap;
+
+    width: 400px;
+}
+
+.example-long-text {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+}

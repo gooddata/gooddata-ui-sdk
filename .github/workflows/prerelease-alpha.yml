@@ -1,0 +1,15 @@
+# (C) 2024 GoodData Corporation
+
+name: Prerelease ~ Publish alpha
+on:
+    workflow_dispatch:
+jobs:
+    publish-pre-release:
+        uses: ./.github/workflows/rw-publish-prerelease.yml
+        permissions:
+            contents: write
+            id-token: write
+        secrets: inherit
+        with:
+            source-branch: "master"
+            author-name: ${{ github.actor }}

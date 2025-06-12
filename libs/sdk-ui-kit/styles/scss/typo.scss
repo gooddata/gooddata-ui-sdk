@@ -1,0 +1,53 @@
+// (C) 2007-2020 GoodData Corporation
+@use "typo-mixins";
+
+// Headings
+.gd-heading-1 {
+    @include typo-mixins.gd-heading-1;
+}
+
+.gd-heading-2 {
+    @include typo-mixins.gd-heading-2;
+}
+
+.gd-heading-3 {
+    @include typo-mixins.gd-heading-3;
+}
+
+// Paragraphs
+.gd-paragraph {
+    @include typo-mixins.gd-paragraph;
+}
+
+// Labels
+.gd-label-top {
+    @include typo-mixins.gd-label-top;
+}
+
+.gd-label {
+    @include typo-mixins.gd-label;
+}
+
+.gd-label-small {
+    @include typo-mixins.gd-label-small;
+}
+
+.gd-typography {
+    margin: 0;
+
+    &--h1 {
+        @include typo-mixins.gd-heading-1;
+    }
+
+    &--h2 {
+        @include typo-mixins.gd-heading-2;
+    }
+
+    &--h3 {
+        @include typo-mixins.gd-heading-3;
+    }
+
+    &--p {
+        @include typo-mixins.gd-paragraph;
+    }
+}

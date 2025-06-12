@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="11px" viewBox="0 0 8 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>less then equal</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Spec" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Conditions" transform="translate(-261.000000, -358.000000)" fill="#B0BECA">
+            <g id="Group-2" transform="translate(241.000000, 208.000000)">
+                <g id="Group-4">
+                    <g id="Group" transform="translate(14.000000, 35.000000)">
+                        <g id="less-then-equal" transform="translate(10.000000, 120.500000) scale(-1, 1) translate(-10.000000, -120.500000) translate(6.000000, 115.000000)">
+                            <polygon id="Rectangle-Copy-19" points="0 0 8 3 8 5 0 2"></polygon>
+                            <polygon id="Rectangle-Copy-20" transform="translate(4.000000, 5.500000) scale(-1, 1) translate(-4.000000, -5.500000) " points="0 3 8 6 8 8 0 5"></polygon>
+                            <rect id="Rectangle-Copy-21" x="0" y="9" width="8" height="2"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

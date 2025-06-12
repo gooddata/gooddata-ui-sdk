@@ -1,0 +1,72 @@
+name: check
+
+on:
+  pull_request:
+    branches:
+      - master
+      - release
+
+concurrency:
+  group: check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+
+  dismiss-approvals:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - name: Dismiss Approvals
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+
+            // Get all reviews on the pull request
+            const reviews = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+            });
+
+            // Iterate over reviews and dismiss approvals
+            for (const review of reviews.data) {
+              if (review.state === "APPROVED") {
+                await github.rest.pulls.dismissReview({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber,
+                  review_id: review.id,
+                  message: "Approval dismissed automatically due to PR update.",
+                });
+                console.log(`Dismissed approval from ${review.user.login}`);
+              }
+            }
+        env:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+
+  build-validate-stage:
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+    name: build-validate-stage
+    uses: ./.github/workflows/rw-rush-build-basic-checks.yml
+    with:
+      target-branch: ${{ github.event.pull_request.base.ref }}
+    secrets: inherit
+
+  ready-to-merge:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    if: ${{ !cancelled() }}
+    needs:
+      - build-validate-stage
+    steps:
+      - name: Check if needed jobs succeeded
+        uses: re-actors/alls-green@release/v1
+        with:
+          jobs: ${{ toJSON(needs) }}

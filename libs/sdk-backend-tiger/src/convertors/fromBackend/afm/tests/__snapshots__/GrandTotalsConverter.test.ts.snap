@@ -1,0 +1,56 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`transformGrandTotalData > should correctly transform grand total data 1`] = `
+[
+  [
+    [
+      6,
+      3,
+      15,
+      6,
+    ],
+    [
+      null,
+      1,
+      null,
+      2,
+    ],
+  ],
+  [],
+]
+`;
+
+exports[`transformGrandTotalData > should correctly transform grand total data with row and column grand totals 1`] = `
+[
+  [
+    [
+      6,
+      null,
+      10,
+      null,
+    ],
+  ],
+  [
+    [
+      4,
+    ],
+    [
+      12,
+    ],
+  ],
+]
+`;
+
+exports[`transformGrandTotalData > should correctly transform grand total data with two header groups 1`] = `
+[
+  [
+    [
+      7232,
+      3914.259799423051,
+      null,
+      null,
+    ],
+  ],
+  [],
+]
+`;

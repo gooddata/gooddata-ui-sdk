@@ -1,0 +1,183 @@
+// (C) 2007-2024 GoodData Corporation
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-viz-tooltip {
+    position: relative;
+    border-radius: 3px;
+    font-family: variables.$font-stack-roman;
+    color: var(
+        --gd-chart-tooltipLabelColor,
+        var(--gd-palette-complementary-6-from-theme, kit-variables.$gd-color-dark)
+    );
+    background-color: var(
+        --gd-chart-tooltipBackgroundColor,
+        var(
+            --gd-palette-complementary-0-from-theme,
+            color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
+        )
+    );
+}
+
+.gd-viz-tooltip-stroke {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 0;
+    border-top: 3px solid var(--gd-palette-complementary-3-from-theme, #848484);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.gd-viz-tooltip-content {
+    display: block;
+    padding: 10px 9px 9px;
+    border-radius: 3px;
+    border: 1px solid;
+    border-color: var(
+        --gd-chart-tooltipBorderColor,
+        var(--gd-palette-complementary-3-from-theme, color.adjust(#c9d5e0, $alpha: -0.3))
+    );
+    box-shadow: 0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
+        0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+    line-height: 1.3;
+    white-space: normal;
+
+    @media #{variables.$insight-small-only} {
+        max-width: none;
+    }
+}
+
+.gd-viz-tooltip-item {
+    display: block;
+    margin-bottom: 10px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.gd-viz-tooltip-title {
+    display: block;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+    color: var(--gd-chart-tooltipLabelColor-from-theme, kit-variables.$gd-color-label);
+}
+
+.gd-viz-tooltip-value-wraper {
+    padding-right: 1em;
+}
+
+.gd-viz-tooltip-value {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 1.3em;
+    max-height: 2.6em;
+    text-align: justify;
+    margin-right: -1em;
+    padding-right: 1em;
+    word-wrap: break-word;
+    color: var(--gd-chart-tooltipValueColor, kit-variables.$gd-color-dark);
+
+    &::before {
+        content: "...";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: var(
+            --gd-chart-tooltipBackgroundColor,
+            var(
+                --gd-palette-complementary-0-from-theme,
+                color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
+            )
+        );
+    }
+}
+
+.gd-viz-tooltip-value-max-content {
+    display: block;
+    visibility: hidden;
+    overflow: hidden;
+    height: 0;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: left;
+}
+
+.gd-multiline-supported {
+    .gd-viz-tooltip-value-wraper {
+        padding-right: 0;
+    }
+
+    .gd-viz-tooltip-value {
+        margin: 0;
+        padding: 0;
+        line-height: 1.3em;
+        text-align: left;
+        max-height: 2.6em;
+
+        &.gd-clamp-two-line {
+            display: flex;
+
+            /*! autoprefixer: ignore next */
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
+        &::before {
+            content: none;
+        }
+
+        &::after {
+            content: none;
+        }
+    }
+}
+
+// hide default highcharts svg tooltip when using html-based one
+.highcharts-tooltip-container {
+    g.highcharts-tooltip {
+        visibility: hidden;
+    }
+
+    // !important is necessary because z-index have been added to the element by Highcharts in
+    // https://github.com/highcharts/highcharts/commit/48a82ce80ba946839e3a1280e63ca02ab1f88ec0
+    /* stylelint-disable declaration-no-important */
+    z-index: 3005 !important;
+}
+
+.gd-viz-tooltip-interaction {
+    white-space: nowrap;
+    color: kit-variables.$gd-color-state-blank;
+    font-size: 12px;
+    text-align: left;
+    border-top: 1px solid kit-variables.$gd-border-color;
+    padding-top: 9px;
+
+    @media only screen and (min-width: kit-variables.$small-breakpoint) and (max-width: 720px) {
+        white-space: normal;
+    }
+}
+
+.gd-viz-tooltip-drilling-point {
+    cursor: pointer;
+}

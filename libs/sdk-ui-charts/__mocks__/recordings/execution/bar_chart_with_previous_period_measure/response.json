@@ -1,0 +1,50 @@
+{
+    "executionResponse": {
+        "dimensions": [
+            {
+                "headers": [
+                    {
+                        "measureGroupHeader": {
+                            "items": [
+                                {
+                                    "measureHeaderItem": {
+                                        "name": "Primary measure - period ago",
+                                        "format": "$#,##0.00",
+                                        "localIdentifier": "m1.pp1"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "name": "Primary measure",
+                                        "format": "$#,##0.00",
+                                        "localIdentifier": "m1"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "headers": [
+                    {
+                        "attributeHeader": {
+                            "name": "Year created",
+                            "localIdentifier": "a1",
+                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/324",
+                            "identifier": "closed.aag81lMifn6q",
+                            "formOf": {
+                                "name": "Year created",
+                                "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/323",
+                                "identifier": "closed.year"
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "links": {
+            "executionResult": "/gdc/app/projects/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/executionResults/8815266349284326400?q=eAGlkdFPwjAQxv%2BVpfigyXSDMUASY4yI4cUYlQez7KHQmylr1%2BbaQXDhf7d1mGDiC%2FjWXu5%2B9933%0ANQRBK7RPVAIZk3lluRXASEiWStSyMmScNYRxowXdThXKGXNt0QdbRpJFfFAOTNk3nxUU625ZxEVP%0AmOGqGFmZckYHkVqsoqTXd7gFNfAgQEJl5y%2Bz4xlJBO20ueXsxgGptcgXtYVTFCUOwJALMVGb6tWC%0AvvuhTabHauul145mnIluUpf%2BXUtJceu%2B70DxUOubd3dfD87vhTLALlzDt%2Bt%2F1ZWlwmeQ5WGW57s8%0AJBLc3cs2l8IFQv3as07Y6cRXcfxr%2BwH4GbmXFEigpkYILgONsOaqNoEG5Mon3pKPt3OYjoYJ2YUN%0AOVnPP7d3iXcG1cbbsr%2FjEVWtSb77AnuB8r0%3D%0A&c=8b2a2cb0917fb346c0a3970046b85b4c&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=0%2C0"
+        }
+    }
+}

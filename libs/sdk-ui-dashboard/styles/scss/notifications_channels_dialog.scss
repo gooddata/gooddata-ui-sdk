@@ -1,0 +1,899 @@
+// (C) 2019-2025 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "_variables" as variables;
+@use "zIndexes";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
+
+$horizontal-space: 10px;
+$vertical-space: 20px;
+$input-height: 28px;
+$dialog-padding: 20px;
+$min-content-height: 110px;
+
+@mixin input-styles {
+    color: button-variables.$button-normal-color;
+    font-size: 12px;
+}
+
+@media #{kit-variables.$small-only} {
+    .gd-notifications-channels-dialog-overlay {
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 99vh;
+    }
+}
+.gd-notifications-channels-dialog-overlay.truncated {
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .gd-notification-channel-dialog-with-automation-filters {
+        overflow: hidden;
+    }
+}
+
+.gd-dialog:not(.gd-dropdown).gd-notifications-channels-dialog {
+    // TODO: test this with IE https://caniuse.com/#search=calc
+    // responsive layout: viewport's width - $dialog-padding
+    width: calc(100vw - $dialog-padding);
+    max-width: 640px;
+
+    .hr {
+        height: 0;
+        margin: 12px 0 14px;
+        border-top: 1px solid kit-variables.$gd-border-color;
+    }
+
+    .gd-dialog-footer {
+        display: flex;
+
+        .gd-loading-spinner {
+            top: 8px;
+            right: 6px;
+        }
+    }
+}
+
+.gd-input-component {
+    margin-bottom: $vertical-space;
+
+    &--no-last-child-margin {
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    @media #{kit-variables.$small-only} {
+        .gd-label {
+            display: block;
+            margin-bottom: 7px;
+            margin-top: -3px;
+        }
+        .gd-label:first-child {
+            margin-top: 0;
+        }
+    }
+
+    @media #{kit-variables.$medium-up} {
+        display: flex;
+        align-items: center;
+
+        .gd-label {
+            width: 95px;
+            min-width: 95px;
+        }
+
+        .gd-input {
+            flex-grow: 1;
+            min-width: 0;
+            width: 100%;
+        }
+    }
+}
+
+.gd-textarea-component {
+    @media #{kit-variables.$medium-up} {
+        align-items: flex-start;
+    }
+
+    .gd-input-field {
+        resize: vertical;
+        min-height: 30px;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 15px;
+
+        &.has-error {
+            outline-color: kit-variables.$gd-color-negative;
+        }
+    }
+}
+
+.gd-notification-channels-automation-filters {
+    align-items: normal;
+}
+
+.gd-notifications-channels-attachments {
+    @media #{kit-variables.$medium-up} {
+        align-items: flex-start;
+    }
+
+    // Remove fieldset border and padding
+    &.gd-input-component {
+        border: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+    }
+
+    legend.gd-label {
+        float: left;
+        padding: 0;
+        margin-bottom: 0;
+        height: 30px;
+        line-height: 30px;
+
+        @media #{kit-variables.$small-only} {
+            float: none;
+            display: block;
+            width: auto;
+            margin-bottom: 7px;
+            margin-top: -3px;
+        }
+    }
+
+    .gd-attachment-list {
+        display: flex;
+        flex-direction: row;
+        align-items: end;
+        flex: 1;
+        overflow: hidden;
+        margin: -2px 0;
+        flex-wrap: wrap;
+
+        @media #{kit-variables.$small-only} {
+            max-width: none;
+        }
+    }
+
+    .gd-attachment-list-message {
+        display: flex;
+        flex-basis: 100%;
+        margin-top: 10px;
+    }
+
+    .gd-attachment-filters-dropdown-button {
+        display: flex;
+        align-items: baseline;
+        height: 28px;
+        color: kit-variables.$gd-color-link;
+
+        .gd-button-link-dimmed {
+            border: none;
+            box-shadow: none;
+        }
+    }
+
+    .gd-attachment-item {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        margin-top: -3px;
+        margin-left: 5px;
+
+        &-format {
+            padding-left: 7px;
+            padding-right: 7px;
+            display: flex;
+            align-items: center;
+            height: 24px;
+            color: kit-variables.$gd-color-text;
+            background: kit-variables.$gd-border-color;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        &-format-with-configuration {
+            > span {
+                border-radius: 3px 0 0 3px;
+            }
+        }
+
+        &-configuration {
+            display: flex;
+            height: 24px;
+            color: kit-variables.$gd-color-text;
+            background: variables.$button-grey-background;
+            border: none;
+            border-radius: 0 3px 3px 0;
+            padding-left: 7px;
+            padding-right: 7px;
+            margin-left: -10px;
+            margin-right: 10px;
+            cursor: pointer;
+
+            &::before {
+                position: relative;
+                top: 2px;
+                margin-top: 1px;
+            }
+        }
+    }
+}
+
+.gd-attachment-filters-dropdown {
+    width: 245px;
+    max-height: 350px;
+
+    .gd-list-title {
+        line-height: normal;
+    }
+
+    .gd-close-button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+
+        .gd-button-link.gd-button-icon-only::before {
+            font-size: 14px;
+        }
+    }
+
+    .gd-attachment-filters-dropdown-content {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        > :first-child {
+            margin-bottom: 10px;
+        }
+
+        > :last-child {
+            margin-top: 10px;
+        }
+
+        .gd-icon-circle-question {
+            position: relative;
+            top: -1px;
+            padding: 5px;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        .gd-attachment-filters-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-left: 2px dotted kit-variables.$gd-border-color;
+            padding: 0 10px;
+            margin-left: 6px;
+            max-height: 180px;
+            overflow-y: auto;
+            margin-right: -10px;
+        }
+
+        .gd-attachment-filters-list-item-title {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            color: kit-variables.$gd-color-link;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        .gd-attachment-filters-list-item-subtitle {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            color: kit-variables.$gd-color-text;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: bold;
+            line-height: normal;
+        }
+    }
+
+    .gd-attachment-filters-dropdown-footer {
+        display: flex;
+        justify-content: end;
+        padding: 10px;
+    }
+}
+
+.gd-attachment-settings-dropdown {
+    width: 245px;
+
+    .gd-list-title {
+        line-height: normal;
+    }
+
+    .gd-close-button {
+        position: absolute;
+        top: 2px;
+        right: 0;
+
+        .gd-button-link.gd-button-icon-only::before {
+            font-size: 14px;
+        }
+    }
+
+    .gd-attachment-settings-dropdown-content {
+        display: flex;
+        flex-direction: column;
+        padding: 15px 10px;
+    }
+
+    .gd-attachment-settings-dropdown-footer {
+        display: flex;
+        justify-content: end;
+        padding: 10px;
+    }
+}
+
+.gd-notifications-channels-management-dialog {
+    display: flex;
+    flex-direction: column;
+    width: 540px;
+
+    @media #{kit-variables.$small-only} {
+        width: calc(100vw - 20px);
+        height: 90vh;
+        max-height: none;
+    }
+
+    .gd-notifications-channels-management-dialog-title {
+        display: flex;
+        margin-bottom: 10px;
+
+        .gd-dialog-header {
+            margin: 0;
+        }
+
+        > h3 {
+            color: var(--gd-modal-title-color, kit-variables.$gd-color-dark);
+        }
+    }
+
+    .gd-notifications-channels-content {
+        overflow-x: hidden;
+        width: calc(100% + 20px);
+        margin: 0 -20px 0 0;
+        padding: 10px 20px 10px 0;
+        min-height: 143px;
+        max-height: 475px;
+        overflow-y: auto;
+
+        @media #{kit-variables.$small-only} {
+            max-height: none;
+            height: 100%;
+        }
+    }
+
+    .gd-notifications-channels-content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+            flex-grow: 2;
+            position: relative;
+            overflow: hidden;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: kit-variables.$gd-color-state-blank;
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                display: inline-block;
+                width: 100%;
+                height: 0;
+                margin-left: 10px;
+                border-top: 1px solid kit-variables.$gd-border-color;
+            }
+
+            + label {
+                margin-top: 10px;
+            }
+        }
+    }
+
+    .gd-notifications-channels-message {
+        height: 100%;
+        min-height: $min-content-height;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 10px;
+        text-align: center;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    .gd-loading-equalizer {
+        margin: auto;
+    }
+
+    .gd-notifications-channel {
+        display: flex;
+        overflow: hidden;
+        width: 100%;
+        height: 50px;
+        cursor: default;
+
+        &:hover,
+        &.hover {
+            background: kit-variables.$is-focused-background;
+
+            .gd-notifications-channel-icon {
+                background: transparent;
+            }
+
+            .gd-notifications-channel-delete-icon {
+                display: block;
+            }
+        }
+        &.editable:hover,
+        &.editable.hover {
+            cursor: pointer;
+        }
+
+        .gd-notifications-channel-menu-icon {
+            display: block;
+            width: 50px;
+            height: 50px;
+            border: none;
+            cursor: pointer;
+
+            background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/ellipsis.svg");
+            background-color: transparent;
+            background-position: center center;
+        }
+    }
+
+    .gd-notifications-channel-old {
+        display: inline-flex;
+        flex-direction: row-reverse;
+
+        .gd-notifications-channel-menu-icon {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+        }
+    }
+
+    .gd-notifications-channel-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        margin: auto 10px auto 0;
+        background-color: kit-variables.$is-focused-background;
+        border-radius: 100px;
+        flex-shrink: 0;
+
+        &.gd-notifications-channel-icon-invalid {
+            background-color: kit-variables.$gd-palette-error-dimmed;
+        }
+    }
+
+    .gd-notifications-channel-content {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .gd-notifications-channel-text-content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+        height: 40px;
+        margin: auto;
+        white-space: nowrap;
+    }
+
+    .gd-schedule-email__list {
+        &:focus-visible {
+            outline: none;
+
+            .gd-schedule-email__item--isFocused .gd-notifications-channel-delete-icon {
+                display: block;
+            }
+
+            .gd-schedule-email__item--isFocusedSelectItem,
+            .gd-schedule-email__item__button--isFocused {
+                @include mixins.focus-ring;
+            }
+        }
+    }
+
+    .gd-notifications-channel-title {
+        white-space: nowrap;
+    }
+
+    .gd-notifications-channel-subtitle {
+        white-space: nowrap;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    .gd-notifications-channel-shortened-text {
+        display: block;
+        overflow: hidden;
+    }
+
+    .gd-notifications-channel-delete {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 36px;
+        height: 100%;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    // Making the row red on delete hover, this affects elements before the delete icon
+    .gd-notifications-channel-content:has(~ .gd-notifications-channel-delete:hover) {
+        background-color: var(--gd-palette-error-lightest, #fff2f1);
+    }
+
+    .gd-notifications-channel-delete:hover {
+        background-color: var(--gd-palette-error-lightest, #fff2f1);
+
+        // Making the row red on delete hover, this affects elements after the delete icon
+        ~ .gd-notifications-channel-content {
+            background-color: var(--gd-palette-error-lightest, #fff2f1);
+        }
+
+        .gd-notifications-channel-delete-icon::after {
+            color: kit-variables.$gd-palette-error-base;
+        }
+
+        .gd-notifications-channel-menu-icon {
+            color: kit-variables.$default-gd-medium-gray;
+        }
+    }
+
+    .gd-notifications-channel-delete-icon {
+        display: none;
+        margin: auto;
+
+        @media #{kit-variables.$small-only} {
+            display: block;
+        }
+
+        &::after {
+            content: "\e61a";
+            position: relative;
+            font-family: kit-variables.$gd-font-indigo;
+            color: kit-variables.$gd-color-disabled;
+            font-size: 16px;
+            font-weight: 400;
+        }
+    }
+
+    .gd-notifications-channel-menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 100%;
+        cursor: pointer;
+        flex-shrink: 0;
+        position: relative;
+
+        &:hover {
+            background-color: kit-variables.$gd-input-text-border;
+        }
+    }
+
+    .gd-content-divider {
+        border-top: 1px solid kit-variables.$gd-border-color;
+        height: 0;
+        margin: 0 0 20px 0;
+    }
+
+    .gd-buttons {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: -5px;
+
+        button {
+            margin: 5px;
+        }
+
+        .gd-hyperlink:hover {
+            text-decoration: none;
+        }
+    }
+
+    .gd-add-button {
+        .gd-button-icon {
+            color: button-variables.$button-action-color;
+        }
+    }
+}
+
+.gd-notifications-channel-delete-dialog {
+    width: 440px;
+
+    @media #{kit-variables.$small-only} {
+        width: calc(100vw - 20px);
+    }
+
+    .gd-dialog-content {
+        overflow: hidden;
+        height: 40px;
+        text-overflow: ellipsis;
+        line-height: 20px;
+
+        @media #{kit-variables.$small-only} {
+            height: auto;
+        }
+    }
+
+    .gd-notifications-channel-delete-dialog-text {
+        overflow: hidden;
+        line-height: 20px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        @media #{kit-variables.$small-only} {
+            > strong {
+                overflow: hidden;
+                line-height: 20px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}
+
+.gd-notifications-channel-delete-dialog-overlay {
+    .modalityPlugin-mask {
+        z-index: zIndexes.$scheduled-email-mask;
+    }
+
+    @media #{kit-variables.$small-only} {
+        .modalityPlugin-mask {
+            z-index: zIndexes.$scheduled-email-mask-small;
+        }
+    }
+}
+
+.gd-notifications-channel-dialog-content-wrapper {
+    background: variables.$dialog-background;
+    margin: 0 (-$dialog-padding);
+    padding: 0 $dialog-padding;
+    border-top: 1px solid kit-variables.$gd-border-color;
+    border-bottom: 1px solid kit-variables.$gd-border-color;
+}
+
+.gd-notification-channel-dialog-with-automation-filters {
+    display: flex;
+    flex-direction: column;
+    box-sizing: content-box;
+    max-height: 544px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    @media #{kit-variables.$small-only} {
+        height: inherit;
+    }
+}
+
+.gd-divider-with-margin {
+    margin-top: 0;
+    margin-bottom: $vertical-space;
+}
+
+.gd-divider-without-margin {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.gd-divider-full-row {
+    margin-left: -$dialog-padding;
+    margin-right: -$dialog-padding;
+}
+
+.gd-notifications-channels-dialog-destination-empty {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    color: kit-variables.$gd-color-state-blank;
+    gap: 10px;
+
+    span {
+        line-height: 30px;
+    }
+
+    .gd-icon-warning {
+        position: relative;
+        top: 3px;
+        font-size: 18px;
+        margin-right: 6px;
+    }
+
+    .gd-hyperlink-text {
+        color: kit-variables.$gd-palette-primary-base;
+        text-decoration: none;
+    }
+
+    @media #{kit-variables.$small-only} {
+        display: block;
+    }
+}
+
+.gd-notifications-channels-dialog-destination {
+    button {
+        width: 200px;
+        height: $input-height;
+    }
+}
+
+.gd-notifications-channels-dialog-message {
+    textarea {
+        padding: 6px 8px;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 15px;
+    }
+
+    .gd-notifications-channels-dialog-message-content {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+
+        .has-error {
+            border-color: kit-variables.$gd-color-negative;
+        }
+    }
+
+    .gd-notifications-channels-dialog-message-error {
+        color: kit-variables.$gd-color-negative;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px;
+    }
+}
+
+.gd-notifications-channels-dialog-error {
+    max-height: 70px;
+    overflow: auto;
+    margin-bottom: $vertical-space;
+}
+
+.gd-notifications-channels-dialog-error-scrollable {
+    min-height: unset;
+    max-height: 100%;
+    overflow: unset;
+}
+
+.gd-notifications-channels-dialog-warning {
+    width: 100%;
+    margin-bottom: $vertical-space;
+}
+
+.gd-notifications-channels-dialog-subject {
+    input {
+        height: $input-height;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 15px;
+    }
+
+    .gd-notifications-channels-dialog-subject-wrapper {
+        width: 100%;
+
+        .gd-notifications-channels-dialog-subject-error {
+            color: kit-variables.$gd-color-negative;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 13px;
+        }
+    }
+}
+
+.gd-notifications-channels-dialog-header {
+    display: flex;
+    flex: 1;
+    padding-bottom: $vertical-space;
+    overflow: hidden;
+
+    .gd-editable-label-inner {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.gd-notifications-channels-dialog-title {
+    margin-left: 15px;
+    width: 100%;
+    height: 29px;
+
+    &.gd-editable-label.is-editing,
+    &:hover {
+        border-color: kit-variables.$gd-palette-primary-base;
+    }
+
+    &.placeholder {
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    .gd-input-field {
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        font-family: Avenir, sans-serif;
+        height: 29px;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &.has-error {
+            padding-right: 30px;
+        }
+    }
+}
+
+.gd-notifications-channels-dialog-error-icon {
+    right: 5px;
+    position: absolute;
+    transform: translateY(25%);
+}
+
+.gd-notifications-channels-attachment-checkbox {
+    height: 100%;
+    margin-left: 2px;
+    margin-top: 8px;
+}
+
+.gd-notifications-channels-dialog-footer-link {
+    display: inline-flex;
+    flex: 1;
+    justify-content: space-between;
+
+    .gd-hyperlink:hover {
+        text-decoration: none;
+    }
+
+    .gd-button {
+        padding: 0 10px;
+    }
+}
+
+.gd-notifications-channels-dialog-menu {
+    min-width: 100px;
+    .deleteItem {
+        &:hover {
+            background-color: kit-variables.$gd-palette-error-dimmed;
+            color: kit-variables.$gd-palette-error-base;
+        }
+    }
+}
+
+// Common styles for UiListbox items
+.gd-notifications-channels-dialog-destination-list-item.gd-list-item {
+    height: 28px;
+}
+
+// Fix label width for recurrence form
+.gd-recurrence-form .gd-input-component .gd-label {
+    min-width: unset;
+}

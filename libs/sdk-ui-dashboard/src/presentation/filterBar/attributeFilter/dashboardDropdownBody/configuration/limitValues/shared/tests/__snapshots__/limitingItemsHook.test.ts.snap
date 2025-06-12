@@ -1,0 +1,102 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`limitingItemsHook > sortByTypeAndTitle > should sort array of items as expected 1`] = `
+[
+  {
+    "item": {
+      "displayForm": {
+        "identifier": "label1",
+      },
+      "isSelected": false,
+      "localIdentifier": "filter1",
+      "selectedConnectingAttribute": undefined,
+    },
+    "title": "Filter 1",
+  },
+  {
+    "item": {
+      "displayForm": {
+        "identifier": "label2",
+      },
+      "isSelected": false,
+      "localIdentifier": "filter2",
+      "selectedConnectingAttribute": undefined,
+    },
+    "title": "Filter 2",
+  },
+  {
+    "item": {
+      "displayForm": {
+        "identifier": "label3",
+      },
+      "isSelected": false,
+      "localIdentifier": "filter3",
+      "selectedConnectingAttribute": undefined,
+    },
+    "title": undefined,
+  },
+  {
+    "item": {
+      "identifier": "m1",
+      "type": "measure",
+    },
+    "title": "Measure 1",
+  },
+  {
+    "item": {
+      "identifier": "m2",
+      "type": "measure",
+    },
+    "title": "Measure 2",
+  },
+  {
+    "item": {
+      "identifier": "m0",
+      "type": "measure",
+    },
+    "title": undefined,
+  },
+  {
+    "item": {
+      "identifier": "a3",
+      "type": "attribute",
+    },
+    "title": "Attribute 1",
+  },
+  {
+    "item": {
+      "identifier": "a1",
+      "type": "attribute",
+    },
+    "title": "Attribute 2",
+  },
+  {
+    "item": {
+      "identifier": "a2",
+      "type": "attribute",
+    },
+    "title": undefined,
+  },
+  {
+    "item": {
+      "identifier": "f0",
+      "type": "fact",
+    },
+    "title": "Fact 1",
+  },
+  {
+    "item": {
+      "identifier": "f2",
+      "type": "fact",
+    },
+    "title": "Fact 2",
+  },
+  {
+    "item": {
+      "identifier": "f1",
+      "type": "fact",
+    },
+    "title": undefined,
+  },
+]
+`;

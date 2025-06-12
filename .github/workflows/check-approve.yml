@@ -1,0 +1,51 @@
+name: check-approve
+
+on:
+  pull_request_review:
+    types:
+      - submitted
+      - dismissed
+
+concurrency:
+  group: check-approve-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  detect-changes:
+    if: ${{ github.event.review.state == 'approved' }}
+    secrets: inherit
+    permissions:
+      contents: write
+      id-token: write
+    uses: ./.github/workflows/rw-rush-detect-changes.yml
+    with:
+      source-branch: ${{ github.event.pull_request.head.sha }}
+      target-branch: ${{ github.event.pull_request.base.ref }}
+      package-name: "@gooddata/sdk-ui-tests-e2e"
+
+  e2e-stage:
+    needs: [detect-changes]
+    if: ${{ needs.detect-changes.outputs.is-changed == 'true' }}
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+    name: e2e-stage
+    uses: ./.github/workflows/rw-rush-build-e2e-tests.yml
+    with:
+      source-ref: ${{ github.event.pull_request.merge_commit_sha }}
+    secrets: inherit
+
+  ready-to-merge-approved:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    if: ${{ github.event.review.state == 'approved' && !cancelled() }}
+    needs:
+      - e2e-stage
+    steps:
+      - name: Check if needed jobs succeeded
+        uses: re-actors/alls-green@release/v1
+        with:
+          allowed-skips: ${{ toJSON(needs) }}
+          jobs: ${{ toJSON(needs) }}

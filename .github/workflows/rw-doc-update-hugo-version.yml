@@ -1,0 +1,81 @@
+name: rw ~ Doc ~ Update Hugo version
+on:
+  workflow_call:
+    inputs:
+      source-branch:
+        required: true
+        description: "The name of the source branch"
+        type: string
+      version:
+        required: true
+        description: "Version to update hugo router params"
+        type: string
+      path-to-version-config:
+        required: false
+        default: "./docs/config/public/params.toml"
+        description: "Path to the Hugo version config file"
+        type: string
+      path-to-redir-config:
+        required: false
+        default: "./docs/layouts/index.redir"
+        description: "Path to the Hugo redir index file"
+        type: string
+
+jobs:
+    update-hugo-version:
+        runs-on: [ubuntu-latest]
+        permissions:
+            contents: write
+        steps:
+            - name: check if version is patch
+              id: check-version
+              run: |
+                  # if version ends with zero we want to release, otherwise skip
+                  if [[ $version =~ \.0$ ]]; then
+                      echo "Version ends with .0, is minor or major"
+                      echo "is_patch=false" >> $GITHUB_OUTPUT
+                  else
+                      echo "Version does not end with .0, is patch"
+                      echo "is_patch=true" >> $GITHUB_OUTPUT
+                  fi
+
+                  short=${version%.*}
+                  echo "short_version=$short" >> $GITHUB_OUTPUT
+              shell: bash
+              env:
+                version: ${{inputs.version}}
+            - name: Checkout
+              if: steps.check-version.outputs.is_patch == 'false'
+              uses: actions/checkout@v4
+              with:
+                ref: ${{ inputs.source-branch }}
+                token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+            - name: Add repository to git safe directories to avoid dubious ownership issue
+              if: steps.check-version.outputs.is_patch == 'false'
+              run: git config --global --add safe.directory $GITHUB_WORKSPACE
+            - name: Config user
+              if: steps.check-version.outputs.is_patch == 'false'
+              run: |
+                  git config --global user.email "git-action@gooddata.com"
+                  git config --global user.name "git-action"
+            - name: Update Hugo version
+              if: steps.check-version.outputs.is_patch == 'false'
+              uses: gooddata/gooddata-ui-sdk/.github/actions/hugo-update-param-action@master
+              with:
+                  path-to-version-config: ${{ inputs.path-to-version-config }}
+                  path-to-redir-config: ${{ inputs.path-to-redir-config }}
+                  version: ${{inputs.version}}
+                  short-version: ${{steps.check-version.outputs.short_version}}
+            - name: Create and push branch
+              if: steps.check-version.outputs.is_patch == 'false'
+              shell: bash
+              run: |
+                    git add ${path_to_version_config}
+                    git add ${path_to_redir_config}
+                    git commit -m "chore: update Hugo version to ${version}" -m "risk: nonprod"
+                    git push origin ${brach_name}
+              env:
+                brach_name: ${{inputs.source-branch}}
+                version: ${{steps.check-version.outputs.short_version}}
+                path_to_version_config: ${{ inputs.path-to-version-config }}
+                path_to_redir_config: ${{ inputs.path-to-redir-config }}

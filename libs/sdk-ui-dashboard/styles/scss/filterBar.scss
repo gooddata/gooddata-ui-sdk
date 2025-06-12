@@ -1,0 +1,771 @@
+// (C) 2019-2025 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "zIndexes";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
+
+$attribute-filter-drag-handle-left: 10px;
+
+.dash-filters-wrapper {
+    position: relative;
+
+    .show-all {
+        display: none;
+    }
+    .show-all:last-child {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        display: block;
+        transform: translateX(-50%);
+    }
+
+    .gd-filter-button-custom-icon-wrapper {
+        .gd-icon-invisible {
+            display: flex;
+            padding-top: 2px;
+        }
+    }
+}
+
+.filters-message {
+    position: absolute;
+    left: 50%;
+    display: block;
+    transform: translateX(-50%);
+    z-index: zIndexes.$dashboard-message;
+    text-align: center;
+    width: 90%;
+
+    .gd-message {
+        background-color: var(--gd-palette-primary-dimmed, #e8f7fc);
+    }
+
+    a {
+        cursor: pointer;
+    }
+
+    .filters-message-spacer {
+        width: 10px;
+        display: inline-block;
+    }
+}
+
+.gd-dash-header-wrapper {
+    z-index: zIndexes.$filterbar-old; // we have to leave this style unchanged because old plugins
+    transition: left variables.$sidebar-transition-length;
+
+    &.gd-dash-header-wrapper-sdk-8-12 {
+        // style is added because we should keep old styles unchanged to not brake plugins
+        z-index: zIndexes.$filterbar-sdk-8-12; // overlay in Dashboard component start at index 5000
+    }
+
+    .is-dashboard-loading & {
+        z-index: 0;
+        animation-delay: 1s;
+        animation-duration: variables.$sidebar-transition-length;
+        animation-fill-mode: forwards;
+        opacity: 0;
+    }
+
+    @media #{kit-variables.$medium-up} {
+        position: sticky;
+        top: 0;
+        right: 0;
+        left: 0;
+    }
+}
+
+.is-sticky {
+    .dash-nav,
+    .gd-dash-header-wrapper {
+        @media #{kit-variables.$medium-up} {
+            position: fixed;
+            top: 0;
+            animation: sticky-intro 1ms;
+        }
+    }
+
+    .dash-nav {
+        width: variables.$sidebar-width;
+    }
+}
+
+@keyframes sticky-intro {
+    from {
+        top: -100%;
+    }
+
+    to {
+        top: 0;
+    }
+}
+
+.dash-filters-visible {
+    position: relative;
+    overflow-y: hidden;
+    padding: 0 15px;
+    border-bottom: variables.$nav-border;
+    border-bottom-color: var(--gd-dashboards-filterBar-borderColor, kit-variables.$gd-border-color);
+    background-color: variables.$gd-dashboards-filterBar-backgroundColor;
+    transition: height variables.$transition-length;
+    max-height: 50vh;
+
+    &.scrollable {
+        overflow-y: auto;
+    }
+
+    .dash-filters-rows {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        left: 15px;
+        display: flex;
+        flex-direction: column;
+        pointer-events: none;
+
+        .dash-filters-row {
+            width: 100%;
+            background-image: linear-gradient(
+                to right,
+                var(--gd-dashboards-filterBar-borderColor, kit-variables.$gd-border-color) 15%,
+                rgba(255, 255, 255, 0) 0%
+            );
+            background-position: bottom;
+            background-size: 4px 1px;
+            background-repeat: repeat-x;
+        }
+        .dash-filters-row:last-child {
+            background: none;
+        }
+    }
+}
+
+.dash-filters-all {
+    $default_padding: 10px;
+    $default_space: 3px;
+
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    width: calc(100% - 150px); // minus filters configuration buttons panel width
+    min-height: variables.$filter-bar-height;
+    margin-right: variables.$scrollbar-width;
+
+    .apply-all-at-once & {
+        width: calc(100% - 225px); // make space for global apply button too
+    }
+
+    .dash-filters-date {
+        max-width: 285px;
+    }
+
+    .dash-filters-attribute,
+    .dash-filters-date {
+        position: relative;
+
+        .gd-bubble-trigger {
+            .gd-attribute-filter-dropdown-button__next {
+                display: flex;
+            }
+
+            .gd-attribute-filter-dropdown-button-content__next {
+                width: calc(100% - 17px);
+            }
+        }
+
+        .gd-attribute-filter-dropdown-button__next,
+        .gd-date-filter-button {
+            margin: 7px 11px 7px $default_space;
+        }
+
+        //edit mode
+        &.dash-filter-is-edit-mode {
+            margin-left: -$default_padding;
+
+            .gd-attribute-filter-dropdown-button__next,
+            .gd-date-filter-button {
+                margin-left: 0;
+                padding-left: $default_padding + $default_padding + $default_space;
+            }
+
+            .gd-date-filter-button::before {
+                left: 9px;
+            }
+
+            .gd-date-filter-button::after {
+                left: 0;
+            }
+        }
+    }
+}
+
+.button-filter-bar-show-all {
+    position: relative;
+    top: -2px;
+    height: 24px;
+    padding: 5px 24px;
+    border: variables.$nav-border;
+    border-top: none;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-color: var(--gd-dashboards-filterBar-borderColor, kit-variables.$gd-border-color);
+    line-height: 12px;
+    white-space: nowrap;
+    text-align: left;
+    vertical-align: middle;
+    color: button-variables.$button-normal-border-color;
+    background-color: variables.$gd-dashboards-filterBar-backgroundColor;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+
+    &:hover {
+        .gd-button-text,
+        .gd-button-icon {
+            color: kit-variables.$gd-palette-primary-base;
+        }
+    }
+
+    .gd-button-text {
+        font-size: 10px;
+        line-height: inherit;
+    }
+
+    .gd-button-icon {
+        margin-left: 8px;
+        color: kit-variables.$gd-color-state-blank;
+    }
+}
+
+.dropdown-footer {
+    margin: 0 10px;
+    padding: 10px 0;
+    text-align: right;
+
+    @media #{kit-variables.$medium-up} {
+        border-top: 1px solid kit-variables.$gd-border-color;
+    }
+
+    .delete-button-wrapper {
+        margin-top: 2px;
+        float: left;
+        .delete-button:hover::before {
+            color: kit-variables.$gd-color-negative;
+        }
+    }
+
+    &-mobile {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: stretch;
+
+        .gd-button {
+            text-align: center;
+            flex: 1;
+        }
+    }
+}
+
+.attr-filter-dropzone-box-outer {
+    display: flex;
+    align-items: stretch;
+    margin-left: 10px;
+}
+
+.attr-filter-dropzone-box {
+    display: flex;
+    min-width: 160px;
+    height: calc(100% - (variables.$filter-bar-height - variables.$filter-bar-drop-zone-height));
+    margin: calc((variables.$filter-bar-height - variables.$filter-bar-drop-zone-height) / 2) 0;
+    padding: 3px;
+    border: 2px dashed
+        var(
+            --gd-palette-complementary-3-from-theme,
+            color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.55)
+        );
+    color: kit-variables.$gd-color-state-blank;
+    border-radius: 5px;
+    transition: 0.2s, margin-right 0.4s;
+
+    &:hover {
+        border-color: var(
+            --gd-palette-complementary-5-from-theme,
+            color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.15)
+        );
+        color: kit-variables.$gd-color-link;
+    }
+
+    .attr-filter-dropzone-box-inner {
+        display: flex;
+        flex: 1;
+        padding-top: 3px;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 3px;
+        justify-content: center;
+        align-items: center;
+
+        .attribute-filter-icon {
+            margin: 0 4px;
+        }
+    }
+
+    &.attr-filter-dropzone-box-active {
+        border-color: variables.$gd-palette-primary-dimmed50;
+        color: kit-variables.$gd-color-text;
+        background-color: kit-variables.$gd-palette-primary-dimmed;
+    }
+
+    &.attr-filter-dropzone-box-over {
+        > div {
+            color: kit-variables.$gd-color-white;
+            background-color: kit-variables.$gd-palette-primary-base;
+        }
+    }
+}
+
+.filter-bar-dropzone-container {
+    position: relative;
+    flex-grow: 1;
+    height: 55px;
+}
+
+.draggable-attribute-filter {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-attribute-filter-dropdown {
+    .attribute-filter-button {
+        margin-left: $attribute-filter-drag-handle-left;
+
+        &::before {
+            opacity: 1;
+        }
+
+        &::after {
+            left: -10px;
+        }
+
+        .button-title {
+            &:only-child {
+                font-weight: bold;
+                color: kit-variables.$gd-color-text;
+            }
+        }
+    }
+}
+
+.gd-button-small[class*="gd-icon-"].gd-button-icon-only {
+    &.gd-configuration-button,
+    &.gd-delete-button {
+        width: 18px;
+        height: 18px;
+        padding: 0;
+    }
+}
+
+.gd-button-separator {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 18px;
+    background-color: var(--gd-palette-complementary-3, #dde4eb);
+    margin: 0 5px;
+}
+
+.gd-attribute-dropdown-list-item-details {
+    width: 230px;
+    word-wrap: break-word;
+    padding: 0;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--gd-palette-complementary-3-from-theme, #c9d5e0);
+    box-shadow: 0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
+        0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+    background: var(--gd-palette-complementary-0, #fff);
+
+    .gd-attribute-dropdown-list-tooltip-content {
+        display: block;
+        overflow: hidden;
+        max-width: 100%;
+        word-wrap: break-word;
+        word-break: break-word;
+        pointer-events: auto;
+        padding: 12px 0 12px 12px;
+
+        h3 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: normal;
+            color: kit-variables.$gd-color-text;
+        }
+
+        h4 {
+            margin: 13px 0 0;
+            padding-right: 5px;
+            font-size: 10px;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        p {
+            font-size: 12px;
+            line-height: 20px;
+            color: kit-variables.$gd-color-text;
+        }
+
+        .gd-attribute-element {
+            font-size: 12px;
+            line-height: 14px;
+        }
+
+        .attribute-tooltip-elements-more {
+            color: kit-variables.$gd-color-state-blank;
+            text-transform: lowercase;
+        }
+    }
+}
+
+.gd-attribute-list-item {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    &:hover {
+        .gd-attribute-item-tooltip-icon {
+            display: block;
+            cursor: help;
+        }
+    }
+
+    .gd-attribute-item-tooltip-icon {
+        display: none;
+        flex: 0 0 auto;
+        margin-left: 7px;
+        font-weight: normal;
+    }
+}
+
+.dropdown-body .attributes-list {
+    .gd-attribute-list-item {
+        &.gd-list-item.type-geo_attribute::before {
+            content: "\E624";
+            height: 14px;
+            padding-left: 4px;
+            padding-top: 1px;
+            line-height: normal;
+            vertical-align: middle;
+            color: kit-variables.$gd-color-warning;
+        }
+    }
+}
+
+.gd-bubble {
+    &.gd-filter-button-custom-icon-bubble,
+    &.gd-filter-configuration-mode-item-bubble {
+        max-width: 209px;
+    }
+}
+
+.dash-filters-reset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+}
+
+.button-filter-bar-reset {
+    padding: 0;
+    margin-left: 1px;
+
+    & .gd-icon-reset path {
+        fill: kit-variables.$gd-color-state-blank;
+    }
+
+    &:hover .gd-icon-reset {
+        path {
+            fill: kit-variables.$gd-palette-primary-base;
+        }
+    }
+}
+
+.filter-bar-configuration {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    height: 100%;
+}
+
+// --- Filter Views configuration panel open button
+
+.gd-filter-views {
+    display: flex;
+    align-items: center;
+}
+
+.gd-button-primary.gd-filter-views-button {
+    border: 0;
+    box-shadow: none;
+    color: kit-variables.$gd-color-state-blank;
+    background: variables.$gd-dashboards-content-backgroundColor;
+    font-size: 14px;
+
+    // can be removed when filters apply modes feature flag is enabled
+    &.deprecated-margin-top {
+        margin-top: 7px;
+    }
+
+    // override .button behavior so text and icon does not "jump" (simulate pressed button)
+    &:not(.disabled):not(.gd-button-link) {
+        &:active {
+            &::before,
+            &::after {
+                top: 1px;
+            }
+
+            .gd-button-text {
+                top: 1px;
+            }
+
+            .gd-button-icon {
+                margin-top: 1px;
+            }
+        }
+    }
+}
+
+.gd-button-primary.gd-filter-views-button--open {
+    color: kit-variables.$gd-color-text;
+
+    .gd-button-icon::before {
+        color: kit-variables.$gd-color-highlight;
+    }
+}
+
+.gd-filters-views__panel__divider {
+    border-right: 1px solid kit-variables.$default-gd-border-color;
+    width: 1px;
+    height: 20px;
+    margin-top: 9px;
+}
+
+// --- Filter Views configuration panel
+
+.gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on {
+    .gd-configuration-bubble {
+        &.gd-filters-configuration-panel,
+        &.gd-filters-views__panel {
+            .arrow-position {
+                display: none;
+            }
+        }
+
+        &.gd-filters-views__panel {
+            min-width: 350px;
+            max-width: 350px;
+
+            .configuration-panel-header {
+                display: flex;
+                align-items: center;
+                height: 35px;
+                padding: 0 10px;
+            }
+        }
+
+        .configuration-panel__filter-view__add {
+            .configuration-category {
+                margin: 10px 10px 0;
+            }
+
+            // it is not easily possible to override this otherwise
+            // stylelint-disable-next-line max-nesting-depth
+            .gd-filter-view-add-hint {
+                font-size: 12px;
+                margin: 5px 0;
+            }
+        }
+
+        .configuration-panel__filter-view__list .configuration-category {
+            margin: 10px 0 0;
+            overflow: auto;
+        }
+
+        .gd-filter-view__list {
+            &:focus-visible {
+                outline: none;
+
+                .gd-filter-view__item--isFocused .gd-filter-view__item__button {
+                    display: block;
+                }
+
+                .gd-filter-view__item--isFocusedSelectItem,
+                .gd-filter-view__item__button--isFocused {
+                    @include mixins.focus-ring;
+                }
+            }
+        }
+    }
+}
+
+.gd-filters-views__panel {
+    .gd-title-with-icon {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .gd-bubble-trigger-wrapper {
+            line-height: 14px;
+        }
+    }
+
+    .configuration-panel-header-title {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .configuration-panel-footer__content {
+        text-align: right;
+    }
+
+    .gd-input-with-label {
+        .gd-input-label {
+            font-size: 12px;
+        }
+    }
+
+    .gd-filter-view-add-checkbox-row {
+        padding: 5px 0;
+    }
+}
+
+.configuration-panel__filter-view__list {
+    .configuration-panel-footer__content {
+        text-align: left;
+
+        .gd-button {
+            display: flex;
+            height: 23px;
+            align-items: center;
+            margin-left: -10px;
+        }
+    }
+}
+
+// --- Filter Views item
+
+.gd-filter-view__item {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    height: 28px;
+
+    .gd-filter-view__item__value {
+        display: flex;
+        flex-grow: 1;
+        gap: 5px;
+        overflow: hidden;
+        cursor: pointer;
+        color: kit-variables.$gd-color-text;
+        padding: 5px 10px;
+        align-items: center;
+    }
+
+    .gd-filter-view__item__value__title {
+        gap: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .gd-filter-view__item__value__suffix {
+        flex-shrink: 0;
+        color: kit-variables.$gd-color-disabled;
+    }
+
+    .gd-filter-view__item__button {
+        display: none;
+        flex-shrink: 0;
+        height: 28px;
+        padding: 0;
+        margin: 0;
+        transition: none;
+
+        .gd-button-icon::before {
+            font-size: 12px;
+        }
+    }
+
+    &:hover {
+        background: kit-variables.$default-is-focused-background;
+
+        .gd-filter-view__item__button {
+            display: block;
+            cursor: pointer;
+        }
+    }
+
+    .gd-filter-view__item__button--delete {
+        width: 16px;
+        margin-left: 5px;
+
+        .gd-button-icon::before {
+            color: kit-variables.$gd-color-link;
+        }
+
+        &:hover {
+            .gd-button-icon::before {
+                color: kit-variables.$gd-color-negative;
+            }
+        }
+    }
+
+    .gd-filter-view__item__delete-button-wrapper {
+        padding: 0 5px;
+
+        &:hover {
+            background-color: kit-variables.$gd-delete-item-background;
+
+            ~ .gd-filter-view__item__button,
+            ~ .gd-filter-view__item__value {
+                background-color: kit-variables.$gd-delete-item-background;
+            }
+        }
+    }
+}
+
+// --- Filter Views configuration miscellaneous
+
+.gd-filter-view__list__empty {
+    text-align: center;
+    color: kit-variables.$gd-color-disabled;
+    padding: 5px 0;
+}
+
+.gd-filter-view__list__tooltip {
+    width: 230px;
+}
+
+.overlay.gd-dialog.gd-filter-view__delete-dialog {
+    min-width: 450px;
+    max-width: 450px;
+
+    .gd-filter-view__delete-dialog__item {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+}

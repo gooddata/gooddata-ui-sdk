@@ -1,0 +1,173 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ Release ~ Publish prerelease
+on:
+  workflow_call:
+    inputs:
+      source-branch:
+        required: true
+        description: "The name of the source branch"
+        type: string
+      skip-bump:
+        required: false
+        default: false
+        description: "Skip bumping the version"
+        type: boolean
+      author-name:
+        required: false
+        description: "The name of the author"
+        type: string
+
+# limit concurrency to one run per branch at a time
+# so that we can run this from master and a release branch at the same time
+# When a concurrent job or workflow is queued,
+# if another job or workflow using the same concurrency group in the repository is in progress,
+# the queued job or workflow will be pending. Any previously pending job or workflow in the concurrency group will be canceled.
+concurrency:
+  group: prerelease-${{ inputs.source-branch }}
+  cancel-in-progress: false
+
+jobs:
+  check-version:
+    runs-on:
+        group: infra1-runners-arc
+        labels: runners-small
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-branch }}
+      - name: Setup node
+        uses: ./.github/actions/node/set-up-node
+        id: node-init
+      - name: Get version from branch ${{ inputs.source-branch }}
+        uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
+        id: get-version
+
+      - name: Check version on ${{ inputs.source-branch }} branch
+        run: |
+          if [[ "${BRANCH}" == "release" ]]; then
+            # we need check that prerelase will not run on unfinished release where packages published
+            # but release process not finished yet (branch is not deleted)
+            # when we prerelease from rel/X.Y branch, we are processing patch and its ok becouse bump will
+            # correctly bump version to next patch
+
+            if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+-(beta|alpha)\.[0-9]+$ ]]; then
+              echo "The version "$VERSION" does not match X.Y.Z-beta.W or X.Y.Z-alpha.W"
+              exit 1
+            fi
+          fi
+        env:
+          VERSION: ${{ steps.get-version.outputs.version }}
+          BRANCH: ${{ inputs.source-branch }}
+
+  setup-params:
+    needs: [check-version]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    outputs:
+      prerelease-id: ${{ steps.validate-params.outputs.prerelease-id }}
+      prerelease-tag: ${{ steps.validate-params.outputs.prerelease-tag }}
+    steps:
+      - name: validate params
+        id: validate-params
+        run: |
+          # TODO: remove inputs from bash script, use env
+          if [[ "${SOURCE_BRANCH}" = "master" ]]; then
+            echo "prerelease-id=alpha" >> $GITHUB_OUTPUT
+            echo "prerelease-tag=prerelease" >> $GITHUB_OUTPUT
+          elif [[ "${SOURCE_BRANCH}" = "release" ]]; then
+            echo "prerelease-id=beta" >> $GITHUB_OUTPUT
+            echo "prerelease-tag=betarelease" >> $GITHUB_OUTPUT
+          elif [[ "${SOURCE_BRANCH}" == rel/* ]]; then
+            echo "prerelease-id=beta" >> $GITHUB_OUTPUT
+            echo "prerelease-tag=betarelease" >> $GITHUB_OUTPUT
+          else
+            echo "Invalid branch provided. Please provide either 'master' or 'release'."
+            exit 1
+          fi
+        env:
+          SOURCE_BRANCH: ${{ inputs.source-branch }}
+
+  bump-version:
+    needs: [setup-params]
+    uses: ./.github/workflows/rw-bump-version.yml
+    permissions:
+      contents: write
+      id-token: write
+    secrets: inherit
+    with:
+      source-branch: ${{ inputs.source-branch }}
+      bump: "prerelease"
+      prerelease-id: ${{ needs.setup-params.outputs.prerelease-id }}
+      skip-bump: ${{ inputs.skip-bump }}
+
+  publish-prerelease:
+    needs: [bump-version,setup-params]
+    uses: ./.github/workflows/rw-publish-version.yml
+    permissions:
+      contents: read
+      id-token: write
+    secrets: inherit
+    with:
+      source-branch: ${{ inputs.source-branch }}
+      release-tag: ${{ needs.setup-params.outputs.prerelease-tag }}
+
+  slack-notification:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs: [bump-version, publish-prerelease,setup-params]
+    steps:
+      - name: Notify to slack with author name
+        if: ${{ inputs.author-name != '' }}
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: "#javascript-notifications"
+          slack-message: "The latest *${{env.PRERELEASE}}* version, *gooddata-ui-sdk@${{env.RELEASE_VERSION}}*, has been successfully published on NPM by the github user *${{env.GITHUB_USER}}*. :tada:"
+        env:
+          RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          GITHUB_USER: ${{ inputs.author-name }}
+          PRERELEASE: ${{ needs.setup-params.outputs.prerelease-tag }}
+      - name: Notify to slack with without author name
+        if: ${{ inputs.author-name == '' }}
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: "#javascript-notifications"
+          slack-message: "The latest *${{env.PRERELEASE}}* version, *gooddata-ui-sdk@${{env.RELEASE_VERSION}}*, has been successfully published on NPM. :tada:"
+        env:
+          RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          PRERELEASE: ${{ needs.setup-params.outputs.prerelease-tag }}
+
+  notify-gdc-ui:
+    if: ${{  needs.setup-params.outputs.prerelease-id == 'alpha' }}
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs: [bump-version, publish-prerelease,setup-params]
+    steps:
+      - name: Set user
+        run: |
+          if [[ -z "${{ inputs.author-name }}" ]]; then
+            echo "UPD_AUTHOR=${{ github.actor }}" >> $GITHUB_ENV
+          else
+            echo "UPD_AUTHOR=${{ inputs.author-name }}" >> $GITHUB_ENV
+          fi
+      - name: Wait for NPM registry
+        run: |
+          #wait for npm registry to be updated
+          sleep 30
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+          repository: gooddata/gdc-ui
+          event-type: public-sdk-update
+          client-payload: |
+            {
+              "githubuser": "${{ env.UPD_AUTHOR }}",
+              "version": "${{ needs.bump-version.outputs.version }}"
+            }

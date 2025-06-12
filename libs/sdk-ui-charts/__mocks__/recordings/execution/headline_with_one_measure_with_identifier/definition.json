@@ -1,0 +1,29 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "lostMetric",
+                "alias": "Lost",
+                "format": "#,##0.00",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "af2Ewj9Re2vK"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

@@ -1,0 +1,4 @@
+DirectoryPath: public
+IgnoreInternalEmptyHash: true
+CheckExternal: false
+CheckInternalHash: false

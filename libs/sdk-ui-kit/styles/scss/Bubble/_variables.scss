@@ -1,0 +1,76 @@
+// (C) 2020-2025 GoodData Corporation
+@use "sass:color";
+@use "../mixins.scss";
+@use "../variables";
+
+/* ==========================================================================
+   Variables, mixins, silent classes etc.
+   ========================================================================== */
+$bubble-helper-size: 8px;
+$bubble-max-width: 300px;
+$bubble-small-max-width: 200px;
+$bubble-skins: primary, secondary, dark, light, warning, negative;
+
+// Bubble
+$bubble-boxShadow: 0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
+    0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+$bubble-help-color: var(--gd-palette-complementary-6-from-theme, #bbb);
+$bubble-help-color-hover: #999;
+$bubble-borderWidth: 0;
+$bubble-bg-color: var(
+    --gd-tooltip-backgroundColor,
+    var(
+        --gd-palette-complementary-8-from-theme,
+        color.adjust(variables.$default-gd-color-text, $alpha: -0.05)
+    )
+);
+$bubble-secondary-base: var(
+    --gd-palette-primary-base-t10,
+    color.adjust(variables.$gd-color-highlight, $alpha: -0.1)
+);
+$bubble-light-base: rgba(255, 255, 255, 0.95);
+$bubble-warning-base: var(
+    --gd-palette-primary-base-t10-from-theme,
+    color.adjust(variables.$gd-color-warning, $alpha: -0.1)
+);
+$default-bubble-light-border-base: #c9d5e0;
+$bubble-light-border-base: var(--gd-palette-complementary-3-from-theme, $default-bubble-light-border-base);
+$bubble-primary-borderWidth: $bubble-borderWidth;
+$bubble-primary-color: var(--gd-tooltip-color, variables.$gd-color-text-light);
+$bubble-primary-borderColor: $bubble-bg-color;
+$bubble-primary-arrowColor: $bubble-bg-color;
+$bubble-primary-arrowBorderColor: $bubble-bg-color;
+$bubble-primary-bgcolor: $bubble-bg-color;
+
+$bubble-secondary-borderWidth: $bubble-borderWidth;
+$bubble-secondary-color: variables.$gd-color-text-light;
+$bubble-secondary-borderColor: $bubble-secondary-base;
+$bubble-secondary-arrowColor: $bubble-secondary-base;
+$bubble-secondary-arrowBorderColor: $bubble-secondary-base;
+$bubble-secondary-bgcolor: $bubble-secondary-base;
+$bubble-light-borderWidth: 1px;
+$bubble-light-color: #000;
+$bubble-light-borderColor: $bubble-light-border-base;
+$bubble-light-arrowColor: $bubble-light-base;
+$bubble-light-arrowBorderColor: $bubble-light-border-base;
+$bubble-light-bgcolor: $bubble-light-base;
+$bubble-warning-borderWidth: $bubble-borderWidth;
+$bubble-warning-color: variables.$gd-color-text-light;
+$bubble-warning-borderColor: $bubble-warning-base;
+$bubble-warning-arrowColor: $bubble-warning-base;
+$bubble-warning-arrowBorderColor: $bubble-warning-base;
+$bubble-warning-bgcolor: $bubble-warning-base;
+
+// error
+$bubble-negative-base: var(
+    --gd-palette-error-base-t10,
+    color.adjust(variables.$gd-color-negative, $alpha: -0.1)
+);
+$bubble-negative-borderWidth: $bubble-borderWidth;
+$bubble-negative-color: variables.$gd-color-text-light;
+
+// error derived colors
+$bubble-negative-borderColor: $bubble-negative-base;
+$bubble-negative-arrowColor: $bubble-negative-base;
+$bubble-negative-arrowBorderColor: $bubble-negative-base;
+$bubble-negative-bgcolor: $bubble-negative-base;

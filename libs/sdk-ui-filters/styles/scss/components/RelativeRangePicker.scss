@@ -1,0 +1,66 @@
+// (C) 2019-2025 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.gd-relative-range-picker {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    gap: 10px;
+    align-items: baseline;
+
+    .gd-relative-range-picker-select-wrapper {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        .gd-label {
+            font-size: 13px;
+            line-height: 21px;
+        }
+
+        &__error-message {
+            margin-top: 5px;
+            max-width: 158px;
+            font-size: 12px;
+            line-height: 17px;
+            color: variables.$gd-palette-error-base;
+        }
+    }
+
+    &-picker {
+        flex: 1 1 auto;
+
+        .gd-select-menu-wrapper {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: 0;
+        }
+
+        &-mobile {
+            flex-direction: column;
+            overflow: hidden;
+
+            .gd-select-separator {
+                padding: 0;
+            }
+
+            .gd-select-menu-wrapper .gd-select-menu {
+                position: relative;
+                z-index: auto;
+                border-radius: 0;
+                background-color: variables.$gd-color-white;
+                box-shadow: none;
+            }
+
+            .gd-input-field {
+                font-size: 16px; // Prevent iPhone zoom on focus
+            }
+        }
+    }
+
+    &-dash {
+        margin: 0 5px;
+    }
+}

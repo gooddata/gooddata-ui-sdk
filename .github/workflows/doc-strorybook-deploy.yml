@@ -1,0 +1,28 @@
+# (C) 2024 GoodData Corporation
+
+name: Doc ~ Storybook deploy
+on:
+  workflow_dispatch:
+  schedule:
+      - cron: '0 0 * * *'
+jobs:
+  storybook-deploy:
+    secrets: inherit
+    uses: ./.github/workflows/rw-doc-storybook-deploy.yml
+    permissions:
+      contents: write
+      id-token: write
+    with:
+      source-branch: "master"
+
+  slack-notification:
+    runs-on: [ubuntu-latest]
+    needs: [storybook-deploy]
+    steps:
+      - name: Notify to slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: "#javascript-notifications"
+          slack-message: "The Storybook for *gooddata-ui-sdk* has been successfully deployed. :tada:"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

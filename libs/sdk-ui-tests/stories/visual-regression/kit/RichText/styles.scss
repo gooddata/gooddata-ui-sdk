@@ -1,0 +1,11 @@
+// (C) 2024 GoodData Corporation
+
+.custom-rich-text {
+    border: 1px solid darkgray;
+}
+
+.library-component .custom-rich-text textarea {
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+    font: revert;
+    font-size: inherit;
+}

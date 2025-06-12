@@ -1,0 +1,65 @@
+name: Set up rush with cache
+description: This action sets up rush with cache
+
+# more info https://github.com/microsoft/rushstack/issues/1847#issuecomment-1030889912
+runs:
+  using: 'composite'
+  steps:
+    # init node and warmup node cache installation
+    - name: Warmup cache Node.js
+      uses: ./.github/actions/node/warm-up-node
+      id: node-cache
+
+    - name: Set rush home dirs
+      run: |
+        # Set path to global rush folder
+        echo "RUSH_GLOBAL_FOLDER=$GITHUB_WORKSPACE/common/.rush" >> $GITHUB_ENV
+
+      shell: bash
+
+    # Set up caching for global rush installation
+    # path common/.rush is set via RUSH_GLOBAL_FOLDER
+    # We need defined unified home folder for rush on runners and different docker images
+    - name: Cache Rush
+      uses: runs-on/cache@v4
+      env:
+        RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache
+      with:
+        path: |
+          common/temp/install-run
+          common/.rush
+        key: rush-cache-${{ hashFiles('rush.json') }}
+
+    # Perform a lookup to check if the cache for pnpm exists
+    - name: Cache pnpm lookup
+      id: cache-pnpm-lookup
+      uses: runs-on/cache@v4
+      env:
+        RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache
+      with:
+        lookup-only: true
+        path: |
+          common/temp/pnpm-store
+        key: pnpm-cache-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}-${{ hashFiles('rush.json') }}
+
+
+    - name: Cache pnpm
+      # we skip cache fetch if we are warming up the cache and cache hit
+      if: ${{ steps.cache-pnpm-lookup.outputs.cache-hit != 'true' }}
+      id: cache-pnpm
+      uses: runs-on/cache@v4
+      env:
+        RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache
+      with:
+        path: |
+          common/temp/pnpm-store
+        key: pnpm-cache-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}-${{ hashFiles('rush.json') }}
+
+    - name: Install rush
+      # we skip instal if we are warming up the cache and cache hit
+      if: ${{ steps.cache-pnpm-lookup.outputs.cache-hit != 'true' }}
+      env:
+        NPM_AUTH_TOKEN: ${{ env.NPM_AUTH_TOKEN }}
+      run: |
+        node common/scripts/install-run-rush.js install
+      shell: bash

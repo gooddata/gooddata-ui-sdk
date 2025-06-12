@@ -1,0 +1,959 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "https://staging.dev-latest.stg11.panther.intgdc.com",
+            "description": "Generated server url"
+        },
+        {
+            "url": "/",
+            "description": "GoodData.CN endpoint"
+        }
+    ],
+    "tags": [
+        {
+            "name": "actions",
+            "description": "| execution of some form of computation (RPC over JSON)"
+        }
+    ],
+    "paths": {
+        "/api/v1/actions/fileStorage/staging/upload": {
+            "post": {
+                "tags": ["Data source staging location", "actions"],
+                "summary": "Upload a file to the staging area",
+                "description": "Provides a location for uploading staging files.",
+                "operationId": "stagingUpload",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": ["file"],
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "description": "The file to upload.",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Upload was successful.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UploadFileResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/fileStorage/staging/analyzeCsv": {
+            "post": {
+                "tags": ["Data source files analysis", "actions"],
+                "summary": "Analyze CSV",
+                "description": "Analyzes CSV files at the given locations",
+                "operationId": "analyzeCsv",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnalyzeCsvRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful analysis.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AnalyzeCsvResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/readCsvFileManifests": {
+            "post": {
+                "tags": ["Data source files manifest read", "actions"],
+                "summary": "Read CSV file manifests",
+                "description": "Read the manifests of the CSV files in the given data source.",
+                "operationId": "readCsvFileManifests",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReadCsvFileManifestsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful listing.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ReadCsvFileManifestsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/listFiles": {
+            "post": {
+                "tags": ["Data source files listing", "actions"],
+                "summary": "List datasource files",
+                "description": "List all the files in the given data source.",
+                "operationId": "listFiles",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful listing.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GdStorageFile"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/importCsv": {
+            "post": {
+                "tags": ["Data source files import", "actions"],
+                "summary": "Import CSV",
+                "description": "Import the CSV files at the given locations in the staging area to the final location.",
+                "operationId": "importCsv",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImportCsvRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful import.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ImportCsvResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/deleteFiles": {
+            "post": {
+                "tags": ["Data source files deletion", "actions"],
+                "summary": "Delete datasource files",
+                "description": "Delete the files in the given data source.",
+                "operationId": "deleteFiles",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteFilesRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful deletion."
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/collectCacheUsage": {
+            "get": {
+                "tags": ["Cache usage", "actions"],
+                "summary": "Collect data about the current cache usage",
+                "description": "Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.",
+                "operationId": "collectCacheUsage",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CacheUsageData"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UploadFileResponse": {
+                "required": ["location"],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location to use when referencing the uploaded file in subsequent requests."
+                    }
+                },
+                "description": "Information related to the file uploaded to the staging area."
+            },
+            "AnalyzeCsvRequest": {
+                "required": ["analyzeRequests"],
+                "type": "object",
+                "properties": {
+                    "analyzeRequests": {
+                        "type": "array",
+                        "description": "List of individual CSV analysis requests.",
+                        "items": {
+                            "$ref": "#/components/schemas/AnalyzeCsvRequestItem"
+                        }
+                    }
+                },
+                "description": "Bulk CSV analysis request."
+            },
+            "AnalyzeCsvRequestItem": {
+                "required": ["location"],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location of the CSV file to analyze."
+                    },
+                    "config": {
+                        "$ref": "#/components/schemas/AnalyzeCsvRequestItemConfig"
+                    }
+                },
+                "description": "CSV analysis request."
+            },
+            "AnalyzeCsvRequestItemConfig": {
+                "type": "object",
+                "properties": {
+                    "resultRows": {
+                        "type": "integer",
+                        "description": "Number of rows to return in the flight that represents analysis result. If 0, no rows are returned, if less than 0, all rows that were in the sample are returned.",
+                        "format": "int32"
+                    },
+                    "headerDetectMaxRows": {
+                        "type": "integer",
+                        "description": "Maximum number of rows to work with during header detection.",
+                        "format": "int32"
+                    },
+                    "headerRowCount": {
+                        "type": "integer",
+                        "description": "Number of rows to consider as header, if null, header will be detected.",
+                        "format": "int32"
+                    },
+                    "delimiters": {
+                        "type": "array",
+                        "description": "Possible column delimiters.",
+                        "items": {
+                            "type": "string",
+                            "description": "Possible column delimiters."
+                        }
+                    }
+                },
+                "description": "CSV analysis request config."
+            },
+            "AnalyzeCsvResponse": {
+                "required": ["columns", "location", "previewData"],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location of the analyzed file in the source data source."
+                    },
+                    "columns": {
+                        "type": "array",
+                        "description": "List of column metadata.",
+                        "items": {
+                            "$ref": "#/components/schemas/AnalyzeCsvResponseColumn"
+                        }
+                    },
+                    "previewData": {
+                        "type": "array",
+                        "description": "Preview of the first N rows of the file.",
+                        "items": {
+                            "type": "array",
+                            "description": "Preview of the first N rows of the file.",
+                            "items": {
+                                "type": "object",
+                                "description": "Preview of the first N rows of the file."
+                            }
+                        }
+                    },
+                    "config": {
+                        "$ref": "#/components/schemas/AnalyzeCsvResponseConfig"
+                    }
+                },
+                "description": "Describes the results of a CSV analysis of a single file."
+            },
+            "AnalyzeCsvResponseColumn": {
+                "required": ["name", "type"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the column as specified in the file (or autogenerated one if the file has no header)."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of the column (e.g. string, bool, etc.)."
+                    },
+                    "detectedDateFormats": {
+                        "type": "array",
+                        "description": "List of date formats that can be used to parse this column as date. Null if there are none.",
+                        "items": {
+                            "type": "string",
+                            "description": "List of date formats that can be used to parse this column as date. Null if there are none."
+                        }
+                    }
+                },
+                "description": "Describes the result column."
+            },
+            "AnalyzeCsvResponseConfig": {
+                "type": "object",
+                "properties": {
+                    "readOptions": {
+                        "$ref": "#/components/schemas/CsvReadOptions"
+                    },
+                    "parseOptions": {
+                        "$ref": "#/components/schemas/CsvParseOptions"
+                    },
+                    "convertOptions": {
+                        "$ref": "#/components/schemas/CsvConvertOptions"
+                    }
+                },
+                "description": "Config used to process the CSV file."
+            },
+            "CsvConvertOptions": {
+                "type": "object",
+                "properties": {
+                    "checkUtf8": {
+                        "type": "boolean",
+                        "description": "Whether to check UTF8 validity of string columns."
+                    },
+                    "columnTypes": {
+                        "type": "array",
+                        "description": "Information about the column types in the table.",
+                        "items": {
+                            "$ref": "#/components/schemas/CsvConvertOptionsColumnType"
+                        }
+                    },
+                    "nullValues": {
+                        "type": "array",
+                        "description": "Sequence of strings that denote nulls in the data.",
+                        "items": {
+                            "type": "string",
+                            "description": "Sequence of strings that denote nulls in the data."
+                        }
+                    },
+                    "trueValues": {
+                        "type": "array",
+                        "description": "Sequence of strings that denote true Booleans in the data.",
+                        "items": {
+                            "type": "string",
+                            "description": "Sequence of strings that denote true Booleans in the data."
+                        }
+                    },
+                    "falseValues": {
+                        "type": "array",
+                        "description": "Sequence of strings that denote false Booleans in the data.",
+                        "items": {
+                            "type": "string",
+                            "description": "Sequence of strings that denote false Booleans in the data."
+                        }
+                    },
+                    "decimalPoint": {
+                        "type": "string",
+                        "description": "The character used as decimal point in floating-point and decimal data."
+                    },
+                    "stringsCanBeNull": {
+                        "type": "boolean",
+                        "description": "Whether string / binary columns can have null values."
+                    },
+                    "quotedStringsCanBeNull": {
+                        "type": "boolean",
+                        "description": "Whether quoted values can be null."
+                    },
+                    "includeColumns": {
+                        "type": "array",
+                        "description": "The names of columns to include in the Table. If empty, the Table will include all columns from the CSV file. If not empty, only these columns will be included, in this order.",
+                        "items": {
+                            "type": "string",
+                            "description": "The names of columns to include in the Table. If empty, the Table will include all columns from the CSV file. If not empty, only these columns will be included, in this order."
+                        }
+                    },
+                    "includeMissingColumns": {
+                        "type": "boolean",
+                        "description": "If false, columns in includeColumns but not in the CSV file will error out."
+                    },
+                    "autoDictEncode": {
+                        "type": "boolean",
+                        "description": "Whether to try to automatically dict-encode string / binary data."
+                    },
+                    "autoDictMaxCardinality": {
+                        "type": "integer",
+                        "description": "The maximum dictionary cardinality for autoDictEncode.",
+                        "format": "int32"
+                    },
+                    "timestampParsers": {
+                        "type": "array",
+                        "description": "Sequence of strptime()-compatible format strings, tried in order when attempting to infer or convert timestamp values.",
+                        "items": {
+                            "type": "string",
+                            "description": "Sequence of strptime()-compatible format strings, tried in order when attempting to infer or convert timestamp values."
+                        }
+                    }
+                },
+                "description": "Options for converting CSV files when reading."
+            },
+            "CsvConvertOptionsColumnType": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The column name."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The column type."
+                    },
+                    "nullable": {
+                        "type": "boolean",
+                        "description": "Whether the data in the given column can be null."
+                    }
+                },
+                "description": "Information about a certain column in the table."
+            },
+            "CsvParseOptions": {
+                "type": "object",
+                "properties": {
+                    "delimiter": {
+                        "type": "string",
+                        "description": "The character delimiting individual cells in the CSV data."
+                    },
+                    "quoteChar": {
+                        "type": "object",
+                        "description": "The character used optionally for quoting CSV values or false to disable quoting."
+                    },
+                    "doubleQuote": {
+                        "type": "boolean",
+                        "description": "Whether two quotes in a quoted CSV value denote a single quote in the data."
+                    },
+                    "escapeChar": {
+                        "type": "object",
+                        "description": "The character used optionally for escaping special characters or false to disable escaping."
+                    },
+                    "newlinesInValues": {
+                        "type": "boolean",
+                        "description": "Whether newline characters are allowed in CSV values."
+                    },
+                    "ignoreEmptyLines": {
+                        "type": "boolean",
+                        "description": "Whether empty lines are ignored in CSV input."
+                    }
+                },
+                "description": "Options for parsing CSV files."
+            },
+            "CsvReadOptions": {
+                "type": "object",
+                "properties": {
+                    "useThreads": {
+                        "type": "boolean",
+                        "description": "Whether to use multiple threads to accelerate reading."
+                    },
+                    "blockSize": {
+                        "type": "integer",
+                        "description": "How many bytes to process at a time from the input stream.",
+                        "format": "int32"
+                    },
+                    "skipRows": {
+                        "type": "integer",
+                        "description": "The number of rows to skip before the column names (if any) and the CSV data.",
+                        "format": "int32"
+                    },
+                    "skipRowsAfterNames": {
+                        "type": "integer",
+                        "description": "The number of rows to skip after the column names.",
+                        "format": "int32"
+                    },
+                    "columnNames": {
+                        "type": "array",
+                        "description": "The column names of the target table.",
+                        "items": {
+                            "type": "string",
+                            "description": "The column names of the target table."
+                        }
+                    },
+                    "autoGenerateColumnNames": {
+                        "type": "boolean",
+                        "description": "Whether to autogenerate column names if columnNames is empty."
+                    },
+                    "encoding": {
+                        "type": "string",
+                        "description": "The character encoding of the CSV data."
+                    }
+                },
+                "description": "Options for reading CSV files."
+            },
+            "ReadCsvFileManifestsRequest": {
+                "required": ["manifestRequests"],
+                "type": "object",
+                "properties": {
+                    "manifestRequests": {
+                        "type": "array",
+                        "description": "Files to read the manifests for.",
+                        "items": {
+                            "$ref": "#/components/schemas/ReadCsvFileManifestsRequestItem"
+                        }
+                    }
+                },
+                "description": "Request to read the manifests of the specified CSV files."
+            },
+            "ReadCsvFileManifestsRequestItem": {
+                "required": ["fileName"],
+                "type": "object",
+                "properties": {
+                    "fileName": {
+                        "type": "string",
+                        "description": "Name of the CSV file to read the manifest for."
+                    },
+                    "version": {
+                        "type": "integer",
+                        "description": "Optional version of the file to read the manifest for. If null or not specified, the latest version is read.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Request to read the manifest of a single CSV file."
+            },
+            "CsvManifestBody": {
+                "type": "object",
+                "properties": {
+                    "read": {
+                        "$ref": "#/components/schemas/CsvReadOptions"
+                    },
+                    "parse": {
+                        "$ref": "#/components/schemas/CsvParseOptions"
+                    },
+                    "convert": {
+                        "$ref": "#/components/schemas/CsvConvertOptions"
+                    },
+                    "column_date_formats": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "Map of column names to date formats to use when parsing them as dates."
+                        },
+                        "description": "Map of column names to date formats to use when parsing them as dates."
+                    },
+                    "read_method": {
+                        "type": "string",
+                        "description": "Method used to read the CSV file."
+                    }
+                },
+                "description": "Body of the CSV manifest."
+            },
+            "ReadCsvFileManifestsResponse": {
+                "required": ["manifest", "name", "version"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the file in the source data source."
+                    },
+                    "version": {
+                        "type": "integer",
+                        "description": "Version of the file in the source data source.",
+                        "format": "int32"
+                    },
+                    "manifest": {
+                        "$ref": "#/components/schemas/CsvManifestBody"
+                    }
+                },
+                "description": "Describes the results of a CSV manifest read of a single file."
+            },
+            "GdStorageFile": {
+                "required": ["modifiedAt", "name", "size", "type"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the file."
+                    },
+                    "size": {
+                        "type": "integer",
+                        "description": "Size of the file in bytes.",
+                        "format": "int64"
+                    },
+                    "modifiedAt": {
+                        "type": "string",
+                        "description": "Last modification timestamp of the file.",
+                        "format": "date-time"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of the file.",
+                        "enum": ["CSV"]
+                    }
+                },
+                "description": "File stored in GD Storage."
+            },
+            "ImportCsvRequest": {
+                "required": ["tables"],
+                "type": "object",
+                "properties": {
+                    "tables": {
+                        "type": "array",
+                        "description": "Information about the individual tables.",
+                        "items": {
+                            "$ref": "#/components/schemas/ImportCsvRequestTable"
+                        }
+                    }
+                },
+                "description": "Request containing the information necessary to import one or more CSV files from the staging area."
+            },
+            "ImportCsvRequestTable": {
+                "required": ["name", "source"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the table."
+                    },
+                    "source": {
+                        "$ref": "#/components/schemas/ImportCsvRequestTableSource"
+                    }
+                },
+                "description": "Information about a particular table."
+            },
+            "ImportCsvRequestTableSource": {
+                "required": ["config", "location"],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location of the data in the staging area."
+                    },
+                    "config": {
+                        "$ref": "#/components/schemas/ImportCsvRequestTableSourceConfig"
+                    }
+                },
+                "description": "Information about source data for a particular table."
+            },
+            "ImportCsvRequestTableSourceConfig": {
+                "type": "object",
+                "properties": {
+                    "readOptions": {
+                        "$ref": "#/components/schemas/CsvReadOptions"
+                    },
+                    "parseOptions": {
+                        "$ref": "#/components/schemas/CsvParseOptions"
+                    },
+                    "convertOptions": {
+                        "$ref": "#/components/schemas/CsvConvertOptions"
+                    },
+                    "columnDateFormats": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "Date formats to use to use to read the given columns."
+                        },
+                        "description": "Date formats to use to use to read the given columns."
+                    }
+                },
+                "description": "Config to use when accessing the data for executions, etc."
+            },
+            "ImportCsvResponse": {
+                "required": ["name", "version"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the table the file was imported to."
+                    },
+                    "version": {
+                        "type": "integer",
+                        "description": "Version the file was imported as.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Response containing the information about the imported CSV file."
+            },
+            "DeleteFilesRequest": {
+                "required": ["fileNames"],
+                "type": "object",
+                "properties": {
+                    "fileNames": {
+                        "type": "array",
+                        "description": "Names of the files to delete.",
+                        "items": {
+                            "type": "string",
+                            "description": "Names of the files to delete."
+                        }
+                    }
+                },
+                "description": "Request to delete files from the storage."
+            },
+            "CacheRemovalInterval": {
+                "required": ["from", "removed", "to"],
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "type": "string",
+                        "description": "Start timestamp of the removal interval.",
+                        "format": "date-time"
+                    },
+                    "to": {
+                        "type": "string",
+                        "description": "End timestamp of the removal interval.",
+                        "format": "date-time"
+                    },
+                    "removed": {
+                        "type": "integer",
+                        "description": "Bytes removed during this interval.",
+                        "format": "int64"
+                    }
+                },
+                "description": "Information about a period in time and how much cached data was removed."
+            },
+            "CacheUsageData": {
+                "required": ["organizationCacheUsage", "workspaceCacheUsages"],
+                "type": "object",
+                "properties": {
+                    "organizationCacheUsage": {
+                        "$ref": "#/components/schemas/OrganizationCacheUsage"
+                    },
+                    "workspaceCacheUsages": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/WorkspaceCacheUsage"
+                        },
+                        "description": "Map of data about the cache usage of the individual workspaces."
+                    }
+                },
+                "description": "Result of scan of data source physical model."
+            },
+            "OrganizationCacheSettings": {
+                "required": ["extraCacheBudget"],
+                "type": "object",
+                "properties": {
+                    "extraCacheBudget": {
+                        "type": "integer",
+                        "description": "Extra cache budget the organization can allocate among its workspaces, in bytes.",
+                        "format": "int64"
+                    }
+                },
+                "description": "Settings for organization cache."
+            },
+            "OrganizationCacheUsage": {
+                "required": ["current", "removalIntervals", "settings"],
+                "type": "object",
+                "properties": {
+                    "settings": {
+                        "$ref": "#/components/schemas/OrganizationCacheSettings"
+                    },
+                    "current": {
+                        "$ref": "#/components/schemas/OrganizationCurrentCacheUsage"
+                    },
+                    "removalIntervals": {
+                        "type": "array",
+                        "description": "List of cache removal intervals.",
+                        "items": {
+                            "$ref": "#/components/schemas/CacheRemovalInterval"
+                        }
+                    }
+                },
+                "description": "Data about the whole organization's cache usage."
+            },
+            "OrganizationCurrentCacheUsage": {
+                "required": ["cacheUsed", "removedSinceStart"],
+                "type": "object",
+                "properties": {
+                    "cacheUsed": {
+                        "type": "integer",
+                        "description": "Cache currently used by the organization, in bytes.",
+                        "format": "int64"
+                    },
+                    "removalPeriodStart": {
+                        "type": "string",
+                        "description": "Start timestamp of removal period.",
+                        "format": "date-time"
+                    },
+                    "removedSinceStart": {
+                        "type": "integer",
+                        "description": "Bytes removed since start due to insufficient cache.",
+                        "format": "int64"
+                    }
+                },
+                "description": "Current cache usage of the organization."
+            },
+            "WorkspaceCacheSettings": {
+                "required": ["extraCache"],
+                "type": "object",
+                "properties": {
+                    "extraCache": {
+                        "type": "integer",
+                        "description": "Extra cache for the workspace, in bytes.",
+                        "format": "int64"
+                    }
+                },
+                "description": "Cache settings for the workspace."
+            },
+            "WorkspaceCacheUsage": {
+                "required": ["current", "removalIntervals", "settings"],
+                "type": "object",
+                "properties": {
+                    "settings": {
+                        "$ref": "#/components/schemas/WorkspaceCacheSettings"
+                    },
+                    "current": {
+                        "$ref": "#/components/schemas/WorkspaceCurrentCacheUsage"
+                    },
+                    "removalIntervals": {
+                        "type": "array",
+                        "description": "List of cache removal intervals for workspace.",
+                        "items": {
+                            "$ref": "#/components/schemas/CacheRemovalInterval"
+                        }
+                    }
+                },
+                "description": "Data about a particular workspace cache usage."
+            },
+            "WorkspaceCurrentCacheUsage": {
+                "required": ["cacheAvailable", "cacheUsed", "removalPeriodStart", "removedSinceStart"],
+                "type": "object",
+                "properties": {
+                    "cacheUsed": {
+                        "type": "integer",
+                        "description": "Cache used by the workspace.",
+                        "format": "int64"
+                    },
+                    "cacheAvailable": {
+                        "type": "integer",
+                        "description": "Cache available for the workspace.",
+                        "format": "int64"
+                    },
+                    "removalPeriodStart": {
+                        "type": "string",
+                        "description": "Start timestamp of removal period for the workspace.",
+                        "format": "date-time"
+                    },
+                    "removedSinceStart": {
+                        "type": "integer",
+                        "description": "Bytes removed since start due to insufficient cache for the workspace.",
+                        "format": "int64"
+                    }
+                },
+                "description": "Current cache usage of the workspace."
+            }
+        }
+    }
+}

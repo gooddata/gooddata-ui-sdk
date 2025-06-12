@@ -1,0 +1,114 @@
+// (C) 2019-2025 GoodData Corporation
+@use "sass:color";
+@use "@gooddata/sdk-ui/styles/scss/settings";
+@use "@gooddata/sdk-ui-kit/styles/scss/SVGicons";
+@use "@gooddata/sdk-ui-kit/styles/scss/dropdown";
+@use "@gooddata/sdk-ui-kit/styles/scss/indigoFont";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/form";
+@use "@gooddata/sdk-ui-kit/styles/scss/button";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+$dialog_width: 250px;
+
+.gd-mvf-dropdown-body {
+    width: $dialog_width;
+    // stylelint-disable-next-line declaration-no-important
+    padding: 0 !important; // !important is necessary to ensure MVF doesn't have padding from predecessor styling
+
+    .gd-mvf-dropdown-section {
+        padding: 10px 10px 0;
+
+        .gd-mvf-warning-message {
+            padding: 4px 8px 4px 10px;
+            line-height: 1.4em;
+            font-size: 12px;
+            border-radius: 3px;
+            font-family: variables.$gd-font-primary;
+            margin-top: 4px;
+
+            &.gd-mvf-warning-message-low {
+                color: variables.$gd-palette-primary-base;
+                background: variables.$gd-palette-primary-base-t80;
+            }
+
+            &.gd-mvf-warning-message-medium {
+                color: variables.$gd-color-warning;
+                background: var(
+                    --gd-palette-warning-base-t85,
+                    color.adjust(variables.$gd-color-warning, $alpha: -0.85)
+                );
+            }
+
+            &.gd-mvf-warning-message-high {
+                color: variables.$gd-color-negative;
+                background: color.adjust(variables.$gd-color-negative, $alpha: -0.85);
+            }
+        }
+
+        .gd-mvf-treat-null-values-as-zero {
+            margin-top: 8px;
+            font-size: 12px;
+
+            .inlineBubbleHelp {
+                margin: 0 0 2px 5px;
+                font-size: 12px;
+            }
+        }
+
+        &:last-child {
+            padding-bottom: 10px;
+        }
+    }
+
+    .gd-mvf-dropdown-footer {
+        margin: 0 10px;
+        padding: 10px 0;
+        border-top: 1px solid variables.$gd-border-color;
+        text-align: right;
+    }
+}
+
+.gd-mvf-operator-dropdown-button {
+    width: 100%;
+}
+
+.gd-mvf-operator-dropdown-body {
+    width: $dialog_width - 20px;
+    padding: 5px 0;
+
+    .gd-list-item {
+        padding: 5px 10px;
+
+        & > span {
+            margin-left: 5px;
+        }
+
+        & > .tooltip-bubble {
+            margin-right: 5px;
+            text-align: right;
+        }
+    }
+}
+
+.gd-mvf-range-input {
+    display: flex;
+
+    &.hidden {
+        display: none;
+    }
+
+    .gd-input {
+        flex: auto;
+
+        &:last-child {
+            padding-left: 10px;
+        }
+    }
+}
+
+.gd-mvf-compare-input {
+    &.hidden {
+        display: none;
+    }
+}

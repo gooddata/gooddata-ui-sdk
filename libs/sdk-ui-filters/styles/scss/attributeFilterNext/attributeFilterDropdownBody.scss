@@ -1,0 +1,12 @@
+// (C) 2022 GoodData Corporation
+@use "attributeFilterVariables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.gd-attribute-filter-dropdown-body__next {
+    display: flex;
+    flex-direction: column;
+
+    @media #{variables.$xsmall-only}, #{variables.$small-only} {
+        height: 100%;
+    }
+}

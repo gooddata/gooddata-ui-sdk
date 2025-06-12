@@ -1,0 +1,19 @@
+// (C) 2007-2024 GoodData Corporation
+@use "sass:list";
+@use "sass:map";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.gd-date-filter-form-wrapper-desktop.gd-date-filter-form-wrapper {
+    @include typo-mixins.gd-font-base;
+
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 4);
+    margin: 0 0 10px 10px;
+    padding: 10px 10px 0 10px;
+    border-left: 2px dotted variables.$gd-border-color;
+}
+
+.gd-date-filter-form-wrapper-inner {
+    padding: 10px;
+    background-color: var(--gd-palette-complementary-1-from-theme, #f5f7f9);
+}

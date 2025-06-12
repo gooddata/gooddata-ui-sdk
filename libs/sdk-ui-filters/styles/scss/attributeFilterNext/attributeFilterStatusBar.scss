@@ -1,0 +1,91 @@
+// (C) 2022-2025 GoodData Corporation
+@use "attributeFilterVariables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.gd-attribute-filter-filtered-status__next {
+    position: relative;
+    margin: 0 10px 5px;
+    color: var(--gd-palette-complementary-8, #464e56);
+    cursor: default;
+
+    .gd-filtered-message__next {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 20px;
+        line-height: 20px;
+        color: variables.$gd-color-text;
+        background: variables.$gd-color-white;
+        font-size: 12px;
+
+        .gd-icon-circle-question {
+            top: 1px;
+            padding: 5px;
+            color: variables.$gd-color-state-blank;
+        }
+
+        @media #{variables.$xsmall-only}, #{variables.$small-only} {
+            font-size: 14px;
+        }
+    }
+}
+
+.gd-attribute-filter-status-bar__next {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.gd-attribute-filter-status-show-all {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 25px;
+    min-width: 0;
+    margin: 0 10px;
+    color: variables.$gd-color-state-blank;
+    line-height: 20px;
+    font-size: 12px;
+    padding-top: 5px;
+    border-top: 1px solid variables.$gd-border-color;
+    font-family: variables.$gd-font-primary;
+
+    .gd-relevant-values-text {
+        margin-left: 3px;
+    }
+
+    .gd-action-show-all {
+        text-decoration: underline;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding-left: 0;
+
+        &:hover {
+            color: variables.$gd-palette-primary-base;
+        }
+    }
+
+    &.no-divider {
+        margin-bottom: 6px;
+    }
+}
+
+.gd-attribute-filter-status-irrelevant-message {
+    width: 100%;
+    margin: 0 10px 10px;
+
+    .gd-message-text {
+        line-height: 20px;
+        font-size: 12px;
+    }
+
+    .gd-action-clear {
+        text-decoration: underline;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding-left: 0;
+    }
+}

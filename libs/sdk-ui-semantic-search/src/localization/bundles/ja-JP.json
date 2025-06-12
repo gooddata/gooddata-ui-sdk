@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "検索サービスが一時的に停止しています。",
+    "semantic-search.error.text": "私たちはこの問題の解決に取り組んでいます。",
+    "semantic-search.no-results": "「{query}」の結果は見つかりませんでした。",
+    "semantic-search.placeholder": "ダッシュボードまたはビジュアライゼーションを検索…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "タグ",
+    "semantic-search.match": "{score}％マッチ",
+    "semantic-search.previous-search": "過去の検索",
+    "semantic-search.date.at": "の時刻",
+    "gs.date.today": "今日",
+    "gs.date.yesterday": "昨日",
+    "semantic-search.label": "ダッシュボードまたはビジュアライゼーションを検索"
+}

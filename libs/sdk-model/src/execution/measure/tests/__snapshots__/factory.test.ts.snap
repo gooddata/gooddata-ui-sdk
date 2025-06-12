@@ -1,0 +1,482 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`measure factories > modifyInlineMeasure > should return a modified inline measure 1`] = `
+{
+  "measure": {
+    "definition": {
+      "inlineDefinition": {
+        "maql": "SELECT 2;",
+      },
+    },
+    "localIdentifier": "m_b1698e52_inline",
+  },
+}
+`;
+
+exports[`measure factories > modifyMeasure > should create new measure with modified local id 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
+          "identifier": "measure1",
+        },
+      },
+    },
+    "localIdentifier": "measure2",
+  },
+}
+`;
+
+exports[`measure factories > modifyPopMeasure > should change master measure and pop attribute 1`] = `
+{
+  "measure": {
+    "definition": {
+      "popMeasureDefinition": {
+        "measureIdentifier": "otherMaster",
+        "popAttribute": {
+          "identifier": "attrId2",
+          "type": "attribute",
+        },
+      },
+    },
+    "localIdentifier": "measure1",
+  },
+}
+`;
+
+exports[`measure factories > modifyPreviousPeriodMeasure > should change master measure and pop attribute 1`] = `
+{
+  "measure": {
+    "definition": {
+      "previousPeriodMeasure": {
+        "dateDataSets": [
+          {
+            "dataSet": {
+              "identifier": "dataset2",
+            },
+            "periodsAgo": -1,
+          },
+        ],
+        "measureIdentifier": "otherMaster",
+      },
+    },
+    "localIdentifier": "measure1",
+  },
+}
+`;
+
+exports[`measure factories > modifySimpleMeasure > should create new measure with cleaned up customizations and same localId 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
+          "identifier": "measure1",
+        },
+      },
+    },
+    "localIdentifier": "measure1",
+  },
+}
+`;
+
+exports[`measure factories > modifySimpleMeasure > should create new measure with modified aggregation and custom local id 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "aggregation": "min",
+        "item": {
+          "identifier": "measure1",
+        },
+      },
+    },
+    "localIdentifier": "customLocalId",
+  },
+}
+`;
+
+exports[`measure factories > modifySimpleMeasure > should create new measure with modified aggregation and same localId 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "aggregation": "min",
+        "item": {
+          "identifier": "measure1",
+        },
+      },
+    },
+    "localIdentifier": "measure1",
+  },
+}
+`;
+
+exports[`measure factories > newArithmeticMeasure > should return a simple arithmetic measure 1`] = `
+{
+  "measure": {
+    "definition": {
+      "arithmeticMeasure": {
+        "measureIdentifiers": [
+          "foo",
+          "bar",
+        ],
+        "operator": "sum",
+      },
+    },
+    "localIdentifier": "m_3858f62230ac3c915f300c664312c63f",
+  },
+}
+`;
+
+exports[`measure factories > newArithmeticMeasure > should return a simple arithmetic measure from two measure objects 1`] = `
+{
+  "measure": {
+    "definition": {
+      "arithmeticMeasure": {
+        "measureIdentifiers": [
+          "m_afSEwRwdbMeQ",
+          "m_fact.stagehistory.velocity_min",
+        ],
+        "operator": "sum",
+      },
+    },
+    "localIdentifier": "m_f41f9d3bb81ba6c5d004ee17cac27ecd",
+  },
+}
+`;
+
+exports[`measure factories > newInlineMeasure > should return a inline measure 1`] = `
+{
+  "measure": {
+    "definition": {
+      "inlineDefinition": {
+        "maql": "SELECT 1",
+      },
+    },
+    "localIdentifier": "m_b1698e52_inline",
+  },
+}
+`;
+
+exports[`measure factories > newMeasure > should honor custom-set localId for simple measures with aggregation 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "aggregation": "sum",
+        "item": {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "bar",
+  },
+}
+`;
+
+exports[`measure factories > newMeasure > should return a measure with a filter 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "filters": [
+          {
+            "positiveAttributeFilter": {
+              "displayForm": {
+                "identifier": "filter",
+              },
+              "in": {
+                "uris": [
+                  "baz",
+                ],
+              },
+            },
+          },
+        ],
+        "item": {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "m_foo_e2e8b1b1",
+  },
+}
+`;
+
+exports[`measure factories > newMeasure > should return a measure with alias 1`] = `
+{
+  "measure": {
+    "alias": "bar",
+    "definition": {
+      "measureDefinition": {
+        "item": {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "m_cff821ae_foo",
+  },
+}
+`;
+
+exports[`measure factories > newMeasure > should return a measure with custom localIdentifier 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "custom",
+  },
+}
+`;
+
+exports[`measure factories > newMeasure > should return a measure with format 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
+          "identifier": "foo",
+        },
+      },
+    },
+    "format": "bar",
+    "localIdentifier": "m_0c875c48_foo",
+  },
+}
+`;
+
+exports[`measure factories > newMeasure > should return a measure with title 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "m_5e52638c_foo",
+    "title": "bar",
+  },
+}
+`;
+
+exports[`measure factories > newMeasure > should return a simple measure 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "m_foo",
+  },
+}
+`;
+
+exports[`measure factories > newMeasure > should return a simple measure with different aggregation 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "aggregation": "sum",
+        "item": {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "m_foo_sum",
+  },
+}
+`;
+
+exports[`measure factories > newMeasure > should sanitize automatically generated localId 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
+          "identifier": "id:with:colons",
+        },
+      },
+    },
+    "localIdentifier": "m_id_with_colons",
+  },
+}
+`;
+
+exports[`measure factories > newPopMeasure > should return a simple PoP measure from attribute ref 1`] = `
+{
+  "measure": {
+    "definition": {
+      "popMeasureDefinition": {
+        "measureIdentifier": "foo",
+        "popAttribute": {
+          "identifier": "attr",
+        },
+      },
+    },
+    "localIdentifier": "m_foo_attr",
+  },
+}
+`;
+
+exports[`measure factories > newPopMeasure > should return a simple PoP measure from other measure object 1`] = `
+{
+  "measure": {
+    "definition": {
+      "popMeasureDefinition": {
+        "measureIdentifier": "m_afSEwRwdbMeQ",
+        "popAttribute": {
+          "identifier": "attr",
+          "type": "attribute",
+        },
+      },
+    },
+    "localIdentifier": "m_m_afSEwRwdbMeQ_attr",
+  },
+}
+`;
+
+exports[`measure factories > newPopMeasure > should return a simple PoP measure from shorthand attribute identifier 1`] = `
+{
+  "measure": {
+    "definition": {
+      "popMeasureDefinition": {
+        "measureIdentifier": "foo",
+        "popAttribute": {
+          "identifier": "attr",
+          "type": "attribute",
+        },
+      },
+    },
+    "localIdentifier": "m_foo_attr",
+  },
+}
+`;
+
+exports[`measure factories > newPreviousPeriodMeasure > should return a simple PP measure when supplied with ObjRef datasets 1`] = `
+{
+  "measure": {
+    "definition": {
+      "previousPeriodMeasure": {
+        "dateDataSets": [
+          {
+            "dataSet": {
+              "uri": "/some/uri",
+            },
+            "periodsAgo": 3,
+          },
+        ],
+        "measureIdentifier": "foo",
+      },
+    },
+    "localIdentifier": "m_foo_previous_period",
+  },
+}
+`;
+
+exports[`measure factories > newPreviousPeriodMeasure > should return a simple PP measure when supplied with objects 1`] = `
+{
+  "measure": {
+    "definition": {
+      "previousPeriodMeasure": {
+        "dateDataSets": [
+          {
+            "dataSet": {
+              "identifier": "bar",
+            },
+            "periodsAgo": 3,
+          },
+        ],
+        "measureIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+    "localIdentifier": "m_m_afSEwRwdbMeQ_previous_period",
+  },
+}
+`;
+
+exports[`measure factories > newPreviousPeriodMeasure > should return a simple PP measure when supplied with strings 1`] = `
+{
+  "measure": {
+    "definition": {
+      "previousPeriodMeasure": {
+        "dateDataSets": [
+          {
+            "dataSet": {
+              "identifier": "bar",
+            },
+            "periodsAgo": 3,
+          },
+        ],
+        "measureIdentifier": "foo",
+      },
+    },
+    "localIdentifier": "m_foo_previous_period",
+  },
+}
+`;
+
+exports[`measure factories > newVirtualArithmeticMeasure > should combine local id with operator 1`] = `
+{
+  "measure": {
+    "definition": {
+      "arithmeticMeasure": {
+        "measureIdentifiers": [
+          "m_afSEwRwdbMeQ",
+          "m_fact.stagehistory.velocity_min",
+        ],
+        "operator": "sum",
+      },
+      "virtual": true,
+    },
+    "localIdentifier": "m_f41f9d3bb81ba6c5d004ee17cac27ecd_sum",
+  },
+}
+`;
+
+exports[`measure factories > newVirtualArithmeticMeasure > should return a simple arithmetic measure from two measure objects 1`] = `
+{
+  "measure": {
+    "definition": {
+      "arithmeticMeasure": {
+        "measureIdentifiers": [
+          "m_afSEwRwdbMeQ",
+          "m_fact.stagehistory.velocity_min",
+        ],
+        "operator": "sum",
+      },
+      "virtual": true,
+    },
+    "localIdentifier": "m_f41f9d3bb81ba6c5d004ee17cac27ecd",
+  },
+}
+`;
+
+exports[`measure factories > newVirtualArithmeticMeasure > should return a simple virtual arithmetic measure 1`] = `
+{
+  "measure": {
+    "definition": {
+      "arithmeticMeasure": {
+        "measureIdentifiers": [
+          "foo",
+          "bar",
+        ],
+        "operator": "sum",
+      },
+      "virtual": true,
+    },
+    "localIdentifier": "m_3858f62230ac3c915f300c664312c63f",
+  },
+}
+`;

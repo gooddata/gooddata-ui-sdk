@@ -1,0 +1,253 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SankeyChartUIHelper > configBuckets > sets the correct values when correct items are passed 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "localIdentifier": "m1",
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_from",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_to",
+    },
+  ],
+  "filters": undefined,
+  "uiConfig": undefined,
+}
+`;
+
+exports[`SankeyChartUIHelper > configBuckets > sets the correct values when pass metric and some attributes from 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "localIdentifier": "m1",
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_from",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a2",
+          "type": "date",
+        },
+      ],
+      "localIdentifier": "attribute_to",
+    },
+  ],
+  "filters": undefined,
+  "uiConfig": undefined,
+}
+`;
+
+exports[`SankeyChartUIHelper > configBuckets > sets the correct values when pass metric and some attributes to 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "localIdentifier": "m1",
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_from",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_to",
+    },
+  ],
+  "filters": undefined,
+  "uiConfig": undefined,
+}
+`;
+
+exports[`SankeyChartUIHelper > configBuckets > sets the correct values when pass metric and some attributes without attribute from/to 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "localIdentifier": "m1",
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_from",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_to",
+    },
+  ],
+  "filters": undefined,
+  "uiConfig": undefined,
+}
+`;
+
+exports[`SankeyChartUIHelper > configBuckets > sets the correct values when pass metric, attribute from, and some attributes without attribute to 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "localIdentifier": "m1",
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_from",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_to",
+    },
+  ],
+  "filters": undefined,
+  "uiConfig": undefined,
+}
+`;
+
+exports[`SankeyChartUIHelper > configBuckets > sets the correct values when pass metric, attribute to, and some attributes without attribute from 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "localIdentifier": "m1",
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_from",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_to",
+    },
+  ],
+  "filters": undefined,
+  "uiConfig": undefined,
+}
+`;
+
+exports[`SankeyChartUIHelper > configBuckets > sets the correct values when pass multi metrics/attributes from/to  1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "localIdentifier": "m1",
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_from",
+    },
+    {
+      "items": [
+        {
+          "localIdentifier": "a3",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute_to",
+    },
+  ],
+  "filters": undefined,
+  "uiConfig": undefined,
+}
+`;

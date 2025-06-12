@@ -1,0 +1,155 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PluggableGeoPushpinChart > getExecution > should generate virtual buckets for latitude and longitude from location 1`] = `
+{
+  "items": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "latitude_df_identifier",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_geo_attribute",
+      },
+    },
+  ],
+  "localIdentifier": "latitude",
+}
+`;
+
+exports[`PluggableGeoPushpinChart > getExecution > should generate virtual buckets for latitude and longitude from location 2`] = `
+{
+  "items": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "longitude_df_identifier",
+          "type": "displayForm",
+        },
+        "localIdentifier": "longitude_df",
+      },
+    },
+  ],
+  "localIdentifier": "longitude",
+}
+`;
+
+exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should generate latitude/longitude and tooltipText to properties 1`] = `
+{
+  "controls": {
+    "latitude": "/geo/attribute/displayform/uri/3",
+    "longitude": "/geo/attribute/displayform/uri/4",
+    "points": {
+      "groupNearbyPoints": false,
+    },
+    "tooltipText": "/geo/attribute/displayform/uri/2",
+  },
+}
+`;
+
+exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should not generate latitude/longitude and tooltipText to properties when location item missing 1`] = `{}`;
+
+exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should return a new reference point with geoPushpin UI config 1`] = `
+{
+  "buckets": {
+    "color": {
+      "accepts": [
+        "metric",
+        "fact",
+        "attribute",
+      ],
+      "allowsDuplicateItems": true,
+      "allowsReordering": false,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:geoPushpin/bucket-title-color-icon.svg",
+      "isShowInPercentEnabled": false,
+      "isShowInPercentVisible": false,
+      "itemsLimit": 1,
+      "subtitle": "Color",
+      "title": "Metric",
+    },
+    "filters": {
+      "accepts": [
+        "attribute",
+        "date",
+      ],
+      "allowsReordering": false,
+      "enabled": true,
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": {
+        "date": 1,
+      },
+    },
+    "location": {
+      "accepts": [
+        "attribute",
+        "geo_attribute",
+      ],
+      "allowsReordering": false,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:geoPushpin/bucket-title-location-icon.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 1,
+      "itemsLimitByType": {
+        "date": 1,
+      },
+      "title": "Location",
+    },
+    "segment": {
+      "accepts": [
+        "attribute",
+      ],
+      "allowsReordering": false,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:geoPushpin/bucket-title-segment-icon.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 1,
+      "itemsLimitByType": {
+        "date": 1,
+      },
+      "title": "Segment by",
+    },
+    "size": {
+      "accepts": [
+        "metric",
+        "fact",
+        "attribute",
+      ],
+      "allowsDuplicateItems": true,
+      "allowsReordering": false,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:geoPushpin/bucket-title-size-icon.svg",
+      "isShowInPercentEnabled": false,
+      "isShowInPercentVisible": false,
+      "itemsLimit": 1,
+      "subtitle": "Size",
+      "title": "Metric",
+    },
+  },
+  "exportConfig": {
+    "supported": true,
+  },
+  "noMetricAccepted": {
+    "supported": true,
+  },
+  "openAsReport": {
+    "supported": false,
+  },
+  "recommendations": {
+    "supportsFilteringRecommendation": false,
+  },
+  "supportedLocationIcon": {
+    "supported": true,
+  },
+  "supportedOverTimeComparisonTypes": [],
+}
+`;

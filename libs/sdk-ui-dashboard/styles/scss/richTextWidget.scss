@@ -1,0 +1,104 @@
+// (C) 2024-2025 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mx;
+@use "variables";
+
+.gd-rich-text-widget-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.gd-rich-text-widget-export-container {
+    width: 100%;
+    height: 100%;
+}
+
+.gd-rich-text-widget {
+    padding: 5px;
+    border-radius: variables.$gd-dashboards-content-widget-borderRadius;
+
+    textarea {
+        background-color: var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0, #fff));
+        line-height: 19px;
+        font-size: 14px;
+        font-weight: 400;
+        font-family: kit-variables.$measure_sequence_number_font;
+        color: kit-variables.$gd-color-text;
+    }
+
+    .gd-rich-text-content-view {
+        h1,
+        h2,
+        h3 {
+            color: var(--gd-dashboards-title-color, var(--gd-palette-complementary-8, #464e56));
+        }
+    }
+}
+
+.gd-rich-text-widget-footer {
+    padding: 0 4px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    height: 40px;
+    min-height: 40px;
+
+    .gd-divider {
+        margin: 4px;
+        height: 20px;
+        border-left: 1px solid kit-variables.$gd-border-color;
+    }
+
+    .gd-rich-text-footer-options {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        overflow: hidden;
+        align-items: center;
+
+        .gd-button-link-dimmed::before {
+            top: 6px;
+        }
+
+        .gd-button-link-dimmed:focus {
+            color: button-variables.$button-normal-color;
+        }
+
+        .gd-button-link-dimmed:hover {
+            color: kit-variables.$gd-color-text;
+        }
+
+        .gd-button-link-dimmed:hover::before {
+            color: kit-variables.$gd-color-text;
+        }
+    }
+
+    .gd-rich-text-footer-actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .gd-button-link.gd-button-icon-only.gd-icon-trash:hover::before {
+            color: kit-variables.$gd-palette-error-base;
+        }
+    }
+}
+
+.gd-rich-text-widget-empty-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}

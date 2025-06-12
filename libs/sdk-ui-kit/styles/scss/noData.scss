@@ -1,0 +1,23 @@
+// (C) 2007-2018 GoodData Corporation
+@use "variables";
+
+.gd-no-data {
+    margin: 12px;
+    color: variables.$gd-color-state-blank;
+    text-align: center;
+}
+
+.gd-no-data,
+.gd-no-data-headline {
+    line-height: 19px;
+    font-size: 14px;
+}
+
+.gd-no-data-text {
+    line-height: 16px;
+    font-size: 12px;
+
+    .gd-no-data-headline + & {
+        margin-top: 13px;
+    }
+}

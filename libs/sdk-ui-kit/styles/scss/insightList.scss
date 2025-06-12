@@ -1,0 +1,166 @@
+// (C) 2007-2024 GoodData Corporation
+@use "variables";
+@use "Button/variables" as button-variables;
+@use "indigoFont";
+
+$base-path: "~@gooddata/sdk-ui-kit/styles/images/visualization-types/";
+$visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, funnel, pyramid, headline,
+    heatmap, line, pie, scatter, table, treemap, unknown, xirr, pushpin, region, bullet, dependencywheel,
+    sankey, waterfall, repeater;
+
+%visualisation-icon {
+    display: inline-block;
+    width: 32px;
+    height: 30px;
+    vertical-align: top;
+    margin-right: 9px;
+    background-repeat: no-repeat;
+    background-position: center, -999px -999px;
+
+    .is-selected & {
+        background-position: -999px -999px, center;
+    }
+}
+
+.gd-vis-type {
+    @extend %visualisation-icon;
+
+    background-image: url($base-path + "unknown.svg"), url($base-path + "unknown-active.svg");
+}
+
+@each $icon in $visualization-types {
+    .gd-vis-type-#{$icon} {
+        @extend %visualisation-icon;
+
+        background-image: url($base-path + $icon + ".svg"), url($base-path + $icon + "-active.svg");
+    }
+}
+
+.gd-visualizations-list {
+    .public_fixedDataTableRow_main,
+    .public_fixedDataTableCell_main,
+    .fixedDataTableCellGroupLayout_cellGroup {
+        overflow: visible;
+    }
+}
+
+.gd-visualizations-list-item {
+    display: flex;
+    align-items: stretch;
+    flex-direction: row-reverse;
+    margin: 0 3px 0 15px;
+    padding: 5px 2px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    align-content: stretch;
+    border-radius: 3px;
+
+    > * {
+        flex: 1 1 auto;
+    }
+
+    &:hover {
+        position: relative;
+        border-color: var(--gd-palette-complementary-5-from-theme, transparent);
+        box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
+            0 2px 9px 0 button-variables.$button-shadow-darker;
+        background-color: var(--gd-palette-complementary-0, #fff);
+    }
+
+    &.is-selected {
+        .gd-visualizations-list-item-content {
+            font-weight: bold;
+
+            .gd-visualizations-list-item-content-name {
+                color: variables.$gd-palette-primary-base;
+            }
+        }
+    }
+
+    .gd-visualizations-list-item-content {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: middle;
+
+        .gd-visualizations-list-item-content-name,
+        .gd-visualizations-list-item-content-date {
+            margin-top: 2px;
+        }
+
+        .gd-visualizations-list-item-content-name {
+            line-height: 14px;
+            color: variables.$gd-color-text;
+            font-size: 12px;
+
+            span {
+                display: inline-block;
+                width: 100%;
+            }
+        }
+
+        .gd-visualizations-list-item-content-date {
+            line-height: 12px;
+            color: variables.$gd-color-state-blank;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+    }
+
+    .gd-vis-type-container {
+        flex: 0 0 32px;
+    }
+
+    .gd-visualizations-list-item-description {
+        flex: 0 0 15px;
+        padding-top: 8px;
+        padding-left: 10px;
+    }
+
+    .gd-visualizations-list-item-actions {
+        flex: 0 0 40px;
+
+        &:hover {
+            background: var(--gd-palette-error-lightest, #fff2f1);
+
+            ~ .gd-visualizations-list-item-content {
+                background: var(--gd-palette-error-lightest, #fff2f1);
+            }
+
+            ~ .gd-visualizations-list-item-description {
+                background: var(--gd-palette-error-lightest, #fff2f1);
+            }
+
+            ~ .gd-vis-type-container {
+                background: var(--gd-palette-error-lightest, #fff2f1);
+            }
+
+            .gd-visualizations-list-item-action-delete {
+                // stylelint-disable-next-line max-nesting-depth
+                &::before {
+                    color: variables.$gd-palette-error-base;
+                }
+            }
+        }
+    }
+
+    .gd-icon-lock {
+        color: variables.$gd-color-state-blank;
+        margin-right: 4px;
+    }
+}
+
+.gd-visualizations-list-item-actions {
+    opacity: 0;
+
+    .gd-visualizations-list-item:hover & {
+        opacity: 1;
+    }
+}
+
+.gd-visualizations-list-item-description {
+    opacity: 0;
+
+    .gd-visualizations-list-item:hover & {
+        opacity: 1;
+    }
+}

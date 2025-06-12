@@ -1,0 +1,53 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_opportunity.opportunity.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_opportunity.opportunity.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "trend"
+            },
+            { "items": [], "localIdentifier": "segment" }
+        ],
+        "filters": [
+            {
+                "measureValueFilter": {
+                    "condition": { "comparison": { "operator": "GREATER_THAN", "value": 100000 } },
+                    "measure": { "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" }
+                }
+            }
+        ],
+        "identifier": "LineChart.458c9384ce6e0a0f8e4e7dc55812a6ce",
+        "properties": { "controls": { "dataPoints": { "visible": false } } },
+        "sorts": [],
+        "title": "LineChart - data points - dense chart - forced hidden",
+        "uri": "LineChart.458c9384ce6e0a0f8e4e7dc55812a6ce",
+        "visualizationUrl": "local:line"
+    }
+}

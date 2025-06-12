@@ -1,0 +1,133 @@
+// (C) 2007-2025 GoodData Corporation
+@use "variables";
+
+.color-picker-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    transition: background-color 0.2s;
+}
+
+.color-picker-component {
+    margin-bottom: 20px;
+}
+
+.color-picker-row {
+    display: flex;
+    font-size: 0;
+}
+
+.color-picker-cell {
+    flex: 1;
+    padding: 1px;
+    cursor: pointer;
+
+    &::before {
+        content: "";
+        display: block;
+        width: 100%;
+        padding-top: 100%;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        padding: 0;
+        border: 1px solid variables.$gd-color-white;
+        transform: scale(1.1);
+    }
+
+    .overlay .color-picker-row:first-child & {
+        &:first-child {
+            border-top-left-radius: 3px;
+        }
+
+        &:last-child {
+            border-top-right-radius: 3px;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-radius: 0;
+        }
+    }
+}
+
+.color-picker-control-wrapper {
+    margin: 0 20px;
+    color: variables.$gd-color-label;
+    text-transform: uppercase;
+    font-size: 12px;
+
+    &,
+    .gd-input-field {
+        text-align: center;
+    }
+
+    p {
+        margin: 5px 0 10px;
+    }
+}
+
+.color-picker-pointer {
+    width: 10px;
+    height: 10px;
+    border: 1px solid variables.$gd-color-white;
+    transform: translate(-5px, 7.5px);
+    border-radius: 50%;
+}
+
+.color-picker-preview {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0 10px;
+    border-top: 1px solid variables.$gd-border-color;
+
+    .color-value {
+        width: 30px;
+        height: 30px;
+        margin: 0 auto 10px;
+        border: 1px solid transparent;
+        border-radius: 50%;
+    }
+
+    .color-picker-value-wrapper {
+        width: 60px;
+    }
+}
+
+.color-picker-buttons-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-top: 1px solid variables.$gd-border-color;
+
+    .gd-button {
+        flex: 1;
+        max-width: 100px;
+        text-align: center;
+    }
+}
+
+.hue-picker {
+    position: relative;
+    height: 25px;
+    padding: 0 2px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+
+    &.hue-horizontal {
+        background: linear-gradient(
+            to right,
+            #f00 0%,
+            #ff0 17%,
+            #0f0 33%,
+            #0ff 50%,
+            #00f 67%,
+            #f0f 83%,
+            #f00 100%
+        );
+    }
+}

@@ -1,0 +1,224 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`createDrillHeaders > should generate drill item containing all scoping attribute's headers and descriptors and measure from measure's data col 1`] = `
+[
+  {
+    "attributeHeaderItem": {
+      "name": "Exclude",
+      "uri": "Exclude",
+    },
+  },
+  {
+    "attributeHeader": {
+      "formOf": {
+        "identifier": "f_opportunitysnapshot.forecastcategory_id",
+        "name": "Forecast Category",
+        "ref": undefined,
+        "uri": "",
+      },
+      "granularity": null,
+      "identifier": "f_opportunitysnapshot.forecastcategory_id",
+      "localIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
+      "name": "Forecast Category",
+      "primaryLabel": {
+        "identifier": "f_opportunitysnapshot.forecastcategory_id",
+        "type": "displayForm",
+      },
+      "ref": undefined,
+      "totalItems": [],
+      "uri": "",
+    },
+  },
+  {
+    "attributeHeaderItem": {
+      "name": "East Coast",
+      "uri": "East Coast",
+    },
+  },
+  {
+    "attributeHeader": {
+      "formOf": {
+        "identifier": "f_owner.region_id",
+        "name": "Region",
+        "ref": undefined,
+        "uri": "",
+      },
+      "granularity": null,
+      "identifier": "f_owner.region_id",
+      "localIdentifier": "a_f_owner.region_id",
+      "name": "Region",
+      "primaryLabel": {
+        "identifier": "f_owner.region_id",
+        "type": "displayForm",
+      },
+      "ref": undefined,
+      "totalItems": [],
+      "uri": "",
+    },
+  },
+  {
+    "measureHeaderItem": {
+      "format": "$#,##0.00",
+      "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "name": "Amount",
+      "ref": undefined,
+    },
+  },
+]
+`;
+
+exports[`createDrillHeaders > should generate drill item containing both parent's and second level's group attribute and descriptor from second level group 1`] = `
+[
+  {
+    "attributeHeaderItem": {
+      "name": "Exclude",
+      "uri": "Exclude",
+    },
+  },
+  {
+    "attributeHeader": {
+      "formOf": {
+        "identifier": "f_opportunitysnapshot.forecastcategory_id",
+        "name": "Forecast Category",
+        "ref": undefined,
+        "uri": "",
+      },
+      "granularity": null,
+      "identifier": "f_opportunitysnapshot.forecastcategory_id",
+      "localIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
+      "name": "Forecast Category",
+      "primaryLabel": {
+        "identifier": "f_opportunitysnapshot.forecastcategory_id",
+        "type": "displayForm",
+      },
+      "ref": undefined,
+      "totalItems": [],
+      "uri": "",
+    },
+  },
+  {
+    "attributeHeaderItem": {
+      "name": "East Coast",
+      "uri": "East Coast",
+    },
+  },
+  {
+    "attributeHeader": {
+      "formOf": {
+        "identifier": "f_owner.region_id",
+        "name": "Region",
+        "ref": undefined,
+        "uri": "",
+      },
+      "granularity": null,
+      "identifier": "f_owner.region_id",
+      "localIdentifier": "a_f_owner.region_id",
+      "name": "Region",
+      "primaryLabel": {
+        "identifier": "f_owner.region_id",
+        "type": "displayForm",
+      },
+      "ref": undefined,
+      "totalItems": [],
+      "uri": "",
+    },
+  },
+]
+`;
+
+exports[`createDrillHeaders > should generate drill item containing first attribute's header and descriptor from first slice column 1`] = `
+[
+  {
+    "attributeHeaderItem": {
+      "name": "CompuSci",
+      "uri": "CompuSci",
+    },
+  },
+  {
+    "attributeHeader": {
+      "formOf": {
+        "identifier": "attr.f_product.product",
+        "name": "Product",
+        "ref": undefined,
+        "uri": "",
+      },
+      "granularity": null,
+      "identifier": "label.f_product.product.name",
+      "localIdentifier": "a_label.f_product.product.name",
+      "name": "Product Name",
+      "primaryLabel": {
+        "identifier": "attr.f_product.product",
+        "type": "displayForm",
+      },
+      "ref": undefined,
+      "totalItems": [],
+      "uri": "",
+    },
+  },
+]
+`;
+
+exports[`createDrillHeaders > should generate drill item containing just first level group's attribute header and descriptor from first level group 1`] = `
+[
+  {
+    "attributeHeaderItem": {
+      "name": "Exclude",
+      "uri": "Exclude",
+    },
+  },
+  {
+    "attributeHeader": {
+      "formOf": {
+        "identifier": "f_opportunitysnapshot.forecastcategory_id",
+        "name": "Forecast Category",
+        "ref": undefined,
+        "uri": "",
+      },
+      "granularity": null,
+      "identifier": "f_opportunitysnapshot.forecastcategory_id",
+      "localIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
+      "name": "Forecast Category",
+      "primaryLabel": {
+        "identifier": "f_opportunitysnapshot.forecastcategory_id",
+        "type": "displayForm",
+      },
+      "ref": undefined,
+      "totalItems": [],
+      "uri": "",
+    },
+  },
+]
+`;
+
+exports[`createDrillHeaders > should generate drill item containing second attribute's header and descriptor from second column 1`] = `
+[
+  {
+    "attributeHeaderItem": {
+      "name": "Direct Sales",
+      "uri": "Direct Sales",
+    },
+  },
+  {
+    "attributeHeader": {
+      "formOf": {
+        "identifier": "f_owner.department_id",
+        "name": "Department",
+        "ref": undefined,
+        "uri": "",
+      },
+      "granularity": null,
+      "identifier": "f_owner.department_id",
+      "localIdentifier": "a_f_owner.department_id",
+      "name": "Department",
+      "primaryLabel": {
+        "identifier": "f_owner.department_id",
+        "type": "displayForm",
+      },
+      "ref": undefined,
+      "totalItems": [],
+      "uri": "",
+    },
+  },
+]
+`;

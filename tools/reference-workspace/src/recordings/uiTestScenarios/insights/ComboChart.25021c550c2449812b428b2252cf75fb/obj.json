@@ -1,0 +1,33 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "secondary_measures" },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "ComboChart.25021c550c2449812b428b2252cf75fb",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "ComboChart - one primary measure",
+        "uri": "ComboChart.25021c550c2449812b428b2252cf75fb",
+        "visualizationUrl": "local:combo2"
+    }
+}

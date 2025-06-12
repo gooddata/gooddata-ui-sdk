@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+    isolated-tests:
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/cypress/included:13.17.0
+        entrypoint: "node ./scripts/run_isolated_compose.js --$MODE --filter=$FILTER"
+        volumes:
+            - ../../:/gooddata-ui-sdk-e2e:rw
+        working_dir: /gooddata-ui-sdk-e2e/libs/sdk-ui-tests-e2e
+        user: "$USER_UID:$USER_GID"
+        depends_on:
+            - gooddata-ui-sdk-scenarios
+            - backend-mock
+        environment:
+            - CYPRESS_HOST=http://gooddata-ui-sdk-scenarios:9500
+            - MODE
+            - FILTER
+            - BUILD_URL
+            - HOST
+            - TEST_WORKSPACE_ID
+            - TIGER_API_TOKEN
+            - TIGER_DATASOURCES_NAME
+            - FIXTURE_TYPE
+            - CYPRESS_TEST_TAGS
+            - NO_COLOR
+            - ZUUL_PIPELINE=$ZUUL_PIPELINE
+            - COMMIT_INFO_MESSAGE=$DOCKER_BUILD_URL
+
+    gooddata-ui-sdk-scenarios:
+        image: $IMAGE_ID
+        volumes:
+            - ./nginx/proxy-isolated-tests.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests.conf
+        depends_on:
+            - backend-mock
+
+    backend-mock:
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/wiremock/wiremock:3.3.1
+        # Use "--print-all-network-traffic --verbose" for verbose logging
+        command: "--proxy-all=${HOST:-https://staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
+        user: "$USER_UID:$USER_GID"
+        volumes:
+            - ./recordings/wiremock_extension/jar/:/var/wiremock/extensions:ro
+        environment:
+            - PROXY_HOST=${HOST:-https://staging3.intgdc.com}

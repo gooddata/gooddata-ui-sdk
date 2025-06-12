@@ -1,0 +1,48 @@
+name: Push ~ FOSSA update attribution file
+
+on:
+  push:
+    branches:
+      - master
+      - release
+    paths:
+      - 'common/config/rush/pnpm-lock.yaml'
+
+jobs:
+    prepare-branch-name:
+        runs-on: [ubuntu-latest]
+        outputs:
+          branch: ${{ steps.extract-branch.outputs.branch }}
+        steps:
+          - name: Extract branch name
+            id: extract-branch
+            env:
+              CURRENT_REF: ${{ github.event.ref }}
+            shell: bash
+            run: |
+               echo "branch=${CURRENT_REF#refs/heads/}" >> $GITHUB_OUTPUT
+               echo $branch
+
+    run-fossa-scan-update-attribution:
+        needs: [prepare-branch-name]
+        name: Run FOSSA scan and update attribution file
+        uses: ./.github/workflows/rw-fossa-update-attribution-file.yml
+        secrets: inherit
+        permissions:
+          contents: write
+          id-token: write
+        with:
+          source-branch:  ${{ needs.prepare-branch-name.outputs.branch }}
+
+    notify-publish-failed-to-slack:
+        if: ${{ always() && needs.run-fossa-scan-update-attribution.result == 'failure' }}
+        needs: [run-fossa-scan-update-attribution]
+        runs-on: [ubuntu-latest]
+        steps:
+          - name: Inform to slack when fossa workflows failed
+            uses: slackapi/slack-github-action@v1.25.0
+            with:
+                channel-id: "#javascript-notifications"
+                slack-message: ":warning: The FOSSA scan and attribution file creation failed. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>* for further information."
+            env:
+                SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

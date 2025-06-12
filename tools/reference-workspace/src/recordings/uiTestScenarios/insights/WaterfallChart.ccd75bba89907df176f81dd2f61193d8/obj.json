@@ -1,0 +1,58 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Sum Velocity",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Sum Duration",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Sum Density",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_density", "type": "fact" }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_f_density_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.ccd75bba89907df176f81dd2f61193d8",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "WaterfallChart - default state",
+        "uri": "WaterfallChart.ccd75bba89907df176f81dd2f61193d8",
+        "visualizationUrl": "local:waterfall"
+    }
+}

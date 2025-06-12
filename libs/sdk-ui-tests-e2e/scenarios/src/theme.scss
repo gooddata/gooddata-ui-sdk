@@ -1,0 +1,36 @@
+// (C) 2021 GoodData Corporation
+
+$color-primary: #14b2e2;
+$color-primary-darker: #0a0d79;
+$color-primary-lighter: lighten($color-primary, 35%);
+$color-active: #4a90e2;
+$color-success: #00c18d;
+$color-paper: #fff;
+$color-grey: #f2f2f2;
+
+$color-positive: #417505;
+$color-negative: #710311;
+$color-error: #e54d42;
+$color-paper-inverse: #303442;
+$color-box: #eee;
+$color-text: #464e56;
+$color-text-inverse: #94a1ad;
+$color-text-muted: rgb(148, 161, 173);
+$color-border: lighten($color-paper-inverse, 65%);
+$color-grey-lighter: #f4f0f0;
+$color-accent: #b19057;
+$color-accent-lighter: lighten($color-accent, 35%);
+
+$spacing: 20px;
+$font-size-body: 14px;
+$font-size-h1: 50px;
+$font-size-h2: 40px;
+$font-size-h3: 30px;
+$font-size-h4: 20px;
+$font-size-h5: 15px;
+$font-family: avenir, "Helvetica Neue", arial, sans-serif;
+$border-radius: 6px;
+
+$transition-fast: all 0.2s ease 0s;
+
+$shadow-high: rgba(0, 0, 0, 0.25) 0px $spacing $spacing/2 0px;

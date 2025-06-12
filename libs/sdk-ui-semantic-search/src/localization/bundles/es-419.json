@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "Nuestro servicio de búsqueda está temporalmente fuera de servicio.",
+    "semantic-search.error.text": "Estamos trabajando para resolver el problema.",
+    "semantic-search.no-results": "No se han encontrado resultados para “{query}”.",
+    "semantic-search.placeholder": "Búsqueda en paneles o visualización…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Etiquetas",
+    "semantic-search.match": "{score}% coincidencia",
+    "semantic-search.previous-search": "Búsqueda anterior",
+    "semantic-search.date.at": "en",
+    "gs.date.today": "Hoy",
+    "gs.date.yesterday": "Ayer",
+    "semantic-search.label": "Búsqueda en paneles de control o visualización"
+}

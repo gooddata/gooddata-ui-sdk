@@ -1,0 +1,33 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.f_product.product.name", "type": "displayForm" },
+                "localIdentifier": "a_label.f_product.product.name"
+            }
+        }
+    ],
+    "buckets": [
+        { "items": [], "localIdentifier": "measures" },
+        { "items": [], "localIdentifier": "attribute" },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.f_product.product.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.f_product.product.name"
+                    }
+                }
+            ],
+            "localIdentifier": "columns"
+        }
+    ],
+    "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["a_label.f_product.product.name"] }],
+    "filters": [],
+    "measures": [],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

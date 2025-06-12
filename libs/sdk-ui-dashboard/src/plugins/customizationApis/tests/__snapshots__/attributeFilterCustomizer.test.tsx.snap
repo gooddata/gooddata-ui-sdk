@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Attribute Filter customizer > should fallback to rendering default component 1`] = `"<div id="default"></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should decorate custom component registered for an attribute filter 1`] = `"<div id="decorator1"><div id="fromCustomProvider"></div></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should decorate default component if attribute filter does not match custom component criteria  1`] = `"<div id="decorator1"><div id="default"></div></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should decorate default component if no other providers are registered 1`] = `"<div id="decorator1"><div id="default"></div></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should decorate if attribute filter matches criteria 1`] = `"<div id="decorator1"><div id="default"></div></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should not decorate if attribute filter does not match criteria 1`] = `"<div id="default"></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should only use only those decorators that match criteria and then use custom component 1`] = `"<div id="decorator2"><div id="customProvider1"></div></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should use multiple decorators and custom component if attribute fiter matches criteria 1`] = `"<div id="decorator2"><div id="decorator1"><div id="customProvider1"></div></div></div>"`;
+
+exports[`Attribute Filter customizer > withCustomDecorator > should use multiple decorators if attribute filter matches criteria 1`] = `"<div id="decorator2"><div id="decorator1"><div id="default"></div></div></div>"`;
+
+exports[`Attribute Filter customizer > withCustomProvider > should fallback to default component if attribute filter does not match provider criteria 1`] = `"<div id="default"></div>"`;
+
+exports[`Attribute Filter customizer > withCustomProvider > should use component from latest registered provider that matches the filter 1`] = `"<div id="fromCustomProvider3"></div>"`;
+
+exports[`Attribute Filter customizer > withCustomProvider > should work for attribute filter that matches predicate 1`] = `"<div id="fromCustomProvider"></div>"`;

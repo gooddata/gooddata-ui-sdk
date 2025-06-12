@@ -1,0 +1,233 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AttributeFilterHandler > getInitialElementsPageError() should return error 1`] = `[Error: Elements error]`;
+
+exports[`AttributeFilterHandler > getInitialElementsPageStatus() should return proper status for failed load > after the load 1`] = `"loading"`;
+
+exports[`AttributeFilterHandler > getInitialElementsPageStatus() should return proper status for failed load > before the load 1`] = `"pending"`;
+
+exports[`AttributeFilterHandler > getInitialElementsPageStatus() should return proper status for failed load > during the load 1`] = `"loading"`;
+
+exports[`AttributeFilterHandler > getInitialElementsPageStatus() should return proper status for successful load > after the load 1`] = `"success"`;
+
+exports[`AttributeFilterHandler > getInitialElementsPageStatus() should return proper status for successful load > before the load 1`] = `"pending"`;
+
+exports[`AttributeFilterHandler > getInitialElementsPageStatus() should return proper status for successful load > during the load 1`] = `"loading"`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered by limit() 1`] = `
+[
+  {
+    "title": "CompuSci",
+    "uri": "CompuSci",
+  },
+  {
+    "title": "Educationly",
+    "uri": "Educationly",
+  },
+  {
+    "title": "Explorer",
+    "uri": "Explorer",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered by order() 1`] = `
+[
+  {
+    "title": "WonderKid",
+    "uri": "WonderKid",
+  },
+  {
+    "title": "TouchAll",
+    "uri": "TouchAll",
+  },
+  {
+    "title": "PhoenixSoft",
+    "uri": "PhoenixSoft",
+  },
+  {
+    "title": "Grammar Plus",
+    "uri": "Grammar Plus",
+  },
+  {
+    "title": "Explorer",
+    "uri": "Explorer",
+  },
+  {
+    "title": "Educationly",
+    "uri": "Educationly",
+  },
+  {
+    "title": "CompuSci",
+    "uri": "CompuSci",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered by search() 1`] = `
+[
+  {
+    "title": "WonderKid",
+    "uri": "WonderKid",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered by setLimitingAttributeFilters() 1`] = `
+[
+  {
+    "title": "Educationly",
+    "uri": "Educationly",
+  },
+  {
+    "title": "Grammar Plus",
+    "uri": "Grammar Plus",
+  },
+  {
+    "title": "TouchAll",
+    "uri": "TouchAll",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered by setLimitingDateFilters() 1`] = `
+[
+  {
+    "title": "Grammar Plus",
+    "uri": "Grammar Plus",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered by setLimitingMeasures() 1`] = `
+[
+  {
+    "title": "Explorer",
+    "uri": "Explorer",
+  },
+  {
+    "title": "TouchAll",
+    "uri": "TouchAll",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered by setLimitingValidationItems() 1`] = `
+[
+  {
+    "title": "CompuSci",
+    "uri": "CompuSci",
+  },
+  {
+    "title": "Educationly",
+    "uri": "Educationly",
+  },
+  {
+    "title": "Explorer",
+    "uri": "Explorer",
+  },
+  {
+    "title": "Grammar Plus",
+    "uri": "Grammar Plus",
+  },
+  {
+    "title": "PhoenixSoft",
+    "uri": "PhoenixSoft",
+  },
+  {
+    "title": "TouchAll",
+    "uri": "TouchAll",
+  },
+  {
+    "title": "WonderKid",
+    "uri": "WonderKid",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() should throw error if it's called before the initialization 1`] = `[Invariant Violation: Cannot call loadInitialElementsPage() before successful initialization.]`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() should trigger onLoadInitialElementsPageStart() callback > with parameters 1`] = `
+[
+  {
+    "correlation": "start",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() that failed should trigger onLoadInitialElementsPageError() callback > with parameters 1`] = `
+[
+  {
+    "correlation": "error",
+    "error": [Error: Elements error],
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() that was canceled by another loadInitialElementsPage() call should trigger onLoadInitialElementsPageCancel() callback > with parameters 1`] = `
+[
+  {
+    "correlation": "cancel",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() that was canceled by cancelInitialElementsPageLoad() call should trigger onLoadInitialElementsPageCancel() callback > with parameters 1`] = `
+[
+  {
+    "correlation": "cancel",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > loadInitialElementsPage() that was successful should trigger onLoadInitialElementsPageSuccess() callback > with parameters 1`] = `
+[
+  {
+    "cacheId": undefined,
+    "correlation": "success",
+    "elements": [
+      {
+        "title": "CompuSci",
+        "uri": "CompuSci",
+      },
+      {
+        "title": "Educationly",
+        "uri": "Educationly",
+      },
+      {
+        "title": "Explorer",
+        "uri": "Explorer",
+      },
+      {
+        "title": "Grammar Plus",
+        "uri": "Grammar Plus",
+      },
+      {
+        "title": "PhoenixSoft",
+        "uri": "PhoenixSoft",
+      },
+      {
+        "title": "TouchAll",
+        "uri": "TouchAll",
+      },
+      {
+        "title": "WonderKid",
+        "uri": "WonderKid",
+      },
+    ],
+    "enableDuplicatedLabelValuesInAttributeFilter": undefined,
+    "options": {
+      "excludePrimaryLabel": false,
+      "limit": 500,
+      "limitingAttributeFilters": [],
+      "limitingDateFilters": [],
+      "limitingMeasures": [],
+      "limitingValidationItems": [],
+      "offset": 0,
+      "order": undefined,
+      "search": "",
+    },
+    "totalCount": 7,
+  },
+]
+`;

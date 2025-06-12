@@ -1,0 +1,75 @@
+name: rw ~ Release ~ Perform release
+on:
+    workflow_call:
+        inputs:
+            source-branch:
+                required: true
+                description: "Source branch to release from (release, rel/*)"
+                type: string
+
+jobs:
+    publish-release:
+        uses: ./.github/workflows/rw-publish-release.yml
+        permissions:
+            contents: write
+            id-token: write
+        secrets: inherit
+        with:
+            bump: "patch"
+            source-branch: ${{ inputs.source-branch }}
+
+    prepare-variables:
+        runs-on: [ubuntu-latest]
+        needs: [publish-release]
+        outputs:
+            version: ${{ steps.set_variables.outputs.version }}
+            rel-branch: ${{ steps.set_variables.outputs.target-branch }}
+            short-version: ${{ steps.set_variables.outputs.short-version }}
+        permissions:
+            contents: read
+        steps:
+            - name: Set variables names for release aka rel branch name and short version
+              id: set_variables
+              run: |
+                  echo "version $VERSION"
+                  echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+                  string=$VERSION
+                  base="rel/${string%.*}"
+                  echo "version $string converted to $base"
+                  echo "target-branch=$base" >> $GITHUB_OUTPUT
+
+                  short=${string%.*}
+                  echo "version $string converted to $short"
+                  echo "short-version=$short" >> $GITHUB_OUTPUT
+              env:
+                  VERSION: ${{ needs.publish-release.outputs.version }}
+
+    add-release-tag:
+        needs: [publish-release,prepare-variables]
+        uses: ./.github/workflows/rw-git-create-tag.yml
+        permissions:
+          contents: write
+        with:
+          source-branch: ${{ inputs.source-branch }}
+          version: ${{ needs.prepare-variables.outputs.version }}
+          is-latest: ${{ needs.publish-release.outputs.is-latest}}
+
+    slack-notification:
+      runs-on: [ubuntu-latest]
+      needs: [add-release-tag, prepare-variables]
+      steps:
+        - name: Set up message
+          id: set-up-message
+          run: |
+            echo "RELEASE_MESSAGE=Please add changelog entries from the ${SOURCE_BRANCH} to master branch manually" >> $GITHUB_ENV
+          env:
+            SOURCE_BRANCH: ${{ inputs.source-branch }}
+
+        - name: Notify to slack
+          uses: slackapi/slack-github-action@v1.25.0
+          with:
+            channel-id: "#javascript-notifications"
+            slack-message: ${{ env.RELEASE_MESSAGE }}
+          env:
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

@@ -1,0 +1,78 @@
+// (C) 2024 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-visualization-switcher-widget-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+
+    // inside switcher we repeat dash-item but need to style it differently
+    .dash-item,
+    .dash-item-content {
+        padding: 0;
+        position: static;
+    }
+    .dash-item {
+        flex: 1 1 100%;
+    }
+    .dash-item-content {
+        border-width: 0;
+    }
+
+    .gd-editable-label-inner {
+        span {
+            text-decoration-line: underline;
+            &::after {
+                content: "\e612";
+                display: inline-block;
+                height: 1px;
+                color: variables.$gd-dashboards-content-widget-title-color;
+                vertical-align: top;
+                transition: 0.2s;
+                margin-left: 0.5em;
+                font-family: "Indigo", sans-serif;
+                font-weight: normal;
+                font-size: inherit;
+            }
+        }
+    }
+}
+
+.gd-visualization-switcher-widget-empty-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    .gd-typography--p {
+        color: kit-variables.$gd-color-link;
+    }
+}
+
+.gd-visualization-switcher-visible-visualization {
+    width: 100%;
+    height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+
+    &.is-edit-mode {
+        display: flex;
+    }
+
+    .gd-drill-modal-wrapper-mask:first-child {
+        padding-top: 0;
+    }
+}
+
+.gd-visualization-switcher-hidden-visualization {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}

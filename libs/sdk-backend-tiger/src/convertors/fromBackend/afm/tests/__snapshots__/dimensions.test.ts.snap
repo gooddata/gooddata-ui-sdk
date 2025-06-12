@@ -1,0 +1,524 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`transformResultDimensions > should fill in totals 1`] = `
+[
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "event_date.quarter.label",
+          "labelType": undefined,
+          "localIdentifier": "localAttr1",
+          "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "totalItems": [
+            {
+              "totalHeaderItem": {
+                "name": "sum",
+              },
+            },
+          ],
+          "uri": "",
+        },
+      },
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "event_date.quarter.label",
+          "labelType": undefined,
+          "localIdentifier": "localAttr2",
+          "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "totalItems": [
+            {
+              "totalHeaderItem": {
+                "name": "sum",
+              },
+            },
+          ],
+          "uri": "",
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "measureGroupHeader": {
+          "items": [
+            {
+              "measureHeaderItem": {
+                "format": "#,##0.00",
+                "identifier": undefined,
+                "localIdentifier": "measureLocalId",
+                "name": "measureLocalId",
+                "ref": undefined,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "event_date.quarter.label",
+          "labelType": undefined,
+          "localIdentifier": "localAttr3",
+          "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "totalItems": [
+            {
+              "totalHeaderItem": {
+                "name": "max",
+              },
+            },
+          ],
+          "uri": "",
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "hyperlink.attr",
+            "name": "Hyperlink",
+            "ref": {
+              "identifier": "hyperlink.attr",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "hyperlink.label",
+          "labelType": "GDC.link",
+          "localIdentifier": "localAttr4",
+          "name": "Hyperlink",
+          "primaryLabel": {
+            "identifier": "hyperlink.label",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "hyperlink.label",
+            "type": "displayForm",
+          },
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "image.attr",
+            "name": "Image",
+            "ref": {
+              "identifier": "image.attr",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "image.label",
+          "labelType": "GDC.image",
+          "localIdentifier": "localAttr5",
+          "name": "Image",
+          "primaryLabel": {
+            "identifier": "image.label",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "image.label",
+            "type": "displayForm",
+          },
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`transformResultDimensions > should fill in totals with multiple totals of the same type on one attribute (RAIL-3246) 1`] = `
+[
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "event_date.quarter.label",
+          "labelType": undefined,
+          "localIdentifier": "localAttr1",
+          "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "totalItems": [
+            {
+              "totalHeaderItem": {
+                "name": "sum",
+              },
+            },
+          ],
+          "uri": "",
+        },
+      },
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "event_date.quarter.label",
+          "labelType": undefined,
+          "localIdentifier": "localAttr2",
+          "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "totalItems": [
+            {
+              "totalHeaderItem": {
+                "name": "sum",
+              },
+            },
+          ],
+          "uri": "",
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "measureGroupHeader": {
+          "items": [
+            {
+              "measureHeaderItem": {
+                "format": "#,##0.00",
+                "identifier": undefined,
+                "localIdentifier": "measureLocalId",
+                "name": "measureLocalId",
+                "ref": undefined,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "event_date.quarter.label",
+          "labelType": undefined,
+          "localIdentifier": "localAttr3",
+          "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "totalItems": [
+            {
+              "totalHeaderItem": {
+                "name": "max",
+              },
+            },
+          ],
+          "uri": "",
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "hyperlink.attr",
+            "name": "Hyperlink",
+            "ref": {
+              "identifier": "hyperlink.attr",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "hyperlink.label",
+          "labelType": "GDC.link",
+          "localIdentifier": "localAttr4",
+          "name": "Hyperlink",
+          "primaryLabel": {
+            "identifier": "hyperlink.label",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "hyperlink.label",
+            "type": "displayForm",
+          },
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "image.attr",
+            "name": "Image",
+            "ref": {
+              "identifier": "image.attr",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "image.label",
+          "labelType": "GDC.image",
+          "localIdentifier": "localAttr5",
+          "name": "Image",
+          "primaryLabel": {
+            "identifier": "image.label",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "image.label",
+            "type": "displayForm",
+          },
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`transformResultDimensions > should fill in uris and refs for attribute descriptors 1`] = `
+[
+  {
+    "headers": [
+      {
+        "measureGroupHeader": {
+          "items": [
+            {
+              "measureHeaderItem": {
+                "format": "#,##0.00",
+                "identifier": undefined,
+                "localIdentifier": "measureLocalId",
+                "name": "measureLocalId",
+                "ref": undefined,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "event_date.quarter.label",
+          "labelType": undefined,
+          "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
+          "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`transformResultDimensions > should fill in uris and refs for attribute descriptors and simple measure descriptors 1`] = `
+[
+  {
+    "headers": [
+      {
+        "measureGroupHeader": {
+          "items": [
+            {
+              "measureHeaderItem": {
+                "format": "#,##0.00",
+                "identifier": "measureIdentifier",
+                "localIdentifier": "measureLocalId",
+                "name": "measureLocalId",
+                "ref": {
+                  "identifier": "measureIdentifier",
+                  "type": "measure",
+                },
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "event_date.quarter.label",
+          "labelType": undefined,
+          "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
+          "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
+          "ref": {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+    ],
+  },
+]
+`;

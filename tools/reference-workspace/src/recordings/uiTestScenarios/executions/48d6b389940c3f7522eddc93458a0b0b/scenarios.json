@@ -1,0 +1,499 @@
+[
+    {
+        "n2oMap": { "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "secondary_measures" },
+                { "items": [], "localIdentifier": "tertiary_measures" },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "x axis measure",
+        "vis": "BubbleChart"
+    },
+    {
+        "n2oMap": { "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure",
+        "vis": "DonutChart"
+    },
+    {
+        "n2oMap": { "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure",
+        "vis": "FunnelChart"
+    },
+    {
+        "n2oMap": { "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure",
+        "vis": "PyramidChart"
+    },
+    {
+        "n2oMap": { "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" },
+                { "items": [], "localIdentifier": "stack" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "measure only",
+        "vis": "Heatmap"
+    },
+    {
+        "n2oMap": { "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure",
+        "vis": "PieChart"
+    },
+    {
+        "n2oMap": { "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "secondary_measures" },
+                { "items": [], "localIdentifier": "attribute" },
+                { "items": [], "localIdentifier": "segment" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "x axis measure",
+        "vis": "ScatterPlot"
+    },
+    {
+        "n2oMap": { "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" },
+                { "items": [], "localIdentifier": "segment" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure",
+        "vis": "Treemap"
+    },
+    {
+        "n2oMap": { "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure",
+        "vis": "WaterfallChart"
+    },
+    {
+        "n2oMap": { "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "attribute" },
+                { "items": [], "localIdentifier": "columns" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure",
+        "vis": "PivotTable"
+    }
+]

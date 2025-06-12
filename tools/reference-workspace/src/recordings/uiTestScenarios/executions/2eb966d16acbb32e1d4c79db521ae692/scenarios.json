@@ -1,0 +1,81 @@
+[
+    {
+        "n2oMap": {
+            "a_f_city.id.cityname": "a_f_city.id.cityname",
+            "a_f_city.id.cityname_1": "a_f_city.id.cityname_cloned",
+            "m_of_lost_opps.": "m_of_lost_opps."
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.cityname"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.cityname_cloned"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                                "localIdentifier": "a_f_city.id.cityname"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "attribute"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                                "localIdentifier": "a_f_city.id.cityname_cloned"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "of_lost_opps.", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_of_lost_opps."
+                            }
+                        }
+                    ],
+                    "localIdentifier": "columns"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["a_f_city.id.cityname", "a_f_city.id.cityname_cloned"] },
+                { "itemIdentifiers": ["measureGroup"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "of_lost_opps.", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_of_lost_opps."
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "one attribute and one measure",
+        "vis": "Repeater"
+    }
+]

@@ -1,0 +1,34 @@
+{
+    "count": [7, 3],
+    "data": [
+        [18939790.52, 0.6178247734138973, 0.6246223564954683],
+        [53688663.75, 0.631890492045875, 0.6392896781354052],
+        [39648366.14, 0.4158311345646438, 0.5347046413502109],
+        [4318364.55, null, 0.22702702702702704],
+        [26627.58, null, 0.2],
+        [null, null, 0.3],
+        [3644, null, 0.1]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "formattedName": "2010", "name": "2010", "uri": "2010" } },
+                { "attributeHeaderItem": { "formattedName": "2011", "name": "2011", "uri": "2011" } },
+                { "attributeHeaderItem": { "formattedName": "2012", "name": "2012", "uri": "2012" } },
+                { "attributeHeaderItem": { "formattedName": "2013", "name": "2013", "uri": "2013" } },
+                { "attributeHeaderItem": { "formattedName": "2014", "name": "2014", "uri": "2014" } },
+                { "attributeHeaderItem": { "formattedName": "2016", "name": "2016", "uri": "2016" } },
+                { "attributeHeaderItem": { "formattedName": "2017", "name": "2017", "uri": "2017" } }
+            ]
+        ],
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Win Rate", "order": 1 } },
+                { "measureHeaderItem": { "name": "Probability", "order": 2 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [7, 3]
+}

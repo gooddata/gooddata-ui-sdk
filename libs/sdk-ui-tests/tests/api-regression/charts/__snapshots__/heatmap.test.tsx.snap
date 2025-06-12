@@ -1,0 +1,4555 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - auto legend > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - auto legend > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "auto",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend at bottom > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend at bottom > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "bottom",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend on left > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend on left > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "left",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend on right > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend on right > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "right",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend on top > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend on top > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "top",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with 620x400 - Position respects configuration, standard variant - auto legend > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with 620x400 - Position respects configuration, standard variant - auto legend > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "auto",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with 620x400 - Position respects configuration, standard variant - legend at bottom > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with 620x400 - Position respects configuration, standard variant - legend at bottom > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "bottom",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with 620x400 - Position respects configuration, standard variant - legend on left > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with 620x400 - Position respects configuration, standard variant - legend on left > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "left",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with 620x400 - Position respects configuration, standard variant - legend on right > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with 620x400 - Position respects configuration, standard variant - legend on right > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "right",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with 620x400 - Position respects configuration, standard variant - legend on top > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with 620x400 - Position respects configuration, standard variant - legend on top > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "top",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with assign color to measures > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with assign color to measures > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colorMapping": [
+      {
+        "color": {
+          "type": "rgb",
+          "value": {
+            "b": 0,
+            "g": 0,
+            "r": 0,
+          },
+        },
+        "predicate": [Function],
+      },
+    ],
+    "colorPalette": [
+      {
+        "fill": {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      {
+        "fill": {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      {
+        "fill": {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      {
+        "fill": {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      {
+        "fill": {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with axis name configuration - high > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with axis name configuration - high > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "secondary_xaxis": {
+      "name": {
+        "position": "high",
+        "visible": true,
+      },
+    },
+    "secondary_yaxis": {
+      "name": {
+        "position": "high",
+        "visible": true,
+      },
+    },
+    "xaxis": {
+      "name": {
+        "position": "high",
+        "visible": true,
+      },
+    },
+    "yaxis": {
+      "name": {
+        "position": "high",
+        "visible": true,
+      },
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with axis name configuration - invisible > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with axis name configuration - invisible > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "secondary_xaxis": {
+      "name": {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+    "secondary_yaxis": {
+      "name": {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+    "xaxis": {
+      "name": {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+    "yaxis": {
+      "name": {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with axis name configuration - low > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with axis name configuration - low > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "secondary_xaxis": {
+      "name": {
+        "position": "low",
+        "visible": true,
+      },
+    },
+    "secondary_yaxis": {
+      "name": {
+        "position": "low",
+        "visible": true,
+      },
+    },
+    "xaxis": {
+      "name": {
+        "position": "low",
+        "visible": true,
+      },
+    },
+    "yaxis": {
+      "name": {
+        "position": "low",
+        "visible": true,
+      },
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with axis name configuration - middle > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with axis name configuration - middle > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "secondary_xaxis": {
+      "name": {
+        "position": "middle",
+        "visible": true,
+      },
+    },
+    "secondary_yaxis": {
+      "name": {
+        "position": "middle",
+        "visible": true,
+      },
+    },
+    "xaxis": {
+      "name": {
+        "position": "middle",
+        "visible": true,
+      },
+    },
+    "yaxis": {
+      "name": {
+        "position": "middle",
+        "visible": true,
+      },
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with coloring - custom colors > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with coloring - custom colors > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colors": [
+      "rgb(33, 41, 195)",
+      "rgb(18, 194, 25)",
+      "rgb(243, 56, 47)",
+      "rgb(240, 239, 8)",
+      "rgb(131, 131, 131)",
+    ],
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with coloring - custom palette > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with coloring - custom palette > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colorPalette": [
+      {
+        "fill": {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      {
+        "fill": {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      {
+        "fill": {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      {
+        "fill": {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      {
+        "fill": {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with coloring - custom palette preferred over colors > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with coloring - custom palette preferred over colors > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colorPalette": [
+      {
+        "fill": {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      {
+        "fill": {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      {
+        "fill": {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      {
+        "fill": {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      {
+        "fill": {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+    "colors": [
+      "rgb(33, 41, 195)",
+      "rgb(18, 194, 25)",
+      "rgb(243, 56, 47)",
+      "rgb(240, 239, 8)",
+      "rgb(131, 131, 131)",
+    ],
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with coloring - default > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with coloring - default > should create expected props for core chart 1`] = `
+{
+  "config": {},
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with data labels - auto visibility > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with data labels - auto visibility > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "dataLabels": {
+      "visible": "auto",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with data labels - default > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with data labels - default > should create expected props for core chart 1`] = `
+{
+  "config": {},
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with data labels - forced hidden > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with data labels - forced hidden > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "dataLabels": {
+      "visible": false,
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with data labels - forced visible > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with data labels - forced visible > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "dataLabels": {
+      "visible": true,
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with data labels - forced visible and german separators > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with data labels - forced visible and german separators > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "dataLabels": {
+      "visible": true,
+    },
+    "separators": {
+      "decimal": ",",
+      "thousand": ".",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with legend position - auto legend > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with legend position - auto legend > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "auto",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with legend position - disabled > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with legend position - disabled > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "enabled": false,
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with legend position - legend at bottom > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with legend position - legend at bottom > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "bottom",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with legend position - legend on left > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with legend position - legend on left > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "left",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with legend position - legend on right > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with legend position - legend on right > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "right",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with legend position - legend on top > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with legend position - legend on top > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
+      "position": "top",
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with measure and columns > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [],
+    },
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with measure and columns > should create expected props for core chart 1`] = `
+{
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with measure and rows > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with measure and rows > should create expected props for core chart 1`] = `
+{
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with measure only > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with measure only > should create expected props for core chart 1`] = `
+{
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with measure, rows and columns > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_owner.region_id",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_owner.region_id",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_owner.region_id",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_f_owner.region_id",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with measure, rows and columns > should create expected props for core chart 1`] = `
+{
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`Heatmap > with measure, rows and columns with null data points > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "dt_closedate_timestamp.year",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_dt_closedate_timestamp.year",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.f_product.product.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.f_product.product.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "dt_closedate_timestamp.year",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_dt_closedate_timestamp.year",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_dt_closedate_timestamp.year",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap > with measure, rows and columns with null data points > should create expected props for core chart 1`] = `
+{
+  "enableExecutionCancelling": false,
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;

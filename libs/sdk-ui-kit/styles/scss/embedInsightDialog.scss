@@ -1,0 +1,231 @@
+// (C) 2020-2025 GoodData Corporation
+@use "variables";
+@use "mixins" as mx;
+@use "Form/_mixins";
+
+.embed-insight-dialog {
+    width: 600px;
+
+    .gd-tabs.small {
+        margin-bottom: 20px;
+    }
+}
+
+.embed-insight-dialog-header {
+    .gd-dialog-header-title {
+        display: inline-block;
+        max-width: 100%;
+    }
+}
+
+.embed-insight-dialog-header-icon {
+    vertical-align: super;
+    margin-left: 10px;
+    color: variables.$default-gd-color-state-blank;
+}
+
+.embed-insight-dialog-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.embed-component-type-help {
+    color: #bbb;
+    margin: 0 5px;
+
+    &::before {
+        vertical-align: middle;
+    }
+}
+
+.embed-insight-dialog-code {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.embed-insight-dialog-code-wrapper {
+    height: 263px;
+    width: 340px;
+}
+
+.embed-insight-dialog-code-settings {
+    min-width: 220px;
+}
+
+.embed-insight-dialog-code-content {
+    width: 100%;
+    height: 100%;
+    background-color: #ccd8e226;
+    border: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+}
+
+.embed-insight-dialog-code-area {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    word-wrap: break-word;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    resize: none;
+    line-height: 18px;
+    font-size: 12px;
+    letter-spacing: 0;
+    font-family: menlo, monaco, consolas, "Courier New", monospace;
+    color: var(--gd-palette-complementary-8, #464e56);
+}
+
+.embed-insight-dialog-code-empty {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background: url("~@gooddata/sdk-ui-kit/styles/images/embed-insight/code-area-placeholder.svg") no-repeat
+        center center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+
+    &.definition .embed-insight-dialog-code-empty-msg {
+        max-width: 264px;
+    }
+
+    .embed-insight-dialog-code-empty-msg {
+        background-color: var(--gd-palette-complementary-0, #fff);
+        border-radius: 3px;
+        padding: 7px 10px;
+        text-align: center;
+        max-width: 254px;
+        color: var(--gd-palette-complementary-8-from-theme, #687581);
+
+        a {
+            cursor: pointer;
+            color: var(--gd-palette-primary-base, #14b2e2);
+            text-decoration: none;
+
+            @include mx.active-states {
+                color: var(--gd-palette-complementary-8, #464e56);
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.embed-insight-dialog-message-changes {
+    margin-bottom: 20px;
+}
+
+.embed-insight-dialog-prep-env-message {
+    width: 100%;
+    margin-bottom: 20px;
+    .gd-message-text {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+.embed-insight-dialog-list-props-message {
+    display: flex;
+    align-items: center;
+
+    a,
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .question-mark-icon::before {
+        vertical-align: middle;
+        color: variables.$default-gd-color-state-blank;
+    }
+}
+
+.embed-insight-dialog-lang-selector {
+    display: flex;
+    flex-direction: column;
+
+    strong {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    span,
+    label {
+        height: 16px;
+        line-height: 16px;
+    }
+
+    .bottom-space-label {
+        margin-bottom: 15px;
+    }
+
+    .bottom-space {
+        margin-bottom: 10px;
+    }
+
+    .top-space {
+        margin-top: 10px;
+    }
+}
+
+.toggle-wrapper-revers-label {
+    height: 16px;
+    line-height: 16px;
+
+    .toggle-switch {
+        padding-right: 30px;
+    }
+    .toggle-switch-title {
+        margin-left: 10px;
+    }
+
+    .toggle-switch-icon {
+        margin: 0 5px;
+    }
+    .toggle-switch-icon::before {
+        vertical-align: middle;
+        color: variables.$default-gd-color-state-blank;
+    }
+
+    &.bottom-space {
+        margin-bottom: 10px;
+    }
+}
+
+.height-setting-component,
+.locale-setting-component {
+    display: flex;
+    border-left: 2px dotted var(--gd-palette-complementary-3, #dde4eb);
+    padding-left: 10px;
+    margin-top: 10px;
+
+    .gd-input-field {
+        margin-right: 10px;
+        text-align: end;
+        @include mixins.gd-input-small-base;
+    }
+
+    .dropdown-button,
+    .gd-input-field {
+        width: 88px;
+    }
+}
+
+.bottom-space + .locale-setting-component {
+    margin-top: 0;
+}
+
+.gd-embed-input-numeric-invalid {
+    // override input focus
+    // stylelint-disable-next-line declaration-no-important
+    border-color: variables.$gd-color-negative !important;
+}
+
+.embed-insight-dialog-left-footer-renderer {
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    margin-left: 20px;
+    margin-top: 5px;
+    vertical-align: middle;
+}

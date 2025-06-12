@@ -1,0 +1,62 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`configuration > getConfigFromConfigFile > should read the given config file and return allowed values from it 1`] = `
+{
+  "catalogOutput": "catalogOutput",
+  "hostname": "hostname",
+  "workspaceId": "workspaceId",
+}
+`;
+
+exports[`configuration > getConfigFromEnv > should parse credentials and ignore everything else 1`] = `
+{
+  "token": "token",
+}
+`;
+
+exports[`configuration > getConfigFromEnv > should return null for credentials if not present in env 1`] = `
+{
+  "token": null,
+}
+`;
+
+exports[`configuration > getConfigFromOptions > should output allowed values from the input object 1`] = `
+{
+  "catalogOutput": "catalogOutput",
+  "hostname": "hostname",
+  "token": "token",
+  "workspaceId": "workspaceId",
+}
+`;
+
+exports[`configuration > getConfigFromPackage > should ignore credentials and not supported values 1`] = `
+{
+  "hostname": "hostname",
+  "workspaceId": "workspaceId",
+}
+`;
+
+exports[`configuration > getConfigFromPackage > should override parent folder package.jsons with child ones 1`] = `
+{
+  "catalogOutput": "catalogOutput",
+  "hostname": "hostname-new",
+  "workspaceId": "workspaceId-new",
+}
+`;
+
+exports[`configuration > getConfigFromPackage > should parse allowed values from the package.json file in a given folder 1`] = `
+{
+  "catalogOutput": "catalogOutput",
+  "hostname": "hostname",
+  "workspaceId": "workspaceId",
+}
+`;
+
+exports[`configuration > mergeConfigs > should only output allowed values 1`] = `
+{
+  "catalogOutput": "./cat.ts",
+  "hostname": "https://cloud.gooddata.com/",
+  "token": "secret",
+  "workspaceId": "123",
+}
+`;

@@ -1,0 +1,58 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "localIdentifier": "784a5018a51049078e8f7e86247e08a3",
+                        "title": "_Snapshot [EOP-2]",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "secondary_measures",
+            "items": []
+        },
+        {
+            "localIdentifier": "tertiary_measures",
+            "items": []
+        }
+    ],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "784a5018a51049078e8f7e86247e08a3",
+                "alias": "_Snapshot [EOP-2]",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": []
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

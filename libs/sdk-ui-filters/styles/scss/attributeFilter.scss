@@ -1,0 +1,444 @@
+// (C) 2021-2025 GoodData Corporation
+@use "fixed-data-table-2/dist/fixed-data-table.css";
+@use "sass:list";
+@use "sass:map";
+@use "@gooddata/sdk-ui/styles/scss/settings";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/overlay";
+@use "@gooddata/sdk-ui-kit/styles/scss/spinner";
+@use "@gooddata/sdk-ui-kit/styles/scss/list" as list2;
+@use "@gooddata/sdk-ui-kit/styles/scss/dropdown";
+@use "@gooddata/sdk-ui-kit/styles/scss/indigoFont";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/form";
+@use "@gooddata/sdk-ui-kit/styles/scss/button";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/loadingMask";
+
+@use "attributeFilterNext";
+
+// this css are not use we need to keep it for backward compatibility
+// RAIL-4478
+
+$transition-length: 0.2s;
+$separator-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0 7 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4h2v2H0V4zm0-4h2v2H0V0zm5 4h2v2H5V4zm0-4h2v2H5V0zm0 8h2v2H5V8zM0 8h2v2H0V8zm0 4h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5-12h2v2H5v-2z' fill='%23B0BECA' fill-rule='evenodd'/%3E%3C/svg%3E%0A";
+$gd-dashboards-filterBar-filterButton-backgroundColor: var(
+    --gd-dashboards-filterBar-filterButton-backgroundColor,
+    transparent
+);
+
+.gd-attribute-filter {
+    display: inline-block;
+
+    &-overlay {
+        padding: 16px 8px 8px 8px;
+        max-width: 245px;
+        // TODO: Importing Messages doesn't work. Error styles are temporarily hardcoded here
+        .gd-message {
+            position: relative;
+            box-sizing: border-box;
+            display: inline-block;
+            max-width: 100%;
+            padding: 4px 8px 4px 10px;
+            min-height: 1px;
+            border-radius: 3px;
+            font-family: gdcustomfont, Avenir, "Helvetica Neue", arial, sans-serif;
+            font-size: 14px;
+            text-align: left;
+            color: #e54d42;
+            background: rgba(229, 77, 66, 0.15);
+            pointer-events: all;
+        }
+    }
+
+    &-actions {
+        text-align: right;
+        margin-top: 8px;
+    }
+
+    .button-dropdown {
+        max-width: 100%;
+    }
+}
+
+.attribute-filter-button {
+    @include typo-mixins.gd-font-base;
+
+    max-width: 185px;
+    position: relative;
+    height: 41px;
+    margin: 7px 11px 7px 0;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: pointer;
+    user-select: none;
+
+    &.disabled {
+        cursor: pointer;
+        user-select: auto;
+        pointer-events: none;
+
+        .button-subtitle::after {
+            content: none;
+        }
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        transition: all $transition-length;
+    }
+
+    &::before {
+        z-index: 1;
+        top: 8px;
+        left: -4px;
+        width: 7px;
+        height: 26px;
+        background: url($separator-icon) no-repeat;
+        opacity: 0;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 1px solid transparent;
+        background: $gd-dashboards-filterBar-filterButton-backgroundColor;
+        transform: translateZ(-1px);
+        border-radius: 3px;
+    }
+
+    .button-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        flex-direction: column;
+
+        .overlay & {
+            align-items: center;
+            height: 100%;
+            flex-direction: row;
+        }
+    }
+
+    &:active,
+    &.is-active {
+        &::after {
+            &,
+            .edit-mode-on & {
+                box-shadow: inset 0 1px 0 0 button-variables.$button-normal-active-shadow;
+                border-color: var(
+                    --gd-palette-complementary-5-from-theme,
+                    button-variables.$button-normal-hover-border-color
+                );
+
+                // refactor
+                // stylelint-disable-next-line max-line-length
+                @include mixins.gradient-linear(
+                    button-variables.$button-normal-active-gradient-top,
+                    button-variables.$button-normal-active-gradient-bottom
+                );
+            }
+        }
+
+        .button-title,
+        .button-subtitle {
+            &::after {
+                content: "\e613";
+            }
+        }
+    }
+
+    &:hover {
+        &::after {
+            border-color: variables.$gd-border-color;
+        }
+    }
+}
+
+.gd-mobile-dropdown-overlay .gd-attribute-filter-button-mobile {
+    display: none;
+}
+
+.gd-mobile-dropdown-header .gd-attribute-filter-button-mobile {
+    display: block;
+    width: auto;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    padding: 10px;
+    box-shadow: 0 1px 2px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1));
+    line-height: 25px;
+    border-width: 1px 0;
+    border-top: 1px solid variables.$gd-border-color;
+    border-bottom: 1px solid variables.$gd-border-color;
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 4);
+    text-align: left;
+    background-color: variables.$gd-color-white;
+
+    &::after {
+        display: none;
+    }
+
+    &::before {
+        right: 4px;
+    }
+}
+
+.gd-attribute-filter-button-mobile.is-active {
+    .button-title,
+    .button-subtitle {
+        &::after {
+            content: "\e613";
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            display: inline-block;
+            font-size: 18px;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+.button-title {
+    overflow: hidden;
+    color: variables.$gd-color-link;
+
+    .gd-bubble-trigger,
+    .shortened {
+        display: inline-flex;
+    }
+
+    .shortened {
+        max-width: 100%;
+    }
+
+    .overlay & {
+        flex: 0 0 auto;
+        max-width: 100%;
+        margin-right: 5px;
+        color: variables.$gd-color-label;
+
+        &::after {
+            content: ":";
+        }
+    }
+}
+
+.button-title,
+.button-subtitle {
+    max-width: 100%;
+    white-space: nowrap;
+
+    &::after {
+        content: "\e612";
+        display: none;
+        margin-left: 0.5em;
+        font-family: "Indigo", sans-serif;
+        font-weight: normal;
+        font-size: inherit;
+        vertical-align: top;
+        color: variables.$gd-color-state-blank;
+        transition: $transition-length;
+    }
+
+    &:only-child::after {
+        display: inline-block;
+    }
+
+    .drag-preview &::after {
+        display: none;
+    }
+}
+
+.button-subtitle {
+    display: inline-flex;
+    overflow: hidden;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    color: variables.$gd-color-dark;
+
+    .overlay & {
+        flex: 1 1 auto;
+        max-width: none;
+
+        &::after {
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            font-size: 18px;
+            transform: translateY(-50%);
+        }
+    }
+
+    &::after {
+        display: inline-block;
+    }
+}
+
+.button-selected-items {
+    display: inline-block;
+    flex: 0 1 auto;
+    overflow: hidden;
+    max-width: 120px;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+
+    .overlay & {
+        max-width: none;
+    }
+}
+
+.button-selected-items-count {
+    display: inline-block;
+    flex: 0 0 auto;
+    vertical-align: bottom;
+}
+
+.gd-attribute-filter-dropdown-all-items-filtered {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: variables.$gd-color-state-blank;
+    cursor: default;
+
+    .gd-filtered-message {
+        margin-left: -20px;
+
+        .gd-icon-circle-question {
+            position: absolute;
+            top: 22px;
+            padding: 5px;
+
+            @media #{variables.$xsmall-only}, #{variables.$small-only} {
+                top: 60px;
+            }
+        }
+    }
+}
+
+.gd-attribute-filter-dropdown-bubble {
+    max-width: 200px;
+}
+
+.gd-extended-date-filter-body .gd-list-item.is-selected {
+    font-weight: bold;
+}
+
+.attributevalues-list {
+    .loading-mask {
+        flex: 1 0 auto;
+        min-height: 52px;
+    }
+
+    .gd-list-item {
+        &:hover {
+            background-color: variables.$is-focused-background;
+
+            &.is-selected {
+                color: variables.$gd-color-text;
+                background-color: variables.$is-focused-background;
+            }
+
+            .input-label-text {
+                color: var(--gd-palette-complementary-9-from-theme, inherit);
+            }
+        }
+
+        &.is-selected {
+            font-weight: bold;
+            color: variables.$gd-color-text;
+        }
+    }
+}
+
+.gd-filtered-message:hover {
+    color: variables.$gd-color-text;
+}
+
+.gd-attribute-filter-dropdown-items-filtered {
+    position: relative;
+    margin-top: 10px;
+    padding: 0 10px;
+    cursor: default;
+
+    &::before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        display: block;
+        width: calc(100% - 20px);
+        height: 10px;
+        border-radius: 50%;
+        box-shadow: 0 -2px 4px 0 variables.$gd-border-color;
+    }
+
+    .gd-filtered-message {
+        position: relative;
+        z-index: 2;
+        padding: 6px 5px;
+        color: variables.$gd-color-state-blank;
+        background: variables.$gd-color-white;
+        font-size: 12px;
+
+        .gd-icon-circle-question {
+            position: absolute;
+            top: 1px;
+            padding: 5px;
+        }
+
+        @media #{variables.$xsmall-only}, #{variables.$small-only} {
+            font-size: 14px;
+            background: var(--gd-palette-complementary-0-from-theme, #f8fafb);
+        }
+    }
+}
+
+.gd-attribute-filter-button-is-filtering {
+    &.attribute-filter-button:not(.is-active) {
+        background: variables.$gd-palette-primary-dimmed;
+        border-radius: 3px;
+
+        &.attribute-filter-button::before,
+        &.attribute-filter-button::after {
+            display: none;
+        }
+    }
+}
+
+.gd-mobile-dropdown-content {
+    .gd-attribute-filter-overlay {
+        max-width: none;
+    }
+
+    .gd-attribute-filter-actions {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: stretch;
+        margin: 0 10px;
+        padding: 10px 0;
+
+        .gd-button {
+            text-align: center;
+            flex: 1;
+        }
+    }
+}
+
+/* hide IE10+ eraser */
+::-ms-clear {
+    display: none;
+}

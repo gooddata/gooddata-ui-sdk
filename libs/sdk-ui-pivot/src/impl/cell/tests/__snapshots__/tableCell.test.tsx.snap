@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`cellRenderer > should escape value 1`] = `
+<div>
+  <span
+    class="s-value s-loading-done"
+    title="<button>xss</button>"
+  >
+    &lt;button&gt;xss&lt;/button&gt;
+  </span>
+</div>
+`;

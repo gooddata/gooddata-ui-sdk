@@ -1,0 +1,14 @@
+[
+    { "tag": { "identifier": "Account", "type": "tag" }, "title": "Account" },
+    { "tag": { "identifier": "Activity", "type": "tag" }, "title": "Activity" },
+    { "tag": { "identifier": "custom_column", "type": "tag" }, "title": "custom_column" },
+    { "tag": { "identifier": "OpportunitySnapshot", "type": "tag" }, "title": "OpportunitySnapshot" },
+    { "tag": { "identifier": "City", "type": "tag" }, "title": "City" },
+    { "tag": { "identifier": "owner", "type": "tag" }, "title": "owner" },
+    { "tag": { "identifier": "stagehistory", "type": "tag" }, "title": "stagehistory" },
+    { "tag": { "identifier": "Stage", "type": "tag" }, "title": "Stage" },
+    { "tag": { "identifier": "Opportunity", "type": "tag" }, "title": "Opportunity" },
+    { "tag": { "identifier": "product", "type": "tag" }, "title": "product" },
+    { "tag": { "identifier": "attribute_image_url", "type": "tag" }, "title": "attribute_image_url" },
+    { "tag": { "identifier": "Timeline", "type": "tag" }, "title": "Timeline" }
+]

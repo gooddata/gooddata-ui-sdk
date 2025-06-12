@@ -1,0 +1,38 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050_ratio",
+                                    "name": "Amount"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "attr.f_product.product", "name": "Product", "uri": "" },
+                        "granularity": null,
+                        "identifier": "label.f_product.product.name",
+                        "localIdentifier": "a_label.f_product.product.name",
+                        "name": "Product Name",
+                        "primaryLabel": { "identifier": "attr.f_product.product", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

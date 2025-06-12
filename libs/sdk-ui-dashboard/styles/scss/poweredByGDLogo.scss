@@ -1,0 +1,36 @@
+// (C) 2019-2020 GoodData Corporation
+.gd-powered-by-logo-wrapper {
+    right: 0;
+    bottom: 0;
+    margin: 10px 10px 10px 0;
+    line-height: 0;
+    background-color: white;
+    opacity: 0.85;
+
+    &-small {
+        position: absolute;
+        z-index: 1;
+    }
+
+    &-large {
+        position: fixed;
+    }
+}
+
+.gd-powered-by-logo-img {
+    display: block;
+
+    &-large {
+        width: 165px;
+        height: 30px;
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/powered-by-gd-large.svg?v=2022");
+        background-size: 165px 30px;
+    }
+
+    &-small {
+        width: 146px;
+        height: 16px;
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/powered-by-gd-small.svg?v=2022");
+        background-size: 146px 16px;
+    }
+}

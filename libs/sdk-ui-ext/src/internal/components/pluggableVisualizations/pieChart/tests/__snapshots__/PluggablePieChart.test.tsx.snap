@@ -1,0 +1,473 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PluggablePieChart > Sort config > should provide measure sort as default sort, measure sort as available sorts for 1M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": [
+    {
+      "measureSortItem": {
+        "direction": "desc",
+        "locators": [
+          {
+            "measureLocatorItem": {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggablePieChart > should return reference point with multiple metrics and no category 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "acfWntEMcom0",
+          "localIdentifier": "m4",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:pie/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 20,
+        "title": "Metrics",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:pie/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 0,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+        "warningMessage": "To view by, an visualization can have only one metric",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": true,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggablePieChart > should return reference point with one metric and no category 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:pie/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 20,
+        "title": "Metrics",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:pie/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": true,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggablePieChart > should return reference point with one metric and one attribute from stack 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": "attr.owner.region",
+          "dfRef": {
+            "uri": "a3/df",
+          },
+          "localIdentifier": "a3",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:pie/bucket-title-measures.svg",
+        "isShowInPercentEnabled": true,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 1,
+        "title": "Metrics",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:pie/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": true,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggablePieChart > should return reference point with only one metric and one category and only valid filters 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "filters": {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": [
+          {
+            "attribute": "attr.owner.department",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:pie/bucket-title-measures.svg",
+        "isShowInPercentEnabled": true,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 1,
+        "title": "Metrics",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:pie/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": true,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;

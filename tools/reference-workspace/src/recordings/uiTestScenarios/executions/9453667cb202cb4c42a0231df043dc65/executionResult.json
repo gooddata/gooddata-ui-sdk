@@ -1,0 +1,39 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "identifier": "sample_xirr",
+                                    "localIdentifier": "m_sample_xirr",
+                                    "name": "Sample XIRR"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "dt_timeline_timestamp.year",
+                            "name": "Timeline - Year",
+                            "uri": ""
+                        },
+                        "format": { "locale": "en-US", "pattern": "y" },
+                        "granularity": "YEAR",
+                        "identifier": "dt_timeline_timestamp.year",
+                        "localIdentifier": "a_dt_timeline_timestamp.year",
+                        "name": "Timeline - Year",
+                        "primaryLabel": { "identifier": "dt_timeline_timestamp.year", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

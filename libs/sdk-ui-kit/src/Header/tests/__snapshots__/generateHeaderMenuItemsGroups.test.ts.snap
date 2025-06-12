@@ -1,0 +1,82 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generateHeaderMenuItemsGroups > should return absolute paths for Panther 1`] = `
+[
+  [
+    {
+      "className": "s-menu-kpis",
+      "href": "https://cdnUrl/dashboards/#/project/TestWorkspaceId",
+      "key": "gs.header.kpis",
+    },
+    {
+      "className": "s-menu-analyze",
+      "href": "https://cdnUrl/analyze/#/TestWorkspaceId/reportId/edit",
+      "key": "gs.header.analyze",
+    },
+    {
+      "className": "s-menu-metrics",
+      "href": "https://cdnUrl/metrics/#/TestWorkspaceId",
+      "key": "gs.header.metrics",
+    },
+    {
+      "className": "s-menu-data",
+      "href": "https://cdnUrl/modeler/#/TestWorkspaceId",
+      "key": "gs.header.data",
+    },
+  ],
+]
+`;
+
+exports[`generateHeaderMenuItemsGroups > should return correct absolute paths for Panther when baseUrl ends with slash 1`] = `
+[
+  [
+    {
+      "className": "s-menu-kpis",
+      "href": "https://cdnUr/dashboards/#/project/TestWorkspaceId",
+      "key": "gs.header.kpis",
+    },
+    {
+      "className": "s-menu-analyze",
+      "href": "https://cdnUr/analyze/#/TestWorkspaceId/reportId/edit",
+      "key": "gs.header.analyze",
+    },
+    {
+      "className": "s-menu-metrics",
+      "href": "https://cdnUr/metrics/#/TestWorkspaceId",
+      "key": "gs.header.metrics",
+    },
+    {
+      "className": "s-menu-data",
+      "href": "https://cdnUr/modeler/#/TestWorkspaceId",
+      "key": "gs.header.data",
+    },
+  ],
+]
+`;
+
+exports[`generateHeaderMenuItemsGroups > should return relative paths for Panther 1`] = `
+[
+  [
+    {
+      "className": "s-menu-kpis",
+      "href": "/dashboards/#/project/TestWorkspaceId",
+      "key": "gs.header.kpis",
+    },
+    {
+      "className": "s-menu-analyze",
+      "href": "/analyze/#/TestWorkspaceId/reportId/edit",
+      "key": "gs.header.analyze",
+    },
+    {
+      "className": "s-menu-metrics",
+      "href": "/metrics/#/TestWorkspaceId",
+      "key": "gs.header.metrics",
+    },
+    {
+      "className": "s-menu-data",
+      "href": "/modeler/#/TestWorkspaceId",
+      "key": "gs.header.data",
+    },
+  ],
+]
+`;

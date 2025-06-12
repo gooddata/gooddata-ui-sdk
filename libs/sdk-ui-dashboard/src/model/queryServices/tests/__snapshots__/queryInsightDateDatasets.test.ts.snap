@@ -1,0 +1,82 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance and title if tied 1`] = `
+[
+  "Activity",
+  "Timeline",
+]
+`;
+
+exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance and title if tied 2`] = `
+{
+  "Activity": "Activity",
+  "Timeline": "Timeline",
+}
+`;
+
+exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance desc 1`] = `
+[
+  "Timeline",
+  "Activity",
+]
+`;
+
+exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance desc 2`] = `
+{
+  "Activity": "Activity",
+  "Timeline": "Timeline",
+}
+`;
+
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date attributes in buckets 1`] = `
+[
+  "Closed",
+  "Created",
+]
+`;
+
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date attributes in buckets 2`] = `
+[
+  "Activity",
+  "Closed",
+  "Created",
+  "Snapshot",
+  "Timeline",
+]
+`;
+
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date attributes in buckets 3`] = `
+{
+  "Activity": "Activity",
+  "Closed": "Closed",
+  "Created": "Created",
+  "Snapshot": "Snapshot",
+  "Timeline": "Timeline",
+}
+`;
+
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date filter 1`] = `
+[
+  "Activity",
+]
+`;
+
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date filter 2`] = `
+[
+  "Activity",
+  "Closed",
+  "Created",
+  "Snapshot",
+  "Timeline",
+]
+`;
+
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date filter 3`] = `
+{
+  "Activity": "Activity",
+  "Closed": "Closed",
+  "Created": "Created",
+  "Snapshot": "Snapshot",
+  "Timeline": "Timeline",
+}
+`;

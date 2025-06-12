@@ -1,0 +1,219 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AbstractProvider > createExecution > execution should be created 1`] = `
+{
+  "definition": {
+    "attributes": [],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "aggregation": "sum",
+                  "item": {
+                    "identifier": "f_opportunitysnapshot.f_amount",
+                    "type": "fact",
+                  },
+                },
+              },
+              "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+            },
+          },
+        ],
+        "localIdentifier": "secondary_measures",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.f_account.account.name",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [],
+          },
+        },
+      },
+    ],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "aggregation": "sum",
+              "item": {
+                "identifier": "f_opportunitysnapshot.f_amount",
+                "type": "fact",
+              },
+            },
+          },
+          "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "PROJECTID",
+  },
+  "equals": [Function],
+  "execute": [Function],
+  "explain": [Function],
+  "fingerprint": [Function],
+  "withBuckets": [Function],
+  "withDateFormat": [Function],
+  "withDimensions": [Function],
+  "withExecConfig": [Function],
+  "withSignal": [Function],
+  "withSorting": [Function],
+}
+`;
+
+exports[`AbstractProvider > createExecution > execution should be created without dateFormat and sortItems 1`] = `
+{
+  "definition": {
+    "attributes": [],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "aggregation": "sum",
+                  "item": {
+                    "identifier": "f_opportunitysnapshot.f_amount",
+                    "type": "fact",
+                  },
+                },
+              },
+              "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+            },
+          },
+        ],
+        "localIdentifier": "secondary_measures",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.f_account.account.name",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [],
+          },
+        },
+      },
+    ],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "aggregation": "sum",
+              "item": {
+                "identifier": "f_opportunitysnapshot.f_amount",
+                "type": "fact",
+              },
+            },
+          },
+          "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "PROJECTID",
+  },
+  "equals": [Function],
+  "execute": [Function],
+  "explain": [Function],
+  "fingerprint": [Function],
+  "withBuckets": [Function],
+  "withDateFormat": [Function],
+  "withDimensions": [Function],
+  "withExecConfig": [Function],
+  "withSignal": [Function],
+  "withSorting": [Function],
+}
+`;

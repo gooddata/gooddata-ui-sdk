@@ -1,0 +1,45 @@
+[
+    {
+        "n2oMap": { "m_sample_xirr": "m_sample_xirr" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "sample_xirr", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_sample_xirr"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "attribute" }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "sample_xirr", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_sample_xirr"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "only measure",
+        "vis": "Xirr"
+    }
+]

@@ -1,0 +1,627 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`convertTotals > should correctly convert attributes in first dim and measure group in second dim 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert column total and row subtotal 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_opportunitysnapshot.forecastcategory_id_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "a_f_owner.department_id",
+          "a_f_stage.isactive_id",
+          "measureGroup",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "a_label.f_account.account.name",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_stage.isactive_id_1",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "a_label.f_account.account.name",
+          "a_f_opportunitysnapshot.forecastcategory_id",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "a_f_owner.department_id",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "subtotal_column_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_opportunitysnapshot.forecastcategory_id_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "a_label.f_account.account.name",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert measure group and attribute in one dimension 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_1",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "measureGroup",
+          "localAttr2",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert multiple totals with various functions 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m2_by_localAttr1_0",
+    "metric": "m2",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "MAX",
+    "localIdentifier": "total_max_m2_by_localAttr1_0",
+    "metric": "m2",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "MIN",
+    "localIdentifier": "total_min_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert native total 1`] = `
+[
+  {
+    "function": "NAT",
+    "localIdentifier": "total_nat_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert no totals 1`] = `[]`;
+
+exports[`convertTotals > should correctly convert row total and column subtotal 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_opportunitysnapshot.forecastcategory_id_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "a_f_owner.department_id",
+          "a_f_stage.isactive_id",
+          "measureGroup",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "a_label.f_account.account.name",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_stage.isactive_id_1",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "a_label.f_account.account.name",
+          "a_f_opportunitysnapshot.forecastcategory_id",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "a_f_owner.department_id",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "subtotal_row_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_label.f_account.account.name_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "a_f_owner.department_id",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert subtotal 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "localAttr3",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr2_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "localAttr3",
+          "measureGroup",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "localAttr1",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert subtotals with non-sorted totals 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_owner.department_id_1",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "a_label.f_account.account.name",
+          "a_f_opportunitysnapshot.forecastcategory_id",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_e519fa2a_86c3_4e32_8313_0c03062348j3_by_a_f_owner.department_id_1",
+    "metric": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "a_label.f_account.account.name",
+          "a_f_opportunitysnapshot.forecastcategory_id",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert three dimensions 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_2",
+        "totalDimensionItems": [
+          "localAttr2",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr2_2",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "localAttr1",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert three totals with the same function 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "localAttr3",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m2_by_localAttr1_0",
+    "metric": "m2",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "localAttr3",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m3_by_localAttr1_0",
+    "metric": "m3",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "localAttr3",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert total on dimension with measure group 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "localAttr3",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert total on single dimension result spec 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert total without any measure group 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "localAttr3",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert two subtotals and marginal total 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_opportunitysnapshot.forecastcategory_id_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "a_f_owner.department_id",
+          "a_f_stage.isactive_id",
+          "measureGroup",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "a_label.f_account.account.name",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_stage.isactive_id_1",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "a_label.f_account.account.name",
+          "a_f_opportunitysnapshot.forecastcategory_id",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "a_f_owner.department_id",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "marginal_total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_opportunitysnapshot.forecastcategory_id_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "a_label.f_account.account.name",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "a_f_owner.department_id",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert two totals and grand total 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_label.f_account.account.name_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "a_f_owner.department_id",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_owner.department_id_1",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": [
+          "a_label.f_account.account.name",
+        ],
+      },
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "SUM",
+    "localIdentifier": "total_of_totals_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_label.f_account.account.name_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals > should correctly convert two totals with different functions 1`] = `
+[
+  {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "localAttr3",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  {
+    "function": "MIN",
+    "localIdentifier": "total_min_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": [
+      {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": [
+          "localAttr3",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;

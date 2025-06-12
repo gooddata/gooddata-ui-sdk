@@ -1,0 +1,62 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`setAttributeFilterParentHandler > should emit the appropriate events for valid set attribute filter parent command 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+  },
+]
+`;
+
+exports[`setAttributeFilterParentHandler > should emit the appropriate events when trying to set parent of a non-existent attribute filter 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;
+
+exports[`setAttributeFilterParentHandler > should set the appropriate values in state for valid set attribute filter parent command 1`] = `
+{
+  "attributeFilter": {
+    "attributeElements": {
+      "uris": [],
+    },
+    "displayForm": {
+      "identifier": "f_owner.department_id",
+      "type": "displayForm",
+    },
+    "filterElementsBy": [
+      {
+        "filterLocalIdentifier": "4436376372e7468b81b327dca9b65ec1",
+        "over": {
+          "attributes": [
+            {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+        },
+      },
+    ],
+    "localIdentifier": "34b4386e227544b39ed0978791b8bd50",
+    "negativeSelection": true,
+    "selectionMode": "multi",
+  },
+}
+`;

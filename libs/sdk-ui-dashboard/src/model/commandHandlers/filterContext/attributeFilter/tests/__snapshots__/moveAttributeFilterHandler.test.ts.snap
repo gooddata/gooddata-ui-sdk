@@ -1,0 +1,64 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`moveAttributeFilterHandler > should emit the appropriate events for moved attribute filter 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+  },
+]
+`;
+
+exports[`moveAttributeFilterHandler > should emit the appropriate events when trying to move a non-existent attribute filter 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;
+
+exports[`moveAttributeFilterHandler > should emit the appropriate events when trying to move an attribute filter to an invalid index 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;
+
+exports[`moveAttributeFilterHandler > should set the attribute selection in state on moved attribute filter 1`] = `
+{
+  "attributeFilter": {
+    "attributeElements": {
+      "uris": [],
+    },
+    "displayForm": {
+      "identifier": "label.f_activity.subject",
+      "type": "displayForm",
+    },
+    "localIdentifier": Any<String>,
+    "negativeSelection": true,
+    "selectionMode": "multi",
+  },
+}
+`;

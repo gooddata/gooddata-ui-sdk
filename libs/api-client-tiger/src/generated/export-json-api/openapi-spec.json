@@ -1,0 +1,2387 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "GoodData.CN endpoint"
+        }
+    ],
+    "tags": [
+        {
+            "name": "actions",
+            "description": "| execution of some form of computation (RPC over JSON)"
+        }
+    ],
+    "paths": {
+        "/api/v1/actions/workspaces/{workspaceId}/export/visual": {
+            "post": {
+                "tags": ["actions", "Visual export"],
+                "summary": "Create visual - pdf export request",
+                "description": "An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "operationId": "createPdfExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VisualExportRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Visual export request created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExportResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
+                    "description": "Permissions required to execute pdf export."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/tabular": {
+            "post": {
+                "tags": ["Tabular export", "actions"],
+                "summary": "Create tabular export request",
+                "description": "An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "operationId": "createTabularExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TabularExportRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tabular export request created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExportResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_TABULAR"],
+                    "description": "Permissions required to execute tabular export."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/slides": {
+            "post": {
+                "tags": ["Slides export", "actions"],
+                "summary": "(EXPERIMENTAL) Create slides export request",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "operationId": "createSlidesExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SlidesExportRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Slides export request created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExportResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
+                    "description": "Permissions required to execute slides export."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/raw": {
+            "post": {
+                "tags": ["Raw export", "actions"],
+                "summary": "(EXPERIMENTAL) Create raw export request",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "operationId": "createRawExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RawExportRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Raw export request created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExportResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_TABULAR"],
+                    "description": "Permissions required to execute raw export."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/image": {
+            "post": {
+                "tags": ["Image export", "actions"],
+                "summary": "(EXPERIMENTAL) Create image export request",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "operationId": "createImageExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImageExportRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Image export request created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExportResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
+                    "description": "Permissions required to execute image export."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/analyticalDashboards/{dashboardId}/export/tabular": {
+            "post": {
+                "tags": ["Tabular export", "actions"],
+                "summary": "(EXPERIMENTAL) Create dashboard tabular export request",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "operationId": "createDashboardExportRequest",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "dashboardId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DashboardTabularExportRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tabular export request created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExportResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_TABULAR"],
+                    "description": "Permissions required to execute tabular export."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/visual/{exportId}/metadata": {
+            "get": {
+                "tags": ["actions", "Visual export"],
+                "summary": "Retrieve metadata context",
+                "description": "This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.",
+                "operationId": "getMetadata",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Json metadata representation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/visual/{exportId}": {
+            "get": {
+                "tags": ["actions", "Visual export"],
+                "summary": "Retrieve exported files",
+                "description": "Returns 202 until original POST export request is not processed.Returns 200 with exported data once the export is done.",
+                "operationId": "getExportedFile",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Binary export result.",
+                        "headers": {
+                            "Content-Disposition": {
+                                "style": "simple",
+                                "schema": {
+                                    "pattern": "attachment; filename='[^']+'",
+                                    "type": "string",
+                                    "example": "attachment; filename='result.pdf'"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/pdf": {}
+                        }
+                    },
+                    "202": {
+                        "description": "Request is accepted, provided exportId exists, but export is not yet ready.",
+                        "content": {
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/tabular/{exportId}": {
+            "get": {
+                "tags": ["Tabular export", "actions"],
+                "summary": "Retrieve exported files",
+                "description": "After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
+                "operationId": "getTabularExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Binary export result.",
+                        "headers": {
+                            "Content-Disposition": {
+                                "style": "simple",
+                                "schema": {
+                                    "pattern": "attachment; filename='[^']+'",
+                                    "type": "string",
+                                    "example": "attachment; filename='result.csv'"
+                                }
+                            }
+                        },
+                        "content": {
+                            "text/csv": {},
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {},
+                            "text/html": {},
+                            "application/pdf": {}
+                        }
+                    },
+                    "202": {
+                        "description": "Request is accepted, provided exportId exists, but export is not yet ready.",
+                        "content": {
+                            "text/csv": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_TABULAR"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}/metadata": {
+            "get": {
+                "tags": ["Slides export", "actions"],
+                "summary": "(EXPERIMENTAL) Retrieve metadata context",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.",
+                "operationId": "getSlidesExportMetadata",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Json metadata representation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}": {
+            "get": {
+                "tags": ["Slides export", "actions"],
+                "summary": "(EXPERIMENTAL) Retrieve exported files",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
+                "operationId": "getSlidesExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Binary export result.",
+                        "headers": {
+                            "Content-Disposition": {
+                                "style": "simple",
+                                "schema": {
+                                    "pattern": "attachment; filename='[^']+'",
+                                    "type": "string",
+                                    "example": "attachment; filename='result.pdf'"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/pdf": {},
+                            "application/vnd.openxmlformats-officedocument.presentationml.presentation": {}
+                        }
+                    },
+                    "202": {
+                        "description": "Request is accepted, provided exportId exists, but export is not yet ready.",
+                        "content": {
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "short": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "char": {
+                                                "type": "string"
+                                            },
+                                            "int": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "long": {
+                                                "type": "integer",
+                                                "format": "int64"
+                                            },
+                                            "float": {
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "double": {
+                                                "type": "number",
+                                                "format": "double"
+                                            },
+                                            "direct": {
+                                                "type": "boolean"
+                                            },
+                                            "readOnly": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "application/vnd.openxmlformats-officedocument.presentationml.presentation": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "short": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "char": {
+                                                "type": "string"
+                                            },
+                                            "int": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "long": {
+                                                "type": "integer",
+                                                "format": "int64"
+                                            },
+                                            "float": {
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "double": {
+                                                "type": "number",
+                                                "format": "double"
+                                            },
+                                            "direct": {
+                                                "type": "boolean"
+                                            },
+                                            "readOnly": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/raw/{exportId}": {
+            "get": {
+                "tags": ["Raw export", "actions"],
+                "summary": "(EXPERIMENTAL) Retrieve exported files",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
+                "operationId": "getRawExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Binary export result.",
+                        "headers": {
+                            "Content-Disposition": {
+                                "style": "simple",
+                                "schema": {
+                                    "pattern": "attachment; filename='[^']+'",
+                                    "type": "string",
+                                    "example": "attachment; filename='result.csv'"
+                                }
+                            }
+                        },
+                        "content": {
+                            "text/csv": {},
+                            "application/vnd.apache.arrow.stream": {},
+                            "application/vnd.apache.arrow.file": {}
+                        }
+                    },
+                    "202": {
+                        "description": "Request is accepted, provided exportId exists, but export is not yet ready.",
+                        "content": {
+                            "text/csv": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/vnd.apache.arrow.stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/vnd.apache.arrow.file": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_TABULAR"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/image/{exportId}/metadata": {
+            "get": {
+                "tags": ["Image export", "actions"],
+                "summary": "(EXPERIMENTAL) Retrieve metadata context",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.",
+                "operationId": "getImageExportMetadata",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Json metadata representation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/image/{exportId}": {
+            "get": {
+                "tags": ["Image export", "actions"],
+                "summary": "(EXPERIMENTAL) Retrieve exported files",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
+                "operationId": "getImageExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Binary export result.",
+                        "headers": {
+                            "Content-Disposition": {
+                                "style": "simple",
+                                "schema": {
+                                    "pattern": "attachment; filename='[^']+'",
+                                    "type": "string",
+                                    "example": "attachment; filename='result.png'"
+                                }
+                            }
+                        },
+                        "content": {
+                            "image/png": {}
+                        }
+                    },
+                    "202": {
+                        "description": "Request is accepted, provided exportId exists, but export is not yet ready.",
+                        "content": {
+                            "image/png": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "short": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "char": {
+                                                "type": "string"
+                                            },
+                                            "int": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "long": {
+                                                "type": "integer",
+                                                "format": "int64"
+                                            },
+                                            "float": {
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "double": {
+                                                "type": "number",
+                                                "format": "double"
+                                            },
+                                            "direct": {
+                                                "type": "boolean"
+                                            },
+                                            "readOnly": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "JsonNode": {
+                "maxLength": 15000,
+                "type": "object",
+                "description": "Metadata definition in free-form JSON format.",
+                "nullable": true,
+                "example": {}
+            },
+            "VisualExportRequest": {
+                "required": ["dashboardId", "fileName"],
+                "type": "object",
+                "properties": {
+                    "fileName": {
+                        "type": "string",
+                        "description": "File name to be used for retrieving the pdf document.",
+                        "example": "filename"
+                    },
+                    "dashboardId": {
+                        "type": "string",
+                        "description": "Dashboard identifier",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "description": "Metadata definition in free-form JSON format.",
+                        "example": "{}"
+                    }
+                },
+                "description": "Export request object describing the export properties and metadata for dashboard PDF exports."
+            },
+            "ExportResponse": {
+                "required": ["exportResult"],
+                "type": "object",
+                "properties": {
+                    "exportResult": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CustomLabel": {
+                "required": ["title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Override value."
+                    }
+                },
+                "description": "Custom label object override."
+            },
+            "CustomMetric": {
+                "required": ["format", "title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Metric title override."
+                    },
+                    "format": {
+                        "type": "string",
+                        "description": "Format override."
+                    }
+                },
+                "description": "Custom metric object override."
+            },
+            "CustomOverride": {
+                "type": "object",
+                "properties": {
+                    "labels": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/CustomLabel"
+                        },
+                        "description": "Map of CustomLabels with keys used as placeholders in document."
+                    },
+                    "metrics": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/CustomMetric"
+                        },
+                        "description": "Map of CustomMetrics with keys used as placeholders in document."
+                    }
+                },
+                "description": "Custom cell value overrides (IDs will be replaced with specified values)."
+            },
+            "PdfTableStyle": {
+                "required": ["selector"],
+                "type": "object",
+                "properties": {
+                    "selector": {
+                        "type": "string",
+                        "description": "CSS selector where to apply given properties."
+                    },
+                    "properties": {
+                        "type": "array",
+                        "description": "List of CSS properties.",
+                        "items": {
+                            "$ref": "#/components/schemas/PdfTableStyleProperty"
+                        }
+                    }
+                },
+                "description": "Custom CSS styles for the table. (PDF, HTML)",
+                "example": [
+                    {
+                        "selector": "th",
+                        "properties": [
+                            {
+                                "key": "font-size",
+                                "value": "30px"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "PdfTableStyleProperty": {
+                "required": ["key", "value"],
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "CSS property key."
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "CSS property value."
+                    }
+                },
+                "description": "CSS property."
+            },
+            "Settings": {
+                "type": "object",
+                "properties": {
+                    "exportInfo": {
+                        "type": "boolean",
+                        "description": "Include export info sheet in the exported file. Works only with `visualizationObject`. (XLSX)",
+                        "example": true,
+                        "default": false
+                    },
+                    "mergeHeaders": {
+                        "type": "boolean",
+                        "description": "Merge equal headers in neighbouring cells. (XLSX)",
+                        "example": true
+                    },
+                    "showFilters": {
+                        "type": "boolean",
+                        "description": "Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)",
+                        "example": false
+                    },
+                    "pdfPageSize": {
+                        "type": "string",
+                        "description": "Page size and orientation. (PDF)",
+                        "example": "a4 landscape"
+                    },
+                    "pdfTableStyle": {
+                        "type": "array",
+                        "description": "Custom CSS styles for the table. (PDF, HTML)",
+                        "example": [
+                            {
+                                "selector": "th",
+                                "properties": [
+                                    {
+                                        "key": "font-size",
+                                        "value": "30px"
+                                    }
+                                ]
+                            }
+                        ],
+                        "items": {
+                            "$ref": "#/components/schemas/PdfTableStyle"
+                        }
+                    },
+                    "pdfTopLeftContent": {
+                        "type": "string",
+                        "description": "Top left header content. (PDF)",
+                        "example": "Good"
+                    },
+                    "pdfTopRightContent": {
+                        "type": "string",
+                        "description": "Top right header content. (PDF)",
+                        "example": "Morning"
+                    }
+                },
+                "description": "Additional settings."
+            },
+            "TabularExportRequest": {
+                "required": ["fileName", "format"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Expected file format.",
+                        "example": "CSV",
+                        "enum": ["CSV", "XLSX", "HTML", "PDF"]
+                    },
+                    "executionResult": {
+                        "type": "string",
+                        "description": "Execution result identifier.",
+                        "example": "ff483727196c9dc862c7fd3a5a84df55c96d61a4"
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "Filename of downloaded file without extension.",
+                        "example": "result"
+                    },
+                    "settings": {
+                        "$ref": "#/components/schemas/Settings"
+                    },
+                    "customOverride": {
+                        "$ref": "#/components/schemas/CustomOverride"
+                    },
+                    "visualizationObject": {
+                        "type": "string",
+                        "description": "Visualization object identifier. Alternative to executionResult property.",
+                        "example": "f7c359bc-c230-4487-b15b-ad9685bcb537"
+                    },
+                    "visualizationObjectCustomFilters": {
+                        "type": "array",
+                        "description": "Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given.",
+                        "example": "[{\"negativeAttributeFilter\":{\"displayForm\":{\"identifier\":{\"id\":\"products.category\",\"type\":\"label\"}},\"notIn\":{\"values\":[\"Books\"]}}}]",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "relatedDashboardId": {
+                        "type": "string",
+                        "description": "Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    }
+                },
+                "description": "Export request object describing the export properties and overrides for tabular exports."
+            },
+            "SlidesExportRequest": {
+                "required": ["fileName", "format"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Requested resulting file type.",
+                        "example": "PDF",
+                        "enum": ["PDF", "PPTX"]
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "File name to be used for retrieving the pdf document.",
+                        "example": "filename"
+                    },
+                    "dashboardId": {
+                        "type": "string",
+                        "description": "Dashboard identifier",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
+                    },
+                    "widgetIds": {
+                        "maxItems": 1,
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "List of widget identifiers to be exported. Note that only one widget is currently supported.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "visualizationIds": {
+                        "maxItems": 1,
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "List of visualization ids to be exported. Note that only one visualization is currently supported.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    },
+                    "templateId": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Export template identifier.",
+                        "nullable": true
+                    }
+                },
+                "description": "Export request object describing the export properties and metadata for slides exports."
+            },
+            "AFM": {
+                "required": ["attributes", "filters", "measures"],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "array",
+                        "description": "Attributes to be used in the computation.",
+                        "items": {
+                            "$ref": "#/components/schemas/AttributeItem"
+                        }
+                    },
+                    "filters": {
+                        "type": "array",
+                        "description": "Various filter types to filter the execution result.",
+                        "items": {
+                            "$ref": "#/components/schemas/FilterDefinition"
+                        }
+                    },
+                    "measures": {
+                        "type": "array",
+                        "description": "Metrics to be computed.",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
+                        }
+                    },
+                    "auxMeasures": {
+                        "type": "array",
+                        "description": "Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
+                        }
+                    }
+                },
+                "description": "Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics."
+            },
+            "AbsoluteDateFilter": {
+                "required": ["absoluteDateFilter"],
+                "type": "object",
+                "properties": {
+                    "absoluteDateFilter": {
+                        "required": ["from", "to", "dataset"],
+                        "type": "object",
+                        "properties": {
+                            "from": {
+                                "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
+                                "type": "string",
+                                "example": "2020-07-01 18:23"
+                            },
+                            "to": {
+                                "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
+                                "type": "string",
+                                "example": "2020-07-16 23:59"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "dataset": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                            }
+                        }
+                    }
+                },
+                "description": "A datetime filter specifying exact from and to values."
+            },
+            "AbstractMeasureValueFilter": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RankingFilter"
+                    }
+                ]
+            },
+            "AfmIdentifier": {
+                "type": "object",
+                "description": "Reference to the attribute label to which the filter should be applied.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AfmLocalIdentifier"
+                    }
+                ]
+            },
+            "AfmLocalIdentifier": {
+                "required": ["localIdentifier"],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "pattern": "^[.a-zA-Z0-9_-]+$",
+                        "type": "string",
+                        "example": "sampleAutoGenerated0123_ID"
+                    }
+                }
+            },
+            "AfmObjectIdentifier": {
+                "required": ["identifier"],
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": ["type", "id"],
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "example": "fact",
+                                "enum": [
+                                    "analyticalDashboard",
+                                    "attribute",
+                                    "dashboardPlugin",
+                                    "dataset",
+                                    "fact",
+                                    "label",
+                                    "metric",
+                                    "prompt",
+                                    "visualizationObject",
+                                    "filterContext"
+                                ]
+                            },
+                            "id": {
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "type": "string",
+                                "example": "sample_item.price"
+                            }
+                        }
+                    }
+                },
+                "description": "ObjectIdentifier with `identifier` wrapper. This serves to distinguish MD object identifiers in AFM request from local identifiers."
+            },
+            "AfmObjectIdentifierAttribute": {
+                "required": ["identifier"],
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": ["id", "type"],
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "type": "string",
+                                "example": "sample_item.price"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": ["attribute"]
+                            }
+                        }
+                    }
+                },
+                "description": "Reference to the date attribute to use."
+            },
+            "AfmObjectIdentifierCore": {
+                "required": ["identifier"],
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": ["id", "type"],
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "type": "string",
+                                "example": "sample_item.price"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": ["attribute", "label", "fact", "metric"]
+                            }
+                        }
+                    }
+                },
+                "description": "Reference to the metric, fact or attribute object to use for the metric."
+            },
+            "AfmObjectIdentifierDataset": {
+                "required": ["identifier"],
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": ["id", "type"],
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "type": "string",
+                                "example": "sample_item.price"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": ["dataset"]
+                            }
+                        }
+                    }
+                },
+                "description": "Reference to the date dataset to which the filter should be applied."
+            },
+            "AfmObjectIdentifierLabel": {
+                "required": ["identifier"],
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": ["type", "id"],
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["label"]
+                            },
+                            "id": {
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "type": "string",
+                                "example": "sample_item.price"
+                            }
+                        }
+                    }
+                }
+            },
+            "ArithmeticMeasureDefinition": {
+                "required": ["arithmeticMeasure"],
+                "type": "object",
+                "properties": {
+                    "arithmeticMeasure": {
+                        "required": ["measureIdentifiers", "operator"],
+                        "type": "object",
+                        "properties": {
+                            "measureIdentifiers": {
+                                "type": "array",
+                                "description": "List of metrics to apply arithmetic operation by chosen operator.",
+                                "items": {
+                                    "$ref": "#/components/schemas/AfmLocalIdentifier"
+                                }
+                            },
+                            "operator": {
+                                "type": "string",
+                                "description": "Arithmetic operator describing operation between metrics.",
+                                "example": "SUM",
+                                "enum": ["SUM", "DIFFERENCE", "MULTIPLICATION", "RATIO", "CHANGE"]
+                            }
+                        }
+                    }
+                },
+                "description": "Metric representing arithmetics between other metrics."
+            },
+            "AttributeFilter": {
+                "type": "object",
+                "description": "Abstract filter definition type attributes",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/NegativeAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/PositiveAttributeFilter"
+                    }
+                ]
+            },
+            "AttributeFilterElements": {
+                "required": ["values"],
+                "type": "object",
+                "properties": {
+                    "values": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Set of label values.",
+                        "example": ["value1", "value2"],
+                        "items": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                },
+                "description": "Filter on specific set of label values."
+            },
+            "AttributeItem": {
+                "required": ["label", "localIdentifier"],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "pattern": "^[.a-zA-Z0-9_-]+$",
+                        "type": "string",
+                        "description": "Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.",
+                        "example": "attribute_1"
+                    },
+                    "label": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierLabel"
+                    },
+                    "showAllValues": {
+                        "type": "boolean",
+                        "description": "Indicates whether to show all values of given attribute even if the data bound to those values is not available.",
+                        "default": false
+                    }
+                }
+            },
+            "ComparisonMeasureValueFilter": {
+                "required": ["comparisonMeasureValueFilter"],
+                "type": "object",
+                "properties": {
+                    "comparisonMeasureValueFilter": {
+                        "required": ["operator", "value", "measure"],
+                        "type": "object",
+                        "properties": {
+                            "dimensionality": {
+                                "type": "array",
+                                "description": "References to the attributes to be used when filtering.",
+                                "items": {
+                                    "$ref": "#/components/schemas/AfmIdentifier"
+                                }
+                            },
+                            "treatNullValuesAs": {
+                                "type": "number",
+                                "description": "A value that will be substituted for null values in the metric for the comparisons.",
+                                "example": 0
+                            },
+                            "operator": {
+                                "type": "string",
+                                "example": "GREATER_THAN",
+                                "enum": [
+                                    "GREATER_THAN",
+                                    "GREATER_THAN_OR_EQUAL_TO",
+                                    "LESS_THAN",
+                                    "LESS_THAN_OR_EQUAL_TO",
+                                    "EQUAL_TO",
+                                    "NOT_EQUAL_TO"
+                                ]
+                            },
+                            "value": {
+                                "type": "number",
+                                "example": 1327
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "measure": {
+                                "$ref": "#/components/schemas/AfmIdentifier"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter the result by comparing specified metric to given constant value, using given comparison operator."
+            },
+            "DateFilter": {
+                "type": "object",
+                "description": "Abstract filter definition type for dates.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AbsoluteDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RelativeDateFilter"
+                    }
+                ]
+            },
+            "ExecutionSettings": {
+                "type": "object",
+                "properties": {
+                    "dataSamplingPercentage": {
+                        "maximum": 100,
+                        "exclusiveMaximum": true,
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "number",
+                        "description": "Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.",
+                        "format": "float"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "description": "Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.",
+                        "format": "date-time"
+                    }
+                },
+                "description": "Various settings affecting the process of AFM execution or its result"
+            },
+            "FilterDefinition": {
+                "type": "object",
+                "description": "Abstract filter definition type",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/InlineFilterDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RankingFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AbsoluteDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RelativeDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/NegativeAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/PositiveAttributeFilter"
+                    }
+                ]
+            },
+            "FilterDefinitionForSimpleMeasure": {
+                "type": "object",
+                "description": "Abstract filter definition type for simple metric.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/DateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AttributeFilter"
+                    }
+                ]
+            },
+            "InlineFilterDefinition": {
+                "required": ["inline"],
+                "type": "object",
+                "properties": {
+                    "inline": {
+                        "required": ["filter"],
+                        "type": "object",
+                        "properties": {
+                            "filter": {
+                                "type": "string",
+                                "description": "MAQL query representing the filter."
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter in form of direct MAQL query."
+            },
+            "InlineMeasureDefinition": {
+                "required": ["inline"],
+                "type": "object",
+                "properties": {
+                    "inline": {
+                        "required": ["maql"],
+                        "type": "object",
+                        "properties": {
+                            "maql": {
+                                "type": "string",
+                                "description": "MAQL query defining the metric."
+                            }
+                        }
+                    }
+                },
+                "description": "Metric defined by the raw MAQL query."
+            },
+            "MeasureDefinition": {
+                "type": "object",
+                "description": "Abstract metric definition type",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/InlineMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ArithmeticMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/SimpleMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/PopMeasureDefinition"
+                    }
+                ]
+            },
+            "MeasureItem": {
+                "required": ["definition", "localIdentifier"],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "pattern": "^[.a-zA-Z0-9_-]+$",
+                        "type": "string",
+                        "description": "Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.",
+                        "example": "metric_1"
+                    },
+                    "definition": {
+                        "$ref": "#/components/schemas/MeasureDefinition"
+                    }
+                },
+                "description": "Metric is a quantity that is calculated from the data."
+            },
+            "MeasureValueFilter": {
+                "type": "object",
+                "description": "Abstract filter definition type filtering by the value of the metric.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                    }
+                ]
+            },
+            "NegativeAttributeFilter": {
+                "required": ["negativeAttributeFilter"],
+                "type": "object",
+                "properties": {
+                    "negativeAttributeFilter": {
+                        "required": ["notIn", "label"],
+                        "type": "object",
+                        "properties": {
+                            "notIn": {
+                                "$ref": "#/components/schemas/AttributeFilterElements"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "label": {
+                                "$ref": "#/components/schemas/AfmIdentifier"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter able to limit element values by label and related selected negated elements."
+            },
+            "PopDataset": {
+                "required": ["dataset", "periodsAgo"],
+                "type": "object",
+                "properties": {
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                    },
+                    "periodsAgo": {
+                        "type": "integer",
+                        "description": "Number of periods ago to calculate the previous period for.",
+                        "format": "int32",
+                        "example": 1
+                    }
+                },
+                "description": "Combination of the date data set to use and how many periods ago to calculate the previous period for."
+            },
+            "PopDatasetMeasureDefinition": {
+                "required": ["previousPeriodMeasure"],
+                "type": "object",
+                "properties": {
+                    "previousPeriodMeasure": {
+                        "required": ["dateDatasets", "measureIdentifier"],
+                        "type": "object",
+                        "properties": {
+                            "measureIdentifier": {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            },
+                            "dateDatasets": {
+                                "type": "array",
+                                "description": "Specification of which date data sets to use for determining the period to calculate the previous period for.",
+                                "items": {
+                                    "$ref": "#/components/schemas/PopDataset"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Previous period type of metric."
+            },
+            "PopDate": {
+                "required": ["attribute", "periodsAgo"],
+                "type": "object",
+                "properties": {
+                    "attribute": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierAttribute"
+                    },
+                    "periodsAgo": {
+                        "type": "integer",
+                        "description": "Number of periods ago to calculate the previous period for.",
+                        "format": "int32",
+                        "example": 1
+                    }
+                },
+                "description": "Combination of the date attribute to use and how many periods ago to calculate the PoP for."
+            },
+            "PopDateMeasureDefinition": {
+                "required": ["overPeriodMeasure"],
+                "type": "object",
+                "properties": {
+                    "overPeriodMeasure": {
+                        "required": ["dateAttributes", "measureIdentifier"],
+                        "type": "object",
+                        "properties": {
+                            "measureIdentifier": {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            },
+                            "dateAttributes": {
+                                "type": "array",
+                                "description": "Attributes to use for determining the period to calculate the PoP for.",
+                                "items": {
+                                    "$ref": "#/components/schemas/PopDate"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Period over period type of metric."
+            },
+            "PopMeasureDefinition": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/PopDatasetMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/PopDateMeasureDefinition"
+                    }
+                ]
+            },
+            "PositiveAttributeFilter": {
+                "required": ["positiveAttributeFilter"],
+                "type": "object",
+                "properties": {
+                    "positiveAttributeFilter": {
+                        "required": ["in", "label"],
+                        "type": "object",
+                        "properties": {
+                            "in": {
+                                "$ref": "#/components/schemas/AttributeFilterElements"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "label": {
+                                "$ref": "#/components/schemas/AfmIdentifier"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter able to limit element values by label and related selected elements."
+            },
+            "RangeMeasureValueFilter": {
+                "required": ["rangeMeasureValueFilter"],
+                "type": "object",
+                "properties": {
+                    "rangeMeasureValueFilter": {
+                        "required": ["from", "operator", "to", "measure"],
+                        "type": "object",
+                        "properties": {
+                            "dimensionality": {
+                                "type": "array",
+                                "description": "References to the attributes to be used when filtering.",
+                                "items": {
+                                    "$ref": "#/components/schemas/AfmIdentifier"
+                                }
+                            },
+                            "treatNullValuesAs": {
+                                "type": "number",
+                                "description": "A value that will be substituted for null values in the metric for the comparisons.",
+                                "example": 0
+                            },
+                            "operator": {
+                                "type": "string",
+                                "example": "BETWEEN",
+                                "enum": ["BETWEEN", "NOT_BETWEEN"]
+                            },
+                            "from": {
+                                "type": "number",
+                                "example": 100
+                            },
+                            "to": {
+                                "type": "number",
+                                "example": 999
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "measure": {
+                                "$ref": "#/components/schemas/AfmIdentifier"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter the result by comparing specified metric to given range of values."
+            },
+            "RankingFilter": {
+                "required": ["rankingFilter"],
+                "type": "object",
+                "properties": {
+                    "rankingFilter": {
+                        "required": ["measures", "operator", "value"],
+                        "type": "object",
+                        "properties": {
+                            "dimensionality": {
+                                "type": "array",
+                                "description": "References to the attributes to be used when filtering.",
+                                "items": {
+                                    "$ref": "#/components/schemas/AfmIdentifier"
+                                }
+                            },
+                            "measures": {
+                                "type": "array",
+                                "description": "References to the metrics to be used when filtering.",
+                                "items": {
+                                    "$ref": "#/components/schemas/AfmIdentifier"
+                                }
+                            },
+                            "operator": {
+                                "type": "string",
+                                "description": "The type of ranking to use, TOP or BOTTOM.",
+                                "enum": ["TOP", "BOTTOM"]
+                            },
+                            "value": {
+                                "type": "integer",
+                                "description": "Number of top/bottom values to filter.",
+                                "format": "int32",
+                                "example": 5
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter the result on top/bottom N values according to given metric(s)."
+            },
+            "RawCustomLabel": {
+                "required": ["title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Override value."
+                    }
+                },
+                "description": "Custom label object override."
+            },
+            "RawCustomMetric": {
+                "required": ["title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Metric title override."
+                    }
+                },
+                "description": "Custom metric object override."
+            },
+            "RawCustomOverride": {
+                "type": "object",
+                "properties": {
+                    "labels": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/RawCustomLabel"
+                        },
+                        "description": "Map of CustomLabels with keys used as placeholders in export result."
+                    },
+                    "metrics": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/RawCustomMetric"
+                        },
+                        "description": "Map of CustomMetrics with keys used as placeholders in export result."
+                    }
+                },
+                "description": "Custom cell value overrides (IDs will be replaced with specified values)."
+            },
+            "RawExportRequest": {
+                "required": ["execution", "fileName", "format"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Requested resulting file type.",
+                        "example": "CSV",
+                        "enum": ["ARROW_FILE", "ARROW_STREAM", "CSV"]
+                    },
+                    "execution": {
+                        "$ref": "#/components/schemas/AFM"
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "Filename of downloaded file without extension.",
+                        "example": "result"
+                    },
+                    "customOverride": {
+                        "$ref": "#/components/schemas/RawCustomOverride"
+                    },
+                    "executionSettings": {
+                        "$ref": "#/components/schemas/ExecutionSettings"
+                    }
+                },
+                "description": "Export request object describing the export properties and overrides for raw exports."
+            },
+            "RelativeDateFilter": {
+                "required": ["relativeDateFilter"],
+                "type": "object",
+                "properties": {
+                    "relativeDateFilter": {
+                        "required": ["from", "granularity", "to", "dataset"],
+                        "type": "object",
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "description": "Date granularity specifying particular date attribute in given dimension.",
+                                "example": "DAY",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR"
+                                ]
+                            },
+                            "from": {
+                                "type": "integer",
+                                "description": "Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for '2 days/weeks, ... ago').",
+                                "format": "int32",
+                                "example": -6
+                            },
+                            "to": {
+                                "type": "integer",
+                                "description": "End of the filtering interval. Specified by number of periods (with respect to given granularity). Value 'O' is representing current time-interval (current day, week, ...).",
+                                "format": "int32",
+                                "example": 0
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "dataset": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                            }
+                        }
+                    }
+                },
+                "description": "A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension."
+            },
+            "SimpleMeasureDefinition": {
+                "required": ["measure"],
+                "type": "object",
+                "properties": {
+                    "measure": {
+                        "required": ["item"],
+                        "type": "object",
+                        "properties": {
+                            "item": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierCore"
+                            },
+                            "aggregation": {
+                                "type": "string",
+                                "description": "Definition of aggregation type of the metric.",
+                                "example": "SUM",
+                                "enum": [
+                                    "SUM",
+                                    "COUNT",
+                                    "AVG",
+                                    "MIN",
+                                    "MAX",
+                                    "MEDIAN",
+                                    "RUNSUM",
+                                    "APPROXIMATE_COUNT"
+                                ]
+                            },
+                            "computeRatio": {
+                                "type": "boolean",
+                                "description": "If true, compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).",
+                                "example": true,
+                                "default": false
+                            },
+                            "filters": {
+                                "type": "array",
+                                "description": "Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.",
+                                "items": {
+                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Metric defined by referencing a MAQL metric or an LDM fact object with aggregation."
+            },
+            "ImageExportRequest": {
+                "required": ["dashboardId", "fileName", "format", "widgetIds"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Requested resulting file type.",
+                        "example": "PNG",
+                        "enum": ["PNG"]
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "File name to be used for retrieving the image document.",
+                        "example": "filename"
+                    },
+                    "dashboardId": {
+                        "type": "string",
+                        "description": "Dashboard identifier",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
+                    },
+                    "widgetIds": {
+                        "maxItems": 1,
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "List of widget identifiers to be exported. Note that only one widget is currently supported.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    }
+                },
+                "description": "Export request object describing the export properties and metadata for image exports."
+            },
+            "AttributeElements": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AttributeElementsByRef"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AttributeElementsByValue"
+                    }
+                ]
+            },
+            "AttributeElementsByRef": {
+                "required": ["uris"],
+                "type": "object",
+                "properties": {
+                    "uris": {
+                        "type": "array",
+                        "description": "List of attribute elements by reference",
+                        "items": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                }
+            },
+            "AttributeElementsByValue": {
+                "required": ["values"],
+                "type": "object",
+                "properties": {
+                    "values": {
+                        "type": "array",
+                        "description": "List of attribute elements by value",
+                        "items": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                }
+            },
+            "AttributeFilterByDate": {
+                "required": ["filterLocalIdentifier", "isCommonDate"],
+                "type": "object",
+                "properties": {
+                    "filterLocalIdentifier": {
+                        "type": "string"
+                    },
+                    "isCommonDate": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "AttributeFilterParent": {
+                "required": ["filterLocalIdentifier", "over"],
+                "type": "object",
+                "properties": {
+                    "filterLocalIdentifier": {
+                        "type": "string"
+                    },
+                    "over": {
+                        "$ref": "#/components/schemas/Over"
+                    }
+                }
+            },
+            "DashboardAttributeFilter": {
+                "required": ["attributeFilter"],
+                "type": "object",
+                "properties": {
+                    "attributeFilter": {
+                        "required": ["attributeElements", "displayForm", "negativeSelection"],
+                        "type": "object",
+                        "properties": {
+                            "displayForm": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "negativeSelection": {
+                                "type": "boolean"
+                            },
+                            "attributeElements": {
+                                "$ref": "#/components/schemas/AttributeElements"
+                            },
+                            "filterElementsBy": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/AttributeFilterParent"
+                                }
+                            },
+                            "filterElementsByDate": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/AttributeFilterByDate"
+                                }
+                            },
+                            "validateElementsBy": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/IdentifierRef"
+                                }
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "selectionMode": {
+                                "type": "string",
+                                "enum": ["single", "multi"]
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "DashboardDateFilter": {
+                "required": ["dateFilter"],
+                "type": "object",
+                "properties": {
+                    "dateFilter": {
+                        "required": ["granularity", "type"],
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["relative", "absolute"]
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "ALL_TIME_GRANULARITY",
+                                    "GDC.time.year",
+                                    "GDC.time.week_us",
+                                    "GDC.time.week_in_year",
+                                    "GDC.time.week_in_quarter",
+                                    "GDC.time.week",
+                                    "GDC.time.euweek_in_year",
+                                    "GDC.time.euweek_in_quarter",
+                                    "GDC.time.quarter",
+                                    "GDC.time.quarter_in_year",
+                                    "GDC.time.month",
+                                    "GDC.time.month_in_quarter",
+                                    "GDC.time.month_in_year",
+                                    "GDC.time.day_in_year",
+                                    "GDC.time.day_in_quarter",
+                                    "GDC.time.day_in_month",
+                                    "GDC.time.day_in_week",
+                                    "GDC.time.day_in_euweek",
+                                    "GDC.time.date",
+                                    "GDC.time.hour",
+                                    "GDC.time.hour_in_day",
+                                    "GDC.time.minute",
+                                    "GDC.time.minute_in_hour"
+                                ]
+                            },
+                            "from": {
+                                "oneOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                ]
+                            },
+                            "to": {
+                                "oneOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                ]
+                            },
+                            "dataSet": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "attribute": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "DashboardExportSettings": {
+                "type": "object",
+                "properties": {
+                    "exportInfo": {
+                        "type": "boolean",
+                        "description": "If true, the export will contain the information about the exported date and dashboard filters.",
+                        "example": true,
+                        "default": false
+                    },
+                    "mergeHeaders": {
+                        "type": "boolean",
+                        "description": "Merge equal headers in neighbouring cells. Used for [XLSX] format only.",
+                        "example": true,
+                        "default": false
+                    }
+                },
+                "description": "Additional settings."
+            },
+            "DashboardFilter": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/DashboardAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DashboardDateFilter"
+                    }
+                ]
+            },
+            "DashboardTabularExportRequest": {
+                "required": ["fileName", "format"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Requested tabular export type.",
+                        "example": "XLSX",
+                        "enum": ["XLSX"]
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "Filename of downloaded file without extension.",
+                        "example": "result"
+                    },
+                    "dashboardFiltersOverride": {
+                        "type": "array",
+                        "description": "List of filters that will be used instead of the default dashboard filters.",
+                        "items": {
+                            "$ref": "#/components/schemas/DashboardFilter"
+                        }
+                    },
+                    "widgetIds": {
+                        "maxItems": 1,
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "List of widget identifiers to be exported. Note that only one widget is currently supported.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "settings": {
+                        "$ref": "#/components/schemas/DashboardExportSettings"
+                    }
+                },
+                "description": "Export request object describing the export properties for dashboard tabular exports."
+            },
+            "DateValue": {
+                "required": ["value"],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "IdentifierRef": {
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": ["id", "type"],
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "analyticalDashboard",
+                                    "attribute",
+                                    "attributeHierarchy",
+                                    "dashboardPlugin",
+                                    "dataset",
+                                    "fact",
+                                    "label",
+                                    "metric",
+                                    "userDataFilter",
+                                    "exportDefinition",
+                                    "automation",
+                                    "prompt",
+                                    "visualizationObject",
+                                    "filterContext",
+                                    "workspaceSettings",
+                                    "customApplicationSetting",
+                                    "workspaceDataFilter",
+                                    "workspaceDataFilterSetting",
+                                    "filterView"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "Over": {
+                "required": ["attributes"],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/IdentifierRef"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

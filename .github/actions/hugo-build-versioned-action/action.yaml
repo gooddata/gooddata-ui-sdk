@@ -1,0 +1,37 @@
+name: Hugo Versioned Build
+description: Builds documentation using Hugo
+inputs:
+  base-url:
+    required: false
+    description: Optional base url used during build
+  working-directory:
+    required: false
+    description: Path to documentation directory
+    default: docs
+  hugo-env:
+    required: false
+    description: Environment variable
+    default: public
+  keep-master:
+    required: false
+    description: Preview of the master branch
+    default: no
+  fetch-from:
+    required: false
+    description: Git Remote to fetch the versions from
+    default: origin
+
+runs:
+  using: "composite"
+  steps:
+    - name: Generate Versioned Documentation
+      shell: bash
+      run: |
+        cd docs
+        ../scripts/generate.sh ${{ inputs.fetch-from }} master ${{ inputs.keep-master}}
+    - name: Hugo Build
+      uses: ./.github/actions/hugo-build-action
+      with:
+        hugo-env: ${{ inputs.hugo-env }}
+        working-directory: ${{ inputs.working-directory }}
+        base-url: ${{ inputs.base-url }}

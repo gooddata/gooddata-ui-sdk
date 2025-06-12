@@ -1,0 +1,358 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PluggableBarChart > Sort config > should provide areaSort+measureSort by first measure as default sort for 2M + 2 VB 1`] = `
+[
+  {
+    "attributeSortItem": {
+      "aggregation": "sum",
+      "attributeIdentifier": "a1",
+      "direction": "desc",
+    },
+  },
+  {
+    "measureSortItem": {
+      "direction": "desc",
+      "locators": [
+        {
+          "measureLocatorItem": {
+            "measureIdentifier": "m1",
+          },
+        },
+      ],
+    },
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should provide attribute area sort and measureSort as default sort for 1M + 2 VB 1`] = `
+[
+  {
+    "attributeSortItem": {
+      "aggregation": "sum",
+      "attributeIdentifier": "a1",
+      "direction": "desc",
+    },
+  },
+  {
+    "measureSortItem": {
+      "direction": "desc",
+      "locators": [
+        {
+          "measureLocatorItem": {
+            "measureIdentifier": "m1",
+          },
+        },
+      ],
+    },
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should provide attribute area sort as default sort for 2 stacked M + 1 VB 1`] = `
+[
+  {
+    "attributeSortItem": {
+      "aggregation": "sum",
+      "attributeIdentifier": "a1",
+      "direction": "desc",
+    },
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should provide measureSort as default sort for 1M + 1 VB 1`] = `
+[
+  {
+    "measureSortItem": {
+      "direction": "desc",
+      "locators": [
+        {
+          "measureLocatorItem": {
+            "measureIdentifier": "m1",
+          },
+        },
+      ],
+    },
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should provide measureSort by first measure as default sort for 2M + 1 VB 1`] = `
+[
+  {
+    "measureSortItem": {
+      "direction": "desc",
+      "locators": [
+        {
+          "measureLocatorItem": {
+            "measureIdentifier": "m1",
+          },
+        },
+      ],
+    },
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should provide two areaSorts as default sort for 2 stacked M + 2 VB 1`] = `
+[
+  {
+    "attributeSortItem": {
+      "aggregation": "sum",
+      "attributeIdentifier": "a1",
+      "direction": "desc",
+    },
+  },
+  {
+    "attributeSortItem": {
+      "aggregation": "sum",
+      "attributeIdentifier": "a2",
+      "direction": "desc",
+    },
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should provide two attribute area sorts as default sort for 1M + 2 VB + 1SB 1`] = `
+[
+  {
+    "attributeSortItem": {
+      "aggregation": "sum",
+      "attributeIdentifier": "a1",
+      "direction": "desc",
+    },
+  },
+  {
+    "attributeSortItem": {
+      "aggregation": "sum",
+      "attributeIdentifier": "a2",
+      "direction": "desc",
+    },
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should return valid available sorts for 1M + 1 VB + 1SB 1`] = `
+[
+  {
+    "attributeSort": {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": {
+      "localIdentifier": "a1",
+    },
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should return valid available sorts for 1M + 1 VB 1`] = `
+[
+  {
+    "attributeSort": {
+      "areaSortEnabled": false,
+      "normalSortEnabled": true,
+    },
+    "itemId": {
+      "localIdentifier": "a1",
+    },
+    "metricSorts": [
+      {
+        "locators": [
+          {
+            "measureLocatorItem": {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+    ],
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should return valid available sorts for 1M + 2 VB + 1SB 1`] = `
+[
+  {
+    "attributeSort": {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": {
+      "localIdentifier": "a1",
+    },
+  },
+  {
+    "attributeSort": {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": {
+      "localIdentifier": "a2",
+    },
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should return valid available sorts for 2 stacked M + 1 VB 1`] = `
+[
+  {
+    "attributeSort": {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": {
+      "localIdentifier": "a1",
+    },
+    "metricSorts": [
+      {
+        "locators": [
+          {
+            "measureLocatorItem": {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+      {
+        "locators": [
+          {
+            "measureLocatorItem": {
+              "measureIdentifier": "m2",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+    ],
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should return valid available sorts for 2 stacked M + 2 VB 1`] = `
+[
+  {
+    "attributeSort": {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": {
+      "localIdentifier": "a1",
+    },
+  },
+  {
+    "attributeSort": {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": {
+      "localIdentifier": "a2",
+    },
+    "metricSorts": [
+      {
+        "locators": [
+          {
+            "measureLocatorItem": {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+      {
+        "locators": [
+          {
+            "measureLocatorItem": {
+              "measureIdentifier": "m2",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+    ],
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should return valid available sorts for 2M + 1 VB 1`] = `
+[
+  {
+    "attributeSort": {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": {
+      "localIdentifier": "a1",
+    },
+    "metricSorts": [
+      {
+        "locators": [
+          {
+            "measureLocatorItem": {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+      {
+        "locators": [
+          {
+            "measureLocatorItem": {
+              "measureIdentifier": "m2",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+    ],
+  },
+]
+`;
+
+exports[`PluggableBarChart > Sort config > should return valid available sorts for 2M + 2 VB 1`] = `
+[
+  {
+    "attributeSort": {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": {
+      "localIdentifier": "a1",
+    },
+  },
+  {
+    "attributeSort": {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": {
+      "localIdentifier": "a2",
+    },
+    "metricSorts": [
+      {
+        "locators": [
+          {
+            "measureLocatorItem": {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+      {
+        "locators": [
+          {
+            "measureLocatorItem": {
+              "measureIdentifier": "m2",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+    ],
+  },
+]
+`;

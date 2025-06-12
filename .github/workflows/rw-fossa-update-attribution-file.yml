@@ -1,0 +1,82 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ FOSSA ~ Update attribtion file
+on:
+    workflow_call:
+        inputs:
+            source-branch:
+                required: true
+                description: "The name of the source branch"
+                type: string
+
+jobs:
+  fossa-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-branch }}
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+      - name: Add repository to git safe directories to avoid dubious ownership issue
+        run: git config --global --add safe.directory $GITHUB_WORKSPACE
+      - name: Config user
+        run: |
+            git config --global user.email "git-action@gooddata.com"
+            git config --global user.name "git-action"
+      - name: Install fossa
+        run: |
+          curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install-latest.sh | bash
+      - name: dummy package.json
+        run: |
+          # we need create dummy package.json to make fossa happy without this hack fossa will fail
+          echo '{}' > common/config/rush/package.json
+      - name: Fossa scan
+        run: fossa analyze --project "gooddata-ui-sdk" --branch ${branch}
+        env:
+          FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
+          branch: ${{ inputs.source-branch }}
+      - name: Wait for the scan to finish in fossa app
+        run: |
+          sleep 100
+      - name: Generate FOSSA Attribution Report
+        uses: nick-fields/retry@v3
+        env:
+          FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
+          MINIMUM_LINES: 30000
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          retry_on: error
+          retry_wait_seconds: 60
+          command: |
+            REVISION=$(git rev-parse HEAD)
+            LINK="https://app.fossa.com/api/revisions/custom%2B13637%2Fgooddata-ui-sdk%24$REVISION/attribution/download?includeProjectLicense=&includeLicenseScan=&includeDependencySummary=true&includeDirectDependencies=true&includeDeepDependencies=true&includeLicenseList=true&includeVulnerabilities=&format=TXT&includeLicenseHeaders=&download=true"
+            echo $LINK
+            curl -o NOTICE --header "Authorization: Bearer $FOSSA_API_KEY" $LINK
+
+            # check if the NOTICE file has at least $MINIMUM_LINES lines
+            # empty notice has cca 50 lines so $MINIMUM_LINES is a good threshold
+            # current notice has cca 660000 lines so NOTICE has less than $MINIMUM_LINES lines its suspicious
+            lines=$(wc -l < NOTICE)
+            if (( lines < $MINIMUM_LINES )); then
+              echo "The NOTICE file has less than $MINIMUM_LINES lines which is suspicious, please see $LINK to check if the scan is complete."
+              exit 1
+            fi
+      - name: fix NOTICE file declared license
+        run: |
+            # we need delete license definition of declared licenses that are empty.
+            # In the NOTICE file, the empty declared licenses are represented by the following pattern:
+            #
+            # * Declared Licenses *
+            # No licenses found
+
+            sed -i '/[*] Declared Licenses [*]/ {N; /No licenses found/d;}' NOTICE
+      - name: Git commit and push
+        env:
+          BRANCH: ${{ inputs.source-branch }}
+        run: |
+          git add NOTICE
+          git commit -m "chore: update attribution file" -m "risk: nonprod"
+          git pull --rebase origin ${BRANCH}
+          git push origin HEAD

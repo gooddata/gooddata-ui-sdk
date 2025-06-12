@@ -1,0 +1,214 @@
+// (C) 2024-2025 GoodData Corporation
+
+.gd-ui-kit-button {
+    $root: &;
+
+    font-family: var(--gd-font-family);
+    gap: var(--gd-spacing-5px);
+    border-radius: var(--gd-button-borderRadius);
+    transition: var(--gd-transition-all);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-style: solid;
+    border-width: 1px;
+
+    &:disabled {
+        cursor: default;
+    }
+
+    /**
+     * Size
+     */
+    &--size {
+        &-small {
+            height: var(--gd-button-S);
+            padding: 0 var(--gd-spacing-10px);
+            font-size: 12px;
+
+            &#{$root}--hasIconBefore {
+                padding-left: var(--gd-spacing-7px);
+            }
+
+            &#{$root}--hasIconAfter {
+                padding-right: var(--gd-spacing-7px);
+            }
+        }
+
+        &-medium {
+            height: var(--gd-button-M);
+            padding: 0 var(--gd-spacing-15px);
+            font-size: 14px;
+
+            &#{$root}--hasIconBefore {
+                padding-left: var(--gd-spacing-10px);
+            }
+
+            &#{$root}--hasIconAfter {
+                padding-right: var(--gd-spacing-10px);
+            }
+        }
+
+        &-large {
+            height: var(--gd-button-L);
+            padding: 0 var(--gd-spacing-20px);
+            font-size: 16px;
+
+            &#{$root}--hasIconBefore {
+                padding-left: var(--gd-spacing-15px);
+            }
+
+            &#{$root}--hasIconAfter {
+                padding-right: var(--gd-spacing-15px);
+            }
+        }
+    }
+
+    /**
+     * Variant
+     */
+    &--variant {
+        &-primary {
+            --gd-icon-fill-color: var(--gd-palette-complementary-0);
+            color: var(--gd-palette-complementary-0);
+            background-color: var(--gd-palette-primary-base);
+            border-color: var(--gd-palette-complementary-9-t90);
+            font-weight: 700;
+
+            &:not(&:disabled) {
+                &:focus-visible,
+                &:hover {
+                    background-color: var(--gd-palette-primary-base-d06);
+
+                    box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-complementary-9-t85)
+                        inset;
+                }
+
+                &:active {
+                    background-color: var(--gd-palette-primary-base-d12);
+                    box-shadow: var(--gd-button-dropShadow, 0 1px 0 0) var(--gd-palette-complementary-9-t85)
+                        inset;
+                }
+            }
+
+            &:disabled {
+                background-color: var(--gd-palette-primary-disabled);
+                box-shadow: none;
+                border-color: transparent;
+            }
+        }
+
+        &-secondary {
+            --gd-icon-fill-color: var(--gd-palette-complementary-5);
+            color: var(--gd-palette-complementary-7);
+            border-color: var(--gd-palette-complementary-4);
+            background-color: var(--gd-palette-complementary-0);
+            font-weight: 400;
+
+            &:not(&:disabled) {
+                &:focus-visible,
+                &:hover {
+                    --gd-icon-fill-color: var(--gd-palette-primary-base);
+
+                    color: var(--gd-palette-complementary-8);
+                    border-color: var(--gd-palette-complementary-5);
+                    background-color: var(--gd-palette-complementary-1);
+                    box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-complementary-5-t40)
+                        inset;
+                }
+
+                &:active {
+                    --gd-icon-fill-color: var(--gd-palette-primary-base);
+
+                    color: var(--gd-palette-complementary-8);
+                    border-color: var(--gd-palette-complementary-5);
+                    background-color: var(--gd-palette-complementary-3);
+                    box-shadow: var(--gd-button-dropShadow, 0 1px 0 0) var(--gd-palette-complementary-9-t85)
+                        inset;
+                }
+            }
+
+            &:disabled {
+                color: var(--gd-palette-complementary-5);
+                border-color: var(--gd-palette-complementary-4);
+                box-shadow: none;
+            }
+        }
+
+        &-tertiary {
+            --gd-icon-fill-color: var(--gd-palette-complementary-5);
+            color: var(--gd-palette-complementary-7);
+            padding: 0;
+            text-decoration: underline;
+            background-color: transparent;
+            border-color: transparent;
+
+            &:not(&:disabled) {
+                &:hover,
+                &:focus-visible,
+                &:active {
+                    --gd-icon-fill-color: var(--gd-palette-primary-base);
+
+                    color: var(--gd-palette-complementary-8);
+                }
+            }
+
+            &:disabled {
+                color: var(--gd-palette-complementary-5);
+                text-decoration: none;
+            }
+        }
+
+        &-popout {
+            --gd-icon-fill-color: var(--gd-palette-primary-base);
+            color: var(--gd-palette-primary-base);
+            padding: 0;
+            background-color: transparent;
+            border-color: transparent;
+
+            &:not(&:disabled) {
+                &:hover,
+                &:focus-visible,
+                &:active {
+                    text-decoration: underline;
+                }
+            }
+
+            &:disabled {
+                color: var(--gd-palette-complementary-5);
+            }
+        }
+
+        &-danger {
+            --gd-icon-fill-color: var(--gd-palette-complementary-0);
+            color: var(--gd-palette-complementary-0);
+            background-color: var(--gd-palette-error-base);
+            border-color: var(--gd-palette-complementary-9-t90);
+            font-weight: 700;
+
+            &:not(&:disabled) {
+                &:focus-visible,
+                &:hover {
+                    border-color: var(--gd-palette-complementary-9-t80);
+                    background-color: var(--gd-palette-error-base-d10);
+                    box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-complementary-9-t85)
+                        inset;
+                }
+
+                &:active {
+                    border-color: var(--gd-palette-complementary-9-t80);
+                    background-color: var(--gd-palette-error-base-d20);
+                    box-shadow: var(--gd-button-dropShadow, 0 1px 0 0) var(--gd-palette-complementary-9-t85)
+                        inset;
+                }
+            }
+
+            &:disabled {
+                background-color: var(--gd-palette-error-disabled);
+                box-shadow: none;
+                border-color: transparent;
+            }
+        }
+    }
+}

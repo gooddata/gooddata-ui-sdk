@@ -1,0 +1,119 @@
+// (C) 2020-2025 GoodData Corporation
+
+.export-mode {
+    * {
+        transition: none !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    .gd-fluidlayout-row {
+        // overwrite 'flex'
+        display: block !important; /* stylelint-disable-line declaration-no-important */
+        page-break-inside: avoid;
+
+        .gd-fluidlayout-column {
+            display: inline-block;
+            vertical-align: top;
+
+            .dash-item {
+                min-height: inherit;
+            }
+
+            .dashboard-widget-draggable-wrapper {
+                min-height: inherit;
+            }
+        }
+    }
+
+    .gd-grid-layout__item--leaf {
+        page-break-inside: avoid;
+
+        .dash-item {
+            min-height: inherit;
+        }
+
+        .dashboard-widget-draggable-wrapper {
+            min-height: inherit;
+        }
+    }
+
+    .gd-row-header-view .description .more-link.active {
+        display: none;
+    }
+
+    // For some reason, custom widgets in export mode are rendered with wrong height,
+    // or with height 0. height: 100% does not solve it, but we can rely on fact, that
+    // gd-fluild-layout-column has position: relative, so we can stretch the container to a full size.
+    .gd-custom-widget-export {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    // The following fixes export of flexible layouts to work in the most cases.
+    // The below are some magic numbers that ensure that widgets at the end of dashboard are
+    // usually not cut of and widgets at the end of the nested container do not bleed into the
+    // next container/section. For some reason grid items overflow its container. It can be fixed
+    // by changing display: grid to display: block/flex on the containers but then the grid nesting
+    // is broken. Something is wrong with how the layout is constructed and interpreted by print
+    // preview in Chromium. Maybe our grid structure is not clean enough and some flex containers
+    // inside the grid tree messes up with it. For now, this is good enough but this needs to be fixed properly.
+    // For future debugging purposes:
+    // The export service sets the browser to width: 1265, height: 960, deviceScaleFactor: 0, mobile: false
+    // The PDF is created with the following parameters: scale: 0.58, paperWidth: 8.5, paperHeight: 11.0,
+    // marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0, printBackground: true
+    .gd-grid-layout__container--root {
+        padding-bottom: 500px;
+    }
+
+    .gd-grid-layout__container--nested {
+        padding-bottom: 300px;
+    }
+
+    /* =====================================================================
+    Export Mode Accessibility Enhancements
+    ===================================================================== */
+
+    // Reset z-index during export to ensure proper element stacking in PDF
+    // This prevents issues with z-index values affecting the print layout
+    .gd-widget-export {
+        z-index: auto;
+    }
+    .gd-fluidlayout-column-container-export {
+        z-index: auto;
+    }
+
+    // Always left align row header title during export
+    // This overrides the default centered alignment at small resolutions
+    .gd-row-header-export {
+        text-align: left;
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    // Hide the decorative line before the title in export mode since we want left alignment
+    // This overrides the line that appears at small resolutions
+    .gd-row-header-title-wrapper-export {
+        &::before {
+            display: none;
+        }
+    }
+
+    /* =====================================================================
+    Export Mode Accessibility Enhancements
+    ===================================================================== */
+}
+
+.gd-dashboard-meta {
+    display: none;
+    width: 100%;
+}
+
+.export-slides-mode {
+    .dash-item.type-visualization {
+        &.viz-type-headline .headline {
+            max-height: calc(100% - 10px);
+        }
+    }
+}

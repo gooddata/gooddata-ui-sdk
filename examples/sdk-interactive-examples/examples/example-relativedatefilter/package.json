@@ -1,0 +1,59 @@
+{
+    "name": "@gooddata/sdk-interactive-example-relativedatefilter",
+    "version": "10.31.0-alpha.32",
+    "title": "RelativeDateFilter",
+    "description": "Example demonstrates how to set relative DateFilter for visualization.",
+    "author": "GoodData",
+    "private": false,
+    "license": "LicenseRef-LICENSE",
+    "type": "module",
+    "gooddata": {
+        "hostname": "https://public-examples.gooddata.com",
+        "workspaceId": "demo_ecommerce",
+        "backend": "tiger",
+        "catalogOutput": "src/catalog.ts"
+    },
+    "scripts": {
+        "clean": "rm -rf esm dist *.log",
+        "build": "tsc -p tsconfig.json",
+        "build-example": "vite build",
+        "build-example-ci": "vite build -l error",
+        "start": "vite serve",
+        "preview": "vite preview",
+        "refresh-md": "gdc-catalog-export && npm run prettier-write",
+        "update-version": "node ./scripts/updateWorkspaceVersion.mjs",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "validate": "npm run prettier-check",
+        "validate-ci": "npm run prettier-check"
+    },
+    "exampleDependencies": [],
+    "dependencies": {
+        "@gooddata/sdk-backend-base": "workspace:*",
+        "@gooddata/sdk-backend-spi": "workspace:*",
+        "@gooddata/sdk-backend-tiger": "workspace:*",
+        "@gooddata/sdk-model": "workspace:*",
+        "@gooddata/sdk-ui": "workspace:*",
+        "@gooddata/sdk-ui-charts": "workspace:*",
+        "@gooddata/sdk-ui-dashboard": "workspace:*",
+        "@gooddata/sdk-ui-ext": "workspace:*",
+        "@gooddata/sdk-ui-filters": "workspace:*",
+        "@gooddata/sdk-ui-geo": "workspace:*",
+        "@gooddata/sdk-ui-kit": "workspace:*",
+        "@gooddata/sdk-ui-pivot": "workspace:*",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "tslib": "^2.5.0"
+    },
+    "devDependencies": {
+        "@gooddata/catalog-export": "workspace:*",
+        "@types/react": "^18.2.0",
+        "@types/react-dom": "^18.2.1",
+        "@vitejs/plugin-react-swc": "~3.5.0",
+        "prettier": "~2.5.0",
+        "process": "^0.11.10",
+        "typescript": "5.3.3",
+        "vite": "^5.4.3",
+        "vite-plugin-html": "~3.2.0"
+    }
+}

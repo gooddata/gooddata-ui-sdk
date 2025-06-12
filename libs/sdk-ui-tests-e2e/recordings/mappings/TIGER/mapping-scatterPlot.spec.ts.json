@@ -1,0 +1,268 @@
+{
+    "mappings": [
+        {
+            "id": "e3ef8f72-5ae4-49ad-a456-40ba6aa087d7",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_63dac6baa0a1d41f850a314e7ec82ba11bbc55f0f325e3df1b4e9cefdfef677387e6ff8e323962993e340b5e549e6acf92e99e1d",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/63dac6baa0a1d41f850a314e7ec82ba11bbc55f0%3Af325e3df1b4e9cefdfef677387e6ff8e323962993e340b5e549e6acf92e99e1d",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":[[2423890.44,14619.896561743342],[1229796.71,15851.630392609699],[1219510.1,23453.791789473686],[61200.4,15108.65382647386],[200000.0,21204.94606571188],[null,23164.952256],[null,61080.7092],[null,84288.606],[null,null],[null,8875.86],[null,null],[null,3644.0]],\"dimensionHeaders\":[{\"headerGroups\":[{\"headers\":[{\"attributeHeader\":{\"labelValue\":\"2010\",\"primaryLabelValue\":\"2010\"}},{\"attributeHeader\":{\"labelValue\":\"2010\",\"primaryLabelValue\":\"2010\"}},{\"attributeHeader\":{\"labelValue\":\"2011\",\"primaryLabelValue\":\"2011\"}},{\"attributeHeader\":{\"labelValue\":\"2011\",\"primaryLabelValue\":\"2011\"}},{\"attributeHeader\":{\"labelValue\":\"2012\",\"primaryLabelValue\":\"2012\"}},{\"attributeHeader\":{\"labelValue\":\"2012\",\"primaryLabelValue\":\"2012\"}},{\"attributeHeader\":{\"labelValue\":\"2013\",\"primaryLabelValue\":\"2013\"}},{\"attributeHeader\":{\"labelValue\":\"2013\",\"primaryLabelValue\":\"2013\"}},{\"attributeHeader\":{\"labelValue\":\"2014\",\"primaryLabelValue\":\"2014\"}},{\"attributeHeader\":{\"labelValue\":\"2014\",\"primaryLabelValue\":\"2014\"}},{\"attributeHeader\":{\"labelValue\":\"2016\",\"primaryLabelValue\":\"2016\"}},{\"attributeHeader\":{\"labelValue\":\"2017\",\"primaryLabelValue\":\"2017\"}}]},{\"headers\":[{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}}]}]},{\"headerGroups\":[{\"headers\":[{\"measureHeader\":{\"measureIndex\":0}},{\"measureHeader\":{\"measureIndex\":1}}]}]}],\"grandTotals\":[],\"paging\":{\"count\":[12,2],\"offset\":[0,0],\"total\":[12,2]},\"metadata\":{\"dataSourceMessages\":[]}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/json"
+                }
+            },
+            "uuid": "e3ef8f72-5ae4-49ad-a456-40ba6aa087d7"
+        },
+        {
+            "id": "d73a4115-cef4-4d3a-b62a-7ee9168b65cc",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"resultSpec\":{\"dimensions\":[{\"localIdentifier\":\"dim_0\",\"itemIdentifiers\":[\"a_dt_closedate_timestamp.year\",\"a_f_owner.department_id\"]},{\"localIdentifier\":\"dim_1\",\"itemIdentifiers\":[\"measureGroup\"]}],\"totals\":[]},\"execution\":{\"measures\":[{\"localIdentifier\":\"m_amount_bop\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"amount_bop\",\"type\":\"metric\"}}}}},{\"localIdentifier\":\"m_avg._amount\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"avg._amount\",\"type\":\"metric\"}}}}}],\"attributes\":[{\"label\":{\"identifier\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"}},\"localIdentifier\":\"a_dt_closedate_timestamp.year\"},{\"label\":{\"identifier\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"}},\"localIdentifier\":\"a_f_owner.department_id\"}],\"filters\":[],\"auxMeasures\":[]},\"settings\":{}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"localIdentifier\":\"a_dt_closedate_timestamp.year\",\"label\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"labelName\":\"Closed - Year\",\"attribute\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"attribute\"},\"attributeName\":\"Closed - Year\",\"granularity\":\"YEAR\",\"primaryLabel\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"format\":{\"locale\":\"vn-VN\",\"pattern\":\"y\"},\"valueType\":\"TEXT\"}},{\"attributeHeader\":{\"localIdentifier\":\"a_f_owner.department_id\",\"label\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"labelName\":\"Department\",\"attribute\":{\"id\":\"f_owner.department_id\",\"type\":\"attribute\"},\"attributeName\":\"Department\",\"granularity\":null,\"primaryLabel\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"valueType\":\"TEXT\"}}],\"localIdentifier\":\"dim_0\"},{\"headers\":[{\"measureGroupHeaders\":[{\"localIdentifier\":\"m_amount_bop\",\"format\":\"$#,##0.00\",\"name\":\"Amount [BOP]\"},{\"localIdentifier\":\"m_avg._amount\",\"format\":\"$#,##0.00\",\"name\":\"Avg. Amount\"}]}],\"localIdentifier\":\"dim_1\"}],\"links\":{\"executionResult\":\"63dac6baa0a1d41f850a314e7ec82ba11bbc55f0:f325e3df1b4e9cefdfef677387e6ff8e323962993e340b5e549e6acf92e99e1d\"}}}",
+                "headers": {
+                    "X-Content-Type-Options": "nosniff",
+                    "Pragma": "no-cache",
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "Expires": "0",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/json"
+                }
+            },
+            "uuid": "d73a4115-cef4-4d3a-b62a-7ee9168b65cc"
+        },
+        {
+            "id": "8d162769-ffe4-44e8-b47c-225c3afbdf63",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_resolvesettings",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/resolveSettings",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "[{\"content\":{\"value\":\"Africa/Douala\"},\"id\":\"timezone\",\"type\":\"TIMEZONE\"},{\"content\":{\"id\":\"\",\"type\":\"theme\"},\"id\":\"activeTheme\",\"type\":\"ACTIVE_THEME\"},{\"content\":{\"id\":\"\",\"type\":\"colorPalette\"},\"id\":\"activeColorPalette\",\"type\":\"ACTIVE_COLOR_PALETTE\"},{\"content\":{\"enabled\":false,\"logoUrl\":\"\"},\"id\":\"whiteLabeling\",\"type\":\"WHITE_LABELING\"},{\"content\":{\"value\":\"vn-VN\"},\"id\":\"locale\",\"type\":\"LOCALE\"},{\"content\":{\"value\":\"en-US\"},\"id\":\"metadataLocale\",\"type\":\"METADATA_LOCALE\"},{\"content\":{\"value\":\"vn-VN\"},\"id\":\"formatLocale\",\"type\":\"FORMAT_LOCALE\"},{\"content\":{\"value\":\"pk.eyJ1IjoiZ29vZGRhdGEiLCJhIjoiY2s4YTN3ZTJwMGM5NjNucW1jaTZwYTBpeiJ9.clHePVr90Y6o6Vj1-yY9PQ\"},\"id\":\"mapboxToken\",\"type\":\"MAPBOX_TOKEN\"},{\"content\":{\"value\":\"Monday\"},\"id\":\"weekStart\",\"type\":\"WEEK_START\"},{\"content\":{\"value\":false},\"id\":\"showHiddenCatalogItems\",\"type\":\"SHOW_HIDDEN_CATALOG_ITEMS\"},{\"content\":{\"overrides\":[]},\"id\":\"operatorOverrides\",\"type\":\"OPERATOR_OVERRIDES\"},{\"content\":{\"value\":true},\"id\":\"timezoneValidation\",\"type\":\"TIMEZONE_VALIDATION_ENABLED\"},{\"content\":{\"org\":\"\",\"token\":\"\"},\"id\":\"openAiConfig\",\"type\":\"OPENAI_CONFIG\"},{\"content\":{\"value\":false},\"id\":\"enableFileAnalytics\",\"type\":\"ENABLE_FILE_ANALYTICS\"},{\"content\":{\"defaultCron\":\"0 0 * * * ?\",\"defaultTimezone\":\"Etc/UTC\"},\"id\":\"alert\",\"type\":\"ALERT\"},{\"content\":{\"thousand\":\",\",\"decimal\":\".\"},\"id\":\"separators\",\"type\":\"SEPARATORS\"},{\"content\":{\"config\":null},\"id\":\"dateFilterConfig\",\"type\":\"DATE_FILTER_CONFIG\"},{\"content\":{\"enabled\":false,\"userGroupsScopeEnabled\":false,\"userGroupsScopeName\":null,\"userGroupsClaimName\":null,\"userGroupsDefaults\":null},\"id\":\"jitProvisioning\",\"type\":\"JIT_PROVISIONING\"},{\"content\":{\"mode\":\"INDIVIDUAL\"},\"id\":\"dashboardFiltersApplyMode\",\"type\":\"DASHBOARD_FILTERS_APPLY_MODE\"},{\"content\":{\"value\":true},\"id\":\"enableSlidesExport\",\"type\":\"ENABLE_SLIDES_EXPORT\"}]",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "max-age=10, private",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/json"
+                }
+            },
+            "uuid": "8d162769-ffe4-44e8-b47c-225c3afbdf63"
+        },
+        {
+            "id": "70f51e64-d095-4b82-ac3e-ff9471f983ed",
+            "name": "api_v1_entities_workspaces",
+            "request": {
+                "url": "/api/v1/entities/workspaces?include=parent&page=0&size=100&sort=name%2Casc&metaInclude=page",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":[{\"id\":\"452ff4f155774c0e89a8f7732d4674bb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"0.my_manual_test\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/452ff4f155774c0e89a8f7732d4674bb\"}},{\"id\":\"6bb14fa4cb144f80864252e89be29507\",\"type\":\"workspace\",\"attributes\":{\"name\":\"0-testing\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/6bb14fa4cb144f80864252e89be29507\"}},{\"id\":\"9cdae60aad5d4edda042a229d1fce506\",\"type\":\"workspace\",\"attributes\":{\"name\":\"AYE - E2E - Radial Bar Chart\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9cdae60aad5d4edda042a229d1fce506\"}},{\"id\":\"child_prefix_cr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"child_prefix_cr\",\"prefix\":\"CR_\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/child_prefix_cr\"}},{\"id\":\"b6f2acca69ff4cd487bc92335dbfe020\",\"type\":\"workspace\",\"attributes\":{\"name\":\"DO NOT DELETE - Bich test 13Feb\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/b6f2acca69ff4cd487bc92335dbfe020\"}},{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-05-13T11:23:47.367Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f\"}},{\"id\":\"f3c1ec4c13434fe5b3d3d843fc14f29b\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test_child -- 2025-05-13T11:23:53.879Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/f3c1ec4c13434fe5b3d3d843fc14f29b\"}},{\"id\":\"8c28f85af79a416ebb67710dd34e18db\",\"type\":\"workspace\",\"attributes\":{\"name\":\"empty-ws 2024-12-04T12:48:03.013Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/8c28f85af79a416ebb67710dd34e18db\"}},{\"id\":\"Home-ui-cypress-ws_12296824268_xpjtnv\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Home-ui-cypress-ws_12296824268_xpjtnv\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/Home-ui-cypress-ws_12296824268_xpjtnv\"}},{\"id\":\"e2aeb364793b443582720834df254b0d\",\"type\":\"workspace\",\"attributes\":{\"name\":\"IVAN SDK mock-handling\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/e2aeb364793b443582720834df254b0d\"}},{\"id\":\"0bb495ceb5c140a6848f0bc2f23785a3\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Ivan SDK test\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/0bb495ceb5c140a6848f0bc2f23785a3\"}},{\"id\":\"36f5a563875f49eaa5dd1c2ad2f49d28\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Ivan test project\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/36f5a563875f49eaa5dd1c2ad2f49d28\"}},{\"id\":\"84c819c4c9f54ee686774ed4fe31cbe9\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KD_cypress_test -- 2025-05-13T11:31:19.309Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/84c819c4c9f54ee686774ed4fe31cbe9\"}},{\"id\":\"cf80c2d0408b4c238d09682445d96908\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KD_cypress_test_child -- 2025-05-13T11:31:31.195Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"84c819c4c9f54ee686774ed4fe31cbe9\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/cf80c2d0408b4c238d09682445d96908\"}},{\"id\":\"1a7ccea580014af6ae7e0acf6120d5ad\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ dashboard description\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/1a7ccea580014af6ae7e0acf6120d5ad\"}},{\"id\":\"ccaf54d106da43629d0dd7d9aaf387f9\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Gauge Chart\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/ccaf54d106da43629d0dd7d9aaf387f9\"}},{\"id\":\"44db2f01216642acb771c1491d3de340\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Gauge Chart NEW\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/44db2f01216642acb771c1491d3de340\"}},{\"id\":\"79332acea8ed40efb1b531ef3872af47\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Insight to action\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/79332acea8ed40efb1b531ef3872af47\"}},{\"id\":\"f25ae71f8ef447218891f90605070bbb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Polar, Target Gauge KPI\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/f25ae71f8ef447218891f90605070bbb\"}},{\"id\":\"ae5a2a2b81cb4bfcbe41649bdd3e845a\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Table with images [another]\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/ae5a2a2b81cb4bfcbe41649bdd3e845a\"}},{\"id\":\"44bfcf2f2a4f4bd7b4982b37c9e8a1e0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Table with images NEW\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/44bfcf2f2a4f4bd7b4982b37c9e8a1e0\"}},{\"id\":\"11d3186f88b14ea0bfbfc6e0b03291eb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test -- 2025-05-13T09:57:25.333Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/11d3186f88b14ea0bfbfc6e0b03291eb\"}},{\"id\":\"0d885288c4fc49b38f976a8f7122de09\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test -- 2025-05-13T10:51:27.657Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/0d885288c4fc49b38f976a8f7122de09\"}},{\"id\":\"c898025ff5634fc791035ce3f538eaab\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child -- 2025-05-13T09:57:29.679Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"11d3186f88b14ea0bfbfc6e0b03291eb\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c898025ff5634fc791035ce3f538eaab\"}},{\"id\":\"fdd86d593eab4e30be0b5078dbf591a8\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child -- 2025-05-13T10:51:28.975Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"0d885288c4fc49b38f976a8f7122de09\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/fdd86d593eab4e30be0b5078dbf591a8\"}},{\"id\":\"282ef2f71db8435dac64548075831d37\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child_of_child -- 2025-05-13T09:57:30.040Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"c898025ff5634fc791035ce3f538eaab\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/282ef2f71db8435dac64548075831d37\"}},{\"id\":\"0515aa7e9e834d459bc270766e4ce3c5\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child_of_child -- 2025-05-13T10:51:29.019Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"fdd86d593eab4e30be0b5078dbf591a8\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/0515aa7e9e834d459bc270766e4ce3c5\"}},{\"id\":\"604a11f88dbc4eafb7eba27ca5326289\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_empty -- 2025-05-13T09:57:25.242Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/604a11f88dbc4eafb7eba27ca5326289\"}},{\"id\":\"d6daf25c578047e3a54e8377c199aff3\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_empty -- 2025-05-13T10:51:27.571Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d6daf25c578047e3a54e8377c199aff3\"}},{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"parent_prefix_pr\",\"prefix\":\"PR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/parent_prefix_pr\"}},{\"id\":\"perftest_ws_child_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_child_postgres_1736225363000_0\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_child_postgres_1736225363000_0\"}},{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_parent_postgres_1736225363000_0\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_parent_postgres_1736225363000_0\"}},{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_root_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_root_postgres_1736225363000_0\"}},{\"id\":\"6eddbb13a0d243699ac0ce808603b43c\",\"type\":\"workspace\",\"attributes\":{\"name\":\"PJI e2e keep\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/6eddbb13a0d243699ac0ce808603b43c\"}},{\"id\":\"subchild_no_prefix\",\"type\":\"workspace\",\"attributes\":{\"name\":\"subchild_no_prefix\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"child_prefix_cr\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/subchild_no_prefix\"}},{\"id\":\"49597630b3224f8486b1c4d6d968fd41\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tu\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/49597630b3224f8486b1c4d6d968fd41\"}},{\"id\":\"86737175df10462285b105be0cd8987d\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tu00\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/86737175df10462285b105be0cd8987d\"}},{\"id\":\"cbaef440900b41faa0abf9669cfb1df9\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tuan\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/cbaef440900b41faa0abf9669cfb1df9\"}}],\"included\":[{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_root_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_root_postgres_1736225363000_0\"}},{\"id\":\"fdd86d593eab4e30be0b5078dbf591a8\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child -- 2025-05-13T10:51:28.975Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/fdd86d593eab4e30be0b5078dbf591a8\"}},{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-05-13T11:23:47.367Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f\"}},{\"id\":\"84c819c4c9f54ee686774ed4fe31cbe9\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KD_cypress_test -- 2025-05-13T11:31:19.309Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/84c819c4c9f54ee686774ed4fe31cbe9\"}},{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"parent_prefix_pr\",\"prefix\":\"PR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/parent_prefix_pr\"}},{\"id\":\"11d3186f88b14ea0bfbfc6e0b03291eb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test -- 2025-05-13T09:57:25.333Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/11d3186f88b14ea0bfbfc6e0b03291eb\"}},{\"id\":\"c898025ff5634fc791035ce3f538eaab\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child -- 2025-05-13T09:57:29.679Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c898025ff5634fc791035ce3f538eaab\"}},{\"id\":\"0d885288c4fc49b38f976a8f7122de09\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test -- 2025-05-13T10:51:27.657Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/0d885288c4fc49b38f976a8f7122de09\"}},{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_parent_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_parent_postgres_1736225363000_0\"}},{\"id\":\"child_prefix_cr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"child_prefix_cr\",\"prefix\":\"CR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/child_prefix_cr\"}}],\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces?include=parent&metaInclude=page&page=0&size=100&sort=name,asc\"},\"meta\":{\"page\":{\"size\":100,\"totalElements\":38,\"totalPages\":1,\"number\":0}}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "Pragma": "no-cache",
+                    "Expires": "0",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "70f51e64-d095-4b82-ac3e-ff9471f983ed"
+        },
+        {
+            "id": "d4c83040-cc4a-4bc6-ab47-133f0fddefaa",
+            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f",
+            "request": {
+                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f?include=parent&metaInclude=config%2Cpermissions",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-05-13T11:23:47.367Z\"},\"meta\":{\"config\":{\"dataSamplingAvailable\":true,\"approximateCountAvailable\":true,\"showAllValuesOnDatesAvailable\":true},\"permissions\":[\"MANAGE\",\"ANALYZE\",\"EXPORT\",\"EXPORT_TABULAR\",\"EXPORT_PDF\",\"CREATE_AUTOMATION\",\"USE_AI_ASSISTANT\",\"CREATE_FILTER_VIEW\",\"VIEW\"]}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f?include=parent&metaInclude=config%2Cpermissions\"}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "max-age=5, private",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "d4c83040-cc4a-4bc6-ab47-133f0fddefaa"
+        },
+        {
+            "id": "d40c3c1e-b16a-4e93-8ea1-38f3d8482c0c",
+            "name": "api_v1_profile",
+            "request": {
+                "url": "/api/v1/profile",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"organizationId\":\"staging-automation\",\"organizationName\":\"Staging Automation, QA AWS.\",\"userId\":\"admin\",\"permissions\":[\"MANAGE\",\"SELF_CREATE_TOKEN\"],\"telemetry\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2,\"deploymentId\":\"deploymentId\",\"organizationHash\":\"bea76a2929bee15d760c823b1c97612174e87fff\",\"userHash\":\"27247146f055a8f9b6786e0c525c66d878a9d9bf\"},\"telemetryConfig\":{\"context\":{\"deploymentId\":\"deploymentId\",\"organizationHash\":\"bea76a2929bee15d760c823b1c97612174e87fff\",\"userHash\":\"27247146f055a8f9b6786e0c525c66d878a9d9bf\"},\"services\":{\"matomo\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2},\"openTelemetry\":{\"host\":\"https://collector.stg11.intgdc.com\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/profile\",\"organization\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/admin/organizations/staging-automation\",\"user\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/users/admin\"},\"features\":{\"live\":{\"configuration\":{\"host\":\"https://flags.panther.intgdc.com\",\"key\":\"default/f0352b97-5e76-4139-9059-4bea366cc2f9/q9yyvCPq957AR7T5GqfbIHaLZXAwqRtSzKt2Rtuv\"},\"context\":{\"earlyAccessValues\":[],\"earlyAccess\":\"\"}}},\"entitlements\":[{\"name\":\"Contract\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"UnlimitedAutomations\"},{\"name\":\"AutomationRecipientCount\"},{\"name\":\"UnlimitedDailyScheduledActions\"},{\"name\":\"UnlimitedDailyAlertActions\"},{\"name\":\"ScheduledActionMinimumRecurrenceMinutes\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "max-age=10, private",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/json"
+                }
+            },
+            "uuid": "d40c3c1e-b16a-4e93-8ea1-38f3d8482c0c"
+        },
+        {
+            "id": "844d3349-f717-48ba-891e-d846c4a2f275",
+            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_visualizationobjects_3fb464aa-4a2c-4412-8811-609e5d6e06a5",
+            "request": {
+                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/3fb464aa-4a2c-4412-8811-609e5d6e06a5",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":{\"id\":\"3fb464aa-4a2c-4412-8811-609e5d6e06a5\",\"type\":\"visualizationObject\",\"attributes\":{\"title\":\"Scatter plot segment by attribute\",\"description\":\"\",\"content\":{\"buckets\":[{\"items\":[{\"measure\":{\"definition\":{\"measureDefinition\":{\"filters\":[],\"item\":{\"identifier\":{\"id\":\"amount_bop\",\"type\":\"metric\"}}}},\"localIdentifier\":\"e2443104dc0442dcadf04eb8a45996fe\",\"title\":\"Amount [BOP]\"}}],\"localIdentifier\":\"measures\"},{\"items\":[{\"measure\":{\"definition\":{\"measureDefinition\":{\"filters\":[],\"item\":{\"identifier\":{\"id\":\"avg._amount\",\"type\":\"metric\"}}}},\"localIdentifier\":\"218a741d464f47c1bd6e7607ba3ca1c3\",\"title\":\"Avg. Amount\"}}],\"localIdentifier\":\"secondary_measures\"},{\"items\":[{\"attribute\":{\"displayForm\":{\"identifier\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"}},\"localIdentifier\":\"073f360b71214bbcab4002517983dc1f\"}}],\"localIdentifier\":\"attribute\"},{\"items\":[{\"attribute\":{\"displayForm\":{\"identifier\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"}},\"localIdentifier\":\"88027b1059024979a33227cfebad0638\"}}],\"localIdentifier\":\"segment\"}],\"filters\":[],\"properties\":{},\"sorts\":[],\"version\":\"2\",\"visualizationUrl\":\"local:scatter\"},\"createdAt\":\"2024-05-27 09:56\"},\"meta\":{\"origin\":{\"originType\":\"NATIVE\",\"originId\":\"c76e0537d0614abb0027f7c992656b964922506f\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/3fb464aa-4a2c-4412-8811-609e5d6e06a5\"}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "844d3349-f717-48ba-891e-d846c4a2f275"
+        },
+        {
+            "id": "b15103b2-2807-4e05-a0e1-dac80759e4ce",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_6a48f508edfc7b576106a9f35e8fa86fb77485e654f887de0422fefdf9538bfc80763bd3b1419f9fb8c0326aeabf189f19b19b73",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/6a48f508edfc7b576106a9f35e8fa86fb77485e6%3A54f887de0422fefdf9538bfc80763bd3b1419f9fb8c0326aeabf189f19b19b73",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":[[2423890.44,14619.896561743342],[1219510.1,23453.791789473686],[200000.0,21204.94606571188],[null,61080.7092],[null,null],[null,null],[1229796.71,15851.630392609699],[61200.4,15108.65382647386],[null,23164.952256],[null,84288.606],[null,8875.86],[null,3644.0]],\"dimensionHeaders\":[{\"headerGroups\":[{\"headers\":[{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}}]},{\"headers\":[{\"attributeHeader\":{\"labelValue\":\"2010\",\"primaryLabelValue\":\"2010\"}},{\"attributeHeader\":{\"labelValue\":\"2011\",\"primaryLabelValue\":\"2011\"}},{\"attributeHeader\":{\"labelValue\":\"2012\",\"primaryLabelValue\":\"2012\"}},{\"attributeHeader\":{\"labelValue\":\"2013\",\"primaryLabelValue\":\"2013\"}},{\"attributeHeader\":{\"labelValue\":\"2014\",\"primaryLabelValue\":\"2014\"}},{\"attributeHeader\":{\"labelValue\":\"2016\",\"primaryLabelValue\":\"2016\"}},{\"attributeHeader\":{\"labelValue\":\"2010\",\"primaryLabelValue\":\"2010\"}},{\"attributeHeader\":{\"labelValue\":\"2011\",\"primaryLabelValue\":\"2011\"}},{\"attributeHeader\":{\"labelValue\":\"2012\",\"primaryLabelValue\":\"2012\"}},{\"attributeHeader\":{\"labelValue\":\"2013\",\"primaryLabelValue\":\"2013\"}},{\"attributeHeader\":{\"labelValue\":\"2014\",\"primaryLabelValue\":\"2014\"}},{\"attributeHeader\":{\"labelValue\":\"2017\",\"primaryLabelValue\":\"2017\"}}]}]},{\"headerGroups\":[{\"headers\":[{\"measureHeader\":{\"measureIndex\":0}},{\"measureHeader\":{\"measureIndex\":1}}]}]}],\"grandTotals\":[],\"paging\":{\"count\":[12,2],\"offset\":[0,0],\"total\":[12,2]},\"metadata\":{\"dataSourceMessages\":[]}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/json"
+                }
+            },
+            "uuid": "b15103b2-2807-4e05-a0e1-dac80759e4ce"
+        },
+        {
+            "id": "42f9bedd-db6b-4c31-b55b-d3b36c42c84f",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"resultSpec\":{\"dimensions\":[{\"localIdentifier\":\"dim_0\",\"itemIdentifiers\":[\"a_f_owner.department_id\",\"a_dt_closedate_timestamp.year\"]},{\"localIdentifier\":\"dim_1\",\"itemIdentifiers\":[\"measureGroup\"]}],\"totals\":[]},\"execution\":{\"measures\":[{\"localIdentifier\":\"m_amount_bop\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"amount_bop\",\"type\":\"metric\"}}}}},{\"localIdentifier\":\"m_avg._amount\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"avg._amount\",\"type\":\"metric\"}}}}}],\"attributes\":[{\"label\":{\"identifier\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"}},\"localIdentifier\":\"a_f_owner.department_id\"},{\"label\":{\"identifier\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"}},\"localIdentifier\":\"a_dt_closedate_timestamp.year\"}],\"filters\":[],\"auxMeasures\":[]},\"settings\":{}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"localIdentifier\":\"a_f_owner.department_id\",\"label\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"labelName\":\"Department\",\"attribute\":{\"id\":\"f_owner.department_id\",\"type\":\"attribute\"},\"attributeName\":\"Department\",\"granularity\":null,\"primaryLabel\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"valueType\":\"TEXT\"}},{\"attributeHeader\":{\"localIdentifier\":\"a_dt_closedate_timestamp.year\",\"label\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"labelName\":\"Closed - Year\",\"attribute\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"attribute\"},\"attributeName\":\"Closed - Year\",\"granularity\":\"YEAR\",\"primaryLabel\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"format\":{\"locale\":\"vn-VN\",\"pattern\":\"y\"},\"valueType\":\"TEXT\"}}],\"localIdentifier\":\"dim_0\"},{\"headers\":[{\"measureGroupHeaders\":[{\"localIdentifier\":\"m_amount_bop\",\"format\":\"$#,##0.00\",\"name\":\"Amount [BOP]\"},{\"localIdentifier\":\"m_avg._amount\",\"format\":\"$#,##0.00\",\"name\":\"Avg. Amount\"}]}],\"localIdentifier\":\"dim_1\"}],\"links\":{\"executionResult\":\"6a48f508edfc7b576106a9f35e8fa86fb77485e6:54f887de0422fefdf9538bfc80763bd3b1419f9fb8c0326aeabf189f19b19b73\"}}}",
+                "headers": {
+                    "X-Content-Type-Options": "nosniff",
+                    "Pragma": "no-cache",
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "Expires": "0",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/json"
+                }
+            },
+            "uuid": "42f9bedd-db6b-4c31-b55b-d3b36c42c84f"
+        }
+    ]
+}

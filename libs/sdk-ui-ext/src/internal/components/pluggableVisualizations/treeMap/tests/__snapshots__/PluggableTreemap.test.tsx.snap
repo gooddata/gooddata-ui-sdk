@@ -1,0 +1,857 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for 1 M, 1 Vb, 1 Sb 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": [
+          {
+            "attribute": "attr.owner.department",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+      {
+        "aggregation": null,
+        "attribute": "attr.stage.iswon",
+        "filters": [
+          {
+            "attribute": "attr.stage.iswon",
+            "displayFormRef": {
+              "uri": "iswon/attribute/df/uri",
+            },
+            "isInverted": true,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a2",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 1,
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for n M, n Attrs 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.datedataset",
+          "dateDatasetRef": {
+            "identifier": "ds1",
+          },
+          "localIdentifier": "a1",
+          "showInPercent": null,
+          "type": "date",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 1,
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="date-field-icon" /> from <span class="stack-by">view by</span>",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for n M, n Vb, 0 Sb 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": [
+          {
+            "attribute": "attr.owner.department",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+      {
+        "aggregation": null,
+        "attribute": "attr.stage.iswon",
+        "filters": [
+          {
+            "attribute": "attr.stage.iswon",
+            "displayFormRef": {
+              "uri": "iswon/attribute/df/uri",
+            },
+            "isInverted": true,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a2",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 1,
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n M, 0 Attr 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "acfWntEMcom0",
+          "localIdentifier": "m4",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Metrics",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 0,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+        "warningMessage": "To view by, an visualization can have only one metric",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n M, 0 Vb, 1 Sb 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "acfWntEMcom0",
+          "localIdentifier": "m4",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Metrics",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 0,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+        "warningMessage": "To view by, an visualization can have only one metric",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableTreemap > should return reference point with 1 M, 0 Vb, 0 Sb for 1 M, 0 Vb, 0 Sb 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Metrics",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;

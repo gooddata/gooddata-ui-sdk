@@ -1,0 +1,157 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ Release ~ Publish release
+on:
+  workflow_call:
+    inputs:
+      source-branch:
+        required: true
+        description: "source branch"
+        type: string
+      bump:
+        required: true
+        description: "The type of version bump (major, minor, patch)"
+        type: string
+    outputs:
+      version:
+        description: "Version which was created"
+        value: ${{ jobs.bump-version.outputs.version }}
+      is-latest:
+        description: "Is the version latest"
+        value: ${{ jobs.prape-release-releasde-tag.outputs.is_latest }}
+
+# limit concurrency to one run per branch at a time
+# so that we can run this from master and a release branch at the same time
+# When a concurrent job or workflow is queued,
+# if another job or workflow using the same concurrency group in the repository is in progress,
+# the queued job or workflow will be pending. Any previously pending job or workflow in the concurrency group will be canceled.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  check-version:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-branch }}
+      - name: Setup node
+        uses: ./.github/actions/node/set-up-node
+        id: node-init
+      - name: Get version from branch ${{ inputs.source-branch }}
+        id: get-version
+        uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
+      - name: Check version on ${{ inputs.source-branch }} branch
+        run: |
+          if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]]; then
+            echo "The version $VERSION does not match X.Y.Z-beta.W"
+            exit 1
+          fi
+        env:
+          VERSION: ${{ steps.get-version.outputs.version }}
+
+  bump-version:
+    needs: [check-version]
+    uses: ./.github/workflows/rw-bump-version.yml
+    permissions:
+      contents: write
+      id-token: write
+    secrets: inherit
+    with:
+      source-branch: ${{ inputs.source-branch }}
+      bump: ${{ inputs.bump }}
+
+  prape-release-releasde-tag:
+    outputs:
+      is_latest: ${{ steps.check-release-is-latest.outputs.is-latest }}
+      release_tag: ${{ steps.calculate-release-tag.outputs.release_tag }}
+    needs: [bump-version]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: ./.github/actions/node/set-up-node
+        id: node-init
+      - name: Check Release Version is latest
+        id: check-release-is-latest
+        uses: gooddata/gooddata-ui-sdk/.github/actions/git-check-release@master
+        with:
+          version: ${{ needs.bump-version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Calculate release tag and set output
+        id: calculate-release-tag
+        run: |
+          if [[ "$BUMP" == "minor" ]]; then
+            echo "release_tag=latest" >> $GITHUB_OUTPUT
+          else
+            if [[ "$IS_LATEST" == "true" ]]; then
+              echo "release_tag=latest" >> $GITHUB_OUTPUT
+            else
+              echo "release_tag=patch" >> $GITHUB_OUTPUT
+            fi
+          fi
+        env:
+          RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
+          IS_LATEST: ${{ steps.check-release-is-latest.outputs.is-latest }}
+          BUMP: ${{ inputs.bump }}
+
+  publish-release:
+    needs: [bump-version,prape-release-releasde-tag]
+    uses: ./.github/workflows/rw-publish-version.yml
+    permissions:
+      contents: read
+      id-token: write
+    secrets: inherit
+    with:
+      source-branch: ${{ inputs.source-branch }}
+      release-tag: ${{ needs.prape-release-releasde-tag.outputs.release_tag }}
+
+  check-npm-package:
+    outputs:
+      verified: ${{ steps.check-npm-package.outputs.exists }}
+    runs-on: [ubuntu-latest]
+    needs: [bump-version,publish-release]
+    steps:
+      - name: Check NPM package
+        id: check-npm-package
+        uses: gooddata/gooddata-ui-sdk/.github/actions/check-npm-version@master
+        with:
+          package: "@gooddata/sdk-ui"
+          version: ${{ needs.bump-version.outputs.version }}
+
+  slack-notification:
+    runs-on: [ubuntu-latest]
+    needs: [bump-version, check-npm-package]
+    steps:
+      - name: Set up message
+        id: set-up-message
+        run: |
+            if [[ "$NPM_PACKAGE_VERIFIED" == "true" ]]; then
+              echo "RELEASE_MESSAGE=The latest *${BUMP}* version, *gooddata-ui-sdk@${RELEASE_VERSION}*, has been successfully published on NPM by the user *${GITHUB_USER}*. :tada:" >> $GITHUB_ENV
+            else
+              NPM_PACKAGE_LINK="https://www.npmjs.com/package/@gooddata/sdk-ui/v/${RELEASE_VERSION}"
+              SLACK_LINK="<$NPM_PACKAGE_LINK|link>"
+              echo "RELEASE_MESSAGE=The latest *${BUMP}* version, *gooddata-ui-sdk@${RELEASE_VERSION}*, has been published on NPM by the user *${GITHUB_USER}*, but the NPM package verification failed. Check it on NPM manually at $SLACK_LINK. :warning:" >> $GITHUB_ENV
+            fi
+        env:
+          RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
+          BUMP: ${{ inputs.bump }}
+          GITHUB_USER: ${{ github.actor }}
+          NPM_PACKAGE_VERIFIED: ${{ needs.check-npm-package.outputs.verified }}
+      - name: Notify to slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: "#javascript-notifications"
+          slack-message: ${{ env.RELEASE_MESSAGE }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

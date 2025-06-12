@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`addDrillTargetsHandler > should add drill target to the state for given widget 1`] = `{}`;
+
+exports[`addDrillTargetsHandler > should emit the appropriate events for add drill target 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.DRILL_TARGETS.ADD",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
+  },
+]
+`;

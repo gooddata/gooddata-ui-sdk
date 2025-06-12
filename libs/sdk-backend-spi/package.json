@@ -1,0 +1,70 @@
+{
+    "name": "@gooddata/sdk-backend-spi",
+    "version": "10.31.0-alpha.32",
+    "author": "GoodData",
+    "description": "GoodData Backend SPI abstraction interfaces",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-backend-spi"
+    },
+    "license": "MIT",
+    "type": "module",
+    "browser": "./esm/index.js",
+    "exports": "./esm/index.js",
+    "types": "./esm/index.d.ts",
+    "sideEffects": false,
+    "files": [
+        "esm/**/*.js",
+        "esm/**/*.json",
+        "esm/**/*.d.ts",
+        "esm/**/*.map"
+    ],
+    "scripts": {
+        "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "build": "tsc -p tsconfig.json && npm run api-extractor",
+        "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
+        "test": "vitest watch",
+        "test-once": "vitest run",
+        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
+        "eslint": "eslint -c .eslintrc.cjs src/",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-backend-spi\"' "
+    },
+    "dependencies": {
+        "@gooddata/sdk-model": "workspace:*",
+        "lodash": "^4.17.21",
+        "ts-invariant": "^0.7.5",
+        "tslib": "^2.5.0"
+    },
+    "devDependencies": {
+        "@gooddata/eslint-config": "^4.1.1",
+        "@microsoft/api-documenter": "^7.17.0",
+        "@microsoft/api-extractor": "^7.36.0",
+        "@types/lodash": "^4.14.202",
+        "@typescript-eslint/eslint-plugin": "^5.57.1",
+        "@typescript-eslint/parser": "^5.57.1",
+        "concurrently": "^6.0.2",
+        "dependency-cruiser": "^13.0.3",
+        "eslint": "^8.25.0",
+        "eslint-plugin-header": "^3.0.0",
+        "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-import-esm": "^1.2.1",
+        "eslint-plugin-jest": "^27.1.1",
+        "eslint-plugin-no-only-tests": "^2.4.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-regexp": "^1.9.0",
+        "eslint-plugin-sonarjs": "^0.16.0",
+        "eslint-plugin-tsdoc": "^0.2.14",
+        "prettier": "~2.5.0",
+        "typescript": "5.3.3",
+        "vitest": "3.0.8"
+    }
+}

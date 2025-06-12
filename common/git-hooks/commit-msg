@@ -1,0 +1,32 @@
+#!/bin/sh
+
+#
+# commit-msg receives one arg: file name with message
+# this hook reads first line - supposedly containing the message, takes the first word out of the message,
+# converts to lowercase and then verifies it does not start with the 'old-style' prefix
+#
+
+msg=$(head -1 $1)
+first_word=$(echo ${msg%% *} | awk '{print tolower($0)}')
+retval=0
+
+case "$first_word" in
+*"feature:"*)
+  retval=1
+  ;;
+*"related:"*)
+  retval=1
+  ;;
+*"bugfix:"*)
+  retval=1
+  ;;
+*"config:"*)
+  retval=1
+  ;;
+esac
+
+if [ $retval -eq 1 ]; then
+    echo "ABORTING COMMIT: Please do not use FEATURE, RELATED, BUGFIX or CONFIG prefixes in commit messages. Check out the docs/contributing.md and docs/sdk-dev.md for additional guidelines and information useful when making contributions."
+fi
+
+exit ${retval}

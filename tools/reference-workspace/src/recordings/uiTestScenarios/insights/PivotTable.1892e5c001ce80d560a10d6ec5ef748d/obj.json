@@ -1,0 +1,29 @@
+{
+    "insight": {
+        "buckets": [
+            { "items": [], "localIdentifier": "measures" },
+            { "items": [], "localIdentifier": "attribute" },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "columns"
+            }
+        ],
+        "filters": [],
+        "identifier": "PivotTable.1892e5c001ce80d560a10d6ec5ef748d",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "PivotTable - single column",
+        "uri": "PivotTable.1892e5c001ce80d560a10d6ec5ef748d",
+        "visualizationUrl": "local:table"
+    }
+}

@@ -1,0 +1,40 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:list";
+@use "sass:map";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.gd-extended-date-filter-body {
+    .gd-filter-list-item {
+        @include typo-mixins.gd-font-base;
+
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        border: none;
+        line-height: list.nth(map.get(variables.$gd-typo, line-heights), 1);
+        background: transparent;
+        font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 5);
+        text-align: left;
+
+        span {
+            flex: 0 1 auto;
+        }
+
+        .gd-list-item-tooltip {
+            color: var(--gd-palette-complementary-8-from-theme, initial);
+        }
+
+        &:hover {
+            .gd-list-item-tooltip {
+                color: var(--gd-palette-complementary-9-from-theme, initial);
+            }
+        }
+    }
+
+    .gd-customizable-checkmark-mobile-date-filter {
+        top: 15px;
+        right: 13px;
+        bottom: 0;
+    }
+}

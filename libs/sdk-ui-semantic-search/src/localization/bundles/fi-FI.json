@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "Hakupalvelumme on tilapäisesti pois käytöstä.",
+    "semantic-search.error.text": "Pyrimme ratkaisemaan ongelman.",
+    "semantic-search.no-results": "Tuloksia ei löytynyt haulle “{query}“.",
+    "semantic-search.placeholder": "Hae koontinäytöistä tai visualisoinnista…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Tagit",
+    "semantic-search.match": "{score}% täsmää",
+    "semantic-search.previous-search": "Edellinen haku",
+    "semantic-search.date.at": "klo",
+    "gs.date.today": "Tänään",
+    "gs.date.yesterday": "Eilen",
+    "semantic-search.label": "Hae ohjauspaneeleista tai visualisoinnista"
+}

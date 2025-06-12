@@ -1,0 +1,376 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the both items (primary, secondary) 1`] = `
+{
+  "primaryItem": {
+    "isDrillable": true,
+    "localIdentifier": "m1",
+    "title": "Lost",
+    "value": "120",
+  },
+  "secondaryItem": {
+    "isDrillable": true,
+    "localIdentifier": "m2",
+    "title": "Found",
+    "value": "220",
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the primary item identified by the drillable item identifier 1`] = `
+{
+  "primaryItem": {
+    "isDrillable": true,
+    "localIdentifier": "m1",
+    "title": "Lost",
+    "value": "120",
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the primary item identified by the drillable item uri 1`] = `
+{
+  "primaryItem": {
+    "isDrillable": true,
+    "localIdentifier": "m1",
+    "title": "Lost",
+    "value": "120",
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the secondary item identified by the drillable item identifier 1`] = `
+{
+  "secondaryItem": {
+    "isDrillable": true,
+    "localIdentifier": "m2",
+    "title": "Found",
+    "value": "220",
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the secondary item identified by the drillable item uri 1`] = `
+{
+  "secondaryItem": {
+    "isDrillable": true,
+    "localIdentifier": "m2",
+    "title": "Found",
+    "value": "220",
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > applyDrillableItems > should reset drilling state of every item when drillable items does not match any header item 1`] = `
+{
+  "primaryItem": {
+    "isDrillable": false,
+    "localIdentifier": "m1",
+    "title": "Lost",
+    "value": "120",
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > applyDrillableItems > should treat provided data object as immutable 1`] = `
+{
+  "primaryItem": {
+    "isDrillable": true,
+    "localIdentifier": "m1",
+    "title": "Lost",
+    "value": "120",
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > buildDrillEventData > should build drill event data from execution for secondary value 1`] = `
+{
+  "element": "secondaryValue",
+  "intersection": [
+    {
+      "header": {
+        "measureHeaderItem": {
+          "format": "#,##0.00",
+          "identifier": "afSEwRwdbMeQ",
+          "localIdentifier": "wonMetric",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+          },
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+        },
+      },
+    },
+  ],
+  "type": "headline",
+  "value": "42470571.16",
+}
+`;
+
+exports[`HeadlineTransformationUtils > buildDrillEventData > should build expected drill event data from execution request made with metric identifier 1`] = `
+{
+  "element": "primaryValue",
+  "intersection": [
+    {
+      "header": {
+        "measureHeaderItem": {
+          "format": "#,##0.00",
+          "identifier": "af2Ewj9Re2vK",
+          "localIdentifier": "lostMetric",
+          "name": "Lost",
+          "ref": {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+          },
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+        },
+      },
+    },
+  ],
+  "type": "headline",
+  "value": "9011389.956",
+}
+`;
+
+exports[`HeadlineTransformationUtils > buildDrillEventData > should build expected drill event data from execution request made with metric uri 1`] = `
+{
+  "element": "primaryValue",
+  "intersection": [
+    {
+      "header": {
+        "measureHeaderItem": {
+          "format": "#,##0.00",
+          "identifier": "af2Ewj9Re2vK",
+          "localIdentifier": "lostMetric",
+          "name": "Lost",
+          "ref": {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+          },
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+        },
+      },
+    },
+  ],
+  "type": "headline",
+  "value": "9011389.956",
+}
+`;
+
+exports[`HeadlineTransformationUtils > getData > should set -100 for tertiary value when primary value is 0 1`] = `
+{
+  "primaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "lostMetric",
+    "title": "Lost",
+    "value": "0",
+  },
+  "secondaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "wonMetric",
+    "title": "Won",
+    "value": "42470571.16",
+  },
+  "tertiaryItem": {
+    "format": null,
+    "isDrillable": false,
+    "localIdentifier": "tertiaryIdentifier",
+    "title": "Versus",
+    "value": "-100",
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > getData > should set 0 for tertiary value when both primary & secondary are the same values except 0 1`] = `
+{
+  "primaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "lostMetric",
+    "title": "Lost",
+    "value": "100",
+  },
+  "secondaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "wonMetric",
+    "title": "Won",
+    "value": "100",
+  },
+  "tertiaryItem": {
+    "format": null,
+    "isDrillable": false,
+    "localIdentifier": "tertiaryIdentifier",
+    "title": "Versus",
+    "value": "0",
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > getData > should set null for tertiary value when both primary & secondary values are 0 1`] = `
+{
+  "primaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "lostMetric",
+    "title": "Lost",
+    "value": "0",
+  },
+  "secondaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "wonMetric",
+    "title": "Won",
+    "value": "0",
+  },
+  "tertiaryItem": {
+    "format": null,
+    "isDrillable": false,
+    "localIdentifier": "tertiaryIdentifier",
+    "title": "Versus",
+    "value": null,
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > getData > should set null for tertiary value when both primary & secondary values are null 1`] = `
+{
+  "primaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "lostMetric",
+    "title": "Lost",
+    "value": null,
+  },
+  "secondaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "wonMetric",
+    "title": "Won",
+    "value": null,
+  },
+  "tertiaryItem": {
+    "format": null,
+    "isDrillable": false,
+    "localIdentifier": "tertiaryIdentifier",
+    "title": "Versus",
+    "value": null,
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > getData > should set null for tertiary value when primary value is null 1`] = `
+{
+  "primaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "lostMetric",
+    "title": "Lost",
+    "value": null,
+  },
+  "secondaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "wonMetric",
+    "title": "Won",
+    "value": "42470571.16",
+  },
+  "tertiaryItem": {
+    "format": null,
+    "isDrillable": false,
+    "localIdentifier": "tertiaryIdentifier",
+    "title": "Versus",
+    "value": null,
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > getData > should set null for tertiary value when secondary value is 0 1`] = `
+{
+  "primaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "lostMetric",
+    "title": "Lost",
+    "value": "9011389.956",
+  },
+  "secondaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "wonMetric",
+    "title": "Won",
+    "value": "0",
+  },
+  "tertiaryItem": {
+    "format": null,
+    "isDrillable": false,
+    "localIdentifier": "tertiaryIdentifier",
+    "title": "Versus",
+    "value": null,
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > getData > should set null for tertiary value when secondary value is null 1`] = `
+{
+  "primaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "lostMetric",
+    "title": "Lost",
+    "value": "9011389.956",
+  },
+  "secondaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "wonMetric",
+    "title": "Won",
+    "value": null,
+  },
+  "tertiaryItem": {
+    "format": null,
+    "isDrillable": false,
+    "localIdentifier": "tertiaryIdentifier",
+    "title": "Versus",
+    "value": null,
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > getData > should set primary item data from the execution 1`] = `
+{
+  "primaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "lostMetric",
+    "title": "Lost",
+    "value": "9011389.956",
+  },
+}
+`;
+
+exports[`HeadlineTransformationUtils > getData > should set primary, secondary and tertiary item data from the execution 1`] = `
+{
+  "primaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "lostMetric",
+    "title": "Lost",
+    "value": "9011389.956",
+  },
+  "secondaryItem": {
+    "format": "#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "wonMetric",
+    "title": "Won",
+    "value": "42470571.16",
+  },
+  "tertiaryItem": {
+    "format": null,
+    "isDrillable": false,
+    "localIdentifier": "tertiaryIdentifier",
+    "title": "Versus",
+    "value": "-78.78203727929332",
+  },
+}
+`;

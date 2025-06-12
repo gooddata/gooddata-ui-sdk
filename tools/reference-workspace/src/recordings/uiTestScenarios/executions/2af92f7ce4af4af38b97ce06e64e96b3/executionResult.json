@@ -1,0 +1,22 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                                    "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+                                    "name": "Won"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

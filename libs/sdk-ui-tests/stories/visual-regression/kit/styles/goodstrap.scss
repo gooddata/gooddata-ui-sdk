@@ -1,0 +1,50 @@
+// (C) 2020-2025 GoodData Corporation
+
+@import "./library";
+@import "./theme";
+
+.library-component-light {
+    color: var(--gd-palette-complementary-8, #464e56);
+    font-size: 14px;
+    font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+}
+
+.library-component {
+    margin: 20px;
+    padding: 0;
+    line-height: 1.4rem;
+    color: var(--gd-palette-complementary-8, #464e56);
+    font-size: 14px;
+    font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    font-weight: 400;
+
+    input,
+    optgroup,
+    select,
+    textarea {
+        font: inherit;
+        color: inherit;
+    }
+
+    h4 {
+        margin: 1em 0;
+        font-size: 16px;
+    }
+}
+
+.goodstrap-row {
+    // stylelint-disable-next-line declaration-no-important
+    max-width: none !important;
+}
+
+.row,
+.column,
+.columns {
+    box-sizing: border-box;
+}
+
+abbr,
+acronym {
+    border-bottom: 0.1em dotted;
+    cursor: help;
+}

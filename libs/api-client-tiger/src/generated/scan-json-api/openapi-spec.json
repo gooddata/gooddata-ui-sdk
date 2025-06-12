@@ -1,0 +1,1040 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "GoodData.CN endpoint"
+        }
+    ],
+    "tags": [
+        {
+            "name": "actions",
+            "description": "| execution of some form of computation (RPC over JSON)"
+        }
+    ],
+    "paths": {
+        "/api/v1/actions/dataSources/{dataSourceId}/test": {
+            "post": {
+                "tags": ["Test Connection", "actions"],
+                "summary": "Test data source connection by data source id",
+                "description": "Test if it is possible to connect to a database using an existing data source definition.",
+                "operationId": "testDataSource",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "description": "Data source id",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        },
+                        "example": "myPostgres"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "The result of the test of a data source connection.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestResponse"
+                                },
+                                "examples": {
+                                    "An example of a successful connection": {
+                                        "description": "An example of a successful connection",
+                                        "value": {
+                                            "queryDurationMillis": {
+                                                "simpleSelect": 562,
+                                                "createCacheTable": 235
+                                            },
+                                            "successful": true
+                                        }
+                                    },
+                                    "An example of an unsuccessful connection": {
+                                        "description": "An example of an unsuccessful connection",
+                                        "value": {
+                                            "error": "Connection exception: Failed to initialize pool: FATAL: password authentication failed for user \"user\"",
+                                            "successful": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["USE"],
+                    "description": "Permissions required to test a data source."
+                }
+            }
+        },
+        "/api/v1/actions/dataSources/{dataSourceId}/scanSql": {
+            "post": {
+                "tags": ["Scanning", "actions"],
+                "summary": "Collect metadata about SQL query",
+                "description": "It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query",
+                "operationId": "scanSql",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "description": "Data source id",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        },
+                        "example": "myPostgres"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScanSqlRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "The result of the scan.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanSqlResponse"
+                                },
+                                "examples": {
+                                    "An example of a successful scan": {
+                                        "description": "An example of a successful scan",
+                                        "value": {
+                                            "columns": [
+                                                {
+                                                    "name": "budget",
+                                                    "dataType": "NUMERIC"
+                                                },
+                                                {
+                                                    "name": "category",
+                                                    "dataType": "STRING"
+                                                },
+                                                {
+                                                    "name": "spend",
+                                                    "dataType": "NUMERIC"
+                                                }
+                                            ],
+                                            "dataPreview": [
+                                                ["1000", "campaign1", "458.8"],
+                                                ["1800", "campaign2", "144"]
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/dataSources/{dataSourceId}/scan": {
+            "post": {
+                "tags": ["Scanning", "actions"],
+                "summary": "Scan a database to get a physical data model (PDM)",
+                "description": "It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.",
+                "operationId": "scanDataSource",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "description": "Data source id",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        },
+                        "example": "myPostgres"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScanRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "The result of the scan.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanResultPdm"
+                                },
+                                "examples": {
+                                    "An example of a successful scan": {
+                                        "description": "An example of a successful scan",
+                                        "value": {
+                                            "pdm": {
+                                                "tables": [
+                                                    {
+                                                        "columns": [
+                                                            {
+                                                                "dataType": "NUMERIC",
+                                                                "isPrimaryKey": false,
+                                                                "name": "budget"
+                                                            },
+                                                            {
+                                                                "dataType": "STRING",
+                                                                "isPrimaryKey": false,
+                                                                "name": "category"
+                                                            },
+                                                            {
+                                                                "dataType": "NUMERIC",
+                                                                "isPrimaryKey": false,
+                                                                "name": "spend"
+                                                            }
+                                                        ],
+                                                        "id": "campaign_channels",
+                                                        "path": ["demo", "campaign_channels"],
+                                                        "type": "TABLE"
+                                                    }
+                                                ]
+                                            },
+                                            "warnings": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["USE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/dataSources/{dataSourceId}/computeColumnStatistics": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "(EXPERIMENTAL) Compute column statistics",
+                "description": "(EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.",
+                "operationId": "columnStatistics",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ColumnStatisticsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ColumnStatisticsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/dataSource/test": {
+            "post": {
+                "tags": ["Test Connection", "actions"],
+                "summary": "Test connection by data source definition",
+                "description": "Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.",
+                "operationId": "testDataSourceDefinition",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestDefinitionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "The result of the test of a data source connection.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestResponse"
+                                },
+                                "examples": {
+                                    "An example of a successful connection": {
+                                        "description": "An example of a successful connection",
+                                        "value": {
+                                            "queryDurationMillis": {
+                                                "simpleSelect": 562,
+                                                "createCacheTable": 235
+                                            },
+                                            "successful": true
+                                        }
+                                    },
+                                    "An example of an unsuccessful connection": {
+                                        "description": "An example of an unsuccessful connection",
+                                        "value": {
+                                            "error": "Connection exception: Failed to initialize pool: FATAL: password authentication failed for user \"user\"",
+                                            "successful": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal organization permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/dataSources/{dataSourceId}/scanSchemata": {
+            "get": {
+                "tags": ["Scanning", "actions"],
+                "summary": "Get a list of schema names of a database",
+                "description": "It scans a database and reads metadata. The result of the request contains a list of schema names of a database.",
+                "operationId": "getDataSourceSchemata",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "description": "Data source id",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        },
+                        "example": "myPostgres"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The result of the scan schemata",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DataSourceSchemata"
+                                },
+                                "examples": {
+                                    "An example of a successful scan": {
+                                        "description": "An example of a successful scan",
+                                        "value": {
+                                            "schemaNames": ["demo", "public"]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "TestQueryDuration": {
+                "required": ["simpleSelect"],
+                "type": "object",
+                "properties": {
+                    "simpleSelect": {
+                        "type": "integer",
+                        "description": "Field containing duration of a test select query on a data source. In milliseconds.",
+                        "format": "int32",
+                        "example": 562
+                    },
+                    "createCacheTable": {
+                        "type": "integer",
+                        "description": "Field containing duration of a test 'create table as select' query on a datasource. In milliseconds. The field is omitted if a data source doesn't support caching.",
+                        "format": "int32",
+                        "example": 235
+                    }
+                },
+                "description": "A structure containing duration of the test queries run on a data source. It is omitted if an error happens."
+            },
+            "TestResponse": {
+                "required": ["successful"],
+                "type": "object",
+                "properties": {
+                    "successful": {
+                        "type": "boolean",
+                        "description": "A flag indicating whether test passed or not.",
+                        "example": true
+                    },
+                    "error": {
+                        "type": "string",
+                        "description": "Field containing more details in case of a failure. Details are available to a privileged user only.",
+                        "example": "Connection exception: Failed to initialize pool: FATAL: password authentication failed for user \"user\""
+                    },
+                    "queryDurationMillis": {
+                        "$ref": "#/components/schemas/TestQueryDuration"
+                    }
+                },
+                "description": "Response from data source testing."
+            },
+            "DataSourceParameter": {
+                "required": ["name", "value"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Parameter name."
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "Parameter value."
+                    }
+                },
+                "description": "A parameter for testing data source connection"
+            },
+            "TestRequest": {
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "description": "URL to database in JDBC format, where test should connect to.",
+                        "example": "jdbc:postgresql://localhost:5432/db_name"
+                    },
+                    "schema": {
+                        "type": "string",
+                        "description": "Database schema.",
+                        "example": "public"
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "Database user name.",
+                        "example": "dbadmin"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Database user password.",
+                        "example": "admin123"
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Secret for token based authentication for data sources which supports it."
+                    },
+                    "privateKey": {
+                        "type": "string",
+                        "description": "Private key for data sources which supports key-pair authentication."
+                    },
+                    "privateKeyPassphrase": {
+                        "type": "string",
+                        "description": "Passphrase for a encrypted version of a private key."
+                    },
+                    "clientId": {
+                        "type": "string",
+                        "description": "Id for client based authentication for data sources which supports it."
+                    },
+                    "clientSecret": {
+                        "type": "string",
+                        "description": "Secret for client based authentication for data sources which supports it."
+                    },
+                    "parameters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DataSourceParameter"
+                        }
+                    }
+                },
+                "description": "A request containing all information for testing existing data source."
+            },
+            "ScanSqlResponse": {
+                "required": ["columns"],
+                "type": "object",
+                "properties": {
+                    "columns": {
+                        "type": "array",
+                        "description": "Array of columns with types.",
+                        "items": {
+                            "$ref": "#/components/schemas/SqlColumn"
+                        }
+                    },
+                    "dataPreview": {
+                        "type": "array",
+                        "description": "Array of rows where each row is another array of string values.",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "nullable": true
+                            }
+                        }
+                    }
+                },
+                "description": "Result of scanSql. Consists of array of query columns including type. Sql query result data preview can be attached optionally"
+            },
+            "SqlColumn": {
+                "required": ["dataType", "name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Column name",
+                        "example": "customer_id"
+                    },
+                    "dataType": {
+                        "type": "string",
+                        "description": "Column type",
+                        "example": "INT",
+                        "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "TIMESTAMP_TZ", "BOOLEAN"]
+                    }
+                },
+                "description": "A SQL query result column."
+            },
+            "ScanSqlRequest": {
+                "required": ["sql"],
+                "type": "object",
+                "properties": {
+                    "sql": {
+                        "type": "string",
+                        "description": "SQL query to be analyzed.",
+                        "example": "SELECT a.special_value as result FROM tableA a"
+                    }
+                },
+                "description": "A request with SQL query to by analyzed."
+            },
+            "ColumnWarning": {
+                "required": ["message", "name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Column name."
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Warning message related to the column."
+                    }
+                },
+                "description": "Warning related to single column."
+            },
+            "DeclarativeColumn": {
+                "required": ["dataType", "name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "maxLength": 255,
+                        "pattern": "^[^\u0000]*$",
+                        "type": "string",
+                        "description": "Column name",
+                        "example": "customer_id"
+                    },
+                    "dataType": {
+                        "type": "string",
+                        "description": "Column type",
+                        "example": "INT",
+                        "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "TIMESTAMP_TZ", "BOOLEAN"]
+                    },
+                    "isPrimaryKey": {
+                        "type": "boolean",
+                        "description": "Is column part of primary key?"
+                    },
+                    "referencedTableId": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Referenced table (Foreign key)",
+                        "example": "customers"
+                    },
+                    "referencedTableColumn": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Referenced table (Foreign key)",
+                        "example": "customer_id"
+                    }
+                },
+                "description": "A table column."
+            },
+            "DeclarativeTable": {
+                "required": ["columns", "id", "path", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "Table id.",
+                        "example": "customers"
+                    },
+                    "path": {
+                        "type": "array",
+                        "description": "Path to table.",
+                        "example": ["table_schema", "table_name"],
+                        "items": {
+                            "type": "string",
+                            "example": "table_name"
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Table type: TABLE or VIEW.",
+                        "example": "TABLE"
+                    },
+                    "namePrefix": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Table or view name prefix used in scan. Will be stripped when generating LDM.",
+                        "example": "out_gooddata"
+                    },
+                    "columns": {
+                        "type": "array",
+                        "description": "An array of physical columns",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeColumn"
+                        }
+                    }
+                },
+                "description": "A database table."
+            },
+            "DeclarativeTables": {
+                "required": ["tables"],
+                "type": "object",
+                "properties": {
+                    "tables": {
+                        "type": "array",
+                        "description": "An array of physical database tables.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeTable"
+                        }
+                    }
+                },
+                "description": "A physical data model (PDM) tables."
+            },
+            "ScanResultPdm": {
+                "required": ["pdm", "warnings"],
+                "type": "object",
+                "properties": {
+                    "pdm": {
+                        "$ref": "#/components/schemas/DeclarativeTables"
+                    },
+                    "warnings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TableWarning"
+                        }
+                    }
+                },
+                "description": "Result of scan of data source physical model."
+            },
+            "TableWarning": {
+                "required": ["columns", "name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Table name."
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Warning message related to the table."
+                    },
+                    "columns": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ColumnWarning"
+                        }
+                    }
+                },
+                "description": "Warnings related to single table."
+            },
+            "ScanRequest": {
+                "required": ["scanTables", "scanViews", "separator"],
+                "type": "object",
+                "properties": {
+                    "separator": {
+                        "type": "string",
+                        "description": "A separator between prefixes and the names.",
+                        "example": "__"
+                    },
+                    "scanTables": {
+                        "type": "boolean",
+                        "description": "A flag indicating whether the tables should be scanned.",
+                        "example": true
+                    },
+                    "scanViews": {
+                        "type": "boolean",
+                        "description": "A flag indicating whether the views should be scanned.",
+                        "example": true
+                    },
+                    "schemata": {
+                        "type": "array",
+                        "description": "What schemata will be scanned.",
+                        "example": ["tpch", "demo"],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tablePrefix": {
+                        "type": "string",
+                        "description": "Tables starting with this prefix will be scanned. The prefix is then followed by the value of `separator` parameter. Given the table prefix is `out_table` and separator is `__`, the table with name like `out_table__customers` will be scanned.",
+                        "example": "out_table"
+                    },
+                    "viewPrefix": {
+                        "type": "string",
+                        "description": "Views starting with this prefix will be scanned. The prefix is then followed by the value of `separator` parameter. Given the view prefix is `out_view` and separator is `__`, the table with name like `out_view__us_customers` will be scanned.",
+                        "example": "out_view"
+                    }
+                },
+                "description": "A request containing all information critical to model scanning."
+            },
+            "ColumnLocation": {
+                "type": "object"
+            },
+            "ColumnStatisticsRequest": {
+                "required": ["columnName", "from"],
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/SqlQuery"
+                            },
+                            {
+                                "$ref": "#/components/schemas/Table"
+                            }
+                        ]
+                    },
+                    "columnName": {
+                        "type": "string"
+                    },
+                    "statistics": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "COUNT",
+                                "COUNT_NULL",
+                                "COUNT_UNIQUE",
+                                "AVG",
+                                "STDDEV",
+                                "MIN",
+                                "MAX",
+                                "PERCENTILE_25",
+                                "PERCENTILE_50",
+                                "PERCENTILE_75"
+                            ]
+                        }
+                    },
+                    "histogram": {
+                        "$ref": "#/components/schemas/HistogramProperties"
+                    },
+                    "frequency": {
+                        "$ref": "#/components/schemas/FrequencyProperties"
+                    }
+                },
+                "description": "A request to retrieve statistics for a column."
+            },
+            "FrequencyProperties": {
+                "type": "object",
+                "properties": {
+                    "valueLimit": {
+                        "type": "integer",
+                        "description": "The maximum number of distinct values to return.",
+                        "format": "int32",
+                        "default": 10
+                    }
+                }
+            },
+            "HistogramProperties": {
+                "required": ["bucketCount"],
+                "type": "object",
+                "properties": {
+                    "bucketCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "SqlQuery": {
+                "required": ["sql"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ColumnLocation"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "sql": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            },
+            "Table": {
+                "required": ["tableName"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ColumnLocation"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "tableName": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            },
+            "ColumnStatistic": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "COUNT",
+                            "COUNT_NULL",
+                            "COUNT_UNIQUE",
+                            "AVG",
+                            "STDDEV",
+                            "MIN",
+                            "MAX",
+                            "PERCENTILE_25",
+                            "PERCENTILE_50",
+                            "PERCENTILE_75"
+                        ]
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ColumnStatisticWarning": {
+                "required": ["action", "message"],
+                "type": "object",
+                "properties": {
+                    "action": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ColumnStatisticsResponse": {
+                "type": "object",
+                "properties": {
+                    "statistics": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ColumnStatistic"
+                        }
+                    },
+                    "histogram": {
+                        "$ref": "#/components/schemas/Histogram"
+                    },
+                    "frequency": {
+                        "$ref": "#/components/schemas/Frequency"
+                    },
+                    "warnings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ColumnStatisticWarning"
+                        }
+                    }
+                }
+            },
+            "Frequency": {
+                "required": ["buckets"],
+                "type": "object",
+                "properties": {
+                    "buckets": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FrequencyBucket"
+                        }
+                    }
+                }
+            },
+            "FrequencyBucket": {
+                "required": ["count"],
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Histogram": {
+                "required": ["buckets"],
+                "type": "object",
+                "properties": {
+                    "buckets": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/HistogramBucket"
+                        }
+                    }
+                }
+            },
+            "HistogramBucket": {
+                "required": ["count", "lowerBound", "upperBound"],
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "lowerBound": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "upperBound": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "TestDefinitionRequest": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Type of database, where test should connect to.",
+                        "example": "POSTGRESQL",
+                        "enum": [
+                            "POSTGRESQL",
+                            "REDSHIFT",
+                            "VERTICA",
+                            "SNOWFLAKE",
+                            "ADS",
+                            "BIGQUERY",
+                            "MSSQL",
+                            "PRESTO",
+                            "DREMIO",
+                            "DRILL",
+                            "GREENPLUM",
+                            "AZURESQL",
+                            "SYNAPSESQL",
+                            "DATABRICKS",
+                            "GDSTORAGE",
+                            "CLICKHOUSE",
+                            "MYSQL",
+                            "MARIADB",
+                            "ORACLE",
+                            "PINOT",
+                            "SINGLESTORE",
+                            "MOTHERDUCK",
+                            "FLEXCONNECT",
+                            "STARROCKS",
+                            "ATHENA"
+                        ]
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "URL to database in JDBC format, where test should connect to.",
+                        "example": "jdbc:postgresql://localhost:5432/db_name"
+                    },
+                    "schema": {
+                        "type": "string",
+                        "description": "Database schema.",
+                        "example": "public"
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "Database user name.",
+                        "example": "dbadmin"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Database user password.",
+                        "example": "admin123"
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Secret for token based authentication for data sources which supports it."
+                    },
+                    "privateKey": {
+                        "type": "string",
+                        "description": "Private key for data sources which supports key-pair authentication."
+                    },
+                    "privateKeyPassphrase": {
+                        "type": "string",
+                        "description": "Passphrase for a encrypted version of a private key."
+                    },
+                    "clientId": {
+                        "type": "string",
+                        "description": "Id for client based authentication for data sources which supports it."
+                    },
+                    "clientSecret": {
+                        "type": "string",
+                        "description": "Secret for client based authentication for data sources which supports it."
+                    },
+                    "parameters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DataSourceParameter"
+                        }
+                    }
+                },
+                "description": "A request containing all information for testing data source definition."
+            },
+            "DataSourceSchemata": {
+                "required": ["schemaNames"],
+                "type": "object",
+                "properties": {
+                    "schemaNames": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "description": "Result of getSchemata. Contains list of available DB schema names."
+            }
+        }
+    }
+}

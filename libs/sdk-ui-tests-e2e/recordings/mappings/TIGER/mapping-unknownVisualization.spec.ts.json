@@ -1,0 +1,323 @@
+{
+    "mappings": [
+        {
+            "id": "528ac896-0371-40a2-a584-23e848997bf8",
+            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_automations",
+            "request": {
+                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/automations?origin=NATIVE&include=createdBy%2CmodifiedBy%2CnotificationChannel%2Crecipients%2CexportDefinitions%2CanalyticalDashboard&page=0&size=1&metaInclude=page",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":[],\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/automations?origin=NATIVE&include=createdBy%2CmodifiedBy%2CnotificationChannel%2Crecipients%2CexportDefinitions%2CanalyticalDashboard&metaInclude=page&page=0&size=1\"},\"meta\":{\"page\":{\"size\":1,\"totalElements\":0,\"totalPages\":0,\"number\":0}}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "528ac896-0371-40a2-a584-23e848997bf8"
+        },
+        {
+            "id": "7191bded-e135-457f-b17e-998f1f7b40b5",
+            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_automations",
+            "request": {
+                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/automations?origin=NATIVE&filter=analyticalDashboard.id%3D%3D%272326d431-ccb3-405e-a3d2-394bdf276e61%27&include=createdBy%2CmodifiedBy%2CnotificationChannel%2Crecipients%2CexportDefinitions%2CanalyticalDashboard&page=0&size=100&sort=title%2Casc&sort=createdAt%2Casc&metaInclude=page",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":[],\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/automations?origin=NATIVE&include=createdBy%2CmodifiedBy%2CnotificationChannel%2Crecipients%2CexportDefinitions%2CanalyticalDashboard&filter=analyticalDashboard.id%3D%3D%272326d431-ccb3-405e-a3d2-394bdf276e61%27&metaInclude=page&page=0&size=100&sort=title,createdAt,asc\"},\"meta\":{\"page\":{\"size\":100,\"totalElements\":0,\"totalPages\":0,\"number\":0}}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "7191bded-e135-457f-b17e-998f1f7b40b5"
+        },
+        {
+            "id": "e07c8123-e295-4142-a92a-2591dfbf9424",
+            "name": "api_v1_entities_notificationchannels",
+            "request": {
+                "url": "/api/v1/entities/notificationChannels?filter=%28destinationType%3D%3DSMTP+or+destinationType%3D%3DDEFAULT_SMTP+or+destinationType%3D%3DWEBHOOK+or+destinationType%3D%3DIN_PLATFORM%29&page=0&size=100&metaInclude=page",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":[{\"id\":\"defaultsmtp\",\"type\":\"notificationChannel\",\"attributes\":{\"name\":\"Default SMTP\",\"destination\":{\"fromEmail\":\"no-reply@gooddata.com\",\"fromEmailName\":\"GoodData\",\"type\":\"DEFAULT_SMTP\"},\"destinationType\":\"DEFAULT_SMTP\",\"dashboardLinkVisibility\":\"INTERNAL_ONLY\",\"allowedRecipients\":\"INTERNAL\",\"inPlatformNotification\":\"DISABLED\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/notificationChannels/defaultsmtp\"}},{\"id\":\"externalsmtp\",\"type\":\"notificationChannel\",\"attributes\":{\"name\":\"External SMTP\",\"destination\":{\"fromEmail\":\"no-reply@gooddata.com\",\"fromEmailName\":\"GoodData\",\"type\":\"DEFAULT_SMTP\"},\"destinationType\":\"DEFAULT_SMTP\",\"dashboardLinkVisibility\":\"INTERNAL_ONLY\",\"allowedRecipients\":\"EXTERNAL\",\"inPlatformNotification\":\"DISABLED\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/notificationChannels/externalsmtp\"}}],\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/notificationChannels?filter=destinationType%3D%3D%27SMTP%27%2CdestinationType%3D%3D%27DEFAULT_SMTP%27%2CdestinationType%3D%3D%27WEBHOOK%27%2CdestinationType%3D%3D%27IN_PLATFORM%27&metaInclude=page&page=0&size=100\"},\"meta\":{\"page\":{\"size\":100,\"totalElements\":2,\"totalPages\":1,\"number\":0}}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "e07c8123-e295-4142-a92a-2591dfbf9424"
+        },
+        {
+            "id": "c29a0ae4-15cc-45b3-b1fd-91624520b77b",
+            "name": "api_v1_entities_notificationchannels",
+            "request": {
+                "url": "/api/v1/entities/notificationChannels?filter=%28destinationType%3D%3DSMTP+or+destinationType%3D%3DDEFAULT_SMTP+or+destinationType%3D%3DWEBHOOK+or+destinationType%3D%3DIN_PLATFORM%29&page=0&size=1&metaInclude=page",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":[{\"id\":\"defaultsmtp\",\"type\":\"notificationChannel\",\"attributes\":{\"name\":\"Default SMTP\",\"destination\":{\"fromEmail\":\"no-reply@gooddata.com\",\"fromEmailName\":\"GoodData\",\"type\":\"DEFAULT_SMTP\"},\"destinationType\":\"DEFAULT_SMTP\",\"dashboardLinkVisibility\":\"INTERNAL_ONLY\",\"allowedRecipients\":\"INTERNAL\",\"inPlatformNotification\":\"DISABLED\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/notificationChannels/defaultsmtp\"}}],\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/notificationChannels?filter=destinationType%3D%3D%27SMTP%27%2CdestinationType%3D%3D%27DEFAULT_SMTP%27%2CdestinationType%3D%3D%27WEBHOOK%27%2CdestinationType%3D%3D%27IN_PLATFORM%27&metaInclude=page&page=0&size=1\",\"next\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/notificationChannels?filter=destinationType%3D%3D%27SMTP%27%2CdestinationType%3D%3D%27DEFAULT_SMTP%27%2CdestinationType%3D%3D%27WEBHOOK%27%2CdestinationType%3D%3D%27IN_PLATFORM%27&metaInclude=page&page=1&size=1\"},\"meta\":{\"page\":{\"size\":1,\"totalElements\":2,\"totalPages\":2,\"number\":0}}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "c29a0ae4-15cc-45b3-b1fd-91624520b77b"
+        },
+        {
+            "id": "46e44965-d2be-4579-9bc4-1a6d7ab5864a",
+            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_filterviews",
+            "request": {
+                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/filterViews?origin=NATIVE&filter=analyticalDashboard.id%3D%3D2326d431-ccb3-405e-a3d2-394bdf276e61%3Buser.id%3D%3Dadmin&include=user%2CanalyticalDashboard",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":[],\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/filterViews?origin=NATIVE&include=user%2CanalyticalDashboard&filter=analyticalDashboard.id%3D%3D%272326d431-ccb3-405e-a3d2-394bdf276e61%27%3Buser.id%3D%3D%27admin%27&page=0&size=20\",\"next\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/filterViews?origin=NATIVE&include=user%2CanalyticalDashboard&filter=analyticalDashboard.id%3D%3D%272326d431-ccb3-405e-a3d2-394bdf276e61%27%3Buser.id%3D%3D%27admin%27&page=1&size=20\"}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "46e44965-d2be-4579-9bc4-1a6d7ab5864a"
+        },
+        {
+            "id": "2d9cc04c-b18b-4878-8a19-b4a2f7e699f1",
+            "name": "api_v1_entities_users_admin",
+            "request": {
+                "url": "/api/v1/entities/users/admin",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":{\"id\":\"admin\",\"type\":\"user\",\"attributes\":{\"firstname\":\"\"}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/users/admin\"}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "2d9cc04c-b18b-4878-8a19-b4a2f7e699f1"
+        },
+        {
+            "id": "a724e34a-fcc8-4905-8e51-c60204c651c3",
+            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_analyticaldashboards_2326d431-ccb3-405e-a3d2-394bdf276e61",
+            "request": {
+                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/analyticalDashboards/2326d431-ccb3-405e-a3d2-394bdf276e61?include=filterContexts%2CcreatedBy%2CmodifiedBy%2CvisualizationObjects%2Cdatasets&metaInclude=accessInfo",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":{\"id\":\"2326d431-ccb3-405e-a3d2-394bdf276e61\",\"type\":\"analyticalDashboard\",\"attributes\":{\"title\":\"Dashboard with unknown visualization class\",\"description\":\"\",\"content\":{\"filterContextRef\":{\"identifier\":{\"id\":\"486d105b-c636-4c38-8180-3c48ac7cd678\",\"type\":\"filterContext\"}},\"layout\":{\"sections\":[{\"header\":{},\"items\":[{\"size\":{\"xl\":{\"gridHeight\":22,\"gridWidth\":6}},\"type\":\"IDashboardLayoutItem\",\"widget\":{\"configuration\":{\"hideTitle\":false},\"dateDataSet\":{\"identifier\":{\"id\":\"dt_oppcreated_timestamp\",\"type\":\"dataset\"}},\"description\":\"\",\"drills\":[],\"ignoreDashboardFilters\":[],\"insight\":{\"identifier\":{\"id\":\"c4121590-8e24-418e-b3d1-7e442288eb4e\",\"type\":\"visualizationObject\"}},\"properties\":{},\"title\":\"With unknown visualization class\",\"type\":\"insight\"}}],\"type\":\"IDashboardLayoutSection\"}],\"type\":\"IDashboardLayout\"},\"version\":\"2\"},\"createdAt\":\"2024-01-02 11:50\"},\"relationships\":{\"createdBy\":{\"data\":{\"id\":\"admin\",\"type\":\"userIdentifier\"}},\"filterContexts\":{\"data\":[{\"id\":\"486d105b-c636-4c38-8180-3c48ac7cd678\",\"type\":\"filterContext\"}]},\"datasets\":{\"data\":[{\"id\":\"dt_oppcreated_timestamp\",\"type\":\"dataset\"}]},\"visualizationObjects\":{\"data\":[{\"id\":\"c4121590-8e24-418e-b3d1-7e442288eb4e\",\"type\":\"visualizationObject\"}]}},\"meta\":{\"origin\":{\"originType\":\"NATIVE\",\"originId\":\"c76e0537d0614abb0027f7c992656b964922506f\"},\"accessInfo\":{\"private\":true}}},\"included\":[{\"id\":\"486d105b-c636-4c38-8180-3c48ac7cd678\",\"type\":\"filterContext\",\"attributes\":{\"title\":\"filterContext\",\"description\":\"\",\"content\":{\"filters\":[],\"version\":\"2\"}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/filterContexts/486d105b-c636-4c38-8180-3c48ac7cd678\"}},{\"id\":\"admin\",\"type\":\"userIdentifier\",\"attributes\":{\"firstname\":\"\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/userIdentifiers/admin\"}},{\"id\":\"c4121590-8e24-418e-b3d1-7e442288eb4e\",\"type\":\"visualizationObject\",\"attributes\":{\"title\":\"With unknown visualization class\",\"description\":\"\",\"content\":{\"buckets\":[{\"items\":[{\"measure\":{\"definition\":{\"measureDefinition\":{\"filters\":[],\"item\":{\"identifier\":{\"id\":\"of_activities\",\"type\":\"metric\"}}}},\"localIdentifier\":\"36642f1298e5430695ccb879114672f3\",\"title\":\"# of Activities\"}},{\"measure\":{\"definition\":{\"measureDefinition\":{\"filters\":[],\"item\":{\"identifier\":{\"id\":\"of_lost_opps.\",\"type\":\"metric\"}}}},\"localIdentifier\":\"bfde205f48b44c379df41fcfd03b801f\",\"title\":\"# of Lost Opps.\"}}],\"localIdentifier\":\"measures\"}],\"filters\":[],\"properties\":{},\"sorts\":[],\"version\":\"2\",\"visualizationUrl\":\"local:nonexistent\"},\"createdAt\":\"2024-01-02 11:50\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/c4121590-8e24-418e-b3d1-7e442288eb4e\"}},{\"id\":\"dt_oppcreated_timestamp\",\"type\":\"dataset\",\"attributes\":{\"title\":\"Created\",\"description\":\"\",\"tags\":[\"Created\"],\"type\":\"DATE\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/datasets/dt_oppcreated_timestamp\"}}],\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/analyticalDashboards/2326d431-ccb3-405e-a3d2-394bdf276e61?include=filterContexts%2CcreatedBy%2CmodifiedBy%2CvisualizationObjects%2Cdatasets&metaInclude=accessInfo\"}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "Pragma": "no-cache",
+                    "Expires": "0",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "a724e34a-fcc8-4905-8e51-c60204c651c3"
+        },
+        {
+            "id": "f189ee92-f633-463f-94ea-550e399fb4f7",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_resolvesettings",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/resolveSettings",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "[{\"content\":{\"value\":\"Africa/Douala\"},\"id\":\"timezone\",\"type\":\"TIMEZONE\"},{\"content\":{\"id\":\"\",\"type\":\"theme\"},\"id\":\"activeTheme\",\"type\":\"ACTIVE_THEME\"},{\"content\":{\"id\":\"\",\"type\":\"colorPalette\"},\"id\":\"activeColorPalette\",\"type\":\"ACTIVE_COLOR_PALETTE\"},{\"content\":{\"enabled\":false,\"logoUrl\":\"\"},\"id\":\"whiteLabeling\",\"type\":\"WHITE_LABELING\"},{\"content\":{\"value\":\"vn-VN\"},\"id\":\"locale\",\"type\":\"LOCALE\"},{\"content\":{\"value\":\"en-US\"},\"id\":\"metadataLocale\",\"type\":\"METADATA_LOCALE\"},{\"content\":{\"value\":\"vn-VN\"},\"id\":\"formatLocale\",\"type\":\"FORMAT_LOCALE\"},{\"content\":{\"value\":\"pk.eyJ1IjoiZ29vZGRhdGEiLCJhIjoiY2s4YTN3ZTJwMGM5NjNucW1jaTZwYTBpeiJ9.clHePVr90Y6o6Vj1-yY9PQ\"},\"id\":\"mapboxToken\",\"type\":\"MAPBOX_TOKEN\"},{\"content\":{\"value\":\"Monday\"},\"id\":\"weekStart\",\"type\":\"WEEK_START\"},{\"content\":{\"value\":false},\"id\":\"showHiddenCatalogItems\",\"type\":\"SHOW_HIDDEN_CATALOG_ITEMS\"},{\"content\":{\"overrides\":[]},\"id\":\"operatorOverrides\",\"type\":\"OPERATOR_OVERRIDES\"},{\"content\":{\"value\":true},\"id\":\"timezoneValidation\",\"type\":\"TIMEZONE_VALIDATION_ENABLED\"},{\"content\":{\"org\":\"\",\"token\":\"\"},\"id\":\"openAiConfig\",\"type\":\"OPENAI_CONFIG\"},{\"content\":{\"value\":false},\"id\":\"enableFileAnalytics\",\"type\":\"ENABLE_FILE_ANALYTICS\"},{\"content\":{\"defaultCron\":\"0 0 * * * ?\",\"defaultTimezone\":\"Etc/UTC\"},\"id\":\"alert\",\"type\":\"ALERT\"},{\"content\":{\"thousand\":\",\",\"decimal\":\".\"},\"id\":\"separators\",\"type\":\"SEPARATORS\"},{\"content\":{\"config\":null},\"id\":\"dateFilterConfig\",\"type\":\"DATE_FILTER_CONFIG\"},{\"content\":{\"enabled\":false,\"userGroupsScopeEnabled\":false,\"userGroupsScopeName\":null,\"userGroupsClaimName\":null,\"userGroupsDefaults\":null},\"id\":\"jitProvisioning\",\"type\":\"JIT_PROVISIONING\"},{\"content\":{\"mode\":\"INDIVIDUAL\"},\"id\":\"dashboardFiltersApplyMode\",\"type\":\"DASHBOARD_FILTERS_APPLY_MODE\"},{\"content\":{\"value\":true},\"id\":\"enableSlidesExport\",\"type\":\"ENABLE_SLIDES_EXPORT\"}]",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "max-age=10, private",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/json"
+                }
+            },
+            "uuid": "f189ee92-f633-463f-94ea-550e399fb4f7"
+        },
+        {
+            "id": "1f806bc1-6dde-4446-9eaf-5e5ad0d56090",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_resolvesettings",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/resolveSettings",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"settings\":[\"DATE_FILTER_CONFIG\"]}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "[{\"content\":{\"config\":null},\"id\":\"dateFilterConfig\",\"type\":\"DATE_FILTER_CONFIG\"}]",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/json"
+                }
+            },
+            "uuid": "1f806bc1-6dde-4446-9eaf-5e5ad0d56090"
+        },
+        {
+            "id": "99959133-074b-4c3d-b2ef-544f0214e5c0",
+            "name": "api_v1_entities_workspaces",
+            "request": {
+                "url": "/api/v1/entities/workspaces?include=parent&page=0&size=100&sort=name%2Casc&metaInclude=page",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":[{\"id\":\"452ff4f155774c0e89a8f7732d4674bb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"0.my_manual_test\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/452ff4f155774c0e89a8f7732d4674bb\"}},{\"id\":\"6bb14fa4cb144f80864252e89be29507\",\"type\":\"workspace\",\"attributes\":{\"name\":\"0-testing\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/6bb14fa4cb144f80864252e89be29507\"}},{\"id\":\"9cdae60aad5d4edda042a229d1fce506\",\"type\":\"workspace\",\"attributes\":{\"name\":\"AYE - E2E - Radial Bar Chart\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9cdae60aad5d4edda042a229d1fce506\"}},{\"id\":\"child_prefix_cr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"child_prefix_cr\",\"prefix\":\"CR_\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/child_prefix_cr\"}},{\"id\":\"b6f2acca69ff4cd487bc92335dbfe020\",\"type\":\"workspace\",\"attributes\":{\"name\":\"DO NOT DELETE - Bich test 13Feb\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/b6f2acca69ff4cd487bc92335dbfe020\"}},{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-05-13T11:23:47.367Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f\"}},{\"id\":\"f3c1ec4c13434fe5b3d3d843fc14f29b\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test_child -- 2025-05-13T11:23:53.879Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/f3c1ec4c13434fe5b3d3d843fc14f29b\"}},{\"id\":\"8c28f85af79a416ebb67710dd34e18db\",\"type\":\"workspace\",\"attributes\":{\"name\":\"empty-ws 2024-12-04T12:48:03.013Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/8c28f85af79a416ebb67710dd34e18db\"}},{\"id\":\"Home-ui-cypress-ws_12296824268_xpjtnv\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Home-ui-cypress-ws_12296824268_xpjtnv\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/Home-ui-cypress-ws_12296824268_xpjtnv\"}},{\"id\":\"e2aeb364793b443582720834df254b0d\",\"type\":\"workspace\",\"attributes\":{\"name\":\"IVAN SDK mock-handling\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/e2aeb364793b443582720834df254b0d\"}},{\"id\":\"0bb495ceb5c140a6848f0bc2f23785a3\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Ivan SDK test\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/0bb495ceb5c140a6848f0bc2f23785a3\"}},{\"id\":\"36f5a563875f49eaa5dd1c2ad2f49d28\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Ivan test project\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/36f5a563875f49eaa5dd1c2ad2f49d28\"}},{\"id\":\"1a7ccea580014af6ae7e0acf6120d5ad\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ dashboard description\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/1a7ccea580014af6ae7e0acf6120d5ad\"}},{\"id\":\"ccaf54d106da43629d0dd7d9aaf387f9\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Gauge Chart\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/ccaf54d106da43629d0dd7d9aaf387f9\"}},{\"id\":\"44db2f01216642acb771c1491d3de340\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Gauge Chart NEW\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/44db2f01216642acb771c1491d3de340\"}},{\"id\":\"79332acea8ed40efb1b531ef3872af47\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Insight to action\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/79332acea8ed40efb1b531ef3872af47\"}},{\"id\":\"f25ae71f8ef447218891f90605070bbb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Polar, Target Gauge KPI\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/f25ae71f8ef447218891f90605070bbb\"}},{\"id\":\"ae5a2a2b81cb4bfcbe41649bdd3e845a\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Table with images [another]\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/ae5a2a2b81cb4bfcbe41649bdd3e845a\"}},{\"id\":\"44bfcf2f2a4f4bd7b4982b37c9e8a1e0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Table with images NEW\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/44bfcf2f2a4f4bd7b4982b37c9e8a1e0\"}},{\"id\":\"11d3186f88b14ea0bfbfc6e0b03291eb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test -- 2025-05-13T09:57:25.333Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/11d3186f88b14ea0bfbfc6e0b03291eb\"}},{\"id\":\"0d885288c4fc49b38f976a8f7122de09\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test -- 2025-05-13T10:51:27.657Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/0d885288c4fc49b38f976a8f7122de09\"}},{\"id\":\"c898025ff5634fc791035ce3f538eaab\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child -- 2025-05-13T09:57:29.679Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"11d3186f88b14ea0bfbfc6e0b03291eb\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c898025ff5634fc791035ce3f538eaab\"}},{\"id\":\"fdd86d593eab4e30be0b5078dbf591a8\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child -- 2025-05-13T10:51:28.975Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"0d885288c4fc49b38f976a8f7122de09\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/fdd86d593eab4e30be0b5078dbf591a8\"}},{\"id\":\"282ef2f71db8435dac64548075831d37\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child_of_child -- 2025-05-13T09:57:30.040Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"c898025ff5634fc791035ce3f538eaab\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/282ef2f71db8435dac64548075831d37\"}},{\"id\":\"0515aa7e9e834d459bc270766e4ce3c5\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child_of_child -- 2025-05-13T10:51:29.019Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"fdd86d593eab4e30be0b5078dbf591a8\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/0515aa7e9e834d459bc270766e4ce3c5\"}},{\"id\":\"604a11f88dbc4eafb7eba27ca5326289\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_empty -- 2025-05-13T09:57:25.242Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/604a11f88dbc4eafb7eba27ca5326289\"}},{\"id\":\"d6daf25c578047e3a54e8377c199aff3\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_empty -- 2025-05-13T10:51:27.571Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d6daf25c578047e3a54e8377c199aff3\"}},{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"parent_prefix_pr\",\"prefix\":\"PR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/parent_prefix_pr\"}},{\"id\":\"perftest_ws_child_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_child_postgres_1736225363000_0\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_child_postgres_1736225363000_0\"}},{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_parent_postgres_1736225363000_0\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_parent_postgres_1736225363000_0\"}},{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_root_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_root_postgres_1736225363000_0\"}},{\"id\":\"6eddbb13a0d243699ac0ce808603b43c\",\"type\":\"workspace\",\"attributes\":{\"name\":\"PJI e2e keep\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/6eddbb13a0d243699ac0ce808603b43c\"}},{\"id\":\"subchild_no_prefix\",\"type\":\"workspace\",\"attributes\":{\"name\":\"subchild_no_prefix\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"child_prefix_cr\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/subchild_no_prefix\"}},{\"id\":\"49597630b3224f8486b1c4d6d968fd41\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tu\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/49597630b3224f8486b1c4d6d968fd41\"}},{\"id\":\"86737175df10462285b105be0cd8987d\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tu00\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/86737175df10462285b105be0cd8987d\"}},{\"id\":\"cbaef440900b41faa0abf9669cfb1df9\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tuan\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/cbaef440900b41faa0abf9669cfb1df9\"}}],\"included\":[{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_root_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_root_postgres_1736225363000_0\"}},{\"id\":\"fdd86d593eab4e30be0b5078dbf591a8\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child -- 2025-05-13T10:51:28.975Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/fdd86d593eab4e30be0b5078dbf591a8\"}},{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-05-13T11:23:47.367Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f\"}},{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"parent_prefix_pr\",\"prefix\":\"PR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/parent_prefix_pr\"}},{\"id\":\"11d3186f88b14ea0bfbfc6e0b03291eb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test -- 2025-05-13T09:57:25.333Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/11d3186f88b14ea0bfbfc6e0b03291eb\"}},{\"id\":\"c898025ff5634fc791035ce3f538eaab\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test_child -- 2025-05-13T09:57:29.679Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c898025ff5634fc791035ce3f538eaab\"}},{\"id\":\"0d885288c4fc49b38f976a8f7122de09\",\"type\":\"workspace\",\"attributes\":{\"name\":\"ME_cypress_test -- 2025-05-13T10:51:27.657Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/0d885288c4fc49b38f976a8f7122de09\"}},{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_parent_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_parent_postgres_1736225363000_0\"}},{\"id\":\"child_prefix_cr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"child_prefix_cr\",\"prefix\":\"CR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/child_prefix_cr\"}}],\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces?include=parent&metaInclude=page&page=0&size=100&sort=name,asc\"},\"meta\":{\"page\":{\"size\":100,\"totalElements\":36,\"totalPages\":1,\"number\":0}}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "Pragma": "no-cache",
+                    "Expires": "0",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "99959133-074b-4c3d-b2ef-544f0214e5c0"
+        },
+        {
+            "id": "cc6a8ee3-0d7d-4f7d-a5a9-cbafcb3b1659",
+            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f",
+            "request": {
+                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f?include=parent&metaInclude=config%2Cpermissions",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"data\":{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-05-13T11:23:47.367Z\"},\"meta\":{\"config\":{\"dataSamplingAvailable\":true,\"approximateCountAvailable\":true,\"showAllValuesOnDatesAvailable\":true},\"permissions\":[\"MANAGE\",\"ANALYZE\",\"EXPORT\",\"EXPORT_TABULAR\",\"EXPORT_PDF\",\"CREATE_AUTOMATION\",\"USE_AI_ASSISTANT\",\"CREATE_FILTER_VIEW\",\"VIEW\"]}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f?include=parent&metaInclude=config%2Cpermissions\"}}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "max-age=5, private",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/vnd.gooddata.api+json"
+                }
+            },
+            "uuid": "cc6a8ee3-0d7d-4f7d-a5a9-cbafcb3b1659"
+        },
+        {
+            "id": "2cb4da11-250d-4759-85f1-2a6206e5ca43",
+            "name": "api_v1_profile",
+            "request": {
+                "url": "/api/v1/profile",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"organizationId\":\"staging-automation\",\"organizationName\":\"Staging Automation, QA AWS.\",\"userId\":\"admin\",\"permissions\":[\"MANAGE\",\"SELF_CREATE_TOKEN\"],\"telemetry\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2,\"deploymentId\":\"deploymentId\",\"organizationHash\":\"bea76a2929bee15d760c823b1c97612174e87fff\",\"userHash\":\"27247146f055a8f9b6786e0c525c66d878a9d9bf\"},\"telemetryConfig\":{\"context\":{\"deploymentId\":\"deploymentId\",\"organizationHash\":\"bea76a2929bee15d760c823b1c97612174e87fff\",\"userHash\":\"27247146f055a8f9b6786e0c525c66d878a9d9bf\"},\"services\":{\"matomo\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2},\"openTelemetry\":{\"host\":\"https://collector.stg11.intgdc.com\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/profile\",\"organization\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/admin/organizations/staging-automation\",\"user\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/users/admin\"},\"features\":{\"live\":{\"configuration\":{\"host\":\"https://flags.panther.intgdc.com\",\"key\":\"default/f0352b97-5e76-4139-9059-4bea366cc2f9/q9yyvCPq957AR7T5GqfbIHaLZXAwqRtSzKt2Rtuv\"},\"context\":{\"earlyAccessValues\":[],\"earlyAccess\":\"\"}}},\"entitlements\":[{\"name\":\"Contract\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"UnlimitedAutomations\"},{\"name\":\"AutomationRecipientCount\"},{\"name\":\"UnlimitedDailyScheduledActions\"},{\"name\":\"UnlimitedDailyAlertActions\"},{\"name\":\"ScheduledActionMinimumRecurrenceMinutes\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]}",
+                "headers": {
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "max-age=10, private",
+                    "X-Content-Type-Options": "nosniff",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/json"
+                }
+            },
+            "uuid": "2cb4da11-250d-4759-85f1-2a6206e5ca43"
+        }
+    ]
+}

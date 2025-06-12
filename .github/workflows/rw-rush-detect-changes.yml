@@ -1,0 +1,88 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ Rush ~ Detect changes
+on:
+    workflow_call:
+        inputs:
+            source-branch:
+                required: true
+                description: "The head of the source branch with changes"
+                type: string
+            target-branch:
+                required: true
+                description: "The target branch to compare with aka master or main or release branch"
+                type: string
+            package-name:
+                required: true
+                description: "The package name to detect changes"
+                type: string
+        outputs:
+            is-changed:
+                description: "Package is changed/impacted by the changes in source branch"
+                value: ${{ jobs.detetct-changes.outputs.is-changed }}
+
+jobs:
+  detetct-changes:
+    env:
+      TARGET_BRANCH: ${{ inputs.target-branch }}
+      PACKAGE_NAME: ${{ inputs.package-name }}
+    outputs:
+      is-changed: ${{ steps.detect-changes.outputs.is_changed }}
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - name: print inputs
+        run: |
+          echo "source-branch: ${{ inputs.source-branch }}"
+          echo "target-branch: ${{ inputs.target-branch }}"
+          echo "package-name: ${{ inputs.package-name }}"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-branch }}
+          fetch-depth: 100
+      - name: Debug
+        run: git log -10
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+        with:
+          install-dependencies: false
+      - name: fetch target branch
+        run: |
+            echo "Target branch is: ${TARGET_BRANCH#refs/heads/}"
+            git fetch origin ${TARGET_BRANCH#refs/heads/} --depth=100
+
+            echo "Debug target branch revision for: $TARGET_BRANCH"
+            git log -1 origin/${TARGET_BRANCH#refs/heads/}
+      - name: Rush detect changes
+        id: detect-changes
+        run: |
+          # Get the list of impacted projects
+
+          impacted_projects=$(node common/scripts/install-run-rush.js list --impacted-by git:origin/${TARGET_BRANCH#refs/heads/}) || {
+            echo "Rush failed to detect changes continue and changes to true"
+            echo "is_changed=true" >> $GITHUB_ENV
+            exit 0
+          }
+
+          echo "Impacted projects: $impacted_projects"
+          echo "Package name: $PACKAGE_NAME"
+
+          # Check if @gooddata/sdk-ui-tests-e2e is in the list
+          if echo "$impacted_projects" | grep -q ${PACKAGE_NAME}; then
+            echo "is_changed=true" >> $GITHUB_OUTPUT
+          else
+             echo "is_changed=false" >> $GITHUB_OUTPUT
+          fi
+      - name: print output
+        run: |
+          echo "is_changed: ${{ steps.detect-changes.outputs.is_changed }}"
+          echo "GITHUB_OUTPUT: $GITHUB_OUTPUT"

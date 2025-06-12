@@ -1,0 +1,9 @@
+// (C) 2007-2020 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$insight-small-only: "only screen and (max-width: 480px)";
+
+$footer-border: #e2e8ed;
+$footer-border-top: kit-variables.$gd-color-disabled;
+
+$font-stack-roman: gdcustomfont, "Avenir", "Helvetica Neue", arial, sans-serif;

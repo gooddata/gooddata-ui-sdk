@@ -1,0 +1,16 @@
+// (C) 2007-2019 GoodData Corporation
+@use "indigoFont";
+@use "list";
+
+.gd-menuOpenner {
+    position: relative;
+    z-index: 1;
+}
+
+.gd-menuPosition-wrapper {
+    position: relative;
+}
+
+.gd-menuOpenedByClick-togglerWrapped {
+    display: inline-block;
+}

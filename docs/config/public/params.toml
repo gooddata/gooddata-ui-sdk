@@ -1,0 +1,28 @@
+# Put document versions here for every major or minor release
+# Every TOML list item contains the following properties:
+# - "version"   - text that appears in versions menu
+# - "dirpath"   - directory name (relative to contentDir) where documentation
+#                 for given version resides
+# - "url"       - url for link in version menu. May be absolute URL.
+# - "latestTag" - docker image tag for the latest patch version. Must be changed
+#                 on every patch release of respective branch
+
+[[versions]]
+    version = "10.30"
+    dirpath = "latest"
+    url = "/latest/"
+[[versions]]
+    version = "10.29"
+    dirpath = "10.29"
+    url = "/10.29/"
+[[versions]]
+    version = "10.28"
+    dirpath = "10.28"
+    url = "/10.28/"
+[[versions]]
+    version = "10.27"
+    dirpath = "10.27"
+    url = "/10.27/"
+[[versions]]
+    version = "Older"
+    url = "https://sdk.gooddata.com/gooddata-ui/versions.html"

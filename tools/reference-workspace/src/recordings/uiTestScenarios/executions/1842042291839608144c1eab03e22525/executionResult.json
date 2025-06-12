@@ -1,0 +1,45 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                    "name": "Amount"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.f_opportunity.opportunity",
+                            "name": "Opportunity",
+                            "uri": ""
+                        },
+                        "granularity": null,
+                        "identifier": "label.f_opportunity.opportunity.name",
+                        "localIdentifier": "a_label.f_opportunity.opportunity.name",
+                        "name": "Opportunity Name",
+                        "primaryLabel": {
+                            "identifier": "attr.f_opportunity.opportunity",
+                            "type": "displayForm"
+                        },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,160 @@
+// (C) 2024-2025 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-dashboard-nested-layout-widget {
+    .gd-dashboard-nested-layout-content.dash-item-content {
+        border-radius: 0;
+        padding: 19px 10px 18px 10px;
+    }
+    & .is-selectable {
+        &.gd-dashboard-nested-layout-content.dash-item-content:not(.is-selected):hover,
+        &.gd-dashboard-nested-layout-content.dash-item-content.is-dragging-widget {
+            border-style: solid;
+        }
+        &.dash-item-content:not(.is-selected):hover
+            > .gd-dashboard-nested-layout-widget-visualization-content:first-child
+            > .gd-dashboard-nested-layout-tab:not(.is-selected),
+        &.dash-item-content.is-dragging-widget .gd-dashboard-nested-layout-tab {
+            display: flex;
+            color: kit-variables.$gd-color-link;
+            background-color: kit-variables.$is-focused-background;
+            .gd-dashboard-nested-layout-tab__text {
+                background-color: kit-variables.$is-focused-background;
+            }
+        }
+    }
+    & .gd-dashboard-nested-layout-tab.is-selected {
+        display: flex;
+        color: kit-variables.$gd-color-text-light;
+        background-color: kit-variables.$gd-palette-primary-base;
+        .gd-dashboard-nested-layout-tab__text {
+            background-color: kit-variables.$gd-palette-primary-base;
+        }
+        path {
+            fill: kit-variables.$gd-color-text-light;
+        }
+    }
+    .drop-target-inner {
+        align-content: center;
+        height: 100%;
+        p {
+            font-size: 18px;
+        }
+    }
+}
+
+.gd-nested-layout-widget-renderer {
+    .gd-nested-layout-hotspot.dropzone {
+        width: min(10%, 50px); // 10% of left and right side of the widget, or 50px, whatever is smaller
+        min-width: 24px; // ensure usage in narrow containers, when parent dropzone would cover child one
+    }
+}
+
+.gd-dashboard-nested-layout-tab {
+    display: none;
+    width: auto;
+    padding: 2px 5px;
+    font-size: 11px;
+    position: absolute;
+    left: calc(0px - #{variables.$gd-dashboards-content-widget-borderWidth});
+    top: calc(0px - #{variables.$gd-dashboards-content-widget-borderWidth});
+
+    & > .gd-dashboard-nested-layout-tab__icon {
+        display: block;
+        position: absolute;
+        width: 6px;
+        height: 10px;
+        margin-top: 2px;
+        margin-right: 5px;
+    }
+    & > .gd-dashboard-nested-layout-tab__text {
+        z-index: 1;
+        margin-left: 11px;
+    }
+}
+.gd-dashboard-nested-layout-widget-visualization-content {
+    width: 100%;
+    height: 100%;
+
+    .drag-info-placeholder-inner {
+        padding: 0;
+    }
+
+    .drag-info-placeholder-box,
+    .drag-info-placeholder-drop-target {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        align-content: center;
+    }
+    .drag-info-placeholder {
+        padding: 0 0 0 10px;
+    }
+}
+
+.gd-grid-layout {
+    .gd-fluidlayout-column-dropzone {
+        height: 100%;
+    }
+
+    .gd-empty-dashboard-dropzone {
+        .drag-info-placeholder-inner,
+        .drag-info-placeholder-drop-target {
+            height: 100%;
+        }
+
+        .drop-target-inner {
+            align-content: center;
+            height: 100%;
+        }
+
+        .drag-info-placeholder {
+            min-height: 300px;
+        }
+    }
+
+    .gd-hotspot-border__container {
+        display: none;
+        position: absolute;
+        padding: 10px 0;
+        width: 10px;
+        height: 100%;
+    }
+
+    .gd-first-container-row-dropzone .gd-hotspot-border__container {
+        padding-top: 0;
+    }
+
+    .gd-hotspot-border__drop-target {
+        width: 100%;
+        height: 100%;
+        padding: 2px;
+        border: 1px dashed kit-variables.$gd-palette-primary-base;
+        border-radius: 15px;
+        background-color: kit-variables.$gd-palette-primary-dimmed;
+
+        .drop-target-inner {
+            width: 4px;
+            height: 100%;
+            padding: 0;
+            border-radius: 2px;
+            background-color: kit-variables.$gd-palette-primary-base;
+        }
+    }
+
+    .dropzone.prev.active {
+        .gd-hotspot-border__container {
+            left: -15px;
+            display: block;
+        }
+    }
+
+    .dropzone.next.active {
+        .gd-hotspot-border__container {
+            right: -15px;
+            display: block;
+        }
+    }
+}

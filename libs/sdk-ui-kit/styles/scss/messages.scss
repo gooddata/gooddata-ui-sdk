@@ -1,0 +1,235 @@
+// (C) 2007-2025 GoodData Corporation
+@use "mixins";
+@use "variables";
+@use "layout";
+@use "Messages/_variables" as messages-variables;
+
+/* ==========================================================================
+   Messages
+   ========================================================================== */
+
+.gd-message-enter,
+.gd-message-exit.gd-message-exit-active {
+    opacity: 0;
+    transition: opacity 0.22s ease-in;
+}
+
+.gd-message-enter.gd-message-enter-active,
+.gd-message-exit {
+    opacity: 1;
+}
+
+$gd-messages-space: 5px;
+$gd-message-padding-vertical: 4px;
+
+.gd-messages {
+    position: fixed;
+    z-index: 2;
+    top: 30px;
+    left: 50%;
+    width: 90%;
+    margin: 0;
+    transform: translateX(-50%);
+    pointer-events: none;
+    max-width: 620px;
+    text-align: center;
+
+    @media #{variables.$small-only} {
+        top: 30px;
+    }
+}
+
+.gd-message-layout {
+    margin: 15px 0 20px;
+}
+
+%gd-message-link {
+    font: inherit;
+    color: inherit;
+    opacity: 0.85;
+    cursor: pointer;
+
+    @include mixins.active-states {
+        color: inherit;
+        opacity: 1;
+    }
+}
+
+.gd-message-support {
+    @extend %gd-message-link;
+
+    margin-left: 10px;
+    text-decoration: underline;
+}
+
+.gd-message-dismiss {
+    @extend %gd-message-link;
+
+    position: relative;
+    padding: 0;
+    margin-left: 10px;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    height: 20px;
+
+    @include mixins.active-states-and-self {
+        text-decoration: none;
+    }
+
+    &::before {
+        color: variables.$gd-color-text-light;
+        font-size: 14px;
+    }
+}
+
+/* ==========================================================================
+   Messages
+   ========================================================================== */
+
+.gd-message {
+    position: relative;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: $gd-message-padding-vertical 8px $gd-message-padding-vertical 10px;
+    @include mixins.clearfix();
+
+    line-height: 1.4em;
+    color: variables.$gd-palette-error-base;
+    background: messages-variables.$gd-message-error-backgroundColor;
+    pointer-events: all;
+    max-width: 100%;
+    border-radius: 3px;
+    font-family: variables.$gd-font-primary;
+    font-size: 14px;
+    text-align: left;
+
+    a:not(.gd-message-dismiss) {
+        color: inherit;
+        text-decoration: underline;
+    }
+
+    &.progress {
+        color: messages-variables.$gd-message-progress-color;
+        background: messages-variables.$gd-message-progress-backgroundColor;
+    }
+
+    &.success {
+        color: variables.$gd-palette-success-base;
+        background: messages-variables.$gd-message-success-backgroundColor;
+    }
+
+    &.warning {
+        color: variables.$gd-palette-warning-base;
+        background: messages-variables.$gd-message-warning-backgroundColor;
+    }
+
+    &.contrast {
+        &::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border-radius: inherit;
+            background-color: variables.$gd-color-white;
+        }
+    }
+}
+
+.gd-message-overlay,
+.gd-message.intensive {
+    color: variables.$gd-color-text-light;
+    background: messages-variables.$gd-message-overlay-error-backgroundColor;
+
+    &.success,
+    &.progress,
+    &.error,
+    &.warning {
+        color: variables.$gd-color-text-light;
+    }
+
+    &.success {
+        background: messages-variables.$gd-message-overlay-success-backgroundColor;
+    }
+
+    &.progress {
+        background: messages-variables.$gd-message-overlay-progress-backgroundColor;
+    }
+
+    &.error {
+        background: messages-variables.$gd-message-overlay-error-backgroundColor;
+    }
+
+    &.warning {
+        background: messages-variables.$gd-message-overlay-warning-backgroundColor;
+    }
+}
+
+.gd-message-overlay {
+    margin: 0;
+
+    @include mixins.transition("opacity", 0.25s, "ease-in-out");
+    @include mixins.box-shadow("0 1px 3px rgba(20, 56, 92, 0.1), 0 2px 9px rgba(20, 57, 93, 0.15)");
+
+    &.is-hidden {
+        opacity: 0;
+    }
+
+    .gd-message-text {
+        display: flex;
+        align-items: flex-start;
+
+        > div {
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+        }
+
+        .gd-message-support,
+        &-header {
+            margin: 0;
+            padding: 5px 10px;
+        }
+
+        &-showmorelink {
+            color: rgba($color: variables.$gd-color-text-light, $alpha: 0.85);
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: underline;
+            padding-left: 5px;
+            background-color: transparent;
+            border: none;
+
+            &.warning {
+                color: rgba($color: variables.$gd-color-warning-label, $alpha: 1);
+            }
+        }
+
+        &-content {
+            padding-top: 5px;
+            color: rgba($color: variables.$gd-color-text-light, $alpha: 0.85);
+            font-size: 13px;
+            border-top: 1px solid rgba($color: variables.$gd-color-text-light, $alpha: 0.85);
+
+            &.on {
+                visibility: visible;
+                overflow: auto;
+                height: 100%;
+                max-height: 100px;
+            }
+
+            &.off {
+                visibility: hidden;
+                height: 0;
+                padding: 0;
+            }
+
+            &.warning {
+                color: rgba($color: variables.$gd-color-warning-label, $alpha: 1);
+                border-color: rgba($color: variables.$gd-color-warning-label, $alpha: 0.3);
+            }
+        }
+    }
+}

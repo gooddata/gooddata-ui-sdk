@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DateFilterFormWrapper > should match snapshot 1`] = `
+<div>
+  <div
+    class="foo gd-date-filter-form-wrapper gd-date-filter-form-wrapper-desktop"
+  >
+    <div
+      class="gd-date-filter-form-wrapper-inner"
+    >
+      content
+    </div>
+  </div>
+</div>
+`;

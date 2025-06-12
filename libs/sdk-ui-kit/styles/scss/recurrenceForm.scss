@@ -1,0 +1,235 @@
+// (C) 2024-2025 GoodData Corporation
+
+@use "variables";
+
+$input-height: 28px;
+$input-width: 128px;
+
+.gd-recurrence-form {
+    display: flex;
+    flex-direction: column;
+
+    .gd-input-component {
+        margin-bottom: 20px;
+
+        label,
+        .gd-label {
+            min-width: 100px;
+        }
+    }
+    .gd-recurrence-form-repeat-cron {
+        margin-bottom: 0;
+    }
+
+    .gd-recurrence-form-datetime {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+
+        > :not(:first-of-type):not(.gd-label),
+        > :not(:last-of-type) {
+            margin-right: 10px;
+        }
+
+        .gd-recurrence-form-datetime-timezone {
+            margin-top: 5px;
+        }
+
+        .gd-label {
+            margin-right: 0;
+        }
+
+        input,
+        button {
+            height: $input-height;
+        }
+
+        .gd-datepicker-icon {
+            left: 8px;
+            font-size: 16px;
+            line-height: 28px;
+        }
+
+        .gd-recurrence-form-datetime-date {
+            width: $input-width;
+        }
+
+        .gd-recurrence-form-datetime-time {
+            height: $input-height;
+            max-width: $input-width;
+        }
+    }
+
+    .gd-recurrence-form-datetime-inner,
+    .gd-recurrence-form-time-inner,
+    .gd-recurrence-form-repeat-inner {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .gd-recurrence-form-datetime-inner {
+        .gd-recurrence-form-date {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+
+    .gd-recurrence-form-datetime-help,
+    .gd-recurrence-form-datetime-error-message {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px;
+        width: 128px;
+    }
+
+    .gd-recurrence-form-datetime-error-message {
+        color: variables.$gd-color-negative;
+    }
+
+    .gd-recurrence-form-datetime-help {
+        color: variables.$gd-color-state-blank;
+    }
+    .gd-recurrence-form-hint-wrapper {
+        margin-bottom: 20px;
+
+        .gd-recurrence-form-cron-help,
+        .gd-recurrence-form-cron-error-message {
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 13px;
+        }
+
+        .gd-recurrence-form-cron-help,
+        .gd-recurrence-form-cron-help a {
+            color: variables.$gd-color-state-blank;
+        }
+
+        .gd-recurrence-form-cron-help a {
+            text-decoration: underline;
+        }
+
+        .gd-recurrence-form-cron-error-message {
+            color: variables.$gd-color-negative;
+        }
+
+        .gd-recurrence-form-cron-error-message a {
+            text-decoration: underline;
+            color: variables.$gd-color-negative;
+        }
+    }
+
+    .gd-recurrence-form-repeat {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+
+        > :not(:first-of-type),
+        > :not(:last-of-type) {
+            margin-right: 10px;
+        }
+
+        .gd-recurrence-form-type {
+            &,
+            button {
+                height: $input-height;
+            }
+        }
+
+        .gd-recurrence-form-cron {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            input {
+                max-width: $input-width;
+                height: $input-height;
+            }
+
+            .gd-recurrence-form-cron-help,
+            .gd-recurrence-form-cron-error-message {
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 13px;
+            }
+            .gd-recurrence-form-cron-help,
+            .gd-recurrence-form-cron-help a {
+                color: variables.$gd-color-state-blank;
+            }
+
+            .gd-recurrence-form-cron-error-message,
+            .gd-recurrence-form-cron-error-message a {
+                color: variables.$gd-color-negative;
+            }
+        }
+
+        .gd-recurrence-form-cron-icon {
+            display: flex;
+            align-items: center;
+            height: $input-height;
+        }
+
+        .gd-recurrence-form-repeat-type-description {
+            display: flex;
+            align-items: center;
+            color: variables.$gd-color-state-blank;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 19px;
+            gap: 5px;
+            margin-top: 5px;
+
+            .gd-recurrence-form-timezone-wrapper {
+                display: flex;
+            }
+
+            .gd-recurrence-form-timezone {
+                display: inline-block;
+                white-space: nowrap;
+                max-width: 200px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+            .s-portal-scroll-anchor {
+                display: none;
+            }
+        }
+    }
+
+    @media #{variables.$small-only} {
+        .gd-recurrence-form-datetime,
+        .gd-recurrence-form-repeat {
+            display: block;
+        }
+
+        .gd-label {
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .gd-recurrence-form-datetime-timezone {
+            margin-top: 10px;
+            color: variables.$gd-color-link;
+        }
+    }
+}
+
+@media #{variables.$medium-up} {
+    .gd-notifications-channel-dialog-content-wrapper {
+        .gd-recurrence-form {
+            .gd-recurrence-form-hint-wrapper {
+                margin-left: 105px;
+            }
+        }
+    }
+}
+
+// // Common styles for UiListbox items
+.gd-recurrence-form-list-item.gd-list-item {
+    height: 28px;
+}

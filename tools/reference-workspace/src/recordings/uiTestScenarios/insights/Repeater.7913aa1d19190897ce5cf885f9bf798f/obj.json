@@ -1,0 +1,35 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname_cloned"
+                        }
+                    }
+                ],
+                "localIdentifier": "columns"
+            }
+        ],
+        "filters": [],
+        "identifier": "Repeater.7913aa1d19190897ce5cf885f9bf798f",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "Repeater - one attribute",
+        "uri": "Repeater.7913aa1d19190897ce5cf885f9bf798f",
+        "visualizationUrl": "local:repeater"
+    }
+}

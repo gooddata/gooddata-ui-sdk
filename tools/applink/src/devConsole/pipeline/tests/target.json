@@ -1,0 +1,277 @@
+{
+    "root": "/dev/targetApp",
+    "dependencies": [
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/util",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/util",
+                "installDir": ["@gooddata", "util"],
+                "directory": "/dev/gooddata-ui-sdk/libs/util",
+                "rushPackage": {
+                    "packageName": "@gooddata/util",
+                    "projectFolder": "libs/util",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-embedding",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-embedding",
+                "installDir": ["@gooddata", "sdk-embedding"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-embedding",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-embedding",
+                    "projectFolder": "libs/sdk-embedding",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-ui-kit",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-ui-kit",
+                "installDir": ["@gooddata", "sdk-ui-kit"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-kit",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-ui-kit",
+                    "projectFolder": "libs/sdk-ui-kit",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-ui-vis-commons",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-ui-vis-commons",
+                "installDir": ["@gooddata", "sdk-ui-vis-commons"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-vis-commons",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-ui-vis-commons",
+                    "projectFolder": "libs/sdk-ui-vis-commons",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-ui-geo",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-ui-geo",
+                "installDir": ["@gooddata", "sdk-ui-geo"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-geo",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-ui-geo",
+                    "projectFolder": "libs/sdk-ui-geo",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-backend-base",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-backend-base",
+                "installDir": ["@gooddata", "sdk-backend-base"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-base",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-backend-base",
+                    "projectFolder": "libs/sdk-backend-base",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-ui-charts",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-ui-charts",
+                "installDir": ["@gooddata", "sdk-ui-charts"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-charts",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-ui-charts",
+                    "projectFolder": "libs/sdk-ui-charts",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-ui-filters",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-ui-filters",
+                "installDir": ["@gooddata", "sdk-ui-filters"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-filters",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-ui-filters",
+                    "projectFolder": "libs/sdk-ui-filters",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-ui-pivot",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-ui-pivot",
+                "installDir": ["@gooddata", "sdk-ui-pivot"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-pivot",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-ui-pivot",
+                    "projectFolder": "libs/sdk-ui-pivot",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-ui-ext",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-ui-ext",
+                "installDir": ["@gooddata", "sdk-ui-ext"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui-ext",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-ui-ext",
+                    "projectFolder": "libs/sdk-ui-ext",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/reference-workspace",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/reference-workspace",
+                "installDir": ["@gooddata", "reference-workspace"],
+                "directory": "/dev/gooddata-ui-sdk/tools/reference-workspace",
+                "rushPackage": {
+                    "packageName": "@gooddata/reference-workspace",
+                    "projectFolder": "tools/reference-workspace",
+                    "reviewCategory": "tools",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-backend-mockingbird",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-backend-mockingbird",
+                "installDir": ["@gooddata", "sdk-backend-mockingbird"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-mockingbird",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-backend-mockingbird",
+                    "projectFolder": "libs/sdk-backend-mockingbird",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-backend-tiger",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-backend-tiger",
+                "installDir": ["@gooddata", "sdk-backend-tiger"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-tiger",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-backend-tiger",
+                    "projectFolder": "libs/sdk-backend-tiger",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-model",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-model",
+                "installDir": ["@gooddata", "sdk-model"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-model",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-model",
+                    "projectFolder": "libs/sdk-model",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-backend-spi",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-backend-spi",
+                "installDir": ["@gooddata", "sdk-backend-spi"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-spi",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-backend-spi",
+                    "projectFolder": "libs/sdk-backend-spi",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/api-client-tiger",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/api-client-tiger",
+                "installDir": ["@gooddata", "api-client-tiger"],
+                "directory": "/dev/gooddata-ui-sdk/libs/api-client-tiger",
+                "rushPackage": {
+                    "packageName": "@gooddata/api-client-tiger",
+                    "projectFolder": "libs/api-client-tiger",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        },
+        {
+            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-ui",
+            "version": "8.0.0-beta.80",
+            "pkg": {
+                "packageName": "@gooddata/sdk-ui",
+                "installDir": ["@gooddata", "sdk-ui"],
+                "directory": "/dev/gooddata-ui-sdk/libs/sdk-ui",
+                "rushPackage": {
+                    "packageName": "@gooddata/sdk-ui",
+                    "projectFolder": "libs/sdk-ui",
+                    "reviewCategory": "production",
+                    "versionPolicyName": "sdk",
+                    "shouldPublish": true
+                }
+            }
+        }
+    ]
+}

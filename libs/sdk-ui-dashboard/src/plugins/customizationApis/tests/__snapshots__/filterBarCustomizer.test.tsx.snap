@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`filter bar customizer > filter bar rendering mode > rendering > should render with decorator 1`] = `"<div>Decorator</div>"`;
+
+exports[`filter bar customizer > filter bar rendering mode > rendering > should render with default 1`] = `""`;
+
+exports[`filter bar customizer > filter bar rendering mode > rendering > should render with provider 1`] = `"<div>Provider</div>"`;

@@ -1,0 +1,477 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "react-day-picker/dist/style.css";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$gd-date-range-picker-hover-bgcolor: kit-variables.$is-focused-background;
+$gd-date-range-picker-interval-bgcolor: var(
+    --gd-palette-primary-lightest,
+    color.adjust(kit-variables.$gd-color-highlight, $lightness: 45%)
+);
+$gd-date-range-picker-shadow-color: #1f354a;
+
+$gd-day-picker-width: 267px;
+
+$gd-day-picker-input-width: 126px;
+
+.gd-date-range-row {
+    fieldset {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 10px;
+
+        // reset default fieldset browser rules
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.gd-date-range-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.gd-date-range-column--with-time {
+    width: 50%;
+}
+
+.gd-date-range-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    & .gd-input-field,
+    & .input-text {
+        font-size: 13px;
+    }
+
+    &-from,
+    &-to {
+        position: relative;
+    }
+
+    label {
+        font-size: 13px;
+        display: block;
+
+        &:nth-of-type(2) {
+            padding-top: 10px;
+        }
+    }
+
+    &.datetime {
+        input {
+            @media #{kit-variables.$medium-up} {
+                width: $gd-day-picker-input-width;
+            }
+        }
+    }
+
+    input[type="time"] {
+        @media #{kit-variables.$medium-up} {
+            &::-webkit-calendar-picker-indicator {
+                display: none;
+            }
+        }
+    }
+
+    &-input {
+        position: relative;
+
+        & input {
+            height: 30px;
+            padding-left: 34px;
+
+            @media #{kit-variables.$medium-up} {
+                width: $gd-day-picker-input-width;
+            }
+        }
+
+        &-native {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        &-native &-field {
+            flex: 1 1 auto;
+            font-size: 16px; // Prevent iPhone zoom on focus
+            -webkit-appearance: none;
+
+            &[value=""]::before {
+                content: attr(placeholder);
+                margin-right: 5px;
+                color: color.adjust(kit-variables.$default-gd-color-link, $alpha: -0.25);
+            }
+
+            @media #{kit-variables.$medium-up} {
+                min-width: 13em;
+            }
+        }
+
+        .gd-icon-clock,
+        .gd-icon-calendar {
+            position: absolute;
+            top: 0;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            font-size: 16px;
+            color: kit-variables.$gd-palette-primary-base;
+            pointer-events: none;
+        }
+
+        &__description {
+            white-space: normal;
+            font-size: 12px;
+            line-height: 17px;
+            padding-top: 5px;
+
+            @media #{kit-variables.$medium-up} {
+                width: $gd-day-picker-input-width;
+            }
+
+            &--error {
+                color: kit-variables.$gd-palette-error-base;
+            }
+        }
+    }
+
+    //CSS for old RANGE PICKER due to RAIL-4460
+    &:not(.datetime) {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    &-input-wrapper {
+        position: relative;
+    }
+
+    &-picker {
+        --rdp-cell-size: 32px;
+        --rdp-background-color: none;
+        --rdp-accent-color: none;
+        --rdp-accent-color-dart: none;
+        --rdp-background-color-dark: none;
+        --rdp-accent-color-dark: none;
+        // stylelint-disable max-nesting-depth
+        position: absolute;
+        z-index: 10;
+        width: $gd-day-picker-width;
+        padding: 18px 15px 15px;
+        box-shadow: 0 2px 5px 0
+            var(--gd-shadow-color-from-theme, color.adjust($gd-date-range-picker-shadow-color, $alpha: -0.85));
+        background: kit-variables.$gd-color-white;
+        user-select: none;
+
+        //CSS for new RANGE PICKER
+
+        .rdp-months {
+            display: flex;
+            justify-content: center;
+        }
+
+        .rdp-nav {
+            position: absolute;
+            top: 1.05em;
+            right: 0;
+            left: 0;
+            padding: 0 0.5rem;
+        }
+
+        .rdp-nav_button {
+            position: absolute;
+            width: 1.5rem;
+            height: 1.5rem;
+            cursor: pointer;
+
+            &:hover {
+                color: kit-variables.$gd-color-state-blank;
+            }
+        }
+
+        .rdp-nav_button_previous {
+            left: 0.8em;
+            display: block;
+            width: 2em;
+            height: 2em;
+            text-align: center;
+            color: kit-variables.$gd-palette-primary-base;
+            padding-top: 0.15em;
+            font-family: kit-variables.$gd-font-indigo;
+            font-size: 18px;
+        }
+
+        .rdp-nav_button_next {
+            right: 0.8em;
+            display: block;
+            width: 2em;
+            height: 2em;
+            text-align: center;
+            color: kit-variables.$gd-palette-primary-base;
+            padding-top: 0.15em;
+            font-family: kit-variables.$gd-font-indigo;
+            font-size: 18px;
+        }
+
+        .rdp-caption {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0.7em;
+        }
+
+        .rdp-caption_label {
+            font-family: kit-variables.$gd-font-primary;
+            font-size: 17px;
+            text-align: center;
+            font-weight: normal;
+            color: kit-variables.$gd-color-dark;
+        }
+
+        .rdp-head_cell {
+            display: table-cell;
+            color: var(--gd-palette-complementary-8-from-theme, kit-variables.$default-gd-color-state-blank);
+            cursor: help;
+            font-family: kit-variables.$gd-font-primary;
+            font-weight: 400;
+            font-size: 13px;
+            text-transform: none;
+            text-align: center;
+
+            span {
+                text-decoration: none;
+                border-bottom: none;
+            }
+        }
+
+        .rdp-day {
+            padding: 0.3125em 0.55em;
+            color: kit-variables.$gd-color-text;
+            font-family: kit-variables.$gd-font-primary;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+            border-radius: 0;
+
+            &:not(.rdp-day_range_middle):hover {
+                background: $gd-date-range-picker-hover-bgcolor;
+                cursor: pointer;
+            }
+        }
+
+        .rdp-day_disabled {
+            color: kit-variables.$gd-color-disabled;
+            cursor: default;
+            font-weight: 400;
+        }
+
+        .rdp-day_outside {
+            color: kit-variables.$gd-color-disabled;
+            cursor: default;
+            font-weight: 400;
+        }
+
+        .rdp-day_selected:not(.rdp-day_disabled):not(.rdp-day_range_middle) {
+            color: kit-variables.$gd-color-text-light;
+            background: kit-variables.$gd-palette-primary-base;
+        }
+
+        .rdp-day_selected:not(.rdp-day_range_start):not(.rdp-day_range_end) {
+            color: kit-variables.$gd-color-text;
+            background: $gd-date-range-picker-interval-bgcolor;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        //CSS for old RANGE PICKER due to RAIL-4460
+
+        .DayPicker {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            user-select: none;
+        }
+
+        .DayPicker-Month {
+            display: table;
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin-top: 0;
+            user-select: none;
+        }
+
+        .DayPicker-NavBar {
+            position: absolute;
+            right: 0;
+            left: 0;
+            padding: 0 0.5rem;
+        }
+
+        .DayPicker-NavButton {
+            position: absolute;
+            top: -0.25em;
+            box-sizing: content-box;
+            width: 1.5rem;
+            height: 1.5rem;
+            text-align: center;
+            background-image: none;
+            cursor: pointer;
+
+            &::before {
+                display: block;
+                padding-top: 0.15em;
+                font-family: kit-variables.$gd-font-indigo;
+                font-size: 18px;
+                color: kit-variables.$gd-palette-primary-base;
+            }
+
+            &:hover {
+                color: kit-variables.$gd-palette-primary-base;
+                cursor: pointer;
+            }
+
+            &:hover::before {
+                color: kit-variables.$gd-color-state-blank;
+            }
+
+            &--prev {
+                left: 0.15em;
+
+                &::before {
+                    content: "\e630";
+                }
+            }
+
+            &--next {
+                right: 0.35em;
+
+                &::before {
+                    content: "\e631";
+                }
+            }
+        }
+
+        .DayPicker-Caption {
+            display: table-caption;
+            margin-left: 0.25em;
+            margin-right: 0.25em;
+            margin-bottom: 1em;
+            font-family: kit-variables.$gd-font-primary;
+            font-weight: 400;
+            font-size: 17px;
+            text-align: center;
+            color: kit-variables.$gd-color-dark;
+            cursor: default;
+        }
+
+        .DayPicker-Weekdays {
+            display: table-header-group;
+        }
+
+        .DayPicker-WeekdaysRow {
+            display: table-row;
+        }
+
+        .DayPicker-Weekday {
+            display: table-cell;
+            padding-bottom: 0.5em;
+            font-family: kit-variables.$gd-font-primary;
+            font-weight: 400;
+            font-size: 13px;
+            text-align: center;
+            color: var(--gd-palette-complementary-8-from-theme, kit-variables.$default-gd-color-state-blank);
+            cursor: help;
+
+            abbr {
+                text-decoration: none;
+                border-bottom: none;
+            }
+        }
+
+        .DayPicker-Body {
+            display: table-row-group;
+        }
+
+        .DayPicker-Week {
+            display: table-row;
+        }
+
+        .DayPicker-Day {
+            display: table-cell;
+            padding: 0.3125em 0.55em;
+            font-family: kit-variables.$gd-font-primary;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+            color: kit-variables.$gd-color-text;
+            border-radius: 0;
+
+            &:hover {
+                background: $gd-date-range-picker-hover-bgcolor;
+                cursor: pointer;
+            }
+
+            &--disabled {
+                font-weight: 400;
+                color: kit-variables.$gd-color-disabled;
+
+                &:hover {
+                    background: transparent;
+                    cursor: default;
+                }
+            }
+
+            &--outside {
+                font-weight: normal;
+                color: kit-variables.$gd-color-disabled;
+            }
+        }
+
+        .DayPicker--interactionDisabled .DayPicker-Day {
+            cursor: default;
+        }
+
+        .DayPicker-NavButton--interactionDisabled {
+            display: none;
+        }
+
+        .DayPicker-Day--selected:not(.DayPicker-Day--disabled) {
+            color: kit-variables.$gd-color-text-light;
+            background: kit-variables.$gd-palette-primary-base;
+        }
+
+        .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end) {
+            color: kit-variables.$gd-color-text;
+            background: $gd-date-range-picker-interval-bgcolor;
+        }
+    }
+
+    &-error-message {
+        width: 269px;
+        margin-top: 5px;
+        padding: 2px 10px;
+        border-radius: 3px;
+        color: kit-variables.$gd-palette-warning-base;
+        background-color: kit-variables.$gd-palette-warning-dimmed;
+    }
+}
+
+.gd-date-range__hint {
+    display: flex;
+    flex-direction: column;
+    color: kit-variables.$gd-medium-gray;
+    font-size: 12px;
+    padding-top: 10px;
+}
+
+.gd-date-range-picker-wrapper {
+    position: relative;
+}

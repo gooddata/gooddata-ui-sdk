@@ -1,0 +1,71 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "dt_closedate_timestamp.month",
+                            "name": "Closed - Month/Year",
+                            "uri": ""
+                        },
+                        "format": { "locale": "en-US", "pattern": "MMM y" },
+                        "granularity": "MONTH",
+                        "identifier": "dt_closedate_timestamp.month",
+                        "localIdentifier": "a_dt_closedate_timestamp.month",
+                        "name": "Closed - Month/Year",
+                        "primaryLabel": {
+                            "identifier": "dt_closedate_timestamp.month",
+                            "type": "displayForm"
+                        },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "dt_closedate_timestamp.day",
+                            "name": "Closed - Date",
+                            "uri": ""
+                        },
+                        "format": { "locale": "en-US", "pattern": "M/d/y" },
+                        "granularity": "DAY",
+                        "identifier": "dt_closedate_timestamp.day",
+                        "localIdentifier": "a_dt_closedate_timestamp.day",
+                        "name": "Closed - Date",
+                        "primaryLabel": { "identifier": "dt_closedate_timestamp.day", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                },
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0",
+                                    "identifier": "timeline_bop",
+                                    "localIdentifier": "m_timeline_bop",
+                                    "name": "_Timeline [BOP]"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0",
+                                    "identifier": "metric_has_null_value",
+                                    "localIdentifier": "m_metric_has_null_value",
+                                    "name": "Metric has null value"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

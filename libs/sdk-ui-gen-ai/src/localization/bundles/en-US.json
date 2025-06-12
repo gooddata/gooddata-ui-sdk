@@ -1,0 +1,252 @@
+{
+    "gd.gen-ai.global-error": {
+        "value": "Something went wrong",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.global-error.description": {
+        "value": "Try restarting the chatbot and starting over.",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.global-error.button-details": {
+        "value": "See details",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.global-error.button-clear": {
+        "value": "Restart chatbot",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.permission-error": {
+        "value": "Insufficient permissions",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.permission-error.description": {
+        "value": "You don’t have access to the chatbot. Contact your administrator to request access.",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.input-placeholder": {
+        "value": "Ask here…",
+        "comment": "Use ellipsis at the end …",
+        "limit": 0
+    },
+    "gd.gen-ai.input-label": {
+        "value": "Ask your question",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.assistant-icon": {
+        "value": "Chatbot response",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.feedback.like": {
+        "value": "Mark this message as helpful",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.feedback.dislike": {
+        "value": "Mark this message as not helpful",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.disclaimer": {
+        "value": "AI assistants can make mistakes. Check before relying on these answers.",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.dialog.label": {
+        "value": "AI assistant chatbot dialog",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.header.reset-tooltip": {
+        "value": "Reset",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.header.contract-tooltip": {
+        "value": "Contract",
+        "comment": "As in the opposite of expand",
+        "limit": 0
+    },
+    "gd.gen-ai.header.expand-tooltip": {
+        "value": "Expand",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.header.close-tooltip": {
+        "value": "Close",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.welcome.line-1": {
+        "value": "Hi there,",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.welcome.line-2": {
+        "value": "How can I help you?",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.welcome.option-1.title": {
+        "value": "Search for a dashboard or visualization",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.welcome.option-1.answer": {
+        "value": "Sure thing, what kind of dashboard or visualization would you like to see?",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.welcome.option-2.title": {
+        "value": "Create a new visualization",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.welcome.option-2.answer": {
+        "value": "Sure thing, what kind of visualization would you like to create?",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.welcome.option-3.title": {
+        "value": "Answer a business question",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.welcome.option-3.answer": {
+        "value": "Sure thing, what business question would you like to answer?",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.state.cancelled": {
+        "value": "Evaluation cancelled…",
+        "comment": "Use ellipsis at the end …",
+        "limit": 0
+    },
+    "gd.gen-ai.state.generating": {
+        "value": "Generating your response…",
+        "comment": "Use ellipsis at the end …",
+        "limit": 0
+    },
+    "gd.gen-ai.button.send": {
+        "value": "Send message",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.button.save": {
+        "value": "Save",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.button.save_and_explore": {
+        "value": "Save & Open",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.button.cancel": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.save-dialog.label": {
+        "value": "Name",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.save-dialog.title": {
+        "value": "Name your visualization",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.save-dialog.description": {
+        "value": "Give your new visualization a new descriptive name, so it's easier to find it later on.",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.save-dialog.description.explore": {
+        "value": "To open this visualization, it needs to be saved first. You can give it a name below.",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.type": {
+        "value": "Type",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.dataset": {
+        "value": "Dataset",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.id": {
+        "value": "Id",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.attribute": {
+        "value": "Attribute",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.metric": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.fact": {
+        "value": "Fact",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.date": {
+        "value": "Date",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.input-info.mac": {
+        "value": "<code>^+Space</code> or <code>⌘+I</code> for suggestions",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.input-info.win": {
+        "value": "<code>Ctrl+Space</code> or <code>Ctrl+I</code> for suggestions",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.visualisation.menu": {
+        "value": "{name}, more actions",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.visualisation.menu.button.save_as_visualisation": {
+        "value": "Save visualization",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": {
+        "value": "Save as new…",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze": {
+        "value": "Open in Analyze",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": {
+        "value": "Copy visualization link",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.message.label.user": {
+        "value": "User input",
+        "comment": "",
+        "limit": 0
+    }
+}

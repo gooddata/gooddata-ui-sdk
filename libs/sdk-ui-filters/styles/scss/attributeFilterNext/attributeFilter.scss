@@ -1,0 +1,50 @@
+// (C) 2022 GoodData Corporation
+@use "attributeFilterVariables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.gd-attribute-filter__next {
+    display: inline-block;
+
+    .button-dropdown {
+        max-width: 100%;
+    }
+}
+
+// TODO:
+
+.gd-attribute-filter-dropdown-bubble__next {
+    max-width: 200px;
+}
+
+.gd-extended-date-filter-body .gd-list-item.is-selected {
+    font-weight: bold;
+}
+
+.gd-filtered-message__next:hover {
+    color: variables.$gd-color-text;
+}
+
+.gd-mobile-dropdown-content {
+    .gd-attribute-filter-overlay__next {
+        max-width: none;
+    }
+}
+
+// Invertable list overrides
+.gd-is-mobile {
+    .gd-invertable-select-all-checkbox {
+        font-size: 14px;
+        height: 30px;
+        padding-bottom: 10px;
+        margin-bottom: 0;
+    }
+
+    .gd-invertable-list-limitExceeded {
+        width: 100%;
+    }
+
+    .gd-invertable-select-selection-status {
+        font-size: 14px;
+        height: 30px;
+    }
+}

@@ -1,0 +1,244 @@
+// (C) 2020-2025 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$widget-title-color: var(--gd-palette-complementary-8-from-theme, #454e56);
+$insight-panel-header-bg: var(--gd-palette-primary-dimmed-from-theme, rgba(142, 220, 244, 0.2));
+$insight-arrow-panel-bg: #e9f8fc;
+$insight-original-title-color: var(--gd-palette-complementary-7-from-theme, #454e56);
+$insight-config-item-color: kit-variables.$gd-color-text;
+$insight-config-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b1c1d1);
+$delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
+
+%ellipsis {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.edit-insight-config {
+    .bubble-content {
+        .widget-title {
+            position: relative;
+            z-index: 1;
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 15px;
+            color: $widget-title-color;
+        }
+
+        .insight-title {
+            display: flex;
+            align-items: center;
+            padding-bottom: 5px;
+
+            .original-insight-title {
+                @extend %ellipsis;
+
+                max-width: 204px;
+                line-height: normal;
+                color: kit-variables.$gd-color-link;
+                font-size: 11px;
+            }
+
+            .gd-icon-locked {
+                margin-right: 5px;
+            }
+
+            .gd-icon-link {
+                opacity: 0;
+                cursor: pointer;
+            }
+
+            .gd-bubble-locked {
+                display: flex;
+                flex: 1 1 auto;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        p.insight-title {
+            width: fit-content;
+        }
+
+        .widget-title .insight-title {
+            font: inherit;
+            padding-bottom: 0;
+            text-align: left;
+
+            .original-insight-title {
+                font: inherit;
+                line-height: normal;
+                max-width: 190px;
+                color: $insight-original-title-color;
+            }
+        }
+
+        .widget-title > span.insight-title,
+        .insight-configuration-panel-header > span.insight-title {
+            @extend %ellipsis;
+
+            display: block;
+        }
+
+        .insight-configuration .insight-configuration-panel-header {
+            display: flex;
+            justify-content: space-between;
+
+            .insight-menu-title-wrapper {
+                flex: 1;
+            }
+
+            p.insight-title {
+                min-height: 16px;
+                margin-top: 5px;
+                padding-bottom: 0;
+
+                .original-insight-title {
+                    line-height: normal;
+                }
+            }
+
+            h3.widget-title p.insight-title {
+                min-height: 23px;
+                margin-top: 0;
+            }
+        }
+    }
+
+    .configuration-panel-header-close-button[class*="gd-icon-"] {
+        &::before {
+            font-size: 14px;
+        }
+    }
+
+    .insight-configuration .insight-configuration-panel-header {
+        background-color: $insight-panel-header-bg;
+        position: relative;
+        padding: variables.$item-inner-padding variables.$item-outer-padding variables.$item-inner-padding
+            variables.$gd-configuration-bubble-margin;
+        margin-bottom: 8px;
+    }
+    .insight-configuration .gd-menu-wrapper-small-spacing.gd-menu-wrapper {
+        box-shadow: inherit;
+        padding: 0;
+    }
+    .insight-configuration .gd-menu-wrapper.gd-menu-wrapper-small-spacing .gd-list-item {
+        &.gd-menu-item {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            padding: 6px 15px;
+            color: $insight-config-item-color;
+
+            &:hover {
+                color: var(--gd-palette-complementary-9-from-theme, kit-variables.$default-gd-color-text);
+            }
+
+            .item-icon {
+                margin-right: 10px;
+            }
+
+            .item-label {
+                line-height: 21px;
+            }
+
+            i {
+                margin-right: 10px;
+                color: $insight-config-item-icon-color;
+                font-size: 16px;
+            }
+            i::before {
+                position: relative;
+                top: 2px;
+            }
+
+            .gd-icon-wrapper {
+                display: flex;
+                padding-top: 3px;
+            }
+
+            .gd-icon-wrapper > .gd-icon-explore {
+                margin-right: 10px;
+            }
+        }
+        &.gd-list-item-separator {
+            &::before {
+                right: 0;
+                left: 0;
+            }
+        }
+        &.s-delete-insight-item:hover {
+            background-color: $delete-hover-status-bg;
+            color: kit-variables.$gd-palette-error-base;
+
+            i {
+                color: inherit;
+            }
+        }
+    }
+    .insight-configuration .gd-menu-wrapper {
+        border-radius: 0 0 3px 3px;
+
+        .insight-configuration-menu {
+            max-height: 350px;
+
+            &.Alerts {
+                max-height: 500px;
+            }
+
+            .gd-ui-kit-menu__content-container {
+                width: 100%;
+                display: flex;
+            }
+            .gd-ui-kit-menu__items-container {
+                padding-bottom: 8px;
+            }
+        }
+    }
+}
+
+.bubble-light.arrow-left-direction.edit-insight-config-arrow-color .arrow {
+    border-right-color: var(--gd-palette-complementary-3-from-theme, $insight-panel-header-bg);
+}
+
+.bubble-light.arrow-right-direction.edit-insight-config-arrow-color .arrow {
+    border-left-color: var(--gd-palette-complementary-3-from-theme, $insight-panel-header-bg);
+}
+
+.bubble-light.arrow-left-direction.edit-insight-config-arrow-submenu-color .arrow {
+    border-right-color: kit-variables.$is-focused-background;
+}
+
+.bubble-light.arrow-right-direction.edit-insight-config-arrow-submenu-color .arrow {
+    border-left-color: kit-variables.$is-focused-background;
+}
+
+.edit-insight-config .bubble-content .content a {
+    opacity: 1;
+}
+
+// sdk-edit-mode-on is in selector to override same classes in KD.
+// Can be removed when old implementation in KD removed
+.gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on {
+    .edit-insight-config-arrow-submenu-color {
+        .bubble-content .configuration-panel-header {
+            padding: variables.$item-outer-padding;
+        }
+    }
+
+    .edit-insight-config-title-1-line {
+        .bubble-content .arrow-position {
+            top: 9px;
+        }
+    }
+
+    .edit-insight-config-title-2-lines {
+        .bubble-content .arrow-position {
+            top: 18px;
+        }
+    }
+}

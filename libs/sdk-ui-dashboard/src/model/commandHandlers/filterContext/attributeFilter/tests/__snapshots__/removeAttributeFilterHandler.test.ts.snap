@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`removeAttributeFilterHandler > should emit the appropriate events for removed attribute filter 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+  },
+]
+`;
+
+exports[`removeAttributeFilterHandler > should emit the appropriate events when trying to remove a non-existent attribute filter 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;

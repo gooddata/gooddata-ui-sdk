@@ -1,0 +1,15 @@
+{
+    "properly.string": "test {t}",
+    "properly.obj": {
+        "value": "test <span class='addon'>test</span>",
+        "comment": "test",
+        "limit": 0
+    },
+    "property.string": "test with translate property {t}",
+    "property.obj": {
+        "value": "test with translate<span class='addon'>test</span>",
+        "comment": "test with translate",
+        "limit": 0,
+        "translate": false
+    }
+}

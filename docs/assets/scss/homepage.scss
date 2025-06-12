@@ -1,0 +1,231 @@
+@import "variables/variables";
+@import "homepage/box";
+@import "homepage/hosted";
+@import "homepage/learn";
+@import "homepage/slack";
+@import "homepage/sections-list";
+@import "homepage/icons";
+
+.container {
+    @include mq(x-large) {
+        max-width: 1400px;
+    }
+}
+
+.td-box {
+    text-align: center;
+
+    &--gray {
+        color: inherit;
+        background-color: $color-bg-gray;
+    }
+
+    .row {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .links {
+        max-width: 500px;
+        margin: auto;
+
+        @include mq(medium) {
+            max-width: 1200px;
+        }
+
+        h2 {
+            margin-bottom: 50px;
+        }
+
+        p {
+            display: flex;
+            flex-wrap: wrap;
+            text-align: left;
+
+            a {
+                flex: 1 1 auto;
+                width: 100%;
+                padding: 10px;
+                font-weight: bold;
+                text-decoration: underline;
+
+                &::after {
+                    content: url("../img/arrow-right.svg");
+                    position: relative;
+                    top: 2px;
+                    margin-left: 10px;
+                    vertical-align: top;
+                }
+
+                @include mq(medium) {
+                    width: 50%;
+                }
+            }
+        }
+    }
+
+    .gray-box {
+        padding: 25px 32px;
+        background-color: $color-bg-gray;
+    }
+}
+
+.td-cover-block {
+    min-height: 280px;
+    margin-top: $header-height;
+
+    &#td-cover-block-0 {
+        padding: 50px 15px;
+        background-image: url("../cover-background.svg");
+
+        @include mq(x-large) {
+            background-image: url("../cover-background.svg");
+        }
+    }
+
+    &,
+    h1 {
+        color: $color-white;
+    }
+
+    p {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    .lead {
+        padding: 2rem 0 !important;
+    }
+}
+
+.gd-docs-button {
+    display: inline-block;
+    padding: .28125rem 1.25rem;
+    border: 2px solid $color-deep-purple;
+    border-radius: 50px;
+    color: $color-deep-purple;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.5;
+    white-space: nowrap;
+    background-color: transparent;
+    transition: $transition;
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: none;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        color: desaturate(lighten($color-deep-purple, 30%), 40%);
+        border-color: desaturate(lighten($color-deep-purple, 30%), 40%);
+    }
+}
+
+.c-video-thumbnail {
+    picture {
+        //margin-top: 20px;
+        position: relative;
+        display: inline-block;
+        max-width: 842px;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 64px;
+            height: 64px;
+            margin-top: -32px;
+            margin-left: -32px;
+            background: rgba(28, 13, 63, 0.6);
+            background-image: url('../img/video-play.svg');
+            background-position: 23px center;
+            background-size: 23px 29px;
+            background-repeat: no-repeat;
+            backdrop-filter: blur(24px);
+            border-radius: 50%;
+
+            @include mq(large) {
+                width: 138px;
+                height: 138px;
+                margin-top: -74px;
+                margin-left: -74px;
+                background-size: 54px 68px;
+                background-position: 47px center;
+            }
+        }
+    }
+}
+
+.homepage-card {
+    width: 100%;
+    padding: 24px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    background-color: $color-mist-gray;
+
+    &__hasIcon {
+        position: relative;
+    }
+
+    &__iconLeft {
+        padding-left: 88px;
+    }
+
+    &__icon {
+        display: block;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 16px;
+
+        svg {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+
+    &__iconLeft &__icon {
+        position: absolute;
+        top: 24px;
+        left: 24px;
+        color:none;
+    }
+
+    &__sectionLink {
+        color: $color-deep-purple;
+
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+
+            p {
+                color: $color-deep-purple;
+            }
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: $color-shocking-pink;
+        }
+    }
+
+    a {
+        display: block;
+    }
+
+    & h4#{&}__title {
+        margin-top: 0;
+    }
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+}

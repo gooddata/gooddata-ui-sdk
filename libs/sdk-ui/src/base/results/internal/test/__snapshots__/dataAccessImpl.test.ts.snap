@@ -1,0 +1,325 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DataAccessMethods > for data with scoped series and slices > should correctly extract data for series 1`] = `
+{
+  "rawData": [
+    5099309.54,
+    6614222.47,
+    8269682.68,
+    2761931.26,
+    2664832.4,
+    2607118.07,
+  ],
+  "series": "East Coast > Amount",
+  "slices": "CompuSci|Educationly|Explorer|Grammar Plus|PhoenixSoft|WonderKid",
+}
+`;
+
+exports[`DataAccessMethods > for data with scoped series and slices > should correctly extract data for series 2`] = `
+{
+  "rawData": [
+    2115472,
+    2307461.24,
+    2749765.23,
+    1401561.16,
+    804564.3,
+    1163935.72,
+  ],
+  "series": "East Coast > Won",
+  "slices": "CompuSci|Educationly|Explorer|Grammar Plus|PhoenixSoft|WonderKid",
+}
+`;
+
+exports[`DataAccessMethods > for data with scoped series and slices > should correctly extract data for series 3`] = `
+{
+  "rawData": [
+    22123590.1,
+    16332673,
+    30326512.18,
+    5280100.66,
+    6861025.51,
+    7684458.67,
+  ],
+  "series": "West Coast > Amount",
+  "slices": "CompuSci|Educationly|Explorer|Grammar Plus|PhoenixSoft|WonderKid",
+}
+`;
+
+exports[`DataAccessMethods > for data with scoped series and slices > should correctly extract data for series 4`] = `
+{
+  "rawData": [
+    7122497.87,
+    6550145.82,
+    6497774.39,
+    2571645.05,
+    2569827.89,
+    2456102.78,
+  ],
+  "series": "West Coast > Won",
+  "slices": "CompuSci|Educationly|Explorer|Grammar Plus|PhoenixSoft|WonderKid",
+}
+`;
+
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 1`] = `
+{
+  "rawData": [
+    2174478.26,
+    405767.14,
+    2580245.4,
+    1290122.7,
+    2008366.85,
+    590536.1,
+    2598902.95,
+    1299451.475,
+    2610784.51,
+    793939.81,
+    3404724.32,
+    1702362.16,
+    1964931.93,
+    268112.52,
+    2233044.45,
+    1116522.225,
+    1827108.25,
+    120416.22,
+    1947524.47,
+    973762.235,
+    1374944.56,
+    278916.58,
+    1653861.1400000001,
+    826930.5700000001,
+  ],
+  "series": "Exclude > East Coast > Amount",
+  "slices": "CompuSci,Direct Sales|CompuSci,Inside Sales|CompuSci,sum|CompuSci,med|Educationly,Direct Sales|Educationly,Inside Sales|Educationly,sum|Educationly,med|Explorer,Direct Sales|Explorer,Inside Sales|Explorer,sum|Explorer,med|Grammar Plus,Direct Sales|Grammar Plus,Inside Sales|Grammar Plus,sum|Grammar Plus,med|PhoenixSoft,Direct Sales|PhoenixSoft,Inside Sales|PhoenixSoft,sum|PhoenixSoft,med|WonderKid,Direct Sales|WonderKid,Inside Sales|WonderKid,sum|WonderKid,med",
+}
+`;
+
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 2`] = `
+{
+  "rawData": [
+    883793.08,
+    194123.92,
+    null,
+    538958.5,
+    754830.5,
+    283569.17,
+    null,
+    519199.83499999996,
+    989426.6,
+    430585.96,
+    null,
+    710006.28,
+    826188.69,
+    167291.74,
+    null,
+    496740.21499999997,
+    229646.4,
+    87001.62,
+    null,
+    158324.01,
+    550627.31,
+    119311.53,
+    null,
+    334969.42000000004,
+  ],
+  "series": "Exclude > East Coast > Won",
+  "slices": "CompuSci,Direct Sales|CompuSci,Inside Sales|CompuSci,sum|CompuSci,med|Educationly,Direct Sales|Educationly,Inside Sales|Educationly,sum|Educationly,med|Explorer,Direct Sales|Explorer,Inside Sales|Explorer,sum|Explorer,med|Grammar Plus,Direct Sales|Grammar Plus,Inside Sales|Grammar Plus,sum|Grammar Plus,med|PhoenixSoft,Direct Sales|PhoenixSoft,Inside Sales|PhoenixSoft,sum|PhoenixSoft,med|WonderKid,Direct Sales|WonderKid,Inside Sales|WonderKid,sum|WonderKid,med",
+}
+`;
+
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 3`] = `
+{
+  "rawData": [
+    5917286.73,
+    3156945.21,
+    9074231.940000001,
+    4537115.970000001,
+    4088621.31,
+    3053141.34,
+    7141762.65,
+    3570881.325,
+    6011398.61,
+    3135777.62,
+    9147176.23,
+    4573588.115,
+    1060976.15,
+    877547.53,
+    1938523.68,
+    969261.84,
+    1980712.38,
+    1358755.87,
+    3339468.25,
+    1669734.125,
+    2542872.97,
+    1330301.14,
+    3873174.1100000003,
+    1936587.0550000002,
+  ],
+  "series": "Exclude > West Coast > Amount",
+  "slices": "CompuSci,Direct Sales|CompuSci,Inside Sales|CompuSci,sum|CompuSci,med|Educationly,Direct Sales|Educationly,Inside Sales|Educationly,sum|Educationly,med|Explorer,Direct Sales|Explorer,Inside Sales|Explorer,sum|Explorer,med|Grammar Plus,Direct Sales|Grammar Plus,Inside Sales|Grammar Plus,sum|Grammar Plus,med|PhoenixSoft,Direct Sales|PhoenixSoft,Inside Sales|PhoenixSoft,sum|PhoenixSoft,med|WonderKid,Direct Sales|WonderKid,Inside Sales|WonderKid,sum|WonderKid,med",
+}
+`;
+
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 4`] = `
+{
+  "rawData": [
+    2370306.08,
+    1270431.27,
+    null,
+    1820368.675,
+    1350035.81,
+    1746096.06,
+    null,
+    1548065.935,
+    2305188,
+    1226965.38,
+    null,
+    1766076.69,
+    389910.95,
+    510727.21,
+    null,
+    450319.08,
+    1150517.74,
+    272152.06,
+    null,
+    711334.9,
+    1109596.41,
+    398431.88,
+    null,
+    754014.145,
+  ],
+  "series": "Exclude > West Coast > Won",
+  "slices": "CompuSci,Direct Sales|CompuSci,Inside Sales|CompuSci,sum|CompuSci,med|Educationly,Direct Sales|Educationly,Inside Sales|Educationly,sum|Educationly,med|Explorer,Direct Sales|Explorer,Inside Sales|Explorer,sum|Explorer,med|Grammar Plus,Direct Sales|Grammar Plus,Inside Sales|Grammar Plus,sum|Grammar Plus,med|PhoenixSoft,Direct Sales|PhoenixSoft,Inside Sales|PhoenixSoft,sum|PhoenixSoft,med|WonderKid,Direct Sales|WonderKid,Inside Sales|WonderKid,sum|WonderKid,med",
+}
+`;
+
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 5`] = `
+{
+  "rawData": [
+    1989393.54,
+    529670.6,
+    2519064.14,
+    1259532.07,
+    3467615.16,
+    547704.36,
+    4015319.52,
+    2007659.76,
+    2935008.02,
+    1929950.34,
+    4864958.36,
+    2432479.18,
+    361332.16,
+    167554.65,
+    528886.8099999999,
+    264443.40499999997,
+    536526.06,
+    180781.87,
+    717307.93,
+    358653.965,
+    728206.16,
+    225050.77,
+    953256.93,
+    476628.465,
+  ],
+  "series": "Include > East Coast > Amount",
+  "slices": "CompuSci,Direct Sales|CompuSci,Inside Sales|CompuSci,sum|CompuSci,med|Educationly,Direct Sales|Educationly,Inside Sales|Educationly,sum|Educationly,med|Explorer,Direct Sales|Explorer,Inside Sales|Explorer,sum|Explorer,med|Grammar Plus,Direct Sales|Grammar Plus,Inside Sales|Grammar Plus,sum|Grammar Plus,med|PhoenixSoft,Direct Sales|PhoenixSoft,Inside Sales|PhoenixSoft,sum|PhoenixSoft,med|WonderKid,Direct Sales|WonderKid,Inside Sales|WonderKid,sum|WonderKid,med",
+}
+`;
+
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 6`] = `
+{
+  "rawData": [
+    817756.22,
+    219798.78,
+    null,
+    518777.5,
+    1160639.56,
+    108422.01,
+    null,
+    634530.785,
+    1106550.62,
+    223202.05,
+    null,
+    664876.3350000001,
+    259178.39,
+    148902.34,
+    null,
+    204040.365,
+    329035.25,
+    158881.03,
+    null,
+    243958.14,
+    476598.4,
+    17398.48,
+    null,
+    246998.44,
+  ],
+  "series": "Include > East Coast > Won",
+  "slices": "CompuSci,Direct Sales|CompuSci,Inside Sales|CompuSci,sum|CompuSci,med|Educationly,Direct Sales|Educationly,Inside Sales|Educationly,sum|Educationly,med|Explorer,Direct Sales|Explorer,Inside Sales|Explorer,sum|Explorer,med|Grammar Plus,Direct Sales|Grammar Plus,Inside Sales|Grammar Plus,sum|Grammar Plus,med|PhoenixSoft,Direct Sales|PhoenixSoft,Inside Sales|PhoenixSoft,sum|PhoenixSoft,med|WonderKid,Direct Sales|WonderKid,Inside Sales|WonderKid,sum|WonderKid,med",
+}
+`;
+
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 7`] = `
+{
+  "rawData": [
+    5501537.16,
+    7547821,
+    13049358.16,
+    6524679.08,
+    6623534.92,
+    2567375.43,
+    9190910.35,
+    4595455.175,
+    18472467,
+    2706868.95,
+    21179335.95,
+    10589667.975,
+    2476731.94,
+    864845.04,
+    3341576.98,
+    1670788.49,
+    1418895.61,
+    2102661.65,
+    3521557.26,
+    1760778.63,
+    2332594.72,
+    1478689.84,
+    3811284.5600000005,
+    1905642.2800000003,
+  ],
+  "series": "Include > West Coast > Amount",
+  "slices": "CompuSci,Direct Sales|CompuSci,Inside Sales|CompuSci,sum|CompuSci,med|Educationly,Direct Sales|Educationly,Inside Sales|Educationly,sum|Educationly,med|Explorer,Direct Sales|Explorer,Inside Sales|Explorer,sum|Explorer,med|Grammar Plus,Direct Sales|Grammar Plus,Inside Sales|Grammar Plus,sum|Grammar Plus,med|PhoenixSoft,Direct Sales|PhoenixSoft,Inside Sales|PhoenixSoft,sum|PhoenixSoft,med|WonderKid,Direct Sales|WonderKid,Inside Sales|WonderKid,sum|WonderKid,med",
+}
+`;
+
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 8`] = `
+{
+  "rawData": [
+    2039952.64,
+    1441807.88,
+    null,
+    1740880.2599999998,
+    2612041.49,
+    841972.46,
+    null,
+    1727006.975,
+    2097915.19,
+    867705.82,
+    null,
+    1482810.505,
+    1434946.69,
+    236060.2,
+    null,
+    835503.445,
+    583354.19,
+    563803.9,
+    null,
+    573579.0449999999,
+    676823.87,
+    271250.62,
+    null,
+    474037.245,
+  ],
+  "series": "Include > West Coast > Won",
+  "slices": "CompuSci,Direct Sales|CompuSci,Inside Sales|CompuSci,sum|CompuSci,med|Educationly,Direct Sales|Educationly,Inside Sales|Educationly,sum|Educationly,med|Explorer,Direct Sales|Explorer,Inside Sales|Explorer,sum|Explorer,med|Grammar Plus,Direct Sales|Grammar Plus,Inside Sales|Grammar Plus,sum|Grammar Plus,med|PhoenixSoft,Direct Sales|PhoenixSoft,Inside Sales|PhoenixSoft,sum|PhoenixSoft,med|WonderKid,Direct Sales|WonderKid,Inside Sales|WonderKid,sum|WonderKid,med",
+}
+`;

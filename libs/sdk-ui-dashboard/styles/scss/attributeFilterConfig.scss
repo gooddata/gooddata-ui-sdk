@@ -1,0 +1,364 @@
+// (C) 2022-2025 GoodData Corporation
+
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "sharedFilterConfig";
+
+.attribute-filter-dropdown-configuration-button {
+    width: 100%;
+    margin-bottom: -1px;
+
+    .button-wrapper {
+        display: flex;
+        width: 100%;
+        height: 40px;
+        padding: 10px;
+        font-size: 16px;
+        color: var(--gd-palette-complementary-5, #b0beca);
+        border-top: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    }
+
+    .button-text {
+        padding-left: 6px;
+        font-size: 14px;
+        color: var(--gd-palette-complementary-8, #464e56);
+    }
+}
+
+.attribute-filter-dropdown-configuration {
+    .gd-infinite-list {
+        max-height: 350px;
+        overflow: auto;
+        margin: 6px 0 10px;
+    }
+
+    .gd-list-item.is-selected {
+        font-weight: normal;
+    }
+
+    .attribute-filter-item {
+        height: 28px;
+    }
+
+    .input-checkbox-label.configuration-item-title {
+        display: flex;
+        flex-grow: 0;
+
+        .addon {
+            flex-shrink: 0;
+            color: kit-variables.$gd-color-state-blank;
+            margin-right: 3px;
+        }
+    }
+
+    .input-checkbox-label {
+        display: inline-block;
+    }
+
+    .configuration-panel-body {
+        padding: 0 10px 10px;
+
+        .attribute-display-form-button {
+            width: 100%;
+        }
+    }
+
+    .connecting-attributes-dropdown {
+        padding: 6px 10px 6px 30px;
+
+        .gd-button {
+            width: 100%;
+        }
+
+        .gd-button-icon {
+            width: 18px;
+        }
+
+        .gd-button-icon::before {
+            height: 17px;
+        }
+    }
+
+    .configuration-selection-mode {
+        display: flex;
+        flex-direction: column;
+        margin: 0 10px 10px;
+
+        .selection-mode-dropdown-button {
+            width: 100%;
+        }
+    }
+
+    .configuration-item-mode {
+        margin: 0 10px 10px;
+
+        .input-radio-label {
+            font-size: 12px;
+        }
+    }
+
+    // remove line drawn across the dropdown content, made by attribute filter styles
+    // targeting every :after in the dropdown, the ones below should not have the line
+    .configuration-category.attribute-filter__limit__title {
+        .gd-button-small::after {
+            width: 0;
+        }
+
+        .gd-button-icon::after,
+        .gd-button-text::after {
+            width: 0;
+        }
+    }
+}
+
+.connecting-attributes-dropdown-body {
+    .gd-list-icon {
+        width: 18px;
+    }
+
+    .gd-list-icon::before {
+        height: 16px;
+    }
+}
+
+.dropdown-footer {
+    margin: 0 10px;
+    padding: 10px 0;
+    text-align: right;
+
+    @media #{kit-variables.$medium-up} {
+        border-top: 1px solid kit-variables.$gd-border-color;
+    }
+}
+
+.dropdown-body {
+    .gd-list-footer {
+        .unrelated-date-button {
+            font-size: 12px;
+            line-height: 16px;
+            padding-left: 2px;
+            padding-right: 0;
+            margin-top: -3px;
+        }
+    }
+}
+
+.gd-attribute-filter-dropdown-bubble {
+    max-width: 200px;
+}
+
+.attribute-display-form-dropdown-body {
+    line-height: 1.4rem;
+
+    .attribute-display-form-name {
+        padding: 2px 10px;
+
+        &::before {
+            content: "";
+            flex-shrink: 0;
+            position: relative;
+            top: -1px;
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+            vertical-align: bottom;
+        }
+
+        &.gd-icon-earth::before {
+            content: "\E624";
+            color: kit-variables.$gd-color-warning;
+            text-align: center;
+        }
+    }
+}
+
+.attribute-filter__limit__title {
+    display: flex;
+    justify-content: space-between;
+
+    h3 {
+        flex: 1 0;
+    }
+
+    .gd-icon-circle-question {
+        color: kit-variables.$default-gd-color-disabled;
+    }
+}
+
+.attribute-filter__limit__add-button {
+    padding: 0 0 0 5px;
+
+    &:active,
+    &:focus,
+    &:hover {
+        .gd-button-text {
+            text-decoration: none;
+            color: kit-variables.$gd-palette-primary-base-darken06;
+        }
+    }
+
+    .gd-button-text {
+        line-height: 21px;
+    }
+
+    .gd-button-icon::before {
+        line-height: 22px;
+    }
+}
+
+.attribute-filter__limit__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 3px 10px;
+    font-size: 12px;
+
+    .attribute-filter__limit__item__delete {
+        visibility: hidden;
+        font-size: 12px;
+        text-align: center;
+        cursor: pointer;
+        line-height: 12px;
+        color: kit-variables.$gd-color-link;
+    }
+
+    &:hover {
+        .attribute-filter__limit__item__delete {
+            visibility: visible;
+        }
+    }
+
+    .attribute-filter__limit__item__delete:hover {
+        color: var(--gd-palette-error-base, #e54d42);
+    }
+}
+
+.attribute-filter__limit__item__title {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    color: kit-variables.$default-gd-color-text;
+
+    .attribute-filter__limit__item__icon {
+        flex-shrink: 0;
+        margin: 0 5px 0 0;
+    }
+
+    .attribute-filter__limit__item__name {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+
+.attribute-filter__limit__item__title--aggregated {
+    white-space: nowrap;
+    overflow: hidden;
+    color: kit-variables.$gd-color-state-blank;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.attribute-filter__limit__item--disabled {
+    color: kit-variables.$default-gd-color-disabled;
+}
+
+.attribute-filter__limit__no-data,
+.attribute-filter__limit__popup__no-data {
+    font-size: 12px;
+    text-align: left;
+    margin: 10px;
+}
+
+.attribute-filter__limit__popup__no-data {
+    text-align: center;
+    padding: 30px 0;
+    font-size: 14px;
+    margin: 0;
+}
+
+.attribute-filter__limit__popup__item.gd-list-item {
+    span {
+        display: flex; // override leaking style from gd-list-item
+    }
+
+    &.is-disabled {
+        color: kit-variables.$default-gd-color-disabled;
+        cursor: default;
+    }
+}
+
+.attribute-filter__limit__popup {
+    .attribute-filter__limit__popup__content {
+        padding: 5px 0;
+    }
+
+    // this specificity seems to be necessary in order to override the wrong color
+    &.bubble {
+        .bubble-content {
+            .content {
+                // stylelint-disable-next-line max-nesting-depth
+                .attribute-filter__limit__popup__action-select__option__link {
+                    color: kit-variables.$gd-color-text;
+                }
+            }
+        }
+    }
+}
+
+.attribute-filter__limit__popup__action-select__option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+
+    &:hover {
+        background: kit-variables.$is-focused-background;
+    }
+}
+
+.attribute-filter__limit__popup__action-select__title {
+    color: kit-variables.$gd-color-text;
+    font-size: 14px;
+    padding-bottom: 5px;
+}
+
+.attribute-filter__limit__popup__action-select__description {
+    color: kit-variables.$gd-color-link;
+}
+
+.attribute-filter__limit__popup__action-select__icon::before {
+    font-size: 10px;
+}
+
+.attribute-filter__limit__popup__list {
+    padding: 10px 0;
+}
+
+.attribute-filter__limit__popup__list--searchable {
+    padding: 0 0 10px;
+}
+
+.attribute-filter__limit__popup__list--dates {
+    padding: 10px 0;
+}
+
+.date-filter__limit__popup__item {
+    span {
+        display: flex;
+        margin-left: 5px;
+    }
+
+    &::before {
+        content: "";
+        position: relative;
+        display: block;
+        width: 18px;
+        height: 24px;
+        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/date-dropdown.svg") no-repeat center;
+    }
+}

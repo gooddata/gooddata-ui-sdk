@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`modifyDrillsForInsightWidgetHandler > modify > should emit the appropriate events for modify drill for Insight Widget command 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.WIDGET.FILTERS",
+    "type": "GDC.DASH/EVT.QUERY.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.WIDGET.FILTERS",
+    "type": "GDC.DASH/EVT.QUERY.COMPLETED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
+  },
+]
+`;

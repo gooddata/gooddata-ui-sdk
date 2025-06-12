@@ -1,0 +1,45 @@
+// (C) 2023 GoodData Corporation
+
+// Import external styles TODO: link those directly from gooddata/gdc-website repository
+@import "functions/functions.pxtorem";
+@import "mixins/mixins.media-queries";
+@import "variables/variables.colors";
+@import "variables/variables.media-queries";
+
+// Local styles
+@import "typography";
+@import "header";
+@import "breadcrumbs";
+@import "dropdown";
+@import "menu";
+@import "layout";
+@import "prev-next-pages";
+@import "toc";
+@import "code-select";
+@import "share-dialog";
+@import "swagger";
+@import "alert";
+@import "tooltip";
+@import "homepage";
+@import "tables";
+@import "content-select";
+@import "embedded-image";
+@import "api-reference";
+@import "addon-widget";
+@import "expand-content";
+@import "cards-container";
+@import "404";
+
+#print {
+  display: none; // Hide print functionality for now
+}
+
+.gd-footer {
+  min-height: auto;
+  margin-left: -15px;
+  margin-right: -15px;
+
+  &-buttons svg {
+    vertical-align: top;
+  }
+}

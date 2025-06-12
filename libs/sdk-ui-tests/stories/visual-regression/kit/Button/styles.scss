@@ -1,0 +1,38 @@
+// (C) 2020-2024 GoodData Corporation
+@import "../styles/goodstrap.scss";
+
+.icons-list {
+    box-sizing: border-box;
+
+    button {
+        min-width: 185px;
+        margin-left: 10px;
+        text-align: left;
+
+        &,
+        &:hover,
+        &:active {
+            &::before {
+                color: var(--gd-palette-complementary-7-from-theme, #777);
+            }
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            text-decoration: none;
+        }
+
+        span {
+            color: var(--gd-palette-complementary-5-from-theme, #aaa);
+            text-decoration: none;
+            text-transform: none;
+        }
+    }
+}
+
+.example-buttons-button-class {
+    div {
+        margin-top: 5px;
+    }
+}

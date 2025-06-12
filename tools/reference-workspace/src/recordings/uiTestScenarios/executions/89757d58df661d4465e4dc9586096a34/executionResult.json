@@ -1,0 +1,46 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "dt_oppcreated_timestamp.year",
+                            "name": "Created - Year",
+                            "uri": ""
+                        },
+                        "format": { "locale": "en-US", "pattern": "y" },
+                        "granularity": "YEAR",
+                        "identifier": "dt_oppcreated_timestamp.year",
+                        "localIdentifier": "a_dt_oppcreated_timestamp.year",
+                        "name": "Created - Year",
+                        "primaryLabel": {
+                            "identifier": "dt_oppcreated_timestamp.year",
+                            "type": "displayForm"
+                        },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                    "name": "Amount"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,71 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`prepareComplementaryPalette > should complete the complementary palette with missing shades 1`] = `
+{
+  "palette": {
+    "complementary": {
+      "c0": "#fff",
+      "c1": "#e2e2e2",
+      "c2": "#c6c6c6",
+      "c3": "#aaa",
+      "c4": "#8d8d8d",
+      "c5": "#717171",
+      "c6": "#555",
+      "c7": "#383838",
+      "c8": "#1c1c1c",
+      "c9": "#000",
+    },
+  },
+}
+`;
+
+exports[`prepareComplementaryPalette > should complete the complementary palette with missing shades 2`] = `
+{
+  "palette": {
+    "complementary": {
+      "c0": "#fff",
+      "c1": "#d7f2fa",
+      "c2": "#b0e5f5",
+      "c3": "#89d8f0",
+      "c4": "#62cbeb",
+      "c5": "#3bbee6",
+      "c6": "#14b2e2",
+      "c7": "#0d7696",
+      "c8": "#063b4b",
+      "c9": "#000",
+    },
+  },
+}
+`;
+
+exports[`prepareTheme > should prepare the theme 1`] = `
+{
+  "palette": {
+    "complementary": {
+      "c0": "#fff",
+      "c1": "#e2e2e2",
+      "c2": "#c6c6c6",
+      "c3": "#aaa",
+      "c4": "#8d8d8d",
+      "c5": "#717171",
+      "c6": "#555",
+      "c7": "#383838",
+      "c8": "#1c1c1c",
+      "c9": "#000",
+    },
+    "error": {
+      "base": "#f00",
+      "contrast": "#0ff",
+    },
+    "primary": {
+      "base": "#14b2e2",
+    },
+    "success": {
+      "base": "#00c18d",
+    },
+    "warning": {
+      "base": "#f18600",
+    },
+  },
+}
+`;

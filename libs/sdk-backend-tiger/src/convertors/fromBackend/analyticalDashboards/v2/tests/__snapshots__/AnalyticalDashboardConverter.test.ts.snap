@@ -1,0 +1,172 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AnalyticalDashboardConverter > prepareDrillLocalIdentifierIfMissing > should add localIdentifier to drillItems if missing 1`] = `
+{
+  "sections": [
+    {
+      "header": {},
+      "items": [
+        {
+          "size": {
+            "xl": {
+              "gridHeight": 22,
+              "gridWidth": 8,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "dateDataSet": {
+              "identifier": "dt_oppcreated_timestamp",
+              "type": "dataSet",
+            },
+            "description": "",
+            "drills": [
+              {
+                "localIdentifier": "mockeduuid",
+                "origin": {
+                  "measure": {
+                    "localIdentifier": "3502d14f99e845d6a9b6d41ad7f434e8",
+                  },
+                  "type": "drillFromMeasure",
+                },
+                "target": {
+                  "identifier": "51ab79db-d7aa-44fe-ba93-404d83f071d3",
+                  "type": "analyticalDashboard",
+                },
+                "transition": "in-place",
+                "type": "drillToDashboard",
+              },
+              {
+                "localIdentifier": "mockeduuid",
+                "origin": {
+                  "measure": {
+                    "localIdentifier": "0194ba717d1e41e3ba6c4a3302b9a74a",
+                  },
+                  "type": "drillFromMeasure",
+                },
+                "target": {
+                  "url": "https://googgle.com",
+                },
+                "transition": "new-window",
+                "type": "drillToCustomUrl",
+              },
+            ],
+            "identifier": "de6092cf-d243-4987-918b-8aac3ecd26cc_widget-0",
+            "ignoreDashboardFilters": [],
+            "insight": {
+              "identifier": "de6092cf-d243-4987-918b-8aac3ecd26cc",
+              "type": "insight",
+            },
+            "properties": {},
+            "ref": {
+              "identifier": "de6092cf-d243-4987-918b-8aac3ecd26cc_widget-0",
+            },
+            "title": "Pie chart multiple measures",
+            "type": "insight",
+            "uri": "de6092cf-d243-4987-918b-8aac3ecd26cc_widget-0",
+          },
+        },
+        {
+          "size": {
+            "xl": {
+              "gridHeight": 31,
+              "gridWidth": 11,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "dateDataSet": {
+              "identifier": "dt_closedate_timestamp",
+              "type": "dataSet",
+            },
+            "description": "",
+            "drills": [
+              {
+                "localIdentifier": "b4c6999557164163a9e0e75ec74cb8db",
+                "origin": {
+                  "measure": {
+                    "localIdentifier": "ebf774d29af346b2915d72e74b6527a5",
+                  },
+                  "type": "drillFromMeasure",
+                },
+                "target": {
+                  "identifier": "51ab79db-d7aa-44fe-ba93-404d83f071d3",
+                  "type": "analyticalDashboard",
+                },
+                "transition": "in-place",
+                "type": "drillToDashboard",
+              },
+              {
+                "localIdentifier": "f524468b249440f5b446a5f354d9df07",
+                "origin": {
+                  "attribute": {
+                    "localIdentifier": "7d5bbdfea48a419d92e14444fa47bdb5",
+                  },
+                  "type": "drillFromAttribute",
+                },
+                "target": {
+                  "identifier": "c4e4916e-ccc2-46d1-8202-8321249ec2a3",
+                  "type": "analyticalDashboard",
+                },
+                "transition": "in-place",
+                "type": "drillToDashboard",
+              },
+              {
+                "localIdentifier": "mockeduuid",
+                "origin": {
+                  "attribute": {
+                    "localIdentifier": "7d5bbdfea48a419d92e14444fa47bdb5",
+                  },
+                  "type": "drillFromAttribute",
+                },
+                "target": {
+                  "identifier": "87e5c951-0ae6-4a71-a38d-843457bdfc0b",
+                  "type": "insight",
+                },
+                "transition": "pop-up",
+                "type": "drillToInsight",
+              },
+              {
+                "localIdentifier": "75ba0281ecef4c4e8f874cd1642965d0",
+                "origin": {
+                  "attribute": {
+                    "localIdentifier": "fa674d6055324a23bceb93f624a4844b",
+                  },
+                  "type": "drillFromAttribute",
+                },
+                "target": {
+                  "displayForm": {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "hyperlinkDisplayForm": {
+                    "identifier": "f_owner.region_id.regionhyperlink",
+                    "type": "displayForm",
+                  },
+                },
+                "transition": "new-window",
+                "type": "drillToAttributeUrl",
+              },
+            ],
+            "identifier": "75e08348-d27f-42b8-a360-41bee971fb6d_widget-1",
+            "ignoreDashboardFilters": [],
+            "insight": {
+              "identifier": "75e08348-d27f-42b8-a360-41bee971fb6d",
+              "type": "insight",
+            },
+            "properties": {},
+            "ref": {
+              "identifier": "75e08348-d27f-42b8-a360-41bee971fb6d_widget-1",
+            },
+            "title": "Dependency wheel chart",
+            "type": "insight",
+            "uri": "75e08348-d27f-42b8-a360-41bee971fb6d_widget-1",
+          },
+        },
+      ],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;

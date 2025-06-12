@@ -1,0 +1,44 @@
+// (C) 2021-2025 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
+@use "@gooddata/sdk-ui-kit/styles/css/list";
+@use "@gooddata/sdk-ui-kit/styles/css/messages";
+@use "@gooddata/sdk-ui-kit/styles/css/richText";
+@use "@gooddata/sdk-ui-filters/styles/css/attributeFilter";
+@use "@gooddata/sdk-ui-filters/styles/css/dateFilter";
+@use "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext";
+@use "@gooddata/sdk-ui-ext/styles/internal/css/attribute_hierarchies";
+@use "remove";
+@use "dashboard";
+@use "dragAndDrop";
+@use "filterBar";
+@use "grouped-navigation";
+@use "topBar";
+@use "drillDialog";
+@use "drillSelect";
+@use "poweredByGDLogo";
+@use "export";
+@use "saveAsDialog";
+@use "loadingEqualizer";
+@use "configurationPanel"; // order is important here, configurationPanel must come before insightConfiguration ...
+@use "insightConfiguration";
+@use "visualization";
+@use "shareIndicators";
+@use "sidebar";
+@use "icons";
+@use "dateFilterConfigWarnings";
+@use "attributeFilterConfig"; // order is important here, must come after "icons"
+@use "resizing";
+@use "drillConfigPanel";
+@use "toolbar";
+@use "dateFilterConfig";
+@use "richTextWidget";
+@use "visualizationSwitcherWidget";
+@use "alerting";
+@use "deleteDialog";
+@use "visualizationSwitcherToolbar";
+@use "visualizationSwitcherHeader";
+@use "dashboardNestedLayoutToolbar";
+@use "dashboardNestedLayoutWidget";
+@use "dashboardSettingsDialog";
+@use "descriptionPanel";
+@use "automationFilters";

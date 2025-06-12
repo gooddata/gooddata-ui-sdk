@@ -1,0 +1,142 @@
+// (C) 2020-2024 GoodData Corporation
+@import "../styles/goodstrap.scss";
+
+/* bubble */
+
+// allow vendor prefixes
+// stylelint-disable value-no-vendor-prefix, declaration-block-no-duplicate-properties, max-line-length
+
+@mixin gradient-linear($topColor, $bottomColor) {
+    background: $bottomColor; /* Old browsers */
+    background-image: -webkit-linear-gradient(top, $topColor, $bottomColor); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient(top, $topColor, $bottomColor); /* FF3.6 */
+    background-image: -ms-linear-gradient(top, $topColor, $bottomColor); /* IE10 */
+    background-image: linear-gradient(to top, $topColor, $bottomColor);
+}
+// stylelint-enable value-no-vendor-prefix, declaration-block-no-duplicate-properties
+
+.bubble-example-container {
+    position: relative;
+    // overwrite
+    // stylelint-disable-next-line declaration-no-important
+    padding: 30px 0 !important;
+    min-width: 130px;
+
+    .bubble {
+        top: 10px;
+        left: 25px;
+    }
+}
+
+.bubble-example-container-short {
+    // overwrite
+    // stylelint-disable-next-line declaration-no-important
+    padding: 10px 0 60px !important;
+    min-width: 80px;
+}
+
+.bubbleHelpView {
+    display: inline-block;
+}
+
+/* react examples */
+
+.bubble-align-example {
+    display: inline-block;
+    width: 25%;
+    padding: 30px;
+}
+
+.bubble-align-example-target {
+    width: 150px;
+    height: 70px;
+    background: var(--gd-palette-complementary-5-from-theme, silver);
+}
+
+.bubble-align-point-example .bubble-align-example-target {
+    position: relative;
+    width: 250px;
+    height: 125px;
+    background: #d62a1e;
+}
+
+.bubble-align-point {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px dashed black;
+    background: var(--gd-palette-complementary-3-from-theme, rgba(255, 255, 255, 0.75));
+    border-radius: 50%;
+    font-size: 90%;
+    text-align: center;
+}
+
+/* top */
+$offset: 10px;
+
+.bubble-align-point-tl {
+    top: 0;
+    left: 0;
+    margin-top: -$offset;
+    margin-left: -$offset;
+}
+
+.bubble-align-point-tc {
+    top: 0;
+    left: 50%;
+    margin-top: -$offset;
+    margin-left: -$offset;
+}
+
+.bubble-align-point-tr {
+    top: 0;
+    right: 0;
+    margin-top: -$offset;
+    margin-right: -$offset;
+}
+
+/* center */
+
+.bubble-align-point-cc {
+    top: 50%;
+    left: 50%;
+    margin-top: -$offset;
+    margin-left: -$offset;
+}
+
+.bubble-align-point-cl {
+    top: 50%;
+    left: 0;
+    margin-top: -$offset;
+    margin-left: -$offset;
+}
+
+.bubble-align-point-cr {
+    top: 50%;
+    right: 0;
+    margin-top: -$offset;
+    margin-right: -$offset;
+}
+
+/* bottom */
+
+.bubble-align-point-bc {
+    bottom: 0;
+    left: 50%;
+    margin-bottom: -$offset;
+    margin-left: -$offset;
+}
+
+.bubble-align-point-bl {
+    bottom: 0;
+    left: 0;
+    margin-bottom: -$offset;
+    margin-left: -$offset;
+}
+
+.bubble-align-point-br {
+    right: 0;
+    bottom: 0;
+    margin-bottom: -$offset;
+    margin-right: -$offset;
+}

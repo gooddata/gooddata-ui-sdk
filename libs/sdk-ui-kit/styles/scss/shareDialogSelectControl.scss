@@ -1,0 +1,171 @@
+// (C) 2021-2025 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "mixins";
+@use "Button/_variables" as button-variables;
+
+.gd-share-dialog-content-select {
+    margin-bottom: 15px;
+
+    .gd-share-dialog__control {
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 1px solid button-variables.$button-normal-border-color;
+        box-shadow: inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85);
+        font-size: 14px;
+        font-family: variables.$gd-font-primary;
+        font-weight: 200;
+        line-height: normal;
+        vertical-align: middle;
+        color: variables.$gd-color-text;
+        background: variables.$gd-color-white;
+        transition-property: all;
+        transition-duration: 0.25s;
+        transition-timing-function: ease-in-out;
+        border-radius: 3px;
+        min-height: 32px;
+        &:hover {
+            border-color: var(--gd-palette-complementary-5-from-theme, #b3b3b3);
+        }
+    }
+
+    .gd-share-dialog__control--is-focused,
+    .gd-share-dialog__control--is-focused:hover {
+        border-color: variables.$gd-palette-primary-base;
+        outline: revert;
+        box-shadow: inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.8);
+    }
+
+    .gd-share-dialog__control--is-disabled {
+        color: variables.$gd-color-disabled;
+    }
+
+    .gd-share-dialog-input {
+        display: inline-flex;
+        flex-grow: 1;
+
+        div {
+            width: 100%;
+        }
+
+        .gd-share-dialog__input {
+            margin: 0;
+            padding: 0;
+            max-height: 19px;
+            color: variables.$gd-color-text;
+            font-size: 14px;
+
+            input {
+                // stylelint-disable-next-line declaration-no-important
+                width: 100% !important;
+                font-family: variables.$gd-font-primary;
+            }
+        }
+    }
+
+    .gd-share-dialog__placeholder {
+        position: absolute;
+        color: var(
+            --gd-palette-complementary-6-from-theme,
+            color.adjust(variables.$default-gd-color-link, $alpha: -0.25)
+        );
+    }
+
+    .gd-share-dialog__menu {
+        padding: 0;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 0 0 3px 3px;
+        border-color: variables.$gd-palette-primary-base;
+        border-top: 1px solid variables.$gd-border-color;
+        margin-top: -2px;
+        box-shadow: 0 0 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.2) inset;
+        color: variables.$gd-color-text;
+        background-color: variables.$gd-color-white;
+    }
+
+    .gd-share-dialog__menu-list {
+        padding-top: 0;
+        padding-bottom: 0;
+
+        .gd-share-dialog__option {
+            padding: 7px 12px;
+        }
+
+        .gd-share-dialog__option--is-focused {
+            background: variables.$is-focused-background;
+        }
+
+        .option-content {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            cursor: default;
+        }
+
+        .option-email {
+            color: var(--gd-palette-complementary-6, #94a1ad);
+            cursor: default;
+        }
+    }
+
+    .gd-share-dialog__group {
+        padding-bottom: 0;
+    }
+
+    .gd-share-dialog-option-error {
+        display: flex;
+        min-height: 38px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .gd-share-dialog-option-error-content {
+        flex-grow: 2;
+        margin: 4px;
+        padding: 4px;
+        font-size: 14px;
+        font-family: variables.$gd-font-primary;
+        font-weight: 200;
+        line-height: normal;
+        vertical-align: middle;
+        color: var(--gd-palette-error-base, #e54d42);
+        background: var(--gd-palette-error-lightest, #fff2f1);
+    }
+
+    .gd-share-dialog-loading-mask-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 38px;
+    }
+}
+
+.gd-share-dialog-select-group-heading {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 12px;
+    margin-right: 12px;
+
+    h3 {
+        flex-grow: 2;
+        position: relative;
+        overflow: hidden;
+        font-size: 11px;
+        text-transform: uppercase;
+        color: variables.$gd-color-state-blank;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            display: inline-block;
+            width: 100%;
+            height: 0;
+            margin-left: 10px;
+            border-top: 1px solid variables.$gd-border-color;
+        }
+    }
+}

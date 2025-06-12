@@ -1,0 +1,126 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`waterfallChartsSeries > should render the series correctly when one metric 1`] = `
+[
+  {
+    "color": "rgb(229,77,66)",
+    "connectNulls": true,
+    "data": [
+      {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Amount",
+        "y": 116625456.54,
+      },
+    ],
+    "legendIndex": 0,
+    "name": "Amount",
+    "seriesIndex": 0,
+    "upColor": "rgb(0,193,141)",
+  },
+]
+`;
+
+exports[`waterfallChartsSeries > should render the series correctly when one metric and view by 1`] = `
+[
+  {
+    "color": "rgb(229,77,66)",
+    "connectNulls": true,
+    "data": [
+      {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "CompuSci",
+        "y": 27222899.64,
+      },
+      {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Educationly",
+        "y": 22946895.47,
+      },
+      {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Explorer",
+        "y": 38596194.86,
+      },
+      {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Grammar Plus",
+        "y": 8042031.92,
+      },
+      {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "PhoenixSoft",
+        "y": 9525857.91,
+      },
+      {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "WonderKid",
+        "y": 10291576.74,
+      },
+    ],
+    "legendIndex": 0,
+    "name": "Amount",
+    "seriesIndex": 0,
+    "upColor": "rgb(0,193,141)",
+  },
+]
+`;
+
+exports[`waterfallChartsSeries > should render the series correctly when only metrics 1`] = `
+[
+  {
+    "color": "rgb(229,77,66)",
+    "connectNulls": true,
+    "data": [
+      {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0",
+        "legendIndex": 1,
+        "name": "Sum Velocity",
+        "y": 452518,
+      },
+      {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0",
+        "legendIndex": 1,
+        "name": "Sum Duration",
+        "y": 31110,
+      },
+      {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0",
+        "legendIndex": 1,
+        "name": "Sum Density",
+        "y": 511254,
+      },
+    ],
+    "legendIndex": 0,
+    "name": "Sum Velocity, Sum Duration, Sum Density",
+    "seriesIndex": 0,
+    "upColor": "rgb(0,193,141)",
+  },
+]
+`;

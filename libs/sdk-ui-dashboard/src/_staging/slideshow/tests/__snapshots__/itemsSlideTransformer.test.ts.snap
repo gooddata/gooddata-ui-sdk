@@ -1,0 +1,60 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ItemsSlideTransformer > filled items 1`] = `
+[
+  {
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridHeight": 4,
+            "gridWidth": 4,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "drills": [],
+          "identifier": "test1",
+          "insight": {
+            "identifier": "test1",
+            "type": "insight",
+          },
+          "ref": {
+            "identifier": "test1",
+            "type": "insight",
+          },
+          "type": "insight",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+  {
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridHeight": 4,
+            "gridWidth": 4,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "drills": [],
+          "identifier": "test2",
+          "insight": {
+            "identifier": "test2",
+            "type": "insight",
+          },
+          "ref": {
+            "identifier": "test2",
+            "type": "insight",
+          },
+          "type": "insight",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+]
+`;

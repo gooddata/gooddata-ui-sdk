@@ -1,0 +1,94 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ Rush ~ Bump major version
+on:
+    workflow_call:
+        inputs:
+            source-branch:
+                required: true
+                description: "The name of the source branch"
+                type: string
+            prerelease-id:
+                required: true
+                description: "The prerelease ID (alpha, beta, etc.)"
+                type: string
+        outputs:
+            version:
+                description: "Version which was created"
+                value: ${{ jobs.bump-version-and-commit.outputs.version }}
+
+jobs:
+    bump-version-and-commit:
+        runs-on:
+            group: infra1-runners-arc
+            labels: runners-cxa-xlarge
+        outputs:
+            version: ${{ steps.version.outputs.version }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ inputs.source-branch }}
+                  token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+
+            - name: Add repository to git safe directories to avoid dubious ownership issue
+              run: git config --global --add safe.directory $GITHUB_WORKSPACE
+
+            - name: Git config user
+              uses: snow-actions/git-config-user@v1.0.0
+              with:
+                name: git-action
+                email: git-action@gooddata.com
+            - name: Setup rush
+              env:
+                NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              uses: ./.github/actions/rush/set-up-rush
+
+            - name: Get current version
+              uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
+              id: current_version
+
+            - name: Prepare next major version
+              env:
+                  CURRENT_VERSION: ${{ steps.current_version.outputs.version }}
+                  PRERELEASE_ID: ${{ inputs.prerelease-id }}
+              run: |
+                echo "Bumping version to next major from ${CURRENT_VERSION}"
+
+                # Extract the major version
+                major_version=$(echo $CURRENT_VERSION | cut -d '.' -f 1)
+
+                echo "current major version: ${major_version}"
+
+                # Increment the major version
+                next_major_version=$((major_version + 1))
+
+                # Construct the next version string
+                NEXT_VERSION="${next_major_version}.0.0-${PRERELEASE_ID}.0"
+
+                echo "Next version: ${NEXT_VERSION}"
+                echo "NEXT_VERSION=${NEXT_VERSION}" >> $GITHUB_ENV
+            - name: Bump version
+              env:
+                  NEXT_VERSION: ${{ env.NEXT_VERSION }}
+              run: |
+                # policies.json is not a valid json, cannot use `cat common/config/rush/version-policies.json | jq -r '.[].policyName'`
+                policies=$(cat common/config/rush/version-policies.json | grep '^\s\+"policyName' | sed 's/.*"policyName": "\(.*\)",/\1/')
+
+                for policy in $policies
+                do
+                    node common/scripts/install-run-rush.js version --ensure-version-policy --override-version $NEXT_VERSION --version-policy $policy
+                done
+            - name: Git commit and push
+              env:
+                NEXT_VERSION: ${{ env.NEXT_VERSION }}
+                SOURCE_BRANCH: ${{ inputs.source-branch }}
+              run: |
+                git ls-files | grep '\.json' | xargs git add
+
+                git commit -a -m "chore: bump versions to $NEXT_VERSION" -m "risk: nonprod"
+                git push origin ${SOURCE_BRANCH}
+
+            - name: Get version
+              uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
+              id: version

@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "Il nostro servizio di ricerca è temporaneamente inattivo.",
+    "semantic-search.error.text": "Stiamo lavorando per risolvere il problema.",
+    "semantic-search.no-results": "Nessun risultato trovato per ”{query}”.",
+    "semantic-search.placeholder": "Ricerca di cruscotti o visualizzazioni…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Tag",
+    "semantic-search.match": "{score}% di corrispondenza",
+    "semantic-search.previous-search": "Ricerca precedente",
+    "semantic-search.date.at": "alle",
+    "gs.date.today": "Oggi",
+    "gs.date.yesterday": "Ieri",
+    "semantic-search.label": "Ricerca di cruscotti o visualizzazioni"
+}

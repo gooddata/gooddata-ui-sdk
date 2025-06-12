@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "我们的搜索服务暂时中断。",
+    "semantic-search.error.text": "我们正在努力解决该问题。",
+    "semantic-search.no-results": "没有找到“的结果{query}”。",
+    "semantic-search.placeholder": "搜索仪表板或可视化…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "标签",
+    "semantic-search.match": "{score}％ 匹配",
+    "semantic-search.previous-search": "上一搜索",
+    "semantic-search.date.at": "在",
+    "gs.date.today": "今天",
+    "gs.date.yesterday": "昨天",
+    "semantic-search.label": "搜索仪表板或可视化"
+}

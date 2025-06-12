@@ -1,0 +1,103 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SankeyChart tooltip > should render tooltip for connection correctly ( show in percent ) 1`] = `
+"<div class="gd-viz-tooltip-item gd-multiline-supported">
+                        <span class="gd-viz-tooltip-title" style="max-width: 300px;">Product</span>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">Explorer</span>
+                        </div>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">Explorer</span>
+                        </div>
+                    </div>
+<div class="gd-viz-tooltip-item gd-multiline-supported">
+                        <span class="gd-viz-tooltip-title" style="max-width: 300px;">Region</span>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">West coast</span>
+                        </div>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">West coast</span>
+                        </div>
+                    </div>
+<div class="gd-viz-tooltip-item gd-multiline-supported">
+                        <span class="gd-viz-tooltip-title" style="max-width: 300px;">Amount</span>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">12.00%</span>
+                        </div>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">12.00%</span>
+                        </div>
+                    </div>"
+`;
+
+exports[`SankeyChart tooltip > should render tooltip for connection correctly 1`] = `
+"<div class="gd-viz-tooltip-item gd-multiline-supported">
+                        <span class="gd-viz-tooltip-title" style="max-width: 300px;">Product</span>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">Explorer</span>
+                        </div>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">Explorer</span>
+                        </div>
+                    </div>
+<div class="gd-viz-tooltip-item gd-multiline-supported">
+                        <span class="gd-viz-tooltip-title" style="max-width: 300px;">Region</span>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">West coast</span>
+                        </div>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">West coast</span>
+                        </div>
+                    </div>
+<div class="gd-viz-tooltip-item gd-multiline-supported">
+                        <span class="gd-viz-tooltip-title" style="max-width: 300px;">Amount</span>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">$12.00</span>
+                        </div>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">$12.00</span>
+                        </div>
+                    </div>"
+`;
+
+exports[`SankeyChart tooltip > should render tooltip for node correctly ( show in percent ) 1`] = `
+"<div class="gd-viz-tooltip-item gd-multiline-supported">
+                        <span class="gd-viz-tooltip-title" style="max-width: 300px;"></span>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">Explorer</span>
+                        </div>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">Explorer</span>
+                        </div>
+                    </div>
+<div class="gd-viz-tooltip-item gd-multiline-supported">
+                        <span class="gd-viz-tooltip-title" style="max-width: 300px;">Amount</span>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">20.00%</span>
+                        </div>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">20.00%</span>
+                        </div>
+                    </div>"
+`;
+
+exports[`SankeyChart tooltip > should render tooltip for node correctly 1`] = `
+"<div class="gd-viz-tooltip-item gd-multiline-supported">
+                        <span class="gd-viz-tooltip-title" style="max-width: 300px;"></span>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">Explorer</span>
+                        </div>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">Explorer</span>
+                        </div>
+                    </div>
+<div class="gd-viz-tooltip-item gd-multiline-supported">
+                        <span class="gd-viz-tooltip-title" style="max-width: 300px;">Amount</span>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">$20.00</span>
+                        </div>
+                        <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">$20.00</span>
+                        </div>
+                    </div>"
+`;

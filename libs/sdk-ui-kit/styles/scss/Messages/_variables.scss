@@ -1,0 +1,38 @@
+@use "sass:color";
+@use "../variables";
+
+// (C) 2020 GoodData Corporation
+
+$gd-message-error-backgroundColor: var(
+    --gd-palette-error-base-t85,
+    color.adjust(variables.$gd-color-negative, $alpha: -0.85)
+);
+$gd-message-overlay-error-backgroundColor: var(
+    --gd-palette-error-base-t02,
+    color.adjust(variables.$gd-color-negative, $alpha: -0.02)
+);
+
+$gd-message-success-backgroundColor: var(
+    --gd-palette-success-base-t85,
+    color.adjust(variables.$gd-color-positive, $alpha: -0.85)
+);
+$gd-message-overlay-success-backgroundColor: var(
+    --gd-palette-success-base-t02,
+    color.adjust(variables.$gd-color-positive, $alpha: -0.02)
+);
+
+$gd-message-warning-backgroundColor: var(
+    --gd-palette-warning-base-t85,
+    color.adjust(variables.$gd-color-warning, $alpha: -0.85)
+);
+$gd-message-overlay-warning-backgroundColor: var(--gd-palette-warning-base, variables.$gd-color-warning);
+
+$gd-message-progress-color: var(--gd-palette-info-base, variables.$gd-palette-primary-base);
+$gd-message-progress-backgroundColor: var(
+    --gd-palette-info-base-t85,
+    var(--gd-palette-primary-base-t85, color.adjust(variables.$gd-color-highlight, $alpha: -0.85))
+);
+$gd-message-overlay-progress-backgroundColor: var(
+    --gd-palette-info-base-t02,
+    var(--gd-palette-primary-base-t02, color.adjust(variables.$gd-color-highlight, $alpha: -0.02))
+);

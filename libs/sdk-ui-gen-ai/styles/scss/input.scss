@@ -1,0 +1,316 @@
+// (C) 2024-2025 GoodData Corporation
+// stylelint-disable max-nesting-depth
+
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
+@use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
+@use "variables" as variables;
+
+$base_path: "~@gooddata/sdk-ui-kit/styles";
+
+@mixin gd-svg-icon-base {
+    &::before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@mixin gd-svg-icon($filename) {
+    @include gd-svg-icon-base;
+
+    &::before {
+        background-image: url($base_path + "/icons/" + $filename + ".svg");
+    }
+}
+
+.gd-gen-ai-chat__input {
+    position: relative;
+    transition: margin-top 0.2s ease-in-out;
+    margin: 0 variables.$x-spacing;
+    margin-top: 0;
+
+    &.focused {
+        margin-top: variables.$info-height;
+    }
+
+    &__mc {
+        .cm-editor {
+            height: auto;
+            padding: 3px 30px 3px 5px;
+        }
+        .cm-scroller {
+            // stylelint-disable-next-line declaration-no-important
+            font-family: kit-variables.$gd-font-primary !important;
+        }
+    }
+
+    &__send_button {
+        @include kit-mixins.transition(all, 0.25s, ease-in-out);
+
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        bottom: 1px;
+        width: 40px;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background: none;
+        border: none;
+        border-radius: 3px;
+
+        & path,
+        & rect {
+            fill: kit-variables.$gd-color-link;
+        }
+
+        &:hover path,
+        &:hover rect {
+            fill: kit-variables.$gd-palette-primary-base;
+        }
+
+        &:disabled:hover {
+            cursor: default;
+
+            path,
+            rect {
+                fill: kit-variables.$gd-color-disabled;
+            }
+        }
+
+        &:focus,
+        &:focus-within,
+        &:focus-visible,
+        &:active {
+            outline: 1px solid kit-variables.$gd-palette-primary-base;
+        }
+    }
+
+    &__info {
+        position: absolute;
+        width: calc(100% + #{variables.$x-spacing * 2});
+        margin-left: -#{variables.$x-spacing};
+        margin-right: -#{variables.$x-spacing};
+        padding: variables.$y-spacing variables.$x-spacing;
+        background: kit-variables.$gd-color-light;
+
+        color: kit-variables.$gd-color-state-blank;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 400;
+        font-style: normal;
+        line-height: normal;
+
+        top: -#{variables.$info-height};
+        opacity: 1;
+        transition: top 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
+        &.hidden {
+            top: 0;
+            opacity: 0;
+        }
+
+        code {
+            display: inline-flex;
+            padding: 1px 5px;
+            justify-content: center;
+            align-items: center;
+            gap: 2px;
+            border-radius: 3px;
+            background: kit-variables.$is-focused-background;
+            color: kit-variables.$gd-color-link;
+            font-weight: 400;
+            font-size: 11px;
+            font-style: normal;
+            line-height: normal;
+        }
+    }
+
+    &:focus-within &__send_button {
+        path,
+        rect {
+            fill: kit-variables.$gd-palette-primary-base;
+        }
+
+        &--disabled,
+        &--disabled:hover {
+            cursor: default;
+
+            path,
+            rect {
+                fill: kit-variables.$gd-color-disabled;
+            }
+        }
+    }
+
+    //CodeMirror autocomplete restyle
+    .cm-tooltip.cm-tooltip-autocomplete {
+        background: kit-variables.$gd-color-white;
+        border: 1px solid kit-variables.$gd-border-color;
+        border-radius: 3px;
+
+        & > ul {
+            padding: 6px 0;
+            min-width: 240px;
+            max-height: 205px;
+
+            & > li {
+                display: flex;
+                padding: 5px 10px;
+                align-items: center;
+                gap: 7px;
+                align-self: stretch;
+
+                &[aria-selected="true"],
+                &:hover {
+                    background: kit-variables.$is-focused-background;
+                }
+
+                .cm-completionIcon {
+                    width: 17px;
+                    aspect-ratio: 1 / 1;
+
+                    &-metric {
+                        @include gd-svg-icon("metric");
+                    }
+                    &-attribute {
+                        @include gd-svg-icon("attribute");
+                    }
+                    &-fact {
+                        @include gd-svg-icon("measure");
+                    }
+                    &-date {
+                        @include gd-svg-icon("date");
+                    }
+                }
+
+                .cm-completionLabel {
+                    font-family: kit-variables.$gd-font-primary;
+                    color: kit-variables.$gd-color-text;
+                    flex: 1 0 0;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 18px;
+                }
+            }
+        }
+    }
+
+    //CodeMirror completion info restyle
+    .cm-tooltip.cm-completionInfo {
+        min-width: 220px;
+        background: kit-variables.$gd-color-white;
+        border: 1px solid kit-variables.$gd-border-color;
+        border-radius: 3px;
+        padding: 0;
+
+        .gd-gen-ai-chat__autocomplete__info {
+            display: flex;
+            min-width: 220px;
+            max-width: 220px;
+            padding: 15px;
+            gap: 10px;
+            flex-direction: column;
+            align-items: flex-start;
+            font-family: kit-variables.$gd-font-primary;
+
+            h3 {
+                align-self: stretch;
+                padding: 0;
+                margin: 0;
+                color: kit-variables.$gd-color-text;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 23px;
+            }
+
+            p {
+                margin: 0;
+                padding: 0;
+                line-clamp: 4;
+                align-self: stretch;
+                overflow: hidden;
+                color: kit-variables.$gd-color-link;
+                text-overflow: ellipsis;
+                font-size: 13px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 18px;
+            }
+
+            &__item {
+                display: flex;
+                gap: 3px;
+                padding-top: 5px;
+                flex-direction: column;
+                align-items: flex-start;
+                align-self: stretch;
+
+                &__title {
+                    color: kit-variables.$gd-color-state-blank;
+                    align-self: stretch;
+                    font-size: 10px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    text-transform: uppercase;
+                }
+                &__value {
+                    color: kit-variables.$gd-color-text;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 19px;
+                }
+            }
+        }
+    }
+
+    //CodeMirror highlight restyle
+    .cm-editor .cm-highlight-phrase {
+        font-weight: normal;
+
+        &.metric {
+            color: kit-variables.$gd-color-positive;
+        }
+        &.fact {
+            color: kit-variables.$gd-color-positive;
+        }
+        &.attribute {
+            color: kit-variables.$gd-color-warning;
+        }
+        &.date {
+            color: kit-variables.$gd-color-highlight;
+        }
+    }
+    .cm-editor .cm-icon-widget {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-bottom: -0.3em;
+        margin-right: 5px;
+
+        &.metric {
+            @include gd-svg-icon("metric");
+        }
+        &.attribute {
+            @include gd-svg-icon("attribute");
+        }
+        &.fact {
+            @include gd-svg-icon("measure");
+        }
+        &.date {
+            @include gd-svg-icon("date");
+        }
+    }
+}

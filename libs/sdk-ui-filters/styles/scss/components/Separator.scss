@@ -1,0 +1,9 @@
+// (C) 2007-2019 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.gd-separator-generic {
+    height: 1px;
+    margin: 0;
+    border: 0;
+    background: variables.$gd-border-color;
+}

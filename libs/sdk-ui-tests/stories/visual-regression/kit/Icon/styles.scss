@@ -1,0 +1,17 @@
+// (C) 2021-2024 GoodData Corporation
+
+.gd-icon-wrapper {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    align-items: center;
+    width: 200px;
+    padding: 0.35rem;
+
+    &:first-of-type {
+        border-top: 1px solid #ccc;
+    }
+
+    .gd-icon-name {
+        flex: 1 1 100%;
+    }
+}

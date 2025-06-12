@@ -1,0 +1,482 @@
+// (C) 2024-2025 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
+@use "react-loading-skeleton/dist/skeleton.css";
+
+@use "variables" as dashboard-variables;
+
+//
+// Alerts list
+//
+.gd-alerts-list {
+    width: 100%;
+}
+
+.gd-alerts-list__items {
+    padding: 10px 0 10px 0;
+    overflow-y: auto;
+    max-height: 365px;
+
+    .skeleton-flex {
+        flex: 1;
+    }
+
+    .skeleton-margin {
+        margin-left: 10px;
+    }
+
+    .gd-react-loading-skeleton-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .gd-react-loading-skeleton.react-loading-skeleton {
+        --base-color: var(
+            --gd-dashboards-title-borderColor-from-theme,
+            var(--gd-palette-complementary-2, #ebeff4)
+        );
+        --highlight-color: var(
+            --gd-dashboards-content-backgroundColor,
+            var(--gd-palette-complementary-0, #fff)
+        );
+    }
+}
+
+.gd-alerts-list__buttons {
+    padding: 10px 0;
+
+    .gd-alerts-list__add-button {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+        padding-left: 28px;
+
+        &::before {
+            font-size: 15px;
+        }
+    }
+}
+
+.gd-alerts-list__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    color: kit-variables.$gd-color-state-blank;
+}
+
+//
+// Alerts list item
+//
+.gd-alerts-list--widget .gd-alerts-list-item {
+    --icon-size: 13px;
+    --icon-left-padding: 10px;
+    --item-height: 42px;
+}
+
+.gd-alerts-list--dialog .gd-alerts-list-item {
+    --icon-size: 16px;
+    --icon-left-padding: 0;
+    --item-height: 50px;
+}
+
+.gd-alerts-list-item {
+    --item-height: 42px;
+    --icon-size: 26px;
+    --icon-left-padding: 10px;
+
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 100ms ease-in-out;
+    height: var(--item-height);
+
+    &:hover,
+    &--isActive {
+        background-color: kit-variables.$is-focused-background;
+    }
+
+    &--readonly {
+        cursor: default;
+    }
+
+    &__content {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        padding: 5px 0 5px var(--icon-left-padding);
+    }
+
+    &__icon {
+        background-color: kit-variables.$is-focused-background;
+        padding: calc(var(--icon-size) / 2);
+        border-radius: 51%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &--invalid {
+            background-color: kit-variables.$gd-palette-error-dimmed;
+        }
+
+        & > * {
+            width: var(--icon-size);
+            height: var(--icon-size);
+        }
+    }
+
+    &__text-content {
+        overflow: hidden;
+        color: kit-variables.$gd-color-text;
+    }
+
+    &__shortened-text {
+        white-space: nowrap;
+        display: inline-block;
+        width: 100%;
+    }
+
+    &__title {
+        font-weight: 700;
+    }
+
+    &__subtitle {
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    &__menu-icon {
+        border: none;
+        background: transparent;
+        width: var(--item-height);
+        height: var(--item-height);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 100%;
+        transition: background-color 100ms ease-in-out;
+    }
+
+    &__menu-icon:hover,
+    &--isActive &__menu-icon {
+        background-color: kit-variables.$gd-input-text-border;
+    }
+}
+
+.gd-alerts-list__items:focus-visible {
+    outline: none;
+
+    .gd-alerts-list-item {
+        &--isFocusedSelectItem {
+            @include mixins.focus-ring;
+        }
+
+        &__menu-icon--isFocused {
+            @include mixins.focus-ring;
+        }
+    }
+}
+
+//
+// Edit alert
+//
+.gd-edit-alert {
+    font-size: 12px;
+    line-height: 14px;
+    color: kit-variables.$gd-color-text;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.gd-edit-alert__form {
+    padding: 10px 10px 0 10px;
+    overflow: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    button {
+        margin-bottom: 10px;
+    }
+}
+
+.gd-edit-alert__destination-label,
+.gd-edit-alert__title-label {
+    margin-bottom: 5px;
+}
+
+.gd-edit-alert__measure-info {
+    display: flex;
+    gap: 5px;
+    line-height: 1.8rem;
+    color: kit-variables.$gd-color-link;
+
+    .inlineBubbleHelp {
+        font-size: 12px;
+    }
+}
+
+.gd-edit-alert__value-input {
+    /* Removes number input arrows for Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Removes number input arrows for Firefox */
+    input[type="number"] {
+        appearance: textfield;
+        -moz-appearance: textfield;
+    }
+}
+
+.gd-edit-alert__title-input {
+    margin-bottom: 20px;
+}
+
+.gd-edit-alert__buttons {
+    padding: 10px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid kit-variables.$gd-border-color;
+
+    .gd-button-left-margin {
+        margin-left: 10px;
+    }
+}
+
+.gd-edit-alert__configuration-button {
+    color: kit-variables.$gd-color-state-blank;
+}
+
+.gd-edit-alert__recipients {
+    flex-direction: column;
+    margin-bottom: 10px;
+
+    > label {
+        font-size: 12px;
+        line-height: 21px;
+    }
+}
+
+//
+// Edit alert configuration
+//
+.gd-edit-alert-configuration {
+    width: 100%;
+}
+
+.gd-edit-alert-configuration__form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.gd-edit-alert-configuration__trigger-label {
+    color: kit-variables.$gd-color-text;
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.gd-edit-alert-configuration__trigger-label-icon {
+    margin-left: 5px;
+    position: relative;
+    top: 2px;
+}
+
+.gd-edit-alert-configuration__trigger-select {
+    width: 50%;
+}
+
+.gd-edit-alert-configuration__buttons {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-top: 1px solid kit-variables.$gd-border-color;
+}
+
+//
+// No measures alert
+//
+.gd-no-measures-alert {
+    .gd-message {
+        margin: 10px;
+        font-size: 12px;
+        line-height: 17px;
+    }
+}
+
+.gd-alert-measure-select__button,
+.gd-alert-attribute-select__button {
+    width: 100%;
+}
+.gd-alert-attribute-select__button_wrapper > div {
+    width: 100%;
+}
+
+.gd-alert-measure-select__list,
+.gd-alert-attribute-select__list {
+    height: 100%;
+}
+
+.gd-alert-measure-select__icon,
+.gd-alert-attribute-select__icon {
+    height: 100%;
+
+    &::before {
+        height: 100%;
+    }
+}
+
+.gd-alert-comparison-operator-select__list .gd-list-item-header {
+    display: flex;
+}
+
+.gd-alert-comparison-operator-tooltip-spacer {
+    margin-bottom: 10px;
+}
+
+.gd-alert-attribute-select__menu-item_wrapper {
+    // stylelint-disable-next-line declaration-no-important
+    padding: 5px 10px !important;
+
+    &::before {
+        // stylelint-disable-next-line declaration-no-important
+        content: none !important;
+    }
+
+    &.is-checked {
+        color: kit-variables.$gd-palette-primary-base;
+        font-weight: 700;
+    }
+}
+
+.gd-alert-attribute-select__submenu-content {
+    min-width: 200px;
+}
+
+.gd-alert-attribute-select__menu-item_search {
+    font-size: 13px;
+    margin: 5px 10px 10px 10px;
+    width: auto;
+}
+
+.gd-alert-attribute-select__menu-item {
+    position: relative;
+
+    &.is-clickable {
+        cursor: pointer;
+    }
+}
+
+.gd-alert-attribute-select__menu-item__values {
+    max-height: 375px;
+    overflow-y: auto;
+}
+
+.gd-alert-attribute-select__submenu {
+    .gd-list-item-separator::before {
+        // stylelint-disable-next-line declaration-no-important
+        left: 10px !important;
+        // stylelint-disable-next-line declaration-no-important
+        right: 10px !important;
+    }
+
+    .gd-menuOpenedByClick-togglerWrapped {
+        width: 100%;
+    }
+}
+
+.gd-alerts-configuration-panel-management {
+    .arrow-position {
+        display: none;
+    }
+}
+
+.gd-configuration-bubble-wrapper.truncated {
+    .gd-alerts-configuration-panel-management,
+    .gd-alerts-configuration-panel {
+        height: 100%;
+    }
+}
+
+.gd-configuration-bubble-wrapper:not(.truncated) {
+    .gd-edit-alert__form {
+        max-height: dashboard-variables.$gd-configuration-alert-content-height;
+    }
+}
+
+.gd-alert-comparison-operator-select__button {
+    width: 100%;
+}
+
+// TODO: support "invisible" styling of the Button on sdk-ui-kit component level.
+// For now overload because of clash with other config panel css
+.gd-button.gd-alert-destination-select__button,
+.gd-button.gd-alert-comparison-select__button {
+    margin-top: 0;
+    padding-left: 5px;
+    // stylelint-disable-next-line declaration-no-important
+    width: 100% !important;
+}
+
+//
+// Trigger mode select
+//
+.gd-edit-alert-trigger-mode-select__button {
+    width: 100%;
+}
+
+//
+// Alert actions dropdown
+//
+.gd-button.gd-alert-actions-dropdown__button {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+
+    &:hover,
+    &.gd-alert-actions-dropdown__button--open {
+        background-color: kit-variables.$gd-input-text-border;
+    }
+
+    .gd-button-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.gd-alert-actions-dropdown__list-item-delete {
+    &:hover {
+        color: kit-variables.$gd-color-negative;
+        background-color: kit-variables.$gd-palette-error-dimmed;
+    }
+}
+
+// Common styles for UiListbox items
+.gd-alert-destination-select__list-item.gd-list-item,
+.gd-alert-trigger-mode-select__list-item.gd-list-item,
+.gd-alert-measure-select__list-item.gd-list-item,
+.gd-alert-comparison-operator-select__list-item.gd-list-item,
+.gd-alert-comparison-select__list-item.gd-list-item {
+    height: 28px;
+}
+
+.gd-alert-attribute-select__dropdown-separator {
+    height: 1px;
+    background: kit-variables.$gd-border-color;
+    margin: 4px 0;
+}

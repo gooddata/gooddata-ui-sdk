@@ -1,0 +1,851 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+
+$legend-right-width: 190px;
+$paging-button-small-size: 22px;
+$responsive-legend: "only screen and (max-width: 767px)";
+$dialog-border: bubble-variables.$default-bubble-light-border-base;
+$dialog-background: kit-variables.$is-focused-background;
+$legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0, #fff));
+
+@media #{$responsive-legend} {
+    .viz-line-family-chart-wrap {
+        &.responsive-legend {
+            // stylelint-disable-next-line declaration-no-important
+            flex-direction: column !important;
+        }
+    }
+}
+
+.viz-legend-wrap {
+    width: 100%;
+    height: 100%;
+}
+
+.viz-fluid-legend-wrap {
+    flex: 1 1 auto;
+}
+
+.viz-static-legend-wrap {
+    &.position-top,
+    &.position-bottom {
+        flex: 1 0 auto;
+    }
+
+    &.position-right,
+    &.position-left {
+        flex: 0 0 210px;
+    }
+}
+
+.viz-legend {
+    display: flex;
+
+    .series {
+        display: flex;
+        width: 100%;
+        text-align: left;
+    }
+
+    .series-item {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+
+        &:focus-visible {
+            outline: revert;
+        }
+    }
+
+    .series-item,
+    .series-axis-indicator {
+        display: flex;
+        align-items: center;
+        font-family: kit-variables.$gd-font-primary;
+        cursor: pointer;
+
+        .series-icon {
+            flex: 0 0 auto;
+            width: 9px;
+            height: 9px;
+            margin-right: 5px;
+        }
+
+        .series-name,
+        .series-text {
+            flex: 1 1 auto;
+            font-size: 12px;
+            line-height: 20px;
+            color: var(--gd-chart-legendValueColor, kit-variables.$gd-color-link);
+
+            @include mixins.text-overflow();
+        }
+    }
+
+    .series-axis-indicator {
+        cursor: default;
+        margin-right: -10px;
+        .series-text {
+            color: var(--gd-chart-legendLabelColor, kit-variables.$gd-color-text-dimmed);
+        }
+    }
+
+    .legend-separator {
+        width: 20px;
+        height: 15px;
+    }
+
+    .paging {
+        white-space: nowrap;
+
+        button.paging-button {
+            padding: 0;
+            border-radius: 50%;
+
+            &:focus-visible {
+                outline: revert;
+            }
+
+            &::before {
+                font-size: 11px;
+            }
+
+            @include mixins.active-states-and-self {
+                text-decoration: none;
+                background-color: kit-variables.$is-focused-background;
+
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                &::before {
+                    color: kit-variables.$gd-color-link;
+                }
+            }
+
+            &:hover {
+                background-color: var(
+                    --gd-palette-complementary-7-from-theme,
+                    kit-variables.$gd-color-text-dimmed
+                );
+
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                &::before {
+                    color: kit-variables.$gd-color-text-light;
+                }
+            }
+
+            &[aria-disabled="true"],
+            &[disabled] {
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                @include mixins.active-states-and-self {
+                    background-color: var(
+                        --gd-palette-complementary-1-from-theme,
+                        color.adjust(kit-variables.$default-is-focused-background, $alpha: -0.5)
+                    );
+
+                    // refactor?
+                    // stylelint-disable-next-line max-nesting-depth
+                    &::before {
+                        color: kit-variables.$gd-color-disabled;
+                    }
+                }
+            }
+        }
+    }
+
+    &.static {
+        flex-direction: column;
+        margin-left: 20px;
+
+        &.position-top,
+        &.position-bottom {
+            align-items: flex-end;
+            margin-left: 0;
+
+            .series {
+                flex-flow: row wrap;
+                box-sizing: border-box;
+                justify-content: flex-start;
+                width: auto;
+                overflow-x: hidden;
+                min-width: 0; // hack for FF
+                max-width: 100%; // hack for IE
+            }
+
+            .series-item {
+                margin-left: 15px;
+                overflow-x: auto;
+            }
+        }
+
+        &.position-right,
+        &.position-left {
+            flex: 0 0 210px;
+
+            .paging {
+                width: $legend-right-width;
+            }
+        }
+
+        &.position-row {
+            align-items: normal;
+            margin-left: 0;
+            overflow-x: hidden;
+
+            .series {
+                flex-flow: row wrap;
+                box-sizing: border-box;
+                justify-content: flex-start;
+                overflow: hidden;
+                width: auto;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                min-width: 0; // hack for FF
+                max-width: 100%; // hack for IE
+            }
+
+            .series-axis-indicator {
+                margin-right: 0;
+            }
+
+            .series-item {
+                margin-left: 10px;
+            }
+        }
+
+        &.position-dialog {
+            margin-left: 0;
+            overflow-x: auto;
+
+            .circle-min-value {
+                margin-left: 10px;
+
+                // stylelint-disable-next-line max-nesting-depth
+                .circle-value {
+                    margin-left: 25px;
+                }
+            }
+            .circle-separator {
+                // stylelint-disable-next-line max-nesting-depth
+                &::after {
+                    content: "\22EE";
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 11px;
+                    color: kit-variables.$gd-color-link;
+                }
+            }
+
+            .circle-average-value {
+                margin-left: 5px;
+                // stylelint-disable-next-line max-nesting-depth
+                .circle-value {
+                    margin-left: 20px;
+                }
+            }
+
+            .circle-max-value {
+                // stylelint-disable-next-line max-nesting-depth
+                .circle-value {
+                    margin-left: 15px;
+                }
+            }
+
+            .series {
+                box-sizing: border-box;
+                display: flex;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                flex-direction: column;
+                overflow: hidden;
+                width: auto;
+                min-width: 0; // hack for FF
+                max-width: 100%; // hack for IE
+            }
+
+            .series-item {
+                margin-left: 0;
+                width: 118px;
+            }
+
+            .paging {
+                justify-content: center;
+                margin-top: 10px;
+            }
+
+            &.no-width {
+                // stylelint-disable-next-line max-nesting-depth
+                .series-item {
+                    margin-left: 0;
+                    width: 100%;
+                }
+            }
+        }
+
+        .series {
+            flex-direction: column;
+            justify-content: flex-start;
+            width: $legend-right-width;
+            min-width: $legend-right-width;
+        }
+
+        .series-item {
+            max-width: 100%;
+        }
+
+        .paging {
+            display: flex;
+            width: 100%;
+            margin-top: 20px;
+            line-height: $paging-button-small-size;
+
+            .paging-button {
+                width: $paging-button-small-size;
+                height: $paging-button-small-size;
+                min-width: $paging-button-small-size;
+                min-height: $paging-button-small-size;
+            }
+
+            span {
+                display: inline-block;
+                margin: 0 10px;
+                font-size: 12px;
+                color: kit-variables.$gd-color-state-blank;
+                font-family: kit-variables.$gd-font-primary;
+
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                strong {
+                    color: kit-variables.$gd-color-dark;
+                }
+            }
+        }
+    }
+
+    &.color-legend {
+        font-family: kit-variables.$gd-font-primary;
+
+        .labels {
+            display: flex;
+            font-size: 11px;
+            overflow: visible;
+            line-height: 20px;
+            text-overflow: unset;
+            color: kit-variables.$gd-color-link;
+        }
+
+        .boxes {
+            display: flex;
+            flex: 0 0 auto;
+
+            .box {
+                box-sizing: border-box;
+            }
+        }
+
+        &.position-top,
+        &.position-bottom {
+            flex-direction: column;
+            align-items: flex-end;
+
+            .boxes {
+                height: 10px;
+
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                .box {
+                    width: 50px;
+                }
+            }
+
+            // stylelint-disable-next-line max-nesting-depth
+            &.medium {
+                // stylelint-disable-next-line max-nesting-depth
+                .boxes {
+                    // refactor?
+                    // stylelint-disable-next-line max-nesting-depth
+                    .box {
+                        width: 40px;
+
+                        // refactor?
+                        // stylelint-disable-next-line max-nesting-depth
+                        &.middle {
+                            width: 36px;
+                        }
+                    }
+                }
+            }
+
+            // stylelint-disable-next-line max-nesting-depth
+            &.small {
+                // stylelint-disable-next-line max-nesting-depth
+                .boxes {
+                    // refactor?
+                    // stylelint-disable-next-line max-nesting-depth
+                    .box {
+                        width: 18px;
+                    }
+                }
+            }
+        }
+
+        &.position-bottom {
+            margin-top: 2px;
+        }
+
+        &.position-left,
+        &.position-right {
+            flex: 0 0 210px;
+            align-items: flex-start;
+            margin-right: 5px;
+            margin-top: 8px;
+
+            .labels {
+                display: flex;
+                flex-direction: column;
+                margin-left: 4px;
+                text-align: left;
+                justify-content: center;
+            }
+
+            .boxes {
+                flex-direction: column;
+                width: 10px;
+                margin-left: 20px;
+
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                .box {
+                    height: 30px;
+                }
+            }
+        }
+    }
+
+    &.fluid {
+        margin: 0 12px;
+
+        .series {
+            flex-wrap: wrap;
+            .series-name {
+                flex: 1 1 auto;
+            }
+        }
+
+        .paging {
+            text-align: right;
+
+            .paging-button {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
+}
+
+.legend-popup-row {
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+
+.legend-popup-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 22px;
+    height: 22px;
+    margin: 4px;
+    border: none;
+    border-radius: 50%;
+    background-color: kit-variables.$is-focused-background;
+    cursor: pointer;
+
+    .LegendMenuContent {
+        fill: kit-variables.$gd-color-link;
+    }
+
+    &:hover,
+    &.legend-popup-icon-active {
+        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
+
+        .LegendMenuContent {
+            fill: kit-variables.$gd-color-text-light;
+        }
+    }
+}
+
+.heatmap-legend-with-title {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+
+    .heatmap-legend-title {
+        font-size: 12px;
+        max-height: 20px;
+        display: flex;
+        overflow: hidden;
+        line-height: 20px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: var(--gd-chart-legendValueColor, kit-variables.$gd-color-link);
+        max-width: 210px;
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
+
+    .heatmap-legend-boxes {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &.horizontal {
+        justify-content: flex-end;
+        flex-direction: row;
+        margin-bottom: 5px;
+
+        .heatmap-legend-boxes {
+            flex-direction: column;
+        }
+
+        .heatmap-legend-title {
+            text-align: right;
+            margin-bottom: 0;
+            margin-right: 10px;
+            align-self: center;
+            min-width: 50px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+}
+
+// legend dialog
+
+.legend-popup-dialog {
+    display: flex;
+    flex-direction: column;
+
+    .legend-header {
+        height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 15px;
+
+        .legend-header-title {
+            font-family: kit-variables.$gd-font-primary;
+            color: kit-variables.$gd-color-label;
+            font-size: 12px;
+        }
+
+        .legend-close.gd-icon-cross.gd-button-link.gd-button-icon-only {
+            right: 0;
+            width: 12px;
+            position: relative;
+        }
+
+        .legend-close.gd-icon-cross.gd-button-link.gd-button-icon-only::before {
+            font-size: 12px;
+        }
+    }
+
+    .legend-content {
+        flex: 1 1 auto;
+        background-color: $legend-content-background;
+        padding: 15px;
+    }
+}
+
+.legend-popup-dialog-content {
+    position: relative;
+    z-index: 5002;
+    min-height: 148px;
+    border: 1px solid var(--gd-palette-complementary-3-from-theme, color.adjust($dialog-border, $alpha: -0.5));
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
+        0 2px 9px 0 button-variables.$button-shadow-darker;
+    background: $dialog-background;
+
+    &::after,
+    &::before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        width: 0;
+        height: 0;
+        margin-right: 0;
+        border: solid transparent;
+        pointer-events: none;
+    }
+
+    &::before {
+        border-width: 12px;
+    }
+
+    &::after {
+        border-width: 11px;
+    }
+
+    @media #{kit-variables.$medium-up} {
+        width: 308px;
+    }
+
+    .legend-close[class*="gd-icon-"] {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        width: 12px;
+        height: 40px;
+        line-height: 40px;
+        color: kit-variables.$gd-color-label;
+        cursor: pointer;
+
+        &::before {
+            font-size: 12px;
+            width: 12px;
+        }
+
+        &:active {
+            &::before {
+                color: button-variables.$button-action-hover-bg;
+            }
+        }
+
+        &:focus,
+        &:hover {
+            &::before {
+                color: button-variables.$button-action-color;
+            }
+        }
+    }
+}
+
+// legend dialog arrow
+.target-tr.self-tl,
+.target-tl.self-tr,
+.target-cc.self-cr {
+    .legend-popup-dialog-content {
+        &::before {
+            margin-top: -12px;
+        }
+
+        &::after {
+            margin-top: -11px;
+        }
+    }
+}
+
+.target-tr.self-tl,
+.target-tl.self-tr {
+    .legend-popup-dialog-content {
+        &::before,
+        &::after {
+            top: 93px;
+        }
+    }
+}
+
+.truncated {
+    .legend-popup-dialog-content.zoomed {
+        width: 100%;
+        height: 100%;
+        .legend-content {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+    }
+}
+
+.target-cc.self-cr {
+    .legend-popup-dialog-content {
+        &::before,
+        &::after {
+            top: 50%;
+        }
+    }
+}
+
+.target-tr.self-tl,
+.target-br.self-bl {
+    .legend-popup-dialog-content {
+        &::before,
+        &::after {
+            right: 100%;
+        }
+
+        &::before {
+            border-right-color: var(
+                --gd-palette-complementary-3-from-theme,
+                color.adjust($dialog-border, $alpha: -0.5)
+            );
+        }
+
+        &::after {
+            border-right-color: $dialog-background;
+        }
+    }
+}
+
+.target-tl.self-tr,
+.target-bl.self-br,
+.target-cc.self-cr {
+    .legend-popup-dialog-content {
+        &::after,
+        &::before {
+            left: 100%;
+        }
+
+        &::after {
+            border-left-color: $dialog-background;
+        }
+
+        &::before {
+            border-left-color: var(
+                --gd-palette-complementary-3-from-theme,
+                color.adjust($dialog-border, $alpha: -0.5)
+            );
+        }
+    }
+}
+
+.target-br.self-bl,
+.target-bl.self-br {
+    .legend-popup-dialog-content {
+        &::before,
+        &::after {
+            bottom: 93px;
+        }
+
+        &::before {
+            margin-bottom: -12px;
+        }
+
+        &::after {
+            margin-bottom: -11px;
+        }
+    }
+}
+
+.target-bc.self-tc,
+.target-tc.self-bc,
+.target-bl.self-tl,
+.target-br.self-tr,
+.target-tl.self-bl,
+.target-tr.self-br,
+.target-cc.self-tc,
+.target-cl.self-tl,
+.target-cr.self-tr {
+    .legend-popup-dialog-content {
+        &::before,
+        &::after {
+            border-right-color: transparent;
+        }
+
+        &::before {
+            margin-left: -12px;
+        }
+
+        &::after {
+            margin-left: -11px;
+        }
+    }
+}
+
+.target-bc.self-tc,
+.target-bl.self-tl,
+.target-br.self-tr,
+.target-cc.self-tc,
+.target-cl.self-tl,
+.target-cr.self-tr {
+    .legend-popup-dialog-content {
+        &::before,
+        &::after {
+            bottom: 100%;
+        }
+
+        &::before {
+            border-bottom-color: var(
+                --gd-palette-complementary-3-from-theme,
+                color.adjust($dialog-border, $alpha: -0.5)
+            );
+        }
+
+        &::after {
+            border-bottom-color: $dialog-background;
+        }
+    }
+}
+
+.target-tc.self-bc,
+.target-tl.self-bl,
+.target-tr.self-br {
+    .legend-popup-dialog-content {
+        &::before,
+        &::after {
+            top: 100%;
+        }
+
+        &::before {
+            border-top-color: var(
+                --gd-palette-complementary-3-from-theme,
+                color.adjust($dialog-border, $alpha: -0.5)
+            );
+        }
+
+        &::after {
+            border-top-color: $dialog-background;
+        }
+    }
+}
+
+.target-bc.self-tc,
+.target-tc.self-bc,
+.target-cc.self-tc {
+    .legend-popup-dialog-content {
+        &::before,
+        &::after {
+            left: 50%;
+        }
+    }
+}
+
+.target-bl.self-tl,
+.target-tl.self-bl,
+.target-cl.self-tl {
+    .legend-popup-dialog-content {
+        &::before,
+        &::after {
+            left: 25%;
+        }
+    }
+}
+
+.target-br.self-tr,
+.target-tr.self-br,
+.target-cr.self-tr {
+    .legend-popup-dialog-content {
+        &::before,
+        &::after {
+            left: 75%;
+        }
+    }
+}
+
+.legend-series-wrapper:focus-visible {
+    outline: none;
+    .series-item--isFocused {
+        @include mixins.focus-ring;
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "insight": {
+        "buckets": [
+            { "items": [], "localIdentifier": "measures" },
+            { "items": [], "localIdentifier": "attribute" },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "columns"
+            }
+        ],
+        "filters": [],
+        "identifier": "PivotTable.060b5dc818986e5aff74df76d42a9320",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "PivotTable - with column attributes only and auto-resizing",
+        "uri": "PivotTable.060b5dc818986e5aff74df76d42a9320",
+        "visualizationUrl": "local:table"
+    }
+}

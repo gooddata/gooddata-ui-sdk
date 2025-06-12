@@ -1,0 +1,6 @@
+// (C) 2020 GoodData Corporation
+@use "../variables.scss";
+
+// from goodstrap DatePicker
+$gd-datepicker-hover-bgcolor: variables.$is-focused-background;
+$gd-datepicker-shadow-color: #1f354a;

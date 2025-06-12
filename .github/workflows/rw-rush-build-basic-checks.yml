@@ -1,0 +1,124 @@
+name: rw ~ rush ~ build validate and run unit tests
+on:
+  workflow_call:
+    inputs:
+      target-branch:
+          required: true
+          description: "Target branch to compare with (marge into)"
+          type: string
+
+
+jobs:
+  ######################################################
+  # Warm up the cache pnmp and rush
+  ######################################################
+  warm-up-cache:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Warmup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/warm-up-rush
+
+  ######################################################
+  # Warm up build cache and build changes see:STL-710
+  ######################################################
+  build:
+    needs: [warm-up-cache]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Debug
+        run: git log -1
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: node common/scripts/install-run-rush.js build
+
+  ######################################################
+  # Validate the changes
+  ######################################################
+  validate:
+    needs: [warm-up-cache,build]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge  # for testing we need bigger runners
+    env:
+      NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      TARGET_BRANCH: ${{ inputs.target-branch }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Setup rush
+        uses: ./.github/actions/rush/set-up-rush
+      - name: fetch target branch
+        run: git fetch origin ${TARGET_BRANCH}
+      - name: Rush build
+        run: |
+          node common/scripts/install-run-rush.js build
+      - name: Rush validate
+        run: |
+          node common/scripts/install-run-rush.js validate-ci --impacted-by git:origin/${TARGET_BRANCH}
+      - name: Rush validate-esm
+        run: |
+          node common/scripts/install-run-rush.js validate-esm
+
+
+  test:
+    needs: [warm-up-cache,build]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-mxa-2xlarge #we need bigger runners
+    env:
+      NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      TARGET_BRANCH: ${{ inputs.target-branch }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: fetch target branch
+        run: git fetch origin ${TARGET_BRANCH}
+      - name: Rush build
+        run: |
+          # build libs first, then the app
+          node common/scripts/install-run-rush.js build
+      - name: Rush test-ci
+        run: |
+          node common/scripts/install-run-rush.js test-ci --impacted-by git:origin/${TARGET_BRANCH}
+      - name: Rush test-isolated-ci
+        run: |
+          node common/scripts/install-run-rush.js test-isolated-ci --impacted-by git:origin/${TARGET_BRANCH}

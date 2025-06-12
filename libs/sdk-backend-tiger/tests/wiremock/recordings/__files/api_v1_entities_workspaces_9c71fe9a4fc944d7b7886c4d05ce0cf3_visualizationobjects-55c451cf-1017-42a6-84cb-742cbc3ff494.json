@@ -1,0 +1,1999 @@
+{
+    "data": [
+        {
+            "id": "b1614db1-3058-4071-a2fe-64a017d318c5",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart with Department attribute",
+                "description": "Column chart with Department attribute",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                                        "title": "Amount [BOP]"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.department_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "be65b4c9d5cd4272a552409f70e4698a"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:column"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/b1614db1-3058-4071-a2fe-64a017d318c5"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "87c466b7-e3e0-4a1a-a45a-4ae333bce863",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart long attribute has hyperlink",
+                "description": "Column chart long attribute has hyperlink",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                                        "title": "Amount [BOP]"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "best_case", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "5cc307a739034b35a8bd485dfba825d5",
+                                        "title": "Best Case"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "productthatisrenamedtotestthelongattributename",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "7504986dd4854e848a7e9411789bb97c"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:column"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/87c466b7-e3e0-4a1a-a45a-4ae333bce863"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "9a2ab62b-587a-4b16-9682-1b7962340354",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart has many hyperlinks",
+                "description": "Column chart has many hyperlinks",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                                        "title": "Amount [BOP]"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "best_case", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "5cc307a739034b35a8bd485dfba825d5",
+                                        "title": "Best Case"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.department_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "5e61d047dac64eaebcbfd102176cbdc1"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.region_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "fbd134a022954e5c94d15939c96d061e"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:column"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/9a2ab62b-587a-4b16-9682-1b7962340354"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "f7a50db1-5d2d-4b1a-82e6-e1648836985c",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart has hyperlink",
+                "description": "Column chart has hyperlink",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                                        "title": "Amount [BOP]"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_opportunity.opportunity.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "4281a0b55f65458f98f5e11b20c6faaf"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:column"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/f7a50db1-5d2d-4b1a-82e6-e1648836985c"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "84d13bd9-f976-4e03-8b00-fec9497d580b",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart has not hyperlink",
+                "description": "Column chart has not hyperlink",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "92cee6a571f64e09abe8c43055fe5dea",
+                                        "title": "Amount [BOP]"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "best_case", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "ddec7417e27f4921bc001317cea32e44",
+                                        "title": "Best Case"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_owner.salesrep.ownername",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "85b09ca610064d5cbb7f966efe91e09b"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "attr.f_stage.stagename", "type": "label" }
+                                        },
+                                        "localIdentifier": "908a5fcd650941f885ed768c243f4d0d"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:column"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/84d13bd9-f976-4e03-8b00-fec9497d580b"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "6ecba0d9-8fff-4c78-8adf-7f33cc1956c8",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart only measures",
+                "description": "Column chart only measures",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "ded20bdcb90145b68711ae0c1901968d",
+                                        "title": "Amount [BOP]"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "best_case", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "953ecfafba014941ab12ec89f84d1d85",
+                                        "title": "Best Case"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:column"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/6ecba0d9-8fff-4c78-8adf-7f33cc1956c8"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "843701ee-8f24-4942-8522-872a96575f8e",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Insight using long name metric",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9",
+                                        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "avg._amount", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "ab408bcdfd76443984d7db17c3d5f62a",
+                                        "title": "Avg. Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "attr.f_stage.stagename", "type": "label" }
+                                        },
+                                        "localIdentifier": "5daa8ff598014da2b89f626ef3c2de67"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "measureValueFilter": {
+                                "measure": { "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9" }
+                            }
+                        }
+                    ],
+                    "properties": { "controls": { "legend": { "position": "right" } } },
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:column"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/843701ee-8f24-4942-8522-872a96575f8e"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "1e17f8cf-aa34-4474-8dd5-c1249c688225",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Table using long name metric",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "bf992ef0637142dba774330a0851098c",
+                                        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/1e17f8cf-aa34-4474-8dd5-c1249c688225"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "unmerge cells insight",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "5f10774f0ef24bf0abf93cacfe2a7454",
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.region_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "attr.f_stage.stagename", "type": "label" }
+                                        },
+                                        "localIdentifier": "168b0bbeefac47eeae7cdc172cd2083e"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "negativeAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": { "id": "label.f_stage.stagename.order", "type": "label" }
+                                },
+                                "notIn": { "values": ["101", "102", "103"] }
+                            }
+                        }
+                    ],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/fb53ecfb-3874-4bee-8612-afecd3fa3e04"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "No data",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "58c6f0115c95489da76f0cff48df18d2",
+                                        "title": "# Of Opportunities Won"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "cd73fb09abc34c4c92042ed0421a21f5"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "absoluteDateFilter": {
+                                "dataSet": {
+                                    "identifier": { "id": "dt_closedate_timestamp", "type": "dataset" }
+                                },
+                                "from": "1900-11-20 00:00",
+                                "to": "1900-12-20 23:59"
+                            }
+                        }
+                    ],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/f00bd5d5-91da-4139-9e7e-5498d9fe49b5"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "dcce2234-9097-47e7-a165-36cdbaa2e134",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "many data",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "fact.f_activity.activitydate",
+                                                        "type": "fact"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "8e79bc72230b460487232e0c67f4e2c9",
+                                        "title": "Sum of Activity (Date)"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_opportunity.id", "type": "label" }
+                                        },
+                                        "localIdentifier": "434ea45fa89e4a56ba2a827572a93852"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_account.account.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "cfc7199c9e8c4f829bb803cc28197d27"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:column"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/dcce2234-9097-47e7-a165-36cdbaa2e134"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Parent Insight",
+                "description": "Parent Insight",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "e519fa2a-86c3-4e32-8313-0c03061626b1",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "e5bd892b4d0b445fae98c549267ab9a8",
+                                        "title": "Parent metric"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.department_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "ce9720f3ccc642acb66d288a9adce435"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/b3b665b7-bca2-4462-82f1-b0e01dff8afe"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "AD has null value",
+                "description": "AD has null value",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "metric_has_null_value",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "38b871775be5400a98fd261a38e2cb9c",
+                                        "title": "Metric has null value"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "f107b852334c4730abc4e11608530bb2",
+                                        "title": "_Snapshot [EOP]"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "9bd8d6e1d80f4f15965be8a7926c590f",
+                                        "title": "_Timeline [EOP]"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "attr.f_product.product", "type": "label" }
+                                        },
+                                        "localIdentifier": "204473a01e6442f8a10822ff15b7a0d2"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.region_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "12f5fa008d404c5092f476a00bb1cda7"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "positiveAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": { "id": "f_owner.region_id", "type": "label" }
+                                },
+                                "in": { "values": ["", "East Coast", null] }
+                            }
+                        },
+                        {
+                            "absoluteDateFilter": {
+                                "dataSet": {
+                                    "identifier": { "id": "dt_closedate_timestamp", "type": "dataset" }
+                                },
+                                "from": "2000-08-07 00:00",
+                                "to": "2022-09-07 23:59"
+                            }
+                        },
+                        {
+                            "negativeAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": { "id": "attr.f_product.product", "type": "label" }
+                                },
+                                "notIn": { "values": ["CompuSci", "Educationly"] }
+                            }
+                        }
+                    ],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "measureSortItem": {
+                                "direction": "desc",
+                                "locators": [
+                                    {
+                                        "attributeLocatorItem": {
+                                            "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
+                                            "element": "East Coast"
+                                        }
+                                    },
+                                    {
+                                        "measureLocatorItem": {
+                                            "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/b3b665b7-bca2-0322-82f1-b86ky73k90f8afe"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "invalid insight",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "1ed7c5a07de94cf9ac583124b909f7bf",
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "dt_activity_timestamp.year",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "63e1799693114006adfed9e510b00a83"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "relativeDateFilter": {
+                                "dataSet": {
+                                    "identifier": { "id": "dt_activity_timestamp", "type": "dataset" }
+                                },
+                                "granularity": "GDC.time.year"
+                            }
+                        }
+                    ],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/81452cc9-558b-4b4e-a70b-0a80f3bd2924"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "big insight",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "cf7c621eaf5f44f483c6ac52ca5e7fde",
+                                        "title": "_Timeline [EOP]"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_activity.subject",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "644e49c9164d4763b23b4cf7436de0ef"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/5517045e-661f-4d6b-b0b0-98030ab9f68c"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "merge cells insight",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "5f10774f0ef24bf0abf93cacfe2a7454",
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.region_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "attr.f_stage.stagename", "type": "label" }
+                                        },
+                                        "localIdentifier": "168b0bbeefac47eeae7cdc172cd2083e"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "negativeAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": { "id": "label.f_stage.stagename.order", "type": "label" }
+                                },
+                                "notIn": { "values": ["101", "102", "103"] }
+                            }
+                        }
+                    ],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+                                "direction": "desc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/3ef94acb-1e15-49ef-88d5-e9e2931be959"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Negative Insight",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "negative_metric",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "4ad1cb04125348e3b106411c09054fb7",
+                                        "title": "Negative Metric"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:pyramid"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "ba13041b-87bc-458c-a514-fcc0074c9973",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Combine with all filter types",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "computeRatio": false,
+                                                "filters": [
+                                                    {
+                                                        "positiveAttributeFilter": {
+                                                            "displayForm": {
+                                                                "identifier": {
+                                                                    "id": "f_owner.department_id",
+                                                                    "type": "label"
+                                                                }
+                                                            },
+                                                            "in": { "values": ["Direct Sales"] }
+                                                        }
+                                                    }
+                                                ],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777",
+                                        "title": "Amount (Department: Direct Sales)"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_account.account.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "d100a73db7ec4d418429935e53239a90"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "positiveAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": { "id": "label.f_account.account.name", "type": "label" }
+                                },
+                                "in": {
+                                    "values": [
+                                        "(add)ventures",
+                                        ".decimal",
+                                        "1 Source Consulting",
+                                        "1-800 Postcards",
+                                        "1-800 We Answer",
+                                        "1000Bulbs.com",
+                                        "1-888-OhioComp",
+                                        "101 Financial",
+                                        "123 Exteriors",
+                                        "14 West",
+                                        "1Source International",
+                                        "1st Choice Staffing & Consulting",
+                                        "2 Wheel Bikes",
+                                        "2HB Software Designs",
+                                        "352 Media Group",
+                                        "1st in Video - Music World",
+                                        "3Degrees",
+                                        "3E",
+                                        "3balls.com",
+                                        "3dCart Shopping Cart Software",
+                                        "49er Communications",
+                                        "4Wall Entertainment",
+                                        "(mt) Media Temple",
+                                        "4th Source",
+                                        "5LINX Enterprises",
+                                        "614 Media Group",
+                                        "6K Systems",
+                                        "7 Medical Systems",
+                                        "7 Simple Machines",
+                                        "7-Eleven",
+                                        "720 Strategies",
+                                        "90octane",
+                                        "919 Marketing",
+                                        "@properties",
+                                        "A Main Hobbies",
+                                        "A Place for Mom"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "measureValueFilter": {
+                                "condition": {
+                                    "comparison": {
+                                        "operator": "GREATER_THAN",
+                                        "treatNullValuesAs": 0,
+                                        "value": 0
+                                    }
+                                },
+                                "measure": { "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777" }
+                            }
+                        },
+                        {
+                            "absoluteDateFilter": {
+                                "dataSet": {
+                                    "identifier": { "id": "dt_oppcreated_timestamp", "type": "dataset" }
+                                },
+                                "from": "2008-01-01 00:00",
+                                "to": "2009-01-01 23:59"
+                            }
+                        },
+                        {
+                            "negativeAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "dt_oppcreated_timestamp.quarterOfYear",
+                                        "type": "label"
+                                    }
+                                },
+                                "notIn": { "values": ["04"] }
+                            }
+                        }
+                    ],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:pyramid"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/ba13041b-87bc-458c-a514-fcc0074c9973"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "6d236ec6-5cf7-493e-8285-6613fde4ce18",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Table has multi metrics and multi formats",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "[>=9][color=2190c0]██████████;\n[>=8][color=2190c0]█████████░;\n[>=7][color=2190c0]████████░░;\n[>=6][color=2190c0]███████░░░;\n[>=5][color=2190c0]██████░░░░;\n[>=4][color=2190c0]█████░░░░░;\n[>=3][color=2190c0]████░░░░░░;\n[>=2][color=2190c0]███░░░░░░░;\n[>=1][color=2190c0]██░░░░░░░░;\n[color=2190c0]█░░░░░░░░░\n",
+                                        "localIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                                        "title": "# Of Opportunities"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "[<0][red]#,#.##;\n[<1000][green]#,0.##;\n[>=1000][black]#,#.##",
+                                        "localIdentifier": "820c5beb252641049020e6026be3e40e",
+                                        "title": "# Of Opportunities Won"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "[<0][green]▲ #,##0.0%;\n[=0][black]#,##0.0%;\n[>0][red]▼ #,##0.0%\n",
+                                        "localIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                                        "title": "Amount"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "[BLUE][backgroundColor=aff8ef]$#,##0.00",
+                                        "localIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                                        "title": "# Of Opportunities"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "<button>#,##0.00</button>",
+                                        "localIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                                        "title": "Win Rate"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.0% long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long",
+                                        "localIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                                        "title": "Probability"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00 kiểm tra nghiêm khắc",
+                                        "localIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                                        "title": "# Of Opportunities"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "[=NULL]null value; #,##0.00",
+                                        "localIdentifier": "28f55bd907394608845f87a046f2117e",
+                                        "title": "Won"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_opportunitysnapshot.forecastcategory_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "attr.f_stage.stagename", "type": "label" }
+                                        },
+                                        "localIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute",
+                            "totals": [
+                                {
+                                    "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                                    "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                                    "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                                    "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                                    "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                                    "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                                    "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                                    "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                                    "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                                    "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                                    "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                                    "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                                    "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                                    "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                                    "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                                    "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                                    "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                                    "type": "sum"
+                                }
+                            ]
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.region_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "201dd02a610c4575a44f7713b8f80fd4"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.department_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns",
+                            "totals": [
+                                {
+                                    "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                                    "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                                    "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                                    "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                                    "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                                    "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                                    "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                                    "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                                    "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                                    "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                                    "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                                    "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                                    "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                                    "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                                    "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                                    "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                                    "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                                    "type": "sum"
+                                }
+                            ]
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/6d236ec6-5cf7-493e-8285-6613fde4ce18"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "343b329b-e2b0-43b2-9724-de8cd664ebac",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Table has AM metric",
+                "description": "",
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "fccc4446dc314fc4911315b881d2b5c4",
+                                        "title": "# Of Opportunities"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                                        "title": "_Snapshot [EOP]"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "arithmeticMeasure": {
+                                                "measureIdentifiers": [
+                                                    "fccc4446dc314fc4911315b881d2b5c4",
+                                                    "a954df386c3b40e986820c47b50c3e7f"
+                                                ],
+                                                "operator": "sum"
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "6cb6dc742b4545789a804a4cdaca58b9"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "02ee089c502047d391c3d783c7616a7f"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.department_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_stage.status_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "37df01ac7f3047469b075685d37bfc8c"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns",
+                            "totals": [
+                                {
+                                    "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                                    "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                                    "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                                    "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                                    "type": "sum"
+                                },
+                                {
+                                    "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                                    "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                                    "type": "sum"
+                                }
+                            ]
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "absoluteDateFilter": {
+                                "dataSet": {
+                                    "identifier": { "id": "dt_closedate_timestamp", "type": "dataset" }
+                                },
+                                "from": "2005-05-20 00:00",
+                                "to": "2023-06-20 23:59"
+                            }
+                        }
+                    ],
+                    "properties": {
+                        "controls": {
+                            "columnWidths": [
+                                {
+                                    "measureColumnWidthItem": {
+                                        "locators": [
+                                            {
+                                                "attributeLocatorItem": {
+                                                    "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                                                    "element": "Direct Sales"
+                                                }
+                                            },
+                                            {
+                                                "attributeLocatorItem": {
+                                                    "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                                                    "element": "Lost"
+                                                }
+                                            },
+                                            {
+                                                "measureLocatorItem": {
+                                                    "measureIdentifier": "fccc4446dc314fc4911315b881d2b5c4"
+                                                }
+                                            }
+                                        ],
+                                        "width": { "value": 203 }
+                                    }
+                                },
+                                {
+                                    "measureColumnWidthItem": {
+                                        "locators": [
+                                            {
+                                                "attributeLocatorItem": {
+                                                    "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                                                    "element": "Direct Sales"
+                                                }
+                                            },
+                                            {
+                                                "totalLocatorItem": {
+                                                    "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                                                    "totalFunction": "sum"
+                                                }
+                                            },
+                                            {
+                                                "measureLocatorItem": {
+                                                    "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f"
+                                                }
+                                            }
+                                        ],
+                                        "width": { "value": 98 }
+                                    }
+                                },
+                                {
+                                    "measureColumnWidthItem": {
+                                        "locators": [
+                                            {
+                                                "attributeLocatorItem": {
+                                                    "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                                                    "element": "Direct Sales"
+                                                }
+                                            },
+                                            {
+                                                "totalLocatorItem": {
+                                                    "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                                                    "totalFunction": "sum"
+                                                }
+                                            },
+                                            {
+                                                "measureLocatorItem": {
+                                                    "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9"
+                                                }
+                                            }
+                                        ],
+                                        "width": { "value": 322 }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "02ee089c502047d391c3d783c7616a7f",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-10-18 07:04"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects/343b329b-e2b0-43b2-9724-de8cd664ebac"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        }
+    ],
+    "links": {
+        "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects?metaInclude=page&page=0&size=50&sort=modifiedAt,createdAt,title,desc"
+    },
+    "meta": { "page": { "size": 50, "totalElements": 20, "totalPages": 1, "number": 0 } }
+}

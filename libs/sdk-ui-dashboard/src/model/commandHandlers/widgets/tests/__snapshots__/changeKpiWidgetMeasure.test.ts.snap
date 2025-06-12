@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`change KPI widget measure handler > for KPI with date dataset > should emit correct events 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",
+    "type": "GDC.DASH/EVT.QUERY.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",
+    "type": "GDC.DASH/EVT.QUERY.COMPLETED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
+  },
+]
+`;
+
+exports[`change KPI widget measure handler > for any KPI > should emit correct events 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
+  },
+]
+`;

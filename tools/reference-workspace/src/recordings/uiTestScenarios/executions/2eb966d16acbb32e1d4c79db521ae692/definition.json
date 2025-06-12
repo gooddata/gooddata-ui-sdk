@@ -1,0 +1,67 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                "localIdentifier": "a_f_city.id.cityname"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                "localIdentifier": "a_f_city.id.cityname_1"
+            }
+        }
+    ],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.cityname"
+                    }
+                }
+            ],
+            "localIdentifier": "attribute"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.cityname_1"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "of_lost_opps.", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_of_lost_opps."
+                    }
+                }
+            ],
+            "localIdentifier": "columns"
+        }
+    ],
+    "dimensions": [
+        { "itemIdentifiers": ["a_f_city.id.cityname", "a_f_city.id.cityname_1"] },
+        { "itemIdentifiers": ["measureGroup"] }
+    ],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "of_lost_opps.", "type": "measure" } }
+                },
+                "localIdentifier": "m_of_lost_opps."
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

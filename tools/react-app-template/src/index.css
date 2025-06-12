@@ -1,0 +1,104 @@
+:root {
+    --max-width: 600px;
+    --white: #fff;
+    --light-grey: #ebeff4;
+    --dark-grey: #464e56;
+    --code-grey: #f5f8fa;
+    --brand: #ed26b7;
+    --brand-hover: #cf119b;
+    --brand-blue: #2637ef;
+    --main-bg-color: brown;
+}
+
+html,
+body,
+#root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--dark-grey);
+    font-family: avenir, "Helvetica Neue", arial, sans-serif;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    background: var(--white) no-repeat top right url(assets/topology-bg.svg);
+    background-size: cover;
+}
+
+.app {
+    width: 100%;
+    max-width: calc(var(--max-width) + 3em);
+    margin: 0 auto;
+    padding: 0 1.5em;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.app .app-link,
+.app .app-link:active,
+.app .app-link:visited {
+    transition: color 0.2s;
+    color: var(--brand);
+    text-decoration: none;
+}
+
+.app .app-link:hover {
+    color: var(--brand-hover);
+    text-decoration: underline;
+}
+
+.app .app-title {
+    text-align: center;
+    font-size: 2.2em;
+    margin-top: 2em;
+}
+
+.app .app-paragraph {
+    text-align: center;
+    margin-top: 4em;
+}
+
+.app :not(.app-preformatted) .app-code {
+    font-family: monospace;
+    font-size: inherit;
+    color: var(--brand-blue);
+    background-color: rgba(38, 55, 239, 0.1);
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.3rem;
+}
+
+.app .app-preformatted {
+    background: var(--code-grey);
+    border: 1px solid var(--light-grey);
+    padding: 1em;
+    overflow: auto;
+    margin-top: 2em;
+}
+
+.app .app-figure {
+    border: 1px solid var(--light-grey);
+    height: calc(var(--max-width) * 0.6);
+    margin: 2em 0 0;
+    padding: 0 1em;
+    background: var(--white);
+    overflow: auto;
+}
+
+.app .app-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--light-grey);
+    padding: 1em 0 1em;
+    margin-top: 2em;
+}
+
+@media (min-width: 600px) {
+    .app .app-title {
+        font-size: 3.6em;
+        margin-top: 1em;
+    }
+}

@@ -1,0 +1,138 @@
+# (C) 2024 GoodData Corporation
+
+name: Test ~ run boiler app
+on:
+  workflow_dispatch:
+    inputs:
+      GIT_REVISION:
+        description: 'GIT REVISION'
+        default: master
+        required: true
+        type: string
+      TEST_BACKEND:
+        default: 'https://checklist.staging.stg11.panther.intgdc.com'
+        required: true
+        type: string
+      TIGER_DATASOURCES_NAME:
+        description: 'Tiger DS name'
+        default: 'vertica_staging-goodsales'
+        required: true
+        type: string
+      SDK_VERSION:
+        required: true
+        type: string
+        default: 'latest'
+      SDK_LANG:
+        description: 'Programming Language to be used'
+        type: choice
+        default: 'js'
+        options:
+          - js
+          - ts
+      FILTER:
+        type: string
+        required: true
+        description: 'Test files to be filtered'
+        default: 'boilerapp.spec.ts'
+  workflow_call:
+    inputs:
+      GIT_REVISION:
+        description: 'GIT REVISION'
+        default: master
+        required: true
+        type: string
+      TEST_BACKEND:
+        default: 'https://checklist.staging.stg11.panther.intgdc.com'
+        required: true
+        type: string
+      TIGER_DATASOURCES_NAME:
+        description: 'Tiger DS name'
+        default: 'vertica_staging-goodsales'
+        required: true
+        type: string
+      SDK_VERSION:
+        required: true
+        type: string
+        default: 'latest'
+      SDK_LANG:
+        description: 'Programming Language to be used'
+        type: string
+        default: 'js'
+        required: true
+      FILTER:
+        type: string
+        required: true
+        description: 'Test files to be filtered'
+        default: 'boilerapp.spec.ts'
+
+jobs:
+  warm-up-cache:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.GIT_REVISION }}
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Warmup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/warm-up-rush
+  e2e:
+    needs: [ warm-up-cache ]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.GIT_REVISION }}
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Get vault secrets
+        uses: hashicorp/vault-action@v3
+        id: secrets
+        with:
+          url: https://vault.ord1.infra.intgdc.com
+          method: jwt
+          path: jwt/github
+          role: front-end
+          secrets: |-
+            secret/data/v3/dev/panther/qa-org-bootstrap-token token | TIGER_API_TOKEN ;
+      - name: Run e2e tests
+        run: |
+          export HOST=${{ inputs.TEST_BACKEND }}
+          export TIGER_DATASOURCES_NAME=${{ inputs.TIGER_DATASOURCES_NAME }}
+          export FIXTURE_TYPE=goodsales
+          export SDK_LANG=${{ inputs.SDK_LANG }}
+          export FILTER=${{ inputs.FILTER }}
+          if [[ -z ${{ inputs.SDK_VERSION }} || ${{ inputs.SDK_VERSION }} == "latest" ]]; then
+            export SDK_VERSION=$(jq < libs/sdk-backend-spi/package.json -r '.["version"]')
+          else
+            export SDK_VERSION=${{ inputs.SDK_VERSION }}
+          fi
+          echo "The boiler app will be run with sdk version $SDK_VERSION"
+          ./common/scripts/ci/run_boiler_app_integration_tests_with_live_backend.sh
+      - name: Archive the cypress test artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: cypress-boiler-test-artifacts
+          path: |
+            libs/sdk-ui-tests-e2e/cypress/videos/**/*.mp4
+            libs/sdk-ui-tests-e2e/cypress/screenshots/**/*
+            libs/sdk-ui-tests-e2e/cypress/results/**/*

@@ -1,0 +1,59 @@
+{
+    "count": [21],
+    "data": [
+        36890, 37255, 37620, 37985, 38351, 38716, 39081, 39446, 39812, 40177, 40542, 40907, 41273, 41638,
+        42003, 42368, 42734, 43099, 43464, 43829, 44195
+    ],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "_Timeline [EOP]", "order": 0 } }
+            ],
+            [
+                { "attributeHeaderItem": { "formattedName": "2000", "name": "2000", "uri": "2000" } },
+                { "attributeHeaderItem": { "formattedName": "2001", "name": "2001", "uri": "2001" } },
+                { "attributeHeaderItem": { "formattedName": "2002", "name": "2002", "uri": "2002" } },
+                { "attributeHeaderItem": { "formattedName": "2003", "name": "2003", "uri": "2003" } },
+                { "attributeHeaderItem": { "formattedName": "2004", "name": "2004", "uri": "2004" } },
+                { "attributeHeaderItem": { "formattedName": "2005", "name": "2005", "uri": "2005" } },
+                { "attributeHeaderItem": { "formattedName": "2006", "name": "2006", "uri": "2006" } },
+                { "attributeHeaderItem": { "formattedName": "2007", "name": "2007", "uri": "2007" } },
+                { "attributeHeaderItem": { "formattedName": "2008", "name": "2008", "uri": "2008" } },
+                { "attributeHeaderItem": { "formattedName": "2009", "name": "2009", "uri": "2009" } },
+                { "attributeHeaderItem": { "formattedName": "2010", "name": "2010", "uri": "2010" } },
+                { "attributeHeaderItem": { "formattedName": "2011", "name": "2011", "uri": "2011" } },
+                { "attributeHeaderItem": { "formattedName": "2012", "name": "2012", "uri": "2012" } },
+                { "attributeHeaderItem": { "formattedName": "2013", "name": "2013", "uri": "2013" } },
+                { "attributeHeaderItem": { "formattedName": "2014", "name": "2014", "uri": "2014" } },
+                { "attributeHeaderItem": { "formattedName": "2015", "name": "2015", "uri": "2015" } },
+                { "attributeHeaderItem": { "formattedName": "2016", "name": "2016", "uri": "2016" } },
+                { "attributeHeaderItem": { "formattedName": "2017", "name": "2017", "uri": "2017" } },
+                { "attributeHeaderItem": { "formattedName": "2018", "name": "2018", "uri": "2018" } },
+                { "attributeHeaderItem": { "formattedName": "2019", "name": "2019", "uri": "2019" } },
+                { "attributeHeaderItem": { "formattedName": "2020", "name": "2020", "uri": "2020" } }
+            ]
+        ]
+    ],
+    "offset": [0],
+    "totalCount": [21]
+}

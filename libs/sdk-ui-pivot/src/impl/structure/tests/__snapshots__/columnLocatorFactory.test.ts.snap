@@ -1,0 +1,91 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`createColumnLocator > creates valid group column locator for second-level group in table with column attributes 1`] = `
+[
+  {
+    "attributeLocatorItem": {
+      "attributeIdentifier": "a_attr.f_stage.stagename",
+      "element": "Interest",
+    },
+  },
+  {
+    "attributeLocatorItem": {
+      "attributeIdentifier": "a_f_owner.region_id",
+      "element": "East Coast",
+    },
+  },
+]
+`;
+
+exports[`createColumnLocator > creates valid group column locator for top-level group in table with column attributes 1`] = `
+[
+  {
+    "attributeLocatorItem": {
+      "attributeIdentifier": "a_attr.f_stage.stagename",
+      "element": "Interest",
+    },
+  },
+]
+`;
+
+exports[`createColumnLocator > creates valid leaf column locator in table with column attributes 1`] = `
+[
+  {
+    "attributeLocatorItem": {
+      "attributeIdentifier": "a_attr.f_stage.stagename",
+      "element": "Interest",
+    },
+  },
+  {
+    "attributeLocatorItem": {
+      "attributeIdentifier": "a_f_owner.region_id",
+      "element": "East Coast",
+    },
+  },
+  {
+    "measureLocatorItem": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    },
+  },
+]
+`;
+
+exports[`createColumnLocator > creates valid leaf column locator in table without column attributes 1`] = `
+[
+  {
+    "measureLocatorItem": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    },
+  },
+]
+`;
+
+exports[`createColumnLocator > creates valid mixed values column locator in transposed table 1`] = `
+[
+  {
+    "measureLocatorItem": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    },
+  },
+  {
+    "measureLocatorItem": {
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    },
+  },
+]
+`;
+
+exports[`createColumnLocator > creates valid slice measure column locator in transposed table 1`] = `
+[
+  {
+    "measureLocatorItem": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    },
+  },
+  {
+    "measureLocatorItem": {
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    },
+  },
+]
+`;

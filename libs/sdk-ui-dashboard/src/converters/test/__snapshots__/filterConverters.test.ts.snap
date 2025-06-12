@@ -1,0 +1,124 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`filterConverters tests > filterContextToFiltersForDataSet > should handle filterContext with absolute date filter 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "identifier": "dt_activity_timestamp",
+        "type": "dataSet",
+      },
+      "from": "2020-01-01",
+      "to": "2021-01-01",
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests > filterContextToFiltersForDataSet > should handle filterContext with positive attribute filter with values 1`] = `
+[
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
+        "identifier": "label.f_account.account.name",
+        "type": "displayForm",
+      },
+      "in": {
+        "values": [
+          "foo",
+          "bar",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests > filterContextToFiltersForDataSet > should handle filterContext with relative date filter 1`] = `
+[
+  {
+    "relativeDateFilter": {
+      "dataSet": {
+        "identifier": "dt_activity_timestamp",
+        "type": "dataSet",
+      },
+      "from": -4,
+      "granularity": "GDC.time.date",
+      "to": -3,
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests > filterContextToFiltersForDataSet > should handle undefined filterContext 1`] = `[]`;
+
+exports[`filterConverters tests > filterContextToFiltersForWidget > should handle filterContext with absolute date filter 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "identifier": "dt_activity_timestamp",
+        "type": "dataSet",
+      },
+      "from": "2020-01-01",
+      "to": "2021-01-01",
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests > filterContextToFiltersForWidget > should handle filterContext with negative attribute filter with uris 1`] = `
+[
+  {
+    "negativeAttributeFilter": {
+      "displayForm": {
+        "identifier": "label.f_account.account.name",
+        "type": "displayForm",
+      },
+      "notIn": {
+        "uris": [
+          "foo",
+          "bar",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests > filterContextToFiltersForWidget > should handle filterContext with positive attribute filter with values 1`] = `
+[
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
+        "identifier": "label.f_account.account.name",
+        "type": "displayForm",
+      },
+      "in": {
+        "values": [
+          "foo",
+          "bar",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests > filterContextToFiltersForWidget > should handle filterContext with relative date filter 1`] = `
+[
+  {
+    "relativeDateFilter": {
+      "dataSet": {
+        "identifier": "dt_activity_timestamp",
+        "type": "dataSet",
+      },
+      "from": -4,
+      "granularity": "GDC.time.date",
+      "to": -3,
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests > filterContextToFiltersForWidget > should handle undefined filterContext 1`] = `[]`;

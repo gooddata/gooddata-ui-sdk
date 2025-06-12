@@ -1,0 +1,62 @@
+# (C) 2024 GoodData Corporation
+
+name: Push ~ Prerelease
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  pull-request-info:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    outputs:
+      should-prerelease: ${{ steps.should-prerelease.outputs.result }}
+      author: ${{ steps.author.outputs.result }}
+      branch-name: ${{ steps.extract-branch.outputs.branch }}
+    steps:
+      - uses: actions/github-script@v7
+        id: should-prerelease
+        with:
+          script: |
+            const pullRequests = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              commit_sha: context.sha,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            return pullRequests?.data[0]?.labels?.every((it) => it.name !== 'skip publish');
+          result-encoding: string
+      - uses: actions/github-script@v7
+        id: author
+        with:
+          script: |
+            const pullRequests = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              commit_sha: context.sha,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            return pullRequests?.data[0]?.user?.login;
+          result-encoding: string
+      - name: Extract branch name
+        env:
+          CURRENT_REF: ${{ github.event.ref }}
+        id: extract-branch
+        shell: bash
+        run: echo "branch=${CURRENT_REF#refs/heads/}" >> $GITHUB_OUTPUT
+
+  publish-pre-release:
+    needs: [pull-request-info]
+    name: Publish pre-release
+    # should-prerelease is a string, not a boolean
+    if: ${{ needs.pull-request-info.outputs.should-prerelease == 'true' }}
+    uses: ./.github/workflows/rw-publish-prerelease.yml
+    secrets: inherit
+    permissions:
+      contents: write
+      id-token: write
+    with:
+      source-branch:  ${{ needs.pull-request-info.outputs.branch-name }}
+      author-name: ${{ needs.pull-request-info.outputs.author }}

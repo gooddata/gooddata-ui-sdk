@@ -1,0 +1,558 @@
+// (C) 2007-2025 GoodData Corporation
+@use "fixed-data-table-2/dist/fixed-data-table.css";
+@use "sass:color";
+@use "animations";
+@use "List/_mixins" as list-mixins;
+@use "variables";
+@use "mixins";
+@use "indigoFont";
+
+$menu-item-icon-width: 30px;
+
+%collapsible-icon {
+    overflow: hidden;
+    width: 12px;
+    height: 20px;
+    margin: 1px 0 0;
+    color: #b9b9b9;
+    font-family: variables.$gd-font-indigo;
+    font-size: 11px;
+}
+
+%menu-item-icon {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: variables.$gd-color-disabled;
+    font-family: variables.$gd-font-indigo;
+}
+
+.gd-list-noResults {
+    padding: 15px;
+    color: variables.$gd-color-state-blank;
+    font-size: 14px;
+    font-family: variables.$gd-font-primary;
+    text-align: center;
+}
+
+.gd-list-loading {
+    margin: 10px;
+    text-align: center;
+}
+
+.gd-list-status-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 20px;
+    margin: 5px 10px;
+    line-height: 20px;
+    font-size: 12px;
+    padding-top: 5px;
+    border-top: 1px solid variables.$gd-border-color;
+    font-family: variables.$gd-font-primary;
+
+    span {
+        flex: 0 0 auto;
+        height: 20px;
+        white-space: nowrap;
+        min-width: 0;
+    }
+
+    .gd-shortened-text {
+        flex: 0 1 auto;
+        overflow: hidden;
+        width: auto;
+        height: 20px;
+        white-space: nowrap;
+        max-width: inherit;
+        text-overflow: ellipsis;
+
+        &.gd-selection-list {
+            font-weight: bold;
+        }
+    }
+}
+
+.gd-list-all-checkbox-checked {
+    font-weight: bold;
+}
+
+.gd-list-actions {
+    font-family: variables.$gd-font-primary;
+    margin: 0 10px 10px;
+    line-height: 1;
+    font-size: 12px;
+
+    .gd-button-link:first-of-type {
+        margin-left: 0;
+        padding-left: 0;
+    }
+
+    &.gd-list-actions-invertable {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 5px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid variables.$gd-border-color;
+
+        .input-checkbox-label {
+            flex: 0 1 auto;
+            cursor: pointer;
+
+            &.disabled {
+                cursor: default;
+            }
+
+            &::after {
+                content: " ";
+            }
+        }
+    }
+}
+
+.gd-list-actions-selection-size {
+    box-sizing: border-box;
+    margin: 1px 0 0 5px;
+    color: variables.$gd-color-label;
+}
+
+.gd-list {
+    line-height: 28px;
+    font-size: 12px;
+
+    .gd-infinite-list {
+        position: relative;
+        width: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+button.gd-list-item {
+    width: 100%;
+    border-color: transparent;
+    background: none;
+    text-align: left;
+}
+
+.gd-list-item {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: inherit;
+    padding: 0 10px;
+    color: variables.$gd-color-text;
+    cursor: pointer;
+    font-family: variables.$gd-font-primary;
+    font-size: 12px;
+    text-decoration: none;
+
+    @include mixins.text-overflow();
+
+    &:hover {
+        color: variables.$is-focused-color;
+        background: variables.$is-focused-background;
+        text-decoration: none;
+
+        &.is-selected {
+            background-color: variables.$is-selected-focused-background;
+        }
+    }
+    &:focus-visible {
+        outline: revert;
+        outline-offset: -2px; // pull outline inside to not have it clipped by item's overflow: hidden
+    }
+
+    &.gd-menu-item-remove:hover {
+        color: variables.$gd-palette-error-base;
+        background: variables.$gd-palette-error-dimmed;
+    }
+
+    .gd-mobile-dropdown-content & {
+        border-bottom: 1px solid variables.$gd-border-color;
+        font-size: 14px;
+        text-align: left;
+    }
+
+    &.is-disabled {
+        opacity: 0.5;
+    }
+
+    &.is-focused {
+        background-color: variables.$is-focused-background;
+        color: variables.$is-focused-color;
+    }
+
+    &.is-selected {
+        color: variables.$gd-palette-primary-base;
+        font-weight: bold;
+
+        .gd-customizable-checkmark-mobile-navigation-wrapper {
+            width: 29px;
+        }
+
+        .gd-customizable-checkmark-mobile-navigation {
+            top: 18px;
+            right: 13px;
+            bottom: 0;
+        }
+    }
+
+    &.gd-menu-item {
+        padding: 4px $menu-item-icon-width;
+
+        .gd-menu-wrapper.gd-menu-wrapper-small-spacing & {
+            padding: 4px 10px;
+        }
+
+        &.is-checked {
+            &::before {
+                @extend %menu-item-icon;
+
+                content: "\E62C";
+                left: 0;
+                width: $menu-item-icon-width;
+                font-size: 12px;
+            }
+        }
+
+        &.is-submenu {
+            &::after {
+                @extend %menu-item-icon;
+
+                content: "\E611";
+                right: 0;
+                width: $menu-item-icon-width;
+                font-size: 14px;
+            }
+        }
+    }
+
+    label.input-checkbox-label {
+        pointer-events: none; // this prevents event bubbling (select changed fired twice)
+    }
+
+    input[type="checkbox"] {
+        flex: 0 0 auto;
+        margin: 0 7px 0 0;
+    }
+
+    span,
+    label {
+        display: block;
+        flex: 1 1 auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .gd-list-icon {
+        flex: 0 0 auto;
+    }
+
+    .is-multiselect & {
+        &.is-selected {
+            color: variables.$gd-color-text;
+            font-weight: bold;
+
+            &::after {
+                // overwrite
+                // stylelint-disable-next-line declaration-no-important
+                display: none !important;
+            }
+        }
+
+        &.is-focused.is-selected,
+        &:hover.is-selected {
+            color: variables.$gd-color-text;
+        }
+    }
+
+    &.has-only-visible:hover {
+        &:hover {
+            .gd-list-item-only {
+                display: block;
+            }
+        }
+    }
+
+    .gd-list-item-only {
+        display: none;
+        flex: 0 0 auto;
+        color: variables.$gd-palette-primary-base;
+        margin-left: 7px;
+        font-weight: normal;
+
+        @include mixins.active-states {
+            color: variables.$gd-color-text;
+            text-decoration: underline;
+        }
+    }
+
+    &.gd-list-item-separator,
+    &.gd-list-item-header {
+        cursor: default;
+
+        @include mixins.active-states {
+            &,
+            & > div {
+                color: variables.$gd-color-state-blank;
+                background: transparent;
+            }
+        }
+    }
+
+    &.gd-list-item-separator {
+        position: relative;
+        min-height: 10px;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            left: 10px;
+            height: 0;
+            border-bottom: 1px solid variables.$gd-border-color;
+
+            .gd-menu-wrapper & {
+                right: $menu-item-icon-width;
+                left: $menu-item-icon-width;
+            }
+
+            .gd-menu-wrapper.gd-menu-wrapper-small-spacing & {
+                right: 10px;
+                left: 10px;
+            }
+        }
+    }
+
+    &.gd-list-item-header {
+        padding: 12px 10px 0;
+        line-height: 16px;
+        color: variables.$gd-color-state-blank;
+        font-size: 10px;
+        text-transform: uppercase;
+
+        @include mixins.text-overflow();
+
+        .gd-menu-wrapper & {
+            padding: 12px 30px 0;
+        }
+
+        .gd-menu-wrapper.gd-menu-wrapper-small-spacing & {
+            padding: 12px 10px 0;
+        }
+
+        > div {
+            color: inherit;
+        }
+
+        .is-collapsible {
+            cursor: pointer;
+
+            &:hover {
+                background-color: #f2f2f2;
+            }
+
+            &::before {
+                content: "\29";
+                float: left;
+
+                @extend %collapsible-icon;
+            }
+        }
+
+        .is-open::before {
+            content: "\28";
+
+            @extend %collapsible-icon;
+        }
+    }
+
+    .gd-list-item-bubble {
+        padding-left: 3px;
+        padding-bottom: 3px;
+    }
+}
+
+.gd-ui-kit-listbox__items:focus-visible {
+    .gd-list-item.is-focused {
+        @include mixins.focus-ring;
+    }
+}
+
+.gd-list-icon {
+    width: 16px;
+    height: 16px;
+    margin: 0 8px;
+    line-height: 16px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+.gd-list-item,
+.gd-list-actions {
+    .input-checkbox-label {
+        padding-right: 0;
+        padding-left: 23px;
+    }
+}
+
+.gd-list-root {
+    .gd-button-link {
+        padding: 0;
+        font-size: 12px;
+
+        > span {
+            text-decoration: none;
+        }
+
+        &:hover > span {
+            text-decoration: underline;
+        }
+
+        &:first-child {
+            margin-left: 8px;
+        }
+    }
+}
+
+.gd-infinite-list {
+    .fixedDataTableLayout_topShadow,
+    .fixedDataTableLayout_bottomShadow {
+        display: none;
+    }
+
+    .public_fixedDataTable_main,
+    .fixedDataTableCellLayout_main,
+    .fixedDataTableRowLayout_main {
+        border: none;
+    }
+
+    .public_fixedDataTable_main:focus-visible {
+        outline: revert;
+    }
+
+    .public_Scrollbar_main {
+        &,
+        &.public_Scrollbar_mainActive {
+            border-color: transparent;
+        }
+
+        &,
+        &Active {
+            background-color: transparent;
+        }
+
+        &:hover,
+        &Active {
+            .public_Scrollbar_face::after {
+                background-color: variables.$gd-color-disabled;
+            }
+        }
+    }
+
+    .public_Scrollbar_face {
+        &::after {
+            background-color: color.adjust(variables.$default-gd-color-disabled, $alpha: -0.7);
+        }
+
+        &Active::after {
+            background-color: variables.$gd-color-disabled;
+        }
+    }
+
+    .public_fixedDataTable_header,
+    .public_fixedDataTable_header .public_fixedDataTableCell_main,
+    .public_fixedDataTable_scrollbarSpacer {
+        background: none;
+    }
+
+    .public_fixedDataTableRow_main,
+    .public_fixedDataTableCell_main,
+    .public_fixedDataTableRow_highlighted,
+    .public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main {
+        background-color: transparent;
+    }
+
+    .public_fixedDataTableCell_cellContent {
+        padding: 0;
+        white-space: nowrap;
+        color: variables.$gd-color-text;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
+    .fixedDataTableCellLayout_wrap1 {
+        table-layout: fixed;
+    }
+
+    .fixedDataTableCellLayout_wrap2,
+    .fixedDataTableCellLayout_wrap3 {
+        width: inherit;
+    }
+
+    .fixedDataTableCellLayout_wrap2,
+    .fixedDataTableCellLayout_wrap3,
+    .public_fixedDataTableCell_cellContent,
+    .gd-project-list-item {
+        height: inherit;
+    }
+}
+
+.gd-list-header,
+.gd-list-footer {
+    margin: 10px;
+    line-height: 16px;
+    color: variables.$gd-color-state-blank;
+    font-size: 12px;
+}
+
+.gd-list-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid variables.$gd-border-color;
+}
+
+.gd-list-footer {
+    padding-top: 10px;
+    border-top: 1px solid variables.$gd-border-color;
+}
+
+.gd-list-limitExceeded {
+    margin: 5px 10px;
+
+    &.gd-message::after {
+        display: none;
+    }
+}
+
+.gd-menu-wrapper {
+    position: relative;
+    z-index: 10;
+    display: inline-block;
+    padding: 8px 0;
+    box-shadow: 0 1px 20px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2));
+    background: variables.$gd-color-white;
+    border-radius: 3px;
+}

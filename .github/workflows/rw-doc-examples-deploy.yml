@@ -1,0 +1,61 @@
+# (C) 2024 GoodData Corporation
+
+# Deploy of ui sdk examples
+name: rw ~ Release ~ Examples deploy
+on:
+  workflow_call:
+    inputs:
+      source-branch:
+        required: true
+        description: "The name of the source branch"
+        type: string
+        default: "rel/9.9"
+
+jobs:
+  release-ui-sdk-examples-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+            ref: ${{inputs.source-branch}}
+
+      - uses: actions/setup-node@v4
+        with:
+            node-version: 22.13.0
+      - name: Install rush
+        run: |
+            npm install -g @microsoft/rush
+      - name: Install heroku
+        run: |
+            npm install -g heroku@8.7.1
+      - name: Rush install
+        run: |
+            rush install
+      - name: Rush build
+        env:
+            EXAMPLES_BUILD_TYPE: public
+            EXAMPLE_MAPBOX_ACCESS_TOKEN: ${{secrets.MAPBOX_TOKEN}}
+            BROWSERSLIST_IGNORE_OLD_DATA: true
+        run: |
+            rush build -t @gooddata/sdk-examples
+
+      - name: Deploy to heroku
+        uses: akhileshns/heroku-deploy@v3.13.15
+        with:
+          appdir: "examples/sdk-examples"
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "gdui-examples"
+          heroku_email: "rail@gooddata.com"
+          team: "gooddata"
+          usedocker: true
+          docker_heroku_process_type: web
+          docker_build_args: |
+              BACKEND_HOST
+              BACKEND_URL
+        env:
+            BACKEND_URL: "https://live-examples-proxy.herokuapp.com"
+            BACKEND_HOST: "live-examples-proxy.herokuapp.com"

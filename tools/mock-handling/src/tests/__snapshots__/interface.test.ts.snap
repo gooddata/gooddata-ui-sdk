@@ -1,0 +1,51 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`requestPages > creates correct request window for 1 page 1`] = `
+[
+  {
+    "offset": [
+      0,
+      0,
+    ],
+    "size": [
+      100,
+      1000,
+    ],
+  },
+]
+`;
+
+exports[`requestPages > creates request windows for 3 pages 1`] = `
+[
+  {
+    "offset": [
+      0,
+      0,
+    ],
+    "size": [
+      100,
+      1000,
+    ],
+  },
+  {
+    "offset": [
+      100,
+      0,
+    ],
+    "size": [
+      100,
+      1000,
+    ],
+  },
+  {
+    "offset": [
+      200,
+      0,
+    ],
+    "size": [
+      100,
+      1000,
+    ],
+  },
+]
+`;

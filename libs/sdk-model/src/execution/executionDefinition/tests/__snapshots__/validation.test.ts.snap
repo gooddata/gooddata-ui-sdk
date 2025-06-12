@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`defValidate > should throw for execution definition with measure and an attribute with the same localId 1`] = `[Invariant Violation: There are 2 items with the same localId 'foo'. Please make sure the attributes and measures in the execution definition have unique localIds.]`;
+
+exports[`defValidate > should throw for execution definition with two attributes with the same localId 1`] = `[Invariant Violation: There are 2 items with the same localId 'foo'. Please make sure the attributes and measures in the execution definition have unique localIds.]`;
+
+exports[`defValidate > should throw for execution definition with two measures with the same localId 1`] = `[Invariant Violation: There are 2 items with the same localId 'foo'. Please make sure the attributes and measures in the execution definition have unique localIds.]`;

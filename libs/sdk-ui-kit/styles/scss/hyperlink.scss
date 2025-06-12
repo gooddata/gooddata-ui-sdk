@@ -1,0 +1,38 @@
+@use "variables";
+
+.gd-hyperlink {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+    line-height: 20px;
+    white-space: nowrap;
+    color: variables.$gd-medium-gray;
+    font-family: variables.$gd-font-primary;
+    font-size: 14px;
+    text-decoration: none;
+    gap: 10px;
+    max-width: fit-content;
+
+    &-icon {
+        display: flex;
+        color: variables.$gd-color-state-blank;
+    }
+
+    &-text {
+        overflow: hidden;
+        text-decoration: underline;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    &:hover {
+        .gd-hyperlink-icon {
+            color: variables.$gd-color-text;
+        }
+
+        .gd-hyperlink-text {
+            color: variables.$gd-color-text;
+        }
+    }
+}

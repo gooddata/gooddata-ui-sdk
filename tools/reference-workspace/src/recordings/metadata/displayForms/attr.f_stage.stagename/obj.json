@@ -1,0 +1,10 @@
+{
+    "attribute": { "identifier": "attr.f_stage.stagename", "type": "attribute" },
+    "description": "Stage Name",
+    "id": "attr.f_stage.stagename",
+    "isDefault": true,
+    "ref": { "identifier": "attr.f_stage.stagename", "type": "displayForm" },
+    "title": "Stage Name",
+    "type": "displayForm",
+    "uri": "https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_stage.stagename"
+}

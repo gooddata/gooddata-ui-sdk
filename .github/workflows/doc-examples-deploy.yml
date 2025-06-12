@@ -1,0 +1,14 @@
+# (C) 2024 GoodData Corporation
+
+# Deploy of ui sdk examples from rel/9.9 branch
+name: Doc ~ Examples deploy
+on:
+  workflow_dispatch:
+
+jobs:
+  release-ui-sdk-examples-deploy:
+    secrets: inherit
+    permissions:
+      contents: write
+      id-token: write
+    uses: ./.github/workflows/rw-doc-examples-deploy.yml

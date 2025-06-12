@@ -1,0 +1,191 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PluggableHeadline > getExtendedReferencePoint > should correctly process empty reference point 1`] = `
+{
+  "buckets": [
+    {
+      "items": [],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:headline/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "primary",
+        "title": "Metric",
+      },
+      "secondary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:headline/bucket-title-secondary-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "secondary",
+        "title": "Metric",
+      },
+    },
+    "exportConfig": {
+      "supported": false,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": false,
+    },
+    "supportedOverTimeComparisonTypes": [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > should return proper extended reference point 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:headline/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "primary",
+        "title": "Metric",
+      },
+      "secondary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:headline/bucket-title-secondary-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "secondary",
+        "title": "Metric",
+      },
+    },
+    "exportConfig": {
+      "supported": false,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": false,
+    },
+    "supportedOverTimeComparisonTypes": [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;

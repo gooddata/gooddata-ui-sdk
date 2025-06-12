@@ -1,0 +1,378 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renderingWorker > async rendering resolution > should accept new async rendering request, when it's fired within time limit after resolution 1`] = `
+[
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.INITIALIZED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
+  },
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.RESOLVED",
+  },
+]
+`;
+
+exports[`renderingWorker > async rendering resolution > should accept new async rendering requests, when running requests are not yet resolved 1`] = `
+[
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.INITIALIZED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
+  },
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.RESOLVED",
+  },
+]
+`;
+
+exports[`renderingWorker > async rendering resolution > should emit render resolved after async rendering resolution 1`] = `
+[
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.INITIALIZED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
+  },
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.RESOLVED",
+  },
+]
+`;
+
+exports[`renderingWorker > async rendering resolution > should emit render resolved after async rendering resolution, even if the component requested async rendering multiple times before the resolution 1`] = `
+[
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.INITIALIZED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
+  },
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.RESOLVED",
+  },
+]
+`;
+
+exports[`renderingWorker > async rendering resolution > should emit render resolved, when async renderings are resolved during the asyncRenderRequestedTimeout 1`] = `
+[
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.INITIALIZED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
+  },
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.RESOLVED",
+  },
+]
+`;
+
+exports[`renderingWorker > async rendering resolution > should emit render resolved, when no async rendering is requested during the asyncRenderRequestedTimeout 1`] = `
+[
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.INITIALIZED",
+  },
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.RESOLVED",
+  },
+]
+`;
+
+exports[`renderingWorker > async rendering resolution > should not emit render resolved, when async rendering is not resolved 1`] = `[Error: Wait for action 'GDC.DASH/EVT.RENDER.RESOLVED' timed out after 200ms]`;
+
+exports[`renderingWorker > async rendering resolution > should not emit render resolved, when async rendering is not resolved 2`] = `
+[
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.INITIALIZED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+]
+`;
+
+exports[`renderingWorker > maximum timeout > should emit render resolved, when async rendering is still running, but the maximum timeout reached 1`] = `
+[
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.INITIALIZED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  {
+    "correlationId": "correlation",
+    "type": "GDC.DASH/EVT.RENDER.RESOLVED",
+  },
+]
+`;

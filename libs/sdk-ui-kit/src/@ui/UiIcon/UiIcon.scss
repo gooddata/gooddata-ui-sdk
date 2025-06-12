@@ -1,0 +1,61 @@
+// (C) 2024-2025 GoodData Corporation
+.gd-ui-kit-icon {
+    fill: var(--gd-icon-fill-color);
+    &--color {
+        &-primary {
+            --gd-icon-fill-color: var(--gd-palette-primary-base);
+        }
+
+        &-warning {
+            --gd-icon-fill-color: var(--gd-palette-warning-base);
+        }
+
+        &-error {
+            --gd-icon-fill-color: var(--gd-palette-error-base);
+        }
+
+        &-complementary-0 {
+            --gd-icon-fill-color: var(--gd-palette-complementary-0);
+        }
+
+        &-complementary-1 {
+            --gd-icon-fill-color: var(--gd-palette-complementary-1);
+        }
+
+        &-complementary-2 {
+            --gd-icon-fill-color: var(--gd-palette-complementary-2);
+        }
+
+        &-complementary-3 {
+            --gd-icon-fill-color: var(--gd-palette-complementary-3);
+        }
+
+        &-complementary-4 {
+            --gd-icon-fill-color: var(--gd-palette-complementary-4);
+        }
+
+        &-complementary-5 {
+            --gd-icon-fill-color: var(--gd-palette-complementary-5);
+        }
+
+        &-complementary-6 {
+            --gd-icon-fill-color: var(--gd-palette-complementary-6);
+        }
+
+        &-complementary-7 {
+            --gd-icon-fill-color: var(--gd-palette-complementary-7);
+        }
+
+        &-complementary-8 {
+            --gd-icon-fill-color: var(--gd-palette-complementary-8);
+        }
+
+        &-complementary-9 {
+            --gd-icon-fill-color: var(--gd-palette-complementary-9);
+        }
+    }
+
+    path {
+        transition: var(--gd-transition-all);
+    }
+}

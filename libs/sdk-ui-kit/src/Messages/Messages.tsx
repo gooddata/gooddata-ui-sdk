@@ -1,0 +1,150 @@
+// (C) 2020-2025 GoodData Corporation
+import React, { useState, useCallback } from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { v4 as uuid } from "uuid";
+import noop from "lodash/noop.js";
+import cx from "classnames";
+
+import { Message } from "./Message.js";
+import { IMessage, IMessagesProps } from "./typings.js";
+import { Overlay } from "../Overlay/index.js";
+
+/**
+ * @internal
+ */
+export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClose = noop }) => {
+    const [expandedMessageIds, setExpandedMessageIds] = useState<string[]>([]);
+
+    const handleMessageClose = useCallback(
+        (messageId: string) => {
+            setExpandedMessageIds((old) => old.filter((expandedId) => expandedId !== messageId));
+            onMessageClose(messageId);
+        },
+        [onMessageClose],
+    );
+
+    return (
+        <Overlay>
+            <div className="gd-messages">
+                <TransitionGroup>
+                    <CSSTransition classNames="gd-message" timeout={220}>
+                        <div>
+                            {messages.map((message) => {
+                                const { id, component: Component, type, contrast, intensive } = message;
+                                const isExpanded = expandedMessageIds.includes(message.id);
+                                return (
+                                    <div key={id}>
+                                        <Message
+                                            className="gd-message-overlay"
+                                            type={type}
+                                            onClose={() => handleMessageClose(id)}
+                                            contrast={contrast}
+                                            intensive={intensive}
+                                        >
+                                            {Component ? (
+                                                <Component />
+                                            ) : (
+                                                <>
+                                                    <MessageWithShowMore
+                                                        message={message}
+                                                        shouldShowMore={!isExpanded}
+                                                        handleShowMore={() => {
+                                                            if (isExpanded) {
+                                                                setExpandedMessageIds((old) =>
+                                                                    old.filter(
+                                                                        (expandedId) => expandedId !== id,
+                                                                    ),
+                                                                );
+                                                            } else {
+                                                                setExpandedMessageIds((old) => [...old, id]);
+                                                            }
+                                                        }}
+                                                    />
+                                                    <MessageSimple message={message} />
+                                                </>
+                                            )}
+                                        </Message>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </CSSTransition>
+                </TransitionGroup>
+            </div>
+        </Overlay>
+    );
+};
+
+type MessageWithShowMoreProps = {
+    message: IMessage;
+    shouldShowMore: boolean;
+    handleShowMore: (e: React.MouseEvent<HTMLElement>) => void;
+};
+
+const MessageWithShowMore: React.FC<MessageWithShowMoreProps> = ({
+    message,
+    shouldShowMore,
+    handleShowMore,
+}) => {
+    const { showMore, showLess, errorDetail, type } = message;
+
+    if (!showMore) {
+        return null;
+    }
+
+    const contentClassNames = cx("gd-message-text-content", "s-message-text-content", type, {
+        off: shouldShowMore,
+        on: !shouldShowMore,
+    });
+    const showMoreLinkClassNames = cx("gd-message-text-showmorelink", "s-message-text-showmorelink", type);
+
+    const accessibilityId = uuid();
+    return (
+        <div className="gd-message-text-showmore">
+            <MessageElement message={message} type="span" />
+            <button
+                aria-expanded={shouldShowMore ? "false" : "true"}
+                aria-controls={accessibilityId}
+                className={showMoreLinkClassNames}
+                onClick={handleShowMore}
+            >
+                {shouldShowMore ? showMore : showLess}
+            </button>
+            <div id={accessibilityId} className={contentClassNames}>
+                {errorDetail}
+            </div>
+        </div>
+    );
+};
+
+type MessageSimpleProps = {
+    message: IMessage;
+};
+
+const MessageSimple: React.FC<MessageSimpleProps> = ({ message }) => {
+    const { showMore } = message;
+
+    if (showMore) {
+        return null;
+    }
+
+    return <MessageElement message={message} type="div" />;
+};
+
+type MessageElementProps = {
+    message: IMessage;
+    type: "div" | "span";
+};
+
+const MessageElement: React.FC<MessageElementProps> = ({ message, type }) => {
+    const { text, node } = message;
+    const Component = type;
+
+    if (node) {
+        return <Component className="s-message-text-header-value">{node}</Component>;
+    }
+
+    return (
+        <Component className="s-message-text-header-value" dangerouslySetInnerHTML={{ __html: text || "" }} />
+    );
+};

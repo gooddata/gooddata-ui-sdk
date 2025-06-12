@@ -1,0 +1,72 @@
+// (C) 2007-2025 GoodData Corporation
+@use "mixins";
+@use "typo-mixins";
+@use "variables";
+
+.gd-dropdown.overlay {
+    // reset overlays padding
+    padding: 0;
+}
+
+.overlay-wrapper {
+    z-index: 5001;
+}
+
+.overlay {
+    @include typo-mixins.gd-paragraph;
+
+    position: relative;
+    padding: 0.1px; // Prevent collapsing margins
+    border-radius: 3px;
+    font-family: variables.$gd-font-primary;
+    background-color: variables.$gd-color-white;
+
+    @include mixins.box-shadow(0 1px 20px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2)));
+
+    @media #{variables.$small-only} {
+        border-radius: 0;
+    }
+}
+
+.gd-overlay-content {
+    @include mixins.default-styles();
+}
+
+// Fix for UiFocusTrap height issue in fullscreen overlays
+// Ensures focus trap takes full height when used in fixed positioned overlays
+.overlay-wrapper[style*="position: fixed"] .gd-focus-trap {
+    height: 100%;
+}
+
+.gd-error-overlay-content {
+    .modalityPlugin-mask-visible {
+        z-index: 10001;
+        opacity: 0.95;
+    }
+}
+
+.gd-error-overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .gd-error-overlay-icon {
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    .gd-error-overlay-text {
+        line-height: 23px;
+        color: variables.$gd-color-text;
+        font-size: 14px;
+    }
+
+    .gd-error-overlay-button {
+        margin-top: 20px;
+    }
+}

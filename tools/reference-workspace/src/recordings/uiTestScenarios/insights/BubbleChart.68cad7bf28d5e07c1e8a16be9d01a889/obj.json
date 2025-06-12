@@ -1,0 +1,64 @@
+{
+    "insight": {
+        "buckets": [
+            { "items": [], "localIdentifier": "measures" },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa"
+                        }
+                    }
+                ],
+                "localIdentifier": "tertiary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "BubbleChart.68cad7bf28d5e07c1e8a16be9d01a889",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "BubbleChart - y axis and size measures with viewBy",
+        "uri": "BubbleChart.68cad7bf28d5e07c1e8a16be9d01a889",
+        "visualizationUrl": "local:bubble"
+    }
+}

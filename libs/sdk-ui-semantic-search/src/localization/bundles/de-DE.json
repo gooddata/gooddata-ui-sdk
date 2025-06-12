@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "Unser Suchdienst ist vorübergehend nicht verfügbar.",
+    "semantic-search.error.text": "Wir arbeiten daran, das Problem zu lösen.",
+    "semantic-search.no-results": "Keine Ergebnisse für „{query}“ gefunden.",
+    "semantic-search.placeholder": "Dashboards oder Visualisierung durchsuchen…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Tags",
+    "semantic-search.match": "{score}% Übereinstimmung",
+    "semantic-search.previous-search": "Vorherige Suche",
+    "semantic-search.date.at": "um",
+    "gs.date.today": "Heute",
+    "gs.date.yesterday": "Gestern",
+    "semantic-search.label": "Dashboards oder Visualisierung durchsuchen"
+}

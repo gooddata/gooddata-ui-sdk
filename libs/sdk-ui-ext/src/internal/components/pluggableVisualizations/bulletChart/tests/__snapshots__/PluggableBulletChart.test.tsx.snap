@@ -1,0 +1,973 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PluggableBulletChart > Sort config > should return expected sort config for 0 M + 0 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
+  "disabled": true,
+  "disabledExplanation": "Sorting is not possible for this visualization configuration.",
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart > Sort config > should return expected sort config for 0 M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
+  "disabled": true,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart > Sort config > should return expected sort config for 1 M + 0 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
+  "disabled": true,
+  "disabledExplanation": "Sorting is not possible for this visualization configuration.",
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart > Sort config > should return expected sort config for 1 M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart > Sort config > should return expected sort config for 1 M + 2 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+    },
+    {
+      "attributeSort": {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a2",
+      },
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a2",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart > Sort config > should return expected sort config for 2 M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart > Sort config > should return expected sort config for 2 M + 2 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+    },
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a2",
+      },
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a2",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart > Sort config > should return expected sort config for 3 M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m3",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart > Sort config > should return expected sort config for 3 M + 2 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+    },
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a2",
+      },
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m3",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a2",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart > should return reference point with target and comparative measures and one category 1`] = `
+{
+  "buckets": [
+    {
+      "items": [],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "tertiary_measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "filters": {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": [
+          {
+            "attribute": "attr.owner.department",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+      {
+        "aggregation": null,
+        "attribute": "attr.stage.iswon",
+        "filters": [
+          {
+            "attribute": "attr.stage.iswon",
+            "displayFormRef": {
+              "uri": "iswon/attribute/df/uri",
+            },
+            "isInverted": true,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a2",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-primary.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Primary",
+        "title": "Metric",
+      },
+      "secondary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-target.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Target",
+        "title": "Metric",
+      },
+      "tertiary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-comparative.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Comparative",
+        "title": "Metric",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-view-by.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "customError": {
+      "heading": "No primary metric in your visualization",
+      "text": "Add a primary metric to your visualization, or switch to table.
+Once done, you'll be able to save it.",
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;
+
+exports[`PluggableBulletChart > should return reference point with three measures and no attribute 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "tertiary_measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-primary.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Primary",
+        "title": "Metric",
+      },
+      "secondary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-target.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Target",
+        "title": "Metric",
+      },
+      "tertiary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-comparative.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Comparative",
+        "title": "Metric",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-view-by.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;
+
+exports[`PluggableBulletChart > should return reference point with three measures and one category and only valid filters 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "tertiary_measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "filters": {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": [
+          {
+            "attribute": "attr.owner.department",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+      {
+        "aggregation": null,
+        "attribute": "attr.stage.iswon",
+        "filters": [
+          {
+            "attribute": "attr.stage.iswon",
+            "displayFormRef": {
+              "uri": "iswon/attribute/df/uri",
+            },
+            "isInverted": true,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a2",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-primary.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Primary",
+        "title": "Metric",
+      },
+      "secondary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-target.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Target",
+        "title": "Metric",
+      },
+      "tertiary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-comparative.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Comparative",
+        "title": "Metric",
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-view-by.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;

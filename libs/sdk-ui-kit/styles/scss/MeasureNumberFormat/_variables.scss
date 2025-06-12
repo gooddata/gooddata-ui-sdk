@@ -1,0 +1,12 @@
+@use "sass:color";
+@use "../variables";
+
+// (C) 2020 GoodData Corporation
+
+$measure_number_format_custom_format_dialog_width: 250px;
+$measure_number_format_custom_format_dialog_textarea_height: 100px;
+
+$button_templates_hover_color: var(
+    --gd-palette-primary-base-darken20,
+    color.adjust(variables.$gd-color-highlight, $lightness: -20%)
+);

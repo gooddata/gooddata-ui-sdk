@@ -1,0 +1,297 @@
+name: Pull request ~ comment
+on:
+  issue_comment:
+    types:
+      - created
+jobs:
+  ##########################################################################
+  # Get PR info is for both extended-test and extended-test-legacy
+  ##########################################################################
+  get-pr-info:
+    if: github.event.issue.pull_request != null && startsWith(github.event.comment.body, 'extended-test')
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    outputs:
+      sha: ${{ steps.get-sha.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/head
+      - name: get-sha
+        id: get-sha
+        run: |
+          SHA=$(git log -1 --format='%H')
+          echo "Comment is $COMMENT"
+          echo "Exporting ${{ github.event.issue.number }} as $SHA"
+          echo "sha=$SHA" >> $GITHUB_OUTPUT
+        env:
+          COMMENT: ${{ github.event.comment.body }}
+
+  ##########################################################################
+  # Comment on PR when command is started for both extended-test and extended-test-legacy
+  ##########################################################################
+  command-started:
+    needs: [get-pr-info]
+    if: ${{ startsWith(github.event.comment.body, 'extended-test') }}
+    permissions:
+      pull-requests: write
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const issue_number = context.issue.number;
+            const repository = context.repo;
+            const url = `https://github.com/${repository.owner}/${repository.repo}/actions/runs/${context.runId}`;
+            const message = `"${process.env.COMMENT}" started. Check the progress [here](${url}).`;
+            github.rest.issues.createComment({
+              owner: repository.owner,
+              repo: repository.repo,
+              issue_number: issue_number,
+              body: message
+            });
+        env:
+          COMMENT: ${{ github.event.comment.body }}
+
+  ##########################################################################
+  # Handling commands for extended-test mainly from PR to master
+  ##########################################################################
+  extract-filter:
+    needs: [get-pr-info]
+    outputs:
+      filter: ${{ steps.extract-filter.outputs.filter_output }}
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - name: Extract filter
+        id: extract-filter
+        run: |
+          # Allowed commands
+          commands=("extended-test --isolated" "extended-test --integrated" "extended-test --record")
+
+          # Check if the command matches one of the allowed commands
+          is_valid_command=false
+          for cmd in "${commands[@]}"; do
+            if [[ $command_string == $cmd* ]]; then
+              is_valid_command=true
+              break
+            fi
+          done
+
+          # Initialize filter_value as empty
+          filter_value=""
+
+          if $is_valid_command; then
+            # Extract the --filter value if present
+            filter_pattern="--filter ([^ ]+)"
+            if [[ $command_string =~ $filter_pattern ]]; then
+              filter_value=${BASH_REMATCH[1]}
+            fi
+          fi
+
+          # Output the filter value if set
+          if [[ -n $filter_value ]]; then
+            echo "Filter value: $filter_value"
+            echo "filter_output=$filter_value" >> $GITHUB_OUTPUT
+          else
+            echo "No filter found."
+          fi
+        env:
+          command_string: ${{ github.event.comment.body }}
+
+
+  e2e-run-isolated:
+    needs: [get-pr-info,extract-filter]
+    if: ${{ startsWith(github.event.comment.body, 'extended-test --isolated') }}
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+    uses: ./.github/workflows/rw-rush-build-e2e-tests.yml
+    with:
+      source-ref: ${{ needs.get-pr-info.outputs.sha }}
+      filter: ${{ needs.extract-filter.outputs.filter }}
+    secrets: inherit
+
+  e2e-record:
+    needs: [get-pr-info,extract-filter]
+    if: ${{ startsWith(github.event.comment.body, 'extended-test --record') }}
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+    uses: ./.github/workflows/rw-rush-build-e2e-tests-record.yml
+    with:
+      source-ref: ${{ needs.get-pr-info.outputs.sha }}
+      filter: ${{ needs.extract-filter.outputs.filter }}
+    secrets: inherit
+
+  e2e-integrated:
+    needs: [get-pr-info,extract-filter]
+    if: ${{ startsWith(github.event.comment.body, 'extended-test --integrated') }}
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+    uses: ./.github/workflows/rw-rush-build-e2e-tests-integrated.yml
+    with:
+      source-ref: ${{ needs.get-pr-info.outputs.sha }}
+      filter: ${{ needs.extract-filter.outputs.filter }}
+    secrets: inherit
+
+  e2e-backstop:
+    needs: [get-pr-info]
+    if: ${{ startsWith(github.event.comment.body, 'extended-test --backstop') }}
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+    uses: ./.github/workflows/rw-rush-build-e2e-tests-backstop.yml
+    with:
+      source-ref: ${{ needs.get-pr-info.outputs.sha }}
+      keep-passing-screenshots: ${{ contains(github.event.comment.body, '--keep-passing-screenshots') }}
+    secrets: inherit
+
+  comment-pr:
+    permissions:
+      pull-requests: write
+    needs: [e2e-run-isolated,e2e-record,e2e-integrated,e2e-backstop]
+    if: ${{ !cancelled() && startsWith(github.event.comment.body, 'extended-test') && !startsWith(github.event.comment.body, 'extended-test-legacy') }}
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const issue_number = context.issue.number;
+            const repository = context.repo;
+            const url = `https://github.com/${repository.owner}/${repository.repo}/actions/runs/${context.runId}`;
+
+            let testResult = "'command not recognized'";
+            if (process.env.COMMENT?.startsWith('extended-test --isolated')) {
+                testResult = process.env.TEST_RESULT_ISOLATED;
+            }
+            if (process.env.COMMENT?.startsWith('extended-test --record')) {
+                testResult = process.env.TEST_RESULT_RECORD;
+            }
+            if (process.env.COMMENT?.startsWith('extended-test --integrated')) {
+                testResult = process.env.TEST_RESULT_INTEGRATED;
+            }
+            if (process.env.COMMENT?.startsWith('extended-test --backstop')) {
+                testResult = process.env.TEST_RESULT_BACKSTOP;
+            }
+
+            const icon = testResult === 'success' ? '✅' : '❌';
+            const message = `${icon} "${process.env.COMMENT}" finished with result **${testResult}**. Check the results [here](${url}).`;
+            github.rest.issues.createComment({
+              owner: repository.owner,
+              repo: repository.repo,
+              issue_number: issue_number,
+              body: message
+            });
+        env:
+          COMMENT: ${{ github.event.comment.body }}
+          TEST_RESULT_ISOLATED: ${{ needs.e2e-run-isolated.result }}
+          TEST_RESULT_RECORD: ${{ needs.e2e-record.result }}
+          TEST_RESULT_INTEGRATED: ${{ needs.e2e-integrated.result }}
+          TEST_RESULT_BACKSTOP: ${{ needs.e2e-backstop.result }}
+
+  ##########################################################################
+  # Handling legacy commands from PR to rel/9.9 Bear platform
+  # Jobs are running on jenkins
+  # All commands are different than extended-test
+  ##########################################################################
+
+  prepare-env:
+    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, 'extended-test-legacy') }}
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    permissions: read-all
+    outputs:
+      branch: ${{ steps.branch.outputs.branch }}
+      ref: refs/pull/${{ github.event.issue.number }}/merge
+      commit: ${{ steps.commit.outputs.commit }}
+      pr_number: ${{ github.event.issue.number }}
+      project: ${{ github.repository }}
+    steps:
+      - name: Branch name
+        id: branch
+        run: |-
+          branch=$(echo "${{ github.ref }}" | sed 's/^refs\/heads\///')
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+      - name: Commit
+        id: commit
+        run: |-
+          pr_head_sha=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.issue.number }}" | \
+            jq --raw-output .head.sha)
+          echo "commit=$pr_head_sha" >> "$GITHUB_OUTPUT"
+
+  gooddata-ui-sdk-pull-request-dispatcher-pipeline:
+    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, 'extended-test-legacy') }}
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs:
+      - prepare-env
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Map Test Commands
+        id: map-commands
+        run: |
+          # Map legacy test command format to new format
+          INPUT_COMMAND="${{ github.event.comment.body }}"
+
+          case "$INPUT_COMMAND" in
+            "extended-test-legacy --backstop")
+              NEW_COMMAND="extended test - backstop"
+            ;;
+            "extended-test-legacy --integrated")
+              NEW_COMMAND="extended test - cypress - integrated"
+            ;;
+            "extended-test-legacy --isolated")
+              NEW_COMMAND="extended test - cypress - isolated"
+            ;;
+            "extended-test-legacy --record")
+              NEW_COMMAND="extended test - cypress - record"
+            ;;
+            *)
+              echo "Unknown command: $INPUT_COMMAND"
+              exit 1
+            ;;
+          esac
+
+          echo "NEW_COMMAND=$NEW_COMMAND" >> $GITHUB_OUTPUT
+
+      - name: Call Jenkins trigger
+        id: call-jenkins
+        uses: gooddata/github-actions-public/jenkins/trigger@master
+        with:
+          server: ${{ vars.JENKINS_ADDRESS }}
+          folder: gooddata-ui-sdk
+          job-name: gooddata-ui-sdk-pull-request-dispatcher-pipeline
+          vault-url: ${{ vars.VAULT_ADDRESS }}
+          params: |-
+            {
+              "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
+              "GH_REF": "${{ needs.prepare-env.outputs.ref }}",
+              "GH_COMMIT": "${{ needs.prepare-env.outputs.commit }}",
+              "GH_URL": "git@github.com:",
+              "GH_CHANGE": "${{ needs.prepare-env.outputs.pr_number }}",
+              "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
+              "BUILD_BY_GITHUB": "true",
+              "GH_PIPELINE": "Pull request ~ comment",
+              "GH_COMMENT": "${{ steps.map-commands.outputs.NEW_COMMAND }}"
+            }
+          comment-pr: 'true'

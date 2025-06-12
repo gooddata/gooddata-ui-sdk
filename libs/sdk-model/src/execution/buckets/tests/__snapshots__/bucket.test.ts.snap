@@ -1,0 +1,213 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`newBucket > should create bucket with mix of attributes and measures 1`] = `
+{
+  "items": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.account.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.account.id.name",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "aggregation": "sum",
+            "item": {
+              "identifier": "fact.stagehistory.velocity",
+            },
+          },
+        },
+        "localIdentifier": "m_fact.stagehistory.velocity_sum",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.account.id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.account.id",
+      },
+    },
+  ],
+  "localIdentifier": "mixedBucket",
+}
+`;
+
+exports[`newBucket > should create bucket with multiple attributes 1`] = `
+{
+  "items": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.account.id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.account.id",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.account.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.account.id.name",
+      },
+    },
+  ],
+  "localIdentifier": "attributeBucket",
+}
+`;
+
+exports[`newBucket > should create bucket with multiple measures 1`] = `
+{
+  "items": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "aggregation": "sum",
+            "item": {
+              "identifier": "fact.stagehistory.velocity",
+            },
+          },
+        },
+        "localIdentifier": "m_fact.stagehistory.velocity_sum",
+      },
+    },
+  ],
+  "localIdentifier": "measureBucket",
+}
+`;
+
+exports[`newBucket > should create bucket with single attribute 1`] = `
+{
+  "items": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.account.id",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.account.id",
+      },
+    },
+  ],
+  "localIdentifier": "attributeBucket",
+}
+`;
+
+exports[`newBucket > should create bucket with single measure 1`] = `
+{
+  "items": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+  ],
+  "localIdentifier": "measureBucket",
+}
+`;
+
+exports[`newBucket > should create bucket with totals 1`] = `
+{
+  "items": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.account.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.account.id.name",
+      },
+    },
+  ],
+  "localIdentifier": "totalsBucket",
+  "totals": [
+    {
+      "attributeIdentifier": "a_label.account.id.name",
+      "measureIdentifier": "m_afSEwRwdbMeQ",
+      "type": "sum",
+    },
+  ],
+}
+`;
+
+exports[`newBucket > should create bucket with totals when items not in bucket 1`] = `
+{
+  "items": [],
+  "localIdentifier": "totalsBucket",
+  "totals": [
+    {
+      "attributeIdentifier": "a_label.account.id.name",
+      "measureIdentifier": "m_afSEwRwdbMeQ",
+      "type": "sum",
+    },
+  ],
+}
+`;
+
+exports[`newBucket > should create empty bucket 1`] = `
+{
+  "items": [],
+  "localIdentifier": "emptyBucket",
+}
+`;
+
+exports[`newBucket > should throw error if attribute has more than one display forms 1`] = `[Invariant Violation: Contents of a bucket must be either attribute, measure or total. It looks like you used an attribute from generated metadata containing more than one display form. Use one of the following display forms instead: Subject: label.activity.id.subject, Default: label.activity.id.]`;
+
+exports[`newBucket > should throw error if content invalid object containing valid aggregations 1`] = `[Invariant Violation: Contents of a bucket must be either attribute, measure or total. It looks like you used an object fact.stagehistory.duration from generated metadata. You need to use one of the following aggregation functions instead: Sum, Count, Avg, Min, Max, Median, Runsum.]`;
+
+exports[`newBucket > should throw if content not an object 1`] = `[Invariant Violation: Contents of a bucket must be either attribute, measure or total. Got unsupported content of type string: string.]`;
+
+exports[`newBucket > should throw if unknown object 1`] = `[Invariant Violation: Contents of a bucket must be either attribute, measure or total. Got unknown content object: {}.]`;

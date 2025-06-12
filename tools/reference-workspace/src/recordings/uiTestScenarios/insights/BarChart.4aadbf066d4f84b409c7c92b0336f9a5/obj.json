@@ -1,0 +1,61 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "stack"
+            }
+        ],
+        "filters": [],
+        "identifier": "BarChart.4aadbf066d4f84b409c7c92b0336f9a5",
+        "properties": {
+            "controls": {
+                "dataLabels": { "totalsVisible": true, "visible": false },
+                "enableSeparateTotalLabels": true
+            }
+        },
+        "sorts": [],
+        "title": "BarChart - data labels - data labels forced hidden totals forced visible",
+        "uri": "BarChart.4aadbf066d4f84b409c7c92b0336f9a5",
+        "visualizationUrl": "local:bar"
+    }
+}

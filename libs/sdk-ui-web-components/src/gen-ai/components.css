@@ -1,0 +1,5 @@
+@import "~@gooddata/sdk-ui-gen-ai/styles/css/main.css";
+
+gd-ai-chat {
+    display: block;
+}

@@ -1,0 +1,154 @@
+// (C) 2025 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+@use "../../../styles/scss/mixins";
+
+.gd-ui-kit-menu {
+    $root: &;
+
+    max-height: 300px;
+    width: 100%;
+    min-width: 200px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+
+    &__items-container {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    @media #{variables.$small-only} {
+        // !important to override inline style from maxWidth prop
+        /* stylelint-disable-next-line declaration-no-important */
+        max-width: 100vw !important;
+        max-height: 100vh;
+        width: 100vw;
+    }
+
+    &__menu-header {
+        padding: 10px;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        width: 100%;
+        background: variables.$is-focused-background;
+
+        &-title {
+            cursor: pointer;
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            flex-grow: 1;
+            background: none;
+            border: none;
+            padding: 0;
+            color: variables.$gd-color-state-blank;
+            overflow: hidden;
+
+            &-text {
+                margin: 0;
+                white-space: nowrap;
+                font-size: 11px;
+                font-style: normal;
+                font-weight: 700;
+                text-transform: uppercase;
+                overflow: hidden;
+            }
+        }
+        &-close-icon {
+            flex-shrink: 0;
+        }
+    }
+
+    &__group {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__group-title-container {
+        padding: 4px 10px;
+        display: flex;
+    }
+
+    &__group-title {
+        text-transform: uppercase;
+        color: variables.$gd-color-text-dimmed;
+        font-size: 10px;
+        font-weight: normal;
+        margin: 0;
+    }
+
+    &__group-separator {
+        flex-grow: 1;
+        display: flex;
+        vertical-align: middle;
+    }
+
+    &__items {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        outline: none;
+
+        // Focus ring when not controlling by mouse
+        #{$root}:not(#{$root}--controlType-mouse) &:focus-visible #{$root}__item-wrapper--isFocused {
+            @include mixins.focus-ring;
+        }
+    }
+
+    &__item {
+        padding: 8px 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        line-height: 20px;
+        color: variables.$gd-color-text;
+        transition: background-color 0.2s;
+        box-sizing: border-box;
+
+        // Controlled by mouse and has hover
+        #{$root}--controlType-mouse &:hover:not(&--isDisabled) {
+            background-color: variables.$is-focused-background;
+            color: variables.$is-focused-color;
+        }
+
+        &--isDisabled {
+            color: variables.$gd-color-disabled;
+            cursor: not-allowed;
+        }
+
+        &--isSelected {
+            font-weight: bold;
+            background-color: variables.$is-selected-background;
+            color: variables.$is-selected-color;
+        }
+
+        #{$root}--controlType-mouse &--isSelected:hover:not(&--isDisabled) {
+            background-color: variables.$is-selected-focused-background;
+            color: variables.$is-selected-color;
+        }
+
+        &--size {
+            &-small {
+                height: 28px;
+                font-size: 12px;
+            }
+
+            &-medium {
+                height: 36px;
+                font-size: 14px;
+            }
+        }
+    }
+
+    &__item-title {
+        width: 100%;
+        white-space: nowrap;
+    }
+}

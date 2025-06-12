@@ -1,0 +1,27 @@
+#!/bin/sh
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+
+# Invoke the "rush lint-staged-files" custom command to lint files whenever they
+# are committed. The command is defined in common/config/rush/command-line.json
+# and uses the "lint-staged" autoinstaller.
+
+# If NVM_DIR is not already defined, set it to the default value
+NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+    # Load nvm
+    . "$NVM_DIR/nvm.sh"
+    # Call nvm use – if it fails, only output an error message
+    nvm use || echo "nvm use failed, continuing with current node version..."
+else
+    echo "nvm not found, using system-installed node"
+fi
+
+if command -v node >/dev/null 2>&1; then
+    # Run linting
+    node common/scripts/install-run-rush.js lint-staged-files || exit $?
+else
+    echo "node.js is not installed, skipping pre-commit lint"
+fi

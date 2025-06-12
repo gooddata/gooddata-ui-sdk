@@ -1,0 +1,10 @@
+@import "variables/variables";
+
+.cards-container {
+  &.cards-container--aligned {
+    @include mq(large) {
+      max-width: calc(80% + 30px); // Bootstrap and/or docsy does a -15px margin on grids. This is to compensate for that.
+    }
+  }
+  
+}

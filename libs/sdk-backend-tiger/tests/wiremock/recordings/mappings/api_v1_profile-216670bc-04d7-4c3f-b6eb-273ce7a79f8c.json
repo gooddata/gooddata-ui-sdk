@@ -1,0 +1,34 @@
+{
+    "id": "216670bc-04d7-4c3f-b6eb-273ce7a79f8c",
+    "name": "api_v1_profile",
+    "request": {
+        "url": "/api/v1/profile",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"organizationId\":\"staging\",\"organizationName\":\"Anywhere Staging\",\"userId\":\"first.last\",\"permissions\":[\"MANAGE\",\"SELF_CREATE_TOKEN\"],\"telemetry\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2,\"deploymentId\":\"deploymentId\",\"organizationHash\":\"d9390b2c40115621a794999e812abc00bf9e5c7b\",\"userHash\":\"425135f0a4f3acab61005f4c4983401cb7e6c135\"},\"telemetryConfig\":{\"context\":{\"deploymentId\":\"deploymentId\",\"organizationHash\":\"d9390b2c40115621a794999e812abc00bf9e5c7b\",\"userHash\":\"425135f0a4f3acab61005f4c4983401cb7e6c135\"},\"services\":{\"matomo\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2},\"openTelemetry\":{\"host\":\"https://collector.stg11.intgdc.com\"}}},\"links\":{\"self\":\"https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/profile\",\"organization\":\"https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/admin/organizations/staging\",\"user\":\"https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/users/first.last\"},\"features\":{\"live\":{\"configuration\":{\"host\":\"https://flags.panther.intgdc.com\",\"key\":\"default/f0352b97-5e76-4139-9059-4bea366cc2f9/q9yyvCPq957AR7T5GqfbIHaLZXAwqRtSzKt2Rtuv\"},\"context\":{\"earlyAccessValues\":[\"experimental-semantic-search\"],\"earlyAccess\":\"experimental-semantic-search\"}}},\"entitlements\":[{\"name\":\"Contract\",\"expiry\":\"2026-04-26\"},{\"name\":\"UnlimitedAutomationRecipients\"},{\"name\":\"UnlimitedAutomations\"},{\"name\":\"UnlimitedDailyAlertActions\"},{\"name\":\"UnlimitedDailyScheduledActions\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"ScheduledActionMinimumRecurrenceMinutes\",\"value\":\"0\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]}",
+        "headers": {
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+            "Cache-Control": "max-age=10, private",
+            "X-Content-Type-Options": "nosniff",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "X-XSS-Protection": "0",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "216670bc-04d7-4c3f-b6eb-273ce7a79f8c",
+    "persistent": true,
+    "insertionIndex": 2
+}

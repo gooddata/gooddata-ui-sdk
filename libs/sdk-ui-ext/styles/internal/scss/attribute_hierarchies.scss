@@ -1,0 +1,328 @@
+// (C) 2023-2024 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-attribute-hierarchy-detail-panel {
+    width: 200px;
+    padding: 8px 5px;
+    font-style: normal;
+    font-weight: 400;
+    color: kit-variables.$gd-color-text;
+
+    .gd-attribute-hierarchy-detail-title {
+        font-size: 14px;
+        line-height: 23px;
+        margin-bottom: 10px;
+    }
+
+    .gd-attribute-hierarchy-detail-description {
+        font-size: 13px;
+        line-height: 18px;
+        color: kit-variables.$gd-medium-gray;
+        margin-bottom: 15px;
+    }
+
+    .gd-attribute-hierarchy-detail-levels {
+        font-size: 10px;
+        line-height: normal;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    .gd-attribute-hierarchy-detail-item {
+        font-size: 12px;
+        line-height: 20px;
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+        padding: 3px 0;
+    }
+
+    .is-attribute::before {
+        content: "";
+        width: 18px;
+        height: 20px;
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/attribute.svg");
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: contain;
+    }
+
+    .is-date::before {
+        content: "";
+        width: 18px;
+        height: 20px;
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/date.svg");
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: contain;
+    }
+
+    .gd-attribute-hierarchy-detail-panel-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+}
+
+.gd-dialog.attribute-hierarchy-dialog {
+    width: 890px;
+    // should be important because date-filter/attribute-filter have override the max-width
+    // stylelint-disable-next-line declaration-no-important
+    max-width: 890px !important;
+    height: 690px;
+
+    .gd-dialog-header {
+        height: 32px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+
+        .gd-attribute-hierarchy-icon {
+            &::before {
+                display: flex;
+                content: "";
+                width: 16px;
+                height: 16px;
+                background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/attribute-hierarchy.svg");
+                background-size: 16px 16px;
+                background-repeat: no-repeat;
+            }
+        }
+
+        .attribute-hierarchy-title {
+            padding: 3px 4px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .attribute-hierarchy-title.placeholder {
+            .gd-editable-label-inner {
+                color: var(--gd-palette-complementary-6, #94a1ad);
+            }
+        }
+    }
+
+    .gd-dialog-content.attribute-hierarchy-dialog-content {
+        position: relative;
+        height: 468px;
+        margin: 0 -20px;
+        padding: 0 20px;
+        border-bottom: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
+        border-top: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
+        background-color: var(--gd-palette-complementary-0-from-theme, #fcfcfd);
+
+        .attribute-hierarchy-table-title {
+            height: 16px;
+            margin: 10px 0;
+            color: var(--gd-palette-complementary-6, #94a1ad);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .gd-list-item {
+            padding-right: 0;
+            border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+
+            &:hover {
+                background: var(--gd-palette-complementary-2, #ebeff4);
+            }
+
+            &:has(.attribute-item-delete-action:hover) {
+                background: var(--gd-palette-error-dimmed, #fcedec);
+            }
+
+            .attribute-item-title {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                color: var(--gd-palette-complementary-8, #464e56);
+                font-size: 14px;
+                font-weight: 700;
+            }
+
+            .attribute-item-title .gd-icon-navigatedown {
+                font-size: 16px;
+                font-weight: 400;
+                color: var(--gd-palette-complementary-6, #94a1ad);
+            }
+        }
+
+        .gd-list-item .attribute-item-actions {
+            display: flex;
+
+            button {
+                display: flex;
+                align-items: center;
+                height: 43px;
+                width: 43px;
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .attribute-item-delete-action:active::before,
+            .attribute-item-delete-action:focus::before,
+            .attribute-item-add-action:active::before,
+            .attribute-item-add-action:focus::before {
+                color: unset;
+            }
+
+            .attribute-item-delete-action:hover::before {
+                color: var(--gd-palette-error-base, #e54d42);
+            }
+
+            .attribute-item-add-action:hover {
+                background: var(--gd-palette-complementary-3, #dde4eb);
+            }
+
+            .attribute-item-add-action:hover::before {
+                color: var(--gd-palette-complementary-8, #464e56);
+            }
+        }
+
+        .attribute-hierarchy-add-attribute-action {
+            padding: 5px 0;
+            border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+        }
+
+        .attribute-hierarchy-content-loading-mask {
+            position: absolute;
+            top: 0;
+            width: 850px;
+            height: 546px;
+            background: var(--gd-palette-complementary-0, #fff);
+            opacity: 0.8;
+        }
+    }
+
+    .gd-dialog-footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: start;
+
+        .attribute-hierarchy-note-message {
+            margin: -5px 0 20px;
+            border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+
+            .gd-message {
+                margin-bottom: 15px;
+            }
+        }
+
+        .attribute-hierarchy-footer-actions-wrapper {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .gd-dialog-footer-tip {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            span {
+                color: var(--gd-palette-complementary-6, #94a1ad);
+                font-size: 14px;
+                height: 18px;
+            }
+
+            a {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.gd-dropdown-tabs.gd-tabs.date-attribute-dropdown-tabs {
+    display: flex;
+    flex-direction: row;
+
+    > div {
+        display: flex;
+        flex: 1 0 0;
+        justify-content: center;
+        align-items: center;
+        height: 27px;
+        padding: 0 39px;
+        border-radius: 3px;
+        border: 1px solid #ccd8e2;
+        margin-right: 0;
+
+        &:first-child {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        &:last-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        &.is-active {
+            background: linear-gradient(180deg, #dee6ef 0%, #ecf0f5 100%);
+            box-shadow: 0 2px 0 0 rgba(177, 193, 209, 0.65) inset;
+            border: 1px solid rgba(31, 53, 74, 0.2);
+        }
+    }
+}
+
+.attribute-hierarchy-delete-confirmation {
+    width: 464px;
+
+    .gd-dialog-content {
+        position: relative;
+
+        .attribute-hierarchy-content-loading-mask {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            background: var(--gd-palette-complementary-0, #fff);
+            opacity: 0.8;
+        }
+    }
+}
+
+.gd-dialog.attribute-hierarchy-dialog,
+.attribute-hierarchy-attribute-dropdown-body,
+.date-attribute-dropdown-tabs {
+    .gd-icon-attribute::before {
+        width: 18px;
+        height: 18px;
+        margin-right: 5px;
+        background-size: 18px 18px;
+    }
+
+    .gd-icon-date::before {
+        width: 16px;
+        height: 16px;
+        margin-right: 7px;
+        background-size: 16px 16px;
+    }
+}
+
+.attribute-hierarchy-add-action-menu {
+    .gd-list-item.gd-menu-item {
+        gap: 10px;
+
+        i {
+            font-size: 14px;
+            color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+    }
+}
+
+.gd-attribute-hierarchy-detail-panel-bubble {
+    padding: 0;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--gd-palette-complementary-3-from-theme, #c9d5e0);
+    box-shadow: 0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
+        0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+    background: var(--gd-palette-complementary-0, #fff);
+}

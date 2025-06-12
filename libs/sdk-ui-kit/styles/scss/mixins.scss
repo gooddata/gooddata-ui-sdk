@@ -1,0 +1,241 @@
+// (C) 2007-2025 GoodData Corporation
+// Make sure the charset is set appropriately
+@charset 'utf-8';
+
+@use "sass:string";
+@use "variables";
+
+// core mixins
+
+@mixin background($filename, $color: transparent, $position: left top, $repeat: no-repeat) {
+    background: $color url(#{$image-dir}#{$filename}) $position $repeat;
+}
+
+@mixin border-radius($radius: variables.$gd-rounded-small) {
+    border-radius: $radius;
+}
+
+@mixin box-shadow($shadow, $important: blank) {
+    @if $important == "important" {
+        // stylelint-disable-next-line declaration-no-important
+        box-shadow: #{$shadow} !important;
+    } @else {
+        box-shadow: #{$shadow};
+    }
+}
+
+@mixin disable-filter($important: blank) {
+    $disabledFilter: "progid:DXImageTransform.Microsoft.gradient(enabled=false)";
+
+    @if $important == "important" {
+        // stylelint-disable-next-line declaration-no-important
+        -ms-filter: string.unquote($disabledFilter) !important;
+        // stylelint-disable-next-line declaration-no-important
+        filter: string.unquote($disabledFilter) !important;
+    } @else {
+        -ms-filter: string.unquote($disabledFilter);
+        filter: string.unquote($disabledFilter);
+    }
+}
+
+@mixin opacity($value, $important: blank) {
+    @if $important == "important" {
+        // stylelint-disable-next-line declaration-no-important
+        opacity: $value !important;
+    } @else {
+        opacity: $value;
+    }
+}
+
+@mixin user-select($value) {
+    -khtml-user-select: $value;
+    -moz-user-select: $value;
+    -o-user-select: $value;
+    -webkit-user-select: $value;
+    user-select: $value;
+}
+
+@mixin hide-content {
+    /* hack; these 2 lines should hide the text and should be done better */
+    text-indent: -9999px;
+}
+
+@mixin undo-hide-content {
+    text-indent: 0;
+}
+
+@mixin transition-property($property) {
+    -moz-transition-property: $property;
+    -webkit-transition-property: $property;
+    transition-property: $property;
+}
+
+@mixin transition-duration($duration) {
+    -moz-transition-duration: $duration;
+    -webkit-transition-duration: $duration;
+    transition-duration: $duration;
+}
+
+@mixin transition-timing-function($easing) {
+    -moz-transition-timing-function: $easing;
+    -webkit-transition-timing-function: $easing;
+    transition-timing-function: $easing;
+}
+
+@mixin transition-delay($delay) {
+    -moz-transition-delay: $delay;
+    -webkit-transition-delay: $delay;
+    transition-delay: $delay;
+}
+
+@mixin transition($property, $duration, $easing: blank, $delay: blank) {
+    @include transition-property($property);
+    @include transition-duration($duration);
+
+    @if $easing != blank {
+        @include transition-timing-function($easing);
+    }
+
+    @if $delay != blank {
+        @include transition-delay($delay);
+    }
+}
+
+@mixin clearfix($minHeight: 1px) {
+    min-height: $minHeight;
+
+    &::after {
+        content: ".";
+        display: block;
+        visibility: hidden;
+        clear: both;
+        height: 0;
+        font-size: 0;
+    }
+}
+
+@mixin text-overflow($type: ellipsis) {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: $type;
+}
+
+/* allow vendor prefixes and disable max length */
+// stylelint-disable max-line-length
+@mixin transform-rotate($degrees) {
+    zoom: 1;
+    -moz-transform: rotate(#{$degrees}deg);
+    -ms-transform: rotate(#{$degrees}deg);
+    -o-transform: rotate(#{$degrees}deg);
+    -webkit-transform: rotate(#{$degrees}deg);
+    transform: rotate(#{$degrees}deg);
+    -ms-filter: "progid:DXImageTransform.Microsoft.matriX(sizingMethod=" auto expand
+        ", M11=#{cos($degrees)}, M12=-#{sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)})";
+
+    // it would not work
+    // stylelint-disable-next-line function-name-case
+    filter: progid:DXImageTransform.Microsoft.matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=-#{sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)});
+}
+// stylelint-enable max-line-length
+
+@mixin transform-scale($x: 1, $y: 1) {
+    -ms-transform: scale($x, $y);
+    -webkit-transform: scale($x, $y);
+    transform: scale($x, $y);
+}
+
+// https://github.com/stylelint/stylelint/issues/2185
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content;
+    }
+
+    &:-moz-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder {
+        @content;
+    }
+
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
+@mixin active-states() {
+    &:hover,
+    &:focus,
+    &:active {
+        @content;
+    }
+}
+
+@mixin active-states-and-self() {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+        @content;
+    }
+}
+
+/* allow vendor prefixes and disable max length */
+// stylelint-disable value-no-vendor-prefix, declaration-block-no-duplicate-properties, max-line-length
+
+@mixin button-gradient($color1, $color2, $color3, $color4) {
+    background: -moz-linear-gradient(top, $color1 1%, $color2 49%, $color3 50%, $color4 100%); /* FF3.6+ */
+    background: -webkit-linear-gradient(
+        top,
+        $color1 1%,
+        $color2 49%,
+        $color3 50%,
+        $color4 100%
+    ); /* Chrome10+,Safari5.1+ */
+
+    background: -ms-linear-gradient(top, $color1 1%, $color2 49%, $color3 50%, $color4 100%); /* IE10+ */
+    background: linear-gradient(to top, $color1 1%, $color2 49%, $color3 50%, $color4 100%); /* W3C */
+}
+
+@mixin grid-sort-gradient($color) {
+    background: -moz-linear-gradient(left, rgba($color, 0) 0%, rgba($color, 1) $stop); /* FF3.6+ */
+    background: -webkit-linear-gradient(
+        left,
+        rgba($color, 0) 0%,
+        rgba($color, 1) $stop
+    ); /* Chrome10+,Safari5.1+ */
+
+    background: -ms-linear-gradient(left, rgba($color, 0) 0%, rgba($color, 1) $stop); /* IE10+ */
+    background: linear-gradient(to left, rgba($color, 0) 0%, rgba($color, 1) $stop); /* W3C */
+
+    $stop: 20%;
+}
+
+@mixin gradient-linear($topColor, $bottomColor) {
+    background: $bottomColor; /* Old browsers */
+    background-image: -webkit-linear-gradient(top, $topColor, $bottomColor); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient(top, $topColor, $bottomColor); /* FF3.6 */
+    background-image: -ms-linear-gradient(top, $topColor, $bottomColor); /* IE10 */
+    background-image: linear-gradient(to top, $topColor, $bottomColor);
+}
+@mixin default-styles() {
+    font-family: variables.$gd-font-primary;
+    line-height: 1.5;
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    // NOTE: Not sure why this is here, is not used in sdk
+    .invisible {
+        visibility: hidden;
+    }
+}
+
+@mixin focus-ring() {
+    outline-offset: -2px;
+    outline: auto 5px Highlight; /* For Firefox */
+    outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+}

@@ -1,0 +1,431 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SankeyChartColorStrategy > should return correct colors for each attribute header items in cases 1 measure and 1 attribute_from 1`] = `
+[
+  {
+    "color": {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Educationly",
+        "uri": "Educationly",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "03",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Explorer",
+        "uri": "Explorer",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "04",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Grammar Plus",
+        "uri": "Grammar Plus",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "05",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "PhoenixSoft",
+        "uri": "PhoenixSoft",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "WonderKid",
+        "uri": "WonderKid",
+      },
+    },
+  },
+]
+`;
+
+exports[`SankeyChartColorStrategy > should return correct colors for each attribute header items in cases 1 measure and 1 attribute_to 1`] = `
+[
+  {
+    "color": {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "West Coast",
+        "uri": "West Coast",
+      },
+    },
+  },
+]
+`;
+
+exports[`SankeyChartColorStrategy > should return correct colors for each attribute header items in cases 1 measure and 2 attributes 1`] = `
+[
+  {
+    "color": {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Educationly",
+        "uri": "Educationly",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "03",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Explorer",
+        "uri": "Explorer",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "04",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Grammar Plus",
+        "uri": "Grammar Plus",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "05",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "PhoenixSoft",
+        "uri": "PhoenixSoft",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "WonderKid",
+        "uri": "WonderKid",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "03",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "West Coast",
+        "uri": "West Coast",
+      },
+    },
+  },
+]
+`;
+
+exports[`SankeyChartColorStrategy > should return correct colors for each attribute header items when color mapping in cases 1 measure and 1 attribute_from 1`] = `
+[
+  {
+    "color": {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Educationly",
+        "uri": "Educationly",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "rgb",
+      "value": {
+        "b": 0,
+        "g": 0,
+        "r": 255,
+      },
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Explorer",
+        "uri": "Explorer",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "04",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Grammar Plus",
+        "uri": "Grammar Plus",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "05",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "PhoenixSoft",
+        "uri": "PhoenixSoft",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "rgb",
+      "value": {
+        "b": 0,
+        "g": 0,
+        "r": 0,
+      },
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "WonderKid",
+        "uri": "WonderKid",
+      },
+    },
+  },
+]
+`;
+
+exports[`SankeyChartColorStrategy > should return correct colors for each attribute header items when color mapping in cases 1 measure and 1 attribute_to 1`] = `
+[
+  {
+    "color": {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "West Coast",
+        "uri": "West Coast",
+      },
+    },
+  },
+]
+`;
+
+exports[`SankeyChartColorStrategy > should return correct colors for each attribute header items when color mapping in cases 1 measure and 2 attributes 1`] = `
+[
+  {
+    "color": {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Educationly",
+        "uri": "Educationly",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "rgb",
+      "value": {
+        "b": 0,
+        "g": 0,
+        "r": 255,
+      },
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Explorer",
+        "uri": "Explorer",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "04",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "Grammar Plus",
+        "uri": "Grammar Plus",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "05",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "PhoenixSoft",
+        "uri": "PhoenixSoft",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "rgb",
+      "value": {
+        "b": 0,
+        "g": 0,
+        "r": 0,
+      },
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "WonderKid",
+        "uri": "WonderKid",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "03",
+    },
+    "headerItem": {
+      "attributeHeaderItem": {
+        "name": "West Coast",
+        "uri": "West Coast",
+      },
+    },
+  },
+]
+`;

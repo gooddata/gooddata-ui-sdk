@@ -1,0 +1,158 @@
+// (C) 2022 GoodData Corporation
+@use "Dialog/_mixins" as dialog-mixins;
+@use "variables";
+@use "mixins.scss";
+@use "Button/_variables" as button-variables;
+
+%sorting-icon {
+    content: "";
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    vertical-align: bottom;
+    background-repeat: no-repeat;
+}
+
+.gd-sort-charting-dropdown {
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+
+    &.gd-sort-charting-dropdown-wide {
+        width: 250px;
+    }
+
+    .gd-sort-charting-dropdown-header {
+        padding: 6px 6px 6px 10px;
+        color: variables.$gd-color-state-blank;
+        background: variables.$is-focused-background;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .gd-sort-attribute-section {
+        .gd-sort-attribute-item:not(:first-child) {
+            margin-top: 10px;
+        }
+    }
+
+    .gd-sort-charting-body {
+        padding: 10px;
+    }
+
+    .gd-sort-charting-dropdown {
+        padding: 10px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        font-size: 12px;
+        color: variables.$gd-color-label;
+
+        button {
+            width: 100%;
+        }
+    }
+
+    .gd-chart-sorting-dropdown-footer {
+        margin: 0 10px;
+        padding: 10px 0;
+        border-top: 1px solid variables.$gd-border-color;
+        text-align: right;
+
+        button + button {
+            margin-left: 10px;
+        }
+    }
+
+    .sort-measure-section {
+        display: flex;
+        align-items: center;
+        margin: 8px 0 0 6px;
+        white-space: nowrap;
+        border-left: 2px dotted variables.$gd-border-color;
+
+        .select-label {
+            flex: 0 0 auto;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        .measure-sorting-dropdown {
+            flex: 1 1 auto;
+            overflow: hidden;
+        }
+    }
+}
+
+.gd-sorting-measure {
+    width: 100%;
+    overflow-x: auto;
+
+    &.gd-button-link {
+        display: flex;
+        width: 100%;
+        text-align: left;
+        font-size: 12px;
+    }
+
+    .gd-sorting-measure-title {
+        flex-grow: 1;
+    }
+
+    .gd-sorting-sequence-number {
+        flex-grow: 0;
+        flex-shrink: 0;
+        font-size: 10px;
+        line-height: 10px;
+        color: variables.$gd-color-state-blank;
+        margin-left: 3px;
+        font-family: variables.$measure_sequence_number_font;
+    }
+}
+
+// icons
+.gd-sort-attribute-section,
+.gd-attribute-sorting-dropdown-body {
+    .gd-icon-sort-numerical-asc::before {
+        @extend %sorting-icon;
+
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-numerical-asc.svg");
+    }
+
+    .gd-icon-sort-numerical-desc::before {
+        @extend %sorting-icon;
+
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-numerical-desc.svg");
+    }
+
+    .gd-icon-sort-alphabetical-asc::before {
+        @extend %sorting-icon;
+
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-alphabetical-asc.svg");
+    }
+
+    .gd-icon-sort-alphabetical-desc::before {
+        @extend %sorting-icon;
+
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-alphabetical-desc.svg");
+    }
+
+    .gd-icon-sort-date-asc::before {
+        @extend %sorting-icon;
+
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-date-asc.svg");
+    }
+
+    .gd-icon-sort-date-desc::before {
+        @extend %sorting-icon;
+
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-date-desc.svg");
+    }
+
+    .gd-icon-sort-default::before {
+        @extend %sorting-icon;
+
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-default.svg");
+    }
+}

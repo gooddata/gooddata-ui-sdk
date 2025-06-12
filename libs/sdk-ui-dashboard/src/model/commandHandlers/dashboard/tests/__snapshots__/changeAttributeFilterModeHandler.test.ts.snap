@@ -1,0 +1,42 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`changeAttributeFilterModeHandler > should emit the appropriate events for changed attribute filter mode 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+  },
+]
+`;
+
+exports[`changeAttributeFilterModeHandler > should emit the appropriate events when trying to update mode of a non-existent attribute filter 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;
+
+exports[`changeAttributeFilterModeHandler > should set the attribute mode in state on changed attribute filter 1`] = `
+[
+  {
+    "localIdentifier": "34b4386e227544b39ed0978791b8bd50",
+    "mode": "active",
+  },
+]
+`;

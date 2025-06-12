@@ -1,0 +1,1114 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`createTableDescriptor > correctly creates colDefs for table with just column attribute 1`] = `
+[
+  {
+    "children": [
+      {
+        "colId": "cg_0",
+        "field": "cg_0",
+        "headerName": "CompuSci",
+        "headerTooltip": "CompuSci",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      {
+        "colId": "cg_1",
+        "field": "cg_1",
+        "headerName": "Educationly",
+        "headerTooltip": "Educationly",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      {
+        "colId": "cg_2",
+        "field": "cg_2",
+        "headerName": "Explorer",
+        "headerTooltip": "Explorer",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      {
+        "colId": "cg_3",
+        "field": "cg_3",
+        "headerName": "Grammar Plus",
+        "headerTooltip": "Grammar Plus",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      {
+        "colId": "cg_4",
+        "field": "cg_4",
+        "headerName": "PhoenixSoft",
+        "headerTooltip": "PhoenixSoft",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      {
+        "colId": "cg_5",
+        "field": "cg_5",
+        "headerName": "TouchAll",
+        "headerTooltip": "TouchAll",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      {
+        "colId": "cg_6",
+        "field": "cg_6",
+        "headerName": "WonderKid",
+        "headerTooltip": "WonderKid",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+    ],
+    "groupId": "root",
+    "headerName": "Product",
+    "headerTooltip": "Product",
+  },
+]
+`;
+
+exports[`createTableDescriptor > correctly creates colDefs for table with just row attribute 1`] = `
+[
+  {
+    "colId": "r_0",
+    "field": "r_0",
+    "headerName": "Product",
+    "headerTooltip": "Product",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+]
+`;
+
+exports[`createTableDescriptor > correctly creates colDefs for table with just two measures 1`] = `
+[
+  {
+    "colId": "c_0",
+    "field": "c_0",
+    "headerName": "Amount",
+    "headerTooltip": "Amount",
+    "sortingOrder": [
+      "desc",
+      "asc",
+    ],
+    "type": "MEASURE_COLUMN",
+  },
+  {
+    "colId": "c_1",
+    "field": "c_1",
+    "headerName": "Won",
+    "headerTooltip": "Won",
+    "sortingOrder": [
+      "desc",
+      "asc",
+    ],
+    "type": "MEASURE_COLUMN",
+  },
+]
+`;
+
+exports[`createTableDescriptor > correctly creates colDefs for table with single attribute pivot 1`] = `
+[
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "colId": "c_0",
+            "field": "c_0",
+            "headerName": "Amount",
+            "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_0",
+        "headerName": "East Coast",
+        "headerTooltip": "East Coast",
+      },
+      {
+        "children": [
+          {
+            "colId": "c_1",
+            "field": "c_1",
+            "headerName": "Amount",
+            "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_1",
+        "headerName": "West Coast",
+        "headerTooltip": "West Coast",
+      },
+    ],
+    "groupId": "root",
+    "headerName": "Region",
+    "headerTooltip": "Region",
+  },
+]
+`;
+
+exports[`createTableDescriptor > correctly creates colDefs for table with single row and column pivot 1`] = `
+[
+  {
+    "colId": "r_0",
+    "field": "r_0",
+    "headerName": "Product",
+    "headerTooltip": "Product",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "colId": "c_0",
+            "field": "c_0",
+            "headerName": "Amount",
+            "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_0",
+        "headerName": "East Coast",
+        "headerTooltip": "East Coast",
+      },
+      {
+        "children": [
+          {
+            "colId": "c_1",
+            "field": "c_1",
+            "headerName": "Amount",
+            "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_1",
+        "headerName": "West Coast",
+        "headerTooltip": "West Coast",
+      },
+    ],
+    "groupId": "root",
+    "headerName": "Region",
+    "headerTooltip": "Region",
+  },
+]
+`;
+
+exports[`createTableDescriptor > correctly creates colDefs for table with two attribute pivot 1`] = `
+[
+  {
+    "colId": "r_0",
+    "field": "r_0",
+    "headerName": "Product",
+    "headerTooltip": "Product",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  {
+    "colId": "r_1",
+    "field": "r_1",
+    "headerName": "Department",
+    "headerTooltip": "Department",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "colId": "c_0",
+                "field": "c_0",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_1",
+            "headerName": "East Coast",
+            "headerTooltip": "East Coast",
+          },
+          {
+            "children": [
+              {
+                "colId": "c_1",
+                "field": "c_1",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_2",
+            "headerName": "West Coast",
+            "headerTooltip": "West Coast",
+          },
+        ],
+        "groupId": "g_0",
+        "headerName": "Interest",
+        "headerTooltip": "Interest",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "colId": "c_2",
+                "field": "c_2",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_4",
+            "headerName": "East Coast",
+            "headerTooltip": "East Coast",
+          },
+          {
+            "children": [
+              {
+                "colId": "c_3",
+                "field": "c_3",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_5",
+            "headerName": "West Coast",
+            "headerTooltip": "West Coast",
+          },
+        ],
+        "groupId": "g_3",
+        "headerName": "Discovery",
+        "headerTooltip": "Discovery",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "colId": "c_4",
+                "field": "c_4",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_7",
+            "headerName": "East Coast",
+            "headerTooltip": "East Coast",
+          },
+          {
+            "children": [
+              {
+                "colId": "c_5",
+                "field": "c_5",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_8",
+            "headerName": "West Coast",
+            "headerTooltip": "West Coast",
+          },
+        ],
+        "groupId": "g_6",
+        "headerName": "Short List",
+        "headerTooltip": "Short List",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "colId": "c_6",
+                "field": "c_6",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_10",
+            "headerName": "East Coast",
+            "headerTooltip": "East Coast",
+          },
+          {
+            "children": [
+              {
+                "colId": "c_7",
+                "field": "c_7",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_11",
+            "headerName": "West Coast",
+            "headerTooltip": "West Coast",
+          },
+        ],
+        "groupId": "g_9",
+        "headerName": "Risk Assessment",
+        "headerTooltip": "Risk Assessment",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "colId": "c_8",
+                "field": "c_8",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_13",
+            "headerName": "East Coast",
+            "headerTooltip": "East Coast",
+          },
+          {
+            "children": [
+              {
+                "colId": "c_9",
+                "field": "c_9",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_14",
+            "headerName": "West Coast",
+            "headerTooltip": "West Coast",
+          },
+        ],
+        "groupId": "g_12",
+        "headerName": "Conviction",
+        "headerTooltip": "Conviction",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "colId": "c_10",
+                "field": "c_10",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_16",
+            "headerName": "East Coast",
+            "headerTooltip": "East Coast",
+          },
+          {
+            "children": [
+              {
+                "colId": "c_11",
+                "field": "c_11",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_17",
+            "headerName": "West Coast",
+            "headerTooltip": "West Coast",
+          },
+        ],
+        "groupId": "g_15",
+        "headerName": "Negotiation",
+        "headerTooltip": "Negotiation",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "colId": "c_12",
+                "field": "c_12",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_19",
+            "headerName": "East Coast",
+            "headerTooltip": "East Coast",
+          },
+          {
+            "children": [
+              {
+                "colId": "c_13",
+                "field": "c_13",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_20",
+            "headerName": "West Coast",
+            "headerTooltip": "West Coast",
+          },
+        ],
+        "groupId": "g_18",
+        "headerName": "Closed Won",
+        "headerTooltip": "Closed Won",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "colId": "c_14",
+                "field": "c_14",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_22",
+            "headerName": "East Coast",
+            "headerTooltip": "East Coast",
+          },
+          {
+            "children": [
+              {
+                "colId": "c_15",
+                "field": "c_15",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_23",
+            "headerName": "West Coast",
+            "headerTooltip": "West Coast",
+          },
+        ],
+        "groupId": "g_21",
+        "headerName": "Closed Lost",
+        "headerTooltip": "Closed Lost",
+      },
+    ],
+    "groupId": "root",
+    "headerName": "Stage Name › Region",
+    "headerTooltip": "Stage Name › Region",
+  },
+]
+`;
+
+exports[`createTableDescriptor > correctly creates colDefs for table with two measures and single attribute pivot 1`] = `
+[
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "colId": "c_0",
+            "field": "c_0",
+            "headerName": "Amount",
+            "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
+            "type": "MEASURE_COLUMN",
+          },
+          {
+            "colId": "c_1",
+            "field": "c_1",
+            "headerName": "Won",
+            "headerTooltip": "Won",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_0",
+        "headerName": "East Coast",
+        "headerTooltip": "East Coast",
+      },
+      {
+        "children": [
+          {
+            "colId": "c_2",
+            "field": "c_2",
+            "headerName": "Amount",
+            "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
+            "type": "MEASURE_COLUMN",
+          },
+          {
+            "colId": "c_3",
+            "field": "c_3",
+            "headerName": "Won",
+            "headerTooltip": "Won",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_1",
+        "headerName": "West Coast",
+        "headerTooltip": "West Coast",
+      },
+    ],
+    "groupId": "root",
+    "headerName": "Region",
+    "headerTooltip": "Region",
+  },
+]
+`;
+
+exports[`createTableDescriptor > correctly creates colDefs for table with two measures, rows and cols and totals and subtotals 1`] = `
+[
+  {
+    "colId": "r_0",
+    "field": "r_0",
+    "headerName": "Product",
+    "headerTooltip": "Product",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  {
+    "colId": "r_1",
+    "field": "r_1",
+    "headerName": "Department",
+    "headerTooltip": "Department",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "colId": "c_0",
+                "field": "c_0",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+              {
+                "colId": "c_1",
+                "field": "c_1",
+                "headerName": "Won",
+                "headerTooltip": "Won",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_1",
+            "headerName": "East Coast",
+            "headerTooltip": "East Coast",
+          },
+          {
+            "children": [
+              {
+                "colId": "c_2",
+                "field": "c_2",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+              {
+                "colId": "c_3",
+                "field": "c_3",
+                "headerName": "Won",
+                "headerTooltip": "Won",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_2",
+            "headerName": "West Coast",
+            "headerTooltip": "West Coast",
+          },
+        ],
+        "groupId": "g_0",
+        "headerName": "Exclude",
+        "headerTooltip": "Exclude",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "colId": "c_4",
+                "field": "c_4",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+              {
+                "colId": "c_5",
+                "field": "c_5",
+                "headerName": "Won",
+                "headerTooltip": "Won",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_4",
+            "headerName": "East Coast",
+            "headerTooltip": "East Coast",
+          },
+          {
+            "children": [
+              {
+                "colId": "c_6",
+                "field": "c_6",
+                "headerName": "Amount",
+                "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+              {
+                "colId": "c_7",
+                "field": "c_7",
+                "headerName": "Won",
+                "headerTooltip": "Won",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_5",
+            "headerName": "West Coast",
+            "headerTooltip": "West Coast",
+          },
+        ],
+        "groupId": "g_3",
+        "headerName": "Include",
+        "headerTooltip": "Include",
+      },
+    ],
+    "groupId": "root",
+    "headerName": "Forecast Category › Region",
+    "headerTooltip": "Forecast Category › Region",
+  },
+]
+`;
+
+exports[`createTableDescriptor > correctly creates colDefs for table without pivoting 1`] = `
+[
+  {
+    "colId": "r_0",
+    "field": "r_0",
+    "headerName": "Product",
+    "headerTooltip": "Product",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  {
+    "colId": "c_0",
+    "field": "c_0",
+    "headerName": "Amount",
+    "headerTooltip": "Amount",
+    "sortingOrder": [
+      "desc",
+      "asc",
+    ],
+    "type": "MEASURE_COLUMN",
+  },
+]
+`;
+
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with just column attribute 1`] = `
+[
+  [
+    0,
+    0,
+  ],
+  [
+    0,
+    1,
+  ],
+  [
+    0,
+    2,
+  ],
+  [
+    0,
+    3,
+  ],
+  [
+    0,
+    4,
+  ],
+  [
+    0,
+    5,
+  ],
+  [
+    0,
+    6,
+  ],
+]
+`;
+
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with just row attribute 1`] = `[]`;
+
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with just two measures 1`] = `
+[
+  [
+    0,
+  ],
+  [
+    1,
+  ],
+]
+`;
+
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with single attribute pivot 1`] = `
+[
+  [
+    0,
+    0,
+    0,
+  ],
+  [
+    0,
+    1,
+    0,
+  ],
+]
+`;
+
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with single row and column pivot 1`] = `
+[
+  [
+    0,
+    0,
+    0,
+  ],
+  [
+    0,
+    1,
+    0,
+  ],
+]
+`;
+
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with two attribute pivot 1`] = `
+[
+  [
+    0,
+    0,
+    0,
+    0,
+  ],
+  [
+    0,
+    0,
+    1,
+    0,
+  ],
+  [
+    0,
+    1,
+    0,
+    0,
+  ],
+  [
+    0,
+    1,
+    1,
+    0,
+  ],
+  [
+    0,
+    2,
+    0,
+    0,
+  ],
+  [
+    0,
+    2,
+    1,
+    0,
+  ],
+  [
+    0,
+    3,
+    0,
+    0,
+  ],
+  [
+    0,
+    3,
+    1,
+    0,
+  ],
+  [
+    0,
+    4,
+    0,
+    0,
+  ],
+  [
+    0,
+    4,
+    1,
+    0,
+  ],
+  [
+    0,
+    5,
+    0,
+    0,
+  ],
+  [
+    0,
+    5,
+    1,
+    0,
+  ],
+  [
+    0,
+    6,
+    0,
+    0,
+  ],
+  [
+    0,
+    6,
+    1,
+    0,
+  ],
+  [
+    0,
+    7,
+    0,
+    0,
+  ],
+  [
+    0,
+    7,
+    1,
+    0,
+  ],
+]
+`;
+
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with two measures and single attribute pivot 1`] = `
+[
+  [
+    0,
+    0,
+    0,
+  ],
+  [
+    0,
+    0,
+    1,
+  ],
+  [
+    0,
+    1,
+    0,
+  ],
+  [
+    0,
+    1,
+    1,
+  ],
+]
+`;
+
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with two measures, rows and cols and totals and subtotals 1`] = `
+[
+  [
+    0,
+    0,
+    0,
+    0,
+  ],
+  [
+    0,
+    0,
+    0,
+    1,
+  ],
+  [
+    0,
+    0,
+    1,
+    0,
+  ],
+  [
+    0,
+    0,
+    1,
+    1,
+  ],
+  [
+    0,
+    1,
+    0,
+    0,
+  ],
+  [
+    0,
+    1,
+    0,
+    1,
+  ],
+  [
+    0,
+    1,
+    1,
+    0,
+  ],
+  [
+    0,
+    1,
+    1,
+    1,
+  ],
+]
+`;
+
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table without pivoting 1`] = `
+[
+  [
+    0,
+  ],
+]
+`;

@@ -1,0 +1,57 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,#.##",
+                                    "identifier": "f_opportunitysnapshot.f_amount",
+                                    "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
+                                    "name": "m_f_opportunitysnapshot.f_amount_sum"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "attr.f_product.product", "name": "Product", "uri": "" },
+                        "granularity": null,
+                        "identifier": "label.f_product.product.name",
+                        "localIdentifier": "a_label.f_product.product.name",
+                        "name": "Product Name",
+                        "primaryLabel": { "identifier": "attr.f_product.product", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.f_opportunity.opportunity",
+                            "name": "Opportunity",
+                            "uri": ""
+                        },
+                        "granularity": null,
+                        "identifier": "label.f_opportunity.opportunity.name",
+                        "localIdentifier": "a_label.f_opportunity.opportunity.name",
+                        "name": "Opportunity Name",
+                        "primaryLabel": {
+                            "identifier": "attr.f_opportunity.opportunity",
+                            "type": "displayForm"
+                        },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

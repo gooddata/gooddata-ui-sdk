@@ -1,0 +1,20 @@
+// (C) 2019-2025 GoodData Corporation
+.gd-dynamic-select {
+    position: relative;
+    display: inline-flex;
+    flex-wrap: wrap;
+
+    .gd-dynamic-select-input-wrapper {
+        display: inline-flex;
+        flex: 1 1 auto;
+    }
+
+    .gd-input-field {
+        flex: 1 1 auto;
+        overflow: hidden;
+    }
+
+    &-menu {
+        width: 100%;
+    }
+}

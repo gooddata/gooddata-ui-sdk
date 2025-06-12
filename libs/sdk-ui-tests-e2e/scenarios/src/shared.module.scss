@@ -1,0 +1,128 @@
+// (C) 2021-2025 GoodData Corporation
+
+@import "./theme.scss";
+
+.Link {
+    cursor: pointer;
+    font-size: inherit;
+    background-color: transparent;
+    color: $color-accent;
+    text-decoration: underline;
+    border: 0;
+    padding: 0;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $color-accent;
+        text-decoration: none;
+    }
+}
+
+.BreakWord {
+    white-space: normal;
+    word-break: break-all;
+}
+
+.Ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.References {
+    color: $color-text-muted;
+    border-top: 1px solid $color-border;
+    padding-top: 0.25rem;
+    margin-top: $spacing/2;
+}
+
+.Header {
+    margin: -2 * $spacing -1 * $spacing $spacing * 2 -1 * $spacing;
+    padding: $spacing $spacing;
+    background-color: $color-paper-inverse;
+    color: $color-text-inverse;
+}
+
+.Column {
+    display: flex;
+    flex-direction: row;
+}
+
+.Title {
+    font-size: $font-size-h2;
+    font-weight: 400;
+    flex: 1 1 auto;
+    margin: 0 $spacing 0 0;
+}
+
+.Headline {
+    margin: 0;
+    color: $color-text;
+    font-weight: 500;
+    font-size: $font-size-h3;
+    text-transform: uppercase;
+}
+
+.Widget {
+    padding: $spacing;
+    margin-bottom: $spacing;
+    border: 1px solid $color-grey;
+    border-radius: $border-radius;
+}
+
+.Modal {
+    position: relative;
+    background-color: $color-paper;
+    border: 1px solid $color-border;
+    border-radius: $border-radius;
+    box-shadow: $shadow-high;
+    padding: $spacing;
+}
+
+.ModalOverlay {
+    position: fixed;
+    display: flex;
+    padding: $spacing;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: transparentize($color-grey, 0.5);
+    z-index: 2000;
+    cursor: pointer;
+}
+
+.ModalContent {
+    cursor: auto;
+    max-width: calc(100vw - #{($spacing * 6)});
+    color: $color-text;
+    font-size: 14px;
+    font-family: $font-family;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.ModalClose.ModalClose {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
+    padding: $spacing/4;
+}
+
+.MainStretch {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+}
+
+.StretchContent {
+    flex: 1 0 auto;
+    padding: 0 $spacing;
+}

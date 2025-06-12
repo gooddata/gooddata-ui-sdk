@@ -1,0 +1,137 @@
+# (C) 2024 GoodData Corporation
+
+name: Checklist ~ run integrated e2e tests
+on:
+  schedule:
+    - cron: '30 8,20 * * 0-4' #master branch
+  workflow_dispatch:
+    inputs:
+      run-cypress-sdk:
+        description: 'Cypress SDK on top of Tiger'
+        required: false
+        default: true
+        type: boolean
+      run-export:
+        description: 'Cypress SDK Export Test'
+        required: false
+        default: true
+        type: boolean
+      run-boiler-app:
+        description: 'Boiler app test'
+        required: false
+        default: true
+        type: boolean
+      test-branch:
+        description: 'Test branch to run tests'
+        required: false
+        default: master
+        type: string
+      send_message_to_slack_channel:
+        description: 'Notify result to slack'
+        required: false
+        default: true
+        type: boolean
+jobs:
+  setup-stage:
+    name: Setup env variables
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    outputs:
+      run-cypress-sdk: ${{ steps.test-suite-options.outputs.run-cypress-sdk }}
+      run-export: ${{ steps.test-suite-options.outputs.run-export }}
+      run-boiler-app: ${{ steps.test-suite-options.outputs.run-boiler-app }}
+      send_message_to_slack_channel: ${{ steps.test-suite-options.outputs.send_message_to_slack_channel }}
+    steps:
+      - name: Set test suite options
+        id: test-suite-options
+        run: |
+          if [ -z "${{ inputs.run-cypress-sdk }}" ]; then
+            echo 'run-cypress-sdk=true' >> $GITHUB_OUTPUT
+          else
+            echo "run-cypress-sdk=${{ inputs.run-cypress-sdk }}" >> $GITHUB_OUTPUT
+          fi
+          if [ -z "${{ inputs.run-export }}" ]; then
+            echo 'run-export=true' >> $GITHUB_OUTPUT
+          else
+            echo "run-export=${{ inputs.run-export }}" >> $GITHUB_OUTPUT
+          fi
+          if [ -z "${{ inputs.run-boiler-app }}" ]; then
+            echo 'run-boiler-app=true' >> $GITHUB_OUTPUT
+          else
+            echo "run-boiler-app=${{ inputs.run-boiler-app }}" >> $GITHUB_OUTPUT
+          fi
+          if [ -z "${{ inputs.send_message_to_slack_channel }}" ]; then
+            echo 'send_message_to_slack_channel=true' >> $GITHUB_OUTPUT
+          else
+            echo "send_message_to_slack_channel=${{ inputs.send_message_to_slack_channel }}" >> $GITHUB_OUTPUT
+          fi
+  checklist-SDK:
+    name: Cypress SDK on top of Tiger
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/checklist-cypress-ui-test.yaml
+    needs: [ setup-stage ]
+    if: ${{ needs.setup-stage.outputs.run-cypress-sdk == 'true' }}
+    with:
+      CYPRESS_TEST_TAGS: 'checklist_integrated_tiger'
+      GIT_REVISION: ${{ inputs.test-branch }}
+      TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
+      TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
+  checklist-export:
+    name: Cypress SDK Export Test
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/checklist-cypress-ui-test.yaml
+    needs: [ setup-stage, checklist-SDK ]
+    if: ${{ !cancelled() && needs.setup-stage.outputs.run-export == 'true' }}
+    with:
+      CYPRESS_TEST_TAGS: 'checklist_integrated_tiger_export'
+      GIT_REVISION: ${{ inputs.test-branch }}
+      TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
+      TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
+  checklist-boiler-app:
+    name: Boiler app test
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/checklist-run-boiler-app.yaml
+    needs: [ setup-stage ]
+    if: ${{ needs.setup-stage.outputs.run-boiler-app == 'true' }}
+    with:
+      GIT_REVISION: ${{ inputs.test-branch }}
+      TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
+      TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
+      SDK_VERSION: 'latest'
+      SDK_LANG: 'js'
+      FILTER: 'boilerapp.spec.ts'
+  status-check-notify-slack:
+    needs:
+      - setup-stage
+      - checklist-SDK
+      - checklist-export
+      - checklist-boiler-app
+    if: ${{ !cancelled() }}
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        id: alls-green
+        uses: re-actors/alls-green@release/v1
+        with:
+          allowed-skips: checklist-SDK, checklist-export, checklist-boiler-app
+          jobs: ${{ toJSON(needs) }}
+      - name: Send Slack notification
+        uses: slackapi/slack-github-action@v1.27.1
+        if: ${{ !cancelled() && needs.setup-stage.outputs.send_message_to_slack_channel == 'true' }}
+        with:
+          channel-id: panther-checklist-testing
+          slack-message: "${{ steps.alls-green.outcome == 'success' &&  ':unicorn_face:' || ':robot_panic:' }} `checklist-SDK-${{ github.ref_name }}-branch: ` *${{ steps.alls-green.outcome == 'success' &&  'success' || 'failed' }}*; please check *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|the logs>*."
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

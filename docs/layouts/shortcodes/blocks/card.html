@@ -1,0 +1,62 @@
+{{/* (C) 2023 GoodData Corporation */}}
+{{ $title := .Get "title" }}
+{{ $description := .Get "description" }}
+{{ $sectionLink := .Get "sectionLink" }}
+{{ $extLink := .Get "extLink" }}
+{{ $icon := .Get "icon" }}
+{{ $iconPosition := default "left" (.Get "iconPosition") }}
+{{ $maxRow := .Parent.Get "maxRow" }}
+
+{{ if ne .Page.FirstSection .Site.Home }}
+    {{ .Scratch.Set "docsRoot" (replaceRE "/$" "" .Page.FirstSection.RelPermalink) }}
+{{ else if (and (isset .Site.Params "versions") (isset .Site.Params.versions 0)) }}
+    {{ .Scratch.Set "docsRoot" (replaceRE "/$" "" (index .Site.Params.versions 0).url) }}
+{{ else }}
+    {{ .Scratch.Set "docsRoot" "/docs" }}
+{{ end }}
+
+<div class="col{{ if not $maxRow }}-xl{{ end }} d-flex align-items-stretch">
+    {{ if $sectionLink }}
+        {{ with .Site.GetPage (printf "%s%s" (.Scratch.Get "docsRoot") $sectionLink) }}
+            <a href="{{ .RelPermalink }}" class="homepage-card homepage-card__sectionLink homepage-card__hasIcon homepage-card__icon{{ title $iconPosition }}">
+                <div class="homepage-card__icon">
+                    {{ readFile (printf "%s%s" .RelPermalink .Params.icon) | safeHTML }}
+                </div>
+                <h4 class="homepage-card__title">{{ .Title }}</h4>
+                {{ if $description }}
+                    <p class="homepage-card__text">{{ $description }}</p>
+                {{ else }}
+                    <p class="homepage-card__text">{{ .Description }}</p>
+                {{ end }}
+            </a>
+        {{ end }}
+    {{ else }}
+        {{ if $extLink }}
+
+        <a href={{$extLink}} class="homepage-card homepage-card__sectionLink homepage-card__hasIcon homepage-card__icon{{ title $iconPosition }}">
+        {{ else }}
+        <div class="homepage-card{{ if $icon }} homepage-card__hasIcon homepage-card__icon{{ title $iconPosition }}{{ end }}">
+        {{ end }}
+            {{ if $icon }}
+                <div class="homepage-card__icon">
+                    {{ if eq (index (last 1 (split $icon ".")) 0) "svg" }}
+                        {{ readFile $icon | safeHTML }}
+                    {{ else }}
+                        <img src="{{ $icon }}" />
+                    {{ end }}
+                </div>
+            {{ end }}
+            <h4 class="homepage-card__title">{{ $title }}</h4>
+
+            {{ if eq .Page.File.Ext "md" }}
+                {{ .Inner | .Page.RenderString }}
+            {{ else }}
+                {{ .Inner | htmlUnescape | safeHTML }}
+            {{ end }}
+        {{ if $extLink }}
+        </a>
+        {{ else}}
+        </div>
+        {{ end }}
+    {{ end }}
+</div>

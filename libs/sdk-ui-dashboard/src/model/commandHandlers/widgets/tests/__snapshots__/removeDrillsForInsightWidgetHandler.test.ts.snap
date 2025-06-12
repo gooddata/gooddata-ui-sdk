@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`removeDrillsForInsightWidgetHandler > remove > should emit the appropriate events for remove drill for Insight Widget command 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.WIDGET.FILTERS",
+    "type": "GDC.DASH/EVT.QUERY.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.WIDGET.FILTERS",
+    "type": "GDC.DASH/EVT.QUERY.COMPLETED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED",
+  },
+]
+`;
+
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of non-existent widget 1`] = `"Cannot find insight widget with ref: {"uri":"missing"}."`;
+
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of non-existent widget 2`] = `"USER_ERROR"`;
+
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills where origin missing in widget drills 1`] = `"Invalid drill local identifier: missing. Error: Cannot find drill definition specified by local identifier"`;
+
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills where origin missing in widget drills 2`] = `"USER_ERROR"`;

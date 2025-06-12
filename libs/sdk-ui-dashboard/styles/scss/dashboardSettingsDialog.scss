@@ -1,0 +1,70 @@
+// (C) 2024-2025 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-dashboard-settings-dialog {
+    width: 500px;
+
+    .gd-dashboard-settings-dialog-section {
+        margin-top: 20px;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    .gd-dashboard-settings-filters {
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+    .gd-dashboard-settings-evaluation-note {
+        margin-top: -15px;
+        font-size: 12px;
+        line-height: 17px;
+        font-family: kit-variables.$gd-font-primary;
+        color: kit-variables.$gd-color-label;
+    }
+
+    .configuration-category-item {
+        display: block;
+        font-size: 14px;
+        line-height: 23px;
+        padding: 6px 0;
+        min-height: 32px;
+
+        .input-checkbox-toggle {
+            display: block;
+            width: 100%;
+
+            .input-label-text {
+                display: flex;
+            }
+        }
+
+        .configuration-category-item-tooltip-icon {
+            margin: 0 5px;
+
+            .gd-filter-configuration__help-icon {
+                cursor: help;
+                color: kit-variables.$gd-color-state-blank;
+            }
+        }
+    }
+
+    .gd-recurrence-form-repeat.gd-input-component {
+        flex-wrap: wrap;
+
+        .gd-label {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    .gd-dashboard-content-wrapper {
+        margin: 0 -20px;
+        padding: 0 20px 20px 20px;
+        border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    }
+}

@@ -1,0 +1,188 @@
+{
+    "data": [
+        {
+            "id": "fact.f_activity.activitydate",
+            "type": "fact",
+            "attributes": {
+                "title": "Activity (Date)",
+                "description": "Activity (Date)",
+                "tags": ["Activity"],
+                "sourceColumn": "f__dt_activity",
+                "sourceColumnDataType": "INT"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/fact.f_activity.activitydate"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "fact.f_opportunity.oppcreateddate",
+            "type": "fact",
+            "attributes": {
+                "title": "Opp. Created (Date)",
+                "description": "Opp. Created (Date)",
+                "tags": ["Opportunity"],
+                "sourceColumn": "f__dt_oppcreated",
+                "sourceColumnDataType": "INT"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/fact.f_opportunity.oppcreateddate"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "fact.f_opportunitysnapshot.oppclosedate",
+            "type": "fact",
+            "attributes": {
+                "title": "Opp. Close (Date)",
+                "description": "Opp. Close (Date)",
+                "tags": ["OpportunitySnapshot"],
+                "sourceColumn": "f__dt_closedate",
+                "sourceColumnDataType": "INT"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/fact.f_opportunitysnapshot.oppclosedate"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "fact.f_opportunitysnapshot.oppsnapshotdate",
+            "type": "fact",
+            "attributes": {
+                "title": "Opp. Snapshot (Date)",
+                "description": "Opp. Snapshot (Date)",
+                "tags": ["OpportunitySnapshot"],
+                "sourceColumn": "f__dt_snapshotdate",
+                "sourceColumnDataType": "INT"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/fact.f_opportunitysnapshot.oppsnapshotdate"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "fact.f_timeline.timelinedate",
+            "type": "fact",
+            "attributes": {
+                "title": "Timeline (Date)",
+                "description": "Timeline (Date)",
+                "tags": ["Timeline"],
+                "sourceColumn": "f__dt_timeline",
+                "sourceColumnDataType": "INT"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/fact.f_timeline.timelinedate"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "f_density",
+            "type": "fact",
+            "attributes": {
+                "title": "Density",
+                "description": "F density",
+                "tags": ["City"],
+                "sourceColumn": "f_density",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/f_density"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "f_opportunitysnapshot.f_amount",
+            "type": "fact",
+            "attributes": {
+                "title": "Amount",
+                "description": "Amount",
+                "tags": ["OpportunitySnapshot"],
+                "sourceColumn": "f_amount",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/f_opportunitysnapshot.f_amount"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "f_opportunitysnapshot.f_daystoclose",
+            "type": "fact",
+            "attributes": {
+                "title": "Days to Close",
+                "description": "Days to Close",
+                "tags": ["OpportunitySnapshot"],
+                "sourceColumn": "f_daystoclose",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/f_opportunitysnapshot.f_daystoclose"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "f_opportunitysnapshot.f_probability",
+            "type": "fact",
+            "attributes": {
+                "title": "Probability",
+                "description": "Probability",
+                "tags": ["OpportunitySnapshot"],
+                "sourceColumn": "f_probability",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/f_opportunitysnapshot.f_probability"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "f_population",
+            "type": "fact",
+            "attributes": {
+                "title": "Population",
+                "description": "F population",
+                "tags": ["City"],
+                "sourceColumn": "f_population",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/f_population"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "f_stagehistory.f_duration",
+            "type": "fact",
+            "attributes": {
+                "title": "Duration",
+                "description": "Duration",
+                "tags": ["stagehistory"],
+                "sourceColumn": "f_duration",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/f_stagehistory.f_duration"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        },
+        {
+            "id": "f_stagehistory.f_velocity",
+            "type": "fact",
+            "attributes": {
+                "title": "Velocity",
+                "description": "Velocity",
+                "tags": ["stagehistory"],
+                "sourceColumn": "f_velocity",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts/f_stagehistory.f_velocity"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "9c71fe9a4fc944d7b7886c4d05ce0cf3" } }
+        }
+    ],
+    "links": {
+        "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts?page=0&size=250",
+        "next": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts?page=1&size=250"
+    }
+}

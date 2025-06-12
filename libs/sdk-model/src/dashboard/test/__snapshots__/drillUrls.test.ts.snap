@@ -1,0 +1,40 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`drill url placeholders > should extracted placeholders 1`] = `
+[
+  {
+    "identifier": "campaign_channels.category",
+    "placeholder": "{attribute_title(campaign_channels.category)}",
+    "ref": {
+      "identifier": "campaign_channels.category",
+      "type": "displayForm",
+    },
+    "toBeEncoded": true,
+  },
+  {
+    "identifier": "6c2664ac21764748910953139a3aedad:campaign_channels.category",
+    "placeholder": "{attribute_title(6c2664ac21764748910953139a3aedad:campaign_channels.category)}",
+    "ref": {
+      "identifier": "6c2664ac21764748910953139a3aedad:campaign_channels.category",
+      "type": "displayForm",
+    },
+    "toBeEncoded": true,
+  },
+]
+`;
+
+exports[`drill url placeholders > should split and join parts 1`] = `
+[
+  "https://google.com/?q=",
+  {
+    "identifier": "campaign_channels.category",
+    "type": "displayForm",
+  },
+  "&b=",
+  {
+    "identifier": "6c2664ac21764748910953139a3aedad:campaign_channels.category",
+    "type": "displayForm",
+  },
+  "",
+]
+`;

@@ -1,0 +1,11 @@
+{
+  "title": "Dashboard component",
+  "description": "This example shows how to use the Dashboard component.",
+  "iconUrl": "https://www.gooddata.com/favicon.ico",
+  "tags": [
+    "react",
+    "typescript",
+    "gooddata-ui-sdk"
+  ],
+  "published": true
+}

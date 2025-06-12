@@ -1,0 +1,24 @@
+# (C) 2024 GoodData Corporation
+
+name: WF run ~ Send notification to slack for failed post-merge workflows
+
+on:
+  workflow_run:
+    workflows: ["Push ~ Build web component's container image"]
+    types: [completed]
+    branches: ["master", "release", "hotfix/tiger", "hotfix/panther", "fast_track"]
+
+jobs:
+  notify-post-merge-failed-to-slack:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - name: Inform to slack when post-merge workflows failed
+        if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: '#javascript-notifications'
+          slack-message: ":robot_panic: `post-merge github workflows` in `${{ github.event.repository.name }}` encountered an error during execution, check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}|log here>* for further information"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

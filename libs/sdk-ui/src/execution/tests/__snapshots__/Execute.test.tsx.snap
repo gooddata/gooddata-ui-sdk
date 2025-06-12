@@ -1,0 +1,364 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`createExecution > should create correct definition for scoped series only 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`createExecution > should create correct definition for scoped series with slicing 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+  ],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`createExecution > should create correct definition for scoped series with slicing and filter 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+  ],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "in": {
+          "values": [
+            "CompuSci",
+          ],
+        },
+      },
+    },
+  ],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`createExecution > should create correct definition for scoped series with slicing and sortBy 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+  ],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`createExecution > should create correct definition for scoped series with slicing and totals 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+  ],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+      "totals": [
+        {
+          "attributeIdentifier": "a_label.f_product.product.name",
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          "type": "sum",
+        },
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`createExecution > should create correct definition for unscoped series only 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`createExecution > should create correct definition for unscoped series only with only attributes (RAIL-4265) 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+  ],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`createExecution > should create correct definition for unscoped series with slicing 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.f_product.product.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.f_product.product.name",
+      },
+    },
+  ],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.f_product.product.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;

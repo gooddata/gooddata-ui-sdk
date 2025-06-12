@@ -1,0 +1,353 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`dimensionSetTotals > should clear totals 1`] = `
+{
+  "itemIdentifiers": [
+    "localId1",
+  ],
+}
+`;
+
+exports[`dimensionSetTotals > should clear totals when no second arg 1`] = `
+{
+  "itemIdentifiers": [
+    "localId1",
+  ],
+}
+`;
+
+exports[`dimensionSetTotals > should replace non-empty totals 1`] = `
+{
+  "itemIdentifiers": [
+    "localId1",
+  ],
+  "totals": {
+    "attributeIdentifier": "localId2",
+    "measureIdentifier": "measureId",
+    "type": "avg",
+  },
+}
+`;
+
+exports[`dimensionSetTotals > should set totals  1`] = `
+{
+  "itemIdentifiers": [
+    "localId1",
+  ],
+  "totals": {
+    "attributeIdentifier": "localId1",
+    "measureIdentifier": "measureId",
+    "type": "avg",
+  },
+}
+`;
+
+exports[`dimensionsFindItem > should find no item 1`] = `[]`;
+
+exports[`dimensionsFindItem > should find one item in both dimensions 1`] = `
+[
+  {
+    "dim": {
+      "itemIdentifiers": [
+        "localId1",
+        "localId2",
+      ],
+    },
+    "dimIdx": 0,
+    "itemIdx": 1,
+  },
+  {
+    "dim": {
+      "itemIdentifiers": [
+        "localId3",
+        "localId4",
+        "localId2",
+      ],
+    },
+    "dimIdx": 1,
+    "itemIdx": 2,
+  },
+]
+`;
+
+exports[`dimensionsFindItem > should find one item in first dimension 1`] = `
+[
+  {
+    "dim": {
+      "itemIdentifiers": [
+        "localId1",
+        "localId2",
+      ],
+    },
+    "dimIdx": 0,
+    "itemIdx": 0,
+  },
+]
+`;
+
+exports[`dimensionsFindItem > should find one item in second dimension 1`] = `
+[
+  {
+    "dim": {
+      "itemIdentifiers": [
+        "localId3",
+        "localId4",
+        "localId2",
+      ],
+    },
+    "dimIdx": 1,
+    "itemIdx": 1,
+  },
+]
+`;
+
+exports[`newDimension > should create a valid dimension when input arg is mix of identifiers and totals 1`] = `
+{
+  "itemIdentifiers": [
+    "localId1",
+  ],
+  "totals": [
+    {
+      "attributeIdentifier": "localId1",
+      "measureIdentifier": "measureId",
+      "type": "avg",
+    },
+  ],
+}
+`;
+
+exports[`newDimension > should create a valid dimension when totals are in both args  1`] = `
+{
+  "itemIdentifiers": [
+    "localId1",
+  ],
+  "totals": [
+    {
+      "attributeIdentifier": "localId1",
+      "measureIdentifier": "measureId",
+      "type": "avg",
+    },
+    {
+      "attributeIdentifier": "localId2",
+      "measureIdentifier": "measureId",
+      "type": "avg",
+    },
+  ],
+}
+`;
+
+exports[`newDimension > should create a valid dimension when totals are in second arg  1`] = `
+{
+  "itemIdentifiers": [
+    "localId1",
+  ],
+  "totals": [
+    {
+      "attributeIdentifier": "localId1",
+      "measureIdentifier": "measureId",
+      "type": "avg",
+    },
+  ],
+}
+`;
+
+exports[`newDimension > should create a valid dimension when using attribute objects and localIds 1`] = `
+{
+  "itemIdentifiers": [
+    "a_label.account.id.name",
+    "explicitLocalId1",
+  ],
+}
+`;
+
+exports[`newDimension > should create a valid dimension without totals when totals arg empty 1`] = `
+{
+  "itemIdentifiers": [
+    "localId1",
+    "localId2",
+  ],
+}
+`;
+
+exports[`newDimension > should create a valid dimension without totals when totals arg undef 1`] = `
+{
+  "itemIdentifiers": [
+    "localId1",
+    "localId2",
+  ],
+}
+`;
+
+exports[`newDimension > should create empty dimension if no input provided 1`] = `
+{
+  "itemIdentifiers": [],
+}
+`;
+
+exports[`newTwoDimensional > should create both dimension with totals 1`] = `
+[
+  {
+    "itemIdentifiers": [
+      "localId1",
+    ],
+    "totals": [
+      {
+        "attributeIdentifier": "localId1",
+        "measureIdentifier": "measureId",
+        "type": "avg",
+      },
+    ],
+  },
+  {
+    "itemIdentifiers": [
+      "localId2",
+    ],
+    "totals": [
+      {
+        "attributeIdentifier": "localId2",
+        "measureIdentifier": "measureId",
+        "type": "avg",
+      },
+    ],
+  },
+]
+`;
+
+exports[`newTwoDimensional > should create both dimensions with correct ids 1`] = `
+[
+  {
+    "itemIdentifiers": [
+      "localId1",
+    ],
+  },
+  {
+    "itemIdentifiers": [
+      "localId2",
+    ],
+  },
+]
+`;
+
+exports[`newTwoDimensional > should create both dimensions with correct ids when mixing attribute and localId 1`] = `
+[
+  {
+    "itemIdentifiers": [
+      "localId1",
+      "a_label.account.id.name",
+    ],
+  },
+  {
+    "itemIdentifiers": [
+      "a_label.activity.id.subject",
+      "localId2",
+    ],
+  },
+]
+`;
+
+exports[`newTwoDimensional > should create first dimension empty 1`] = `
+[
+  {
+    "itemIdentifiers": [],
+  },
+  {
+    "itemIdentifiers": [
+      "localId1",
+    ],
+  },
+]
+`;
+
+exports[`newTwoDimensional > should create first dimension with measuregroup 1`] = `
+[
+  {
+    "itemIdentifiers": [
+      "measureGroup",
+    ],
+  },
+  {
+    "itemIdentifiers": [],
+  },
+]
+`;
+
+exports[`newTwoDimensional > should create first dimension with totals 1`] = `
+[
+  {
+    "itemIdentifiers": [
+      "localId1",
+    ],
+    "totals": [
+      {
+        "attributeIdentifier": "localId1",
+        "measureIdentifier": "measureId",
+        "type": "avg",
+      },
+    ],
+  },
+  {
+    "itemIdentifiers": [
+      "localId2",
+    ],
+  },
+]
+`;
+
+exports[`newTwoDimensional > should create second dimension empty 1`] = `
+[
+  {
+    "itemIdentifiers": [
+      "localId1",
+    ],
+  },
+  {
+    "itemIdentifiers": [],
+  },
+]
+`;
+
+exports[`newTwoDimensional > should create second dimension with measuregroup 1`] = `
+[
+  {
+    "itemIdentifiers": [],
+  },
+  {
+    "itemIdentifiers": [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`newTwoDimensional > should create second dimension with totals 1`] = `
+[
+  {
+    "itemIdentifiers": [
+      "localId1",
+    ],
+  },
+  {
+    "itemIdentifiers": [
+      "localId2",
+    ],
+    "totals": [
+      {
+        "attributeIdentifier": "localId1",
+        "measureIdentifier": "measureId",
+        "type": "avg",
+      },
+    ],
+  },
+]
+`;
+
+exports[`newTwoDimensional > should create two empty dimensions 1`] = `
+[
+  {
+    "itemIdentifiers": [],
+  },
+  {
+    "itemIdentifiers": [],
+  },
+]
+`;

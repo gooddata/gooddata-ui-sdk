@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":semanticCommits",
+    ":semanticCommitType(chore)",
+    ":semanticCommitScopeDisabled"
+    ],
+    "packageRules": [
+        {
+            "matchDatasources": ["docker"],
+            "commitMessageAction": "update",
+            "commitMessageTopic": "of dependency by renovate",
+            "commitMessageExtra": "",
+            "commitMessageSuffix": "",
+            "commitBody": "TRIVIAL"
+        }
+  ]
+}

@@ -1,0 +1,96 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`insight factory > should create new empty insight 1`] = `
+{
+  "insight": {
+    "buckets": [],
+    "filters": [],
+    "properties": {},
+    "sorts": [],
+    "title": "Untitled",
+    "visualizationUrl": "local:bar",
+  },
+}
+`;
+
+exports[`insight factory > should create new empty insight with buckets, filters and sorts 1`] = `
+{
+  "insight": {
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "afSEwRwdbMeQ",
+                  },
+                },
+              },
+              "localIdentifier": "m_afSEwRwdbMeQ",
+            },
+          },
+        ],
+        "localIdentifier": "test",
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.owner.department",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [
+              "Inside Sales",
+            ],
+          },
+        },
+      },
+    ],
+    "properties": {},
+    "sorts": [
+      {
+        "attributeSortItem": {
+          "attributeIdentifier": "a_label.owner.department",
+          "direction": "asc",
+        },
+      },
+    ],
+    "title": "Untitled",
+    "visualizationUrl": "local:bar",
+  },
+}
+`;
+
+exports[`insight factory > should create new empty insight with custom properties 1`] = `
+{
+  "insight": {
+    "buckets": [],
+    "filters": [],
+    "properties": {
+      "controls": {
+        "grid": true,
+      },
+    },
+    "sorts": [],
+    "title": "Untitled",
+    "visualizationUrl": "local:bar",
+  },
+}
+`;
+
+exports[`insight factory > should create new empty insight with custom title 1`] = `
+{
+  "insight": {
+    "buckets": [],
+    "filters": [],
+    "properties": {},
+    "sorts": [],
+    "title": "My Insight",
+    "visualizationUrl": "local:bar",
+  },
+}
+`;

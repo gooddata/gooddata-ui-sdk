@@ -1,0 +1,95 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`dependency graph > should create correct build order 1`] = `
+[
+  [
+    "@gooddata/sdk-skel-ts",
+    "@gooddata/sdk-skel-tsx",
+    "@gooddata/sdk-model",
+    "@gooddata/sdk-embedding",
+    "@gooddata/util",
+    "@gooddata/applink",
+  ],
+  [
+    "@gooddata/sdk-backend-spi",
+  ],
+  [
+    "@gooddata/mock-handling",
+    "@gooddata/reference-workspace",
+  ],
+  [
+    "@gooddata/api-client-tiger",
+    "@gooddata/sdk-backend-base",
+  ],
+  [
+    "@gooddata/sdk-backend-mockingbird",
+    "@gooddata/sdk-backend-tiger",
+    "@gooddata/catalog-export",
+  ],
+  [
+    "@gooddata/sdk-ui",
+    "@gooddata/reference-workspace-mgmt",
+  ],
+  [
+    "@gooddata/sdk-ui-filters",
+    "@gooddata/sdk-ui-vis-commons",
+    "@gooddata/sdk-ui-kit",
+  ],
+  [
+    "@gooddata/sdk-ui-geo",
+    "@gooddata/sdk-ui-charts",
+    "@gooddata/sdk-ui-pivot",
+  ],
+  [
+    "@gooddata/sdk-ui-ext",
+  ],
+  [
+    "@gooddata/sdk-ui-all",
+    "@gooddata/sdk-ui-tests",
+  ],
+]
+`;
+
+exports[`dependency graph > should create correct build order for prod deps only 1`] = `
+[
+  [
+    "@gooddata/sdk-skel-ts",
+    "@gooddata/sdk-skel-tsx",
+    "@gooddata/sdk-model",
+    "@gooddata/sdk-embedding",
+    "@gooddata/util",
+    "@gooddata/applink",
+  ],
+  [
+    "@gooddata/sdk-backend-spi",
+  ],
+  [
+    "@gooddata/mock-handling",
+    "@gooddata/reference-workspace",
+    "@gooddata/sdk-backend-base",
+    "@gooddata/api-client-tiger",
+    "@gooddata/sdk-ui",
+  ],
+  [
+    "@gooddata/sdk-ui-kit",
+    "@gooddata/catalog-export",
+    "@gooddata/sdk-ui-vis-commons",
+    "@gooddata/sdk-ui-filters",
+    "@gooddata/sdk-backend-mockingbird",
+    "@gooddata/sdk-backend-tiger",
+  ],
+  [
+    "@gooddata/sdk-ui-tests",
+    "@gooddata/sdk-ui-pivot",
+    "@gooddata/sdk-ui-charts",
+    "@gooddata/sdk-ui-geo",
+    "@gooddata/reference-workspace-mgmt",
+  ],
+  [
+    "@gooddata/sdk-ui-ext",
+  ],
+  [
+    "@gooddata/sdk-ui-all",
+  ],
+]
+`;

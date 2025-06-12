@@ -1,0 +1,234 @@
+// (C) 2025 GoodData Corporation
+
+$border-radius: 20px;
+$background-color: var(--gd-palette-complementary-0);
+$border-color: var(--gd-palette-complementary-4);
+$box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-complementary-5-t40) inset;
+
+$active-background-color: var(--gd-palette-complementary-2);
+
+$action-border-color: var(--gd-palette-error-base-t50);
+$action-background-color: var(--gd-palette-error-lightest);
+$action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-error-base-t50) inset;
+
+.gd-ui-kit-chip {
+    $root: &;
+
+    height: 27px;
+    max-width: 245px;
+
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    position: relative;
+
+    border-radius: $border-radius;
+    border: 1px solid $border-color;
+    background-color: $background-color;
+
+    &:has(#{$root}__trigger:hover) {
+        border-color: $border-color;
+
+        &::after {
+            content: "";
+            border-radius: inherit;
+            box-shadow: $box-shadow;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            pointer-events: none;
+        }
+
+        #{$root}__trigger {
+            background-color: $active-background-color;
+        }
+
+        #{$root}__trigger--isDeletable {
+            border-right: 1px solid $border-color;
+        }
+
+        &:has(#{$root}__trigger--isLocked:hover) {
+            &::after {
+                content: none;
+            }
+
+            #{$root}__trigger--isLocked {
+                border: none;
+                background-color: $background-color;
+            }
+        }
+    }
+
+    &:has(#{$root}__delete:hover) {
+        border-color: $action-border-color;
+        background-color: $action-background-color;
+
+        &::after {
+            content: "";
+            border-radius: inherit;
+            box-shadow: $action-box-shadow;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            pointer-events: none;
+        }
+
+        #{$root}__trigger {
+            border-color: $action-border-color;
+            border-right: 1px solid $action-border-color;
+        }
+
+        #{$root}__trigger--isActive {
+            background-color: $action-background-color;
+        }
+
+        #{$root}__delete {
+            color: var(--gd-palette-error-base);
+        }
+    }
+
+    #{$root}__trigger--isDeletable {
+        border-right: 1px solid transparent;
+    }
+
+    &__trigger,
+    &__delete {
+        color: var(--gd-palette-complementary-7);
+        background-color: transparent;
+        border-radius: var(--gd-button-borderRadius);
+        transition: var(--gd-transition-all);
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        height: 100%;
+        min-width: 0;
+        flex-shrink: 1;
+        gap: 0;
+        text-decoration: none;
+        padding: 0 10px;
+        border: none;
+
+        &:disabled {
+            cursor: default;
+            color: var(--gd-palette-complementary-5);
+        }
+    }
+
+    &__trigger {
+        border-radius: $border-radius 0 0 $border-radius;
+        border-right: 1px solid transparent;
+
+        &--isActive {
+            color: var(--gd-palette-complementary-8);
+            background-color: $active-background-color;
+            border-right: 1px solid $border-color;
+        }
+
+        &--isLocked {
+            cursor: default;
+            color: var(--gd-palette-complementary-7);
+            border-radius: $border-radius;
+
+            &:disabled {
+                background-color: $background-color;
+                color: var(--gd-palette-complementary-7);
+                border: none;
+            }
+        }
+
+        &:not(&:disabled) {
+            &:hover,
+            &:focus,
+            &:active {
+                svg {
+                    color: var(--gd-palette-primary-base);
+                }
+
+                color: var(--gd-palette-complementary-8);
+            }
+        }
+
+        &:not(&--isDeletable) {
+            border-radius: $border-radius;
+            border: none;
+        }
+    }
+
+    &__delete {
+        flex-shrink: 0;
+        border-radius: 0 $border-radius $border-radius 0;
+        padding: 0 7px 0 5px;
+
+        &:not(&:disabled) {
+            &:hover,
+            &:focus,
+            &:active {
+                svg {
+                    color: var(--gd-palette-error-base);
+                }
+
+                color: var(--gd-palette-complementary-8);
+            }
+        }
+    }
+
+    &__label {
+        transition: var(--gd-transition-all);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__tag {
+        transition: var(--gd-transition-all);
+        margin-left: 2px;
+    }
+
+    &__icon-before {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--gd-transition-all);
+        margin-right: 5px;
+    }
+
+    &__icon-chevron {
+        align-items: center;
+        justify-content: center;
+        transition: var(--gd-transition-all);
+        display: none;
+        margin-left: 5px;
+
+        #{$root}:hover &,
+        #{$root}:active & {
+            display: flex;
+        }
+
+        &--isActive {
+            display: flex;
+        }
+    }
+
+    &__icon-lock {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--gd-transition-all);
+
+        margin-left: 5px;
+    }
+
+    &__icon-delete {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--gd-transition-all);
+    }
+}

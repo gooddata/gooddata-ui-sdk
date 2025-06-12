@@ -1,0 +1,116 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Min Amount",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "min",
+                                    "item": { "identifier": "f_opportunitysnapshot.f_amount", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_e9c321cf_f_opportunitysnapshot.f_amount_min"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Median Amount",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "median",
+                                    "item": { "identifier": "f_opportunitysnapshot.f_amount", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_899a31be_f_opportunitysnapshot.f_amount_median"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Max Amount",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "max",
+                                    "item": { "identifier": "f_opportunitysnapshot.f_amount", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_5c640258_f_opportunitysnapshot.f_amount_max"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Calculated 'Lost' measure",
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": [
+                                        "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                        "m_e519fa2a_86c3_4e32_8313_0c03062348j3"
+                                    ],
+                                    "operator": "difference"
+                                }
+                            },
+                            "localIdentifier": "m_358184a8_9fa7cb9ce4d2947059b490e24a925317"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "ComboChart.1c118e8588d3b9d84f28e3ad5660e150",
+        "properties": {
+            "controls": { "legend": { "position": "bottom", "responsive": "autoPositionWithPopup" } }
+        },
+        "sorts": [],
+        "title": "ComboChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend at bottom",
+        "uri": "ComboChart.1c118e8588d3b9d84f28e3ad5660e150",
+        "visualizationUrl": "local:combo2"
+    }
+}

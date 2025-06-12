@@ -1,0 +1,10 @@
+{
+    "attribute": { "identifier": "f_owner.department_id", "type": "attribute" },
+    "description": "Department",
+    "id": "f_owner.department_id",
+    "isDefault": true,
+    "ref": { "identifier": "f_owner.department_id", "type": "displayForm" },
+    "title": "Department",
+    "type": "displayForm",
+    "uri": "https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.department_id"
+}

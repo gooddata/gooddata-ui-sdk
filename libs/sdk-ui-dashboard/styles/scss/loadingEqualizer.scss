@@ -1,0 +1,40 @@
+// (C) 2021 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-loading-equalizer-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: kit-variables.$gd-color-text-dimmed;
+}
+
+.gd-loading-equalizer {
+    flex: 0 0 auto;
+    margin-top: 220px;
+
+    .gd-loading-equalizer-spinner {
+        display: block;
+        margin: 10px auto;
+    }
+
+    &-fade {
+        animation: fadein 0.25s ease-in-out;
+
+        @keyframes fadein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.gd-loading-equalizer-attribute-filter-config-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 25px 0;
+}

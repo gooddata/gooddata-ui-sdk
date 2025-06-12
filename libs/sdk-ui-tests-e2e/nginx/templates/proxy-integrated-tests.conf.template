@@ -1,0 +1,21 @@
+# (C) 2023 GoodData Corporation
+
+access_log off;
+
+location ^~ /api {
+    proxy_ssl_server_name on;
+    proxy_pass $TEST_BACKEND;
+    proxy_set_header Origin $TEST_BACKEND;
+}
+
+location ^~ /gdc {
+    proxy_pass $TEST_BACKEND;
+    proxy_set_header x-forwarded-host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Referer $TEST_BACKEND;
+    proxy_set_header Origin "";
+    # need to strip http(s) from TEST_BACKEND
+    proxy_set_header Host $TEST_BACKEND_NO_PREFIX;
+    proxy_cookie_domain $TEST_BACKEND_NO_PREFIX $host;
+    proxy_cookie_flags ~ nosecure samesite=lax;
+}

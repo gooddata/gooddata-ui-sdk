@@ -1,0 +1,1825 @@
+{
+    "analytics": {
+        "analyticalDashboardExtensions": [],
+        "analyticalDashboards": [
+            {
+                "content": {
+                    "disableCrossFiltering": true,
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "8ba62f8b-a012-4421-871b-dfcb27d6215e",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 8,
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "04b8cd47-35d6-4e82-b24d-7a98647e0374",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Amount",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "f615b2cd-024c-4cc8-9db9-b6f08150b0b3",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Simple Sorted Table",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "f615b2cd-024c-4cc8-9db9-b6f08150b0b3",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Simple Sorted Table",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "b2cfe70f-59a6-4b04-b7ca-f01c8e47df0a",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Test insight",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "7837806a-a406-4dcd-a8a2-902c64587e63",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "drillToAttributeUrl",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2024-03-26 13:18",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "44a9d0ed-8a06-4ffd-b16c-6281707acfcf",
+                "modifiedAt": "2024-03-26 13:19",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "permissions": [
+                    {
+                        "assigneeRule": {
+                            "type": "allWorkspaceUsers"
+                        },
+                        "name": "EDIT"
+                    },
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Simple dashboard no drills"
+            },
+            {
+                "content": {
+                    "disableCrossFiltering": true,
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "292a9f43-6562-40e4-bd06-82b07fc0e0c4",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 8,
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "04b8cd47-35d6-4e82-b24d-7a98647e0374",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Amount",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "f615b2cd-024c-4cc8-9db9-b6f08150b0b3",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Simple Sorted Table",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "f615b2cd-024c-4cc8-9db9-b6f08150b0b3",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Simple Sorted Table",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "b2cfe70f-59a6-4b04-b7ca-f01c8e47df0a",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Test insight",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [
+                                                {
+                                                    "localIdentifier": "c747290775824416949e0d8a31c3129f",
+                                                    "origin": {
+                                                        "attribute": {
+                                                            "localIdentifier": "71155ff09d254ecc9265d67f5e6ee37f"
+                                                        },
+                                                        "type": "drillFromAttribute"
+                                                    },
+                                                    "target": {
+                                                        "displayForm": {
+                                                            "identifier": {
+                                                                "id": "label.f_opportunity.opportunity.name",
+                                                                "type": "label"
+                                                            }
+                                                        },
+                                                        "hyperlinkDisplayForm": {
+                                                            "identifier": {
+                                                                "id": "label.f_opportunity.opportunity.sfdcurl",
+                                                                "type": "label"
+                                                            }
+                                                        }
+                                                    },
+                                                    "transition": "new-window",
+                                                    "type": "drillToAttributeUrl"
+                                                }
+                                            ],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "7837806a-a406-4dcd-a8a2-902c64587e63",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "drillToAttributeUrl",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2024-03-25 12:40",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "adb4fefa-c5ad-410e-bb2c-d6933e0ec7a0",
+                "modifiedAt": "2024-03-25 18:59",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "permissions": [
+                    {
+                        "assigneeRule": {
+                            "type": "allWorkspaceUsers"
+                        },
+                        "name": "EDIT"
+                    },
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Simple dashboard"
+            },
+            {
+                "content": {
+                    "disableCrossFiltering": true,
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "6576af80-d846-46ca-b66a-1c6acf02d99b",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "f615b2cd-024c-4cc8-9db9-b6f08150b0b3",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Simple Sorted Table",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2024-03-26 08:09",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "b8bbf78e-e3ad-4bcf-98a6-0142ea7fa8a2",
+                "modifiedAt": "2024-03-26 08:10",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "permissions": [
+                    {
+                        "assigneeRule": {
+                            "type": "allWorkspaceUsers"
+                        },
+                        "name": "EDIT"
+                    },
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Locked dashboard"
+            },
+            {
+                "content": {
+                    "disableCrossFiltering": true,
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "d28d90c3-6d6a-459b-8cfc-22d3ecd617fd",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {
+                                    "title": "First section has 6 headlines"
+                                },
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 8,
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "b75ccd1a-4489-44fd-8cd5-83ec122e3288",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Sum of Duration",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 8,
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "04b8cd47-35d6-4e82-b24d-7a98647e0374",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Amount",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 8,
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [
+                                                {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "f_owner.region_id",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "type": "attributeFilterReference"
+                                                },
+                                                {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "label.f_product.product.name",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "type": "attributeFilterReference"
+                                                }
+                                            ],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "986add04-6568-4834-a635-e42982650c54",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Sum of Probability",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 8,
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "4eb2f130-e36e-4d8d-834e-14780366edfd",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Sum of Days to Close",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 8,
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "afa75538-ea5f-4cfc-a10f-dce95929a68d",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Sum of Opp. Close (Date)",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 8,
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "a04af4cb-94e2-4cdb-aa21-c95bbb0b3ab8",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Sum of Opp. Snapshot (Date)",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "description": "",
+                                            "drills": [
+                                                {
+                                                    "localIdentifier": "75b4b1d98abd45128b089805568eacc3",
+                                                    "origin": {
+                                                        "measure": {
+                                                            "localIdentifier": "2d652ae9d2b149ddbe6f651603124c41"
+                                                        },
+                                                        "type": "drillFromMeasure"
+                                                    },
+                                                    "target": {
+                                                        "identifier": {
+                                                            "id": "adb4fefa-c5ad-410e-bb2c-d6933e0ec7a0",
+                                                            "type": "analyticalDashboard"
+                                                        }
+                                                    },
+                                                    "transition": "in-place",
+                                                    "type": "drillToDashboard"
+                                                },
+                                                {
+                                                    "localIdentifier": "79aaeba4f22c4f3494f9b597c69f2660",
+                                                    "origin": {
+                                                        "measure": {
+                                                            "localIdentifier": "bb34c646dcff4aeeaad4be46f8490e3f"
+                                                        },
+                                                        "type": "drillFromMeasure"
+                                                    },
+                                                    "target": {
+                                                        "identifier": {
+                                                            "id": "86be2337-968a-40f1-9fa4-4b3bb809da4b",
+                                                            "type": "visualizationObject"
+                                                        }
+                                                    },
+                                                    "transition": "pop-up",
+                                                    "type": "drillToInsight"
+                                                },
+                                                {
+                                                    "localIdentifier": "552c713996d54132a0e13cf4c87eba45",
+                                                    "origin": {
+                                                        "measure": {
+                                                            "localIdentifier": "4f4a632d96734acdb585232d609263fc"
+                                                        },
+                                                        "type": "drillFromMeasure"
+                                                    },
+                                                    "target": {
+                                                        "url": ["https://www.gooddata.com"]
+                                                    },
+                                                    "transition": "new-window",
+                                                    "type": "drillToCustomUrl"
+                                                }
+                                            ],
+                                            "ignoreDashboardFilters": [
+                                                {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "f_owner.region_id",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "type": "attributeFilterReference"
+                                                },
+                                                {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "label.f_product.product.name",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "type": "attributeFilterReference"
+                                                }
+                                            ],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "86be2337-968a-40f1-9fa4-4b3bb809da4b",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "any dashboard filters",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [
+                                                {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "f_owner.region_id",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "type": "attributeFilterReference"
+                                                },
+                                                {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "label.f_product.product.name",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "type": "attributeFilterReference"
+                                                }
+                                            ],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "86be2337-968a-40f1-9fa4-4b3bb809da4b",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "any attribute filter",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "83804893-45f6-476a-ac69-fef969a791d7",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "my heatmap",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2024-03-26 11:14",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "e6473e57-1914-46ec-9cb9-5611f1298100",
+                "modifiedAt": "2024-03-26 12:30",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "permissions": [
+                    {
+                        "assigneeRule": {
+                            "type": "allWorkspaceUsers"
+                        },
+                        "name": "VIEW"
+                    },
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Dashboard With 3 Sections"
+            }
+        ],
+        "attributeHierarchies": [],
+        "dashboardPlugins": [],
+        "filterContexts": [
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "f_owner.department_id",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "34b4386e227544b39ed0978791b8bd50",
+                                "negativeSelection": true
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_activity.subject",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "4436376372e7468b81b327dca9b65ec1",
+                                "negativeSelection": true
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "292a9f43-6562-40e4-bd06-82b07fc0e0c4",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "6576af80-d846-46ca-b66a-1c6acf02d99b",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "f_owner.department_id",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "34b4386e227544b39ed0978791b8bd50",
+                                "negativeSelection": true,
+                                "selectionMode": "multi"
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_activity.subject",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "4436376372e7468b81b327dca9b65ec1",
+                                "negativeSelection": true,
+                                "selectionMode": "multi"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "8ba62f8b-a012-4421-871b-dfcb27d6215e",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": 0,
+                                "granularity": "GDC.time.month",
+                                "to": 0,
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "bbda1831-5a0f-4baa-a094-88494fc4d59f",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": "2010-09-10 00:00",
+                                "granularity": "GDC.time.date",
+                                "to": "2010-11-11 23:59",
+                                "type": "absolute",
+                                "localIdentifier": "0_dateFilter"
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "f_owner.region_id",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "c1469d8b21b74130846eb5fedb29b123",
+                                "negativeSelection": true
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_product.product.name",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "fb46a9cc585249f39e801870648657e4",
+                                "negativeSelection": true
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "d28d90c3-6d6a-459b-8cfc-22d3ecd617fd",
+                "title": "filterContext"
+            }
+        ],
+        "metrics": [
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX(\n        CASE\n            WHEN {label/dt_timeline_timestamp.year} = \"2018\" THEN -123400,\n            WHEN {label/dt_timeline_timestamp.year} = \"2019\" THEN 36200,\n            WHEN {label/dt_timeline_timestamp.year} = \"2020\" THEN 54800,\n            WHEN {label/dt_timeline_timestamp.year} = \"2021\" THEN 48100\n        END,\n        {dataset/f_timeline})\n    WHERE {label/dt_timeline_timestamp.year} BETWEEN \"2018\" AND \"2021\"\n"
+                },
+                "createdAt": "2024-03-20 13:42",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "sample_xirr",
+                "modifiedAt": "2024-03-21 07:30",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "title": "Sample XIRR"
+            }
+        ],
+        "visualizationObjects": [
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "12ef28a87dfa437ca3375f1ddd6baef8",
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {
+                        "controls": {
+                            "comparison": {
+                                "enabled": true
+                            }
+                        }
+                    },
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:headline"
+                },
+                "createdAt": "2024-03-25 12:36",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "04b8cd47-35d6-4e82-b24d-7a98647e0374",
+                "title": "Amount"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "f_opportunitysnapshot.f_daystoclose",
+                                                        "type": "fact"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "aac032792978445da550c6f852addcd6",
+                                        "title": "Sum of Days to Close"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {
+                        "controls": {
+                            "comparison": {
+                                "enabled": true
+                            }
+                        }
+                    },
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:headline"
+                },
+                "createdAt": "2024-03-26 11:15",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "4eb2f130-e36e-4d8d-834e-14780366edfd",
+                "modifiedAt": "2024-03-26 11:18",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "title": "Sum of Days to Close"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "606c8bce0b3a42f884c251b8b2648f93",
+                                        "title": "# Of Opportunities"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_opportunity.opportunity.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "71155ff09d254ecc9265d67f5e6ee37f"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "71155ff09d254ecc9265d67f5e6ee37f",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-03-25 12:43",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "7837806a-a406-4dcd-a8a2-902c64587e63",
+                "title": "drillToAttributeUrl"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "f_opportunitysnapshot.f_amount",
+                                                        "type": "fact"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "3f771c9dd9144edb8c5119766fa1e978",
+                                        "title": "Sum of Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "a35c023cc2e24e4d9d3e4253727c5190"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_owner.region_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "2b8ef9313eca4366bc44153f998de43f"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "stack"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:heatmap"
+                },
+                "createdAt": "2024-03-26 11:31",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "83804893-45f6-476a-ac69-fef969a791d7",
+                "title": "my heatmap"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "2d652ae9d2b149ddbe6f651603124c41",
+                                        "title": "Amount"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "bb34c646dcff4aeeaad4be46f8490e3f",
+                                        "title": "Won"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "4f4a632d96734acdb585232d609263fc",
+                                        "title": "Probability"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "955d8ff7bdc24597877fa7c519c96caf"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "955d8ff7bdc24597877fa7c519c96caf",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-03-26 11:26",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "86be2337-968a-40f1-9fa4-4b3bb809da4b",
+                "title": "table"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "f_opportunitysnapshot.f_probability",
+                                                        "type": "fact"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "3e30454092454e71994773ed82227a2b",
+                                        "title": "Sum of Probability"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {
+                        "controls": {
+                            "comparison": {
+                                "enabled": true
+                            }
+                        }
+                    },
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:headline"
+                },
+                "createdAt": "2024-03-26 11:20",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "986add04-6568-4834-a635-e42982650c54",
+                "title": "Sum of Probability"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "fact.f_opportunitysnapshot.oppsnapshotdate",
+                                                        "type": "fact"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "2421415d0f3e494fa436dc987548fbfb",
+                                        "title": "Sum of Opp. Snapshot (Date)"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {
+                        "controls": {
+                            "comparison": {
+                                "enabled": true
+                            }
+                        }
+                    },
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:headline"
+                },
+                "createdAt": "2024-03-26 11:18",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "a04af4cb-94e2-4cdb-aa21-c95bbb0b3ab8",
+                "title": "Sum of Opp. Snapshot (Date)"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "fact.f_opportunitysnapshot.oppclosedate",
+                                                        "type": "fact"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "b70f936e04734b54bb862e7c58d34e88",
+                                        "title": "Sum of Opp. Close (Date)"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {
+                        "controls": {
+                            "comparison": {
+                                "enabled": true
+                            }
+                        }
+                    },
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:headline"
+                },
+                "createdAt": "2024-03-26 11:17",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "afa75538-ea5f-4cfc-a10f-dce95929a68d",
+                "modifiedAt": "2024-03-26 11:17",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "title": "Sum of Opp. Close (Date)"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "f_opportunitysnapshot.f_daystoclose",
+                                                        "type": "fact"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "f84de77f39514826a6d110928018ccb4",
+                                        "title": "Sum of Days to Close"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_owner.department_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "40a12ec3031f440fb51c368c01a04714"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:column"
+                },
+                "createdAt": "2024-03-25 12:40",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "b2cfe70f-59a6-4b04-b7ca-f01c8e47df0a",
+                "title": "Test insight"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "f_stagehistory.f_duration",
+                                                        "type": "fact"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "38e438271bf94c869daf31145ddc1a9b",
+                                        "title": "Sum of Duration"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {
+                        "controls": {
+                            "comparison": {
+                                "enabled": true
+                            }
+                        }
+                    },
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:headline"
+                },
+                "createdAt": "2024-03-26 11:20",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "b75ccd1a-4489-44fd-8cd5-83ec122e3288",
+                "title": "Sum of Duration"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "f5dad8b42c134c2b97fdb471663abf72",
+                                        "title": "Won"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "0a5139550a7e490cae143219233471bf"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_owner.department_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "91aada58ca3e43e79d2522f844171090"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "measureSortItem": {
+                                "direction": "desc",
+                                "locators": [
+                                    {
+                                        "attributeLocatorItem": {
+                                            "attributeIdentifier": "91aada58ca3e43e79d2522f844171090",
+                                            "element": "Direct Sales"
+                                        }
+                                    },
+                                    {
+                                        "measureLocatorItem": {
+                                            "measureIdentifier": "f5dad8b42c134c2b97fdb471663abf72"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2024-03-25 12:34",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "f615b2cd-024c-4cc8-9db9-b6f08150b0b3",
+                "title": "Simple Sorted Table"
+            }
+        ]
+    }
+}

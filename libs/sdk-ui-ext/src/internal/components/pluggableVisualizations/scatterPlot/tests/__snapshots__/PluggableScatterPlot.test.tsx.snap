@@ -1,0 +1,715 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PluggableScatterPlot > should return reference point after switching from Geo Chart 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.city",
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {
+    "controls": {
+      "clustering": {
+        "enabled": false,
+      },
+    },
+  },
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-measures-x.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "X-axis",
+        "title": "Metric",
+      },
+      "secondary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-measures-y.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Y-axis",
+        "title": "Metric",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableScatterPlot > should return reference point with one secondary measure and one attribute 1`] = `
+{
+  "buckets": [
+    {
+      "items": [],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {
+    "controls": {
+      "clustering": {
+        "enabled": false,
+      },
+    },
+  },
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-measures-x.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "X-axis",
+        "title": "Metric",
+      },
+      "secondary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-measures-y.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Y-axis",
+        "title": "Metric",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableScatterPlot > should return reference point with primary and secondary measure, one category and only valid filters 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {
+    "controls": {
+      "clustering": {
+        "enabled": false,
+      },
+    },
+  },
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-measures-x.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "X-axis",
+        "title": "Metric",
+      },
+      "secondary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-measures-y.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Y-axis",
+        "title": "Metric",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableScatterPlot > should return reference point with primary measure and one attribute 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {
+    "controls": {
+      "clustering": {
+        "enabled": false,
+      },
+    },
+  },
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-measures-x.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "X-axis",
+        "title": "Metric",
+      },
+      "secondary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-measures-y.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Y-axis",
+        "title": "Metric",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableScatterPlot > should return reference point with two measures and no attribute 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {
+    "controls": {
+      "clustering": {
+        "enabled": false,
+      },
+    },
+  },
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-measures-x.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "X-axis",
+        "title": "Metric",
+      },
+      "secondary_measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-measures-y.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Y-axis",
+        "title": "Metric",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;

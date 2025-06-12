@@ -1,0 +1,426 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`query widget filters > advanced scenarios > should return filters for insight with all measures filtered by date 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2010-01-01",
+      "to": "2020-01-01",
+    },
+  },
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "in": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`query widget filters > advanced scenarios > should return filters for insight with own attribute filter 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2010-01-01",
+      "to": "2020-01-01",
+    },
+  },
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "in": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
+        ],
+      },
+    },
+  },
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "in": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460490",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`query widget filters > advanced scenarios > should return filters for insight with own date filter 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2010-01-01",
+      "to": "2020-01-01",
+    },
+  },
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "in": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`query widget filters > advanced scenarios > should return filters for insight with own date filter connected to a different date dimension than set in the widget 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/392",
+      },
+      "from": "2010-01-01",
+      "to": "2020-01-01",
+    },
+  },
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2010-01-01",
+      "to": "2011-01-01",
+    },
+  },
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "in": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`query widget filters > advanced scenarios > should return filters for insight with own measure value filter 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2010-01-01",
+      "to": "2020-01-01",
+    },
+  },
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "in": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
+        ],
+      },
+    },
+  },
+  {
+    "measureValueFilter": {
+      "condition": {
+        "comparison": {
+          "operator": "GREATER_THAN_OR_EQUAL_TO",
+          "value": 15000000,
+        },
+      },
+      "measure": {
+        "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c",
+      },
+    },
+  },
+]
+`;
+
+exports[`query widget filters > advanced scenarios > should return filters for insight with own ranking filter 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2010-01-01",
+      "to": "2020-01-01",
+    },
+  },
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "in": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
+        ],
+      },
+    },
+  },
+  {
+    "rankingFilter": {
+      "measure": {
+        "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c",
+      },
+      "operator": "TOP",
+      "value": 1,
+    },
+  },
+]
+`;
+
+exports[`query widget filters > advanced scenarios > should return filters for insight with some measures filtered by date 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2010-01-01",
+      "to": "2020-01-01",
+    },
+  },
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "in": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`query widget filters > basic scenarios > should fail in case the widget does not exist 1`] = `
+{
+  "correlationId": undefined,
+  "ctx": {
+    "backend": {
+      "authenticate": [Function],
+      "capabilities": {
+        "allowsInconsistentRelations": false,
+        "canCalculateGrandTotals": true,
+        "canCalculateNativeTotals": true,
+        "canCalculateSubTotals": true,
+        "canCalculateTotals": true,
+        "supportsCsvUploader": true,
+        "supportsCustomColorPalettes": true,
+        "supportsElementUris": true,
+        "supportsElementsQueryParentFiltering": true,
+        "supportsEveryoneUserGroupForAccessControl": true,
+        "supportsHierarchicalWorkspaces": false,
+        "supportsKpiWidget": true,
+        "supportsOwners": true,
+        "supportsWidgetEntity": true,
+      },
+      "config": {
+        "getCommonAttributesResponses": {
+          "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1070": [
+            {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+          "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1086": [
+            {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+          "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1088": [
+            {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+          "/gdc/md/referenceworkspace/obj/1070_/gdc/md/referenceworkspace/obj/1086": [
+            {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+          "/gdc/md/referenceworkspace/obj/1070_/gdc/md/referenceworkspace/obj/1088": [
+            {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+          "/gdc/md/referenceworkspace/obj/1086_/gdc/md/referenceworkspace/obj/1088": [
+            {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+        },
+        "globalSettings": {
+          "enableKPIDashboardDrillFromAttribute": true,
+        },
+      },
+      "currentUser": [Function],
+      "dataSources": [Function],
+      "deauthenticate": [Function],
+      "entitlements": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "organization": [Function],
+      "organizations": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "dashboardRef": {
+      "identifier": "abr8vSe5exU7",
+    },
+    "workspace": "reference-workspace",
+  },
+  "meta": Any<Object>,
+  "payload": {
+    "message": "Widget with ref non existent widget does not exist on the dashboard",
+    "reason": "USER_ERROR",
+  },
+  "type": "GDC.DASH/EVT.QUERY.FAILED",
+}
+`;
+
+exports[`query widget filters > basic scenarios > should return filters for insight with ignored attribute filter 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2012-01-01",
+      "to": "2019-01-01",
+    },
+  },
+]
+`;
+
+exports[`query widget filters > basic scenarios > should return filters for insight with ignored date filter 1`] = `
+[
+  {
+    "negativeAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "notIn": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460490",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`query widget filters > basic scenarios > should return filters for insight with no ignored filters 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2012-01-01",
+      "to": "2019-01-01",
+    },
+  },
+  {
+    "negativeAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "notIn": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460490",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`query widget filters > basic scenarios > should return filters for kpi with ignored attribute filter 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2012-01-01",
+      "to": "2019-01-01",
+    },
+  },
+]
+`;
+
+exports[`query widget filters > basic scenarios > should return filters for kpi with ignored date filter 1`] = `
+[
+  {
+    "negativeAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "notIn": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460490",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`query widget filters > basic scenarios > should return filters for kpi with no ignored filters 1`] = `
+[
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2012-01-01",
+      "to": "2019-01-01",
+    },
+  },
+  {
+    "negativeAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "notIn": {
+        "uris": [
+          "/gdc/md/referenceworkspace/obj/1088/elements?id=460490",
+        ],
+      },
+    },
+  },
+]
+`;

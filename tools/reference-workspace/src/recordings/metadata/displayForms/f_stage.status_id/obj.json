@@ -1,0 +1,10 @@
+{
+    "attribute": { "identifier": "f_stage.status_id", "type": "attribute" },
+    "description": "Status",
+    "id": "f_stage.status_id",
+    "isDefault": true,
+    "ref": { "identifier": "f_stage.status_id", "type": "displayForm" },
+    "title": "Status",
+    "type": "displayForm",
+    "uri": "https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/referenceworkspace/labels/f_stage.status_id"
+}

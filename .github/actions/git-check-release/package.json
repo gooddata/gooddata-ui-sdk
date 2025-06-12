@@ -1,0 +1,19 @@
+{
+    "name": "update-hugo-param-action",
+    "version": "1.0.0",
+    "description": "Github action to update Hugo parameter in toml file",
+    "main": "action-build/index.js",
+    "author": "GoodData",
+    "license": "MIT",
+    "scripts": {
+        "build": "ncc build src/index.js -o action-build"
+    },
+    "dependencies": {
+        "@actions/core": "^1.10.0",
+        "@actions/github": "^6.0.0",
+        "semver": "^7.3.5"
+    },
+    "devDependencies": {
+        "@vercel/ncc": "^0.38.1"
+    }
+}

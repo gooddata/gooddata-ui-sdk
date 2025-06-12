@@ -1,0 +1,54 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "dt_closedate_timestamp.year",
+                            "name": "Closed - Year",
+                            "uri": ""
+                        },
+                        "format": { "locale": "en-US", "pattern": "y" },
+                        "granularity": "YEAR",
+                        "identifier": "dt_closedate_timestamp.year",
+                        "localIdentifier": "a_dt_closedate_timestamp.year",
+                        "name": "Closed - Year",
+                        "primaryLabel": {
+                            "identifier": "dt_closedate_timestamp.year",
+                            "type": "displayForm"
+                        },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                    "name": "Amount"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.0%",
+                                    "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                                    "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+                                    "name": "Win Rate"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

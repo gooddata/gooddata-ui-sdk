@@ -1,0 +1,12 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/build-cache.schema.json",
+    "buildCacheEnabled": false,
+    "cacheProvider": "amazon-s3",
+    "cacheEntryNamePattern": "[projectName:normalize]-[phaseName:normalize]-[hash]",
+    "amazonS3Configuration": {
+      "s3Bucket": "gdc-github-cache",
+      "s3Region": "us-east-1",
+      "s3Prefix": "cache/gooddata/gooddata-ui-sdk/build-cache",
+      "isCacheWriteAllowed": true
+    }
+  }

@@ -1,0 +1,42 @@
+{
+    "id": "ab08d2c8-655a-4591-9571-7d9185194be5",
+    "name": "api_v1_actions_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_execution_collectlabelelements",
+    "request": {
+        "url": "/api/v1/actions/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/execution/collectLabelElements?offset=0&limit=2",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[{\"title\":\"(add)ventures\",\"primaryTitle\":\"(add)ventures\"},{\"title\":\"(blank)\",\"primaryTitle\":\"(blank)\"}],\"paging\":{\"total\":4846,\"count\":2,\"offset\":0,\"next\":\"https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/actions/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/execution/collectLabelElements?limit=2&offset=2\"},\"cacheId\":\"1d1eed31e2e67db6e8f9d3a878ee2e7f\"}",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "Expires": "0",
+            "X-XSS-Protection": "0",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "ab08d2c8-655a-4591-9571-7d9185194be5",
+    "persistent": true,
+    "insertionIndex": 10
+}

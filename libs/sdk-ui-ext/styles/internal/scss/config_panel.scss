@@ -1,0 +1,402 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "variables.scss";
+@use "@gooddata/sdk-ui-kit/styles/scss/colorPicker";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$color-picker-item-size: 20px;
+$color-picker-spacing: 5px;
+
+.gd-color-drop-down {
+    margin: $color-picker-spacing;
+}
+
+.gd-color-config-list-item {
+    &.is-active {
+        color: kit-variables.$is-focused-color;
+        background: kit-variables.$is-focused-background;
+    }
+
+    &.is-active,
+    &:hover {
+        .gd-color-config-item-sample::before {
+            opacity: 1;
+        }
+    }
+
+    &.is-disabled:hover {
+        background: unset;
+        color: unset;
+        cursor: unset;
+
+        .gd-color-config-item-sample::before {
+            opacity: 0;
+        }
+    }
+}
+
+.gd-color-config-item-sample {
+    flex: 0 0 auto;
+    width: $color-picker-item-size;
+    height: $color-picker-item-size;
+    margin-right: 10px;
+    text-align: center;
+    line-height: $color-picker-item-size;
+
+    &::before {
+        width: 100%;
+        height: 100%;
+        color: kit-variables.$gd-color-white;
+        opacity: 0;
+        transition: opacity 0.2s;
+        font-size: 16px;
+    }
+}
+
+.gd-color-drop-down-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 160px;
+}
+
+.gd-color-drop-down-list-large {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: scroll;
+    width: 160px;
+    height: 138px;
+}
+
+.gd-color-list-item {
+    width: $color-picker-item-size;
+    height: $color-picker-item-size;
+    margin: $color-picker-spacing;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.gd-color-list-item-active {
+        border-color: kit-variables.$gd-color-white;
+        box-shadow: 0 0 1px 1px color.adjust(kit-variables.$default-gd-color-dark, $alpha: -0.85);
+        transform: scale(1.1);
+    }
+}
+
+.gd-color-drop-down-custom-section {
+    position: relative;
+    display: flex;
+    margin: 0 $color-picker-spacing;
+    padding: 2 * $color-picker-spacing 0 0;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: $color-picker-spacing;
+        right: 0;
+        left: 0;
+        height: 0;
+        border-top: 1px solid kit-variables.$gd-border-color;
+    }
+
+    .gd-button-link {
+        justify-content: center;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        text-decoration: none;
+    }
+}
+
+.gd-color-reset-colors-section {
+    overflow: hidden;
+    transition: all 0.4s;
+
+    @extend .gd-color-drop-down-custom-section;
+
+    &.disabled {
+        height: 0;
+        padding-top: 0;
+    }
+
+    .gd-button-link {
+        font-size: 12px;
+    }
+}
+
+.gd-color-unsupported {
+    padding: 20px 10px;
+    font-size: 12.5px;
+    line-height: 15px;
+    text-align: center;
+    color: kit-variables.$gd-color-text-dimmed;
+}
+
+.gd-canvas-section.adi-bucket-configuration {
+    padding: 10px 12px;
+
+    .adi-properties-dropdown-container {
+        margin: -8px auto;
+    }
+
+    .input-checkbox-label {
+        margin-top: 5px;
+        margin-bottom: -2px;
+    }
+}
+
+.bubble.continuous-line-tooltip {
+    max-width: 341px;
+}
+
+.gd-interactions-section.adi-bucket-configuration {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.gd-interactions-section__control-with-tooltip {
+    display: flex;
+    align-items: center;
+
+    + .gd-interactions-section__control-with-tooltip {
+        margin-top: 10px;
+    }
+}
+
+.gd-interactions-section__question-mark {
+    color: kit-variables.$gd-color-state-blank;
+}
+
+.gd-table-canvas-section.adi-bucket-configuration {
+    padding: 0;
+}
+
+.gd-forecast-section.adi-bucket-configuration {
+    .gd-slicedForecast-message {
+        margin-top: 15px;
+    }
+}
+
+.gd-advanced-section.adi-bucket-configuration {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 0 15px 0;
+    align-items: center;
+
+    .gd-chart-override-value-preview {
+        width: 100%;
+        max-height: 150px;
+        overflow: hidden;
+        border-bottom: 1px solid kit-variables.$gd-border-color;
+        color: kit-variables.$navigation-bg;
+    }
+
+    .gd-chart-override-value {
+        width: calc(100% - 26px);
+        padding: 13px;
+        margin: 0;
+        background: color.adjust(kit-variables.$default-gd-color-white, $alpha: 0.6);
+        font-size: 11px;
+        white-space: pre-wrap;
+    }
+
+    .fade-out {
+        mask-image: linear-gradient(
+            to bottom,
+            black 50%,
+            transparent 90%,
+            transparent calc(100% - 1px),
+            black 90%
+        );
+    }
+
+    .gd-chart-override-no-value {
+        color: kit-variables.$gd-color-state-blank;
+        font-size: 12px;
+        padding-top: 14px;
+    }
+
+    .gd-chart-override-link {
+        font-size: 12px;
+    }
+}
+
+.gd-icon-code {
+    background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/icon-code.svg");
+}
+
+.gd-advanced-customization-dialog {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: inherit;
+    font-size: 12px;
+
+    .gd-advanced-customization-dialog__header {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 12px;
+        background-color: kit-variables.$is-focused-background;
+        border-bottom: 1px solid kit-variables.$gd-border-color;
+
+        & > span {
+            color: kit-variables.$gd-color-state-blank;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .gd-button-link {
+            width: 12px;
+            height: 19px;
+            line-height: 12px;
+
+            &::before {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .gd-advanced-customization-dialog__content {
+        display: flex;
+    }
+
+    .gd-advanced-customization-dialog__main {
+        width: 400px;
+        padding: 10px;
+    }
+
+    .gd-advanced-customization-dialog__snippets {
+        width: 200px;
+        max-height: 320px;
+        overflow: auto;
+        border-left: 1px solid kit-variables.$gd-border-color;
+        color: kit-variables.$gd-color-text;
+        padding: 0 5px;
+    }
+
+    .gd-advanced-customization-dialog__snippets--header {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 10px 5px;
+        color: kit-variables.$gd-color-state-blank;
+        font-size: 10px;
+
+        .gd-advanced-customization-dialog__snippets--header__line {
+            flex-grow: 1;
+            border-top: 1px solid kit-variables.$gd-border-color;
+        }
+    }
+
+    .gd-advanced-customization-dialog__snippet--header {
+        text-transform: uppercase;
+        color: kit-variables.$gd-color-state-blank;
+        padding: 5px;
+        font-size: 11px;
+    }
+
+    .gd-advanced-customization-dialog__snippet {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 12px;
+
+        .gd-advanced-customization-dialog__snippet__tooltip__trigger {
+            display: none;
+        }
+
+        &:hover {
+            background: kit-variables.$is-focused-background;
+
+            .gd-advanced-customization-dialog__snippet__tooltip__trigger {
+                display: block;
+            }
+        }
+    }
+
+    .gd-advanced-customization-dialog__footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-top: 1px solid kit-variables.$gd-border-color;
+        text-align: right;
+    }
+}
+
+.gd-advanced-customization-dialog__snippet__tooltip {
+    padding: 10px;
+}
+
+.gd-advanced-customization-dialog__snippet__tooltip__header {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.gd-advanced-customization-dialog__snippet__tooltip__body {
+    font-size: 12px;
+    color: kit-variables.$gd-color-link;
+}
+
+@mixin code-mirror-icon--error {
+    background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/icon-error.svg");
+    background-size: 12px 12px;
+}
+
+// CodeMirror 6 theme
+.gd-advanced-customization-dialog__theme {
+    display: flex;
+    height: 100%;
+
+    .cm-editor {
+        flex: 1;
+        max-height: 300px;
+        border-radius: 3px;
+        border: 1px solid kit-variables.$gd-border-color;
+        background: kit-variables.$gd-color-white;
+
+        .cm-content {
+            padding: 0 10px;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .cm-gutters {
+            background: #fff;
+            border-right: 1px solid kit-variables.$gd-border-color;
+        }
+
+        .cm-line {
+            padding: 0 10px;
+        }
+    }
+
+    .cm-tooltip {
+        z-index: 6000;
+        background: white;
+        padding: 10px;
+        font-size: 12px;
+        border-radius: 3px;
+        color: kit-variables.$gd-color-text;
+        border: 1px solid kit-variables.$gd-border-color;
+        box-shadow: 0 2px 4px color.adjust(kit-variables.$default-gd-color-dark, $alpha: 0.1);
+    }
+
+    .cm-tooltip-lint {
+        .cm-lintRange-error {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23e54d42' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+            background-position: left center;
+            background-repeat: no-repeat;
+            padding-left: 20px;
+        }
+    }
+}

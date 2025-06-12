@@ -1,0 +1,54 @@
+// (C) 2007-2018 GoodData Corporation
+
+.animation-fadeIn,
+.animation-fadeOut,
+.animation-bounce {
+    animation-duration: 0.6s;
+}
+
+.animation-fadeIn,
+.animation-fadeOut {
+    animation-name: animation-fade;
+}
+
+.animation-fadeOut {
+    animation-direction: reverse;
+}
+
+.animation-bounce {
+    animation-name: animation-bounce;
+}
+
+.animation-slow {
+    animation-duration: 1s;
+}
+
+.animation-fast {
+    animation-duration: 0.4s;
+}
+
+@keyframes animation-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes animation-bounce {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

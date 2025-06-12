@@ -1,0 +1,69 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ Rush ~ Publish version
+on:
+    workflow_call:
+        inputs:
+            source-branch:
+                required: true
+                description: "The name of the source branch"
+                type: string
+            release-tag:
+                required: true
+                description: "The release NPM tag e.g. prerelease, latest, hotfix ..."
+                type: string
+
+jobs:
+    publish-version:
+        runs-on:
+            group: infra1-runners-arc
+            labels: runners-rxa-xlarge
+        permissions:
+            contents: read
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                ref: ${{inputs.source-branch}}
+            - name: Add repository to git safe directories to avoid dubious ownership issue
+              run: git config --global --add safe.directory $GITHUB_WORKSPACE
+            - name: Git config user
+              uses: snow-actions/git-config-user@v1.0.0
+              with:
+                name: git-action
+                email: git-action@gooddata.com
+            - name: Setup rush
+              env:
+                NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              uses: ./.github/actions/rush/set-up-rush
+            - name: Rush build
+              run: |
+                  node common/scripts/install-run-rush.js build
+            - name: Rush publish dry run
+              run: |
+                  node common/scripts/install-run-rush.js publish --include-all --version-policy sdk --set-access-level public
+            - name: Rush publish
+              uses: nick-fields/retry@v3
+              env:
+                  NPM_PUBLISH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+                  TAG: ${{ inputs.release-tag }}
+              with:
+                  timeout_minutes: 30
+                  max_attempts: 3
+                  retry_on: error
+                  retry_wait_seconds: 10
+                  command: |
+                      node common/scripts/install-run-rush.js publish --publish --include-all --version-policy sdk --tag $TAG --set-access-level public
+
+    notify-publish-failed-to-slack:
+        if: ${{ !cancelled() && needs.publish-version.result  == 'failure' }}
+        needs: publish-version
+        runs-on: [ubuntu-latest]
+        steps:
+            - name: Inform to slack when publish workflows failed
+              uses: slackapi/slack-github-action@v1.25.0
+              with:
+                  channel-id: "#javascript-notifications"
+                  slack-message: ":warning: Publish to NPM in *gooddata-ui-sdk* encountered an error during execution. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>* for further information."
+              env:
+                  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

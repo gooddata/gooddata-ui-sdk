@@ -1,0 +1,82 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/324"
+                },
+                "localIdentifier": "a1"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "alias": "Primary measure - period ago",
+                "localIdentifier": "m1.pp1",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "m1",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m1",
+                "alias": "Primary measure",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279"
+                        },
+                        "filters": [
+                            {
+                                "positiveAttributeFilter": {
+                                    "displayForm": {
+                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                    },
+                                    "in": {
+                                        "values": [
+                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["a1"]
+        }
+    ],
+    "filters": [
+        {
+            "absoluteDateFilter": {
+                "dataSet": {
+                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330"
+                },
+                "from": "2011-01-01",
+                "to": "2011-12-31"
+            }
+        }
+    ],
+    "sortBy": []
+}

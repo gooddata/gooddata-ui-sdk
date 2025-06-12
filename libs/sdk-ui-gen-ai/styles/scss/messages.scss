@@ -1,0 +1,321 @@
+// (C) 2024-2025 GoodData Corporation
+
+@use "sass:color";
+@use "variables" as variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
+@use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins" as typo-mixins;
+
+.gd-gen-ai-chat__messages {
+    flex: 1;
+    overflow-y: auto;
+
+    // Use padding on the right to prevent the scrollbar from overlapping the content
+    margin: variables.$y-spacing 0 0 variables.$x-spacing;
+    padding-right: variables.$x-spacing;
+}
+
+.gd-gen-ai-chat__messages__scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.gd-gen-ai-chat__messages__message {
+    display: flex;
+}
+
+.gd-gen-ai-chat__messages__message__contents_wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-grow: 1;
+}
+
+.gd-gen-ai-chat__messages__feedback {
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+
+    svg {
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    & path {
+        fill: kit-variables.$gd-color-link;
+    }
+
+    &:focus-within {
+        svg {
+            opacity: 1;
+        }
+    }
+}
+
+.gd-gen-ai-chat__messages__message:last-child .gd-gen-ai-chat__messages__feedback,
+.gd-gen-ai-chat__messages__message:hover .gd-gen-ai-chat__messages__feedback,
+.gd-gen-ai-chat__messages__feedback--assigned {
+    svg {
+        opacity: 1;
+    }
+}
+
+.gd-gen-ai-chat__messages__feedback__button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline-offset: 3px;
+    border-radius: 2px;
+
+    & path {
+        opacity: 0.8;
+        transition: opacity 0.2s, fill 0.2s;
+    }
+
+    &:hover path {
+        fill: kit-variables.$gd-palette-primary-base;
+        opacity: 1;
+    }
+
+    &--positive path,
+    &--positive:hover path {
+        fill: kit-variables.$gd-palette-primary-base;
+    }
+
+    &--negative path,
+    &--negative:hover path {
+        fill: kit-variables.$gd-palette-primary-base;
+    }
+
+    &:focus,
+    &:focus-visible {
+        outline: 1px solid kit-variables.$gd-palette-primary-base;
+    }
+}
+
+.gd-gen-ai-chat__messages__message--user {
+    .gd-gen-ai-chat__messages__content--text {
+        $tail-height: 7px;
+        $tail-width: 10px;
+
+        max-width: 80%;
+        background-color: kit-variables.$gd-palette-primary-base;
+        border-radius: 3px 3px 0 3px;
+        padding: 4.5px 12px;
+        position: relative;
+        align-self: flex-end;
+        margin-bottom: 15px;
+        animation: gd-gen-ai-message-in 0.3s ease-out;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: -$tail-height;
+            right: 0;
+            border: 0 solid transparent;
+            border-top: $tail-height solid kit-variables.$gd-palette-primary-base;
+            border-left-width: $tail-width;
+            width: 0;
+            height: 0;
+        }
+
+        & p {
+            color: kit-variables.$gd-color-white;
+        }
+    }
+
+    &.gd-gen-ai-chat__messages__message--cancelled .gd-gen-ai-chat__messages__content--text {
+        color: kit-variables.$gd-color-white;
+        background-color: kit-variables.$gd-palette-primary-base-t80;
+    }
+
+    &.gd-gen-ai-chat__messages__message--cancelled .gd-gen-ai-chat__messages__content--text::after {
+        border-top-color: kit-variables.$gd-palette-primary-base-t80;
+    }
+}
+
+.gd-gen-ai-chat__messages__message--assistant {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 19px;
+
+    &:last-child {
+        margin-bottom: 40px;
+    }
+}
+
+.gd-gen-ai-chat__messages__contents {
+    flex: 1;
+    padding: 4.5px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    // UI kit links have white-space nowrap, which is not desired in the chat
+    & .gd-hyperlink,
+    & .gd-hyperlink-text {
+        white-space: normal;
+    }
+
+    // List contents should be styled same as a pargraph
+    & li {
+        @include typo-mixins.gd-paragraph;
+    }
+}
+
+.gd-gen-ai-chat__messages__content--error {
+    flex: unset;
+    padding: 4.5px 12px;
+    border-radius: 3px;
+    background: kit-variables.$gd-palette-error-dimmed;
+    color: kit-variables.$gd-palette-error-base;
+}
+
+.gd-gen-ai-chat__messages__message--cancelled .gd-gen-ai-chat__messages__content {
+    &,
+    & p,
+    & a,
+    & a:hover,
+    & a:active,
+    & a:visited {
+        color: kit-variables.$gd-color-disabled;
+    }
+}
+
+.gd-gen-ai-chat__loading {
+    animation: gd-gen-ai-message-loading 3s infinite linear;
+}
+
+.gd-gen-ai-chat__visualization {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid kit-variables.$is-focused-background;
+    background: kit-variables.$gd-color-white;
+    border-radius: 8px;
+    position: relative;
+
+    &__wrapper {
+        height: 250px;
+
+        &--headline {
+            height: auto;
+            min-height: 50px;
+        }
+    }
+
+    &__title {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    &__suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        gap: 10px;
+
+        .gd-button + .gd-button {
+            margin-left: 0;
+        }
+    }
+
+    &__save-dialog {
+        width: 565px;
+
+        .gd-dialog-content p {
+            margin-bottom: 1em;
+        }
+    }
+
+    &__save {
+        display: flex;
+        position: absolute;
+        top: 0.5em;
+        right: 0.5em;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 32px;
+        height: 32px;
+        margin-right: 0;
+        padding: 0;
+
+        .gd-button-text {
+            opacity: 1;
+            transition: opacity 0.25s ease-in-out;
+        }
+    }
+
+    &__save.hidden:not(:focus):not(:focus-visible) {
+        border: transparent;
+        background: transparent;
+        box-shadow: none;
+
+        .gd-button-text {
+            opacity: 0;
+        }
+    }
+}
+
+.gd-gen-ai-chat__messages__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &__h1--accent {
+        color: kit-variables.$gd-palette-primary-base;
+    }
+
+    & .gd-button {
+        margin-top: 2em;
+
+        & + .gd-button {
+            margin-top: 1em;
+            margin-left: 0;
+        }
+    }
+
+    & .gd-button-text {
+        display: flex;
+        align-items: center;
+        line-height: 20px;
+        gap: 10px;
+    }
+
+    &__icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.gd-gen-ai-chat__messages__content .gd-hyperlink {
+    display: inline;
+}
+
+@keyframes gd-gen-ai-message-in {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gd-gen-ai-message-loading {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
+}

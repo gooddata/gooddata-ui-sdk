@@ -1,0 +1,29 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "sample_xirr", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_sample_xirr"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "attribute" }
+        ],
+        "filters": [],
+        "identifier": "Xirr.74456ce90909b92d28a01949e02ac574",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "Xirr - only measure",
+        "uri": "Xirr.74456ce90909b92d28a01949e02ac574",
+        "visualizationUrl": "local:xirr"
+    }
+}

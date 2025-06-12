@@ -1,0 +1,53 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            { "items": [], "localIdentifier": "segment" }
+        ],
+        "filters": [
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": { "identifier": "label.f_product.product.name", "type": "displayForm" },
+                    "in": { "values": ["CompuSci"] }
+                }
+            }
+        ],
+        "identifier": "Treemap.f92fe7048e24a76694640e2707aea183",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "Treemap - single measure and viewBy filtered to one element",
+        "uri": "Treemap.f92fe7048e24a76694640e2707aea183",
+        "visualizationUrl": "local:treemap"
+    }
+}

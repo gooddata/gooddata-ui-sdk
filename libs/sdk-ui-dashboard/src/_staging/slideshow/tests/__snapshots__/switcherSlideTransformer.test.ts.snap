@@ -1,0 +1,110 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SwitcherSlideTransformer > switcher 1`] = `
+[
+  {
+    "items": [
+      {
+        "size": {
+          "lg": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+          "md": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+          "sm": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+          "xl": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+          "xs": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "size": {
+            "xl": {
+              "gridHeight": 4,
+              "gridWidth": 4,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "drills": [],
+            "identifier": "test1",
+            "insight": {
+              "identifier": "test1",
+              "type": "insight",
+            },
+            "ref": {
+              "identifier": "test1",
+              "type": "insight",
+            },
+            "type": "insight",
+          },
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+  {
+    "items": [
+      {
+        "size": {
+          "lg": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+          "md": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+          "sm": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+          "xl": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+          "xs": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "size": {
+            "xl": {
+              "gridHeight": 4,
+              "gridWidth": 4,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "drills": [],
+            "identifier": "test2",
+            "insight": {
+              "identifier": "test2",
+              "type": "insight",
+            },
+            "ref": {
+              "identifier": "test2",
+              "type": "insight",
+            },
+            "type": "insight",
+          },
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+]
+`;

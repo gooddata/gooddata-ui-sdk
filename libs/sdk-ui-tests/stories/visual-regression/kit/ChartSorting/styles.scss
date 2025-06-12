@@ -1,0 +1,10 @@
+// (C) 2022 GoodData Corporation
+
+.gd-sort-charting-dropdown {
+    *,
+    ::before,
+    ::after {
+        // stylelint-disable-next-line declaration-no-important
+        transition: none !important;
+    }
+}

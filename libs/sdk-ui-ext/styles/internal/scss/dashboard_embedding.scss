@@ -1,0 +1,52 @@
+// (C) 2007-2020 GoodData Corporation
+@use "sass:math";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.insight-view-loader {
+    flex: 0 1 auto;
+    height: 100%;
+}
+
+.insight-view-visualization {
+    flex: 1 1 auto;
+    height: 100%;
+}
+
+.insight-view-container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+    font-family: kit-variables.$gd-font-primary;
+    background-color: kit-variables.$gd-color-white;
+}
+
+.insight-title-outer {
+    position: relative;
+    z-index: 1;
+    height: (variables.$insight-title-lineHeight + variables.$insight-title-padding-vertical) * 2 + 2; // relate SD-956: please update HEADLINE_OUTER_HEIGHT in widgetHeightUtil.ts when height is changed
+    margin: 10px 0;
+    line-height: (variables.$insight-title-lineHeight + variables.$insight-title-padding-vertical) * 2;
+
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .visualization & {
+        margin-bottom: 10px;
+    }
+}
+
+.insight-title {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-height: (variables.$insight-title-lineHeight + variables.$insight-title-padding-vertical) * 2;
+    font-size: 17px;
+    line-height: variables.$insight-title-lineHeight;
+    vertical-align: middle;
+    text-align: variables.$gd-dashboards-content-widget-title-textAlign;
+    color: variables.$gd-dashboards-content-widget-title-color;
+}

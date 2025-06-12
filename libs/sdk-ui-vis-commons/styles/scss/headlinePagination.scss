@@ -1,0 +1,185 @@
+// (C) 2021-2025 GoodData Corporation
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+
+$legend-paging-background: #eee;
+
+.headline-compare-section {
+    &.headline-paginated-compare-section {
+        .pagination {
+            position: absolute;
+            top: 8px;
+            width: 22px;
+            height: 22px;
+
+            &.first-item {
+                left: 0;
+            }
+
+            &.second-item {
+                right: 0;
+            }
+        }
+
+        button.first-item,
+        button.second-item {
+            position: absolute;
+            top: 8px;
+            width: 22px;
+            height: 22px;
+            padding: 0;
+            border-radius: 50%;
+
+            &::before {
+                font-size: 11px;
+            }
+
+            @include mixins.active-states-and-self {
+                text-decoration: none;
+                background-color: var(--gd-palette-complementary-2-from-theme, $legend-paging-background);
+
+                // stylelint-disable-next-line max-nesting-depth
+                &::before {
+                    color: var(--gd-palette-complementary-7-from-theme, kit-variables.$default-gd-color-dark);
+                }
+            }
+
+            &:hover {
+                // stylelint-disable-next-line max-nesting-depth
+                &::before {
+                    color: kit-variables.$gd-palette-primary-base;
+                }
+            }
+
+            &.is-disabled {
+                cursor: default;
+                // stylelint-disable-next-line max-nesting-depth
+                @include mixins.active-states-and-self {
+                    background-color: var(
+                        --gd-palette-complementary-1-from-theme,
+                        color.adjust($legend-paging-background, $alpha: -0.5)
+                    );
+
+                    // stylelint-disable-next-line max-nesting-depth
+                    &::before {
+                        color: kit-variables.$gd-color-disabled;
+                    }
+                }
+            }
+        }
+    }
+
+    .kpi-pop-section-item {
+        overflow: hidden;
+        width: 50%;
+        margin: 0;
+        padding: 0 15px;
+        white-space: nowrap;
+        color: var(
+            --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
+            kit-variables.$gd-color-state-blank
+        );
+
+        &:first-child {
+            padding-left: 0;
+            text-align: right;
+        }
+
+        &:last-child {
+            flex-shrink: 1;
+            padding-right: 0;
+            text-align: left;
+        }
+
+        > dt,
+        > dd {
+            display: block;
+            line-height: 16px;
+        }
+
+        > dt {
+            overflow: hidden;
+            height: 20px;
+            margin-bottom: 0.25em;
+            font-size: 17px;
+            font-weight: bold;
+            line-height: 20px;
+        }
+
+        > dd {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+    }
+
+    &.gd-small,
+    &.gd-shortened-label {
+        display: flex;
+        flex-flow: column-reverse wrap;
+
+        .headline-compare-section-item {
+            width: 100%;
+        }
+
+        .kpi-pop-section-item {
+            width: 100%;
+
+            &.kpi-pop-change {
+                padding: 10px 0 0;
+                text-align: center;
+            }
+
+            &.kpi-pop-period {
+                border-left: 0;
+                border-bottom: 1px dashed
+                    var(
+                        --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor-from-theme,
+                        var(
+                            --gd-palette-complementary-3-from-theme,
+                            color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5)
+                        )
+                    );
+                padding: 0 0 10px;
+                text-align: center;
+            }
+
+            & > dd {
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .headline-tertiary-item,
+        .headline-compare-item:nth-child(1) {
+            padding: 10px 0 0;
+            text-align: center;
+        }
+
+        .headline-secondary-item,
+        .headline-compare-item:nth-child(2) {
+            border-left: 0;
+            border-bottom: 1px dashed
+                var(
+                    --gd-kpi-secondaryInfoColor,
+                    var(
+                        --gd-palette-complementary-3-from-theme,
+                        color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5)
+                    )
+                );
+            padding: 0 0 10px;
+            text-align: center;
+        }
+    }
+
+    &.gd-shortened-label,
+    &.gd-medium {
+        .headline-compare-section-item .headline-title-wrapper {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+}

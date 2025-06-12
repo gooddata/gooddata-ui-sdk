@@ -1,0 +1,215 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`fixInsightLegacyElementUris > color mapping > should handle color mapping items with null ids (RAIL-3983) 1`] = `
+[
+  {
+    "color": {
+      "type": "guid",
+      "value": "0",
+    },
+    "id": "CZ",
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "1",
+    },
+    "id": "Czech.Republic",
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "foo",
+    },
+    "id": null,
+  },
+]
+`;
+
+exports[`fixInsightLegacyElementUris > color mapping > should strip fake uris and keep only label text values 1`] = `
+[
+  {
+    "color": {
+      "type": "guid",
+      "value": "0",
+    },
+    "id": "CZ",
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "1",
+    },
+    "id": "Czech.Republic",
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "2",
+    },
+    "id": "Czech Republic",
+  },
+  {
+    "color": {
+      "type": "guid",
+      "value": "3",
+    },
+    "id": "CZ",
+  },
+]
+`;
+
+exports[`fixInsightLegacyElementUris > column widths > should strip fake uris and keep only label text values 1`] = `
+[
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "element": "CZ",
+          },
+        },
+      ],
+    },
+  },
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "element": "Czech.Republic",
+          },
+        },
+      ],
+    },
+  },
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "element": "Czech Republic",
+          },
+        },
+      ],
+    },
+  },
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "element": "CZ",
+          },
+        },
+      ],
+    },
+  },
+]
+`;
+
+exports[`fixInsightLegacyElementUris > sort items > should strip fake uris and keep only label text values 1`] = `
+[
+  {
+    "measureSortItem": {
+      "direction": "asc",
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "attributeIdentifier": "localAttributeId",
+            "element": "CZ",
+          },
+        },
+      ],
+    },
+  },
+  {
+    "measureSortItem": {
+      "direction": "asc",
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "attributeIdentifier": "localAttributeId",
+            "element": "Czech.Republic",
+          },
+        },
+      ],
+    },
+  },
+  {
+    "measureSortItem": {
+      "direction": "asc",
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "attributeIdentifier": "localAttributeId",
+            "element": "Czech Republic",
+          },
+        },
+      ],
+    },
+  },
+  {
+    "measureSortItem": {
+      "direction": "asc",
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "attributeIdentifier": "localAttributeId",
+            "element": "CZ",
+          },
+        },
+      ],
+    },
+  },
+]
+`;
+
+exports[`fixWidgetLegacyElementUris > column widths > should strip fake uris and keep only label text values 1`] = `
+[
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "element": "CZ",
+          },
+        },
+      ],
+    },
+  },
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "element": "Czech.Republic",
+          },
+        },
+      ],
+    },
+  },
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "element": "Czech Republic",
+          },
+        },
+      ],
+    },
+  },
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
+            "element": "CZ",
+          },
+        },
+      ],
+    },
+  },
+]
+`;

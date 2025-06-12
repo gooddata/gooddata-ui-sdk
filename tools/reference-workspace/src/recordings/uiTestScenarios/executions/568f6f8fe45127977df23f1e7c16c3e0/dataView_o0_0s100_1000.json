@@ -1,0 +1,32 @@
+{
+    "count": [2, 2],
+    "data": [
+        [28017096.42, 88608360.12],
+        [10542759.65, 27767993.8]
+    ],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } }
+            ]
+        ],
+        [
+            [
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "totalHeaderItem": { "name": "sum", "type": "SUM" } },
+                { "totalHeaderItem": { "name": "med", "type": "MED" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [2, 2],
+    "totals": [
+        [],
+        [
+            [116625456.54, 58312728.27],
+            [null, 19155376.725]
+        ]
+    ]
+}

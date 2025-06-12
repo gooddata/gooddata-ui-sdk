@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`visualisation switcher customizer > visualisation switcher rendering mode > should render with decorator 1`] = `"<div>Switcher Decorator</div>"`;
+
+exports[`visualisation switcher customizer > visualisation switcher rendering mode > should render with default 1`] = `"<div>Switcher</div>"`;
+
+exports[`visualisation switcher customizer > visualisation switcher rendering mode > should render with provider 1`] = `"<div>Switcher Provider</div>"`;
+
+exports[`visualisation switcher customizer > visualisation switcher toolbar rendering mode > should render with decorator 1`] = `"<div>Toolbar Decorator</div>"`;
+
+exports[`visualisation switcher customizer > visualisation switcher toolbar rendering mode > should render with default 1`] = `"<div>Toolbar</div>"`;
+
+exports[`visualisation switcher customizer > visualisation switcher toolbar rendering mode > should render with provider 1`] = `"<div>Toolbar Provider</div>"`;

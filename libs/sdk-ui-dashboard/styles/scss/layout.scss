@@ -1,0 +1,513 @@
+// (C) 2007-2025 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo";
+@use "variables";
+@use "zIndexes";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+
+$gd-dashboards-section-title-color: var(--gd-dashboards-section-title-color, kit-variables.$gd-color-text);
+$gd-dashboards-section-title-lineColor: var(
+    --gd-dashboards-section-title-lineColor,
+    kit-variables.$gd-border-color
+);
+$gd-dashboards-section-description-color: var(
+    --gd-dashboards-section-description-color,
+    kit-variables.$gd-color-state-blank
+);
+
+.gd-fluidlayout-container {
+    width: 100%;
+
+    .visualization {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+    }
+
+    .dash-item {
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
+        min-height: inherit;
+        flex-direction: column;
+    }
+
+    &.is-resizing {
+        cursor: col-resize;
+    }
+
+    &.is-row-resizing {
+        cursor: row-resize;
+    }
+}
+
+.gd-fluidlayout-layout {
+    width: 100%;
+}
+
+.gd-fluidlayout-column-container {
+    width: 100%;
+    height: 100%;
+
+    @media #{kit-variables.$xsmall-only} {
+        flex-direction: column;
+
+        &::after {
+            content: "";
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            left: 10px;
+            height: 0;
+            border-bottom: 1px dashed kit-variables.$gd-color-disabled;
+        }
+
+        &.last::after {
+            display: none;
+        }
+    }
+}
+
+.gd-fluidlayout-column-container.custom-height {
+    .kpi {
+        min-height: 100%;
+    }
+
+    .gd-visualization-content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.gd-fluidlayout-row {
+    position: relative;
+}
+
+.gd-fluidlayout-row-debug {
+    background-color: #fff;
+
+    &:nth-of-type(even) {
+        color: #f2f2f2;
+    }
+}
+
+.gd-fluid-layout-row-header {
+    padding-right: 20px;
+    padding-left: 20px;
+    text-align: center;
+
+    .gd-fluid-layout-row-header-container {
+        margin-top: 16px;
+    }
+
+    @media #{kit-variables.$medium-up} {
+        padding-right: 0;
+        padding-left: 0;
+        text-align: left;
+    }
+
+    .gd-row-header-view {
+        .title {
+            padding: 3px 5px;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+
+        .description {
+            padding: 4px 5px 2px;
+        }
+    }
+
+    .gd-row-header-title-wrapper {
+        display: flex;
+
+        h2,
+        h3 {
+            color: $gd-dashboards-section-title-color;
+        }
+
+        &::before,
+        &::after {
+            content: "";
+            position: relative;
+            top: 16px;
+            flex: 1 1 auto;
+            height: 0;
+            border-top: 1px solid $gd-dashboards-section-title-lineColor;
+        }
+
+        &::before {
+            margin-right: 20px;
+        }
+
+        &::after {
+            margin-left: 20px;
+        }
+
+        @media #{kit-variables.$medium-up} {
+            &::before {
+                display: none;
+            }
+        }
+    }
+
+    .gd-row-header-description-wrapper {
+        overflow: hidden;
+    }
+
+    .title-align-center {
+        @media #{kit-variables.$medium-up} {
+            text-align: center;
+
+            &::before {
+                display: block;
+            }
+        }
+    }
+
+    .title-align-right {
+        @media #{kit-variables.$medium-up} {
+            text-align: right;
+
+            &::before {
+                display: block;
+            }
+
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+    .title,
+    .gd-row-header-view .description {
+        @media #{kit-variables.$medium-up} {
+            max-width: 95%;
+        }
+    }
+
+    .title {
+        @include typo-mixins.gd-heading-2;
+
+        flex: 0 1 auto;
+        overflow: hidden;
+        color: $gd-dashboards-section-title-color;
+    }
+
+    .description {
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        color: $gd-dashboards-section-description-color;
+
+        &.collapsible {
+            cursor: pointer;
+        }
+
+        &:hover {
+            .more-link {
+                color: kit-variables.$gd-color-link;
+            }
+
+            .underline {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .more-link {
+        display: inline-block;
+        color: kit-variables.$gd-color-state-blank;
+
+        &::before {
+            vertical-align: top;
+            margin-left: 0.5em;
+            margin-right: 0.1em;
+            font-family: kit-variables.$gd-font-indigo;
+        }
+
+        &.active::before {
+            content: "\E612";
+        }
+
+        &.passive::before {
+            content: "\E613";
+        }
+    }
+
+    .underline {
+        text-decoration: underline;
+    }
+
+    .gd-editable-label-container {
+        font-size: 0;
+    }
+
+    .gd-editable-label {
+        display: inline-block;
+        overflow: hidden;
+        width: auto;
+        max-height: inherit;
+        padding: variables.$item-headline-padding-vertical 4px 0;
+
+        @include mixins.active-states {
+            border-color: variables.$editable-label-border;
+        }
+
+        &.is-editing {
+            width: 100%;
+            border-color: variables.$editable-label-border;
+        }
+
+        &.title {
+            min-width: 0;
+        }
+
+        &.description {
+            margin-top: 2px;
+            font-size: 14px;
+
+            @media #{kit-variables.$medium-up} {
+                max-width: 95%;
+            }
+        }
+
+        .description.gd-paragraph {
+            height: 21px;
+            padding-top: 1px;
+        }
+
+        &.placeholder {
+            color: kit-variables.$gd-color-state-blank;
+        }
+    }
+
+    .gd-layout-row-description-richtext {
+        white-space: initial;
+    }
+
+    .gd-editable-label-richtext {
+        padding: 0 5px;
+        margin-top: 3px;
+        border: 1px solid transparent;
+
+        textarea {
+            padding: 0;
+            font-size: 14px;
+            line-height: 19px;
+            color: var(--gd-palette-complementary-7, #6d7680);
+
+            &::placeholder {
+                color: var(--gd-palette-complementary-6, #94a1ad);
+            }
+        }
+
+        @include mixins.active-states {
+            border-color: variables.$editable-label-border;
+        }
+
+        &.is-editing {
+            border-color: variables.$editable-label-border;
+        }
+
+        .gd-editable-label-richtext-empty {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 19px;
+        }
+    }
+}
+
+.gd-rich-text-content-view .gd-editable-label-richtext-empty {
+    color: var(--gd-palette-complementary-6, #94a1ad);
+}
+
+.gd-visualization-content {
+    &.relative {
+        // overwrite
+        // stylelint-disable-next-line declaration-no-important
+        position: relative !important;
+    }
+
+    &.absolute {
+        // overwrite
+        // stylelint-disable-next-line declaration-no-important
+        position: absolute !important;
+    }
+}
+
+.gd-fluidlayout-item-changed {
+    position: absolute;
+    z-index: zIndexes.$layout-fluidlayout-item-changed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+
+    &.none {
+        display: none;
+    }
+
+    &.added,
+    &.modified {
+        background: var(
+            --gd-dashboards-content-backgroundColor-from-theme,
+            var(--gd-palette-complementary-0-from-theme, rgba(255, 255, 255, 0.95))
+        );
+    }
+
+    .gd-fluidlayout-item-changed-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    &.small .gd-fluidlayout-item-changed-content {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        max-height: 100%;
+    }
+
+    .gd-fluidlayout-item-changed-icon {
+        display: flex;
+        align-items: center;
+
+        svg {
+            max-height: 100%;
+        }
+    }
+    &.small .gd-fluidlayout-item-changed-icon {
+        svg {
+            top: -4px;
+            position: relative;
+        }
+    }
+    &.big .gd-fluidlayout-item-changed-icon {
+        // stylelint-disable-next-line declaration-no-important
+        height: auto !important;
+    }
+
+    .gd-fluidlayout-item-changed-info {
+        display: block;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 19px;
+    }
+    .gd-button {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 19px;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+    }
+}
+
+// The rules are scoped inside a class that's added dynamically based upon a feature flag value.
+// When ff is removed, class name envelope can be removed.
+.gd-auto-resized-dashboard-descriptions {
+    .gd-fluid-layout-row-header {
+        .gd-editable-label {
+            @include mixins.active-states {
+                border-color: variables.$editable-label-border;
+                border-radius: 3px;
+            }
+
+            &.is-editing {
+                border-radius: 3px;
+            }
+        }
+
+        .gd-editable-label-richtext {
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    }
+}
+
+// ****** FLEXIBLE NESTED LAYOUT ******
+
+// The styles counts with 12 grid columns. The matching constant is defined in
+// src/_staging/dashboard/flexibleLayout/config.ts
+
+.gd-grid-layout {
+    flex-direction: column;
+
+    .gd-fluid-layout-row-header {
+        position: relative;
+
+        .gd-row-header-edit--nested {
+            .title {
+                @include typo-mixins.gd-heading-3;
+
+                color: $gd-dashboards-section-title-color;
+            }
+
+            .placeholder {
+                color: kit-variables.$gd-color-state-blank;
+            }
+        }
+    }
+
+    .gd-fluid-layout-row-header-container--with-headers {
+        margin-top: 16px;
+    }
+
+    .gd-dashboard-nested-layout-content:not(.is-dragging-widget) {
+        .gd-fluid-layout-row-header-container--no-headers {
+            margin-top: 0;
+        }
+    }
+
+    .gd-fluidlayout-column-container {
+        display: flex;
+    }
+}
+
+.gd-grid-layout__container--root {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 20px;
+    grid-auto-rows: min-content; // do not render empty row for potential next grid item (chrome weird behavior)
+    flex-grow: 1; // take the whole width of the page (parent flex container).
+}
+
+.gd-grid-layout__container--nested {
+    display: grid;
+    column-gap: 20px;
+}
+
+.gd-grid-layout__section {
+    display: grid;
+    grid-template-columns: subgrid;
+}
+
+.gd-grid-layout__item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+// generate classes for grid span from 1 to 12
+@for $i from 1 through 12 {
+    .gd-grid-layout__item--span-#{$i} {
+        grid-column: span #{$i};
+    }
+
+    .gd-grid-layout__container--nested--width-#{$i} {
+        grid-template-columns: repeat(#{$i}, 1fr);
+    }
+}
+
+.rich-text-tooltip {
+    // override overlay z-index defined in style element as overlay's zIndex prop is not exposed to Bubble
+    // stylelint-disable-next-line declaration-no-important
+    z-index: zIndexes.$dashboard-canvas-tooltip !important;
+}

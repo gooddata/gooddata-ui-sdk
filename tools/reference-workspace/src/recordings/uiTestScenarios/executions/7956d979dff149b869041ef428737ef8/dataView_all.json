@@ -1,0 +1,24 @@
+{
+    "count": [1, 6],
+    "data": [
+        [
+            0.2334215912000579, 0.1967571759269359, 0.33094142569776214, 0.0689560594966825,
+            0.08167906212425276, 0.08824468555430874
+        ]
+    ],
+    "headerItems": [
+        [[{ "measureHeaderItem": { "name": "Amount", "order": 0 } }]],
+        [
+            [
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } },
+                { "attributeHeaderItem": { "name": "Explorer", "uri": "Explorer" } },
+                { "attributeHeaderItem": { "name": "Grammar Plus", "uri": "Grammar Plus" } },
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [1, 6]
+}

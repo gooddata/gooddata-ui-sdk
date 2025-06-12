@@ -1,0 +1,650 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "Button/_mixins" as button-mixins;
+@use "Button/variables" as button-variables;
+@use "mixins";
+@use "variables";
+
+/* Basic button variants
+   ========================================================================== */
+
+/* disable max length */
+// stylelint-disable max-line-length
+
+.gd-button {
+    & + & {
+        margin-left: 10px;
+    }
+}
+
+.gd-button-primary,
+.gd-button-secondary {
+    @extend %btn;
+
+    box-shadow: button-variables.$button-box-shadow-x-offset button-variables.$button-shadow-darker;
+    color: button-variables.$button-normal-color;
+    background: button-variables.$button-normal-bg;
+    border-color: button-variables.$button-normal-border-color;
+
+    &:hover {
+        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker,
+            inset 0 -1px 0 0 button-variables.$button-normal-hover-box-shadow;
+        color: variables.$gd-color-text;
+        background: button-variables.$button-normal-hover-bg;
+        border-color: button-variables.$button-normal-hover-border-color;
+    }
+
+    &:focus,
+    &.is-focus {
+        box-shadow: button-variables.$button-box-shadow-focus-x-offset
+                button-variables.$button-normal-focus-shadow,
+            button-variables.$button-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
+            inset 0 -1px 0 0 button-variables.$button-normal-hover-box-shadow;
+        border-color: button-variables.$button-action-color-t25;
+    }
+
+    &:active,
+    &.is-active {
+        box-shadow: inset 0 1px 0 0 button-variables.$button-normal-active-shadow;
+        color: variables.$gd-color-text;
+        border-color: button-variables.$button-normal-active-border-color;
+
+        @include mixins.gradient-linear(
+            button-variables.$button-normal-active-gradient-top,
+            button-variables.$button-normal-active-gradient-bottom
+        );
+    }
+}
+
+.gd-button-positive,
+.gd-button-negative,
+.gd-button-action {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: variables.$gd-color-text-light;
+
+    &[class*="gd-icon-"],
+    .gd-button-icon {
+        color: variables.$gd-color-text-light;
+
+        &,
+        &:hover {
+            &::before,
+            &::after,
+            .gd-button-icon {
+                color: variables.$gd-color-text-light;
+            }
+        }
+    }
+}
+
+.gd-button-positive,
+.gd-button-negative,
+.gd-button-action,
+.gd-button-primary {
+    font-weight: 700;
+}
+
+.gd-button-positive {
+    box-shadow: button-variables.$button-box-shadow-x-offset button-variables.$button-shadow-lighter;
+    background: variables.$gd-palette-success-base;
+
+    @extend %btn;
+
+    &:hover {
+        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+        background: button-variables.$button-positive-hover-bg;
+    }
+
+    &:focus {
+        box-shadow: button-variables.$button-box-shadow-focus-x-offset
+                button-variables.$button-positive-focus-shadow,
+            button-variables.$button-positive-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
+            inset 0 -2px 0 0 rgba(0, 0, 0, 0.15);
+    }
+
+    &:active,
+    &.is-active {
+        box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
+
+        @include mixins.gradient-linear(
+            button-variables.$button-positive-active-gradient-top,
+            button-variables.$button-positive-active-gradient-bottom
+        );
+    }
+}
+
+.gd-button-negative {
+    box-shadow: button-variables.$button-box-shadow-x-offset button-variables.$button-shadow-lighter;
+    background: variables.$gd-palette-error-base;
+
+    @extend %btn;
+
+    &:hover {
+        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+        background: button-variables.$button-negative-hover-bg;
+    }
+
+    &:focus {
+        box-shadow: button-variables.$button-box-shadow-focus-x-offset
+                button-variables.$button-negative-focus-shadow,
+            button-variables.$button-negative-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
+            inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+    }
+
+    &:active,
+    &.is-active {
+        box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
+
+        @include mixins.gradient-linear(
+            button-variables.$button-negative-active-gradient-top,
+            button-variables.$button-negative-active-gradient-bottom
+        );
+    }
+}
+
+.gd-button-action {
+    box-shadow: button-variables.$button-action-box-shadow-x-offset button-variables.$button-shadow-lighter;
+    background: button-variables.$button-action-color;
+
+    @extend %btn;
+
+    &:hover {
+        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+        background: button-variables.$button-action-hover-bg;
+    }
+
+    &:focus {
+        box-shadow: button-variables.$button-box-shadow-focus-x-offset
+                button-variables.$button-action-focus-shadow,
+            button-variables.$button-action-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
+            inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+    }
+
+    &:active,
+    &.is-active {
+        box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
+
+        @include mixins.gradient-linear(
+            button-variables.$button-action-active-gradient-top,
+            button-variables.$button-action-active-gradient-bottom
+        );
+    }
+}
+
+/* Button links
+   ========================================================================== */
+
+.gd-button-link[class*="gd-icon-"] {
+    position: relative;
+    padding-left: 32px;
+}
+
+.gd-button-link[class*="gd-icon-"].gd-icon-right {
+    padding-left: 11px;
+    padding-right: 30px;
+
+    &::after {
+        position: absolute;
+        right: 5px;
+        font-size: 18px;
+    }
+}
+
+.gd-button-link {
+    box-sizing: border-box;
+    display: inline-flex;
+    padding: 0 6px;
+    border: 1px solid transparent;
+    font: 400 14px/30px variables.$gd-font-primary;
+    vertical-align: middle;
+    color: button-variables.$button-action-color;
+    background: none;
+    cursor: pointer;
+
+    @include mixins.transition(all, 0.25s, ease-in-out);
+
+    > span {
+        text-decoration: none;
+    }
+
+    &::before,
+    &::after {
+        position: absolute;
+        top: 50%;
+        width: 20px;
+        transform: translateY(-50%);
+        font-size: button-variables.$button-icon-width;
+        text-align: center;
+
+        @include mixins.transition(color, 0.25s, ease-in-out);
+    }
+
+    &::before,
+    &::after,
+    .gd-button-icon {
+        color: button-variables.$button-action-color;
+    }
+
+    &::before {
+        left: 6px;
+    }
+
+    &::after {
+        right: 6px;
+    }
+
+    .gd-button-icon {
+        width: 20px;
+        margin: 0 6px;
+        font-size: button-variables.$button-icon-width;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &:only-child {
+            position: relative;
+            left: -3px;
+        }
+    }
+
+    &:hover,
+    &:active,
+    &.is-active {
+        color: button-variables.$button-action-color-hover;
+
+        &::after,
+        &::before,
+        .gd-button-icon {
+            color: button-variables.$button-action-color;
+        }
+    }
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.is-active {
+        .gd-button-text {
+            text-decoration: underline;
+        }
+    }
+}
+
+.gd-button-link-dimmed {
+    @extend .gd-button-link;
+
+    color: button-variables.$button-normal-color;
+
+    &::before,
+    &::after,
+    .gd-button-icon {
+        color: variables.$gd-color-text-dimmed;
+    }
+
+    &.is-active,
+    &:hover,
+    &:focus,
+    &:active {
+        color: var(--gd-palette-complementary-8-from-theme, variables.$default-gd-color-dark);
+    }
+
+    .gd-button-text {
+        text-decoration: underline;
+    }
+}
+
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"] {
+    width: 31px;
+    height: 29px;
+    line-height: 27px;
+
+    @extend .gd-button-primary;
+
+    @include mixins.active-states-and-self {
+        border: 0;
+        box-shadow: none;
+        background: none;
+        padding-left: 0;
+    }
+
+    &.gd-button-small::before {
+        font-size: button-variables.$button-small-icon-width;
+    }
+
+    &::before,
+    .gd-button-icon {
+        color: variables.$gd-color-link;
+    }
+
+    &:active {
+        &::before,
+        .gd-button-icon {
+            color: button-variables.$button-action-hover-bg;
+        }
+    }
+
+    &:hover {
+        &::before,
+        .gd-button-icon {
+            color: button-variables.$button-action-color;
+        }
+    }
+
+    &.disabled {
+        @include mixins.active-states-and-self {
+            &::before,
+            .gd-button-icon {
+                color: variables.$gd-color-disabled;
+            }
+        }
+    }
+}
+
+:not(button) {
+    &.gd-button-link,
+    &.gd-button-link-dimmed {
+        line-height: 0.8;
+    }
+}
+
+.button-dropdown {
+    font-weight: 400;
+
+    &:not(.customizable) {
+        border-radius: 3px;
+        text-transform: "none";
+    }
+
+    &::after,
+    &::before,
+    .gd-button-icon {
+        color: variables.$gd-color-state-blank;
+    }
+
+    &:focus,
+    &:hover,
+    &:active,
+    &.is-active {
+        &::after,
+        &::before,
+        .gd-button-icon {
+            color: variables.$gd-color-link;
+        }
+    }
+}
+
+/* Button sizes
+   ========================================================================== */
+
+.gd-button-small {
+    height: 27px;
+    padding: 0 11px;
+    line-height: 25px;
+    font-size: 12px;
+
+    &[class*="gd-icon-"] {
+        padding-left: 32px;
+
+        &::before,
+        &::after {
+            width: 18px;
+            font-size: 15px;
+
+            @include mixins.transition(color, 0.25s, ease-in-out);
+        }
+
+        &::before {
+            left: 9px;
+        }
+
+        &::after {
+            right: 7px;
+        }
+
+        &.gd-button-icon-only {
+            height: 27px;
+
+            &::before {
+                width: auto;
+            }
+        }
+    }
+
+    .gd-button-icon {
+        width: button-variables.$button-small-icon-width;
+        height: button-variables.$button-small-icon-width;
+        line-height: button-variables.$button-small-icon-width;
+        font-size: button-variables.$button-small-icon-width;
+    }
+}
+
+.gd-button-important,
+.gd-button-large {
+    height: 38px;
+    padding: 7px 19px;
+    line-height: 22px;
+    font-size: 16px;
+}
+
+.gd-button.gd-button-icon-only {
+    width: 31px;
+    height: 29px;
+    line-height: 27px;
+    color: button-variables.$button-normal-color;
+    padding-left: 0;
+
+    &::before {
+        right: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        color: button-variables.$button-normal-color;
+        font-size: button-variables.$button-small-icon-width;
+    }
+
+    &:hover {
+        &::before,
+        .gd-button-icon {
+            color: button-variables.$button-action-color;
+        }
+    }
+}
+
+/* Button states
+   ========================================================================== */
+
+// refactor needed
+// stylelint-disable-next-line no-duplicate-selectors
+.gd-button {
+    &.disabled {
+        @include mixins.active-states-and-self {
+            box-shadow: none;
+            background: transparent;
+            cursor: default;
+            border-color: transparent;
+            text-decoration: none;
+        }
+    }
+}
+
+// refactor needed
+// stylelint-disable-next-line no-duplicate-selectors
+.gd-button-primary,
+.gd-button-secondary {
+    &.disabled {
+        cursor: default;
+
+        @include mixins.active-states-and-self {
+            color: variables.$gd-color-disabled;
+            background: color.adjust(variables.$default-gd-color-light, $alpha: -0.7);
+            border-color: rgba(210, 219, 227, 0.75);
+
+            &::before,
+            &::after,
+            .gd-button-icon {
+                color: variables.$gd-color-disabled;
+            }
+        }
+    }
+}
+
+// refactor needed
+// stylelint-disable-next-line no-duplicate-selectors
+.gd-button-positive {
+    &.disabled {
+        cursor: default;
+
+        @include mixins.active-states-and-self {
+            color: variables.$gd-color-text-light;
+            background: button-variables.$button-positive-disabled-bg;
+
+            &::before,
+            &::after,
+            .gd-button-icon {
+                color: variables.$gd-color-text-light;
+            }
+        }
+    }
+}
+
+// refactor needed
+// stylelint-disable-next-line no-duplicate-selectors
+.gd-button-negative {
+    &.disabled {
+        cursor: default;
+
+        @include mixins.active-states-and-self {
+            color: variables.$gd-color-text-light;
+            background: button-variables.$button-negative-disabled-bg;
+
+            &::before,
+            &::after,
+            .gd-button-icon {
+                color: variables.$gd-color-text-light;
+            }
+        }
+    }
+}
+
+// refactor needed
+// stylelint-disable-next-line no-duplicate-selectors
+.gd-button-action {
+    &.disabled {
+        cursor: default;
+
+        @include mixins.active-states-and-self {
+            color: variables.$gd-color-text-light;
+            background: button-variables.$button-action-disabled-bg;
+
+            @include mixins.disable-filter();
+
+            &::before,
+            &::after,
+            .gd-button-icon {
+                color: variables.$gd-color-text-light;
+            }
+        }
+    }
+}
+
+// refactor needed
+// stylelint-disable-next-line no-duplicate-selectors
+.gd-button-link {
+    &.disabled {
+        cursor: default;
+        $color: button-variables.$button-normal-border-color;
+
+        @include mixins.active-states-and-self {
+            color: $color;
+            border-color: transparent;
+
+            > span {
+                text-decoration: none;
+            }
+        }
+
+        &::before,
+        &::after,
+        .gd-button-icon {
+            color: $color;
+        }
+    }
+
+    // refactor needed
+    // stylelint-disable-next-line no-duplicate-selectors
+    &.gd-button-icon-only[class*="gd-icon-"] {
+        &::before,
+        &::after {
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+            padding: 0;
+        }
+    }
+}
+
+.gd-button-group {
+    .gd-button {
+        position: relative;
+        z-index: 1;
+        margin: 0 -1px 0 0;
+        border-radius: button-variables.$button-group-border-radius;
+
+        &:focus {
+            z-index: 2;
+        }
+
+        &:not(:focus) {
+            box-shadow: none;
+        }
+    }
+
+    > .gd-button:first-child,
+    > *:not(.gd-button):first-child .gd-button {
+        border-radius: button-variables.$button-border-radius 0 0 button-variables.$button-border-radius;
+    }
+
+    > .gd-button:last-child,
+    > *:not(.gd-button):last-child .gd-button {
+        margin-right: 0;
+        border-radius: 0 button-variables.$button-border-radius button-variables.$button-border-radius 0;
+    }
+}
+
+/* Alternative markup support
+   ========================================================================== */
+
+a {
+    &[class*="gd-button-"] {
+        box-sizing: border-box;
+        display: inline-block;
+
+        &,
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
+
+        &,
+        &:active {
+            outline: none;
+        }
+
+        .gd-button-text {
+            display: initial;
+        }
+    }
+
+    &.gd-button-link,
+    &.gd-button-link-dimmed {
+        &:hover {
+            .gd-button-text {
+                text-decoration: underline;
+            }
+        }
+    }
+}

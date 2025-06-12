@@ -1,0 +1,32 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "amountMetric",
+                "alias": "Amount",
+                "format": "#,##0.00",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": []
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

@@ -1,0 +1,20 @@
+// (C) 2023 GoodData Corporation
+.gd-attribute-filter-dropdown-button__next {
+    &.gd-message.error {
+        box-sizing: border-box;
+        width: 103px;
+    }
+}
+
+.dash-filter-is-edit-mode {
+    .gd-attribute-filter-dropdown-button__next.gd-message.error {
+        padding-left: 23px;
+        width: 106px;
+
+        &:hover {
+            &::before {
+                opacity: 1;
+            }
+        }
+    }
+}

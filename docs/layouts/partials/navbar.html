@@ -1,0 +1,35 @@
+{{/* (C) 2023 GoodData Corporation */}}
+{{ $cover := .HasShortcode "blocks/cover" }}
+<nav class="gd-docs-header-nav gd-docs-header-nav__first">
+  <div class="gd-docs-header-nav__left">
+    <a class="gd-docs-header-nav__logo gd-header-nav__logo" href="{{ (printf "%s%s/" .Site.Home.Permalink "latest" ) | safeURL }}" >
+      {{ with resources.Get "icons/GoodDataLearn.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}
+    </a>
+    <span class="gd-header-nav__logo-text">Learn</span>
+  </div>
+  {{ partial "header-menu.html" . }}
+  {{ partial "header-right.html" . }}
+</nav>
+<nav class="gd-docs-header-nav gd-docs-header-nav__second">
+  <div class="gd-docs-header-nav__left">
+    {{ partial "navbar-breadcrumb.html" . }}
+  </div>
+  <div class="gd-docs-header-nav__center">
+    <div id="adds-container" class="gd-docs-header-nav__search"></div>
+  </div>
+  <div class="gd-docs-header-nav__right">
+    {{ if .Site.Params.versions }}
+      {{ partial "navbar-version-selector.html" . }}
+
+      {{ $version := partial "version.html" (dict "context" .) }}
+      <a href="https://github.com/gooddata/gooddata-ui-sdk/tree/{{ if and $version $version.tag }}{{ $version.tag }}{{ else }}master{{ end }}/examples/sdk-interactive-examples" class="gd-docs-header-nav__cta gd-docs-header-nav__github" target="_blank">
+        Examples
+      </a>
+    {{ end }}
+
+    <a href="https://github.com/gooddata/gooddata-ui-sdk" class="gd-docs-header-nav__cta gd-docs-header-nav__github">
+        {{ with resources.Get "icons/github.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}
+        GitHub
+    </a>
+    </div>
+</nav>

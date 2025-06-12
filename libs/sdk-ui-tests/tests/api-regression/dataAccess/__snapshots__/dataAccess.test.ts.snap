@@ -1,0 +1,5812 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+      " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - single measure with two viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 6,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "CompuSci > Amount",
+      "Educationly > Amount",
+      "Explorer > Amount",
+      "Grammar Plus > Amount",
+      "PhoenixSoft > Amount",
+      "WonderKid > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "East Coast",
+      "West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - single measure with viewBy and stackBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 6,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "CompuSci > Amount",
+      "Educationly > Amount",
+      "Explorer > Amount",
+      "Grammar Plus > Amount",
+      "PhoenixSoft > Amount",
+      "WonderKid > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "East Coast",
+      "West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - two measures with undefined values 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - two measures with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - two measures with viewBy sorted by attribute 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - two measures with viewBy sorted by measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "PhoenixSoft",
+      "WonderKid",
+      "Grammar Plus",
+      "Educationly",
+      "CompuSci",
+      "Explorer",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - with one measure and view by date and stack by date 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 7,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "2010 > Amount",
+      "2011 > Amount",
+      "2012 > Amount",
+      "2013 > Amount",
+      "2014 > Amount",
+      "2016 > Amount",
+      "2017 > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 5,
+    "attributes": 1,
+    "sliceNames": [
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+      " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 6,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "CompuSci > Amount",
+      "Educationly > Amount",
+      "Explorer > Amount",
+      "Grammar Plus > Amount",
+      "PhoenixSoft > Amount",
+      "WonderKid > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "East Coast",
+      "West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - four measures and PoP 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 5,
+    "attributes": 0,
+    "measures": 5,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Won Last Year",
+      " > Calculated 'Lost' measure",
+      " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - single measure with two viewBy and stack 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 12,
+    "attributes": 2,
+    "measures": 1,
+    "seriesNames": [
+      "CompuSci > East Coast > Amount",
+      "CompuSci > West Coast > Amount",
+      "Educationly > East Coast > Amount",
+      "Educationly > West Coast > Amount",
+      "Explorer > East Coast > Amount",
+      "Explorer > West Coast > Amount",
+      "Grammar Plus > East Coast > Amount",
+      "Grammar Plus > West Coast > Amount",
+      "PhoenixSoft > East Coast > Amount",
+      "PhoenixSoft > West Coast > Amount",
+      "WonderKid > East Coast > Amount",
+      "WonderKid > West Coast > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "Direct Sales",
+      "Inside Sales",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - single measure with viewBy and stackBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 6,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "CompuSci > Amount",
+      "Educationly > Amount",
+      "Explorer > Amount",
+      "Grammar Plus > Amount",
+      "PhoenixSoft > Amount",
+      "WonderKid > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "East Coast",
+      "West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - stackBy with one date 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 6,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "CompuSci > Amount",
+      "Educationly > Amount",
+      "Explorer > Amount",
+      "Grammar Plus > Amount",
+      "PhoenixSoft > Amount",
+      "WonderKid > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "East Coast",
+      "West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - two measures with two viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - two measures with two viewBy, filtered to single value 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 1,
+    "attributes": 2,
+    "sliceNames": [
+      "WonderKid > East Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - two measures with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - two measures with viewBy sorted by attribute 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - two measures with viewBy sorted by measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "PhoenixSoft",
+      "WonderKid",
+      "Grammar Plus",
+      "Educationly",
+      "CompuSci",
+      "Explorer",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - viewBy date and PoP measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BarChart - viewBy with two dates 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 2,
+    "sliceNames": [
+      "2010 > 2010",
+      "2011 > 2011",
+      "2012 > 2012",
+      "2013 > 2013",
+      "2014 > 2014",
+      "2016 > 2016",
+      "2017 > 2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - arithmetic measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+      " > Probability",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+      " > Probability",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x and y axis and size measures with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+      " > Probability",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x and y axis and size measures with viewBy and sorted by attr 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+      " > Probability",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x and y axis and size measures with viewBy with nulls in data 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+      " > Probability",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x and y axis measures with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x axis and size measures with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Probability",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x axis measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x axis measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - y axis and size measures with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Probability",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > Calculated 'Lost' measure",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary and comparative measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary and target measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary and target measures with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary with two viewBy dates 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 3,
+    "attributes": 2,
+    "sliceNames": [
+      "2010 > 2010",
+      "2011 > 2011",
+      "2012 > 2012",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary, target and comparative measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > Calculated 'Lost' measure",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary, target and comparative measures with two viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > Calculated 'Lost' measure",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary, target and comparative measures with two viewBy dates 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > Calculated 'Lost' measure",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 2,
+    "sliceNames": [
+      "2010 > 2010",
+      "2011 > 2011",
+      "2012 > 2012",
+      "2013 > 2013",
+      "2014 > 2014",
+      "2016 > 2016",
+      "2017 > 2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary, target and comparative measures with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > Calculated 'Lost' measure",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary, target and comparative measures with viewBy and sort 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > Calculated 'Lost' measure",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > Calculated 'Lost' measure",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - dense chart with two view by 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > m_f_opportunitysnapshot.f_amount_sum",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 215,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > ASI System Integration > CompuSci",
+      "CompuSci > AdvancedMD Software > CompuSci",
+      "CompuSci > AdvantageBridal.com > CompuSci",
+      "CompuSci > Aerial Services > CompuSci",
+      "CompuSci > Air Innovations > CompuSci",
+      "CompuSci > Ali International > CompuSci",
+      "CompuSci > American Bancard > CompuSci",
+      "CompuSci > American Communications > CompuSci",
+      "CompuSci > American Technologies > CompuSci",
+      "CompuSci > Art & Logic > CompuSci",
+      "CompuSci > Billtrust > CompuSci",
+      "CompuSci > Boston Health Economics > CompuSci",
+      "CompuSci > Bronto Software > CompuSci",
+      "CompuSci > Burstabit Technologies > CompuSci",
+      "CompuSci > BusinessOnLine > CompuSci",
+      "CompuSci > C&I Engineering > CompuSci",
+      "CompuSci > C&S Companies > CompuSci",
+      "CompuSci > CPX Interactive > CompuSci",
+      "CompuSci > Cahill Gordon & Reindel > CompuSci",
+      "CompuSci > Canyon Manufacturing Services > CompuSci",
+      "CompuSci > Cash Cycle Solutions > CompuSci",
+      "CompuSci > Compliance Implementation Services > CompuSci",
+      "CompuSci > Convergence Consulting Group > CompuSci",
+      "CompuSci > CyberData Technologies > CompuSci",
+      "CompuSci > Davis Polk & Wardwell > CompuSci",
+      "CompuSci > DestinationWeddings.com > CompuSci",
+      "CompuSci > Docutrend Imaging Solutions > CompuSci",
+      "CompuSci > EGB Systems & Solutions > CompuSci",
+      "CompuSci > Emmi Solutions > CompuSci",
+      "CompuSci > Excalibur Technology > CompuSci",
+      "CompuSci > First In Service Travel > CompuSci",
+      "CompuSci > Flipswap > CompuSci",
+      "CompuSci > GTM Sportswear > CompuSci",
+      "CompuSci > Greenberg Traurig > CompuSci",
+      "CompuSci > Hinshaw & Culbertson > CompuSci",
+      "CompuSci > Interbit Data > CompuSci",
+      "CompuSci > Kansas City Home Care > CompuSci",
+      "CompuSci > LasX Industries > CompuSci",
+      "CompuSci > National Asset Recovery Services > CompuSci",
+      "CompuSci > Paylocity > CompuSci",
+      "CompuSci > Shorts Brewing > CompuSci",
+      "CompuSci > TechSource > CompuSci",
+      "CompuSci > agencyQ > CompuSci",
+      "CompuSci > allConnex > CompuSci",
+      "CompuSci > iPipeline > CompuSci",
+      "Educationly > 3balls.com > Educationly",
+      "Educationly > 7-Eleven > Educationly",
+      "Educationly > AEEC > Educationly",
+      "Educationly > ASP Pool and Spa > Educationly",
+      "Educationly > Acadian Ambulance Service > Educationly",
+      "Educationly > AdvenTech > Educationly",
+      "Educationly > Advocate Radiology Billing > Educationly",
+      "Educationly > AirSplat > Educationly",
+      "Educationly > All Copy Products > Educationly",
+      "Educationly > Allconnect > Educationly",
+      "Educationly > American Business Solutions > Educationly",
+      "Educationly > Arrow Strategies > Educationly",
+      "Educationly > Arrowhead Advertising > Educationly",
+      "Educationly > Aspire Systems > Educationly",
+      "Educationly > Aware Web Solutions > Educationly",
+      "Educationly > Baseball Rampage > Educationly",
+      "Educationly > BeQuick Software > Educationly",
+      "Educationly > Big Red Fasteners > Educationly",
+      "Educationly > Blaser's USA > Educationly",
+      "Educationly > Blinc > Educationly",
+      "Educationly > CPower > Educationly",
+      "Educationly > Cadena Contracting > Educationly",
+      "Educationly > Cafe Rio > Educationly",
+      "Educationly > Cascades Technologies > Educationly",
+      "Educationly > Catapult Technology > Educationly",
+      "Educationly > Clearpointe > Educationly",
+      "Educationly > CloseOutStore.net > Educationly",
+      "Educationly > Cowan & Associates > Educationly",
+      "Educationly > Crescent City Packaging > Educationly",
+      "Educationly > Cyquent > Educationly",
+      "Educationly > DataDirect Networks > Educationly",
+      "Educationly > Defran Systems > Educationly",
+      "Educationly > Diplomaframe.com > Educationly",
+      "Educationly > Discount Ramps.com > Educationly",
+      "Educationly > Dull Olson Weekes Architects > Educationly",
+      "Educationly > Global Medical Imaging > Educationly",
+      "Educationly > Great Expressions Dental Centers > Educationly",
+      "Educationly > HSP Direct > Educationly",
+      "Educationly > Holland & Hart > Educationly",
+      "Educationly > ICON Information Consultants > Educationly",
+      "Educationly > Iasta > Educationly",
+      "Educationly > InterMed Biomedical Services > Educationly",
+      "Educationly > Judicial Correction Services > Educationly",
+      "Educationly > LAgraphico > Educationly",
+      "Educationly > Liquid Web > Educationly",
+      "Educationly > MediGain > Educationly",
+      "Educationly > Milestone Metals > Educationly",
+      "Educationly > Mortgagebot > Educationly",
+      "Educationly > OnDemand Resources > Educationly",
+      "Educationly > Rabbit Air > Educationly",
+      "Educationly > Sentek Global > Educationly",
+      "Educationly > TalentBurst > Educationly",
+      "Educationly > eVestment Alliance > Educationly",
+      "Explorer > 14 West > Explorer",
+      "Explorer > 3Degrees > Explorer",
+      "Explorer > 6K Systems > Explorer",
+      "Explorer > A.B. Data > Explorer",
+      "Explorer > ACAI Associates > Explorer",
+      "Explorer > AKA Media > Explorer",
+      "Explorer > ASK Staffing > Explorer",
+      "Explorer > AccountNow > Explorer",
+      "Explorer > Addx > Explorer",
+      "Explorer > Aerodyn Engineering > Explorer",
+      "Explorer > All American Swim Supply > Explorer",
+      "Explorer > Area51-ESG > Explorer",
+      "Explorer > Aspen of DC > Explorer",
+      "Explorer > BANC3 > Explorer",
+      "Explorer > Barrack's Cater Inn > Explorer",
+      "Explorer > Batteries Plus > Explorer",
+      "Explorer > Burt Hill > Explorer",
+      "Explorer > CablesAndKits.com > Explorer",
+      "Explorer > Capinc > Explorer",
+      "Explorer > Catch the Moment > Explorer",
+      "Explorer > Cloud Creek Systems > Explorer",
+      "Explorer > Concerro > Explorer",
+      "Explorer > DNT Environmental Services > Explorer",
+      "Explorer > Data Systems Analysts > Explorer",
+      "Explorer > Datawiz > Explorer",
+      "Explorer > DealYard.com > Explorer",
+      "Explorer > Dorsey & Whitney > Explorer",
+      "Explorer > Duffey Petrosky > Explorer",
+      "Explorer > Essai > Explorer",
+      "Explorer > Fidelity Technologies > Explorer",
+      "Explorer > Fusion Systems > Explorer",
+      "Explorer > Grandstream Networks > Explorer",
+      "Explorer > Granite Telecommunications > Explorer",
+      "Explorer > Harbinger Partners > Explorer",
+      "Explorer > Haynes and Boone > Explorer",
+      "Explorer > Info Retail > Explorer",
+      "Explorer > Integrated Resources > Explorer",
+      "Explorer > InterCon > Explorer",
+      "Explorer > International Checkout > Explorer",
+      "Explorer > Intueor Consulting > Explorer",
+      "Explorer > Knowledge Mosaic > Explorer",
+      "Explorer > Laser Technologies > Explorer",
+      "Explorer > LawyerLink > Explorer",
+      "Explorer > Logic Planet > Explorer",
+      "Explorer > Logical Choice Technologies > Explorer",
+      "Explorer > LogoSportswear.com > Explorer",
+      "Explorer > Mansell Group > Explorer",
+      "Explorer > Mantz Automation > Explorer",
+      "Explorer > Maverick Networks > Explorer",
+      "Explorer > Max Borges Agency > Explorer",
+      "Explorer > Mediatavern > Explorer",
+      "Explorer > Medical Transaction Billing > Explorer",
+      "Explorer > Microdynamics Group > Explorer",
+      "Explorer > Mobile One Courier & Logistics > Explorer",
+      "Explorer > Novae > Explorer",
+      "Explorer > Ovation Travel Group > Explorer",
+      "Explorer > Paramore-Redd Online Marketing > Explorer",
+      "Explorer > Post-Up Stand > Explorer",
+      "Explorer > SLR Contracting & Service > Explorer",
+      "Explorer > See Kai Run > Explorer",
+      "Explorer > TBJ > Explorer",
+      "Grammar Plus > Access Technology Solutions > Grammar Plus",
+      "Grammar Plus > Alarm Team > Grammar Plus",
+      "Grammar Plus > Ascentium > Grammar Plus",
+      "Grammar Plus > Best Practice Systems > Grammar Plus",
+      "Grammar Plus > Bulk TV & Internet > Grammar Plus",
+      "Grammar Plus > ChiroNET > Grammar Plus",
+      "Grammar Plus > Defender Direct > Grammar Plus",
+      "Grammar Plus > Dialogue Marketing > Grammar Plus",
+      "Grammar Plus > Direct Exteriors > Grammar Plus",
+      "Grammar Plus > Fandotech > Grammar Plus",
+      "Grammar Plus > Herndon Products > Grammar Plus",
+      "Grammar Plus > IMS ExpertServices > Grammar Plus",
+      "Grammar Plus > Nukk-Freeman & Cerra > Grammar Plus",
+      "Grammar Plus > Physique 57 > Grammar Plus",
+      "PhoenixSoft > Aspen of DC > PhoenixSoft",
+      "PhoenixSoft > Brightree > PhoenixSoft",
+      "PhoenixSoft > CallCopy > PhoenixSoft",
+      "PhoenixSoft > Cellular Sales of Knoxville > PhoenixSoft",
+      "PhoenixSoft > Central Coast Farms > PhoenixSoft",
+      "PhoenixSoft > Decision Lens > PhoenixSoft",
+      "PhoenixSoft > Geckotech > PhoenixSoft",
+      "PhoenixSoft > Invertix > PhoenixSoft",
+      "PhoenixSoft > LearnLive Technologies > PhoenixSoft",
+      "PhoenixSoft > Logistic Dynamics > PhoenixSoft",
+      "PhoenixSoft > Mustang Technology > PhoenixSoft",
+      "PhoenixSoft > R2integrated > PhoenixSoft",
+      "WonderKid > 1 Source Consulting > WonderKid",
+      "WonderKid > AArrow Advertising > WonderKid",
+      "WonderKid > AccountNow > WonderKid",
+      "WonderKid > Agency Consulting Group > WonderKid",
+      "WonderKid > ArrowStream > WonderKid",
+      "WonderKid > Ascendent Engineering & Safety Solutions > WonderKid",
+      "WonderKid > Blaser's USA > WonderKid",
+      "WonderKid > Brian Taylor International > WonderKid",
+      "WonderKid > Cable Links Consulting > WonderKid",
+      "WonderKid > Community Impact Newspaper > WonderKid",
+      "WonderKid > Compass Solutions > WonderKid",
+      "WonderKid > Consero > WonderKid",
+      "WonderKid > DKW Communications > WonderKid",
+      "WonderKid > Dennis Corporation > WonderKid",
+      "WonderKid > Dialect Technologies > WonderKid",
+      "WonderKid > Dukas Public Relations > WonderKid",
+      "WonderKid > EcoTech Marine > WonderKid",
+      "WonderKid > Evolve > WonderKid",
+      "WonderKid > GameFly > WonderKid",
+      "WonderKid > Great Expressions Dental Centers > WonderKid",
+      "WonderKid > Infinity Roofing & Siding > WonderKid",
+      "WonderKid > Invizion > WonderKid",
+      "WonderKid > Logica > WonderKid",
+      "WonderKid > Meso Group > WonderKid",
+      "WonderKid > Millennium > WonderKid",
+      "WonderKid > Monster Scooter Parts > WonderKid",
+      "WonderKid > MyCEO > WonderKid",
+      "WonderKid > Safety Sam > WonderKid",
+      "WonderKid > SecurityMetrics > WonderKid",
+      "WonderKid > adaQuest > WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure with one viewBy and one stackBy with multiple items 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "East Coast > Amount",
+      "West Coast > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure with two viewBy and stack 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 12,
+    "attributes": 2,
+    "measures": 1,
+    "seriesNames": [
+      "CompuSci > East Coast > Amount",
+      "CompuSci > West Coast > Amount",
+      "Educationly > East Coast > Amount",
+      "Educationly > West Coast > Amount",
+      "Explorer > East Coast > Amount",
+      "Explorer > West Coast > Amount",
+      "Grammar Plus > East Coast > Amount",
+      "Grammar Plus > West Coast > Amount",
+      "PhoenixSoft > East Coast > Amount",
+      "PhoenixSoft > West Coast > Amount",
+      "WonderKid > East Coast > Amount",
+      "WonderKid > West Coast > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "Direct Sales",
+      "Inside Sales",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure with viewBy and stackBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 6,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "CompuSci > Amount",
+      "Educationly > Amount",
+      "Explorer > Amount",
+      "Grammar Plus > Amount",
+      "PhoenixSoft > Amount",
+      "WonderKid > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "East Coast",
+      "West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure with viewBy and stackBy filtered to single stack 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 6,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "CompuSci > Amount",
+      "Educationly > Amount",
+      "Explorer > Amount",
+      "Grammar Plus > Amount",
+      "PhoenixSoft > Amount",
+      "WonderKid > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 1,
+    "attributes": 1,
+    "sliceNames": [
+      "East Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single ratio measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount with Ratio",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - stackBy with one date 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - two measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - two measures with two viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - two measures with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - two measures with viewBy sorted by attribute 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - two measures with viewBy sorted by measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "PhoenixSoft",
+      "WonderKid",
+      "Grammar Plus",
+      "Educationly",
+      "CompuSci",
+      "Explorer",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - viewBy date and PoP measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - viewBy with two dates 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 2,
+    "sliceNames": [
+      "2010 > 2010",
+      "2011 > 2011",
+      "2012 > 2012",
+      "2013 > 2013",
+      "2014 > 2014",
+      "2016 > 2016",
+      "2017 > 2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+      " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+      " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - multiple measures and no viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+      " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - multiple primary and secondary measures with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 6,
+    "attributes": 0,
+    "measures": 6,
+    "seriesNames": [
+      " > Min Amount",
+      " > Median Amount",
+      " > Max Amount",
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary and secondary measure no viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy sorted by attr 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy sorted by primary measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "Explorer",
+      "CompuSci",
+      "Educationly",
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy sorted by secondary measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "Explorer",
+      "CompuSci",
+      "Educationly",
+      "Grammar Plus",
+      "WonderKid",
+      "PhoenixSoft",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one secondary measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+      " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - two measures with null values 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - two secondary measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - measure and attributeFrom 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - measure and attributeTo 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "East Coast",
+      "West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - measure only 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - measure, attributeFrom and attributeTo 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+      " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - two measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Execute - scoped series 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 1,
+    "measures": 2,
+    "seriesNames": [
+      "East Coast > Amount",
+      "East Coast > Won",
+      "West Coast > Amount",
+      "West Coast > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Execute - scoped series with slicing 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 1,
+    "measures": 2,
+    "seriesNames": [
+      "East Coast > Amount",
+      "East Coast > Won",
+      "West Coast > Amount",
+      "West Coast > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Execute - single unscoped series 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Execute - two unscoped series 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Calculated 'Lost' measure",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - single measure with viewBy sorted by attribute 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - single measure with viewBy sorted by measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+      "Educationly",
+      "CompuSci",
+      "Explorer",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - two measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as change (difference) and custom format 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+      " > m_9fa7cb9ce4d2947059b490e24a925317_1",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as change (difference) and default sub format 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+      " > m_9fa7cb9ce4d2947059b490e24a925317_1",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as different and default format 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with custom format 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with custom label 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with decimal-1 format 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with default config 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with default config with secondary measure is PoP 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Won Last Year",
+      " > m_fb5b6f1921f682f64c312ace756a8691",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with equals arrow 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Custom Amount",
+      " > m_6aea7862cb864bcedb6ff97fce8fbfae",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with equals arrow and color 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Custom Amount",
+      " > m_6aea7862cb864bcedb6ff97fce8fbfae",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with negative arrow 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > m_8a3164755a3677c1c8c4c3a9fb44ea3a",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with negative arrow and color 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > m_8a3164755a3677c1c8c4c3a9fb44ea3a",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with position on right 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with position on top 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with positive arrow 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with positive arrow and color 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - multi measures with only primary measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - multi measures with three measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Probability",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - multi measures with two measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - multi measures with two measures one PoP 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - multi measures with two measures with german separators 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - two measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - two measures one PoP 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - two measures with comparison 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - two measures with german separators 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "East Coast > Amount",
+      "West Coast > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - measure and columns 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 6,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "CompuSci > Amount",
+      "Educationly > Amount",
+      "Explorer > Amount",
+      "Grammar Plus > Amount",
+      "PhoenixSoft > Amount",
+      "WonderKid > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - measure and rows 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - measure only 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - measure, rows and columns 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "East Coast > Amount",
+      "West Coast > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - measure, rows and columns with null data points 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 7,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "2010 > Amount",
+      "2011 > Amount",
+      "2012 > Amount",
+      "2013 > Amount",
+      "2014 > Amount",
+      "2016 > Amount",
+      "2017 > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "East Coast > Amount",
+      "West Coast > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - themed with null values 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 7,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "2010 > Amount",
+      "2011 > Amount",
+      "2012 > Amount",
+      "2013 > Amount",
+      "2014 > Amount",
+      "2016 > Amount",
+      "2017 > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+      " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 18,
+    "attributes": 1,
+    "sliceNames": [
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 18,
+    "attributes": 1,
+    "sliceNames": [
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - single measure with % and trendBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Win Rate",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 18,
+    "attributes": 1,
+    "sliceNames": [
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - single measure with trendBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 18,
+    "attributes": 1,
+    "sliceNames": [
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - single measure with trendBy and segmentBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 18,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "2008-1 > Amount",
+      "2008-2 > Amount",
+      "2008-3 > Amount",
+      "2008-4 > Amount",
+      "2009-1 > Amount",
+      "2009-2 > Amount",
+      "2009-3 > Amount",
+      "2009-4 > Amount",
+      "2010-1 > Amount",
+      "2010-2 > Amount",
+      "2010-3 > Amount",
+      "2010-4 > Amount",
+      "2011-1 > Amount",
+      "2011-2 > Amount",
+      "2011-3 > Amount",
+      "2011-4 > Amount",
+      "2012-1 > Amount",
+      "2012-2 > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "East Coast",
+      "West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - stacked threshold zones 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 26,
+    "attributes": 1,
+    "measures": 2,
+    "seriesNames": [
+      "2013-04-17 > _Timeline [BOP]",
+      "2013-04-17 > Metric has null value",
+      "2013-04-20 > _Timeline [BOP]",
+      "2013-04-20 > Metric has null value",
+      "2013-04-24 > _Timeline [BOP]",
+      "2013-04-24 > Metric has null value",
+      "2013-04-26 > _Timeline [BOP]",
+      "2013-04-26 > Metric has null value",
+      "2013-04-27 > _Timeline [BOP]",
+      "2013-04-27 > Metric has null value",
+      "2013-05-02 > _Timeline [BOP]",
+      "2013-05-02 > Metric has null value",
+      "2013-05-03 > _Timeline [BOP]",
+      "2013-05-03 > Metric has null value",
+      "2013-05-15 > _Timeline [BOP]",
+      "2013-05-15 > Metric has null value",
+      "2013-05-17 > _Timeline [BOP]",
+      "2013-05-17 > Metric has null value",
+      "2013-05-18 > _Timeline [BOP]",
+      "2013-05-18 > Metric has null value",
+      "2013-05-22 > _Timeline [BOP]",
+      "2013-05-22 > Metric has null value",
+      "2013-05-24 > _Timeline [BOP]",
+      "2013-05-24 > Metric has null value",
+      "2013-05-31 > _Timeline [BOP]",
+      "2013-05-31 > Metric has null value",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "2013-04",
+      "2013-05",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 18,
+    "attributes": 1,
+    "sliceNames": [
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - threshold zones 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > _Snapshot [BOP]",
+      " > _Snapshot [EOP]",
+      " > _Timeline [BOP]",
+      " > Metric has null value",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 13,
+    "attributes": 1,
+    "sliceNames": [
+      "2013-04-17",
+      "2013-04-20",
+      "2013-04-24",
+      "2013-04-26",
+      "2013-04-27",
+      "2013-05-02",
+      "2013-05-03",
+      "2013-05-15",
+      "2013-05-17",
+      "2013-05-18",
+      "2013-05-22",
+      "2013-05-24",
+      "2013-05-31",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - two measures with trendBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 18,
+    "attributes": 1,
+    "sliceNames": [
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - two measures with trendBy and sort by attribute 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 18,
+    "attributes": 1,
+    "sliceNames": [
+      "2012-2",
+      "2012-1",
+      "2011-4",
+      "2011-3",
+      "2011-2",
+      "2011-1",
+      "2010-4",
+      "2010-3",
+      "2010-2",
+      "2010-1",
+      "2009-4",
+      "2009-3",
+      "2009-2",
+      "2009-1",
+      "2008-4",
+      "2008-3",
+      "2008-2",
+      "2008-1",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - two measures with trendBy and sort by measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 18,
+    "attributes": 1,
+    "sliceNames": [
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2009-1",
+      "2008-4",
+      "2010-1",
+      "2009-3",
+      "2009-2",
+      "2009-4",
+      "2012-2",
+      "2010-2",
+      "2012-1",
+      "2011-4",
+      "2011-2",
+      "2010-4",
+      "2010-3",
+      "2011-1",
+      "2011-3",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - with one measure and segment by date 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 5,
+    "attributes": 1,
+    "sliceNames": [
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - with one measure and trend by date and segment by date 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 5,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "2008 > Amount",
+      "2009 > Amount",
+      "2010 > Amount",
+      "2011 > Amount",
+      "2012 > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: LineChart - with two measures and null values 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PieChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+      " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PieChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PieChart - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PieChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PieChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PieChart - two measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PivotTable - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PivotTable - single measure with row attribute 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PivotTable - two measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Calculated 'Lost' measure",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - single measure with viewBy sorted by attribute 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - single measure with viewBy sorted by measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+      "Educationly",
+      "CompuSci",
+      "Explorer",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - two measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - measure and attributeFrom 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - measure and attributeTo 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "East Coast",
+      "West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - measure only 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - measure, attributeFrom and attributeTo 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x and y axis measures and attribute 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x and y axis measures and attribute with attr sorting 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x and y axis measures and attribute with nulls in data 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x and y axis measures, attribute and segmentation 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 20,
+    "attributes": 2,
+    "sliceNames": [
+      "Boston > Massachusetts",
+      "Bridgeport > Connecticut",
+      "Eugene > Oregon",
+      "Hartford > Connecticut",
+      "Nashua > New Hampshire",
+      "New York > New York",
+      "Philadelphia > Pennsylvania",
+      "Portland > Oregon",
+      "Poughkeepsie > New York",
+      "Providence > Rhode Island",
+      "Sacramento > California",
+      "Salem > Oregon",
+      "Salinas > California",
+      "San Francisco > California",
+      "San Jose > California",
+      "Santa Barbara > California",
+      "Santa Cruz > California",
+      "Santa Rosa > California",
+      "Seattle > Washington",
+      "Vancouver > Washington",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x axis measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x axis measure and attribute 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - y axis measure and attribute 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - arithmetic measures and segment 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 18,
+    "attributes": 1,
+    "sliceNames": [
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > West Coast",
+      "CompuSci > East Coast",
+      "Educationly > West Coast",
+      "Educationly > East Coast",
+      "Explorer > West Coast",
+      "Explorer > East Coast",
+      "Grammar Plus > West Coast",
+      "Grammar Plus > East Coast",
+      "PhoenixSoft > West Coast",
+      "PhoenixSoft > East Coast",
+      "WonderKid > West Coast",
+      "WonderKid > East Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - single measure and segment 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "East Coast",
+      "West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - single measure and viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - single measure and viewBy filtered to one element 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 1,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - single measure, viewBy and segment 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > West Coast",
+      "CompuSci > East Coast",
+      "Educationly > West Coast",
+      "Educationly > East Coast",
+      "Explorer > West Coast",
+      "Explorer > East Coast",
+      "Grammar Plus > West Coast",
+      "Grammar Plus > East Coast",
+      "PhoenixSoft > West Coast",
+      "PhoenixSoft > East Coast",
+      "WonderKid > West Coast",
+      "WonderKid > East Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": [
+      "CompuSci > West Coast",
+      "CompuSci > East Coast",
+      "Educationly > West Coast",
+      "Educationly > East Coast",
+      "Explorer > West Coast",
+      "Explorer > East Coast",
+      "Grammar Plus > West Coast",
+      "Grammar Plus > East Coast",
+      "PhoenixSoft > West Coast",
+      "PhoenixSoft > East Coast",
+      "WonderKid > West Coast",
+      "WonderKid > East Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - two measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - two measures and segmentBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - two measures and viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Treemap - with one measure and view by date and segment by date 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 23,
+    "attributes": 2,
+    "sliceNames": [
+      "2010 > 2010",
+      "2010 > 2009",
+      "2010 > 2008",
+      "2010 > 2011",
+      "2011 > 2011",
+      "2011 > 2010",
+      "2011 > 2009",
+      "2011 > 2008",
+      "2011 > 2012",
+      "2012 > 2011",
+      "2012 > 2012",
+      "2012 > 2010",
+      "2012 > 2008",
+      "2012 > 2009",
+      "2013 > 2011",
+      "2013 > 2012",
+      "2013 > 2009",
+      "2013 > 2010",
+      "2013 > 2008",
+      "2014 > 2012",
+      "2014 > 2010",
+      "2016 > 2010",
+      "2017 > 2012",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Sum Velocity",
+      " > Sum Duration",
+      " > Sum Density",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures with a total measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Sum Velocity",
+      " > Sum Duration",
+      " > Sum Density",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures with font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Sum Velocity",
+      " > Sum Duration",
+      " > Sum Density",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures with themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Sum Velocity",
+      " > Sum Duration",
+      " > Sum Density",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Xirr - correct config 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "2018 > Sample XIRR",
+      "2019 > Sample XIRR",
+      "2020 > Sample XIRR",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Xirr - font 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "2018 > Sample XIRR",
+      "2019 > Sample XIRR",
+      "2020 > Sample XIRR",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Xirr - only measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Sample XIRR",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Xirr - semantically wrong measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 21,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "2000 > _Timeline [EOP]",
+      "2001 > _Timeline [EOP]",
+      "2002 > _Timeline [EOP]",
+      "2003 > _Timeline [EOP]",
+      "2004 > _Timeline [EOP]",
+      "2005 > _Timeline [EOP]",
+      "2006 > _Timeline [EOP]",
+      "2007 > _Timeline [EOP]",
+      "2008 > _Timeline [EOP]",
+      "2009 > _Timeline [EOP]",
+      "2010 > _Timeline [EOP]",
+      "2011 > _Timeline [EOP]",
+      "2012 > _Timeline [EOP]",
+      "2013 > _Timeline [EOP]",
+      "2014 > _Timeline [EOP]",
+      "2015 > _Timeline [EOP]",
+      "2016 > _Timeline [EOP]",
+      "2017 > _Timeline [EOP]",
+      "2018 > _Timeline [EOP]",
+      "2019 > _Timeline [EOP]",
+      "2020 > _Timeline [EOP]",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Xirr - themed 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": [
+      "2018 > Sample XIRR",
+      "2019 > Sample XIRR",
+      "2020 > Sample XIRR",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;

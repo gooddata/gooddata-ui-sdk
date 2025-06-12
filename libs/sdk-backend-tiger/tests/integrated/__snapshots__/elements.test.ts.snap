@@ -1,0 +1,221 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`tiger elements > forDisplayForm > should load attribute elements for existing display form 1`] = `
+{
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [
+    {
+      "title": "38",
+      "uri": "38",
+    },
+    {
+      "title": "78",
+      "uri": "78",
+    },
+    {
+      "title": "224",
+      "uri": "224",
+    },
+    {
+      "title": "545",
+      "uri": "545",
+    },
+    {
+      "title": "552",
+      "uri": "552",
+    },
+    {
+      "title": "955129",
+      "uri": "955129",
+    },
+    {
+      "title": "955131",
+      "uri": "955131",
+    },
+    {
+      "title": "955133",
+      "uri": "955133",
+    },
+    {
+      "title": "955139",
+      "uri": "955139",
+    },
+    {
+      "title": "955141",
+      "uri": "955141",
+    },
+    {
+      "title": "955143",
+      "uri": "955143",
+    },
+    {
+      "title": "955145",
+      "uri": "955145",
+    },
+    {
+      "title": "955147",
+      "uri": "955147",
+    },
+    {
+      "title": "955153",
+      "uri": "955153",
+    },
+    {
+      "title": "955155",
+      "uri": "955155",
+    },
+    {
+      "title": "955157",
+      "uri": "955157",
+    },
+    {
+      "title": "955159",
+      "uri": "955159",
+    },
+    {
+      "title": "955163",
+      "uri": "955163",
+    },
+    {
+      "title": "955165",
+      "uri": "955165",
+    },
+    {
+      "title": "955167",
+      "uri": "955167",
+    },
+  ],
+  "limit": 20,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 4846,
+}
+`;
+
+exports[`tiger elements > forFilter > should load attribute filter elements for provided negative attribute filter 1`] = `
+InMemoryPaging {
+  "allItems": [
+    {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "items": [
+    {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`tiger elements > forFilter > should load attribute filter elements for provided positive attribute filter 1`] = `
+InMemoryPaging {
+  "allItems": [
+    {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "items": [
+    {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`tiger elements > forFilter > should load no attribute filter elements for provided ALL attribute filter 1`] = `
+InMemoryPaging {
+  "allItems": [],
+  "items": [],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 0,
+}
+`;
+
+exports[`tiger elements > forFilter > should return attribute filter elements for provided attribute filter with elements by value 1`] = `
+InMemoryPaging {
+  "allItems": [
+    {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "items": [
+    {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`tiger elements > forFilter > should return correct page for given displayForm 1`] = `
+{
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "limit": 2,
+  "next": [Function],
+  "offset": 6,
+  "totalCount": 4846,
+}
+`;
+
+exports[`tiger elements > forFilter > should return empty result for out-of-range page in initial request 1`] = `
+{
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [],
+  "limit": 100,
+  "next": [Function],
+  "offset": 5000,
+  "totalCount": 4846,
+}
+`;
+
+exports[`tiger elements > forFilter > should return empty result for out-of-range page with goTo 1`] = `
+{
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [],
+  "limit": 100,
+  "next": [Function],
+  "offset": 10000,
+  "totalCount": 4846,
+}
+`;
+
+exports[`tiger elements > forFilter > should return empty result for out-of-range page with next 1`] = `
+{
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [],
+  "limit": 100,
+  "next": [Function],
+  "offset": 4940,
+  "totalCount": 4846,
+}
+`;

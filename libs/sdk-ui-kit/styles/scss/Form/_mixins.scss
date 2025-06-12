@@ -1,0 +1,49 @@
+// (C) 2007-2025 GoodData Corporation
+@use "../variables.scss";
+@use "../mixins";
+
+/* ==========================================================================
+   Mixins, silent classes etc.
+   ========================================================================== */
+@mixin gd-input-and-prefix() {
+    &,
+    ~ .gd-input-prefix,
+    ~ .gd-input-suffix {
+        @content;
+    }
+}
+
+@mixin gd-input-prefix() {
+    ~ .gd-input-prefix,
+    ~ .gd-input-suffix {
+        @content;
+    }
+}
+
+@mixin gd-input-base {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 6px 7px 5px;
+    border: 1px solid variables.$gd-input-text-border;
+    line-height: normal;
+    vertical-align: middle;
+    color: variables.$gd-color-text;
+    background: variables.$gd-color-white;
+    font-size: 14px;
+    font-family: variables.$gd-font-primary;
+    font-weight: 200;
+}
+
+@mixin gd-input-small-base {
+    height: 27.1px; // .1px forces Safari to round the vertical position correctly
+    padding: 5px 7px;
+    font-size: 13px;
+}
+
+@mixin gd-searchfield-base {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    line-height: 32px;
+    font-size: 16px;
+}

@@ -1,0 +1,83 @@
+{
+    "attributes": [],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                            }
+                        },
+                        "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                            }
+                        },
+                        "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_density", "type": "fact" }
+                            }
+                        },
+                        "localIdentifier": "m_f_density_sum"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        { "items": [], "localIdentifier": "view" }
+    ],
+    "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "aggregation": "sum",
+                        "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                    }
+                },
+                "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "aggregation": "sum",
+                        "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                    }
+                },
+                "localIdentifier": "m_f_stagehistory.f_duration_sum"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "aggregation": "sum",
+                        "item": { "identifier": "f_density", "type": "fact" }
+                    }
+                },
+                "localIdentifier": "m_f_density_sum"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

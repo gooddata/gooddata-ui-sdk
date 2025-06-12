@@ -1,0 +1,128 @@
+---
+# (C) 2024 GoodData Corporation
+name: Push ~ Build web component's container image
+
+on:
+    push:
+        branches: ["master"]
+
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
+
+env:
+    WEB_COMPONENTS_DIR: libs/sdk-ui-web-components
+
+jobs:
+  build-web-components:
+    if: ${{ startsWith(github.event.head_commit.message, 'Release ') || startsWith(github.event.head_commit.message, format('chore{0} bump versions to', ':')) }}
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Add repository to git safe directories to avoid dubious ownership issue
+        run: git config --global --add safe.directory $GITHUB_WORKSPACE
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Run build web components app
+        run: |
+            node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-web-components
+      - name: Collect build artifacts
+        run: |
+          tar czvf ./libs/sdk-ui-web-components/web-components.tar.gz -C ./$WEB_COMPONENTS_DIR/esm .
+      - name: Archive the build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-components-artifact
+          path: ./${{ env.WEB_COMPONENTS_DIR }}/web-components.tar.gz
+  docker-build-web-components:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs: [build-web-components]
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set SHORT SHA and BRANCH ESCAPE REF NAME to ENV Variable to use for image tag later
+        run: |
+          echo "GITHUB_SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
+          echo "GITHUB_ESCAPE_REF_NAME=${GITHUB_REF_NAME/\//-}" >> $GITHUB_ENV
+      - name: Set up QEMU to add multiplatform support
+        uses: docker/setup-qemu-action@v2
+      - name: Create docker context
+        run: |
+          docker context create builder
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          endpoint: builder
+      - name: Get Vault secrets for ECR
+        uses: hashicorp/vault-action@v2
+        with:
+          url: "https://vault.ord1.infra.intgdc.com"
+          method: jwt
+          path: jwt/github
+          role: ecr-push
+          secrets: |
+            secret/data/v2/data-special/infra1-user-ecr-rw aws_ecr_access_key | AWS_ACCESS_KEY ;
+            secret/data/v2/data-special/infra1-user-ecr-rw aws_ecr_secret_key | AWS_SECRET_KEY ;
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_KEY }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - uses: actions/download-artifact@v4
+        with:
+          name: web-components-artifact
+          path: ./${{ env.WEB_COMPONENTS_DIR }}
+      - name: Docker build and push image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./${{ env.WEB_COMPONENTS_DIR }}
+          file: ./${{ env.WEB_COMPONENTS_DIR }}/Dockerfile
+          platforms: |
+            linux/amd64
+            linux/arm64
+          push: true
+          tags: |
+            020413372491.dkr.ecr.us-east-1.amazonaws.com/nas-testing/${{ github.event.repository.name }}:${{ env.GITHUB_ESCAPE_REF_NAME }}
+            020413372491.dkr.ecr.us-east-1.amazonaws.com/nas-testing/${{ github.event.repository.name }}:${{ env.GITHUB_SHORT_SHA }}
+    outputs:
+      github_short_sha: ${{ env.GITHUB_SHORT_SHA }}
+  generate-update:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs: [docker-build-web-components]
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+          repository: gooddata/github-actions
+          event-type: public-ext-update
+          client-payload: |
+            {
+                "component": "web-components",
+                "branch": "${{ github.ref_name }}",
+                "github_short_sha": "${{ needs.docker-build-web-components.outputs.github_short_sha }}"
+            }

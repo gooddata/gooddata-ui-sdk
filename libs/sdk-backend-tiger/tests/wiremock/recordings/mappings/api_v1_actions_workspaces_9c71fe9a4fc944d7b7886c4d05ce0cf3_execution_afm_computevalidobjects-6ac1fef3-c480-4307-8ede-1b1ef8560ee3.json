@@ -1,0 +1,47 @@
+{
+    "id": "6ac1fef3-c480-4307-8ede-1b1ef8560ee3",
+    "name": "api_v1_actions_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_execution_afm_computevalidobjects",
+    "request": {
+        "url": "/api/v1/actions/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/execution/afm/computeValidObjects",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"types\":[\"attributes\",\"measures\",\"facts\"],\"afm\":{\"attributes\":[],\"measures\":[{\"localIdentifier\":\"m_de156d02_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_f_account.id\",\"definition\":{\"overPeriodMeasure\":{\"measureIdentifier\":{\"localIdentifier\":\"m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba\"},\"dateAttributes\":[{\"attribute\":{\"identifier\":{\"id\":\"f_account.id\",\"type\":\"attribute\"}},\"periodsAgo\":1}]}},\"alias\":\"PoP measure\"},{\"localIdentifier\":\"m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"973a14c4-acb1-45fb-ba52-5d96fa02f7ba\",\"type\":\"metric\"}}}}},{\"localIdentifier\":\"m_c259efe401270d1198a7d2469f58c0a5\",\"definition\":{\"arithmeticMeasure\":{\"measureIdentifiers\":[{\"localIdentifier\":\"m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba\"},{\"localIdentifier\":\"m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba\"}],\"operator\":\"SUM\"}}},{\"localIdentifier\":\"m_de156d02_m_c259efe401270d1198a7d2469f58c0a5_f_account.id\",\"definition\":{\"overPeriodMeasure\":{\"measureIdentifier\":{\"localIdentifier\":\"m_c259efe401270d1198a7d2469f58c0a5\"},\"dateAttributes\":[{\"attribute\":{\"identifier\":{\"id\":\"f_account.id\",\"type\":\"attribute\"}},\"periodsAgo\":1}]}},\"alias\":\"PoP measure\"}],\"filters\":[],\"auxMeasures\":[]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"items\":[{\"id\":\"f_density\",\"type\":\"fact\"},{\"id\":\"f_opportunitysnapshot.f_amount\",\"type\":\"fact\"},{\"id\":\"f_opportunitysnapshot.f_daystoclose\",\"type\":\"fact\"},{\"id\":\"f_opportunitysnapshot.f_probability\",\"type\":\"fact\"},{\"id\":\"f_population\",\"type\":\"fact\"},{\"id\":\"f_stagehistory.f_duration\",\"type\":\"fact\"},{\"id\":\"f_stagehistory.f_velocity\",\"type\":\"fact\"},{\"id\":\"fact.f_activity.activitydate\",\"type\":\"fact\"},{\"id\":\"fact.f_opportunity.oppcreateddate\",\"type\":\"fact\"},{\"id\":\"fact.f_opportunitysnapshot.oppclosedate\",\"type\":\"fact\"},{\"id\":\"fact.f_opportunitysnapshot.oppsnapshotdate\",\"type\":\"fact\"},{\"id\":\"fact.f_timeline.timelinedate\",\"type\":\"fact\"},{\"id\":\"6b1411d5-e253-418e-8fd3-137a9f56ea92\",\"type\":\"metric\"},{\"id\":\"768414e1-4bbe-4f01-b125-0cdc6305dc76\",\"type\":\"metric\"},{\"id\":\"87a053b0-3947-49f3-b0c5-de53fd01f050\",\"type\":\"metric\"},{\"id\":\"8d33a0b1-cfdf-4074-a26a-4c4357774967\",\"type\":\"metric\"},{\"id\":\"973a14c4-acb1-45fb-ba52-5d96fa02f7ba\",\"type\":\"metric\"},{\"id\":\"amount_bop\",\"type\":\"metric\"},{\"id\":\"avg._amount\",\"type\":\"metric\"},{\"id\":\"b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa\",\"type\":\"metric\"},{\"id\":\"best_case\",\"type\":\"metric\"},{\"id\":\"c5ee7836-126c-41aa-bd69-1873d379a065\",\"type\":\"metric\"},{\"id\":\"close_bop\",\"type\":\"metric\"},{\"id\":\"close_eop\",\"type\":\"metric\"},{\"id\":\"e519fa2a-86c3-4e32-8313-0c03061626b1\",\"type\":\"metric\"},{\"id\":\"e519fa2a-86c3-4e32-8313-0c03062348j3\",\"type\":\"metric\"},{\"id\":\"lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i\",\"type\":\"metric\"},{\"id\":\"metric_has_null_value\",\"type\":\"metric\"},{\"id\":\"negative_metric\",\"type\":\"metric\"},{\"id\":\"of_activities\",\"type\":\"metric\"},{\"id\":\"of_lost_opps.\",\"type\":\"metric\"},{\"id\":\"of_won_opps.\",\"type\":\"metric\"},{\"id\":\"opp._first_snapshot\",\"type\":\"metric\"},{\"id\":\"snapshot_bop\",\"type\":\"metric\"},{\"id\":\"timeline_bop\",\"type\":\"metric\"}]}",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Expires": "0",
+            "X-XSS-Protection": "0",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "6ac1fef3-c480-4307-8ede-1b1ef8560ee3",
+    "persistent": true,
+    "insertionIndex": 13
+}

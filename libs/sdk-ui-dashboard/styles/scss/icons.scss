@@ -1,0 +1,195 @@
+// (C) 2015-2025 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.icon {
+    display: inline-block;
+    margin: 0 0.25em;
+    font-size: 80%;
+    vertical-align: middle;
+}
+
+.button-dropdown.gd-button-small,
+.dropdown-body .gd-list-item,
+.configuration-category label {
+    &[class*="type-"] {
+        &::before {
+            content: "";
+            position: relative;
+            left: 0;
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            margin-top: -1px;
+            margin-right: 6px;
+            font-family: Indigo, sans-serif;
+            font-size: 12px;
+            text-align: left;
+            vertical-align: bottom;
+        }
+    }
+
+    &.type-growIsGood {
+        .shortened {
+            display: inline;
+        }
+
+        &::before {
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/trend-positive.svg") no-repeat center;
+        }
+
+        &.is-selected {
+            color: kit-variables.$gd-color-positive;
+
+            &:hover {
+                background-color: variables.$gd-color-positive-dimmed;
+            }
+        }
+    }
+
+    &.type-growIsBad {
+        .shortened {
+            display: inline;
+        }
+
+        &::before {
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/trend-negative.svg") no-repeat center;
+        }
+
+        &.is-selected {
+            color: kit-variables.$gd-color-negative;
+
+            &:hover {
+                background-color: variables.$gd-color-negative-dimmed;
+            }
+        }
+    }
+
+    &.type-measure::before {
+        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/measure.svg") no-repeat center;
+    }
+
+    &.type-metric::before {
+        margin-top: 0;
+        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/metric.svg") no-repeat center;
+    }
+
+    &.type-attribute::before {
+        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/attribute.svg") no-repeat center;
+    }
+
+    &.type-date::before {
+        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/date-dropdown.svg") no-repeat center;
+    }
+
+    &.type-comparison::before {
+        display: none;
+    }
+}
+
+.button-dropdown.gd-button-small {
+    &[class*="type-"] {
+        padding-left: 35px;
+
+        &::before {
+            position: absolute;
+            left: 11px;
+        }
+    }
+}
+
+.gd-list-item {
+    .gd-icon-list {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/list.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-save-as-new {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/save-as-new.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-filter {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/filter.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-pdf {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-pdf.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-sheet {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-sheet.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-slides {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-slides.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-image {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-image.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-csv-raw {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-csv-raw.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-csv-formatted {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-csv-formatted.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+}
+
+.dropdown-body .gd-list-item {
+    &.type-growIsGood,
+    &.type-growIsBad,
+    &.type-metric,
+    &.type-attribute,
+    &.type-date {
+        &::before {
+            margin-left: 1px;
+        }
+    }
+}

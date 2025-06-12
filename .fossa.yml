@@ -1,0 +1,11 @@
+---
+version: 3
+project:
+  id: gooddata-ui-sdk
+
+telemetry:
+  scope: 'off'
+targets:
+  only:
+    - type: pnpm
+      path: common/config/rush

@@ -1,0 +1,14 @@
+// (C) 2019-2025 GoodData Corporation
+
+.gd-relative-filter-form-granularity-tabs {
+    margin-bottom: 10px;
+
+    &.gd-tabs.small .gd-tab {
+        background: none;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        margin-right: 0;
+        margin-left: 0;
+    }
+}

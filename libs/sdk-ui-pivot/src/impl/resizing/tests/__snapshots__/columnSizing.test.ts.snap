@@ -1,0 +1,420 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ResizedColumnStore > addWeekMeasureColumn > should add weak column 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {},
+  "weakMeasuresColumnWidths": {
+    "m_87a053b0_3947_49f3_b0c5_de53fd01f050": {
+      "measureColumnWidthItem": {
+        "locator": {
+          "measureLocatorItem": {
+            "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+        "width": {
+          "value": 111,
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`ResizedColumnStore > addWeekMeasureColumn > should do nothing when column type is not MEASURE_COLUMN 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {},
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > addWeekMeasureColumn > should replace single row measure width with weak column 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {},
+  "weakMeasuresColumnWidths": {
+    "m_87a053b0_3947_49f3_b0c5_de53fd01f050": {
+      "measureColumnWidthItem": {
+        "locator": {
+          "measureLocatorItem": {
+            "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+        "width": {
+          "value": 111,
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for all columns of a first measure on pivoted table 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {},
+  "weakMeasuresColumnWidths": {
+    "m_87a053b0_3947_49f3_b0c5_de53fd01f050": {
+      "measureColumnWidthItem": {
+        "locator": {
+          "measureLocatorItem": {
+            "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+        "width": {
+          "value": 155,
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for all columns of a second measure on pivoted table 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {},
+  "weakMeasuresColumnWidths": {
+    "m_e519fa2a_86c3_4e32_8313_0c03062348j3": {
+      "measureColumnWidthItem": {
+        "locator": {
+          "measureLocatorItem": {
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+          },
+        },
+        "width": {
+          "value": 175,
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for all measure columns on pivoted table 1`] = `
+{
+  "allMeasureColumnWidth": 125,
+  "manuallyResizedColumns": {},
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for attribute column width on table with single row attribute 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "r_0": {
+      "width": {
+        "value": 200,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for auto-sizing exactly one measure column on pivoted table 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "c_4": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": "auto",
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for auto-sizing exactly two measure columns of two different measures on pivoted table 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "c_4": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": "auto",
+      },
+    },
+    "c_5": {
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "width": {
+        "value": "auto",
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for both attribute columns width on table with two row attributes 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "r_0": {
+      "width": {
+        "value": 300,
+      },
+    },
+    "r_1": {
+      "width": {
+        "value": 200,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for both measure columns on non-pivoted table with two measures 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "c_0": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": 100,
+      },
+    },
+    "c_1": {
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "width": {
+        "value": 200,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for combination of attribute, single measure and all measure widths on pivoted table 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "c_4": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": 200,
+      },
+    },
+    "r_0": {
+      "width": {
+        "value": 300,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {
+    "m_e519fa2a_86c3_4e32_8313_0c03062348j3": {
+      "measureColumnWidthItem": {
+        "locator": {
+          "measureLocatorItem": {
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+          },
+        },
+        "width": {
+          "value": 175,
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for combination of single measure and all measure widths on pivoted table 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "c_4": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": 200,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {
+    "m_e519fa2a_86c3_4e32_8313_0c03062348j3": {
+      "measureColumnWidthItem": {
+        "locator": {
+          "measureLocatorItem": {
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+          },
+        },
+        "width": {
+          "value": 175,
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for exactly one measure column on pivoted table 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "c_4": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": 100,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for exactly two measure columns of same measure on pivoted table 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "c_2": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": 200,
+      },
+    },
+    "c_4": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": 100,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for exactly two measure columns of two different measures on pivoted table 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "c_4": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": 100,
+      },
+    },
+    "c_5": {
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "width": {
+        "value": 200,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for first attribute column width on table with two row attributes 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "r_0": {
+      "width": {
+        "value": 200,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for first measure column on non-pivoted table with two measures 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "c_0": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": 100,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for measureless column width on column-only table 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "cg_3": {
+      "measureIdentifier": undefined,
+      "width": {
+        "value": 400,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for second attribute column width on table with two row attributes 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "r_1": {
+      "width": {
+        "value": 200,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > initial state > should create valid store for second measure column on non-pivoted table with two measures 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {
+    "c_1": {
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "width": {
+        "value": 100,
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > removeFromManuallyResizedColumn > should set auto-width for measure column when column not sized but auto-width is used 1`] = `
+{
+  "allMeasureColumnWidth": 155,
+  "manuallyResizedColumns": {
+    "c_0": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": "auto",
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > removeFromManuallyResizedColumn > should set auto-width for measure column when column sized but auto-width is used 1`] = `
+{
+  "allMeasureColumnWidth": 155,
+  "manuallyResizedColumns": {
+    "c_0": {
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "width": {
+        "value": "auto",
+      },
+    },
+  },
+  "weakMeasuresColumnWidths": {},
+}
+`;
+
+exports[`ResizedColumnStore > removeWeakMeasureColumn > should clear auto-width for measure column 1`] = `
+{
+  "allMeasureColumnWidth": null,
+  "manuallyResizedColumns": {},
+  "weakMeasuresColumnWidths": {},
+}
+`;

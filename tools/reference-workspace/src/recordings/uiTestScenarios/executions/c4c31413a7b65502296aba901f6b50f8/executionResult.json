@@ -1,0 +1,21 @@
+{
+    "dimensions": [
+        { "headers": [] },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "attr.f_product.product", "name": "Product", "uri": "" },
+                        "granularity": null,
+                        "identifier": "label.f_product.product.name",
+                        "localIdentifier": "a_label.f_product.product.name",
+                        "name": "Product Name",
+                        "primaryLabel": { "identifier": "attr.f_product.product", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

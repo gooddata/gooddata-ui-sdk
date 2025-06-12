@@ -1,0 +1,7 @@
+styles/css
+# ignore the auxiliary file created during build to extract package version
+src/__version.ts
+# ignore the NOTICE that gets copied here on publish, the source of truth is the root of the repo
+NOTICE
+
+src/presentation/localization/bundles/*.ts

@@ -1,0 +1,72 @@
+[
+    {
+        "comparisonType": "Previous period",
+        "dateFilter": "relative-this-month",
+        "kpiPOPTitle": "prev. month"
+    },
+    {
+        "comparisonType": "Previous period",
+        "dateFilter": "relative-this-quarter",
+        "kpiPOPTitle": "prev. quarter"
+    },
+    {
+        "comparisonType": "Previous period",
+        "dateFilter": "relative-last-7-days",
+        "kpiPOPTitle": "prev. 7d"
+    },
+    {
+        "comparisonType": "Previous period",
+        "dateFilter": "relative-last-12-months",
+        "kpiPOPTitle": "prev. 12m"
+    },
+    {
+        "comparisonType": "Previous period",
+        "dateFilter": "relative-last-4-quarters",
+        "kpiPOPTitle": "prev. 4q"
+    },
+    {
+        "comparisonType": "Previous period",
+        "dateFilter": "relative-this-year",
+        "kpiPOPTitle": "prev. year"
+    },
+    {
+        "comparisonType": "Previous period",
+        "dateFilter": "relative-last-year",
+        "kpiPOPTitle": "prev. year"
+    },
+    {
+        "comparisonType": "Same period in previous year",
+        "dateFilter": "relative-this-month",
+        "kpiPOPTitle": "prev. year"
+    },
+    {
+        "comparisonType": "Same period in previous year",
+        "dateFilter": "relative-this-quarter",
+        "kpiPOPTitle": "prev. year"
+    },
+    {
+        "comparisonType": "Same period in previous year",
+        "dateFilter": "relative-last-7-days",
+        "kpiPOPTitle": "prev. year"
+    },
+    {
+        "comparisonType": "Same period in previous year",
+        "dateFilter": "relative-last-12-months",
+        "kpiPOPTitle": "prev. year"
+    },
+    {
+        "comparisonType": "Same period in previous year",
+        "dateFilter": "relative-last-4-quarters",
+        "kpiPOPTitle": "prev. year"
+    },
+    {
+        "comparisonType": "Same period in previous year",
+        "dateFilter": "relative-this-year",
+        "kpiPOPTitle": "prev. year"
+    },
+    {
+        "comparisonType": "Same period in previous year",
+        "dateFilter": "relative-last-year",
+        "kpiPOPTitle": "prev. year"
+    }
+]

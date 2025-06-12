@@ -1,0 +1,37 @@
+// (C) 2019-2025 GoodData Corporation
+@use "mixins";
+@use "variables";
+
+/* ==========================================================================
+   Timepicker
+   ========================================================================== */
+.gd-timepicker {
+    display: inline-block;
+
+    .button-dropdown {
+        width: 100%;
+    }
+
+    .gd-icon-timer,
+    .button-dropdown .gd-icon-timer,
+    .button-dropdown:focus .gd-icon-timer,
+    .button-dropdown:hover .gd-icon-timer,
+    .button-dropdown.is-active .gd-icon-timer {
+        color: variables.$gd-palette-primary-base;
+    }
+}
+
+.gd-mobile-dropdown-header {
+    .button-dropdown.is-active .gd-button-icon.gd-icon-timer {
+        color: variables.$gd-palette-primary-base;
+    }
+}
+
+// Common styles for UiListbox items
+.gd-timepicker-list-item.gd-list-item {
+    height: 28px;
+}
+
+.gd-ui-kit-listbox {
+    min-width: 95px;
+}

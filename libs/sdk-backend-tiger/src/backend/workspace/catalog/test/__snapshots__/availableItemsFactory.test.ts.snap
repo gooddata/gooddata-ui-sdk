@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`available item filtering > item filtering > should filter-in date dataset if attribute ref matches 1`] = `[]`;
+
+exports[`available item filtering > item filtering > should filter-in simple object if ref matches 1`] = `[]`;

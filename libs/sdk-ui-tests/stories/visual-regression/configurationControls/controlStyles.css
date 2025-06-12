@@ -1,0 +1,8 @@
+/*
+ * this is normally defined in AD and is used to control whether the 'This property is not applicable'
+ * popup is visible when hovering over control panels.
+ */
+
+.invisible {
+    display: none;
+}

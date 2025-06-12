@@ -1,0 +1,584 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`query insight attributes meta > should return metadata for insight with attribute filter 1`] = `
+{
+  "attributes": [
+    {
+      "description": "Product",
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "Product",
+          "id": "attr.f_product.product",
+          "isDefault": false,
+          "isPrimary": true,
+          "ref": {
+            "identifier": "attr.f_product.product",
+            "type": "displayForm",
+          },
+          "title": "Product",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "label.f_product.product.name",
+          "isDefault": true,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.name",
+            "type": "displayForm",
+          },
+          "title": "Product Name",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.image",
+          "id": "label.f_product.product.image",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.image",
+            "type": "displayForm",
+          },
+          "title": "Product Image",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "label.f_product.product.link",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.link",
+            "type": "displayForm",
+          },
+          "title": "Product Link",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",
+        },
+      ],
+      "id": "attr.f_product.product",
+      "ref": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "title": "Product",
+      "type": "attribute",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_product.product",
+    },
+  ],
+  "displayForms": [
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "",
+      "id": "label.f_product.product.name",
+      "isDefault": true,
+      "isPrimary": false,
+      "ref": {
+        "identifier": "label.f_product.product.name",
+        "type": "displayForm",
+      },
+      "title": "Product Name",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+    },
+  ],
+  "usage": {
+    "inAttributes": [
+      {
+        "identifier": "label.f_product.product.name",
+        "type": "displayForm",
+      },
+    ],
+    "inFilters": [
+      {
+        "identifier": "label.f_product.product.name",
+        "type": "displayForm",
+      },
+    ],
+    "inMeasureFilters": [],
+  },
+}
+`;
+
+exports[`query insight attributes meta > should return metadata for insight with date attributes in buckets 1`] = `
+{
+  "attributes": [
+    {
+      "description": "Year",
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "dt_closedate_timestamp.year",
+            "type": "attribute",
+          },
+          "description": "Year",
+          "id": "dt_closedate_timestamp.year",
+          "isDefault": false,
+          "isPrimary": true,
+          "ref": {
+            "identifier": "dt_closedate_timestamp.year",
+            "type": "displayForm",
+          },
+          "title": "Closed - Year",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/dt_closedate_timestamp.year",
+        },
+      ],
+      "id": "dt_closedate_timestamp.year",
+      "ref": {
+        "identifier": "dt_closedate_timestamp.year",
+        "type": "attribute",
+      },
+      "title": "Closed - Year",
+      "type": "attribute",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/dt_closedate_timestamp.year",
+    },
+    {
+      "description": "Year",
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "dt_oppcreated_timestamp.year",
+            "type": "attribute",
+          },
+          "description": "Year",
+          "id": "dt_oppcreated_timestamp.year",
+          "isDefault": false,
+          "isPrimary": true,
+          "ref": {
+            "identifier": "dt_oppcreated_timestamp.year",
+            "type": "displayForm",
+          },
+          "title": "Created - Year",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/dt_oppcreated_timestamp.year",
+        },
+      ],
+      "id": "dt_oppcreated_timestamp.year",
+      "ref": {
+        "identifier": "dt_oppcreated_timestamp.year",
+        "type": "attribute",
+      },
+      "title": "Created - Year",
+      "type": "attribute",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/dt_oppcreated_timestamp.year",
+    },
+  ],
+  "displayForms": [
+    {
+      "attribute": {
+        "identifier": "dt_closedate_timestamp.year",
+        "type": "attribute",
+      },
+      "description": "Year",
+      "id": "dt_closedate_timestamp.year",
+      "isDefault": false,
+      "isPrimary": true,
+      "ref": {
+        "identifier": "dt_closedate_timestamp.year",
+        "type": "displayForm",
+      },
+      "title": "Closed - Year",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/dt_closedate_timestamp.year",
+    },
+    {
+      "attribute": {
+        "identifier": "dt_oppcreated_timestamp.year",
+        "type": "attribute",
+      },
+      "description": "Year",
+      "id": "dt_oppcreated_timestamp.year",
+      "isDefault": false,
+      "isPrimary": true,
+      "ref": {
+        "identifier": "dt_oppcreated_timestamp.year",
+        "type": "displayForm",
+      },
+      "title": "Created - Year",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/dt_oppcreated_timestamp.year",
+    },
+  ],
+  "usage": {
+    "inAttributes": [
+      {
+        "identifier": "dt_closedate_timestamp.year",
+        "type": "displayForm",
+      },
+      {
+        "identifier": "dt_oppcreated_timestamp.year",
+        "type": "displayForm",
+      },
+    ],
+    "inFilters": [],
+    "inMeasureFilters": [],
+  },
+}
+`;
+
+exports[`query insight attributes meta > should return metadata for insight with multiple attributes in buckets 1`] = `
+{
+  "attributes": [
+    {
+      "description": "Product",
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "Product",
+          "id": "attr.f_product.product",
+          "isDefault": false,
+          "isPrimary": true,
+          "ref": {
+            "identifier": "attr.f_product.product",
+            "type": "displayForm",
+          },
+          "title": "Product",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "label.f_product.product.name",
+          "isDefault": true,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.name",
+            "type": "displayForm",
+          },
+          "title": "Product Name",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.image",
+          "id": "label.f_product.product.image",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.image",
+            "type": "displayForm",
+          },
+          "title": "Product Image",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "label.f_product.product.link",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.link",
+            "type": "displayForm",
+          },
+          "title": "Product Link",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",
+        },
+      ],
+      "id": "attr.f_product.product",
+      "ref": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "title": "Product",
+      "type": "attribute",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_product.product",
+    },
+    {
+      "description": "Department",
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "f_owner.department_id",
+            "type": "attribute",
+          },
+          "description": "Department",
+          "id": "f_owner.department_id",
+          "isDefault": true,
+          "isPrimary": true,
+          "ref": {
+            "identifier": "f_owner.department_id",
+            "type": "displayForm",
+          },
+          "title": "Department",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.department_id",
+        },
+        {
+          "attribute": {
+            "identifier": "f_owner.department_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "f_owner.department_id.departmenthyperlink",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "f_owner.department_id.departmenthyperlink",
+            "type": "displayForm",
+          },
+          "title": "Department hyperlink",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.department_id.departmenthyperlink",
+        },
+      ],
+      "id": "f_owner.department_id",
+      "ref": {
+        "identifier": "f_owner.department_id",
+        "type": "attribute",
+      },
+      "title": "Department",
+      "type": "attribute",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/f_owner.department_id",
+    },
+    {
+      "description": "Stage Name",
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "attr.f_stage.stagename",
+            "type": "attribute",
+          },
+          "description": "Stage Name",
+          "id": "attr.f_stage.stagename",
+          "isDefault": true,
+          "isPrimary": true,
+          "ref": {
+            "identifier": "attr.f_stage.stagename",
+            "type": "displayForm",
+          },
+          "title": "Stage Name",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_stage.stagename",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_stage.stagename",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "label.f_stage.stagename.stagename",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_stage.stagename.stagename",
+            "type": "displayForm",
+          },
+          "title": "Stage Name",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_stage.stagename.stagename",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_stage.stagename",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "label.f_stage.stagename.order",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_stage.stagename.order",
+            "type": "displayForm",
+          },
+          "title": "Order",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_stage.stagename.order",
+        },
+      ],
+      "id": "attr.f_stage.stagename",
+      "ref": {
+        "identifier": "attr.f_stage.stagename",
+        "type": "attribute",
+      },
+      "title": "Stage Name",
+      "type": "attribute",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_stage.stagename",
+    },
+    {
+      "description": "Region",
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "f_owner.region_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "f_owner.region_id.regionhyperlink",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "f_owner.region_id.regionhyperlink",
+            "type": "displayForm",
+          },
+          "title": "Region hyperlink",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.region_id.regionhyperlink",
+        },
+        {
+          "attribute": {
+            "identifier": "f_owner.region_id",
+            "type": "attribute",
+          },
+          "description": "Region",
+          "id": "f_owner.region_id",
+          "isDefault": true,
+          "isPrimary": true,
+          "ref": {
+            "identifier": "f_owner.region_id",
+            "type": "displayForm",
+          },
+          "title": "Region",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.region_id",
+        },
+      ],
+      "id": "f_owner.region_id",
+      "ref": {
+        "identifier": "f_owner.region_id",
+        "type": "attribute",
+      },
+      "title": "Region",
+      "type": "attribute",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/f_owner.region_id",
+    },
+  ],
+  "displayForms": [
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "",
+      "id": "label.f_product.product.name",
+      "isDefault": true,
+      "isPrimary": false,
+      "ref": {
+        "identifier": "label.f_product.product.name",
+        "type": "displayForm",
+      },
+      "title": "Product Name",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+    },
+    {
+      "attribute": {
+        "identifier": "f_owner.department_id",
+        "type": "attribute",
+      },
+      "description": "Department",
+      "id": "f_owner.department_id",
+      "isDefault": true,
+      "isPrimary": true,
+      "ref": {
+        "identifier": "f_owner.department_id",
+        "type": "displayForm",
+      },
+      "title": "Department",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.department_id",
+    },
+    {
+      "attribute": {
+        "identifier": "attr.f_stage.stagename",
+        "type": "attribute",
+      },
+      "description": "Stage Name",
+      "id": "attr.f_stage.stagename",
+      "isDefault": true,
+      "isPrimary": true,
+      "ref": {
+        "identifier": "attr.f_stage.stagename",
+        "type": "displayForm",
+      },
+      "title": "Stage Name",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_stage.stagename",
+    },
+    {
+      "attribute": {
+        "identifier": "f_owner.region_id",
+        "type": "attribute",
+      },
+      "description": "Region",
+      "id": "f_owner.region_id",
+      "isDefault": true,
+      "isPrimary": true,
+      "ref": {
+        "identifier": "f_owner.region_id",
+        "type": "displayForm",
+      },
+      "title": "Region",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.region_id",
+    },
+  ],
+  "usage": {
+    "inAttributes": [
+      {
+        "identifier": "label.f_product.product.name",
+        "type": "displayForm",
+      },
+      {
+        "identifier": "f_owner.department_id",
+        "type": "displayForm",
+      },
+      {
+        "identifier": "attr.f_stage.stagename",
+        "type": "displayForm",
+      },
+      {
+        "identifier": "f_owner.region_id",
+        "type": "displayForm",
+      },
+    ],
+    "inFilters": [],
+    "inMeasureFilters": [],
+  },
+}
+`;

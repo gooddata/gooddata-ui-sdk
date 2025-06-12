@@ -1,0 +1,34 @@
+name: Hugo Build
+description: Builds documentation using Hugo
+inputs:
+  base-url:
+    required: false
+    description: Optional base url used during build
+  working-directory:
+    required: false
+    description: Path to documentation directory
+    default: docs
+  hugo-env:
+    required: false
+    description: Environment variable
+    default: public
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: '0.110.0'
+        extended: true
+    - name: Install dependencies
+      working-directory: ${{ inputs.working-directory }}
+      run: npm ci
+      shell: bash
+    - name: Build
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        HUGO_ENV: ${{ inputs.hugo-env }}
+        BASE_URL: ${{ inputs.base-url }}
+      run: hugo --minify ${BASE_URL:+--baseURL $BASE_URL}
+      shell: bash

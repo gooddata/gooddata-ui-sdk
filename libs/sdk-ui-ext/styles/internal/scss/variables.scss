@@ -1,0 +1,70 @@
+// (C) 2007-2024 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+$item-border: 2px;
+$item-min-height: 178px;
+$item-inner-padding: 8px;
+$item-outer-padding: 10px;
+$item-headline-lineHeight: 21px;
+$item-headline-padding-vertical: 2px;
+$item-action-width: 36px;
+$widget-drop-shadow: none;
+
+$transition-length: 0.2s;
+
+$button-grey-background: var(--gd-palette-complementary-2, #ebeff4);
+
+// KPI-DASHBOARDS
+$gd-dashboards-content-backgroundColor: var(
+    --gd-dashboards-content-backgroundColor,
+    variables.$gd-color-white
+);
+
+// WIDGETS
+$gd-dashboards-content-widget-title-color: var(
+    --gd-dashboards-content-widget-title-color,
+    variables.$gd-color-text
+);
+$gd-dashboards-content-widget-title-textAlign: var(--gd-dashboards-content-widget-title-textAlign, center);
+$gd-dashboards-content-widget-borderRadius: var(--gd-dashboards-content-widget-borderRadius, 15px);
+$gd-dashboards-content-widget-borderColor: var(--gd-dashboards-content-widget-borderColor, transparent);
+$gd-dashboards-content-widget-borderWidth: var(--gd-dashboards-content-widget-borderWidth, $item-border);
+$gd-dashboards-content-widget-dropShadow: var(--gd-dashboards-content-widget-dropShadow, $widget-drop-shadow);
+
+// HEADLINES
+$gd-dashboards-content-kpiWidget-title-color: var(
+    --gd-dashboards-content-kpiWidget-title-color,
+    $gd-dashboards-content-widget-title-color
+);
+$gd-dashboards-content-kpiWidget-title-textAlign: var(
+    --gd-dashboards-content-kpiWidget-title-textAlign,
+    $gd-dashboards-content-widget-title-textAlign
+);
+$gd-dashboards-content-kpiWidget-backgroundColor: var(
+    --gd-dashboards-content-kpiWidget-backgroundColor,
+    variables.$gd-color-white
+);
+$gd-dashboards-content-kpiWidget-borderRadius: var(
+    --gd-dashboards-content-kpiWidget-borderRadius,
+    $gd-dashboards-content-widget-borderRadius
+);
+$gd-dashboards-content-kpiWidget-borderColor: var(
+    --gd-dashboards-content-kpiWidget-borderColor,
+    $gd-dashboards-content-widget-borderColor
+);
+$gd-dashboards-content-kpiWidget-borderWidth: var(
+    --gd-dashboards-content-kpiWidget-borderWidth,
+    $gd-dashboards-content-widget-borderWidth
+);
+$gd-dashboards-content-kpiWidget-dropShadow: var(
+    --gd-dashboards-content-kpiWidget-dropShadow,
+    $gd-dashboards-content-widget-dropShadow
+);
+$gd-kpi-primaryMeasureColor: var(
+    --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor-from-theme,
+    variables.$gd-color-link
+);
+
+// INSIGHT TITLE
+$insight-title-lineHeight: 21px;
+$insight-title-padding-vertical: 2px;

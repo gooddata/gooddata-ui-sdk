@@ -1,0 +1,62 @@
+// (C) 2020-2025 GoodData Corporation
+@use "sass:color";
+@use "mixins";
+@use "variables";
+
+.gd-input-syntax-highlighting-input {
+    .cm-editor {
+        // start of gd-input-base mixin body
+        box-sizing: border-box;
+        height: 100px;
+        margin: 0;
+        padding: 0;
+        border: 1px solid variables.$gd-input-text-border;
+        line-height: normal;
+        vertical-align: middle;
+        color: variables.$default-gd-color-text;
+        background: variables.$gd-color-white;
+        font-size: 14px;
+        font-family: monospace;
+        font-weight: 200;
+
+        transition: all 0.25s ease-in-out, padding 0s;
+        // end of gd-input-base mixin body
+
+        @include mixins.border-radius(3px);
+        @include mixins.box-shadow(
+            inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
+        );
+
+        @include mixins.placeholder {
+            color: color.adjust(variables.$default-gd-color-link, $alpha: -0.25);
+
+            @include mixins.transition(color, 0.25s, ease-in-out);
+        }
+
+        &:hover {
+            border-color: variables.$gd-input-text-hover-border;
+
+            @include mixins.placeholder {
+                color: variables.$gd-color-link;
+            }
+        }
+
+        &.cm-focused {
+            border-color: variables.$gd-palette-primary-base;
+            outline: none;
+            @include mixins.box-shadow(
+                inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
+            );
+        }
+
+        .cm-matchingBracket {
+            font-weight: bold;
+            color: variables.$gd-color-dark;
+            background-color: variables.$gd-palette-warning-dimmed;
+        }
+
+        .cm-nonmatchingBracket {
+            color: variables.$gd-palette-error-base;
+        }
+    }
+}

@@ -1,0 +1,69 @@
+// (C) 2024-2025 GoodData Corporation
+
+@use "sass:color";
+@use "sass:meta";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
+@use "./main.scss" as main;
+
+.gd-semantic-search {
+    &__overlay {
+        background: kit-variables.$gd-color-white;
+        margin: 10px 0;
+
+        // Desktop view
+        .gd-header-search-dropdown & {
+            width: 440px;
+        }
+
+        // Mobile view
+        .gd-header-menu-search & {
+            .gd-semantic-search__overlay-input {
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    &__overlay-input {
+        margin: 0 10px;
+    }
+
+    &__overlay-error,
+    &__overlay-no-results {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    &__overlay-error {
+        padding: 10px 10px 0;
+    }
+
+    &__overlay-no-results {
+        height: 100px;
+        padding: 0 10px;
+    }
+
+    &__results-item {
+        &--history &__icon {
+            @include main.icon(17px);
+        }
+
+        &__text__lock-icon {
+            width: 14px;
+
+            & svg {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        &__text__row:not(:first-child) {
+            :not(:first-child)::before {
+                content: "\2022";
+                padding-right: 5px;
+            }
+        }
+    }
+}

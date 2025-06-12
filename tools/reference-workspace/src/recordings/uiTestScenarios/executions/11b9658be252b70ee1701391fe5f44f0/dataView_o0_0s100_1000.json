@@ -1,0 +1,95 @@
+{
+    "count": [20, 4],
+    "data": [
+        [2555560.95, 0.48055555555555557, 1552799.85, 0.5798076923076922],
+        [1545646.98, 0.6295238095238095, 721881.5, 0.5948453608247423],
+        [2399135.49, 0.6428571428571429, 1062238.38, 0.659433962264151],
+        [1151921.55, 0.6306930693069307, 1224178.86, 0.6522935779816513],
+        [1338590.52, 0.5923728813559322, 1456436.03, 0.6574468085106383],
+        [1715091.46, 0.5787234042553191, 1495320.45, 0.6185840707964603],
+        [1254667.41, 0.6245098039215686, 2505226.03, 0.6329896907216495],
+        [1415235.79, 0.623404255319149, 2494904.83, 0.5911504424778761],
+        [1042452.58, 0.6191919191919192, 1085807.76, 0.6342592592592593],
+        [2554681.18, 0.5357798165137615, 2029446.29, 0.5666666666666667],
+        [1662922.33, 0.5736363636363636, 1148869.39, 0.6353535353535353],
+        [2167088.59, 0.6171428571428571, 1961557.6, 0.598989898989899],
+        [1740874.32, 0.6689320388349516, 1893293.06, 0.5556603773584905],
+        [4052085.02, 0.6004901960784313, 4710674.62, 0.606046511627907],
+        [4558382.41, 0.6063758389261744, 6347776.18, 0.593730407523511],
+        [4865834.3, 0.5753333333333334, 18734144.21, 0.570404984423676],
+        [3696555.26, 0.5592760180995475, 3109904.94, 0.5871134020618557],
+        [3243476.86, 0.5995454545454546, 3802152.53, 0.588659793814433],
+        [2994463.64, 0.6297435897435897, 3256668.6, 0.5928571428571429],
+        [2977972.95, 0.6037914691943128, 7099535.84, 0.553921568627451]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "Adam Bradley", "uri": "Adam Bradley" } },
+                { "attributeHeaderItem": { "name": "Alejandro Vabiano", "uri": "Alejandro Vabiano" } },
+                { "attributeHeaderItem": { "name": "Alexsandr Fyodr", "uri": "Alexsandr Fyodr" } },
+                { "attributeHeaderItem": { "name": "Cory Owens", "uri": "Cory Owens" } },
+                { "attributeHeaderItem": { "name": "Dale Perdadtin", "uri": "Dale Perdadtin" } },
+                { "attributeHeaderItem": { "name": "Dave Bostadt", "uri": "Dave Bostadt" } },
+                { "attributeHeaderItem": { "name": "Ellen Jones", "uri": "Ellen Jones" } },
+                { "attributeHeaderItem": { "name": "Huey Jonas", "uri": "Huey Jonas" } },
+                { "attributeHeaderItem": { "name": "Jessica Traven", "uri": "Jessica Traven" } },
+                { "attributeHeaderItem": { "name": "John Jovi", "uri": "John Jovi" } },
+                { "attributeHeaderItem": { "name": "Jon Jons", "uri": "Jon Jons" } },
+                { "attributeHeaderItem": { "name": "Lea Forbes", "uri": "Lea Forbes" } },
+                { "attributeHeaderItem": { "name": "Monique Babonas", "uri": "Monique Babonas" } },
+                { "attributeHeaderItem": { "name": "Paul Gomez", "uri": "Paul Gomez" } },
+                { "attributeHeaderItem": { "name": "Paul Jacobs", "uri": "Paul Jacobs" } },
+                { "attributeHeaderItem": { "name": "Ravi Deetri", "uri": "Ravi Deetri" } },
+                { "attributeHeaderItem": { "name": "Thomas Gones", "uri": "Thomas Gones" } },
+                { "attributeHeaderItem": { "name": "Tom Stickler", "uri": "Tom Stickler" } },
+                { "attributeHeaderItem": { "name": "Trevor Deegan", "uri": "Trevor Deegan" } },
+                { "attributeHeaderItem": { "name": "Victor Crushetz", "uri": "Victor Crushetz" } }
+            ]
+        ],
+        [
+            [
+                { "attributeHeaderItem": { "name": "Exclude", "uri": "Exclude" } },
+                { "attributeHeaderItem": { "name": "Exclude", "uri": "Exclude" } },
+                { "attributeHeaderItem": { "name": "Include", "uri": "Include" } },
+                { "attributeHeaderItem": { "name": "Include", "uri": "Include" } },
+                { "totalHeaderItem": { "name": "sum", "type": "SUM" } }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Probability", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Probability", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "SUM" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [20, 4],
+    "totalTotals": [[[116625456.53999999]]],
+    "totals": [
+        [[48932639.59, null, 67692816.95, null]],
+        [
+            [4108360.8000000003],
+            [2267528.48],
+            [3461373.87],
+            [2376100.41],
+            [2795026.55],
+            [3210411.91],
+            [3759893.4399999995],
+            [3910140.62],
+            [2128260.34],
+            [4584127.470000001],
+            [2811791.7199999997],
+            [4128646.19],
+            [3634167.38],
+            [8762759.64],
+            [10906158.59],
+            [23599978.51],
+            [6806460.199999999],
+            [7045629.39],
+            [6251132.24],
+            [10077508.79]
+        ]
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "Our search service is temporarily unavailable.",
+    "semantic-search.error.text": "We are working to resolve the issue.",
+    "semantic-search.no-results": "No results found for “{query}”.",
+    "semantic-search.placeholder": "Search dashboards or visualisation…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Tags",
+    "semantic-search.match": "{score}% match",
+    "semantic-search.previous-search": "Previous search",
+    "semantic-search.date.at": "at",
+    "gs.date.today": "Today",
+    "gs.date.yesterday": "Yesterday",
+    "semantic-search.label": "Search dashboards or visualisation"
+}

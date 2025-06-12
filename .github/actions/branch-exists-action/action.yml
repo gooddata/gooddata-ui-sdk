@@ -1,0 +1,27 @@
+name: Branch exists
+description: This action checks if branch esists
+inputs:
+  source-branch:
+    required: true
+    description: source branch
+outputs:
+  exists:
+    description: exists
+    value: ${{ steps.check-version.outputs.exists }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Check if branch exists
+      id: check-version
+      run: |
+        if git ls-remote --heads origin ${SOURCE_BRANCH} | grep ${SOURCE_BRANCH}; then
+            branch_exists="true"
+        else
+            branch_exists="false"
+        fi
+
+        echo "exists=$branch_exists >> $GITHUB_OUTPUT"
+      env:
+          SOURCE_BRANCH: ${{ inputs.source-branch }}
+      shell: bash

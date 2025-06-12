@@ -1,0 +1,58 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "f_owner.region_id", "name": "Region", "uri": "" },
+                        "granularity": null,
+                        "identifier": "f_owner.region_id",
+                        "localIdentifier": "a_f_owner.region_id",
+                        "name": "Region",
+                        "primaryLabel": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "dt_oppcreated_timestamp.quarter",
+                            "name": "Created - Quarter/Year",
+                            "uri": ""
+                        },
+                        "format": { "locale": "en-US", "pattern": "QQQ y" },
+                        "granularity": "QUARTER",
+                        "identifier": "dt_oppcreated_timestamp.quarter",
+                        "localIdentifier": "a_dt_oppcreated_timestamp.quarter",
+                        "name": "Created - Quarter/Year",
+                        "primaryLabel": {
+                            "identifier": "dt_oppcreated_timestamp.quarter",
+                            "type": "displayForm"
+                        },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                },
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                    "name": "Amount"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

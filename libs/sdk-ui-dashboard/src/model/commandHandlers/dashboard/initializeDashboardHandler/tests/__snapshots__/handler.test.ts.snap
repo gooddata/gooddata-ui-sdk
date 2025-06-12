@@ -1,0 +1,257 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`initialize dashboard handler > for a new dashboard > should initialize new dashboard with default filter context 1`] = `
+{
+  "description": "",
+  "filters": [
+    {
+      "dateFilter": {
+        "from": 0,
+        "granularity": "GDC.time.month",
+        "to": 0,
+        "type": "relative",
+      },
+    },
+  ],
+  "title": "filterContext",
+}
+`;
+
+exports[`initialize dashboard handler > for a new dashboard > should initialize new dashboard with default layout 1`] = `
+{
+  "sections": [],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`initialize dashboard handler > for an empty dashboard > should add default filter context for an empty dashboard 1`] = `
+{
+  "description": "",
+  "filters": [],
+  "title": "filterContext",
+}
+`;
+
+exports[`initialize dashboard handler > for an empty dashboard > should add default layout for an empty dashboard 1`] = `
+{
+  "sections": [],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`initialize dashboard handler > for any dashboard > should resolve config props that can be obtained from backend 1`] = `
+{
+  "allowCreateInsightRequest": false,
+  "allowUnfinishedFeatures": false,
+  "colorPalette": [],
+  "dateFilterConfig": {
+    "absoluteForm": {
+      "from": Any<String>,
+      "localIdentifier": "ABSOLUTE_FORM",
+      "name": "",
+      "to": Any<String>,
+      "type": "absoluteForm",
+      "visible": true,
+    },
+    "absolutePresets": [],
+    "allTime": {
+      "localIdentifier": "ALL_TIME",
+      "name": "",
+      "type": "allTime",
+      "visible": true,
+    },
+    "ref": {
+      "identifier": "defaultDateFilterProjectConfig",
+    },
+    "relativeForm": {
+      "availableGranularities": [
+        "GDC.time.month",
+        "GDC.time.date",
+        "GDC.time.quarter",
+        "GDC.time.year",
+      ],
+      "localIdentifier": "RELATIVE_FORM",
+      "name": "",
+      "type": "relativeForm",
+      "visible": true,
+    },
+    "relativePresets": [
+      {
+        "from": -6,
+        "granularity": "GDC.time.date",
+        "localIdentifier": "LAST_7_DAYS",
+        "name": "",
+        "to": 0,
+        "type": "relativePreset",
+        "visible": true,
+      },
+      {
+        "from": -29,
+        "granularity": "GDC.time.date",
+        "localIdentifier": "LAST_30_DAYS",
+        "name": "",
+        "to": 0,
+        "type": "relativePreset",
+        "visible": true,
+      },
+      {
+        "from": -89,
+        "granularity": "GDC.time.date",
+        "localIdentifier": "LAST_90_DAYS",
+        "name": "",
+        "to": 0,
+        "type": "relativePreset",
+        "visible": true,
+      },
+      {
+        "from": 0,
+        "granularity": "GDC.time.month",
+        "localIdentifier": "THIS_MONTH",
+        "name": "",
+        "to": 0,
+        "type": "relativePreset",
+        "visible": true,
+      },
+      {
+        "from": -1,
+        "granularity": "GDC.time.month",
+        "localIdentifier": "LAST_MONTH",
+        "name": "",
+        "to": -1,
+        "type": "relativePreset",
+        "visible": true,
+      },
+      {
+        "from": -11,
+        "granularity": "GDC.time.month",
+        "localIdentifier": "LAST_12_MONTHS",
+        "name": "",
+        "to": 0,
+        "type": "relativePreset",
+        "visible": true,
+      },
+      {
+        "from": 0,
+        "granularity": "GDC.time.quarter",
+        "localIdentifier": "THIS_QUARTER",
+        "name": "",
+        "to": 0,
+        "type": "relativePreset",
+        "visible": true,
+      },
+      {
+        "from": -1,
+        "granularity": "GDC.time.quarter",
+        "localIdentifier": "LAST_QUARTER",
+        "name": "",
+        "to": -1,
+        "type": "relativePreset",
+        "visible": true,
+      },
+      {
+        "from": -3,
+        "granularity": "GDC.time.quarter",
+        "localIdentifier": "LAST_4_QUARTERS",
+        "name": "",
+        "to": 0,
+        "type": "relativePreset",
+        "visible": true,
+      },
+      {
+        "from": 0,
+        "granularity": "GDC.time.year",
+        "localIdentifier": "THIS_YEAR",
+        "name": "",
+        "to": 0,
+        "type": "relativePreset",
+        "visible": true,
+      },
+      {
+        "from": -1,
+        "granularity": "GDC.time.year",
+        "localIdentifier": "LAST_YEAR",
+        "name": "",
+        "to": -1,
+        "type": "relativePreset",
+        "visible": true,
+      },
+    ],
+    "selectedOption": "THIS_MONTH",
+  },
+  "disableCrossFiltering": false,
+  "disableDefaultDrills": false,
+  "disableUserFilterReset": false,
+  "enableFilterValuesResolutionInDrillEvents": false,
+  "externalRecipient": undefined,
+  "hideSaveAsNewButton": false,
+  "hideShareButton": false,
+  "initialRenderMode": "view",
+  "isEmbedded": false,
+  "isExport": false,
+  "isReadOnly": false,
+  "isWhiteLabeled": false,
+  "locale": "en-US",
+  "mapboxToken": undefined,
+  "menuButtonItemsVisibility": {},
+  "objectAvailability": {},
+  "separators": {
+    "decimal": ".",
+    "thousand": ",",
+  },
+  "settings": {
+    "enableKPIDashboardDrillFromAttribute": true,
+  },
+  "widgetsOverlay": {},
+}
+`;
+
+exports[`initialize dashboard handler > for any dashboard > should resolve permissions if none provided 1`] = `
+{
+  "canAccessWorkbench": true,
+  "canCreateAnalyticalDashboard": true,
+  "canCreateAutomation": true,
+  "canCreateFilterView": true,
+  "canCreateReport": true,
+  "canCreateScheduledMail": true,
+  "canCreateVisualization": true,
+  "canExecuteRaw": true,
+  "canExportPdf": true,
+  "canExportReport": true,
+  "canExportTabular": true,
+  "canInitData": true,
+  "canInviteUserToProject": true,
+  "canListUsersInProject": true,
+  "canManageACL": true,
+  "canManageAnalyticalDashboard": true,
+  "canManageDomain": true,
+  "canManageMetric": true,
+  "canManageProject": true,
+  "canManageReport": true,
+  "canManageScheduledMail": true,
+  "canRefreshData": true,
+  "canUploadNonProductionCSV": true,
+  "canUseAiAssistant": true,
+}
+`;
+
+exports[`initialize dashboard handler > should emit events in correct order and carry-over correlationId 1`] = `
+[
+  {
+    "correlationId": "renderCorrelation",
+    "type": "GDC.DASH/EVT.RENDER.REQUESTED",
+  },
+  {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.INITIALIZED",
+  },
+]
+`;

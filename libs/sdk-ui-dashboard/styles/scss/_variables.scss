@@ -1,0 +1,155 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+// CSS - variables
+$gd-palette-primary-base-t90: var(
+    --gd-palette-primary-base-t90,
+    color.adjust(kit-variables.$gd-color-highlight, $alpha: -0.9)
+);
+$gd-palette-primary-base-t85: var(
+    --gd-palette-primary-base-t85,
+    color.adjust(kit-variables.$gd-color-highlight, $alpha: -0.85)
+);
+$gd-palette-primary-base-t50: var(
+    --gd-palette-primary-base-t50,
+    color.adjust(kit-variables.$gd-color-highlight, $alpha: -0.5)
+);
+$gd-palette-primary-base-mix15-white: var(
+    --gd-palette-primary-base-mix15-white,
+    color.adjust(
+        color.mix(kit-variables.$gd-color-highlight, kit-variables.$default-gd-color-text-light, 15%),
+        $alpha: -0.075
+    )
+);
+$gd-palette-primary-dimmed50: var(
+    --gd-palette-primary-dimmed50,
+    color.mix(kit-variables.$gd-color-highlight, kit-variables.$default-gd-color-white, 50%)
+);
+$gd-color-positive-dimmed: color.mix(
+    kit-variables.$gd-color-positive,
+    kit-variables.$default-gd-color-text-light,
+    10%
+);
+$gd-color-negative-dimmed: color.mix(
+    kit-variables.$gd-color-negative,
+    kit-variables.$default-gd-color-text-light,
+    10%
+);
+
+$grey-background: #eceff3;
+$darker-grey-background: var(--gd-palette-complementary-7-from-theme, #b4c0cf);
+
+$scrollbar-width: 15px;
+
+$item-border: 2px;
+$item-min-height: 178px;
+$item-inner-padding: 8px;
+$item-outer-padding: 10px;
+$item-headline-lineHeight: 21px;
+$item-headline-padding-vertical: 2px;
+$item-action-width: 36px;
+$item-action-icon-width: 18px;
+$item-action-gap: 10px;
+$widget-drop-shadow: none;
+$sidebar-width: 230px;
+
+$filter-config-padding: 6px;
+
+$dialog-border: bubble-variables.$default-bubble-light-border-base;
+$dialog-background: var(--gd-palette-complementary-0-from-theme, #fcfcfd);
+
+$transition-length: 0.2s;
+
+$button-grey-background: var(--gd-palette-complementary-2, #ebeff4);
+
+$gd-dashboards-content-backgroundColor: var(
+    --gd-dashboards-content-backgroundColor,
+    kit-variables.$gd-color-white
+);
+
+$filter-bar-height: 55px;
+$filter-bar-drop-zone-height: 30px;
+
+$gd-dashboards-filterBar-backgroundColor: var(
+    --gd-dashboards-filterBar-backgroundColor,
+    kit-variables.$gd-color-white
+);
+
+$nav-border-size: 1px;
+$nav-border: $nav-border-size solid kit-variables.$gd-border-color;
+$default-gd-color-text: #464e56;
+$gd-color-text: var(--gd-palette-complementary-8, $default-gd-color-text);
+
+$gd-dashboards-title-color: var(--gd-dashboards-title-color, kit-variables.$gd-color-text);
+$default-button-normal-active-border-color: #b1c1d1;
+$editable-label-border: var(
+    --gd-palette-complementary-4-from-theme,
+    color.adjust($default-button-normal-active-border-color, $alpha: -0.5)
+);
+
+$sidebar-transition-length: 0.5s;
+
+$gd-dashboards-title-backgroundColor: var(
+    --gd-dashboards-title-backgroundColor,
+    kit-variables.$gd-color-white
+);
+
+// configuration panel
+$gd-configuration-alert-content-height: 400px;
+$gd-configuration-alert-bubble-height: 500px;
+
+$gd-configuration-bubble-height: 450px;
+$gd-configuration-bubble-width: 251px;
+$gd-configuration-bubble-borders-width: 2px;
+$gd-configuration-bubble-margin: 15px;
+$gd-configuration-right-scrollbar-spacer: $scrollbar-width;
+$gd-configuration-panel-inner-width: $gd-configuration-bubble-width - $gd-configuration-bubble-borders-width -
+    (2 * $gd-configuration-bubble-margin) - $gd-configuration-right-scrollbar-spacer;
+
+$gd-dashboards-content-widget-title-color: var(
+    --gd-dashboards-content-widget-title-color,
+    kit-variables.$gd-color-text
+);
+$gd-dashboards-content-widget-title-textAlign: var(--gd-dashboards-content-widget-title-textAlign, center);
+$gd-dashboards-content-widget-borderRadius: var(--gd-dashboards-content-widget-borderRadius, 15px);
+$gd-dashboards-content-widget-borderColor: var(--gd-dashboards-content-widget-borderColor, transparent);
+$gd-dashboards-content-widget-borderWidth: var(--gd-dashboards-content-widget-borderWidth, $item-border);
+$gd-dashboards-content-widget-dropShadow: var(--gd-dashboards-content-widget-dropShadow, $widget-drop-shadow);
+
+$gd-dashboards-content-kpiWidget-title-color: var(
+    --gd-dashboards-content-kpiWidget-title-color,
+    $gd-dashboards-content-widget-title-color
+);
+$gd-dashboards-content-kpiWidget-title-textAlign: var(
+    --gd-dashboards-content-kpiWidget-title-textAlign,
+    $gd-dashboards-content-widget-title-textAlign
+);
+$gd-dashboards-content-kpiWidget-backgroundColor: var(
+    --gd-dashboards-content-kpiWidget-backgroundColor,
+    kit-variables.$gd-widget-background
+);
+$gd-dashboards-content-kpiWidget-borderRadius: var(
+    --gd-dashboards-content-kpiWidget-borderRadius,
+    $gd-dashboards-content-widget-borderRadius
+);
+$gd-dashboards-content-kpiWidget-borderColor: var(
+    --gd-dashboards-content-kpiWidget-borderColor,
+    $gd-dashboards-content-widget-borderColor
+);
+$gd-dashboards-content-kpiWidget-borderWidth: var(
+    --gd-dashboards-content-kpiWidget-borderWidth,
+    $gd-dashboards-content-widget-borderWidth
+);
+$gd-dashboards-content-kpiWidget-dropShadow: var(
+    --gd-dashboards-content-kpiWidget-dropShadow,
+    $gd-dashboards-content-widget-dropShadow
+);
+$gd-kpi-primaryMeasureColor: var(
+    --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor-from-theme,
+    kit-variables.$gd-color-link
+);
+
+$highchart-selection-marker-color: var(--gd-palette-complementary-1-from-theme, #b0beca);
+$info-text-color: #909293;

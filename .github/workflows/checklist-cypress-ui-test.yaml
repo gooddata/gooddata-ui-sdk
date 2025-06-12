@@ -1,0 +1,163 @@
+# (C) 2024 GoodData Corporation
+
+name: Test ~ run checklist e2e tests
+on:
+  workflow_dispatch:
+    inputs:
+      GIT_REVISION:
+        description: 'GIT REVISION'
+        default: master
+        required: true
+        type: string
+      TEST_BACKEND:
+        default: 'https://checklist.staging.stg11.panther.intgdc.com'
+        required: true
+        type: string
+      TIGER_DATASOURCES_NAME:
+        description: 'Tiger DS name'
+        default: 'vertica_staging-goodsales'
+        required: true
+        type: string
+      CYPRESS_TEST_TAGS:
+        description: 'Test tags should be run. Tip: can get them inside each spec file'
+        required: true
+        default: 'checklist_integrated_tiger,checklist_integrated_tiger_export'
+        type: string
+      FILTER:
+        type: string
+        required: false
+        description: 'Test files to be filtered'
+      DISPATCH_ID:
+        description: 'Unique dispatch id from upstream job'
+        required: false
+        type: string
+  workflow_call:
+    inputs:
+      GIT_REVISION:
+        default: master
+        required: true
+        type: string
+      TEST_BACKEND:
+        default: 'https://checklist.staging.stg11.panther.intgdc.com'
+        required: true
+        type: string
+      TIGER_DATASOURCES_NAME:
+        default: 'vertica_staging-goodsales'
+        required: true
+        type: string
+      CYPRESS_TEST_TAGS:
+        required: true
+        type: string
+      FILTER:
+        required: false
+        description: "List of spec files to filter"
+        type: string
+
+jobs:
+  dispatch_id:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.DISPATCH_ID != ''
+    runs-on: ubuntu-latest
+    steps:
+      - id: dispatch-id
+        name: ${{ github.event.inputs.DISPATCH_ID }}
+        run: echo "The dispatch ID is ${{ github.event.inputs.DISPATCH_ID }}"
+  warm-up-cache:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Warmup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/warm-up-rush
+  build:
+    needs: [ warm-up-cache ]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Debug
+        run: git log -1
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
+  e2e:
+    needs: [ warm-up-cache, build ]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Checkout the correct commit corresponding to $GIT_REVISION
+        if: ${{ inputs.GIT_REVISION != 'master' }}
+        run: |
+          git checkout ${{ inputs.GIT_REVISION }}
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: |
+          node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
+      - name: Get vault secrets
+        uses: hashicorp/vault-action@v3
+        id: secrets
+        with:
+          url: https://vault.ord1.infra.intgdc.com
+          method: jwt
+          path: jwt/github
+          role: front-end
+          secrets: |-
+            secret/data/v3/dev/panther/qa-org-bootstrap-token token | TIGER_API_TOKEN ;
+      - name: Run e2e tests
+        run: |
+          export TEST_BACKEND=${{ inputs.TEST_BACKEND }}
+          export TIGER_DATASOURCES_NAME=${{ inputs.TIGER_DATASOURCES_NAME }}
+          export EXECUTOR_NUMBER=$GH_RUN_ID
+          export CYPRESS_TEST_TAGS=${{ inputs.CYPRESS_TEST_TAGS }}
+          if [ -n "$USER_FILTER" ]; then
+            export FILTER=$USER_FILTER
+          fi
+          echo "Running with FILTER=$FILTER"
+          ./common/scripts/ci/run_cypress_integrated_tests.sh
+        env:
+          GH_RUN_ID: ${{ github.run_id }}
+          USER_FILTER: ${{ inputs.FILTER }}
+      - name: Archive the cypress test artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: cypress-${{ inputs.CYPRESS_TEST_TAGS }}-artifacts
+          path: |
+            libs/sdk-ui-tests-e2e/cypress/videos/**/*.mp4
+            libs/sdk-ui-tests-e2e/cypress/screenshots/**/*
+            libs/sdk-ui-tests-e2e/cypress/results/**/*

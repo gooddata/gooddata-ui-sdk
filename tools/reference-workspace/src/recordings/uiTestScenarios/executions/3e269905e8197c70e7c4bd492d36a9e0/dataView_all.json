@@ -1,0 +1,82 @@
+{
+    "count": [2, 18],
+    "data": [
+        [
+            155062, 141793.85, 689713.9, 141164.16, 974538.4, 293191.13, 1113658.12, 470732.49, 805749.26,
+            1262805.79, 2417059.68, 2231572.47, 3370629.89, 4305927.51, 2912698.8, 3163839.16, 2539099.42,
+            1027860.39
+        ],
+        [
+            null,
+            312960.06,
+            646873.98,
+            685859,
+            304587.17,
+            1587939.59,
+            1268096.77,
+            2643724.53,
+            1421000.85,
+            7095140.73,
+            8231486.17,
+            5675594.14,
+            9989366.64,
+            8211863.39,
+            21593571.13,
+            6722175.68,
+            8822293.65,
+            3395826.64
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } }
+            ]
+        ],
+        [
+            [
+                { "attributeHeaderItem": { "formattedName": "Q1 2008", "name": "2008-1", "uri": "2008-1" } },
+                { "attributeHeaderItem": { "formattedName": "Q2 2008", "name": "2008-2", "uri": "2008-2" } },
+                { "attributeHeaderItem": { "formattedName": "Q3 2008", "name": "2008-3", "uri": "2008-3" } },
+                { "attributeHeaderItem": { "formattedName": "Q4 2008", "name": "2008-4", "uri": "2008-4" } },
+                { "attributeHeaderItem": { "formattedName": "Q1 2009", "name": "2009-1", "uri": "2009-1" } },
+                { "attributeHeaderItem": { "formattedName": "Q2 2009", "name": "2009-2", "uri": "2009-2" } },
+                { "attributeHeaderItem": { "formattedName": "Q3 2009", "name": "2009-3", "uri": "2009-3" } },
+                { "attributeHeaderItem": { "formattedName": "Q4 2009", "name": "2009-4", "uri": "2009-4" } },
+                { "attributeHeaderItem": { "formattedName": "Q1 2010", "name": "2010-1", "uri": "2010-1" } },
+                { "attributeHeaderItem": { "formattedName": "Q2 2010", "name": "2010-2", "uri": "2010-2" } },
+                { "attributeHeaderItem": { "formattedName": "Q3 2010", "name": "2010-3", "uri": "2010-3" } },
+                { "attributeHeaderItem": { "formattedName": "Q4 2010", "name": "2010-4", "uri": "2010-4" } },
+                { "attributeHeaderItem": { "formattedName": "Q1 2011", "name": "2011-1", "uri": "2011-1" } },
+                { "attributeHeaderItem": { "formattedName": "Q2 2011", "name": "2011-2", "uri": "2011-2" } },
+                { "attributeHeaderItem": { "formattedName": "Q3 2011", "name": "2011-3", "uri": "2011-3" } },
+                { "attributeHeaderItem": { "formattedName": "Q4 2011", "name": "2011-4", "uri": "2011-4" } },
+                { "attributeHeaderItem": { "formattedName": "Q1 2012", "name": "2012-1", "uri": "2012-1" } },
+                { "attributeHeaderItem": { "formattedName": "Q2 2012", "name": "2012-2", "uri": "2012-2" } }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [2, 18]
+}

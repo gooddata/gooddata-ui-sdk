@@ -1,0 +1,69 @@
+// (C) 2025 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-automation-filters {
+    width: 100%;
+
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        align-items: center;
+    }
+
+    &__message {
+        color: var(--gd-palette-complementary-7, #6d7680);
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 21px;
+    }
+
+    &__warning-message {
+        color: kit-variables.$gd-palette-warning-base;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 21px;
+        margin-top: 5px;
+    }
+
+    &__dropdown-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background: kit-variables.$is-focused-background;
+
+        h3 {
+            color: kit-variables.$gd-color-state-blank;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: normal;
+        }
+    }
+
+    &__dropdown-no-filters {
+        margin: 12px;
+        color: kit-variables.$gd-color-state-blank;
+        text-align: center;
+        line-height: 19px;
+        font-size: 14px;
+    }
+
+    &__use-filters-checkbox {
+        margin-top: 10px;
+
+        .input-label-text {
+            color: kit-variables.$gd-color-link;
+        }
+    }
+
+    &__checkbox-icon {
+        position: relative;
+        margin-left: 5px;
+        top: 3px;
+    }
+}

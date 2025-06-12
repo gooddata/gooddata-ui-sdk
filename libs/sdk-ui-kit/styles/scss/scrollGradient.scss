@@ -1,0 +1,41 @@
+// (C) 2007-2022 GoodData Corporation
+@use "ScrollGradient/_mixins";
+
+/* Basic scroll gradient definition
+   ========================================================================== */
+
+.gd-gradient-wrapper {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 0;
+
+    .gd-gradient-top {
+        @extend %gradientOverflow;
+
+        top: 0;
+    }
+
+    .gd-gradient-bottom {
+        @extend %gradientOverflow;
+
+        bottom: 0;
+    }
+
+    .gd-gradient-content {
+        display: flex;
+        flex: 1 1 auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+        flex-direction: column;
+
+        &::before {
+            content: "";
+            width: 100%;
+            height: 0;
+            flex-grow: 1;
+            flex-shrink: 0;
+        }
+    }
+}

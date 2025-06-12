@@ -1,0 +1,31 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                                    "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+                                    "name": "Won"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                    "name": "Amount"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        { "headers": [] }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "Notre service de recherche est temporairement indisponible.",
+    "semantic-search.error.text": "Nous nous efforçons de résoudre ce problème.",
+    "semantic-search.no-results": "Aucun résultat trouvé pour ”{query}”.",
+    "semantic-search.placeholder": "Recherche de tableaux de bord ou de visualisation…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Balises",
+    "semantic-search.match": "{score}% de correspondance",
+    "semantic-search.previous-search": "Recherche précédente",
+    "semantic-search.date.at": "à",
+    "gs.date.today": "Aujourd’hui",
+    "gs.date.yesterday": "Hier",
+    "semantic-search.label": "Recherche de tableaux de bord ou de visualisation"
+}

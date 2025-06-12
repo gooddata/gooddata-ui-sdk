@@ -1,0 +1,36 @@
+// (C) 2019-2024 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+
+.gd-select-menu {
+    & * {
+        box-sizing: border-box;
+    }
+
+    position: absolute;
+    z-index: 5000;
+    padding: 6px 0;
+    line-height: 1.4rem;
+    border-radius: 3px;
+    font-family: variables.$gd-font-primary;
+    background-color: variables.$gd-color-light;
+    min-width: 100%;
+
+    @include mixins.box-shadow(0 1px 20px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2)));
+
+    &-wrapper {
+        position: relative;
+    }
+
+    div.gd-select-separator {
+        padding: 0 10px;
+    }
+
+    div.gd-select-heading {
+        padding: 0 10px;
+    }
+
+    div.gd-select-option {
+        padding: 5px 10px;
+    }
+}

@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`insightDisplayFormusage > should return object with empty lists for empty insight 1`] = `
+{
+  "inAttributes": [],
+  "inFilters": [],
+  "inMeasureFilters": [],
+}
+`;

@@ -1,0 +1,48 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ Release ~ Release documentation for major/minor
+on:
+    workflow_call:
+
+jobs:
+    get-version:
+        uses: ./.github/workflows/rw-bump-version.yml
+        secrets: inherit
+        permissions:
+            contents: write
+        with:
+            skip-bump: true
+            source-branch: 'release'
+
+    update-apidocs-version:
+        needs: [get-version]
+        uses: ./.github/workflows/rw-doc-release-apidocs.yml
+        permissions:
+            contents: write
+            id-token: write
+        secrets: inherit
+        with:
+            source-branch: "release"
+            version: ${{ needs.get-version.outputs.version }}
+            is-new-latest: true
+
+    publish-netlify:
+        uses: ./.github/workflows/rw-doc-netlify-deploy.yml
+        permissions:
+            contents: write
+            id-token: write
+        secrets: inherit
+
+    slack-notification:
+        runs-on: [ubuntu-latest]
+        needs: [publish-netlify, update-apidocs-version, get-version]
+        steps:
+          - name: Notify to slack
+            uses: slackapi/slack-github-action@v1.25.0
+            with:
+              channel-id: "#javascript-notifications"
+              slack-message: "The documentation for ui sdk *${{ env.RELEASE_VERSION }}* was successfully released by *${{ env.GITHUB_USER }}*"
+            env:
+              RELEASE_VERSION: ${{ needs.get-version.outputs.version }}
+              SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+              GITHUB_USER: ${{ github.actor }}

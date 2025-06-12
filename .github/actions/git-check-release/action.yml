@@ -1,0 +1,18 @@
+# (C) 2022 GoodData Corporation
+
+name: "Action to update hugo version param in parmas.toml"
+description: "Action add new version to hugo version config set it latest and remove old one"
+
+inputs:
+    version:
+        description: "New version to be set"
+        required: true
+
+outputs:
+  is-latest:
+    description: true if version could be set as latest
+
+
+runs:
+    using: "node20"
+    main: "action-build/index.js"

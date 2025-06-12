@@ -1,0 +1,523 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly in cases 1 measure and 0 attribute  1`] = `
+[
+  {
+    "data": [
+      {
+        "from": "",
+        "name": "",
+        "to": "",
+        "weight": 116625456.54,
+      },
+    ],
+    "keys": [
+      "from",
+      "to",
+      "weight",
+      "name",
+    ],
+    "nodes": [],
+    "seriesIndex": 0,
+  },
+]
+`;
+
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly in cases 1 measure and 1 attribute_from  1`] = `
+[
+  {
+    "data": [
+      {
+        "from": "CompuSci",
+        "name": "CompuSci",
+        "to": undefined,
+        "weight": 27222899.64,
+      },
+      {
+        "from": "Educationly",
+        "name": "Educationly",
+        "to": undefined,
+        "weight": 22946895.47,
+      },
+      {
+        "from": "Explorer",
+        "name": "Explorer",
+        "to": undefined,
+        "weight": 38596194.86,
+      },
+      {
+        "from": "Grammar Plus",
+        "name": "Grammar Plus",
+        "to": undefined,
+        "weight": 8042031.92,
+      },
+      {
+        "from": "PhoenixSoft",
+        "name": "PhoenixSoft",
+        "to": undefined,
+        "weight": 9525857.91,
+      },
+      {
+        "from": "WonderKid",
+        "name": "WonderKid",
+        "to": undefined,
+        "weight": 10291576.74,
+      },
+    ],
+    "keys": [
+      "from",
+      "to",
+      "weight",
+      "name",
+    ],
+    "nodes": [
+      {
+        "color": "rgb(195,49,73)",
+        "id": "CompuSci",
+      },
+      {
+        "color": "rgb(168,194,86)",
+        "id": "Educationly",
+      },
+      {
+        "color": "rgb(243,217,177)",
+        "id": "Explorer",
+      },
+      {
+        "color": "rgb(194,153,121)",
+        "id": "Grammar Plus",
+      },
+      {
+        "color": "rgb(162,37,34)",
+        "id": "PhoenixSoft",
+      },
+      {
+        "color": "rgb(195,49,73)",
+        "id": "WonderKid",
+      },
+    ],
+    "seriesIndex": 0,
+  },
+]
+`;
+
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly in cases 1 measure and 1 attribute_to  1`] = `
+[
+  {
+    "data": [
+      {
+        "from": "East Coast",
+        "name": "East Coast",
+        "to": undefined,
+        "weight": 28017096.42,
+      },
+      {
+        "from": "West Coast",
+        "name": "West Coast",
+        "to": undefined,
+        "weight": 88608360.12,
+      },
+    ],
+    "keys": [
+      "from",
+      "to",
+      "weight",
+      "name",
+    ],
+    "nodes": [
+      {
+        "color": "rgb(195,49,73)",
+        "id": "East Coast",
+      },
+      {
+        "color": "rgb(168,194,86)",
+        "id": "West Coast",
+      },
+    ],
+    "seriesIndex": 0,
+  },
+]
+`;
+
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly in cases 1 measure and 2 attributes  1`] = `
+[
+  {
+    "data": [
+      {
+        "from": "CompuSci",
+        "name": "CompuSci",
+        "to": "East Coast",
+        "weight": 5099309.54,
+      },
+      {
+        "from": "CompuSci",
+        "name": "CompuSci",
+        "to": "West Coast",
+        "weight": 22123590.1,
+      },
+      {
+        "from": "Educationly",
+        "name": "Educationly",
+        "to": "East Coast",
+        "weight": 6614222.47,
+      },
+      {
+        "from": "Educationly",
+        "name": "Educationly",
+        "to": "West Coast",
+        "weight": 16332673,
+      },
+      {
+        "from": "Explorer",
+        "name": "Explorer",
+        "to": "East Coast",
+        "weight": 8269682.68,
+      },
+      {
+        "from": "Explorer",
+        "name": "Explorer",
+        "to": "West Coast",
+        "weight": 30326512.18,
+      },
+      {
+        "from": "Grammar Plus",
+        "name": "Grammar Plus",
+        "to": "East Coast",
+        "weight": 2761931.26,
+      },
+      {
+        "from": "Grammar Plus",
+        "name": "Grammar Plus",
+        "to": "West Coast",
+        "weight": 5280100.66,
+      },
+      {
+        "from": "PhoenixSoft",
+        "name": "PhoenixSoft",
+        "to": "East Coast",
+        "weight": 2664832.4,
+      },
+      {
+        "from": "PhoenixSoft",
+        "name": "PhoenixSoft",
+        "to": "West Coast",
+        "weight": 6861025.51,
+      },
+      {
+        "from": "WonderKid",
+        "name": "WonderKid",
+        "to": "East Coast",
+        "weight": 2607118.07,
+      },
+      {
+        "from": "WonderKid",
+        "name": "WonderKid",
+        "to": "West Coast",
+        "weight": 7684458.67,
+      },
+    ],
+    "keys": [
+      "from",
+      "to",
+      "weight",
+      "name",
+    ],
+    "nodes": [
+      {
+        "color": "rgb(195,49,73)",
+        "id": "CompuSci",
+      },
+      {
+        "color": "rgb(168,194,86)",
+        "id": "Educationly",
+      },
+      {
+        "color": "rgb(243,217,177)",
+        "id": "Explorer",
+      },
+      {
+        "color": "rgb(194,153,121)",
+        "id": "Grammar Plus",
+      },
+      {
+        "color": "rgb(162,37,34)",
+        "id": "PhoenixSoft",
+      },
+      {
+        "color": "rgb(195,49,73)",
+        "id": "WonderKid",
+      },
+      {
+        "color": "rgb(168,194,86)",
+        "id": "East Coast",
+      },
+      {
+        "color": "rgb(243,217,177)",
+        "id": "West Coast",
+      },
+    ],
+    "seriesIndex": 0,
+  },
+]
+`;
+
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly with custom color mappings in cases 1 measure and 0 attribute  1`] = `
+[
+  {
+    "data": [
+      {
+        "from": "",
+        "name": "",
+        "to": "",
+        "weight": 116625456.54,
+      },
+    ],
+    "keys": [
+      "from",
+      "to",
+      "weight",
+      "name",
+    ],
+    "nodes": [],
+    "seriesIndex": 0,
+  },
+]
+`;
+
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly with custom color mappings in cases 1 measure and 1 attribute_from  1`] = `
+[
+  {
+    "data": [
+      {
+        "from": "CompuSci",
+        "name": "CompuSci",
+        "to": undefined,
+        "weight": 27222899.64,
+      },
+      {
+        "from": "Educationly",
+        "name": "Educationly",
+        "to": undefined,
+        "weight": 22946895.47,
+      },
+      {
+        "from": "Explorer",
+        "name": "Explorer",
+        "to": undefined,
+        "weight": 38596194.86,
+      },
+      {
+        "from": "Grammar Plus",
+        "name": "Grammar Plus",
+        "to": undefined,
+        "weight": 8042031.92,
+      },
+      {
+        "from": "PhoenixSoft",
+        "name": "PhoenixSoft",
+        "to": undefined,
+        "weight": 9525857.91,
+      },
+      {
+        "from": "WonderKid",
+        "name": "WonderKid",
+        "to": undefined,
+        "weight": 10291576.74,
+      },
+    ],
+    "keys": [
+      "from",
+      "to",
+      "weight",
+      "name",
+    ],
+    "nodes": [
+      {
+        "color": "rgb(195,49,73)",
+        "id": "CompuSci",
+      },
+      {
+        "color": "rgb(168,194,86)",
+        "id": "Educationly",
+      },
+      {
+        "color": "rgb(255,0,0)",
+        "id": "Explorer",
+      },
+      {
+        "color": "rgb(194,153,121)",
+        "id": "Grammar Plus",
+      },
+      {
+        "color": "rgb(162,37,34)",
+        "id": "PhoenixSoft",
+      },
+      {
+        "color": "rgb(0,0,0)",
+        "id": "WonderKid",
+      },
+    ],
+    "seriesIndex": 0,
+  },
+]
+`;
+
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly with custom color mappings in cases 1 measure and 1 attribute_to  1`] = `
+[
+  {
+    "data": [
+      {
+        "from": "East Coast",
+        "name": "East Coast",
+        "to": undefined,
+        "weight": 28017096.42,
+      },
+      {
+        "from": "West Coast",
+        "name": "West Coast",
+        "to": undefined,
+        "weight": 88608360.12,
+      },
+    ],
+    "keys": [
+      "from",
+      "to",
+      "weight",
+      "name",
+    ],
+    "nodes": [
+      {
+        "color": "rgb(195,49,73)",
+        "id": "East Coast",
+      },
+      {
+        "color": "rgb(168,194,86)",
+        "id": "West Coast",
+      },
+    ],
+    "seriesIndex": 0,
+  },
+]
+`;
+
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly with custom color mappings in cases 1 measure and 2 attributes  1`] = `
+[
+  {
+    "data": [
+      {
+        "from": "CompuSci",
+        "name": "CompuSci",
+        "to": "East Coast",
+        "weight": 5099309.54,
+      },
+      {
+        "from": "CompuSci",
+        "name": "CompuSci",
+        "to": "West Coast",
+        "weight": 22123590.1,
+      },
+      {
+        "from": "Educationly",
+        "name": "Educationly",
+        "to": "East Coast",
+        "weight": 6614222.47,
+      },
+      {
+        "from": "Educationly",
+        "name": "Educationly",
+        "to": "West Coast",
+        "weight": 16332673,
+      },
+      {
+        "from": "Explorer",
+        "name": "Explorer",
+        "to": "East Coast",
+        "weight": 8269682.68,
+      },
+      {
+        "from": "Explorer",
+        "name": "Explorer",
+        "to": "West Coast",
+        "weight": 30326512.18,
+      },
+      {
+        "from": "Grammar Plus",
+        "name": "Grammar Plus",
+        "to": "East Coast",
+        "weight": 2761931.26,
+      },
+      {
+        "from": "Grammar Plus",
+        "name": "Grammar Plus",
+        "to": "West Coast",
+        "weight": 5280100.66,
+      },
+      {
+        "from": "PhoenixSoft",
+        "name": "PhoenixSoft",
+        "to": "East Coast",
+        "weight": 2664832.4,
+      },
+      {
+        "from": "PhoenixSoft",
+        "name": "PhoenixSoft",
+        "to": "West Coast",
+        "weight": 6861025.51,
+      },
+      {
+        "from": "WonderKid",
+        "name": "WonderKid",
+        "to": "East Coast",
+        "weight": 2607118.07,
+      },
+      {
+        "from": "WonderKid",
+        "name": "WonderKid",
+        "to": "West Coast",
+        "weight": 7684458.67,
+      },
+    ],
+    "keys": [
+      "from",
+      "to",
+      "weight",
+      "name",
+    ],
+    "nodes": [
+      {
+        "color": "rgb(195,49,73)",
+        "id": "CompuSci",
+      },
+      {
+        "color": "rgb(168,194,86)",
+        "id": "Educationly",
+      },
+      {
+        "color": "rgb(255,0,0)",
+        "id": "Explorer",
+      },
+      {
+        "color": "rgb(194,153,121)",
+        "id": "Grammar Plus",
+      },
+      {
+        "color": "rgb(162,37,34)",
+        "id": "PhoenixSoft",
+      },
+      {
+        "color": "rgb(0,0,0)",
+        "id": "WonderKid",
+      },
+      {
+        "color": "rgb(168,194,86)",
+        "id": "East Coast",
+      },
+      {
+        "color": "rgb(243,217,177)",
+        "id": "West Coast",
+      },
+    ],
+    "seriesIndex": 0,
+  },
+]
+`;

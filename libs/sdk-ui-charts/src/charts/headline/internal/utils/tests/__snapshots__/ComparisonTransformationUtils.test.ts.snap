@@ -1,0 +1,721 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with calculate as change (different) and custom format' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "[color=d2ccde]#,##0.0",
+      "title": "Change",
+      "value": "78314703.09",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with calculate as change (different) and default format' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0%",
+      "title": "Change",
+      "value": "78314703.09",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with calculate as different and default format' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "title": "Difference",
+      "value": "78314703.09",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with change calculation and conditional labels ' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0%",
+      "title": "Increase",
+      "value": "3.0441963688396214",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with custom format' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+      "title": "of",
+      "value": "3.0441963688396214",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with custom label' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+      "title": "Custom label",
+      "value": "3.0441963688396214",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with decimal-1 format' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0.0",
+      "title": "of",
+      "value": "3.0441963688396214",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with default config and conditional labels' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0%",
+      "title": "of",
+      "value": "3.0441963688396214",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with default config with secondary measure is PoP' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e40a8329_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
+      "title": "Won Last Year",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0%",
+      "title": "Change",
+      "value": "0",
+    },
+    "evaluationType": "equals",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with default config' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0%",
+      "title": "of",
+      "value": "3.0441963688396214",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with drilling on 2 measures' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": true,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": true,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0%",
+      "title": "of",
+      "value": "3.0441963688396214",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with equals arrow and color' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "custom_amount_local_id",
+      "title": "Custom Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+      "title": "of",
+      "value": "1",
+    },
+    "evaluationType": "equals",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with equals arrow' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "custom_amount_local_id",
+      "title": "Custom Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+      "title": "of",
+      "value": "1",
+    },
+    "evaluationType": "equals",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with negative arrow and color' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+      "title": "of",
+      "value": "0.3284939205092007",
+    },
+    "evaluationType": "negative",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with negative arrow' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+      "title": "of",
+      "value": "0.3284939205092007",
+    },
+    "evaluationType": "negative",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with position on right' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "title": "of",
+      "value": "3.0441963688396214",
+    },
+    "evaluationType": "positive",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with position on top' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "title": "of",
+      "value": "3.0441963688396214",
+    },
+    "evaluationType": "positive",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with positive arrow and color' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+      "title": "of",
+      "value": "3.0441963688396214",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with positive arrow' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+      "title": "of",
+      "value": "3.0441963688396214",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with secondary measure is PoP and conditional labels' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e40a8329_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
+      "title": "Won Last Year",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0%",
+      "title": "No change",
+      "value": "0",
+    },
+    "evaluationType": "equals",
+  },
+}
+`;

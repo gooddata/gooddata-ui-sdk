@@ -1,0 +1,10 @@
+// (C) 2020 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.s-exclude-current-perod-disabled {
+    color: variables.$gd-color-disabled;
+}
+
+.s-exclude-current-perod-enabled {
+    color: variables.$gd-color-text;
+}

@@ -1,0 +1,312 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/324"
+                },
+                "localIdentifier": "a1"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "alias": "Primary measure - period ago_1",
+                "localIdentifier": "m1.pp1_1",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "m1_1",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_1"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m1_1",
+                "alias": "Primary measure_1",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_1"
+                        },
+                        "filters": [
+                            {
+                                "positiveAttributeFilter": {
+                                    "displayForm": {
+                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                    },
+                                    "in": {
+                                        "values": [
+                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Primary measure - period ago_2",
+                "localIdentifier": "m1.pp1_2",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "m1_2",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_2"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m1_2",
+                "alias": "Primary measure_2",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_2"
+                        },
+                        "filters": [
+                            {
+                                "positiveAttributeFilter": {
+                                    "displayForm": {
+                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                    },
+                                    "in": {
+                                        "values": [
+                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Primary measure - period ago_3",
+                "localIdentifier": "m1.pp1_3",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "m1_3",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_3"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m1_3",
+                "alias": "Primary measure_3",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_3"
+                        },
+                        "filters": [
+                            {
+                                "positiveAttributeFilter": {
+                                    "displayForm": {
+                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                    },
+                                    "in": {
+                                        "values": [
+                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Primary measure - period ago_4",
+                "localIdentifier": "m1.pp1_4",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "m1_4",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_4"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m1_4",
+                "alias": "Primary measure_4",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_4"
+                        },
+                        "filters": [
+                            {
+                                "positiveAttributeFilter": {
+                                    "displayForm": {
+                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                    },
+                                    "in": {
+                                        "values": [
+                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Primary measure - period ago_5",
+                "localIdentifier": "m1.pp1_5",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "m1_5",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_5"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m1_5",
+                "alias": "Primary measure_5",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_5"
+                        },
+                        "filters": [
+                            {
+                                "positiveAttributeFilter": {
+                                    "displayForm": {
+                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                    },
+                                    "in": {
+                                        "values": [
+                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Primary measure - period ago_6",
+                "localIdentifier": "m1.pp1_6",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "m1_6",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_6"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m1_6",
+                "alias": "Primary measure_6",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_6"
+                        },
+                        "filters": [
+                            {
+                                "positiveAttributeFilter": {
+                                    "displayForm": {
+                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                    },
+                                    "in": {
+                                        "values": [
+                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["a1"]
+        }
+    ],
+    "filters": [
+        {
+            "absoluteDateFilter": {
+                "dataSet": {
+                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330"
+                },
+                "from": "2011-01-01",
+                "to": "2011-12-31"
+            }
+        }
+    ],
+    "sortBy": []
+}

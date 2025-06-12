@@ -1,0 +1,17 @@
+// (C) 2019 GoodData Corporation
+@use "sass:list";
+@use "sass:map";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.gd-extended-date-filter-header {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-top: 1px solid variables.$gd-border-color;
+    border-bottom: 1px solid variables.$gd-border-color;
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 4);
+    text-align: left;
+    font-weight: bold;
+    background: variables.$gd-color-white;
+}

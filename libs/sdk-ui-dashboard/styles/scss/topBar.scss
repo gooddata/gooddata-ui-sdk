@@ -1,0 +1,189 @@
+// (C) 2024-2025 GoodData Corporation
+
+@use "variables";
+@use "zIndexes";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$gd-dashboards-section-title-lineColor: var(
+    --gd-dashboards-section-title-lineColor,
+    kit-variables.$gd-border-color
+);
+
+.dash-header {
+    @include mixins.clearfix();
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 48px;
+    max-width: 100vw;
+    border-bottom: variables.$nav-border;
+    border-bottom-color: var(--gd-dashboards-title-borderColor, kit-variables.$gd-border-color);
+    background: variables.$gd-dashboards-title-backgroundColor;
+
+    .dash-control-buttons {
+        flex: 0 0 auto;
+        margin-left: auto;
+        padding-left: 20px;
+        text-align: right;
+
+        .cancel-button {
+            margin-right: 10px;
+        }
+
+        .setting-button {
+            margin-left: 10px;
+            height: 100%;
+        }
+    }
+
+    &.dash-header-export {
+        border-bottom: none;
+        display: flex;
+
+        .dash-header-inner {
+            flex: unset;
+        }
+
+        &::after {
+            content: "";
+            position: relative;
+            top: 1px;
+            flex: 1 1 auto;
+            height: 0;
+            border-top: 1px solid $gd-dashboards-section-title-lineColor;
+            visibility: visible;
+            margin-right: 20px;
+        }
+    }
+}
+
+.dash-control-buttons {
+    flex: 0 0 auto;
+    margin: 0 10px 0 auto;
+    padding-left: 20px;
+    text-align: right;
+}
+
+.dash-header-inner {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    overflow: hidden;
+    margin-left: 15px;
+
+    .gd-locked-status,
+    .gd-share-status {
+        align-self: flex-end;
+    }
+
+    .gd-locked-status {
+        padding-bottom: 2px;
+        margin-left: 5px;
+    }
+    .gd-share-status {
+        padding-bottom: 4px;
+    }
+}
+
+.dash-title-wrapper {
+    display: block;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.dash-title {
+    overflow: hidden;
+    width: auto;
+    height: 40px;
+    max-width: 100%;
+    padding: 4px 10px 2px 8px;
+    border: 1px solid transparent;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 32px;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    color: variables.$gd-dashboards-title-color;
+
+    // make sure the textarea uses the same font and color (that is not the default behavior)
+    textarea {
+        font: inherit;
+        color: inherit;
+    }
+
+    &,
+    textarea {
+        white-space: nowrap;
+
+        &::placeholder {
+            color: var(--gd-palette-complementary-6-from-theme, inherit);
+        }
+    }
+
+    &.editable {
+        min-width: 76px;
+    }
+
+    &.editable:hover,
+    &.is-editing {
+        border-color: variables.$editable-label-border;
+    }
+
+    &.placeholder {
+        color: kit-variables.$gd-color-state-blank;
+    }
+}
+
+.dash-header-options-wrapper {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
+        height: 100%;
+
+        button {
+            height: 100%;
+        }
+    }
+}
+
+.dash-header-options-button {
+    flex: 0 0 auto;
+    text-align: center;
+
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
+        width: 45px;
+        align-self: stretch;
+        padding: 0;
+        border-radius: 0;
+        border-width: 0 0 0 1px;
+        font-size: 20px;
+        background: variables.$gd-dashboards-title-backgroundColor;
+        border-color: var(--gd-dashboards-title-borderColor, kit-variables.$gd-border-color);
+
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    @media #{kit-variables.$medium-up} {
+        margin-right: 10px;
+    }
+}
+
+.dash-header-share-button {
+    margin-left: 10px;
+}
+
+.overlay-wrapper {
+    z-index: zIndexes.$topbar-basic;
+}
+
+.gd-list-item.delete-button {
+    &:hover {
+        background-color: var(--gd-palette-error-lightest, #fff2f1);
+        color: kit-variables.$gd-palette-error-base;
+    }
+}

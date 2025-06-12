@@ -1,0 +1,28 @@
+name: Branch cutoff
+description: This action performs branching and copies source branch to target branch
+inputs:
+  source-branch:
+    required: true
+    description: source branch
+    default: m1
+  target-branch:
+    required: true
+    description: target branch
+    default: r1
+  token:
+    required: true
+    description: GitHub token
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.source-branch }}
+        token: ${{ inputs.token }}
+    - name: Create and push branch
+      run: |
+        git checkout -b ${{ inputs.target-branch }}
+        git push -f origin ${{ inputs.target-branch }}
+      shell: bash

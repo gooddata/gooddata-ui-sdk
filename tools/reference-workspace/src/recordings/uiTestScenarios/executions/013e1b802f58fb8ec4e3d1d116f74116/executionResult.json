@@ -1,0 +1,69 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "f_city.id", "name": "City", "uri": "" },
+                        "granularity": null,
+                        "identifier": "f_city.id.cityname",
+                        "localIdentifier": "a_f_city.id.cityname",
+                        "name": "City name",
+                        "primaryLabel": { "identifier": "f_city.id", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "f_city.id", "name": "City", "uri": "" },
+                        "granularity": null,
+                        "identifier": "f_city.id.cityname",
+                        "localIdentifier": "a_f_city.id.cityname_1",
+                        "name": "City name",
+                        "primaryLabel": { "identifier": "f_city.id", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "attr.f_product.product", "name": "Product", "uri": "" },
+                        "granularity": null,
+                        "identifier": "attr.f_product.product",
+                        "localIdentifier": "a_attr.f_product.product",
+                        "name": "Product",
+                        "primaryLabel": { "identifier": "attr.f_product.product", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                },
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,#.##",
+                                    "localIdentifier": "m_7bd77a90_inline",
+                                    "name": "m_7bd77a90_inline"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0",
+                                    "identifier": "of_lost_opps.",
+                                    "localIdentifier": "m_of_lost_opps.",
+                                    "name": "# of Lost Opps."
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

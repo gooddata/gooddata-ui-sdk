@@ -1,0 +1,50 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`changeAttributeSelectionModeHandler > should emit the appropriate events for changed attribute filter selection mode 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+  },
+]
+`;
+
+exports[`changeAttributeSelectionModeHandler > should emit the appropriate events when trying to update selection mode of a non-existent attribute filter 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;
+
+exports[`changeAttributeSelectionModeHandler > should set the attribute selection mode in state on changed attribute filter 1`] = `
+{
+  "attributeFilter": {
+    "attributeElements": {
+      "uris": [],
+    },
+    "displayForm": {
+      "identifier": "f_owner.department_id",
+      "type": "displayForm",
+    },
+    "localIdentifier": Any<String>,
+    "negativeSelection": true,
+    "selectionMode": "single",
+  },
+}
+`;

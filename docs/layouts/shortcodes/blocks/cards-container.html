@@ -1,0 +1,12 @@
+{{/* (C) 2023 GoodData Corporation */}}
+{{ $maxRow := 0 }}
+{{/* If maxRow doesn't exist set it to 0 else set it to the argument value */}}
+{{ if (.Get "maxRow")  }}
+    {{ if (gt (len (.Get "maxRow")) 0)}} {{/* Has to be a nested 'if' instead of 'and' as hugo 0.83 evaluates both sides in a 'and' statement */}}
+        {{ $maxRow = .Get "maxRow" }}
+    {{ end }}
+{{ end }}
+
+{{ $aligned := eq (.Get "aligned") "true" }}
+
+<div class="row{{ if and (gt (int $maxRow) 0) (lt (int $maxRow) 13) }} row-cols-1 row-cols-md-{{ int $maxRow }}{{ end }} mt-4 cards-container {{if $aligned}} cards-container--aligned {{ end }}">{{ .Inner }}</div>

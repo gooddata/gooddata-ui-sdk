@@ -1,0 +1,4 @@
+styles/css
+styles/internal/css
+
+src/base/localization/bundles/*.ts

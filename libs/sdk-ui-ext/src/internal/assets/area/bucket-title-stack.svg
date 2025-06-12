@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="13px" viewBox="0 0 16 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>bucket:Stackedby</title>
+    <defs></defs>
+    <g id="t" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-26.000000, -74.000000)">
+            <g id="bucket:Stackedby" transform="translate(26.000000, 74.000000)">
+                <polygon id="measure2" fill="#D7DCE1" points="0 4.37737006 2.38651747 5.4897874 7.93729872 0 12.6593969 3.15636195 16 0.149702143 16 9 0 9"></polygon>
+                <polygon id="measure1" fill="#B0BECA" points="0 8.37737006 2.38651747 7.74779883 7.93729872 4 12.6593969 8.31768767 16 4.14970214 16 13 0 13"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

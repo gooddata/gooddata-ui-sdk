@@ -1,0 +1,53 @@
+// (C) 2007-2024 GoodData Corporation
+@use "variables";
+
+$loading-dots-dot-slug: gd-loading-dots !default;
+$loading-dots-count: 3;
+$loading-dot-delay: 0.16;
+
+.gd-loading-dots {
+    overflow: hidden;
+
+    &-centered {
+        min-width: 36px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    div {
+        float: left;
+        width: 8px;
+        height: 8px;
+        margin-right: 6px;
+        border-radius: 100%;
+        background-color: var(--gd-palette-complementary-6-from-theme, variables.$default-gd-color-disabled);
+        animation: bouncedelay 1.4s infinite ease-in-out;
+        animation-fill-mode: both;
+    }
+
+    @for $loading-dot-index from 1 through $loading-dots-count {
+        $animation-delay: -$loading-dot-delay * ($loading-dots-count - $loading-dot-index);
+
+        .#{$loading-dots-dot-slug}-#{$loading-dot-index} {
+            animation-delay: #{$animation-delay}s;
+        }
+    }
+
+    div:last-child {
+        margin-right: 0;
+    }
+
+    @keyframes bouncedelay {
+        0%,
+        80%,
+        100% {
+            transform: scale(0);
+        }
+
+        40% {
+            transform: scale(1);
+        }
+    }
+}

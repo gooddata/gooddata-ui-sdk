@@ -1,0 +1,14 @@
+{
+    "semantic-search.error.title": "Arama hizmetimiz geçici olarak devre dışı.",
+    "semantic-search.error.text": "Sorunu çözmek için çalışıyoruz.",
+    "semantic-search.no-results": "“{query}” için sonuç bulunamadı.",
+    "semantic-search.placeholder": "Pano veya görselleştirme ara…",
+    "semantic-search.id": "Kimlik",
+    "semantic-search.tags": "Etiketler",
+    "semantic-search.match": "{score}% eşleşme",
+    "semantic-search.previous-search": "Önceki arama",
+    "semantic-search.date.at": "Burada",
+    "gs.date.today": "Bugün",
+    "gs.date.yesterday": "Dün",
+    "semantic-search.label": "Panoları veya görselleştirmeyi ara"
+}

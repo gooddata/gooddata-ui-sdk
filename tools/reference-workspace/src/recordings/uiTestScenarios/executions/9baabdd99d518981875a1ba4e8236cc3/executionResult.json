@@ -1,0 +1,92 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                    "name": "Amount"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                                    "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+                                    "name": "Won"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.0%",
+                                    "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                                    "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
+                                    "name": "Probability"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.0%",
+                                    "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                                    "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+                                    "name": "Win Rate"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                                    "localIdentifier": "m_c5ee7836_126c_41aa_bd69_1873d379a065",
+                                    "name": "_Snapshot [EOP]"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,#.##",
+                                    "localIdentifier": "m_9fa7cb9ce4d2947059b490e24a925317",
+                                    "name": "m_9fa7cb9ce4d2947059b490e24a925317"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,#.##",
+                                    "localIdentifier": "m_aebe46cecdb5eb3b5c069ce97a80535f",
+                                    "name": "m_aebe46cecdb5eb3b5c069ce97a80535f"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "dt_oppcreated_timestamp.quarter",
+                            "name": "Created - Quarter/Year",
+                            "uri": ""
+                        },
+                        "format": { "locale": "en-US", "pattern": "QQQ y" },
+                        "granularity": "QUARTER",
+                        "identifier": "dt_oppcreated_timestamp.quarter",
+                        "localIdentifier": "a_dt_oppcreated_timestamp.quarter",
+                        "name": "Created - Quarter/Year",
+                        "primaryLabel": {
+                            "identifier": "dt_oppcreated_timestamp.quarter",
+                            "type": "displayForm"
+                        },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

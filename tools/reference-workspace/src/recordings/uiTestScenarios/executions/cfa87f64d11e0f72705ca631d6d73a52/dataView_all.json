@@ -1,0 +1,81 @@
+{
+    "count": [20, 2],
+    "data": [
+        [2267528.48, 0.5792079207920792],
+        [3210411.91, 0.5458937198067633],
+        [4128646.19, 0.5665024630541872],
+        [2795026.55, 0.5754716981132075],
+        [3461373.87, 0.6018957345971564],
+        [3910140.62, 0.5555555555555556],
+        [2128260.34, 0.5700483091787439],
+        [4108360.8, 0.4881516587677725],
+        [3759893.44, 0.592964824120603],
+        [2376100.41, 0.6076555023923444],
+        [8762759.64, 0.5574162679425837],
+        [3634167.38, 0.5625],
+        [10077508.79, 0.538647342995169],
+        [23599978.51, 0.529126213592233],
+        [6806460.2, 0.5301204819277109],
+        [6251132.24, 0.562962962962963],
+        [7045629.39, 0.5399515738498789],
+        [10906158.59, 0.5607779578606159],
+        [4584127.47, 0.5144230769230769],
+        [2811791.72, 0.5384615384615384]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "Boston", "uri": "1840000455" } },
+                { "attributeHeaderItem": { "name": "Bridgeport", "uri": "1840004836" } },
+                { "attributeHeaderItem": { "name": "Eugene", "uri": "1840020007" } },
+                { "attributeHeaderItem": { "name": "Hartford", "uri": "1840004773" } },
+                { "attributeHeaderItem": { "name": "Nashua", "uri": "1840002984" } },
+                { "attributeHeaderItem": { "name": "New York", "uri": "1840034016" } },
+                { "attributeHeaderItem": { "name": "Philadelphia", "uri": "1840000673" } },
+                { "attributeHeaderItem": { "name": "Portland", "uri": "1840019941" } },
+                { "attributeHeaderItem": { "name": "Poughkeepsie", "uri": "1840000500" } },
+                { "attributeHeaderItem": { "name": "Providence", "uri": "1840003289" } },
+                { "attributeHeaderItem": { "name": "Sacramento", "uri": "1840021491" } },
+                { "attributeHeaderItem": { "name": "Salem", "uri": "1840021224" } },
+                { "attributeHeaderItem": { "name": "Salinas", "uri": "1840021632" } },
+                { "attributeHeaderItem": { "name": "San Francisco", "uri": "1840021543" } },
+                { "attributeHeaderItem": { "name": "San Jose", "uri": "1840021570" } },
+                { "attributeHeaderItem": { "name": "Santa Barbara", "uri": "1840021829" } },
+                { "attributeHeaderItem": { "name": "Santa Cruz", "uri": "1840021579" } },
+                { "attributeHeaderItem": { "name": "Santa Rosa", "uri": "1840021488" } },
+                { "attributeHeaderItem": { "name": "Seattle", "uri": "1840021117" } },
+                { "attributeHeaderItem": { "name": "Vancouver", "uri": "1840021189" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "Massachusetts", "uri": "MA" } },
+                { "attributeHeaderItem": { "name": "Connecticut", "uri": "CT" } },
+                { "attributeHeaderItem": { "name": "Oregon", "uri": "OR" } },
+                { "attributeHeaderItem": { "name": "Connecticut", "uri": "CT" } },
+                { "attributeHeaderItem": { "name": "New Hampshire", "uri": "NH" } },
+                { "attributeHeaderItem": { "name": "New York", "uri": "NY" } },
+                { "attributeHeaderItem": { "name": "Pennsylvania", "uri": "PA" } },
+                { "attributeHeaderItem": { "name": "Oregon", "uri": "OR" } },
+                { "attributeHeaderItem": { "name": "New York", "uri": "NY" } },
+                { "attributeHeaderItem": { "name": "Rhode Island", "uri": "RI" } },
+                { "attributeHeaderItem": { "name": "California", "uri": "CA" } },
+                { "attributeHeaderItem": { "name": "Oregon", "uri": "OR" } },
+                { "attributeHeaderItem": { "name": "California", "uri": "CA" } },
+                { "attributeHeaderItem": { "name": "California", "uri": "CA" } },
+                { "attributeHeaderItem": { "name": "California", "uri": "CA" } },
+                { "attributeHeaderItem": { "name": "California", "uri": "CA" } },
+                { "attributeHeaderItem": { "name": "California", "uri": "CA" } },
+                { "attributeHeaderItem": { "name": "California", "uri": "CA" } },
+                { "attributeHeaderItem": { "name": "Washington", "uri": "WA" } },
+                { "attributeHeaderItem": { "name": "Washington", "uri": "WA" } }
+            ]
+        ],
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Win Rate", "order": 1 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [20, 2]
+}

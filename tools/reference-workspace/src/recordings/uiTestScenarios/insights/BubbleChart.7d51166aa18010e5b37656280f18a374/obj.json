@@ -1,0 +1,34 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "secondary_measures" },
+            { "items": [], "localIdentifier": "tertiary_measures" },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "BubbleChart.7d51166aa18010e5b37656280f18a374",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "BubbleChart - x axis measure",
+        "uri": "BubbleChart.7d51166aa18010e5b37656280f18a374",
+        "visualizationUrl": "local:bubble"
+    }
+}

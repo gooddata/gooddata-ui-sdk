@@ -1,0 +1,134 @@
+// (C) 2022-2025 GoodData Corporation
+@use "attributeFilterVariables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
+
+.gd-item-title-tooltip {
+    .bubble-content .content {
+        p {
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        h4 {
+            margin: 13px 0 0;
+            padding-right: 5px;
+            font-size: 10px;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: variables.$gd-color-state-blank;
+        }
+    }
+}
+
+.gd-async-list {
+    &:focus-visible {
+        outline: none;
+
+        .gd-attribute-filter-list-item--isFocused .gd-list-item-only {
+            display: block;
+        }
+
+        .gd-attribute-filter-single-selection-list-item--isFocusedSelectItem,
+        .gd-attribute-filter-list-item--isFocusedSelectItem,
+        .gd-list-item-only--isFocusedSelectItem,
+        .gd-list-item-only .gd-icon-circle-question--isFocusedSelectItem {
+            @include mixins.focus-ring;
+        }
+    }
+}
+
+.gd-single-selection-attribute-filter-elements-select-item {
+    .gd-item-title-tooltip-wrapper.gd-list-item-only {
+        margin-left: 5px;
+        flex-grow: 0;
+        &:hover {
+            text-decoration: none;
+        }
+
+        .gd-empty-list-item-tooltip {
+            color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+    }
+    &.gd-list-item.is-selected .gd-customizable-checkmark-mobile-navigation {
+        right: 27px;
+    }
+}
+
+.gd-attribute-filter-elements-select-item__next {
+    min-height: 28px;
+
+    .gd-empty-list-item-tooltip-wrapper {
+        margin-left: 5px;
+        flex-grow: 1;
+
+        .gd-empty-list-item-tooltip {
+            color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+    }
+
+    .gd-item-title-tooltip-wrapper.gd-list-item-only {
+        margin-left: 5px;
+        flex-grow: 0;
+        &:hover {
+            text-decoration: none;
+        }
+
+        .gd-empty-list-item-tooltip {
+            color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+    }
+
+    &.gd-list-item {
+        &:hover {
+            background-color: variables.$is-focused-background;
+
+            &.is-selected {
+                color: variables.$gd-color-text;
+                background-color: variables.$is-selected-focused-background;
+            }
+
+            .input-label-text {
+                color: var(--gd-palette-complementary-9-from-theme, inherit);
+            }
+        }
+
+        &.is-selected {
+            font-weight: bold;
+            color: variables.$gd-color-text;
+        }
+    }
+}
+
+.gd-attribute-filter-list-empty-item .input-checkbox-label {
+    &.gd-empty-value-label {
+        flex-grow: 0;
+    }
+
+    .input-label-text {
+        justify-content: flex-start;
+        font-style: italic;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+
+        .gd-empty-value-tooltip-icon {
+            vertical-align: middle;
+            color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+    }
+}
+
+div.gd-empty-item-bubble {
+    max-width: 235px;
+}
+
+.gd-attribute-filter-elements-select__next.gd-list {
+    margin: 0;
+
+    .gd-list-item.gd-attribute-filter-list-empty-item {
+        &:hover {
+            .input-label-text {
+                color: var(--gd-palette-complementary-6, #94a1ad);
+            }
+        }
+    }
+}

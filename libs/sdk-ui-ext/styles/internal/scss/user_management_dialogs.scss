@@ -1,0 +1,239 @@
+// (C) 2023-2024 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-user-management-dialog-permission-remove {
+    border-top: 1px solid kit-variables.$gd-border-color;
+}
+
+.gd-user-management-dialog-list-empty {
+    text-align: center;
+    padding: 40px 0 40px;
+    height: auto;
+}
+
+.gd-user-management-dialog-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gd-user-management-dialog-buttons-right {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.gd-button-secondary {
+    .gd-button-icon.gd-user-management-dialog-edit-mode-icon {
+        color: kit-variables.$gd-palette-primary-base;
+    }
+}
+
+.gd-user-management-dialog {
+    .gd-dialog-footer {
+        padding: 20px 0 0;
+        border-top: 1px solid kit-variables.$gd-border-color;
+    }
+
+    .gd-share-dialog-grantee-list {
+        margin-right: 0;
+        padding-right: 0;
+    }
+}
+
+.gd-user-management-dialog-view {
+    .gd-dialog-header-title {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+}
+
+.gd-user-management-dialog-tabs {
+    margin-bottom: 20px;
+}
+
+.gd-user-management-dialog-loading {
+    position: absolute;
+    z-index: 10000;
+    width: 100%;
+    background: #fff;
+}
+
+.gd-user-management-dialog-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.gd-user-management-dialog-detail-row {
+    display: flex;
+    gap: 20px;
+}
+
+.gd-user-management-dialog-detail-label {
+    width: 150px;
+    color: kit-variables.$default-gd-color-label;
+}
+
+.gd-user-management-dialog-detail-value {
+    flex: 1 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gd-user-management-dialog-detail-value-empty {
+    color: kit-variables.$gd-color-text-dimmed;
+    font-style: italic;
+}
+
+.gd-user-management-dialog-detail-input {
+    width: 300px;
+}
+
+.gd-user-management-dialog-hidden {
+    display: none;
+}
+
+.gd-user-management-admin-alert {
+    width: 100%;
+    margin: 5px 0 20px;
+}
+
+.gd-list-item.gd-user-management-permission-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    span {
+        display: inline;
+        flex: none;
+    }
+
+    .gd-user-management-help-icon-wrapper {
+        margin-bottom: -3px;
+    }
+}
+
+.gd-user-management-create-user-group-input {
+    width: 400px;
+}
+
+.gd-user-management-delete-dialog {
+    max-width: 450px;
+}
+
+.gd-user-management-create-dialog {
+    max-width: 450px;
+
+    .gd-dialog-footer {
+        padding: 0;
+        border: 0;
+    }
+}
+
+.gd-button-link-dimmed-disabled {
+    text-decoration: underline;
+    color: kit-variables.$gd-color-disabled;
+    cursor: default;
+    line-height: 20px;
+    padding: 0 7px;
+}
+
+.gd-user-management-dialog-error {
+    display: block;
+}
+
+.gd-granular-permissions {
+    padding-top: 5px;
+
+    &__hierarchy {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    &__hierarchy-icon {
+        margin-left: 4px;
+        position: relative;
+        top: 2px;
+    }
+
+    &__workspace-access {
+        display: flex;
+    }
+
+    &__workspace-access-description {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 19px;
+        color: kit-variables.$gd-color-state-blank;
+        margin: 10px 0;
+    }
+
+    &__additional-access-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &__additional-access-item {
+        display: flex;
+
+        .input-checkbox-label {
+            margin: 0;
+            padding: 0 5px 0 23px;
+        }
+
+        .input-label-text {
+            vertical-align: baseline;
+        }
+    }
+
+    &__additional-access-item-indent {
+        border-left: 2px dotted kit-variables.$gd-border-color;
+        margin: -5px 0 -5px 6px;
+        padding: 5px 0 5px 14px;
+    }
+
+    &__additional-access-item-info {
+        height: 20px;
+        position: relative;
+        top: 3px;
+    }
+
+    &__warning {
+        display: flex;
+        margin-top: 10px;
+    }
+}
+
+.gd-share-dialog-add-workspace {
+    .gd-dialog-footer {
+        display: flex;
+        justify-content: right;
+    }
+
+    &__footer-link {
+        display: flex;
+        flex: 1;
+
+        .gd-hyperlink {
+            gap: 6px;
+        }
+    }
+}
+
+.gd-granular-permissions-empty {
+    margin-top: 20px;
+    padding: 50px 0 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid kit-variables.$gd-border-color;
+    color: kit-variables.$gd-color-state-blank;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}

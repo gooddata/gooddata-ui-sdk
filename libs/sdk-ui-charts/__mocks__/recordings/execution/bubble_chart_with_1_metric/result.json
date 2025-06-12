@@ -1,0 +1,23 @@
+{
+    "executionResult": {
+        "data": [["4600"]],
+        "paging": {
+            "count": [1, 1],
+            "offset": [0, 0],
+            "total": [1, 1]
+        },
+        "headerItems": [
+            [],
+            [
+                [
+                    {
+                        "measureHeaderItem": {
+                            "name": "_Snapshot [EOP-2]",
+                            "order": 0
+                        }
+                    }
+                ]
+            ]
+        ]
+    }
+}

@@ -1,0 +1,132 @@
+// (C) 2024-2025 GoodData Corporation
+
+@use "sass:color";
+@use "variables" as variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
+@use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
+
+// Needed for spinner as a mid-point color
+$gd-palette-primary-base-midpoint: color-mix(
+    in sRGB,
+    kit-variables.$gd-palette-primary-base 50%,
+    kit-variables.$gd-palette-primary-dimmed 50%
+);
+
+.gd-gen-ai-chat__agent_icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+
+    &__background {
+        fill: kit-variables.$gd-palette-primary-dimmed;
+    }
+
+    &__circle {
+        fill: none;
+        stroke-width: 2px;
+        transform: translate(16px, 16px);
+    }
+
+    &__star {
+        fill: kit-variables.$gd-palette-primary-base;
+    }
+
+    &--loading & {
+        &__circle {
+            animation: gd-gen-ai-chat__agent_icon--rotation 2s linear infinite;
+        }
+
+        &__star--flickr {
+            $duration: 2s;
+
+            animation: gd-gen-ai-chat__agent_icon--flickr $duration linear infinite;
+
+            &--delay {
+                animation-delay: calc($duration / 3);
+            }
+        }
+    }
+
+    &--appear & {
+        &__background {
+            animation: gd-gen-ai-chat__agent_icon--appear 0.3s ease-out;
+        }
+    }
+
+    &--error & {
+        &__background {
+            fill: none;
+            stroke-width: 1px;
+            stroke: kit-variables.$gd-palette-error-dimmed;
+            animation: gd-gen-ai-chat__agent_icon--appear--error 0.3s ease-out;
+        }
+    }
+
+    &--cancelled & {
+        &__background {
+            fill: kit-variables.$gd-color-light;
+        }
+
+        &__star {
+            fill: kit-variables.$gd-color-disabled;
+        }
+    }
+
+    &__grad {
+        &--from {
+            stop-color: kit-variables.$gd-palette-primary-base;
+        }
+        &--mid {
+            stop-color: $gd-palette-primary-base-midpoint;
+        }
+        &--to {
+            stop-color: kit-variables.$gd-palette-primary-base-t80;
+        }
+    }
+}
+
+@keyframes gd-gen-ai-chat__agent_icon--rotation {
+    0% {
+        transform: translate(16px, 16px) rotate(0deg);
+    }
+    100% {
+        transform: translate(16px, 16px) rotate(360deg);
+    }
+}
+
+@keyframes gd-gen-ai-chat__agent_icon--flickr {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes gd-gen-ai-chat__agent_icon--appear {
+    0% {
+        fill: kit-variables.$gd-palette-primary-dimmed;
+    }
+    50% {
+        fill: kit-variables.$gd-palette-primary-base;
+    }
+    100% {
+        fill: kit-variables.$gd-palette-primary-dimmed;
+    }
+}
+
+@keyframes gd-gen-ai-chat__agent_icon--appear--error {
+    0% {
+        fill: kit-variables.$gd-color-text-light;
+    }
+    50% {
+        fill: kit-variables.$gd-palette-error-dimmed;
+    }
+    100% {
+        fill: kit-variables.$gd-color-text-light;
+    }
+}

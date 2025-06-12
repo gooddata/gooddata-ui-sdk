@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`resolveFilterValues > should resolve relative date filter 1`] = `
+{
+  "attributeFilters": {},
+  "dateFilters": [
+    {
+      "from": "2021-08-01",
+      "to": "2021-08-04",
+    },
+  ],
+}
+`;
+
+exports[`resolveFilterValues > should resolved ALL attribute filter to empty values 1`] = `
+{
+  "attributeFilters": {
+    "label.f_product.product.name": {},
+  },
+  "dateFilters": [],
+}
+`;
+
+exports[`resolveFilterValues > should resolved multiple attribute filters 1`] = `
+{
+  "attributeFilters": {
+    "f_owner.department_id": {
+      "Direct Sales": "Direct Sales",
+    },
+    "label.f_product.product.name": {
+      "Educationly": "Educationly",
+    },
+  },
+  "dateFilters": [],
+}
+`;
+
+exports[`resolveFilterValues > should return resolved absolute date limits 1`] = `
+{
+  "attributeFilters": {},
+  "dateFilters": [
+    {
+      "from": "2020-01-01",
+      "to": "2020-02-01",
+    },
+  ],
+}
+`;
+
+exports[`resolveFilterValues > should return resolved attribute filter elements by value 1`] = `
+{
+  "attributeFilters": {
+    "label.f_product.product.name": {
+      "Educationly": "Educationly",
+    },
+  },
+  "dateFilters": [],
+}
+`;
