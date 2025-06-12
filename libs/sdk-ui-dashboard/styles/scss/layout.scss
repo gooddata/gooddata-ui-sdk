@@ -503,6 +503,7 @@ $gd-dashboards-section-description-color: var(
     .gd-editable-label {
         // fix height of the title of widget in edit mode, long title is shortened to parent height
         max-height: inherit;
+        overflow: hidden;
     }
 }
 
