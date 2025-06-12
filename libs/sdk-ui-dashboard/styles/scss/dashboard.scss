@@ -412,9 +412,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     display: flex;
     align-items: center;
     justify-content: center;
-    path {
-        fill: variables.$gd-color-text;
-    }
     &:hover {
         path {
             fill: kit-variables.$gd-color-white;
