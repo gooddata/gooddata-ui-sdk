@@ -17,7 +17,9 @@ export interface IDialogBaseProps {
         titleElementId?: string;
         descriptionElementId?: string;
         isModal?: boolean;
+        title?: string;
     };
+    isModal?: boolean;
     submitOnEnterKey?: boolean;
     shouldCloseOnEscape?: boolean;
     onCancel?: (data?: any) => void;
@@ -54,6 +56,12 @@ export interface IDialogProps extends IDialogBaseProps {
     onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onClose?: () => void;
+    isModal?: boolean;
+    alignPoints?: IAlignPoint[];
+    closeOnEscape?: boolean;
+    closeOnParentScroll?: boolean;
+    closeOnMouseDrag?: boolean;
 }
 
 /**
