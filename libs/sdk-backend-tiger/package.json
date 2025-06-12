@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "10.31.0-alpha.28",
+    "version": "10.31.0-alpha.29",
     "author": "GoodData",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "repository": {
