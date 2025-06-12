@@ -12,9 +12,8 @@ import {
 
 import { getInfo } from "./InfoComponent.js";
 
-// Utility: Escape regex special characters
-export function escapeRegex(str: string) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+export interface CompletionItem extends Completion {
+    item: CatalogItem;
 }
 
 // Utility: Get item title
@@ -45,75 +44,14 @@ export function getOptions(
         search?: string;
         canManage?: boolean;
         canAnalyze?: boolean;
-        onCompletionSelected?: (completion: Completion) => void;
+        onCompletionSelected?: (completion: CompletionItem) => void;
     },
-) {
+): CompletionItem[] {
     const options = items
-        .map((item): Completion | Completion[] | null => {
-            if (isCatalogAttribute(item)) {
-                return getItem(
-                    item.attribute.title,
-                    "attribute",
-                    getInfo(intl, item.attribute.id, item.attribute, {
-                        dataset: item.dataSet,
-                        canManage,
-                        canAnalyze,
-                    }),
-                    onCompletionSelected,
-                );
-            }
-            if (isCatalogFact(item)) {
-                return getItem(
-                    item.fact.title,
-                    "fact",
-                    getInfo(intl, item.fact.id, item.fact, {
-                        canManage,
-                        canAnalyze,
-                    }),
-                    onCompletionSelected,
-                );
-            }
-            if (isCatalogMeasure(item)) {
-                return getItem(
-                    item.measure.title,
-                    "metric",
-                    getInfo(intl, item.measure.id, item.measure, {
-                        canManage,
-                        canAnalyze,
-                    }),
-                    onCompletionSelected,
-                );
-            }
-            if (isCatalogDateDataset(item)) {
-                return [
-                    getItem(
-                        item.dataSet.title,
-                        "date",
-                        getInfo(intl, item.dataSet.id, item.dataSet, {
-                            dataset: item.dataSet,
-                            canManage,
-                            canAnalyze,
-                        }),
-                        onCompletionSelected,
-                    ),
-                    ...item.dateAttributes.map((attr) => {
-                        return getItem(
-                            attr.attribute.title,
-                            "date",
-                            getInfo(intl, attr.attribute.id, attr.attribute, {
-                                dataset: item.dataSet,
-                                canManage,
-                                canAnalyze,
-                            }),
-                            onCompletionSelected,
-                        );
-                    }),
-                ];
-            }
-            return null;
+        .map((item): CompletionItem[] => {
+            return getItems(intl, item, { canManage, canAnalyze, onCompletionSelected });
         })
-        .flat()
-        .filter((opt) => opt !== null) as Completion[];
+        .flat();
 
     return options.filter((opt) => {
         const label = opt.label.toLowerCase();
@@ -122,23 +60,198 @@ export function getOptions(
     });
 }
 
+const SupportedReferenceTypes = ["fact", "metric", "dataset", "attribute"] as const;
+
+// Utility: Get regex for references
+export function getReferenceRegex(split?: boolean) {
+    if (split) {
+        return new RegExp(`(\\{(?:${SupportedReferenceTypes.join("|")})\\/[.A-Za-z0-9_-]{1,255}\})`, "g");
+    }
+    return new RegExp(`\\{((?:${SupportedReferenceTypes.join("|")})\\/(?!\\.)[.A-Za-z0-9_-]{1,255})\\}`, "g");
+}
+
 // Utility: Get item for completion
-export function getItem(
-    label: string,
-    type: "fact" | "metric" | "attribute" | "date",
-    info: () => Node,
-    onCompletion: (completion: Completion) => void,
-): Completion {
-    return {
-        type,
-        label,
-        info,
-        apply: (view, completion, from, to) => {
-            onCompletion(completion);
-            view.dispatch({
-                changes: { from, to, insert: completion.label },
-                selection: { anchor: from + completion.label.length },
-            });
-        },
-    };
+export function getItems(
+    intl: IntlShape,
+    item: CatalogItem,
+    {
+        canManage,
+        canAnalyze,
+        onCompletionSelected,
+    }: {
+        canManage?: boolean;
+        canAnalyze?: boolean;
+        onCompletionSelected?: (completion: CompletionItem) => void;
+    },
+): CompletionItem[] {
+    if (isCatalogAttribute(item)) {
+        return [
+            {
+                type: "attribute",
+                label: item.attribute.title,
+                info: getInfo(intl, item.attribute.id, item.attribute, {
+                    dataset: item.dataSet,
+                    canManage,
+                    canAnalyze,
+                }),
+                item,
+                apply: (view, completion, from, to) => {
+                    const type = "attribute" as typeof SupportedReferenceTypes[number];
+                    const insert = `{${type}/${item.attribute.id}}`;
+                    onCompletionSelected?.(completion as CompletionItem);
+                    view.dispatch({
+                        changes: { from, to, insert },
+                        selection: { anchor: from + insert.length },
+                    });
+                },
+            },
+        ];
+    }
+    if (isCatalogFact(item)) {
+        return [
+            {
+                type: "fact",
+                label: item.fact.title,
+                info: getInfo(intl, item.fact.id, item.fact, {
+                    canManage,
+                    canAnalyze,
+                }),
+                item,
+                apply: (view, completion, from, to) => {
+                    const type = "fact" as typeof SupportedReferenceTypes[number];
+                    const insert = `{${type}/${item.fact.id}}`;
+                    onCompletionSelected?.(completion as CompletionItem);
+                    view.dispatch({
+                        changes: { from, to, insert },
+                        selection: { anchor: from + insert.length },
+                    });
+                },
+            },
+        ];
+    }
+    if (isCatalogMeasure(item)) {
+        return [
+            {
+                type: "metric",
+                label: item.measure.title,
+                info: getInfo(intl, item.measure.id, item.measure, {
+                    canManage,
+                    canAnalyze,
+                }),
+                item,
+                apply: (view, completion, from, to) => {
+                    const type = "metric" as typeof SupportedReferenceTypes[number];
+                    const insert = `{${type}/${item.measure.id}}`;
+                    onCompletionSelected?.(completion as CompletionItem);
+                    view.dispatch({
+                        changes: { from, to, insert },
+                        selection: { anchor: from + insert.length },
+                    });
+                },
+            },
+        ];
+    }
+    if (isCatalogDateDataset(item)) {
+        const dateItems = item.dateAttributes.map((attr): CompletionItem => {
+            return {
+                type: "date",
+                label: attr.attribute.title,
+                info: getInfo(intl, attr.attribute.id, attr.attribute, {
+                    dataset: item.dataSet,
+                    canManage,
+                    canAnalyze,
+                }),
+                item,
+                apply: (view, completion, from, to) => {
+                    const type = "attribute" as typeof SupportedReferenceTypes[number];
+                    const insert = `{${type}/${attr.attribute.id}}`;
+                    onCompletionSelected?.(completion as CompletionItem);
+                    view.dispatch({
+                        changes: { from, to, insert },
+                        selection: { anchor: from + insert.length },
+                    });
+                },
+            };
+        });
+
+        return [
+            {
+                type: "date",
+                label: item.dataSet.title,
+                info: getInfo(intl, item.dataSet.id, item.dataSet, {
+                    dataset: item.dataSet,
+                    canManage,
+                    canAnalyze,
+                }),
+                item,
+                apply: (view, completion, from, to) => {
+                    const type = "dataset" as typeof SupportedReferenceTypes[number];
+                    const insert = `{${type}/${item.dataSet.id}}`;
+                    onCompletionSelected?.(completion as CompletionItem);
+                    view.dispatch({
+                        changes: { from, to, insert },
+                        selection: { anchor: from + insert.length },
+                    });
+                },
+            },
+            ...dateItems,
+        ];
+    }
+    return [];
+}
+
+// Utility: Get completion item ID
+export function getCompletionItemId(data: CompletionItem) {
+    return getCatalogItemId(data.item);
+}
+
+// Utility: Get catalog item ID
+export function getCatalogItemId(item: CatalogItem) {
+    if (isCatalogFact(item)) {
+        return item.fact.id;
+    }
+    if (isCatalogAttribute(item)) {
+        return item.attribute.id;
+    }
+    if (isCatalogMeasure(item)) {
+        return item.measure.id;
+    }
+    if (isCatalogDateDataset(item)) {
+        return item.dataSet.id;
+    }
+    return null;
+}
+
+// Utility: Get catalog item ID
+export function getCatalogItemTitle(item: CatalogItem) {
+    if (isCatalogFact(item)) {
+        return item.fact.title ?? item.fact.id;
+    }
+    if (isCatalogAttribute(item)) {
+        return item.attribute.title ?? item.attribute.id;
+    }
+    if (isCatalogMeasure(item)) {
+        return item.measure.title ?? item.measure.id;
+    }
+    if (isCatalogDateDataset(item)) {
+        return item.dataSet.title ?? item.dataSet.id;
+    }
+    return "Unknown Item";
+}
+
+// Utility: Get a catalog item type
+export function getCatalogItemType(item: CatalogItem): typeof SupportedReferenceTypes[number] | null {
+    if (isCatalogFact(item)) {
+        return "fact";
+    }
+    if (isCatalogAttribute(item)) {
+        return "attribute";
+    }
+    if (isCatalogMeasure(item)) {
+        return "metric";
+    }
+    if (isCatalogDateDataset(item)) {
+        return "dataset";
+    }
+    return null;
 }

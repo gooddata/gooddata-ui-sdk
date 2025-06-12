@@ -96,6 +96,7 @@ export type ChatSaveVisualizationSuccessEvent = BaseEvent & {
 export type ChatUserMessageEvent = BaseEvent & {
     type: "chatUserMessage";
     question: string;
+    objects: TextContentObject[];
 };
 
 // @public
@@ -189,9 +190,17 @@ export type SearchContents = {
 };
 
 // @public (undocumented)
+export type TextContentObject = {
+    id: string;
+    type: "metric" | "attribute" | "fact" | "dataset";
+    title: string;
+};
+
+// @public (undocumented)
 export type TextContents = {
     type: "text";
     text: string;
+    objects: TextContentObject[];
 };
 
 // @public (undocumented)

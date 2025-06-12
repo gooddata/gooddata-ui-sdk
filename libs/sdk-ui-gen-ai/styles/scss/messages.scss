@@ -166,6 +166,48 @@
     & li {
         @include typo-mixins.gd-paragraph;
     }
+
+    //Objects
+    .gd-gen-ai-chat__message__object {
+        font-weight: normal;
+
+        &.metric {
+            color: kit-variables.$gd-color-white;
+        }
+        &.fact {
+            color: kit-variables.$gd-color-white;
+        }
+        &.attribute {
+            color: kit-variables.$gd-color-white;
+        }
+        &.date {
+            color: kit-variables.$gd-color-white;
+        }
+
+        .gd-gen-ai-chat__message-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            margin-bottom: -0.3em;
+            margin-right: 5px;
+
+            &::before {
+                background-color: kit-variables.$gd-color-white;
+            }
+        }
+        &.metric .gd-gen-ai-chat__message-icon {
+            @include variables.gd-svg-mask("metric");
+        }
+        &.attribute .gd-gen-ai-chat__message-icon {
+            @include variables.gd-svg-mask("attribute");
+        }
+        &.fact .gd-gen-ai-chat__message-icon {
+            @include variables.gd-svg-mask("measure");
+        }
+        &.date .gd-gen-ai-chat__message-icon {
+            @include variables.gd-svg-mask("date");
+        }
+    }
 }
 
 .gd-gen-ai-chat__messages__content--error {

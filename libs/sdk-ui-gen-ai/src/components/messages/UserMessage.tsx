@@ -25,7 +25,12 @@ export const UserMessageComponent: React.FC<UserMessageProps> = ({ message, isLa
             className={classNames}
             aria-label={intl.formatMessage({ id: "gd.gen-ai.message.label.user" })}
         >
-            <MessageContents content={message.content} isLastMessage={isLast} messageId={message.localId} />
+            <MessageContents
+                useMarkdown
+                content={message.content}
+                isLastMessage={isLast}
+                messageId={message.localId}
+            />
         </section>
     );
 };

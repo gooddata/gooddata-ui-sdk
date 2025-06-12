@@ -60,6 +60,8 @@
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-gen-ai\"'"
     },
     "dependencies": {
+        "@types/mdast": "^4.0.4",
+        "@types/unist": "^3.0.3",
         "@gooddata/api-client-tiger": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",

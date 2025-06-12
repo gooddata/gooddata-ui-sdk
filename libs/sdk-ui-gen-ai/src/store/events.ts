@@ -2,6 +2,8 @@
 
 import { SdkErrorType } from "@gooddata/sdk-ui";
 
+import { TextContentObject } from "../model.js";
+
 /**
  * A common event definition for the Chat component.
  * @public
@@ -65,6 +67,7 @@ export const isChatResetEvent = (event: ChatEvent): event is ChatResetEvent => {
 export type ChatUserMessageEvent = BaseEvent & {
     type: "chatUserMessage";
     question: string;
+    objects: TextContentObject[];
 };
 
 /**

@@ -390,7 +390,9 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                             title={suggestion.query}
                             onClick={() => {
                                 dispatch(
-                                    newMessageAction(makeUserMessage([makeTextContents(suggestion.query)])),
+                                    newMessageAction(
+                                        makeUserMessage([makeTextContents(suggestion.query, [])]),
+                                    ),
                                 );
                             }}
                         >
