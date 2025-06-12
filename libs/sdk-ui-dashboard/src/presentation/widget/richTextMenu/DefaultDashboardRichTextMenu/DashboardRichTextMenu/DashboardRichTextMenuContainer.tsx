@@ -27,7 +27,11 @@ export const DashboardRichTextMenuContainer: React.FC<IDashboardRichTextMenuCont
                     dataTestId="s-configuration-panel-header-close-button"
                 />
             </div>
-            <ItemsWrapper smallItemsSpacing style={itemsWrapperStyle}>
+            <ItemsWrapper
+                smallItemsSpacing
+                style={itemsWrapperStyle}
+                className="gd-rich-text-insight-configuration-menu-item"
+            >
                 {props.children}
             </ItemsWrapper>
         </div>
