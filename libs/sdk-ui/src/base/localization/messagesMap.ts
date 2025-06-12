@@ -19,6 +19,9 @@ import { en_AU } from "./bundles/en-AU.localization-bundle.js";
 import { fi_FI } from "./bundles/fi-FI.localization-bundle.js";
 import { zh_Hant } from "./bundles/zh-Hant.localization-bundle.js";
 import { zh_HK } from "./bundles/zh-HK.localization-bundle.js";
+import { tr_TR } from "./bundles/tr-TR.localization-bundle.js";
+import { pl_PL } from "./bundles/pl-PL.localization-bundle.js";
+import { ko_KR } from "./bundles/ko-KR.localization-bundle.js";
 
 /**
  * @internal
@@ -49,4 +52,7 @@ export const messagesMap: { [locale: string]: ITranslations } = {
     "fi-FI": fi_FI,
     "zh-Hant": zh_Hant,
     "zh-HK": zh_HK,
+    "tr-TR": tr_TR,
+    "pl-PL": pl_PL,
+    "ko-KR": ko_KR,
 };
