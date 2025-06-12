@@ -35,6 +35,7 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
     returnFocusTo,
     shouldCloseOnEscape = false,
     returnFocusAfterClose = false,
+    isModal = true,
 }) {
     const handleKeyDown = React.useCallback<React.KeyboardEventHandler<HTMLDivElement>>(
         (event) => {
@@ -57,16 +58,18 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
     const dialogClasses = cx("overlay", "gd-dialog", className);
 
     return (
-        <UiFocusTrap
+        <FocusTrapOrNull
             initialFocus={initialFocus}
             returnFocusTo={returnFocusTo}
             autofocusOnOpen={autofocusOnOpen}
-            returnFocusOnUnmount={returnFocusAfterClose}
+            returnFocusAfterClose={returnFocusAfterClose}
+            isModal={isModal}
         >
             <div
                 onKeyDown={handleKeyDown}
                 role={"dialog"}
                 aria-modal={accessibilityConfig?.isModal}
+                aria-label={accessibilityConfig?.title}
                 aria-labelledby={accessibilityConfig?.titleElementId}
                 aria-describedby={accessibilityConfig?.descriptionElementId}
             >
@@ -81,6 +84,27 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
                     {children}
                 </div>
             </div>
-        </UiFocusTrap>
+        </FocusTrapOrNull>
     );
 });
+
+const FocusTrapOrNull = (
+    props: { children: React.ReactElement } & Pick<
+        IDialogBaseProps,
+        "initialFocus" | "returnFocusTo" | "autofocusOnOpen" | "returnFocusAfterClose" | "isModal"
+    >,
+) => {
+    if (!props.isModal) {
+        return <>{props.children}</>;
+    }
+    return (
+        <UiFocusTrap
+            initialFocus={props.initialFocus}
+            returnFocusTo={props.returnFocusTo}
+            autofocusOnOpen={props.autofocusOnOpen}
+            returnFocusOnUnmount={props.returnFocusAfterClose}
+        >
+            {props.children}
+        </UiFocusTrap>
+    );
+};

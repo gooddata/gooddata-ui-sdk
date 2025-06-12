@@ -12,26 +12,38 @@ export const Dialog = React.memo<IDialogProps>(function Dialog({
     onClick,
     onMouseUp,
     onMouseOver,
+    onClose,
     shouldCloseOnClick,
+    isModal = true,
+    alignPoints,
+    closeOnParentScroll,
+    closeOnEscape,
+    closeOnMouseDrag,
     ...dialogProps
 }) {
     return (
         <Overlay
-            alignPoints={[
-                {
-                    align: "cc cc",
-                },
-            ]}
-            isModal
+            isModal={isModal}
             positionType="fixed"
+            alignPoints={
+                alignPoints ?? [
+                    {
+                        align: "cc cc",
+                    },
+                ]
+            }
             containerClassName={containerClassName}
             onMouseUp={onMouseUp}
             onMouseOver={onMouseOver}
             onClick={onClick}
             closeOnOutsideClick={Boolean(shouldCloseOnClick)}
             shouldCloseOnClick={shouldCloseOnClick}
+            closeOnEscape={closeOnEscape}
+            closeOnParentScroll={closeOnParentScroll}
+            closeOnMouseDrag={closeOnMouseDrag}
+            onClose={onClose}
         >
-            <DialogBase {...dialogProps} />
+            <DialogBase {...dialogProps} isModal={isModal} />
         </Overlay>
     );
 });

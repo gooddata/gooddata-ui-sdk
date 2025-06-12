@@ -1566,6 +1566,7 @@ export interface IDialogBaseProps {
         titleElementId?: string;
         descriptionElementId?: string;
         isModal?: boolean;
+        title?: string;
     };
     autofocusOnOpen?: boolean;
     // (undocumented)
@@ -1579,6 +1580,8 @@ export interface IDialogBaseProps {
     displayCloseButton?: boolean;
     // (undocumented)
     initialFocus?: React_2.RefObject<HTMLElement> | string;
+    // (undocumented)
+    isModal?: boolean;
     // (undocumented)
     onCancel?: (data?: any) => void;
     // (undocumented)
@@ -1686,9 +1689,21 @@ export interface IDialogListProps<T extends IDialogListItem = IDialogListItem> {
 
 // @internal (undocumented)
 export interface IDialogProps extends IDialogBaseProps {
+    // (undocumented)
+    alignPoints?: IAlignPoint[];
+    // (undocumented)
+    closeOnEscape?: boolean;
+    // (undocumented)
+    closeOnMouseDrag?: boolean;
+    // (undocumented)
+    closeOnParentScroll?: boolean;
     containerClassName?: string;
     // (undocumented)
+    isModal?: boolean;
+    // (undocumented)
     onClick?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    // (undocumented)
+    onClose?: () => void;
     // (undocumented)
     onMouseOver?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     // (undocumented)

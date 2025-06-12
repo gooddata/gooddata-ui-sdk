@@ -22,6 +22,7 @@ export function useCodemirrorOptions({ placeholderText, labelText }: IUseCodemir
     // ARIA
     const ariaExtension = EditorView.contentAttributes.of({
         "aria-label": labelText || placeholderText,
+        tabIndex: "0", // Ensure the input is focusable
     });
 
     return {

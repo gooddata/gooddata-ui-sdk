@@ -2,7 +2,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { Icon, Overlay } from "@gooddata/sdk-ui-kit";
+import { Dialog, Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
 import {
@@ -47,52 +47,49 @@ const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps & WrappedCompone
     });
 
     return (
-        <Overlay
+        <Dialog
             isModal={isFullscreen}
-            positionType="fixed"
             alignPoints={[{ align: isFullscreen ? "cc cc" : "br br" }]}
+            submitOnEnterKey={false}
             closeOnEscape={true}
             closeOnParentScroll={false}
-            closeOnOutsideClick={false}
             closeOnMouseDrag={false}
             onClose={onClose}
+            className={classNames}
+            accessibilityConfig={{
+                title: intl.formatMessage({ id: "gd.gen-ai.dialog.label" }),
+                isModal: isFullscreen,
+            }}
         >
-            <div
-                className={classNames}
-                role="dialog"
-                aria-modal={isFullscreen}
-                aria-label={intl.formatMessage({ id: "gd.gen-ai.dialog.label" })}
-            >
-                <div className="gd-gen-ai-chat__window__header">
-                    <HeaderIcon
-                        Icon={Icon.Undo}
-                        className="gd-gen-ai-chat__window__header__icon--reset"
-                        tooltip={intl.formatMessage({ id: "gd.gen-ai.header.reset-tooltip" })}
-                        onClick={() => clearThread()}
-                        disabled={!hasMessages}
-                    />
-                    <div className="gd-gen-ai-chat__window__header__gap"></div>
-                    <HeaderIcon
-                        Icon={isFullscreen ? Icon.Contract : Icon.Expand}
-                        className="gd-gen-ai-chat__window__header__icon--fullscreen"
-                        tooltip={
-                            isFullscreen
-                                ? intl.formatMessage({ id: "gd.gen-ai.header.contract-tooltip" })
-                                : intl.formatMessage({ id: "gd.gen-ai.header.expand-tooltip" })
-                        }
-                        onClick={() => setFullscreen({ isFullscreen: !isFullscreen })}
-                    />
-                    <div className="gd-gen-ai-chat__window__header__divider"></div>
-                    <HeaderIcon
-                        Icon={Icon.Close}
-                        className="gd-gen-ai-chat__window__header__icon--close"
-                        tooltip={intl.formatMessage({ id: "gd.gen-ai.header.close-tooltip" })}
-                        onClick={onClose}
-                    />
-                </div>
-                <GenAIChatWrapper autofocus />
+            <div className="gd-gen-ai-chat__window__header">
+                <HeaderIcon
+                    Icon={Icon.Undo}
+                    className="gd-gen-ai-chat__window__header__icon--reset"
+                    tooltip={intl.formatMessage({ id: "gd.gen-ai.header.reset-tooltip" })}
+                    onClick={() => clearThread()}
+                    disabled={!hasMessages}
+                />
+                <div className="gd-gen-ai-chat__window__header__gap"></div>
+                <HeaderIcon
+                    Icon={isFullscreen ? Icon.Contract : Icon.Expand}
+                    className="gd-gen-ai-chat__window__header__icon--fullscreen"
+                    tooltip={
+                        isFullscreen
+                            ? intl.formatMessage({ id: "gd.gen-ai.header.contract-tooltip" })
+                            : intl.formatMessage({ id: "gd.gen-ai.header.expand-tooltip" })
+                    }
+                    onClick={() => setFullscreen({ isFullscreen: !isFullscreen })}
+                />
+                <div className="gd-gen-ai-chat__window__header__divider"></div>
+                <HeaderIcon
+                    Icon={Icon.Close}
+                    className="gd-gen-ai-chat__window__header__icon--close"
+                    tooltip={intl.formatMessage({ id: "gd.gen-ai.header.close-tooltip" })}
+                    onClick={onClose}
+                />
             </div>
-        </Overlay>
+            <GenAIChatWrapper autofocus />
+        </Dialog>
     );
 };
 
