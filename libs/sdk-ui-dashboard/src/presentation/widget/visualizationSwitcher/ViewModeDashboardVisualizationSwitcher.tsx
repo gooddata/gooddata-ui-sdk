@@ -19,12 +19,15 @@ import {
 import { IInsight, IInsightWidget, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 import { InsightWidgetDescriptionTrigger } from "../description/InsightWidgetDescriptionTrigger.js";
+import { ShowAsTableButton } from "../showAsTableButton/ShowAsTableButton.js";
 import { useInsightExport } from "../common/index.js";
 import { useAlertingAndScheduling } from "../widget/InsightWidget/useAlertingAndScheduling.js";
 import { useInsightMenu } from "../widget/InsightWidget/useInsightMenu.js";
 import { VisualizationSwitcherNavigationHeader } from "../widget/VisualizationSwitcherWidget/VisualizationSwitcherNavigationHeader.js";
 import { useExecutionProgress } from "./useExecutionProgress.js";
 import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
+import { useShowAsTable } from "../showAsTableButton/useShowAsTable.js";
+import { supportsShowAsTable } from "../insight/insightToTable.js";
 
 /**
  * @internal
@@ -211,6 +214,8 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
             : insight.insight.summary
         : "";
 
+    const { isWidgetAsTable, toggleWidgetAsTable } = useShowAsTable(activeVisualization);
+
     return (
         <DashboardItem
             className={cx(
@@ -244,6 +249,20 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
                                 screen={screen}
                             />
                         ) : null}
+                        {/* AsTable button: show for all except table, repeater, headline */}
+                        {(() => {
+                            const visType = insightVisualizationType(insight);
+                            if (supportsShowAsTable(visType)) {
+                                return (
+                                    <ShowAsTableButton
+                                        widget={activeVisualization}
+                                        isWidgetAsTable={isWidgetAsTable}
+                                        onClick={toggleWidgetAsTable}
+                                    />
+                                );
+                            }
+                            return null;
+                        })()}
                         <InsightMenuButtonComponent
                             insight={insight}
                             widget={activeVisualization}

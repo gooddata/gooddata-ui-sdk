@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
     idRef,
     IInsight,
@@ -8,6 +8,7 @@ import {
     IInsightWidget,
     IInsightWidgetDescriptionConfiguration,
     IFilter,
+    insightVisualizationType,
 } from "@gooddata/sdk-model";
 import {
     Button,
@@ -41,6 +42,8 @@ import { DrillDialog } from "./DrillDialog.js";
 import { DrillDialogInsight } from "./DrillDialogInsight.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 import { useIntl } from "react-intl";
+import { supportsShowAsTable } from "../../insightToTable.js";
+import { useShowAsTable } from "../../../showAsTableButton/useShowAsTable.js";
 
 // Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be above header
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
@@ -159,6 +162,17 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
     const descriptionConfig = widget.configuration?.description ?? defaultDescriptionConfig;
     const description = getInsightWidgetDescription(descriptionConfig, widget, insight.insight);
 
+    const { toggleWidgetAsTable, isWidgetAsTable, setWidgetAsTable } = useShowAsTable(widget);
+
+    // because widget from dashboard and its drill target inside share the same widget ref, we need to restore original value once drill dialog is closed
+    const originalIsWidgetAsTable = useRef(isWidgetAsTable);
+    const onCloseDialog = () => {
+        onClose();
+        setWidgetAsTable(originalIsWidgetAsTable.current);
+    };
+
+    const isShowAsTableVisible = supportsShowAsTable(insightVisualizationType(insight));
+
     return (
         <OverlayControllerProvider overlayController={overlayController}>
             <OverlayComponent
@@ -167,7 +181,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                 closeOnEscape
                 closeOnOutsideClick
                 ignoreClicksOnByClass={overlayIgnoredClasses}
-                onClose={onClose}
+                onClose={onCloseDialog}
                 positionType="fixed"
             >
                 <IntlWrapper locale={locale}>
@@ -175,7 +189,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                         insightTitle={baseInsightTitle}
                         isBackButtonVisible={breadcrumbs.length > 1}
                         onBackButtonClick={onBackButtonClick}
-                        onCloseDialog={onClose}
+                        onCloseDialog={onCloseDialog}
                         breadcrumbs={breadcrumbs}
                         exportAvailable={exportXLSXEnabled || exportCSVEnabled}
                         exportXLSXEnabled={exportXLSXEnabled}
@@ -188,6 +202,9 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                         isLoading={isLoading}
                         isExporting={isExporting}
                         isExportRawVisible={isExportRawVisible}
+                        isShowAsTableVisible={isShowAsTableVisible}
+                        isWidgetAsTable={isWidgetAsTable}
+                        onShowAsTable={toggleWidgetAsTable}
                     >
                         <WithDrillSelect
                             widgetRef={widget.ref}

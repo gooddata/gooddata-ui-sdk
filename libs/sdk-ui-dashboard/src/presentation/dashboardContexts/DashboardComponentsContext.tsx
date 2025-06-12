@@ -36,6 +36,7 @@ import {
     RichTextComponentProvider,
     RichTextMenuComponentProvider,
     RichTextMenuTitleComponentProvider,
+    ShowAsTableButtonComponentProvider,
     VisualizationSwitcherComponentProvider,
     VisualizationSwitcherToolbarComponentProvider,
     WidgetComponentProvider,
@@ -97,6 +98,7 @@ interface IDashboardComponentsContext {
     SettingButtonComponent: CustomSettingButtonComponent;
     DashboardContentComponentProvider: DashboardContentComponentProvider;
     DashboardSettingsDialogComponent: CustomDashboardSettingsDialogComponent;
+    ShowAsTableButtonComponentProvider: ShowAsTableButtonComponentProvider;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -155,6 +157,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     ),
     SettingButtonComponent: ThrowMissingComponentError("SettingButtonComponent"),
     DashboardSettingsDialogComponent: ThrowMissingComponentError("DashboardSettingsDialogComponent"),
+    ShowAsTableButtonComponentProvider: ThrowMissingComponentError("ShowAsTableButtonComponentProvider"),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 

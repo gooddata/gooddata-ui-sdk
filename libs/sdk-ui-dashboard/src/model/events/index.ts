@@ -516,6 +516,11 @@ export { drillTargetsAdded, isDrillTargetsAdded } from "./drillTargets.js";
 
 export * from "./userInteraction.js";
 
+export type { ShowWidgetAsTableSet, ShowWidgetAsTableSetPayload } from "./showWidgetAsTable.js";
+export { isShowWidgetAsTableSet, showWidgetAsTableSet } from "./showWidgetAsTable.js";
+
+import type { ShowWidgetAsTableSet } from "./showWidgetAsTable.js";
+
 export type {
     DashboardRenderRequested,
     DashboardAsyncRenderRequestedPayload,
@@ -644,6 +649,7 @@ export type DashboardEvents =
     | DashboardScheduledEmailCreated
     | DashboardScheduledEmailSaved
     | DashboardAutomationsRefreshed
+    | ShowWidgetAsTableSet
     //alpha
     | DashboardDrillDownResolved
     | DashboardDrillToAttributeUrlResolved

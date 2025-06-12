@@ -93,4 +93,5 @@ export type IconType =
     | "attribute"
     | "horn"
     | "cw"
-    | "ccw";
+    | "ccw"
+    | "table";

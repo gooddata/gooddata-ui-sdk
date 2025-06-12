@@ -505,3 +505,6 @@ export type { ExecutedState } from "./executed/executedState.js";
 export { selectIsDashboardExecuted } from "./executed/executedSelectors.js";
 
 export type { AccessibleDashboardsState } from "./accessibleDashboards/index.js";
+
+export type { ShowWidgetAsTableState } from "./showWidgetAsTable/showWidgetAsTableState.js";
+export { selectShowWidgetAsTable } from "./showWidgetAsTable/showWidgetAsTableSelectors.js";

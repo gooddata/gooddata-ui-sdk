@@ -3351,5 +3351,15 @@
         "value": "Close menu",
         "comment": "",
         "limit": 0
+    },
+    "controlButtons.asTable": {
+        "value": "Show as table",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.asOriginal": {
+        "value": "Show original visualization",
+        "comment": "",
+        "limit": 0
     }
 }

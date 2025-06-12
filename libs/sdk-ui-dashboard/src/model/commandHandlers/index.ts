@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { DashboardCommands, IDashboardCommand } from "../commands/index.js";
+import { handleSetWidgetToShowAsTable } from "./showWidgetAsTable/showWidgetAsTableHandler.js";
 import { SagaIterator } from "redux-saga";
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler/index.js";
 import { saveDashboardHandler } from "./dashboard/saveDashboardHandler.js";
@@ -230,4 +231,5 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD": reloadFilterViewsHandler,
     "GDC.DASH/CMD.USERS.LOAD_ALL": loadAllWorkspaceUsersHandler,
     "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP": changeIgnoreExecutionTimestampHandler,
+    "GDC.DASH/CMD.SHOW_WIDGET_AS_TABLE.SET": handleSetWidgetToShowAsTable,
 };

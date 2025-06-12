@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import {
     Button,
     Bubble,
@@ -11,6 +11,7 @@ import {
     DialogBase,
     useId,
     IDialogBaseProps,
+    UiButton,
 } from "@gooddata/sdk-ui-kit";
 import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model/index.js";
 import { PoweredByGDLogo } from "./PoweredByGDLogo.js";
@@ -36,10 +37,22 @@ export interface DrillDialogProps extends Pick<IDialogBaseProps, "initialFocus" 
     isExporting: boolean;
     enableDrillDescription: boolean;
     isExportRawVisible: boolean;
+    isShowAsTableVisible: boolean;
+    isWidgetAsTable: boolean;
+    onShowAsTable: () => void;
 }
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cc tc", offset: { x: -20, y: 10 } }];
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc", offset: { x: -5, y: -5 } }];
+
+const messages = defineMessages({
+    showAsTable: {
+        id: "controlButtons.asTable",
+    },
+    showAsOriginal: {
+        id: "controlButtons.asOriginal",
+    },
+});
 
 export const DrillDialog: React.FC<DrillDialogProps> = ({
     insightTitle,
@@ -62,6 +75,9 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     isExportRawVisible,
     initialFocus,
     returnFocusTo,
+    isShowAsTableVisible,
+    isWidgetAsTable,
+    onShowAsTable,
 }) => {
     const settings = useDashboardSelector(selectSettings);
     const canExport = useDashboardSelector(selectCanExportTabular);
@@ -72,6 +88,8 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     const titleElementId = useId();
 
     const { formatMessage } = useIntl();
+
+    const showAsTableButtonMessage = isWidgetAsTable ? messages.showAsOriginal : messages.showAsTable;
 
     return (
         <DialogBase
@@ -121,20 +139,30 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
             >
                 <div className="gd-drill-modal-dialog-content-base">{children}</div>
             </div>
-            {shouldShowDrilledInsightExport ? (
+            {shouldShowDrilledInsightExport || isShowAsTableVisible ? (
                 <div className="gd-drill-modal-dialog-footer gd-drill-modal-dialog-footer-with-border s-drill-modal-dialog-footer">
-                    <DrillDialogExportDropdown
-                        exportAvailable={exportAvailable}
-                        exportXLSXEnabled={exportXLSXEnabled}
-                        exportCSVEnabled={exportCSVEnabled}
-                        exportCSVRawEnabled={exportCSVRawEnabled}
-                        onExportXLSX={onExportXLSX}
-                        onExportCSV={onExportCSV}
-                        onExportCSVRaw={onExportCSVRaw}
-                        isLoading={isLoading}
-                        isExporting={isExporting}
-                        isExportRawVisible={isExportRawVisible}
-                    />
+                    {isShowAsTableVisible ? (
+                        <UiButton
+                            variant="tertiary"
+                            onClick={onShowAsTable}
+                            iconBefore={isWidgetAsTable ? "visualization" : "table"}
+                            label={formatMessage(showAsTableButtonMessage)}
+                        />
+                    ) : null}
+                    {shouldShowDrilledInsightExport ? (
+                        <DrillDialogExportDropdown
+                            exportAvailable={exportAvailable}
+                            exportXLSXEnabled={exportXLSXEnabled}
+                            exportCSVEnabled={exportCSVEnabled}
+                            exportCSVRawEnabled={exportCSVRawEnabled}
+                            onExportXLSX={onExportXLSX}
+                            onExportCSV={onExportCSV}
+                            onExportCSVRaw={onExportCSVRaw}
+                            isLoading={isLoading}
+                            isExporting={isExporting}
+                            isExportRawVisible={isExportRawVisible}
+                        />
+                    ) : null}
                 </div>
             ) : null}
             <PoweredByGDLogo isSmall />

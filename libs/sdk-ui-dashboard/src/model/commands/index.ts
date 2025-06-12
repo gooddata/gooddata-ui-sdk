@@ -120,6 +120,7 @@ import { AddDrillTargets } from "./drillTargets.js";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render.js";
 import { ChangeRenderMode } from "./renderMode.js";
 import { LoadAllWorkspaceUsers } from "./users.js";
+import { SetShowWidgetAsTable } from "./showWidgetAsTable.js";
 
 export type { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base.js";
 export type {
@@ -462,6 +463,8 @@ export type {
     ExportImageInsightWidget,
     ExportImageInsightWidgetPayload,
 } from "./insight.js";
+export type { SetShowWidgetAsTable } from "./showWidgetAsTable.js";
+
 export {
     changeInsightWidgetHeader,
     changeInsightWidgetDescription,
@@ -524,6 +527,9 @@ export { changeRenderMode, cancelEditRenderMode, switchToEditRenderMode } from "
 
 export type { AddDrillTargets, AddDrillTargetsPayload } from "./drillTargets.js";
 export { addDrillTargets } from "./drillTargets.js";
+
+export type { SetShowWidgetAsTablePayload } from "./showWidgetAsTable.js";
+export { setShowWidgetAsTable } from "./showWidgetAsTable.js";
 
 /**
  * Union type that contains all available built-in dashboard commands.
@@ -646,4 +652,5 @@ export type DashboardCommands =
     | LoadAllWorkspaceUsers
     | ExportRawInsightWidget
     | ExportSlidesInsightWidget
-    | ExportImageInsightWidget;
+    | ExportImageInsightWidget
+    | SetShowWidgetAsTable;
