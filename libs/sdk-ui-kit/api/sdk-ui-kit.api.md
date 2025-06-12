@@ -473,7 +473,7 @@ export const DropdownButton: React_2.FC<IDropdownButtonProps>;
 // @internal (undocumented)
 export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): React_2.JSX.Element;
 
-// @internal (undocumented)
+// @internal
 export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element;
 
 // @internal (undocumented)
@@ -1838,11 +1838,15 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     mobileItemHeight?: number;
     // (undocumented)
+    onKeyDownSelect?: (item: T) => void;
+    // (undocumented)
     onSearch?: (searchString: string) => void;
     // (undocumented)
     onTabSelect?: (tab: ITab) => void;
     // (undocumented)
     renderNoData?: (props: IDropdownListNoDataRenderProps) => React_2.ReactNode;
+    // (undocumented)
+    renderVirtualisedList?: boolean;
     // (undocumented)
     scrollDirection?: -1 | 1;
     // (undocumented)
@@ -3983,6 +3987,8 @@ export interface IRegion {
 // @internal (undocumented)
 export interface IRenderListItemProps<T> {
     // (undocumented)
+    focused?: boolean;
+    // (undocumented)
     height: number;
     // (undocumented)
     isFirst: boolean;
@@ -5977,6 +5983,10 @@ export interface UiPagedVirtualListProps<T> {
     // (undocumented)
     children: (item: T) => React_2.ReactNode;
     // (undocumented)
+    closeDropdown?: () => void;
+    // (undocumented)
+    customKeyboardNavigationHandler?: (event: React_2.KeyboardEvent<Element>) => void;
+    // (undocumented)
     hasNextPage?: boolean;
     // (undocumented)
     isLoading?: boolean;
@@ -5992,6 +6002,8 @@ export interface UiPagedVirtualListProps<T> {
     loadNextPage?: () => void;
     // (undocumented)
     maxHeight: number;
+    // (undocumented)
+    onKeyDownSelect?: (item: T) => void;
     scrollToItem?: T;
     scrollToItemKeyExtractor?: (item: T) => string | number;
     // (undocumented)

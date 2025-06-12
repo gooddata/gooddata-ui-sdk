@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
 import { bem } from "../@utils/bem.js";
+import { makeLinearKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 const { b, e } = bem("gd-ui-kit-paged-virtual-list");
 
@@ -26,6 +27,9 @@ export interface UiPagedVirtualListProps<T> {
     skeletonItemsCount: number;
     hasNextPage?: boolean;
     loadNextPage?: () => void;
+    customKeyboardNavigationHandler?: (event: React.KeyboardEvent<Element>) => void;
+    onKeyDownSelect?: (item: T) => void;
+    closeDropdown?: () => void;
     isLoading?: boolean;
     /**
      * An item in the list that should be scrolled into view when the component renders.
@@ -47,16 +51,34 @@ export interface UiPagedVirtualListProps<T> {
  * @internal
  */
 export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
-    const { SkeletonItem = UiSkeleton, items, itemHeight, itemsGap, itemPadding, children } = props;
+    const {
+        SkeletonItem = UiSkeleton,
+        items,
+        itemHeight,
+        itemsGap,
+        itemPadding,
+        onKeyDownSelect,
+        closeDropdown,
+        customKeyboardNavigationHandler,
+        children,
+    } = props;
 
     const { itemsCount, scrollContainerRef, height, hasScroll, rowVirtualizer, virtualItems } =
         useVirtualList(props);
+
+    const { focusedIndex, onKeyboardNavigation } = useVirtualListKeyboardNavigation(
+        items,
+        onKeyDownSelect,
+        closeDropdown,
+    );
 
     return (
         <div
             className={b({
                 hasScroll,
             })}
+            tabIndex={0}
+            onKeyDown={customKeyboardNavigationHandler ?? onKeyboardNavigation}
         >
             <div
                 ref={scrollContainerRef}
@@ -83,7 +105,11 @@ export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
                         };
 
                         return (
-                            <div key={virtualRow.index} className={e("item")} style={style}>
+                            <div
+                                key={virtualRow.index}
+                                className={e("item", { isFocused: focusedIndex === virtualRow.index })}
+                                style={style}
+                            >
                                 {isSkeletonItem ? (
                                     <SkeletonItem key={virtualRow.index} itemHeight={itemHeight} />
                                 ) : (
@@ -192,5 +218,61 @@ function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
         hasScroll,
         rowVirtualizer,
         virtualItems,
+    };
+}
+
+function useVirtualListKeyboardNavigation<T>(
+    items: T[],
+    onKeyDownSelect?: (item: T) => void,
+    closeDropdown?: () => void,
+) {
+    const [focusedIndex, setFocusedIndex] = React.useState<number>(0);
+
+    useEffect(() => {
+        setFocusedIndex(0);
+    }, [items]);
+
+    const virtualListKeyboardNavigationHandler = React.useMemo(
+        () =>
+            makeLinearKeyboardNavigation({
+                onFocusNext: () => {
+                    setFocusedIndex((prevIndex) => {
+                        const nextIndex = prevIndex + 1;
+                        if (nextIndex >= items.length) {
+                            return 0;
+                        }
+                        return nextIndex;
+                    });
+                },
+                onFocusPrevious: () => {
+                    setFocusedIndex((prevIndex) => {
+                        const nextIndex = prevIndex - 1;
+                        if (nextIndex < 0) {
+                            return items.length - 1;
+                        }
+                        return nextIndex;
+                    });
+                },
+                onFocusFirst: () => {
+                    setFocusedIndex(0);
+                },
+                onFocusLast: () => {
+                    setFocusedIndex(items.length - 1);
+                },
+                onSelect: () => {
+                    onKeyDownSelect?.(items[focusedIndex]);
+                    closeDropdown?.();
+                },
+                onClose: (e) => {
+                    e.preventDefault();
+                    closeDropdown?.();
+                },
+            }),
+        [items, focusedIndex, onKeyDownSelect, closeDropdown],
+    );
+
+    return {
+        focusedIndex,
+        onKeyboardNavigation: virtualListKeyboardNavigationHandler,
     };
 }

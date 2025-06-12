@@ -1,12 +1,23 @@
 // (C) 2024-2025 GoodData Corporation
+@use "../../../styles/scss/mixins";
 
 .gd-ui-kit-paged-virtual-list {
+    $root: &;
+
     display: flex;
     flex-direction: column;
     min-height: 0;
     max-height: 100%;
     height: 100%;
     width: 100%;
+
+    &:focus-visible {
+        outline: none;
+
+        #{$root}__item--isFocused {
+            @include mixins.focus-ring;
+        }
+    }
 
     &--hasScroll {
         padding-right: 4px;

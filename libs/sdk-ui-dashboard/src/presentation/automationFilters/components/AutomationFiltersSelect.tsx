@@ -28,7 +28,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import noop from "lodash/noop.js";
-import React, { useState } from "react";
+import React, { RefObject, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { gdColorStateBlank } from "../../constants/colors.js";
 import { AttributesDropdown } from "../../filterBar/index.js";
@@ -190,7 +190,8 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                             getCustomItemTitle={(item) =>
                                 getCatalogItemCustomTitle(item, availableFilters, dateConfigs)
                             }
-                            DropdownButtonComponent={({ onClick }) => (
+                            renderVirtualisedList={true}
+                            DropdownButtonComponent={({ buttonRef, onClick }) => (
                                 <UiIconButton
                                     icon="plus"
                                     label={intl.formatMessage({
@@ -198,6 +199,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                                     })}
                                     onClick={onClick}
                                     variant="tertiary"
+                                    ref={buttonRef as RefObject<HTMLButtonElement>}
                                 />
                             )}
                             DropdownTitleComponent={() => (

@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { Dropdown, DropdownList, ITab } from "@gooddata/sdk-ui-kit";
+import { Dropdown, DropdownList, isEscapeKey, ITab } from "@gooddata/sdk-ui-kit";
 import debounce from "lodash/debounce.js";
 
 import { AddAttributeFilterButton } from "./AddAttributeFilterButton.js";
@@ -79,6 +79,7 @@ export function AttributesDropdown({
     DropdownTitleComponent,
     renderNoData,
     overlayPositionType,
+    renderVirtualisedList,
     getCustomItemTitle,
 }: IDashboardAttributeFilterPlaceholderProps) {
     const intl = useIntl();
@@ -202,18 +203,27 @@ export function AttributesDropdown({
             alignPoints={dropdownAlignPoints}
             openOnInit={openOnInit}
             overlayPositionType={overlayPositionType}
-            renderButton={({ isOpen, openDropdown }) => (
+            renderButton={({ isOpen, openDropdown, buttonRef }) => (
                 <DropdownButtonComponent
                     className="attribute-filter-button mobile-dropdown-button"
                     isOpen={isOpen}
                     title={buttonTitle}
                     onClick={openDropdown}
+                    buttonRef={buttonRef as React.MutableRefObject<HTMLButtonElement>}
                 />
             )}
             renderBody={({ closeDropdown }) => (
                 <>
                     {DropdownTitleComponent ? <DropdownTitleComponent /> : null}
-                    <div className={cx(bodyClassName, "attributes-list")}>
+                    <div
+                        className={cx(bodyClassName, "attributes-list")}
+                        onKeyDown={(e) => {
+                            if (isEscapeKey(e)) {
+                                e.stopPropagation();
+                                closeDropdown();
+                            }
+                        }}
+                    >
                         <DropdownList
                             width={WIDTH}
                             showTabs={showTabs}
@@ -229,6 +239,15 @@ export function AttributesDropdown({
                             searchPlaceholder={intl.formatMessage({
                                 id: "attributesDropdown.placeholder",
                             })}
+                            onKeyDownSelect={(item) => {
+                                if (isCatalogAttribute(item)) {
+                                    onSelect(item.defaultDisplayForm.ref);
+                                } else {
+                                    onSelect(item.dataSet.ref);
+                                }
+                            }}
+                            closeDropdown={closeDropdown}
+                            renderVirtualisedList={renderVirtualisedList}
                             renderNoData={renderNoData}
                             renderItem={({ item }) => {
                                 const title = getCustomItemTitle?.(item);

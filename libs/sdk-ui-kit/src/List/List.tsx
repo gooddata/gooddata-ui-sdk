@@ -47,6 +47,7 @@ export interface IRenderListItemProps<T> {
     height: number;
     isFirst: boolean;
     isLast: boolean;
+    focused?: boolean;
 }
 
 /**
