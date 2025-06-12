@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { getPushpinColors } from "./geoChartColor.js";
 import {
     DEFAULT_CLUSTER_RADIUS,
@@ -55,7 +55,7 @@ function transformPushpinDataSource(dataSourceProps: IGeoDataSourceProps): IGeoD
 
     return locationData.reduce(
         (result: IGeoDataSourceFeatures, coordinates: IGeoLngLat, index: number): IGeoDataSourceFeatures => {
-            if (!coordinates) {
+            if (!coordinates || !Number.isFinite(coordinates.lat) || !Number.isFinite(coordinates.lng)) {
                 return result;
             }
 
