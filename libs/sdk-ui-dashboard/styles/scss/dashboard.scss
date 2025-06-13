@@ -387,6 +387,11 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         top: auto;
         right: auto;
     }
+
+    // remove portal anchor from flex
+    & > span {
+        display: none;
+    }
 }
 
 .dash-item-action {
