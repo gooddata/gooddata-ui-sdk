@@ -80,6 +80,7 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { INotification } from '@gooddata/sdk-model';
+import { INotificationChannelIdentifier } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { INotificationChannelTestResponse } from '@gooddata/sdk-model';
@@ -946,9 +947,14 @@ export interface IMeasureReferencing {
 }
 
 // @beta
+export type INotificationChannelIdentifiersQueryResult = IPagedResource<INotificationChannelIdentifier>;
+
+// @beta
 export interface INotificationChannelsQuery {
     query(): Promise<INotificationChannelsQueryResult>;
     queryAll(): Promise<INotificationChannelMetadataObject[]>;
+    queryAllIdentifiers(): Promise<INotificationChannelIdentifier[]>;
+    queryIdentifiers(): Promise<INotificationChannelIdentifiersQueryResult>;
     withPage(page: number): INotificationChannelsQuery;
     withSize(size: number): INotificationChannelsQuery;
     withSorting(sort: string[]): INotificationChannelsQuery;

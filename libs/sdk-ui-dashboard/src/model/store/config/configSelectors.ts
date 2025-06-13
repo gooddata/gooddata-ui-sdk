@@ -1072,3 +1072,15 @@ export const selectExternalRecipient: DashboardSelector<string | undefined> = cr
         return state.externalRecipient;
     },
 );
+
+/**
+ * Returns whether notification channel identifiers are enabled.
+ *
+ * @internal
+ */
+export const selectEnableNotificationChannelIdentifiers: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableNotificationChannelIdentifiers) ?? false;
+    },
+);

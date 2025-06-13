@@ -1,11 +1,16 @@
-// (C) 2021-2024 GoodData Corporation
-import { INotificationChannelMetadataObject, NotificationChannelDestinationType } from "@gooddata/sdk-model";
+// (C) 2021-2025 GoodData Corporation
+import {
+    INotificationChannelIdentifier,
+    INotificationChannelMetadataObject,
+    NotificationChannelDestinationType,
+} from "@gooddata/sdk-model";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function loadNotificationChannels(
     ctx: DashboardContext,
     enableInPlatformNotifications: boolean,
-): Promise<INotificationChannelMetadataObject[]> {
+    enableNotificationChannelIdentifiers: boolean,
+): Promise<INotificationChannelIdentifier[] | INotificationChannelMetadataObject[]> {
     const { backend } = ctx;
 
     const typesToLoad: NotificationChannelDestinationType[] = ["smtp", "webhook"];
@@ -13,6 +18,20 @@ export function loadNotificationChannels(
     if (enableInPlatformNotifications) {
         typesToLoad.push("inPlatform");
     }
+
+    if (enableNotificationChannelIdentifiers) {
+        return backend
+            .organizations()
+            .getCurrentOrganization()
+            .then((organization) => {
+                return organization
+                    .notificationChannels()
+                    .getNotificationChannelsQuery()
+                    .withTypes(typesToLoad)
+                    .queryAllIdentifiers();
+            });
+    }
+
     return backend
         .organizations()
         .getCurrentOrganization()

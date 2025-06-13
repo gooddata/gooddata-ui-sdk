@@ -1,6 +1,10 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { INotificationChannelMetadataObject, NotificationChannelDestinationType } from "@gooddata/sdk-model";
+import {
+    INotificationChannelMetadataObject,
+    NotificationChannelDestinationType,
+    INotificationChannelIdentifier,
+} from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging.js";
 
 /**
@@ -57,6 +61,20 @@ export interface INotificationChannelsQuery {
      * @returns promise with a list of all notification channels matching the specified options
      */
     queryAll(): Promise<INotificationChannelMetadataObject[]>;
+
+    /**
+     * Starts the notification channel identifiers query (lightweight, no sensitive data).
+     *
+     * @returns promise of first page of the results
+     */
+    queryIdentifiers(): Promise<INotificationChannelIdentifiersQueryResult>;
+
+    /**
+     * Starts the notification channel identifiers query (lightweight, no sensitive data).
+     *
+     * @returns promise with a list of all notification channel identifiers matching the specified options
+     */
+    queryAllIdentifiers(): Promise<INotificationChannelIdentifier[]>;
 }
 
 /**
@@ -65,3 +83,10 @@ export interface INotificationChannelsQuery {
  * @beta
  */
 export type INotificationChannelsQueryResult = IPagedResource<INotificationChannelMetadataObject>;
+
+/**
+ * Queried notification channel identifiers are returned in a paged representation.
+ *
+ * @beta
+ */
+export type INotificationChannelIdentifiersQueryResult = IPagedResource<INotificationChannelIdentifier>;

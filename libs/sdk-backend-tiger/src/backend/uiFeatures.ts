@@ -150,6 +150,7 @@ export enum TigerFeaturesNames {
     EnableWidgetExportPngImage = "enableWidgetExportPngImage",
     EnableExportToDocumentStorage = "enableExportToDocumentStorage",
     EnableAttributeFilterVirtualised = "enableAttributeFilterVirtualised",
+    EnableNotificationChannelIdentifiers = "enableNotificationChannelIdentifiers",
 }
 
 export type ITigerFeatureFlags = {
@@ -262,6 +263,7 @@ export type ITigerFeatureFlags = {
     enableWidgetExportPngImage: typeof FeatureFlagsValues["enableWidgetExportPngImage"][number];
     enableExportToDocumentStorage: typeof FeatureFlagsValues["enableExportToDocumentStorage"][number];
     enableAttributeFilterVirtualised: typeof FeatureFlagsValues["enableAttributeFilterVirtualised"][number];
+    enableNotificationChannelIdentifiers: typeof FeatureFlagsValues["enableNotificationChannelIdentifiers"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -374,6 +376,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableWidgetExportPngImage: false,
     enableExportToDocumentStorage: false,
     enableAttributeFilterVirtualised: true,
+    enableNotificationChannelIdentifiers: false,
 };
 
 export const FeatureFlagsValues = {
@@ -490,4 +493,5 @@ export const FeatureFlagsValues = {
     enableWidgetExportPngImage: [true, false] as const,
     enableExportToDocumentStorage: [true, false] as const,
     enableAttributeFilterVirtualised: [true, false] as const,
+    enableNotificationChannelIdentifiers: [true, false] as const,
 };

@@ -1,7 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { IAutomationMetadataObject, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    INotificationChannelIdentifier,
+    INotificationChannelMetadataObject,
+} from "@gooddata/sdk-model";
 import {
     AutofocusOnMount,
     LoadingSpinner,
@@ -19,7 +23,7 @@ interface IScheduledEmailsProps {
     scheduledEmails: IAutomationMetadataObject[];
     currentUserEmail?: string;
     noSchedulesMessageId: string;
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 }
 
 export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {

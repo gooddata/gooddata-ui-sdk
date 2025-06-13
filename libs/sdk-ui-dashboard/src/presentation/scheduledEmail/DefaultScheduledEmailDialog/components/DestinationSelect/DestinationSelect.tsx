@@ -13,7 +13,7 @@ import {
     Hyperlink,
 } from "@gooddata/sdk-ui-kit";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS } from "../../constants.js";
-import { INotificationChannelMetadataObject } from "@gooddata/sdk-model";
+import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
 
 const DROPDOWN_WIDTH = 199;
 
@@ -23,7 +23,7 @@ interface IDestinationItem {
 }
 
 interface IDestinationSelectProps {
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     selectedItemId: string | undefined;
     onChange: (selectedItemId: string) => void;
     closeOnParentScroll?: boolean;

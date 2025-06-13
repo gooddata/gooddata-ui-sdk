@@ -20,6 +20,19 @@ export type NotificationChannelDestinationType = "webhook" | "smtp" | "inPlatfor
 export type NotificationChannelDashboardLinkVisibility = "hidden" | "visible" | "internalOnly";
 
 /**
+ * Lightweight identifier object for notification channel.
+ * @beta
+ */
+export interface INotificationChannelIdentifier {
+    type: "notificationChannel";
+    destinationType: NotificationChannelDestinationType;
+    id: string;
+    title?: string;
+    description?: string;
+    allowedRecipients?: NotificationChannelAllowedRecipients;
+}
+
+/**
  * Allowed recipients of notifications from this channel.
  *
  * Creator - only the creator of the report.

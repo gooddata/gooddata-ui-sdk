@@ -721,6 +721,11 @@ export interface ISettings {
      */
     enableAttributeFilterVirtualised?: boolean;
 
+    /**
+     * Enable notification channel identifiers
+     */
+    enableNotificationChannelIdentifiers?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

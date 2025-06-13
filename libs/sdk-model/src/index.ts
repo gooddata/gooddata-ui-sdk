@@ -52,6 +52,7 @@ export type {
     NotificationChannelDashboardLinkVisibility,
     INotificationChannelTestResponse,
     ToNotificationChannelMetadataObject,
+    INotificationChannelIdentifier,
 } from "./notificationChannels/index.js";
 export {
     isNotificationChannelMetadataObject,

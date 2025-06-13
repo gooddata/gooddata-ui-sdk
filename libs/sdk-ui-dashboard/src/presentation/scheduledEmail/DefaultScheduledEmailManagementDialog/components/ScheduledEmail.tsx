@@ -3,7 +3,11 @@
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
-import { IAutomationMetadataObject, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    INotificationChannelIdentifier,
+    INotificationChannelMetadataObject,
+} from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Icon, SELECT_ITEM_ACTION, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
@@ -21,7 +25,7 @@ interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IAutomationMetadataObject) => void;
     onEdit: (scheduledEmail: IAutomationMetadataObject) => void;
     scheduledEmail: IAutomationMetadataObject;
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     focusedAction?: IAction;
 }
 

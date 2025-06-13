@@ -1,12 +1,23 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { INotificationChannelsQuery, INotificationChannelsQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    INotificationChannelsQuery,
+    INotificationChannelsQueryResult,
+    INotificationChannelIdentifiersQueryResult,
+} from "@gooddata/sdk-backend-spi";
 import { MetadataUtilities } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import isNil from "lodash/isNil.js";
-import { INotificationChannelMetadataObject, NotificationChannelDestinationType } from "@gooddata/sdk-model";
-import { convertNotificationChannelFromBackend } from "../../convertors/fromBackend/NotificationChannelsConvertor.js";
+import {
+    INotificationChannelIdentifier,
+    INotificationChannelMetadataObject,
+    NotificationChannelDestinationType,
+} from "@gooddata/sdk-model";
+import {
+    convertNotificationChannelFromBackend,
+    convertNotificationChannelIdentifierFromBackend,
+} from "../../convertors/fromBackend/NotificationChannelsConvertor.js";
 import { convertNotificationChannelTypesToBackend } from "../../convertors/toBackend/NotificationChannelsConvertor.js";
 
 export class NotificationChannelsQuery implements INotificationChannelsQuery {
@@ -92,6 +103,48 @@ export class NotificationChannelsQuery implements INotificationChannelsQuery {
 
     async queryAll(): Promise<INotificationChannelMetadataObject[]> {
         const firstQuery = await this.query();
+        return firstQuery.all();
+    }
+
+    queryIdentifiers(): Promise<INotificationChannelIdentifiersQueryResult> {
+        return ServerPaging.for(
+            async ({ limit, offset }) => {
+                /**
+                 * For backend performance reasons, we do not want to ask for paging info each time.
+                 */
+                const metaIncludeObj =
+                    this.totalCount === undefined ? { metaInclude: ["page" as const] } : {};
+
+                const filterObj = this.constructFilter();
+
+                const items = await this.authCall((client) =>
+                    client.entities.getAllEntitiesNotificationChannelIdentifiers({
+                        ...metaIncludeObj,
+                        ...filterObj,
+                        ...this.sort,
+                        size: limit,
+                        page: offset / limit,
+                    }),
+                )
+                    .then((res) => res.data)
+                    .then((data) => {
+                        const totalCount = data.meta?.page?.totalElements;
+                        !isNil(totalCount) && this.setTotalCount(totalCount);
+                        return data.data.flatMap((channel) => {
+                            const converted = convertNotificationChannelIdentifierFromBackend(channel);
+                            return converted ? [converted] : [];
+                        });
+                    });
+
+                return { items, totalCount: this.totalCount! };
+            },
+            this.size,
+            this.page * this.size,
+        );
+    }
+
+    async queryAllIdentifiers(): Promise<INotificationChannelIdentifier[]> {
+        const firstQuery = await this.queryIdentifiers();
         return firstQuery.all();
     }
 

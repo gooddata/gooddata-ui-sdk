@@ -23,6 +23,7 @@ import {
     JsonApiAutomationOutList,
     JsonApiUserOutList,
     JsonApiNotificationChannelOutList,
+    JsonApiNotificationChannelIdentifierOutList,
 } from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;
@@ -127,7 +128,8 @@ export type MetadataGetEntitiesResult =
     | JsonApiExportDefinitionOutList
     | JsonApiAutomationOutList
     | JsonApiUserOutList
-    | JsonApiNotificationChannelOutList;
+    | JsonApiNotificationChannelOutList
+    | JsonApiNotificationChannelIdentifierOutList;
 
 /**
  * All API client getEntities* functions follow this signature.

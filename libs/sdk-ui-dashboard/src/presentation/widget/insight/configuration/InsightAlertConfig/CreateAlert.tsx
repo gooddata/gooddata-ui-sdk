@@ -5,6 +5,7 @@ import {
     IAutomationMetadataObjectDefinition,
     ICatalogAttribute,
     ICatalogDateDataset,
+    INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     ISeparators,
     IWorkspaceUser,
@@ -23,7 +24,7 @@ interface ICreateAlertProps {
     onClose: () => void;
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
-    destinations: INotificationChannelMetadataObject[];
+    destinations: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     users: IWorkspaceUser[];
     hasAlerts: boolean;
     measures: AlertMetric[];

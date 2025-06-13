@@ -13,6 +13,7 @@ import {
     selectEnableScheduling,
     selectIsReadOnly,
     selectExternalRecipient,
+    selectEnableNotificationChannelIdentifiers,
 } from "../../store/config/configSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
@@ -72,6 +73,9 @@ export function* initializeAutomationsHandler(
     );
     const enableInPlatformNotifications: ReturnType<typeof selectEnableInPlatformNotifications> =
         yield select(selectEnableInPlatformNotifications);
+    const enableNotificationChannelIdentifiers: ReturnType<
+        typeof selectEnableNotificationChannelIdentifiers
+    > = yield select(selectEnableNotificationChannelIdentifiers);
     const automationsInitialized: ReturnType<typeof selectAutomationsIsInitialized> = yield select(
         selectAutomationsIsInitialized,
     );
@@ -112,7 +116,12 @@ export function* initializeAutomationsHandler(
                 externalRecipient,
             ),
             call(loadWorkspaceAutomationsCount, ctx),
-            call(loadNotificationChannels, ctx, enableInPlatformNotifications),
+            call(
+                loadNotificationChannels,
+                ctx,
+                enableInPlatformNotifications,
+                enableNotificationChannelIdentifiers,
+            ),
         ]);
 
         // Set filters according to provided automationId
