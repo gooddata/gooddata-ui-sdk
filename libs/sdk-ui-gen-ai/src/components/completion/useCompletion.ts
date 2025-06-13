@@ -3,7 +3,7 @@ import { useCallback, useRef, useState, MutableRefObject } from "react";
 import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { CompletionContext, CompletionResult, CompletionSource } from "@codemirror/autocomplete";
-import { CatalogItem } from "@gooddata/sdk-model";
+import { CatalogItem, ICatalogDateAttribute } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
 
 import { CompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
@@ -12,7 +12,7 @@ const WORD_REGEX = /\p{L}[\p{L}\p{N}_]*/u;
 
 export interface IUseCompletion {
     onCompletion: CompletionSource;
-    used: MutableRefObject<CatalogItem[]>;
+    used: MutableRefObject<(CatalogItem | ICatalogDateAttribute)[]>;
 }
 
 export function useCompletion(
@@ -21,7 +21,7 @@ export function useCompletion(
     { canManage, canAnalyze }: { canManage?: boolean; canAnalyze?: boolean },
 ): IUseCompletion {
     const [catalogItems, setCatalogItems] = useState<CatalogItem[] | undefined>(items);
-    const usedItems = useRef<CatalogItem[]>(selected ?? []);
+    const usedItems = useRef<(CatalogItem | ICatalogDateAttribute)[]>(selected ?? []);
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const intl = useIntl();

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { ICatalogAttribute, isCatalogAttribute } from "./attribute/index.js";
 import { ICatalogMeasure, isCatalogMeasure } from "./measure/index.js";
 import { ICatalogFact, isCatalogFact } from "./fact/index.js";
@@ -62,7 +62,7 @@ export { isCatalogMeasure } from "./measure/index.js";
 export type { ICatalogFact } from "./fact/index.js";
 export { isCatalogFact } from "./fact/index.js";
 export type { ICatalogDateDataset, ICatalogDateAttribute } from "./dateDataset/index.js";
-export { isCatalogDateDataset } from "./dateDataset/index.js";
+export { isCatalogDateDataset, isCatalogDateAttribute } from "./dateDataset/index.js";
 export type { ICatalogGroup, IGroupableCatalogItemBase } from "./group/index.js";
 export type {
     ICatalogAttributeHierarchy,

@@ -1,11 +1,14 @@
 // (C) 2025 GoodData Corporation
-import { CatalogItem } from "@gooddata/sdk-model";
+import { CatalogItem, ICatalogDateAttribute } from "@gooddata/sdk-model";
 
 import { TextContentObject } from "../../model.js";
 
 import { getCatalogItemId, getCatalogItemTitle, getCatalogItemType } from "./utils.js";
 
-export function collectReferences(text: string, used: CatalogItem[]): TextContentObject[] {
+export function collectReferences(
+    text: string,
+    used: (CatalogItem | ICatalogDateAttribute)[],
+): TextContentObject[] {
     const items: TextContentObject[] = [];
     used.forEach((item) => {
         const id = getCatalogItemId(item);

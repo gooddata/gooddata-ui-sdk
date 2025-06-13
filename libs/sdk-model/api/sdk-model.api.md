@@ -3171,6 +3171,9 @@ export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
 // @public
 export function isCatalogAttributeHierarchy(obj: unknown): obj is ICatalogAttributeHierarchy;
 
+// @public
+export function isCatalogDateAttribute(obj: unknown): obj is ICatalogDateAttribute;
+
 // @internal (undocumented)
 export function isCatalogDateAttributeHierarchy(obj: unknown): obj is ICatalogDateAttributeHierarchy;
 

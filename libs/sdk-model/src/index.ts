@@ -680,6 +680,7 @@ export {
     isCatalogFact,
     isCatalogMeasure,
     isCatalogDateDataset,
+    isCatalogDateAttribute,
     catalogItemMetadataObject,
     getHierarchyRef,
     getHierarchyTitle,

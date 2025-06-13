@@ -4,7 +4,9 @@ import { IntlShape } from "react-intl";
 import { Completion } from "@codemirror/autocomplete";
 import {
     CatalogItem,
+    ICatalogDateAttribute,
     isCatalogAttribute,
+    isCatalogDateAttribute,
     isCatalogDateDataset,
     isCatalogFact,
     isCatalogMeasure,
@@ -13,7 +15,7 @@ import {
 import { getInfo } from "./InfoComponent.js";
 
 export interface CompletionItem extends Completion {
-    item: CatalogItem;
+    item: CatalogItem | ICatalogDateAttribute;
 }
 
 // Utility: Get item title
@@ -161,7 +163,7 @@ export function getItems(
                     canManage,
                     canAnalyze,
                 }),
-                item,
+                item: attr,
                 apply: (view, completion, from, to) => {
                     const type = "attribute" as typeof SupportedReferenceTypes[number];
                     const insert = `{${type}/${attr.attribute.id}}`;
@@ -206,7 +208,7 @@ export function getCompletionItemId(data: CompletionItem) {
 }
 
 // Utility: Get catalog item ID
-export function getCatalogItemId(item: CatalogItem) {
+export function getCatalogItemId(item: CatalogItem | ICatalogDateAttribute): string | null {
     if (isCatalogFact(item)) {
         return item.fact.id;
     }
@@ -219,11 +221,14 @@ export function getCatalogItemId(item: CatalogItem) {
     if (isCatalogDateDataset(item)) {
         return item.dataSet.id;
     }
+    if (isCatalogDateAttribute(item)) {
+        return item.attribute.id;
+    }
     return null;
 }
 
 // Utility: Get catalog item ID
-export function getCatalogItemTitle(item: CatalogItem) {
+export function getCatalogItemTitle(item: CatalogItem | ICatalogDateAttribute) {
     if (isCatalogFact(item)) {
         return item.fact.title ?? item.fact.id;
     }
@@ -236,11 +241,16 @@ export function getCatalogItemTitle(item: CatalogItem) {
     if (isCatalogDateDataset(item)) {
         return item.dataSet.title ?? item.dataSet.id;
     }
+    if (isCatalogDateAttribute(item)) {
+        return item.attribute.title ?? item.attribute.id;
+    }
     return "Unknown Item";
 }
 
 // Utility: Get a catalog item type
-export function getCatalogItemType(item: CatalogItem): typeof SupportedReferenceTypes[number] | null {
+export function getCatalogItemType(
+    item: CatalogItem | ICatalogDateAttribute,
+): typeof SupportedReferenceTypes[number] | null {
     if (isCatalogFact(item)) {
         return "fact";
     }
@@ -252,6 +262,9 @@ export function getCatalogItemType(item: CatalogItem): typeof SupportedReference
     }
     if (isCatalogDateDataset(item)) {
         return "dataset";
+    }
+    if (isCatalogDateAttribute(item)) {
+        return "attribute";
     }
     return null;
 }
