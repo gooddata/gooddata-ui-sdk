@@ -84,12 +84,24 @@ export function convertInsightToTableDefinition(insight: IInsight): IInsight {
         },
     ];
 
+    const onlyMeasures = !rowAttributes.length && !columnAttributes.length;
+    const propertiesProp = onlyMeasures
+        ? {
+              properties: {
+                  controls: {
+                      measureGroupDimension: "rows",
+                  },
+              },
+          }
+        : {};
+
     const tableInsight: IInsight = {
         ...insight,
         insight: {
             ...insight.insight,
             visualizationUrl: "local:table",
             buckets: tableBuckets,
+            ...propertiesProp,
         },
     };
     return tableInsight;
