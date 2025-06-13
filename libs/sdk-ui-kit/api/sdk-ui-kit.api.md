@@ -5195,6 +5195,15 @@ export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
 export const LocaleSetting: React_2.VFC<ILocaleSettingProps>;
 
 // @internal (undocumented)
+export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent | React_2.KeyboardEvent<Element> = React_2.KeyboardEvent<Element>>(handlers: {
+    onFocusPrevious?: (event: T) => void;
+    onFocusNext?: (event: T) => void;
+    onFocusFirst?: (event: T) => void;
+    onFocusLast?: (event: T) => void;
+    onUnhandledKeyDown?: (event: T) => void;
+}, options?: IHandleActionOptions) => (event: T) => void;
+
+// @internal (undocumented)
 export const makeKeyboardNavigation: <ActionKeysMap extends {
     [action: string]: {
         code: string | string[];
@@ -5838,7 +5847,7 @@ export interface UiFocusTrapProps {
     autofocusOnOpen?: boolean;
     // (undocumented)
     children: React_2.ReactNode;
-    customKeyboardNavigationHandler?: (event: KeyboardEvent) => void;
+    customKeyboardNavigationHandler?: (event: React_2.KeyboardEvent) => void;
     initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     isTabCaught?: boolean;

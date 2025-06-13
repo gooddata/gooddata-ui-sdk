@@ -117,6 +117,11 @@
         "comment": "Dialog. Configure of drill interaction is updated.",
         "limit": 0
     },
+    "filterBar.label": {
+        "value": "Filters",
+        "comment": "",
+        "limit": 0
+    },
     "filterBar.showAll": {
         "value": "Show all",
         "comment": "",

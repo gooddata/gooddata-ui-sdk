@@ -39,7 +39,7 @@ export interface UiFocusTrapProps {
      * Specify a custom keyboard navigation handler.
      * If not provided, the default keyboard navigation handler will be used.
      */
-    customKeyboardNavigationHandler?: (event: KeyboardEvent) => void;
+    customKeyboardNavigationHandler?: (event: React.KeyboardEvent) => void;
     isTabCaught?: boolean;
 }
 
@@ -107,12 +107,12 @@ const useDialogKeyboardNavigation = ({
     );
 
     const keyboardNavigationHandler = useCallback(
-        (event: KeyboardEvent) => {
+        (event: React.KeyboardEvent) => {
             if (!trapRef.current?.contains(event.target as Node)) {
                 return;
             }
 
-            return makeDialogKeyboardNavigation<KeyboardEvent>({
+            return makeDialogKeyboardNavigation<React.KeyboardEvent>({
                 onFocusNext: isTabCaught
                     ? () => {
                           const { focusableElements } = getFocusableElements(trapRef.current);
@@ -217,16 +217,12 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
 
     useAutofocusOnMount(elementToFocus, { isDisabled: !autofocusOnOpen, refocusKey });
 
-    useEffect(() => {
-        document.addEventListener("keydown", keyboardHandler);
-
-        return () => {
-            document.removeEventListener("keydown", keyboardHandler);
-        };
-    }, [keyboardHandler]);
-
     return (
-        <div className="gd-focus-trap" ref={useCombineRefs(trapRef, setTrapElement)}>
+        <div
+            className="gd-focus-trap"
+            ref={useCombineRefs(trapRef, setTrapElement)}
+            onKeyDown={keyboardHandler}
+        >
             {children}
         </div>
     );

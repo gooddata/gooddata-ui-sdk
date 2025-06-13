@@ -85,7 +85,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
         [menuItems, selectedMenuItem],
     );
 
-    const menuKeyboardNavigationHandler = makeMenuKeyboardNavigation<KeyboardEvent>({
+    const menuKeyboardNavigationHandler = makeMenuKeyboardNavigation({
         onFocusFirst: () => {
             if (menuWrapperRef.current) {
                 const { firstElement } = getFocusableElements(menuWrapperRef.current);

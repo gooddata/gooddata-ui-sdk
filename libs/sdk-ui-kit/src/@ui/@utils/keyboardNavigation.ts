@@ -131,3 +131,13 @@ export const makeTabsKeyboardNavigation = makeKeyboardNavigation({
     onFocusLast: [{ code: "End" }],
     onSelect: [{ code: ["Enter", "Space"] }],
 });
+
+/**
+ * @internal
+ */
+export const makeHorizontalKeyboardNavigation = makeKeyboardNavigation({
+    onFocusPrevious: [{ code: ["ArrowLeft"] }],
+    onFocusNext: [{ code: ["ArrowRight"] }],
+    onFocusFirst: [{ code: "Home" }],
+    onFocusLast: [{ code: "End" }],
+});
