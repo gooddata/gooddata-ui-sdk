@@ -477,8 +477,6 @@ export function useEditAlert(props: IUseEditAlertProps) {
 
     const hasNoUnknownRecipients = !editedAutomation.recipients?.some(isAutomationUnknownUserRecipient);
 
-    const hasDestination = !!editedAutomation.notificationChannel;
-
     const respectsRecipientsLimit = (editedAutomation.recipients?.length ?? 0) <= maxAutomationsRecipients;
 
     const hasFilledEmails =
@@ -491,7 +489,6 @@ export function useEditAlert(props: IUseEditAlertProps) {
     const isValid =
         hasRecipients &&
         respectsRecipientsLimit &&
-        hasDestination &&
         hasValidExternalRecipients &&
         hasValidCreatorRecipient &&
         hasNoUnknownRecipients &&
