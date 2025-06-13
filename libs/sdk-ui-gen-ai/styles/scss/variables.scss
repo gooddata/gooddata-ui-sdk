@@ -1,5 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
 $x-spacing: 15px;
 $y-spacing: 10px;
 $info-height: 35px;
@@ -34,3 +36,15 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
         mask-position: center;
     }
 }
+$gd-dashboards-content-widget-title-color: var(
+    --gd-dashboards-content-widget-title-color,
+    kit-variables.$gd-color-text
+);
+$gd-dashboards-content-kpiWidget-backgroundColor: var(
+    --gd-dashboards-content-kpiWidget-backgroundColor,
+    kit-variables.$gd-widget-background
+);
+$gd-dashboards-content-kpiWidget-title-color: var(
+    --gd-dashboards-content-kpiWidget-title-color,
+    $gd-dashboards-content-widget-title-color
+);

@@ -236,10 +236,30 @@
 .gd-gen-ai-chat__visualization {
     margin: 10px 0;
     padding: 10px;
-    border: 1px solid kit-variables.$is-focused-background;
-    background: kit-variables.$gd-color-white;
     border-radius: 8px;
     position: relative;
+    border: 1px solid kit-variables.$is-focused-background;
+    background: kit-variables.$gd-chart-background;
+    color: variables.$gd-dashboards-content-widget-title-color;
+
+    &--headline {
+        height: auto;
+        min-height: 50px;
+        background: variables.$gd-dashboards-content-kpiWidget-backgroundColor;
+        color: variables.$gd-dashboards-content-kpiWidget-title-color;
+
+        p {
+            color: variables.$gd-dashboards-content-kpiWidget-title-color;
+        }
+
+        // Headline value is smaller in chart, looks much better with contrast with other text
+        .headline-value {
+            font-size: 0.8em;
+        }
+    }
+    &--table {
+        background: kit-variables.$gd-table-background;
+    }
 
     &__wrapper {
         height: 250px;

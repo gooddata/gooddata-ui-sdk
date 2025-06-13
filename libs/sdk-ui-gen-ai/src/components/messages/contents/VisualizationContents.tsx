@@ -258,9 +258,13 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
             {visualization ? (
                 <div
-                    className={cx("gd-gen-ai-chat__visualization", {
-                        active: isMenuButtonOpen || isHovered,
-                    })}
+                    className={cx(
+                        "gd-gen-ai-chat__visualization",
+                        `gd-gen-ai-chat__visualization--${visualization.visualizationType.toLowerCase()}`,
+                        {
+                            active: isMenuButtonOpen || isHovered,
+                        },
+                    )}
                     onPointerEnter={() => setHovered(true)}
                     onPointerLeave={() => setHovered(false)}
                 >
