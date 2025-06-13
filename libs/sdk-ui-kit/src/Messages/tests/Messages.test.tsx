@@ -27,8 +27,8 @@ const mockError: Array<IMessage> = [
         id: "1",
         type: "error",
         text: "cool",
-        showMore: "Show More",
-        showLess: "Show Less",
+        showMore: "Show more",
+        showLess: "Show less",
         errorDetail: "test",
     },
 ];
@@ -63,23 +63,23 @@ describe("Messages", () => {
         });
     });
 
-    it("Show More", async () => {
+    it("Show more", async () => {
         const onMessageClose = vi.fn();
         renderMessages({
             messages: mockError,
             onMessageClose,
         });
 
-        expect(screen.getByText("Show More")).toBeInTheDocument();
-        expect(screen.queryByText("Show Less")).not.toBeInTheDocument();
+        expect(screen.getByText("Show more")).toBeInTheDocument();
+        expect(screen.queryByText("Show less")).not.toBeInTheDocument();
         expect(screen.getByText(mockError[0].errorDetail)).toBeInTheDocument();
 
-        await userEvent.click(screen.getByText("Show More"));
+        await userEvent.click(screen.getByText("Show more"));
 
-        expect(await screen.findByText("Show Less")).toBeInTheDocument();
+        expect(await screen.findByText("Show less")).toBeInTheDocument();
 
         await waitFor(() => {
-            expect(screen.queryByText("Show More")).not.toBeInTheDocument();
+            expect(screen.queryByText("Show more")).not.toBeInTheDocument();
         });
     });
 });
