@@ -498,6 +498,9 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         .dash-item-action-options {
             display: block;
         }
+        .dash-item-action-options.dash-item-action-as-table {
+            display: flex;
+        }
     }
 }
 
