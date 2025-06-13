@@ -33,7 +33,7 @@ runs:
     # Perform a lookup to check if the cache for pnpm exists
     - name: Cache pnpm lookup
       id: cache-pnpm-lookup
-      uses: runs-on/cache@v4
+      uses: runs-on/cache/restore@v4
       env:
         RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache
       with:
