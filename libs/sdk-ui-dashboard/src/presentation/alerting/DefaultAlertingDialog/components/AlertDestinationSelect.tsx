@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { INotificationChannelMetadataObject } from "@gooddata/sdk-model";
+import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
 import { Button, Dropdown, UiListbox, OverlayPositionType, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import React from "react";
@@ -9,7 +9,7 @@ export interface IAlertDestinationSelectProps {
     id: string;
     selectedDestination: string;
     onDestinationChange: (destinationId: string) => void;
-    destinations: INotificationChannelMetadataObject[];
+    destinations: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     overlayPositionType?: OverlayPositionType;
     closeOnParentScroll?: boolean;
 }

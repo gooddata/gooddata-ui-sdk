@@ -249,6 +249,7 @@ import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMenuButtonItemsVisibility as IMenuButtonItemsVisibility_2 } from '../../../types.js';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
+import { INotificationChannelIdentifier } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObjectBase } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
@@ -4378,7 +4379,7 @@ export interface IAlertingDialogProps {
     alertToEdit?: IAutomationMetadataObject;
     insight?: IInsight;
     isLoading?: boolean;
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     onCancel?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
     onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
@@ -4409,7 +4410,7 @@ export interface IAlertingManagementDialogProps {
     alertDataError?: GoodDataSdkError;
     automations: IAutomationMetadataObject[];
     isLoadingAlertingData: boolean;
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     onAdd?: () => void;
     onClose?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
@@ -6017,7 +6018,7 @@ export interface IScheduledEmailDialogProps {
     dashboardFilters?: FilterContextItem[];
     insight?: IInsight;
     isLoading?: boolean;
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     onBack?: () => void;
     onCancel?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
@@ -6045,7 +6046,7 @@ export interface IScheduledEmailDialogPropsContext {
 export interface IScheduledEmailManagementDialogProps {
     automations: IAutomationMetadataObject[];
     isLoadingScheduleData: boolean;
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     onAdd?: () => void;
     onClose?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
@@ -7248,9 +7249,9 @@ export function newPlaceholderWidget(): PlaceholderWidget;
 // @alpha (undocumented)
 export interface NotificationChannelsState {
     // (undocumented)
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     // (undocumented)
-    notiticationChannelsCount: number;
+    notificationChannelsCount: number;
 }
 
 // @public
@@ -9322,7 +9323,7 @@ export const selectMapboxToken: DashboardSelector<string | undefined>;
 export const selectMenuButtonItemsVisibility: DashboardSelector<IMenuButtonItemsVisibility>;
 
 // @alpha
-export const selectNotificationChannels: DashboardSelector<INotificationChannelMetadataObject[]>;
+export const selectNotificationChannels: DashboardSelector<INotificationChannelIdentifier[] | INotificationChannelMetadataObject[]>;
 
 // @alpha
 export const selectNotificationChannelsCount: DashboardSelector<number>;
@@ -9331,7 +9332,7 @@ export const selectNotificationChannelsCount: DashboardSelector<number>;
 export const selectNotificationChannelsCountWithoutInPlatform: DashboardSelector<number>;
 
 // @alpha
-export const selectNotificationChannelsWithoutInPlatform: DashboardSelector<INotificationChannelMetadataObject[]>;
+export const selectNotificationChannelsWithoutInPlatform: DashboardSelector<INotificationChannelIdentifier[] | INotificationChannelMetadataObject[]>;
 
 // @public
 export const selectObjectAvailabilityConfig: DashboardSelector<ObjectAvailabilityConfig>;
@@ -10323,7 +10324,7 @@ export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallba
 export const useDashboardAlerts: () => {
     alertToEdit: IAutomationMetadataObject | undefined;
     isInitialized: boolean;
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelMetadataObject[] | INotificationChannelIdentifier[];
     automations: IAutomationMetadataObject[];
     automationsCount: number;
     numberOfAvailableDestinations: number;
@@ -10851,7 +10852,7 @@ export type UseDashboardQueryProcessingResult<TQueryCreatorArgs extends any[], T
 export const useDashboardScheduledEmails: () => {
     scheduledExportToEdit: IAutomationMetadataObject | undefined;
     isInitialized: boolean;
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[];
     automations: IAutomationMetadataObject[];
     automationsCount: number;
     numberOfAvailableDestinations: number;

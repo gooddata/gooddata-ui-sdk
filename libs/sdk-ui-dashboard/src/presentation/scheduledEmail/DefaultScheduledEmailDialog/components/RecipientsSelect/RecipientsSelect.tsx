@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import {
     IAutomationRecipient,
+    INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     IWorkspaceUser,
 } from "@gooddata/sdk-model";
@@ -73,7 +74,7 @@ interface IRecipientsSelectProps {
     /**
      * Notification channels
      */
-    notificationChannels?: INotificationChannelMetadataObject[];
+    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 
     /**
      * Notification channel id

@@ -7,6 +7,8 @@ import {
     JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum,
     DefaultSmtp,
     JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum,
+    JsonApiNotificationChannelIdentifierOut,
+    JsonApiNotificationChannelOutAttributesDestinationTypeEnum,
 } from "@gooddata/api-client-tiger";
 import {
     assertNever,
@@ -15,7 +17,45 @@ import {
     ISmtpNotificationChannelMetadataObject,
     IInPlatformNotificationChannelMetadataObject,
     INotificationChannelMetadataObject,
+    INotificationChannelIdentifier,
+    NotificationChannelDestinationType,
 } from "@gooddata/sdk-model";
+
+/**
+ * Converts a notification channel identifier from backend to SDK model.
+ * @internal
+ */
+export function convertNotificationChannelIdentifierFromBackend(
+    channel: JsonApiNotificationChannelIdentifierOut,
+): INotificationChannelIdentifier | undefined {
+    if (!channel.attributes?.destinationType) {
+        return undefined;
+    }
+    return {
+        type: "notificationChannel",
+        destinationType: convertJsonApiNotificationChannelOutAttributesDestinationTypeEnum(
+            channel.attributes.destinationType,
+        ),
+        id: channel.id,
+        title: channel.attributes?.name ?? undefined,
+        description: channel.attributes?.description ?? undefined,
+        allowedRecipients: convertAllowedRecipientsFromBackend(channel.attributes?.allowedRecipients),
+    };
+}
+
+export const convertJsonApiNotificationChannelOutAttributesDestinationTypeEnum = (
+    destinationType: JsonApiNotificationChannelOutAttributesDestinationTypeEnum,
+): NotificationChannelDestinationType => {
+    switch (destinationType) {
+        case "DEFAULT_SMTP":
+        case "SMTP":
+            return "smtp";
+        case "IN_PLATFORM":
+            return "inPlatform";
+        case "WEBHOOK":
+            return "webhook";
+    }
+};
 
 /**
  * Converts notification channel from backend to SDK model.

@@ -3,6 +3,7 @@ import React from "react";
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     ICatalogAttribute,
     IWorkspaceUser,
@@ -74,7 +75,7 @@ interface IEditAlertProps {
     alert: IAutomationMetadataObject;
     isNewAlert?: boolean;
     hasAlerts: boolean;
-    destinations: INotificationChannelMetadataObject[];
+    destinations: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     users: IWorkspaceUser[];
     measures: AlertMetric[];
     attributes: AlertAttribute[];

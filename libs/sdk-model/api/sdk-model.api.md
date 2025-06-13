@@ -2551,6 +2551,22 @@ export interface INotificationBase {
     workspaceId?: string;
 }
 
+// @beta
+export interface INotificationChannelIdentifier {
+    // (undocumented)
+    allowedRecipients?: NotificationChannelAllowedRecipients;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    destinationType: NotificationChannelDestinationType;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    type: "notificationChannel";
+}
+
 // @beta (undocumented)
 export type INotificationChannelMetadataObject = IWebhookNotificationChannelMetadataObject | ISmtpNotificationChannelMetadataObject | IInPlatformNotificationChannelMetadataObject;
 
@@ -3473,6 +3489,7 @@ export interface ISettings {
     // (undocumented)
     enableNewNavigationForResponsiveUi?: boolean;
     enableNewUserCreationFlow?: boolean;
+    enableNotificationChannelIdentifiers?: boolean;
     enableNumberSeparators?: boolean;
     // (undocumented)
     enableOracleDataSource?: boolean;

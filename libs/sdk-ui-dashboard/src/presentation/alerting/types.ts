@@ -8,6 +8,7 @@ import {
     IInsight,
     IInsightWidget,
     IMeasure,
+    INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     IWorkspaceUser,
 } from "@gooddata/sdk-model";
@@ -40,7 +41,7 @@ export interface IAlertingDialogProps {
     /**
      * Notification channels in organization
      */
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 
     /**
      * Widget to be used for alert.
@@ -147,7 +148,7 @@ export interface IAlertingManagementDialogProps {
     /**
      * Notification channels in organization
      */
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 
     /**
      * Automations in workspace

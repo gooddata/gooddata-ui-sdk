@@ -10,6 +10,7 @@ import {
     IAutomationRecipient,
     ICatalogAttribute,
     ICatalogDateDataset,
+    INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
@@ -54,7 +55,7 @@ export interface IUseEditAlertProps {
     measureFormatMap: IMeasureFormatMap;
     catalogAttributes: ICatalogAttribute[];
     catalogDateDatasets: ICatalogDateDataset[];
-    destinations: INotificationChannelMetadataObject[];
+    destinations: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     separators?: ISeparators;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     onUpdate?: (alert: IAutomationMetadataObject) => void;

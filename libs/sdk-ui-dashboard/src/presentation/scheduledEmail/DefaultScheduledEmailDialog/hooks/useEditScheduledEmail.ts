@@ -11,6 +11,7 @@ import {
     IInsight,
     IAutomationMetadataObject,
     IFilter,
+    INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     isAutomationUserRecipient,
     isWidget,
@@ -62,7 +63,7 @@ import {
 
 export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     maxAutomationsRecipients: number;
     widget?: ExtendedDashboardWidget;
     insight?: IInsight;
