@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { ILocale } from "@gooddata/sdk-ui";
 
@@ -50,6 +50,9 @@ export const LOCALES: ILocale[] = [
     "es-419",
     "fr-CA",
     "en-GB",
+    "tr-TR",
+    "pl-PL",
+    "ko-KR",
 ];
 export const DEFAULT_LOCALE = "en-US";
 

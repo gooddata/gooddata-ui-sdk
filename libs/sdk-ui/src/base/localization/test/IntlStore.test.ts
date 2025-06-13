@@ -49,6 +49,9 @@ describe("IntlStore", () => {
                 "fi-FI",
                 "zh-Hant",
                 "zh-HK",
+                "tr-TR",
+                "pl-PL",
+                "ko-KR",
             ];
 
             it("should return message for simple translation key", () => {

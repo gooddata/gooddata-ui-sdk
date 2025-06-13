@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 /**
  * Language codes that can be used with GoodData.
@@ -23,7 +23,10 @@ export type ILocale =
     | "en-AU"
     | "fi-FI"
     | "zh-Hant"
-    | "zh-HK";
+    | "zh-HK"
+    | "tr-TR"
+    | "pl-PL"
+    | "ko-KR";
 
 /**
  * Array of locales for type-guard. It must be the same as {@link ILocale}
@@ -49,6 +52,9 @@ export const LOCALES = [
     "fi-FI",
     "zh-Hant",
     "zh-HK",
+    "tr-TR",
+    "pl-PL",
+    "ko-KR",
 ];
 
 /**

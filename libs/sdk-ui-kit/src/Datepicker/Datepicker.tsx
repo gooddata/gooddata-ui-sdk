@@ -35,6 +35,9 @@ import fi from "date-fns/locale/fi/index.js";
 import enAU from "date-fns/locale/en-AU/index.js";
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 import { isEnterKey } from "../utils/events.js";
+import tr from "date-fns/locale/tr/index.js";
+import pl from "date-fns/locale/pl/index.js";
+import ko from "date-fns/locale/ko/index.js";
 
 const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
 
@@ -89,6 +92,9 @@ const convertedLocales: Record<string, Locale> = {
     "zh-HK": zhCN,
     "en-AU": enAU,
     "fi-FI": fi,
+    "tr-TR": tr,
+    "pl-PL": pl,
+    "ko-KR": ko,
 };
 
 function formatDate(date: Date, dateFormat: string): string {

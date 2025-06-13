@@ -22,6 +22,9 @@ import { en_AU } from "../translations/en-AU.localization-bundle.js";
 import { fi_FI } from "../translations/fi-FI.localization-bundle.js";
 import { zh_Hant } from "../translations/zh-Hant.localization-bundle.js";
 import { zh_HK } from "../translations/zh-HK.localization-bundle.js";
+import { tr_TR } from "../translations/tr-TR.localization-bundle.js";
+import { pl_PL } from "../translations/pl-PL.localization-bundle.js";
+import { ko_KR } from "../translations/ko-KR.localization-bundle.js";
 
 import { IDropdownItem } from "../interfaces/Dropdown.js";
 
@@ -60,6 +63,9 @@ const sdkUiExtTranslations: { [locale: string]: Record<string, string> } = {
     "fi-FI": fi_FI,
     "zh-Hant": zh_Hant,
     "zh-HK": zh_HK,
+    "tr-TR": tr_TR,
+    "pl-PL": pl_PL,
+    "ko-KR": ko_KR,
 };
 
 /**

@@ -25,6 +25,9 @@ import enGB from "date-fns/locale/en-GB/index.js";
 import frCA from "date-fns/locale/fr-CA/index.js";
 import enAU from "date-fns/locale/en-AU/index.js";
 import fi from "date-fns/locale/fi/index.js";
+import tr from "date-fns/locale/tr/index.js";
+import pl from "date-fns/locale/pl/index.js";
+import ko from "date-fns/locale/ko/index.js";
 
 import { mergeDayPickerProps } from "./utils.js";
 import { IDateRange } from "./types.js";
@@ -49,6 +52,9 @@ const convertedLocales: Record<string, Locale> = {
     "en-AU": enAU,
     "fi-FI": fi,
     "zh-HK": zhCN,
+    "tr-TR": tr,
+    "pl-PL": pl,
+    "ko-KR": ko,
 };
 
 const ALIGN_POINTS = [{ align: "bl tl", offset: { x: 0, y: 1 } }];

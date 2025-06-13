@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { expect, describe, it } from "vitest";
 import { removeMetadata, sanitizeLocaleForMoment } from "../translationUtils.js";
 
@@ -61,6 +61,9 @@ describe("sanitizeLocaleForMoment", () => {
         "en-GB",
         "en-AU",
         "fi-FI",
+        "tr-TR",
+        "pl-PL",
+        "ko-KR",
     ])("should not touch %s locale", (value: string) => {
         const expected = value;
         const actual = sanitizeLocaleForMoment(value);
