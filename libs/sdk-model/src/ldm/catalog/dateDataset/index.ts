@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { ICatalogItemBase } from "../types.js";
 import { IAttributeMetadataObject } from "../../metadata/attribute/index.js";
@@ -26,6 +26,16 @@ export interface ICatalogDateAttribute {
      * Date attribute default display form metadata object
      */
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
+}
+
+/**
+ * Type guard checking whether object is an instance of ICatalogDateDataset.
+ *
+ * @public
+ */
+export function isCatalogDateAttribute(obj: unknown): obj is ICatalogDateAttribute {
+    const o = obj as ICatalogDateAttribute;
+    return !isEmpty(obj) && Boolean(o.attribute && o.defaultDisplayForm && o.granularity);
 }
 
 /**

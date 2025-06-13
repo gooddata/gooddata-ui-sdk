@@ -2,20 +2,30 @@
 import { MutableRefObject, useMemo } from "react";
 import { Decoration, DecorationSet, EditorView, ViewPlugin, WidgetType } from "@codemirror/view";
 import { ChangeSpec, Range, Transaction } from "@codemirror/state";
-import { CatalogItem } from "@gooddata/sdk-model";
+import {
+    CatalogItem,
+    ICatalogDateAttribute,
+    isCatalogAttribute,
+    isCatalogDateAttribute,
+    isCatalogDateDataset,
+    isCatalogFact,
+    isCatalogMeasure,
+} from "@gooddata/sdk-model";
 
 import { getCatalogItemId, getCatalogItemTitle, getReferenceRegex } from "../completion/utils.js";
 
 const HIGHLIGHT_CLASS = "cm-highlight-phrase";
 const WIDGET_CLASS = "cm-icon-widget";
 
-type Matches = Array<{ from: number; to: number; item: CatalogItem }>;
+type Matches = Array<{ from: number; to: number; item: CatalogItem | ICatalogDateAttribute }>;
 interface HighlightState {
     decorations: DecorationSet;
     matches: Matches;
 }
 
-export function useHighlight(catalogItems: MutableRefObject<CatalogItem[] | undefined>) {
+export function useHighlight(
+    catalogItems: MutableRefObject<(CatalogItem | ICatalogDateAttribute)[] | undefined>,
+) {
     return useMemo(() => {
         const state: HighlightState = {
             decorations: Decoration.none,
@@ -102,7 +112,7 @@ export function useHighlight(catalogItems: MutableRefObject<CatalogItem[] | unde
 // Create a highlight extension
 function buildDecorations(
     view: EditorView,
-    catalogItems: MutableRefObject<CatalogItem[] | undefined>,
+    catalogItems: MutableRefObject<(CatalogItem | ICatalogDateAttribute)[] | undefined>,
     regex: RegExp | undefined,
 ) {
     const decorations: Range<Decoration>[] = [];
@@ -123,7 +133,7 @@ function buildDecorations(
 
 // Scan the document for matches
 function addMatch(
-    catalogItems: MutableRefObject<CatalogItem[] | undefined>,
+    catalogItems: MutableRefObject<(CatalogItem | ICatalogDateAttribute)[] | undefined>,
     matches: Matches,
     builder: Range<Decoration>[],
     match: RegExpExecArray,
@@ -157,9 +167,9 @@ function addMatch(
 }
 
 class IconWidget extends WidgetType {
-    item: CatalogItem;
+    item: CatalogItem | ICatalogDateAttribute;
 
-    constructor(item: CatalogItem) {
+    constructor(item: CatalogItem | ICatalogDateAttribute) {
         super();
         this.item = item;
     }
@@ -169,10 +179,11 @@ class IconWidget extends WidgetType {
         const span = document.createElement("span");
         span.className = [
             WIDGET_CLASS,
-            ...(item.type === "measure" ? ["metric"] : []),
-            ...(item.type === "attribute" ? ["attribute"] : []),
-            ...(item.type === "fact" ? ["fact"] : []),
-            ...(item.type === "dateDataset" ? ["date"] : []),
+            ...(isCatalogMeasure(item) ? ["metric"] : []),
+            ...(isCatalogAttribute(item) ? ["attribute"] : []),
+            ...(isCatalogFact(item) ? ["fact"] : []),
+            ...(isCatalogDateDataset(item) ? ["date"] : []),
+            ...(isCatalogDateAttribute(item) ? ["date"] : []),
         ].join(" ");
         return span;
     }
@@ -183,22 +194,24 @@ class IconWidget extends WidgetType {
 }
 
 class TitleWidget extends WidgetType {
-    item: CatalogItem;
+    item: CatalogItem | ICatalogDateAttribute;
 
-    constructor(item: CatalogItem) {
+    constructor(item: CatalogItem | ICatalogDateAttribute) {
         super();
         this.item = item;
     }
 
     toDOM() {
+        const item = this.item;
         const span = document.createElement("span");
         span.textContent = getCatalogItemTitle(this.item);
         span.className = [
             HIGHLIGHT_CLASS,
-            ...(this.item.type === "measure" ? ["metric"] : []),
-            ...(this.item.type === "attribute" ? ["attribute"] : []),
-            ...(this.item.type === "fact" ? ["fact"] : []),
-            ...(this.item.type === "dateDataset" ? ["date"] : []),
+            ...(isCatalogMeasure(item) ? ["metric"] : []),
+            ...(isCatalogAttribute(item) ? ["attribute"] : []),
+            ...(isCatalogFact(item) ? ["fact"] : []),
+            ...(isCatalogDateDataset(item) ? ["date"] : []),
+            ...(isCatalogDateAttribute(item) ? ["date"] : []),
         ].join(" ");
         return span;
     }

@@ -82,6 +82,7 @@ function iterateReferenceMatch<T>(
 ): T[] {
     const items: T[] = [];
     const regex = getReferenceRegex();
+
     let match = regex.exec(value);
     while (match) {
         const [type, id] = match[1].split("/");
