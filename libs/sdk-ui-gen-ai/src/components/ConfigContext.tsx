@@ -6,6 +6,7 @@ export type ConfigContext = {
     allowNativeLinks: boolean;
     canManage: boolean;
     canAnalyze: boolean;
+    canFullControl: boolean;
     linkHandler?: (linkClickEvent: LinkHandlerEvent) => void;
     catalogItems?: CatalogItem[];
 };
@@ -14,18 +15,20 @@ export type ConfigContext = {
  * @public
  */
 export type LinkHandlerEvent = {
-    type: string;
+    type: "visualization" | "setting";
     id: string;
     workspaceId: string;
     newTab: boolean;
     itemUrl: string;
     preventDefault: () => void;
+    section?: "ai";
 };
 
 const configContext = React.createContext<ConfigContext>({
     allowNativeLinks: false,
     canManage: false,
     canAnalyze: false,
+    canFullControl: false,
 });
 
 export const ConfigProvider: React.FC<React.PropsWithChildren<ConfigContext>> = ({
@@ -35,6 +38,7 @@ export const ConfigProvider: React.FC<React.PropsWithChildren<ConfigContext>> = 
     catalogItems,
     canManage,
     canAnalyze,
+    canFullControl,
 }) => {
     const value = React.useMemo(
         () => ({
@@ -43,8 +47,9 @@ export const ConfigProvider: React.FC<React.PropsWithChildren<ConfigContext>> = 
             catalogItems,
             canManage,
             canAnalyze,
+            canFullControl,
         }),
-        [allowNativeLinks, linkHandler, catalogItems, canManage, canAnalyze],
+        [allowNativeLinks, linkHandler, catalogItems, canManage, canAnalyze, canFullControl],
     );
 
     return <configContext.Provider value={value}>{children}</configContext.Provider>;

@@ -7,3 +7,11 @@ export function getVisualizationHref(wsId: string, visId: string) {
 export function getAbsoluteVisualizationHref(wsId: string, visId: string) {
     return `${window.location.origin}${getVisualizationHref(wsId, visId)}`;
 }
+
+export function getSettingHref(section: string, action: string) {
+    return `/settings/#/${section}/${action}`;
+}
+
+export function getAbsoluteSettingHref(section: string, action: string) {
+    return `${window.location.origin}${getSettingHref(section, action)}`;
+}

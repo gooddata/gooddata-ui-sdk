@@ -125,6 +125,7 @@ export interface GenAIChatProps {
     catalogItems?: CatalogItem[];
     colorPalette?: IColorPalette;
     disableAnalyze?: boolean;
+    disableFullControl?: boolean;
     disableManage?: boolean;
     eventHandlers?: ChatEventHandler[];
     locale?: string;
@@ -164,12 +165,13 @@ export const isChatVisualizationErrorEvent: (event: ChatEvent) => event is ChatV
 
 // @public (undocumented)
 export type LinkHandlerEvent = {
-    type: string;
+    type: "visualization" | "setting";
     id: string;
     workspaceId: string;
     newTab: boolean;
     itemUrl: string;
     preventDefault: () => void;
+    section?: "ai";
 };
 
 // @public

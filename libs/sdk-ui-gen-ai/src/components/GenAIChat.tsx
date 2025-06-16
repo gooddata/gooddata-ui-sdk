@@ -64,6 +64,11 @@ export interface GenAIChatProps {
      * This will disable analyze permissions for the user even if the user has them defined.
      */
     disableAnalyze?: boolean;
+
+    /**
+     * This will disable full control permissions for the user even if the user has them defined.
+     */
+    disableFullControl?: boolean;
 }
 
 /**
@@ -103,6 +108,7 @@ const GenAIContent: React.FC<GenAIChatProps> = (props) => {
             linkHandler={onLinkClick}
             catalogItems={catalogItems}
             allowNativeLinks={props.allowNativeLinks ?? false}
+            canFullControl={props.disableFullControl ? false : permissions.canManageProject ?? false}
             canManage={props.disableManage ? false : permissions.canManageProject ?? false}
             canAnalyze={props.disableAnalyze ? false : permissions.canCreateVisualization ?? false}
         >

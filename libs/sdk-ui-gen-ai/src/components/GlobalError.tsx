@@ -11,12 +11,14 @@ type GlobalErrorProps = {
     errorDetails?: string;
     clearing?: boolean;
     clearError?: () => void;
+    buttonsBefore?: React.ReactNode;
 };
 
 const GlobalErrorComponent: React.FC<GlobalErrorProps & WrappedComponentProps> = ({
     errorMessage,
     errorDescription,
     errorDetails,
+    buttonsBefore,
     clearing,
     clearError,
     intl,
@@ -35,6 +37,7 @@ const GlobalErrorComponent: React.FC<GlobalErrorProps & WrappedComponentProps> =
                 />
             </div>
             <div className="gd-gen-ai-chat__global_error__buttons">
+                {buttonsBefore}
                 {clearError ? (
                     <Button
                         className="gd-button-link"
