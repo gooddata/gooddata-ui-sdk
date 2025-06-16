@@ -255,6 +255,7 @@ export type { IOrganizationNotificationChannelService } from "./organization/not
 export type {
     INotificationChannelsQuery,
     INotificationChannelsQueryResult,
+    INotificationChannelIdentifiersQueryResult,
 } from "./organization/notificationChannels/query.js";
 export type { IDataFiltersService } from "./workspace/dataFilter/index.js";
 

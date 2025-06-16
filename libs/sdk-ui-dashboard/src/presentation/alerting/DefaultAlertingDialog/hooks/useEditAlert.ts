@@ -6,7 +6,6 @@ import {
     FilterContextItem,
     IInsight,
     IAutomationMetadataObject,
-    INotificationChannelMetadataObject,
     isAutomationUserRecipient,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
@@ -16,6 +15,8 @@ import {
     IAlertRelativeArithmeticOperator,
     IAlertTriggerMode,
     IInsightWidget,
+    INotificationChannelIdentifier,
+    INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 import {
     useDashboardSelector,
@@ -75,7 +76,7 @@ import isEqual from "lodash/isEqual.js";
 
 export interface IUseEditAlertProps {
     alertToEdit?: IAutomationMetadataObject;
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     maxAutomationsRecipients: number;
     widget?: ExtendedDashboardWidget;
     insight?: IInsight;

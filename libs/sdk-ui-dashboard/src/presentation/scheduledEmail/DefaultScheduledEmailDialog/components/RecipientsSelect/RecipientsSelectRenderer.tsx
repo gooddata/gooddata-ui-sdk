@@ -2,6 +2,7 @@
 /* eslint-disable import/named,import/namespace */
 import {
     IAutomationRecipient,
+    INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
@@ -142,7 +143,7 @@ export interface IRecipientsSelectRendererProps {
     /**
      * Notification channel
      */
-    notificationChannel?: INotificationChannelMetadataObject;
+    notificationChannel?: INotificationChannelIdentifier | INotificationChannelMetadataObject;
 
     /**
      * Show label?

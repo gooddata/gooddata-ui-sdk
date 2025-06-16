@@ -1,15 +1,15 @@
-// (C) 2024 GoodData Corporation
-import { INotificationChannelMetadataObject } from "@gooddata/sdk-model";
+// (C) 2024-2025 GoodData Corporation
+import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
 
 /**
  * @alpha
  */
 export interface NotificationChannelsState {
-    notiticationChannelsCount: number;
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannelsCount: number;
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 }
 
 export const notificationChannelsInitialState: NotificationChannelsState = {
-    notiticationChannelsCount: 0,
+    notificationChannelsCount: 0,
     notificationChannels: [],
 };

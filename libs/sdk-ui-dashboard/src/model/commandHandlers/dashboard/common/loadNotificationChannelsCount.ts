@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ISettings, NotificationChannelDestinationType } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../types/commonTypes.js";
 
@@ -13,6 +13,21 @@ export function loadNotificationChannelsCount(ctx: DashboardContext, settings: I
 
     if (settings?.enableInPlatformNotifications) {
         typesToLoad.push("inPlatform");
+    }
+
+    if (settings?.enableNotificationChannelIdentifiers) {
+        return backend
+            .organizations()
+            .getCurrentOrganization()
+            .then((organization) => {
+                return organization
+                    .notificationChannels()
+                    .getNotificationChannelsQuery()
+                    .withTypes(typesToLoad)
+                    .withSize(1)
+                    .queryIdentifiers();
+            })
+            .then((result) => result.totalCount ?? 0);
     }
 
     return backend

@@ -6,6 +6,7 @@ import {
     IAutomationMetadataObjectDefinition,
     IFilter,
     IInsight,
+    INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     IWorkspaceUser,
     ObjRef,
@@ -46,7 +47,7 @@ export interface IScheduledEmailDialogProps {
     /**
      * Notification channels in organization
      */
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 
     /**
      * Widget to be used for scheduled email.
@@ -165,7 +166,7 @@ export interface IScheduledEmailManagementDialogProps {
     /**
      * Notification channels in organization
      */
-    notificationChannels: INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 
     /**
      * Automations in workspace
