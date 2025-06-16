@@ -193,7 +193,7 @@
     "properties.yaxis.title": "Oś Y",
     "properties.axis.labels": "etykiety",
     "properties.axis.rotation": "Rotacja",
-    "properties.axis.format": "Formatowanie",
+    "properties.axis.format": "Format",
     "properties.axis.format.inherit": "dziedziczenie",
     "properties.axis.format.info.inherit._measure": "Format jest dziedziczony z pierwszej miary w wizualizacji.",
     "properties.axis.format.info.inherit._metric": "Format jest dziedziczony z pierwszej metryki w wizualizacji.",
