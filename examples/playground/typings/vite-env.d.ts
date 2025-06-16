@@ -8,6 +8,7 @@ interface ImportMetaEnv {
     readonly VITE_WORKSPACE: string;
     readonly VITE_DASHBOARD: string;
     readonly VITE_INSIGHT: string;
+    readonly VITE_MAPBOX_TOKEN: string;
 }
 
 interface ImportMeta {
