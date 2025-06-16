@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useCallback, useState } from "react";
 import { invariant } from "ts-invariant";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
@@ -52,7 +52,7 @@ export const useInsightExport = (config: {
         () =>
             dispatchAndWaitFor<ExportRawInsightWidget, DashboardInsightWidgetExportResolved>(
                 dispatch,
-                exportRawInsightWidget(insight, uuid()),
+                exportRawInsightWidget(widgetRef, insight, uuid()),
             ).then((result) => result.payload.result),
         [],
     );

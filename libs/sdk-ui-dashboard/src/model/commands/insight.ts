@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IDashboardCommand } from "./base.js";
 import {
@@ -945,6 +945,11 @@ export function exportInsightWidget(
  */
 export interface ExportRawInsightWidgetPayload {
     /**
+     * Reference to Insight Widget to export.
+     */
+    readonly ref: ObjRef;
+
+    /**
      * Reference to Insight to export.
      */
     readonly insight: IInsightDefinition;
@@ -968,6 +973,7 @@ export interface ExportRawInsightWidget extends IDashboardCommand {
  * @alpha
  */
 export function exportRawInsightWidget(
+    ref: ObjRef,
     insight: IInsightDefinition,
     correlationId?: string,
 ): ExportRawInsightWidget {
@@ -975,6 +981,7 @@ export function exportRawInsightWidget(
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW",
         correlationId,
         payload: {
+            ref,
             insight,
         },
     };
