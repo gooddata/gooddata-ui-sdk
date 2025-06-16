@@ -3488,7 +3488,6 @@ export interface ISettings {
     enableMultipleDates?: boolean;
     // (undocumented)
     enableMySqlDataSource?: boolean;
-    enableNewHeadline?: boolean;
     // (undocumented)
     enableNewNavigationForResponsiveUi?: boolean;
     enableNewUserCreationFlow?: boolean;
