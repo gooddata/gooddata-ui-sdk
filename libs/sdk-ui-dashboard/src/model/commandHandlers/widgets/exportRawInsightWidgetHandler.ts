@@ -1,6 +1,6 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call } from "redux-saga/effects";
+import { call, select } from "redux-saga/effects";
 import { IExecutionResult, IExportResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 
@@ -10,6 +10,7 @@ import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } fro
 import { DashboardContext } from "../../types/commonTypes.js";
 import { createExportRawFunction } from "@gooddata/sdk-ui";
 import { PromiseFnReturnType } from "../../types/sagas.js";
+import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import { defaultDimensionsGenerator, defWithDimensions, newDefForInsight } from "@gooddata/sdk-model";
 
 async function performExport(execution: IExecutionResult): Promise<IExportResult> {
@@ -24,12 +25,21 @@ export function* exportRawInsightWidgetHandler(
     ctx: DashboardContext,
     cmd: ExportRawInsightWidget,
 ): SagaIterator<DashboardInsightWidgetExportResolved> {
-    const { insight } = cmd.payload;
+    const { ref, insight } = cmd.payload;
     const { workspace, backend } = ctx;
+
+    const executionEnvelope: ReturnType<ReturnType<typeof selectExecutionResultByRef>> = yield select(
+        selectExecutionResultByRef(ref),
+    );
 
     const definition = defWithDimensions(newDefForInsight(workspace, insight!), defaultDimensionsGenerator);
 
-    const preparedExecution = backend.workspace(workspace).execution().forDefinition(definition);
+    const preparedExecutionDefinition = executionEnvelope?.executionResult?.definition ?? definition;
+
+    const preparedExecution = backend
+        .workspace(workspace)
+        .execution()
+        .forDefinition(preparedExecutionDefinition);
 
     const executionResult: PromiseFnReturnType<typeof getExecutionResult> = yield call(
         getExecutionResult,

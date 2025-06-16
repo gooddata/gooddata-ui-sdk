@@ -3234,11 +3234,12 @@ export interface ExportRawInsightWidget extends IDashboardCommand {
 }
 
 // @alpha
-export function exportRawInsightWidget(insight: IInsightDefinition, correlationId?: string): ExportRawInsightWidget;
+export function exportRawInsightWidget(ref: ObjRef, insight: IInsightDefinition, correlationId?: string): ExportRawInsightWidget;
 
 // @alpha
 export interface ExportRawInsightWidgetPayload {
     readonly insight: IInsightDefinition;
+    readonly ref: ObjRef;
 }
 
 // @public
