@@ -1,0 +1,36 @@
+name: check-approve
+
+on:
+  pull_request_review:
+    types:
+      - submitted
+      - dismissed
+
+concurrency:
+  group: check-approve-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+
+  e2e-stage:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - name: dummy
+        run: |
+          echo "No test"
+
+  ready-to-merge-approved:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    if: ${{ github.event.review.state == 'approved' && !cancelled() }}
+    needs:
+      - e2e-stage
+    steps:
+      - name: Check if needed jobs succeeded
+        uses: re-actors/alls-green@release/v1
+        with:
+          allowed-skips: ${{ toJSON(needs) }}
+          jobs: ${{ toJSON(needs) }}
