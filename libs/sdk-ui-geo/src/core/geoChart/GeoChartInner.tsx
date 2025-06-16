@@ -197,7 +197,8 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         const classes = this.getContainerClassName(position);
         const isLegendRenderedFirst: boolean =
             position === LegendPosition.TOP ||
-            (position === LegendPosition.LEFT && !this.state.showFluidLegend);
+            (position === LegendPosition.LEFT &&
+                (!this.state.showFluidLegend || !!this.props.config?.respectLegendPosition));
         const legendComponent = this.renderLegend(height, position, geoChartOptions, contentRect);
 
         return (

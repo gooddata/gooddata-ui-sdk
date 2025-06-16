@@ -6,6 +6,7 @@ import { InsightView } from "@gooddata/sdk-ui-ext";
 
 const dashboard = import.meta.env.VITE_DASHBOARD;
 const insight = import.meta.env.VITE_INSIGHT;
+const mapboxToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export const Playground: React.FC = () => {
     if (insight) {
@@ -17,6 +18,7 @@ export const Playground: React.FC = () => {
                 dashboard={dashboard}
                 config={{
                     initialRenderMode: "view",
+                    mapboxToken: mapboxToken,
                 }}
             />
         );
