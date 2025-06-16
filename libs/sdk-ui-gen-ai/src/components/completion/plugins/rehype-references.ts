@@ -23,7 +23,7 @@ export function rehypeReferences(references: TextContentObject[]) {
                                     metric: obj.type === "metric",
                                     attribute: obj.type === "attribute",
                                     fact: obj.type === "fact",
-                                    date: obj.type === "dataset",
+                                    date: obj.type === "date",
                                 }),
                                 style: {},
                             },

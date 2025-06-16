@@ -62,7 +62,7 @@ export function getOptions(
     });
 }
 
-const SupportedReferenceTypes = ["fact", "metric", "dataset", "attribute"] as const;
+const SupportedReferenceTypes = ["fact", "metric", "date", "attribute"] as const;
 
 // Utility: Get regex for references
 export function getReferenceRegex(split?: boolean) {
@@ -187,7 +187,7 @@ export function getItems(
                 }),
                 item,
                 apply: (view, completion, from, to) => {
-                    const type = "dataset" as typeof SupportedReferenceTypes[number];
+                    const type = "date" as typeof SupportedReferenceTypes[number];
                     const insert = `{${type}/${item.dataSet.id}}`;
                     onCompletionSelected?.(completion as CompletionItem);
                     view.dispatch({
@@ -261,7 +261,7 @@ export function getCatalogItemType(
         return "metric";
     }
     if (isCatalogDateDataset(item)) {
-        return "dataset";
+        return "date";
     }
     if (isCatalogDateAttribute(item)) {
         return "attribute";
