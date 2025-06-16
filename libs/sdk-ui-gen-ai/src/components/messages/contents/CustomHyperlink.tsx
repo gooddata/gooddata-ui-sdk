@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import * as React from "react";
-import { useConfig } from "../../ConfigContext.js";
+import { LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
 
 export type CustomHyperlinkProps = {
     href: string;
@@ -59,7 +59,7 @@ export const CustomHyperlink: React.FC<CustomHyperlinkProps> = ({ href, text }) 
         }
 
         return linkHandler({
-            type: parsedRef.type,
+            type: parsedRef.type as LinkHandlerEvent["type"],
             id: parsedRef.id,
             workspaceId: parsedRef.workspaceId,
             itemUrl: parsedRef.itemUrl,

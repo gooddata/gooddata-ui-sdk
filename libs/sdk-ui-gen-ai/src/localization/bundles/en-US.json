@@ -19,6 +19,21 @@
         "comment": "",
         "limit": 0
     },
+    "gd.gen-ai.global-no-llm": {
+        "value": "No LLM provider configured",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.global-no-llm.description": {
+        "value": "Configure a provider to enable the chatbot.",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.global-no-llm.button-create-llm": {
+        "value": "Configure provider",
+        "comment": "",
+        "limit": 0
+    },
     "gd.gen-ai.permission-error": {
         "value": "Insufficient permissions",
         "comment": "",
