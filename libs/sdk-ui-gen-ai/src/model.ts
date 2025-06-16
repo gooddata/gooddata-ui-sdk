@@ -12,7 +12,7 @@ import {
  */
 export type TextContentObject = {
     id: string;
-    type: "metric" | "attribute" | "fact" | "dataset";
+    type: "metric" | "attribute" | "fact" | "date";
     title: string;
 };
 
