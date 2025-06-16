@@ -624,6 +624,15 @@ export type ISizeInfoDefault = ISizeInfo & {
     default: number;
 };
 
+// @alpha
+export function isSizeInfo(obj: any): obj is ISizeInfo;
+
+// @alpha
+export function isSizeInfoDefault(obj: any): obj is ISizeInfoDefault;
+
+// @alpha
+export function isVisualizationDefaultSizeInfo(obj: any): obj is IVisualizationDefaultSizeInfo;
+
 // @internal (undocumented)
 export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)

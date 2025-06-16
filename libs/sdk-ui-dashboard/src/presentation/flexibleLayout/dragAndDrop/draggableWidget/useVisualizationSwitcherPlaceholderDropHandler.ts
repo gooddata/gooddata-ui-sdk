@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -13,8 +13,11 @@ import {
 import { ILayoutItemPath } from "../../../../types.js";
 import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
 
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
+
 export function useVisualizationSwitcherPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
     const dispatch = useDashboardDispatch();
+    const updateWidgetDefaultSizeByParent = useUpdateWidgetDefaultSizeByParent(layoutPath);
 
     const { run: createVisualizationSwitcher } = useDashboardCommandProcessing({
         commandCreator: addNestedLayoutSectionItem,
@@ -28,7 +31,8 @@ export function useVisualizationSwitcherPlaceholderDropHandler(layoutPath: ILayo
     });
 
     return useCallback(
-        (itemSize: BaseDraggableLayoutItemSize) => {
+        (defaultItemSize: BaseDraggableLayoutItemSize) => {
+            const itemSize = updateWidgetDefaultSizeByParent(defaultItemSize);
             const id = uuidv4();
 
             createVisualizationSwitcher(layoutPath, {
@@ -52,6 +56,6 @@ export function useVisualizationSwitcherPlaceholderDropHandler(layoutPath: ILayo
                 },
             });
         },
-        [createVisualizationSwitcher, layoutPath],
+        [createVisualizationSwitcher, layoutPath, updateWidgetDefaultSizeByParent],
     );
 }

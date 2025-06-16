@@ -65,25 +65,33 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
     } = props;
 
     const layoutRef = React.useRef<HTMLDivElement>(null);
-    const { itemPath, itemSize } = useDashboardItemPathAndSize();
+    const { layoutItemPath, layoutItemSize } = useDashboardItemPathAndSize();
 
     const { layoutFacade, resizedItemPositions } = useMemo(() => {
         const updatedLayout = removeHeights(layout, !!enableCustomHeight);
 
-        const exportMode = renderMode === "export" && itemPath === undefined;
-        let unifiedLayout = unifyDashboardLayoutItemHeights(updatedLayout, itemSize, itemPath);
+        const exportMode = renderMode === "export" && layoutItemPath === undefined;
+        let unifiedLayout = unifyDashboardLayoutItemHeights(updatedLayout, layoutItemSize, layoutItemPath);
         if (exportMode) {
             unifiedLayout =
                 exportTransformer?.(unifiedLayout, focusObject) ??
                 layoutTransformer<TWidget>(unifiedLayout, focusObject);
         }
 
-        const layoutFacade = DashboardLayoutFacade.for(unifiedLayout, itemPath);
+        const layoutFacade = DashboardLayoutFacade.for(unifiedLayout, layoutItemPath);
         const resizedItemPositions = exportMode
             ? []
-            : getResizedItemPositions(layout, layoutFacade.raw(), [], itemPath);
+            : getResizedItemPositions(layout, layoutFacade.raw(), [], layoutItemPath);
         return { layoutFacade, resizedItemPositions };
-    }, [layout, enableCustomHeight, renderMode, itemPath, itemSize, exportTransformer, focusObject]);
+    }, [
+        layout,
+        enableCustomHeight,
+        renderMode,
+        layoutItemPath,
+        layoutItemSize,
+        exportTransformer,
+        focusObject,
+    ]);
 
     const sectionRendererWrapped = useCallback<IDashboardLayoutSectionRenderer<TWidget>>(
         (renderProps) =>
@@ -128,15 +136,15 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
     );
 
     const screenSize = useScreenSize();
-    const isNestedLayout = itemPath !== undefined;
+    const isNestedLayout = layoutItemPath !== undefined;
     const type = isNestedLayout ? "nested" : "root";
 
     const sectionIndex = useMemo(
         (): ILayoutSectionPath => ({
-            parent: itemPath,
+            parent: layoutItemPath,
             sectionIndex: layout.sections.length,
         }),
-        [layout, itemPath],
+        [layout, layoutItemPath],
     );
 
     // do not render the tailing section hotspot if there is only one section in the layout, and it has only initial placeholders in it
@@ -153,7 +161,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
     return (
         <GridLayoutElement
             type={type}
-            layoutItemSize={itemSize}
+            layoutItemSize={layoutItemSize}
             className={cx(
                 {
                     "gd-dashboards": !isNestedLayout,
@@ -178,14 +186,14 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                         widgetRenderer={widgetRendererWrapped}
                         renderMode={renderMode}
                         getLayoutDimensions={getLayoutDimensions}
-                        parentLayoutItemSize={itemSize}
-                        parentLayoutPath={itemPath}
+                        parentLayoutItemSize={layoutItemSize}
+                        parentLayoutPath={layoutItemPath}
                     />
                 );
             })}
             {shouldRenderSectionHotspot ? (
-                <GridLayoutElement type="item" layoutItemSize={itemSize}>
-                    <SectionHotspot index={sectionIndex} targetPosition="below" itemSize={itemSize} />
+                <GridLayoutElement type="item" layoutItemSize={layoutItemSize}>
+                    <SectionHotspot index={sectionIndex} targetPosition="below" itemSize={layoutItemSize} />
                 </GridLayoutElement>
             ) : null}
         </GridLayoutElement>

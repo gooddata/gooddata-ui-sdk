@@ -1,5 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { idRef } from "@gooddata/sdk-model";
+
 import {
     useDashboardDispatch,
     useDashboardCommandProcessing,
@@ -9,13 +12,16 @@ import {
     DashboardCommandFailed,
     ChangeInsightWidgetFilterSettings,
 } from "../../../../model/index.js";
-import { idRef } from "@gooddata/sdk-model";
-import { v4 as uuidv4 } from "uuid";
 import { ILayoutSectionPath } from "../../../../types.js";
 import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
+import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
+
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();
+    const layoutPath = useMemo(() => asLayoutItemPath(sectionIndex, 0), [sectionIndex]);
+    const updateWidgetDefaultSizeByParent = useUpdateWidgetDefaultSizeByParent(layoutPath);
 
     const { run: preselectDateDataset } = useDashboardCommandProcessing({
         commandCreator: enableRichTextWidgetDateFilter,
@@ -41,7 +47,8 @@ export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: ILayou
     });
 
     return useCallback(
-        (itemSize: BaseDraggableLayoutItemSize) => {
+        (defaultItemSize: BaseDraggableLayoutItemSize) => {
+            const itemSize = updateWidgetDefaultSizeByParent(defaultItemSize);
             const id = uuidv4();
 
             addNewSectionWithRichText(sectionIndex, {}, [
@@ -67,6 +74,6 @@ export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: ILayou
                 },
             ]);
         },
-        [addNewSectionWithRichText, sectionIndex],
+        [addNewSectionWithRichText, sectionIndex, updateWidgetDefaultSizeByParent],
     );
 }

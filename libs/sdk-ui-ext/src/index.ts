@@ -61,6 +61,9 @@ export {
     DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
     MIN_VISUALIZATION_WIDTH,
     EmbedInsightDialog,
+    isSizeInfo,
+    isSizeInfoDefault,
+    isVisualizationDefaultSizeInfo,
 } from "./internal/index.js";
 
 export type { CreateRoot, Root } from "./internal/createRootProvider.js";

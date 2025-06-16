@@ -2,12 +2,16 @@
 
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
-import { IDashboardLayout } from "@gooddata/sdk-model";
 import cx from "classnames";
+import { Bubble, BubbleHoverTrigger, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
+import { IDashboardLayout, IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { useDashboardUserInteraction, ExtendedDashboardWidget } from "../../../../model/index.js";
-import { useLayoutSectionsConfiguration } from "../../common/useLayoutSectionsConfiguration.js";
+import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+
+import { HorizontalDirectionIcon } from "./assets/HorizontalDirectionIcon.js";
+import { VerticalDirectionIcon } from "./assets/VerticalDirectionIcon.js";
 
 const TOOLBAR_ALIGN_POINTS: IAlignPoint[] = [
     { align: "tr tl", offset: { x: 0, y: 11 } },
@@ -21,14 +25,24 @@ const IGNORE_TOOLBAR_CLICKS_ON_BY_CLASS = [ALIGN_TOOLBAR_TO]; // do not close on
 interface ToolbarProps {
     layout: IDashboardLayout<ExtendedDashboardWidget>;
     onWidgetDelete: () => void;
+    onWidgetDirectionChanged: (direction: IDashboardLayoutContainerDirection) => void;
     onToggleHeaders: (areSectionHeadersEnabled: boolean) => void;
     onClose: () => void;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = ({ layout, onWidgetDelete, onToggleHeaders, onClose }) => {
+export const Toolbar: React.FC<ToolbarProps> = ({
+    layout,
+    onWidgetDelete,
+    onWidgetDirectionChanged,
+    onToggleHeaders,
+    onClose,
+}) => {
+    const theme = useTheme();
     const userInteraction = useDashboardUserInteraction();
-    const { areSectionHeadersEnabled } = useLayoutSectionsConfiguration(layout);
+    const { sections, direction } = getLayoutConfiguration(layout);
+    const areSectionHeadersEnabled = sections.areHeadersEnabled;
     const hasSections = layout.sections.length > 0;
+    const DirectionIcon = direction === "row" ? VerticalDirectionIcon : HorizontalDirectionIcon;
     return (
         <Bubble
             className="bubble-light"
@@ -41,6 +55,32 @@ export const Toolbar: React.FC<ToolbarProps> = ({ layout, onWidgetDelete, onTogg
             arrowStyle={ARROW_STYLES}
             onClose={onClose}
         >
+            <div>
+                <BubbleHoverTrigger eventsOnBubble={true}>
+                    <div
+                        className="gd-nested-layout__toolbar__button s-nested-layout__button--direction"
+                        onClick={() => {
+                            onWidgetDirectionChanged(direction === "row" ? "column" : "row");
+                            userInteraction.nestedLayoutInteraction(
+                                direction === "row"
+                                    ? "nestedLayoutDirectionColumn"
+                                    : "nestedLayoutDirectionRow",
+                            );
+                        }}
+                    >
+                        <DirectionIcon
+                            className="gd-nested-layout__toolbar__icon--direction"
+                            color={theme?.palette?.complementary?.c7}
+                        />
+                    </div>
+                    <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        {/* TODO LX-1204: will be removed and replaced with a localized menu */}
+                        {direction === "row"
+                            ? "Change group direction to columns."
+                            : "Change group direction to rows."}
+                    </Bubble>
+                </BubbleHoverTrigger>
+            </div>
             {hasSections ? (
                 <>
                     <div>
@@ -76,9 +116,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({ layout, onWidgetDelete, onTogg
                             </Bubble>
                         </BubbleHoverTrigger>
                     </div>
-                    <div className="gd-nested-layout__toolbar__delimiter" />
                 </>
             ) : null}
+            <div className="gd-nested-layout__toolbar__delimiter" />
             <div>
                 <BubbleHoverTrigger eventsOnBubble={true}>
                     <div

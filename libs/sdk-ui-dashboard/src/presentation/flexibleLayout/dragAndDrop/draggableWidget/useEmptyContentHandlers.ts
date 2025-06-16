@@ -1,16 +1,14 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { useNewSectionDashboardLayoutPlaceholderDropHandler } from "./useNewSectionDashboardLayoutPlaceholderDropHandler.js";
 import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler.js";
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
-import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler.js";
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
 import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
 import { ILayoutSectionPath } from "../../../../types.js";
 import {
     useDashboardDrop,
     isInsightDraggableListItem,
-    isKpiPlaceholderDraggableItem,
     isInsightPlaceholderDraggableItem,
     isRichTextDraggableListItem,
     isVisualizationSwitcherDraggableListItem,
@@ -26,7 +24,6 @@ import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectio
 
 export const useEmptyContentHandlers = (sectionPath: ILayoutSectionPath) => {
     const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(sectionPath);
-    const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(sectionPath);
     const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(sectionPath);
     const handleRichTextPlaceholderDrop = useNewSectionRichTextPlaceholderDropHandler(sectionPath);
     const handleVisualizationSwitcherPlaceholderDrop =
@@ -54,9 +51,6 @@ export const useEmptyContentHandlers = (sectionPath: ILayoutSectionPath) => {
                 if (isInsightDraggableListItem(item)) {
                     handleInsightListItemDrop(item.insight);
                 }
-                if (isKpiPlaceholderDraggableItem(item)) {
-                    handleKpiPlaceholderDrop();
-                }
                 if (isInsightPlaceholderDraggableItem(item)) {
                     handleInsightPlaceholderDrop();
                 }
@@ -82,7 +76,6 @@ export const useEmptyContentHandlers = (sectionPath: ILayoutSectionPath) => {
         },
         [
             handleInsightListItemDrop,
-            handleKpiPlaceholderDrop,
             handleInsightPlaceholderDrop,
             handleVisualizationSwitcherPlaceholderDrop,
             handleRichTextPlaceholderDrop,

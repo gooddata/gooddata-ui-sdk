@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import * as Axis from "./constants/axis.js";
 import * as DrillablePredicatesUtils from "./utils/drillablePredicates.js";
 import LabelRotationControl from "./components/configurationControls/axis/LabelRotationControl.js";
@@ -80,6 +80,11 @@ export type {
     IVisualizationDefaultSizeInfo,
     ISizeInfoDefault,
     IVisualizationMeta,
+} from "./interfaces/VisualizationDescriptor.js";
+export {
+    isSizeInfo,
+    isSizeInfoDefault,
+    isVisualizationDefaultSizeInfo,
 } from "./interfaces/VisualizationDescriptor.js";
 export type { IFluidLayoutDescriptor, ILayoutDescriptor, LayoutType } from "./interfaces/LayoutDescriptor.js";
 

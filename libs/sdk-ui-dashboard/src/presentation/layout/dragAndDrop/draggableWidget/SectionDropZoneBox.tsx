@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -23,7 +23,7 @@ export const SectionDropZoneBox: React.FC<ISectionDropZoneBoxProps> = (props) =>
                     )}
                 >
                     <div className={cx("drag-info-placeholder-inner", "can-drop", { "is-over": isOver })}>
-                        <div className="drag-info-placeholder-drop-target">
+                        <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
                             <div className="drop-target-inner">
                                 <Typography tagName="p" className="drop-target-message kpi-drop-target">
                                     <FormattedMessage

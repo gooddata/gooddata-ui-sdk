@@ -50,9 +50,9 @@ export const DefaultEmptyNestedLayoutDropZoneBody: React.FC = () => {
 };
 
 export const EmptyNestedLayoutDropZone: React.FC = () => {
-    const { itemPath } = useDashboardItemPathAndSize();
+    const { layoutItemPath } = useDashboardItemPathAndSize();
     const sectionPath = {
-        parent: itemPath,
+        parent: layoutItemPath,
         sectionIndex: 0,
     };
 

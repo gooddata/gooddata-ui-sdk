@@ -1455,9 +1455,13 @@ export interface IDashboardLayout<TWidget = IDashboardWidget> {
 
 // @alpha
 export interface IDashboardLayoutConfiguration {
+    direction?: IDashboardLayoutContainerDirection;
     // (undocumented)
     sections?: IDashboardLayoutSectionsConfiguration;
 }
+
+// @alpha
+export type IDashboardLayoutContainerDirection = "row" | "column";
 
 // @public
 export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {

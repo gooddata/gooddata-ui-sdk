@@ -1,14 +1,12 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import {
     isInsightDraggableListItem,
-    isKpiPlaceholderDraggableItem,
     isInsightPlaceholderDraggableItem,
     isRichTextDraggableListItem,
     isVisualizationSwitcherDraggableListItem,
     isDashboardLayoutDraggableListItem,
     isInsightDraggableItem,
-    isKpiDraggableItem,
     isRichTextDraggableItem,
     isVisualizationSwitcherDraggableItem,
     isDashboardLayoutDraggableItem,
@@ -30,11 +28,9 @@ type DroppableItem =
     | VisualizationSwitcherDraggableItem;
 
 export type DropHandlers = {
-    handleKpiPlaceholderDrop: () => void;
     handleInsightListItemDrop: (insight: any) => void;
     handleInsightPlaceholderDrop: () => void;
     handleRichTextPlaceholderDrop: (size: BaseDraggableLayoutItemSize) => void;
-
     handleVisualizationSwitcherPlaceholderDrop: (size: BaseDraggableLayoutItemSize) => void;
     handleDashboardLayoutPlaceholderDrop: (size: BaseDraggableLayoutItemSize) => void;
     handleWidgetDrop: (item: DroppableItem) => void;
@@ -44,9 +40,6 @@ export function draggableWidgetDropHandler<
     DragType extends DraggableItemType,
     DragObject = DraggableItemTypeMapping[DragType],
 >(item: DragObject, handlers: DropHandlers) {
-    if (isKpiPlaceholderDraggableItem(item)) {
-        handlers.handleKpiPlaceholderDrop();
-    }
     if (isInsightDraggableListItem(item)) {
         handlers.handleInsightListItemDrop(item.insight);
     }
@@ -64,7 +57,6 @@ export function draggableWidgetDropHandler<
     }
     if (
         isInsightDraggableItem(item) ||
-        isKpiDraggableItem(item) ||
         isRichTextDraggableItem(item) ||
         isVisualizationSwitcherDraggableItem(item) ||
         isDashboardLayoutDraggableItem(item)

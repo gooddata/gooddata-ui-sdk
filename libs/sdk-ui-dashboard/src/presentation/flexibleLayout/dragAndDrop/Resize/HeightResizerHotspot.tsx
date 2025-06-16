@@ -48,7 +48,7 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
     const settings = useDashboardSelector(selectSettings);
 
     const screen = useScreenSize();
-    const { itemSize } = useDashboardItemPathAndSize();
+    const { layoutItemSize } = useDashboardItemPathAndSize();
     const { resizeDirection, resizeItemIdentifiers, resizeStart, resizeEnd, getScrollCorrection } =
         useResizeContext();
     const widgets = useMemo(() => items.map((item) => item.widget() as IWidget), [items]);
@@ -60,7 +60,7 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
 
     const showDefault = useMemo(() => widgets.some((widget) => isHovered(widget.ref)), [isHovered, widgets]);
 
-    const gridWidth = determineWidthForScreen(screen, itemSize);
+    const gridWidth = determineWidthForScreen(screen, layoutItemSize);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {

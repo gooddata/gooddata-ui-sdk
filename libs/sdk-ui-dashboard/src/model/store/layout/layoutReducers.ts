@@ -28,6 +28,7 @@ import {
     IDashboardLayoutSection,
     ScreenSize,
     isDashboardLayoutItem,
+    IDashboardLayoutContainerDirection,
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
@@ -182,6 +183,28 @@ const toggleLayoutSectionHeaders: LayoutReducer<ToggleLayoutSectionHeadersPayloa
                     ...(layout.widget.configuration?.sections ?? {}),
                     enableHeader: enableSectionHeaders,
                 },
+            },
+        };
+    }
+};
+
+type ToggleLayoutDirectionPayload = {
+    layoutPath: ILayoutItemPath | undefined;
+    direction: IDashboardLayoutContainerDirection;
+};
+
+const toggleLayoutDirection: LayoutReducer<ToggleLayoutDirectionPayload> = (state, action) => {
+    invariant(state.layout);
+
+    const { layoutPath, direction } = action.payload;
+    const layout = layoutPath === undefined ? state.layout : findItem(state.layout, layoutPath);
+
+    if (isDashboardLayoutItem(layout) && isDashboardLayout(layout.widget)) {
+        layout.widget = {
+            ...layout.widget,
+            configuration: {
+                ...(layout.widget.configuration ?? {}),
+                direction,
             },
         };
     }
@@ -995,5 +1018,6 @@ export const layoutReducers = {
     changeWidgetIgnoreCrossFiltering: withUndo(changeWidgetIgnoreCrossFiltering),
     resizeVisualizationSwitcherOnInsightChanged: withUndo(resizeVisualizationSwitcherOnInsightChanged),
     toggleLayoutSectionHeaders: withUndo(toggleLayoutSectionHeaders),
+    toggleLayoutDirection: withUndo(toggleLayoutDirection),
     updateHeightOfMultipleItems,
 };

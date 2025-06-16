@@ -112,14 +112,14 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
     const { existingExportTransformFn } = useDashboardCustomizationsContext();
 
     const screenSize = useScreenSize();
-    const { itemPath, itemSize } = useDashboardItemPathAndSize();
+    const { layoutItemPath, layoutItemSize } = useDashboardItemPathAndSize();
 
     const layout: IDashboardLayout<ExtendedDashboardWidget> = useMemo(
         () => ({
             ...(providedLayout ?? selectedLayout),
-            ...(itemSize ? { size: itemSize[screenSize] } : {}),
+            ...(layoutItemSize ? { size: layoutItemSize[screenSize] } : {}),
         }),
-        [providedLayout, selectedLayout, itemSize, screenSize],
+        [providedLayout, selectedLayout, layoutItemSize, screenSize],
     );
 
     const isLayoutEmpty = !layout.sections.length;
@@ -142,12 +142,12 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
             return getDashboardLayoutForExport(layout);
         }
 
-        return DashboardLayoutBuilder.for(layout, itemPath)
+        return DashboardLayoutBuilder.for(layout, layoutItemPath)
             .modifySections((section) =>
                 section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
             )
             .build();
-    }, [isExport, layout, itemPath, sanitizeWidgets, getInsightByRef, enableWidgetCustomHeight]);
+    }, [isExport, layout, layoutItemPath, sanitizeWidgets, getInsightByRef, enableWidgetCustomHeight]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {
@@ -172,7 +172,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
 
     return (
         <>
-            {!itemPath || itemPath.length === 0 ? (
+            {!layoutItemPath || layoutItemPath.length === 0 ? (
                 <DefaultDashboardExportVariables renderMode={renderMode} />
             ) : null}
             <DashboardLayout
@@ -181,8 +181,8 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
                     "export-slides-mode": renderMode === "export",
                 })}
                 layout={transformedLayout}
-                parentLayoutItemSize={itemSize}
-                parentLayoutPath={itemPath}
+                parentLayoutItemSize={layoutItemSize}
+                parentLayoutPath={layoutItemPath}
                 exportTransformer={existingExportTransformFn}
                 itemKeyGetter={itemKeyGetter}
                 widgetRenderer={widgetRenderer}

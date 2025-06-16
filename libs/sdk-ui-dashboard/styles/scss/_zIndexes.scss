@@ -8,6 +8,7 @@ $configuration-panel-bubble-sticky: 5;
 $drag-and-drop-basic: 1;
 $drag-and-drop-draggable-wrapper: 10;
 $drag-and-drop-drop-zone: 99;
+$drag-and-drop-container-draggable-tab: 100; // sits above drop zone so the top widget drop zone can hide behind it
 
 $filterbar-old: 100;
 $filterbar-sdk-8-12: 6000;

@@ -97,6 +97,7 @@ import {
     RemoveSectionItemByWidgetRef,
     SetScreenSize,
     ToggleLayoutSectionHeaders,
+    ToggleLayoutDirection,
 } from "./layout.js";
 import { CreateAlert, SaveAlert } from "./alerts.js";
 import {
@@ -291,6 +292,8 @@ export type {
     SetScreenSizePayload,
     ToggleLayoutSectionHeaders,
     ToggleLayoutSectionHeadersPayload,
+    ToggleLayoutDirection,
+    ToggleLayoutDirectionPayload,
 } from "./layout.js";
 export {
     addLayoutSection,
@@ -327,6 +330,7 @@ export {
     resizeNestedLayoutItemWidth,
     setScreenSize,
     toggleLayoutSectionHeaders,
+    toggleLayoutDirection,
 } from "./layout.js";
 
 export type { CreateAlert, CreateAlertPayload, SaveAlert, SaveAlertPayload } from "./alerts.js";
@@ -644,6 +648,7 @@ export type DashboardCommands =
     | SetFilterViewAsDefault
     | ReloadFilterViews
     | ToggleLayoutSectionHeaders
+    | ToggleLayoutDirection
     | ApplyFilterContextWorkingSelection
     | ResetFilterContextWorkingSelection
     | ChangeIgnoreExecutionTimestamp

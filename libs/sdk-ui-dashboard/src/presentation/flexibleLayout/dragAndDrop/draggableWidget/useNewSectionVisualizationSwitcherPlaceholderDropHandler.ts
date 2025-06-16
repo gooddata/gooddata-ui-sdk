@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { idRef } from "@gooddata/sdk-model";
 
@@ -12,9 +12,14 @@ import {
 } from "../../../../model/index.js";
 import { ILayoutSectionPath } from "../../../../types.js";
 import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
+import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
+
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useNewSectionVisualizationSwitcherPlaceholderDropHandler(sectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();
+    const layoutPath = useMemo(() => asLayoutItemPath(sectionIndex, 0), [sectionIndex]);
+    const updateWidgetDefaultSizeByParent = useUpdateWidgetDefaultSizeByParent(layoutPath);
 
     const { run: addNewSectionWithVisualizationSwitcherPlaceholder } = useDashboardCommandProcessing({
         commandCreator: addNestedLayoutSection,
@@ -28,7 +33,8 @@ export function useNewSectionVisualizationSwitcherPlaceholderDropHandler(section
     });
 
     return useCallback(
-        (itemSize: BaseDraggableLayoutItemSize) => {
+        (defaultItemSize: BaseDraggableLayoutItemSize) => {
+            const itemSize = updateWidgetDefaultSizeByParent(defaultItemSize);
             const id = uuidv4();
 
             addNewSectionWithVisualizationSwitcherPlaceholder(sectionIndex, {}, [
@@ -54,6 +60,6 @@ export function useNewSectionVisualizationSwitcherPlaceholderDropHandler(section
                 },
             ]);
         },
-        [addNewSectionWithVisualizationSwitcherPlaceholder, sectionIndex],
+        [addNewSectionWithVisualizationSwitcherPlaceholder, sectionIndex, updateWidgetDefaultSizeByParent],
     );
 }

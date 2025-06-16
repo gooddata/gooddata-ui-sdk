@@ -1,6 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { ScreenSize } from "@gooddata/sdk-model";
+
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../_staging/dashboard/flexibleLayout/config.js";
 import { IDashboardLayoutItemFacade } from "../../_staging/dashboard/flexibleLayout/index.js";
 
