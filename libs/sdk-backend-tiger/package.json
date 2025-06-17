@@ -34,6 +34,7 @@
         "isolated-test-rec": "GD_TIGER_REC=true NODE_TLS_REJECT_UNAUTHORIZED=0 vitest --config vite.integrated.config.ts run",
         "isolated-test-rec-snapshots": "GD_TIGER_REC=true NODE_TLS_REJECT_UNAUTHORIZED=0 vitest -u --config vite.integrated.config.ts run",
         "test": "vitest watch",
+        "test-once": "vitest run",
         "test-ci": "vitest run --silent",
         "test-isolated-ci": "./scripts/isolated-test.sh",
         "eslint": "eslint -c .eslintrc.cjs src/",
