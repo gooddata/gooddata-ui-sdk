@@ -23,9 +23,10 @@ _build_styles() {
 _assets() {
     mkdir -p esm
     # first copy everything in the assets (in case there are non-SVG files)
-    #    cp -rf src/assets esm/
+    cp -rf src/assets esm/ 2>/dev/null || true
+    cp -rf src/components/*.wav esm/components/ 2>/dev/null || true
     # then use svgo to optimize all the SVGs there
-    #    svgo -rqf src/assets esm/assets
+    svgo -rqf src/assets esm/assets 2>/dev/null || true
 }
 
 _common-build() {

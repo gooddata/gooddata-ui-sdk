@@ -28,6 +28,7 @@
         "esm/**/*.d.ts",
         "esm/**/*.map",
         "esm/**/*.svg",
+        "esm/**/*.wav",
         "styles",
         "NOTICE"
     ],

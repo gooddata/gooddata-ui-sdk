@@ -46,6 +46,24 @@ export const DefaultFeedbackAnimation: React.FC<{
             });
         }
 
+        // Play sound effect when animation starts
+        try {
+            const audio = new Audio();
+            // Load the sound file using import.meta.url for proper resolution
+            try {
+                audio.src = new URL("./coins.wav", import.meta.url).href;
+            } catch (urlError) {
+                // Fallback to relative path if URL construction fails
+                audio.src = "./coins.wav";
+            }
+            audio.volume = 0.7; // Set volume to lower level to avoid being too loud
+            audio.play().catch(() => {
+                // Silently handle audio play failures (e.g., browser autoplay policies)
+            });
+        } catch (error) {
+            // Silently handle any audio-related errors
+        }
+
         // Auto-complete animation after 800ms
         const timer = setTimeout(onComplete, 800);
         return () => clearTimeout(timer);
