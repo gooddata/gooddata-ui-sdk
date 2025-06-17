@@ -40,7 +40,7 @@
         "prepack": "cp -f ../../NOTICE ./NOTICE",
         "prepublishOnly": "npm run build",
         "test": "vitest --watch",
-        "test-once": "vitest",
+        "test-once": "vitest run",
         "test-once-with-coverage": "vitest --coverage=true",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
         "eslint": "eslint -c .eslintrc.cjs src/",

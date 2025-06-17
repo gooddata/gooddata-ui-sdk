@@ -37,7 +37,7 @@
         "remove-plugin-params": "gdc-plugins dashboard-plugin remove-params",
         "start": "webpack-cli serve --config-name harness",
         "test": "vitest --watch --passWithNoTests",
-        "test-once": "vitest --passWithNoTests",
+        "test-once": "vitest run --passWithNoTests",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml --passWithNoTests",
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
