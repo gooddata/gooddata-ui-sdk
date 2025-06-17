@@ -8,7 +8,7 @@ import {
     ZOOM_THRESHOLD,
     useIdPrefixed,
     DialogCloseButton,
-    AutofocusOnMount,
+    UiAutofocus,
 } from "@gooddata/sdk-ui-kit";
 import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints.js";
 
@@ -74,9 +74,9 @@ const LegendDialogContent: React.FC<ILegendDialogContent> = ({ title, onCloseDia
                     onClose={handleClose}
                 />
             </div>
-            <AutofocusOnMount>
+            <UiAutofocus>
                 <div className="legend-content">{children}</div>
-            </AutofocusOnMount>
+            </UiAutofocus>
         </div>
     );
 };

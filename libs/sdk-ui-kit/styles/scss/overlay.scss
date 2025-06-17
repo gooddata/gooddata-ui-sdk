@@ -32,12 +32,6 @@
     @include mixins.default-styles();
 }
 
-// Fix for UiFocusTrap height issue in fullscreen overlays
-// Ensures focus trap takes full height when used in fixed positioned overlays
-.overlay-wrapper[style*="position: fixed"] .gd-focus-trap {
-    height: 100%;
-}
-
 .gd-error-overlay-content {
     .modalityPlugin-mask-visible {
         z-index: 10001;

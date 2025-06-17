@@ -7,7 +7,7 @@ import {
     INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 import {
-    AutofocusOnMount,
+    UiAutofocus,
     LoadingSpinner,
     SELECT_ITEM_ACTION,
     useListWithActionsKeyboardNavigation,
@@ -89,7 +89,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
     }
 
     return (
-        <AutofocusOnMount>
+        <UiAutofocus>
             <div
                 className="configuration-category gd-schedule-email__list"
                 onKeyDown={handleKeyDown}
@@ -107,6 +107,6 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
                     />
                 ))}
             </div>
-        </AutofocusOnMount>
+        </UiAutofocus>
     );
 };

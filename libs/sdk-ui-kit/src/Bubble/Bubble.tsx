@@ -64,6 +64,7 @@ export interface IBubbleProps {
     className?: string;
     closeOnOutsideClick?: boolean;
     closeOnParentScroll?: boolean;
+    closeOnEscape?: boolean;
 
     /**
      * Array of refs where user clicks should be ignored
@@ -106,6 +107,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
         className: "bubble-primary",
         closeOnOutsideClick: false,
         closeOnParentScroll: true,
+        closeOnEscape: false,
         onClose: noop,
         onMouseEnter: noop,
         onMouseLeave: noop,
@@ -197,6 +199,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
                 ignoreClicksOn={this.props.ignoreClicksOn}
                 ignoreClicksOnByClass={this.props.ignoreClicksOnByClass}
                 onClose={this.props.onClose}
+                closeOnEscape={this.props.closeOnEscape}
                 positionType={this.props.overlayPositionType}
                 ensureVisibility={this.props.ensureVisibility}
             >

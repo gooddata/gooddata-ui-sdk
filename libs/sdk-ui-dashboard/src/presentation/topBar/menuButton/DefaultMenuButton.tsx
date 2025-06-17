@@ -9,11 +9,11 @@ import {
     ItemsWrapper,
     Overlay,
     SingleSelectListItem,
-    UiFocusTrap,
     getFocusableElements,
     useId,
     makeMenuKeyboardNavigation,
     isActionKey,
+    UiAutofocus,
 } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
@@ -199,41 +199,40 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                 closeOnOutsideClick={true}
                 onClose={onMenuButtonClick}
             >
-                <UiFocusTrap
-                    autofocusOnOpen={true}
-                    customKeyboardNavigationHandler={menuKeyboardNavigationHandler}
-                >
-                    <ItemsWrapper smallItemsSpacing className="gd-menu" wrapperRef={menuWrapperRef}>
-                        {selectedMenuItem ? (
-                            <DefaultSubmenuHeader
-                                title={selectedMenuItem.itemName}
-                                backLabel={backLabel}
-                                closeLabel={closeLabel}
-                                onClose={onClose}
-                                onGoBack={() => {
-                                    setAutofocusSubmenu(true);
-                                    setSelectedMenuItem(null);
-                                }}
-                            />
-                        ) : null}
-                        <div role={"menu"} id={menuId} aria-labelledby={DEFAULT_MENU_BUTTON_ID}>
-                            {visibleMenuItems.map((menuItem) => {
-                                return (
-                                    <MenuItem
-                                        key={menuItem.itemId}
-                                        menuItem={menuItem}
-                                        selectedMenuItem={selectedMenuItem}
-                                        setMenuItemRef={setMenuItemRef}
-                                        setSelectedMenuItem={setSelectedMenuItem}
-                                        setParentItemId={setParentItemId}
-                                        setAutofocusSubmenu={setAutofocusSubmenu}
-                                        setIsOpen={setIsOpen}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </ItemsWrapper>
-                </UiFocusTrap>
+                <UiAutofocus>
+                    <div onKeyDown={menuKeyboardNavigationHandler}>
+                        <ItemsWrapper smallItemsSpacing className="gd-menu" wrapperRef={menuWrapperRef}>
+                            {selectedMenuItem ? (
+                                <DefaultSubmenuHeader
+                                    title={selectedMenuItem.itemName}
+                                    backLabel={backLabel}
+                                    closeLabel={closeLabel}
+                                    onClose={onClose}
+                                    onGoBack={() => {
+                                        setAutofocusSubmenu(true);
+                                        setSelectedMenuItem(null);
+                                    }}
+                                />
+                            ) : null}
+                            <div role={"menu"} id={menuId} aria-labelledby={DEFAULT_MENU_BUTTON_ID}>
+                                {visibleMenuItems.map((menuItem) => {
+                                    return (
+                                        <MenuItem
+                                            key={menuItem.itemId}
+                                            menuItem={menuItem}
+                                            selectedMenuItem={selectedMenuItem}
+                                            setMenuItemRef={setMenuItemRef}
+                                            setSelectedMenuItem={setSelectedMenuItem}
+                                            setParentItemId={setParentItemId}
+                                            setAutofocusSubmenu={setAutofocusSubmenu}
+                                            setIsOpen={setIsOpen}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </ItemsWrapper>
+                    </div>
+                </UiAutofocus>
             </Overlay>
         );
     };

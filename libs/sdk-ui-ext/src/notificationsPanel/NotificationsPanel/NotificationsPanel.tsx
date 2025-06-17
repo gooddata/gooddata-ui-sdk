@@ -3,7 +3,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { ILocale } from "@gooddata/sdk-ui";
 import { assertNever, INotification } from "@gooddata/sdk-model";
-import { Overlay, alignConfigToAlignPoint, UiFocusTrap } from "@gooddata/sdk-ui-kit";
+import { Overlay, alignConfigToAlignPoint, UiFocusManager } from "@gooddata/sdk-ui-kit";
 import { invariant } from "ts-invariant";
 import { NotificationsProvider, useNotificationsContext } from "../data/NotificationsContext.js";
 import { OrganizationProvider } from "../@staging/OrganizationContext/OrganizationContext.js";
@@ -270,7 +270,11 @@ function NotificationsPanelController({
     } = useNotificationsPanelController();
 
     const notificationsPanel = (
-        <UiFocusTrap returnFocusTo={buttonRef} autofocusOnOpen={true}>
+        <UiFocusManager
+            enableFocusTrap
+            enableAutofocus
+            enableReturnFocusOnUnmount={{ returnFocusTo: buttonRef }}
+        >
             <NotificationsPanel
                 NotificationsPanelHeader={NotificationsPanelHeader}
                 NotificationsList={NotificationsList}
@@ -299,7 +303,7 @@ function NotificationsPanelController({
                 skeletonItemsCount={skeletonItemsCount}
                 maxListHeight={renderInline ? undefined : maxListHeight}
             />
-        </UiFocusTrap>
+        </UiFocusManager>
     );
 
     if (renderInline) {

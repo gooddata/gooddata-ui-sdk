@@ -1,14 +1,16 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { getFocusableElements, isElementFocusable, isElementTextInput } from "./domUtilities.js";
+import { getFocusableElements, isElementFocusable, isElementTextInput } from "../../utils/domUtilities.js";
+import { resolveRef } from "./utils.js";
+import { IUiFocusHelperConnectors } from "./types.js";
 
 /**
  * @internal
  */
-export interface IAutofocusOptions {
-    isDisabled?: boolean;
+export interface IUiAutofocusOptions {
     refocusKey?: unknown;
+    initialFocus?: string | React.RefObject<HTMLElement>;
 }
 
 /**
@@ -16,31 +18,18 @@ export interface IAutofocusOptions {
  *
  * @internal
  */
-export const useAutofocusOnMountRef = ({ isDisabled, refocusKey }: IAutofocusOptions = {}) => {
+export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
+    refocusKey,
+    initialFocus,
+}: IUiAutofocusOptions = {}): IUiFocusHelperConnectors<T> => {
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
-    useAutofocusOnMount(element, { isDisabled, refocusKey });
-
-    return React.useCallback((node: HTMLElement | null) => {
-        setElement(node);
-    }, []);
-};
-
-/**
- * Focuses the element on mount or when `refocusKey` changes.
- *
- * @internal
- */
-export const useAutofocusOnMount = (
-    element: HTMLElement | null | undefined,
-    { isDisabled, refocusKey }: IAutofocusOptions = {},
-) => {
     // If the element is outside of the viewport, calling focus() will not work.
     // This can happen for example with floating elements, that are repositioned after they mount
     React.useEffect(() => {
-        const elementToFocus = getElementToFocus(element);
+        const elementToFocus = getElementToFocus(element, initialFocus);
 
-        if (isDisabled || !elementToFocus) {
+        if (!elementToFocus) {
             return undefined;
         }
 
@@ -48,7 +37,7 @@ export const useAutofocusOnMount = (
             // Focusing a newly created element sometimes fails if not done through requestAnimationFrame()
             window.requestAnimationFrame(() => {
                 if (
-                    element.contains(document.activeElement) ||
+                    element?.contains(document.activeElement) ||
                     target.contains(document.activeElement) ||
                     isElementTextInput(document.activeElement)
                 ) {
@@ -67,11 +56,21 @@ export const useAutofocusOnMount = (
         observer.observe(elementToFocus);
 
         return () => observer.disconnect();
-    }, [refocusKey, isDisabled, element]);
+    }, [refocusKey, element, initialFocus]);
+
+    return React.useMemo(() => ({ ref: setElement }), []);
 };
 
-function getElementToFocus(element: HTMLElement | null | undefined) {
-    return isElementFocusable(element) ? element : getFocusableElements(element).firstElement;
+function getElementToFocus(
+    element: HTMLElement | null | undefined,
+    initialFocus?: string | React.RefObject<HTMLElement>,
+) {
+    const initialFocusElement = resolveRef(initialFocus);
+    const elementToCheck = initialFocusElement ?? element;
+
+    return isElementFocusable(elementToCheck)
+        ? elementToCheck
+        : getFocusableElements(elementToCheck).firstElement;
 }
 
 /**
@@ -79,15 +78,15 @@ function getElementToFocus(element: HTMLElement | null | undefined) {
  *
  * @internal
  */
-export const AutofocusOnMount: React.FC<
+export const UiAutofocus: React.FC<
     {
         children: React.ReactNode;
-    } & IAutofocusOptions
-> = ({ isDisabled, refocusKey, children }) => {
-    const ref = useAutofocusOnMountRef({ isDisabled, refocusKey });
+    } & IUiAutofocusOptions
+> = ({ children, ...options }) => {
+    const connectors = useUiAutofocusConnectors<HTMLDivElement>(options);
 
     return (
-        <div ref={ref} style={{ display: "contents" }}>
+        <div style={{ display: "contents" }} {...connectors}>
             {children}
         </div>
     );

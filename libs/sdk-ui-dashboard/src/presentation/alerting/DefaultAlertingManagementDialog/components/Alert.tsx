@@ -195,7 +195,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
                 className={e("menu")}
                 alignPoints={[{ align: "br tr" }, { align: "tr br" }]}
                 autofocusOnOpen
-                isTabCaught={false}
+                shouldTrapFocus={false}
                 returnFocusTo={listId}
                 renderButton={({ buttonRef, accessibilityConfig, toggleDropdown, isOpen }) => {
                     return (

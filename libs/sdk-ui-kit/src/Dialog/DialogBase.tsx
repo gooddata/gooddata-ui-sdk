@@ -3,8 +3,8 @@ import React from "react";
 import cx from "classnames";
 import { IDialogBaseProps } from "./typings.js";
 import { DialogCloseButton } from "./DialogCloseButton.js";
-import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 import { isElementSubmitButton, isElementTextInput } from "../utils/domUtilities.js";
+import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 
 const checkKeyHandler = (event: React.KeyboardEvent, key: string, handler?: () => void): void => {
     if (event.key !== key || !handler) {
@@ -58,12 +58,10 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
     const dialogClasses = cx("overlay", "gd-dialog", className);
 
     return (
-        <FocusTrapOrNull
-            initialFocus={initialFocus}
-            returnFocusTo={returnFocusTo}
-            autofocusOnOpen={autofocusOnOpen}
-            returnFocusAfterClose={returnFocusAfterClose}
-            isModal={isModal}
+        <UiFocusManager
+            enableFocusTrap={isModal}
+            enableAutofocus={!!isModal && autofocusOnOpen ? { initialFocus } : false}
+            enableReturnFocusOnUnmount={!!isModal && returnFocusAfterClose ? { returnFocusTo } : false}
         >
             <div
                 onKeyDown={handleKeyDown}
@@ -84,27 +82,6 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
                     {children}
                 </div>
             </div>
-        </FocusTrapOrNull>
+        </UiFocusManager>
     );
 });
-
-const FocusTrapOrNull = (
-    props: { children: React.ReactElement } & Pick<
-        IDialogBaseProps,
-        "initialFocus" | "returnFocusTo" | "autofocusOnOpen" | "returnFocusAfterClose" | "isModal"
-    >,
-) => {
-    if (!props.isModal) {
-        return <>{props.children}</>;
-    }
-    return (
-        <UiFocusTrap
-            initialFocus={props.initialFocus}
-            returnFocusTo={props.returnFocusTo}
-            autofocusOnOpen={props.autofocusOnOpen}
-            returnFocusOnUnmount={props.returnFocusAfterClose}
-        >
-            {props.children}
-        </UiFocusTrap>
-    );
-};

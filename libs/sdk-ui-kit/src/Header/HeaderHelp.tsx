@@ -7,8 +7,8 @@ import isEmpty from "lodash/isEmpty.js";
 import { Overlay } from "../Overlay/index.js";
 import { HelpMenuDropdownAlignPoints, IAlignPoint } from "../typings/positioning.js";
 import { Button } from "../Button/index.js";
-import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 import { useIdPrefixed } from "../utils/useId.js";
+import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 
 interface IHelpItem {
     key: string;
@@ -130,7 +130,11 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 }}
             >
                 {!disableDropdown ? (
-                    <UiFocusTrap returnFocusTo={helpMenuButtonRef} autofocusOnOpen={true}>
+                    <UiFocusManager
+                        enableFocusTrap
+                        enableAutofocus
+                        enableReturnFocusOnUnmount={{ returnFocusTo: helpMenuButtonRef }}
+                    >
                         <div
                             id={dropdownId}
                             className="gd-dialog gd-dropdown overlay gd-header-help-dropdown"
@@ -139,7 +143,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                         >
                             <div className="gd-list small">{menuItems}</div>
                         </div>
-                    </UiFocusTrap>
+                    </UiFocusManager>
                 ) : null}
             </Overlay>
         ) : (

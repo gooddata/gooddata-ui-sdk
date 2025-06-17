@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
-import { AutofocusOnMount, InvertableSelectVirtualised, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { UiAutofocus, InvertableSelectVirtualised, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { IAttributeElement } from "@gooddata/sdk-model";
 
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
@@ -134,7 +134,7 @@ export const AttributeFilterVirtualisedElementsSelect: React.FC<IAttributeFilter
     }, [onShowFilteredElements, setRefocusKey]);
 
     return (
-        <AutofocusOnMount refocusKey={refocusKey}>
+        <UiAutofocus refocusKey={refocusKey}>
             <InvertableSelectVirtualised<IAttributeElement>
                 className="gd-attribute-filter-elements-select__next"
                 adaptiveWidth
@@ -230,6 +230,6 @@ export const AttributeFilterVirtualisedElementsSelect: React.FC<IAttributeFilter
                     />
                 )}
             />
-        </AutofocusOnMount>
+        </UiAutofocus>
     );
 };

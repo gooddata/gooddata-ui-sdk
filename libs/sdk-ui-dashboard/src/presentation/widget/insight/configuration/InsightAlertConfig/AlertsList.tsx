@@ -3,7 +3,7 @@ import React from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import {
     AddButton,
-    AutofocusOnMount,
+    UiAutofocus,
     SeparatorLine,
     useIdPrefixed,
     useListWithActionsKeyboardNavigation,
@@ -97,7 +97,7 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
             onBack={onGoBack}
         >
             <div className="gd-alerts-list gd-alerts-list--widget">
-                <AutofocusOnMount>
+                <UiAutofocus>
                     <div
                         onKeyDown={onKeyboardNavigation}
                         tabIndex={0}
@@ -134,7 +134,7 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                             </>
                         )}
                     </div>
-                </AutofocusOnMount>
+                </UiAutofocus>
                 {canCreateAutomation ? (
                     <>
                         <SeparatorLine pL={10} pR={10} />

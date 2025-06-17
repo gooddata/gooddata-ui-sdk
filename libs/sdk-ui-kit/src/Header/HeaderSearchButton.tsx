@@ -5,7 +5,7 @@ import { Overlay } from "../Overlay/index.js";
 import { Button } from "../Button/index.js";
 import { useHeaderSearch } from "./headerSearchContext.js";
 import { useIdPrefixed } from "../utils/useId.js";
-import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
+import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 
 export type HeaderSearchProps = React.PropsWithChildren<{
     /**
@@ -69,14 +69,18 @@ export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, titl
                     onClose={toggleOpen}
                     ignoreClicksOnByClass={[".gd-bubble"]}
                 >
-                    <UiFocusTrap returnFocusTo={buttonRef} autofocusOnOpen={true}>
+                    <UiFocusManager
+                        enableFocusTrap
+                        enableAutofocus
+                        enableReturnFocusOnUnmount={{ returnFocusTo: buttonRef }}
+                    >
                         <div
                             id={dropdownId}
                             className="gd-dialog gd-dropdown overlay gd-header-search-dropdown"
                         >
                             {children}
                         </div>
-                    </UiFocusTrap>
+                    </UiFocusManager>
                 </Overlay>
             ) : null}
         </Button>

@@ -3,10 +3,10 @@ import React, { useState, useMemo } from "react";
 import {
     UiMenu,
     IUiMenuItem,
-    UiFocusTrap,
     IUiMenuContext,
     getSelectedMenuId,
     separatorStaticItem,
+    UiFocusManager,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import {
@@ -138,7 +138,7 @@ export const DashboardInsightMenuBody: React.FC<
     };
 
     return (
-        <UiFocusTrap autofocusOnOpen={true} initialFocus={menuId}>
+        <UiFocusManager enableAutofocus={{ initialFocus: menuId }} enableFocusTrap enableReturnFocusOnUnmount>
             <DashboardInsightMenuContainer>
                 <UiMenu<IMenuItemData, IMenuData>
                     className={menuClassName}
@@ -162,7 +162,7 @@ export const DashboardInsightMenuBody: React.FC<
                     }}
                 />
             </DashboardInsightMenuContainer>
-        </UiFocusTrap>
+        </UiFocusManager>
     );
 };
 
