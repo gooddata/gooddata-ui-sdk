@@ -40,6 +40,7 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
     const [feedbackText, setFeedbackText] = useState("");
     const [showFeedbackAnimation, setShowFeedbackAnimation] = useState(false);
     const [animationTriggerElement, setAnimationTriggerElement] = useState<HTMLElement | null>(null);
+    const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
     // Refs for the feedback buttons
     const likeButtonRef = useRef<HTMLButtonElement>(null);
@@ -69,6 +70,11 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
     };
 
     const handleDislikeClick = () => {
+        // Prevent interaction if feedback has already been submitted
+        if (feedbackSubmitted) {
+            return;
+        }
+
         if (message.feedback === "NEGATIVE" && showFeedbackInput) {
             // If already negative and input is showing, hide input but keep negative feedback
             setShowFeedbackInput(false);
@@ -87,9 +93,31 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
         triggerFeedbackAnimation(dislikeButtonRef.current);
     };
 
+    const handleLikeClick = () => {
+        // Prevent interaction if feedback has already been submitted
+        if (feedbackSubmitted) {
+            return;
+        }
+
+        setUserFeedback({
+            assistantMessageId: message.localId,
+            feedback: message.feedback === "POSITIVE" ? "NONE" : "POSITIVE",
+        });
+
+        // Mark feedback as submitted when giving positive feedback
+        if (message.feedback !== "POSITIVE") {
+            setFeedbackSubmitted(true);
+        }
+
+        triggerFeedbackAnimation(likeButtonRef.current);
+    };
+
     const handleFeedbackSubmit = () => {
         // Capture the button position before removing the input
         const triggerElement = sendButtonRef.current;
+
+        // Mark feedback as submitted to prevent further changes
+        setFeedbackSubmitted(true);
 
         // Trigger animation first
         triggerFeedbackAnimation(triggerElement);
@@ -145,6 +173,7 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                             className={cx({
                                 "gd-gen-ai-chat__messages__feedback": true,
                                 "gd-gen-ai-chat__messages__feedback--assigned": message.feedback !== "NONE",
+                                "gd-gen-ai-chat__messages__feedback--disabled": feedbackSubmitted,
                             })}
                         >
                             <Button
@@ -154,13 +183,8 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                                     "gd-gen-ai-chat__messages__feedback__button--positive":
                                         message.feedback === "POSITIVE",
                                 })}
-                                onClick={() => {
-                                    setUserFeedback({
-                                        assistantMessageId: message.localId,
-                                        feedback: message.feedback === "POSITIVE" ? "NONE" : "POSITIVE",
-                                    });
-                                    triggerFeedbackAnimation(likeButtonRef.current);
-                                }}
+                                onClick={handleLikeClick}
+                                disabled={feedbackSubmitted}
                                 accessibilityConfig={{
                                     ariaLabel: intl.formatMessage({ id: "gd.gen-ai.feedback.like" }),
                                 }}
@@ -176,6 +200,7 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                                 })}
                                 type="button"
                                 onClick={handleDislikeClick}
+                                disabled={feedbackSubmitted}
                                 accessibilityConfig={{
                                     ariaLabel: intl.formatMessage({ id: "gd.gen-ai.feedback.dislike" }),
                                 }}

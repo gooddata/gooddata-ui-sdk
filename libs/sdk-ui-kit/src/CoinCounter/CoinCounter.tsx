@@ -102,8 +102,8 @@ export const CoinCounter: React.FC<ICoinCounterProps> = ({
                 <Overlay
                     alignTo={wrapperRef.current}
                     alignPoints={[
-                        { align: "tc bc", offset: { x: 0, y: 8 } },
-                        { align: "bc tc", offset: { x: 0, y: -8 } },
+                        { align: "tc bc", offset: { x: 0, y: -8 } },
+                        { align: "bc tc", offset: { x: 0, y: 8 } },
                         { align: "bl tr", offset: { x: 8, y: 0 } },
                     ]}
                     onClose={handleCloseOverlay}

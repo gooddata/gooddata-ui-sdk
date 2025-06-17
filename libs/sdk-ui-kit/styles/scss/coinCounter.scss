@@ -7,14 +7,14 @@
     gap: 15px;
     padding: 4px 15px;
     background: transparent;
-    border-radius: 16px;
     font-family: inherit;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
     border: none;
 
     &:hover {
-        background: rgba(253, 216, 53, 0.05);
+        opacity: 1;
+        background: rgba(255, 255, 255, 0.3);
     }
 
     &:focus {

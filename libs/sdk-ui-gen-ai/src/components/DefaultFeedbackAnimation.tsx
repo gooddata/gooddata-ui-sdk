@@ -71,7 +71,7 @@ export const DefaultFeedbackAnimation: React.FC<{
         >
             <div
                 style={{
-                    animation: "feedbackSpinClockwise 0.8s ease-in-out",
+                    animation: "feedbackSpinClockwise 1s ease-in-out",
                     color: "#14b2e2",
                     fontSize: "24px",
                     transformOrigin: "center center",
@@ -80,7 +80,7 @@ export const DefaultFeedbackAnimation: React.FC<{
                     justifyContent: "center",
                 }}
             >
-                <Icon.Coin />
+                <Icon.Coin width={28} height={28} />
             </div>
             <style>{`
                 @keyframes feedbackJump {
@@ -90,19 +90,19 @@ export const DefaultFeedbackAnimation: React.FC<{
                     }
                     25% {
                         opacity: 1;
-                        transform: translate(-50%, -50%) scale(1.1) translateY(-30px);
+                        transform: translate(-50%, -50%) scale(1.1) translateY(-50px);
                     }
                     50% {
                         opacity: 1;
-                        transform: translate(-50%, -50%) scale(1.2) translateY(-50px);
+                        transform: translate(-50%, -50%) scale(1.2) translateY(-80px);
                     }
                     75% {
                         opacity: 1;
-                        transform: translate(-50%, -50%) scale(1.1) translateY(-30px);
+                        transform: translate(-50%, -50%) scale(1.1) translateY(-50px);
                     }
                     100% {
                         opacity: 0;
-                        transform: translate(-50%, -50%) scale(0.8) translateY(-70px);
+                        transform: translate(-50%, -50%) scale(0.8) translateY(-100px);
                     }
                 }
                 
