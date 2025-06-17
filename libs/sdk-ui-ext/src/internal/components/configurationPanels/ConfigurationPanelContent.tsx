@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop.js";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
@@ -23,6 +23,7 @@ import {
     isInsightSupportedForScheduledExports,
 } from "../pluggableVisualizations/alerts.js";
 import AdvancedSection from "../configurationControls/advanced/AdvancedSection.js";
+import { SectionName } from "./sectionName.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;
@@ -63,6 +64,11 @@ export default abstract class ConfigurationPanelContent<
 
     protected supportedPropertiesList: string[];
 
+    constructor(props: T) {
+        super(props);
+        this.isControlDisabled = this.isControlDisabled.bind(this);
+    }
+
     public render() {
         return (
             <div key={`config-${this.props.type}`}>
@@ -75,7 +81,11 @@ export default abstract class ConfigurationPanelContent<
 
     protected abstract renderConfigurationPanel(): React.ReactNode;
 
-    protected isControlDisabled(): boolean {
+    /**
+     * Optionally pass a sectionName to specialize disabling logic for specific sections.
+     * Default logic disables if no measures, error, or loading.
+     */
+    protected isControlDisabled(_sectionName?: SectionName): boolean {
         const { insight, isError, isLoading } = this.props;
         return !insight || !insightHasMeasures(insight) || isError || isLoading;
     }
@@ -137,7 +147,7 @@ export default abstract class ConfigurationPanelContent<
 
         return supportsAlertsConfiguration || panelConfig.supportsAttributeHierarchies ? (
             <InteractionsSection
-                controlsDisabled={this.isControlDisabled()}
+                areControlsDisabledGetter={this.isControlDisabled}
                 properties={properties}
                 propertiesMeta={propertiesMeta}
                 pushData={pushData}
