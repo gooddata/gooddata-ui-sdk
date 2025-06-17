@@ -767,5 +767,8 @@
     "dialogs.automation.applyCurrentFilters.confirm.submit": "Edytuj",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Ostrzeżenie</b>: Niektóre filtry użyte podczas tworzenia tego alertu nie są już dostępne lub ważne. Edytowanie zastosuje bieżące filtry pulpitu nawigacyjnego.",
     "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Ostrzeżenie</b>: Niektóre filtry użyte podczas tworzenia tego harmonogramu nie są już dostępne lub ważne. Edytowanie zastosuje bieżące filtry pulpitu nawigacyjnego.",
-    "options.menu.unsupported.xlsxOldWidget": "Nie można wyeksportować. Proszę ponownie zapisać pulpit nawigacyjny lub skontaktować się z administratorem."
+    "options.menu.unsupported.xlsxOldWidget": "Nie można wyeksportować. Proszę ponownie zapisać pulpit nawigacyjny lub skontaktować się z administratorem.",
+    "filterBar.label": "Filtry",
+    "controlButtons.asTable": "Pokaż jako tabelę",
+    "controlButtons.asOriginal": "Pokaż oryginalną wizualizację"
 }

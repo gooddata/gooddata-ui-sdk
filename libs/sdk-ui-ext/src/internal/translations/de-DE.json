@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Ausgelöst durch",
     "notifications.panel.error.learnMore": "Weitere Informationen",
     "notifications.panel.error.traceId": "Trace-ID",
-    "notifications.panel.error.alert.title": "Der Alarm konnte nicht verarbeitet werden.",
+    "notifications.panel.error.message": "Der Alarm konnte nicht verarbeitet werden.",
     "notifications.panel.button.label": "Benachrichtigungen",
     "notifications.panel.notifications.list.label": "Benachrichtigungen",
     "notifications.panel.alert.notification.type.label": "Benachrichtigung",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>Download-Link abgelaufen</strong> – warten Sie auf den nächsten Export oder erstellen Sie manuell einen.",
     "notifications.panel.dashboardLinkHint": "Öffnen Sie das für diesen Export verwendete Dashboard",
     "notifications.panel.dashboardLink": "Aus {dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "Exportierte Dateien herunterladen"
+    "notifications.panel.downloadFilesHint": "Exportierte Dateien herunterladen",
+    "notifications.panel.error.alert.title": "Der Alarm konnte nicht verarbeitet werden.",
+    "notifications.panel.error.schedule.title": "Geplanter Export fehlgeschlagen.",
+    "notifications.panel.error.limitExceeded.message": "Ihr Export konnte nicht gesendet werden, da Ihre Organisation das Limit für die maximale Anzahl täglicher Warnungen und geplanter Exporte erreicht hat. Bitte wenden Sie sich an Ihren Administrator."
 }

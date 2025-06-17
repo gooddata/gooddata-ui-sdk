@@ -41,12 +41,18 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+välilyönti</code> tai <code>Ctrl+I ehdotuksia</code> varten",
     "gd.gen-ai.button.save_and_explore": "Tallenna ja avaa",
     "gd.gen-ai.save-dialog.description.explore": "Tämän visualisoinnin avaamiseksi se on tallennettava ensin. Voit antaa sille nimen alla.",
-    "gd.gen-ai.visualisation.menu": "Visualisointivalikko",
+    "gd.gen-ai.visualisation.menu": "{name}, lisää toimintoja",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Tallenna visualisointi",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Tallenna uutena…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Avaa kohdassa Analysoi",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Kopioi visualisointilinkki",
     "gd.gen-ai.message.label.user": "Käyttäjän syöttö",
+    "gd.gen-ai.global-no-llm": "LLM-palveluntarjoajaa ei ole määritetty",
+    "gd.gen-ai.global-no-llm.description": "Määritä palveluntarjoaja ottamaan chatbotti käyttöön.",
+    "gd.gen-ai.global-no-llm.button-create-llm": "Määritä palveluntarjoaja",
     "gd.gen-ai.permission-error": "Riittämättömät käyttöoikeudet",
-    "gd.gen-ai.permission-error.description": "Valitettavasti sinulla ei ole pääsyä chatbottiin. Pyydä ylläpitäjää myöntämään sinulle käyttöoikeudet."
+    "gd.gen-ai.permission-error.description": "Sinulla ei ole pääsyä chatbottiin. Ota yhteyttä järjestelmänvalvojaan pyytääksesi käyttöoikeutta.",
+    "gd.gen-ai.feedback.like": "Merkitse tämä viesti hyödylliseksi",
+    "gd.gen-ai.feedback.dislike": "Merkitse tämä viesti tarpeettomaksi",
+    "gd.gen-ai.dialog.label": "Tekoälyavustajan chatbot-valintaikkuna"
 }

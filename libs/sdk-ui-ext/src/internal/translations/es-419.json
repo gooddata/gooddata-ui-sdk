@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Activado por",
     "notifications.panel.error.learnMore": "Más información",
     "notifications.panel.error.traceId": "ID de rastreo",
-    "notifications.panel.error.alert.title": "No se ha podido procesar la alerta.",
+    "notifications.panel.error.message": "No se ha podido procesar la alerta.",
     "notifications.panel.button.label": "Notificaciones",
     "notifications.panel.notifications.list.label": "Notificaciones",
     "notifications.panel.alert.notification.type.label": "Notificación de alerta",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>Enlace de descarga expirado</strong> — espere a la próxima exportación o cree una manualmente.",
     "notifications.panel.dashboardLinkHint": "Abra el cuadro de mandos utilizado para esta exportación",
     "notifications.panel.dashboardLink": "De {dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "Descargar los archivos exportados"
+    "notifications.panel.downloadFilesHint": "Descargar los archivos exportados",
+    "notifications.panel.error.alert.title": "No se ha podido procesar la alerta.",
+    "notifications.panel.error.schedule.title": "La exportación programada ha fallado.",
+    "notifications.panel.error.limitExceeded.message": "No se ha podido enviar su exportación porque su organización ha alcanzado el límite de número máximo de alertas diarias y exportaciones programadas. Póngase en contacto con su administrador."
 }

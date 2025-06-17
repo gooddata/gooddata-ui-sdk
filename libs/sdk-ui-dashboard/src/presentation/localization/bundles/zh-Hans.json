@@ -766,5 +766,8 @@
     "dialogs.automation.applyCurrentFilters.confirm.submit": "编辑",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>警告</b>：创建此警报时使用的某些筛选器不再可用或有效。编辑操作将应用当前的仪表板筛选器。",
     "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>警告</b>：创建此计划时使用的某些筛选器不再可用或有效。编辑将应用当前的仪表板筛选器。",
-    "options.menu.unsupported.xlsxOldWidget": "无法导出。请重新保存仪表板或联系您的管理员。"
+    "options.menu.unsupported.xlsxOldWidget": "无法导出。请重新保存仪表板或联系您的管理员。",
+    "filterBar.label": "筛选器",
+    "controlButtons.asTable": "以表格形式显示",
+    "controlButtons.asOriginal": "显示原始可视化"
 }

@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Wyzwolone dla",
     "notifications.panel.error.learnMore": "Dowiedz się więcej",
     "notifications.panel.error.traceId": "ID śledzenia",
-    "notifications.panel.error.alert.title": "Alert nie mógł zostać przetworzony.",
+    "notifications.panel.error.message": "Alert nie mógł zostać przetworzony.",
     "notifications.panel.button.label": "Powiadomienia",
     "notifications.panel.notifications.list.label": "Powiadomienia",
     "notifications.panel.alert.notification.type.label": "Powiadomienie o alercie",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>Link do pobrania wygasł</strong> — poczekaj na następny eksport lub utwórz go ręcznie.",
     "notifications.panel.dashboardLinkHint": "Otwórz pulpit nawigacyjny używany do tego eksportu",
     "notifications.panel.dashboardLink": "Z{dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "Pobierz wyeksportowane pliki"
+    "notifications.panel.downloadFilesHint": "Pobierz wyeksportowane pliki",
+    "notifications.panel.error.alert.title": "Alert nie mógł zostać przetworzony.",
+    "notifications.panel.error.schedule.title": "Eksport zaplanowany nie powiódł się.",
+    "notifications.panel.error.limitExceeded.message": "Nie można wysłać eksportu, ponieważ Twoja organizacja osiągnęła limit maksymalnej liczby dziennych alertów i zaplanowanych eksportów. Proszę skontaktować się z administratorem."
 }

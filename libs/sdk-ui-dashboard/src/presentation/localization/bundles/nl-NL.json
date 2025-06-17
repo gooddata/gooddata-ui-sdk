@@ -766,5 +766,8 @@
     "dialogs.automation.applyCurrentFilters.confirm.submit": "Bewerken",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Waarschuwing</b>: Sommige filters die werden gebruikt toen deze waarschuwing werd aangemaakt, zijn niet langer beschikbaar of geldig. Bewerken zal de huidige dashboard filters toepassen.",
     "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Waarschuwing</b>: Sommige filters die werden gebruikt toen deze agenda werd gemaakt, zijn niet langer beschikbaar of geldig. Bewerken zal de huidige dashboard filters toepassen.",
-    "options.menu.unsupported.xlsxOldWidget": "Kan niet exporteren. Sla het dashboard opnieuw op of neem contact op met uw beheerder."
+    "options.menu.unsupported.xlsxOldWidget": "Kan niet exporteren. Sla het dashboard opnieuw op of neem contact op met uw beheerder.",
+    "filterBar.label": "Filters",
+    "controlButtons.asTable": "Als tabel weergeven",
+    "controlButtons.asOriginal": "Toon originele visualisatie"
 }

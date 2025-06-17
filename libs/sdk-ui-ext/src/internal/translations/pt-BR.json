@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Acionado para",
     "notifications.panel.error.learnMore": "Saber mais",
     "notifications.panel.error.traceId": "ID de rastreamento",
-    "notifications.panel.error.alert.title": "Não foi possível processar o alerta.",
+    "notifications.panel.error.message": "Não foi possível processar o alerta.",
     "notifications.panel.button.label": "Notificações",
     "notifications.panel.notifications.list.label": "Notificações",
     "notifications.panel.alert.notification.type.label": "Notificação de alerta",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>Link para download expirado</strong> — aguarde a próxima exportação ou crie uma manualmente.",
     "notifications.panel.dashboardLinkHint": "Abra o painel usado para esta exportação",
     "notifications.panel.dashboardLink": "De {dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "Baixe os arquivos exportados"
+    "notifications.panel.downloadFilesHint": "Baixe os arquivos exportados",
+    "notifications.panel.error.alert.title": "Não foi possível processar o alerta.",
+    "notifications.panel.error.schedule.title": "Falha na exportação agendada.",
+    "notifications.panel.error.limitExceeded.message": "Sua exportação não pôde ser enviada, pois sua organização atingiu o limite máximo de alertas diários e exportações agendadas. Entre em contato com seu administrador."
 }

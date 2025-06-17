@@ -766,5 +766,8 @@
     "dialogs.automation.applyCurrentFilters.confirm.submit": "編輯",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>警告</b>：創建此警報時使用的某些篩選器不再可用或無效。 編輯將應用當前嘅控制面板過濾器。",
     "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>警告</b>：創建此計劃時使用的某些篩選器不再可用或無效。 編輯將應用當前嘅控制面板過濾器。",
-    "options.menu.unsupported.xlsxOldWidget": "無法匯出。 請重新儲存儀錶板或聯繫您的管理員。"
+    "options.menu.unsupported.xlsxOldWidget": "無法匯出。 請重新儲存儀錶板或聯繫您的管理員。",
+    "filterBar.label": "篩選器",
+    "controlButtons.asTable": "顯示為表",
+    "controlButtons.asOriginal": "顯示原始可視化"
 }

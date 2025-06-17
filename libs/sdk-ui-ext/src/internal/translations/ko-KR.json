@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "트리거됨",
     "notifications.panel.error.learnMore": "자세히 알아보기",
     "notifications.panel.error.traceId": "추적 ID",
-    "notifications.panel.error.alert.title": "경고를 처리할 수 없습니다.",
+    "notifications.panel.error.message": "경고를 처리할 수 없습니다.",
     "notifications.panel.button.label": "알림",
     "notifications.panel.notifications.list.label": "알림",
     "notifications.panel.alert.notification.type.label": "경고 통지",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>다운로드 링크가 만료되었습니다</strong> — 다음 내보내기를 기다리거나 수동으로 생성하세요.",
     "notifications.panel.dashboardLinkHint": "이 내보내기에 사용된 대시보드를 열기",
     "notifications.panel.dashboardLink": "에서 {dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "내보낸 파일 다운로드"
+    "notifications.panel.downloadFilesHint": "내보낸 파일 다운로드",
+    "notifications.panel.error.alert.title": "경고를 처리할 수 없습니다.",
+    "notifications.panel.error.schedule.title": "예약된 내보내기 실패",
+    "notifications.panel.error.limitExceeded.message": "내보내기를 보낼 수 없습니다. 조직이 일일 알림 및 예약된 내보내기의 최대 수에 도달했습니다. 관리자에게 문의하십시오."
 }

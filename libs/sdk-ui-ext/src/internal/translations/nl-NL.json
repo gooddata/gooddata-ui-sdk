@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Geactiveerd voor",
     "notifications.panel.error.learnMore": "Meer informatie",
     "notifications.panel.error.traceId": "Traceer-ID",
-    "notifications.panel.error.alert.title": "De waarschuwing kon niet worden verwerkt.",
+    "notifications.panel.error.message": "De waarschuwing kon niet worden verwerkt.",
     "notifications.panel.button.label": "Meldingen",
     "notifications.panel.notifications.list.label": "Meldingen",
     "notifications.panel.alert.notification.type.label": "Waarschuwingsmelding",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>Downloadlink verlopen</strong> — wacht op de volgende export of maak er handmatig een.",
     "notifications.panel.dashboardLinkHint": "Open het dashboard dat voor deze export wordt gebruikt",
     "notifications.panel.dashboardLink": "Van{dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "De geëxporteerde bestanden downloaden"
+    "notifications.panel.downloadFilesHint": "De geëxporteerde bestanden downloaden",
+    "notifications.panel.error.alert.title": "De waarschuwing kon niet worden verwerkt.",
+    "notifications.panel.error.schedule.title": "Geplande export mislukt.",
+    "notifications.panel.error.limitExceeded.message": "Uw export kon niet worden verzonden omdat uw organisatie de limiet voor het maximum aantal dagelijkse waarschuwingen en geplande exports heeft bereikt. Neem contact op met uw beheerder."
 }

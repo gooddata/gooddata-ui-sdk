@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "トリガー済み：",
     "notifications.panel.error.learnMore": "詳細",
     "notifications.panel.error.traceId": "トレースID",
-    "notifications.panel.error.alert.title": "警告を処理できませんでした。",
+    "notifications.panel.error.message": "警告を処理できませんでした。",
     "notifications.panel.button.label": "お知らせ",
     "notifications.panel.notifications.list.label": "お知らせ",
     "notifications.panel.alert.notification.type.label": "アラート通知",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>ダウンロードリンクは期限切れ</strong> - 次のエクスポートを待つか、手動で作成してください。",
     "notifications.panel.dashboardLinkHint": "このエクスポートに使用するダッシュボードを開く",
     "notifications.panel.dashboardLink": "より{dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "エクスポートしたファイルをダウンロードする"
+    "notifications.panel.downloadFilesHint": "エクスポートしたファイルをダウンロードする",
+    "notifications.panel.error.alert.title": "警告を処理できませんでした。",
+    "notifications.panel.error.schedule.title": "エクスポートに失敗しました。",
+    "notifications.panel.error.limitExceeded.message": "あなたの組織は、毎日のアラートおよびスケジュールされたエクスポートの最大数の上限に達しているため、エクスポートを送信できませんでした。管理者に連絡してください。"
 }

@@ -767,5 +767,8 @@
     "dialogs.automation.applyCurrentFilters.confirm.submit": "Düzenle",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Uyarı</b>: Bu uyarı oluşturulduğunda kullanılan bazı filtreler artık mevcut değil veya geçerli değil. Düzenleme, mevcut gösterge paneli filtrelerini uygulayacaktır.",
     "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Uyarı</b>: Bu program oluşturulurken kullanılan bazı filtreler artık mevcut değil veya geçerli değil. Düzenleme, mevcut gösterge paneli filtrelerini uygulayacaktır.",
-    "options.menu.unsupported.xlsxOldWidget": "Dışa aktarılamıyor. Lütfen panoyu yeniden kaydedin veya yöneticinizle iletişime geçin."
+    "options.menu.unsupported.xlsxOldWidget": "Dışa aktarılamıyor. Lütfen panoyu yeniden kaydedin veya yöneticinizle iletişime geçin.",
+    "filterBar.label": "Filtreler",
+    "controlButtons.asTable": "Tablo olarak göster",
+    "controlButtons.asOriginal": "Orijinal görselleştirmeyi göster"
 }

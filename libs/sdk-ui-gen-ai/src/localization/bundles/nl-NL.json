@@ -41,12 +41,18 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Spatie</code> of <code>Ctrl+I</code> voor suggesties",
     "gd.gen-ai.button.save_and_explore": "Opslaan en openen",
     "gd.gen-ai.save-dialog.description.explore": "Om deze visualisatie te openen, moet deze eerst worden opgeslagen. Je kunt het hieronder een naam geven.",
-    "gd.gen-ai.visualisation.menu": "Visualisatiemenu",
+    "gd.gen-ai.visualisation.menu": "{name}, meer acties",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Visualisatie opslaan",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Opslaan als nieuw…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Openen in Analyseren",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Link naar visualisatie kopiëren",
     "gd.gen-ai.message.label.user": "Invoer gebruiker",
-    "gd.gen-ai.permission-error": "Onvoldoende rechten",
-    "gd.gen-ai.permission-error.description": "Helaas heb je geen toegang tot de chatbot. Vraag je beheerder om je toestemming te geven."
+    "gd.gen-ai.global-no-llm": "Geen LLM-provider geconfigureerd",
+    "gd.gen-ai.global-no-llm.description": "Configureer een provider om de chatbot in te schakelen.",
+    "gd.gen-ai.global-no-llm.button-create-llm": "Configureer provider",
+    "gd.gen-ai.permission-error": "Onvoldoende machtigingen",
+    "gd.gen-ai.permission-error.description": "Je hebt geen toegang tot de chatbot. Neem contact op met je beheerder om toegang aan te vragen.",
+    "gd.gen-ai.feedback.like": "Markeer dit bericht als nuttig",
+    "gd.gen-ai.feedback.dislike": "Markeer dit bericht als niet nuttig",
+    "gd.gen-ai.dialog.label": "AI assistent chatbot dialoog"
 }

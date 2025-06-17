@@ -41,12 +41,18 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Space</code>或<code>Ctrl+I</code>提供建議",
     "gd.gen-ai.button.save_and_explore": "保存並打開",
     "gd.gen-ai.save-dialog.description.explore": "要打開此可視化，需要保存它先。 你可以喺下面為其命名。",
-    "gd.gen-ai.visualisation.menu": "可視化餐牌",
+    "gd.gen-ai.visualisation.menu": "{name}、更多作",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "保存可視化效果",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "另存為新…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "在Analyze中打開",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "複製可視化效果link",
     "gd.gen-ai.message.label.user": "用戶輸入",
+    "gd.gen-ai.global-no-llm": "未配置LLM提供程序",
+    "gd.gen-ai.global-no-llm.description": "配置提供商以啟用聊天機械人。",
+    "gd.gen-ai.global-no-llm.button-create-llm": "配置提供程序",
     "gd.gen-ai.permission-error": "權限不足",
-    "gd.gen-ai.permission-error.description": "抱歉，您無權使用聊天機械人。如需權限，請聯絡系統管理員。"
+    "gd.gen-ai.permission-error.description": "你無權訪問聊天機械人。 請與您的管理員聯繫以請求訪問權限。",
+    "gd.gen-ai.feedback.like": "將此消息標記為有用",
+    "gd.gen-ai.feedback.dislike": "將此消息標記為無用",
+    "gd.gen-ai.dialog.label": "AI助手傾偈機械人對話"
 }

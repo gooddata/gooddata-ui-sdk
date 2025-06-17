@@ -41,12 +41,18 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Espacio</code> o <code>Ctrl+I</code> para sugerencias",
     "gd.gen-ai.button.save_and_explore": "Guardar y abrir",
     "gd.gen-ai.save-dialog.description.explore": "Para abrir esta visualización, primero hay que guardarla. A continuación puede darle un nombre.",
-    "gd.gen-ai.visualisation.menu": "Menú Visualización",
+    "gd.gen-ai.visualisation.menu": "{name}, más acciones",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Guardar visualización",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Guardar como nuevo…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Abrir en Analizar",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Copiar enlace de visualización",
     "gd.gen-ai.message.label.user": "Entrada del usuario",
+    "gd.gen-ai.global-no-llm": "No se ha configurado ningún proveedor de LLM",
+    "gd.gen-ai.global-no-llm.description": "Configure un proveedor para habilitar el chatbot.",
+    "gd.gen-ai.global-no-llm.button-create-llm": "Configurar proveedor",
     "gd.gen-ai.permission-error": "Permisos insuficientes",
-    "gd.gen-ai.permission-error.description": "Lo sentimos, no tienes acceso al chatbot. Solicita a tu administrador que te otorgue permisos."
+    "gd.gen-ai.permission-error.description": "No tienes acceso al chatbot. Ponte en contacto con tu administrador para solicitar acceso.",
+    "gd.gen-ai.feedback.like": "Marcar este mensaje como útil",
+    "gd.gen-ai.feedback.dislike": "Marcar este mensaje como no útil",
+    "gd.gen-ai.dialog.label": "Asistente de diálogo AI chatbot"
 }

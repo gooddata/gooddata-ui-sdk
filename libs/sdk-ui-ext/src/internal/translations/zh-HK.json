@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "觸發條件",
     "notifications.panel.error.learnMore": "瞭解更多信息",
     "notifications.panel.error.traceId": "跟蹤ID",
-    "notifications.panel.error.alert.title": "無法處理警報。",
+    "notifications.panel.error.message": "無法處理警示。",
     "notifications.panel.button.label": "通知",
     "notifications.panel.notifications.list.label": "通知",
     "notifications.panel.alert.notification.type.label": "警示通知",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>下載連結已過期</strong>-等待下一次導出或手動創建一個。",
     "notifications.panel.dashboardLinkHint": "打開用于此導出嘅儀錶板",
     "notifications.panel.dashboardLink": "從 {dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "下載導出嘅文件"
+    "notifications.panel.downloadFilesHint": "下載導出嘅文件",
+    "notifications.panel.error.alert.title": "無法處理警示。",
+    "notifications.panel.error.schedule.title": "計劃導出失敗。",
+    "notifications.panel.error.limitExceeded.message": "無法發送您的導出，因為您的組織已達到每日警報和計劃導出的最大數量限制。 請與您的管理員聯繫。"
 }

@@ -41,12 +41,18 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Space</code> または<code>Ctrl+I</code> 提案のために",
     "gd.gen-ai.button.save_and_explore": "保存して開く",
     "gd.gen-ai.save-dialog.description.explore": "この可視化を開くには、まず保存する必要があります。以下に名前を付けることができます。",
-    "gd.gen-ai.visualisation.menu": "ビジュアライゼーション・メニュー",
+    "gd.gen-ai.visualisation.menu": "{name}より多くのアクション",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "視覚化の保存",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "新規保存…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "アナライズで開く",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "可視化リンクをコピーする",
     "gd.gen-ai.message.label.user": "ユーザー入力",
-    "gd.gen-ai.permission-error": "権限が不十分です",
-    "gd.gen-ai.permission-error.description": "申し訳ありませんが、チャットボットへのアクセス権がありません。管理者に権限の付与を依頼してください。"
+    "gd.gen-ai.global-no-llm": "LLMプロバイダーが設定されていない",
+    "gd.gen-ai.global-no-llm.description": "チャットボットを有効にするプロバイダーを設定します。",
+    "gd.gen-ai.global-no-llm.button-create-llm": "プロバイダーの設定",
+    "gd.gen-ai.permission-error": "権限不足",
+    "gd.gen-ai.permission-error.description": "チャットボットへのアクセス権がありません。管理者に連絡して、アクセスをリクエストしてください。",
+    "gd.gen-ai.feedback.like": "このメッセージを役に立ったとマークする",
+    "gd.gen-ai.feedback.dislike": "このメッセージを役に立たないとマークする",
+    "gd.gen-ai.dialog.label": "AIアシスタント・チャットボット・ダイアログ"
 }
