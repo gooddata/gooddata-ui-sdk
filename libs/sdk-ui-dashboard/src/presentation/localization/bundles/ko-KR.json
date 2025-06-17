@@ -767,5 +767,8 @@
     "dialogs.automation.applyCurrentFilters.confirm.submit": "편집",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>주의</b> : 이 경고가 생성될 때 사용된 일부 필터는 더 이상 사용할 수 없거나 유효하지 않습니다. 수정하면 현재 대시보드 필터가 적용됩니다.",
     "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>주의</b>: 이 일정이 생성될 때 사용된 일부 필터가 더 이상 사용 가능하거나 유효하지 않습니다. 편집 시 현재 대시보드 필터가 적용됩니다.",
-    "options.menu.unsupported.xlsxOldWidget": "내보낼 수 없습니다. 대시보드를 다시 저장하거나 관리자에게 문의하세요."
+    "options.menu.unsupported.xlsxOldWidget": "내보낼 수 없습니다. 대시보드를 다시 저장하거나 관리자에게 문의하세요.",
+    "filterBar.label": "필터(들)",
+    "controlButtons.asTable": "표로 표시",
+    "controlButtons.asOriginal": "원본 시각화 보기"
 }

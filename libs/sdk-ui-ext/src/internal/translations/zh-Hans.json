@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "触发对象：",
     "notifications.panel.error.learnMore": "了解更多",
     "notifications.panel.error.traceId": "轨迹 ID",
-    "notifications.panel.error.alert.title": "无法处理该警报。",
+    "notifications.panel.error.message": "无法处理该警报。",
     "notifications.panel.button.label": "通知",
     "notifications.panel.notifications.list.label": "通知",
     "notifications.panel.alert.notification.type.label": "警报通知",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>下载链接已过期</strong> — 等待下一次导出或手动创建。",
     "notifications.panel.dashboardLinkHint": "打开用于此导出的仪表板",
     "notifications.panel.dashboardLink": "从{dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "下载导出的文件"
+    "notifications.panel.downloadFilesHint": "下载导出的文件",
+    "notifications.panel.error.alert.title": "无法处理该警报。",
+    "notifications.panel.error.schedule.title": "预定的导出失败。",
+    "notifications.panel.error.limitExceeded.message": "您的导出文件无法发送，因为您的组织已达到每日警报和计划导出的最大数量限制。请联系您的管理员。"
 }

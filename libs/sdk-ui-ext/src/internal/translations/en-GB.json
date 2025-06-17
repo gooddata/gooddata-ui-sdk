@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Triggered for",
     "notifications.panel.error.learnMore": "Learn more",
     "notifications.panel.error.traceId": "Trace ID",
-    "notifications.panel.error.alert.title": "The alert could not be processed.",
+    "notifications.panel.error.message": "The alert could not be processed.",
     "notifications.panel.button.label": "Notifications",
     "notifications.panel.notifications.list.label": "Notifications",
     "notifications.panel.alert.notification.type.label": "Alert notification",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>Download link expired</strong> — please wait for the next export or create one manually.",
     "notifications.panel.dashboardLinkHint": "Open the dashboard utilised for this export",
     "notifications.panel.dashboardLink": "From {dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "Download the exported files"
+    "notifications.panel.downloadFilesHint": "Download the exported files",
+    "notifications.panel.error.alert.title": "The alert could not be processed.",
+    "notifications.panel.error.schedule.title": "Scheduled export unsuccessful",
+    "notifications.panel.error.limitExceeded.message": "Your export could not be sent as your organisation has reached the limit for the maximum number of daily alerts and scheduled exports. Please contact your administrator."
 }

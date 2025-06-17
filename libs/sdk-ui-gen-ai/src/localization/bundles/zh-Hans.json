@@ -41,12 +41,18 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+空格键</code> 或者<code>Ctrl+I</code> 寻求建议",
     "gd.gen-ai.button.save_and_explore": "保存并打开",
     "gd.gen-ai.save-dialog.description.explore": "要打开此可视化，需要先保存。您可以在下面为其命名。",
-    "gd.gen-ai.visualisation.menu": "可视化菜单",
+    "gd.gen-ai.visualisation.menu": "{name}、更多操作",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "保存可视化",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "另存为新…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "在分析中打开",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "复制可视化链接",
     "gd.gen-ai.message.label.user": "用户输入",
+    "gd.gen-ai.global-no-llm": "未配置 LLM 提供程序",
+    "gd.gen-ai.global-no-llm.description": "配置提供商以启用聊天机器人。",
+    "gd.gen-ai.global-no-llm.button-create-llm": "配置提供程序",
     "gd.gen-ai.permission-error": "权限不足",
-    "gd.gen-ai.permission-error.description": "抱歉，您无权访问聊天机器人。请咨询管理员授予您权限。"
+    "gd.gen-ai.permission-error.description": "您无权访问聊天机器人。请联系您的管理员申请访问权限。",
+    "gd.gen-ai.feedback.like": "将此消息标记为有用",
+    "gd.gen-ai.feedback.dislike": "将此消息标记为无帮助",
+    "gd.gen-ai.dialog.label": "AI助手聊天机器人对话"
 }

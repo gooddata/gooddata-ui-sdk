@@ -766,5 +766,8 @@
     "dialogs.automation.applyCurrentFilters.confirm.submit": "Modifier",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Avertissement</b>: Certains filtres utilisés lors de la création de cette alerte ne sont plus disponibles ou valides. La modification appliquera les filtres du tableau de bord actuel.",
     "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Avertissement</b>: Certains filtres utilisés lors de la création de cette programmation ne sont plus disponibles ou valides. La modification appliquera les filtres du tableau de bord actuel.",
-    "options.menu.unsupported.xlsxOldWidget": "Impossible d’exporter. Veuillez réenregistrer le tableau de bord ou contacter votre administrateur."
+    "options.menu.unsupported.xlsxOldWidget": "Impossible d’exporter. Veuillez réenregistrer le tableau de bord ou contacter votre administrateur.",
+    "filterBar.label": "Filtres",
+    "controlButtons.asTable": "Afficher sous forme de tableau",
+    "controlButtons.asOriginal": "Afficher la visualisation originale"
 }

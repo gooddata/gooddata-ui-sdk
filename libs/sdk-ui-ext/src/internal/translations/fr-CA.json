@@ -390,10 +390,10 @@
     "notifications.panel.triggers.dialog.title": "Déclenché pour",
     "notifications.panel.error.learnMore": "En savoir plus",
     "notifications.panel.error.traceId": "ID de la trace",
-    "notifications.panel.error.alert.title": "L'alerte n'a pas pu être traitée.",
+    "notifications.panel.error.message": "L’alerte n’a pas pu être traitée.",
     "notifications.panel.button.label": "Notifications",
     "notifications.panel.notifications.list.label": "Notifications",
-    "notifications.panel.alert.notification.type.label": "Notification d'alerte",
+    "notifications.panel.alert.notification.type.label": "Notification d’alerte",
     "properties.rotation.45": "45°",
     "notifications.panel.triggers.dialog.truncatedValues": "…et {count} de plus",
     "notifications.panel.download": "Télécharger",
@@ -401,6 +401,9 @@
     "notifications.panel.linkHasExpired": "Le lien a expiré",
     "notifications.panel.toast.warning.filesExpired": "<strong>Lien de téléchargement expiré</strong> — attendez la prochaine exportation ou créez-en une manuellement.",
     "notifications.panel.dashboardLinkHint": "Ouvrir le tableau de bord utilisé pour cette exportation",
-    "notifications.panel.dashboardLink": "Depuis {dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "Télécharger les fichiers exportés"
+    "notifications.panel.dashboardLink": "Depuis dashboardTitle}",
+    "notifications.panel.downloadFilesHint": "Télécharger les fichiers exportés",
+    "notifications.panel.error.alert.title": "L’alerte n’a pas pu être traitée.",
+    "notifications.panel.error.schedule.title": "L'exportation programmée a échoué.",
+    "notifications.panel.error.limitExceeded.message": "Votre exportation n'a pas pu être envoyée, car votre organisation a atteint la limite du nombre maximum d'alertes quotidiennes et d'exportations programmées. Veuillez contacter votre administrateur."
 }

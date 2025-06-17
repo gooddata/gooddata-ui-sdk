@@ -41,12 +41,18 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Spacja</code> lub <code>Ctrl+I</code> dla sugestii",
     "gd.gen-ai.button.save_and_explore": "Zapisz i Otwórz",
     "gd.gen-ai.save-dialog.description.explore": "Aby otworzyć tę wizualizację, najpierw musi zostać zapisana. Możesz nadać jej nazwę poniżej.",
-    "gd.gen-ai.visualisation.menu": "Menu wizualizacji",
+    "gd.gen-ai.visualisation.menu": "{name}, więcej akcji",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Zapisz wizualizację",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Zapisz jako nowy…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Otwórz w Analyze",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Skopiuj link wizualizacji",
     "gd.gen-ai.message.label.user": "Dane wejściowe użytkownika",
+    "gd.gen-ai.global-no-llm": "Nie skonfigurowano dostawcy LLM",
+    "gd.gen-ai.global-no-llm.description": "Skonfiguruj dostawcę, aby włączyć chatbota.",
+    "gd.gen-ai.global-no-llm.button-create-llm": "Skonfiguruj dostawcę",
     "gd.gen-ai.permission-error": "Niewystarczające uprawnienia",
-    "gd.gen-ai.permission-error.description": "Przepraszamy, nie masz dostępu do chatbota. Poproś administratora o przyznanie uprawnień."
+    "gd.gen-ai.permission-error.description": "Nie masz dostępu do chatbota. Skontaktuj się z administratorem, aby uzyskać dostęp.",
+    "gd.gen-ai.feedback.like": "Oznacz tę wiadomość jako pomocną",
+    "gd.gen-ai.feedback.dislike": "Oznacz tę wiadomość jako nieprzydatną",
+    "gd.gen-ai.dialog.label": "Dialog czatu asystenta AI"
 }

@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Laukaistu kohteelle",
     "notifications.panel.error.learnMore": "Lue lisää",
     "notifications.panel.error.traceId": "Jäljitystunnus",
-    "notifications.panel.error.alert.title": "Hälytystä ei voitu käsitellä.",
+    "notifications.panel.error.message": "Hälytystä ei voitu käsitellä.",
     "notifications.panel.button.label": "Ilmoitukset",
     "notifications.panel.notifications.list.label": "Ilmoitukset",
     "notifications.panel.alert.notification.type.label": "Hälytysilmoitus",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>Latauslinkki vanhentunut</strong> — odota seuraavaa vientiä tai luo se manuaalisesti.",
     "notifications.panel.dashboardLinkHint": "Avaa tähän vientiin käytetty dashboard",
     "notifications.panel.dashboardLink": "Alkaen {dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "Lataa viedyt tiedostot"
+    "notifications.panel.downloadFilesHint": "Lataa viedyt tiedostot",
+    "notifications.panel.error.alert.title": "Hälytystä ei voitu käsitellä.",
+    "notifications.panel.error.schedule.title": "Ajoitettu vienti epäonnistui.",
+    "notifications.panel.error.limitExceeded.message": "Vientiäsi ei voitu lähettää, koska organisaatiosi on saavuttanut päivittäisten hälytysten ja ajoitettujen vientien enimmäismäärän rajan. Ota yhteyttä järjestelmänvalvojaan."
 }

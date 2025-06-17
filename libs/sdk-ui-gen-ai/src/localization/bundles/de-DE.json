@@ -41,12 +41,18 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Strg+Leertaste</code> oder <code>Strg+I</code> für Vorschläge",
     "gd.gen-ai.button.save_and_explore": "Speichern & Öffnen",
     "gd.gen-ai.save-dialog.description.explore": "Um diese Visualisierung zu öffnen, muss sie zuerst gespeichert werden. Sie können ihm unten einen Namen geben.",
-    "gd.gen-ai.visualisation.menu": "Visualisierungsmenü",
+    "gd.gen-ai.visualisation.menu": "{name}, weitere Aktionen",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Visualisierung speichern",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Als neu speichern…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "In Analyse öffnen",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Visualisierungslink kopieren",
     "gd.gen-ai.message.label.user": "Benutzereingabe",
-    "gd.gen-ai.permission-error": "Unzureichende Berechtigungen",
-    "gd.gen-ai.permission-error.description": "Leider haben Sie keinen Zugriff auf den Chatbot. Bitten Sie Ihren Administrator, Ihnen die entsprechenden Berechtigungen zu erteilen."
+    "gd.gen-ai.global-no-llm": "Kein LLM-Anbieter konfiguriert",
+    "gd.gen-ai.global-no-llm.description": "Konfigurieren Sie einen Anbieter, um den Chatbot zu aktivieren.",
+    "gd.gen-ai.global-no-llm.button-create-llm": "Anbieter konfigurieren",
+    "gd.gen-ai.permission-error": "Fehlende Berechtigungen",
+    "gd.gen-ai.permission-error.description": "Sie haben keinen Zugriff auf den Chatbot. Wenden Sie sich an Ihren Administrator, um den Zugriff anzufordern.",
+    "gd.gen-ai.feedback.like": "Diese Nachricht als hilfreich markieren",
+    "gd.gen-ai.feedback.dislike": "Diese Nachricht als nicht hilfreich markieren",
+    "gd.gen-ai.dialog.label": "Chatbot-Dialog KI-Assistent"
 }

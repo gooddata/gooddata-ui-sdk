@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Tetiklendiği için",
     "notifications.panel.error.learnMore": "Daha fazla bilgi edinin",
     "notifications.panel.error.traceId": "İzleme Kimliği",
-    "notifications.panel.error.alert.title": "Uyarı işlenemedi.",
+    "notifications.panel.error.message": "Uyarı işlenemedi.",
     "notifications.panel.button.label": "Bildirimler",
     "notifications.panel.notifications.list.label": "Bildirimler",
     "notifications.panel.alert.notification.type.label": "Uyarı bildirimi",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>İndirme bağlantısı süresi doldu</strong> — bir sonraki dışa aktarımı bekleyin veya elle bir tane oluşturun.",
     "notifications.panel.dashboardLinkHint": "Bu dışa aktarma için kullanılan gösterge tablosunu aç",
     "notifications.panel.dashboardLink": "İtibaren{dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "Dışa aktarılan dosyaları indir"
+    "notifications.panel.downloadFilesHint": "Dışa aktarılan dosyaları indir",
+    "notifications.panel.error.alert.title": "Uyarı işlenemedi.",
+    "notifications.panel.error.schedule.title": "Zamanlanmış dışa aktarma başarısız oldu.",
+    "notifications.panel.error.limitExceeded.message": "Dışa aktarmanız gönderilemedi, çünkü kuruluşunuz günlük maksimum uyarı ve planlanmış dışa aktarma sayısına ulaşmıştır. Lütfen yöneticinizle iletişime geçin."
 }

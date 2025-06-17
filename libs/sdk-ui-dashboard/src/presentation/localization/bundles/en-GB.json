@@ -766,5 +766,8 @@
     "dialogs.automation.applyCurrentFilters.confirm.submit": "Edit",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Warning</b>: Certain filters used during the creation of this alert are no longer available or valid. Editing will apply the current dashboard filters.",
     "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Warning</b>: Certain filters used at the time of this schedule's creation are no longer available or valid. Editing will apply the current dashboard filters.",
-    "options.menu.unsupported.xlsxOldWidget": "Unable to export. Please resave the dashboard or contact your administrator."
+    "options.menu.unsupported.xlsxOldWidget": "Unable to export. Please resave the dashboard or contact your administrator.",
+    "filterBar.label": "Filters",
+    "controlButtons.asTable": "Show as table",
+    "controlButtons.asOriginal": "Show original visualisation"
 }

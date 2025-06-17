@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "觸發原因",
     "notifications.panel.error.learnMore": "了解更多",
     "notifications.panel.error.traceId": "追蹤 ID",
-    "notifications.panel.error.alert.title": "無法處理警報。",
+    "notifications.panel.error.message": "無法處理警報。",
     "notifications.panel.button.label": "通知",
     "notifications.panel.notifications.list.label": "通知",
     "notifications.panel.alert.notification.type.label": "警報通知",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>下載連結已過期</strong> — 等待下一次匯出或手動建立。",
     "notifications.panel.dashboardLinkHint": "開啟用於此匯出的儀表板",
     "notifications.panel.dashboardLink": "從{dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "下載匯出的文件"
+    "notifications.panel.downloadFilesHint": "下載匯出的文件",
+    "notifications.panel.error.alert.title": "無法處理警報。",
+    "notifications.panel.error.schedule.title": "預定的匯出失敗。",
+    "notifications.panel.error.limitExceeded.message": "您的匯出文件無法發送，因為您的組織已達到每日警報和計劃導出的最大數量限制。請聯絡您的管理員。"
 }

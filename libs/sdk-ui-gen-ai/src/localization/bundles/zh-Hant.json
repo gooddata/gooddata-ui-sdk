@@ -41,12 +41,18 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+空白鍵</code> 或者<code>Ctrl+I</code> 尋求建議",
     "gd.gen-ai.button.save_and_explore": "儲存並打開",
     "gd.gen-ai.save-dialog.description.explore": "要開啟此視覺化，需要先儲存。您可以在下面為其命名。",
-    "gd.gen-ai.visualisation.menu": "視覺化選單",
+    "gd.gen-ai.visualisation.menu": "{name}、更多操作",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "保存視覺化",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "另存為新…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "在分析中打開",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "複製視覺化連結",
     "gd.gen-ai.message.label.user": "使用者輸入",
+    "gd.gen-ai.global-no-llm": "未配置 LLM 提供者",
+    "gd.gen-ai.global-no-llm.description": "配置提供者以啟用聊天機器人。",
+    "gd.gen-ai.global-no-llm.button-create-llm": "配置提供程式",
     "gd.gen-ai.permission-error": "權限不足",
-    "gd.gen-ai.permission-error.description": "抱歉，您無權存取聊天機器人。請諮詢管理員授予您權限。"
+    "gd.gen-ai.permission-error.description": "您無權存取聊天機器人。請聯絡您的管理員申請存取權限。",
+    "gd.gen-ai.feedback.like": "將此訊息標記為有用",
+    "gd.gen-ai.feedback.dislike": "將此訊息標記為無幫助",
+    "gd.gen-ai.dialog.label": "AI助理聊天機器人對話"
 }

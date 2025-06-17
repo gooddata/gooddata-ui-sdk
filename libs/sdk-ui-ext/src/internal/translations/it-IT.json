@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Attivato per",
     "notifications.panel.error.learnMore": "Maggiori informazioni",
     "notifications.panel.error.traceId": "Trace ID",
-    "notifications.panel.error.alert.title": "Non è stato possibile elaborare l'avviso.",
+    "notifications.panel.error.message": "Non è stato possibile elaborare l'avviso.",
     "notifications.panel.button.label": "Notifiche",
     "notifications.panel.notifications.list.label": "Notifiche",
     "notifications.panel.alert.notification.type.label": "Notifica di allarme",
@@ -402,5 +402,8 @@
     "notifications.panel.toast.warning.filesExpired": "<strong>Il link per il download è scaduto</strong> — attendere la prossima esportazione o crearne una manualmente.",
     "notifications.panel.dashboardLinkHint": "Aprire la dashboard utilizzata per l'esportazione",
     "notifications.panel.dashboardLink": "Da {dashboardTitle}",
-    "notifications.panel.downloadFilesHint": "Scaricare i file esportati"
+    "notifications.panel.downloadFilesHint": "Scaricare i file esportati",
+    "notifications.panel.error.alert.title": "Non è stato possibile elaborare l'avviso.",
+    "notifications.panel.error.schedule.title": "Esportazione programmata non riuscita.",
+    "notifications.panel.error.limitExceeded.message": "Non è stato possibile inviare l'esportazione perché l'organizzazione ha raggiunto il limite del numero massimo di avvisi giornalieri e di esportazioni programmate. Contattare l'amministratore."
 }

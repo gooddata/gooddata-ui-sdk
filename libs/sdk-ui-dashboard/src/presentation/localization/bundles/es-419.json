@@ -766,5 +766,8 @@
     "dialogs.automation.applyCurrentFilters.confirm.submit": "Editar",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Advertencia</b>: Algunos filtros utilizados cuando se creó esta alerta ya no están disponibles o no son válidos. La edición aplicará los filtros actuales del cuadro de mandos.",
     "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Advertencia</b>: Algunos filtros utilizados cuando se creó este horario ya no están disponibles o no son válidos. La edición aplicará los filtros actuales del cuadro de mandos.",
-    "options.menu.unsupported.xlsxOldWidget": "No se puede exportar. Vuelva a guardar el panel de control o comuníquese con su administrador."
+    "options.menu.unsupported.xlsxOldWidget": "No se puede exportar. Vuelva a guardar el panel de control o comuníquese con su administrador.",
+    "filterBar.label": "Filtros",
+    "controlButtons.asTable": "Mostrar como tabla",
+    "controlButtons.asOriginal": "Mostrar visualización original"
 }
