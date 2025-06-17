@@ -63,6 +63,8 @@ export {
     EmbedInsightDialog,
 } from "./internal/index.js";
 
+export { CoinProvider, useCoinContext } from "./context/CoinContext/CoinContext.js";
+export type { ICoinContextProps, ICoinContextValue } from "./context/CoinContext/types.js";
 export type { CreateRoot, Root } from "./internal/createRootProvider.js";
 export { provideCreateRoot } from "./internal/createRootProvider.js";
 

@@ -71,6 +71,7 @@ export interface IAppHeaderProps {
     }) => React.ReactNode;
     showChatItem?: boolean;
     onChatItemClick?: (e: React.MouseEvent) => void;
+    coinCount?: number;
 }
 
 /**

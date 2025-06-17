@@ -68,6 +68,7 @@ export * from "./SeparatorLine/index.js";
 export * from "./RichText/index.js";
 export * from "./RecurrenceForm/index.js";
 export * from "./AddButton/index.js";
+export * from "./CoinCounter/index.js";
 export * from "./ZoomContext/ZoomContext.js";
 /**
  * New components

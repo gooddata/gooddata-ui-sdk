@@ -110,6 +110,8 @@ import { SmallDragHandle } from "./icons/SmallDragHandle.js";
 import { Header } from "./icons/Header.js";
 import { Save } from "./icons/Save.js";
 import { Edit } from "./icons/Edit.js";
+import { Coin } from "./icons/Coin.js";
+import { Merch } from "./icons/Merch.js";
 
 /**
  * @internal
@@ -222,6 +224,8 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Header,
     Save,
     Edit,
+    Coin,
+    Merch,
 };
 
 export type { IRowsIconProps, IColumnsIconProps };

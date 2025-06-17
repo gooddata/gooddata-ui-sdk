@@ -109,6 +109,12 @@ export type ChatVisualizationErrorEvent = BaseEvent & {
 // @public (undocumented)
 export type Contents = TextContents | RoutingContents | SearchContents | VisualizationContents | ErrorContents;
 
+// @public
+export const DefaultFeedbackAnimation: React_2.FC<{
+    onComplete: () => void;
+    triggerElement?: HTMLElement | null;
+}>;
+
 // @public (undocumented)
 export type ErrorContents = {
     type: "error";

@@ -8,6 +8,7 @@
 
 export type { GenAIChatProps } from "./components/GenAIChat.js";
 export { GenAIChat } from "./components/GenAIChat.js";
+export { DefaultFeedbackAnimation } from "./components/DefaultFeedbackAnimation.js";
 export type {
     Message,
     BaseMessage,

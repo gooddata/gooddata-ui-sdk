@@ -69,6 +69,9 @@ export { ChartInlineVisualizationType }
 // @public
 export function clearInsightViewCaches(): void;
 
+// @alpha (undocumented)
+export const CoinProvider: React_2.FC<Partial<ICoinContextProps>>;
+
 // @public
 export type CreateRoot = (container: Element | DocumentFragment, options?: any) => Root;
 
@@ -261,6 +264,26 @@ export interface IAttributeHierarchyDialogProps {
     onDeleteSuccess?: () => void;
     // (undocumented)
     onSaveOrUpdateSuccess?: (attributeHierarchy: ICatalogAttributeHierarchy) => void;
+}
+
+// @alpha (undocumented)
+export interface ICoinContextProps {
+    // (undocumented)
+    children?: React.ReactNode;
+    // (undocumented)
+    coinCount: number;
+    // (undocumented)
+    setCoinCount: (count: number) => void;
+}
+
+// @alpha (undocumented)
+export interface ICoinContextValue {
+    // (undocumented)
+    addCoin: () => void;
+    // (undocumented)
+    coinCount: number;
+    // (undocumented)
+    setCoinCount: (count: number) => void;
 }
 
 // @internal (undocumented)
@@ -744,6 +767,9 @@ export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted
 
 // @internal (undocumented)
 export type TrackEventCallback = (event: TelemetryEvent) => void;
+
+// @alpha
+export const useCoinContext: () => ICoinContextValue;
 
 // @internal (undocumented)
 export const UserEditDialog: React_2.FC<IUserEditDialogProps>;

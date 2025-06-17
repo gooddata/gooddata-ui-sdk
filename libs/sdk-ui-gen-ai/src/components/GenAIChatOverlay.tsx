@@ -18,6 +18,11 @@ import { HeaderIcon } from "./HeaderIcon.js";
 
 type GenAIChatOverlayOwnProps = {
     onClose: () => void;
+    onFeedbackCallback?: () => void;
+    feedbackAnimationComponent?: React.ComponentType<{
+        onComplete: () => void;
+        triggerElement?: HTMLElement | null;
+    }>;
 };
 
 type GenAIChatOverlayStateProps = {
@@ -41,6 +46,8 @@ const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps & WrappedCompone
     intl,
     isFullscreen,
     setFullscreen,
+    onFeedbackCallback,
+    feedbackAnimationComponent,
 }) => {
     const classNames = cx("gd-gen-ai-chat__window", {
         "gd-gen-ai-chat__window--fullscreen": isFullscreen,
@@ -88,7 +95,11 @@ const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps & WrappedCompone
                     onClick={onClose}
                 />
             </div>
-            <GenAIChatWrapper autofocus />
+            <GenAIChatWrapper
+                autofocus
+                onFeedbackCallback={onFeedbackCallback}
+                feedbackAnimationComponent={feedbackAnimationComponent}
+            />
         </Dialog>
     );
 };

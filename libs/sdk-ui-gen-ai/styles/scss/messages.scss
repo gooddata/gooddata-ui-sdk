@@ -96,6 +96,95 @@
     }
 }
 
+.gd-gen-ai-chat__messages__feedback__input {
+    margin-top: 8px;
+
+    &__wrapper {
+        position: relative;
+        max-width: 400px;
+    }
+
+    &__field {
+        width: 100%;
+
+        .gd-input-field {
+            border-radius: 4px;
+            padding: 8px 44px 8px 12px;
+            border: 1px solid kit-variables.$gd-color-disabled;
+            font-size: 14px;
+            width: 100%;
+
+            &:focus {
+                border-color: kit-variables.$gd-palette-primary-base;
+                outline: none;
+            }
+        }
+    }
+
+    &__send {
+        @include kit-mixins.transition(all, 0.25s, ease-in-out);
+
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        bottom: 1px;
+        width: 40px;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background: none;
+        border: none;
+        border-radius: 3px;
+
+        & path,
+        & rect {
+            fill: kit-variables.$gd-color-link;
+        }
+
+        &:hover path,
+        &:hover rect {
+            fill: kit-variables.$gd-palette-primary-base;
+        }
+
+        &:disabled:hover {
+            cursor: default;
+
+            path,
+            rect {
+                fill: kit-variables.$gd-color-disabled;
+            }
+        }
+
+        &:focus,
+        &:focus-within,
+        &:focus-visible,
+        &:active {
+            outline: 1px solid kit-variables.$gd-palette-primary-base;
+        }
+    }
+
+    // Focus state for the input wrapper
+    &__wrapper:focus-within &__send {
+        path,
+        rect {
+            fill: kit-variables.$gd-palette-primary-base;
+        }
+
+        &--disabled,
+        &--disabled:hover {
+            cursor: default;
+
+            path,
+            rect {
+                fill: kit-variables.$gd-color-disabled;
+            }
+        }
+    }
+}
+
 .gd-gen-ai-chat__messages__message--user {
     .gd-gen-ai-chat__messages__content--text {
         $tail-height: 7px;
@@ -379,5 +468,17 @@
     }
     100% {
         opacity: 1;
+    }
+}
+
+@keyframes gd-gen-ai-feedback-pulse {
+    0% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
     }
 }

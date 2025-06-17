@@ -33,6 +33,7 @@ import { Typography } from "../Typography/index.js";
 import { HeaderSearchButton } from "./HeaderSearchButton.js";
 import { HeaderSearchProvider } from "./headerSearchContext.js";
 import { HeaderChatButton } from "./HeaderChatButton.js";
+import { CoinCounter } from "../CoinCounter/CoinCounter.js";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -549,6 +550,10 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 />
 
                 {this.renderTrialItems()}
+
+                {this.props.coinCount ? (
+                    <CoinCounter count={this.props.coinCount} coinSize={25} maxCoins={100} />
+                ) : null}
 
                 {this.props.showChatItem ? (
                     <HeaderChatButton

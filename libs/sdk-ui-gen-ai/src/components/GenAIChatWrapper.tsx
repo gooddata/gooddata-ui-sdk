@@ -23,11 +23,19 @@ import { useThreadLoading } from "./hooks/useThreadLoading.js";
 import { useEndpointCheck } from "./hooks/useEndpointCheck.js";
 import { GlobalError } from "./GlobalError.js";
 
-type GenAIChatWrapperProps = {
+type GenAIChatWrapperOwnProps = {
+    autofocus?: boolean;
+    onFeedbackCallback?: () => void;
+    feedbackAnimationComponent?: React.ComponentType<{
+        onComplete: () => void;
+        triggerElement?: HTMLElement | null;
+    }>;
+};
+
+type GenAIChatWrapperProps = GenAIChatWrapperOwnProps & {
     loadThread: typeof loadThreadAction;
     cancelLoading: typeof cancelAsyncAction;
     clearThread: typeof clearThreadAction;
-    autofocus?: boolean;
     initializing?: boolean;
     isClearing?: boolean;
 };
@@ -46,6 +54,8 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
     autofocus,
     initializing,
     isClearing,
+    onFeedbackCallback,
+    feedbackAnimationComponent,
 }) => {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
@@ -105,7 +115,10 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
     return (
         <ErrorBoundary>
             <div className="gd-gen-ai-chat">
-                <Messages />
+                <Messages
+                    onFeedbackCallback={onFeedbackCallback}
+                    feedbackAnimationComponent={feedbackAnimationComponent}
+                />
                 <Input
                     autofocus={autofocus}
                     catalogItems={catalogItems}

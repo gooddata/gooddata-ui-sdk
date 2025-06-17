@@ -59,6 +59,11 @@
         "comment": "",
         "limit": 0
     },
+    "gd.gen-ai.feedback.placeholder": {
+        "value": "What's wrong?",
+        "comment": "",
+        "limit": 0
+    },
     "gd.gen-ai.feedback.like": {
         "value": "Mark this message as helpful",
         "comment": "",

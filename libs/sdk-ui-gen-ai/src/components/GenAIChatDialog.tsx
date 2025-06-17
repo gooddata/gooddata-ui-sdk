@@ -27,6 +27,11 @@ export type GenAIChatDialogProps = {
     colorPalette?: IColorPalette;
     catalogItems?: CatalogItem[];
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
+    onFeedbackCallback?: () => void;
+    feedbackAnimationComponent?: React.ComponentType<{
+        onComplete: () => void;
+        triggerElement?: HTMLElement | null;
+    }>;
 };
 
 // Default z-index:
@@ -47,6 +52,8 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     catalogItems,
     colorPalette,
     onLinkClick,
+    onFeedbackCallback,
+    feedbackAnimationComponent,
 }) => {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -87,7 +94,11 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
                                 canAnalyze={canAnalyze}
                                 canFullControl={canFullControl}
                             >
-                                <GenAIChatOverlay onClose={onClose} />
+                                <GenAIChatOverlay
+                                    onClose={onClose}
+                                    onFeedbackCallback={onFeedbackCallback}
+                                    feedbackAnimationComponent={feedbackAnimationComponent}
+                                />
                             </ConfigProvider>
                         </OverlayControllerProvider>
                     </WorkspaceProvider>

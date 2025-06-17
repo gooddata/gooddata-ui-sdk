@@ -306,6 +306,9 @@ export type CodeLanguageType = "js" | "ts";
 // @internal (undocumented)
 export const CodeOptions: React_2.VFC<ICodeOptionsProps>;
 
+// @public
+export const CoinCounter: React_2.FC<ICoinCounterProps>;
+
 // @internal
 export type Color = string;
 
@@ -875,6 +878,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    coinCount?: number;
+    // (undocumented)
     disableHelpDropdown?: boolean;
     // (undocumented)
     documentationUrl?: string;
@@ -1198,6 +1203,14 @@ export interface ICodeOptionsProps {
     onChange: (opt: IReactOptions) => void;
     // (undocumented)
     option: IReactOptions;
+}
+
+// @public
+export interface ICoinCounterProps {
+    className?: string;
+    coinSize?: number;
+    count: number;
+    maxCoins?: number;
 }
 
 // @internal (undocumented)

@@ -9,13 +9,29 @@ import { isAssistantMessage, isUserMessage } from "../model.js";
 import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
 import { EmptyState } from "./EmptyState.js";
 
-type MessagesComponentProps = {
+type MessagesStateProps = {
     messages: ReturnType<typeof messagesSelector>;
     loading: ReturnType<typeof asyncProcessSelector>;
-    initializing?: boolean;
 };
 
-const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading, initializing }) => {
+type MessagesOwnProps = {
+    initializing?: boolean;
+    onFeedbackCallback?: () => void;
+    feedbackAnimationComponent?: React.ComponentType<{
+        onComplete: () => void;
+        triggerElement?: HTMLElement | null;
+    }>;
+};
+
+type MessagesComponentProps = MessagesStateProps & MessagesOwnProps;
+
+const MessagesComponent: React.FC<MessagesComponentProps> = ({
+    messages,
+    loading,
+    initializing,
+    onFeedbackCallback,
+    feedbackAnimationComponent,
+}) => {
     const { scrollerRef } = useMessageScroller(messages);
     const isLoading = loading === "loading" || loading === "clearing" || initializing;
 
@@ -44,6 +60,8 @@ const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading
                                       key={message.localId}
                                       message={message}
                                       isLast={isLast}
+                                      onFeedbackCallback={onFeedbackCallback}
+                                      feedbackAnimationComponent={feedbackAnimationComponent}
                                   />
                               );
                           }
@@ -77,7 +95,7 @@ const assertNever = (value: never): never => {
     throw new Error(`Unhandled message role: ${value}`);
 };
 
-const mapStateToProps = (state: RootState): MessagesComponentProps => ({
+const mapStateToProps = (state: RootState): MessagesStateProps => ({
     messages: messagesSelector(state),
     loading: asyncProcessSelector(state),
 });
