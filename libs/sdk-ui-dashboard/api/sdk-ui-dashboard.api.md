@@ -4247,7 +4247,7 @@ export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, d
 export function getDefaultInsightMenuItems(intl: IntlShape, config: IUseInsightMenuConfig, execution?: IExecutionResultEnvelope, settings?: ISettings): IInsightMenuItem[];
 
 // @internal (undocumented)
-export function getDefaultRichTextEditMode(widget: IRichTextWidget, { intl, dispatch, useWidgetDeleteDialog }: RichTextMenuItemDependencies): IRichTextMenuItem[];
+export function getDefaultRichTextEditMode(widget: IRichTextWidget, { intl, dispatch }: RichTextMenuItemDependencies): IRichTextMenuItem[];
 
 // @internal (undocumented)
 export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEvent: IDrillEvent, drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[], drillTargetDisplayForm?: IAttributeDisplayFormMetadataObject): string | null;
@@ -8148,7 +8148,6 @@ export type RichTextMenuItemDependencies = {
     intl: IntlShape;
     dispatch: ReturnType<typeof useDashboardDispatch>;
     eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
-    useWidgetDeleteDialog?: boolean;
 };
 
 // @alpha (undocumented)

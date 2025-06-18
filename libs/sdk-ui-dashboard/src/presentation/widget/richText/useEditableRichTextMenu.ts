@@ -21,22 +21,14 @@ export const useEditableRichTextMenu = (
     const dispatch = useDashboardDispatch();
     const eventDispatch = useDashboardEventDispatch();
 
-    const useWidgetDeleteDialog = useMemo(
-        () =>
-            // new widgets in edit mode do not have localIdentifier, so should be deleted without confirmation dialog
-            !!widget.localIdentifier,
-        [widget.localIdentifier],
-    );
-
     const { richTextMenuItemsProvider } = useDashboardCustomizationsContext();
     const defaultMenuItems = useMemo<IRichTextMenuItem[]>(() => {
         return getDefaultRichTextEditMode(widget, {
             intl,
             dispatch,
             eventDispatch,
-            useWidgetDeleteDialog,
         });
-    }, [dispatch, eventDispatch, intl, widget, useWidgetDeleteDialog]);
+    }, [dispatch, eventDispatch, intl, widget]);
 
     const menuItems = useMemo<IRichTextMenuItem[]>(() => {
         return richTextMenuItemsProvider

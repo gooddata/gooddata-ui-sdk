@@ -2597,16 +2597,6 @@
         "comment": "",
         "limit": 0
     },
-    "visualizationSwitcher.deleteDialog.header": {
-        "value": "Delete visualization switcher?",
-        "comment": "",
-        "limit": 0
-    },
-    "visualizationSwitcher.deleteDialog.message": {
-        "value": "The visualization switcher and all of its visualizations will be irreversibly deleted.",
-        "comment": "",
-        "limit": 0
-    },
     "visualizationSwitcherToolbar.visualizationsList.header": {
         "value": "Visualizations",
         "comment": "",
@@ -2679,16 +2669,6 @@
     },
     "nestedLayout.tab.title": {
         "value": "Container",
-        "comment": "",
-        "limit": 0
-    },
-    "nestedLayout.deleteDialog.header": {
-        "value": "Delete container?",
-        "comment": "",
-        "limit": 0
-    },
-    "nestedLayout.deleteDialog.message": {
-        "value": "The container and all of its content will be irreversibly deleted.",
         "comment": "",
         "limit": 0
     },

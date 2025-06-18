@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { ConfirmDialog, Icon, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
+import { Icon } from "@gooddata/sdk-ui-kit";
 
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import {
@@ -14,14 +14,11 @@ import {
     toggleLayoutSectionHeaders,
 } from "../../../../model/index.js";
 
-import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../constants/index.js";
 import { DashboardLayout } from "../../dashboardLayout/DashboardLayout.js";
 import { Toolbar } from "./Toolbar.js";
 import { IDashboardLayoutProps } from "../../dashboardLayout/types.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
 import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
-
-const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTER_Z_INDEX);
 
 /**
  * @internal
@@ -35,7 +32,6 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
 }) => {
     const screen = useScreenSize();
     const dispatch = useDashboardDispatch();
-    const intl = useIntl();
 
     const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
         widget?.ref,
@@ -43,8 +39,6 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
     const isDraggingWidget = useIsDraggingWidget();
-
-    const [isConfirmDeleteDialogVisible, setIsConfirmDeleteDialogVisible] = useState<boolean>(false);
 
     return (
         <>
@@ -75,7 +69,9 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
                                 {hasConfigPanelOpen ? (
                                     <Toolbar
                                         layout={layout!}
-                                        onWidgetDelete={() => setIsConfirmDeleteDialogVisible(true)}
+                                        onWidgetDelete={() =>
+                                            dispatch(eagerRemoveSectionItemByWidgetRef(widget!.ref))
+                                        }
                                         onToggleHeaders={(areSectionHeadersEnabled: boolean) => {
                                             dispatch(
                                                 toggleLayoutSectionHeaders(
@@ -115,23 +111,6 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
                     )}
                 </DashboardItemBase>
             </DashboardItem>
-            {isConfirmDeleteDialogVisible ? (
-                <OverlayControllerProvider overlayController={overlayController}>
-                    <ConfirmDialog
-                        className="s-dashboard-nested-layout-remove-confirm-dialog"
-                        onSubmit={() => {
-                            dispatch(eagerRemoveSectionItemByWidgetRef(widget!.ref));
-                            setIsConfirmDeleteDialogVisible(false);
-                        }}
-                        onCancel={() => setIsConfirmDeleteDialogVisible(false)}
-                        headline={intl.formatMessage({ id: "nestedLayout.deleteDialog.header" })}
-                        submitButtonText={intl.formatMessage({ id: "delete" })}
-                        cancelButtonText={intl.formatMessage({ id: "cancel" })}
-                    >
-                        <FormattedMessage id="nestedLayout.deleteDialog.message" />
-                    </ConfirmDialog>
-                </OverlayControllerProvider>
-            ) : null}
         </>
     );
 };
