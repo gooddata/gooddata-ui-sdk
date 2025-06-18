@@ -218,7 +218,10 @@ export const DateFilterBody = React.forwardRef<HTMLDivElement, IDateFilterBodyPr
                 <div className="gd-extended-date-filter-actions-buttons">
                     <DateFilterBodyButton
                         messageId={withoutApply ? "close" : "cancel"}
-                        className="gd-button-secondary gd-button-small s-date-filter-cancel"
+                        className={cx(
+                            "gd-button-secondary gd-button-small",
+                            withoutApply ? "s-date-filter-close" : "s-date-filter-cancel",
+                        )}
                         onClick={() => {
                             onCancelClick();
                             closeDropdown();
