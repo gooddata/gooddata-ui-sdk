@@ -69,17 +69,9 @@ export interface IUiListboxContext<InteractiveItemData, StaticItemData = React.R
 export interface UiListboxProps<InteractiveItemData, StaticItemData = React.ReactNode> {
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
 
-    /**
-     * @deprecated use `dataTestId` instead. Prop will be removed.
-     */
-    className?: string;
     dataTestId?: string;
-
-    /**
-     * @deprecated use `itemDataTestId` instead. Prop will be removed.
-     */
-    itemClassName?: string;
     itemDataTestId?: string;
+
     maxWidth?: number;
     maxHeight?: number;
 

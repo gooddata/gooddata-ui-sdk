@@ -5919,16 +5919,12 @@ export interface UiListboxInteractiveItemProps<T> {
 export interface UiListboxProps<InteractiveItemData, StaticItemData = React_2.ReactNode> {
     // (undocumented)
     ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
-    // @deprecated (undocumented)
-    className?: string;
     // (undocumented)
     dataTestId?: string;
     // (undocumented)
     InteractiveItemComponent?: React_2.ComponentType<UiListboxInteractiveItemProps<InteractiveItemData>>;
     // (undocumented)
     isDisabledFocusable?: boolean;
-    // @deprecated (undocumented)
-    itemClassName?: string;
     // (undocumented)
     itemDataTestId?: string;
     // (undocumented)
