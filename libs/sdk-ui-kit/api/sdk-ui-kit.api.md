@@ -15,6 +15,7 @@ import { CSSProperties } from 'react';
 import { DebouncedFunc } from 'lodash';
 import { EditorView } from '@codemirror/view';
 import { Extension } from '@codemirror/state';
+import { FilterContextItem } from '@gooddata/sdk-model';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
@@ -811,11 +812,15 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     appliedGrantees: GranteeItem[];
     // (undocumented)
+    applyShareGrantOnSelect?: boolean;
+    // (undocumented)
     currentUser: IUser;
     // (undocumented)
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     isDirty: boolean;
+    // (undocumented)
+    isGranteeShareLoading?: boolean;
     // (undocumented)
     onAddUserOrGroups?: (grantee: GranteeItem) => void;
     // (undocumented)
@@ -1297,6 +1302,8 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     headerLeftButtonRenderer?: () => JSX.Element;
     // (undocumented)
     headline?: string;
+    // (undocumented)
+    hideSubmitButton?: boolean;
     // (undocumented)
     initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
@@ -2182,6 +2189,8 @@ export interface IGranteeItemProps {
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     grantee: GranteeItem;
+    // (undocumented)
+    isGranteeShareLoading?: boolean;
     // (undocumented)
     isSharedObjectLocked: boolean;
     // (undocumented)
@@ -3570,6 +3579,8 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
     // (undocumented)
     renderClearIcon(clearOnEsc: boolean): React_2.ReactNode;
     // (undocumented)
+    renderIconButton(iconButton: IconType, iconButtonLabel: string, onIconButtonClick: (e: React_2.MouseEvent<HTMLButtonElement>) => void): React_2.ReactNode;
+    // (undocumented)
     renderInput(): React_2.JSX.Element;
     // (undocumented)
     renderLabel(label: React_2.ReactNode): React_2.ReactNode;
@@ -3600,6 +3611,10 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     hasWarning: boolean;
     // (undocumented)
+    iconButton?: IconType;
+    // (undocumented)
+    iconButtonLabel?: string;
+    // (undocumented)
     id?: string;
     // (undocumented)
     isSearch: boolean;
@@ -3623,6 +3638,8 @@ export interface InputPureProps extends IDomNativeProps {
     onEscKeyPress: (e: React_2.KeyboardEvent) => void;
     // (undocumented)
     onFocus: (e: React_2.FocusEvent<HTMLInputElement>) => void;
+    // (undocumented)
+    onIconButtonClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
     // (undocumented)
     placeholder: string;
     // (undocumented)
@@ -4236,19 +4253,31 @@ export const isGranularGranteeUser: (obj: unknown) => obj is IGranularGranteeUse
 // @internal (undocumented)
 export interface IShareDialogBaseProps {
     // (undocumented)
+    applyShareGrantOnSelect?: boolean;
+    // (undocumented)
     currentUser: IUser;
     // (undocumented)
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
+    dashboardFilters?: FilterContextItem[];
+    // (undocumented)
     isCurrentUserWorkspaceManager: boolean;
+    // (undocumented)
+    isGranteeShareLoading?: boolean;
+    // (undocumented)
+    isShareGrantHidden?: boolean;
     // (undocumented)
     onCancel: () => void;
     // (undocumented)
     onError: (err: Error) => void;
     // (undocumented)
+    onShareLinkCopy?: (shareLink: string) => void;
+    // (undocumented)
     onSubmit: (grantees: GranteeItem[], granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[], isUnderLenientControl: boolean, isLocked: boolean) => void;
     // (undocumented)
     sharedObject: IAffectedSharedObject;
+    // (undocumented)
+    showDashboardShareLink?: boolean;
 }
 
 // @internal (undocumented)
@@ -4282,15 +4311,23 @@ export interface IShareDialogLabels {
 // @internal (undocumented)
 export interface IShareDialogProps {
     // (undocumented)
+    applyShareGrantOnSelect?: boolean;
+    // (undocumented)
     backend: IAnalyticalBackend;
     // (undocumented)
     currentUser: IUser;
     // (undocumented)
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
+    dashboardFilters?: FilterContextItem[];
+    // (undocumented)
     isCurrentUserWorkspaceManager: boolean;
     // (undocumented)
+    isGranteeShareLoading?: boolean;
+    // (undocumented)
     isLockingSupported: boolean;
+    // (undocumented)
+    isShareGrantHidden?: boolean;
     // (undocumented)
     labels: IShareDialogLabels;
     // (undocumented)
@@ -4304,7 +4341,11 @@ export interface IShareDialogProps {
     // (undocumented)
     onInteraction?: (data: IShareDialogInteractionData) => void;
     // (undocumented)
+    onShareLinkCopy?: (shareLink: string) => void;
+    // (undocumented)
     sharedObject: ISharedObject;
+    // (undocumented)
+    showDashboardShareLink?: boolean;
     // (undocumented)
     workspace: string;
 }
@@ -4318,9 +4359,13 @@ export interface ISharedObject extends IAccessControlAware, IAuditableUsers {
 // @internal (undocumented)
 export interface IShareGranteeBaseProps {
     // (undocumented)
+    applyShareGrantOnSelect?: boolean;
+    // (undocumented)
     currentUser: IUser;
     // (undocumented)
     currentUserPermissions: CurrentUserPermissions;
+    // (undocumented)
+    dashboardFilters?: FilterContextItem[];
     // (undocumented)
     grantees: GranteeItem[];
     // (undocumented)
@@ -4328,9 +4373,13 @@ export interface IShareGranteeBaseProps {
     // (undocumented)
     isDirty: boolean;
     // (undocumented)
+    isGranteeShareLoading?: boolean;
+    // (undocumented)
     isLoading: boolean;
     // (undocumented)
     isLockedNow: boolean;
+    // (undocumented)
+    isShareGrantHidden?: boolean;
     // (undocumented)
     isUnderLenientControlNow: boolean;
     // (undocumented)
@@ -4344,21 +4393,31 @@ export interface IShareGranteeBaseProps {
     // (undocumented)
     onLockChange: (locked: boolean) => void;
     // (undocumented)
+    onShareLinkCopy?: (shareLink: string) => void;
+    // (undocumented)
     onSubmit: () => void;
     // (undocumented)
     onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
     // (undocumented)
     sharedObject: IAffectedSharedObject;
+    // (undocumented)
+    showDashboardShareLink?: boolean;
 }
 
 // @internal (undocumented)
 export interface IShareGranteeContentProps {
+    // (undocumented)
+    applyShareGrantOnSelect?: boolean;
     // (undocumented)
     areGranularPermissionsSupported?: boolean;
     // (undocumented)
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     grantees: GranteeItem[];
+    // (undocumented)
+    headline: string;
+    // (undocumented)
+    isGranteeShareLoading?: boolean;
     // (undocumented)
     isLoading: boolean;
     // (undocumented)

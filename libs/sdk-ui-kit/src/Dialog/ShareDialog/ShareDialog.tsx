@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import {
     BackendProvider,
@@ -39,8 +39,14 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
         onInteraction = noop,
         isLockingSupported,
         isCurrentUserWorkspaceManager,
+        isGranteeShareLoading,
         labels,
         currentUserPermissions,
+        dashboardFilters,
+        isShareGrantHidden,
+        applyShareGrantOnSelect,
+        showDashboardShareLink,
+        onShareLinkCopy,
     } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -132,9 +138,15 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
                                 sharedObject={affectedSharedObject}
                                 isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
                                 currentUserPermissions={currentUserPermissions}
+                                dashboardFilters={dashboardFilters}
                                 onCancel={onCancel}
                                 onSubmit={onSubmit}
                                 onError={onShareDialogBaseError}
+                                isShareGrantHidden={isShareGrantHidden}
+                                applyShareGrantOnSelect={applyShareGrantOnSelect}
+                                showDashboardShareLink={showDashboardShareLink}
+                                onShareLinkCopy={onShareLinkCopy}
+                                isGranteeShareLoading={isGranteeShareLoading}
                             />
                         </ComponentInteractionProvider>
                     </ComponentLabelsProvider>

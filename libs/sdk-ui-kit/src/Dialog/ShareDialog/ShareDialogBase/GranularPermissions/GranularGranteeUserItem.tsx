@@ -18,6 +18,7 @@ interface IGranularGranteeUserItemProps {
     grantee: IGranularGranteeUser;
     currentUserPermissions: CurrentUserPermissions;
     isSharedObjectLocked: boolean;
+    isGranteeShareLoading: boolean;
     mode: DialogModeType;
     id?: string;
     onChange: (grantee: GranteeItem) => void;
@@ -25,7 +26,16 @@ interface IGranularGranteeUserItemProps {
 }
 
 export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = (props) => {
-    const { grantee, currentUserPermissions, isSharedObjectLocked, onChange, onDelete, mode, id } = props;
+    const {
+        grantee,
+        currentUserPermissions,
+        isSharedObjectLocked,
+        onChange,
+        onDelete,
+        mode,
+        id,
+        isGranteeShareLoading,
+    } = props;
     const { email } = grantee;
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const { permissionsDropdownOpenInteraction } = useShareDialogInteraction();
@@ -77,7 +87,7 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
                 handleToggleDropdown={handleToggleDropdown}
                 onChange={onChange}
                 onDelete={onDelete}
-                isDropdownDisabled={!granteePossibilities.change.enabled}
+                isDropdownDisabled={!granteePossibilities.change.enabled || isGranteeShareLoading}
                 bubbleTextId={granteePossibilities.change.tooltip}
                 className="gd-grantee-granular-permission"
                 triggerClassName="gd-grantee-granular-permission-bubble-trigger"

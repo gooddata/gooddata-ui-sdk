@@ -1,6 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
 import { Typography } from "../../../Typography/index.js";
 import { AddUserOrGroupButton } from "./AddGranteeButton.js";
 import { GranteeList } from "./GranteeList.js";
@@ -17,6 +16,9 @@ export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) 
         areGranularPermissionsSupported,
         currentUserPermissions,
         isSharedObjectLocked,
+        isGranteeShareLoading,
+        applyShareGrantOnSelect,
+        headline,
         onAddGrantee,
         onChange,
         onDelete,
@@ -25,10 +27,11 @@ export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) 
     return (
         <>
             <div className="gd-share-dialog-grantee-content-header">
-                <Typography tagName="h3">
-                    <FormattedMessage id="shareDialog.share.grantee.list.title" />
-                </Typography>
-                <AddUserOrGroupButton onClick={onAddGrantee} isDisabled={isLoading} />
+                <Typography tagName="h3">{headline}</Typography>
+                <AddUserOrGroupButton
+                    onClick={onAddGrantee}
+                    isDisabled={isLoading || (applyShareGrantOnSelect && isGranteeShareLoading)}
+                />
             </div>
             {isLoading ? (
                 <GranteeListLoading />
@@ -41,6 +44,7 @@ export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) 
                     areGranularPermissionsSupported={areGranularPermissionsSupported}
                     onChange={onChange}
                     onDelete={onDelete}
+                    isGranteeShareLoading={isGranteeShareLoading}
                 />
             )}
         </>

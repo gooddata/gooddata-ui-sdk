@@ -1,7 +1,7 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IUser } from "@gooddata/sdk-model";
+import { FilterContextItem, IUser } from "@gooddata/sdk-model";
 import {
     ISharedObject,
     ISharingApplyPayload as ISharingDialogApplyPayload,
@@ -59,6 +59,36 @@ export interface IShareDialogProps {
      * Dashboard permissions for current user.
      */
     currentUserPermissions: CurrentUserPermissions;
+
+    /**
+     * Dashboard filters
+     */
+    dashboardFilters: FilterContextItem[];
+
+    /**
+     * Is share grant hidden?
+     */
+    isShareGrantHidden: boolean;
+
+    /**
+     * Apply share grant on select, without confirming?
+     */
+    applyShareGrantOnSelect: boolean;
+
+    /**
+     * Show dashboard share link?
+     */
+    showDashboardShareLink: boolean;
+
+    /**
+     * Is grantee share loading?
+     */
+    isGranteeShareLoading: boolean;
+
+    /**
+     * Callback to be called when user copies share link
+     */
+    onShareLinkCopy: (shareLink: string) => void;
 
     /**
      * Callback to be called when user apply share dialog

@@ -76,6 +76,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     submitButtonTooltipText?: string;
     submitButtonTooltipAlignPoints?: IAlignPoint[];
     submitButtonTooltipArrowOffsets?: ArrowOffsets;
+    hideSubmitButton?: boolean;
     warning?: string | React.ReactElement;
     showProgressIndicator?: boolean;
     headerLeftButtonRenderer?: () => JSX.Element;

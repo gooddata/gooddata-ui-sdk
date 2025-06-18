@@ -13,6 +13,7 @@ import { SharedObjectLockControl } from "./SharedObjectLockControl.js";
 import { useAdminInformationMessageState } from "./useAdminInformationMessage.js";
 import { AdminInformationMessage } from "./AdminInformationMessage.js";
 import { ADD_GRANTEE_ID } from "./utils.js";
+import { ShareLink } from "./ShareLink.js";
 
 /**
  * @internal
@@ -27,6 +28,11 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         sharedObject,
         isDirty,
         currentUserPermissions,
+        dashboardFilters,
+        isShareGrantHidden,
+        applyShareGrantOnSelect,
+        showDashboardShareLink,
+        isGranteeShareLoading,
         onCancel,
         onSubmit,
         onGranteeDelete,
@@ -35,6 +41,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         onLockChange,
         onUnderLenientControlChange,
         isCurrentUserWorkspaceManager,
+        onShareLinkCopy,
     } = props;
     const {
         owner,
@@ -53,12 +60,20 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
     }, [grantees, owner]);
 
     const dialogLabels = useMemo(() => {
+        const shareDashboardTitle = intl.formatMessage({ id: "shareDialog.share.dashboard.title" });
+        const shareGranteeTitle = intl.formatMessage({ id: "shareDialog.share.grantee.title" });
+        const shareDashboardListTitle = intl.formatMessage({ id: "shareDialog.share.dashboard.list.title" });
+        const shareGranteeListTitle = intl.formatMessage({ id: "shareDialog.share.grantee.list.title" });
         return {
-            headline: intl.formatMessage({ id: "shareDialog.share.grantee.title" }),
+            headline: showDashboardShareLink ? shareDashboardTitle : shareGranteeTitle,
+            shareGrantHeadline: showDashboardShareLink ? shareDashboardListTitle : shareGranteeListTitle,
+            linkHeadline: intl.formatMessage({ id: "shareDialog.share.link.title" }),
+            linkHelperText: intl.formatMessage({ id: "shareDialog.share.link.helperText" }),
+            linkButtonText: intl.formatMessage({ id: "shareDialog.share.link.buttonText" }),
             cancelButtonText: intl.formatMessage({ id: "cancel" }),
             submitButtonText: intl.formatMessage({ id: "save" }),
         };
-    }, [intl]);
+    }, [intl, showDashboardShareLink]);
 
     const shouldDisplayAdminMessage = useMemo(
         () =>
@@ -80,20 +95,38 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             submitButtonText={dialogLabels.submitButtonText}
             onCancel={onCancel}
             onSubmit={onSubmit}
+            hideSubmitButton={applyShareGrantOnSelect}
             initialFocus={ADD_GRANTEE_ID}
         >
-            <ShareGranteeContent
-                currentUserPermissions={currentUserPermissions}
-                isSharedObjectLocked={isLocked}
-                isLoading={isLoading}
-                grantees={granteeList}
-                areGranularPermissionsSupported={areGranularPermissionsSupported}
-                onAddGrantee={onAddGranteeButtonClick}
-                onDelete={onGranteeDelete}
-                onChange={onGranularGranteeChange}
-            />
-            <ContentDivider />
             <AdminInformationMessage isVisible={shouldDisplayAdminMessage} onClose={handleMessageClose} />
+
+            {!isShareGrantHidden ? (
+                <ShareGranteeContent
+                    currentUserPermissions={currentUserPermissions}
+                    isSharedObjectLocked={isLocked}
+                    isLoading={isLoading}
+                    grantees={granteeList}
+                    areGranularPermissionsSupported={areGranularPermissionsSupported}
+                    onAddGrantee={onAddGranteeButtonClick}
+                    onDelete={onGranteeDelete}
+                    onChange={onGranularGranteeChange}
+                    isGranteeShareLoading={isGranteeShareLoading}
+                    applyShareGrantOnSelect={applyShareGrantOnSelect}
+                    headline={dialogLabels.shareGrantHeadline}
+                />
+            ) : null}
+
+            {showDashboardShareLink ? (
+                <ShareLink
+                    dashboardFilters={dashboardFilters}
+                    onShareLinkCopy={onShareLinkCopy}
+                    headline={dialogLabels.linkHeadline}
+                    helperText={dialogLabels.linkHelperText}
+                    buttonText={dialogLabels.linkButtonText}
+                />
+            ) : null}
+
+            <ContentDivider className="gd-share-dialog-content-divider" />
             <SharedObjectUnderLenientControl
                 isUnderLenientControl={isUnderLenientControlNow}
                 isLeniencyControlSupported={isLeniencyControlSupported}

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     IAuditableUsers,
@@ -8,6 +8,7 @@ import {
     IAccessGrantee,
     IUser,
     AccessGranularPermission,
+    FilterContextItem,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -68,6 +69,12 @@ export interface IShareDialogProps {
     isCurrentUserWorkspaceManager: boolean;
     labels: IShareDialogLabels;
     currentUserPermissions: CurrentUserPermissions;
+    dashboardFilters?: FilterContextItem[];
+    isGranteeShareLoading?: boolean;
+    isShareGrantHidden?: boolean;
+    applyShareGrantOnSelect?: boolean;
+    showDashboardShareLink?: boolean;
+    onShareLinkCopy?: (shareLink: string) => void;
 }
 
 /**
