@@ -72,7 +72,6 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                     <UiListbox
                         shouldKeyboardActionStopPropagation={true}
                         shouldKeyboardActionPreventDefault={true}
-                        className="s-alert-destination-select-list"
                         dataTestId="s-alert-destination-select-list"
                         items={listboxItems}
                         selectedItemId={selectedDestination}

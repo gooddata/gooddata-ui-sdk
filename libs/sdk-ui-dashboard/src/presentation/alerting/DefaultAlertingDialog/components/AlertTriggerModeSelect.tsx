@@ -89,7 +89,6 @@ export const AlertTriggerModeSelect = ({
                         <UiListbox
                             shouldKeyboardActionStopPropagation={true}
                             shouldKeyboardActionPreventDefault={true}
-                            className="s-alert-trigger-mode-select-list"
                             dataTestId="s-alert-trigger-mode-select-list"
                             items={listboxItems}
                             selectedItemId={selectedTriggerMode}

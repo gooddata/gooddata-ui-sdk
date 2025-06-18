@@ -141,7 +141,6 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                     <UiListbox<OperatorItemType<string | IAlertComparisonOperator>, StaticItemData>
                         shouldKeyboardActionStopPropagation={true}
                         shouldKeyboardActionPreventDefault={true}
-                        className="s-alert-operator-select-list"
                         dataTestId="s-alert-operator-select-list"
                         items={listboxItems}
                         maxWidth={ref.current?.offsetWidth}

@@ -74,9 +74,7 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
                     onClose={closeDropdown}
                     ariaAttributes={ariaAttributes}
                     maxWidth={clientWidth ?? 200}
-                    className={"s-visualization-switcher-widget-list"}
                     dataTestId="s-visualization-switcher-widget-list"
-                    itemClassName={"s-visualization-switcher-widget-list-item"}
                     itemDataTestId="s-visualization-switcher-widget-list-item"
                 />
             )}

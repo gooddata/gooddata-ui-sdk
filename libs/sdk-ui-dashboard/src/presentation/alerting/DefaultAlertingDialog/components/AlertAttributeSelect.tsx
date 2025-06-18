@@ -290,7 +290,6 @@ export const AlertAttributeSelect = ({
                             InteractiveItem={CustomInteractiveItem}
                             StaticItem={CustomStaticItem}
                             ariaAttributes={ariaAttributes}
-                            className="s-alert-attribute-select-list"
                             dataTestId="s-alert-attribute-select-list"
                         />
                     )}

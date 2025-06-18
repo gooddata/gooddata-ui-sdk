@@ -178,7 +178,6 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                     <UiListbox
                         shouldKeyboardActionStopPropagation={true}
                         shouldKeyboardActionPreventDefault={true}
-                        className="s-recurrence-form-type-list"
                         dataTestId="s-recurrence-form-type-list"
                         items={listboxItems}
                         maxWidth={DEFAULT_DROPDOWN_WIDTH}
