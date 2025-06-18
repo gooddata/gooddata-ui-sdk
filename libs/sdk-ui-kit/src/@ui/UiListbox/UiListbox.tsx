@@ -1,6 +1,5 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import cx from "classnames";
 import { b, e } from "./listboxBem.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
@@ -19,9 +18,7 @@ import { DefaultUiListboxStaticItemComponent } from "./defaults/DefaultUiListbox
 export function UiListbox<InteractiveItemData, StaticItemData>({
     items,
 
-    className,
     dataTestId,
-    itemClassName,
     itemDataTestId,
     maxWidth,
     maxHeight,
@@ -170,7 +167,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     );
 
     return (
-        <div className={cx(b(), className)} style={{ maxWidth, maxHeight }} data-testid={dataTestId}>
+        <div className={b()} style={{ maxWidth, maxHeight }} data-testid={dataTestId}>
             <ul
                 className={e("items")}
                 tabIndex={0}
@@ -189,7 +186,6 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             aria-disabled={item.isDisabled}
                             tabIndex={-1}
                             id={makeItemId(ariaAttributes.id, item)}
-                            className={itemClassName}
                             data-testid={itemDataTestId}
                         >
                             <InteractiveItemComponent
@@ -205,7 +201,6 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                         <li
                             key={item.id ?? index}
                             ref={(el) => (itemRefs.current[index] = el)}
-                            className={itemClassName}
                             data-testid={itemDataTestId}
                         >
                             <StaticItemComponent item={item} />

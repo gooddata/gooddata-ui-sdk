@@ -5901,7 +5901,7 @@ export interface UiIconProps {
 }
 
 // @internal
-export function UiListbox<InteractiveItemData, StaticItemData>({ items, className, dataTestId, itemClassName, itemDataTestId, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
+export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
 
 // @internal (undocumented)
 export interface UiListboxInteractiveItemProps<T> {
