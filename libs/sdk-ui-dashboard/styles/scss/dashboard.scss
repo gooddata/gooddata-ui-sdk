@@ -266,6 +266,11 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         padding: 0;
         border-width: 0;
     }
+
+    &.gd-dashboard-nested-layout-content {
+        // A nested layout container should not have a background, only the widgets themselves
+        background-color: transparent;
+    }
 }
 
 .type-kpi,

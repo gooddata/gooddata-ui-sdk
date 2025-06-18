@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -13,7 +13,9 @@ export const ViewModeEmptyNestedLayout: React.FC = () => {
     const screen = useScreenSize();
     return (
         <DashboardItem className={cx("gd-empty-nested-layout", "gd-dashboard-view-widget")} screen={screen}>
-            <DashboardItemBase>{() => <div />}</DashboardItemBase>
+            <DashboardItemBase contentClassName={"gd-dashboard-nested-layout-content"}>
+                {() => <div />}
+            </DashboardItemBase>
         </DashboardItem>
     );
 };
