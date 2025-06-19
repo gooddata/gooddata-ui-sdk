@@ -21,7 +21,7 @@ const screenClasses: { [S in ScreenSize]: string } = {
     xl: "layout-xl",
 };
 
-export const DashboardItem: React.FC<IDashboardItemProps> = React.forwardRef(
+export const DashboardItem = React.forwardRef<HTMLDivElement, IDashboardItemProps>(
     ({ className, screen, description, exportData, titleId, ...props }, ref) => {
         const id = useId();
         const itemFigureId = `dashboard-item-${id}`;

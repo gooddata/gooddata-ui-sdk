@@ -48,14 +48,14 @@
         "default-import": "1.1.5",
         "highcharts": "12.2.0",
         "highcharts-react-official": "3.2.2",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
         "tslib": "^2.5.0"
     },
     "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",
-        "@types/react": "^18.2.0",
-        "@types/react-dom": "^18.2.1",
+        "@types/react": "18.3.23",
+        "@types/react-dom": "18.3.7",
         "@vitejs/plugin-react-swc": "~3.5.0",
         "prettier": "~2.5.0",
         "process": "^0.11.10",
