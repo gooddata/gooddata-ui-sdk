@@ -5,7 +5,6 @@ import compact from "lodash/compact.js";
 
 import { IRichTextMenuItem } from "../../types.js";
 import {
-    uiActions,
     useDashboardDispatch,
     useDashboardEventDispatch,
     eagerRemoveSectionItemByWidgetRef,
@@ -18,7 +17,6 @@ export type RichTextMenuItemDependencies = {
     intl: IntlShape;
     dispatch: ReturnType<typeof useDashboardDispatch>;
     eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
-    useWidgetDeleteDialog?: boolean;
 };
 
 /**
@@ -26,7 +24,7 @@ export type RichTextMenuItemDependencies = {
  */
 export function getDefaultRichTextEditMode(
     widget: IRichTextWidget,
-    { intl, dispatch, useWidgetDeleteDialog = false }: RichTextMenuItemDependencies,
+    { intl, dispatch }: RichTextMenuItemDependencies,
 ): IRichTextMenuItem[] {
     return compact([
         {
@@ -37,10 +35,7 @@ export function getDefaultRichTextEditMode(
             icon: "gd-icon-trash",
             disabled: false,
             className: "s-delete-insight-item",
-            onClick: () =>
-                useWidgetDeleteDialog
-                    ? dispatch(uiActions.openWidgetDeleteDialog(widget.ref))
-                    : dispatch(eagerRemoveSectionItemByWidgetRef(widget.ref)),
+            onClick: () => dispatch(eagerRemoveSectionItemByWidgetRef(widget.ref)),
         },
     ]);
 }
