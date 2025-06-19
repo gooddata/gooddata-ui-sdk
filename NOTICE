@@ -9,7 +9,7 @@ The following 3rd-party software packages may be used by or distributed with goo
 
 Date generated: 2025-6-19
 
-Revision ID: df957305d8dede754d931b97f7b077b95f6ad4e2
+Revision ID: 64a57465a8543e06cce8978d8e7c46bfe059295f
 
 ================================================================================
 ================================================================================
@@ -188,13 +188,17 @@ Revision ID: df957305d8dede754d931b97f7b077b95f6ad4e2
 - @floating-ui/utils (0.1.6) [MIT]
 - @formatjs/cli-lib (6.3.3) [MIT]
 - @formatjs/ecma402-abstract (1.18.0) [MIT]
-- @formatjs/fast-memoize (2.2.0) [MIT]
+- @formatjs/ecma402-abstract (2.2.4) [MIT]
+- @formatjs/fast-memoize (2.2.3) [MIT]
 - @formatjs/icu-messageformat-parser (2.7.3) [MIT]
+- @formatjs/icu-messageformat-parser (2.9.4) [MIT]
 - @formatjs/icu-skeleton-parser (1.7.0) [MIT]
-- @formatjs/intl (2.9.9) [MIT]
-- @formatjs/intl-displaynames (6.6.4) [MIT]
-- @formatjs/intl-listformat (7.5.3) [MIT]
+- @formatjs/icu-skeleton-parser (1.8.8) [MIT]
+- @formatjs/intl (2.10.15) [MIT]
+- @formatjs/intl-displaynames (6.8.5) [MIT]
+- @formatjs/intl-listformat (7.7.5) [MIT]
 - @formatjs/intl-localematcher (0.5.2) [MIT]
+- @formatjs/intl-localematcher (0.5.8) [MIT]
 - @formatjs/ts-transformer (3.13.9) [MIT]
 - @gooddata/number-formatter (1.0.6) [GOODDATA LICENSE FOR GOODDATA FORMATTER, Python-2.0, PSF-2.0, mit-nagy, MIT, ISC, CNRI-Python, BSD-2-Clause, BSD-3-Clause, Apache-2.0]
 - @html-validate/stylish (4.2.0) [MIT]
@@ -279,11 +283,10 @@ Revision ID: df957305d8dede754d931b97f7b077b95f6ad4e2
 - @types/prop-types (15.7.11) [MIT]
 - @types/qs (6.9.10) [MIT]
 - @types/range-parser (1.2.7) [MIT]
-- @types/react (18.2.45) [MIT]
+- @types/react (18.3.23) [MIT]
 - @types/react-redux (7.1.33) [MIT]
 - @types/react-transition-group (4.4.10) [MIT]
 - @types/retry (0.12.0) [MIT]
-- @types/scheduler (0.16.8) [MIT]
 - @types/send (0.17.4) [MIT]
 - @types/serve-index (1.9.4) [MIT]
 - @types/serve-static (1.15.5) [MIT]
@@ -606,7 +609,7 @@ Revision ID: df957305d8dede754d931b97f7b077b95f6ad4e2
 - inline-style-parser (0.2.2) [MIT]
 - inquirer (8.2.6) [MIT]
 - interpret (2.2.0) [MIT]
-- intl-messageformat (10.5.8) [BSD-3-Clause]
+- intl-messageformat (10.7.7) [BSD-3-Clause]
 - ipaddr.js (1.9.1) [MIT]
 - ipaddr.js (2.1.0) [MIT]
 - is-alphabetical (2.0.1) [MIT]
@@ -816,16 +819,16 @@ Revision ID: df957305d8dede754d931b97f7b077b95f6ad4e2
 - randombytes (2.1.0) [MIT]
 - range-parser (1.2.1) [MIT]
 - raw-body (2.5.1) [MIT]
-- react (18.2.0) [MIT]
+- react (18.3.1) [MIT]
 - react-content-loader (6.2.1) [MIT, Apache-2.0]
 - react-day-picker (8.9.1) [MIT]
 - react-dnd (14.0.5) [MIT, BSD-3-Clause]
 - react-dnd-html5-backend (14.1.0) [MIT]
-- react-dom (18.2.0) [MIT]
+- react-dom (18.3.1) [MIT]
 - react-fast-compare (3.2.2) [MIT]
 - react-grid-system (8.1.9) [MIT]
 - react-helmet (6.1.0) [MIT]
-- react-intl (6.5.5) [BSD-3-Clause]
+- react-intl (6.8.9) [BSD-3-Clause]
 - react-is (16.13.1) [MIT]
 - react-is (17.0.2) [MIT]
 - react-lifecycles-compat (3.0.4) [MIT]
@@ -884,7 +887,7 @@ Revision ID: df957305d8dede754d931b97f7b077b95f6ad4e2
 - safer-buffer (2.1.2) [MIT]
 - sass (1.69.5) [MIT, BSD-3-Clause, Apache-2.0, Zlib, bzip2-1.0.6]
 - saxes (6.0.0) [ISC]
-- scheduler (0.23.0) [MIT]
+- scheduler (0.23.2) [MIT]
 - schema-utils (3.3.0) [MIT]
 - schema-utils (4.2.0) [MIT]
 - select-hose (2.0.0) [MIT]
@@ -8213,9 +8216,9 @@ Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 Package Download URL: https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-1.18.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/fast-memoize (2.2.0)
+Package Title: @formatjs/ecma402-abstract (2.2.4)
 
-Package Locator: npm+@formatjs/fast-memoize$2.2.0
+Package Locator: npm+@formatjs/ecma402-abstract$2.2.4
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8226,7 +8229,7 @@ MIT
 
 MIT License
 
-Copyright (c) 2021 FormatJS
+Copyright (c) 2023 FormatJS
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -8240,7 +8243,37 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@formatjs/fast-memoize/-/fast-memoize-2.2.0.tgz
+Package Download URL: https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-2.2.4.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @formatjs/fast-memoize (2.2.3)
+
+Package Locator: npm+@formatjs/fast-memoize$2.2.3
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2023 FormatJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@formatjs/fast-memoize/-/fast-memoize-2.2.3.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @formatjs/icu-messageformat-parser (2.7.3)
@@ -8273,6 +8306,36 @@ Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 Package Download URL: https://registry.npmjs.org/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.7.3.tgz
 
 --------------------------------------------------------------------------------
+Package Title: @formatjs/icu-messageformat-parser (2.9.4)
+
+Package Locator: npm+@formatjs/icu-messageformat-parser$2.9.4
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2023 FormatJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.9.4.tgz
+
+--------------------------------------------------------------------------------
 Package Title: @formatjs/icu-skeleton-parser (1.7.0)
 
 Package Locator: npm+@formatjs/icu-skeleton-parser$1.7.0
@@ -8303,9 +8366,9 @@ Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 Package Download URL: https://registry.npmjs.org/@formatjs/icu-skeleton-parser/-/icu-skeleton-parser-1.7.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/intl (2.9.9)
+Package Title: @formatjs/icu-skeleton-parser (1.8.8)
 
-Package Locator: npm+@formatjs/intl$2.9.9
+Package Locator: npm+@formatjs/icu-skeleton-parser$1.8.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8330,12 +8393,42 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@formatjs/intl/-/intl-2.9.9.tgz
+Package Download URL: https://registry.npmjs.org/@formatjs/icu-skeleton-parser/-/icu-skeleton-parser-1.8.8.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/intl-displaynames (6.6.4)
+Package Title: @formatjs/intl (2.10.15)
 
-Package Locator: npm+@formatjs/intl-displaynames$6.6.4
+Package Locator: npm+@formatjs/intl$2.10.15
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2023 FormatJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@formatjs/intl/-/intl-2.10.15.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @formatjs/intl-displaynames (6.8.5)
+
+Package Locator: npm+@formatjs/intl-displaynames$6.8.5
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8360,12 +8453,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@formatjs/intl-displaynames/-/intl-displaynames-6.6.4.tgz
+Package Download URL: https://registry.npmjs.org/@formatjs/intl-displaynames/-/intl-displaynames-6.8.5.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/intl-listformat (7.5.3)
+Package Title: @formatjs/intl-listformat (7.7.5)
 
-Package Locator: npm+@formatjs/intl-listformat$7.5.3
+Package Locator: npm+@formatjs/intl-listformat$7.7.5
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8390,7 +8483,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@formatjs/intl-listformat/-/intl-listformat-7.5.3.tgz
+Package Download URL: https://registry.npmjs.org/@formatjs/intl-listformat/-/intl-listformat-7.7.5.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @formatjs/intl-localematcher (0.5.2)
@@ -8421,6 +8514,36 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 
 Package Download URL: https://registry.npmjs.org/@formatjs/intl-localematcher/-/intl-localematcher-0.5.2.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @formatjs/intl-localematcher (0.5.8)
+
+Package Locator: npm+@formatjs/intl-localematcher$0.5.8
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2023 FormatJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@formatjs/intl-localematcher/-/intl-localematcher-0.5.8.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @formatjs/ts-transformer (3.13.9)
@@ -13265,9 +13388,9 @@ Authors: ts-npm-types@microsoft.com
 Package Download URL: https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.7.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @types/react (18.2.45)
+Package Title: @types/react (18.3.23)
 
-Package Locator: npm+@types/react$18.2.45
+Package Locator: npm+@types/react$18.3.23
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -13304,7 +13427,7 @@ MIT
 
 Authors: ts-npm-types@microsoft.com
 
-Package Download URL: https://registry.npmjs.org/@types/react/-/react-18.2.45.tgz
+Package Download URL: https://registry.npmjs.org/@types/react/-/react-18.3.23.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @types/react-redux (7.1.33)
@@ -13431,48 +13554,6 @@ MIT
 Authors: ts-npm-types@microsoft.com
 
 Package Download URL: https://registry.npmjs.org/@types/retry/-/retry-0.12.0.tgz
-
---------------------------------------------------------------------------------
-Package Title: @types/scheduler (0.16.8)
-
-Package Locator: npm+@types/scheduler$0.16.8
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-
-* Package Info *
-
-Authors: ts-npm-types@microsoft.com
-
-Package Download URL: https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.8.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @types/send (0.17.4)
@@ -28556,9 +28637,9 @@ Authors: sttk.xslet@gmail.com, blaine.bublitz@gmail.com, yo@contra.io, tyler@sle
 Package Download URL: https://registry.npmjs.org/interpret/-/interpret-2.2.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: intl-messageformat (10.5.8)
+Package Title: intl-messageformat (10.7.7)
 
-Package Locator: npm+intl-messageformat$10.5.8
+Package Locator: npm+intl-messageformat$10.7.7
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -28607,7 +28688,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Authors: a.pipkin@yahoo.com, caridy@gmail.com, contact@clarle.com, davglass@gmail.com, drew@folta.net, eferraiuolo@gmail.com, imalberto@gmail.com, holevietlong@gmail.com, lzhan@yahoo-inc.com, okuryu@okuryu.com, dinglinjie+npm@gmail.com, seth@bertalotto.net
 
-Package Download URL: https://registry.npmjs.org/intl-messageformat/-/intl-messageformat-10.5.8.tgz
+Package Download URL: https://registry.npmjs.org/intl-messageformat/-/intl-messageformat-10.7.7.tgz
 
 --------------------------------------------------------------------------------
 Package Title: ipaddr.js (1.9.1)
@@ -37852,9 +37933,9 @@ Authors: doug@somethingdoug.com, jonathanrichardong@gmail.com
 Package Download URL: https://registry.npmjs.org/raw-body/-/raw-body-2.5.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: react (18.2.0)
+Package Title: react (18.3.1)
 
-Package Locator: npm+react$18.2.0
+Package Locator: npm+react$18.3.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -37891,7 +37972,7 @@ SOFTWARE.
 
 Authors: opensource+npm@fb.com, react-core@meta.com
 
-Package Download URL: https://registry.npmjs.org/react/-/react-18.2.0.tgz
+Package Download URL: https://registry.npmjs.org/react/-/react-18.3.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: react-content-loader (6.2.1)
@@ -38117,9 +38198,9 @@ Authors: jordangens@gmail.com, dan.abramov@gmail.com, darthtrevino@gmail.com, ni
 Package Download URL: https://registry.npmjs.org/react-dnd-html5-backend/-/react-dnd-html5-backend-14.1.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: react-dom (18.2.0)
+Package Title: react-dom (18.3.1)
 
-Package Locator: npm+react-dom$18.2.0
+Package Locator: npm+react-dom$18.3.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -38156,7 +38237,7 @@ SOFTWARE.
 
 Authors: opensource+npm@fb.com, react-core@meta.com
 
-Package Download URL: https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz
+Package Download URL: https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: react-fast-compare (3.2.2)
@@ -38284,9 +38365,9 @@ Authors: cara.kuei@nfl.com, chris.welch@nfl.com, darren.wiebe@nfl.com, michael.b
 Package Download URL: https://registry.npmjs.org/react-helmet/-/react-helmet-6.1.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: react-intl (6.5.5)
+Package Title: react-intl (6.8.9)
 
-Package Locator: npm+react-intl$6.5.5
+Package Locator: npm+react-intl$6.8.9
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -38329,7 +38410,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Authors: caridy@gmail.com, contact@clarle.com, eferraiuolo@gmail.com, juan@dopazo.me, holevietlong@gmail.com, okuryu@okuryu.com, dinglinjie+npm@gmail.com, seth@bertalotto.net
 
-Package Download URL: https://registry.npmjs.org/react-intl/-/react-intl-6.5.5.tgz
+Package Download URL: https://registry.npmjs.org/react-intl/-/react-intl-6.8.9.tgz
 
 --------------------------------------------------------------------------------
 Package Title: react-is (16.13.1)
@@ -42955,9 +43036,9 @@ Authors: ldd@lddubeau.com
 Package Download URL: https://registry.npmjs.org/saxes/-/saxes-6.0.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: scheduler (0.23.0)
+Package Title: scheduler (0.23.2)
 
-Package Locator: npm+scheduler$0.23.0
+Package Locator: npm+scheduler$0.23.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -42994,7 +43075,7 @@ SOFTWARE.
 
 Authors: opensource+npm@fb.com, react-core@meta.com
 
-Package Download URL: https://registry.npmjs.org/scheduler/-/scheduler-0.23.0.tgz
+Package Download URL: https://registry.npmjs.org/scheduler/-/scheduler-0.23.2.tgz
 
 --------------------------------------------------------------------------------
 Package Title: schema-utils (3.3.0)
@@ -78386,19 +78467,6 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* MIT *
-
-MIT License
-
-Copyright (c) 2021 FormatJS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 * MIT *
