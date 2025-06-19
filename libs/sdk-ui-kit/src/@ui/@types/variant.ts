@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 /**
  * @internal
  */
@@ -23,3 +23,8 @@ export type VariantDanger = "danger";
  * @internal
  */
 export type VariantPopOut = "popout";
+
+/**
+ * @internal
+ */
+export type VariantTooltip = "tooltip";

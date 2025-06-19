@@ -5743,6 +5743,9 @@ export interface ToastMessageContextType {
 export const ToastMessages: React_2.FC;
 
 // @internal (undocumented)
+export type TooltipArrowPlacement = "top" | "top-start" | "top-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end" | "right" | "right-start" | "right-end";
+
+// @internal (undocumented)
 export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader>;
 
 // @internal
@@ -5804,7 +5807,7 @@ export interface UiButtonProps {
     // (undocumented)
     tooltip?: React_2.ReactNode;
     // (undocumented)
-    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip;
 }
 
 // @internal (undocumented)
@@ -6086,6 +6089,34 @@ export interface UiTabsProps {
 }
 
 // @internal (undocumented)
+export const UiTooltip: React_2.FC<UiTooltipProps>;
+
+// @internal (undocumented)
+export const UiTooltipAnchor: ({ children }: {
+    children: React_2.ReactElement;
+}) => React_2.ReactElement<any, string | React_2.JSXElementConstructor<any>>;
+
+// @internal (undocumented)
+export const UiTooltipContent: ({ children }: {
+    children: React_2.ReactNode;
+}) => React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiTooltipProps {
+    accessibilityConfig?: IAccessibilityConfigBase;
+    arrowPlacement?: TooltipArrowPlacement;
+    children?: React.ReactNode;
+    focusTrigger?: boolean;
+    hoverCloseDelay?: number;
+    hoverOpenDelay?: number;
+    hoverTrigger?: boolean;
+    offset?: number;
+    optimalPlacement?: boolean;
+    showArrow?: boolean;
+    width?: number | "auto";
+}
+
+// @internal (undocumented)
 export type UnitsType = "px" | "%" | "rem" | "em";
 
 // @internal (undocumented)
@@ -6209,6 +6240,9 @@ export type VariantSecondary = "secondary";
 
 // @internal (undocumented)
 export type VariantTertiary = "tertiary";
+
+// @internal (undocumented)
+export type VariantTooltip = "tooltip";
 
 // @internal (undocumented)
 export type VerticalPosition = "top" | "center" | "bottom";
