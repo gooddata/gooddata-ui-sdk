@@ -76,11 +76,11 @@
     },
     {
       "name": "@codemirror/state",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@codemirror/view",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@componentdriven/csf",
@@ -180,7 +180,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-gen-ai",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-geo",

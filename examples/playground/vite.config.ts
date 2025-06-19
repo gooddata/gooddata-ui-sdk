@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import * as path from "path";
@@ -66,7 +66,12 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [react()],
         optimizeDeps: {
-            exclude: [...packagesWithoutStyles, ...packagesWithStyles],
+            exclude: [
+                "@codemirror/state",
+                "@codemirror/view",
+                ...packagesWithoutStyles,
+                ...packagesWithStyles,
+            ],
         },
         resolve: {
             alias: [
@@ -89,6 +94,7 @@ export default defineConfig(({ mode }) => {
                     makePackageSourceAlias(pkg),
                 ]),
             ],
+            dedupe: ["@codemirror/state", "@codemirror/view"],
         },
         server: {
             ...serverOptions,

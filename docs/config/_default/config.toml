@@ -144,6 +144,9 @@ link = "/latest/introduction/"
 [[params.404.links]]
 title = "Quick Start"
 link = "/latest/quick_start/"
+[[params.404.links]]
+title = "CodeMirror 6 Integration"
+link = "/latest/codemirror6_genai_integration/"
 
 [params.mermaid]
 enable = true
