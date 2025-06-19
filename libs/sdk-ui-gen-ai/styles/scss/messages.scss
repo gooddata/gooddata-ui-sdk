@@ -20,6 +20,11 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+
+    .react-loading-skeleton {
+        --base-color: #{kit-variables.$is-focused-background};
+        --highlight-color: #{kit-variables.$gd-color-white};
+    }
 }
 
 .gd-gen-ai-chat__messages__message {

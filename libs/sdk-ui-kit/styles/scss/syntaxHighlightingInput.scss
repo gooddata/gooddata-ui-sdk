@@ -13,7 +13,7 @@
         border: 1px solid variables.$gd-input-text-border;
         line-height: normal;
         vertical-align: middle;
-        color: variables.$default-gd-color-text;
+        color: variables.$gd-medium-gray;
         background: variables.$gd-color-white;
         font-size: 14px;
         font-family: monospace;
@@ -28,7 +28,8 @@
         );
 
         @include mixins.placeholder {
-            color: color.adjust(variables.$default-gd-color-link, $alpha: -0.25);
+            color: variables.$gd-color-link;
+            opacity: 0.75;
 
             @include mixins.transition(color, 0.25s, ease-in-out);
         }
@@ -57,6 +58,15 @@
 
         .cm-nonmatchingBracket {
             color: variables.$gd-palette-error-base;
+        }
+
+        .cm-content {
+            caret-color: variables.$gd-medium-gray;
+        }
+
+        .cm-placeholder {
+            color: variables.$gd-color-link;
+            opacity: 0.75;
         }
     }
 }
