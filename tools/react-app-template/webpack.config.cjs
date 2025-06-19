@@ -66,6 +66,12 @@ module.exports = (_env, argv) => {
 
                 // Prefer ESM versions of packages to enable tree shaking
                 mainFields: ["module", "browser", "main"],
+
+                // Dedupe packages to avoid duplicate instances
+                alias: {
+                    "@codemirror/state": path.resolve(__dirname, "node_modules/@codemirror/state"),
+                    "@codemirror/view": path.resolve(__dirname, "node_modules/@codemirror/view"),
+                },
             },
             module: {
                 rules: [

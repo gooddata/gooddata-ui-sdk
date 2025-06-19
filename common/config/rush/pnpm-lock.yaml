@@ -6493,6 +6493,12 @@ importers:
 
   ../../tools/react-app-template:
     dependencies:
+      '@codemirror/state':
+        specifier: ~6.5.2
+        version: 6.5.2
+      '@codemirror/view':
+        specifier: ~6.36.4
+        version: 6.36.5
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-base
@@ -6520,6 +6526,9 @@ importers:
       '@gooddata/sdk-ui-filters':
         specifier: workspace:*
         version: link:../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-gen-ai':
+        specifier: workspace:*
+        version: link:../../libs/sdk-ui-gen-ai
       '@gooddata/sdk-ui-geo':
         specifier: workspace:*
         version: link:../../libs/sdk-ui-geo
