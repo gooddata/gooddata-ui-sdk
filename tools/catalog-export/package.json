@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/catalog-export",
-    "version": "10.32.0-alpha.6",
+    "version": "10.32.0-alpha.7",
     "author": "GoodData",
     "description": "GoodData SDK Catalog Export tooling",
     "repository": {
