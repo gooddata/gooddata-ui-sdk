@@ -3911,6 +3911,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     cronExpression?: string;
     // (undocumented)
+    customRecurrenceTypeMappingFn?: (date?: Date | null, cronExpression?: string, allowHourlyRecurrence?: boolean, showInheritValue?: boolean, weekStart?: WeekStart) => RecurrenceType;
+    // (undocumented)
     dateFormat?: string;
     // (undocumented)
     isWhiteLabeled?: boolean;

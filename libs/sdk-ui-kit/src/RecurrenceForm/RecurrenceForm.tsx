@@ -47,6 +47,13 @@ export interface IRecurrenceFormProps {
     onRecurrenceDropdownOpen?: () => void;
     closeDropdownsOnParentScroll?: boolean;
     onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+    customRecurrenceTypeMappingFn?: (
+        date?: Date | null,
+        cronExpression?: string,
+        allowHourlyRecurrence?: boolean,
+        showInheritValue?: boolean,
+        weekStart?: WeekStart,
+    ) => RecurrenceType;
 }
 
 const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
@@ -72,28 +79,18 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
         onRecurrenceDropdownOpen,
         closeDropdownsOnParentScroll,
         onKeyDownSubmit,
+        customRecurrenceTypeMappingFn,
     } = props;
     const intl = useIntl();
+    const mapRecurrenceType = customRecurrenceTypeMappingFn ?? transformCronExpressionToRecurrenceType;
 
     const [dateValue, setDateValue] = useState<Date | null>(startDate);
     const [cronValue, setCronValue] = useState<string>(cronExpression);
     const [recurrenceType, setRecurrenceType] = useState<RecurrenceType>(
-        transformCronExpressionToRecurrenceType(
-            dateValue,
-            cronExpression,
-            allowHourlyRecurrence,
-            showInheritValue,
-            weekStart,
-        ),
+        mapRecurrenceType(dateValue, cronExpression, allowHourlyRecurrence, showInheritValue, weekStart),
     );
     const [inheritRecurrenceType] = useState<RecurrenceType>(
-        transformCronExpressionToRecurrenceType(
-            dateValue,
-            placeholder,
-            allowHourlyRecurrence,
-            false,
-            weekStart,
-        ),
+        mapRecurrenceType(dateValue, placeholder, allowHourlyRecurrence, false, weekStart),
     );
 
     const onDateChange = useCallback(
