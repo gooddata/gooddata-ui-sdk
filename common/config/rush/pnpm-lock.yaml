@@ -68,11 +68,11 @@ importers:
         specifier: ^4.14.202
         version: 4.14.202
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
@@ -128,11 +128,11 @@ importers:
         specifier: ~2.5.0
         version: 2.5.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -194,11 +194,11 @@ importers:
         specifier: workspace:*
         version: link:../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -207,11 +207,11 @@ importers:
         specifier: workspace:*
         version: link:../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -270,11 +270,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -283,11 +283,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -346,11 +346,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -359,11 +359,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -422,11 +422,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -435,11 +435,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -498,11 +498,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -511,11 +511,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -574,11 +574,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -587,11 +587,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -650,11 +650,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -663,11 +663,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -726,11 +726,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -739,11 +739,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -809,13 +809,13 @@ importers:
         version: 12.2.0
       highcharts-react-official:
         specifier: 3.2.2
-        version: 3.2.2(highcharts@12.2.0)(react@18.2.0)
+        version: 3.2.2(highcharts@12.2.0)(react@18.3.1)
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -824,11 +824,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -887,11 +887,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -900,11 +900,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -963,11 +963,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -976,11 +976,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -1039,11 +1039,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -1052,11 +1052,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -1115,11 +1115,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -1128,11 +1128,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -1191,11 +1191,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -1204,11 +1204,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../tools/catalog-export
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@vitejs/plugin-react-swc':
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
@@ -1958,8 +1958,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.2
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       ts-invariant:
         specifier: ^0.7.5
         version: 0.7.5
@@ -1999,7 +1999,7 @@ importers:
         version: 9.2.0
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@testing-library/user-event':
         specifier: ^14.4.2
         version: 14.5.1(@testing-library/dom@9.2.0)
@@ -2022,11 +2022,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/uuid':
         specifier: ^8.3.4
         version: 8.3.4
@@ -2091,11 +2091,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       stylelint:
         specifier: ^13.8.0
         version: 13.13.1
@@ -2237,7 +2237,7 @@ importers:
         version: 33.1.0
       ag-grid-react:
         specifier: 33.1.0
-        version: 33.1.0(react-dom@18.2.0)(react@18.2.0)
+        version: 33.1.0(react-dom@18.3.1)(react@18.3.1)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -2252,7 +2252,7 @@ importers:
         version: 12.2.0
       highcharts-react-official:
         specifier: 3.2.2
-        version: 3.2.2(highcharts@12.2.0)(react@18.2.0)
+        version: 3.2.2(highcharts@12.2.0)(react@18.3.1)
       hoist-non-react-statics:
         specifier: ^3.3.0
         version: 3.3.2
@@ -2269,11 +2269,11 @@ importers:
         specifier: ^3.6.7
         version: 3.7.2
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       react-measure:
         specifier: ^2.5.2
-        version: 2.5.2(react-dom@18.2.0)(react@18.2.0)
+        version: 2.5.2(react-dom@18.3.1)(react@18.3.1)
       ts-invariant:
         specifier: ^0.7.5
         version: 0.7.5
@@ -2304,7 +2304,7 @@ importers:
         version: 7.38.5(@types/node@18.19.3)
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@types/hoist-non-react-statics':
         specifier: ^3.3.1
         version: 3.3.5
@@ -2324,11 +2324,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/react-measure':
         specifier: ^2.0.8
         version: 2.0.12
@@ -2396,11 +2396,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -2469,10 +2469,10 @@ importers:
         version: 1.2.1
       '@react-aria/interactions':
         specifier: ^3
-        version: 3.25.3(react-dom@18.2.0)(react@18.2.0)
+        version: 3.25.3(react-dom@18.3.1)(react@18.3.1)
       '@reduxjs/toolkit':
         specifier: ^1.9.3
-        version: 1.9.7(react-redux@7.2.9)(react@18.2.0)
+        version: 1.9.7(react-redux@7.2.9)(react@18.3.1)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -2496,34 +2496,34 @@ importers:
         version: 10.1.0
       react-dnd:
         specifier: ^14.0.5
-        version: 14.0.5(@types/node@18.19.3)(@types/react@18.2.45)(react@18.2.0)
+        version: 14.0.5(@types/node@18.19.3)(@types/react@18.3.23)(react@18.3.1)
       react-dnd-html5-backend:
         specifier: ^14.1.0
         version: 14.1.0
       react-grid-system:
         specifier: ^8.1.4
-        version: 8.1.9(react@18.2.0)
+        version: 8.1.9(react@18.3.1)
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       react-lines-ellipsis:
         specifier: ^0.15.0
-        version: 0.15.4(react-dom@18.2.0)(react@18.2.0)
+        version: 0.15.4(react-dom@18.3.1)(react@18.3.1)
       react-loading-skeleton:
         specifier: ^3.4.0
-        version: 3.4.0(react@18.2.0)
+        version: 3.4.0(react@18.3.1)
       react-measure:
         specifier: ^2.5.2
-        version: 2.5.2(react-dom@18.2.0)(react@18.2.0)
+        version: 2.5.2(react-dom@18.3.1)(react@18.3.1)
       react-redux:
         specifier: ^7.2.4
-        version: 7.2.9(react-dom@18.2.0)(react@18.2.0)
+        version: 7.2.9(react-dom@18.3.1)(react@18.3.1)
       react-select:
         specifier: ^5.7.3
-        version: 5.7.3(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
+        version: 5.7.3(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       react-transition-group:
         specifier: ^4.4.2
-        version: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+        version: 4.4.5(react-dom@18.3.1)(react@18.3.1)
       redux-batched-actions:
         specifier: ^0.5.0
         version: 0.5.0
@@ -2563,7 +2563,7 @@ importers:
         version: 9.2.0
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@testing-library/user-event':
         specifier: ^14.4.2
         version: 14.5.1(@testing-library/dom@9.2.0)
@@ -2580,11 +2580,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/react-lines-ellipsis':
         specifier: ^0.15.1
         version: 0.15.5
@@ -2658,11 +2658,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -2764,7 +2764,7 @@ importers:
         version: 1.1.5
       fixed-data-table-2:
         specifier: ^1.2.0
-        version: 1.2.22(react-dom@18.2.0)(react@18.2.0)
+        version: 1.2.22(react-dom@18.3.1)(react@18.3.1)
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -2778,26 +2778,26 @@ importers:
         specifier: ^10.0.1
         version: 10.1.0
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       react-lines-ellipsis:
         specifier: ^0.15.0
-        version: 0.15.4(react-dom@18.2.0)(react@18.2.0)
+        version: 0.15.4(react-dom@18.3.1)(react@18.3.1)
       react-loading-skeleton:
         specifier: ^3.4.0
-        version: 3.4.0(react@18.2.0)
+        version: 3.4.0(react@18.3.1)
       react-measure:
         specifier: ^2.5.2
-        version: 2.5.2(react-dom@18.2.0)(react@18.2.0)
+        version: 2.5.2(react-dom@18.3.1)(react@18.3.1)
       react-select:
         specifier: ^5.7.3
-        version: 5.7.3(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
+        version: 5.7.3(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       react-select-async-paginate:
         specifier: ^0.7.3
-        version: 0.7.3(react-select@5.7.3)(react@18.2.0)
+        version: 0.7.3(react-select@5.7.3)(react@18.3.1)
       react-transition-group:
         specifier: ^4.4.2
-        version: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+        version: 4.4.5(react-dom@18.3.1)(react@18.3.1)
       ts-invariant:
         specifier: ^0.7.5
         version: 0.7.5
@@ -2834,7 +2834,7 @@ importers:
         version: 9.2.0
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@testing-library/user-event':
         specifier: ^14.4.2
         version: 14.5.1(@testing-library/dom@9.2.0)
@@ -2857,11 +2857,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/react-lines-ellipsis':
         specifier: ^0.15.1
         version: 0.15.5
@@ -2935,11 +2935,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -2984,7 +2984,7 @@ importers:
         version: link:../util
       '@reduxjs/toolkit':
         specifier: ^1.9.3
-        version: 1.9.7(react-redux@7.2.9)(react@18.2.0)
+        version: 1.9.7(react-redux@7.2.9)(react@18.3.1)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -2996,10 +2996,10 @@ importers:
         version: 1.1.5
       downshift:
         specifier: ^3.4.7
-        version: 3.4.8(react@18.2.0)
+        version: 3.4.8(react@18.3.1)
       fixed-data-table-2:
         specifier: ^1.2.0
-        version: 1.2.22(react-dom@18.2.0)(react@18.2.0)
+        version: 1.2.22(react-dom@18.3.1)(react@18.3.1)
       json-stable-stringify:
         specifier: ^1.0.1
         version: 1.1.0
@@ -3011,16 +3011,16 @@ importers:
         version: 2.29.4
       react-day-picker:
         specifier: ^8.7.1
-        version: 8.9.1(date-fns@2.30.0)(react@18.2.0)
+        version: 8.9.1(date-fns@2.30.0)(react@18.3.1)
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       react-responsive:
         specifier: ^10.0.1
-        version: 10.0.1(react@18.2.0)
+        version: 10.0.1(react@18.3.1)
       react-window:
         specifier: ^1.8.7
-        version: 1.8.10(react-dom@18.2.0)(react@18.2.0)
+        version: 1.8.10(react-dom@18.3.1)(react@18.3.1)
       redux-saga:
         specifier: ^1.2.3
         version: 1.2.3
@@ -3057,7 +3057,7 @@ importers:
         version: 7.38.5(@types/node@18.19.3)
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@types/json-stable-stringify':
         specifier: ^1.0.32
         version: 1.0.36
@@ -3071,11 +3071,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/react-window':
         specifier: ^1.8.1
         version: 1.8.8
@@ -3143,11 +3143,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -3210,7 +3210,7 @@ importers:
         version: link:../util
       '@reduxjs/toolkit':
         specifier: ^1.9.3
-        version: 1.9.7(react-redux@7.2.9)(react@18.2.0)
+        version: 1.9.7(react-redux@7.2.9)(react@18.3.1)
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
@@ -3230,20 +3230,20 @@ importers:
         specifier: ^9.0.3
         version: 9.0.21
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       react-loading-skeleton:
         specifier: ^3.4.0
-        version: 3.4.0(react@18.2.0)
+        version: 3.4.0(react@18.3.1)
       react-markdown:
         specifier: ^9.0.1
-        version: 9.0.1(@types/react@18.2.45)(react@18.2.0)
+        version: 9.0.1(@types/react@18.3.23)(react@18.3.1)
       react-redux:
         specifier: ^7.2.4
-        version: 7.2.9(react-dom@18.2.0)(react@18.2.0)
+        version: 7.2.9(react-dom@18.3.1)(react@18.3.1)
       react-textarea-autosize:
         specifier: 8.4.0
-        version: 8.4.0(@types/react@18.2.45)(react@18.2.0)
+        version: 8.4.0(@types/react@18.3.23)(react@18.3.1)
       redux-saga:
         specifier: ^1.2.3
         version: 1.2.3
@@ -3286,7 +3286,7 @@ importers:
         version: 9.2.0
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@testing-library/user-event':
         specifier: ^14.4.2
         version: 14.5.1(@testing-library/dom@9.2.0)
@@ -3297,11 +3297,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/react-native-listener':
         specifier: ~1.1.3
         version: 1.1.3
@@ -3369,11 +3369,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -3435,11 +3435,11 @@ importers:
         specifier: ^2.6.1
         version: 2.15.0
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       react-measure:
         specifier: ^2.5.2
-        version: 2.5.2(react-dom@18.2.0)(react@18.2.0)
+        version: 2.5.2(react-dom@18.3.1)(react@18.3.1)
       ts-invariant:
         specifier: ^0.7.5
         version: 0.7.5
@@ -3467,7 +3467,7 @@ importers:
         version: 7.38.5(@types/node@18.19.3)
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -3478,11 +3478,11 @@ importers:
         specifier: ^18.17.6
         version: 18.19.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/react-measure':
         specifier: ^2.0.8
         version: 2.0.12
@@ -3544,11 +3544,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -3575,7 +3575,7 @@ importers:
     dependencies:
       '@aaronhayes/react-use-hubspot-form':
         specifier: ^2.0.1
-        version: 2.1.1(react-dom@18.2.0)(react@18.2.0)
+        version: 2.1.1(react-dom@18.3.1)(react@18.3.1)
       '@codemirror/autocomplete':
         specifier: ^6.18.6
         version: 6.18.6
@@ -3614,7 +3614,7 @@ importers:
         version: 1.2.1
       '@tanstack/react-virtual':
         specifier: ^3.11.1
-        version: 3.11.1(react-dom@18.2.0)(react@18.2.0)
+        version: 3.11.1(react-dom@18.3.1)(react@18.3.1)
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
@@ -3644,7 +3644,7 @@ importers:
         version: 1.1.5
       fixed-data-table-2:
         specifier: ^1.2.0
-        version: 1.2.22(react-dom@18.2.0)(react@18.2.0)
+        version: 1.2.22(react-dom@18.3.1)(react@18.3.1)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3653,46 +3653,46 @@ importers:
         version: 2.29.4
       react-content-loader:
         specifier: ^6.2.0
-        version: 6.2.1(react@18.2.0)
+        version: 6.2.1(react@18.3.1)
       react-day-picker:
         specifier: ^8.7.1
-        version: 8.9.1(date-fns@2.30.0)(react@18.2.0)
+        version: 8.9.1(date-fns@2.30.0)(react@18.3.1)
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.2
       react-helmet:
         specifier: ^6.1.0
-        version: 6.1.0(react@18.2.0)
+        version: 6.1.0(react@18.3.1)
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       react-loading-skeleton:
         specifier: ^3.4.0
-        version: 3.4.0(react@18.2.0)
+        version: 3.4.0(react@18.3.1)
       react-markdown:
         specifier: ^9.0.1
-        version: 9.0.1(@types/react@18.2.45)(react@18.2.0)
+        version: 9.0.1(@types/react@18.3.23)(react@18.3.1)
       react-measure:
         specifier: ^2.5.2
-        version: 2.5.2(react-dom@18.2.0)(react@18.2.0)
+        version: 2.5.2(react-dom@18.3.1)(react@18.3.1)
       react-native-listener:
         specifier: ~1.1.0
         version: 1.1.0
       react-portal:
         specifier: ^4.1.5
-        version: 4.2.2(react-dom@18.2.0)(react@18.2.0)
+        version: 4.2.2(react-dom@18.3.1)(react@18.3.1)
       react-responsive:
         specifier: ^10.0.1
-        version: 10.0.1(react@18.2.0)
+        version: 10.0.1(react@18.3.1)
       react-select:
         specifier: ^5.7.3
-        version: 5.7.3(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
+        version: 5.7.3(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       react-textarea-autosize:
         specifier: 8.4.0
-        version: 8.4.0(@types/react@18.2.45)(react@18.2.0)
+        version: 8.4.0(@types/react@18.3.23)(react@18.3.1)
       react-transition-group:
         specifier: ^4.4.2
-        version: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+        version: 4.4.5(react-dom@18.3.1)(react@18.3.1)
       tinycolor2:
         specifier: ^1.4.2
         version: 1.6.0
@@ -3732,7 +3732,7 @@ importers:
         version: 9.2.0
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@testing-library/user-event':
         specifier: ^14.4.2
         version: 14.5.1(@testing-library/dom@9.2.0)
@@ -3752,11 +3752,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/react-helmet':
         specifier: ^6.1.4
         version: 6.1.11
@@ -3836,11 +3836,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -3887,8 +3887,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       semver:
         specifier: ^7.3.5
         version: 7.5.4
@@ -3921,11 +3921,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/semver':
         specifier: ^7.3.9
         version: 7.5.6
@@ -3984,11 +3984,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -4021,19 +4021,19 @@ importers:
         version: 33.1.0
       ag-grid-react:
         specifier: 33.1.0
-        version: 33.1.0(react-dom@18.2.0)(react@18.2.0)
+        version: 33.1.0(react-dom@18.3.1)(react@18.3.1)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
       fixed-data-table-2:
         specifier: ^1.2.0
-        version: 1.2.22(react-dom@18.2.0)(react@18.2.0)
+        version: 1.2.22(react-dom@18.3.1)(react@18.3.1)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       ts-invariant:
         specifier: ^0.7.5
         version: 0.7.5
@@ -4064,7 +4064,7 @@ importers:
         version: 7.38.5(@types/node@18.19.3)
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -4075,11 +4075,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/uuid':
         specifier: ^8.3.4
         version: 8.3.4
@@ -4144,11 +4144,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -4198,8 +4198,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -4221,7 +4221,7 @@ importers:
         version: 7.38.5(@types/node@18.19.3)
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -4229,11 +4229,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
@@ -4289,11 +4289,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -4407,22 +4407,22 @@ importers:
         version: 7.6.20
       '@storybook/manager-webpack5':
         specifier: ^6.5.16
-        version: 6.5.16(eslint@8.55.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
+        version: 6.5.16(eslint@8.55.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3)
       '@storybook/preset-scss':
         specifier: ^1.0.3
         version: 1.0.3(css-loader@6.8.1)(sass-loader@10.5.0)(style-loader@3.3.3)
       '@storybook/react':
         specifier: ^7.0.7
-        version: 7.6.4(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
+        version: 7.6.4(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3)
       '@storybook/react-webpack5':
         specifier: ^7.0.7
-        version: 7.6.4(@babel/core@7.26.10)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
+        version: 7.6.4(@babel/core@7.26.10)(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3)
       '@testing-library/dom':
         specifier: ~9.2.0
         version: 9.2.0
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@types/json-stable-stringify':
         specifier: ^1.0.32
         version: 1.0.36
@@ -4433,11 +4433,11 @@ importers:
         specifier: ^18.17.6
         version: 18.19.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/spark-md5':
         specifier: ^3.0.1
         version: 3.0.4
@@ -4526,17 +4526,17 @@ importers:
         specifier: ~2.5.0
         version: 2.5.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       react-responsive:
         specifier: ^10.0.1
-        version: 10.0.1(react@18.2.0)
+        version: 10.0.1(react@18.3.1)
       require-from-string:
         specifier: ^2.0.2
         version: 2.0.2
@@ -4682,11 +4682,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/react-router-dom':
         specifier: ^5.1.5
         version: 5.3.3
@@ -4811,17 +4811,17 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       react-router-dom:
         specifier: ^5.2.0
-        version: 5.3.4(react@18.2.0)
+        version: 5.3.4(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -4836,7 +4836,7 @@ importers:
         version: 3.3.3(webpack@5.89.0)
       styled-jsx:
         specifier: ^5.1.0
-        version: 5.1.2(@babel/core@7.26.10)(react@18.2.0)
+        version: 5.1.2(@babel/core@7.26.10)(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -4912,7 +4912,7 @@ importers:
         version: 7.38.5(@types/node@18.19.3)
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -4923,11 +4923,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
@@ -4986,11 +4986,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -5028,11 +5028,11 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       react-measure:
         specifier: ^2.5.2
-        version: 2.5.2(react-dom@18.2.0)(react@18.2.0)
+        version: 2.5.2(react-dom@18.3.1)(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -5057,7 +5057,7 @@ importers:
         version: 7.38.5(@types/node@18.19.3)
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -5065,11 +5065,11 @@ importers:
         specifier: ^18.17.6
         version: 18.19.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@types/react-measure':
         specifier: ^2.0.8
         version: 2.0.12
@@ -5131,11 +5131,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       sass:
         specifier: ^1.52.3
         version: 1.69.5
@@ -5203,8 +5203,8 @@ importers:
         specifier: ~2.6.1
         version: 2.6.1(webpack@5.89.0)
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       ts-invariant:
         specifier: ^0.7.5
         version: 0.7.5
@@ -5234,11 +5234,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
@@ -5306,11 +5306,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       source-map-loader:
         specifier: ^4.0.0
         version: 4.0.1(webpack@5.89.0)
@@ -5488,8 +5488,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -5505,7 +5505,7 @@ importers:
         version: 7.38.5(@types/node@18.19.3)
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -5513,11 +5513,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
@@ -5570,11 +5570,11 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -6017,11 +6017,11 @@ importers:
         specifier: ^3.4.0
         version: 3.4.3
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
@@ -6098,14 +6098,14 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       react-intl:
-        specifier: ^6.4.1
-        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+        specifier: 6.8.9
+        version: 6.8.9(react@18.3.1)(typescript@5.3.3)
       source-map-loader:
         specifier: ^4.0.0
         version: 4.0.1(webpack@5.89.0)
@@ -6536,11 +6536,11 @@ importers:
         specifier: workspace:*
         version: link:../../libs/sdk-ui-pivot
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -6555,11 +6555,11 @@ importers:
         specifier: workspace:*
         version: link:../../libs/sdk-ui-kit
       '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.45
+        specifier: 18.3.23
+        version: 18.3.23
       '@types/react-dom':
-        specifier: ^18.2.1
-        version: 18.2.17
+        specifier: 18.3.7
+        version: 18.3.7(@types/react@18.3.23)
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
@@ -6796,15 +6796,15 @@ importers:
 
 packages:
 
-  /@aaronhayes/react-use-hubspot-form@2.1.1(react-dom@18.2.0)(react@18.2.0):
+  /@aaronhayes/react-use-hubspot-form@2.1.1(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-K1ybIAa6b49hTnr08OcYZWI9yqpI/bGzjh2Vnk+H3Lt1udpToa0wJnP9ONmfs+wUdefzX2v0BwQPxtZ7yE6E8A==}
     engines: {node: '>=10.16'}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /@aashutoshrathi/word-wrap@1.2.6:
@@ -9549,7 +9549,7 @@ packages:
     resolution: {integrity: sha512-W2P2c/VRW1/1tLox0mVUalvnWXxavmv/Oum2aPsRcoDJuob75FC3Y8FbpfLwUegRcxINtGUMPq0tFCvYNTBXNA==}
     dev: false
 
-  /@emotion/react@11.11.1(@types/react@18.2.45)(react@18.2.0):
+  /@emotion/react@11.11.1(@types/react@18.3.23)(react@18.3.1):
     resolution: {integrity: sha512-5mlW1DquU5HaxjLkfkGN1GA/fvVGdyHURRiX/0FHl2cfIfRxSOfmxEH5YS43edp0OldZrZ+dkBKbngxcNCdZvA==}
     peerDependencies:
       '@types/react': '*'
@@ -9562,12 +9562,12 @@ packages:
       '@emotion/babel-plugin': 11.11.0
       '@emotion/cache': 11.11.0
       '@emotion/serialize': 1.1.2
-      '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
+      '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.3.1)
       '@emotion/utils': 1.2.1
       '@emotion/weak-memoize': 0.3.1
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
       hoist-non-react-statics: 3.3.2
-      react: 18.2.0
+      react: 18.3.1
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -9590,12 +9590,12 @@ packages:
     resolution: {integrity: sha512-KOEGMu6dmJZtpadb476IsZBclKvILjopjUii3V+7MnXIQCYh8W3NgNcgwo21n9LXZX6EDIKvqfjYxXebDwxKmQ==}
     dev: false
 
-  /@emotion/use-insertion-effect-with-fallbacks@1.0.1(react@18.2.0):
+  /@emotion/use-insertion-effect-with-fallbacks@1.0.1(react@18.3.1):
     resolution: {integrity: sha512-jT/qyKZ9rzLErtrjGgdkMBn2OP8wl0G3sQlBb3YPryvKHsjvINUhVaPFfP+fpBcOkmrVOVEEHQFJ7nbj2TH2gw==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
   /@emotion/utils@1.2.1:
@@ -10279,9 +10279,17 @@ packages:
     dependencies:
       '@formatjs/intl-localematcher': 0.5.2
       tslib: 2.6.2
+    dev: false
 
-  /@formatjs/fast-memoize@2.2.0:
-    resolution: {integrity: sha512-hnk/nY8FyrL5YxwP9e4r9dqeM6cAbo8PeU9UjyXojZMNvVad2Z06FAVHyR3Ecw6fza+0GH7vdJgiKIVXTMbSBA==}
+  /@formatjs/ecma402-abstract@2.2.4:
+    resolution: {integrity: sha512-lFyiQDVvSbQOpU+WFd//ILolGj4UgA/qXrKeZxdV14uKiAUiPAtX6XAn7WBCRi7Mx6I7EybM9E5yYn4BIpZWYg==}
+    dependencies:
+      '@formatjs/fast-memoize': 2.2.3
+      '@formatjs/intl-localematcher': 0.5.8
+      tslib: 2.8.1
+
+  /@formatjs/fast-memoize@2.2.3:
+    resolution: {integrity: sha512-3jeJ+HyOfu8osl3GNSL4vVHUuWFXR03Iz9jjgI7RwjG6ysu/Ymdr0JRCPHfF5yGbTE6JCrd63EpvX1/WybYRbA==}
     dependencies:
       tslib: 2.8.1
 
@@ -10291,47 +10299,68 @@ packages:
       '@formatjs/ecma402-abstract': 1.18.0
       '@formatjs/icu-skeleton-parser': 1.7.0
       tslib: 2.6.2
+    dev: false
+
+  /@formatjs/icu-messageformat-parser@2.9.4:
+    resolution: {integrity: sha512-Tbvp5a9IWuxUcpWNIW6GlMQYEc4rwNHR259uUFoKWNN1jM9obf9Ul0e+7r7MvFOBNcN+13K7NuKCKqQiAn1QEg==}
+    dependencies:
+      '@formatjs/ecma402-abstract': 2.2.4
+      '@formatjs/icu-skeleton-parser': 1.8.8
+      tslib: 2.8.1
 
   /@formatjs/icu-skeleton-parser@1.7.0:
     resolution: {integrity: sha512-Cfdo/fgbZzpN/jlN/ptQVe0lRHora+8ezrEeg2RfrNjyp+YStwBy7cqDY8k5/z2LzXg6O0AdzAV91XS0zIWv+A==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.18.0
       tslib: 2.6.2
+    dev: false
 
-  /@formatjs/intl-displaynames@6.6.4:
-    resolution: {integrity: sha512-ET8KQ+L9Q0K8x1SnJQa4DNssUcbATlMopWqYvGGR8yAvw5qwAQc1fv+DshCoZNIE9pbcue0IGC4kWNAkWqlFag==}
+  /@formatjs/icu-skeleton-parser@1.8.8:
+    resolution: {integrity: sha512-vHwK3piXwamFcx5YQdCdJxUQ1WdTl6ANclt5xba5zLGDv5Bsur7qz8AD7BevaKxITwpgDeU0u8My3AIibW9ywA==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.18.0
-      '@formatjs/intl-localematcher': 0.5.2
-      tslib: 2.6.2
+      '@formatjs/ecma402-abstract': 2.2.4
+      tslib: 2.8.1
 
-  /@formatjs/intl-listformat@7.5.3:
-    resolution: {integrity: sha512-l7EOr0Yh1m8KagytukB90yw81uyzrM7amKFrgxXqphz4KeSIL0KPa68lPsdtZ+JmQB73GaDQRwLOwUKFZ1VZPQ==}
+  /@formatjs/intl-displaynames@6.8.5:
+    resolution: {integrity: sha512-85b+GdAKCsleS6cqVxf/Aw/uBd+20EM0wDpgaxzHo3RIR3bxF4xCJqH/Grbzx8CXurTgDDZHPdPdwJC+May41w==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.18.0
-      '@formatjs/intl-localematcher': 0.5.2
-      tslib: 2.6.2
+      '@formatjs/ecma402-abstract': 2.2.4
+      '@formatjs/intl-localematcher': 0.5.8
+      tslib: 2.8.1
+
+  /@formatjs/intl-listformat@7.7.5:
+    resolution: {integrity: sha512-Wzes10SMNeYgnxYiKsda4rnHP3Q3II4XT2tZyOgnH5fWuHDtIkceuWlRQNsvrI3uiwP4hLqp2XdQTCsfkhXulg==}
+    dependencies:
+      '@formatjs/ecma402-abstract': 2.2.4
+      '@formatjs/intl-localematcher': 0.5.8
+      tslib: 2.8.1
 
   /@formatjs/intl-localematcher@0.5.2:
     resolution: {integrity: sha512-txaaE2fiBMagLrR4jYhxzFO6wEdEG4TPMqrzBAcbr4HFUYzH/YC+lg6OIzKCHm8WgDdyQevxbAAV1OgcXctuGw==}
     dependencies:
       tslib: 2.8.1
+    dev: false
 
-  /@formatjs/intl@2.9.9(typescript@5.3.3):
-    resolution: {integrity: sha512-JI3CNgL2Zdg5lv9ncT2sYKqbAj2RGrCbdzaCckIxMPxn4QuHuOVvYUGmBAXVusBmfG/0sxLmMrnwnBioz+QKdA==}
+  /@formatjs/intl-localematcher@0.5.8:
+    resolution: {integrity: sha512-I+WDNWWJFZie+jkfkiK5Mp4hEDyRSEvmyfYadflOno/mmKJKcB17fEpEH0oJu/OWhhCJ8kJBDz2YMd/6cDl7Mg==}
+    dependencies:
+      tslib: 2.8.1
+
+  /@formatjs/intl@2.10.15(typescript@5.3.3):
+    resolution: {integrity: sha512-i6+xVqT+6KCz7nBfk4ybMXmbKO36tKvbMKtgFz9KV+8idYFyFbfwKooYk8kGjyA5+T5f1kEPQM5IDLXucTAQ9g==}
     peerDependencies:
-      typescript: '5'
+      typescript: ^4.7 || 5
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@formatjs/ecma402-abstract': 1.18.0
-      '@formatjs/fast-memoize': 2.2.0
-      '@formatjs/icu-messageformat-parser': 2.7.3
-      '@formatjs/intl-displaynames': 6.6.4
-      '@formatjs/intl-listformat': 7.5.3
-      intl-messageformat: 10.5.8
-      tslib: 2.6.2
+      '@formatjs/ecma402-abstract': 2.2.4
+      '@formatjs/fast-memoize': 2.2.3
+      '@formatjs/icu-messageformat-parser': 2.9.4
+      '@formatjs/intl-displaynames': 6.8.5
+      '@formatjs/intl-listformat': 7.7.5
+      intl-messageformat: 10.7.7
+      tslib: 2.8.1
       typescript: 5.3.3
 
   /@formatjs/ts-transformer@3.13.9:
@@ -10889,45 +10918,45 @@ packages:
   /@polka/url@1.0.0-next.24:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
 
-  /@react-aria/interactions@3.25.3(react-dom@18.2.0)(react@18.2.0):
+  /@react-aria/interactions@3.25.3(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-J1bhlrNtjPS/fe5uJQ+0c7/jiXniwa4RQlP+Emjfc/iuqpW2RhbF9ou5vROcLzWIyaW8tVMZ468J68rAs/aZ5A==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
       react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
     dependencies:
-      '@react-aria/ssr': 3.9.9(react@18.2.0)
-      '@react-aria/utils': 3.29.1(react-dom@18.2.0)(react@18.2.0)
+      '@react-aria/ssr': 3.9.9(react@18.3.1)
+      '@react-aria/utils': 3.29.1(react-dom@18.3.1)(react@18.3.1)
       '@react-stately/flags': 3.1.2
-      '@react-types/shared': 3.30.0(react@18.2.0)
+      '@react-types/shared': 3.30.0(react@18.3.1)
       '@swc/helpers': 0.5.17
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /@react-aria/ssr@3.9.9(react@18.2.0):
+  /@react-aria/ssr@3.9.9(react@18.3.1):
     resolution: {integrity: sha512-2P5thfjfPy/np18e5wD4WPt8ydNXhij1jwA8oehxZTFqlgVMGXzcWKxTb4RtJrLFsqPO7RUQTiY8QJk0M4Vy2g==}
     engines: {node: '>= 12'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
     dependencies:
       '@swc/helpers': 0.5.17
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
-  /@react-aria/utils@3.29.1(react-dom@18.2.0)(react@18.2.0):
+  /@react-aria/utils@3.29.1(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-yXMFVJ73rbQ/yYE/49n5Uidjw7kh192WNN9PNQGV0Xoc7EJUlSOxqhnpHmYTyO0EotJ8fdM1fMH8durHjUSI8g==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
       react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
     dependencies:
-      '@react-aria/ssr': 3.9.9(react@18.2.0)
+      '@react-aria/ssr': 3.9.9(react@18.3.1)
       '@react-stately/flags': 3.1.2
-      '@react-stately/utils': 3.10.7(react@18.2.0)
-      '@react-types/shared': 3.30.0(react@18.2.0)
+      '@react-stately/utils': 3.10.7(react@18.3.1)
+      '@react-types/shared': 3.30.0(react@18.3.1)
       '@swc/helpers': 0.5.17
       clsx: 2.1.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /@react-dnd/asap@4.0.1:
@@ -10948,21 +10977,21 @@ packages:
       '@swc/helpers': 0.5.17
     dev: false
 
-  /@react-stately/utils@3.10.7(react@18.2.0):
+  /@react-stately/utils@3.10.7(react@18.3.1):
     resolution: {integrity: sha512-cWvjGAocvy4abO9zbr6PW6taHgF24Mwy/LbQ4TC4Aq3tKdKDntxyD+sh7AkSRfJRT2ccMVaHVv2+FfHThd3PKQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
     dependencies:
       '@swc/helpers': 0.5.17
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
-  /@react-types/shared@3.30.0(react@18.2.0):
+  /@react-types/shared@3.30.0(react@18.3.1):
     resolution: {integrity: sha512-COIazDAx1ncDg046cTJ8SFYsX8aS3lB/08LDnbkH/SkdYrFPWDlXMrO/sUam8j1WWM+PJ+4d1mj7tODIKNiFog==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
   /@redux-saga/core@1.2.3:
@@ -11003,7 +11032,7 @@ packages:
     resolution: {integrity: sha512-1dgmkh+3so0+LlBWRhGA33ua4MYr7tUOj+a9Si28vUi0IUFNbff1T3sgpeDJI/LaC75bBYnQ0A3wXjn0OrRNBA==}
     dev: false
 
-  /@reduxjs/toolkit@1.9.7(react-redux@7.2.9)(react@18.2.0):
+  /@reduxjs/toolkit@1.9.7(react-redux@7.2.9)(react@18.3.1):
     resolution: {integrity: sha512-t7v8ZPxhhKgOKtU+uyJT13lu4vL7az5aFi4IdoDs/eS548edn2M8Ik9h8fxgvMjGoAUVFSt6ZC1P5cWmQ014QQ==}
     peerDependencies:
       react: ^16.9.0 || ^17.0.0 || ^18
@@ -11015,8 +11044,8 @@ packages:
         optional: true
     dependencies:
       immer: 9.0.21
-      react: 18.2.0
-      react-redux: 7.2.9(react-dom@18.2.0)(react@18.2.0)
+      react: 18.3.1
+      react-redux: 7.2.9(react-dom@18.3.1)(react@18.3.1)
       redux: 4.2.1
       redux-thunk: 2.4.2(redux@4.2.1)
       reselect: 4.1.8
@@ -11220,28 +11249,28 @@ packages:
       uuid: 9.0.1
     dev: true
 
-  /@storybook/addons@6.5.16(react-dom@18.2.0)(react@18.2.0):
+  /@storybook/addons@6.5.16(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-p3DqQi+8QRL5k7jXhXmJZLsE/GqHqyY6PcoA1oNTJr0try48uhTGUOYkgzmqtDaa/qPFO5LP+xCPzZXckGtquQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@storybook/api': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/api': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@storybook/channels': 6.5.16
       '@storybook/client-logger': 6.5.16
       '@storybook/core-events': 6.5.16
       '@storybook/csf': 0.0.2--canary.4566f4d.1
-      '@storybook/router': 6.5.16(react-dom@18.2.0)(react@18.2.0)
-      '@storybook/theming': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/router': 6.5.16(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/theming': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@types/webpack-env': 1.18.8
       core-js: 3.34.0
       global: 4.4.0
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       regenerator-runtime: 0.13.11
     dev: true
 
-  /@storybook/api@6.5.16(react-dom@18.2.0)(react@18.2.0):
+  /@storybook/api@6.5.16(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-HOsuT8iomqeTMQJrRx5U8nsC7lJTwRr1DhdD0SzlqL4c80S/7uuCy4IZvOt4sYQjOzW5fOo/kamcoBXyLproTA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -11251,16 +11280,16 @@ packages:
       '@storybook/client-logger': 6.5.16
       '@storybook/core-events': 6.5.16
       '@storybook/csf': 0.0.2--canary.4566f4d.1
-      '@storybook/router': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/router': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@storybook/semver': 7.3.2
-      '@storybook/theming': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/theming': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       core-js: 3.34.0
       fast-deep-equal: 3.1.3
       global: 4.4.0
       lodash: 4.17.21
       memoizerific: 1.11.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       regenerator-runtime: 0.13.11
       store2: 2.14.4
       telejson: 6.0.8
@@ -11450,19 +11479,19 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@storybook/client-api@6.5.16(react-dom@18.2.0)(react@18.2.0):
+  /@storybook/client-api@6.5.16(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-i3UwkzzUFw8I+E6fOcgB5sc4oU2fhvaKnqC1mpd9IYGJ9JN9MnGIaVl3Ko28DtFItu/QabC9JsLIJVripFLktQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@storybook/addons': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/addons': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@storybook/channel-postmessage': 6.5.16
       '@storybook/channels': 6.5.16
       '@storybook/client-logger': 6.5.16
       '@storybook/core-events': 6.5.16
       '@storybook/csf': 0.0.2--canary.4566f4d.1
-      '@storybook/store': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/store': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@types/qs': 6.9.10
       '@types/webpack-env': 1.18.8
       core-js: 3.34.0
@@ -11471,8 +11500,8 @@ packages:
       lodash: 4.17.21
       memoizerific: 1.11.3
       qs: 6.13.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       regenerator-runtime: 0.13.11
       store2: 2.14.4
       synchronous-promise: 2.0.17
@@ -11520,7 +11549,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/components@6.5.16(react-dom@18.2.0)(react@18.2.0):
+  /@storybook/components@6.5.16(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-LzBOFJKITLtDcbW9jXl0/PaG+4xAz25PK8JxPZpIALbmOpYWOAPcO6V9C2heX6e6NgWFMUxjplkULEk9RCQMNA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -11528,17 +11557,17 @@ packages:
     dependencies:
       '@storybook/client-logger': 6.5.16
       '@storybook/csf': 0.0.2--canary.4566f4d.1
-      '@storybook/theming': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/theming': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       core-js: 3.34.0
       memoizerific: 1.11.3
       qs: 6.13.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       regenerator-runtime: 0.13.11
       util-deprecate: 1.0.2
     dev: true
 
-  /@storybook/core-client@6.5.16(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)(webpack@5.89.0):
+  /@storybook/core-client@6.5.16(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3)(webpack@5.89.0):
     resolution: {integrity: sha512-14IRaDrVtKrQ+gNWC0wPwkCNfkZOKghYV/swCUnQX3rP99defsZK8Hc7xHIYoAiOP5+sc3sweRAxgmFiJeQ1Ig==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -11551,24 +11580,24 @@ packages:
       webpack:
         optional: true
     dependencies:
-      '@storybook/addons': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/addons': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@storybook/channel-postmessage': 6.5.16
       '@storybook/channel-websocket': 6.5.16
-      '@storybook/client-api': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/client-api': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@storybook/client-logger': 6.5.16
       '@storybook/core-events': 6.5.16
       '@storybook/csf': 0.0.2--canary.4566f4d.1
-      '@storybook/preview-web': 6.5.16(react-dom@18.2.0)(react@18.2.0)
-      '@storybook/store': 6.5.16(react-dom@18.2.0)(react@18.2.0)
-      '@storybook/ui': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/preview-web': 6.5.16(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/store': 6.5.16(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/ui': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       airbnb-js-shims: 2.2.1
       ansi-to-html: 0.6.15
       core-js: 3.34.0
       global: 4.4.0
       lodash: 4.17.21
       qs: 6.13.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       regenerator-runtime: 0.13.11
       ts-dedent: 2.2.0
       typescript: 5.3.3
@@ -11584,7 +11613,7 @@ packages:
       '@storybook/preview-api': 7.6.4
     dev: true
 
-  /@storybook/core-common@6.5.16(eslint@8.55.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3):
+  /@storybook/core-common@6.5.16(eslint@8.55.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3):
     resolution: {integrity: sha512-2qtnKP3TTOzt2cp6LXKRTh7XrI9z5VanMnMTgeoFcA5ebnndD4V6BExQUdYPClE/QooLx6blUWNgS9dFEpjSqQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -11638,8 +11667,8 @@ packages:
       picomatch: 2.3.1
       pkg-dir: 5.0.0
       pretty-hrtime: 1.0.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       resolve-from: 5.0.0
       slash: 3.0.0
       telejson: 6.0.8
@@ -11849,7 +11878,7 @@ packages:
     resolution: {integrity: sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ==}
     dev: true
 
-  /@storybook/manager-webpack5@6.5.16(eslint@8.55.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3):
+  /@storybook/manager-webpack5@6.5.16(eslint@8.55.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3):
     resolution: {integrity: sha512-OtxXv8JCe0r/0rE5HxaFicsNsXA+fqZxzokxquFFgrYf/1Jg4d7QX6/pG5wINF+5qInJfVkRG6xhPzv1s5bk9Q==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -11862,12 +11891,12 @@ packages:
       '@babel/core': 7.26.10
       '@babel/plugin-transform-template-literals': 7.23.3(@babel/core@7.26.10)
       '@babel/preset-react': 7.23.3(@babel/core@7.26.10)
-      '@storybook/addons': 6.5.16(react-dom@18.2.0)(react@18.2.0)
-      '@storybook/core-client': 6.5.16(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)(webpack@5.89.0)
-      '@storybook/core-common': 6.5.16(eslint@8.55.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
+      '@storybook/addons': 6.5.16(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/core-client': 6.5.16(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3)(webpack@5.89.0)
+      '@storybook/core-common': 6.5.16(eslint@8.55.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3)
       '@storybook/node-logger': 6.5.16
-      '@storybook/theming': 6.5.16(react-dom@18.2.0)(react@18.2.0)
-      '@storybook/ui': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/theming': 6.5.16(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/ui': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@types/node': 16.18.126
       babel-loader: 8.3.0(@babel/core@7.26.10)(webpack@5.89.0)
       case-sensitive-paths-webpack-plugin: 2.4.0
@@ -11880,8 +11909,8 @@ packages:
       html-webpack-plugin: 5.5.4(webpack@5.89.0)
       node-fetch: 2.7.0
       process: 0.11.10
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       read-pkg-up: 7.0.1
       regenerator-runtime: 0.13.11
       resolve-from: 5.0.0
@@ -11928,7 +11957,7 @@ packages:
     resolution: {integrity: sha512-GDkEnnDj4Op+PExs8ZY/P6ox3wg453CdEIaR8PR9TxF/H/T2fBL6puzma3hN2CMam6yzfAL8U+VeIIDLQ5BZdQ==}
     dev: true
 
-  /@storybook/preset-react-webpack@7.6.4(@babel/core@7.26.10)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3):
+  /@storybook/preset-react-webpack@7.6.4(@babel/core@7.26.10)(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3):
     resolution: {integrity: sha512-rQ3hqehGUvmbwUosNdh1jnXevaHQ9ezqc4v8YlX5TELp1oz+qhRe0gnQOdsQ98SsdjA24EHfgc331dp9F3up6Q==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -11949,16 +11978,16 @@ packages:
       '@storybook/core-webpack': 7.6.4
       '@storybook/docs-tools': 7.6.4
       '@storybook/node-logger': 7.6.4
-      '@storybook/react': 7.6.4(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
+      '@storybook/react': 7.6.4(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3)
       '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(typescript@5.3.3)(webpack@5.89.0)
       '@types/node': 18.19.3
       '@types/semver': 7.5.6
       babel-plugin-add-react-displayname: 0.0.5
       fs-extra: 11.2.0
       magic-string: 0.30.5
-      react: 18.2.0
+      react: 18.3.1
       react-docgen: 7.0.1
-      react-dom: 18.2.0(react@18.2.0)
+      react-dom: 18.3.1(react@18.3.1)
       react-refresh: 0.14.0
       semver: 7.5.4
       typescript: 5.3.3
@@ -12028,25 +12057,25 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /@storybook/preview-web@6.5.16(react-dom@18.2.0)(react@18.2.0):
+  /@storybook/preview-web@6.5.16(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-IJnvfe2sKCfk7apN9Fu9U8qibbarrPX5JB55ZzK1amSHVmSDuYk5MIMc/U3NnSQNnvd1DO5v/zMcGgj563hrtg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@storybook/addons': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/addons': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@storybook/channel-postmessage': 6.5.16
       '@storybook/client-logger': 6.5.16
       '@storybook/core-events': 6.5.16
       '@storybook/csf': 0.0.2--canary.4566f4d.1
-      '@storybook/store': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/store': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       ansi-to-html: 0.6.15
       core-js: 3.34.0
       global: 4.4.0
       lodash: 4.17.21
       qs: 6.13.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       regenerator-runtime: 0.13.11
       synchronous-promise: 2.0.17
       ts-dedent: 2.2.0
@@ -12080,17 +12109,17 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/react-dom-shim@7.6.4(react-dom@18.2.0)(react@18.2.0):
+  /@storybook/react-dom-shim@7.6.4(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-wGJfomlDEBnowNmhmumWDu/AcUInxSoPqUUJPgk2f5oL0EW17fR9fDP/juG3XOEdieMDM0jDX48GML7lyvL2fg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: true
 
-  /@storybook/react-webpack5@7.6.4(@babel/core@7.26.10)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3):
+  /@storybook/react-webpack5@7.6.4(@babel/core@7.26.10)(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3):
     resolution: {integrity: sha512-uUucaHG67Yu2WrHigJzMbbYg6vbehHDUC6HsORcfwdC9y/VhR47ORU6UkVQNZ/K4WLNe4HbyGGKGRUght5UtbQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -12106,11 +12135,11 @@ packages:
     dependencies:
       '@babel/core': 7.26.10
       '@storybook/builder-webpack5': 7.6.4(typescript@5.3.3)
-      '@storybook/preset-react-webpack': 7.6.4(@babel/core@7.26.10)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
-      '@storybook/react': 7.6.4(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
+      '@storybook/preset-react-webpack': 7.6.4(@babel/core@7.26.10)(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3)
+      '@storybook/react': 7.6.4(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3)
       '@types/node': 18.19.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       typescript: 5.3.3
     transitivePeerDependencies:
       - '@swc/core'
@@ -12128,7 +12157,7 @@ packages:
       - webpack-plugin-serve
     dev: true
 
-  /@storybook/react@7.6.4(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3):
+  /@storybook/react@7.6.4(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3):
     resolution: {integrity: sha512-XYRP+eylH3JqkCuziwtQGY5vOCeDreOibRYJmj5na6k4QbURjGVB44WCIW04gWVlmBXM9SqLAmserUi3HP890Q==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -12144,7 +12173,7 @@ packages:
       '@storybook/docs-tools': 7.6.4
       '@storybook/global': 5.0.0
       '@storybook/preview-api': 7.6.4
-      '@storybook/react-dom-shim': 7.6.4(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/react-dom-shim': 7.6.4(react-dom@18.3.1)(react@18.3.1)
       '@storybook/types': 7.6.4
       '@types/escodegen': 0.0.6
       '@types/estree': 0.0.51
@@ -12156,9 +12185,9 @@ packages:
       html-tags: 3.3.1
       lodash: 4.17.21
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-element-to-jsx-string: 15.0.0(react-dom@18.2.0)(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-element-to-jsx-string: 15.0.0(react-dom@18.3.1)(react@18.3.1)
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       typescript: 5.3.3
@@ -12168,7 +12197,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/router@6.5.16(react-dom@18.2.0)(react@18.2.0):
+  /@storybook/router@6.5.16(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-ZgeP8a5YV/iuKbv31V8DjPxlV4AzorRiR8OuSt/KqaiYXNXlOoQDz/qMmiNcrshrfLpmkzoq7fSo4T8lWo2UwQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -12178,8 +12207,8 @@ packages:
       core-js: 3.34.0
       memoizerific: 1.11.3
       qs: 6.13.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       regenerator-runtime: 0.13.11
     dev: true
 
@@ -12192,13 +12221,13 @@ packages:
       find-up: 4.1.0
     dev: true
 
-  /@storybook/store@6.5.16(react-dom@18.2.0)(react@18.2.0):
+  /@storybook/store@6.5.16(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-g+bVL5hmMq/9cM51K04e37OviUPHT0rHHrRm5wj/hrf18Kd9120b3sxdQ5Dc+HZ292yuME0n+cyrQPTYx9Epmw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@storybook/addons': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/addons': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@storybook/client-logger': 6.5.16
       '@storybook/core-events': 6.5.16
       '@storybook/csf': 0.0.2--canary.4566f4d.1
@@ -12207,8 +12236,8 @@ packages:
       global: 4.4.0
       lodash: 4.17.21
       memoizerific: 1.11.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       regenerator-runtime: 0.13.11
       slash: 3.0.0
       stable: 0.1.8
@@ -12233,7 +12262,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/theming@6.5.16(react-dom@18.2.0)(react@18.2.0):
+  /@storybook/theming@6.5.16(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-hNLctkjaYLRdk1+xYTkC1mg4dYz2wSv6SqbLpcKMbkPHTE0ElhddGPHQqB362md/w9emYXNkt1LSMD8Xk9JzVQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -12242,8 +12271,8 @@ packages:
       '@storybook/client-logger': 6.5.16
       core-js: 3.34.0
       memoizerific: 1.11.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       regenerator-runtime: 0.13.11
     dev: true
 
@@ -12265,26 +12294,26 @@ packages:
       file-system-cache: 2.3.0
     dev: true
 
-  /@storybook/ui@6.5.16(react-dom@18.2.0)(react@18.2.0):
+  /@storybook/ui@6.5.16(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-rHn/n12WM8BaXtZ3IApNZCiS+C4Oc5+Lkl4MoctX8V7QSml0SxZBB5hsJ/AiWkgbRxjQpa/L/Nt7/Qw0FjTH/A==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@storybook/addons': 6.5.16(react-dom@18.2.0)(react@18.2.0)
-      '@storybook/api': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/addons': 6.5.16(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/api': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@storybook/channels': 6.5.16
       '@storybook/client-logger': 6.5.16
-      '@storybook/components': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/components': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@storybook/core-events': 6.5.16
-      '@storybook/router': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/router': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@storybook/semver': 7.3.2
-      '@storybook/theming': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/theming': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       core-js: 3.34.0
       memoizerific: 1.11.3
       qs: 6.13.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       regenerator-runtime: 0.13.11
       resolve-from: 5.0.0
     dev: true
@@ -12437,15 +12466,15 @@ packages:
     resolution: {integrity: sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==}
     dev: true
 
-  /@tanstack/react-virtual@3.11.1(react-dom@18.2.0)(react@18.2.0):
+  /@tanstack/react-virtual@3.11.1(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-orn2QNe5tF6SqjucHJ6cKTKcRDe3GG7bcYqPNn72Yejj7noECdzgAyRfGt2pGDPemhYim3d1HIR/dgruCnLfUA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     dependencies:
       '@tanstack/virtual-core': 3.10.9
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /@tanstack/virtual-core@3.10.9:
@@ -12466,7 +12495,7 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
-  /@testing-library/react@14.1.2(react-dom@18.2.0)(react@18.2.0):
+  /@testing-library/react@14.1.2(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-z4p7DVBTPjKM5qDZ0t5ZjzkpSNb+fZy1u6bzO7kk8oeGagpPCAtgh4cx1syrfp7a+QWkM021jGqjJaxJJnXAZg==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -12475,9 +12504,11 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.6
       '@testing-library/dom': 9.2.0
-      '@types/react-dom': 18.2.17
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      '@types/react-dom': 18.3.7(@types/react@18.3.23)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    transitivePeerDependencies:
+      - '@types/react'
     dev: true
 
   /@testing-library/user-event@14.5.1(@testing-library/dom@9.2.0):
@@ -12728,7 +12759,7 @@ packages:
   /@types/hoist-non-react-statics@3.3.5:
     resolution: {integrity: sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==}
     dependencies:
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
       hoist-non-react-statics: 3.3.2
 
   /@types/html-minifier-terser@6.1.0:
@@ -12892,48 +12923,50 @@ packages:
   /@types/range-parser@1.2.7:
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
 
-  /@types/react-dom@18.2.17:
-    resolution: {integrity: sha512-rvrT/M7Df5eykWFxn6MYt5Pem/Dbyc1N8Y0S9Mrkw2WFCRiqUgw9P7ul2NpwsXCSM1DVdENzdG9J5SreqfAIWg==}
+  /@types/react-dom@18.3.7(@types/react@18.3.23):
+    resolution: {integrity: sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==}
+    peerDependencies:
+      '@types/react': ^18.0.0
     dependencies:
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
     dev: true
 
   /@types/react-helmet@6.1.11:
     resolution: {integrity: sha512-0QcdGLddTERotCXo3VFlUSWO3ztraw8nZ6e3zJSgG7apwV5xt+pJUS8ewPBqT4NYB1optGLprNQzFleIY84u/g==}
     dependencies:
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
     dev: true
 
   /@types/react-lines-ellipsis@0.15.5:
     resolution: {integrity: sha512-4WeU8aDsYZtpA3a3iuOZjs0sss6ra2dbTeGIfN2UJEnbYwlEE8Ar+Cpisvuk9thu7ClYGwOIBMkj/o3Unrj+tw==}
     dependencies:
       '@types/lodash': 4.14.202
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
     dev: true
 
   /@types/react-measure@2.0.12:
     resolution: {integrity: sha512-Y6V11CH6bU7RhqrIdENPwEUZlPXhfXNGylMNnGwq5TAEs2wDoBA3kSVVM/EQ8u72sz5r9ja+7W8M8PIVcS841Q==}
     dependencies:
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
     dev: true
 
   /@types/react-native-listener@1.1.3:
     resolution: {integrity: sha512-4eSttfDfKBcUmMdNJvkOrWw4PffuALoZmMD/Y5VH49Fpbidkwoc8ZPsEovTQCNo4l415uDcYEBbw5BhyPstg0Q==}
     dependencies:
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
     dev: true
 
   /@types/react-portal@4.0.7:
     resolution: {integrity: sha512-3zQJL6Pqcq7d73+cakVkZDqAYGFBo37XXPfahjhdScr9EdYPlf9evYilL38Fpzs1YGWz7F2SkPtN6+ygTO7ymg==}
     dependencies:
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
     dev: true
 
   /@types/react-redux@7.1.33:
     resolution: {integrity: sha512-NF8m5AjWCkert+fosDsN3hAlHzpjSiXlVy9EgQEmLoBhaNXbmyeGs/aj5dQzKuF+/q+S7JQagorGDW8pJ28Hmg==}
     dependencies:
       '@types/hoist-non-react-statics': 3.3.5
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
       hoist-non-react-statics: 3.3.2
       redux: 4.2.1
 
@@ -12941,7 +12974,7 @@ packages:
     resolution: {integrity: sha512-kpqnYK4wcdm5UaWI3fLcELopqLrHgLqNsdpHauzlQktfkHL3npOSwtj1Uz9oKBAzs7lFtVkV8j83voAz2D8fhw==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
       '@types/react-router': 5.1.20
     dev: true
 
@@ -12949,25 +12982,24 @@ packages:
     resolution: {integrity: sha512-jGjmu/ZqS7FjSH6owMcD5qpq19+1RS9DeVRqfl1FeBMxTDQAGwlMWOcs52NDoXaNKyG3d1cYQFMs9rCrb88o9Q==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
     dev: true
 
   /@types/react-transition-group@4.4.10:
     resolution: {integrity: sha512-hT/+s0VQs2ojCX823m60m5f0sL5idt9SO6Tj6Dg+rdphGPIeJbJ6CxvBYkgkGKrYeDjvIpKTR38UzmtHJOGW3Q==}
     dependencies:
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
 
   /@types/react-window@1.8.8:
     resolution: {integrity: sha512-8Ls660bHR1AUA2kuRvVG9D/4XpRC6wjAaPT9dil7Ckc76eP9TKWZwwmgfq8Q1LANX3QNDnoU4Zp48A3w+zK69Q==}
     dependencies:
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
     dev: true
 
-  /@types/react@18.2.45:
-    resolution: {integrity: sha512-TtAxCNrlrBp8GoeEp1npd5g+d/OejJHFxS3OWmrPBMFaVQMSN0OFySozJio5BHxTuTeug00AVXVAjfDSfk+lUg==}
+  /@types/react@18.3.23:
+    resolution: {integrity: sha512-/LDXMQh55EzZQ0uVAZmKKhfENivEvWz6E+EYzh+/MCjMhNsotd+ZHhBGIjFDTi6+fz0OhQQQLbTgdQIxxCsC0w==}
     dependencies:
       '@types/prop-types': 15.7.11
-      '@types/scheduler': 0.16.8
       csstype: 3.1.2
 
   /@types/resolve@1.20.6:
@@ -12983,9 +13015,6 @@ packages:
       '@types/glob': 8.1.0
       '@types/node': 18.19.3
     dev: true
-
-  /@types/scheduler@0.16.8:
-    resolution: {integrity: sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==}
 
   /@types/semver@7.5.6:
     resolution: {integrity: sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==}
@@ -13293,12 +13322,12 @@ packages:
       loupe: 3.1.3
       tinyrainbow: 2.0.0
 
-  /@vtaits/use-lazy-ref@0.1.0(react@18.2.0):
+  /@vtaits/use-lazy-ref@0.1.0(react@18.3.1):
     resolution: {integrity: sha512-/m5z3Df6I6i/B0lnv6pB2O1+X/nWVquqbnltq+irW1+Nhpv0PpeMzSNf9lTjzT/eHRZtH2fM1370AdYqc3FTyQ==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
   /@webassemblyjs/ast@1.11.6:
@@ -13701,7 +13730,7 @@ packages:
       ag-charts-types: 11.1.0
     dev: false
 
-  /ag-grid-react@33.1.0(react-dom@18.2.0)(react@18.2.0):
+  /ag-grid-react@33.1.0(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-YB/t6U+P7HPcGY+ukJiVYtQNbDsNVVocDITPANsy21pfh5ojvoNfKEdieC904IPTdgjSMTpNDQJogBzTpMLTCA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -13709,8 +13738,8 @@ packages:
     dependencies:
       ag-grid-community: 33.1.0
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /agent-base@5.1.1:
@@ -16414,7 +16443,7 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /downshift@3.4.8(react@18.2.0):
+  /downshift@3.4.8(react@18.3.1):
     resolution: {integrity: sha512-dZL3iNL/LbpHNzUQAaVq/eTD1ocnGKKjbAl/848Q0KEp6t81LJbS37w3f93oD6gqqAnjdgM7Use36qZSipHXBw==}
     peerDependencies:
       react: '>=0.14.9'
@@ -16422,7 +16451,7 @@ packages:
       '@babel/runtime': 7.23.6
       compute-scroll-into-view: 1.0.20
       prop-types: 15.8.1
-      react: 18.2.0
+      react: 18.3.1
       react-is: 16.13.1
     dev: false
 
@@ -17762,7 +17791,7 @@ packages:
       - supports-color
     dev: true
 
-  /fixed-data-table-2@1.2.22(react-dom@18.2.0)(react@18.2.0):
+  /fixed-data-table-2@1.2.22(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-JAw8Dae1kEDrGrmCT9P7fByHOhudbSb0ajTvtWKnyyAh+lqQ5PnDaTDGDI1fDFDPSdI/tHBKvfsI0d7X7LG8fw==}
     peerDependencies:
       react: '>=15.3.0'
@@ -17770,8 +17799,8 @@ packages:
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       react-lifecycles-compat: 3.0.4
       redux: 4.2.1
       reselect: 4.1.8
@@ -18718,14 +18747,14 @@ packages:
     hasBin: true
     dev: true
 
-  /highcharts-react-official@3.2.2(highcharts@12.2.0)(react@18.2.0):
+  /highcharts-react-official@3.2.2(highcharts@12.2.0)(react@18.3.1):
     resolution: {integrity: sha512-2kkWOB6RpdR26fmAJkrtJFG9xWFUDGKWyat88tW3fa/3l/Jc7D5ZfwTng2MZsdiKIH32AFy0Pr75udUe7uN6LA==}
     peerDependencies:
       highcharts: '>=6.0.0'
       react: '>=16.8.0'
     dependencies:
       highcharts: 12.2.0
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
   /highcharts@12.2.0:
@@ -19151,13 +19180,13 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /intl-messageformat@10.5.8:
-    resolution: {integrity: sha512-NRf0jpBWV0vd671G5b06wNofAN8tp7WWDogMZyaU8GUAsmbouyvgwmFJI7zLjfAMpm3zK+vSwRP3jzaoIcMbaA==}
+  /intl-messageformat@10.7.7:
+    resolution: {integrity: sha512-F134jIoeYMro/3I0h08D0Yt4N9o9pjddU/4IIxMMURqbAtI2wu70X8hvG1V48W49zXHXv3RKSF/po+0fDfsGjA==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.18.0
-      '@formatjs/fast-memoize': 2.2.0
-      '@formatjs/icu-messageformat-parser': 2.7.3
-      tslib: 2.6.2
+      '@formatjs/ecma402-abstract': 2.2.4
+      '@formatjs/fast-memoize': 2.2.3
+      '@formatjs/icu-messageformat-parser': 2.9.4
+      tslib: 2.8.1
 
   /ip-address@9.0.5:
     resolution: {integrity: sha512-zHtQzGojZXTwZTHQqra+ETKd4Sn3vgi7uBmlPoXVWZqYvuKmtI0l/VZTjqGmJY9x88GGOaZ9+G9ES8hC4T4X8g==}
@@ -22602,23 +22631,23 @@ packages:
       iconv-lite: 0.4.24
       unpipe: 1.0.0
 
-  /react-content-loader@6.2.1(react@18.2.0):
+  /react-content-loader@6.2.1(react@18.3.1):
     resolution: {integrity: sha512-6ONbFX+Hi3SHuP66JB8CPvJn372pj+qwltJV0J8z/8MFrq98I1cbFdZuhDWeQXu3CFxiiDTXJn7DFxx2ZvrO7g==}
     engines: {node: '>=10'}
     peerDependencies:
       react: '>=16.0.0'
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
-  /react-day-picker@8.9.1(date-fns@2.30.0)(react@18.2.0):
+  /react-day-picker@8.9.1(date-fns@2.30.0)(react@18.3.1):
     resolution: {integrity: sha512-W0SPApKIsYq+XCtfGeMYDoU0KbsG3wfkYtlw8l+vZp6KoBXGOlhzBUp4tNx1XiwiOZwhfdGOlj7NGSCKGSlg5Q==}
     peerDependencies:
       date-fns: ^2.28.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       date-fns: 2.30.0
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
   /react-dnd-html5-backend@14.1.0:
@@ -22627,7 +22656,7 @@ packages:
       dnd-core: 14.0.1
     dev: false
 
-  /react-dnd@14.0.5(@types/node@18.19.3)(@types/react@18.2.45)(react@18.2.0):
+  /react-dnd@14.0.5(@types/node@18.19.3)(@types/react@18.3.23)(react@18.3.1):
     resolution: {integrity: sha512-9i1jSgbyVw0ELlEVt/NkCUkxy1hmhJOkePoCH713u75vzHGyXhPDm28oLfc2NMSBjZRM1Y+wRjHXJT3sPrTy+A==}
     peerDependencies:
       '@types/hoist-non-react-statics': '>= 3.3.1'
@@ -22645,11 +22674,11 @@ packages:
       '@react-dnd/invariant': 2.0.0
       '@react-dnd/shallowequal': 2.0.0
       '@types/node': 18.19.3
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
       dnd-core: 14.0.1
       fast-deep-equal: 3.1.3
       hoist-non-react-statics: 3.3.2
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
   /react-docgen-typescript@2.2.2(typescript@5.3.3):
@@ -22678,16 +22707,16 @@ packages:
       - supports-color
     dev: true
 
-  /react-dom@18.2.0(react@18.2.0):
-    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
+  /react-dom@18.3.1(react@18.3.1):
+    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
-      react: ^18.2.0
+      react: ^18.3.1
     dependencies:
       loose-envify: 1.4.0
-      react: 18.2.0
-      scheduler: 0.23.0
+      react: 18.3.1
+      scheduler: 0.23.2
 
-  /react-element-to-jsx-string@15.0.0(react-dom@18.2.0)(react@18.2.0):
+  /react-element-to-jsx-string@15.0.0(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-UDg4lXB6BzlobN60P8fHWVPX3Kyw8ORrTeBtClmIlGdkOOE+GYQSFvmEU5iLLpwp/6v42DINwNcwOhOLfQ//FQ==}
     peerDependencies:
       react: ^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1 || ^18.0.0
@@ -22695,8 +22724,8 @@ packages:
     dependencies:
       '@base2/pretty-print-object': 1.0.1
       is-plain-object: 5.0.0
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       react-is: 18.1.0
     dev: true
 
@@ -22704,47 +22733,47 @@ packages:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
     dev: false
 
-  /react-grid-system@8.1.9(react@18.2.0):
+  /react-grid-system@8.1.9(react@18.3.1):
     resolution: {integrity: sha512-EdyhAUkc1kJKNZpefIe8UwSJe1JFqKviyv6f2MBFopNYAZDHHYu+zyjQJ7tPJUtcGU1qA47WsCDiN8cSUGtfWA==}
     peerDependencies:
       react: ^16.8.0 || ^17.x || ^18.x
     dependencies:
       prop-types: 15.8.1
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
-  /react-helmet@6.1.0(react@18.2.0):
+  /react-helmet@6.1.0(react@18.3.1):
     resolution: {integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==}
     peerDependencies:
       react: '>=16.3.0'
     dependencies:
       object-assign: 4.1.1
       prop-types: 15.8.1
-      react: 18.2.0
+      react: 18.3.1
       react-fast-compare: 3.2.2
-      react-side-effect: 2.1.2(react@18.2.0)
+      react-side-effect: 2.1.2(react@18.3.1)
     dev: false
 
-  /react-intl@6.5.5(react@18.2.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-cI5UKvBh4tc1zxLIziHBYGMX3dhYWDEFlvUDVN6NfT2i96zTXz/zH2AmM8+2waqgOhwkFUzd+7kK1G9q7fiC2g==}
+  /react-intl@6.8.9(react@18.3.1)(typescript@5.3.3):
+    resolution: {integrity: sha512-TUfj5E7lyUDvz/GtovC9OMh441kBr08rtIbgh3p0R8iF3hVY+V2W9Am7rb8BpJ/29BH1utJOqOOhmvEVh3GfZg==}
     peerDependencies:
       react: ^16.6.0 || 17 || 18
-      typescript: '5'
+      typescript: ^4.7 || 5
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@formatjs/ecma402-abstract': 1.18.0
-      '@formatjs/icu-messageformat-parser': 2.7.3
-      '@formatjs/intl': 2.9.9(typescript@5.3.3)
-      '@formatjs/intl-displaynames': 6.6.4
-      '@formatjs/intl-listformat': 7.5.3
+      '@formatjs/ecma402-abstract': 2.2.4
+      '@formatjs/icu-messageformat-parser': 2.9.4
+      '@formatjs/intl': 2.10.15(typescript@5.3.3)
+      '@formatjs/intl-displaynames': 6.8.5
+      '@formatjs/intl-listformat': 7.7.5
       '@types/hoist-non-react-statics': 3.3.5
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
       hoist-non-react-statics: 3.3.2
-      intl-messageformat: 10.5.8
-      react: 18.2.0
-      tslib: 2.6.2
+      intl-messageformat: 10.7.7
+      react: 18.3.1
+      tslib: 2.8.1
       typescript: 5.3.3
 
   /react-is@16.13.1:
@@ -22761,37 +22790,37 @@ packages:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
     dev: false
 
-  /react-lines-ellipsis@0.15.4(react-dom@18.2.0)(react@18.2.0):
+  /react-lines-ellipsis@0.15.4(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-bIcoVRulN6RdBb9QByRPan7vDjxJv4jhII9eMs5ZkCK4QYEbPiY+8g+IM7/B0kb8UbRRRgR7KwpPWI9j8d2FYg==}
     peerDependencies:
       react: '*'
       react-dom: '*'
     dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /react-loading-skeleton@3.4.0(react@18.2.0):
+  /react-loading-skeleton@3.4.0(react@18.3.1):
     resolution: {integrity: sha512-1oJEBc9+wn7BbkQQk7YodlYEIjgeR+GrRjD+QXkVjwZN7LGIcAFHrx4NhT7UHGBxNY1+zax3c+Fo6XQM4R7CgA==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
-  /react-markdown@9.0.1(@types/react@18.2.45)(react@18.2.0):
+  /react-markdown@9.0.1(@types/react@18.3.23)(react@18.3.1):
     resolution: {integrity: sha512-186Gw/vF1uRkydbsOIkcGXw7aHq0sZOCRFFjGrr7b9+nVZg4UfA4enXCaxm4fUzecU38sWfrNDitGhshuU7rdg==}
     peerDependencies:
       '@types/react': '>=18'
       react: '>=18'
     dependencies:
       '@types/hast': 3.0.3
-      '@types/react': 18.2.45
+      '@types/react': 18.3.23
       devlop: 1.1.0
       hast-util-to-jsx-runtime: 2.3.0
       html-url-attributes: 3.0.0
       mdast-util-to-hast: 13.1.0
-      react: 18.2.0
+      react: 18.3.1
       remark-parse: 11.0.0
       remark-rehype: 11.1.0
       unified: 11.0.5
@@ -22801,7 +22830,7 @@ packages:
       - supports-color
     dev: false
 
-  /react-measure@2.5.2(react-dom@18.2.0)(react@18.2.0):
+  /react-measure@2.5.2(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-M+rpbTLWJ3FD6FXvYV6YEGvQ5tMayQ3fGrZhRPHrE9bVlBYfDCLuDcgNttYfk8IqfOI03jz6cbpqMRTUclQnaA==}
     peerDependencies:
       react: '>0.13.0'
@@ -22810,8 +22839,8 @@ packages:
       '@babel/runtime': 7.23.6
       get-node-dimensions: 1.2.1
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       resize-observer-polyfill: 1.5.1
     dev: false
 
@@ -22820,18 +22849,18 @@ packages:
     engines: {node: '>= 0.10.0'}
     dev: false
 
-  /react-portal@4.2.2(react-dom@18.2.0)(react@18.2.0):
+  /react-portal@4.2.2(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-vS18idTmevQxyQpnde0Td6ZcUlv+pD8GTyR42n3CHUQq9OHi1C4jDE4ZWEbEsrbrLRhSECYiao58cvocwMtP7Q==}
     peerDependencies:
       react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
       react-dom: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
     dependencies:
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /react-redux@7.2.9(react-dom@18.2.0)(react@18.2.0):
+  /react-redux@7.2.9(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-Gx4L3uM182jEEayZfRbI/G11ZpYdNAnBs70lFVMNdHJI76XYtR+7m0MN+eAs7UHBPhWXcnFPaS+9owSCJQHNpQ==}
     peerDependencies:
       react: ^16.8.3 || ^17 || ^18
@@ -22848,8 +22877,8 @@ packages:
       hoist-non-react-statics: 3.3.2
       loose-envify: 1.4.0
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       react-is: 17.0.2
     dev: false
 
@@ -22863,7 +22892,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /react-responsive@10.0.1(react@18.2.0):
+  /react-responsive@10.0.1(react@18.3.1):
     resolution: {integrity: sha512-OM5/cRvbtUWEX8le8RCT8scA8y2OPtb0Q/IViEyCEM5FBN8lRrkUOZnu87I88A6njxDldvxG+rLBxWiA7/UM9g==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -22872,10 +22901,10 @@ packages:
       hyphenate-style-name: 1.0.4
       matchmediaquery: 0.4.2
       prop-types: 15.8.1
-      react: 18.2.0
+      react: 18.3.1
       shallow-equal: 3.1.0
 
-  /react-router-dom@5.3.4(react@18.2.0):
+  /react-router-dom@5.3.4(react@18.3.1):
     resolution: {integrity: sha512-m4EqFMHv/Ih4kpcBCONHbkT68KoAeHN4p3lAGoNryfHi0dMy0kCzEZakiKRsvg5wHZ/JLrLW8o8KomWiz/qbYQ==}
     peerDependencies:
       react: '>=15'
@@ -22884,13 +22913,13 @@ packages:
       history: 4.10.1
       loose-envify: 1.4.0
       prop-types: 15.8.1
-      react: 18.2.0
-      react-router: 5.3.4(react@18.2.0)
+      react: 18.3.1
+      react-router: 5.3.4(react@18.3.1)
       tiny-invariant: 1.3.1
       tiny-warning: 1.0.3
     dev: true
 
-  /react-router@5.3.4(react@18.2.0):
+  /react-router@5.3.4(react@18.3.1):
     resolution: {integrity: sha512-Ys9K+ppnJah3QuaRiLxk+jDWOR1MekYQrlytiXxC1RyfbdsZkS5pvKAzCCr031xHixZwpnsYNT5xysdFHQaYsA==}
     peerDependencies:
       react: '>=15'
@@ -22901,27 +22930,27 @@ packages:
       loose-envify: 1.4.0
       path-to-regexp: 1.8.0
       prop-types: 15.8.1
-      react: 18.2.0
+      react: 18.3.1
       react-is: 16.13.1
       tiny-invariant: 1.3.1
       tiny-warning: 1.0.3
     dev: true
 
-  /react-select-async-paginate@0.7.3(react-select@5.7.3)(react@18.2.0):
+  /react-select-async-paginate@0.7.3(react-select@5.7.3)(react@18.3.1):
     resolution: {integrity: sha512-5r1vcXsVhG2zWbEEAnsnT55UIbU0H0kW+l0x/qJyEX/jwmn+7DyI8DbV92GYa4V4WsmMg224eki00erayqK/sQ==}
     peerDependencies:
       react: ^16.14.0 || ^17.0.0 || ^18.0.0
       react-select: ^5.0.0
     dependencies:
       '@seznam/compose-react-refs': 1.0.6
-      '@vtaits/use-lazy-ref': 0.1.0(react@18.2.0)
-      react: 18.2.0
-      react-select: 5.7.3(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
+      '@vtaits/use-lazy-ref': 0.1.0(react@18.3.1)
+      react: 18.3.1
+      react-select: 5.7.3(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       sleep-promise: 9.1.0
-      use-is-mounted-ref: 1.5.0(react@18.2.0)
+      use-is-mounted-ref: 1.5.0(react@18.3.1)
     dev: false
 
-  /react-select@5.7.3(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0):
+  /react-select@5.7.3(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-z8i3NCuFFWL3w27xq92rBkVI2onT0jzIIPe480HlBjXJ3b5o6Q+Clp4ydyeKrj9DZZ3lrjawwLC5NGl0FSvUDg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -22929,43 +22958,43 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.6
       '@emotion/cache': 11.11.0
-      '@emotion/react': 11.11.1(@types/react@18.2.45)(react@18.2.0)
+      '@emotion/react': 11.11.1(@types/react@18.3.23)(react@18.3.1)
       '@floating-ui/dom': 1.5.3
       '@types/react-transition-group': 4.4.10
       memoize-one: 6.0.0
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
-      use-isomorphic-layout-effect: 1.1.2(@types/react@18.2.45)(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-transition-group: 4.4.5(react-dom@18.3.1)(react@18.3.1)
+      use-isomorphic-layout-effect: 1.1.2(@types/react@18.3.23)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
       - supports-color
     dev: false
 
-  /react-side-effect@2.1.2(react@18.2.0):
+  /react-side-effect@2.1.2(react@18.3.1):
     resolution: {integrity: sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==}
     peerDependencies:
       react: ^16.3.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
-  /react-textarea-autosize@8.4.0(@types/react@18.2.45)(react@18.2.0):
+  /react-textarea-autosize@8.4.0(@types/react@18.3.23)(react@18.3.1):
     resolution: {integrity: sha512-YrTFaEHLgJsi8sJVYHBzYn+mkP3prGkmP2DKb/tm0t7CLJY5t1Rxix8070LAKb0wby7bl/lf2EeHkuMihMZMwQ==}
     engines: {node: '>=10'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@babel/runtime': 7.23.6
-      react: 18.2.0
-      use-composed-ref: 1.3.0(react@18.2.0)
-      use-latest: 1.2.1(@types/react@18.2.45)(react@18.2.0)
+      react: 18.3.1
+      use-composed-ref: 1.3.0(react@18.3.1)
+      use-latest: 1.2.1(@types/react@18.3.23)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
     dev: false
 
-  /react-transition-group@4.4.5(react-dom@18.2.0)(react@18.2.0):
+  /react-transition-group@4.4.5(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
     peerDependencies:
       react: '>=16.6.0'
@@ -22975,11 +23004,11 @@ packages:
       dom-helpers: 5.2.1
       loose-envify: 1.4.0
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /react-window@1.8.10(react-dom@18.2.0)(react@18.2.0):
+  /react-window@1.8.10(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-Y0Cx+dnU6NLa5/EvoHukUD0BklJ8qITCtVEPY1C/nL8wwoZ0b5aEw8Ff1dOVHw7fCzMt55XfJDd8S8W8LCaUCg==}
     engines: {node: '>8.0.0'}
     peerDependencies:
@@ -22988,12 +23017,12 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.6
       memoize-one: 5.2.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /react@18.2.0:
-    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
+  /react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
@@ -23732,8 +23761,8 @@ packages:
     dependencies:
       xmlchars: 2.2.0
 
-  /scheduler@0.23.0:
-    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
+  /scheduler@0.23.2:
+    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
     dependencies:
       loose-envify: 1.4.0
 
@@ -24643,7 +24672,7 @@ packages:
       inline-style-parser: 0.2.2
     dev: false
 
-  /styled-jsx@5.1.2(@babel/core@7.26.10)(react@18.2.0):
+  /styled-jsx@5.1.2(@babel/core@7.26.10)(react@18.3.1):
     resolution: {integrity: sha512-FI5r0a5ED2/+DSdG2ZRz3a4FtNQnKPLadauU5v76a9QsscwZrWggQKOmyxGGP5EWKbyY3bsuWAJYzyKaDAVAcw==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
@@ -24658,7 +24687,7 @@ packages:
     dependencies:
       '@babel/core': 7.26.10
       client-only: 0.0.1
-      react: 18.2.0
+      react: 18.3.1
     dev: true
 
   /stylelint-checkstyle-formatter@0.1.2:
@@ -25813,23 +25842,23 @@ packages:
       qs: 6.11.2
     dev: true
 
-  /use-composed-ref@1.3.0(react@18.2.0):
+  /use-composed-ref@1.3.0(react@18.3.1):
     resolution: {integrity: sha512-GLMG0Jc/jiKov/3Ulid1wbv3r54K9HlMW29IWcDFPEqFkSO2nS0MuefWgMJpeHQ9YJeXDL3ZUF+P3jdXlZX/cQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
-  /use-is-mounted-ref@1.5.0(react@18.2.0):
+  /use-is-mounted-ref@1.5.0(react@18.3.1):
     resolution: {integrity: sha512-p5FksHf/ospZUr5KU9ese6u3jp9fzvZ3wuSb50i0y6fdONaHWgmOqQtxR/PUcwi6hnhQDbNxWSg3eTK3N6m+dg==}
     peerDependencies:
       react: '>=16.0.0'
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
     dev: false
 
-  /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.45)(react@18.2.0):
+  /use-isomorphic-layout-effect@1.1.2(@types/react@18.3.23)(react@18.3.1):
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
     peerDependencies:
       '@types/react': '*'
@@ -25838,11 +25867,11 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.45
-      react: 18.2.0
+      '@types/react': 18.3.23
+      react: 18.3.1
     dev: false
 
-  /use-latest@1.2.1(@types/react@18.2.45)(react@18.2.0):
+  /use-latest@1.2.1(@types/react@18.3.23)(react@18.3.1):
     resolution: {integrity: sha512-xA+AVm/Wlg3e2P/JiItTziwS7FK92LWrDB0p+hgXloIMuVCeJJ8v6f0eeHyPZaJrM+usM1FkFfbNCrJGs8A/zw==}
     peerDependencies:
       '@types/react': '*'
@@ -25851,9 +25880,9 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.45
-      react: 18.2.0
-      use-isomorphic-layout-effect: 1.1.2(@types/react@18.2.45)(react@18.2.0)
+      '@types/react': 18.3.23
+      react: 18.3.1
+      use-isomorphic-layout-effect: 1.1.2(@types/react@18.3.23)(react@18.3.1)
     dev: false
 
   /use@3.1.1:

@@ -48,7 +48,7 @@
         "@gooddata/sdk-ui-dashboard": "workspace:*",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.21",
-        "react-intl": "^6.4.1",
+        "react-intl": "6.8.9",
         "semver": "^7.3.5",
         "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0"
@@ -65,8 +65,8 @@
         "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
         "@types/raf": "^3.4.0",
-        "@types/react-dom": "^18.2.1",
-        "@types/react": "^18.2.0",
+        "@types/react-dom": "18.3.7",
+        "@types/react": "18.3.23",
         "@types/semver": "^7.3.9",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
@@ -86,8 +86,8 @@
         "eslint-plugin-tsdoc": "^0.2.14",
         "prettier": "~2.5.0",
         "raf": "^3.4.1",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
         "typescript": "5.3.3"
     }
 }

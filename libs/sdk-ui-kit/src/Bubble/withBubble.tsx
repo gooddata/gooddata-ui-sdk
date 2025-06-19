@@ -32,7 +32,7 @@ export function withBubble<T>(WrappedComponent: React.ComponentType<T>) {
         const intl = useIntl();
 
         if (!showBubble || !bubbleTextId) {
-            return <WrappedComponent {...props} ref={ref} />;
+            return <WrappedComponent {...(props as T)} ref={ref} />;
         }
         const bubbleText = intl.formatMessage(
             { id: bubbleTextId },
