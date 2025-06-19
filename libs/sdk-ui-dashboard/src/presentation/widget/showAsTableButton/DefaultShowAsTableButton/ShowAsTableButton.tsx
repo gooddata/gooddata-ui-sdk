@@ -32,8 +32,11 @@ export const ShowAsTableButton = (props: IShowAsTableButtonProps): JSX.Element |
     const asTableIconClasses = cx(
         "dash-item-action-options",
         "dash-item-action-as-table",
-        "s-dash-item-action-as-table",
         `s-dash-item-action-as-table-options-${stringUtils.simplifyText(widgetRefAsString)}`,
+        {
+            "s-dash-item-action-as-table": !isWidgetAsTable,
+            "s-dash-item-action-as-original": isWidgetAsTable,
+        },
     );
 
     const id = useIdPrefixed(AS_TABLE_MENU_BUTTON_ID);
