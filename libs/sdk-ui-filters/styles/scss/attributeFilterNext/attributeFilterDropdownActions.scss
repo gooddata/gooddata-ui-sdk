@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 .gd-attribute-filter-dropdown-actions__next {
     border-top: 1px solid var(--gd-palette-complementary-3, #dde4eb);
     text-align: right;
@@ -25,7 +25,8 @@
     }
 
     .gd-attribute-filter-cancel-button__next,
-    .gd-attribute-filter-apply-button__next {
+    .gd-attribute-filter-apply-button__next,
+    .gd-attribute-filter-close-button__next {
         text-align: center;
         flex: 1;
         height: 32px;

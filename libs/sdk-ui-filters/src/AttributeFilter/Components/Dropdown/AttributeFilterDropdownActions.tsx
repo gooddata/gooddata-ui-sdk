@@ -2,6 +2,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
 
 /**
  * AttributeFilter dropdown actions like confirm and cancel button.
@@ -56,12 +57,16 @@ export const AttributeFilterDropdownActions: React.VFC<IAttributeFilterDropdownA
     const closeText = intl.formatMessage({ id: "close" });
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
 
+    const cancelClassNames = withoutApply
+        ? "gd-attribute-filter-close-button__next close-button s-close"
+        : "gd-attribute-filter-cancel-button__next cancel-button s-cancel";
+
     return (
         <div className="gd-attribute-filter-dropdown-actions__next">
             <div className="gd-attribute-filter-dropdown-actions-left-content__next" />
             <div className="gd-attribute-filter-dropdown-actions-right-content__next">
                 <Button
-                    className="gd-attribute-filter-cancel-button__next gd-button-secondary gd-button-small cancel-button s-cancel"
+                    className={cx(cancelClassNames, "gd-button-secondary gd-button-small")}
                     onClick={onCancelButtonClick}
                     value={withoutApply ? closeText : cancelText}
                     title={withoutApply ? closeText : cancelText}
