@@ -42,7 +42,6 @@ const FocusableItemComponent: React.FC<{
     const { icon, className, subMenu, tooltip } = item.data ?? {};
 
     const itemClassName = cx("gd-menu-item", className, {
-        "is-focused": isFocused,
         "gd-ui-kit-menu__item--isFocused": isFocused,
         "is-disabled": isDisabled,
     });

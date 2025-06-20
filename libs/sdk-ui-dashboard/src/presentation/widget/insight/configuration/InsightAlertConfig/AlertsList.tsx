@@ -100,7 +100,7 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                 <AutofocusOnMount>
                     <div
                         onKeyDown={onKeyboardNavigation}
-                        tabIndex={0}
+                        tabIndex={isLoading || alerts.length === 0 ? -1 : 0}
                         className="gd-alerts-list__items"
                         id={listId}
                     >
