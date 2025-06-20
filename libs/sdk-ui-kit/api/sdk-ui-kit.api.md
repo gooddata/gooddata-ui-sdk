@@ -105,11 +105,6 @@ export type ArrowOffsets = Record<string, ArrowOffset>;
 // @internal (undocumented)
 export function AsyncList<T>(props: IAsyncListProps<T>): React_2.JSX.Element;
 
-// @internal
-export const AutofocusOnMount: React_2.FC<{
-    children: React_2.ReactNode;
-} & IAutofocusOptions>;
-
 // @internal (undocumented)
 export class AutoSize extends Component<IAutoSizeProps> {
     // (undocumented)
@@ -161,6 +156,7 @@ export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
         className: string;
         closeOnOutsideClick: boolean;
         closeOnParentScroll: boolean;
+        closeOnEscape: boolean;
         onClose: (...args: any[]) => void;
         onMouseEnter: (...args: any[]) => void;
         onMouseLeave: (...args: any[]) => void;
@@ -549,6 +545,9 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
     updateSize: () => void;
 }
 
+// @internal
+export const focusAndEnsureReachableElement: (initialElement: HTMLElement | undefined, focusableElements: HTMLElement[], direction: NavigationDirection) => void;
+
 // @internal (undocumented)
 export type FormatMessageParams = Parameters<IntlShape["formatMessage"]>;
 
@@ -640,6 +639,9 @@ export const getItemInteractiveParent: <T extends IUiMenuItemData = object>(item
 
 // @internal
 export const getItemsByInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], parentId?: string) => IUiMenuItem<T>[];
+
+// @internal (undocumented)
+export const getNextFocusableElement: (initialElement: HTMLElement | undefined, focusableElements: HTMLElement[], direction: NavigationDirection) => HTMLElement;
 
 // @internal
 export const getNextSiblings: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuItem<T>[];
@@ -976,14 +978,6 @@ export interface IAsyncListProps<T> {
 }
 
 // @internal (undocumented)
-export interface IAutofocusOptions {
-    // (undocumented)
-    isDisabled?: boolean;
-    // (undocumented)
-    refocusKey?: unknown;
-}
-
-// @internal (undocumented)
 export interface IAutoSizeChildren {
     // (undocumented)
     height: number;
@@ -1059,6 +1053,8 @@ export interface IBubbleProps {
     children?: React_2.ReactNode;
     // (undocumented)
     className?: string;
+    // (undocumented)
+    closeOnEscape?: boolean;
     // (undocumented)
     closeOnOutsideClick?: boolean;
     // (undocumented)
@@ -1922,8 +1918,6 @@ export interface IDropdownProps {
     // (undocumented)
     isOpen?: boolean;
     // (undocumented)
-    isTabCaught?: boolean;
-    // (undocumented)
     onOpenStateChanged?: (isOpen: boolean) => void;
     onToggle?: ((desiredState?: boolean) => void) | (() => void);
     // (undocumented)
@@ -1938,6 +1932,8 @@ export interface IDropdownProps {
     renderButton: (props: IDropdownButtonRenderProps) => React_2.ReactNode;
     // (undocumented)
     returnFocusTo?: React_2.RefObject<HTMLElement> | string;
+    // (undocumented)
+    shouldTrapFocus?: boolean;
 }
 
 // @internal (undocumented)
@@ -4783,6 +4779,14 @@ export interface ITypographyProps {
 }
 
 // @internal (undocumented)
+export interface IUiAutofocusOptions {
+    // (undocumented)
+    initialFocus?: string | React_2.RefObject<HTMLElement>;
+    // (undocumented)
+    refocusKey?: unknown;
+}
+
+// @internal (undocumented)
 export interface IUiButtonAccessibilityConfig extends IAccessibilityConfigBase {
     // (undocumented)
     iconAriaHidden?: boolean;
@@ -4793,6 +4797,23 @@ export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, ID
     // (undocumented)
     deleteAriaLabel?: string;
 }
+
+// @internal (undocumented)
+export interface IUiFocusHelperConnectors<T extends HTMLElement = HTMLElement> {
+    // (undocumented)
+    onKeyDown?: (e: React_2.KeyboardEvent) => void;
+    // (undocumented)
+    ref?: React_2.Ref<T>;
+}
+
+// @internal (undocumented)
+export type IUiFocusManagerProps = {
+    enableAutofocus?: boolean | IUiAutofocusOptions;
+    enableFocusTrap?: boolean;
+    enableReturnFocusOnUnmount?: boolean | IUiReturnFocusOnUnmountOptions;
+    tabOutHandler?: (event: React_2.KeyboardEvent) => void;
+    children: React_2.ReactNode;
+};
 
 // @internal (undocumented)
 export interface IUiListboxContext<InteractiveItemData, StaticItemData = React_2.ReactNode> {
@@ -5012,6 +5033,12 @@ export type IUiMenuStaticItem<T extends IUiMenuItemData = object> = {
 export interface IUiMenuStaticItemProps<T extends IUiMenuItemData = object> {
     // (undocumented)
     item: IUiMenuStaticItem<T>;
+}
+
+// @internal (undocumented)
+export interface IUiReturnFocusOnUnmountOptions {
+    // (undocumented)
+    returnFocusTo?: string | React_2.RefObject<HTMLElement>;
 }
 
 // @internal (undocumented)
@@ -5297,6 +5324,9 @@ export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps
 }
 
 // @internal (undocumented)
+export type NavigationDirection = "forward" | "backward";
+
+// @internal (undocumented)
 export const NoData: React_2.FC<INoDataProps>;
 
 // @internal
@@ -5415,6 +5445,9 @@ export type RecurrenceTypeKey = keyof typeof RECURRENCE_TYPES;
 
 // @internal (undocumented)
 export const relatedHeader: IDateDatasetHeader;
+
+// @internal (undocumented)
+export const resolveRef: (ref: string | React_2.RefObject<HTMLElement> | undefined | null) => HTMLElement;
 
 // @internal (undocumented)
 export const ResponsiveContextProvider: React_2.Provider<IResponsiveConfig>;
@@ -5774,6 +5807,11 @@ export const Typography: React_2.FC<ITypographyProps>;
 // @internal (undocumented)
 export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 
+// @internal
+export const UiAutofocus: React_2.FC<{
+    children: React_2.ReactNode;
+} & IUiAutofocusOptions>;
+
 // @internal (undocumented)
 export const UiButton: React_2.ForwardRefExoticComponent<UiButtonProps & React_2.RefAttributes<HTMLButtonElement>>;
 
@@ -5841,24 +5879,12 @@ export interface UiChipProps {
 }
 
 // @internal (undocumented)
-export const UiFocusTrap: React_2.FC<UiFocusTrapProps>;
+export const UiFocusManager: React_2.FC<IUiFocusManagerProps>;
 
 // @internal (undocumented)
-export interface UiFocusTrapProps {
-    // (undocumented)
-    autofocusOnOpen?: boolean;
-    // (undocumented)
-    children: React_2.ReactNode;
-    customKeyboardNavigationHandler?: (event: React_2.KeyboardEvent) => void;
-    initialFocus?: React_2.RefObject<HTMLElement> | string;
-    // (undocumented)
-    isTabCaught?: boolean;
-    // (undocumented)
-    onDeactivate?: () => void;
-    refocusKey?: unknown;
-    returnFocusOnUnmount?: boolean;
-    returnFocusTo?: React_2.RefObject<HTMLElement> | string;
-}
+export const UiFocusTrap: React_3.FC<{
+    children: React_3.ReactNode;
+}>;
 
 // @internal (undocumented)
 export const UiIcon: ({ type, label, color, ariaHidden, size }: UiIconProps) => React_2.JSX.Element;
@@ -6044,6 +6070,11 @@ export interface UiPagedVirtualListSkeletonItemProps {
 }
 
 // @internal (undocumented)
+export const UiReturnFocusOnUnmount: React_2.FC<IUiReturnFocusOnUnmountOptions & {
+    children: React_2.ReactNode;
+}>;
+
+// @internal (undocumented)
 export function UiSkeleton({ itemsCount, itemHeight, itemWidth, itemsGap, direction, itemBorderRadius, }: UiSkeletonProps): React_2.JSX.Element;
 
 // @internal (undocumented)
@@ -6063,6 +6094,12 @@ export interface UiTab {
     // (undocumented)
     label: string;
 }
+
+// @internal (undocumented)
+export const UiTabOutHandler: React_3.FC<{
+    onTabOut: () => void;
+    children: React_3.ReactNode;
+}>;
 
 // @internal (undocumented)
 export const UiTabs: React_2.FC<UiTabsProps>;
@@ -6095,12 +6132,6 @@ export const unrelatedHeader: IDateDatasetHeader;
 
 // @internal
 export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[]): IUiMenuItem<T>[];
-
-// @internal
-export const useAutofocusOnMount: (element: HTMLElement | null | undefined, { isDisabled, refocusKey }?: IAutofocusOptions) => void;
-
-// @internal
-export const useAutofocusOnMountRef: ({ isDisabled, refocusKey }?: IAutofocusOptions) => (node: HTMLElement | null) => void;
 
 // @internal
 export const useDebouncedState: <T>(initialValue: T, delay: number) => UseDebouncedStateOutput<T>;
@@ -6193,6 +6224,21 @@ export interface UseToastMessageType {
     // (undocumented)
     removeMessage: (id: string) => void;
 }
+
+// @internal
+export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>({ refocusKey, initialFocus, }?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
+
+// @internal (undocumented)
+export const useUiFocusManagerConnectors: <T extends HTMLElement = HTMLElement>({ enableFocusTrap, enableAutofocus, enableReturnFocusOnUnmount, tabOutHandler, }: Omit<IUiFocusManagerProps, "children">) => IUiFocusHelperConnectors<T>;
+
+// @internal (undocumented)
+export const useUiFocusTrapConnectors: <T extends HTMLElement = HTMLElement>() => IUiFocusHelperConnectors<T>;
+
+// @internal (undocumented)
+export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLElement>({ returnFocusTo, }?: IUiReturnFocusOnUnmountOptions) => IUiFocusHelperConnectors<T>;
+
+// @internal (undocumented)
+export const useUiTabOutHandlerConnectors: <T extends HTMLElement = HTMLElement>(handler?: (event: React_3.KeyboardEvent) => void) => IUiFocusHelperConnectors<T>;
 
 // @internal
 export const useZoom: () => IZoomContextState;

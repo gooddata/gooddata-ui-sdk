@@ -5,7 +5,7 @@ import React from "react";
  * @internal
  */
 export const useCombineRefs = <T>(
-    ...refs: Array<React.MutableRefObject<T> | ((instance: T) => void) | undefined | null>
+    ...refs: Array<React.MutableRefObject<T> | ((instance: T) => void) | undefined | null | false>
 ) => {
     return React.useCallback((instance: T) => {
         refs.forEach((ref) => {

@@ -15,6 +15,7 @@ import { useDashboardSelector, selectEnableFlexibleLayout } from "../../../../mo
 interface IConfigurationBubbleProps {
     classNames?: string;
     onClose?: () => void;
+    closeOnEscape?: boolean;
     children?: React.ReactNode;
     alignTo?: string;
     alignPoints?: IAlignPoint[];
@@ -57,6 +58,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
         children,
         classNames,
         onClose,
+        closeOnEscape,
         alignTo = ".s-dash-item.is-selected",
         alignPoints = defaultAlignPoints,
         arrowOffsets,
@@ -85,6 +87,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
             closeOnParentScroll={false}
             ignoreClicksOnByClass={ignoreClicksOnByClass}
             onClose={onClose}
+            closeOnEscape={closeOnEscape}
             overlayPositionType={overlayPositionType}
             ensureVisibility={true}
         >

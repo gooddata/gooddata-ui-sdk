@@ -4,7 +4,13 @@ import React, { useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
-import { DropdownButton, useMediaQuery, IAlignPoint, UiFocusTrap, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import {
+    DropdownButton,
+    useMediaQuery,
+    IAlignPoint,
+    useIdPrefixed,
+    UiReturnFocusOnUnmount,
+} from "@gooddata/sdk-ui-kit";
 import { IDashboardFilterView } from "@gooddata/sdk-model";
 
 import { ConfigurationBubble } from "../../../widget/common/configuration/ConfigurationBubble.js";
@@ -158,18 +164,13 @@ export const FilterViews: React.FC = () => {
                 <div className={dropdownAnchorClassName} />
             )}
             {isDialogOpen ? (
-                <ConfigurationBubble
-                    classNames="gd-filters-views__panel"
-                    onClose={closeDialog}
-                    alignTo={`.${dropdownAnchorClassName}`}
-                    alignPoints={BUBBLE_ALIGN_POINTS}
-                >
-                    <UiFocusTrap
-                        returnFocusTo={triggerId}
-                        returnFocusOnUnmount
-                        onDeactivate={closeDialog}
-                        autofocusOnOpen
-                        refocusKey={dialogMode}
+                <UiReturnFocusOnUnmount returnFocusTo={triggerId}>
+                    <ConfigurationBubble
+                        classNames="gd-filters-views__panel"
+                        onClose={closeDialog}
+                        closeOnEscape
+                        alignTo={`.${dropdownAnchorClassName}`}
+                        alignPoints={BUBBLE_ALIGN_POINTS}
                     >
                         {dialogMode === "add" ? (
                             <AddFilterView onClose={openListDialog} />
@@ -180,8 +181,8 @@ export const FilterViews: React.FC = () => {
                                 onClose={closeDialog}
                             />
                         )}
-                    </UiFocusTrap>
-                </ConfigurationBubble>
+                    </ConfigurationBubble>
+                </UiReturnFocusOnUnmount>
             ) : null}
         </div>
     );

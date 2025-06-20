@@ -7,10 +7,11 @@ import { useMediaQuery } from "../responsive/useMediaQuery.js";
 import { IAlignPoint } from "../typings/positioning.js";
 import { OverlayPositionType } from "../typings/overlay.js";
 import { useId } from "../utils/useId.js";
-import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 import { usePropState } from "@gooddata/sdk-ui";
 import { DropdownButtonKeyboardWrapper } from "./DropdownButtonKeyboardWrapper.js";
 import { IButtonAccessibilityConfig } from "../Button/index.js";
+import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
+import { resolveRef } from "../@ui/UiFocusManager/utils.js";
 
 const SCROLLBAR_SELECTOR = ".fixedDataTableLayout_main .ScrollbarLayout_main";
 const MOBILE_DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
@@ -129,7 +130,7 @@ export interface IDropdownProps {
         popupRole?: "listbox" | "tree" | "grid" | "dialog";
     };
 
-    isTabCaught?: boolean;
+    shouldTrapFocus?: boolean;
 }
 
 /**
@@ -171,7 +172,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
 
         accessibilityConfig,
 
-        isTabCaught = true,
+        shouldTrapFocus = true,
     } = props;
     const [isOpen, setIsOpen] = usePropState(isOpenProp ?? openOnInit ?? false);
 
@@ -265,15 +266,21 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         },
     };
 
+    const handleTabOut = React.useCallback(() => {
+        closeDropdown();
+        resolveRef(returnFocusTo)?.focus();
+    }, [closeDropdown, returnFocusTo]);
+
     const isMobileDevice = useMediaQuery("mobileDevice");
 
     const renderDropdown = isOpen ? (
         fullscreenOnMobile && isMobileDevice ? (
             <FullScreenOverlay alignTo="body" alignPoints={MOBILE_DROPDOWN_ALIGN_POINTS}>
-                <UiFocusTrap
-                    returnFocusTo={returnFocusTo ?? (buttonRef.current ? buttonRef : buttonWrapperRef)}
-                    autofocusOnOpen={autofocusOnOpen}
-                    initialFocus={initialFocus}
+                <UiFocusManager
+                    tabOutHandler={shouldTrapFocus ? undefined : handleTabOut}
+                    enableFocusTrap={shouldTrapFocus}
+                    enableAutofocus={autofocusOnOpen ? { initialFocus } : false}
+                    enableReturnFocusOnUnmount={{ returnFocusTo }}
                 >
                     <div className="gd-mobile-dropdown-overlay overlay gd-flex-row-container">
                         <div className="gd-mobile-dropdown-header gd-flex-item">
@@ -291,7 +298,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                             })}
                         </div>
                     </div>
-                </UiFocusTrap>
+                </UiFocusManager>
             </FullScreenOverlay>
         ) : (
             <Overlay
@@ -311,13 +318,11 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 onMouseUp={enableEventPropagation ? noop : undefined}
                 zIndex={overlayZIndex}
             >
-                <UiFocusTrap
-                    returnFocusTo={returnFocusTo ?? (buttonRef.current ? buttonRef : buttonWrapperRef)}
-                    autofocusOnOpen={autofocusOnOpen}
-                    initialFocus={initialFocus}
-                    isTabCaught={isTabCaught}
-                    // Used when tabbing out
-                    onDeactivate={closeDropdown}
+                <UiFocusManager
+                    tabOutHandler={shouldTrapFocus ? undefined : handleTabOut}
+                    enableFocusTrap={shouldTrapFocus}
+                    enableAutofocus={autofocusOnOpen ? { initialFocus } : false}
+                    enableReturnFocusOnUnmount={{ returnFocusTo }}
                 >
                     <div className="overlay dropdown-body">
                         {renderBody({
@@ -325,7 +330,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                             isMobile: false,
                         })}
                     </div>
-                </UiFocusTrap>
+                </UiFocusManager>
             </Overlay>
         )
     ) : null;

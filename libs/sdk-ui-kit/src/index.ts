@@ -21,7 +21,6 @@ export * from "./utils/debounce.js";
 export * from "./utils/dateTimeConfig.js";
 export * from "./utils/events.js";
 export * from "./utils/useId.js";
-export * from "./utils/useAutofocusOnMount.js";
 export { getFocusableElements, isElementFocusable } from "./utils/domUtilities.js";
 export * from "./measureNumberFormat/index.js";
 export * from "./syntaxHighlightingInput/index.js";
@@ -103,8 +102,23 @@ export type {
     UiPagedVirtualListProps,
     UiPagedVirtualListSkeletonItemProps,
 } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
-export { UiFocusTrap } from "./@ui/UiFocusTrap/UiFocusTrap.js";
-export type { UiFocusTrapProps } from "./@ui/UiFocusTrap/UiFocusTrap.js";
+export { UiFocusManager, useUiFocusManagerConnectors } from "./@ui/UiFocusManager/UiFocusManager.js";
+export type { IUiFocusManagerProps } from "./@ui/UiFocusManager/UiFocusManager.js";
+export { UiFocusTrap, useUiFocusTrapConnectors } from "./@ui/UiFocusManager/UiFocusTrap.js";
+export { UiTabOutHandler, useUiTabOutHandlerConnectors } from "./@ui/UiFocusManager/UiTabOutHandler.js";
+export { UiAutofocus, useUiAutofocusConnectors } from "./@ui/UiFocusManager/UiAutofocus.js";
+export type { IUiAutofocusOptions } from "./@ui/UiFocusManager/UiAutofocus.js";
+export {
+    UiReturnFocusOnUnmount,
+    useUiReturnFocusOnUnmountConnectors,
+} from "./@ui/UiFocusManager/UiReturnFocusOnUnmount.js";
+export type { IUiReturnFocusOnUnmountOptions } from "./@ui/UiFocusManager/UiReturnFocusOnUnmount.js";
+export {
+    resolveRef,
+    getNextFocusableElement,
+    focusAndEnsureReachableElement,
+} from "./@ui/UiFocusManager/utils.js";
+export type { IUiFocusHelperConnectors, NavigationDirection } from "./@ui/UiFocusManager/types.js";
 export type {
     IAccessibilityConfigBase,
     IMenuAccessibilityConfig,

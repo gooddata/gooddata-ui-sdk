@@ -6,13 +6,13 @@ import copy from "copy-to-clipboard";
 import { IAttribute, IColorPalette, IFilter, IGenAIVisualization, IMeasure } from "@gooddata/sdk-model";
 import {
     Button,
+    UiFocusManager,
     IAlignPoint,
     Icon,
     ItemsWrapper,
     makeMenuKeyboardNavigation,
     Overlay,
     SingleSelectListItem,
-    UiFocusTrap,
     useId,
 } from "@gooddata/sdk-ui-kit";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
@@ -213,6 +213,14 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
         setVisLoading(isLoading);
     };
 
+    const handleKeyDown = React.useMemo(
+        () =>
+            makeMenuKeyboardNavigation({
+                onClose: () => setMenuButtonOpen(false),
+            }),
+        [],
+    );
+
     const renderMenuItems = () => {
         return (
             <Overlay
@@ -224,31 +232,28 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                 closeOnOutsideClick={true}
                 onClose={() => setMenuButtonOpen(false)}
             >
-                <UiFocusTrap
-                    autofocusOnOpen={true}
-                    customKeyboardNavigationHandler={makeMenuKeyboardNavigation({
-                        onClose: () => setMenuButtonOpen(false),
-                    })}
-                >
-                    <ItemsWrapper smallItemsSpacing className="gd-menu">
-                        <div role={"menu"} id={menuId} aria-labelledby={MORE_MENU_BUTTON_ID}>
-                            {menuItems.map((menuItem) => {
-                                return (
-                                    <SingleSelectListItem
-                                        className="gd-menu-item"
-                                        elementType="button"
-                                        key={menuItem.id}
-                                        title={menuItem.title}
-                                        icon={menuItem.icon}
-                                        onClick={(e) => {
-                                            handleButtonClick(e, menuItem);
-                                        }}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </ItemsWrapper>
-                </UiFocusTrap>
+                <UiFocusManager enableAutofocus enableReturnFocusOnUnmount enableFocusTrap>
+                    <div style={{ display: "contents" }} tabIndex={-1} onKeyDown={handleKeyDown}>
+                        <ItemsWrapper smallItemsSpacing className="gd-menu">
+                            <div role={"menu"} id={menuId} aria-labelledby={MORE_MENU_BUTTON_ID}>
+                                {menuItems.map((menuItem) => {
+                                    return (
+                                        <SingleSelectListItem
+                                            className="gd-menu-item"
+                                            elementType="button"
+                                            key={menuItem.id}
+                                            title={menuItem.title}
+                                            icon={menuItem.icon}
+                                            onClick={(e) => {
+                                                handleButtonClick(e, menuItem);
+                                            }}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </ItemsWrapper>
+                    </div>
+                </UiFocusManager>
             </Overlay>
         );
     };

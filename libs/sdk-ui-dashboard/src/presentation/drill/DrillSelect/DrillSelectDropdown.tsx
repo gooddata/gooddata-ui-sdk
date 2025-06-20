@@ -6,7 +6,7 @@ import { useIntl, IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 import partition from "lodash/partition.js";
 import { IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { Overlay, UiFocusTrap, UiMenu } from "@gooddata/sdk-ui-kit";
+import { UiFocusManager, Overlay, UiMenu } from "@gooddata/sdk-ui-kit";
 import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
 import {
     IInsight,
@@ -176,7 +176,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
                 alignTo={`.${dropDownAnchorClass}`}
                 onClose={onClose}
             >
-                <UiFocusTrap autofocusOnOpen={true}>
+                <UiFocusManager enableFocusTrap enableAutofocus>
                     <div
                         onScroll={stopPropagation}
                         className="gd-drill-modal-picker-dropdown s-drill-item-selector-dropdown"
@@ -195,7 +195,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
                             InteractiveItem={DrillSelectDropdownMenuItem}
                         />
                     </div>
-                </UiFocusTrap>
+                </UiFocusManager>
             </Overlay>
         </div>
     );

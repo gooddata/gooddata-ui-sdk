@@ -10,6 +10,7 @@ import {
     Icon,
     SELECT_ITEM_ACTION,
     Typography,
+    UiFocusManager,
     useListWithActionsKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
 import { IDashboardFilterView, objRefToString } from "@gooddata/sdk-model";
@@ -178,6 +179,8 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
         [canCreateFilterView],
     );
 
+    const refocusKey = `${isLoading}`;
+
     const { onKeyboardNavigation, onBlur, focusedItem, focusedAction } = useListWithActionsKeyboardNavigation(
         {
             items: filterViews,
@@ -191,7 +194,7 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
     );
 
     return (
-        <>
+        <UiFocusManager enableFocusTrap enableAutofocus={{ refocusKey }}>
             {filterViewToDelete ? (
                 <FilterViewDeleteConfirm
                     filterView={filterViewToDelete}
@@ -270,6 +273,6 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
                     </div>
                 </div>
             </div>
-        </>
+        </UiFocusManager>
     );
 };

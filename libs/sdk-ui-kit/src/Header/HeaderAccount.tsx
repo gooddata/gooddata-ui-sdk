@@ -7,9 +7,9 @@ import { Overlay } from "../Overlay/index.js";
 import { Button } from "../Button/index.js";
 
 import { IHeaderMenuItem, IHeaderAccountProps } from "./typings.js";
-import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 import { useIdPrefixed } from "../utils/useId.js";
 import { isActionKey } from "../utils/events.js";
+import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 
 export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
     className = "",
@@ -71,9 +71,13 @@ export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
             >
                 <div className="gd-dialog gd-dropdown overlay gd-header-account-dropdown" id={dropdownId}>
                     <div className="gd-list small">
-                        <UiFocusTrap returnFocusTo={buttonRef} autofocusOnOpen={true}>
+                        <UiFocusManager
+                            enableAutofocus
+                            enableFocusTrap
+                            enableReturnFocusOnUnmount={{ returnFocusTo: buttonRef }}
+                        >
                             {getMenuItems()}
-                        </UiFocusTrap>
+                        </UiFocusManager>
                     </div>
                 </div>
             </Overlay>

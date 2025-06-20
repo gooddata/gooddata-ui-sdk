@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from "react";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
-import { AutofocusOnMount, Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
+import { UiAutofocus, Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 import { IAlertingManagementDialogProps } from "../types.js";
@@ -108,7 +108,7 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
                             <FormattedMessage id={messages.alertingManagementListTitle.id!} />
                         </Typography>
                     </div>
-                    <AutofocusOnMount refocusKey={autofocusKey}>
+                    <UiAutofocus refocusKey={autofocusKey}>
                         <Alerts
                             onDelete={handleAlertDeleteOpen}
                             onEdit={handleAlertEdit}
@@ -117,7 +117,7 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
                             alerts={automations}
                             noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
                         />
-                    </AutofocusOnMount>
+                    </UiAutofocus>
                 </div>
                 <div className="gd-content-divider"></div>
                 <div className="gd-buttons">
