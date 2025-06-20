@@ -373,7 +373,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDRespectLegendPosition: true,
     enableWorkspaceSettingsAppHeaderMenuItem: false,
     enableSnapshotExportAccessibility: false,
-    enableWidgetExportPngImage: false,
+    enableWidgetExportPngImage: true,
     enableExportToDocumentStorage: false,
     enableAttributeFilterVirtualised: true,
     enableNotificationChannelIdentifiers: false,

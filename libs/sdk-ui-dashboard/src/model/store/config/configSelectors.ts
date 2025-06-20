@@ -1045,7 +1045,7 @@ export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean>
 export const selectEnableWidgetExportPngImage: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableWidgetExportPngImage) ?? false;
+        return Boolean(state.settings?.enableWidgetExportPngImage) ?? true;
     },
 );
 
