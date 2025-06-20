@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import sortBy from "lodash/sortBy.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -10,6 +10,8 @@ import {
     getAxisRangeForAxes,
     getDataPointsOfVisibleSeries,
     IAxisRangeForAxes,
+    getAxisWithCategories,
+    getPointsVisibleInAxisRange,
 } from "../../../chartTypes/_chartCreators/helpers.js";
 
 import {
@@ -104,12 +106,14 @@ const toggleNonStackedChartLabels = (
 export const autohideBarLabels = (chart: any): void => {
     const isStackedChart = isStacked(chart);
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
+    const axisWithCategories = getAxisWithCategories(chart);
+    const pointsVisibleInAxisRange = getPointsVisibleInAxisRange(visiblePoints, axisWithCategories);
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);
 
     if (isStackedChart) {
-        toggleStackedChartLabels(visiblePoints, axisRangeForAxes);
+        toggleStackedChartLabels(pointsVisibleInAxisRange, axisRangeForAxes);
     } else {
-        toggleNonStackedChartLabels(visiblePoints, axisRangeForAxes, true);
+        toggleNonStackedChartLabels(pointsVisibleInAxisRange, axisRangeForAxes, true);
     }
 };
 
