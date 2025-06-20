@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -7,9 +7,11 @@ import { messages } from "../../../../locales.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import CheckboxControl from "../CheckboxControl.js";
 import { Bubble, BubbleHoverTrigger, SeparatorLine } from "@gooddata/sdk-ui-kit";
+import { SectionName } from "../../configurationPanels/sectionName.js";
 
 export interface IInteractionsSectionProps {
-    controlsDisabled: boolean;
+    controlsDisabled?: boolean;
+    areControlsDisabledGetter?: (sectionName?: SectionName) => boolean;
     properties: IVisualizationProperties;
     propertiesMeta: any;
     pushData: (data: any) => any;
@@ -33,7 +35,7 @@ export const QuestionMarkTooltip = (props: { tooltipText: string }) => {
 
 const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponentProps> = (props) => {
     const {
-        controlsDisabled,
+        areControlsDisabledGetter,
         properties,
         propertiesMeta,
         pushData,
@@ -63,7 +65,7 @@ const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponent
                         valuePath="disableAlerts"
                         labelText={messages.interactionsAlerts.id}
                         properties={properties}
-                        disabled={controlsDisabled}
+                        disabled={areControlsDisabledGetter("interactions.alerts")}
                         checked={!isAlertsDisabled}
                         pushData={pushData}
                         isValueInverted={true}
@@ -77,7 +79,7 @@ const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponent
                         valuePath="disableScheduledExports"
                         labelText={messages.interactionsScheduledExports.id}
                         properties={properties}
-                        disabled={controlsDisabled}
+                        disabled={areControlsDisabledGetter("interactions.scheduled_exports")}
                         checked={!isScheduledExportsDisabled}
                         pushData={pushData}
                         isValueInverted={true}
@@ -91,7 +93,7 @@ const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponent
                     valuePath="disableDrillDown"
                     labelText={messages.interactionsDrillDown.id}
                     properties={properties}
-                    disabled={controlsDisabled}
+                    disabled={areControlsDisabledGetter("interactions.drill_down")}
                     checked={!isDrillDownDisabled}
                     pushData={pushData}
                     isValueInverted={true}

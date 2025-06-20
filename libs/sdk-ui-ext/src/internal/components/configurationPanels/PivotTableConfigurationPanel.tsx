@@ -1,8 +1,8 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { insightMeasures } from "@gooddata/sdk-model";
+import { insightMeasures, insightHasMeasures, insightHasAttributes } from "@gooddata/sdk-model";
 import cx from "classnames";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
@@ -19,8 +19,23 @@ import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHel
 import ConfigSection from "../configurationControls/ConfigSection.js";
 import { messages } from "../../../locales.js";
 import { ConfigDummySection } from "../configurationControls/ConfigDummySection.js";
+import { SectionName } from "./sectionName.js";
 
 export default class PivotTableConfigurationPanel extends ConfigurationPanelContent {
+    protected isControlDisabled(sectionName?: SectionName): boolean {
+        if (sectionName === "interactions.scheduled_exports" || sectionName === "interactions.drill_down") {
+            const { insight, isError, isLoading } = this.props;
+            // enable if there is at least one attribute (metrics not required)
+            return (
+                !insight ||
+                isError ||
+                isLoading ||
+                (!insightHasMeasures(insight) && !insightHasAttributes(insight))
+            );
+        }
+        return super.isControlDisabled(sectionName);
+    }
+
     protected renderConfigurationPanel(): React.ReactNode {
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
