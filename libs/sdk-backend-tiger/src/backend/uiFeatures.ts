@@ -370,7 +370,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAlertsEvaluationFrequencySetup: true,
     enableRichTooManyDatapointsErrors: false,
     enableLineChartTrendThreshold: true,
-    enableKDRespectLegendPosition: false,
+    enableKDRespectLegendPosition: true,
     enableWorkspaceSettingsAppHeaderMenuItem: false,
     enableSnapshotExportAccessibility: false,
     enableWidgetExportPngImage: false,
