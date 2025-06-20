@@ -2643,6 +2643,12 @@ export interface AutomationTestDestinationRequest {
      * @memberof AutomationTestDestinationRequest
      */
     destination: AutomationDefaultSmtp | AutomationInPlatform | AutomationSmtp | AutomationWebhook;
+    /**
+     * External recipients of the test result.
+     * @type {Array<AutomationAutomationExternalRecipient>}
+     * @memberof AutomationTestDestinationRequest
+     */
+    externalRecipients?: Array<AutomationAutomationExternalRecipient> | null;
 }
 /**
  *

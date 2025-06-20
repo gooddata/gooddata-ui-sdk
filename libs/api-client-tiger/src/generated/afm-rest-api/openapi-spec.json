@@ -3789,13 +3789,13 @@
                             "nullable": true
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"

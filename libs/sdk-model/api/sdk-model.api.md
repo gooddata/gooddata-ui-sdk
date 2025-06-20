@@ -2551,6 +2551,11 @@ export interface INotificationBase {
     workspaceId?: string;
 }
 
+// @alpha (undocumented)
+export interface INotificationChannelExternalRecipient {
+    email: string;
+}
+
 // @beta
 export interface INotificationChannelIdentifier {
     // (undocumented)

@@ -53,6 +53,7 @@ export type {
     INotificationChannelTestResponse,
     ToNotificationChannelMetadataObject,
     INotificationChannelIdentifier,
+    INotificationChannelExternalRecipient,
 } from "./notificationChannels/index.js";
 export {
     isNotificationChannelMetadataObject,

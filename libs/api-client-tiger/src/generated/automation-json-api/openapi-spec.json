@@ -1186,6 +1186,8 @@
                         "type": "array",
                         "description": "List of widget identifiers to be exported. Note that only one widget is currently supported.",
                         "items": {
+                            "maxLength": 255,
+                            "minLength": 1,
                             "type": "string"
                         }
                     },
@@ -1911,6 +1913,8 @@
                         "type": "array",
                         "description": "List of widget identifiers to be exported. Note that only one widget is currently supported.",
                         "items": {
+                            "maxLength": 255,
+                            "minLength": 1,
                             "type": "string"
                         }
                     },
@@ -1920,6 +1924,8 @@
                         "type": "array",
                         "description": "List of visualization ids to be exported. Note that only one visualization is currently supported.",
                         "items": {
+                            "maxLength": 255,
+                            "minLength": 1,
                             "type": "string"
                         }
                     },
@@ -2179,6 +2185,16 @@
                                 "$ref": "#/components/schemas/Webhook"
                             }
                         ]
+                    },
+                    "externalRecipients": {
+                        "maxItems": 1,
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "External recipients of the test result.",
+                        "nullable": true,
+                        "items": {
+                            "$ref": "#/components/schemas/AutomationExternalRecipient"
+                        }
                     }
                 },
                 "description": "Request body with notification channel destination to test."

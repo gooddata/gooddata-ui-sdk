@@ -1,9 +1,10 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import {
     INotificationChannelTestResponse,
     INotificationChannelMetadataObject,
     INotificationChannelMetadataObjectDefinition,
+    INotificationChannelExternalRecipient,
 } from "@gooddata/sdk-model";
 import { INotificationChannelsQuery } from "./query.js";
 
@@ -18,10 +19,12 @@ export interface IOrganizationNotificationChannelService {
      *
      * @param channel - definition of the channel
      * @param notificationId - id of the notification to test if its already created
+     * @param externalRecipients - external recipients of the test result
      * @returns Promise resolved with test response.
      */
     testNotificationChannel(
         channel: INotificationChannelMetadataObjectDefinition,
+        externalRecipients?: INotificationChannelExternalRecipient[],
     ): Promise<INotificationChannelTestResponse>;
 
     /*

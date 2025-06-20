@@ -80,6 +80,7 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { INotification } from '@gooddata/sdk-model';
+import { INotificationChannelExternalRecipient } from '@gooddata/sdk-model';
 import { INotificationChannelIdentifier } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObjectDefinition } from '@gooddata/sdk-model';
@@ -1025,7 +1026,7 @@ export interface IOrganizationNotificationChannelService {
     // (undocumented)
     getNotificationChannel(id: string): Promise<INotificationChannelMetadataObject>;
     getNotificationChannelsQuery(): INotificationChannelsQuery;
-    testNotificationChannel(channel: INotificationChannelMetadataObjectDefinition): Promise<INotificationChannelTestResponse>;
+    testNotificationChannel(channel: INotificationChannelMetadataObjectDefinition, externalRecipients?: INotificationChannelExternalRecipient[]): Promise<INotificationChannelTestResponse>;
     updateNotificationChannel(notificationChannel: INotificationChannelMetadataObject): Promise<INotificationChannelMetadataObject>;
 }
 

@@ -10,9 +10,9 @@ import {
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
-    JsonApiAutomationPatchAttributesAlert,
     ArithmeticMeasureOperatorEnum,
-    JsonApiAutomationPatchAttributesExternalRecipients,
+    JsonApiAutomationOutAttributesExternalRecipients,
+    JsonApiAutomationOutAttributesAlert,
 } from "@gooddata/api-client-tiger";
 import {
     IAlertComparisonOperator,
@@ -57,7 +57,7 @@ function convertRecipient(
 }
 
 function convertExternalRecipient(
-    external: JsonApiAutomationPatchAttributesExternalRecipients,
+    external: JsonApiAutomationOutAttributesExternalRecipients,
 ): IAutomationRecipient {
     return {
         id: external.email,
@@ -178,7 +178,7 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiAutomationPatchAttributesAlert | undefined,
+    alert: JsonApiAutomationOutAttributesAlert | undefined,
     state: JsonApiAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {

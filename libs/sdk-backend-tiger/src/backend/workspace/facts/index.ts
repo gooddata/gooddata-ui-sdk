@@ -1,8 +1,13 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
 import { IDataSetMetadataObject, IMetadataObject, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import {
+    ITigerClient,
+    jsonApiHeaders,
+    JsonApiDatasetOutWithLinks,
+    JsonApiDatasetOutWithLinksTypeEnum,
+} from "@gooddata/api-client-tiger";
 import { invariant } from "ts-invariant";
 import { convertDatasetWithLinks } from "../../../convertors/fromBackend/MetadataConverter.js";
 
@@ -40,7 +45,10 @@ function loadFactDataset(
                 res.data.included && res.data.included.length > 0,
                 "server returned that fact does not belong to any dataset",
             );
+            const datasets = res.data.included.filter((include): include is JsonApiDatasetOutWithLinks => {
+                return include.type === JsonApiDatasetOutWithLinksTypeEnum.DATASET;
+            });
 
-            return convertDatasetWithLinks(res.data.included[0]);
+            return convertDatasetWithLinks(datasets[0]);
         });
 }
