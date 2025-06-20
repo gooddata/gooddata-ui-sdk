@@ -305,3 +305,13 @@ export interface INotificationChannelTestResponse {
      */
     error?: string;
 }
+
+/**
+ * @alpha
+ */
+export interface INotificationChannelExternalRecipient {
+    /**
+     * E-mail address identifying external recipient.
+     */
+    email: string;
+}

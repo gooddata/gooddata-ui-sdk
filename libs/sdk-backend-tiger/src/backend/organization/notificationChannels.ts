@@ -3,6 +3,7 @@
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import {
     assertNever,
+    INotificationChannelExternalRecipient,
     INotificationChannelMetadataObject,
     INotificationChannelMetadataObjectDefinition,
     INotificationChannelTestResponse,
@@ -29,12 +30,14 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
      * This method will test the notification channel by sending a test notification to the destination.
      *
      * @param channel - definition of the notification channel
+     * @param externalRecipients - external recipients of the test result
      * @returns Promise resolved with the response from the test.
      *
      * @beta
      */
     public testNotificationChannel = async (
         channel: INotificationChannelMetadataObject | INotificationChannelMetadataObjectDefinition,
+        externalRecipients?: INotificationChannelExternalRecipient[],
     ): Promise<INotificationChannelTestResponse> => {
         const convertedChannel = convertNotificationChannelToBackend(channel);
 
@@ -49,6 +52,7 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
                     notificationChannelId: channel.id,
                     automationTestDestinationRequest: {
                         destination,
+                        externalRecipients,
                     },
                 });
                 return result.data;
@@ -59,6 +63,7 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
             const result = await client.automation.testNotificationChannel({
                 automationTestDestinationRequest: {
                     destination,
+                    externalRecipients,
                 },
             });
             return result.data;
