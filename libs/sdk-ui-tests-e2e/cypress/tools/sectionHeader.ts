@@ -1,9 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 export class SectionHeader {
     constructor(private rowIndex: number) {}
 
     getSelector() {
-        return `.s-fluid-layout-row:nth-child(${this.rowIndex + 1})`;
+        return `.gd-grid-layout__section:nth-child(${this.rowIndex + 1})`;
     }
 
     getElement() {
@@ -43,7 +43,7 @@ export class SectionHeader {
     }
 
     setTitle(text: string) {
-        this.getTitleInputWrapper().click().find("textarea").type(`${text}{enter}`);
+        this.getTitleInputWrapper().click({ force: true }).find("textarea").type(`${text}{enter}`);
         return this;
     }
 
