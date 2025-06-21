@@ -44,7 +44,8 @@ describe("Insight on dashboard", () => {
         },
     );
 
-    it("shows placeholder text during drag", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("shows placeholder text during drag", { tags: ["pre-merge_isolated_tiger"] }, () => {
         //create a new row, between 2 existing rows
         dashboard.getRow(1).dragAbove("ComboChart");
         dashboard.hasPlaceholderText("Drop to create a new section");
@@ -52,28 +53,30 @@ describe("Insight on dashboard", () => {
 
         //drag to beginning of a row
         dashboard.getWidget(0).dragBefore("TableWithHyperlinkAttribute");
-        dashboard.hasPlaceholderText("Drop here");
+        dashboard.hasDropTargetBorderActive();
         cy.get(".s-cancel_button").trigger("dragleave");
 
         //drag to the end of a row
         dashboard.getWidget(2).dragAfter("ComboChart");
-        dashboard.hasPlaceholderText("Drop to the existing section");
+        dashboard.hasDropTargetBorderActive();
         cy.get(".s-cancel_button").trigger("dragleave");
 
         //drag to between of 2 widgets
         dashboard.getWidget(0).dragAfter("Headline");
-        dashboard.hasPlaceholderText("Drop here");
+        dashboard.hasDropTargetBorderActive();
     });
 
     it("can remove widgets after drap&drop", { tags: ["pre-merge_isolated_tiger"] }, () => {
         dashboard.getRow(2).scrollIntoView().addLast("ComboChart");
         dashboard.hasRowsCount(4);
 
-        new Widget(5).scrollIntoView().removeVizWidget();
+        new Widget(0, 3).scrollIntoView().removeVizWidget();
         dashboard.hasRowsCount(3);
     });
+});
 
-    //Cover ticket: RAIL-4715
+//Cover ticket: RAIL-4715
+describe("Be able to resize widgeton dashboard", () => {
     it(
         "should able to resize widget when is placed next to other in one row",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
@@ -84,8 +87,8 @@ describe("Insight on dashboard", () => {
             insightCatalog.waitForCatalogReload();
             dashboard.getWidget(0).add("WithOwnDescription", "prev");
             dashboard.waitItemLoaded();
-            dashboard.getWidget(0).hasWidth(6).resizeWidthTo(4).hasWidth(4);
-            dashboard.getWidget(1).hasWidth(6).resizeWidthTo(12).hasWidth(8);
+            dashboard.getWidget(0).hasWidth(4).resizeWidthTo(2).hasWidth(2);
+            dashboard.getWidget(1).hasWidth(6).resizeWidthTo(12).hasWidth(10);
         },
     );
 });

@@ -24,7 +24,7 @@ export class Dashboard {
     }
 
     getDashboardBodyElement(): Cypress.Chainable {
-        return cy.get(".s-fluid-layout-container");
+        return cy.get(".gd-grid-layout__container--root");
     }
 
     topBarExist(exist = true): this {
@@ -74,7 +74,7 @@ export class Dashboard {
     }
 
     hasRowsCount(count: number) {
-        cy.get(".s-fluid-layout-row").should("have.length", count);
+        cy.get(".gd-grid-layout__section").should("have.length", count);
         return this;
     }
 
@@ -87,11 +87,23 @@ export class Dashboard {
         return this;
     }
 
+    hasDropTargetBorderActive() {
+        cy.get(".gd-hotspot-border__drop-target.active").should("exist");
+        return this;
+    }
+
     waitItemLoaded() {
         cy.wait(500);
         this.getDashboardBodyElement()
             .find(".dash-item.type-loading", { timeout: getMaximumTimeout() })
             .should("not.exist");
+    }
+
+    isLoaded() {
+        cy.get(".catalog-is-loaded .dash-section").should("exist");
+        cy.get(".s-loading-spinner").should("not.exist");
+        cy.get(".s-loading", { timeout: 60000 }).should("not.exist");
+        return this;
     }
 }
 

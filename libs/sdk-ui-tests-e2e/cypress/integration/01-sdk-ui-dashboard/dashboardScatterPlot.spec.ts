@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Chart } from "../../tools/chart";
@@ -6,7 +6,7 @@ import { Chart } from "../../tools/chart";
 describe("Scatter Plot - Segmentation", { tags: ["pre-merge_isolated_tiger"] }, () => {
     it("should grouped points by segmentation", () => {
         Navigation.visit("dashboard/dashboard-scatter-plot-segmentation");
-        const chart = new Chart(".s-dash-item-0");
+        const chart = new Chart(".s-dash-item-0_0");
         chart
             .waitLoaded()
             .waitComputed()
