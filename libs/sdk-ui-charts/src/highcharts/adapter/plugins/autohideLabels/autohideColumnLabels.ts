@@ -9,7 +9,9 @@ import { Point, Axis } from "../../../lib/index.js";
 
 import {
     getAxisRangeForAxes,
+    getAxisWithCategories,
     getDataPointsOfVisibleSeries,
+    getPointsVisibleInAxisRange,
     getShapeAttributes,
     IAxisRangeForAxes,
     IRectBySize,
@@ -306,13 +308,21 @@ export const autohideColumnLabels = (chart: Highcharts.Chart): void => {
     const isStackedChart = isStacked(chart);
 
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
+    const axisWithCategories = getAxisWithCategories(chart);
+    const pointsVisibleInAxisRange = getPointsVisibleInAxisRange(visiblePoints, axisWithCategories);
+
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);
 
     // stack chart labels is displayed inside column
     if (isStackedChart) {
-        toggleStackedChartLabels(visiblePoints.filter(hasLabelInside), axisRangeForAxes);
+        toggleStackedChartLabels(pointsVisibleInAxisRange.filter(hasLabelInside), axisRangeForAxes);
     } else {
-        toggleNonStackedChartLabels(visiblePoints, axisRangeForAxes, true, chart?.options?.chart?.type);
+        toggleNonStackedChartLabels(
+            pointsVisibleInAxisRange,
+            axisRangeForAxes,
+            true,
+            chart?.options?.chart?.type,
+        );
     }
 };
 

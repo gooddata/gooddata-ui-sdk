@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import React from "react";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
@@ -7,7 +7,9 @@ import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend.
 
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "../insightStories.css";
+import "./zoomButtonFix.css";
 import {
+    BarChartWithArithmeticMeasuresAndViewBy,
     BarChartWithLargeLegend,
     BarChartWithTwoMeasuresAndTwoViewBy,
 } from "../../../../scenarios/charts/barChart/base.js";
@@ -42,6 +44,35 @@ const BarChartTest = (config: Partial<IBarChartProps> = {}) => (
                     position: "top",
                     responsive: "autoPositionWithPopup",
                 },
+            }}
+            {...config}
+        />
+    </div>
+);
+
+const BarChartZoomTest = (config: Partial<IBarChartProps> = {}) => (
+    <div
+        style={{
+            width: 400,
+            height: 400,
+            padding: 10,
+            border: "solid 1px #000000",
+            resize: "both",
+            overflow: "auto",
+        }}
+        className="s-table"
+    >
+        <BarChart
+            backend={backend}
+            workspace={ReferenceWorkspaceId}
+            measures={BarChartWithArithmeticMeasuresAndViewBy.measures.slice(0, 1)}
+            viewBy={BarChartWithArithmeticMeasuresAndViewBy.viewBy}
+            config={{
+                legend: {
+                    position: "top",
+                    responsive: "autoPositionWithPopup",
+                },
+                zoomInsight: true,
             }}
             {...config}
         />
@@ -130,4 +161,7 @@ storiesOf(`${CustomStories}/BarChart`)
             );
         },
         { screenshot: true },
-    );
+    )
+    .add("zooming enabled", () => {
+        return <BarChartZoomTest />;
+    });
