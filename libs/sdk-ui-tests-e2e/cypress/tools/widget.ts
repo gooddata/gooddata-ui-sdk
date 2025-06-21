@@ -8,10 +8,10 @@ import { Headline } from "./headline";
 import { RichText } from "./richText";
 
 export class Widget {
-    constructor(private index: number) {}
+    constructor(private index: number, private section: number = 0) {}
 
     getElementSelector() {
-        return `.s-dash-item-${this.index}`;
+        return `.s-dash-item-${this.section}_${this.index}`;
     }
 
     getElement() {
@@ -118,9 +118,9 @@ export class Widget {
      * @returns
      */
     hasWidth(size: number) {
-        this.getElement()
-            .parents(".s-fluid-layout-column")
-            .should("have.class", `s-fluid-layout-column-width-${size}`);
+        cy.get(this.getElementSelector())
+            .parents(".gd-grid-layout__item")
+            .should("have.class", `gd-grid-layout__item--span-${size}`);
         return this;
     }
 
