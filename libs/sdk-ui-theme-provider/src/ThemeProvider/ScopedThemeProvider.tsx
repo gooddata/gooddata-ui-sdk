@@ -144,7 +144,7 @@ export const ScopedThemeProvider: React.FC<IScopedThemeProviderProps> = ({
     }, [removeGlobalStylesOnUnmout, scope, scopeId]);
 
     return (
-        <ThemeContextProvider theme={theme} themeIsLoading={isLoading} themeStatus={status}>
+        <ThemeContextProvider theme={theme} isScopeThemed themeIsLoading={isLoading} themeStatus={status}>
             <div
                 ref={(el) => {
                     if (el) {

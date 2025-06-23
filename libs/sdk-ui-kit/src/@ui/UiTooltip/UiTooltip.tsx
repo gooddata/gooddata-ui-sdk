@@ -25,7 +25,8 @@ import {
     getFlipFallbackOrder,
     getOppositeBasicPlacement,
 } from "./utils.js";
-import { ARROW_HEIGHT, ARROW_WIDTH, ARROW_EDGE_OFFSET } from "./constants.js";
+import { ARROW_HEIGHT, ARROW_WIDTH } from "./constants.js";
+import { useTheme, useIsScopeThemed, ConditionalScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
 const { b, e } = bem("gd-ui-kit-tooltip");
 
@@ -47,6 +48,9 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const arrowRef = useRef<SVGSVGElement>(null);
+    const themeFromContext = useTheme();
+    const isScopeThemed = useIsScopeThemed();
+    const theme = isScopeThemed ? themeFromContext : undefined;
 
     const customShiftMiddleware = {
         name: "customShift",
@@ -54,7 +58,7 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
             const { x, y, rects, middlewareData } = args;
             const currentFloatingDimensions = getDimensionsFromRect(rects?.floating);
             const enable = !middlewareData?.flip?.index;
-            const shift = computeTooltipShift(arrowPlacement, currentFloatingDimensions, enable);
+            const shift = computeTooltipShift(arrowPlacement, currentFloatingDimensions, enable, theme);
             return {
                 x: shift.x ? x + shift.x : x,
                 y: shift.y ? y + shift.y : y,
@@ -80,7 +84,6 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
                 : []),
             arrow({
                 element: arrowRef,
-                padding: ARROW_EDGE_OFFSET,
             }),
         ],
     });
@@ -119,37 +122,40 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
 
             <FloatingPortal>
                 {showTooltip ? (
-                    <div
-                        className={b({ width: width === "auto" ? "auto" : undefined })}
-                        ref={refs.setFloating}
-                        style={{
-                            ...floatingStyles,
-                            width: width === "auto" ? triggerDimensions.width : width,
-                        }}
-                        aria-label={accessibilityConfig?.ariaLabel}
-                        aria-labelledby={accessibilityConfig?.ariaLabelledBy}
-                        aria-describedby={accessibilityConfig?.ariaDescribedBy}
-                        aria-expanded={accessibilityConfig?.ariaExpanded}
-                        role={accessibilityConfig?.role ?? "tooltip"}
-                        {...getFloatingProps()}
-                    >
-                        {content}
-                        {showArrow ? (
-                            <FloatingArrow
-                                staticOffset={computeArrowOffset(
-                                    arrowPlacement,
-                                    floatingDimensions,
-                                    !middlewareData?.flip?.index,
-                                )}
-                                className={e("arrow")}
-                                ref={arrowRef}
-                                tipRadius={1}
-                                context={context}
-                                height={ARROW_HEIGHT}
-                                width={ARROW_WIDTH}
-                            />
-                        ) : null}
-                    </div>
+                    <ConditionalScopedThemeProvider>
+                        <div
+                            className={b({ width: width === "auto" ? "auto" : undefined })}
+                            ref={refs.setFloating}
+                            style={{
+                                ...floatingStyles,
+                                width: width === "auto" ? triggerDimensions.width : width,
+                            }}
+                            aria-label={accessibilityConfig?.ariaLabel}
+                            aria-labelledby={accessibilityConfig?.ariaLabelledBy}
+                            aria-describedby={accessibilityConfig?.ariaDescribedBy}
+                            aria-expanded={accessibilityConfig?.ariaExpanded}
+                            role={accessibilityConfig?.role ?? "tooltip"}
+                            {...getFloatingProps()}
+                        >
+                            {content}
+                            {showArrow ? (
+                                <FloatingArrow
+                                    staticOffset={computeArrowOffset(
+                                        arrowPlacement,
+                                        floatingDimensions,
+                                        !middlewareData?.flip?.index,
+                                        theme,
+                                    )}
+                                    className={e("arrow")}
+                                    ref={arrowRef}
+                                    tipRadius={1}
+                                    context={context}
+                                    height={ARROW_HEIGHT}
+                                    width={ARROW_WIDTH}
+                                />
+                            ) : null}
+                        </div>
+                    </ConditionalScopedThemeProvider>
                 ) : null}
             </FloatingPortal>
         </>

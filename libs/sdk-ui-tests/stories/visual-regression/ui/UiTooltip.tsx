@@ -12,6 +12,8 @@ import {
 import React from "react";
 import { wrapWithTheme } from "../themeWrapper.js";
 import tooltipImage from "./assets/tooltip-image.png";
+import { ScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider";
+import { indigoDarkTheme, redLightTheme } from "@gooddata/sdk-ui-theme-provider/internal";
 
 const propCombination = propCombinationsFor({} as UiTooltipProps);
 
@@ -184,9 +186,28 @@ const UiTooltipWithButtonsTest: React.FC = () => (
     </div>
 );
 
+const UiTooltipScopedThemeTest: React.FC = () => (
+    <div
+        className="library-component"
+        style={{ width: "1000px", display: "flex", justifyContent: "center", gap: "400px" }}
+    >
+        <div>
+            <ScopedThemeProvider theme={indigoDarkTheme.theme}>
+                <UiTooltipWithButtons isDisabled={false} />
+            </ScopedThemeProvider>
+        </div>
+        <div>
+            <ScopedThemeProvider theme={redLightTheme.theme}>
+                <UiTooltipWithButtons isDisabled={false} />
+            </ScopedThemeProvider>
+        </div>
+    </div>
+);
+
 storiesOf(`${UiStories}/UiTooltip`)
     .add("default", () => <UiTooltipTest />, { screenshot: true })
     .add("themed", () => wrapWithTheme(<UiTooltipTest />), { screenshot: true })
     .add("interface", () => <UiTooltipTest showCode />)
     .add("examples", () => <UiTooltipExamples />)
-    .add("full-example-buttons", () => <UiTooltipWithButtonsTest />);
+    .add("full-example-buttons", () => <UiTooltipWithButtonsTest />)
+    .add("scoped-theme", () => <UiTooltipScopedThemeTest />);
