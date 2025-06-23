@@ -174,7 +174,15 @@ const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
  * @internal
  */
 export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
-    const { grantee, mode, currentUserPermissions, isSharedObjectLocked, onDelete, onChange } = props;
+    const {
+        grantee,
+        mode,
+        currentUserPermissions,
+        isSharedObjectLocked,
+        isGranteeShareLoading,
+        onDelete,
+        onChange,
+    } = props;
 
     const granularGranteeItemId = useIdPrefixed("grantee-item");
 
@@ -188,6 +196,7 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
                 onDelete={onDelete}
                 mode={mode}
                 id={granularGranteeItemId}
+                isGranteeShareLoading={isGranteeShareLoading}
             />
         );
     } else if (isGranularGranteeGroup(grantee) || isGranteeRules(grantee)) {
@@ -200,6 +209,7 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
                 onDelete={onDelete}
                 mode={mode}
                 id={granularGranteeItemId}
+                isGranteeShareLoading={isGranteeShareLoading}
             />
         );
     } else if (isGranteeUser(grantee)) {

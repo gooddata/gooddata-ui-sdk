@@ -10,6 +10,7 @@ export const messages = defineMessages({
     messagesExportResultError: { id: "messages.exportResultError" },
     messagesSharingChangedSuccess: { id: "messages.sharingChangedSuccess" },
     messagesSharingChangedError: { id: "messages.sharingChangedError.general" },
+    messagesShareLinkCopied: { id: "messages.shareLinkCopied" },
     messagesSharingDialogError: { id: "messages.sharingDialogError.general" },
     messagesSettingsDialogError: { id: "messages.settingsDialogError.general" },
     scheduleEmailSubmitError: { id: "dialogs.schedule.email.submit.error" },

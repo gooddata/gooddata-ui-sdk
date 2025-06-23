@@ -24,6 +24,7 @@ export const ConfirmDialogBase = React.memo<IConfirmDialogBaseProps>(function Co
     submitButtonTooltipText,
     submitButtonTooltipAlignPoints,
     submitButtonTooltipArrowOffsets,
+    hideSubmitButton,
     warning,
     showProgressIndicator,
     headerLeftButtonRenderer,
@@ -99,7 +100,7 @@ export const ConfirmDialogBase = React.memo<IConfirmDialogBaseProps>(function Co
                     disabled={isCancelDisabled}
                 />
 
-                {submitButtonText ? (
+                {submitButtonText && !hideSubmitButton ? (
                     <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
                         <Button
                             id={CONFIRM_DIALOG_BASE_ID}

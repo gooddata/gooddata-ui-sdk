@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { CurrentUserPermissions, useToastMessage } from "@gooddata/sdk-ui-kit";
 import {
@@ -13,6 +13,9 @@ import {
     selectCanManageWorkspace,
     selectDashboardPermissions,
     useDashboardUserInteraction,
+    selectFilterContextFilters,
+    selectIsShareGrantVisible,
+    selectEnableDashboardShareDialogLink,
 } from "../../../model/index.js";
 import { ShareDialog, ISharingApplyPayload } from "../../shareDialog/index.js";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -27,10 +30,15 @@ const useShareDialogDashboardHeader = () => {
     const currentUser = useDashboardSelector(selectCurrentUser);
     const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
     const dashboardPermissions = useDashboardSelector(selectDashboardPermissions);
+    const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
+    const isShareGrantHidden = !useDashboardSelector(selectIsShareGrantVisible);
+    const isDashboardShareDialogLinkEnabled = useDashboardSelector(selectEnableDashboardShareDialogLink);
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
+    const applyShareGrantOnSelect = isDashboardShareDialogLinkEnabled;
+    const showDashboardShareLink = isDashboardShareDialogLinkEnabled;
 
-    const { run: runChangeSharing } = useDashboardCommandProcessing({
+    const { run: runChangeSharing, status } = useDashboardCommandProcessing({
         commandCreator: changeSharing,
         successEvent: "GDC.DASH/EVT.SHARING.CHANGED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
@@ -42,6 +50,8 @@ const useShareDialogDashboardHeader = () => {
         },
     });
 
+    const isGranteeShareLoading = status === "running";
+
     const closeShareDialog = useCallback(() => dispatch(uiActions.closeShareDialog()), [dispatch]);
 
     const onCloseShareDialog = useCallback(() => {
@@ -50,7 +60,9 @@ const useShareDialogDashboardHeader = () => {
 
     const onApplyShareDialog = useCallback(
         (payload: ISharingApplyPayload) => {
-            closeShareDialog();
+            if (!applyShareGrantOnSelect) {
+                closeShareDialog();
+            }
             runChangeSharing(payload);
         },
         [closeShareDialog, runChangeSharing],
@@ -60,6 +72,14 @@ const useShareDialogDashboardHeader = () => {
         dispatch(uiActions.closeShareDialog());
         addError(messages.messagesSharingDialogError);
     }, [dispatch, addError]);
+
+    const onShareLinkCopy = useCallback(
+        (shareLink: string) => {
+            navigator.clipboard.writeText(shareLink);
+            addSuccess(messages.messagesShareLinkCopied);
+        },
+        [addSuccess],
+    );
 
     return {
         backend,
@@ -74,6 +94,12 @@ const useShareDialogDashboardHeader = () => {
         isLockingSupported: isWorkspaceManager,
         isCurrentUserWorkspaceManager: isWorkspaceManager,
         dashboardPermissions,
+        dashboardFilters,
+        isShareGrantHidden,
+        applyShareGrantOnSelect,
+        showDashboardShareLink,
+        onShareLinkCopy,
+        isGranteeShareLoading,
     };
 };
 
@@ -94,6 +120,12 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
         isLockingSupported,
         isCurrentUserWorkspaceManager,
         dashboardPermissions,
+        dashboardFilters,
+        isShareGrantHidden,
+        applyShareGrantOnSelect,
+        showDashboardShareLink,
+        onShareLinkCopy,
+        isGranteeShareLoading,
     } = useShareDialogDashboardHeader();
 
     if (!isShareDialogOpen) {
@@ -121,7 +153,13 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
             isLockingSupported={isLockingSupported}
             isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
             currentUserPermissions={currentUserPermissions}
+            dashboardFilters={dashboardFilters}
             onInteraction={onInteractionShareDialog}
+            isShareGrantHidden={isShareGrantHidden}
+            applyShareGrantOnSelect={applyShareGrantOnSelect}
+            showDashboardShareLink={showDashboardShareLink}
+            onShareLinkCopy={onShareLinkCopy}
+            isGranteeShareLoading={isGranteeShareLoading}
         />
     );
 };

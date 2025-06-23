@@ -6482,17 +6482,23 @@ export interface IShareButtonProps {
 
 // @alpha (undocumented)
 export interface IShareDialogProps {
+    applyShareGrantOnSelect: boolean;
     backend: IAnalyticalBackend;
     currentUser: IUser;
     currentUserPermissions: CurrentUserPermissions;
+    dashboardFilters: FilterContextItem[];
     isCurrentUserWorkspaceManager: boolean;
+    isGranteeShareLoading: boolean;
     isLockingSupported: boolean;
+    isShareGrantHidden: boolean;
     isVisible?: boolean;
     onApply: (payload: ISharingApplyPayload) => void;
     onCancel: () => void;
     onError?: (error: GoodDataSdkError) => void;
     onInteraction?: (data: IShareDialogInteractionData) => void;
+    onShareLinkCopy: (shareLink: string) => void;
     sharedObject: ISharedObject;
+    showDashboardShareLink: boolean;
     workspace: string;
 }
 
@@ -8812,6 +8818,9 @@ export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<bo
 export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableDashboardShareLink: DashboardSelector<boolean>;
 
 // @internal (undocumented)
@@ -9272,6 +9281,9 @@ export const selectIsShareButtonVisible: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectIsShareDialogOpen: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectIsShareGrantVisible: DashboardSelector<boolean>;
 
 // @internal
 export const selectIsWhiteLabeled: DashboardSelector<boolean>;

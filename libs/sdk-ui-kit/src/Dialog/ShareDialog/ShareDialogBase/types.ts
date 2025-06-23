@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { AccessGranularPermission, IUser, ObjRef, ShareStatus } from "@gooddata/sdk-model";
+import { AccessGranularPermission, FilterContextItem, IUser, ObjRef, ShareStatus } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
 import { CurrentUserPermissions, IShareDialogLabels } from "../types.js";
@@ -227,7 +227,12 @@ export interface IShareDialogBaseProps {
     sharedObject: IAffectedSharedObject;
     currentUser: IUser;
     currentUserPermissions: CurrentUserPermissions;
+    dashboardFilters?: FilterContextItem[];
+    isShareGrantHidden?: boolean;
+    applyShareGrantOnSelect?: boolean;
+    showDashboardShareLink?: boolean;
     isCurrentUserWorkspaceManager: boolean;
+    isGranteeShareLoading?: boolean;
     onCancel: () => void;
     onSubmit: (
         grantees: GranteeItem[],
@@ -237,6 +242,7 @@ export interface IShareDialogBaseProps {
         isLocked: boolean,
     ) => void;
     onError: (err: Error) => void;
+    onShareLinkCopy?: (shareLink: string) => void;
 }
 
 /**
@@ -248,6 +254,7 @@ export interface IGranteeItemProps {
     currentUserPermissions: CurrentUserPermissions;
     isSharedObjectLocked: boolean;
     areGranularPermissionsSupported?: boolean;
+    isGranteeShareLoading?: boolean;
     onDelete: (grantee: GranteeItem) => void;
     onChange?: (grantee: GranteeItem) => void;
 }
@@ -265,6 +272,11 @@ export interface IShareGranteeBaseProps {
     grantees: GranteeItem[];
     isCurrentUserWorkspaceManager: boolean;
     currentUserPermissions: CurrentUserPermissions;
+    dashboardFilters?: FilterContextItem[];
+    isShareGrantHidden?: boolean;
+    applyShareGrantOnSelect?: boolean;
+    showDashboardShareLink?: boolean;
+    isGranteeShareLoading?: boolean;
     onAddGranteeButtonClick: () => void;
     onGranteeDelete: (grantee: GranteeItem) => void;
     onCancel: () => void;
@@ -272,6 +284,7 @@ export interface IShareGranteeBaseProps {
     onLockChange: (locked: boolean) => void;
     onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
     onGranularGranteeChange?: (grantee: GranteeItem) => void;
+    onShareLinkCopy?: (shareLink: string) => void;
 }
 
 /**
@@ -283,6 +296,9 @@ export interface IShareGranteeContentProps {
     currentUserPermissions: CurrentUserPermissions;
     isSharedObjectLocked: boolean;
     areGranularPermissionsSupported?: boolean;
+    isGranteeShareLoading?: boolean;
+    applyShareGrantOnSelect?: boolean;
+    headline: string;
     onAddGrantee: () => void;
     onDelete: (grantee: GranteeItem) => void;
     onChange?: (grantee: GranteeItem) => void;
@@ -299,6 +315,8 @@ export interface IAddGranteeBaseProps {
     currentUserPermissions: CurrentUserPermissions;
     sharedObject: IAffectedSharedObject;
     previouslyFocusedRef?: React.MutableRefObject<HTMLElement>;
+    isGranteeShareLoading?: boolean;
+    applyShareGrantOnSelect?: boolean;
     onBackClick?: () => void;
     onDelete: (grantee: GranteeItem) => void;
     onAddUserOrGroups?: (grantee: GranteeItem) => void; // rename
@@ -318,6 +336,7 @@ export interface IAddGranteeContentProps {
     isSharedObjectLocked: boolean;
     sharedObjectRef: ObjRef;
     areGranularPermissionsSupported?: boolean;
+    isGranteeShareLoading?: boolean;
     onDelete: (grantee: GranteeItem) => void;
     onAddUserOrGroups: (grantee: GranteeItem) => void;
     onGranularGranteeChange?: (grantee: GranteeItem) => void;
@@ -332,8 +351,20 @@ export interface IGranteesListProps {
     currentUserPermissions: CurrentUserPermissions;
     isSharedObjectLocked: boolean;
     areGranularPermissionsSupported?: boolean;
+    isGranteeShareLoading?: boolean;
     onDelete: (grantee: GranteeItem) => void;
     onChange?: (grantee: GranteeItem) => void;
+}
+
+/**
+ * @internal
+ */
+export interface IShareLinkProps {
+    dashboardFilters?: FilterContextItem[];
+    headline: string;
+    helperText: string;
+    buttonText: string;
+    onShareLinkCopy?: (shareLink: string) => void;
 }
 
 /**

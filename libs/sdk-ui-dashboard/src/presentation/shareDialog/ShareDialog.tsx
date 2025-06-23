@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import { IShareDialogProps } from "./types.js";

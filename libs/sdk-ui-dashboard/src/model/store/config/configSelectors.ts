@@ -1084,3 +1084,15 @@ export const selectEnableNotificationChannelIdentifiers: DashboardSelector<boole
         return Boolean(state.settings?.enableNotificationChannelIdentifiers) ?? false;
     },
 );
+
+/**
+ * Selector for the dashboard share link in the share dialog feature flag
+ *
+ * @internal
+ */
+export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableDashboardShareDialogLink) ?? false;
+    },
+);

@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import { ShareDialog, IShareDialogLabels } from "@gooddata/sdk-ui-kit";
 import { IShareDialogProps } from "./types.js";
@@ -18,10 +18,16 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
         isLockingSupported,
         isCurrentUserWorkspaceManager,
         currentUserPermissions,
+        dashboardFilters,
+        isShareGrantHidden,
+        applyShareGrantOnSelect,
+        showDashboardShareLink,
+        isGranteeShareLoading,
         onApply,
         onCancel,
         onError,
         onInteraction,
+        onShareLinkCopy,
     } = props;
 
     const locale = useDashboardSelector(selectLocale);
@@ -60,7 +66,13 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
             labels={labels}
             isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
             currentUserPermissions={currentUserPermissions}
+            dashboardFilters={dashboardFilters}
+            isShareGrantHidden={isShareGrantHidden}
+            applyShareGrantOnSelect={applyShareGrantOnSelect}
+            showDashboardShareLink={showDashboardShareLink}
+            isGranteeShareLoading={isGranteeShareLoading}
             onInteraction={onInteraction}
+            onShareLinkCopy={onShareLinkCopy}
         />
     );
 };

@@ -1825,6 +1825,31 @@
         "comment": "Title of dialog used for sharing of private dashboard with other users or user groups.",
         "limit": 0
     },
+    "shareDialog.share.dashboard.title": {
+        "value": "Share dashboard",
+        "comment": "Title of dialog used for sharing dashboard.",
+        "limit": 0
+    },
+    "shareDialog.share.dashboard.list.title": {
+        "value": "Users & groups",
+        "comment": "Title shown above list of grantees in share dialog.",
+        "limit": 0
+    },
+    "shareDialog.share.link.helperText": {
+        "value": "Link reflects current filters. Only accessible to users with dashboard access.",
+        "comment": "Helper text shown below the share link input in the share dialog.",
+        "limit": 0
+    },
+    "shareDialog.share.link.title": {
+        "value": "Link",
+        "comment": "Title shown above the share link input in the share dialog.",
+        "limit": 0
+    },
+    "shareDialog.share.link.buttonText": {
+        "value": "Copy",
+        "comment": "Label of button that copies the share link to the clipboard.",
+        "limit": 0
+    },
     "shareDialog.share.grantee.share": {
         "value": "Share",
         "comment": "Title of confirm button of share dialog",

@@ -16,8 +16,19 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
  * @internal
  */
 export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
-    const { onCancel, sharedObject, currentUser, currentUserPermissions, isCurrentUserWorkspaceManager } =
-        props;
+    const {
+        onCancel,
+        sharedObject,
+        currentUser,
+        currentUserPermissions,
+        dashboardFilters,
+        isCurrentUserWorkspaceManager,
+        isShareGrantHidden,
+        applyShareGrantOnSelect,
+        showDashboardShareLink,
+        isGranteeShareLoading,
+        onShareLinkCopy,
+    } = props;
     const { openInteraction, closeInteraction } = useShareDialogInteraction();
 
     useEffect(() => {
@@ -65,6 +76,12 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                 {dialogMode === "ShareGrantee" ? (
                     <ShareGranteeBase
                         currentUserPermissions={currentUserPermissions}
+                        dashboardFilters={dashboardFilters}
+                        isShareGrantHidden={isShareGrantHidden}
+                        applyShareGrantOnSelect={applyShareGrantOnSelect}
+                        showDashboardShareLink={showDashboardShareLink}
+                        onShareLinkCopy={onShareLinkCopy}
+                        isGranteeShareLoading={isGranteeShareLoading}
                         currentUser={currentUser}
                         isLoading={isGranteesLoading}
                         isDirty={isShareDialogDirty}
@@ -96,6 +113,8 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         onSubmit={onSubmitAddGrantee}
                         onBackClick={onAddGranteeBackClick}
                         onGranularGranteeChange={onGranularGranteeAddChange}
+                        isGranteeShareLoading={isGranteeShareLoading}
+                        applyShareGrantOnSelect={applyShareGrantOnSelect}
                     />
                 )}
             </div>

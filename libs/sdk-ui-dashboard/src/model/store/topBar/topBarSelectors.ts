@@ -11,6 +11,7 @@ import {
 } from "../permissions/permissionsSelectors.js";
 import {
     selectEnableAnalyticalDashboardPermissions,
+    selectEnableDashboardShareDialogLink,
     selectEnableFilterViews,
     selectEnableKDCrossFiltering,
     selectEnableKPIDashboardExportPDF,
@@ -149,31 +150,50 @@ export const selectCrossFilteringEnabledAndSupported: DashboardSelector<boolean>
     },
 );
 
-/**
- * @internal
- */
-export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSelector(
+export const selectHasSharePermissions: DashboardSelector<boolean> = createSelector(
     selectEnableAnalyticalDashboardPermissions,
     selectCanShareDashboardPermission,
     selectCanShareLockedDashboardPermission,
     selectDashboardLockStatus,
+    (dashboardPermissionsEnabled, canShareDashboardPermission, canShareLockedDashboardPermission, isLocked) =>
+        dashboardPermissionsEnabled &&
+        canShareDashboardPermission &&
+        (!isLocked || canShareLockedDashboardPermission),
+);
+
+/**
+ *
+ * @internal
+ */
+export const selectIsShareGrantVisible: DashboardSelector<boolean> = createSelector(
+    selectEnableDashboardShareDialogLink,
+    selectHasSharePermissions,
+    (enableDashboardShareDialogLink, hasSharePermissions) =>
+        // If dashboardShareDialogLink feature is disabled always show grant options.
+        // Otherwise decide based on user share permissions
+        !enableDashboardShareDialogLink || hasSharePermissions,
+);
+
+/**
+ * @internal
+ */
+export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSelector(
+    selectHasSharePermissions,
     selectIsCurrentDashboardVisibleInList,
     selectIsReadOnly,
     selectIsInEditMode,
     selectIsShareButtonHidden,
+    selectEnableDashboardShareDialogLink,
     (
-        dashboardPermissionsEnabled,
-        canShareDashboardPermission,
-        canShareLockedDashboardPermission,
-        isLocked,
+        hasSharePermissions,
         isCurrentDashboardVisibleInList,
         isReadOnly,
         isInEditMode,
         isShareButtonHidden,
+        enableDashboardShareDialogLink,
     ) =>
-        dashboardPermissionsEnabled &&
-        canShareDashboardPermission &&
-        (!isLocked || canShareLockedDashboardPermission) &&
+        // If dashboardShareDialogLink feature is enabled, show share button regardless of user share permissions
+        (enableDashboardShareDialogLink || hasSharePermissions) &&
         isCurrentDashboardVisibleInList &&
         !isReadOnly &&
         !isInEditMode &&

@@ -9,6 +9,8 @@ import { ENUM_KEY_CODE } from "../typings/utilities.js";
 import { IDomNative, IDomNativeProps } from "../typings/domNative.js";
 import { runAutofocus } from "./focus.js";
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
+import { IconType } from "../@ui/@types/icon.js";
+import { UiIconButton } from "../@ui/UiIconButton/UiIconButton.js";
 
 const NativeListener = defaultImport(DefaultNativeListener);
 
@@ -44,6 +46,9 @@ export interface InputPureProps extends IDomNativeProps {
     accessibilityType?: string;
     accessibilityConfig?: IAccessibilityConfigBase;
     autocomplete?: string;
+    iconButton?: IconType;
+    onIconButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    iconButtonLabel?: string;
 }
 /**
  * @internal
@@ -125,6 +130,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                 "gd-input-search": this.props.isSearch,
                 "gd-input-with-prefix": !!this.props.prefix,
                 "gd-input-with-suffix": !!this.props.suffix,
+                "gd-input-with-icon-button": !!this.props.iconButton,
                 "gd-input-with-label": !!this.props.label,
                 "gd-input-label-top": this.props.labelPositionTop,
                 "has-error": this.props.hasError,
@@ -186,6 +192,26 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         );
     }
 
+    renderIconButton(
+        iconButton: IconType,
+        iconButtonLabel: string,
+        onIconButtonClick: (e: React.MouseEvent<HTMLButtonElement>) => void,
+    ): React.ReactNode {
+        return iconButton ? (
+            <span className="gd-input-icon-button">
+                <UiIconButton
+                    icon={iconButton}
+                    label={iconButtonLabel}
+                    size="medium"
+                    variant="tertiary"
+                    onClick={onIconButtonClick}
+                />
+            </span>
+        ) : (
+            false
+        );
+    }
+
     renderInput() {
         const {
             clearOnEsc,
@@ -205,6 +231,9 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
             required,
             accessibilityConfig,
             autocomplete,
+            iconButton,
+            iconButtonLabel,
+            onIconButtonClick,
         } = this.props;
         return (
             <div className="gd-input-wrapper">
@@ -235,6 +264,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                 {this.renderClearIcon(clearOnEsc)}
                 {this.renderPrefix(prefix)}
                 {this.renderSuffix(suffix)}
+                {this.renderIconButton(iconButton, iconButtonLabel, onIconButtonClick)}
             </div>
         );
     }

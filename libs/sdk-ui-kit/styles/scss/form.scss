@@ -329,6 +329,21 @@ textarea {
     border-radius: 0 3px 3px 0;
 }
 
+/* Icon button
+   ========================================================================== */
+.gd-input-with-icon-button {
+    .gd-input-field {
+        padding-right: var(--gd-button-M);
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+}
+
+.gd-input-icon-button {
+    position: absolute;
+    right: 0;
+}
+
 /* Checkbox and radio
    ========================================================================== */
 

@@ -120,6 +120,7 @@ export {
     selectEnableSnapshotExportAccessibility,
     selectEnableExportToDocumentStorage,
     selectExternalRecipient,
+    selectEnableDashboardShareDialogLink,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -229,6 +230,7 @@ export {
     selectSlideShowExportAvailable,
     selectSlideShowExportVisible,
     selectCanEnterEditModeAndIsLoaded,
+    selectIsShareGrantVisible,
     selectIsShareButtonVisible,
     selectIsSaveAsNewButtonVisible,
     hasEditDashboardPermission,

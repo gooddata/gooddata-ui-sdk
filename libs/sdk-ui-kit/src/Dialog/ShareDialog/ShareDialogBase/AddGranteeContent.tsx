@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { areObjRefsEqual, IGranteeGranularity } from "@gooddata/sdk-model";
 import { GranteeList } from "./GranteeList.js";
@@ -60,6 +60,7 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
         currentUserPermissions,
         isSharedObjectLocked,
         sharedObjectRef,
+        isGranteeShareLoading,
         onDelete,
         onAddUserOrGroups,
         onGranularGranteeChange,
@@ -98,6 +99,7 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
                 areGranularPermissionsSupported={areGranularPermissionsSupported}
                 onDelete={onDelete}
                 onChange={onGranularGranteeChange}
+                isGranteeShareLoading={isGranteeShareLoading}
             />
         </>
     );

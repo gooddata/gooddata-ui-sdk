@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useCallback, useMemo, useState } from "react";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
@@ -47,6 +47,14 @@ interface IUseShareDialogStateReturnType {
 const useShareDialogState = (
     isUnderLenientControl: boolean,
     isLocked: boolean,
+    onSubmit: (
+        grantees: GranteeItem[],
+        granteesToAdd: GranteeItem[],
+        granteesToDelete: GranteeItem[],
+        isUnderLenientControl: boolean,
+        isLocked: boolean,
+    ) => void,
+    applyShareGrantOnSelect: boolean,
 ): IUseShareDialogStateReturnType => {
     const [dialogMode, setDialogMode] = useState<DialogModeType>("ShareGrantee");
     const [isGranteesLoading, setIsGranteesLoading] = useState(true);
@@ -103,6 +111,68 @@ const useShareDialogState = (
         [originalGranularGrantees],
     );
 
+    const onGranularGranteeAddChangeAndApply = useCallback(
+        (grantee: GranteeItem) => {
+            onSubmit(grantees, [], [grantee], isUnderLenientControlNow, isLockedNow);
+            setGranteesToAdd((state) => state.map((s) => (areObjRefsEqual(s.id, grantee.id) ? grantee : s)));
+        },
+        [onSubmit, grantees, isUnderLenientControlNow, isLockedNow],
+    );
+
+    const onAddedGranteeDeleteAndApply = useCallback(
+        (grantee: GranteeItem) => {
+            onSubmit(grantees, [], [grantee], isUnderLenientControlNow, isLockedNow);
+            setGranteesToAdd((state) => state.filter((g) => !areObjRefsEqual(g.id, grantee.id)));
+        },
+        [onSubmit, grantees, isUnderLenientControlNow, isLockedNow],
+    );
+
+    const onGranteeAddAndApply = useCallback(
+        (grantee: GranteeItem) => {
+            granteeAddInteraction(grantee);
+            onSubmit(grantees, [grantee], [], isUnderLenientControlNow, isLockedNow);
+            setGranteesToAdd((state) => [...state, grantee]);
+        },
+        [onSubmit, granteeAddInteraction, grantees, isUnderLenientControlNow, isLockedNow],
+    );
+
+    const onSharedGranteeDeleteAndApply = useCallback(
+        (grantee: GranteeItem) => {
+            onSubmit(grantees, [], [grantee], isUnderLenientControlNow, isLockedNow);
+            setGrantees((state) => state.filter((s) => !areObjRefsEqual(s.id, grantee.id)));
+        },
+        [onSubmit, grantees, isUnderLenientControlNow, isLockedNow],
+    );
+
+    const onGranularGranteeShareChangeAndApply = useCallback(
+        (grantee: IGranularGrantee) => {
+            const originalGrantee = originalGranularGrantees.find((g) => areObjRefsEqual(g.id, grantee.id));
+            const hasChangedPermissions = !isEqual(originalGrantee?.permissions, grantee.permissions);
+
+            if (hasChangedPermissions) {
+                onSubmit(grantees, [grantee], [], isUnderLenientControlNow, isLockedNow);
+                setGrantees((state) => state.map((s) => (areObjRefsEqual(s.id, grantee.id) ? grantee : s)));
+            }
+        },
+        [onSubmit, originalGranularGrantees, grantees, isUnderLenientControlNow, isLockedNow],
+    );
+
+    const shareGranteeHandlers = applyShareGrantOnSelect
+        ? {
+              onGranularGranteeAddChange: onGranularGranteeAddChangeAndApply,
+              onAddedGranteeDelete: onAddedGranteeDeleteAndApply,
+              onGranteeAdd: onGranteeAddAndApply,
+              onSharedGranteeDelete: onSharedGranteeDeleteAndApply,
+              onGranularGranteeShareChange: onGranularGranteeShareChangeAndApply,
+          }
+        : {
+              onGranularGranteeAddChange,
+              onAddedGranteeDelete,
+              onGranteeAdd,
+              onSharedGranteeDelete,
+              onGranularGranteeShareChange,
+          };
+
     const onAddGranteeButtonClick = useCallback(() => {
         setDialogMode("AddGrantee");
     }, []);
@@ -141,17 +211,13 @@ const useShareDialogState = (
         granteesToDelete,
         granteesToUpdate,
         onLoadGrantees,
-        onSharedGranteeDelete,
-        onAddedGranteeDelete,
-        onGranteeAdd,
         onAddGranteeButtonClick,
         onAddGranteeBackClick,
         isUnderLenientControlNow,
         isLockedNow,
         onUnderLenientControlChange,
         onLockChange,
-        onGranularGranteeShareChange,
-        onGranularGranteeAddChange,
+        ...shareGranteeHandlers,
     };
 };
 
@@ -185,7 +251,7 @@ export interface IUseShareDialogBaseReturnType {
  * @internal
  */
 export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialogBaseReturnType => {
-    const { sharedObject, currentUser, onSubmit, onError } = props;
+    const { sharedObject, currentUser, onSubmit, onError, applyShareGrantOnSelect } = props;
     const { ref, shareStatus, owner, isUnderLenientControl, isLocked, areGranularPermissionsSupported } =
         sharedObject;
     const { saveInteraction: shareDialogSaveInteraction } = useShareDialogInteraction();
@@ -209,7 +275,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         onUnderLenientControlChange,
         onGranularGranteeAddChange,
         onGranularGranteeShareChange,
-    } = useShareDialogState(isUnderLenientControl, isLocked);
+    } = useShareDialogState(isUnderLenientControl, isLocked, onSubmit, applyShareGrantOnSelect);
 
     const onLoadGranteesSuccess = useCallback(
         (result: GranteeItem[]) => {
