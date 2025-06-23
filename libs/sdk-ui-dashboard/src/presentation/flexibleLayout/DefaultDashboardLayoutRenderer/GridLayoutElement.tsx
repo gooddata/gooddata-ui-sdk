@@ -86,7 +86,9 @@ export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementPr
                 ref={ref}
                 {...exportData}
             >
-                {children}
+                <div className={"gd-fluidlayout-row s-fluid-layout-row"} style={{ display: "contents" }}>
+                    {children}
+                </div>
             </section>
         ) : (
             <div
