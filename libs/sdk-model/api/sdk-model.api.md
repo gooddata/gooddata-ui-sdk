@@ -3436,6 +3436,7 @@ export interface ISettings {
     enableDashboardFilterViews?: boolean;
     enableDashboardFlexibleLayout?: boolean;
     enableDashboardFlexibleLayoutContainer?: boolean;
+    enableDashboardShareDialogLink?: boolean;
     enableDashboardShareLink?: boolean;
     enableDashboardTabularExport?: boolean;
     enableDataSampling?: boolean;
@@ -3445,6 +3446,7 @@ export interface ISettings {
     enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
     enableDestinationTesting?: boolean;
+    enableDestinationTestRecipient?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDrilledTooltip?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;

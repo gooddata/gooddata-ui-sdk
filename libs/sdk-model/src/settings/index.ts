@@ -726,6 +726,16 @@ export interface ISettings {
      */
     enableNotificationChannelIdentifiers?: boolean;
 
+    /**
+     * Enable dashboard share dialog link
+     */
+    enableDashboardShareDialogLink?: boolean;
+
+    /**
+     * Enable destination test recipient
+     */
+    enableDestinationTestRecipient?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 
