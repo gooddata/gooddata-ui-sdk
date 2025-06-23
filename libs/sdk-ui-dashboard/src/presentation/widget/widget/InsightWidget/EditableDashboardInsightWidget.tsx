@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import cx from "classnames";
 import { IInsight, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
@@ -82,12 +82,6 @@ const EditableDashboardInsightWidgetCore: React.FC<
                 renderAfterContent={() => {
                     return (
                         <>
-                            {!!isSelected && (
-                                <div
-                                    className="dash-item-action dash-item-action-lw-options"
-                                    onClick={onSelected}
-                                />
-                            )}
                             {!!hasConfigPanelOpen && (
                                 <InsightMenuComponent
                                     insight={insight}
