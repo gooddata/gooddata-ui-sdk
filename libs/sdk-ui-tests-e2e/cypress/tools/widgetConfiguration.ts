@@ -20,7 +20,7 @@ export class WidgetConfiguration {
     }
 
     open() {
-        new Widget(this.widgetIndex).getElement().click().find(".dash-item-action").first().click();
+        new Widget(this.widgetIndex).getElement().click();
         this.getElement().should("be.visible");
         return this;
     }

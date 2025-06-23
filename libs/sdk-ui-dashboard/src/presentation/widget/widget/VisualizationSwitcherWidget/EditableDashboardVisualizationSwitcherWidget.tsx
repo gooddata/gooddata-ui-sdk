@@ -110,12 +110,6 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
                     renderAfterContent={() => {
                         return (
                             <>
-                                {!!isSelected && (
-                                    <div
-                                        className="dash-item-action dash-item-action-lw-options"
-                                        onClick={onSelected}
-                                    />
-                                )}
                                 {!!hasConfigPanelOpen && (
                                     <VisualizationSwitcherToolbarComponent
                                         widget={widget}
