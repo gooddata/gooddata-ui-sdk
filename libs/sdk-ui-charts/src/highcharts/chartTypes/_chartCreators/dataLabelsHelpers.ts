@@ -132,6 +132,8 @@ export function showDataLabelInAxisRange(
     const isInsideAxisRange = pointInRange(value, axisRange);
     if (!isInsideAxisRange) {
         hideDataLabel(point);
+    } else {
+        showDataLabel(point);
     }
 }
 

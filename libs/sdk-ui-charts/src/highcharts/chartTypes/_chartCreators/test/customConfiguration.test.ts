@@ -42,7 +42,6 @@ function getData(dataValues: Partial<ISeriesDataItem>[]) {
 function getChartZoomConfig(chartConfig: any): void {
     return {
         ...chartConfig,
-        animation: true,
         zooming: {
             type: "x",
         },

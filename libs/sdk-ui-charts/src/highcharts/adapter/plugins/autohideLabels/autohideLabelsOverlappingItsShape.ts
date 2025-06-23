@@ -1,5 +1,10 @@
-// (C) 2007-2020 GoodData Corporation
-import { getDataPoints, getVisibleSeries } from "../../../chartTypes/_chartCreators/helpers.js";
+// (C) 2007-2025 GoodData Corporation
+import {
+    getAxesWithCategoriesFromSpaceFillingChart,
+    getDataPoints,
+    getVisibleSeries,
+    isPointVisibleInAxesRanges,
+} from "../../../chartTypes/_chartCreators/helpers.js";
 
 import {
     intersectsParentLabel,
@@ -17,9 +22,18 @@ function autohideLabelsOverlappingItsShape(
     const visibleSeries = getVisibleSeries(chart);
     const visiblePoints = getDataPoints(visibleSeries);
 
+    const axesWithCategories = getAxesWithCategoriesFromSpaceFillingChart(chart);
+
     visiblePoints.forEach((point: any) => {
         if (point) {
-            if (isLabelOverlappingItsShape(point) || intersectsParentLabel(point, visiblePoints)) {
+            // bubble chart has two axes but none of them has categories and is affected by zooming
+            const isPointVisible =
+                axesWithCategories.length <= 0 || isPointVisibleInAxesRanges(point, axesWithCategories);
+            if (
+                isLabelOverlappingItsShape(point) ||
+                intersectsParentLabel(point, visiblePoints) ||
+                !isPointVisible
+            ) {
                 hideFunction(point);
             } else {
                 showFunction(point);

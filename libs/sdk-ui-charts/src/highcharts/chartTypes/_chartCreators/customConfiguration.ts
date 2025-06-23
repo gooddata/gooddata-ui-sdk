@@ -1434,7 +1434,6 @@ function getZoomingAndPanningConfiguration(
     return chartConfig?.zoomInsight
         ? {
               chart: {
-                  animation: true,
                   zooming: {
                       type: "x",
                   },

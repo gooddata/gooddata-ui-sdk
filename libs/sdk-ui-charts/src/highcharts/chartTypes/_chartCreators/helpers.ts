@@ -446,3 +446,54 @@ export function alignChart(chart: Highcharts.Chart, verticalAlign: ChartAlignTyp
         false,
     );
 }
+
+// used to get all axes from charts like heatmap, treemap, bubble ( = space filling charts)
+export function getAxesWithCategoriesFromSpaceFillingChart(chart: Highcharts.Chart): Highcharts.Axis[] {
+    return chart.axes.filter((axis: Highcharts.Axis) => axis.categories?.length > 0);
+}
+
+export function getAxisWithCategories(chart: Highcharts.Chart): Highcharts.Axis | undefined {
+    return chart.xAxis.find((axis: Highcharts.Axis) => axis.categories?.length > 0);
+}
+
+export function getPointsVisibleInAxisRange(
+    points: Highcharts.Point[],
+    axis: Highcharts.Axis | undefined,
+): Highcharts.Point[] {
+    if (!axis) {
+        return points;
+    }
+    const { min, max } = axis.getExtremes();
+    return points.filter((point) => point.x >= min && point.x <= Math.round(max));
+}
+
+export function getPointsVisibleInAxesRanges(
+    points: Highcharts.Point[],
+    axes: Highcharts.Axis[],
+): Highcharts.Point[] {
+    return points.filter((point) => isPointVisibleInAxesRanges(point, axes));
+}
+
+export function isPointVisibleInAxesRanges(point: Highcharts.Point, axes: Highcharts.Axis[]): boolean {
+    const xAxis = axes.find((axis) => axis.isXAxis);
+    const yAxis = axes.find((axis) => !axis.isXAxis);
+
+    if (!yAxis) {
+        return (
+            Math.trunc(xAxis?.getExtremes().min) <= point.x && point.x <= Math.round(xAxis?.getExtremes().max)
+        );
+    }
+
+    if (!xAxis) {
+        return (
+            Math.trunc(yAxis?.getExtremes().min) <= point.y && point.y <= Math.round(yAxis?.getExtremes().max)
+        );
+    }
+
+    return (
+        Math.trunc(xAxis?.getExtremes().min) <= point.x &&
+        point.x <= Math.round(xAxis?.getExtremes().max) &&
+        yAxis?.getExtremes().min <= point.y &&
+        point.y <= Math.round(yAxis?.getExtremes().max)
+    );
+}
