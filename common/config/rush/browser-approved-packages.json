@@ -280,7 +280,7 @@
     },
     {
       "name": "@testing-library/dom",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@testing-library/react",
