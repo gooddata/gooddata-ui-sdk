@@ -8,6 +8,7 @@ import {
     DialogListHeader,
     IAlignPoint,
     RecurrenceForm,
+    simpleRecurrenceTypeMappingFn,
 } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -168,6 +169,7 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
                             locale={locale}
                             showInheritValue={true}
                             isWhiteLabeled={isWhiteLabeled}
+                            customRecurrenceTypeMappingFn={simpleRecurrenceTypeMappingFn}
                         />
                         <div className="gd-dashboard-settings-evaluation-note">
                             {currentData.evaluationFrequency === undefined ? (
