@@ -6,7 +6,7 @@ import { IIconProps } from "../typings.js";
 /**
  * @internal
  */
-export const ColumnGroup: React.FC<IIconProps> = ({ color = "#94A1AD", className, width, height }) => {
+export const ColumnContainer: React.FC<IIconProps> = ({ color = "#94A1AD", className, width, height }) => {
     return (
         <svg
             className={className}
