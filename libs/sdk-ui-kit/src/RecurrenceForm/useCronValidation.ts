@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import * as cronParser from "cron-parser";
-import { isCronExpressionValid } from "./utils.js";
+import { isCronExpressionValid } from "./utils/utils.js";
 import { defineMessages } from "react-intl";
 
 export enum RecurrenceFormCronErrorTypes {

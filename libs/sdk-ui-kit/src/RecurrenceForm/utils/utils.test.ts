@@ -9,7 +9,7 @@ import {
     transformCronExpressionToRecurrenceType,
     transformRecurrenceTypeToDescription,
 } from "./utils.js";
-import { RECURRENCE_TYPES } from "./constants.js";
+import { RECURRENCE_TYPES } from "../constants.js";
 
 const sampleCronExp = "0 0 1 ? * 2";
 const sampleDate = new Date("2023-04-05T14:34:21");

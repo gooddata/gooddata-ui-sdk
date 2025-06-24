@@ -5,9 +5,9 @@ import capitalize from "lodash/capitalize.js";
 import compact from "lodash/compact.js";
 import { WeekStart } from "@gooddata/sdk-model";
 
-import { RecurrenceType } from "./types.js";
-import { RECURRENCE_TYPES } from "./constants.js";
-import { messages } from "./locales.js";
+import { RecurrenceType } from "../types.js";
+import { RECURRENCE_TYPES } from "../constants.js";
+import { messages } from "../locales.js";
 
 const weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
