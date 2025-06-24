@@ -102,9 +102,10 @@ describe("Date filtering on insight", () => {
 
             widgetConfiguration.open().openConfiguration().selectDateDataset(DATASET_CREATED);
 
-            secondWidget.hasTitle("Column with two measures by date");
+            secondWidget.hasTitle("Column with two measures by date").focus();
             secondWidgetConfiguration.open();
 
+            widget.focus();
             widgetConfiguration.open().openConfiguration().hasDatasetSelected(DATASET_CREATED);
         },
     );
