@@ -1,0 +1,23 @@
+// (C) 2025 GoodData Corporation
+
+.gd-ui-kit-tooltip {
+    background-color: var(--gd-palette-complementary-8);
+    font-family: var(--gd-font-family);
+    color: var(--gd-palette-complementary-0);
+    padding: 7px 10px;
+    border-radius: var(--gd-modal-borderRadius);
+    font-size: 12px;
+
+    &--width-auto {
+        width: auto;
+        box-sizing: border-box;
+    }
+
+    &__anchor {
+        width: fit-content;
+    }
+
+    &__arrow {
+        fill: var(--gd-palette-complementary-8);
+    }
+}

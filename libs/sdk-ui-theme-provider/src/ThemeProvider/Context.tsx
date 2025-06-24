@@ -11,6 +11,9 @@ ThemeContext.displayName = "ThemeContext";
 const ThemeIsLoadingContext = React.createContext<boolean | undefined>(undefined);
 ThemeIsLoadingContext.displayName = "ThemeIsLoadingContext";
 
+const ThemeIsScopeThemedContext = React.createContext<boolean | undefined>(undefined);
+ThemeIsScopeThemedContext.displayName = "ThemeIsScopeThemedContext";
+
 const ThemeStatusContext = React.createContext<ThemeStatus | undefined>("pending");
 ThemeStatusContext.displayName = "ThemeStatusContext";
 
@@ -44,6 +47,11 @@ export interface IThemeContextProviderProps {
     themeStatus?: ThemeStatus;
 
     /**
+     * Whether the theme object comes from ScopedThemeProvider
+     */
+    isScopeThemed?: boolean;
+
+    /**
      * React children
      */
     children?: React.ReactNode;
@@ -59,11 +67,14 @@ export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
     theme,
     themeIsLoading,
     themeStatus,
+    isScopeThemed,
 }) => {
     return (
         <ThemeContext.Provider value={theme}>
             <ThemeIsLoadingContext.Provider value={themeIsLoading}>
-                <ThemeStatusContext.Provider value={themeStatus}>{children}</ThemeStatusContext.Provider>
+                <ThemeIsScopeThemedContext.Provider value={isScopeThemed}>
+                    <ThemeStatusContext.Provider value={themeStatus}>{children}</ThemeStatusContext.Provider>
+                </ThemeIsScopeThemedContext.Provider>
             </ThemeIsLoadingContext.Provider>
         </ThemeContext.Provider>
     );
@@ -119,6 +130,15 @@ export const useThemeIsLoading = (): boolean | undefined => {
  */
 export const useThemeStatus = (): ThemeStatus | undefined => {
     return React.useContext(ThemeStatusContext);
+};
+
+/**
+ * Hook for reaching the isScopeThemed flag from context
+ *
+ * @internal
+ */
+export const useIsScopeThemed = (): boolean | undefined => {
+    return React.useContext(ThemeIsScopeThemedContext);
 };
 
 /**

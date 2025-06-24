@@ -8,6 +8,11 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 
+// @internal
+export const ConditionalScopedThemeProvider: React_2.FC<{
+    children: React_2.ReactNode;
+}>;
+
 // @internal (undocumented)
 export interface IScopedThemeProviderProps {
     backend?: IAnalyticalBackend;
@@ -25,6 +30,7 @@ export const isDarkTheme: (theme: ITheme) => boolean;
 // @public (undocumented)
 export interface IThemeContextProviderProps {
     children?: React_2.ReactNode;
+    isScopeThemed?: boolean;
     theme: ITheme;
     // @deprecated
     themeIsLoading: boolean;
@@ -59,6 +65,9 @@ export type ThemeStatus = "pending" | "loading" | "success";
 
 // @public
 export const useIsDarkTheme: () => boolean;
+
+// @internal
+export const useIsScopeThemed: () => boolean | undefined;
 
 // @public
 export const useTheme: (theme?: ITheme) => ITheme | undefined;

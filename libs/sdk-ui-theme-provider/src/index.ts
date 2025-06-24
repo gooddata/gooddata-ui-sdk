@@ -12,6 +12,7 @@
 export type { IThemeProviderProps, ThemeModifier } from "./ThemeProvider/ThemeProvider.js";
 export { ThemeProvider } from "./ThemeProvider/ThemeProvider.js";
 export { ScopedThemeProvider } from "./ThemeProvider/ScopedThemeProvider.js";
+export { ConditionalScopedThemeProvider } from "./ThemeProvider/ConditionalScopedThemeProvider.js";
 export { isDarkTheme } from "./ThemeProvider/isDarkTheme.js";
 export type { IScopedThemeProviderProps } from "./ThemeProvider/ScopedThemeProvider.js";
 export type { IThemeContextProviderProps, ThemeStatus } from "./ThemeProvider/Context.js";
@@ -19,6 +20,7 @@ export {
     withTheme,
     useTheme,
     useThemeIsLoading,
+    useIsScopeThemed,
     useThemeStatus,
     useIsDarkTheme,
     ThemeContextProvider,
