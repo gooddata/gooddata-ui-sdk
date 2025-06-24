@@ -9,7 +9,7 @@ The following 3rd-party software packages may be used by or distributed with goo
 
 Date generated: 2025-6-24
 
-Revision ID: 198eb0369ff6c3281725b6be0b42d4a9a5c9cd92
+Revision ID: 87866b0442711836c3b30eafb4d7b7b10e9fc0b1
 
 ================================================================================
 ================================================================================
@@ -181,9 +181,12 @@ Revision ID: 198eb0369ff6c3281725b6be0b42d4a9a5c9cd92
 - @emotion/use-insertion-effect-with-fallbacks (1.0.1) [MIT]
 - @emotion/utils (1.2.1) [MIT]
 - @emotion/weak-memoize (0.3.1) [MIT]
-- @floating-ui/core (1.5.2) [MIT]
-- @floating-ui/dom (1.5.3) [MIT]
-- @floating-ui/utils (0.1.6) [MIT]
+- @floating-ui/core (1.7.1) [MIT]
+- @floating-ui/dom (1.6.13) [MIT]
+- @floating-ui/react (0.27.12) [MIT]
+- @floating-ui/react-dom (2.1.2) [MIT]
+- @floating-ui/react-dom (2.1.3) [MIT]
+- @floating-ui/utils (0.2.9) [MIT]
 - @formatjs/cli-lib (6.3.3) [MIT]
 - @formatjs/ecma402-abstract (1.18.0) [MIT]
 - @formatjs/ecma402-abstract (2.2.4) [MIT]
@@ -942,6 +945,7 @@ Revision ID: 198eb0369ff6c3281725b6be0b42d4a9a5c9cd92
 - supports-color (8.1.1) [MIT]
 - supports-preserve-symlinks-flag (1.0.0) [MIT]
 - symbol-tree (3.2.4) [MIT]
+- tabbable (6.2.0) [MIT]
 - tapable (2.2.1) [MIT]
 - tar (6.2.1) [ISC]
 - terser (5.26.0) [BSD-2-Clause]
@@ -7939,50 +7943,9 @@ Authors: npm@emmas.town, kye.hohenberger@gmail.com, emotion-release-bot@hamil.to
 Package Download URL: https://registry.npmjs.org/@emotion/weak-memoize/-/weak-memoize-0.3.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @floating-ui/core (1.5.2)
+Package Title: @floating-ui/core (1.7.1)
 
-Package Locator: npm+@floating-ui/core$1.5.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) 2021-present Floating UI contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: federico.zivolo@gmail.com, cc.glows@gmail.com
-
-Package Download URL: https://registry.npmjs.org/@floating-ui/core/-/core-1.5.2.tgz
-
---------------------------------------------------------------------------------
-Package Title: @floating-ui/dom (1.5.3)
-
-Package Locator: npm+@floating-ui/dom$1.5.3
+Package Locator: npm+@floating-ui/core$1.7.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8018,12 +7981,135 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Authors: federico.zivolo@gmail.com, cc.glows@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@floating-ui/dom/-/dom-1.5.3.tgz
+Package Download URL: https://registry.npmjs.org/@floating-ui/core/-/core-1.7.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @floating-ui/utils (0.1.6)
+Package Title: @floating-ui/dom (1.6.13)
 
-Package Locator: npm+@floating-ui/utils$0.1.6
+Package Locator: npm+@floating-ui/dom$1.6.13
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2021-present Floating UI contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: federico.zivolo@gmail.com, cc.glows@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@floating-ui/dom/-/dom-1.6.13.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @floating-ui/react (0.27.12)
+
+Package Locator: npm+@floating-ui/react$0.27.12
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2021-present Floating UI contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: federico.zivolo@gmail.com, cc.glows@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@floating-ui/react/-/react-0.27.12.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @floating-ui/react-dom (2.1.2)
+
+Package Locator: npm+@floating-ui/react-dom$2.1.2
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2021-present Floating UI contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: federico.zivolo@gmail.com, cc.glows@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@floating-ui/react-dom/-/react-dom-2.1.2.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @floating-ui/react-dom (2.1.3)
+
+Package Locator: npm+@floating-ui/react-dom$2.1.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8059,7 +8145,48 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Authors: federico.zivolo@gmail.com, cc.glows@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@floating-ui/utils/-/utils-0.1.6.tgz
+Package Download URL: https://registry.npmjs.org/@floating-ui/react-dom/-/react-dom-2.1.3.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @floating-ui/utils (0.2.9)
+
+Package Locator: npm+@floating-ui/utils$0.2.9
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2021-present Floating UI contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: federico.zivolo@gmail.com, cc.glows@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@floating-ui/utils/-/utils-0.2.9.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @formatjs/cli-lib (6.3.3)
@@ -45307,6 +45434,49 @@ THE SOFTWARE.
 Authors: joris@jorisvanderwel.com
 
 Package Download URL: https://registry.npmjs.org/symbol-tree/-/symbol-tree-3.2.4.tgz
+
+--------------------------------------------------------------------------------
+Package Title: tabbable (6.2.0)
+
+Package Locator: npm+tabbable$6.2.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+The MIT License (MIT)
+
+Copyright (c) 2015 David Clark
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+
+* Package Info *
+
+Authors: david.dave.clark@gmail.com, stefan@stefcameron.com
+
+Package Download URL: https://registry.npmjs.org/tabbable/-/tabbable-6.2.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: tapable (2.2.1)
