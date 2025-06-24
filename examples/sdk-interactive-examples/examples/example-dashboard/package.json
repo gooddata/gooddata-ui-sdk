@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-dashboard",
-    "version": "9.9.3-beta.3",
+    "version": "9.9.3-beta.4",
     "title": "Dashboard component",
     "description": "This example shows how to use the Dashboard component.",
     "author": "GoodData Corporation",
