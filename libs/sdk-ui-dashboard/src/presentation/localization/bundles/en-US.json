@@ -1766,7 +1766,7 @@
         "limit": 0
     },
     "addPanel.dashboardLayout": {
-        "value": "Column group",
+        "value": "Column container",
         "comment": "",
         "limit": 0
     },
@@ -2673,7 +2673,7 @@
         "limit": 0
     },
     "nestedLayout.tab.title": {
-        "value": "Column group",
+        "value": "Column container",
         "comment": "",
         "limit": 0
     },
