@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -24,7 +24,7 @@ export const AddDashboardLayoutWidgetButton: React.FC = () => {
     const theme = useTheme();
     return (
         <div className="add-item-placeholder add-panel-item s-add-dashboard-layout">
-            <Icon.Container color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
+            <Icon.ColumnGroup color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
             <FormattedMessage id="addPanel.dashboardLayout" />
             <OverlayControllerProvider overlayController={overlayController}>
                 <BubbleHoverTrigger
