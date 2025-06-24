@@ -5627,6 +5627,9 @@ export function shouldEnableNewNavigation(featureFlags: ISettings): boolean;
 export function shouldHidePPExperience(featureFlags: ISettings): boolean;
 
 // @internal
+export const simpleRecurrenceTypeMappingFn: (_date?: Date | null, cronExpression?: string, allowHourlyRecurrence?: boolean, _showInheritValue?: boolean, weekStart?: WeekStart) => RecurrenceType;
+
+// @internal
 export const SimpleSettingWidget: React_2.FC<ISimpleSettingWidgetProps>;
 
 // @internal (undocumented)

@@ -5,7 +5,7 @@ import { WeekStart } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
 
 import { RecurrenceType } from "./types.js";
-import { transformRecurrenceTypeToDescription } from "./utils.js";
+import { transformRecurrenceTypeToDescription } from "./utils/utils.js";
 
 interface IRepeatTypeDescriptionProps {
     repeatType: RecurrenceType;

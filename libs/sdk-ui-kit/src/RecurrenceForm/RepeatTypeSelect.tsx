@@ -11,7 +11,7 @@ import {
     DEFAULT_DROPDOWN_ZINDEX,
     RECURRENCE_TYPES,
 } from "./constants.js";
-import { getWeekNumber, getIntlDayName, isLastOccurrenceOfWeekdayInMonth } from "./utils.js";
+import { getWeekNumber, getIntlDayName, isLastOccurrenceOfWeekdayInMonth } from "./utils/utils.js";
 import { messages } from "./locales.js";
 import { RecurrenceType } from "./types.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";

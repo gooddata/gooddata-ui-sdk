@@ -10,7 +10,7 @@ import {
     transformCronExpressionToRecurrenceType,
     constructCronExpression,
     isCronExpressionValid,
-} from "./utils.js";
+} from "./utils/utils.js";
 import { DateTime } from "./DateTime.js";
 import { Recurrence } from "./Recurrence.js";
 import { messages } from "./locales.js";
