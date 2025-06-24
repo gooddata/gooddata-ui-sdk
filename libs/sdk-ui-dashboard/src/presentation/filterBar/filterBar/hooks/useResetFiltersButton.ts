@@ -33,6 +33,7 @@ import {
     resetFilterContextWorkingSelection,
     selectEnableDashboardFiltersApplyModes,
     selectEnableDateFilterIdentifiers,
+    selectDashboardFiltersApplyMode,
 } from "../../../../model/index.js";
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
@@ -59,6 +60,7 @@ export const useResetFiltersButton = (): {
     const disableUserFilterReset = useDashboardSelector(selectDisableDashboardUserFilterReset);
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const dashboardFiltersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode).mode;
     const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
 
     const dispatch = useDashboardDispatch();
@@ -108,7 +110,7 @@ export const useResetFiltersButton = (): {
                 // If the cross filter add some filters, we should allow the reset
                 ((!disableUserFilterReset && !disableUserFilterResetByConfig) ||
                     newlyAddedFiltersLocalIds.length > 0)) ||
-                !!isWorkingFilterContextChanged)
+                (!!isWorkingFilterContextChanged && dashboardFiltersApplyMode === "ALL_AT_ONCE"))
         );
     }, [
         isEditMode,
@@ -118,6 +120,7 @@ export const useResetFiltersButton = (): {
         disableUserFilterResetByConfig,
         newlyAddedFiltersLocalIds.length,
         isWorkingFilterContextChanged,
+        dashboardFiltersApplyMode,
     ]);
 
     const resetFilters = React.useCallback(() => {
