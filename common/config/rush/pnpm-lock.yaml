@@ -10,6 +10,12 @@ importers:
 
   ../../examples/playground:
     devDependencies:
+      '@codemirror/state':
+        specifier: ~6.5.2
+        version: 6.5.2
+      '@codemirror/view':
+        specifier: ~6.36.4
+        version: 6.36.5
       '@gooddata/catalog-export':
         specifier: workspace:*
         version: link:../../tools/catalog-export
@@ -4452,7 +4458,7 @@ importers:
         version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
       babel-loader:
         specifier: ^8.0.5
-        version: 8.3.0(@babel/core@7.26.10)(webpack@5.89.0)
+        version: 8.3.0(@babel/core@7.26.10)(webpack@4.47.0)
       babel-plugin-require-context-hook:
         specifier: ^1.0.0
         version: 1.0.0
@@ -9403,7 +9409,6 @@ packages:
     resolution: {integrity: sha512-FVqsPqtPWKVVL3dPSxy8wEF/ymIEuVzF1PK3VbUgrxXpJUSHQWWZz4JMToquRxnkw+36LTamCZG2iua2Ptq0fA==}
     dependencies:
       '@marijn/find-cluster-break': 1.0.2
-    dev: false
 
   /@codemirror/view@6.36.5:
     resolution: {integrity: sha512-cd+FZEUlu3GQCYnguYm3EkhJ8KJVisqqUsCOKedBoAt/d9c76JUUap6U0UrpElln5k6VyrEOYliMuDAKIeDQLg==}
@@ -9411,7 +9416,6 @@ packages:
       '@codemirror/state': 6.5.2
       style-mod: 4.1.2
       w3c-keyname: 2.2.8
-    dev: false
 
   /@colors/colors@1.5.0:
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -10656,7 +10660,6 @@ packages:
 
   /@marijn/find-cluster-break@1.0.2:
     resolution: {integrity: sha512-l0h88YhZFyKdXIFNfSWpyjStDjGHwZ/U7iobcK1cQQD8sejsONdQtTVU+1wVN1PBw40PiiHB1vA5S7VTfQiP9g==}
-    dev: false
 
   /@microsoft/api-documenter@7.23.14(@types/node@18.19.3):
     resolution: {integrity: sha512-D9cX3sS/6xN8SFbrR6I1ZTKvGl5UIPFZKYqTLg8YBUKJtFbUSDLrzRLWOcjxwxjnu+gCHAHyaNpG4G//CQivLw==}
@@ -24660,7 +24663,6 @@ packages:
 
   /style-mod@4.1.2:
     resolution: {integrity: sha512-wnD1HyVqpJUI2+eKZ+eo1UwghftP6yuFheBqqe+bWCotBjC2K1YnteJILRMs3SM4V/0dLEW1SC27MWP5y+mwmw==}
-    dev: false
 
   /style-search@0.1.0:
     resolution: {integrity: sha512-Dj1Okke1C3uKKwQcetra4jSuk0DqbzbYtXipzFlFMZtowbF1x7BKJwB9AayVMyFARvU8EDrZdcax4At/452cAg==}
@@ -26366,7 +26368,6 @@ packages:
 
   /w3c-keyname@2.2.8:
     resolution: {integrity: sha512-dpojBhNsCNN7T82Tm7k26A6G9ML3NkhDsnw9n/eoxSRlVBB4CEtIQ/KTCLI2Fwf3ataSXRhYFkQi3SlnFwPvPQ==}
-    dev: false
 
   /w3c-xmlserializer@5.0.0:
     resolution: {integrity: sha512-o8qghlI8NZHU1lLPrpi2+Uq7abh4GGPpYANlalzWxyWteJOCsr/P+oPBA49TOLu5FTZO4d3F9MnWJfiMo4BkmA==}

@@ -76,11 +76,11 @@
     },
     {
       "name": "@codemirror/state",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@codemirror/view",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@componentdriven/csf",
