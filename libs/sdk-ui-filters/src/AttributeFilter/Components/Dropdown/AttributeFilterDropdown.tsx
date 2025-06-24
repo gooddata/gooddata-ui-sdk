@@ -135,10 +135,10 @@ export const AttributeFilterDropdown: React.VFC = () => {
     );
 };
 
-function useLastValidValue<T>(value: T, isValid: boolean): T | undefined {
+function useLastValidValue<T>(value: T, isValid: boolean): T {
     const lastValidValue = useRef<T | undefined>();
     if (isValid) {
         lastValidValue.current = value;
     }
-    return lastValidValue.current;
+    return lastValidValue.current ?? value;
 }
