@@ -11,7 +11,15 @@ import { DashboardContext } from "../../types/commonTypes.js";
 import { createExportRawFunction } from "@gooddata/sdk-ui";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
-import { defaultDimensionsGenerator, defWithDimensions, newDefForInsight } from "@gooddata/sdk-model";
+import {
+    defaultDimensionsGenerator,
+    defWithDimensions,
+    INullableFilter,
+    newDefForInsight,
+} from "@gooddata/sdk-model";
+import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
+import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
 
 async function performExport(execution: IExecutionResult): Promise<IExportResult> {
     return createExportRawFunction(execution);
@@ -32,7 +40,21 @@ export function* exportRawInsightWidgetHandler(
         selectExecutionResultByRef(ref),
     );
 
-    const definition = defWithDimensions(newDefForInsight(workspace, insight!), defaultDimensionsGenerator);
+    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
+        selectFilterContextFilters,
+    );
+
+    const widget = yield select(selectWidgetByRef(ref));
+
+    const dashboardFilters: INullableFilter[] = filterContextItemsToDashboardFiltersByWidget(
+        filterContextFilters,
+        widget,
+    );
+
+    const definition = defWithDimensions(
+        newDefForInsight(workspace, insight!, dashboardFilters),
+        defaultDimensionsGenerator,
+    );
 
     const preparedExecutionDefinition = executionEnvelope?.executionResult?.definition ?? definition;
 
