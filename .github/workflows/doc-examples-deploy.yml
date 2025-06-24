@@ -11,4 +11,6 @@ jobs:
     permissions:
       contents: write
       id-token: write
-    uses: ./.github/workflows/rw-doc-examples-deploy.yml
+    uses: ./.github/workflows/rw-rush-build-basic-checks.yml
+    with:
+      target-branch: "master"

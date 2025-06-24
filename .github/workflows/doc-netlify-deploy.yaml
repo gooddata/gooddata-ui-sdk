@@ -3,6 +3,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  netlify-deploy:
+  release-ui-sdk-examples-deploy:
     secrets: inherit
-    uses: ./.github/workflows/rw-doc-netlify-deploy.yml
+    permissions:
+      contents: write
+      id-token: write
+    uses: ./.github/workflows/rw-rush-build-basic-checks.yml
+    with:
+      target-branch: "master"
+

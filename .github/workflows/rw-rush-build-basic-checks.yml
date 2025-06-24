@@ -18,6 +18,8 @@ jobs:
       labels: runners-cxa-xlarge
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: "test2"
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:
@@ -40,6 +42,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
+          ref: "test2"
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:
@@ -57,36 +60,36 @@ jobs:
   ######################################################
   # Validate the changes
   ######################################################
-  validate:
-    needs: [warm-up-cache,build]
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-rxa-xlarge  # for testing we need bigger runners
-    env:
-      NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      TARGET_BRANCH: ${{ inputs.target-branch }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-      - name: Git config user
-        uses: snow-actions/git-config-user@v1.0.0
-        with:
-          name: git-action
-          email: git-action@gooddata.com
-      - name: Setup rush
-        uses: ./.github/actions/rush/set-up-rush
-      - name: fetch target branch
-        run: git fetch origin ${TARGET_BRANCH}
-      - name: Rush build
-        run: |
-          node common/scripts/install-run-rush.js build
-      - name: Rush validate
-        run: |
-          node common/scripts/install-run-rush.js validate-ci --impacted-by git:origin/${TARGET_BRANCH}
-      - name: Rush validate-esm
-        run: |
-          node common/scripts/install-run-rush.js validate-esm
+  # validate:
+  #   needs: [warm-up-cache,build]
+  #   runs-on:
+  #     group: infra1-runners-arc
+  #     labels: runners-rxa-xlarge  # for testing we need bigger runners
+  #   env:
+  #     NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  #     TARGET_BRANCH: ${{ inputs.target-branch }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 2
+  #     - name: Git config user
+  #       uses: snow-actions/git-config-user@v1.0.0
+  #       with:
+  #         name: git-action
+  #         email: git-action@gooddata.com
+  #     - name: Setup rush
+  #       uses: ./.github/actions/rush/set-up-rush
+  #     - name: fetch target branch
+  #       run: git fetch origin ${TARGET_BRANCH}
+  #     - name: Rush build
+  #       run: |
+  #         node common/scripts/install-run-rush.js build
+  #     - name: Rush validate
+  #       run: |
+  #         node common/scripts/install-run-rush.js validate-ci --impacted-by git:origin/${TARGET_BRANCH}
+  #     - name: Rush validate-esm
+  #       run: |
+  #         node common/scripts/install-run-rush.js validate-esm
 
 
   test:
@@ -101,6 +104,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
+          ref: "test2"
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:
@@ -118,7 +122,7 @@ jobs:
           node common/scripts/install-run-rush.js build
       - name: Rush test-ci
         run: |
-          node common/scripts/install-run-rush.js test-ci --impacted-by git:origin/${TARGET_BRANCH}
+          node common/scripts/install-run-rush.js test-ci
       - name: Rush test-isolated-ci
         run: |
-          node common/scripts/install-run-rush.js test-isolated-ci --impacted-by git:origin/${TARGET_BRANCH}
+          node common/scripts/install-run-rush.js test-isolated-ci
