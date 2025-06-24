@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useCallback, useState } from "react";
 import { idRef, IInsight, insightTitle, IInsightWidget } from "@gooddata/sdk-model";
 import {
