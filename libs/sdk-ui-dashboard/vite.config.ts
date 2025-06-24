@@ -3,7 +3,7 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
     test: {
-        environment: "jsdom",
+        environment: "happy-dom",
         setupFiles: "./setupTests.ts",
         include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
         exclude: ["**/node_modules/**", "**/esm/**"],
