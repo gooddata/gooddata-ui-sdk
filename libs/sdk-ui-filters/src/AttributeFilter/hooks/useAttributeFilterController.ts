@@ -192,6 +192,7 @@ export const useAttributeFilterController = (
             shouldReloadElements,
             setShouldReloadElements,
             displayAsLabel,
+            shouldIncludeLimitingFilters,
         },
         supportsKeepingDependentFiltersSelection,
         supportsCircularDependencyInFilters,
@@ -312,6 +313,7 @@ function useInitOrReload(
         shouldReloadElements: MutableRefObject<boolean>;
         setShouldReloadElements: (value: boolean) => void;
         displayAsLabel: ObjRef;
+        shouldIncludeLimitingFilters: boolean;
     },
     supportsKeepingDependentFiltersSelection: boolean,
     supportsCircularDependencyInFilters: boolean,
@@ -333,6 +335,7 @@ function useInitOrReload(
         shouldReloadElements,
         setShouldReloadElements,
         displayAsLabel,
+        shouldIncludeLimitingFilters,
     } = props;
 
     useEffect(() => {
@@ -361,7 +364,7 @@ function useInitOrReload(
 
     useEffect(() => {
         const limitingAttributesChanged = !isEqual(
-            limitingAttributeFilters,
+            shouldIncludeLimitingFilters ? limitingAttributeFilters : [],
             handler.getLimitingAttributeFilters(),
         );
 
@@ -475,6 +478,7 @@ function useInitOrReload(
         enableDuplicatedLabelValuesInAttributeFilter,
         enableDashboardFiltersApplyModes,
         shouldReloadElements,
+        shouldIncludeLimitingFilters,
     ]);
 
     const isMountedRef = useRef(false);
