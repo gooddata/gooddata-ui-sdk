@@ -628,10 +628,10 @@
     "insightAlert.config.for": "Pour",
     "insightAlert.config.warning.destination": "La destination sélectionnée ne permet d’envoyer l’alerte qu’à soi-même.",
     "insightAlert.config.selectAttribute": "Tout",
-    "addPanel.dashboardLayout": "Conteneur",
+    "addPanel.dashboardLayout": "Conteneur à colonnes",
     "addPanel.dashboardLayout.tooltip": "Regrouper et afficher plusieurs widgets ensemble pour une mise en page plus souple.",
     "nestedLayoutToolbar.remove": "Retirer du tableau de bord.",
-    "nestedLayout.tab.title": "Conteneur",
+    "nestedLayout.tab.title": "Conteneur à colonnes",
     "nestedLayout.emptyDropZone.message": "<b>Faites glisser ici</b>{br}pour l'ajouter au conteneur",
     "insightAlert.config.and": "et",
     "insightAlert.config.for.filter": "pour {granularity}",
@@ -765,5 +765,6 @@
     "options.menu.unsupported.xlsxOldWidget": "Impossible d'exporter. Veuillez réenregistrer le tableau de bord ou contacter votre administrateur.",
     "filterBar.label": "Filtres",
     "controlButtons.asTable": "Afficher sous forme de tableau",
-    "controlButtons.asOriginal": "Afficher la visualisation originale"
+    "controlButtons.asOriginal": "Afficher la visualisation originale",
+    "messages.shareLinkCopied": "Lien copié."
 }

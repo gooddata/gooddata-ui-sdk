@@ -727,5 +727,10 @@
     "properties.legend.series.item.description": "Drücken Sie die Leertaste oder die Eingabetaste, um die Sichtbarkeit zu",
     "properties.legend.more.button": "Alle Legendenelemente in einem Dialog anzeigen",
     "properties.legend.series.named": "Legende: {name}",
-    "properties.legend.series.unnamed": "Visualisierungslegende"
+    "properties.legend.series.unnamed": "Visualisierungslegende",
+    "shareDialog.share.dashboard.title": "Dashboard teilen",
+    "shareDialog.share.dashboard.list.title": "Benutzer & Gruppen",
+    "shareDialog.share.link.helperText": "Link spiegelt aktuelle Filter wider. Nur für Benutzer mit Dashboard-Zugriff zugänglich.",
+    "shareDialog.share.link.title": "Link",
+    "shareDialog.share.link.buttonText": "Kopie"
 }

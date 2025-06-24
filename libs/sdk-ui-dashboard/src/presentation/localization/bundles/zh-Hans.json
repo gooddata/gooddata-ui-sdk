@@ -628,10 +628,10 @@
     "insightAlert.config.for": "为了",
     "insightAlert.config.warning.destination": "所选目的地仅支持向您自己发送警报。",
     "insightAlert.config.selectAttribute": "全部",
-    "addPanel.dashboardLayout": "容器",
+    "addPanel.dashboardLayout": "列容器",
     "addPanel.dashboardLayout.tooltip": "将多个小部件组合并显示在一起，以实现更灵活的布局。",
     "nestedLayoutToolbar.remove": "从仪表板上移除。",
-    "nestedLayout.tab.title": "容器",
+    "nestedLayout.tab.title": "列容器",
     "nestedLayout.emptyDropZone.message": "<b>拖到此处</b>{br}添加到容器中",
     "insightAlert.config.and": "和",
     "insightAlert.config.for.filter": "为了 {granularity}",
@@ -765,5 +765,6 @@
     "options.menu.unsupported.xlsxOldWidget": "无法导出。请重新保存仪表板或联系您的管理员。",
     "filterBar.label": "筛选器",
     "controlButtons.asTable": "以表格形式显示",
-    "controlButtons.asOriginal": "显示原始可视化"
+    "controlButtons.asOriginal": "显示原始可视化",
+    "messages.shareLinkCopied": "链接已复制。"
 }

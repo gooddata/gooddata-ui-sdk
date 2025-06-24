@@ -729,5 +729,10 @@
     "properties.legend.series.item.description": "Pulse la barra espaciadora o Intro para cambiar la visibilidad",
     "properties.legend.more.button": "Mostrar todos los elementos de la leyenda en un cuadro de diálogo",
     "properties.legend.series.named": "Leyenda: {name}",
-    "properties.legend.series.unnamed": "Leyenda de visualización"
+    "properties.legend.series.unnamed": "Leyenda de visualización",
+    "shareDialog.share.dashboard.title": "Compartir panel de control",
+    "shareDialog.share.dashboard.list.title": "Usuarios y grupos",
+    "shareDialog.share.link.helperText": "El enlace refleja los filtros actuales. Solo accesible para usuarios con acceso al panel de control.",
+    "shareDialog.share.link.title": "Enlace",
+    "shareDialog.share.link.buttonText": "Copia"
 }

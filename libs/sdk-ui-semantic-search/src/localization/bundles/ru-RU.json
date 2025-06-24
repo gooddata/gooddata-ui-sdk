@@ -1,3 +1,14 @@
 {
-    "semantic-search.date.at": "в"
+    "semantic-search.error.title": "Наш сервис поиска временно недоступен.",
+    "semantic-search.error.text": "Мы работаем над решением проблемы.",
+    "semantic-search.no-results": "Результаты по запросу «не найдены»{query} ”.",
+    "semantic-search.placeholder": "Поиск панелей или визуализаций…",
+    "semantic-search.id": "ИД",
+    "semantic-search.tags": "Теги",
+    "semantic-search.match": "{score}% соответствовать",
+    "semantic-search.previous-search": "Предыдущий поиск",
+    "semantic-search.date.at": "в",
+    "gs.date.today": "Сегодня",
+    "gs.date.yesterday": "Вчера",
+    "semantic-search.label": "Поиск панелей или визуализаций"
 }

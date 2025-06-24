@@ -736,5 +736,10 @@
     "properties.legend.series.item.description": "Görünürlüğü değiştirmek için Boşluk veya Enter tuşuna basın",
     "properties.legend.more.button": "Tüm gösterge öğelerini bir diyalogda göster",
     "properties.legend.series.named": "Açıklama: {name}",
-    "properties.legend.series.unnamed": "Görselleştirme efsanesi"
+    "properties.legend.series.unnamed": "Görselleştirme efsanesi",
+    "shareDialog.share.dashboard.title": "Gösterge tablosunu paylaş",
+    "shareDialog.share.dashboard.list.title": "Kullanıcılar ve gruplar",
+    "shareDialog.share.link.helperText": "Bağlantı mevcut filtreleri yansıtır. Yalnızca panoya erişimi olan kullanıcılar tarafından erişilebilir.",
+    "shareDialog.share.link.title": "Bağlantı",
+    "shareDialog.share.link.buttonText": "Kopyala"
 }

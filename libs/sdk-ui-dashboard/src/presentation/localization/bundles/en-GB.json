@@ -765,5 +765,6 @@
     "options.menu.unsupported.xlsxOldWidget": "Unable to export. Please resave the dashboard or contact your administrator.",
     "filterBar.label": "Filters",
     "controlButtons.asTable": "Show as table",
-    "controlButtons.asOriginal": "Show original visualisation"
+    "controlButtons.asOriginal": "Show original visualisation",
+    "messages.shareLinkCopied": "Link copied"
 }

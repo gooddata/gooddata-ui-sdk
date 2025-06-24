@@ -628,10 +628,10 @@
     "insightAlert.config.for": "Voor",
     "insightAlert.config.warning.destination": "De geselecteerde bestemming ondersteunt alleen het verzenden van de waarschuwing naar jezelf.",
     "insightAlert.config.selectAttribute": "Alle",
-    "addPanel.dashboardLayout": "Container",
+    "addPanel.dashboardLayout": "Kolomcontainer",
     "addPanel.dashboardLayout.tooltip": "Groeperen en toon meerdere widgets samen voor een flexibelere lay-out. ",
     "nestedLayoutToolbar.remove": "Verwijder van het dashboard.",
-    "nestedLayout.tab.title": "Container",
+    "nestedLayout.tab.title": "Kolomcontainer",
     "nestedLayout.emptyDropZone.message": "<b>Hierheen slepen</b>{br}om toe te voegen aan de container",
     "insightAlert.config.and": "en",
     "insightAlert.config.for.filter": "voor {granularity}",
@@ -765,5 +765,6 @@
     "options.menu.unsupported.xlsxOldWidget": "Kan niet exporteren. Sla het dashboard opnieuw op of neem contact op met uw beheerder.",
     "filterBar.label": "Filters",
     "controlButtons.asTable": "Als tabel weergeven",
-    "controlButtons.asOriginal": "Toon originele visualisatie"
+    "controlButtons.asOriginal": "Toon originele visualisatie",
+    "messages.shareLinkCopied": "Link gekopieerd."
 }

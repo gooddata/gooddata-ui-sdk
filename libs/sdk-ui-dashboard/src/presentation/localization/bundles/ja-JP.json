@@ -628,10 +628,10 @@
     "insightAlert.config.for": "について",
     "insightAlert.config.warning.destination": "選択された送信先は、自分自身へのアラート送信にのみ対応しています。",
     "insightAlert.config.selectAttribute": "すべて",
-    "addPanel.dashboardLayout": "コンテナ",
+    "addPanel.dashboardLayout": "カラム・コンテナ",
     "addPanel.dashboardLayout.tooltip": "複数のウィジェットをまとめてグループ化して表示し、より柔軟なレイアウトを実現します。",
     "nestedLayoutToolbar.remove": "ダッシュボードから取り外す。",
-    "nestedLayout.tab.title": "コンテナ",
+    "nestedLayout.tab.title": "カラム・コンテナ",
     "nestedLayout.emptyDropZone.message": "<b>ここにドラッグ</b>{br}コンテナに追加する",
     "insightAlert.config.and": "および",
     "insightAlert.config.for.filter": "にとって {granularity}",
@@ -765,5 +765,6 @@
     "options.menu.unsupported.xlsxOldWidget": "エクスポートできません。ダッシュボードを再保存するか、管理者に連絡してください。",
     "filterBar.label": "フィルター",
     "controlButtons.asTable": "表として表示",
-    "controlButtons.asOriginal": "オリジナルのビジュアライゼーションを表示"
+    "controlButtons.asOriginal": "オリジナルのビジュアライゼーションを表示",
+    "messages.shareLinkCopied": "リンクをコピーした。"
 }

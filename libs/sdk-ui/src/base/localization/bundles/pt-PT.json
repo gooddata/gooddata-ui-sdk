@@ -727,5 +727,10 @@
     "properties.legend.series.item.description": "Pressione Espaço ou Enter para alternar a visibilidade",
     "properties.legend.more.button": "Mostrar todos os itens de legenda em uma caixa de diálogo",
     "properties.legend.series.named": "Lenda: {name}",
-    "properties.legend.series.unnamed": "Legenda de visualização"
+    "properties.legend.series.unnamed": "Legenda de visualização",
+    "shareDialog.share.dashboard.title": "Painel de partilha",
+    "shareDialog.share.dashboard.list.title": "Usuários e grupos",
+    "shareDialog.share.link.helperText": "O link reflete os filtros atuais. Acessível apenas a usuários com acesso ao painel.",
+    "shareDialog.share.link.title": "Link",
+    "shareDialog.share.link.buttonText": "Copiar"
 }

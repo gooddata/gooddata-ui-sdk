@@ -629,10 +629,10 @@
     "insightAlert.config.for": "해당 대상:",
     "insightAlert.config.warning.destination": "선택한 대상은 경고를 본인에게만 보낼 수 있습니다.",
     "insightAlert.config.selectAttribute": "모두",
-    "addPanel.dashboardLayout": "컨테이너",
+    "addPanel.dashboardLayout": "열 컨테이너",
     "addPanel.dashboardLayout.tooltip": "여러 위젯을 그룹화하고 함께 표시하여 더 유연한 레이아웃을 구현할 수 있습니다.",
     "nestedLayoutToolbar.remove": "대시보드에서 제거",
-    "nestedLayout.tab.title": "컨테이너",
+    "nestedLayout.tab.title": "열 컨테이너",
     "nestedLayout.emptyDropZone.message": "<b>여기로 드래그하여</b>{br}컨테이너에 추가하세요",
     "insightAlert.config.and": "및",
     "insightAlert.config.for.filter": "{granularity}에 대해",
@@ -766,5 +766,6 @@
     "options.menu.unsupported.xlsxOldWidget": "내보낼 수 없습니다. 대시보드를 다시 저장하거나 관리자에게 문의하세요.",
     "filterBar.label": "필터(들)",
     "controlButtons.asTable": "표로 표시",
-    "controlButtons.asOriginal": "원본 시각화 보기"
+    "controlButtons.asOriginal": "원본 시각화 보기",
+    "messages.shareLinkCopied": "링크가 복사되었습니다."
 }

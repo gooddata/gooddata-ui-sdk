@@ -736,5 +736,10 @@
     "properties.legend.series.item.description": "Naciśnij Spację lub Enter, aby przełączyć widoczność",
     "properties.legend.more.button": "Pokaż wszystkie elementy legendy w oknie dialogowym",
     "properties.legend.series.named": "Legenda: {name}",
-    "properties.legend.series.unnamed": "Legenda wizualizacji"
+    "properties.legend.series.unnamed": "Legenda wizualizacji",
+    "shareDialog.share.dashboard.title": "Udostępnij pulpit nawigacyjny",
+    "shareDialog.share.dashboard.list.title": "Użytkownicy i grupy",
+    "shareDialog.share.link.helperText": "Link odzwierciedla bieżące filtry. Dostępny tylko dla użytkowników z dostępem do pulpitu nawigacyjnego.",
+    "shareDialog.share.link.title": "Link",
+    "shareDialog.share.link.buttonText": "Kopiuj"
 }

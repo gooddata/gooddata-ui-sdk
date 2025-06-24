@@ -727,5 +727,10 @@
     "properties.legend.series.item.description": "按空格鍵或Enter鍵切換可見性",
     "properties.legend.more.button": "在對話框中顯示所有圖例項",
     "properties.legend.series.named": "傳說： {name}",
-    "properties.legend.series.unnamed": "可視化圖例"
+    "properties.legend.series.unnamed": "可視化圖例",
+    "shareDialog.share.dashboard.title": "共享儀錶板",
+    "shareDialog.share.dashboard.list.title": "用戶和群組",
+    "shareDialog.share.link.helperText": "Link反映當前嘅過濾器。 只有具有控制面板訪問權限嘅用戶才能訪問。",
+    "shareDialog.share.link.title": "連結",
+    "shareDialog.share.link.buttonText": "複製"
 }

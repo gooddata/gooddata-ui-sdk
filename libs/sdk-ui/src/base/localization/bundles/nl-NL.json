@@ -727,5 +727,10 @@
     "properties.legend.series.item.description": "Druk op Spatie of Enter om de zichtbaarheid te wijzigen",
     "properties.legend.more.button": "Toon alle legenda-items in een dialoogvenster",
     "properties.legend.series.named": "Legende: {name}",
-    "properties.legend.series.unnamed": "Legende visualisatie"
+    "properties.legend.series.unnamed": "Legende visualisatie",
+    "shareDialog.share.dashboard.title": "Dashboard delen",
+    "shareDialog.share.dashboard.list.title": "Gebruikers en groepen",
+    "shareDialog.share.link.helperText": "Link geeft huidige filters weer. Alleen toegankelijk voor gebruikers met toegang tot het dashboard.",
+    "shareDialog.share.link.title": "Link",
+    "shareDialog.share.link.buttonText": "Kopie"
 }

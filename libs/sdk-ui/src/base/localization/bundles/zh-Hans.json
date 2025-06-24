@@ -727,5 +727,10 @@
     "properties.legend.series.item.description": "按 Space 或 Enter 键切换可见性",
     "properties.legend.more.button": "在对话框中显示所有图例项",
     "properties.legend.series.named": "传奇：{name}",
-    "properties.legend.series.unnamed": "可视化图例"
+    "properties.legend.series.unnamed": "可视化图例",
+    "shareDialog.share.dashboard.title": "共享控制面板",
+    "shareDialog.share.dashboard.list.title": "用户和群组",
+    "shareDialog.share.link.helperText": "链接反映当前筛选条件。仅具有仪表板访问权限的用户可访问。",
+    "shareDialog.share.link.title": "关联",
+    "shareDialog.share.link.buttonText": "复制"
 }

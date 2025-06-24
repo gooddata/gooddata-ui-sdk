@@ -727,5 +727,10 @@
     "properties.legend.series.item.description": "Vaihda näkyvyyttä painamalla välilyöntiä tai Enter",
     "properties.legend.more.button": "Näytä kaikki legendaariset kohteet valintaikkunassa",
     "properties.legend.series.named": "Selite: {name}",
-    "properties.legend.series.unnamed": "Visualisointilegenda"
+    "properties.legend.series.unnamed": "Visualisointilegenda",
+    "shareDialog.share.dashboard.title": "Jaa ohjauspaneeli",
+    "shareDialog.share.dashboard.list.title": "Käyttäjät ja ryhmät",
+    "shareDialog.share.link.helperText": "Linkki heijastaa nykyisiä suodattimia. Käytettävissä vain käyttäjille, joilla on ohjauspaneelin käyttöoikeus.",
+    "shareDialog.share.link.title": "Linkki",
+    "shareDialog.share.link.buttonText": "Kopioi"
 }

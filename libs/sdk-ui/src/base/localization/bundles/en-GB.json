@@ -736,5 +736,10 @@
     "properties.legend.series.item.description": "Press Space or Enter to toggle visibility",
     "properties.legend.more.button": "Display all legend items in a dialogue box",
     "properties.legend.series.named": "Legend: {name}",
-    "properties.legend.series.unnamed": "Visualisation legend"
+    "properties.legend.series.unnamed": "Visualisation legend",
+    "shareDialog.share.dashboard.title": "Share dashboard",
+    "shareDialog.share.dashboard.list.title": "Users & groups",
+    "shareDialog.share.link.helperText": "Link reflects current filters. Only accessible to users with dashboard access",
+    "shareDialog.share.link.title": "Link",
+    "shareDialog.share.link.buttonText": "Copy"
 }
