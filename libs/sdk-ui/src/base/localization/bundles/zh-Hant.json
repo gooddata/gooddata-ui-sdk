@@ -727,5 +727,10 @@
     "properties.legend.series.item.description": "按 Space 或 Enter 鍵切換可見性",
     "properties.legend.more.button": "在對話方塊中顯示所有圖例項",
     "properties.legend.series.named": "傳奇：{name}",
-    "properties.legend.series.unnamed": "可視化圖例"
+    "properties.legend.series.unnamed": "可視化圖例",
+    "shareDialog.share.dashboard.title": "共享儀表板",
+    "shareDialog.share.dashboard.list.title": "使用者和群組",
+    "shareDialog.share.link.helperText": "連結反映當前篩選條件。僅具有儀表板存取權限的使用者可存取。",
+    "shareDialog.share.link.title": "關聯",
+    "shareDialog.share.link.buttonText": "複製"
 }

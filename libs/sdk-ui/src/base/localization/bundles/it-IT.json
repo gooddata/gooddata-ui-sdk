@@ -727,5 +727,10 @@
     "properties.legend.series.item.description": "Premere Spazio o Invio per alternare la visibilità",
     "properties.legend.more.button": "Mostra tutti gli elementi della legenda in una finestra di dialogo",
     "properties.legend.series.named": "Leggenda: {name}",
-    "properties.legend.series.unnamed": "Legenda di visualizzazione"
+    "properties.legend.series.unnamed": "Legenda di visualizzazione",
+    "shareDialog.share.dashboard.title": "Condividi il cruscotto",
+    "shareDialog.share.dashboard.list.title": "Utenti e gruppi",
+    "shareDialog.share.link.helperText": "Il link riflette i filtri attuali. Accessibile solo agli utenti con accesso al dashboard.",
+    "shareDialog.share.link.title": "Collegamento",
+    "shareDialog.share.link.buttonText": "Copia"
 }

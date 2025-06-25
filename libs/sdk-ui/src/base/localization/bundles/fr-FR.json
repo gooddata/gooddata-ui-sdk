@@ -727,5 +727,10 @@
     "properties.legend.series.item.description": "Appuyer sur Espace ou Entrée pour alterner la visibilité",
     "properties.legend.more.button": "Afficher tous les éléments de la légende dans une boîte de dialogue",
     "properties.legend.series.named": "Légende : {name}",
-    "properties.legend.series.unnamed": "Légende de la visualisation"
+    "properties.legend.series.unnamed": "Légende de la visualisation",
+    "shareDialog.share.dashboard.title": "Partager le tableau de bord",
+    "shareDialog.share.dashboard.list.title": "Utilisateurs et groupes",
+    "shareDialog.share.link.helperText": "Le lien reflète les filtres actuels. Uniquement accessible aux utilisateurs ayant accès au tableau de bord.",
+    "shareDialog.share.link.title": "Lien",
+    "shareDialog.share.link.buttonText": "Copie"
 }

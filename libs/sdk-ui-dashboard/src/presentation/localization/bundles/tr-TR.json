@@ -629,10 +629,10 @@
     "insightAlert.config.for": "İçin",
     "insightAlert.config.warning.destination": "Seçilen hedef, uyarıyı yalnızca kendinize göndermeyi destekler.",
     "insightAlert.config.selectAttribute": "Tümü",
-    "addPanel.dashboardLayout": "Kapsayıcı",
+    "addPanel.dashboardLayout": "Sütun konteyneri",
     "addPanel.dashboardLayout.tooltip": "Daha esnek bir düzen için birden fazla widget'ı bir araya getirip görüntüleyin.",
     "nestedLayoutToolbar.remove": "Gösterge tablosundan kaldır.",
-    "nestedLayout.tab.title": "Kapsayıcı",
+    "nestedLayout.tab.title": "Sütun konteyneri",
     "nestedLayout.emptyDropZone.message": "<b>Buraya sürükleyin</b>{br}konteynere eklemek için",
     "insightAlert.config.and": "ve",
     "insightAlert.config.for.filter": "{granularity} için",
@@ -766,5 +766,6 @@
     "options.menu.unsupported.xlsxOldWidget": "Dışa aktarılamıyor. Lütfen panoyu yeniden kaydedin veya yöneticinizle iletişime geçin.",
     "filterBar.label": "Filtreler",
     "controlButtons.asTable": "Tablo olarak göster",
-    "controlButtons.asOriginal": "Orijinal görselleştirmeyi göster"
+    "controlButtons.asOriginal": "Orijinal görselleştirmeyi göster",
+    "messages.shareLinkCopied": "Bağlantı kopyalandı."
 }

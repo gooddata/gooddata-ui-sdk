@@ -628,10 +628,10 @@
     "insightAlert.config.for": "Per",
     "insightAlert.config.warning.destination": "La destinazione selezionata supporta solo l'invio dell'avviso a se stessi.",
     "insightAlert.config.selectAttribute": "Tutto",
-    "addPanel.dashboardLayout": "Contenitore",
+    "addPanel.dashboardLayout": "Contenitore a colonna",
     "addPanel.dashboardLayout.tooltip": "Raggruppare e visualizzare più widget insieme per una disposizione più flessibile. ",
     "nestedLayoutToolbar.remove": "Rimuovere dal cruscotto.",
-    "nestedLayout.tab.title": "Contenitore",
+    "nestedLayout.tab.title": "Contenitore a colonna",
     "nestedLayout.emptyDropZone.message": "<b>Trascinare qui</b>{br}per aggiungere al contenitore",
     "insightAlert.config.and": "e",
     "insightAlert.config.for.filter": "per {granularity}",
@@ -765,5 +765,6 @@
     "options.menu.unsupported.xlsxOldWidget": "Impossibile esportare. Salvare nuovamente la dashboard o contattare l'amministratore.",
     "filterBar.label": "Filtri",
     "controlButtons.asTable": "Mostra come tabella",
-    "controlButtons.asOriginal": "Mostra la visualizzazione originale"
+    "controlButtons.asOriginal": "Mostra la visualizzazione originale",
+    "messages.shareLinkCopied": "Link copiato."
 }

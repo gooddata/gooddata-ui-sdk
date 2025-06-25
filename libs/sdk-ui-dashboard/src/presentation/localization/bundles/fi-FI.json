@@ -628,10 +628,10 @@
     "insightAlert.config.for": "Kohteelle",
     "insightAlert.config.warning.destination": "Valittu kohde tukee vain hälytyksen lähettämistä itsellesi.",
     "insightAlert.config.selectAttribute": "Kaikki",
-    "addPanel.dashboardLayout": "Säiliö",
+    "addPanel.dashboardLayout": "Pylvässäiliö",
     "addPanel.dashboardLayout.tooltip": "Ryhmittele ja näytä useita pienoissovelluksia yhdessä joustavamman asettelun aikaansaamiseksi. ",
     "nestedLayoutToolbar.remove": "Poista ohjauspaneelista.",
-    "nestedLayout.tab.title": "Säiliö",
+    "nestedLayout.tab.title": "Pylvässäiliö",
     "nestedLayout.emptyDropZone.message": "<b> Vedä tästä</b>{br}lisätäksesi säiliöön",
     "insightAlert.config.and": "ja",
     "insightAlert.config.for.filter": "kohteelle {granularity}",
@@ -765,5 +765,6 @@
     "options.menu.unsupported.xlsxOldWidget": "Ei voida viedä. Tallenna ohjauspaneeli uudelleen tai ota yhteyttä järjestelmänvalvojaan.",
     "filterBar.label": "Suodattimet",
     "controlButtons.asTable": "Näytä taulukkona",
-    "controlButtons.asOriginal": "Näytä alkuperäinen visualisointi"
+    "controlButtons.asOriginal": "Näytä alkuperäinen visualisointi",
+    "messages.shareLinkCopied": "Linkki kopioitu."
 }

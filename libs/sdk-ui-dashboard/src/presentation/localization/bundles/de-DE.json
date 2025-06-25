@@ -628,10 +628,10 @@
     "insightAlert.config.for": "Für",
     "insightAlert.config.warning.destination": "Das ausgewählte Ziel unterstützt nur das Senden des Hinweises an Sie selbst.",
     "insightAlert.config.selectAttribute": "Alle",
-    "addPanel.dashboardLayout": "Container",
+    "addPanel.dashboardLayout": "Säulencontainer",
     "addPanel.dashboardLayout.tooltip": "Mehrere Widgets gruppieren und zusammen anzeigen für ein flexibleres Layout.",
     "nestedLayoutToolbar.remove": "Aus dem Dashboard entfernen.",
-    "nestedLayout.tab.title": "Container",
+    "nestedLayout.tab.title": "Säulencontainer",
     "nestedLayout.emptyDropZone.message": "<b>Hierher ziehen</b>{br}, um den Container hinzuzufügen",
     "insightAlert.config.and": "und",
     "insightAlert.config.for.filter": "für {granularity}",
@@ -765,5 +765,6 @@
     "options.menu.unsupported.xlsxOldWidget": "Export nicht möglich. Bitte speichern Sie das Dashboard erneut oder wenden Sie sich an Ihren Administrator.",
     "filterBar.label": "Filter",
     "controlButtons.asTable": "Als Tabelle anzeigen",
-    "controlButtons.asOriginal": "Originalvisualisierung anzeigen"
+    "controlButtons.asOriginal": "Originalvisualisierung anzeigen",
+    "messages.shareLinkCopied": "Link kopiert."
 }

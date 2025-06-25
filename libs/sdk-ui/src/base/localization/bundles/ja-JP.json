@@ -727,5 +727,10 @@
     "properties.legend.series.item.description": "スペースキーまたはEnterキーを押して表示を切り替える",
     "properties.legend.more.button": "すべての凡例項目をダイアログに表示する",
     "properties.legend.series.named": "凡例だ：{name}",
-    "properties.legend.series.unnamed": "視覚化の凡例"
+    "properties.legend.series.unnamed": "視覚化の凡例",
+    "shareDialog.share.dashboard.title": "共有ダッシュボード",
+    "shareDialog.share.dashboard.list.title": "ユーザーとグループ",
+    "shareDialog.share.link.helperText": "リンクは現在のフィルターを反映しています。ダッシュボードにアクセスできるユーザーのみがアクセスできます。",
+    "shareDialog.share.link.title": "リンク",
+    "shareDialog.share.link.buttonText": "コピー"
 }

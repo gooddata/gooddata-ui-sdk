@@ -629,10 +629,10 @@
     "insightAlert.config.for": "Dla",
     "insightAlert.config.warning.destination": "Wybrane miejsce docelowe obsługuje tylko wysyłanie alertu do siebie.",
     "insightAlert.config.selectAttribute": "Wszystko",
-    "addPanel.dashboardLayout": "Kontener",
+    "addPanel.dashboardLayout": "Kontener kolumn",
     "addPanel.dashboardLayout.tooltip": "Grupuj i wyświetlaj wiele widżetów razem dla bardziej elastycznego układu.",
     "nestedLayoutToolbar.remove": "Usuń z pulpitu nawigacyjnego.",
-    "nestedLayout.tab.title": "Kontener",
+    "nestedLayout.tab.title": "Kontener kolumn",
     "nestedLayout.emptyDropZone.message": "<b>Przeciągnij tutaj</b>{br} dodać do kontenera",
     "insightAlert.config.and": "i",
     "insightAlert.config.for.filter": "dla {granularity}",
@@ -766,5 +766,6 @@
     "options.menu.unsupported.xlsxOldWidget": "Nie można wyeksportować. Proszę ponownie zapisać pulpit nawigacyjny lub skontaktować się z administratorem.",
     "filterBar.label": "Filtry",
     "controlButtons.asTable": "Pokaż jako tabelę",
-    "controlButtons.asOriginal": "Pokaż oryginalną wizualizację"
+    "controlButtons.asOriginal": "Pokaż oryginalną wizualizację",
+    "messages.shareLinkCopied": "Link skopiowany."
 }

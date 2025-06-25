@@ -736,5 +736,10 @@
     "properties.legend.series.item.description": "스페이스바 또는 엔터를 눌러 가시성을 전환하세요",
     "properties.legend.more.button": "대화 상자에 모든 범례 항목 표시",
     "properties.legend.series.named": "범례: {name}",
-    "properties.legend.series.unnamed": "시각화 범례"
+    "properties.legend.series.unnamed": "시각화 범례",
+    "shareDialog.share.dashboard.title": "대시보드 공유",
+    "shareDialog.share.dashboard.list.title": "사용자 및 그룹",
+    "shareDialog.share.link.helperText": "링크는 현재 필터를 반영합니다. 대시보드 접근 권한이 있는 사용자만 접근할 수 있습니다.",
+    "shareDialog.share.link.title": "링크",
+    "shareDialog.share.link.buttonText": "복사"
 }
