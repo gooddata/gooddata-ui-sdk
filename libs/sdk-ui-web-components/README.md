@@ -50,7 +50,7 @@ If you want to customize the authentication flow, you'll need to provide the aut
 
 ## Embedding
 
-Once authentication is set and ready, you can embed Dashboard, single visualization or AI Chat as follows:
+Once authentication is set and ready, you can embed Dashboard, single visualization or AI Assistant as follows:
 
 ```html
 <!-- Embedding dashboard with ID "my-dashboard-id" -->
@@ -59,8 +59,8 @@ Once authentication is set and ready, you can embed Dashboard, single visualizat
 <!-- Embedding insight with ID "my-insight-id" -->
 <gd-insight insight="my-insight-id"></gd-insight>
 
-<!-- Embedding AI chat -->
-<gd-ai-chat />
+<!-- Embedding AI Assistant -->
+<gd-ai-assistant />
 ```
 
 ### Dashboard Custom Element
@@ -130,22 +130,22 @@ InsightView component](https://sdk.gooddata.com/gooddata-ui/docs/visualization_c
 </script>
 ```
 
-### AI chat Custom Element
+### AI Assistant Custom Element
 
-`gd-ai-chat` supports the following attributes:
+`gd-ai-assistant` supports the following attributes:
 
 -   `workspace` - optional, an ID of the workspace for this dashboard. By default, it's taken from the context (e.g. from the script URL).
 -   `locale` - the localization of the visualization. For available languages, see [the full list of available localizations](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui/src/base/localization/Locale.ts).
 
 ```html
 <!-- rewrite currently used workspace -->
-<gd-ai-chat workspace="my-workspace"></gd-ai-chat>
+<gd-ai-assistant workspace="my-workspace"></gd-ai-assistant>
 
 <!-- rewriting used locales in chat -->
-<gd-ai-chat locale="cs-CZ"></gd-ai-chat>
+<gd-ai-assistant locale="cs-CZ"></gd-ai-assistant>
 ```
 
-`gd-ai-chat` emits the following events:
+`gd-ai-assistant` emits the following events:
 
 -   `linkClick` - when user clicks on a link in the chat.
 -   `chatOpened` - when the chat is opened.
@@ -159,7 +159,7 @@ InsightView component](https://sdk.gooddata.com/gooddata-ui/docs/visualization_c
 All events are not cancellable and do not bubble.
 
 ```html
-<gd-ai-chat id="some-dom-id"></gd-ai-chat>
+<gd-ai-assistant id="some-dom-id"></gd-ai-assistant>
 <script>
     const chatEl = document.getElementById("some-dom-id");
     chatEl.addEventListener("linkClick", (event) => {

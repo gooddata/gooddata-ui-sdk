@@ -1,6 +1,6 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { ChatEvent, GenAIChat } from "@gooddata/sdk-ui-gen-ai";
+import { ChatEvent, GenAIAssistant } from "@gooddata/sdk-ui-gen-ai";
 import { StorybookBackend, ReferenceWorkspaceId } from "../../_infra/backend.js";
 
 import { storiesOf } from "../../_infra/storyRepository.js";
@@ -18,7 +18,7 @@ const FlexAIBase: React.FC<{ width?: number }> = ({ width = 500 }) => (
             <div>
                 <h4>Flex AI</h4>
                 <div style={{ width, height: 600, display: "flex", border: "1px solid black" }}>
-                    <GenAIChat
+                    <GenAIAssistant
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         eventHandlers={[

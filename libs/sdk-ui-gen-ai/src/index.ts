@@ -6,8 +6,8 @@
  * @beta
  */
 
-export type { GenAIChatProps } from "./components/GenAIChat.js";
-export { GenAIChat } from "./components/GenAIChat.js";
+export type { GenAIChatProps, GenAIAssistantProps } from "./components/GenAIChat.js";
+export { GenAIChat, GenAIAssistant } from "./components/GenAIChat.js";
 export type {
     Message,
     BaseMessage,

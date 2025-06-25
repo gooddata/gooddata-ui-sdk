@@ -65,17 +65,18 @@ Update your `vite.config.js` file:
 
 ## Embed visualizations
 
-You can now use `gd-insight` and `gd-dashboard` elements anywhere in your Vue template.
+You can now use `gd-insight`, `gd-dashboard`, and `gd-ai-assistant` elements anywhere in your Vue template.
 For example, in `src/App.vue` file.
 
 ```html
 <template>
-  <gd-insight insight="my-visualization-id" style="height:500px"></gd-insight>
-  <gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
+    <gd-insight insight="my-visualization-id" style="height:500px"></gd-insight>
+    <gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
+    <gd-ai-assistant></gd-ai-assistant>
 </template>
 ```
 
-You can copy the *visualization id* and *dashboard id* from the URL bar of your web browser,
+You can copy the _visualization id_ and _dashboard id_ from the URL bar of your web browser,
 from the Analyze and Dashboards pages respectively. At this point you should see an visualization and a dashboard rendering
 on the screen.
 
@@ -90,6 +91,7 @@ You can use attribute binding to define the IDs dynamically from the Vue compone
     <script setup>
 +     const visualizationId = 'my-visualization-id';
 +     const dashboardId = 'my-dashboard-id'
++     const workspaceId = 'my-workspace-id';
     </script>
 
     <template>
@@ -97,12 +99,13 @@ You can use attribute binding to define the IDs dynamically from the Vue compone
 -     <gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
 +     <gd-insight :insight="visualizationId" style="height:500px"></gd-insight>
 +     <gd-dashboard :dashboard="dashboardId"></gd-dashboard>
++     <gd-ai-assistant :workspace="workspaceId"></gd-ai-assistant>
     </template>
 ```
 
 ## Add event listeners
 
-Both `gd-insight` and `gd-dashboard` are dispatching custom events.
+Both `gd-insight`, `gd-dashboard`, and `gd-ai-assistant` are dispatching custom events.
 
 ### Visualization event listener
 
@@ -112,6 +115,7 @@ In case of `gd-insight` you can use the Vue event binding syntax.
     <script setup>
       const insightId = 'my-visualization-id';
       const dashboardId = 'my-dashboard-id';
+      const workspaceId = 'my-workspace-id';
 +     const onInsightLoaded = e => console.log(e.detail);
     </script>
 
@@ -119,6 +123,7 @@ In case of `gd-insight` you can use the Vue event binding syntax.
 -     <gd-insight :insight="visualizationId" style="height:500px"></gd-insight>
 +     <gd-insight :insight="visualizationId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight>
       <gd-dashboard :dashboard="dashboardId"></gd-dashboard>
+      <gd-ai-assistant :workspace="workspaceId"></gd-ai-assistant>
     </template>
 ```
 
@@ -136,6 +141,7 @@ also need to remove the listeners on the component unmount.
 
       const insightId = 'my-visualization-id';
       const dashboardId = 'my-dashboard-id';
+      const workspaceId = 'my-workspace-id';
       const onInsightLoaded = e => console.log(e.detail);
 +     const onDashboardLoaded = e => console.log(e.detail);
 +     const dashboard = ref(null);
@@ -154,7 +160,47 @@ also need to remove the listeners on the component unmount.
       <gd-insight :insight="visualizationId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight>
 -     <gd-dashboard :dashboard="dashboardId"></gd-dashboard>
 +     <gd-dashboard :dashboard="dashboardId" ref="dashboard"></gd-dashboard>
+      <gd-ai-assistant :workspace="workspaceId"></gd-ai-assistant>
     </template>
 ```
 
 [Read more about Dashboard events]webcomponents_dashboard#supported-events.
+
+### AI Assistant event listener
+
+Similar to the dashboard, the `gd-ai-assistant` component requires direct DOM event listeners:
+
+```diff
+    <script setup>
+      import {onMounted, onUnmounted, ref} from "vue";
+
+      const insightId = 'my-visualization-id';
+      const dashboardId = 'my-dashboard-id';
+      const workspaceId = 'my-workspace-id';
+      const onInsightLoaded = e => console.log(e.detail);
+      const onDashboardLoaded = e => console.log(e.detail);
++     const onChatLinkClick = e => console.log(e.detail);
+      const dashboard = ref(null);
++     const aiChat = ref(null);
+      const EVENT_NAME = 'GDC.DASH/EVT.INITIALIZED';
++     const CHAT_EVENT_NAME = 'linkClick';
+
+      onMounted(() => {
+        dashboard.value?.addEventListener(EVENT_NAME, onDashboardLoaded);
++       aiChat.value?.addEventListener(CHAT_EVENT_NAME, onChatLinkClick);
+      })
+
+      onUnmounted(() => {
+        dashboard.value?.removeEventListener(EVENT_NAME, onDashboardLoaded);
++       aiChat.value?.removeEventListener(CHAT_EVENT_NAME, onChatLinkClick);
+      })
+    </script>
+
+    <template>
+      <gd-insight :insight="visualizationId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight>
+      <gd-dashboard :dashboard="dashboardId" ref="dashboard"></gd-dashboard>
++     <gd-ai-assistant :workspace="workspaceId" ref="aiChat"></gd-ai-assistant>
+    </template>
+```
+
+[Read more about AI Assistant events](./ai_assistant_custom_element.md#supported-events).
