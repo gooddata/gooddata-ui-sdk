@@ -13,7 +13,6 @@ import {
 import { useDashboardDrop } from "../../../dragAndDrop/index.js";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
-import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js";
 import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
 import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
 import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
@@ -30,9 +29,9 @@ import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 
 interface IHotspotProps {
     layoutPath: ILayoutItemPath;
+    dropZoneType: "prev" | "next";
     isEndingHotspot?: boolean;
     classNames?: string;
-    dropZoneType: "prev" | "next";
     hideBorder?: boolean;
 }
 
@@ -52,7 +51,6 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
 
     const handleInsightListItemDrop = useInsightListItemDropHandler(desiredDestination);
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler(desiredDestination);
-    const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler(desiredDestination);
     const handleRichTextPlaceholderDrop = useRichTextPlaceholderDropHandler(desiredDestination);
     const handleVisualizationSwitcherPlaceholderDrop =
         useVisualizationSwitcherPlaceholderDropHandler(desiredDestination);
@@ -79,7 +77,6 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             drop: (item) => {
                 draggableWidgetDropHandler(item, {
                     handleInsightListItemDrop,
-                    handleKpiPlaceholderDrop,
                     handleInsightPlaceholderDrop,
                     handleRichTextPlaceholderDrop,
                     handleVisualizationSwitcherPlaceholderDrop,
@@ -93,7 +90,6 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             targetSectionIndex,
             handleInsightListItemDrop,
             handleInsightPlaceholderDrop,
-            handleKpiPlaceholderDrop,
             handleWidgetDrop,
             handleVisualizationSwitcherPlaceholderDrop,
             handleRichTextPlaceholderDrop,

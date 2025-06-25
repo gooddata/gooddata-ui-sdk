@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -31,11 +31,41 @@ export interface ISizeInfo {
 }
 
 /**
+ * Type guard for ISizeInfoDefault
+ *
+ * @alpha
+ */
+export function isSizeInfo(obj: any): obj is ISizeInfo {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        (typeof obj.default === "undefined" || typeof obj.default === "number") &&
+        (typeof obj.min === "undefined" || typeof obj.min === "number") &&
+        (typeof obj.max === "undefined" || typeof obj.max === "number")
+    );
+}
+
+/**
  * Info about min, max and default in layout units with required default value.
  *
  * @alpha
  */
 export type ISizeInfoDefault = ISizeInfo & { default: number };
+
+/**
+ * Type guard for ISizeInfoDefault
+ *
+ * @alpha
+ */
+export function isSizeInfoDefault(obj: any): obj is ISizeInfoDefault {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        typeof obj.default === "number" &&
+        (typeof obj.min === "undefined" || typeof obj.min === "number") &&
+        (typeof obj.max === "undefined" || typeof obj.max === "number")
+    );
+}
 
 /**
  * Info about visualization's min, max and default for width and height.
@@ -55,6 +85,20 @@ export interface IVisualizationSizeInfo {
 export interface IVisualizationDefaultSizeInfo {
     width: ISizeInfoDefault;
     height: ISizeInfoDefault;
+}
+
+/**
+ * Type guard for IVisualizationDefaultSizeInfo
+ *
+ * @alpha
+ */
+export function isVisualizationDefaultSizeInfo(obj: any): obj is IVisualizationDefaultSizeInfo {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        isSizeInfoDefault(obj.width) &&
+        isSizeInfoDefault(obj.height)
+    );
 }
 
 /**

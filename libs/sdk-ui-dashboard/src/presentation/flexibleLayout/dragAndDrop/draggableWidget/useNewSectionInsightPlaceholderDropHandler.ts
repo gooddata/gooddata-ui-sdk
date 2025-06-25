@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import { useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useCallback, useMemo } from "react";
 import { idRef } from "@gooddata/sdk-model";
 
 import { getInsightPlaceholderSizeInfo } from "../../../../_staging/layout/sizing.js";
@@ -13,10 +13,15 @@ import {
 } from "../../../../model/index.js";
 import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../../widgets/index.js";
 import { ILayoutSectionPath } from "../../../../types.js";
+import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
+
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useNewSectionInsightPlaceholderDropHandler(sectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
+    const layoutPath = useMemo(() => asLayoutItemPath(sectionIndex, 0), [sectionIndex]);
+    const updateWidgetDefaultSizeByParent = useUpdateWidgetDefaultSizeByParent(layoutPath);
 
     const { run: addNewSectionWithInsightPlaceholder } = useDashboardCommandProcessing({
         commandCreator: addNestedLayoutSection,
@@ -29,18 +34,20 @@ export function useNewSectionInsightPlaceholderDropHandler(sectionIndex: ILayout
     });
 
     return useCallback(() => {
-        const sizeInfo = getInsightPlaceholderSizeInfo(settings);
+        const defaultItemSize = getInsightPlaceholderSizeInfo(settings);
+        const itemSize = updateWidgetDefaultSizeByParent(defaultItemSize);
+
         addNewSectionWithInsightPlaceholder(sectionIndex, {}, [
             {
                 type: "IDashboardLayoutItem",
                 size: {
                     xl: {
-                        gridHeight: sizeInfo.height.default!,
-                        gridWidth: sizeInfo.width.default!,
+                        gridHeight: itemSize.height.default!,
+                        gridWidth: itemSize.width.default!,
                     },
                 },
                 widget: newInsightPlaceholderWidget(),
             },
         ]);
-    }, [addNewSectionWithInsightPlaceholder, sectionIndex, settings]);
+    }, [addNewSectionWithInsightPlaceholder, sectionIndex, settings, updateWidgetDefaultSizeByParent]);
 }

@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -15,7 +15,7 @@ export const WidgetDropZoneBox: React.FC<IWidgetDropZoneBoxProps> = (props) => {
             className={cx("drag-info-placeholder", "widget-dropzone-box", "s-last-drop-position", "type-kpi")}
         >
             <div className={cx("drag-info-placeholder-inner", "can-drop", "is-over")}>
-                <div className="drag-info-placeholder-drop-target">
+                <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
                     <div className="drop-target-inner">
                         <Typography tagName="p" className="drop-target-message kpi-drop-target">
                             {isLast ? (

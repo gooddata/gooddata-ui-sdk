@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -61,6 +61,14 @@
     .gd-nested-layout__toolbar__icon--remove:hover {
         path {
             fill: var(--gd-palette-error-base, kit-variables.$gd-color-negative);
+        }
+    }
+
+    .gd-nested-layout__toolbar__icon--direction {
+        &:hover {
+            path {
+                fill: var(--gd-palette-complementary-8, kit-variables.$default-gd-color-text);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 import { idRef } from "@gooddata/sdk-model";
 
@@ -14,9 +14,12 @@ import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../.
 import { getInsightPlaceholderSizeInfo } from "../../../../_staging/layout/sizing.js";
 import { ILayoutItemPath } from "../../../../types.js";
 
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
+
 export function useInsightPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
+    const updateWidgetDefaultSizeByParent = useUpdateWidgetDefaultSizeByParent(layoutPath);
 
     const { run: replaceInsightOntoPlaceholder } = useDashboardCommandProcessing({
         commandCreator: addNestedLayoutSectionItem,
@@ -29,16 +32,17 @@ export function useInsightPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
     });
 
     return useCallback(() => {
-        const sizeInfo = getInsightPlaceholderSizeInfo(settings);
+        const defaultItemSize = getInsightPlaceholderSizeInfo(settings);
+        const itemSize = updateWidgetDefaultSizeByParent(defaultItemSize);
         replaceInsightOntoPlaceholder(layoutPath, {
             type: "IDashboardLayoutItem",
             size: {
                 xl: {
-                    gridHeight: sizeInfo.height.default!,
-                    gridWidth: sizeInfo.width.default!,
+                    gridHeight: itemSize.height.default!,
+                    gridWidth: itemSize.width.default!,
                 },
             },
             widget: newInsightPlaceholderWidget(),
         });
-    }, [replaceInsightOntoPlaceholder, layoutPath, settings]);
+    }, [replaceInsightOntoPlaceholder, layoutPath, settings, updateWidgetDefaultSizeByParent]);
 }

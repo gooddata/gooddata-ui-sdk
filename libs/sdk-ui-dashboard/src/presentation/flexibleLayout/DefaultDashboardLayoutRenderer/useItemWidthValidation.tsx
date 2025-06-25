@@ -15,7 +15,7 @@ export const useWidthValidation = (
 } => {
     const screen = useScreenSize();
     const itemWidth = determineWidthForScreen(screen, itemSize);
-    const { itemSize: parentItemSize } = useDashboardItemPathAndSize();
+    const { layoutItemSize: parentItemSize } = useDashboardItemPathAndSize();
     const parentWidthForScreen = parentItemSize?.[screen]?.gridWidth;
     const isValid = !(parentWidthForScreen && itemWidth > parentWidthForScreen);
 

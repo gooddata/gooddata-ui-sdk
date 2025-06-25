@@ -103,6 +103,7 @@ import {
 import { changeInsightWidgetIgnoreCrossFilteringHandler } from "./widgets/changeInsightWidgetIgnoreCrossFilteringHandler.js";
 import { setScreenSizeHandler } from "./layout/setScreenSizeHandler.js";
 import { toggleLayoutSectionHeadersHandler } from "./layout/toggleLayoutSectionHeadersHandler.js";
+import { toggleLayoutDirectionHandler } from "./layout/toggleLayoutDirectionHandler.js";
 import { loadAllWorkspaceUsersHandler } from "./users/loadAllUsersHandler.js";
 import { exportRawInsightWidgetHandler } from "./widgets/exportRawInsightWidgetHandler.js";
 import { exportDashboardToExcelHandler } from "./dashboard/exportDashboardToExcelHandler.js";
@@ -172,6 +173,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FLUID_LAYOUT.UNDO": undoLayoutChangesHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.SET_SCREEN_SIZE": setScreenSizeHandler,
     "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_SECTION_HEADERS": toggleLayoutSectionHeadersHandler,
+    "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_DIRECTION": toggleLayoutDirectionHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER": changeKpiWidgetHeaderHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE": changeKpiWidgetMeasureHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS": changeKpiWidgetFilterSettingsHandler,

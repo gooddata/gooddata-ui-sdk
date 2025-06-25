@@ -3,11 +3,10 @@ import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+import cx from "classnames";
 
 import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
-import { useLayoutSectionsConfiguration } from "../../widget/common/useLayoutSectionsConfiguration.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-
 import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
 import { HeaderExportData } from "../../export/index.js";
 import {
@@ -15,7 +14,7 @@ import {
     selectIsExport,
     useDashboardSelector,
 } from "../../../model/index.js";
-import cx from "classnames";
+import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 
 export interface IDashboardLayoutSectionHeaderProps {
     section: IDashboardLayoutSectionFacade<unknown>;
@@ -30,7 +29,7 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
     onLoadingChanged,
     onError,
 }) => {
-    const { areSectionHeadersEnabled } = useLayoutSectionsConfiguration(section.layout().raw());
+    const { sections } = getLayoutConfiguration(section.layout().raw());
     const { LoadingComponent } = useDashboardComponentsContext();
     const isExport = useDashboardSelector(selectIsExport);
     const isSnapshotAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
@@ -38,7 +37,7 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
 
     const title = section.title();
     const description = section.description();
-    if (!areSectionHeadersEnabled || (isEmpty(title) && isEmpty(description))) {
+    if (!sections.areHeadersEnabled || (isEmpty(title) && isEmpty(description))) {
         return null;
     }
     const isNestedLayout = section.layout().path() !== undefined;

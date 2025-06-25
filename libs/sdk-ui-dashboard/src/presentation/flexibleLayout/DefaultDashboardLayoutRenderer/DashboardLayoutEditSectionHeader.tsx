@@ -7,7 +7,7 @@ import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexi
 import { getRefsForSection } from "../refs.js";
 import { useDashboardSelector, selectIsSectionInsertedByPlugin } from "../../../model/index.js";
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
-import { useLayoutSectionsConfiguration } from "../../widget/common/useLayoutSectionsConfiguration.js";
+import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 
 import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable.js";
 
@@ -25,7 +25,7 @@ export const DashboardLayoutEditSectionHeader: React.FC<IDashboardLayoutSectionH
     parentLayoutItemSize,
     isEmptySection,
 }) => {
-    const { areSectionHeadersEnabled } = useLayoutSectionsConfiguration(section.layout().raw());
+    const { sections } = getLayoutConfiguration(section.layout().raw());
     const refs = getRefsForSection(section);
     const isEditingDisabled = useDashboardSelector(selectIsSectionInsertedByPlugin(refs));
     if (isEmptySection) {
@@ -39,11 +39,11 @@ export const DashboardLayoutEditSectionHeader: React.FC<IDashboardLayoutSectionH
             )}
             <div
                 className={cx({
-                    "gd-fluid-layout-row-header-container--with-headers": areSectionHeadersEnabled,
-                    "gd-fluid-layout-row-header-container--no-headers": !areSectionHeadersEnabled,
+                    "gd-fluid-layout-row-header-container--with-headers": sections.areHeadersEnabled,
+                    "gd-fluid-layout-row-header-container--no-headers": !sections.areHeadersEnabled,
                 })}
             >
-                {areSectionHeadersEnabled && !isEditingDisabled ? (
+                {sections.areHeadersEnabled && !isEditingDisabled ? (
                     <SectionHeaderEditable
                         title={section.title()}
                         description={section.description()}

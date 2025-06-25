@@ -1,5 +1,10 @@
-// (C) 2021-2024 GoodData Corporation
-import { IDashboardLayout, IDashboardLayoutSectionHeader, ScreenSize } from "@gooddata/sdk-model";
+// (C) 2021-2025 GoodData Corporation
+import {
+    IDashboardLayout,
+    IDashboardLayoutSectionHeader,
+    ScreenSize,
+    IDashboardLayoutContainerDirection,
+} from "@gooddata/sdk-model";
 
 import {
     ExtendedDashboardItem,
@@ -1092,4 +1097,60 @@ export function layoutSectionHeadersToggled(
  */
 export const isLayoutSectionHeadersToggled = eventGuard<LayoutSectionHeadersToggled>(
     "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_SECTION_HEADERS_TOGGLED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link LayoutDirectionChanged} event.
+ * @beta
+ */
+export interface LayoutDirectionChangedPayload {
+    /**
+     * Layout section path whose direction was changed.
+     */
+    layoutPath: ILayoutItemPath | undefined;
+    /**
+     * The new direction of the layout.
+     */
+    direction: IDashboardLayoutContainerDirection;
+}
+
+/**
+ * This event is emitted after a layout's direction was changed.
+ *
+ * @alpha
+ */
+export interface LayoutDirectionChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_DIRECTION_CHANGED";
+    readonly payload: LayoutDirectionChangedPayload;
+}
+
+export function layoutDirectionChanged(
+    ctx: DashboardContext,
+    layoutPath: ILayoutItemPath | undefined,
+    direction: IDashboardLayoutContainerDirection,
+    correlationId?: string,
+): LayoutDirectionChanged {
+    return {
+        type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_DIRECTION_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            layoutPath,
+            direction,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link LayoutDirectionChanged}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isLayoutDirectionChanged = eventGuard<LayoutDirectionChanged>(
+    "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_DIRECTION_CHANGED",
 );

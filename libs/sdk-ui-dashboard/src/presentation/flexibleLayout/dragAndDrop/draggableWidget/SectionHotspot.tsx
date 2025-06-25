@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
 import React, { useEffect } from "react";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
@@ -10,7 +10,6 @@ import { useDashboardDrop } from "../../../dragAndDrop/index.js";
 import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
 import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler.js";
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
-import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler.js";
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
 import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
 import { useNewSectionDashboardLayoutPlaceholderDropHandler } from "./useNewSectionDashboardLayoutPlaceholderDropHandler.js";
@@ -33,7 +32,6 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = ({ index, targetPo
     const dispatch = useDashboardDispatch();
 
     const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(index);
-    const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(index);
     const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(index);
     const handleRichTextPlaceholderDrop = useNewSectionRichTextPlaceholderDropHandler(index);
     const handleVisualizationSwitcherPlaceholderDrop =
@@ -60,7 +58,6 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = ({ index, targetPo
         {
             drop: (item) => {
                 draggableWidgetDropHandler(item, {
-                    handleKpiPlaceholderDrop,
                     handleInsightListItemDrop,
                     handleInsightPlaceholderDrop,
                     handleRichTextPlaceholderDrop,
@@ -85,7 +82,6 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = ({ index, targetPo
             dispatch,
             index,
             handleInsightListItemDrop,
-            handleKpiPlaceholderDrop,
             handleInsightPlaceholderDrop,
             handleVisualizationSwitcherPlaceholderDrop,
             handleDashboardLayoutPlaceholderDrop,

@@ -30,7 +30,7 @@ export const WidgetDropZoneBox: React.FC<IWidgetDropZoneBoxProps> = (props) => {
             className={cx("drag-info-placeholder", "widget-dropzone-box", "s-last-drop-position", "type-kpi")}
         >
             <div className={cx("drag-info-placeholder-inner", "can-drop", "is-over")}>
-                <div className="drag-info-placeholder-drop-target">
+                <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
                     <div className="drop-target-inner">
                         <Typography tagName="p" className="drop-target-message kpi-drop-target">
                             <FormattedMessage

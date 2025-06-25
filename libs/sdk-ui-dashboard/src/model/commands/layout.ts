@@ -1,6 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { IDashboardLayoutSectionHeader, ObjRef, ScreenSize } from "@gooddata/sdk-model";
+import {
+    IDashboardLayoutSectionHeader,
+    ObjRef,
+    ScreenSize,
+    IDashboardLayoutContainerDirection,
+} from "@gooddata/sdk-model";
 import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes.js";
 import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
 
@@ -1964,6 +1969,53 @@ export function toggleLayoutSectionHeaders(
         payload: {
             layoutPath,
             enableSectionHeaders,
+        },
+    };
+}
+
+/////
+
+/**
+ * Payload of the {@link ToggleLayoutDirection} command.
+ * @internal
+ */
+export interface ToggleLayoutDirectionPayload {
+    layoutPath: ILayoutItemPath | undefined;
+    direction: IDashboardLayoutContainerDirection;
+}
+
+/**
+ * @internal
+ */
+export interface ToggleLayoutDirection extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_DIRECTION";
+    readonly payload: ToggleLayoutDirectionPayload;
+}
+
+/**
+ * Creates the ToggleLayoutDirection command.
+ *
+ * @remarks
+ * This command changes the direction of the dashboard layout.
+ *
+ * @param layoutPath - layout for which the direction will be changed.
+ * @param direction - the new direction for the layout ('row' or 'column').
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function toggleLayoutDirection(
+    layoutPath: ILayoutItemPath | undefined,
+    direction: IDashboardLayoutContainerDirection,
+    correlationId?: string,
+): ToggleLayoutDirection {
+    return {
+        type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_DIRECTION",
+        correlationId,
+        payload: {
+            layoutPath,
+            direction,
         },
     };
 }

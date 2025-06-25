@@ -15,6 +15,7 @@ import {
 } from "@gooddata/sdk-ui-ext";
 import React, { useRef } from "react";
 import cx from "classnames";
+
 import {
     ExtendedDashboardWidget,
     isCustomWidget,
@@ -36,7 +37,6 @@ import {
 } from "../../model/index.js";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
 import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
-import { getRemainingWidthInRow } from "./rowEndHotspotHelper.js";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import {
@@ -46,6 +46,12 @@ import {
     useResizeItemStatus,
 } from "../dragAndDrop/index.js";
 import { DashboardWidget, IDashboardWidgetProps } from "../widget/index.js";
+import { getItemIndex } from "../../_staging/layout/coordinates.js";
+import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
+import { useWidgetDragEndHandler } from "../dragAndDrop/draggableWidget/useWidgetDragEndHandler.js";
+import { DashboardItemPathAndSizeProvider } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
+import { useWidgetExportData } from "../export/index.js";
+
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
@@ -54,17 +60,12 @@ import {
 } from "./DefaultDashboardLayoutRenderer/index.js";
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
 import { getRefsForSection, getRefsForItem } from "./refs.js";
-import { getItemIndex } from "../../_staging/layout/coordinates.js";
-import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
 import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
 import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
 import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
-import { useWidgetDragEndHandler } from "../dragAndDrop/draggableWidget/useWidgetDragEndHandler.js";
-import { DashboardItemPathAndSizeProvider } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
-import { shouldShowRowEndDropZone } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
+import { useShouldShowRowEndHotspot } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
 import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
 import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
-import { useWidgetExportData } from "../export/index.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -112,7 +113,6 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const isExport = useDashboardSelector(selectIsExport);
     const isSnapshotAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
-
     const handleDragEnd = useWidgetDragEndHandler();
 
     // TODO: we should probably do something more meaningful when item has no widget; should that even
@@ -125,6 +125,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const isRichTextWidgetInEditState = isSelected && isRichText;
     const isNestedLayout = isExtendedDashboardLayoutWidget(widget);
     const exportData = useWidgetExportData(widget);
+    const { enableRowEndHotspot } = useShouldShowRowEndHotspot(item, rowIndex);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
@@ -195,8 +196,6 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
         "gd-first-container-row-dropzone": rowIndex === 0,
     });
 
-    const remainingGridWidth = isCustomWidget(widget) ? 0 : getRemainingWidthInRow(item, screen, rowIndex);
-
     const { isValid, parentWidth } = useWidthValidation(item.size());
 
     if (!isValid) {
@@ -231,7 +230,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 {canShowHotspot && !isAnyPlaceholderWidget(widget) && !isCustomWidget(widget) ? (
                     <Hotspot dropZoneType="prev" layoutPath={item.index()} classNames={hotspotClassNames} />
                 ) : null}
-                <DashboardItemPathAndSizeProvider itemPath={item.index()} itemSize={item.size()}>
+                <DashboardItemPathAndSizeProvider layoutItem={item}>
                     <HoverDetector widgetRef={widget.ref}>
                         <DashboardWidget
                             // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
@@ -267,10 +266,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                                     dropZoneType="next"
                                     layoutPath={item.index()}
                                     classNames={hotspotClassNames}
-                                    hideBorder={
-                                        (item.isLastInSection() || item.isLastInRow(screen)) &&
-                                        shouldShowRowEndDropZone(remainingGridWidth)
-                                    }
+                                    hideBorder={enableRowEndHotspot}
                                 />
                             </>
                         )}

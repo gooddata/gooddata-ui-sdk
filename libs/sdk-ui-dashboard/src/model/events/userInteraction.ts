@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     AccessGranularPermission,
     IAlertTriggerMode,
@@ -133,6 +133,8 @@ export type VisualizationSwitcherInteractionType =
  * @beta
  */
 export type NestedLayoutInteractionType =
+    | "nestedLayoutDirectionColumn"
+    | "nestedLayoutDirectionRow"
     | "nestedLayoutRemoved"
     | "nestedLayoutHeaderEnabled"
     | "nestedLayoutHeaderDisabled";

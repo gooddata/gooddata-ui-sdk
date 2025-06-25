@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import isArray from "lodash/isArray.js";
 import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "./widget.js";
@@ -79,12 +79,29 @@ export interface IDashboardLayoutSectionsConfiguration {
 }
 
 /**
+ * Represents the possible layout container directions in a dashboard structure.
+ *
+ * The direction determines how child elements are arranged within a container.
+ * - "row": Child elements are arranged horizontally.
+ * - "column": Child elements are arranged vertically.
+ *
+ * @alpha
+ */
+export type IDashboardLayoutContainerDirection = "row" | "column";
+
+/**
  * Layout configuration.
  *
  * @alpha
  */
 export interface IDashboardLayoutConfiguration {
     sections?: IDashboardLayoutSectionsConfiguration;
+    /**
+     * When not set, the layout will be rendered in a row.
+     *
+     * @alpha
+     */
+    direction?: IDashboardLayoutContainerDirection;
 }
 
 /**

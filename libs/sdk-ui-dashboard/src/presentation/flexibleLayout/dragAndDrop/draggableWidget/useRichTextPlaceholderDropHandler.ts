@@ -1,5 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { idRef } from "@gooddata/sdk-model";
 
 import {
     addNestedLayoutSectionItem,
@@ -10,14 +12,14 @@ import {
     useDashboardCommandProcessing,
     useDashboardDispatch,
 } from "../../../../model/index.js";
-
-import { idRef } from "@gooddata/sdk-model";
-import { v4 as uuidv4 } from "uuid";
 import { ILayoutItemPath } from "../../../../types.js";
 import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
 
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
+
 export function useRichTextPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
     const dispatch = useDashboardDispatch();
+    const updateWidgetDefaultSizeByParent = useUpdateWidgetDefaultSizeByParent(layoutPath);
 
     const { run: preselectDateDataset } = useDashboardCommandProcessing({
         commandCreator: enableRichTextWidgetDateFilter,
@@ -43,7 +45,8 @@ export function useRichTextPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
     });
 
     return useCallback(
-        (itemSize: BaseDraggableLayoutItemSize) => {
+        (defaultItemSize: BaseDraggableLayoutItemSize) => {
+            const itemSize = updateWidgetDefaultSizeByParent(defaultItemSize);
             const id = uuidv4();
 
             createRichText(layoutPath, {
@@ -67,6 +70,6 @@ export function useRichTextPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
                 },
             });
         },
-        [createRichText, layoutPath],
+        [createRichText, layoutPath, updateWidgetDefaultSizeByParent],
     );
 }

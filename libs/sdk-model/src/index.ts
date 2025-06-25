@@ -796,6 +796,7 @@ export type {
     IDashboardLayoutWidget,
     IDashboardLayoutConfiguration,
     IDashboardLayoutSectionsConfiguration,
+    IDashboardLayoutContainerDirection,
     ScreenSize,
 } from "./dashboard/layout.js";
 export {

@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 import { ILayoutSectionPath } from "../../../../types.js";
 
@@ -12,13 +12,14 @@ export function useMoveWidgetToNewSectionDropHandler(newSectionIndex: ILayoutSec
     const dispatch = useDashboardDispatch();
 
     return useCallback(
-        (item: BaseDraggableMovingItem) =>
+        (item: BaseDraggableMovingItem) => {
             dispatch(
                 moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(
                     item.layoutPath!,
                     newSectionIndex,
                 ),
-            ),
+            );
+        },
         [dispatch, newSectionIndex],
     );
 }

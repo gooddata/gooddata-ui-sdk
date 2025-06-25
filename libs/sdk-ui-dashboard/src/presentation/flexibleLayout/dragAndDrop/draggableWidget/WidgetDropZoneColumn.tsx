@@ -10,7 +10,6 @@ import { WidgetDropZone } from "./WidgetDropZone.js";
 import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
-import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js";
 import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
 import { BaseDraggableLayoutItem } from "../../../dragAndDrop/types.js";
 import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
@@ -27,14 +26,15 @@ export type WidgetDropZoneColumnProps = {
     gridWidthOverride?: number;
 };
 
-export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
-    const { layoutPath, isLastInSection = false } = props;
-
+export const WidgetDropZoneColumn = ({
+    layoutPath,
+    isLastInSection = false,
+    gridWidthOverride,
+}: WidgetDropZoneColumnProps) => {
     const dropzoneCoordinates = useDashboardSelector(selectDraggingWidgetTargetLayoutPath);
 
     const handleInsightListItemDrop = useInsightListItemDropHandler(layoutPath);
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler(layoutPath);
-    const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler(layoutPath);
     const handleRichTextPlaceholderDrop = useRichTextPlaceholderDropHandler(layoutPath);
     const handleVisualizationSwitcherPlaceholderDrop =
         useVisualizationSwitcherPlaceholderDropHandler(layoutPath);
@@ -62,7 +62,6 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
             drop: (item) => {
                 draggableWidgetDropHandler(item, {
                     handleInsightListItemDrop,
-                    handleKpiPlaceholderDrop,
                     handleInsightPlaceholderDrop,
                     handleRichTextPlaceholderDrop,
                     handleVisualizationSwitcherPlaceholderDrop,
@@ -75,7 +74,6 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
             dispatch,
             handleInsightListItemDrop,
             handleInsightPlaceholderDrop,
-            handleKpiPlaceholderDrop,
             handleVisualizationSwitcherPlaceholderDrop,
             handleRichTextPlaceholderDrop,
             handleWidgetDrop,
@@ -98,7 +96,7 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
 
     const { gridWidth = 12, gridHeight } = (collectedProps.item as BaseDraggableLayoutItem).size;
 
-    const usedWidth = props.gridWidthOverride ?? gridWidth;
+    const usedWidth = gridWidthOverride ?? gridWidth;
 
     return (
         <GridLayoutElement

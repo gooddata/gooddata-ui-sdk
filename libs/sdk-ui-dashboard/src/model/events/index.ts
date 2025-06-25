@@ -305,6 +305,8 @@ export type {
     LayoutSectionHeadersToggledPayload,
     ScreenSizeChanged,
     ScreenSizeChangedPayload,
+    LayoutDirectionChanged,
+    LayoutDirectionChangedPayload,
 } from "./layout.js";
 export {
     isDashboardLayoutChanged,
@@ -319,6 +321,7 @@ export {
     isDashboardLayoutSectionRemoved,
     isScreenSizeChanged,
     isLayoutSectionHeadersToggled,
+    isLayoutDirectionChanged,
 } from "./layout.js";
 
 export type {
