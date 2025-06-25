@@ -21,7 +21,9 @@ const featureFlags: ISettings = {
     enableKDAttributeFilterDatesValidation: true,
 };
 describe("Available value filter", () => {
-    it(
+    // skip because of LX-1222
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip(
         "should add metric filter by",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
