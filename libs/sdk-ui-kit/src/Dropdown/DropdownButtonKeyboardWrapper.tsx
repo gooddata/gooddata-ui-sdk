@@ -4,13 +4,17 @@ import { isElementTextInput } from "../utils/domUtilities.js";
 
 type IDropdownButtonKeyboardWrapperProps = {
     onToggle: (desiredState?: boolean | unknown) => void;
+    closeOnEscape?: boolean;
     isOpen: boolean;
 } & React.HTMLProps<HTMLDivElement>;
 
 export const DropdownButtonKeyboardWrapper = React.forwardRef<
     HTMLElement,
     IDropdownButtonKeyboardWrapperProps
->(function DropdownButtonKeyboardWrapper({ onToggle, isOpen, children, ...divProps }, ref) {
+>(function DropdownButtonKeyboardWrapper(
+    { onToggle, isOpen, closeOnEscape = true, children, ...divProps },
+    ref,
+) {
     const handleKeyDown = React.useCallback<React.KeyboardEventHandler<HTMLDivElement>>(
         (event) => {
             const isInputFocused = isElementTextInput(document.activeElement);
@@ -19,7 +23,11 @@ export const DropdownButtonKeyboardWrapper = React.forwardRef<
                 onToggle();
                 event.preventDefault();
             }
-            if ((event.code === "Escape" || event.code === "ArrowUp") && isOpen) {
+            if (event.code === "Escape" && isOpen && closeOnEscape) {
+                onToggle(false);
+                event.preventDefault();
+            }
+            if (event.code === "ArrowUp" && isOpen) {
                 onToggle(false);
                 event.preventDefault();
             }
@@ -28,7 +36,7 @@ export const DropdownButtonKeyboardWrapper = React.forwardRef<
                 event.preventDefault();
             }
         },
-        [isOpen, onToggle],
+        [isOpen, onToggle, closeOnEscape],
     );
 
     return (
