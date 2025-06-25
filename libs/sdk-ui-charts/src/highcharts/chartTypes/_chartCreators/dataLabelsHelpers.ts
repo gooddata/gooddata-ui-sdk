@@ -122,15 +122,15 @@ export interface IInsideResult {
 }
 
 export function showDataLabelInAxisRange(
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    point: any,
+    point: Highcharts.Point,
     value: number,
     axisRangeForAxes: IAxisRangeForAxes,
+    isVisibleInZoomedAxis: boolean,
 ): void {
-    const isSecondAxis = point?.series?.yAxis?.opposite ?? false;
+    const isSecondAxis = point?.series?.yAxis?.options?.opposite ?? false;
     const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? "second" : "first"];
     const isInsideAxisRange = pointInRange(value, axisRange);
-    if (!isInsideAxisRange) {
+    if (!isInsideAxisRange || !isVisibleInZoomedAxis) {
         hideDataLabel(point);
     } else {
         showDataLabel(point);
@@ -138,14 +138,18 @@ export function showDataLabelInAxisRange(
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function showStackLabelInAxisRange(point: any, axisRangeForAxes: IAxisRangeForAxes): void {
-    const isSecondAxis = point.series?.yAxis?.opposite ?? false;
+export function showStackLabelInAxisRange(
+    point: Highcharts.Point,
+    axisRangeForAxes: IAxisRangeForAxes,
+    isVisibleInZoomedAxis: boolean,
+): void {
+    const isSecondAxis = point.series?.yAxis?.options?.opposite ?? false;
     const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? "second" : "first"];
-    const end = point.stackY || point.total;
+    const end = (point as any).stackY || point.total;
     const start = end - point.y;
     const isWholeUnderMin: boolean = start <= axisRange.minAxisValue && end <= axisRange.minAxisValue;
     const isWholeAboveMax: boolean = start >= axisRange.maxAxisValue && end >= axisRange.maxAxisValue;
-    if (isWholeUnderMin || isWholeAboveMax) {
+    if (isWholeUnderMin || isWholeAboveMax || !isVisibleInZoomedAxis) {
         hideDataLabel(point);
     }
 }

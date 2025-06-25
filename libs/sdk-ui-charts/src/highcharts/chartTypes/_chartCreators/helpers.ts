@@ -463,8 +463,12 @@ export function getPointsVisibleInAxisRange(
     if (!axis) {
         return points;
     }
+    return points.filter((point) => isPointVisibleInAxisRange(point, axis));
+}
+
+export function isPointVisibleInAxisRange(point: Highcharts.Point, axis: Highcharts.Axis): boolean {
     const { min, max } = axis.getExtremes();
-    return points.filter((point) => point.x >= min && point.x <= Math.round(max));
+    return point.x >= min && point.x <= Math.round(max);
 }
 
 export function getPointsVisibleInAxesRanges(
