@@ -1,22 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
-import {
-    FilterContextItem,
-    IAttributeFilter,
-    IDashboardAttributeFilter,
-    isNegativeAttributeFilter,
-    ObjRef,
-} from "@gooddata/sdk-model";
+import React, { useCallback } from "react";
+import { FilterContextItem, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import {
     AttributeFilterButton,
     IAttributeFilterButtonProps,
     IAttributeFilterDropdownButtonProps,
 } from "@gooddata/sdk-ui-filters";
 import { Bubble, BubbleHoverTrigger, OverlayPositionType, UiChip, UiSkeleton } from "@gooddata/sdk-ui-kit";
-import noop from "lodash/noop.js";
 import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
-import { attributeFilterToDashboardAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import {
     AutomationAttributeFilterProvider,
     useAutomationAttributeFilterContext,
@@ -38,6 +30,7 @@ export const AutomationAttributeFilter: React.FC<{
 }> = ({ filter, onChange, onDelete, isLocked, displayAsLabel, overlayPositionType }) => {
     const intl = useIntl();
     const deleteAriaLabel = intl.formatMessage({ id: "delete" });
+
     return (
         <AutomationAttributeFilterProvider
             filter={filter}
@@ -46,52 +39,45 @@ export const AutomationAttributeFilter: React.FC<{
             isLocked={isLocked}
             deleteAriaLabel={deleteAriaLabel}
         >
-            <DefaultDashboardAttributeFilter
-                filter={filter}
-                onFilterChanged={noop}
+            <AttributeFilterWrapper
                 displayAsLabel={displayAsLabel}
-                AttributeFilterComponent={AttributeFilter}
                 overlayPositionType={overlayPositionType}
             />
         </AutomationAttributeFilterProvider>
     );
 };
 
-function AttributeFilter(props: IAttributeFilterButtonProps) {
+const AttributeFilterWrapper = ({
+    displayAsLabel,
+    overlayPositionType,
+}: {
+    displayAsLabel?: ObjRef;
+    overlayPositionType?: OverlayPositionType;
+}) => {
     const { onChange, filter } = useAutomationAttributeFilterContext();
 
-    const filterTitle = useMemo(() => {
-        return filter?.attributeFilter.title;
-    }, [filter]);
-
-    const filterLocalIdentifier = useMemo(() => {
-        return filter?.attributeFilter.localIdentifier;
-    }, [filter]);
-
-    const filterSelectionMode = useMemo(() => {
-        return filter?.attributeFilter.selectionMode;
-    }, [filter]);
-
-    const handleOnApply = useCallback(
-        (newFilter: IAttributeFilter) => {
-            onChange?.(
-                attributeFilterToDashboardAttributeFilter(
-                    newFilter,
-                    filterLocalIdentifier,
-                    filterTitle,
-                    undefined,
-                    isNegativeAttributeFilter(newFilter),
-                    filterSelectionMode,
-                ),
-            );
+    const handleFilterChanged = useCallback(
+        (newFilter: IDashboardAttributeFilter) => {
+            onChange(newFilter);
         },
-        [filterLocalIdentifier, filterSelectionMode, filterTitle, onChange],
+        [onChange],
     );
 
     return (
+        <DefaultDashboardAttributeFilter
+            filter={filter}
+            onFilterChanged={handleFilterChanged}
+            displayAsLabel={displayAsLabel}
+            AttributeFilterComponent={AttributeFilter}
+            overlayPositionType={overlayPositionType}
+        />
+    );
+};
+
+function AttributeFilter(props: IAttributeFilterButtonProps) {
+    return (
         <AttributeFilterButton
             {...props}
-            onApply={handleOnApply}
             LoadingComponent={AutomationAttributeFilterLoadingComponent}
             DropdownButtonComponent={AutomationAttributeFilterDropdownButtonComponent}
         />
