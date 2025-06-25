@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { IAutomationAlert, IAutomationMetadataObject } from "@gooddata/sdk-model";
 
-import { ARITHMETIC_OPERATORS } from "../constants.js";
+import { ARITHMETIC_OPERATORS } from "@gooddata/sdk-ui-ext";
 
 /**
  * @internal

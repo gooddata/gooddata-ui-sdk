@@ -24,7 +24,7 @@
             border-color 0.2s;
         background-color: var(--gd-palette-complementary-0);
 
-        &:hover {
+        &:hover:not(&--disabled) {
             border-color: var(--gd-palette-complementary-6);
             box-shadow: 0 1px 2px 0 rgba(31, 53, 74, 0.15) inset;
         }
@@ -64,6 +64,10 @@
                 border: none;
                 transform: scale(1) rotate(0deg);
             }
+        }
+
+        &--disabled {
+            border-color: var(--gd-palette-complementary-3);
         }
     }
 

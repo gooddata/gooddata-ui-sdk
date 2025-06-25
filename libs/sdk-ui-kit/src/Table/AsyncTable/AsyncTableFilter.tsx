@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 import React, { useCallback, useMemo, useRef } from "react";
 import { e } from "./asyncTableBem.js";
-import { Dropdown } from "../Dropdown/Dropdown.js";
-import { UiButton } from "../@ui/UiButton/UiButton.js";
-import { UiAutofocus } from "../@ui/UiFocusManager/UiAutofocus.js";
-import { DropdownList } from "../Dropdown/DropdownList.js";
+import { Dropdown } from "../../Dropdown/Dropdown.js";
+import { UiButton } from "../../@ui/UiButton/UiButton.js";
+import { UiAutofocus } from "../../@ui/UiFocusManager/UiAutofocus.js";
+import { DropdownList } from "../../Dropdown/DropdownList.js";
 import AsyncTableDropdownItem from "./AsyncTableDropdownItem.js";
 import { useIntl } from "react-intl";
-import { messages } from "./locales.js";
+import { messages } from "../locales.js";
 import { IAsyncTableFilterOption, IAsyncTableFilterProps } from "./types.js";
-import { useDebouncedState } from "../utils/debounce.js";
+import { useDebouncedState } from "../../utils/debounce.js";
 
 /**
  * @internal
@@ -45,7 +45,7 @@ export function AsyncTableFilter({
                 renderButton={({ toggleDropdown }) => (
                     <UiButton
                         ref={buttonRef}
-                        label={selected ? selected : label}
+                        label={selected ? selected.label : label}
                         onClick={() => toggleDropdown()}
                         size="small"
                         iconAfter="navigateDown"
@@ -60,7 +60,7 @@ export function AsyncTableFilter({
                                 <AsyncTableDropdownItem
                                     label={item.label ?? String(item.value)}
                                     onSelect={() => onSelect(item, closeDropdown)}
-                                    isSelected={item.value === selected}
+                                    isSelected={item.value === selected.value}
                                 />
                             )}
                             showSearch={true}

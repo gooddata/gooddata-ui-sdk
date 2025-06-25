@@ -1,7 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 @use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
 @use "../internal/scss/dashboard_embedding";
 @use "../internal/scss/user_management_dialogs";
 @use "../internal/scss/attribute_hierarchies";
 @use "../../src/notificationsPanel/notificationPanel.scss";
+@use "../../src/automations/Automations.scss";

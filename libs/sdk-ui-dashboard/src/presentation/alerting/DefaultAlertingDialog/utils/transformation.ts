@@ -29,7 +29,7 @@ import {
     AlertMetricComparator,
     AlertMetricComparatorType,
 } from "../../types.js";
-import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "../constants.js";
+import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "@gooddata/sdk-ui-ext";
 
 import {
     getAttributeRelatedFilterInfo,

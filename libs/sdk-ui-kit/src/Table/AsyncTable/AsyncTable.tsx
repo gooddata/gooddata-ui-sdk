@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { UiPagedVirtualList } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+import { UiPagedVirtualList } from "../../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 import { AsyncTableRow } from "./AsyncTableRow.js";
 import { b } from "./asyncTableBem.js";
 import { AsyncTableHeader } from "./AsyncTableHeader.js";
@@ -10,21 +10,12 @@ import { CHECKBOX_COLUMN_WIDTH, ROW_HEIGHT_LARGE, ROW_HEIGHT_NORMAL, SCROLLBAR_W
 import { AsyncTableToolbar } from "./AsyncTableToolbar.js";
 import { AsyncTableEmptyState } from "./AsyncTableEmptyState.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { AsyncTableTitle } from "./AsyncTableTitle.js";
 import { IAsyncTableProps } from "./types.js";
 import { getColumnWidth } from "./utils.js";
 
 function AsyncTableCore<T extends { id: string }>(props: IAsyncTableProps<T>) {
-    const {
-        width,
-        scrollToIndex,
-        itemHeight,
-        renderHeader,
-        renderItem,
-        shouldLoadNextPage,
-        scrollToStart,
-        onItemSelect,
-    } = useAsyncTable<T>(props);
+    const { width, scrollToIndex, itemHeight, renderHeader, renderItem, shouldLoadNextPage, scrollToStart } =
+        useAsyncTable<T>(props);
 
     const {
         filters,
@@ -39,21 +30,11 @@ function AsyncTableCore<T extends { id: string }>(props: IAsyncTableProps<T>) {
         columns,
         loadNextPage,
         setSelectedItemIds,
-        title,
         onSearch,
-        renderTitleIcon,
-        titleActions,
     } = props;
 
     return (
         <div className={b()} style={{ width }}>
-            <AsyncTableTitle
-                title={title}
-                onSearch={onSearch}
-                renderIcon={renderTitleIcon}
-                actions={titleActions}
-            />
-
             <AsyncTableToolbar<T>
                 filters={filters}
                 bulkActions={bulkActions}
@@ -62,6 +43,7 @@ function AsyncTableCore<T extends { id: string }>(props: IAsyncTableProps<T>) {
                 setSelectedItemIds={setSelectedItemIds}
                 totalItemsCount={totalItemsCount}
                 items={items}
+                onSearch={onSearch}
             />
 
             <div role="grid">
@@ -78,7 +60,7 @@ function AsyncTableCore<T extends { id: string }>(props: IAsyncTableProps<T>) {
                 skeletonItemsCount={skeletonItemsCount}
                 hasNextPage={hasNextPage}
                 isLoading={isLoading}
-                onKeyDownSelect={onItemSelect}
+                onKeyDownSelect={props.onItemClick}
                 loadNextPage={loadNextPage}
                 SkeletonItem={skeletonItemFactory(columns, !!bulkActions)}
                 scrollbarHoverEffect={true}
@@ -104,6 +86,7 @@ const useAsyncTable = <T extends { id: string }>({
     selectedItemIds,
     setSelectedItemIds,
     smallHeader,
+    onItemClick,
 }: IAsyncTableProps<T>) => {
     const [scrollToIndex, setScrollToIndex] = useState<number | undefined>(undefined);
 
@@ -139,12 +122,12 @@ const useAsyncTable = <T extends { id: string }>({
 
     const isItemSelected = useCallback(
         (item: T) => {
-            return selectedItemIds.includes(item.id);
+            return selectedItemIds?.includes(item.id);
         },
         [selectedItemIds],
     );
 
-    const largeRow = useMemo(() => columns.some((column) => column.getMultiLineContent), [columns]);
+    const largeRow = useMemo(() => columns.some((column) => column.getMultiLineTextContent), [columns]);
 
     const itemHeight = useMemo(() => {
         return largeRow ? ROW_HEIGHT_LARGE : ROW_HEIGHT_NORMAL;
@@ -175,10 +158,11 @@ const useAsyncTable = <T extends { id: string }>({
                     isSelected={isItemSelected(item)}
                     hasCheckbox={!!bulkActions}
                     isLarge={largeRow}
+                    onClick={onItemClick}
                 />
             );
         },
-        [columns, renderItemProp, onItemSelect, isItemSelected, bulkActions, largeRow],
+        [columns, renderItemProp, onItemSelect, isItemSelected, onItemClick, bulkActions, largeRow],
     );
 
     const renderHeader = useCallback(() => {

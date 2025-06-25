@@ -2,8 +2,8 @@
 
 import React from "react";
 import { IColumn } from "./types.js";
-import { UiSkeleton } from "../@ui/UiSkeleton/UiSkeleton.js";
-import { UiPagedVirtualListSkeletonItemProps } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+import { UiSkeleton } from "../../@ui/UiSkeleton/UiSkeleton.js";
+import { UiPagedVirtualListSkeletonItemProps } from "../../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 import {
     CHECKBOX_COLUMN_WIDTH,
     COLUMN_PADDING,

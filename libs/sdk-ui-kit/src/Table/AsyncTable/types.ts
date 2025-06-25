@@ -7,6 +7,7 @@ export interface IAsyncTableProps<T extends { id: string }> {
     items: T[];
     totalItemsCount?: number;
     columns: Array<IColumn<T>>;
+    onItemClick?: (item: T) => void;
 
     //default: add up all column widths
     width?: number;
@@ -21,12 +22,6 @@ export interface IAsyncTableProps<T extends { id: string }> {
     hasNextPage?: boolean;
     loadNextPage?: () => void;
 
-    //title
-    title: string;
-    onSearch?: (search: string) => void;
-    renderTitleIcon?: () => React.ReactNode;
-    titleActions?: Array<IAsyncTableTitleAction>;
-
     //filters
     filters?: Array<IAsyncTableFilter>;
 
@@ -34,6 +29,9 @@ export interface IAsyncTableProps<T extends { id: string }> {
     sortBy?: keyof T;
     sortDirection?: SortDirection;
     onSort?: (key: keyof T) => void;
+
+    //search
+    onSearch?: (search: string) => void;
 
     //bulk actions
     bulkActions?: Array<IBulkAction>;
@@ -61,7 +59,10 @@ export interface IColumn<T> {
     renderPrefixIcon?: (item: T) => React.ReactNode;
     renderSuffixIcon?: (item: T) => React.ReactNode;
     renderBadge?: (item: T) => React.ReactNode;
-    getMultiLineContent?: (item: T) => Array<string>;
+    getMultiLineTextContent?: (item: T) => Array<string>;
+    getTextContent?: (item: T) => string;
+    getTextTitle?: (item: T) => string;
+    getTextHref?: (item: T) => string;
     bold?: boolean;
     sortable?: boolean;
 }
@@ -78,7 +79,7 @@ export interface IAsyncTableFilter {
     label: string;
     options: Array<IAsyncTableFilterOption>;
     onItemClick: (option: IAsyncTableFilterOption) => void;
-    selected?: string;
+    selected?: IAsyncTableFilterOption;
 }
 
 /**
@@ -87,7 +88,6 @@ export interface IAsyncTableFilter {
 export interface IAsyncTableFilterOption {
     value: string;
     label?: string;
-    isSelected?: boolean;
 }
 
 /**
@@ -96,13 +96,6 @@ export interface IAsyncTableFilterOption {
 export interface IBulkAction {
     label: string;
     onClick: () => void;
-}
-
-/**
- * @internal
- */
-export interface IAsyncTableTitleAction {
-    renderAction: () => React.ReactNode;
 }
 
 //subcomponent props
@@ -122,23 +115,18 @@ export interface IAsyncTableRowProps<T extends { id: string }> {
     item?: T;
     columns: Array<IColumn<T>>;
     onSelect?: (item: T) => void;
-    isSelected?: boolean;
+    onClick?: (item: T) => void;
     hasCheckbox?: boolean;
     isLarge?: boolean;
+    isSelected?: boolean;
 }
 
 export type IAsyncTableCheckboxProps = {
     onChange?: () => void;
     checked?: boolean;
     indeterminate?: boolean;
+    disabled?: boolean;
 };
-
-export interface IAsyncTableTitleProps {
-    title: string;
-    renderIcon?: () => React.ReactNode;
-    onSearch?: (search: string) => void;
-    actions: Array<IAsyncTableTitleAction>;
-}
 
 export interface IAsyncTableToolbarProps<T extends { id: string }> {
     filters?: Array<IAsyncTableFilter>;
@@ -148,6 +136,7 @@ export interface IAsyncTableToolbarProps<T extends { id: string }> {
     setSelectedItemIds: (items: Array<string>) => void;
     totalItemsCount: number;
     items: Array<T>;
+    onSearch?: (search: string) => void;
 }
 
 export interface IAsyncTableFilterProps extends IAsyncTableFilter {

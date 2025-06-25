@@ -112,6 +112,9 @@ export const AsyncTable: <T extends {
 }>(props: IAsyncTableProps<T>) => React_2.JSX.Element;
 
 // @internal (undocumented)
+export const AsyncTableTitle: ({ title, onSearch, renderIcon, actions }: IAsyncTableTitleProps) => React_2.JSX.Element;
+
+// @internal (undocumented)
 export class AutoSize extends Component<IAutoSizeProps> {
     // (undocumented)
     componentDidMount(): void;
@@ -997,13 +1000,11 @@ export interface IAsyncTableFilter {
     // (undocumented)
     options: Array<IAsyncTableFilterOption>;
     // (undocumented)
-    selected?: string;
+    selected?: IAsyncTableFilterOption;
 }
 
 // @internal (undocumented)
 export interface IAsyncTableFilterOption {
-    // (undocumented)
-    isSelected?: boolean;
     // (undocumented)
     label?: string;
     // (undocumented)
@@ -1033,6 +1034,8 @@ export interface IAsyncTableProps<T extends {
     // (undocumented)
     maxHeight?: number;
     // (undocumented)
+    onItemClick?: (item: T) => void;
+    // (undocumented)
     onSearch?: (search: string) => void;
     // (undocumented)
     onSort?: (key: keyof T) => void;
@@ -1040,8 +1043,6 @@ export interface IAsyncTableProps<T extends {
     renderHeader?: () => React.ReactNode;
     // (undocumented)
     renderItem?: (item: T) => React.ReactNode;
-    // (undocumented)
-    renderTitleIcon?: () => React.ReactNode;
     // (undocumented)
     selectedItemIds?: Array<string>;
     // (undocumented)
@@ -1055,10 +1056,6 @@ export interface IAsyncTableProps<T extends {
     // (undocumented)
     sortDirection?: SortDirection;
     // (undocumented)
-    title: string;
-    // (undocumented)
-    titleActions?: Array<IAsyncTableTitleAction>;
-    // (undocumented)
     totalItemsCount?: number;
     // (undocumented)
     width?: number;
@@ -1067,7 +1064,21 @@ export interface IAsyncTableProps<T extends {
 // @internal (undocumented)
 export interface IAsyncTableTitleAction {
     // (undocumented)
-    renderAction: () => React.ReactNode;
+    renderAction: () => React_2.ReactNode;
+}
+
+// @internal (undocumented)
+export interface IAsyncTableTitleProps {
+    // (undocumented)
+    actions: Array<IAsyncTableTitleAction>;
+    // (undocumented)
+    onSearch?: (search: string) => void;
+    // (undocumented)
+    renderIcon?: () => React_2.ReactNode;
+    // (undocumented)
+    scrollToStart: () => void;
+    // (undocumented)
+    title: string;
 }
 
 // @internal (undocumented)
@@ -1328,7 +1339,13 @@ export interface IColumn<T> {
     // (undocumented)
     bold?: boolean;
     // (undocumented)
-    getMultiLineContent?: (item: T) => Array<string>;
+    getMultiLineTextContent?: (item: T) => Array<string>;
+    // (undocumented)
+    getTextContent?: (item: T) => string;
+    // (undocumented)
+    getTextHref?: (item: T) => string;
+    // (undocumented)
+    getTextTitle?: (item: T) => string;
     // (undocumented)
     key?: keyof T;
     // (undocumented)
@@ -6155,6 +6172,8 @@ export const UiCheckbox: React_2.FC<UiCheckboxProps>;
 export interface UiCheckboxProps {
     // (undocumented)
     checked: boolean;
+    // (undocumented)
+    disabled?: boolean;
     // (undocumented)
     indeterminate?: boolean;
     // (undocumented)

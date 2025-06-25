@@ -1622,5 +1622,117 @@
     "notifications.panel.error.limitExceeded.message": {
         "value": "Your export could not be sent, because your organization has reached the limit for maximum number of daily alerts and scheduled exports. Please contact your administrator.",
         "comment": "Error message when export cannot be sent due to limit reached"
+    },
+    "automations.alert.config.comparisonOperator.lessThan": {
+        "value": "Is less than",
+        "comment": "Comparison operator in alert configuration"
+    },
+    "automations.alert.config.comparisonOperator.lessThanOrEquals": {
+        "value": "Is less than or equal to",
+        "comment": "Comparison operator in alert configuration"
+    },
+    "automations.alert.config.comparisonOperator.greaterThan": {
+        "value": "Is greater than",
+        "comment": "Comparison operator in alert configuration"
+    },
+    "automations.alert.config.comparisonOperator.greaterThanOrEquals": {
+        "value": "Is greater than or equal to",
+        "comment": "Comparison operator in alert configuration"
+    },
+    "automations.alert.config.changeOperator.increasesBy": {
+        "value": "Increases by",
+        "comment": "Alert condition for when a metric's percentage change increases by a specified amount"
+    },
+    "automations.alert.config.changeOperator.decreasesBy": {
+        "value": "Decreases by",
+        "comment": "Alert condition for when a metric's percentage change decreases by a specified amount"
+    },
+    "automations.alert.config.changeOperator.changesBy": {
+        "value": "Changes by",
+        "comment": "Alert condition for when a metric's percentage change (either increase or decrease) exceeds a specified amount"
+    },
+    "automations.alert.config.differenceOperator.increasesBy": {
+        "value": "Increases by",
+        "comment": "Alert condition for when a metric's numeric value increases by a specified amount"
+    },
+    "automations.alert.config.differenceOperator.decreasesBy": {
+        "value": "Decreases by",
+        "comment": "Alert condition for when a metric's numeric value decreases by a specified amount"
+    },
+    "automations.alert.config.differenceOperator.changesBy": {
+        "value": "Changes by",
+        "comment": "Alert condition for when a metric's numeric value changes (either increases or decreases) by a specified amount"
+    },
+    "automations.filter.allDashboards": {
+        "value": "All dashboards",
+        "comment": "Filter option to show automations for all dashboards"
+    },
+    "automations.filter.allRecipients": {
+        "value": "All recipients",
+        "comment": "Filter option to show automations for all recipients"
+    },
+    "automations.filter.allAuthors": {
+        "value": "All authors",
+        "comment": "Filter option to show automations created by all authors"
+    },
+    "automations.filter.dashboard.label": {
+        "value": "Dashboard",
+        "comment": "Label for dashboard filter in automations table"
+    },
+    "automations.filter.recipients.label": {
+        "value": "Recipients",
+        "comment": "Label for recipients filter in automations table"
+    },
+    "automations.filter.createdBy.label": {
+        "value": "Created by",
+        "comment": "Label for created by (author) filter in automations table"
+    },
+    "automations.filter.currentUser": {
+        "value": "Current user",
+        "comment": "Label for current user in filter options"
+    },
+    "automations.column.id": {
+        "value": "ID",
+        "comment": "Column header for automation ID in the automations table"
+    },
+    "automations.column.name": {
+        "value": "Name",
+        "comment": "Column header for automation name in the automations table"
+    },
+    "automations.column.dashboard": {
+        "value": "Dashboard",
+        "comment": "Column header for dashboard in the automations table"
+    },
+    "automations.column.recipients": {
+        "value": "Recipients",
+        "comment": "Column header for recipients in the automations table"
+    },
+    "automations.column.lastSent": {
+        "value": "Last sent",
+        "comment": "Column header for last sent date in the automations table"
+    },
+    "automations.column.state": {
+        "value": "State",
+        "comment": "Column header for automation state in the automations table"
+    },
+    "automations.column.createdBy": {
+        "value": "Created by",
+        "comment": "Column header for creator in the automations table"
+    },
+    "automations.column.createdAt": {
+        "value": "Created at",
+        "comment": "Column header for creation date in the automations table"
+    },
+    "automations.column.notificationChannel": {
+        "value": "Notification channel",
+        "comment": "Column header for notification channel in the automations table"
+    },
+    "automations.menu.edit": {
+        "value": "Edit",
+        "comment": "Menu item for editing an automation"
+    },
+    "automations.menu.delete": {
+        "value": "Delete",
+        "comment": "Menu item for deleting an automation"
     }
 }

@@ -3,9 +3,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { IAsyncTableHeaderProps, IColumn } from "./types.js";
 import { e } from "./asyncTableBem.js";
-import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
+import { UiIcon } from "../../@ui/UiIcon/UiIcon.js";
 import { AsyncTableCheckbox } from "./AsyncTableCheckbox.js";
-import { makeTabsKeyboardNavigation } from "../@ui/@utils/keyboardNavigation.js";
+import { makeTabsKeyboardNavigation } from "../../@ui/@utils/keyboardNavigation.js";
 import { getColumnWidth } from "./utils.js";
 
 const arrowIcon = <UiIcon type="dropDown" size={14} color="complementary-6" />;

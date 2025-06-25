@@ -4,11 +4,15 @@
 
 ```ts
 
+import { AutomationType } from '@gooddata/sdk-backend-spi';
 import { ChartInlineVisualizationType } from '@gooddata/sdk-ui-charts';
 import { CopyCodeOriginType } from '@gooddata/sdk-ui-kit';
 import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
+import { IAlertComparisonOperator } from '@gooddata/sdk-model';
+import { IAlertRelativeArithmeticOperator } from '@gooddata/sdk-model';
+import { IAlertRelativeOperator } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { IChartConfig } from '@gooddata/sdk-ui-charts';
@@ -24,6 +28,7 @@ import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { INotification } from '@gooddata/sdk-model';
+import { IntlShape } from 'react-intl';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
@@ -53,6 +58,15 @@ export const AddUsersToUserGroupsDialog: React_2.FC<IAddUsersToUserGroupsDialogP
 // @internal (undocumented)
 export const AddWorkspaceToSubjects: React_2.FC<IAddWorkspaceToSubjectsProps>;
 
+// @internal
+export type AlertAutomationsColumnName = "widget";
+
+// @internal (undocumented)
+export const ARITHMETIC_OPERATORS: {
+    readonly ARITHMETIC_OPERATOR_DIFFERENCE: "DIFFERENCE";
+    readonly ARITHMETIC_OPERATOR_CHANGE: "CHANGE";
+};
+
 // @internal (undocumented)
 export const AttributeHierarchyDetailBubble: React_2.FC<IAttributeHierarchyDetailBubbleProps>;
 
@@ -62,10 +76,44 @@ export const AttributeHierarchyDetailPanel: React_2.FC<IAttributeHierarchyDetail
 // @internal (undocumented)
 export const AttributeHierarchyDialog: React_2.FC<IAttributeHierarchyDialogProps>;
 
+// @internal
+export type AutomationColumnDefinition = {
+    name: AutomationsColumnName;
+    width?: number;
+};
+
+// @internal
+export const Automations: ({ backend, workspace, locale, selectedColumnDefinitions, maxHeight, pageSize, type, }: {
+    backend?: IAnalyticalBackend;
+    workspace?: string;
+    locale?: string;
+    selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
+    maxHeight?: number;
+    pageSize?: number;
+    type?: AutomationsType;
+}) => React_2.JSX.Element;
+
+// @internal
+export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName | AlertAutomationsColumnName;
+
+// @internal (undocumented)
+export type AutomationsType = Extract<AutomationType, "alert" | "schedule">;
+
 export { ChartInlineVisualizationType }
 
 // @public
 export function clearInsightViewCaches(): void;
+
+// @internal
+export type CommonAutomationsColumnName = "id" | "name" | "dashboard" | "state" | "recipients" | "lastSent" | "createdBy" | "createdAt" | "notificationChannel" | "workspace" | "menu";
+
+// @internal (undocumented)
+export const COMPARISON_OPERATORS: {
+    readonly COMPARISON_OPERATOR_LESS_THAN: "LESS_THAN";
+    readonly COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO";
+    readonly COMPARISON_OPERATOR_GREATER_THAN: "GREATER_THAN";
+    readonly COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO";
+};
 
 // @public
 export type CreateRoot = (container: Element | DocumentFragment, options?: any) => Root;
@@ -151,6 +199,9 @@ export class FluidLayoutDescriptor implements IFluidLayoutDescriptor {
 export const fluidLayoutDescriptor: FluidLayoutDescriptor;
 
 // @internal (undocumented)
+export const getComparisonOperatorTitle: (operator: IAlertComparisonOperator, intl: IntlShape) => string;
+
+// @internal (undocumented)
 export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo;
 
 // @internal (undocumented)
@@ -158,6 +209,9 @@ export function getInsightVisualizationMeta(insight: IInsightDefinition, setting
 
 // @internal (undocumented)
 export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition, backendSupportsElementUris: boolean, enableDuplicatedLabelValuesInAttributeFilter: boolean): IInsight;
+
+// @internal (undocumented)
+export const getRelativeOperatorTitle: (operator: IAlertRelativeOperator, art: IAlertRelativeArithmeticOperator, intl: IntlShape) => string;
 
 // @internal (undocumented)
 export interface IAddDataSourceToSubjectsProps extends IWithTelemetryProps {
@@ -733,6 +787,13 @@ export type PluggableVisualizationErrorType = keyof typeof PluggableVisualizatio
 export function provideCreateRoot(createRoot: CreateRoot): void;
 
 // @internal (undocumented)
+export const RELATIVE_OPERATORS: {
+    readonly RELATIVE_OPERATOR_INCREASE_BY: "INCREASES_BY";
+    readonly RELATIVE_OPERATOR_DECREASE_BY: "DECREASES_BY";
+    readonly RELATIVE_OPERATOR_CHANGES_BY: "CHANGES_BY";
+};
+
+// @internal (undocumented)
 export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
@@ -745,6 +806,9 @@ export interface Root {
     // (undocumented)
     unmount(): void;
 }
+
+// @internal
+export type ScheduleAutomationsColumnName = "source" | "frequency" | "nextRun" | "lastRunStatus" | "attachments";
 
 // @internal (undocumented)
 export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted" | "group-deleted" | "user-deleted" | "group-created" | "user-detail-updated" | "group-detail-updated" | "groups-added-to-single-user" | "groups-added-to-multiple-users" | "users-added-to-single-group" | "users-added-to-multiple-groups" | "permission-added-to-single-user" | "permission-added-to-single-group" | "permission-added-to-multiple-users" | "permission-added-to-multiple-groups" | "user-permission-changed-to-hierarchy" | "user-permission-changed-to-single-workspace" | "group-permission-changed-to-hierarchy" | "group-permission-changed-to-single-workspace" | "user-permission-changed-to-view" | "group-permission-changed-to-view" | "user-permission-changed-to-view-save-views" | "group-permission-changed-to-view-save-views" | "user-permission-changed-to-view-export" | "group-permission-changed-to-view-export" | "user-permission-changed-to-view-export-save-views" | "group-permission-changed-to-view-export-save-views" | "user-permission-changed-to-analyze" | "group-permission-changed-to-analyze" | "user-permission-changed-to-analyze-export" | "group-permission-changed-to-analyze-export" | "user-permission-changed-to-manage" | "group-permission-changed-to-manage" | "user-data-source-permission-changed-to-use" | "group-data-source-permission-changed-to-use" | "user-data-source-permission-changed-to-manage" | "group-data-source-permission-changed-to-manage" | "user-role-changed-to-admin" | "user-role-changed-to-member";

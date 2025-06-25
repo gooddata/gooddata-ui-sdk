@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 import React, { useRef } from "react";
 import { e } from "./asyncTableBem.js";
-import { Dropdown } from "../Dropdown/Dropdown.js";
-import { UiButton } from "../@ui/UiButton/UiButton.js";
-import { UiAutofocus } from "../@ui/UiFocusManager/UiAutofocus.js";
-import { DropdownList } from "../Dropdown/DropdownList.js";
+import { Dropdown } from "../../Dropdown/Dropdown.js";
+import { UiButton } from "../../@ui/UiButton/UiButton.js";
+import { UiAutofocus } from "../../@ui/UiFocusManager/UiAutofocus.js";
+import { DropdownList } from "../../Dropdown/DropdownList.js";
 import AsyncTableDropdownItem from "./AsyncTableDropdownItem.js";
 import { useIntl } from "react-intl";
-import { messages } from "./locales.js";
+import { messages } from "../locales.js";
 import { IAsyncTableBulkActionsProps } from "./types.js";
 
 export function AsyncTableBulkActions({ bulkActions }: IAsyncTableBulkActionsProps) {
@@ -24,7 +24,7 @@ export function AsyncTableBulkActions({ bulkActions }: IAsyncTableBulkActionsPro
                         label={intl.formatMessage(messages.chooseAction)}
                         onClick={() => toggleDropdown()}
                         size="small"
-                        iconAfter="chevronDown"
+                        iconAfter="navigateDown"
                     />
                 )}
                 alignPoints={[{ align: "bl tl" }]}

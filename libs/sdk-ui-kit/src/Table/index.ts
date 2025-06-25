@@ -7,7 +7,9 @@ export type {
     IAsyncTableFilter,
     IAsyncTableFilterOption,
     IBulkAction,
-    IAsyncTableTitleAction,
-} from "./types.js";
+} from "./AsyncTable/types.js";
 
-export { AsyncTable } from "./AsyncTable.js";
+export type { IAsyncTableTitleProps, IAsyncTableTitleAction } from "./AsyncTableTitle/AsyncTableTitle.js";
+
+export { AsyncTable } from "./AsyncTable/AsyncTable.js";
+export { AsyncTableTitle } from "./AsyncTableTitle/AsyncTableTitle.js";

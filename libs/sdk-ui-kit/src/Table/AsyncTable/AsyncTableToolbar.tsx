@@ -5,8 +5,10 @@ import { AsyncTableFilter } from "./AsyncTableFilter.js";
 import { AsyncTableCheckbox } from "./AsyncTableCheckbox.js";
 import { AsyncTableBulkActions } from "./AsyncTableBulkActions.js";
 import { useIntl } from "react-intl";
-import { messages } from "./locales.js";
+import { messages } from "../locales.js";
 import { IAsyncTableToolbarProps } from "./types.js";
+import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
+import { Input } from "../../Form/Input.js";
 
 export function AsyncTableToolbar<T extends { id: string }>(props: IAsyncTableToolbarProps<T>) {
     const {
@@ -14,9 +16,11 @@ export function AsyncTableToolbar<T extends { id: string }>(props: IAsyncTableTo
         isCheckboxIndeterminate,
         hasContent,
         checkbox,
+        isCheckboxDisabled,
         handleCheckboxChange,
         renderBulkActions,
         renderFilters,
+        renderSearch,
     } = useAsyncTableToolbar(props);
     return hasContent ? (
         <div className={e("toolbar", { checkbox })}>
@@ -24,9 +28,11 @@ export function AsyncTableToolbar<T extends { id: string }>(props: IAsyncTableTo
                 onChange={handleCheckboxChange}
                 checked={isChecked}
                 indeterminate={isCheckboxIndeterminate}
+                disabled={isCheckboxDisabled}
             />
             {renderBulkActions()}
             {renderFilters()}
+            {renderSearch()}
         </div>
     ) : null;
 }
@@ -39,12 +45,18 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     setSelectedItemIds,
     totalItemsCount,
     items,
+    onSearch,
 }: IAsyncTableToolbarProps<T>) => {
     const intl = useIntl();
+    const { searchValue, setSearchValue } = useAsyncTableSearch(onSearch);
 
     const handleCheckboxChange = useCallback(() => {
         setSelectedItemIds(selectedItemIds.length === 0 ? items.map((item) => item.id) : []);
     }, [selectedItemIds, items, setSelectedItemIds]);
+
+    const isCheckboxDisabled = useMemo(() => {
+        return items.length === 0;
+    }, [items]);
 
     const renderBulkActions = useCallback(() => {
         if (bulkActions) {
@@ -74,6 +86,25 @@ const useAsyncTableToolbar = <T extends { id: string }>({
         ) : null;
     }, [filters, scrollToStart, intl]);
 
+    const renderSearch = useCallback(() => {
+        const placeholder = intl.formatMessage(messages.titleSearchPlaceholder);
+        return onSearch ? (
+            <div className={e("toolbar-search")}>
+                <Input
+                    isSearch={true}
+                    type="search"
+                    clearOnEsc
+                    placeholder={placeholder}
+                    accessibilityConfig={{
+                        ariaLabel: placeholder,
+                    }}
+                    value={searchValue}
+                    onChange={setSearchValue}
+                />
+            </div>
+        ) : null;
+    }, [onSearch, intl, searchValue, setSearchValue]);
+
     const hasContent = useMemo(() => {
         return filters?.length || bulkActions;
     }, [filters, bulkActions]);
@@ -91,8 +122,10 @@ const useAsyncTableToolbar = <T extends { id: string }>({
         isCheckboxIndeterminate,
         hasContent,
         checkbox: !!bulkActions,
+        isCheckboxDisabled,
         handleCheckboxChange,
         renderBulkActions,
         renderFilters,
+        renderSearch,
     };
 };
