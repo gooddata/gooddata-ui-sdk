@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
 import { useDebouncedState, Input, Dropdown } from "@gooddata/sdk-ui-kit";
@@ -113,9 +113,11 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = ({
             className={classnames("gd-semantic-search", className)}
             ignoreClicksOnByClass={[
                 ".gd-bubble",
+                ".gd-input-icon-clear",
                 ".gd-semantic-search__results-item",
                 ".gd-semantic-search__input",
             ]}
+            closeOnEscape={false}
             renderBody={({ isMobile, closeDropdown }) => {
                 if (!searchResults.length && searchStatus !== "loading") {
                     return null;

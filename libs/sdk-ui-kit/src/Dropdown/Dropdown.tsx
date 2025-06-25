@@ -184,6 +184,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
     const _renderButton = (renderProps: IDropdownButtonRenderProps) => (
         <DropdownButtonKeyboardWrapper
             onToggle={renderProps.toggleDropdown}
+            closeOnEscape={closeOnEscape}
             isOpen={renderProps.isOpen}
             ref={buttonWrapperRef}
             id={dropdownButtonId}
