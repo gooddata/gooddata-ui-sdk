@@ -116,10 +116,10 @@ export type ErrorContents = {
 };
 
 // @public
-export const GenAIChat: React_2.FC<GenAIChatProps>;
+export const GenAIAssistant: React_2.FC<GenAIAssistantProps>;
 
 // @public
-export interface GenAIChatProps {
+export interface GenAIAssistantProps {
     allowNativeLinks?: boolean;
     backend?: IAnalyticalBackend;
     catalogItems?: CatalogItem[];
@@ -132,6 +132,12 @@ export interface GenAIChatProps {
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
     workspace?: string;
 }
+
+// @public @deprecated
+export const GenAIChat: React_2.FC<GenAIAssistantProps>;
+
+// @public @deprecated
+export type GenAIChatProps = GenAIAssistantProps;
 
 // @public
 export const isChatAssistantMessageEvent: (event: ChatEvent) => event is ChatAssistantMessageEvent;

@@ -14,10 +14,10 @@ import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
 
 /**
- * Properties for the GenAIChat component.
+ * Properties for the GenAIAssistant component.
  * @public
  */
-export interface GenAIChatProps {
+export interface GenAIAssistantProps {
     /**
      * Analytical backend to use for server communication.
      */
@@ -72,10 +72,17 @@ export interface GenAIChatProps {
 }
 
 /**
- * UI component that renders the Gen AI chat.
+ * Properties for the GenAIChat component.
+ * @deprecated This is an old name. Use {@link GenAIAssistantProps} instead.
  * @public
  */
-export const GenAIChat: React.FC<GenAIChatProps> = (props) => {
+export type GenAIChatProps = GenAIAssistantProps;
+
+/**
+ * UI component that renders the Gen AI assistant.
+ * @public
+ */
+export const GenAIAssistant: React.FC<GenAIAssistantProps> = (props) => {
     const { backend, workspace, locale, colorPalette, eventHandlers } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -98,6 +105,13 @@ export const GenAIChat: React.FC<GenAIChatProps> = (props) => {
         </IntlWrapper>
     );
 };
+
+/**
+ * UI component that renders the Gen AI chat.
+ * @deprecated This is an old name. Use {@link GenAIAssistant} instead.
+ * @public
+ */
+export const GenAIChat = GenAIAssistant;
 
 const GenAIContent: React.FC<GenAIChatProps> = (props) => {
     const { onLinkClick, catalogItems } = props;

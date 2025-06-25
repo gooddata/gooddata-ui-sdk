@@ -20,13 +20,13 @@ GoodData.UI provides a React component for embedding of the chat interface for [
 
 ## Basic integration example
 
-`GenAIChat` component renders chat history and an input field for sending user messages.
+`GenAIAssistant` component renders chat history and an input field for sending user messages.
 It does not include the logic for overlay management in case you want to render it in a floating window.
 
 ```tsx
 import * as React from "react";
 import {
-    GenAIChat,
+    GenAIAssistant,
     ChatUserMessageEvent,
     isChatUserMessageEvent,
     LinkHandlerEvent,
@@ -39,7 +39,7 @@ const App = () => {
     return (
         <div style={{ width: 500, height: 600, display: "flex" }}>
             {/* Wrap the chat UI in a container of desired size */}
-            <GenAIChat
+            <GenAIAssistant
                 // Optionally, add event listeners
                 eventHandlers={[
                     {

@@ -13,7 +13,7 @@
 import { CustomElementContext, getContext, setContext } from "./context.js";
 import { Insight } from "./visualizations/Insight.js";
 import { Dashboard } from "./visualizations/Dashboard.js";
-import { GenAIChat } from "./gen-ai/GenAiChat.js";
+import { GenAIAssistant } from "./gen-ai/GenAiAssistant.js";
 import initializeAutoAuth from "./autoAuth.js";
 
 // Include styles async to use native link injection from MiniCssExtractPlugin
@@ -31,7 +31,8 @@ initializeAutoAuth(import.meta.url).catch((error) => {
 // Register custom elements with the browser
 window.customElements.define("gd-insight", Insight);
 window.customElements.define("gd-dashboard", Dashboard);
-window.customElements.define("gd-ai-chat", GenAIChat);
+window.customElements.define("gd-ai-chat", GenAIAssistant);
+window.customElements.define("gd-ai-assistant", GenAIAssistant);
 
 // Expose context accessors in case user wants to configure custom
 //  authentication flow

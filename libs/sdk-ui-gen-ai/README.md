@@ -12,11 +12,11 @@ This package provides a set of React-based UI components and hooks for GenAI cha
 Example usage:
 
 ```tsx
-import { GenAIChat } from "@gooddata/sdk-ui-gen-ai";
+import { GenAIAssistant } from "@gooddata/sdk-ui-gen-ai";
 import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 
 const App = () => {
-    return <GenAIChat workspaceId="your-workspace-id" backend={tigerBackend} />;
+    return <GenAIAssistant workspaceId="your-workspace-id" backend={tigerBackend} />;
 };
 ```
 

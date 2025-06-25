@@ -3,7 +3,11 @@ import React from "react";
 import omit from "lodash/omit.js";
 
 import { resolveLocale } from "@gooddata/sdk-ui";
-import type { ChatEvent, GenAIChat as OriginalGenAIChat, LinkHandlerEvent } from "@gooddata/sdk-ui-gen-ai";
+import type {
+    ChatEvent,
+    GenAIAssistant as OriginalGenAIAssistant,
+    LinkHandlerEvent,
+} from "@gooddata/sdk-ui-gen-ai";
 
 import {
     CustomElementAdapter,
@@ -14,23 +18,23 @@ import {
 } from "../common/index.js";
 import { CustomElementContext } from "../context.js";
 
-type IGenAIChat = typeof OriginalGenAIChat;
-type IGenAIChatLinkClick = Omit<LinkHandlerEvent, "preventDefault">;
+type IGenAIAssistant = typeof OriginalGenAIAssistant;
+type IGenAIAssistantLinkClick = Omit<LinkHandlerEvent, "preventDefault">;
 
-export class GenAIChat extends CustomElementAdapter<IGenAIChat> {
+export class GenAIAssistant extends CustomElementAdapter<IGenAIAssistant> {
     static get observedAttributes() {
         return ["workspace", "locale"];
     }
 
     async [LOAD_COMPONENT]() {
-        return (await import("@gooddata/sdk-ui-gen-ai")).GenAIChat;
+        return (await import("@gooddata/sdk-ui-gen-ai")).GenAIAssistant;
     }
 
-    onLinkClick?: (event: CustomEvent<IGenAIChatLinkClick>) => void;
+    onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
 
-    [GET_COMPONENT](Component: IGenAIChat, { backend, workspaceId }: CustomElementContext) {
+    [GET_COMPONENT](Component: IGenAIAssistant, { backend, workspaceId }: CustomElementContext) {
         // Collect the rest of the props
-        const extraProps: Partial<React.ComponentProps<IGenAIChat>> = {};
+        const extraProps: Partial<React.ComponentProps<IGenAIAssistant>> = {};
 
         if (this.hasAttribute("locale")) {
             extraProps.locale = resolveLocale(this.getAttribute("locale"));
@@ -39,7 +43,7 @@ export class GenAIChat extends CustomElementAdapter<IGenAIChat> {
         // Emit custom DOM event when link is clicked
         extraProps.onLinkClick = (e) => {
             const type = "linkClick";
-            const detail = omit(e, ["preventDefault"]) as IGenAIChatLinkClick;
+            const detail = omit(e, ["preventDefault"]) as IGenAIAssistantLinkClick;
 
             this[EVENT_HANDLER](type)(detail);
             if (typeof this.onLinkClick === "function") {

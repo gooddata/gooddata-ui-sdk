@@ -43,9 +43,9 @@ unknown components.
 -   import { NgModule } from '@angular/core';
 +   import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     import { BrowserModule } from '@angular/platform-browser';
-    
+
     import { AppComponent } from './app.component';
-    
+
     @NgModule({
       declarations: [
         AppComponent
@@ -64,14 +64,15 @@ unknown components.
 
 ## Embed visualizations
 
-You can now use `gd-insight` and `gd-dashboard` elements anywhere in your `src/app/app.component.html` template.
+You can now use `gd-insight`, `gd-dashboard`, and `gd-ai-assistant` elements anywhere in your `src/app/app.component.html` template.
 
 ```html
 <gd-insight insight="my-visualization-id" style="height:500px"></gd-insight>
 <gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
+<gd-ai-assistant></gd-ai-assistant>
 ```
 
-You can copy the *visualization id* and *dashboard id* from the URL bar of your web browser,
+You can copy the _visualization id_ and _dashboard id_ from the URL bar of your web browser,
 from the Analyze and Dashboards pages respectively. At this point you should see an visualization and a dashboard rendering
 on the screen.
 
@@ -83,9 +84,10 @@ otherwise.
 You can use attribute binding to define the IDs dynamically from the Angular component code.
 
 Define component variables in `src/app/app.component.ts`:
+
 ```diff
     import { Component } from "@angular/core";
-    
+
     @Component({
       selector: 'app-root',
       templateUrl: './app.component.html',
@@ -95,6 +97,7 @@ Define component variables in `src/app/app.component.ts`:
       title = 'ng-app';
 +     dashboardId = 'my-dashboard-id';
 +     visualizationId = 'my-visualization-id';
++     workspaceId = 'my-workspace-id';
     }
 ```
 
@@ -103,11 +106,12 @@ Update the `src/app/app.component.html` template:
 ```html
 <gd-insight [attr.insight]="visualizationId" style="height:500px"></gd-insight>
 <gd-dashboard [attr.dashboard]="dashboardId"></gd-dashboard>
+<gd-ai-assistant [attr.workspace]="workspaceId"></gd-ai-assistant>
 ```
 
 ## Add event listeners
 
-Both `gd-insight` and `gd-dashboard` are dispatching custom events.
+Both `gd-insight`, `gd-dashboard`, and `gd-ai-assistant` are dispatching custom events.
 
 ### Visualization event listener
 
@@ -126,6 +130,7 @@ your component code (`src/app/app.component.ts`):
       title = 'ng-app';
       dashboardId = 'my-dashboard-id';
       visualizationId = 'my-visualization-id';
+      workspaceId = 'my-workspace-id';
 +
 +     onInsightLoaded(e: Event) {
 +       console.log((e as CustomEvent).detail);
@@ -136,7 +141,11 @@ your component code (`src/app/app.component.ts`):
 Attach the event listener to the visualization at `src/app/app.component.html`:
 
 ```html
-<gd-insight [attr.insight]="visualizationId" style="height:500px" (insightLoaded)="onInsightLoaded($event)"></gd-insight>
+<gd-insight
+    [attr.insight]="visualizationId"
+    style="height:500px"
+    (insightLoaded)="onInsightLoaded($event)"
+></gd-insight>
 ```
 
 [Read more about visualization events](../##supported-events).
@@ -170,8 +179,9 @@ also need to remove the listeners on the component unmount.
       title = 'ng-app';
       dashboardId = 'my-dashboard-id';
       visualizationId = 'my-visualization-id';
+      workspaceId = 'my-workspace-id';
 +     private myDashboardElement?: HTMLElement;
-    
+
       onInsightLoaded(e: Event) {
         console.log((e as CustomEvent).detail);
       }
@@ -193,3 +203,67 @@ also need to remove the listeners on the component unmount.
 ```
 
 [Read more about Dashboard events](../dashboard_custom_element/#supported-events).
+
+### AI Assistant event listener
+
+Similar to the dashboard, the `gd-ai-assistant` component requires direct DOM event listeners.
+
+First, use the template reference variable to mark the AI Assistant element in `src/app/app.component.html`:
+
+```html
+<gd-ai-assistant [attr.workspace]="workspaceId" #aiChat></gd-ai-assistant>
+```
+
+Now you can obtain the element and attach event listeners in `src/app/app.component.ts`:
+
+```diff
+    import { Component, ViewChild, OnDestroy } from "@angular/core";
+
+    const EVENT_NAME = 'GDC.DASH/EVT.INITIALIZED';
++   const CHAT_EVENT_NAME = 'linkClick';
+
+    @Component({
+      selector: 'app-root',
+      templateUrl: './app.component.html',
+      styleUrls: ['./app.component.css']
+    })
+    export class AppComponent implements OnDestroy {
+      title = 'ng-app';
+      dashboardId = 'my-dashboard-id';
+      visualizationId = 'my-visualization-id';
+      workspaceId = 'my-workspace-id';
+      private myDashboardElement?: HTMLElement;
++     private myAiChatElement?: HTMLElement;
+
+      onInsightLoaded(e: Event) {
+        console.log((e as CustomEvent).detail);
+      }
+
+      onDashboardLoaded(e: Event) {
+        console.log((e as CustomEvent).detail);
+      }
++
++     onChatLinkClick(e: Event) {
++       console.log((e as CustomEvent).detail);
++     }
+
+      @ViewChild("dashboard")
+      set dashboard(d: any) {
+        this.myDashboardElement = d.nativeElement;
+        this.myDashboardElement?.addEventListener(EVENT_NAME, this.onDashboardLoaded);
+      }
++
++     @ViewChild("aiChat")
++     set aiChat(c: any) {
++       this.myAiChatElement = c.nativeElement;
++       this.myAiChatElement?.addEventListener(CHAT_EVENT_NAME, this.onChatLinkClick);
++     }
+
+      ngOnDestroy() {
+        this.myDashboardElement?.removeEventListener(EVENT_NAME, this.onDashboardLoaded);
++       this.myAiChatElement?.removeEventListener(CHAT_EVENT_NAME, this.onChatLinkClick);
+      }
+    }
+```
+
+[Read more about AI Assistant events](./ai_assistant_custom_element.md#supported-events).
