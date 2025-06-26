@@ -13,6 +13,8 @@ import {
     useInteractions,
     FloatingPortal,
     FloatingArrow,
+    Middleware,
+    safePolygon,
 } from "@floating-ui/react";
 import React, { useRef, useMemo, useState } from "react";
 import { bem } from "../@utils/bem.js";
@@ -25,8 +27,9 @@ import {
     getFlipFallbackOrder,
     getOppositeBasicPlacement,
 } from "./utils.js";
-import { ARROW_HEIGHT, ARROW_WIDTH } from "./constants.js";
+import { ARROW_HEIGHT, ARROW_WIDTH, HIDE_DELAY, SHOW_DELAY } from "./constants.js";
 import { useTheme, useIsScopeThemed, ConditionalScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider";
+import { useOverlayZIndexWithRegister } from "../../Overlay/index.js";
 
 const { b, e } = bem("gd-ui-kit-tooltip");
 
@@ -38,8 +41,8 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
     content,
     arrowPlacement = "top",
     triggerBy = [],
-    hoverOpenDelay = 0,
-    hoverCloseDelay = 0,
+    hoverOpenDelay = SHOW_DELAY,
+    hoverCloseDelay = HIDE_DELAY,
     showArrow = true,
     width,
     offset: offsetProp,
@@ -52,7 +55,9 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
     const isScopeThemed = useIsScopeThemed();
     const theme = isScopeThemed ? themeFromContext : undefined;
 
-    const customShiftMiddleware = {
+    const zIndex = useOverlayZIndexWithRegister();
+
+    const customShiftMiddleware: Middleware = {
         name: "customShift",
         fn(args) {
             const { x, y, rects, middlewareData } = args;
@@ -91,12 +96,14 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
     const triggerDimensions = getDimensionsFromRef(refs.reference);
     const floatingDimensions = getDimensionsFromRef(refs.floating);
 
-    const showTooltip = useMemo(() => isOpen || triggerBy.length === 0, [triggerBy, isOpen]);
+    const hasNoTriggers = triggerBy.length === 0;
+    const isTooltipVisible = useMemo(() => isOpen || hasNoTriggers, [hasNoTriggers, isOpen]);
 
     // trigger events
     const hover = useHover(context, {
         enabled: triggerBy.includes("hover"),
         move: false,
+        handleClose: safePolygon({ requireIntent: true }),
         delay: {
             open: hoverOpenDelay,
             close: hoverCloseDelay,
@@ -110,6 +117,10 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
         enabled: triggerBy.includes("click"),
     });
 
+    const handleClose = React.useCallback(() => {
+        setIsOpen(false);
+    }, []);
+
     //close on escape
     const dismiss = useDismiss(context);
     const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, hover, focus, click]);
@@ -120,13 +131,14 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
                 {anchor}
             </div>
 
-            <FloatingPortal>
-                {showTooltip ? (
+            {isTooltipVisible ? (
+                <FloatingPortal>
                     <ConditionalScopedThemeProvider>
                         <div
-                            className={b({ width: width === "auto" ? "auto" : undefined })}
+                            className={b({ width: width === "auto" ? "auto" : false })}
                             ref={refs.setFloating}
                             style={{
+                                zIndex,
                                 ...floatingStyles,
                                 width: width === "auto" ? triggerDimensions.width : width,
                             }}
@@ -137,7 +149,8 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
                             role={accessibilityConfig?.role ?? "tooltip"}
                             {...getFloatingProps()}
                         >
-                            {content}
+                            {typeof content === "function" ? content({ onClose: handleClose }) : content}
+
                             {showArrow ? (
                                 <FloatingArrow
                                     staticOffset={computeArrowOffset(
@@ -156,8 +169,8 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
                             ) : null}
                         </div>
                     </ConditionalScopedThemeProvider>
-                ) : null}
-            </FloatingPortal>
+                </FloatingPortal>
+            ) : null}
         </>
     );
 };

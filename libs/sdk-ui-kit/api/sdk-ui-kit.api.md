@@ -324,7 +324,7 @@ export const CommunityEditionDialog: React_2.FC<ICommunityEditionDialogProps>;
 export const ComponentLabelsProvider: React_2.FC<IComponentLabelsProviderProps>;
 
 // @internal (undocumented)
-export function ComponentTable<TProps extends object, TProp extends keyof TProps>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, }: IComponentTableProps<TProps, TProp>): React_2.JSX.Element;
+export function ComponentTable<TProps extends object>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, cellStyle, }: IComponentTableProps<TProps>): React_2.JSX.Element;
 
 // @internal (undocumented)
 export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
@@ -1260,7 +1260,7 @@ export type IComponentLabelsProviderProps = {
 };
 
 // @internal (undocumented)
-export interface IComponentTableProps<TProps extends object, TProp extends keyof TProps> {
+export interface IComponentTableProps<TProps extends object> {
     // (undocumented)
     align?: "center" | "flex-start";
     // (undocumented)
@@ -1268,17 +1268,19 @@ export interface IComponentTableProps<TProps extends object, TProp extends keyof
     // (undocumented)
     cellHeight?: number;
     // (undocumented)
+    cellStyle?: (props: TProps) => React_2.CSSProperties | undefined;
+    // (undocumented)
     cellWidth?: number;
     // (undocumented)
     codeSnippet?: string;
     // (undocumented)
-    columnsBy?: IPropCombination<TProps, TProp> | undefined;
+    columnsBy?: IPropCombination<TProps, keyof TProps> | undefined;
     // (undocumented)
     Component: React_2.ComponentType<TProps>;
     // (undocumented)
     debug?: boolean;
     // (undocumented)
-    rowsBy: IPropCombination<TProps, TProp>[];
+    rowsBy: IPropCombination<TProps, keyof TProps>[];
 }
 
 // @internal (undocumented)
@@ -4875,6 +4877,14 @@ export type IUiFocusManagerProps = {
 };
 
 // @internal (undocumented)
+export interface IUiLinkProps extends Omit<React_2.HTMLProps<HTMLAnchorElement>, "className"> {
+    // (undocumented)
+    flipUnderline?: boolean;
+    // (undocumented)
+    variant: "primary" | "secondary" | "inverse";
+}
+
+// @internal (undocumented)
 export interface IUiListboxContext<InteractiveItemData, StaticItemData = React_2.ReactNode> {
     // (undocumented)
     focusedIndex: number | undefined;
@@ -5993,6 +6003,9 @@ export interface UiIconProps {
     type: IconType;
 }
 
+// @internal (undocumented)
+export const UiLink: React_2.FC<IUiLinkProps>;
+
 // @internal
 export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
 
@@ -6195,9 +6208,11 @@ export const UiTooltip: React_2.FC<UiTooltipProps>;
 // @internal (undocumented)
 export interface UiTooltipProps {
     accessibilityConfig?: IAccessibilityConfigBase;
-    anchor: React.ReactNode;
+    anchor: React_2.ReactNode;
     arrowPlacement?: TooltipArrowPlacement;
-    content: React.ReactNode;
+    content: React_2.ReactNode | ((args: {
+        onClose: () => void;
+    }) => React_2.ReactNode);
     hoverCloseDelay?: number;
     hoverOpenDelay?: number;
     offset?: number;
@@ -6276,10 +6291,13 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
 
 // @internal
-export const useOverlayController: () => OverlayController;
+export const useOverlayController: () => OverlayController | undefined;
 
 // @internal
-export const useOverlayZIndex: (uuid: string) => number;
+export const useOverlayZIndex: (uuid: string) => number | undefined;
+
+// @internal
+export function useOverlayZIndexWithRegister(): number;
 
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;

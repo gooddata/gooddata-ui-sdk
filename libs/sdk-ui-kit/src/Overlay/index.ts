@@ -10,6 +10,7 @@ export {
     OverlayControllerProvider,
     useOverlayController,
     useOverlayZIndex,
+    useOverlayZIndexWithRegister,
 } from "./OverlayContext.js";
 export type { IErrorOverlayProps } from "./ErrorOverlay.js";
 export { ErrorOverlay } from "./ErrorOverlay.js";

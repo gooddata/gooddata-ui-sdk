@@ -1,6 +1,7 @@
-// (C) 2022 GoodData Corporation
-import React, { createContext, useContext } from "react";
+// (C) 2022-2025 GoodData Corporation
+import React, { createContext, useContext, useState } from "react";
 import { OverlayController } from "./OverlayController.js";
+import { v4 as uuid } from "uuid";
 
 /**
  * @internal
@@ -44,7 +45,7 @@ export const OverlayControllerProvider: React.FC<IOverlayControllerProviderProps
  *
  * @internal
  */
-export const useOverlayController = (): OverlayController => {
+export const useOverlayController = (): OverlayController | undefined => {
     return useContext(OverlayContext);
 };
 
@@ -57,7 +58,31 @@ export const useOverlayController = (): OverlayController => {
  *
  * @internal
  */
-export const useOverlayZIndex = (uuid: string): number => {
+export const useOverlayZIndex = (uuid: string): number | undefined => {
     const overlayController = useContext(OverlayContext);
-    return overlayController.getZIndex(uuid);
+    return overlayController?.getZIndex(uuid);
 };
+
+/**
+ * Registers a new overlay and returns its z-index
+ *
+ * @returns the overlay's z-index
+ *
+ * @internal
+ */
+export function useOverlayZIndexWithRegister() {
+    const [overlayId] = useState(uuid());
+    const overlayController = useOverlayController();
+    const zIndex = useOverlayZIndex(overlayId);
+
+    React.useEffect(() => {
+        if (!overlayController) {
+            return undefined;
+        }
+
+        overlayController.addOverlay(overlayId);
+        return () => overlayController.removeOverlay(overlayId);
+    }, [overlayController, overlayId]);
+
+    return zIndex;
+}

@@ -1775,6 +1775,16 @@
         "comment": "",
         "limit": 0
     },
+    "addPanel.dashboardLayout.tooltip.learnMore": {
+        "value": "Learn more",
+        "comment": "",
+        "limit": 0
+    },
+    "addPanel.dashboardLayout.tooltip.button": {
+        "value": "Got it",
+        "comment": "",
+        "limit": 0
+    },
     "visualizationsList.dragToAdd": {
         "value": "Drag to add",
         "comment": "",

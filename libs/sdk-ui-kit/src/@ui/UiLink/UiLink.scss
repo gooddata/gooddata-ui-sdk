@@ -1,0 +1,44 @@
+// (C) 2025 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+
+.gd-ui-kit-link {
+    &--variant-primary {
+        color: variables.$gd-palette-primary-base;
+
+        &:hover {
+            color: variables.$gd-palette-primary-base-darken06;
+        }
+    }
+
+    &--variant-secondary {
+        color: variables.$gd-color-link;
+
+        &:hover {
+            color: variables.$gd-color-text;
+        }
+    }
+
+    &--variant-inverse {
+        color: variables.$gd-color-text-light;
+
+        &:hover {
+            color: variables.$gd-color-text-light;
+        }
+    }
+
+    transition: text-decoration-color 0.1s ease-in-out;
+    text-decoration: underline;
+
+    text-decoration-color: currentColor;
+    &:hover {
+        text-decoration-color: transparent;
+    }
+
+    &--flipUnderline {
+        text-decoration-color: transparent;
+        &:hover {
+            text-decoration-color: currentColor;
+        }
+    }
+}
