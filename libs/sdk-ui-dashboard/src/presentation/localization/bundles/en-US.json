@@ -117,6 +117,11 @@
         "comment": "Success message shown after modifying an existing drill interaction",
         "limit": 0
     },
+    "filterBar.label": {
+        "value": "Filters",
+        "comment": "Label for the filter bar section",
+        "limit": 0
+    },
     "filterBar.showAll": {
         "value": "Show all",
         "comment": "Link text to expand and show all available filters",

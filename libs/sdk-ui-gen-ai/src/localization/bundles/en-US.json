@@ -74,6 +74,11 @@
         "comment": "Warning disclaimer about AI response accuracy shown to users",
         "limit": 0
     },
+    "gd.gen-ai.dialog.label": {
+        "value": "AI assistant chatbot dialog",
+        "comment": "Label for the dialog containing the AI chatbot interface",
+        "limit": 0
+    },
     "gd.gen-ai.header.reset-tooltip": {
         "value": "Reset",
         "comment": "Tooltip for button that resets the AI chatbot conversation",
