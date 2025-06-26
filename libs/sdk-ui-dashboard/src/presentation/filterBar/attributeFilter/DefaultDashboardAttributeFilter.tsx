@@ -42,6 +42,7 @@ import {
     selectDashboardFiltersApplyMode,
     selectEnableDashboardFiltersApplyModes,
     selectEnableAttributeFilterVirtualisedList,
+    selectEnableDashboardFiltersApplyWithoutLoading,
 } from "../../../model/index.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { getVisibilityIcon } from "../utils.js";
@@ -121,6 +122,9 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     );
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
     const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const enableDashboardFiltersApplyWithoutLoading = useDashboardSelector(
+        selectEnableDashboardFiltersApplyWithoutLoading,
+    );
     const enableAttributeFilterVirtualisedList = useDashboardSelector(
         selectEnableAttributeFilterVirtualisedList,
     );
@@ -506,6 +510,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 enableAttributeFilterVirtualised={enableAttributeFilterVirtualisedList}
                 withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
                 enableDashboardFiltersApplyModes={enableDashboardFiltersApplyModes}
+                enableDashboardFiltersApplyWithoutLoading={enableDashboardFiltersApplyWithoutLoading}
             />
         </AttributeFilterParentFilteringProvider>
     );

@@ -315,6 +315,17 @@ export interface IAttributeFilterCoreProps {
      * Specifies the overlay position type for the attribute filter dropdown.
      */
     overlayPositionType?: OverlayPositionType;
+
+    /**
+     * Enables the new apply all filters at once mode without loading on every change
+     *
+     * @remarks
+     * This is a temporary flag to enable the new apply all filters at once mode without loading on every change.
+     * It will be removed after the feature is fully tested and released.
+     *
+     * @alpha
+     */
+    enableDashboardFiltersApplyWithoutLoading?: boolean;
 }
 
 /**

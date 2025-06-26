@@ -105,6 +105,7 @@ export const useAttributeFilterController = (
         enableDashboardFiltersApplyModes = false,
         enableAttributeFilterVirtualised = false,
         withoutApply = false,
+        enableDashboardFiltersApplyWithoutLoading = false,
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
@@ -193,11 +194,13 @@ export const useAttributeFilterController = (
             setShouldReloadElements,
             displayAsLabel,
             shouldIncludeLimitingFilters,
+            withoutApply,
         },
         supportsKeepingDependentFiltersSelection,
         supportsCircularDependencyInFilters,
         enableDuplicatedLabelValuesInAttributeFilter,
         enableDashboardFiltersApplyModes,
+        enableDashboardFiltersApplyWithoutLoading,
     );
     const callbacks = useCallbacks(
         handler,
@@ -314,11 +317,13 @@ function useInitOrReload(
         setShouldReloadElements: (value: boolean) => void;
         displayAsLabel: ObjRef;
         shouldIncludeLimitingFilters: boolean;
+        withoutApply: boolean;
     },
     supportsKeepingDependentFiltersSelection: boolean,
     supportsCircularDependencyInFilters: boolean,
     enableDuplicatedLabelValuesInAttributeFilter: boolean,
     enableDashboardFiltersApplyModes: boolean,
+    enableDashboardFiltersApplyWithoutLoading: boolean,
 ) {
     const {
         filter,
@@ -336,6 +341,7 @@ function useInitOrReload(
         setShouldReloadElements,
         displayAsLabel,
         shouldIncludeLimitingFilters,
+        withoutApply,
     } = props;
 
     useEffect(() => {
@@ -437,6 +443,7 @@ function useInitOrReload(
             limitingValidationItems,
             limitingValidationItemsChanged,
             displayAsLabel,
+            withoutApply,
         };
 
         const change = resetOnParentFilterChange
@@ -447,6 +454,7 @@ function useInitOrReload(
                   supportsKeepingDependentFiltersSelection,
                   enableDuplicatedLabelValuesInAttributeFilter,
                   enableDashboardFiltersApplyModes,
+                  enableDashboardFiltersApplyWithoutLoading,
               );
         refreshByType(
             handler,
@@ -479,6 +487,8 @@ function useInitOrReload(
         enableDashboardFiltersApplyModes,
         shouldReloadElements,
         shouldIncludeLimitingFilters,
+        withoutApply,
+        enableDashboardFiltersApplyWithoutLoading,
     ]);
 
     const isMountedRef = useRef(false);
@@ -547,6 +557,7 @@ type UpdateFilterProps = {
     setShouldReloadElements: (value: boolean) => void;
     limitingValidationItems: ObjRef[];
     limitingValidationItemsChanged: boolean;
+    withoutApply: boolean;
 };
 
 type UpdateFilterType = "init-parent" | "init-self" | undefined;
@@ -565,10 +576,12 @@ function updateNonResettingFilter(
         limitingValidationItemsChanged,
         limitingValidationItems,
         displayAsLabel,
+        withoutApply,
     }: UpdateFilterProps,
     supportsKeepingDependentFiltersSelection: boolean,
     enableDuplicatedLabelValuesInAttributeFilter: boolean,
     enableDashboardFiltersApplyModes: boolean,
+    enableDashboardFiltersApplyWithoutLoading: boolean,
 ): UpdateFilterType {
     if (
         limitingAttributesChanged ||
@@ -626,6 +639,13 @@ function updateNonResettingFilter(
             setShouldReloadElements(true);
             return "init-parent";
         }
+
+        // If the filter changes are commited without apply, we want to avoid loading based on FF.
+        // This is experimental and will be removed after the feature is fully tested and released.
+        if (enableDashboardFiltersApplyWithoutLoading && enableDashboardFiltersApplyModes && withoutApply) {
+            return undefined;
+        }
+
         return "init-self";
     }
 

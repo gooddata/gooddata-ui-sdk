@@ -53,6 +53,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         enableDuplicatedLabelValuesInAttributeFilter = true,
         enableAttributeFilterVirtualised,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
+        enableDashboardFiltersApplyWithoutLoading = false,
     } = props;
 
     const DefaultComponents = getAttributeFilterDefaultComponents(props);
@@ -119,6 +120,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     withoutApply={props.withoutApply}
                     enableDashboardFiltersApplyModes={props.enableDashboardFiltersApplyModes}
                     overlayPositionType={props.overlayPositionType}
+                    enableDashboardFiltersApplyWithoutLoading={enableDashboardFiltersApplyWithoutLoading}
                 >
                     {children}
                 </AttributeFilterContextProvider>
