@@ -800,6 +800,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableDestinationTestRecipient,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDashboardFiltersApplyWithoutLoading,
+            "enableDashboardFiltersApplyWithoutLoading",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardFiltersApplyWithoutLoading,
+        ),
     };
 }
 
