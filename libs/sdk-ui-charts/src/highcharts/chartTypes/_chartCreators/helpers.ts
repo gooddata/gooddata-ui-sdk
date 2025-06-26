@@ -466,7 +466,13 @@ export function getPointsVisibleInAxisRange(
     return points.filter((point) => isPointVisibleInAxisRange(point, axis));
 }
 
-export function isPointVisibleInAxisRange(point: Highcharts.Point, axis: Highcharts.Axis): boolean {
+export function isPointVisibleInAxisRange(
+    point: Highcharts.Point,
+    axis: Highcharts.Axis | undefined,
+): boolean {
+    if (!axis) {
+        return true;
+    }
     const { min, max } = axis.getExtremes();
     return point.x >= min && point.x <= Math.round(max);
 }
@@ -478,26 +484,30 @@ export function getPointsVisibleInAxesRanges(
     return points.filter((point) => isPointVisibleInAxesRanges(point, axes));
 }
 
+function isInsideXAxisRange(point: Highcharts.Point, axis: Highcharts.Axis): boolean {
+    const { min, max } = axis.getExtremes();
+    return point.x >= min && point.x <= Math.round(max);
+}
+
+function isInsideYAxisRange(point: Highcharts.Point, axis: Highcharts.Axis): boolean {
+    const { min, max } = axis.getExtremes();
+    return point.y !== undefined && point.y >= min && point.y <= Math.round(max);
+}
+
 export function isPointVisibleInAxesRanges(point: Highcharts.Point, axes: Highcharts.Axis[]): boolean {
     const xAxis = axes.find((axis) => axis.isXAxis);
     const yAxis = axes.find((axis) => !axis.isXAxis);
 
-    if (!yAxis) {
-        return (
-            Math.trunc(xAxis?.getExtremes().min) <= point.x && point.x <= Math.round(xAxis?.getExtremes().max)
-        );
+    if (xAxis && yAxis) {
+        return isInsideXAxisRange(point, xAxis) && isInsideYAxisRange(point, yAxis);
     }
 
-    if (!xAxis) {
-        return (
-            Math.trunc(yAxis?.getExtremes().min) <= point.y && point.y <= Math.round(yAxis?.getExtremes().max)
-        );
+    if (!yAxis && xAxis) {
+        return isInsideXAxisRange(point, xAxis);
     }
 
-    return (
-        Math.trunc(xAxis?.getExtremes().min) <= point.x &&
-        point.x <= Math.round(xAxis?.getExtremes().max) &&
-        yAxis?.getExtremes().min <= point.y &&
-        point.y <= Math.round(yAxis?.getExtremes().max)
-    );
+    if (!xAxis && yAxis) {
+        return isInsideYAxisRange(point, yAxis);
+    }
+    return true;
 }

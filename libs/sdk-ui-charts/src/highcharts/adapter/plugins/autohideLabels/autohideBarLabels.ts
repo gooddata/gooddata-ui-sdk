@@ -32,7 +32,7 @@ import { Axis } from "../../../lib/index.js";
 const toggleStackedChartLabels = (
     visiblePoints: any[],
     axisRangeForAxes: IAxisRangeForAxes,
-    zoomableAxis: Axis,
+    zoomableAxis?: Axis,
 ) => {
     const intersectionFound = visiblePoints.filter(hasDataLabel).some((point) => {
         const { dataLabel, shapeArgs } = point;
@@ -79,7 +79,7 @@ const toggleNonStackedChartLabels = (
     points: any,
     axisRangeForAxes: IAxisRangeForAxes,
     shouldCheckShapeIntersection: boolean = false,
-    zoomableAxis: Axis,
+    zoomableAxis?: Axis,
 ) => {
     // for intersection detection keep only points visible within axis range
     const visiblePoints = getPointsVisibleInAxisRange(points, zoomableAxis);
