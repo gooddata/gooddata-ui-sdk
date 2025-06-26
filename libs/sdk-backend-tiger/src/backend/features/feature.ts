@@ -651,7 +651,7 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             TigerFeaturesNames.EnableDashboardFiltersApplyModes,
             "enableDashboardFiltersApplyModes",
             "BOOLEAN",
-            FeatureFlagsValues.enableRawExports,
+            FeatureFlagsValues.enableDashboardFiltersApplyModes,
         ),
         ...loadFeature(
             features,
