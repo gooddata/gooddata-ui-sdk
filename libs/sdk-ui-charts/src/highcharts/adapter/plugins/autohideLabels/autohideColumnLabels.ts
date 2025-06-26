@@ -62,7 +62,7 @@ import { isWaterfall } from "../../../chartTypes/_util/common.js";
 const toggleNonStackedChartLabels = (
     points: Highcharts.Point[],
     axisRangeForAxes: IAxisRangeForAxes,
-    zoomableAxis: Axis,
+    zoomableAxis?: Axis,
     shouldCheckShapeIntersection: boolean = false,
     type?: string,
 ) => {
@@ -120,7 +120,7 @@ const getWaterfallAxisRangeForAxes = (axisRangeForAxes: IAxisRangeForAxes) => {
 const toggleStackedChartLabels = (
     visiblePoints: Point[],
     axisRangeForAxes: IAxisRangeForAxes,
-    zoomableAxis: Axis,
+    zoomableAxis?: Axis,
 ) => {
     const toggleLabel = (point: any) => {
         const {
