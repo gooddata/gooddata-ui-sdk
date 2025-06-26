@@ -28,6 +28,7 @@ import { internalTabsThemeVariables } from "./internal/tabs.js";
 import { internalFontThemeVariables } from "./internal/font.js";
 import { internalIconThemeVariables } from "./internal/icon.js";
 import { internalSpacingThemeVariables } from "./internal/spacing.js";
+import { internalTableThemeVariables } from "./internal/table.js";
 import { internalTransitionThemeVariables } from "./internal/transition.js";
 import { internalModelerThemeVariables } from "./internal/modeler.js";
 // Deprecated
@@ -71,6 +72,7 @@ export const themeInternalCssVariables: ThemeInternalCssVariable[] = [
     ...internalButtonThemeVariables,
     ...internalIconThemeVariables,
     ...internalTabsThemeVariables,
+    ...internalTableThemeVariables,
     // Modeler
     ...internalModelerThemeVariables,
 ];

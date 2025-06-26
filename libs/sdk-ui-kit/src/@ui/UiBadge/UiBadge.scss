@@ -1,0 +1,16 @@
+// (C) 2025 GoodData Corporation
+
+.gd-ui-kit-badge {
+    display: flex;
+    padding: 0 var(--gd-spacing-10px);
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    font-size: 12px;
+
+    font-weight: 400;
+    line-height: 20px;
+
+    background: var(--gd-palette-complementary-2);
+    color: var(--gd-palette-complementary-7);
+}

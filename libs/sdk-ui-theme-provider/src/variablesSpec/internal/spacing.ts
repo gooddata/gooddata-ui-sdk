@@ -47,4 +47,9 @@ export const internalSpacingThemeVariables: ThemeInternalCssVariable[] = [
         variableName: "--gd-spacing-16px",
         defaultValue: "16px",
     },
+    {
+        type: "internal",
+        variableName: "--gd-spacing-34px",
+        defaultValue: "34px",
+    },
 ];
