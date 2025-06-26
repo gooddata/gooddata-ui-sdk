@@ -6,6 +6,7 @@ import { Alignment, OverlayPositionType } from "../typings/overlay.js";
  * @internal
  */
 export interface IOverlayProps<T> {
+    id?: string;
     alignPoints?: IAlignPoint[];
     alignTo?: string | HTMLElement | null;
     children?: React.ReactNode;

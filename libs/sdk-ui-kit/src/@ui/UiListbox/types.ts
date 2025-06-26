@@ -2,6 +2,7 @@
 
 import React from "react";
 import { IDropdownBodyRenderProps } from "../../Dropdown/index.js";
+import { IconType } from "../@types/icon.js";
 
 /**
  * @internal
@@ -19,8 +20,10 @@ export interface IUiListboxInteractiveItem<T> {
     type: "interactive";
     id: string;
     stringTitle: string;
+    icon?: IconType;
     isDisabled?: boolean;
     data: T;
+    tooltip?: string;
 }
 
 /**
@@ -38,6 +41,7 @@ export interface UiListboxInteractiveItemProps<T> {
 
     isFocused: boolean;
     isSelected: boolean;
+    isCompact: boolean;
 
     onSelect: () => void;
 }
@@ -62,6 +66,11 @@ export interface IUiListboxContext<InteractiveItemData, StaticItemData = React.R
     setFocusedIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
     isItemFocusable: (item: IUiListboxItem<InteractiveItemData, StaticItemData>) => boolean;
 }
+
+/**
+ * @internal
+ */
+export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
 
 /**
  * @internal
@@ -91,6 +100,7 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React.Reac
     shouldKeyboardActionStopPropagation?: boolean;
     shouldCloseOnSelect?: boolean;
     isDisabledFocusable?: boolean;
+    isCompact?: boolean;
 
-    ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
+    ariaAttributes: UiListboxAriaAttributes;
 }
