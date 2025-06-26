@@ -40,6 +40,7 @@
         line-height: 20px;
         color: variables.$gd-color-text;
         transition: background-color 0.2s;
+        gap: 10px;
 
         &:hover:not(&--isDisabled):not(&--isSelected) {
             background-color: variables.$is-focused-background;
@@ -68,10 +69,20 @@
             color: variables.$gd-color-disabled;
             cursor: not-allowed;
         }
+
+        &--isCompact {
+            font-size: 12px;
+        }
     }
 
     &__item-title {
         width: 100%;
         white-space: nowrap;
+    }
+
+    // wrapper around the question mark icon to center it vertically
+    &__item-explanation {
+        display: flex;
+        align-items: center;
     }
 }

@@ -94,4 +94,7 @@ export type IconType =
     | "horn"
     | "cw"
     | "ccw"
-    | "table";
+    | "table"
+    | "directionColumn"
+    | "directionRow"
+    | "header";

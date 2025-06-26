@@ -2682,8 +2682,38 @@
         "comment": "",
         "limit": 0
     },
+    "nestedLayoutToolbar.direction.title": {
+        "value": "Layout direction",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayoutToolbar.direction.row": {
+        "value": "Horizontal with wrap",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayoutToolbar.direction.row.tooltip": {
+        "value": "Horizontal layout with wrap.",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayoutToolbar.direction.column": {
+        "value": "Vertical",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayoutToolbar.direction.column.tooltip": {
+        "value": "Vertical layout.",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayoutToolbar.direction.column.disabledTooltip": {
+        "value": "Direction cannot be changed to a vertical if the container contains nested containers with a horizontal direction.",
+        "comment": "",
+        "limit": 0
+    },
     "nestedLayout.tab.title": {
-        "value": "Column container",
+        "value": "Container",
         "comment": "",
         "limit": 0
     },

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -16,6 +16,7 @@ export const DashboardInsightEditMenuBubble: React.FC<IDashboardInsightMenuBubbl
 
     return (
         <ConfigurationBubble
+            alignTo=".s-dash-item.is-selected"
             classNames={cx(
                 "edit-insight-config",
                 "s-edit-insight-config",
