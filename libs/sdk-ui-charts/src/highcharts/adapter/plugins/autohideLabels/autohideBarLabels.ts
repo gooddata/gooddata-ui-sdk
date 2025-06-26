@@ -11,6 +11,7 @@ import {
     getDataPointsOfVisibleSeries,
     IAxisRangeForAxes,
     getAxisWithCategories,
+    isPointVisibleInAxisRange,
     getPointsVisibleInAxisRange,
 } from "../../../chartTypes/_chartCreators/helpers.js";
 
@@ -26,8 +27,13 @@ import {
     setStackVisibilityByOpacity,
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 import { areLabelsOverlappingColumns, getStackItems, getStackTotalGroups } from "./autohideColumnLabels.js";
+import { Axis } from "../../../lib/index.js";
 
-const toggleStackedChartLabels = (visiblePoints: any[], axisRangeForAxes: IAxisRangeForAxes) => {
+const toggleStackedChartLabels = (
+    visiblePoints: any[],
+    axisRangeForAxes: IAxisRangeForAxes,
+    zoomableAxis: Axis,
+) => {
     const intersectionFound = visiblePoints.filter(hasDataLabel).some((point) => {
         const { dataLabel, shapeArgs } = point;
 
@@ -58,7 +64,11 @@ const toggleStackedChartLabels = (visiblePoints: any[], axisRangeForAxes: IAxisR
                 // switch axis for bar chart
                 return foundIntersection
                     ? hideDataLabel(point)
-                    : showStackLabelInAxisRange(point, axisRangeForAxes);
+                    : showStackLabelInAxisRange(
+                          point,
+                          axisRangeForAxes,
+                          isPointVisibleInAxisRange(point, zoomableAxis),
+                      );
             }
             return null;
         });
@@ -69,8 +79,11 @@ const toggleNonStackedChartLabels = (
     points: any,
     axisRangeForAxes: IAxisRangeForAxes,
     shouldCheckShapeIntersection: boolean = false,
+    zoomableAxis: Axis,
 ) => {
-    const sortedPoints = sortBy(points, (a, b) => {
+    // for intersection detection keep only points visible within axis range
+    const visiblePoints = getPointsVisibleInAxisRange(points, zoomableAxis);
+    const sortedPoints = sortBy(visiblePoints, (a, b) => {
         const firstLabelAttr = getDataLabelAttributes(a);
         const nextLabelAttr = getDataLabelAttributes(b);
         return firstLabelAttr.y - nextLabelAttr.y;
@@ -98,7 +111,14 @@ const toggleNonStackedChartLabels = (
     if (intersectionFound) {
         hideDataLabels(points);
     } else {
-        points.forEach((point: any) => showDataLabelInAxisRange(point, point.y, axisRangeForAxes));
+        points.forEach((point: any) =>
+            showDataLabelInAxisRange(
+                point,
+                point.y,
+                axisRangeForAxes,
+                isPointVisibleInAxisRange(point, zoomableAxis),
+            ),
+        );
     }
 };
 
@@ -106,28 +126,37 @@ const toggleNonStackedChartLabels = (
 export const autohideBarLabels = (chart: any): void => {
     const isStackedChart = isStacked(chart);
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
-    const axisWithCategories = getAxisWithCategories(chart);
-    const pointsVisibleInAxisRange = getPointsVisibleInAxisRange(visiblePoints, axisWithCategories);
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);
+    const zoomableAxis = getAxisWithCategories(chart);
 
     if (isStackedChart) {
-        toggleStackedChartLabels(pointsVisibleInAxisRange, axisRangeForAxes);
+        toggleStackedChartLabels(visiblePoints, axisRangeForAxes, zoomableAxis);
     } else {
-        toggleNonStackedChartLabels(pointsVisibleInAxisRange, axisRangeForAxes, true);
+        toggleNonStackedChartLabels(visiblePoints, axisRangeForAxes, true, zoomableAxis);
     }
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const handleBarLabelsOutsideChart = (chart: any): void => {
+export const handleBarLabelsOutsideChart = (chart: Highcharts.Chart): void => {
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);
+    const axisWithCategories = getAxisWithCategories(chart);
 
-    visiblePoints.forEach((point: any) => {
+    visiblePoints.forEach((point: Highcharts.Point) => {
         if (!isStacked(chart)) {
-            showDataLabelInAxisRange(point, point.y, axisRangeForAxes);
+            showDataLabelInAxisRange(
+                point,
+                point.y,
+                axisRangeForAxes,
+                isPointVisibleInAxisRange(point, axisWithCategories),
+            );
         } else {
             // fix for HCH bug for negative stack labels
-            showStackLabelInAxisRange(point, axisRangeForAxes);
+            showStackLabelInAxisRange(
+                point,
+                axisRangeForAxes,
+                isPointVisibleInAxisRange(point, axisWithCategories),
+            );
         }
     });
 };

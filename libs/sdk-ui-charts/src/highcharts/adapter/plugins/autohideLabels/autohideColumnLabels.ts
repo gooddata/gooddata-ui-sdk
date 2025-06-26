@@ -11,13 +11,14 @@ import {
     getAxisRangeForAxes,
     getAxisWithCategories,
     getDataPointsOfVisibleSeries,
-    getPointsVisibleInAxisRange,
     getShapeAttributes,
     IAxisRangeForAxes,
     IRectBySize,
     isIntersecting,
+    getPointsVisibleInAxisRange,
     isStacked,
     toNeighbors,
+    isPointVisibleInAxisRange,
 } from "../../../chartTypes/_chartCreators/helpers.js";
 
 import {
@@ -59,11 +60,14 @@ import { isWaterfall } from "../../../chartTypes/_util/common.js";
  */
 
 const toggleNonStackedChartLabels = (
-    visiblePoints: any,
+    points: Highcharts.Point[],
     axisRangeForAxes: IAxisRangeForAxes,
+    zoomableAxis: Axis,
     shouldCheckShapeIntersection: boolean = false,
     type?: string,
 ) => {
+    // use only points visible within axis range when zoomed for intersection detection
+    const visiblePoints = getPointsVisibleInAxisRange(points, zoomableAxis);
     const foundIntersection = toNeighbors(
         // some data labels may not be rendered (too many points)
         // should not get the invisible point
@@ -90,13 +94,14 @@ const toggleNonStackedChartLabels = (
     });
 
     if (foundIntersection) {
-        hideDataLabels(visiblePoints);
+        hideDataLabels(points);
     } else {
-        visiblePoints.forEach((point: any) =>
+        points.forEach((point: any) =>
             showDataLabelInAxisRange(
                 point,
                 isWaterfall(type) ? Math.abs(point.y) : point.y,
                 isWaterfall(type) ? getWaterfallAxisRangeForAxes(axisRangeForAxes) : axisRangeForAxes,
+                isPointVisibleInAxisRange(point, zoomableAxis),
             ),
         );
     }
@@ -112,7 +117,11 @@ const getWaterfallAxisRangeForAxes = (axisRangeForAxes: IAxisRangeForAxes) => {
     };
 };
 
-const toggleStackedChartLabels = (visiblePoints: Point[], axisRangeForAxes: IAxisRangeForAxes) => {
+const toggleStackedChartLabels = (
+    visiblePoints: Point[],
+    axisRangeForAxes: IAxisRangeForAxes,
+    zoomableAxis: Axis,
+) => {
     const toggleLabel = (point: any) => {
         const {
             dataLabel,
@@ -126,7 +135,11 @@ const toggleStackedChartLabels = (visiblePoints: Point[], axisRangeForAxes: IAxi
             return isOverlappingHeight
                 ? hideDataLabel(point)
                 : // fix for HCH bug for negative stack labels
-                  showStackLabelInAxisRange(point, axisRangeForAxes);
+                  showStackLabelInAxisRange(
+                      point,
+                      axisRangeForAxes,
+                      isPointVisibleInAxisRange(point, zoomableAxis),
+                  );
         }
 
         return null;
@@ -308,18 +321,18 @@ export const autohideColumnLabels = (chart: Highcharts.Chart): void => {
     const isStackedChart = isStacked(chart);
 
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
-    const axisWithCategories = getAxisWithCategories(chart);
-    const pointsVisibleInAxisRange = getPointsVisibleInAxisRange(visiblePoints, axisWithCategories);
+    const zoomableAxis = getAxisWithCategories(chart);
 
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);
 
     // stack chart labels is displayed inside column
     if (isStackedChart) {
-        toggleStackedChartLabels(pointsVisibleInAxisRange.filter(hasLabelInside), axisRangeForAxes);
+        toggleStackedChartLabels(visiblePoints.filter(hasLabelInside), axisRangeForAxes, zoomableAxis);
     } else {
         toggleNonStackedChartLabels(
-            pointsVisibleInAxisRange,
+            visiblePoints,
             axisRangeForAxes,
+            zoomableAxis,
             true,
             chart?.options?.chart?.type,
         );
@@ -329,13 +342,23 @@ export const autohideColumnLabels = (chart: Highcharts.Chart): void => {
 export const handleColumnLabelsOutsideChart = (chart: Highcharts.Chart): void => {
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);
+    const axisWithCategories = getAxisWithCategories(chart);
 
     visiblePoints.forEach((point: any) => {
         if (!isStacked(chart)) {
-            showDataLabelInAxisRange(point, point.y, axisRangeForAxes);
+            showDataLabelInAxisRange(
+                point,
+                point.y,
+                axisRangeForAxes,
+                isPointVisibleInAxisRange(point, axisWithCategories),
+            );
         } else {
             // fix for HCH bug for negative stack labels
-            showStackLabelInAxisRange(point, axisRangeForAxes);
+            showStackLabelInAxisRange(
+                point,
+                axisRangeForAxes,
+                isPointVisibleInAxisRange(point, axisWithCategories),
+            );
         }
     });
 };

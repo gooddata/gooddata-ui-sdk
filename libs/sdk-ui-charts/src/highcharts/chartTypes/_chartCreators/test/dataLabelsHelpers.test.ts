@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import set from "lodash/set.js";
 import {
     getDataLabelAttributes,
@@ -206,26 +206,26 @@ describe("dataLabelsHelpers", () => {
 
         it("should show data label in second axis", () => {
             point.y = 15;
-            point = set(point, "series.yAxis.opposite", true);
-            showDataLabelInAxisRange(point, point.y, axisRangeForAxes);
+            point = set(point, "series.yAxis.options.opposite", true);
+            showDataLabelInAxisRange(point, point.y, axisRangeForAxes, true);
             expect(point.dataLabel.hide).not.toHaveBeenCalled();
         });
 
         it("should hide data label in second axis", () => {
             point.y = 30;
-            point = set(point, "series.yAxis.opposite", true);
-            showDataLabelInAxisRange(point, point.y, axisRangeForAxes);
+            point = set(point, "series.yAxis.options.opposite", true);
+            showDataLabelInAxisRange(point, point.y, axisRangeForAxes, true);
             expect(point.dataLabel.hide).toHaveBeenCalled();
         });
 
         it("should keep shown data label when inside axis range", () => {
-            showDataLabelInAxisRange(point, point.y, axisRangeForAxes);
+            showDataLabelInAxisRange(point, point.y, axisRangeForAxes, true);
             expect(point.dataLabel.hide).not.toHaveBeenCalled();
         });
 
         it("should hide data label when outside axis range", () => {
             point.y = 20;
-            showDataLabelInAxisRange(point, point.y, axisRangeForAxes);
+            showDataLabelInAxisRange(point, point.y, axisRangeForAxes, true);
             expect(point.dataLabel.hide).toHaveBeenCalled();
         });
     });
@@ -267,42 +267,47 @@ describe("dataLabelsHelpers", () => {
         });
 
         it("should keep shown data label when inside axis range", () => {
-            showStackLabelInAxisRange(point, axisRangeForAxes);
+            showStackLabelInAxisRange(point, axisRangeForAxes, true);
             expect(point.dataLabel.hide).not.toHaveBeenCalled();
         });
 
         it("should hide data label when outside axis range", () => {
             point.y = 10;
             point.stackY = 20;
-            showStackLabelInAxisRange(point, axisRangeForAxes);
+            showStackLabelInAxisRange(point, axisRangeForAxes, true);
             expect(point.dataLabel.hide).toHaveBeenCalled();
         });
 
         it("should show data label in second axis", () => {
             point.y = 15;
             point.stackY = 15;
-            point = set(point, "series.yAxis.opposite", true);
-            showStackLabelInAxisRange(point, axisRangeForAxes);
+            point = set(point, "series.yAxis.options.opposite", true);
+            showStackLabelInAxisRange(point, axisRangeForAxes, true);
             expect(point.dataLabel.hide).not.toHaveBeenCalled();
         });
 
         it("should hide data label in second axis outside range", () => {
             point.y = 30;
-            point = set(point, "series.yAxis.opposite", true);
-            showStackLabelInAxisRange(point, axisRangeForAxes);
+            point = set(point, "series.yAxis.options.opposite", true);
+            showStackLabelInAxisRange(point, axisRangeForAxes, true);
             expect(point.dataLabel.hide).toHaveBeenCalled();
         });
 
         it("should show last data label without stackY", () => {
             delete point.stackY;
             point.total = 10;
-            showStackLabelInAxisRange(point, axisRangeForAxes);
+            showStackLabelInAxisRange(point, axisRangeForAxes, true);
             expect(point.dataLabel.hide).not.toHaveBeenCalled();
         });
 
         it("should hide last data label without stackY", () => {
             delete point.stackY;
-            showStackLabelInAxisRange(point, axisRangeForAxes);
+            showStackLabelInAxisRange(point, axisRangeForAxes, true);
+            expect(point.dataLabel.hide).toHaveBeenCalled();
+        });
+
+        it("should hide data label when outside of zoomed axis range", () => {
+            showStackLabelInAxisRange(point, axisRangeForAxes, false);
             expect(point.dataLabel.hide).toHaveBeenCalled();
         });
     });

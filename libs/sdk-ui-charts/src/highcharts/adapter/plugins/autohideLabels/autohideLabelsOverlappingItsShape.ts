@@ -22,13 +22,13 @@ function autohideLabelsOverlappingItsShape(
     const visibleSeries = getVisibleSeries(chart);
     const visiblePoints = getDataPoints(visibleSeries);
 
-    const axesWithCategories = getAxesWithCategoriesFromSpaceFillingChart(chart);
+    const zoomableAxes = getAxesWithCategoriesFromSpaceFillingChart(chart);
 
     visiblePoints.forEach((point: any) => {
         if (point) {
             // bubble chart has two axes but none of them has categories and is affected by zooming
             const isPointVisible =
-                axesWithCategories.length <= 0 || isPointVisibleInAxesRanges(point, axesWithCategories);
+                zoomableAxes.length <= 0 || isPointVisibleInAxesRanges(point, zoomableAxes);
             if (
                 isLabelOverlappingItsShape(point) ||
                 intersectsParentLabel(point, visiblePoints) ||
