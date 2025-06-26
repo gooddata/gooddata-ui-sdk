@@ -28,3 +28,8 @@ export type VariantPopOut = "popout";
  * @internal
  */
 export type VariantTooltip = "tooltip";
+
+/**
+ * @internal
+ */
+export type VariantTable = "table";

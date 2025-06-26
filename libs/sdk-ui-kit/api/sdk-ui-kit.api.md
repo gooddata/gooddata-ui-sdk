@@ -51,7 +51,7 @@ import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
-import { SortDirection } from '@gooddata/sdk-model';
+import { SortDirection as SortDirection_2 } from '@gooddata/sdk-model';
 import { WeekStart } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
@@ -108,6 +108,11 @@ export type ArrowOffsets = Record<string, ArrowOffset>;
 
 // @internal (undocumented)
 export function AsyncList<T>(props: IAsyncListProps<T>): React_2.JSX.Element;
+
+// @internal (undocumented)
+export const AsyncTable: <T extends {
+    id: string;
+}>(props: IAsyncTableProps<T>) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export class AutoSize extends Component<IAutoSizeProps> {
@@ -984,6 +989,86 @@ export interface IAsyncListProps<T> {
 }
 
 // @internal (undocumented)
+export interface IAsyncTableFilter {
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onItemClick: (option: IAsyncTableFilterOption) => void;
+    // (undocumented)
+    options: Array<IAsyncTableFilterOption>;
+    // (undocumented)
+    selected?: string;
+}
+
+// @internal (undocumented)
+export interface IAsyncTableFilterOption {
+    // (undocumented)
+    isSelected?: boolean;
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    value: string;
+}
+
+// @internal (undocumented)
+export interface IAsyncTableProps<T extends {
+    id: string;
+}> {
+    // (undocumented)
+    bulkActions?: Array<IBulkAction>;
+    // (undocumented)
+    columns: Array<IColumn<T>>;
+    // (undocumented)
+    filters?: Array<IAsyncTableFilter>;
+    // (undocumented)
+    hasNextPage?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    items: T[];
+    // (undocumented)
+    loadNextPage?: () => void;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    maxHeight?: number;
+    // (undocumented)
+    onSearch?: (search: string) => void;
+    // (undocumented)
+    onSort?: (key: keyof T) => void;
+    // (undocumented)
+    renderHeader?: () => React.ReactNode;
+    // (undocumented)
+    renderItem?: (item: T) => React.ReactNode;
+    // (undocumented)
+    renderTitleIcon?: () => React.ReactNode;
+    // (undocumented)
+    selectedItemIds?: Array<string>;
+    // (undocumented)
+    setSelectedItemIds?: (items: Array<string>) => void;
+    // (undocumented)
+    skeletonItemsCount?: number;
+    // (undocumented)
+    sortBy?: keyof T;
+    // (undocumented)
+    sortDirection?: SortDirection;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    titleActions?: Array<IAsyncTableTitleAction>;
+    // (undocumented)
+    totalItemsCount?: number;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface IAsyncTableTitleAction {
+    // (undocumented)
+    renderAction: () => React.ReactNode;
+}
+
+// @internal (undocumented)
 export interface IAutoSizeChildren {
     // (undocumented)
     height: number;
@@ -1137,6 +1222,14 @@ export interface IBucketItemDescriptors {
 }
 
 // @internal (undocumented)
+export interface IBulkAction {
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onClick: () => void;
+}
+
+// @internal (undocumented)
 export interface IButtonAccessibilityConfig extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
 }
 
@@ -1226,6 +1319,32 @@ export interface IColorPreviewProps {
     className?: string;
     // (undocumented)
     colors: string[];
+}
+
+// @internal (undocumented)
+export interface IColumn<T> {
+    // (undocumented)
+    bold?: boolean;
+    // (undocumented)
+    key?: keyof T;
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    renderBadge?: (item: T) => React.ReactNode;
+    // (undocumented)
+    renderButton?: (item: T) => React.ReactNode;
+    // (undocumented)
+    renderMenu?: (item: T) => React.ReactNode;
+    // (undocumented)
+    renderPrefixIcon?: (item: T) => React.ReactNode;
+    // (undocumented)
+    renderRoleIcon?: (item: T) => React.ReactNode;
+    // (undocumented)
+    renderSuffixIcon?: (item: T) => React.ReactNode;
+    // (undocumented)
+    sortable?: boolean;
+    // (undocumented)
+    width?: number;
 }
 
 // @internal (undocumented)
@@ -4465,7 +4584,7 @@ export interface ISortTypeItem {
     // (undocumented)
     localIdentifier: string;
     // (undocumented)
-    sortDirection: SortDirection;
+    sortDirection: SortDirection_2;
     // (undocumented)
     title: string;
     // (undocumented)
@@ -5612,6 +5731,9 @@ export type SizeMedium = "medium";
 export type SizeSmall = "small";
 
 // @internal (undocumented)
+export type SizeXLarge = "xlarge";
+
+// @internal (undocumented)
 export type SizeXSmall = "xsmall";
 
 // @internal (undocumented)
@@ -5656,6 +5778,9 @@ export enum SORT_TARGET_TYPE {
 
 // @internal (undocumented)
 export function sortDateDatasets<T extends IDateDataset>(dateDatasets: T[], recommendedDate?: T, unrelatedDate?: T): Array<T | IDateDatasetHeader>;
+
+// @internal (undocumented)
+export type SortDirection = "asc" | "desc";
 
 // @internal (undocumented)
 export class Spinner extends PureComponent<ISpinnerProps> {
@@ -5842,6 +5967,15 @@ export const UiAutofocus: React_2.FC<{
 } & IUiAutofocusOptions>;
 
 // @internal (undocumented)
+export const UiBadge: React_2.FC<UiBadgeProps>;
+
+// @internal (undocumented)
+export interface UiBadgeProps {
+    // (undocumented)
+    label: string;
+}
+
+// @internal (undocumented)
 export const UiButton: React_2.ForwardRefExoticComponent<UiButtonProps & React_2.RefAttributes<HTMLButtonElement>>;
 
 // @internal (undocumented)
@@ -5874,6 +6008,21 @@ export interface UiButtonProps {
     tooltip?: React_2.ReactNode;
     // (undocumented)
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip;
+}
+
+// @internal (undocumented)
+export const UiCheckbox: React_2.FC<UiCheckboxProps>;
+
+// @internal (undocumented)
+export interface UiCheckboxProps {
+    // (undocumented)
+    checked: boolean;
+    // (undocumented)
+    indeterminate?: boolean;
+    // (undocumented)
+    onChange?: (e: React_2.ChangeEvent) => void;
+    // (undocumented)
+    preventDefault?: boolean;
 }
 
 // @internal (undocumented)
@@ -5956,9 +6105,9 @@ export interface UiIconButtonPublicProps {
     // (undocumented)
     onKeyDown?: (e: React_2.KeyboardEvent<HTMLButtonElement>) => void;
     // (undocumented)
-    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge;
+    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge;
     // (undocumented)
-    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTable;
 }
 
 // @internal (undocumented)
@@ -6113,8 +6262,14 @@ export interface UiPagedVirtualListProps<T> {
     maxHeight: number;
     // (undocumented)
     onKeyDownSelect?: (item: T) => void;
+    // (undocumented)
+    scrollbarHoverEffect?: boolean;
+    // (undocumented)
+    scrollToIndex?: number;
     scrollToItem?: T;
     scrollToItemKeyExtractor?: (item: T) => string | number;
+    // (undocumented)
+    shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) => boolean;
     // (undocumented)
     SkeletonItem?: React_2.ComponentType<UiPagedVirtualListSkeletonItemProps>;
     // (undocumented)
@@ -6135,13 +6290,14 @@ export const UiReturnFocusOnUnmount: React_2.FC<IUiReturnFocusOnUnmountOptions &
 }>;
 
 // @internal (undocumented)
-export function UiSkeleton({ itemsCount, itemHeight, itemWidth, itemsGap, direction, itemBorderRadius, }: UiSkeletonProps): React_2.JSX.Element;
+export function UiSkeleton({ itemsCount, itemHeight, itemPadding, itemWidth, itemsGap, direction, itemBorderRadius, }: UiSkeletonProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiSkeletonProps {
     direction?: "row" | "column";
     itemBorderRadius?: number;
     itemHeight?: (number | string) | (number | string)[];
+    itemPadding?: number;
     itemsCount?: number;
     itemsGap?: number;
     itemWidth?: (number | string) | (number | string)[];
@@ -6342,6 +6498,9 @@ export type VariantPrimary = "primary";
 
 // @internal (undocumented)
 export type VariantSecondary = "secondary";
+
+// @internal (undocumented)
+export type VariantTable = "table";
 
 // @internal (undocumented)
 export type VariantTertiary = "tertiary";

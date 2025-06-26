@@ -4,12 +4,13 @@ import React, { forwardRef } from "react";
 import { stringUtils } from "@gooddata/util";
 
 import { IconType } from "../@types/icon.js";
-import { SizeLarge, SizeMedium, SizeSmall, SizeXSmall } from "../@types/size.js";
+import { SizeLarge, SizeMedium, SizeSmall, SizeXLarge, SizeXSmall } from "../@types/size.js";
 import {
     VariantDanger,
     VariantPopOut,
     VariantPrimary,
     VariantSecondary,
+    VariantTable,
     VariantTertiary,
 } from "../@types/variant.js";
 import { bem } from "../@utils/bem.js";
@@ -24,9 +25,15 @@ import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 export interface UiIconButtonPublicProps {
     icon: IconType;
     label?: string;
-    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge;
+    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge;
 
-    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
+    variant?:
+        | VariantPrimary
+        | VariantSecondary
+        | VariantTertiary
+        | VariantPopOut
+        | VariantDanger
+        | VariantTable;
     isDisabled?: boolean;
     isActive?: boolean;
 
