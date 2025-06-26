@@ -50,7 +50,7 @@
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
-        "axios": "^1.4.0",
+        "axios": "^1.10.0",
         "chalk": "^4.1.1",
         "columnify": "^1.5.4",
         "commander": "^8.1.0",
