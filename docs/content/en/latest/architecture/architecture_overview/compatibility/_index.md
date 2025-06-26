@@ -12,7 +12,7 @@ This article contains information on whether your development setup is compatibl
 
 We develop GoodData.UI with the following javascript libraries in mind:
 
--   React >=16.8.0
+-   React >=16.8.0, 17, 18
 -   TypeScript >= 5.0.2
 -   Node ^16.20.0 LTS
 
