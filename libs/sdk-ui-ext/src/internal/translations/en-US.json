@@ -801,26 +801,6 @@
         "comment": "Label for legend position setting",
         "limit": 0
     },
-    "properties.legend.position.up": {
-        "value": "top",
-        "comment": "Top legend position option",
-        "limit": 0
-    },
-    "properties.legend.position.down": {
-        "value": "bottom",
-        "comment": "Bottom legend position option",
-        "limit": 0
-    },
-    "properties.legend.position.right": {
-        "value": "right",
-        "comment": "Right legend position option",
-        "limit": 0
-    },
-    "properties.legend.position.left": {
-        "value": "left",
-        "comment": "Left legend position option",
-        "limit": 0
-    },
     "properties.total.title": {
         "value": "Total",
         "comment": "Title for total/sum configuration section",
