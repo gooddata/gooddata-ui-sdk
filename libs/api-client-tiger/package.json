@@ -41,10 +41,10 @@
     },
     "dependencies": {
         "@gooddata/sdk-model": "workspace:*",
-        "axios": "^1.4.0",
+        "axios": "^1.10.0",
         "lodash": "^4.17.19",
         "tslib": "^2.5.0",
-        "axios-cache-interceptor": "^1.2.0"
+        "axios-cache-interceptor": "^1.8.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
