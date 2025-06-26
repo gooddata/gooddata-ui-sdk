@@ -20,7 +20,6 @@ import {
     DefaultDashboardLayout as DefaultDashboardLayoutComponent,
 } from "../../presentation/index.js";
 import { InvariantError } from "ts-invariant";
-import isEmpty from "lodash/isEmpty.js";
 
 interface ILayoutCustomizerState {
     addCustomProvider(provider: OptionalLayoutComponentProvider): void;
@@ -282,10 +281,10 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
             }
 
             /*
-             * Do not apply any transformations if there is a focused object. This is because the export
+             * Do not apply any transformations if there is some focused object. This is because the export
              * layout transformer in plugin is not able to handle focused objects.
              */
-            if (!isEmpty(focusedObject)) {
+            if (focusedObject && Object.values(focusedObject).some((value) => value !== undefined)) {
                 return undefined;
             }
 
