@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useCallback } from "react";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { mapAccessGranteeDetailToGrantee } from "../../shareDialogMappers.js";
@@ -13,13 +13,15 @@ interface IUseGetAccessListProps {
     currentUser: IUser;
     onSuccess: (result: GranteeItem[]) => void;
     onError: (err: Error) => void;
+    isShareGrantHidden?: boolean;
 }
 
 /**
  * @internal
  */
 export const useGetAccessList = (props: IUseGetAccessListProps): void => {
-    const { sharedObjectRef, currentUser, onSuccess, onError } = props;
+    const { sharedObjectRef, currentUser, onSuccess, onError, isShareGrantHidden } = props;
+
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
 
@@ -34,10 +36,8 @@ export const useGetAccessList = (props: IUseGetAccessListProps): void => {
         [currentUser, onSuccess],
     );
 
-    useCancelablePromise({ promise, onError, onSuccess: onSuccessCallBack }, [
-        effectiveBackend,
-        effectiveWorkspace,
-        sharedObjectRef,
-        onSuccessCallBack,
-    ]);
+    useCancelablePromise(
+        { promise: isShareGrantHidden ? undefined : promise, onError, onSuccess: onSuccessCallBack },
+        [effectiveBackend, effectiveWorkspace, sharedObjectRef, onSuccessCallBack],
+    );
 };
