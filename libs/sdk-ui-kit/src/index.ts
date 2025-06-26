@@ -120,6 +120,8 @@ export {
     focusAndEnsureReachableElement,
 } from "./@ui/UiFocusManager/utils.js";
 export type { IUiFocusHelperConnectors, NavigationDirection } from "./@ui/UiFocusManager/types.js";
+export { UiLink } from "./@ui/UiLink/UiLink.js";
+export type { IUiLinkProps } from "./@ui/UiLink/UiLink.js";
 export type {
     IAccessibilityConfigBase,
     IMenuAccessibilityConfig,

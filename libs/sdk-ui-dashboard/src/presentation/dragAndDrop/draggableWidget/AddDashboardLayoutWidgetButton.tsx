@@ -1,48 +1,90 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import {
-    Bubble,
-    BubbleHoverTrigger,
-    IAlignPoint,
+    bemFactory,
     Icon,
     OverlayController,
     OverlayControllerProvider,
+    UiButton,
+    UiLink,
+    UiTooltip,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
+import { selectIsWhiteLabeled, useDashboardSelector } from "../../../model/index.js";
 
-const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
+
+const tooltipBem = bemFactory("gd-container-tooltip");
 
 export const AddDashboardLayoutWidgetButton: React.FC = () => {
     const isMobileDevice = useMediaQuery("mobileDevice");
+    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const theme = useTheme();
+    const { formatMessage } = useIntl();
+
     return (
         <div className="add-item-placeholder add-panel-item s-add-dashboard-layout">
             <Icon.ColumnContainer color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
-            <FormattedMessage id="addPanel.dashboardLayout" />
-            <OverlayControllerProvider overlayController={overlayController}>
-                <BubbleHoverTrigger
-                    eventsOnBubble={true}
-                    className="gd-add-dashboard-layout gd-add-item-placeholder-help-trigger s-add-dashboard-layout-bubble-trigger"
-                >
-                    <div
-                        className={cx("s-description-trigger", {
-                            "is-mobile": isMobileDevice,
-                        })}
-                    >
-                        <div className="gd-icon-circle-question" />
-                    </div>
-                    <Bubble alignPoints={bubbleAlignPoints}>
-                        <FormattedMessage id="addPanel.dashboardLayout.tooltip" />
-                    </Bubble>
-                </BubbleHoverTrigger>
-            </OverlayControllerProvider>
+            <div className={"add-panel-item__text"}>
+                <FormattedMessage id="addPanel.dashboardLayout" />
+                <OverlayControllerProvider overlayController={overlayController}>
+                    <UiTooltip
+                        arrowPlacement={"left"}
+                        content={({ onClose }) => (
+                            <div className={tooltipBem.b()}>
+                                {/* Temporarily disabled until a proper image is supplied */}
+                                {/*<div className={tooltipBem.e("image")} />*/}
+
+                                <div className={tooltipBem.e("text")}>
+                                    <FormattedMessage id="addPanel.dashboardLayout.tooltip" />
+                                </div>
+
+                                <div className={tooltipBem.e("actions")}>
+                                    {!isWhiteLabeled ? (
+                                        <UiLink
+                                            variant={"inverse"}
+                                            rel={"noreferrer noopener"}
+                                            target={"_blank"}
+                                            href={
+                                                "https://www.gooddata.com/docs/cloud/create-dashboards/dashboard-layout/"
+                                            }
+                                        >
+                                            <FormattedMessage
+                                                id={"addPanel.dashboardLayout.tooltip.learnMore"}
+                                            />
+                                        </UiLink>
+                                    ) : null}
+                                    <UiButton
+                                        variant={"secondary"}
+                                        onClick={onClose}
+                                        size={"small"}
+                                        label={formatMessage({
+                                            id: "addPanel.dashboardLayout.tooltip.button",
+                                        })}
+                                    />
+                                </div>
+                            </div>
+                        )}
+                        anchor={
+                            <div
+                                className={cx("s-description-trigger gd-add-item-placeholder-help-trigger", {
+                                    "is-mobile": isMobileDevice,
+                                })}
+                            >
+                                <div className="gd-icon-circle-question" />
+                            </div>
+                        }
+                        optimalPlacement
+                        triggerBy={["hover", "focus", "click"]}
+                    />
+                </OverlayControllerProvider>
+            </div>
         </div>
     );
 };

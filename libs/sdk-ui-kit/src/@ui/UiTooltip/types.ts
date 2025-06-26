@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 
+import React from "react";
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 
 /**
@@ -30,7 +31,7 @@ export interface UiTooltipProps {
     anchor: React.ReactNode;
 
     /** Content to be rendered inside the tooltip */
-    content: React.ReactNode;
+    content: React.ReactNode | ((args: { onClose: () => void }) => React.ReactNode);
 
     /** Whether tooltip should show on hover, focus or click */
     triggerBy?: Array<"hover" | "focus" | "click">;

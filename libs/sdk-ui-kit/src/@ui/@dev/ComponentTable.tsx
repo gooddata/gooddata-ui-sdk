@@ -33,9 +33,9 @@ export interface IPropCombination<TProps extends object, TProp extends keyof TPr
 /**
  * @internal
  */
-export interface IComponentTableProps<TProps extends object, TProp extends keyof TProps> {
-    columnsBy?: IPropCombination<TProps, TProp> | undefined;
-    rowsBy: IPropCombination<TProps, TProp>[];
+export interface IComponentTableProps<TProps extends object> {
+    columnsBy?: IPropCombination<TProps, keyof TProps> | undefined;
+    rowsBy: IPropCombination<TProps, keyof TProps>[];
     baseProps?: Partial<TProps>;
     Component: React.ComponentType<TProps>;
     codeSnippet?: string;
@@ -43,11 +43,12 @@ export interface IComponentTableProps<TProps extends object, TProp extends keyof
     cellWidth?: number;
     cellHeight?: number;
     align?: "center" | "flex-start";
+    cellStyle?: (props: TProps) => React.CSSProperties | undefined;
 }
 
-interface IComponentTableRowProps<TProps extends object, TProp extends keyof TProps> {
-    columnsBy?: IPropCombination<TProps, TProp> | undefined;
-    row: IPropCombination<TProps, TProp>;
+interface IComponentTableRowProps<TProps extends object> {
+    columnsBy?: IPropCombination<TProps, keyof TProps> | undefined;
+    row: IPropCombination<TProps, keyof TProps>;
     baseProps?: Partial<TProps>;
     Component: React.ComponentType<TProps>;
     codeSnippet?: string;
@@ -55,6 +56,7 @@ interface IComponentTableRowProps<TProps extends object, TProp extends keyof TPr
     cellWidth?: number;
     cellHeight?: number;
     align?: "center" | "flex-start";
+    cellStyle?: (props: TProps) => React.CSSProperties;
 }
 
 interface IComponentTableCellProps<TProps extends object> {
@@ -65,6 +67,7 @@ interface IComponentTableCellProps<TProps extends object> {
     cellHeight?: number;
     debug?: boolean;
     align?: "center" | "flex-start";
+    cellStyle?: (props: TProps) => React.CSSProperties;
 }
 
 const GAP = 10;
@@ -73,7 +76,7 @@ const PADDING = 5;
 /**
  * @internal
  */
-export function ComponentTable<TProps extends object, TProp extends keyof TProps>({
+export function ComponentTable<TProps extends object>({
     Component,
     columnsBy,
     rowsBy,
@@ -83,7 +86,8 @@ export function ComponentTable<TProps extends object, TProp extends keyof TProps
     cellWidth,
     cellHeight,
     align = "flex-start",
-}: IComponentTableProps<TProps, TProp>) {
+    cellStyle,
+}: IComponentTableProps<TProps>) {
     return (
         <div
             style={{
@@ -105,6 +109,7 @@ export function ComponentTable<TProps extends object, TProp extends keyof TProps
                         cellWidth={cellWidth}
                         cellHeight={cellHeight}
                         align={align}
+                        cellStyle={cellStyle}
                     />
                 );
             })}
@@ -115,7 +120,7 @@ export function ComponentTable<TProps extends object, TProp extends keyof TProps
 /**
  * @internal
  */
-export function ComponentTableRow<TProps extends object, TProp extends keyof TProps>({
+export function ComponentTableRow<TProps extends object>({
     Component,
     columnsBy,
     row,
@@ -125,7 +130,8 @@ export function ComponentTableRow<TProps extends object, TProp extends keyof TPr
     cellWidth,
     cellHeight,
     align,
-}: IComponentTableRowProps<TProps, TProp>) {
+    cellStyle,
+}: IComponentTableRowProps<TProps>) {
     return (
         <div
             style={{
@@ -171,6 +177,7 @@ export function ComponentTableRow<TProps extends object, TProp extends keyof TPr
                                     cellHeight={cellHeight}
                                     debug={debug}
                                     align={align}
+                                    cellStyle={cellStyle}
                                 />
                             );
                         })}
@@ -192,6 +199,7 @@ export function ComponentTableCell<TProps extends object>({
     cellHeight,
     debug,
     align,
+    cellStyle,
 }: IComponentTableCellProps<TProps>) {
     return (
         <div
@@ -207,7 +215,7 @@ export function ComponentTableCell<TProps extends object>({
                 height: cellHeight,
             }}
         >
-            <div>
+            <div style={cellStyle?.(props)}>
                 <Component {...props} />
             </div>
             {codeSnippet ? (
