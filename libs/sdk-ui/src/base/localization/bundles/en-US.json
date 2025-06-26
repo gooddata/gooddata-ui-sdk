@@ -1,27 +1,27 @@
 {
     "empty_value": {
         "value": "empty value",
-        "comment": "",
+        "comment": "Text displayed when a data field has no value. Used throughout the application to represent null or undefined values in data displays and tables.",
         "limit": 0
     },
     "gs.date.at": {
         "value": "at",
-        "comment": "",
+        "comment": "Preposition used for connecting date and time expressions, e.g., 'January 1, 2023 at 3:00 PM'. Used in various date-time displays throughout the application.",
         "limit": 0
     },
     "gs.time": {
         "value": "time",
-        "comment": "",
+        "comment": "Global string for displaying time units or labels. Used in various time-related components or expressions, such as 'Meeting time' or timestamp displays.",
         "limit": 0
     },
     "gs.header.help": {
         "value": "Help",
-        "comment": "",
+        "comment": "Label for the help button in the global application header. Clicking this opens the help menu or documentation.",
         "limit": 0
     },
     "gs.header.help.label": {
         "value": "Help links",
-        "comment": "",
+        "comment": "ARIA label for the help links section in the help menu. Used for accessibility purposes to describe the collection of help-related links.",
         "limit": 0
     },
     "gs.header.search": {
@@ -36,22 +36,22 @@
     },
     "gs.header.logo.title.accessibility": {
         "value": "Application logo",
-        "comment": "",
+        "comment": "Accessibility text for the application logo in the header. Used by screen readers to identify the logo element.",
         "limit": 0
     },
     "gs.header.href.accessibility": {
         "value": "Go to homepage",
-        "comment": "",
+        "comment": "Accessibility text describing the action of clicking the application logo in the header, which navigates to the homepage.",
         "limit": 0
     },
     "gs.header.accessibility.label": {
         "value": "Global application header",
-        "comment": "",
+        "comment": "ARIA label for the main header section of the application. Used by screen readers to identify the header area.",
         "limit": 0
     },
     "gs.header.menu.accessibility.label": {
         "value": "Global navigation",
-        "comment": "",
+        "comment": "ARIA label for the primary navigation menu in the header. Used by screen readers to identify the main navigation area.",
         "limit": 0
     },
     "gs.header.notifications": {
@@ -61,42 +61,42 @@
     },
     "gs.header.logout": {
         "value": "Logout",
-        "comment": "",
+        "comment": "Label for the logout button in the user menu. Clicking this signs the user out of their current session.",
         "limit": 0
     },
     "gs.header.workspaceSettings": {
         "value": "Workspace settings",
-        "comment": "",
+        "comment": "Label for the workspace settings option in the user menu. Clicking this navigates to the workspace configuration page.",
         "limit": 0
     },
     "gs.header.account.title": {
         "value": "Account",
-        "comment": "",
+        "comment": "Title for the user account menu in the header. Displays user-related options like profile settings and logout.",
         "limit": 0
     },
     "gs.list.all": {
         "value": "All",
-        "comment": "",
+        "comment": "Option in filter controls to select all items. Used in various dropdown lists and filter components.",
         "limit": 0
     },
     "gs.list.except": {
         "value": "except",
-        "comment": "",
+        "comment": "Used in filter expressions to indicate exclusion, e.g., 'All except [selected items]'. Appears in filter components.",
         "limit": 0
     },
     "gs.list.is": {
         "value": "is",
-        "comment": "",
+        "comment": "Used in filter expressions to indicate equality, e.g., 'Product is Shoes'. Appears in filter component descriptions.",
         "limit": 0
     },
     "gs.list.search.placeholder": {
         "value": "Search…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "comment": "Placeholder text displayed in search input fields within list components, prompting users to enter search terms.",
         "limit": 0
     },
     "gs.list.acessibility.search.label": {
         "value": "Search attribute values",
-        "comment": "",
+        "comment": "ARIA label for search input fields in attribute filter components. Used by screen readers to identify the search functionality.",
         "limit": 0
     },
     "gs.list.notAvailableAbbreviation": {
@@ -106,37 +106,37 @@
     },
     "gs.list.searchResults": {
         "value": "search results",
-        "comment": "",
+        "comment": "Label for indicating search results in filter dropdowns and list components. Used in phrases like '5 search results'.",
         "limit": 0
     },
     "gs.visualizationsList.loading": {
         "value": "Loading…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "comment": "Loading indicator text shown while visualizations or data are being fetched or processed.",
         "limit": 0
     },
     "gs.color-picker.inputPlaceholder": {
         "value": "#color",
-        "comment": "Character '#' means user should input color code as hexadecimal value, e.g. #C0D6E4",
+        "comment": "Placeholder text in the color input field, showing the expected format for hexadecimal color codes.",
         "limit": 0
     },
     "gs.color-picker.currentColor": {
         "value": "current",
-        "comment": "",
+        "comment": "Label for the currently selected color in the color picker component. Appears next to the color swatch.",
         "limit": 0
     },
     "gs.color-picker.newColor": {
         "value": "new",
-        "comment": "",
+        "comment": "Label for the newly selected color in the color picker component. Appears next to the new color swatch being chosen.",
         "limit": 0
     },
     "gs.color-picker.cancelButton": {
         "value": "Cancel",
-        "comment": "",
+        "comment": "Label for the cancel button in the color picker dialog. Clicking this discards color changes and closes the dialog.",
         "limit": 0
     },
     "gs.color-picker.okButton": {
         "value": "OK",
-        "comment": "",
+        "comment": "Label for the OK/confirm button in the color picker dialog. Clicking this applies the selected color and closes the dialog.",
         "limit": 0
     },
     "gs.color-picker.hex": {
@@ -146,12 +146,12 @@
     },
     "gs.noData.noMatchingData": {
         "value": "No matching data",
-        "comment": "",
+        "comment": "Message displayed when no data matches the current filter criteria in visualizations or data views.",
         "limit": 0
     },
     "gs.noData.noDataAvailable": {
         "value": "No matching data",
-        "comment": "",
+        "comment": "Message displayed when no data is available for the current visualization or view based on the applied filters or data configuration.",
         "limit": 0
     },
     "geochart.scroll.zoom.blocker": {
@@ -166,7 +166,7 @@
     },
     "visualizations.of": {
         "value": "{page} of {pagesCount}",
-        "comment": "Don't translate placeholders '{page}', '{pagesCount}'",
+        "comment": "Pagination indicator showing current page number and total pages (e.g., '2 of 5'). The {page} and {pagesCount} placeholders will be replaced with actual numbers.",
         "limit": 0
     },
     "visualizations.totals.dropdown.title.sum": {
@@ -284,17 +284,17 @@
     },
     "visualizations.headline.pagination.next.metricLabel": {
         "value": "Show next comparative metric",
-        "comment": "",
+        "comment": "Accessibility label for the button that shows the next comparative metric in the headline visualization. Used by screen readers.",
         "limit": 0
     },
     "visualizations.headline.pagination.previous.metricLabel": {
         "value": "Show previous comparative metric",
-        "comment": "",
+        "comment": "Accessibility label for the button that shows the previous comparative metric in the headline visualization. Used by screen readers.",
         "limit": 0
     },
     "visualizations.headline.pagination.drill.hint": {
         "value": "Drilling available. Press Enter or Space to continue.",
-        "comment": "",
+        "comment": "Accessibility hint informing users that they can drill into the visualization by pressing Enter or Space. Used by screen readers.",
         "limit": 0
     },
     "visualization.numericValues.k": {
@@ -329,7 +329,7 @@
     },
     "visualization.emptyValue": {
         "value": "empty value",
-        "comment": "",
+        "comment": "Text displayed when a data field has no value in visualizations. Used to represent null or undefined values.",
         "limit": 0
     },
     "visualization.waterfall.total": {
@@ -344,266 +344,266 @@
     },
     "visualization.ErrorMessageGeneric|insight": {
         "value": "Sorry, we can't display this visualization",
-        "comment": "",
+        "comment": "Generic error message shown when a visualization cannot be displayed due to an unspecified technical issue.",
         "limit": 0
     },
     "visualization.ErrorMessageGeneric|report": {
         "value": "Sorry, we can't display this report",
-        "comment": "",
+        "comment": "Error message shown when a report cannot be displayed due to an unspecified technical issue. This is the report-specific version of the generic visualization error message.",
         "limit": 0,
         "translate": false
     },
     "visualization.ErrorDescriptionGeneric": {
         "value": "Contact your administrator.",
-        "comment": "",
+        "comment": "Follow-up instruction text shown below error messages, advising the user to contact an administrator for help.",
         "limit": 0
     },
     "visualization.ErrorMessageDataTooLarge": {
         "value": "Too many data points to display",
-        "comment": "",
+        "comment": "Error message shown when visualization cannot be rendered because the dataset is too large for the visualization engine to process.",
         "limit": 0
     },
     "visualization.ErrorDescriptionDataTooLarge": {
         "value": "Try applying filters.",
-        "comment": "",
+        "comment": "Suggestion shown below the 'Too many data points' error message, advising users to reduce the dataset size by applying filters.",
         "limit": 0
     },
     "visualization.ErrorMessageNoData": {
         "value": "No data",
-        "comment": "",
+        "comment": "Error message shown when the visualization has no data to display, typically because filters exclude all data or the dataset is empty.",
         "limit": 0
     },
     "visualization.ErrorDescriptionNoData": {
         "value": "No data for your filter selection.",
-        "comment": "",
+        "comment": "Explanation shown below the 'No data' error message, indicating that the current filter selection results in no data to display.",
         "limit": 0
     },
     "visualization.ErrorMessageKpi": {
         "value": "Error",
-        "comment": "",
+        "comment": "Generic error indicator text shown in KPI (Key Performance Indicator) visualizations when they cannot be displayed properly.",
         "limit": 0
     },
     "visualization.ErrorMessageUnauthorized": {
         "value": "Unauthorized",
-        "comment": "",
+        "comment": "Error message shown when the user does not have permission to view the requested visualization or data.",
         "limit": 0
     },
     "visualization.ErrorDescriptionUnauthorized|insight": {
         "value": "Sorry you don't have access to this visualization. Login or ask your administrator to grant you permissions.",
-        "comment": "",
+        "comment": "Explanation shown when the user lacks permissions to view a visualization, providing instructions for resolution.",
         "limit": 0
     },
     "visualization.ErrorDescriptionUnauthorized|report": {
         "value": "Sorry you don't have access to this report. Login or ask your administrator to grant you permissions.",
-        "comment": "",
+        "comment": "Explanation shown when the user lacks permissions to view a report, providing instructions for resolution. This is the report-specific version of the unauthorized access message.",
         "limit": 0,
         "translate": false
     },
     "visualization.ErrorMessageNotFound|insight": {
         "value": "Sorry, we can't find this visualization",
-        "comment": "",
+        "comment": "Error message shown when the requested visualization cannot be found, typically because it has been deleted or the URL is incorrect.",
         "limit": 0
     },
     "visualization.ErrorMessageNotFound|report": {
         "value": "Sorry, we can't find this report",
-        "comment": "",
+        "comment": "Error message shown when the requested report cannot be found, typically because it has been deleted or the URL is incorrect. This is the report-specific version of the not found message.",
         "limit": 0,
         "translate": false
     },
     "visualization.ErrorDescriptionNotFound|insight": {
         "value": "The visualization with this URL does not exist.",
-        "comment": "",
+        "comment": "Explanation shown when a visualization cannot be found, indicating that no visualization exists with the requested identifier.",
         "limit": 0
     },
     "visualization.ErrorDescriptionNotFound|report": {
         "value": "The report with this URL does not exist.",
-        "comment": "",
+        "comment": "Explanation shown when a report cannot be found, indicating that no report exists with the requested identifier. This is the report-specific version of the not found description.",
         "limit": 0,
         "translate": false
     },
     "visualization.ErrorDescriptionMissingMapboxToken": {
         "value": "The Geochart configuration requires a valid API access token.",
-        "comment": "",
+        "comment": "Error message shown when trying to display a geographic visualization without having a valid Mapbox API token configured.",
         "limit": 0
     },
     "visualization.tooltip.resetZoom": {
         "value": "Reset zoom",
-        "comment": "",
+        "comment": "Button tooltip for resetting the zoom level to default in visualizations that support zooming, like charts and maps.",
         "limit": 0
     },
     "visualization.tooltip.interaction": {
         "value": "Click chart to drill",
-        "comment": "",
+        "comment": "Informational tooltip that appears over charts, informing users they can click to drill down for more detailed data.",
         "limit": 0
     },
     "visualization.tooltip.generic.interaction": {
         "value": "Click to drill or filter",
-        "comment": "",
+        "comment": "Informational tooltip that appears over interactive visualization elements, indicating users can click for drilling or filtering actions.",
         "limit": 0
     },
     "gs.filterLabel.all": {
         "value": "All",
-        "comment": "",
+        "comment": "Filter option label indicating that all available items or values are selected in a filter control.",
         "limit": 0
     },
     "gs.filterLabel.none": {
         "value": "None",
-        "comment": "",
+        "comment": "Filter option label indicating that no items or values are selected in a filter control.",
         "limit": 0
     },
     "gs.filter.loading": {
         "value": "Loading filter…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "comment": "Loading indicator text shown when filter values are being loaded from the server. The ellipsis (…) indicates an in-progress operation.",
         "limit": 0
     },
     "gs.filter.error": {
         "value": "Error when loading filter.",
-        "comment": "",
+        "comment": "Error message displayed when a filter component fails to load its values from the server.",
         "limit": 0
     },
     "gs.filter.error.tooltip": {
         "value": "Error. Values cannot be loaded.",
-        "comment": "",
+        "comment": "Tooltip shown when hovering over a filter that encountered an error when trying to load its values.",
         "limit": 0
     },
     "gs.list.clear": {
         "value": "Clear",
-        "comment": "",
+        "comment": "Button label for clearing all selections in a list or filter component, returning it to empty state.",
         "limit": 0
     },
     "gs.list.cancel": {
         "value": "Cancel",
-        "comment": "",
+        "comment": "Button label for canceling the current operation in list or filter components and returning to the previous state.",
         "limit": 0
     },
     "gs.list.apply": {
         "value": "Apply",
-        "comment": "",
+        "comment": "Button label for applying selected filters or options in list or filter components.",
         "limit": 0
     },
     "gs.list.only": {
         "value": "Only",
-        "comment": "",
+        "comment": "Label used in filter expressions to indicate exclusive selection, e.g., 'Only Product A'.",
         "limit": 0
     },
     "gs.list.selectAll": {
         "value": "Select all",
-        "comment": "",
+        "comment": "Button or option label that allows users to select all available items in a list or filter component.",
         "limit": 0
     },
     "gs.list.limitExceeded": {
         "value": "Sorry, you have exceeded the limit ({limit}).",
-        "comment": "Don't translate placeholder '{limit}'.",
+        "comment": "Error message shown when a user exceeds the maximum allowed number of selections in a list component. The {limit} placeholder will be replaced with the actual limit number.",
         "limit": 0
     },
     "gs.list.limitReached": {
         "value": "You have reached the limit of {limit} selected values.",
-        "comment": "Don't translate placeholder '{limit}'.",
+        "comment": "Informational message shown when a user reaches the maximum allowed number of selections in a list component. The {limit} placeholder will be replaced with the actual limit number.",
         "limit": 0
     },
     "gs.list.cannotSelectMoreValues": {
         "value": "You cannot select more than {limit} values.",
-        "comment": "Don't translate placeholder '{limit}'.",
+        "comment": "Error message shown when a user attempts to select more items than allowed in a list component. The {limit} placeholder will be replaced with the maximum allowed number of selections.",
         "limit": 0
     },
     "gs.list.noItemsFound": {
         "value": "No items found.",
-        "comment": "",
+        "comment": "Message displayed when a search or filter operation in a list component returns no results.",
         "limit": 0
     },
     "gs.list.noResultsMatch": {
         "value": "No results match",
-        "comment": "",
+        "comment": "Message displayed when a search query in a list or filter component doesn't match any available items.",
         "limit": 0
     },
     "gs.list.error": {
         "value": "Error when loading filter values.",
-        "comment": "",
+        "comment": "Error message shown when the application fails to load values for a filter from the server.",
         "limit": 0
     },
     "gs.header.upsellButtonText": {
         "value": "Upgrade",
-        "comment": "",
+        "comment": "Button text for upgrading to a higher tier or paid version of the product from a free or lower tier.",
         "limit": 0
     },
     "gs.header.invite": {
         "value": "Invite",
-        "comment": "",
+        "comment": "Button label for inviting other users to join the workspace or collaborate on dashboards.",
         "limit": 0
     },
     "gs.header.countdown.numberOfDaysLeft": {
         "value": "{number} days left",
-        "comment": "",
+        "comment": "Text showing the number of days remaining in a trial or subscription period. The {number} placeholder will be replaced with the actual count of days.",
         "limit": 0
     },
     "gs.header.countdown.numberOfMonthsLeft": {
         "value": "{number} months left",
-        "comment": "",
+        "comment": "Countdown message showing the number of months remaining in a trial or subscription period. The {number} placeholder will be replaced with the actual count of months.",
         "limit": 0
     },
     "gs.header.countdown.oneMonthLeft": {
         "value": "1 month left",
-        "comment": "",
+        "comment": "Countdown message indicating that one month remains in the current trial or subscription period.",
         "limit": 0
     },
     "gs.header.countdown.lastDay": {
         "value": "This is your last day",
-        "comment": "",
+        "comment": "Message shown on the final day of a trial or subscription period, indicating it's the last day of access.",
         "limit": 0
     },
     "measure.title.suffix.same_period_year_ago": {
         "value": "SP year ago",
-        "comment": "",
+        "comment": "Suffix added to a measure title to indicate it shows data from the same period in the previous year (SP = Same Period). Used in time-based comparisons.",
         "limit": 0
     },
     "measure.title.suffix.previous_period": {
         "value": "period ago",
-        "comment": "",
+        "comment": "Suffix added to a measure title to indicate it shows data from the previous time period. The specific time period (day, week, month, etc.) is determined by the current context.",
         "limit": 0
     },
     "visualizations.measure.arithmetic.sum.title": {
         "value": "Sum of {firstMeasureTitle} and {secondMeasureTitle}",
-        "comment": "Title of an arithmetic measure of type Sum. Don't translate placeholders '{firstMeasureTitle}', '{secondMeasureTitle}'.",
+        "comment": "Title of an arithmetic measure of type Sum.",
         "limit": 0
     },
     "visualizations.measure.arithmetic.difference.title": {
         "value": "Difference of {firstMeasureTitle} and {secondMeasureTitle}",
-        "comment": "Title of an arithmetic measure of type Difference. Don't translate placeholders '{firstMeasureTitle}', '{secondMeasureTitle}'.",
+        "comment": "Title of an arithmetic measure of type Difference.",
         "limit": 0
     },
     "visualizations.measure.arithmetic.multiplication.title": {
         "value": "Product of {firstMeasureTitle} and {secondMeasureTitle}",
-        "comment": "Title of an arithmetic measure of type Product. Don't translate placeholders '{firstMeasureTitle}', '{secondMeasureTitle}'.",
+        "comment": "Title of an arithmetic measure of type Product.",
         "limit": 0
     },
     "visualizations.measure.arithmetic.ratio.title": {
         "value": "Ratio of {firstMeasureTitle} and {secondMeasureTitle}",
-        "comment": "Title of an arithmetic measure of type Ratio. Don't translate placeholders '{firstMeasureTitle}', '{secondMeasureTitle}'.",
+        "comment": "Title of an arithmetic measure of type Ratio.",
         "limit": 0
     },
     "visualizations.measure.arithmetic.change.title": {
         "value": "Change from {secondMeasureTitle} to {firstMeasureTitle}",
-        "comment": "Title of an arithmetic measure of type Change. Don't translate placeholders '{firstMeasureTitle}', '{secondMeasureTitle}'.",
+        "comment": "Title of an arithmetic measure of type Change.",
         "limit": 0
     },
     "visualizations.legend.text.top": {
         "value": "Top",
-        "comment": "",
+        "comment": "Legend position option to place the legend above the chart or visualization.",
         "limit": 0
     },
     "visualizations.legend.text.bottom": {
         "value": "Bottom",
-        "comment": "",
+        "comment": "Legend position option to place the legend below the chart or visualization.",
         "limit": 0
     },
     "visualizations.legend.text.left": {
         "value": "Left",
-        "comment": "",
+        "comment": "Legend position option to place the legend to the left of the chart or visualization.",
         "limit": 0
     },
     "visualizations.legend.text.right": {
         "value": "Right",
-        "comment": "",
+        "comment": "Legend position option to place the legend to the right of the chart or visualization.",
         "limit": 0
     },
     "visualizations.legend.text.colon": {
@@ -613,17 +613,17 @@
     },
     "visualizations.legend.text.column": {
         "value": "Column",
-        "comment": "column chart",
+        "comment": "Label for the column chart series type in visualization legends, used to identify data series represented by vertical bars in charts.",
         "limit": 0
     },
     "visualizations.legend.text.line": {
         "value": "Line",
-        "comment": "line chart",
+        "comment": "Label for the line chart series type in visualization legends, used to identify data series represented by lines in charts.",
         "limit": 0
     },
     "visualizations.legend.text.area": {
         "value": "Area",
-        "comment": "area chart",
+        "comment": "Label for the area chart series type in visualization legends, used to identify data series represented by areas in charts.",
         "limit": 0
     },
     "visualizations.legend.text.combo": {
@@ -633,12 +633,12 @@
     },
     "visualizations.pagination.previous": {
         "value": "Previous page",
-        "comment": "",
+        "comment": "Button label to navigate to the previous page in a paginated view. Shown when there are more items available before the current page.",
         "limit": 0
     },
     "visualizations.pagination.next": {
         "value": "Next page",
-        "comment": "",
+        "comment": "Button label to navigate to the next page in a paginated view. Shown when there are more items available after the current page.",
         "limit": 0
     },
 
@@ -669,17 +669,17 @@
     },
     "visualizations.menu.aggregations.within-attribute": {
         "value": "within {attributeName}",
-        "comment": "Menu option that adds row aggregation (sub-total) for specific attribute to the table. Example: 'Sum within Attribute A'. Don't translate placeholder '{attributeName}'.",
+        "comment": "Menu option that adds row aggregation (sub-total) for specific attribute to the table. Example: 'Sum within Attribute A'.",
         "limit": 50
     },
     "apply": {
         "value": "Apply",
-        "comment": "",
+        "comment": "Button label to confirm and apply changes or selections in a dialog or form.",
         "limit": 0
     },
     "cancel": {
         "value": "Cancel",
-        "comment": "",
+        "comment": "Button label to discard changes and close a dialog or form without applying any changes.",
         "limit": 0
     },
     "close": {
@@ -694,22 +694,22 @@
     },
     "loading": {
         "value": "Loading…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "comment": "Text shown during content loading operations",
         "limit": 0
     },
     "filtering": {
         "value": "Filtering…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "comment": "Text shown during filtering operations",
         "limit": 0
     },
     "dateFilterDropdown.title": {
         "value": "Date range",
-        "comment": "",
+        "comment": "Title for the date filter dropdown component, allowing users to select a time range for filtering data.",
         "limit": 0
     },
     "dateFilterDropdown.setDefault": {
         "value": "Set default date filter for{nbsp}viewers:",
-        "comment": "Do not translate non-breakable space '{nbsp}'",
+        "comment": "Message with non-breaking space for proper formatting. The {nbsp} represents a non-breaking space character.",
         "limit": 0
     },
     "dateFilterDropdown.configuration": {
@@ -719,397 +719,397 @@
     },
     "dateFilterDropdown.label": {
         "value": "Select a date range",
-        "comment": "",
+        "comment": "Label for the date filter dropdown component, allowing users to select a time range for filtering data.",
         "limit": 0
     },
     "dateFilterDropdown.relativeForm.label": {
         "value": "Granularity",
-        "comment": "",
+        "comment": "Label for the granularity selection in the date filter dropdown component, allowing users to select a time range for filtering data.",
         "limit": 0
     },
     "filters.thisMinute.title": {
         "value": "This minute",
-        "comment": "",
+        "comment": "Filter option to select the current minute in time-based filtering controls.",
         "limit": 0
     },
     "filters.lastMinute.title": {
         "value": "Last minute",
-        "comment": "",
+        "comment": "Filter option to select the previous minute in time-based filtering controls.",
         "limit": 0
     },
     "filters.nextMinute.title": {
         "value": "Next minute",
-        "comment": "",
+        "comment": "Filter option to select the upcoming minute in time-based filtering controls.",
         "limit": 0
     },
     "filters.thisHour.title": {
         "value": "This hour",
-        "comment": "",
+        "comment": "Filter option to select the current hour in time-based filtering controls.",
         "limit": 0
     },
     "filters.lastHour.title": {
         "value": "Last hour",
-        "comment": "",
+        "comment": "Filter option to select the previous hour in time-based filtering controls.",
         "limit": 0
     },
     "filters.nextHour.title": {
         "value": "Next hour",
-        "comment": "",
+        "comment": "Filter option to select the upcoming hour in time-based filtering controls.",
         "limit": 0
     },
     "filters.thisDay.title": {
         "value": "Today",
-        "comment": "",
+        "comment": "Filter option for the current day",
         "limit": 0
     },
     "filters.lastDay.title": {
         "value": "Yesterday",
-        "comment": "",
+        "comment": "Filter option for the previous day",
         "limit": 0
     },
     "filters.nextDay.title": {
         "value": "Tomorrow",
-        "comment": "",
+        "comment": "Filter option for the next day",
         "limit": 0
     },
     "filters.thisWeek.title": {
         "value": "This week",
-        "comment": "",
+        "comment": "Filter option for the current week",
         "limit": 0
     },
     "filters.lastWeek.title": {
         "value": "Last week",
-        "comment": "",
+        "comment": "Filter option for the previous week",
         "limit": 0
     },
     "filters.nextWeek.title": {
         "value": "Next week",
-        "comment": "",
+        "comment": "Filter option for the next week",
         "limit": 0
     },
     "filters.thisMonth.title": {
         "value": "This month",
-        "comment": "",
+        "comment": "Filter option for the current month",
         "limit": 0
     },
     "filters.lastMonth.title": {
         "value": "Last month",
-        "comment": "",
+        "comment": "Filter option for the previous month",
         "limit": 0
     },
     "filters.nextMonth.title": {
         "value": "Next month",
-        "comment": "",
+        "comment": "Filter option for the next month",
         "limit": 0
     },
     "filters.thisQuarter.title": {
         "value": "This quarter",
-        "comment": "",
+        "comment": "Filter option for the current quarter",
         "limit": 0
     },
     "filters.lastQuarter.title": {
         "value": "Last quarter",
-        "comment": "",
+        "comment": "Filter option for the previous quarter",
         "limit": 0
     },
     "filters.nextQuarter.title": {
         "value": "Next quarter",
-        "comment": "",
+        "comment": "Filter option for the next quarter",
         "limit": 0
     },
     "filters.thisYear.title": {
         "value": "This year",
-        "comment": "",
+        "comment": "Filter option for the current year",
         "limit": 0
     },
     "filters.lastYear.title": {
         "value": "Last year",
-        "comment": "",
+        "comment": "Filter option for the previous year",
         "limit": 0
     },
     "filters.nextYear.title": {
         "value": "Next year",
-        "comment": "",
+        "comment": "Filter option for the next year",
         "limit": 0
     },
     "filters.lastNMinutes": {
         "value": "{n, plural, one {Last # minute} other {Last # minutes}}",
-        "comment": "In '{n, plural, one {LAST # MINUTE} other {LAST # MINUTES}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the last N minutes (singular/plural)",
         "limit": 0
     },
     "filters.lastNHours": {
         "value": "{n, plural, one {Last # hour} other {Last # hours}}",
-        "comment": "In '{n, plural, one {LAST # HOUR} other {LAST # HOURS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the last N hours (singular/plural)",
         "limit": 0
     },
     "filters.lastNDays": {
         "value": "{n, plural, one {Last # day} other {Last # days}}",
-        "comment": "In '{n, plural, one {LAST # DAY} other {LAST # DAYS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the last N days (singular/plural)",
         "limit": 0
     },
     "filters.lastNWeeks": {
         "value": "{n, plural, one {Last # week} other {Last # weeks}}",
-        "comment": "In '{n, plural, one {LAST # WEEK} other {LAST # WEEKS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the last N weeks (singular/plural)",
         "limit": 0
     },
     "filters.lastNMonths": {
         "value": "{n, plural, one {Last # month} other {Last # months}}",
-        "comment": "In '{n, plural, one {LAST # MONTH} other {LAST # MONTHS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the last N months (singular/plural)",
         "limit": 0
     },
     "filters.lastNQuarters": {
         "value": "{n, plural, one {Last # quarter} other {Last # quarters}}",
-        "comment": "In '{n, plural, one {LAST # QUARTER} other {LAST # QUARTERS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the last N quarters (singular/plural)",
         "limit": 0
     },
     "filters.lastNYears": {
         "value": "{n, plural, one {Last # year} other {Last # years}}",
-        "comment": "In '{n, plural, one {LAST # YEAR} other {LAST # YEARS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the last N years (singular/plural)",
         "limit": 0
     },
     "filters.nextNMinutes": {
         "value": "{n, plural, one {Next # minute} other {Next # minutes}}",
-        "comment": "In '{n, plural, one {NEXT # MINUTE} other {NEXT # MINUTES}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the next N minutes (singular/plural)",
         "limit": 0
     },
     "filters.nextNHours": {
         "value": "{n, plural, one {Next # hour} other {Next # hours}}",
-        "comment": "In '{n, plural, one {NEXT # HOUR} other {NEXT # HOURS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the next N hours (singular/plural)",
         "limit": 0
     },
     "filters.nextNDays": {
         "value": "{n, plural, one {Next # day} other {Next # days}}",
-        "comment": "In '{n, plural, one {NEXT # DAY} other {NEXT # DAYS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the next N days (singular/plural)",
         "limit": 0
     },
     "filters.nextNWeeks": {
         "value": "{n, plural, one {Next # week} other {Next # weeks}}",
-        "comment": "In '{n, plural, one {NEXT # WEEK} other {NEXT # WEEKS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the next N weeks (singular/plural)",
         "limit": 0
     },
     "filters.nextNMonths": {
         "value": "{n, plural, one {Next # month} other {Next # months}}",
-        "comment": "In '{n, plural, one {NEXT # MONTH} other {NEXT # MONTHS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the next N months (singular/plural)",
         "limit": 0
     },
     "filters.nextNQuarters": {
         "value": "{n, plural, one {Next # quarter} other {Next # quarters}}",
-        "comment": "In '{n, plural, one {NEXT # QUARTER} other {NEXT # QUARTERS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the next N quarters (singular/plural)",
         "limit": 0
     },
     "filters.nextNYears": {
         "value": "{n, plural, one {Next # year} other {Next # years}}",
-        "comment": "In '{n, plural, one {NEXT # YEAR} other {NEXT # YEARS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Filter option for the next N years (singular/plural)",
         "limit": 0
     },
     "filters.interval.minutes.past": {
         "value": "From {from} to {to} {to, plural, one {minute} other {minutes}} ago",
-        "comment": "Example: 'From 5 to 3 minutes ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "comment": "Time interval in past minutes (e.g., 'From 5 to 10 minutes ago')",
         "limit": 0
     },
     "filters.interval.minutes.past.sameValue": {
         "value": "{value} {value, plural, one {minute} other {minutes}} ago",
-        "comment": "Example: '5 minutes ago'. Don't translate placeholder '{value}'. In '{value, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "comment": "Time interval for a single past minute (e.g., '5 minutes ago')",
         "limit": 0
     },
     "filters.interval.minutes.future": {
         "value": "From {from} to {to} {to, plural, one {minute} other {minutes}} ahead",
-        "comment": "Example: 'From 3 to 5 minutes ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "comment": "Time interval in future minutes (e.g., 'From 5 to 10 minutes ahead')",
         "limit": 0
     },
     "filters.interval.minutes.future.sameValue": {
         "value": "{value} {value, plural, one {minute} other {minutes}} ahead",
-        "comment": "Example: '5 minutes ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "comment": "Time interval for a single future minute (e.g., '5 minutes ahead')",
         "limit": 0
     },
     "filters.interval.minutes.mixed": {
         "value": "From {from} {from, plural, one {minute} other {minutes}} ago to {to} {to, plural, one {minute} other {minutes}} ahead",
-        "comment": "Example: 'From 5 minutes ago to 3 minutes ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "comment": "Time interval spanning past and future in minutes (e.g., 'From 1 minute ago to 2 minutes ahead')",
         "limit": 0
     },
     "filters.interval.hours.past": {
         "value": "From {from} to {to} {to, plural, one {hour} other {hours}} ago",
-        "comment": "Example: 'From 5 to 3 hours ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {HOUR} other {HOURS}}' translate only uppercase words.",
+        "comment": "Time interval in past hours (e.g., 'From 1 to 3 hours ago')",
         "limit": 0
     },
     "filters.interval.hours.past.sameValue": {
         "value": "{value} {value, plural, one {hour} other {hours}} ago",
-        "comment": "Example: '5 hours ago'. Don't translate placeholder '{value}'. In '{value, plural, one {HOUR} other {HOURS}}' translate only uppercase words.",
+        "comment": "Time interval for a single past hour (e.g., '2 hours ago')",
         "limit": 0
     },
     "filters.interval.hours.future": {
         "value": "From {from} to {to} {to, plural, one {hour} other {hours}} ahead",
-        "comment": "Example: 'From 3 to 5 hours ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {HOUR} other {HOURS}}' translate only uppercase words.",
+        "comment": "Time interval in future hours (e.g., 'From 1 to 3 hours ahead')",
         "limit": 0
     },
     "filters.interval.hours.future.sameValue": {
         "value": "{value} {value, plural, one {hour} other {hours}} ahead",
-        "comment": "Example: '5 hours ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {HOUR} other {HOURS}}' translate only uppercase words.",
+        "comment": "Time interval for a single future hour (e.g., '2 hours ahead')",
         "limit": 0
     },
     "filters.interval.hours.mixed": {
         "value": "From {from} {from, plural, one {hour} other {hours}} ago to {to} {to, plural, one {hour} other {hours}} ahead",
-        "comment": "Example: 'From 5 hours ago to 3 hours ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {HOUR} other {HOURS}}' translate only uppercase words.",
+        "comment": "Time interval spanning past and future in hours (e.g., 'From 1 hour ago to 2 hours ahead')",
         "limit": 0
     },
     "filters.interval.days.past": {
         "value": "From {from} to {to} {to, plural, one {day} other {days}} ago",
-        "comment": "Example: 'From 5 to 3 days ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {DAY} other {DAYS}}' translate only uppercase words.",
+        "comment": "Time interval in past days (e.g., 'From 1 to 3 days ago')",
         "limit": 0
     },
     "filters.interval.days.past.sameValue": {
         "value": "{value} {value, plural, one {day} other {days}} ago",
-        "comment": "Example: '5 days ago'. Don't translate placeholder '{value}'. In '{value, plural, one {DAY} other {DAYS}}' translate only uppercase words.",
+        "comment": "Time interval for a single past day (e.g., '2 days ago')",
         "limit": 0
     },
     "filters.interval.days.future": {
         "value": "From {from} to {to} {to, plural, one {day} other {days}} ahead",
-        "comment": "Example: 'From 3 to 5 days ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {DAY} other {DAYS}}' translate only uppercase words.",
+        "comment": "Time interval for future days with a range, showing the number of days ahead (e.g., 'From 2 to 4 days ahead'). The placeholders {from} and {to} represent the start and end days.",
         "limit": 0
     },
     "filters.interval.days.future.sameValue": {
         "value": "{value} {value, plural, one {day} other {days}} ahead",
-        "comment": "Example: '5 days ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {DAY} other {DAYS}}' translate only uppercase words.",
+        "comment": "Time interval for a single future day (e.g., '2 days ahead'). The placeholder {value} represents the number of days.",
         "limit": 0
     },
     "filters.interval.days.mixed": {
         "value": "From {from} {from, plural, one {day} other {days}} ago to {to} {to, plural, one {day} other {days}} ahead",
-        "comment": "Example: 'From 5 days ago to 3 days ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {DAY} other {DAYS}}' translate only uppercase words.",
+        "comment": "Time interval spanning both past and future days (e.g., 'From 1 day ago to 2 days ahead'). The placeholders {from} and {to} represent the number of days in the past and future respectively.",
         "limit": 0
     },
     "filters.interval.weeks.past": {
         "value": "From {from} to {to} {to, plural, one {week} other {weeks}} ago",
-        "comment": "Example: 'From 5 to 3 weeks ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {WEEK} other {WEEKS}}' translate only uppercase words.",
+        "comment": "Time interval for past weeks with a range, showing the number of weeks ago (e.g., 'From 2 to 4 weeks ago'). The placeholders {from} and {to} represent the start and end weeks.",
         "limit": 0
     },
     "filters.interval.weeks.past.sameValue": {
         "value": "{value} {value, plural, one {week} other {weeks}} ago",
-        "comment": "Example: '5 weeks ago'. Don't translate placeholder '{value}'. In '{value, plural, one {WEEK} other {WEEKS}}' translate only uppercase words.",
+        "comment": "Time interval for a single past week (e.g., '2 weeks ago'). The placeholder {value} represents the number of weeks.",
         "limit": 0
     },
     "filters.interval.weeks.future": {
         "value": "From {from} to {to} {to, plural, one {week} other {weeks}} ahead",
-        "comment": "Example: 'From 3 to 5 weeks ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {WEEK} other {WEEKS}}' translate only uppercase words.",
+        "comment": "Time interval for future weeks with a range, showing the number of weeks ahead (e.g., 'From 2 to 4 weeks ahead'). The placeholders {from} and {to} represent the start and end weeks.",
         "limit": 0
     },
     "filters.interval.weeks.future.sameValue": {
         "value": "{value} {value, plural, one {week} other {weeks}} ahead",
-        "comment": "Example: '5 weeks ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {WEEK} other {WEEKS}}' translate only uppercase words.",
+        "comment": "Time interval for a single future week (e.g., '2 weeks ahead'). The placeholder {value} represents the number of weeks.",
         "limit": 0
     },
     "filters.interval.weeks.mixed": {
         "value": "From {from} {from, plural, one {week} other {weeks}} ago to {to} {to, plural, one {week} other {weeks}} ahead",
-        "comment": "Example: 'From 5 weeks ago to 3 weeks ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {WEEK} other {WEEKS}}' translate only uppercase words.",
+        "comment": "Time interval spanning both past and future weeks (e.g., 'From 1 week ago to 2 weeks ahead'). The placeholders {from} and {to} represent the number of weeks in the past and future respectively.",
         "limit": 0
     },
     "filters.interval.months.past": {
         "value": "From {from} to {to} {to, plural, one {month} other {months}} ago",
-        "comment": "Example: 'From 5 to 3 months ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MONTH} other {MONTHS}}' translate only uppercase words.",
+        "comment": "Time interval for past months with a range, showing the number of months ago (e.g., 'From 2 to 4 months ago'). The placeholders {from} and {to} represent the start and end months.",
         "limit": 0
     },
     "filters.interval.months.past.sameValue": {
         "value": "{value} {value, plural, one {month} other {months}} ago",
-        "comment": "Example: '5 months ago'. Don't translate placeholder '{value}'. In '{value, plural, one {MONTH} other {MONTHS}}' translate only uppercase words.",
+        "comment": "Time interval for a single past month (e.g., '2 months ago'). The placeholder {value} represents the number of months.",
         "limit": 0
     },
     "filters.interval.months.future": {
         "value": "From {from} to {to} {to, plural, one {month} other {months}} ahead",
-        "comment": "Example: 'From 3 to 5 months ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MONTH} other {MONTHS}}' translate only uppercase words.",
+        "comment": "Time interval for future months with a range, showing the number of months ahead (e.g., 'From 2 to 4 months ahead'). The placeholders {from} and {to} represent the start and end months.",
         "limit": 0
     },
     "filters.interval.months.future.sameValue": {
         "value": "{value} {value, plural, one {month} other {months}} ahead",
-        "comment": "Example: '5 months ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {MONTH} other {MONTHS}}' translate only uppercase words.",
+        "comment": "Time interval for a single future month (e.g., '2 months ahead'). The placeholder {value} represents the number of months.",
         "limit": 0
     },
     "filters.interval.months.mixed": {
         "value": "From {from} {from, plural, one {month} other {months}} ago to {to} {to, plural, one {month} other {months}} ahead",
-        "comment": "Example: 'From 5 months ago to 3 months ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MONTH} other {MONTHS}}' translate only uppercase words.",
+        "comment": "Time interval spanning both past and future months (e.g., 'From 1 month ago to 2 months ahead'). The placeholders {from} and {to} represent the number of months in the past and future respectively.",
         "limit": 0
     },
     "filters.interval.quarters.past": {
         "value": "From {from} to {to} {to, plural, one {quarter} other {quarters}} ago",
-        "comment": "Example: 'From 5 to 3 quarters ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {QUARTER} other {QUARTERS}}' translate only uppercase words.",
+        "comment": "Time interval for past quarters with a range, showing the number of quarters ago (e.g., 'From Q2 to Q4 last year'). The placeholders {from} and {to} represent the start and end quarters.",
         "limit": 0
     },
     "filters.interval.quarters.past.sameValue": {
         "value": "{value} {value, plural, one {quarter} other {quarters}} ago",
-        "comment": "Example: '5 quarters ago'. Don't translate placeholder '{value}'. In '{value, plural, one {QUARTER} other {QUARTERS}}' translate only uppercase words.",
+        "comment": "Time interval for a single past quarter (e.g., '2 quarters ago'). The placeholder {value} represents the number of quarters.",
         "limit": 0
     },
     "filters.interval.quarters.future": {
         "value": "From {from} to {to} {to, plural, one {quarter} other {quarters}} ahead",
-        "comment": "Example: 'From 3 to 5 quarters ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {QUARTER} other {QUARTERS}}' translate only uppercase words.",
+        "comment": "Time interval for future quarters with a range, showing the number of quarters ahead (e.g., 'From Q3 to Q4 next year'). The placeholders {from} and {to} represent the start and end quarters.",
         "limit": 0
     },
     "filters.interval.quarters.future.sameValue": {
         "value": "{value} {value, plural, one {quarter} other {quarters}} ahead",
-        "comment": "Example: '5 quarters ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {QUARTER} other {QUARTERS}}' translate only uppercase words.",
+        "comment": "Time interval for a single future quarter (e.g., '2 quarters ahead'). The placeholder {value} represents the number of quarters.",
         "limit": 0
     },
     "filters.interval.quarters.mixed": {
         "value": "From {from} {from, plural, one {quarter} other {quarters}} ago to {to} {to, plural, one {quarter} other {quarters}} ahead",
-        "comment": "Example: 'From 5 quarters ago to 3 quarters ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {QUARTER} other {QUARTERS}}' translate only uppercase words.",
+        "comment": "Time interval spanning both past and future quarters (e.g., 'From Q1 last year to Q2 next year'). The placeholders {from} and {to} represent the number of quarters in the past and future respectively.",
         "limit": 0
     },
     "filters.interval.years.past": {
         "value": "From {from} to {to} {to, plural, one {year} other {years}} ago",
-        "comment": "Example: 'From 5 to 3 years ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {YEAR} other {YEARS}}' translate only uppercase words.",
+        "comment": "Time interval for past years with a range, showing the number of years ago (e.g., 'From 2 to 4 years ago'). The placeholders {from} and {to} represent the start and end years.",
         "limit": 0
     },
     "filters.interval.years.past.sameValue": {
         "value": "{value} {value, plural, one {year} other {years}} ago",
-        "comment": "Example: '5 years ago'. Don't translate placeholder '{value}'. In '{value, plural, one {YEAR} other {YEARS}}' translate only uppercase words.",
+        "comment": "Time interval for a single past year (e.g., '2 years ago'). The placeholder {value} represents the number of years.",
         "limit": 0
     },
     "filters.interval.years.future": {
         "value": "From {from} to {to} {to, plural, one {year} other {years}} ahead",
-        "comment": "Example: 'From 3 to 5 years ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {YEAR} other {YEARS}}' translate only uppercase words.",
+        "comment": "Time interval for future years with a range, showing the number of years ahead (e.g., 'From 2025 to 2027'). The placeholders {from} and {to} represent the start and end years.",
         "limit": 0
     },
     "filters.interval.years.future.sameValue": {
         "value": "{value} {value, plural, one {year} other {years}} ahead",
-        "comment": "Example: '5 years ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {YEAR} other {YEARS}}' translate only uppercase words.",
+        "comment": "Time interval for a single future year (e.g., '2 years ahead'). The placeholder {value} represents the number of years.",
         "limit": 0
     },
     "filters.interval.years.mixed": {
         "value": "From {from} {from, plural, one {year} other {years}} ago to {to} {to, plural, one {year} other {years}} ahead",
-        "comment": "Example: 'From 5 years ago to 3 years ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {YEAR} other {YEARS}}' translate only uppercase words.",
+        "comment": "Time interval spanning both past and future years (e.g., 'From 1 year ago to 2 years ahead'). The placeholders {from} and {to} represent the number of years in the past and future respectively.",
         "limit": 0
     },
     "filters.granularity.minutes": {
         "value": "Minutes",
-        "comment": "",
+        "comment": "Time granularity option for filtering data at the minute level. Used in time-based filters and selectors.",
         "limit": 0
     },
     "filters.granularity.hours": {
         "value": "Hours",
-        "comment": "",
+        "comment": "Time granularity option for filtering data at the hour level. Used in time-based filters and selectors.",
         "limit": 0
     },
     "filters.granularity.days": {
         "value": "Days",
-        "comment": "",
+        "comment": "Time granularity option for filtering data at the day level. Used in time-based filters and selectors.",
         "limit": 0
     },
     "filters.granularity.weeks": {
         "value": "Weeks",
-        "comment": "",
+        "comment": "Time granularity option for filtering data at the week level. Used in time-based filters and selectors.",
         "limit": 0
     },
     "filters.granularity.months": {
         "value": "Months",
-        "comment": "",
+        "comment": "Time granularity option for filtering data at the month level. Used in time-based filters and selectors.",
         "limit": 0
     },
     "filters.granularity.quarters": {
         "value": "Quarters",
-        "comment": "",
+        "comment": "Time granularity option for filtering data at the quarter level. Used in time-based filters and selectors.",
         "limit": 0
     },
     "filters.granularity.years": {
         "value": "Years",
-        "comment": "",
+        "comment": "Time granularity option for filtering data at the year level. Used in time-based filters and selectors.",
         "limit": 0
     },
     "filters.staticPeriod.dateFrom": {
@@ -1134,7 +1134,7 @@
     },
     "filters.staticPeriod.dateFormatHint": {
         "value": "Use date format {format}.",
-        "comment": "Displayed as a hint below input in which user enters a date. Do not translate {format} placeholder. It will be replaced in runtime with date format pattern.",
+        "comment": "Date input field hint. The {format} placeholder shows the expected date format pattern (e.g., 'MM/DD/YYYY').",
         "limit": 0
     },
     "filters.staticPeriod.timeFormatHint": {
@@ -1144,272 +1144,272 @@
     },
     "filters.date.accessibility.label.from": {
         "value": "Select date from",
-        "comment": "",
+        "comment": "Accessibility label for the 'from' date input field in date range selectors. Used by screen readers to identify the start date selection.",
         "limit": 0
     },
     "filters.date.accessibility.label.to": {
         "value": "Select date to",
-        "comment": "",
+        "comment": "Accessibility label for the 'to' date input field in date range selectors. Used by screen readers to identify the end date selection.",
         "limit": 0
     },
     "filters.time.accessibility.label.from": {
         "value": "Select time from",
-        "comment": "",
+        "comment": "Accessibility label for the 'from' time input field in time range selectors. Used by screen readers to identify the start time selection.",
         "limit": 0
     },
     "filters.time.accessibility.label.to": {
         "value": "Select time to",
-        "comment": "",
+        "comment": "Accessibility label for the 'to' time input field in time range selectors. Used by screen readers to identify the end time selection.",
         "limit": 0
     },
     "filters.relative.placeholder": {
         "value": "Type or select",
-        "comment": "",
+        "comment": "Placeholder text shown in relative date filter inputs, indicating users can either type a value or select from a list of options.",
         "limit": 0
     },
     "filters.relative.from.label": {
         "value": "Period start",
-        "comment": "",
+        "comment": "Label for the starting point of a relative time period in date range selectors. Indicates where the time period begins.",
         "limit": 0
     },
     "filters.relative.from.invalid.value": {
         "value": "Error: Invalid period start — enter a valid period or select it from the list.",
-        "comment": "",
+        "comment": "Error message shown when an invalid value is entered for the start of a relative time period. Guides users to enter a valid value or select from available options.",
         "limit": 0
     },
     "filters.relative.from.empty.value": {
         "value": "Error: Period start is empty — enter a valid period or select it from the list.",
-        "comment": "",
+        "comment": "Error message shown when the start period field is left empty in a relative date filter. Guides users to provide a valid value or select from available options.",
         "limit": 0
     },
     "filters.relative.to.label": {
         "value": "Period end",
-        "comment": "",
+        "comment": "Label for the ending point of a relative time period in date range selectors. Indicates where the time period concludes.",
         "limit": 0
     },
     "filters.relative.to.invalid.value": {
         "value": "Error: Invalid period end — enter a valid period or select it from the list.",
-        "comment": "",
+        "comment": "Error message shown when an invalid value is entered for the end of a relative time period. Helps users correct their input with valid values.",
         "limit": 0
     },
     "filters.relative.to.empty.value": {
         "value": "Error: Period end is empty — enter a valid period or select it from the list.",
-        "comment": "",
+        "comment": "Error message shown when the end period field is left empty in a relative date filter. Prompts users to provide a valid value or select from available options.",
         "limit": 0
     },
     "filters.floatingRange": {
         "value": "Relative period",
-        "comment": "",
+        "comment": "Label for the relative period filter option, allowing users to select time periods relative to the current date (e.g., 'Last 7 days').",
         "limit": 0
     },
     "filters.floatingRange.tooltip": {
         "value": "The date range is relative to today and adjusts in time.",
-        "comment": "",
+        "comment": "Tooltip explaining that the relative period filter will automatically update based on the current date, ensuring the time window remains consistent (e.g., 'Last 30 days' will always show the most recent 30 days).",
         "limit": 0
     },
     "filters.floatingRange.noMatch": {
         "value": "No match found",
-        "comment": "",
+        "comment": "Message displayed when a search or filter operation in the relative period selector doesn't return any matching results.",
         "limit": 0
     },
     "filters.floatingRange.tooBig": {
         "value": "Maximum value: {limit}",
-        "comment": "This string should be as short as possible to fit in the container. Don't translate placeholder '{limit}'.",
+        "comment": "Error message shown when a user enters a value exceeding the maximum allowed limit in a relative period filter. Example: 'Maximum value: 100'.",
         "limit": 32
     },
     "filters.floatingRange.option.minute.offset.history": {
         "value": "{n, plural, one {last minute} other {# minutes ago}}",
-        "comment": "In '{n, plural, one {LAST MINUTE} other {# MINUTES AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.minute.offset.today": {
         "value": "this minute",
-        "comment": "",
+        "comment": "Option in the relative time selector referring to the current minute. Used when filtering data to include only the current minute's data.",
         "limit": 0
     },
     "filters.floatingRange.option.minute.offset.future": {
         "value": "{n, plural, one {next minute} other {# minutes ahead}}",
-        "comment": "In '{n, plural, one {NEXT MINUTE} other {# MINUTES AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.hour.offset.history": {
         "value": "{n, plural, one {last hour} other {# hours ago}}",
-        "comment": "In '{n, plural, one {LAST HOUR} other {# HOURS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.hour.offset.today": {
         "value": "this hour",
-        "comment": "",
+        "comment": "Relative time filter option referring to the current hour. Used to filter data for the current 60-minute period.",
         "limit": 0
     },
     "filters.floatingRange.option.hour.offset.future": {
         "value": "{n, plural, one {next hour} other {# hours ahead}}",
-        "comment": "In '{n, plural, one {NEXT HOUR} other {# HOURS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.day.offset.history": {
         "value": "{n, plural, one {yesterday} other {# days ago}}",
-        "comment": "In '{n, plural, one {YESTERDAY} other {# DAYS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.day.offset.today": {
         "value": "today",
-        "comment": "",
+        "comment": "Relative time filter option for the current calendar day. Used to filter data for the current 24-hour period from midnight to midnight.",
         "limit": 0
     },
     "filters.floatingRange.option.day.offset.future": {
         "value": "{n, plural, one {tomorrow} other {# days ahead}}",
-        "comment": "In '{n, plural, one {TOMORROW} other {# DAYS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.week.offset.history": {
         "value": "{n, plural, one {last week} other {# weeks ago}}",
-        "comment": "In '{n, plural, one {LAST WEEK} other {# WEEKS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time filter option for past weeks. The placeholder {n} represents the number of weeks ago. Used in time-based filtering to reference previous weeks.",
         "limit": 0
     },
     "filters.floatingRange.option.week.offset.today": {
         "value": "this week",
-        "comment": "",
+        "comment": "Relative time filter option for the current calendar week (typically Sunday to Saturday or Monday to Sunday, depending on locale). Used to filter data for the current 7-day period.",
         "limit": 0
     },
     "filters.floatingRange.option.week.offset.future": {
         "value": "{n, plural, one {next week} other {# weeks ahead}}",
-        "comment": "In '{n, plural, one {NEXT WEEK} other {# WEEKS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.month.offset.history": {
         "value": "{n, plural, one {last month} other {# months ago}}",
-        "comment": "In '{n, plural, one {LAST MONTH} other {# MONTHS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.month.offset.today": {
         "value": "this month",
-        "comment": "",
+        "comment": "Relative time filter option for the current calendar month. Used to filter data for the current month from first to last day.",
         "limit": 0
     },
     "filters.floatingRange.option.month.offset.future": {
         "value": "{n, plural, one {next month} other {# months ahead}}",
-        "comment": "In '{n, plural, one {NEXT MONTH} other {# MONTHS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.quarter.offset.history": {
         "value": "{n, plural, one {last quarter} other {# quarters ago}}",
-        "comment": "In '{n, plural, one {LAST QUARTER} other {# QUARTERS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.quarter.offset.today": {
         "value": "this quarter",
-        "comment": "",
+        "comment": "Relative time filter option for the current calendar quarter (Q1: Jan-Mar, Q2: Apr-Jun, etc.). Used to filter data for the current 3-month period.",
         "limit": 0
     },
     "filters.floatingRange.option.quarter.offset.future": {
         "value": "{n, plural, one {next quarter} other {# quarters ahead}}",
-        "comment": "In '{n, plural, one {NEXT QUARTER} other {# QUARTERS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.year.offset.history": {
         "value": "{n, plural, one {last year} other {# years ago}}",
-        "comment": "In '{n, plural, one {LAST YEAR} other {# YEARS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.floatingRange.option.year.offset.today": {
         "value": "this year",
-        "comment": "",
+        "comment": "Relative time filter option for the current calendar year. Used to filter data for the current 12-month period from January to December.",
         "limit": 0
     },
     "filters.floatingRange.option.year.offset.future": {
         "value": "{n, plural, one {next year} other {# years ahead}}",
-        "comment": "In '{n, plural, one {NEXT YEAR} other {# YEARS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "comment": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'.",
         "limit": 0
     },
     "filters.allTime.title": {
         "value": "All time",
-        "comment": "",
+        "comment": "Filter option indicating no time-based filtering should be applied, including all available historical data in the results.",
         "limit": 0
     },
     "filters.allTime.excludeCurrentPeriod": {
         "value": "Exclude open period",
-        "comment": "",
+        "comment": "Option to exclude incomplete or in-progress time periods from the 'All time' filter, such as the current day, week, or month that hasn't fully elapsed.",
         "limit": 0
     },
     "filters.minute.title": {
         "value": "MINUTE",
-        "comment": "",
+        "comment": "Header label for minute-level time filter options. Used in filter configuration interfaces to group minute-related filtering controls.",
         "limit": 0
     },
     "filters.minute.excludeCurrentPeriod": {
         "value": "Exclude this minute",
-        "comment": "",
+        "comment": "Option to exclude the current minute from the filtered results. Useful when the current minute might contain incomplete or in-progress data.",
         "limit": 0
     },
     "filters.hour.title": {
         "value": "HOUR",
-        "comment": "",
+        "comment": "Header label for hour-level time filter options. Used in filter configuration interfaces to group hour-related filtering controls.",
         "limit": 0
     },
     "filters.hour.excludeCurrentPeriod": {
         "value": "Exclude this hour",
-        "comment": "",
+        "comment": "Option to exclude the current hour from the filtered results. Useful when the current hour might contain incomplete or in-progress data.",
         "limit": 0
     },
     "filters.day.title": {
         "value": "DAY",
-        "comment": "",
+        "comment": "Header label for day-level time filter options. Used in filter configuration interfaces to group day-related filtering controls.",
         "limit": 0
     },
     "filters.day.excludeCurrentPeriod": {
         "value": "Exclude today",
-        "comment": "",
+        "comment": "Option to exclude the current day from the filtered results. Useful when today's data might be incomplete or still being collected.",
         "limit": 0
     },
     "filters.week.title": {
         "value": "WEEK",
-        "comment": "",
+        "comment": "Header label for week-level time filter options. Used in filter configuration interfaces to group week-related filtering controls.",
         "limit": 0
     },
     "filters.week.excludeCurrentPeriod": {
         "value": "Exclude this week",
-        "comment": "",
+        "comment": "Option to exclude the current week from the filtered results. Useful when the current week's data might be incomplete or still being collected.",
         "limit": 0
     },
     "filters.month.title": {
         "value": "MONTH",
-        "comment": "",
+        "comment": "Header label for month-level time filter options. Used in filter configuration interfaces to group month-related filtering controls.",
         "limit": 0
     },
     "filters.month.excludeCurrentPeriod": {
         "value": "Exclude this month",
-        "comment": "",
+        "comment": "Option to exclude the current month from the filtered results. Useful when the current month's data might be incomplete or still being collected.",
         "limit": 0
     },
     "filters.quarter.title": {
         "value": "QUARTER",
-        "comment": "",
+        "comment": "Header label for quarter-level time filter options. Used in filter configuration interfaces to group quarter-related filtering controls.",
         "limit": 0
     },
     "filters.quarter.excludeCurrentPeriod": {
         "value": "Exclude this quarter",
-        "comment": "",
+        "comment": "Option to exclude the current quarter from the filtered results. Useful when the current quarter's data might be incomplete or still being collected.",
         "limit": 0
     },
     "filters.year.title": {
         "value": "YEAR",
-        "comment": "",
+        "comment": "Header label for year-level time filter options. Used in filter configuration interfaces to group year-related filtering controls.",
         "limit": 0
     },
     "filters.year.excludeCurrentPeriod": {
         "value": "Exclude this year",
-        "comment": "",
+        "comment": "Option to exclude the current year from the filtered results. Useful when the current year's data might be incomplete or still being collected.",
         "limit": 0
     },
     "filters.excludeCurrentPeriod.unavailable": {
         "value": "Not available for the selected date range",
-        "comment": "",
+        "comment": "Message displayed when the 'exclude current period' option is not applicable to the currently selected date range filter settings.",
         "limit": 0
     },
     "filters.staticPeriod": {
         "value": "Static period",
-        "comment": "",
+        "comment": "Label for the static period filter option, allowing users to select fixed date ranges that don't change over time (as opposed to relative periods).",
         "limit": 0
     },
     "filters.staticPeriod.errors.emptyStartDate": {
@@ -1419,7 +1419,7 @@
     },
     "filters.staticPeriod.errors.invalidStartDate": {
         "value": "Error: Invalid start date — use {format} format.",
-        "comment": "Placeholder '{format}' is used for showing date format. Example 'Error: Start date is not in MM/dd/yyyy format'. Don't translate placeholder '{format}'.",
+        "comment": "Placeholder '{format}' is used for showing date format. Example 'Error: Start date is not in MM/dd/yyyy format'.",
         "limit": 0
     },
     "filters.staticPeriod.errors.startDateAfterEndDate": {
@@ -1439,7 +1439,7 @@
     },
     "filters.staticPeriod.errors.invalidEndDate": {
         "value": "Error: Invalid end date — use {format} format.",
-        "comment": "Placeholder '{format}' is used for showing date format. Example 'Error: End date is not in MM/dd/yyyy format'. Don't translate placeholder '{format}'.",
+        "comment": "Placeholder '{format}' is used for showing date format. Example 'Error: End date is not in MM/dd/yyyy format'.",
         "limit": 0
     },
     "filters.staticPeriod.errors.endDateBeforeStartDate": {
@@ -1459,52 +1459,52 @@
     },
     "mvf.operator.greaterThan": {
         "value": "greater than",
-        "comment": "",
+        "comment": "Filter operator that matches values greater than the specified value. Used in measure value filters to filter data points above a certain threshold.",
         "limit": 0
     },
     "mvf.operator.greaterThanOrEqualTo": {
         "value": "greater than or equal to",
-        "comment": "",
+        "comment": "Filter operator that matches values greater than or equal to the specified value. Used in measure value filters to include the threshold value in the results.",
         "limit": 0
     },
     "mvf.operator.lessThan": {
         "value": "less than",
-        "comment": "",
+        "comment": "Filter operator that matches values less than the specified value. Used in measure value filters to filter data points below a certain threshold.",
         "limit": 0
     },
     "mvf.operator.lessThanOrEqualTo": {
         "value": "less than or equal to",
-        "comment": "",
+        "comment": "Filter operator that matches values less than or equal to the specified value. Used in measure value filters to include the threshold value in the results.",
         "limit": 0
     },
     "mvf.operator.equalTo": {
         "value": "equal to",
-        "comment": "",
+        "comment": "Filter operator that matches values exactly equal to the specified value. Used in measure value filters to find specific data points.",
         "limit": 0
     },
     "mvf.operator.notEqualTo": {
         "value": "not equal to",
-        "comment": "",
+        "comment": "Filter operator that matches all values except the specified value. Used in measure value filters to exclude specific data points.",
         "limit": 0
     },
     "mvf.operator.between": {
         "value": "between",
-        "comment": "",
+        "comment": "Filter operator that matches values within a specified range (inclusive of boundaries). Used in measure value filters to find data points within a specific range.",
         "limit": 0
     },
     "mvf.operator.notBetween": {
         "value": "not between",
-        "comment": "",
+        "comment": "Filter operator that matches values outside a specified range (exclusive of boundaries). Used in measure value filters to exclude data points within a specific range.",
         "limit": 0
     },
     "mvf.operator.between.tooltip.bubble": {
         "value": "Start and end values are included.",
-        "comment": "",
+        "comment": "Tooltip explaining that when using the 'between' operator, the range is inclusive of both the start and end values in the filter criteria.",
         "limit": 0
     },
     "mvf.operator.notBetween.tooltip.bubble": {
         "value": "Start and end values are not included.",
-        "comment": "",
+        "comment": "Tooltip explaining that when using the 'not between' operator, the range is exclusive of both the start and end values in the filter criteria.",
         "limit": 0
     },
     "mvf.treatNullValuesAsZeroLabel": {
@@ -1564,37 +1564,37 @@
     },
     "properties.legend.title": {
         "value": "Legend",
-        "comment": "",
+        "comment": "Title for the legend section in visualization properties. The legend provides a key to the colors and patterns used in the chart.",
         "limit": 0
     },
     "properties.legend.series.item.description": {
         "value": "Press Space or Enter to toggle visibility",
-        "comment": "",
+        "comment": "Tooltip for legend items. Space and Enter stands for keyboard keys.",
         "limit": 0
     },
     "properties.legend.more.button": {
         "value": "Show all legend items in a dialog",
-        "comment": "",
+        "comment": "Button text for opening a dialog to show all legend items",
         "limit": 0
     },
     "properties.legend.series.named": {
         "value": "Legend: {name}",
-        "comment": "",
+        "comment": "Title for a named legend item in visualization properties. {name} is a placeholder for the legend name.",
         "limit": 0
     },
     "properties.legend.series.unnamed": {
         "value": "Visualization legend",
-        "comment": "",
+        "comment": "Title for the legend section in visualization properties. The legend provides a key to the colors and patterns used in the chart.",
         "limit": 0
     },
     "attrf.all": {
         "value": "All",
-        "comment": "",
+        "comment": "Option to select all items in an attribute filter. When selected, the filter will include all possible values of the attribute.",
         "limit": 0
     },
     "attrf.all_except": {
         "value": "All except",
-        "comment": "",
+        "comment": "Option to exclude specific items from an attribute filter. When selected, all values except the specified ones will be included in the filter.",
         "limit": 0
     },
     "rankingFilter.topBottom": {
@@ -1666,22 +1666,22 @@
     },
     "rankingFilter.preview.top_without_attribute": {
         "value": "Top {value} of <strong>{measure}</strong>",
-        "comment": "Do not translate placeholder {value} and {measure} or HTML markup enclosed in <>. Text describes ranking filter. Example: 'Top 3 of Revenue'",
+        "comment": "Preview text showing the top N values based on a measure, where {value} is the number of items and {measure} is the measure name. Used when no attribute is specified for ranking.",
         "limit": 0
     },
     "rankingFilter.preview.bottom_without_attribute": {
         "value": "Bottom {value} of <strong>{measure}</strong>",
-        "comment": "Do not translate placeholder {value} and {measure} or HTML markup enclosed in <>. Title describing ranking direction and number of values. Example: 'Bottom 5 of Revenue'",
+        "comment": "Preview text showing the bottom N values based on a measure, where {value} is the number of items and {measure} is the measure name. Used when no attribute is specified for ranking.",
         "limit": 0
     },
     "rankingFilter.preview.top_with_attribute": {
         "value": "Top {value} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
-        "comment": "Do not translate placeholder {value}, {attribute}, and {measure} or HTML markup enclosed in <>. Title describing ranking direction, number of values, attribute granularity, and measure ranking is based on. Example: 'Top 3 out of Product based on Revenue'",
+        "comment": "Preview text showing the top N values of a specific attribute based on a measure, where {value} is the number of items, {attribute} is the attribute name, and {measure} is the measure name.",
         "limit": 0
     },
     "rankingFilter.preview.bottom_with_attribute": {
         "value": "Bottom {value} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
-        "comment": "Do not translate placeholder {value}, {attribute}, and {measure} or HTML markup enclosed in <>. Title describing ranking direction, number of values, attribute granularity, and measure ranking is based on. Example: 'Bottom 5 out of Product based on Revenue'",
+        "comment": "Preview text showing the bottom N values of a specific attribute based on a measure, where {value} is the number of items, {attribute} is the attribute name, and {measure} is the measure name.",
         "limit": 0
     },
     "rankingFilter.valueTooltip|insight": {
@@ -1697,7 +1697,7 @@
     },
     "attributesDropdown.itemsFiltered.tooltip": {
         "value": "Values are filtered by: <strong>{filters}</strong>",
-        "comment": "Do not translate HTML markup enclosed in <> and {filters} placeholder as it will be replaced by list of filter names.",
+        "comment": "Tooltip explaining which filters are currently applied to the attribute dropdown items. The {filters} placeholder will be replaced with the names of active filters.",
         "limit": 0
     },
     "attributesDropdown.itemsFiltered": {
@@ -1707,7 +1707,7 @@
     },
     "attributeFilterDropdown.emptyValue": {
         "value": "empty value",
-        "comment": "",
+        "comment": "Display text for empty or null values in the attribute filter dropdown. Used when an attribute has no value assigned.",
         "limit": 0
     },
     "attributesDropdown.noData": {
@@ -1747,7 +1747,7 @@
     },
     "attributesDropdown.filterConfiguredMessage": {
         "value": "<strong>{parentTitle}</strong> is already filtered by <strong>{childTitle}</strong> filter directly or through other filters.",
-        "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
+        "comment": "Message explaining filter configuration status. The <strong> tags emphasize attribute names, and {parentTitle}/{childTitle} show the specific filter names.",
         "limit": 0
     },
     "attributesDropdown.attributeNameWithData": {
@@ -1757,67 +1757,67 @@
     },
     "attributesDropdown.noConnectionMessage": {
         "value": "<strong>{childTitle}</strong> cannot be filtered by <strong>{parentTitle}</strong>. There is no connection between the filter attributes in the data model.",
-        "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
+        "comment": "Message explaining that a filter cannot be applied because there is no connection between the filter attributes in the data model.",
         "limit": 0
     },
     "attributesDropdown.details.type": {
         "value": "Attribute",
-        "comment": "",
+        "comment": "Label indicating the type of metadata being displayed, in this case an 'Attribute' type field in the attribute dropdown details.",
         "limit": 0
     },
     "attributesDropdown.details.dataset": {
         "value": "Dataset",
-        "comment": "",
+        "comment": "Label for the dataset field in the attribute dropdown details, showing which dataset the attribute belongs to.",
         "limit": 0
     },
     "attributesDropdown.relevantValues": {
         "value": "Relevant values only.{nbsp}",
-        "comment": "Do not translate non-breakable space '{nbsp}'",
+        "comment": "Message explaining that only relevant values are displayed in the dropdown.",
         "limit": 0
     },
     "attributesDropdown.relevantValues.tooltip.parentFilters": {
         "value": "Available values for <strong>{child}</strong> are filtered by selected <strong>{parents}</strong>.",
-        "comment": "Do not translate HTML markup enclosed in <> and {child}, {parents} placeholders as it will be replaced by list of filter names.",
+        "comment": "Message about filter dependencies. The <strong> tags emphasize filter names, and {child}/{parents} placeholders show the specific filter relationships.",
         "limit": 0
     },
     "attributesDropdown.relevantValues.tooltip.limits": {
         "value": "Values for <strong>{child}</strong> are filtered by an additional filter setting. ",
-        "comment": "Do not translate HTML markup enclosed in <> and {child} placeholder as it will be replaced by a filter name.",
+        "comment": "Message about filter dependencies. The <strong> tags emphasize filter names, and {child}/{parents} placeholders show the specific filter relationships.",
         "limit": 0
     },
     "attributesDropdown.relevantValues.tooltip.parentFiltersLimits": {
         "value": "Values for <strong>{child}</strong> are filtered by the selected <strong>{parents}</strong> and an additional filter setting.",
-        "comment": "Do not translate HTML markup enclosed in <> and {child}, {parents} placeholders as it will be replaced by list of filter names.",
+        "comment": "Message about filter dependencies. The <strong> tags emphasize filter names, and {child}/{parents} placeholders show the specific filter relationships.",
         "limit": 0
     },
     "attributesDropdown.noRelevantValues": {
         "value": "No relevant values",
-        "comment": "",
+        "comment": "Message displayed when there are no matching values available in the dropdown based on the current filter criteria.",
         "limit": 0
     },
     "attributesDropdown.noRelevantValues.tooltip": {
         "value": "Your selection in the dependent filter has resulted in no matching values for this filter.{break}Click 'Show all' to see all available options.",
-        "comment": "Do not translate '{break}' variable.",
+        "comment": "Tooltip explaining that the current filter combination yields no results and suggests viewing all available options by clicking the 'Show all' button.",
         "limit": 0
     },
     "attributesDropdown.irrelevantValues": {
         "value": "Irrelevant value selected.{nbsp}",
-        "comment": "Do not translate non-breakable space '{nbsp}'",
+        "comment": "Message with non-breaking space for proper formatting. The {nbsp} represents a non-breaking space character.",
         "limit": 0
     },
     "attributesDropdown.irrelevantValues.tooltip": {
         "value": "Selected value is no longer relevant due to changes in <strong>{parents}</strong>.",
-        "comment": "Do not translate HTML markup enclosed in <> and {parents} placeholder as it will be replaced by list of filter names.",
+        "comment": "Message about parent filter restrictions. The <strong> tags emphasize filter names, and {parents} shows the list of conflicting filters.",
         "limit": 0
     },
     "attributesDropdown.irrelevantValues.clear": {
         "value": "Clear",
-        "comment": "",
+        "comment": "Button label for clearing the current selection of irrelevant values in the attribute filter dropdown.",
         "limit": 0
     },
     "attributesDropdown.showAll": {
         "value": "Show all",
-        "comment": "",
+        "comment": "Button label that reveals all available options in the dropdown, regardless of current filter settings.",
         "limit": 0
     },
     "shareDialog.share.grantee.title": {
@@ -1907,12 +1907,12 @@
     },
     "shareDialog.share.grantee.item.you": {
         "value": "{userName} (You)",
-        "comment": "Text used for currently logged user in the list of grantees in share dialog. '{userName}' placeholder is replaced with logged use name, for example, 'John Doe (You)'. Do not translate '{userName}' placeholder.",
+        "comment": "Text used for currently logged user in the list of grantees in share dialog. '{userName}' placeholder is replaced with logged user name, for example, 'John Doe (You)'. Keep {userName} placeholder unchanged.",
         "limit": 0
     },
     "shareDialog.share.grantee.item.users.count": {
         "value": "{granteeCount} users",
-        "comment": "Description of grantee user group in share dialog that informs about how many users are in the group. {granteeCount} placeholder will be replaced with a number, for example '110 users'. Do not translate '{granteeCount}' placeholder.",
+        "comment": "Description of grantee user group in share dialog that informs about how many users are in the group. {granteeCount} placeholder will be replaced with a number, for example '110 users'",
         "limit": 0
     },
     "shareDialog.share.grantee.item.creator": {
@@ -1942,72 +1942,72 @@
     },
     "shareDialog.share.granular.grantee.permission.edit": {
         "value": "Can edit & share",
-        "comment": "",
+        "comment": "Permission level that grants the user full edit and share capabilities for the dashboard, including modifying content and managing access for others.",
         "limit": 0
     },
     "shareDialog.share.granular.grantee.permission.share": {
         "value": "Can view & share",
-        "comment": "",
+        "comment": "Permission level that allows users to view the dashboard and share it with others, but not modify the dashboard content.",
         "limit": 0
     },
     "shareDialog.share.granular.grantee.permission.view": {
         "value": "Can view",
-        "comment": "",
+        "comment": "Basic read-only permission level that allows users to view the dashboard content but not make any changes or share it with others.",
         "limit": 0
     },
     "shareDialog.share.granular.grantee.permission.remove": {
         "value": "Remove",
-        "comment": "",
+        "comment": "Button label for removing a user's or group's permissions entirely from the dashboard.",
         "limit": 0
     },
     "shareDialog.share.granular.granularUser.tooltip.cannotChangeHigher": {
         "value": "You cannot remove or change permissions for users with higher permissions than you have.",
-        "comment": "",
+        "comment": "Error message shown when a user attempts to modify permissions of another user who has higher access rights than themselves.",
         "limit": 0
     },
     "shareDialog.share.granular.granularGroup.tooltip.cannotChangeHigher": {
         "value": "You cannot remove or change permissions for groups with higher permissions than you have.",
-        "comment": "",
+        "comment": "Error message shown when a user attempts to modify permissions of a group that has higher access rights than they do.",
         "limit": 0
     },
     "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher": {
         "value": "You cannot set higher permissions than you have.",
-        "comment": "",
+        "comment": "Error message shown when a user attempts to grant permissions that exceed their own permission level.",
         "limit": 0
     },
     "shareDialog.share.granular.granularUser.tooltip.cannotGrantLower": {
         "value": "You cannot set lower permissions than are the permissions from user groups with this user.",
-        "comment": "",
+        "comment": "Error message shown when attempting to set permissions for a user that would be lower than what they inherit from their group memberships.",
         "limit": 0
     },
     "shareDialog.share.granular.granularGroup.tooltip.cannotGrantLower": {
         "value": "You cannot set lower permissions than are the permissions from user groups that include this group.",
-        "comment": "",
+        "comment": "Error message shown when attempting to set permissions for a group that would be lower than what's inherited from parent groups.",
         "limit": 0
     },
     "shareDialog.share.granular.granularUser.tooltip.cannotRemoveFromParent": {
         "value": "You cannot remove permissions for this user in this workspace. To remove the permissions, do so from the parent workspace.",
-        "comment": "",
+        "comment": "Error message shown when a user tries to remove permissions that are inherited from a parent workspace and cannot be modified in the current context.",
         "limit": 0
     },
     "shareDialog.share.granular.granularGroup.tooltip.cannotRemoveFromParent": {
         "value": "You cannot remove permissions for this user group in this workspace. To remove the permissions, do so from the parent workspace.",
-        "comment": "",
+        "comment": "Error message shown when a user tries to remove permissions for a group that are inherited from a parent workspace and cannot be modified in the current context.",
         "limit": 0
     },
     "shareDialog.share.granular.granularUser.tooltip.noChangeAvailable": {
         "value": "You cannot remove or change permissions for this user in this workspace. To edit the permissions, do so from the parent workspace.",
-        "comment": "",
+        "comment": "Error message shown when a user attempts to modify permissions that are managed at a higher level and cannot be changed in the current workspace context.",
         "limit": 0
     },
     "shareDialog.share.granular.granularGroup.tooltip.noChangeAvailable": {
         "value": "You cannot remove or change permissions for this user group in this workspace. To edit the permissions, do so from the parent workspace.",
-        "comment": "",
+        "comment": "Error message shown when a user attempts to modify group permissions that are managed at a higher level and cannot be changed in the current workspace context.",
         "limit": 0
     },
     "shareDialog.share.granular.administrator.info": {
         "value": "<b>Note.</b> You and other administrators have full access to all dashboards.",
-        "comment": "",
+        "comment": "Informational message displayed to administrators, indicating they have full access privileges across all dashboards by default.",
         "limit": 0
     },
     "shareDialog.share.granular.grantee.permission.label": {
@@ -2088,7 +2088,7 @@
     },
     "embedInsightDialog.actions.close": {
         "value": "Close",
-        "comment": "",
+        "comment": "Label for the close button in the embed insight dialog, allowing users to exit the dialog without copying any code.",
         "limit": 0
     },
     "embedInsightDialog.actions.copyCode": {
@@ -2118,7 +2118,7 @@
     },
     "embedInsightDialog.webComponents.options.displayTitle": {
         "value": "Display title",
-        "comment": "",
+        "comment": "Option to control whether the title of the embedded insight should be displayed in the web component.",
         "limit": 0
     },
     "embedInsightDialog.webComponents.options.customTitle": {
@@ -2149,22 +2149,22 @@
     },
     "embedInsightDialog.code.options.custom.height": {
         "value": "Custom height",
-        "comment": "",
+        "comment": "Option to specify a custom height for the embedded insight component in the generated code.",
         "limit": 0
     },
     "embedInsightDialog.code.options.display.configuration": {
         "value": "Include configuration",
-        "comment": "",
+        "comment": "Option to include visualization configuration (colors, axes, legend settings) in the generated embed code.",
         "limit": 0
     },
     "embedInsightDialog.headLine.embedInsight|insight": {
         "value": "Embed visualization",
-        "comment": "",
+        "comment": "Title of the dialog for embedding a visualization, shown when the user wants to embed a specific visualization.",
         "limit": 0
     },
     "embedInsightDialog.headLine.embedInsight|report": {
         "value": "Embed report",
-        "comment": "",
+        "comment": "Title of the dialog for embedding a report, shown when the user wants to embed a specific report.",
         "limit": 0,
         "translate": false
     },
@@ -2202,7 +2202,7 @@
     },
     "embedInsightDialog.prepareEnvironmentMessage": {
         "value": "<b>Note.</b> In order for this snippet to work, prepare your environment.",
-        "comment": "Do not translate html tags <b>, </b>",
+        "comment": "Message explaining code area restrictions. The <b> or <a> tags provide emphasis and clickable actions respectively.",
         "limit": 0
     },
     "embedInsightDialog.prepareEnvironmentMessage.link": {
@@ -2227,12 +2227,12 @@
     },
     "embedInsightDialog.emptyInsight.byReference|insight": {
         "value": "Code snipped will be displayed here once you <a>save the visualization</a>.",
-        "comment": "The disabled message for code area. Do not translate html tags <a>, </a>",
+        "comment": "Message explaining code area restrictions. The <b> or <a> tags provide emphasis and clickable actions respectively.",
         "limit": 0
     },
     "embedInsightDialog.emptyInsight.byReference|report": {
         "value": "Code snipped will be displayed here once you <a>save the report</a>.",
-        "comment": "The disabled message for code area. Do not translate html tags <a>, </a>",
+        "comment": "Message explaining code area restrictions. The <b> or <a> tags provide emphasis and clickable actions respectively.",
         "limit": 0,
         "translate": false
     },
@@ -2259,42 +2259,42 @@
     },
     "error.overlay.login": {
         "value": "Login",
-        "comment": "",
+        "comment": "Button label for the login action shown in the error overlay when a user has been logged out.",
         "limit": 0
     },
     "error.overlay.title": {
         "value": "You have been logged out",
-        "comment": "",
+        "comment": "Title shown in the error overlay when a user's session has expired or they have been logged out.",
         "limit": 0
     },
     "error.overlay.text": {
         "value": "Please log back in to continue your work.",
-        "comment": "",
+        "comment": "Instructional text shown in the error overlay, guiding the user to log back in after being logged out.",
         "limit": 0
     },
     "stylingPicker.title.basic": {
         "value": "Default",
-        "comment": "",
+        "comment": "Label for the default styling option in the styling picker, using the system's default styles.",
         "limit": 0
     },
     "stylingPicker.title.custom": {
         "value": "Custom",
-        "comment": "",
+        "comment": "Label for the custom styling option in the styling picker, allowing users to apply their own styles.",
         "limit": 0
     },
     "stylingPicker.title.create": {
         "value": "Create",
-        "comment": "",
+        "comment": "Button label for creating a new custom style in the styling picker interface.",
         "limit": 0
     },
     "stylingEditor.dialog.name": {
         "value": "Name",
-        "comment": "",
+        "comment": "Label for the name input field in the styling editor dialog.",
         "limit": 0
     },
     "stylingEditor.dialog.name.required": {
         "value": "Cannot save. Specify a name.",
-        "comment": "",
+        "comment": "Error message shown when attempting to save a style without providing a name.",
         "limit": 0
     },
     "stylingEditor.dialog.definition": {
@@ -2304,17 +2304,17 @@
     },
     "stylingEditor.dialog.definition.required": {
         "value": "Cannot save. Specify a definition.",
-        "comment": "",
+        "comment": "Error message shown when attempting to save a style without providing a definition.",
         "limit": 0
     },
     "stylingEditor.dialog.definition.invalid": {
         "value": "Cannot save. The definition is not a valid JSON object.",
-        "comment": "",
+        "comment": "Error message shown when the style definition contains invalid JSON syntax.",
         "limit": 0
     },
     "stylingEditor.dialog.examples": {
         "value": "Templates",
-        "comment": "",
+        "comment": "Label for the templates section in the styling editor dialog, containing predefined style examples.",
         "limit": 0
     },
     "stylingEditor.dialog.example.paste": {
@@ -2324,17 +2324,17 @@
     },
     "stylingPicker.item.edit": {
         "value": "Edit",
-        "comment": "",
+        "comment": "Button label for editing an existing style in the styling picker.",
         "limit": 0
     },
     "stylingPicker.item.delete": {
         "value": "Delete",
-        "comment": "",
+        "comment": "Button label for removing a style from the styling picker.",
         "limit": 0
     },
     "stylingPicker.item.delete.tooltip": {
         "value": "Applied item cannot be deleted.",
-        "comment": "",
+        "comment": "Tooltip message shown when attempting to delete a style that is currently in use.",
         "limit": 0
     },
     "descriptionPanel.button.more": {
@@ -2354,17 +2354,17 @@
     },
     "configurationPanel.drillConfig.drillToDashboard.tooltip": {
         "value": "Open a related dashboard for an expanded view on the selected data point, carrying over relevant filters and context. <a>Learn more</a>",
-        "comment": "Tooltip that explain what happens when drilling to dashboard. Do not translate html tags <a>, </a>.",
+        "comment": "Tooltip explaining drilling behavior. The <a> tags create clickable help links for more information.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToInsight.tooltip": {
         "value": "Open a related visualization, maintaining the applied filters from the original view. <a>Learn more</a>",
-        "comment": "Tooltip that explain what happens when drilling to visualization. Do not translate html tags <a>, </a>.",
+        "comment": "Tooltip explaining drilling behavior. The <a> tags create clickable help links for more information.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToUrl.tooltip": {
         "value": "Open a custom URL with dynamic parameters based on the selected data point. <a>Learn more</a>",
-        "comment": "Tooltip that explain what happens when drilling to custom URL. Do not translate html tags <a>, </a>.",
+        "comment": "Tooltip explaining drilling behavior. The <a> tags create clickable help links for more information.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown": {
@@ -2374,17 +2374,17 @@
     },
     "configurationPanel.drillConfig.drilldown.tooltip": {
         "value": "Drill down within the current visualization, following predefined attribute hierarchies to view your data on an increasingly granular level. <a>Learn more</a>",
-        "comment": "Tooltip that explain what happens when drilling down. Do not translate html tags <a>, </a>.",
+        "comment": "Tooltip explaining drilling behavior. The <a> tags create clickable help links for more information.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip.disabled.insight": {
         "value": "Drill down is turned off in this visualization's configuration.",
-        "comment": "Tooltip that explain drill down is disabled by visualization's configuration",
+        "comment": "Tooltip explaining drill down is disabled by visualization's configuration",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip.disabled.metric": {
         "value": "Drill down can only be set for attributes, not metrics.",
-        "comment": "Tooltip that explain drill down is disabled for metrics",
+        "comment": "Tooltip explaining drill down is disabled for metrics",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.emtpy.hierarchy.info": {
@@ -2394,7 +2394,7 @@
     },
     "configurationPanel.drillConfig.selectHierarchy": {
         "value": "Choose hierarchy…",
-        "comment": "Hint guiding users that attribute hierarchy in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
+        "comment": "Hint guiding users that attribute hierarchy in select box has to be selected.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.create.hierarchy": {
@@ -2469,12 +2469,12 @@
     },
     "attributeHierarchyEditor.attribute.dropdown.title": {
         "value": "Choose attribute…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "comment": "Text for dropdown title to select an attribute.",
         "limit": 0
     },
     "attributeHierarchyEditor.attribute.dropdown.search": {
         "value": "Search…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "comment": "Text for dropdown search input placeholder.",
         "limit": 0
     },
     "attributeHierarchyEditor.note.title": {
@@ -2484,7 +2484,7 @@
     },
     "attributeHierarchyEditor.note.message": {
         "value": "<b>Note:</b> The attribute hierarchy you define is applied globally to all visualizations. This enables drill down interactions not just for the {br}current visualization, but for all visualizations that include any of the attributes within the hierarchy.",
-        "comment": "Information shown in create hierarchy editor. Do not translate html tags <b>, </b> and {br}.",
+        "comment": "Information about hierarchy editor functionality. The <b> tags emphasize important terms and {br} represents line breaks.",
         "limit": 0
     },
     "attributeHierarchyEditor.howItWorks.title": {
@@ -2580,12 +2580,12 @@
     },
     "workspaceHierarchy.inheritedInsight|insight": {
         "value": "You cannot edit or delete this visualization.{br}It is centrally managed and certified.",
-        "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
+        "comment": "Shown when hovering over lock indicator. Placeholder {br} is replaced with visual line break",
         "limit": 0
     },
     "workspaceHierarchy.inheritedInsight|report": {
         "value": "You cannot edit or delete this report.{br}It is centrally managed and certified.",
-        "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
+        "comment": "Shown when hovering over lock indicator. Placeholder {br} is replaced with visual line break",
         "translate": false,
         "limit": 0
     },
@@ -2656,17 +2656,17 @@
     },
     "userManagement.tab.workspaces": {
         "value": "Workspaces ({count})",
-        "comment": "Label of tab that lists user permissions to workspaces. Do not translate placeholder {count}. It will be replaced by number of assigned permissions in runtime.",
+        "comment": "Label of tab that lists user permissions to workspaces. The placeholder {count} will be replaced with a number, e.g., 'Workspaces (5)' when user has 5 workspace assignments. For example, if the user has 5 workspace assignments, the label will be 'Workspaces (5)'. The placeholder {count} will be replaced with a number, e.g., 'Workspaces (5)' when user has 5 workspace assignments.",
         "limit": 0
     },
     "userManagement.tab.groups": {
         "value": "Groups ({count})",
-        "comment": "Label of tab that lists user groups user is member of. Do not translate placeholder {count}. It will be replaced by number of assigned groups in runtime.",
+        "comment": "Label of tab that lists user groups user is member of. The placeholder {count} will be replaced with a number, e.g., 'Groups (3)' when user belongs to 3 groups.",
         "limit": 0
     },
     "userManagement.tab.users": {
         "value": "Members ({count})",
-        "comment": "Label of tab that lists user members of a user group. Do not translate placeholder {count}. It will be replaced by number of group members in runtime.",
+        "comment": "Label of tab that lists user members of a user group. The placeholder {count} will be replaced with a number, e.g., 'Members (12)' when group has 12 members.",
         "limit": 0
     },
     "userManagement.tab.details": {
@@ -2701,7 +2701,7 @@
     },
     "userManagement.tab.dataSources": {
         "value": "Data Sources ({count})",
-        "comment": "Label of tab that lists data sources assigned to a user. Do not translate placeholder {count}. It will be replaced by number of data sources in runtime.",
+        "comment": "Label of tab that lists data sources assigned to a user. The placeholder {count} will be replaced with a number, e.g., 'Data Sources (5)' when user has 5 data source assignments.",
         "limit": 0
     },
     "userManagement.buttons.addDataSourcePermission": {
@@ -3191,7 +3191,7 @@
     },
     "userManagement.userGroups.emptySelection.edit": {
         "value": "No groups selected.",
-        "comment": "Information is displayed in user groups selectbox when user did not type anything yet.",
+        "comment": "Shown when user did not type anything yet.",
         "limit": 0
     },
     "userManagement.userDetail.saveButton": {
@@ -3336,7 +3336,7 @@
     },
     "userManagement.deleteDialog.multipleUsers.body": {
         "value": "<b>{count} users</b> will be irreversibly deleted, but their visualizations and dashboards will remain unaffected.",
-        "comment": "Body of dialog that deletes multiple users. Do not translate placeholder {count}. It will be replaced with number of selected users in runtime.",
+        "comment": "Body of dialog that deletes multiple users. The placeholder {count} will be replaced with a number, e.g., '5 users'.",
         "limit": 0
     },
     "userManagement.deleteDialog.group.title": {
@@ -3356,7 +3356,7 @@
     },
     "userManagement.deleteDialog.multipleGroups.body": {
         "value": "<b>{count} groups</b> will be irreversibly deleted. All their members will lose the rights defined by the group-specific permissions.",
-        "comment": "Body of dialog that deletes multiple user group. Do not translate placeholder {count}. It will be replaced with number of selected user groups in runtime.",
+        "comment": "Body of dialog that deletes multiple user groups. The placeholder {count} will be replaced with a number, e.g., '5 groups'.",
         "limit": 0
     },
     "userManagement.deleteDialog.cancelButton": {
@@ -3626,12 +3626,12 @@
     },
     "recurrence.types.weekly": {
         "value": "Weekly on {day}",
-        "comment": "Example: 'Weekly on Friday'. Placeholder '{day}' refers to a day of a week. Don't translate placeholder '{day}'.",
+        "comment": "Example: 'Weekly on Friday'. Placeholder '{day}' refers to a day of a week.",
         "limit": 0
     },
     "recurrence.types.monthly.last": {
         "value": "Monthly on the last {day}",
-        "comment": "Example: 'Monthly on the last Friday'. Do not translate placeholder {day}'",
+        "comment": "Example: 'Monthly on the last Friday'. The placeholder {day} will be replaced with a day of the week name like 'Friday', 'Monday', etc.",
         "limit": 0
     },
     "recurrence.types.monthly.first": {
@@ -3646,7 +3646,7 @@
     },
     "recurrence.types.monthly": {
         "value": "Monthly on the {week, select, 1 {first} 2 {second} 3 {third} 4 {fourth} other {last}} {day}",
-        "comment": "Example: 'Monthly on the first Friday'. Translate only uppercase in 'MONTHLY ON THE {week, select, 1 {FIRST} 2 {SECOND} 3 {THIRD} 4 {FOURTH} other {LAST}} {day}'",
+        "comment": "Recurrence pattern description. The placeholder {week} will be replaced with a number (1-4) to select the appropriate week ordinal, and {day} will be replaced with a day name. Examples: 'Monthly on the first Friday', 'Monthly on the second Monday', 'Monthly on the last Sunday'.",
         "limit": 0
     },
     "recurrence.types.cron": {
@@ -3666,32 +3666,32 @@
     },
     "recurrence.description.hourly": {
         "value": "At start of every hour",
-        "comment": "",
+        "comment": "Description of hourly recurrence pattern, indicating execution at the beginning of each hour.",
         "limit": 0
     },
     "recurrence.description.daily": {
         "value": "At {hour} every day",
-        "comment": "Do not translate placeholder {hour}.",
+        "comment": "The placeholder {hour} will be replaced with a time value like '9:00 AM', '14:30', etc.",
         "limit": 0
     },
     "recurrence.description.weekly_first": {
         "value": "At {hour} every week start",
-        "comment": "Do not translate placeholder {hour}.",
+        "comment": "The placeholder {hour} will be replaced with a time value like '9:00 AM', '14:30', etc.",
         "limit": 0
     },
     "recurrence.description.weekly": {
         "value": "At {hour} on {dayOfWeekName} every week",
-        "comment": "Do not translate placeholders {hour} and {dayOfWeekName}.",
+        "comment": "The placeholder {hour} will be replaced with a time value like '9:00 AM', '14:30', etc. The placeholder {dayOfWeekName} will be replaced with a day name like 'Monday', 'Tuesday', etc.",
         "limit": 0
     },
     "recurrence.description.monthly_first": {
         "value": "At {hour} every month start",
-        "comment": "Do not translate placeholder {hour}.",
+        "comment": "The placeholder {hour} will be replaced with a time value like '9:00 AM', '14:30', etc.",
         "limit": 0
     },
     "recurrence.description.monthly": {
         "value": "At {hour} on {dayOfWeekName} every {weekNumber}. week in month",
-        "comment": "Do not translate placeholders {hour}, {dayOfWeekName} and {weekNumber}.",
+        "comment": "The placeholder {hour} will be replaced with a time value like '9:00 AM', '14:30', etc. The placeholder {dayOfWeekName} will be replaced with a day name like 'Monday', 'Tuesday', etc. The placeholder {weekNumber} will be replaced with a number like '1', '2', '3', etc.",
         "limit": 0
     },
     "recurrence.error.too_often": {
@@ -3701,57 +3701,57 @@
     },
     "recurrence.error.empty": {
         "value": "Error: Required field — enter a Spring cron expression with six fields: seconds, minutes, hours, day of month, month, and day of week. <a>Learn more</a>",
-        "comment": "Input field is required. Do not translate html tags <a>, </a>.",
+        "comment": "Input field validation message. The <a> tags create clickable help links for assistance.",
         "limit": 0
     },
     "recurrence.error.wrongFormat": {
         "value": "Error: Invalid format — use Spring cron format with six fields: seconds, minutes, hours, day of month, month, and day of week. <a>Learn more</a>",
-        "comment": "Input field has wrong format. Do not translate html tags <a>, </a>.",
+        "comment": "Input field has wrong format. The <a> tags create clickable help links for assistance.",
         "limit": 0
     },
     "recurrence.cron.tooltip": {
         "value": "Use Spring cron format — six fields: seconds, minutes, hours, day of month, month, day of week. <a>Learn more</a>",
-        "comment": "Do not translate html tags <a>, </a>.",
+        "comment": "Input field tooltip. The <a> tags create clickable help links for assistance.",
         "limit": 0
     },
     "recurrence.datetime.format.help": {
         "value": "Format: {dateFormat}",
-        "comment": "Do not translate placeholde {dateFormat}",
+        "comment": "Input field tooltip. Example: Format: YYYY-MM-DD",
         "limit": 0
     },
     "recurrence.datetime.empty.error": {
         "value": "Error: Required field — enter a valid date to continue.",
-        "comment": "Do not translate placeholde {dateFormat}",
+        "comment": "Input field validation message.",
         "limit": 0
     },
     "recurrence.datetime.wrong.format.error": {
         "value": "Error: Invalid date — format must be {dateFormat}",
-        "comment": "Do not translate placeholde {dateFormat}",
+        "comment": "Error message shown when the date format doesn't match the expected format. The placeholder {dateFormat} shows the required format.",
         "limit": 0
     },
     "message.accessibility.dismiss.notification": {
         "value": "Dismiss notification",
-        "comment": "",
+        "comment": "Accessibility label for the button that closes or dismisses a notification message. Used by screen readers.",
         "limit": 0
     },
     "datePicker.accessibility.label": {
         "value": "Select start date",
-        "comment": "",
+        "comment": "Accessibility label for the date picker component, indicating it's used to select a start date. Used by screen readers.",
         "limit": 0
     },
     "timePicker.accessibility.label": {
         "value": "Select starting time",
-        "comment": "",
+        "comment": "Accessibility label for the time picker component, indicating it's used to select a starting time. Used by screen readers.",
         "limit": 0
     },
     "menu.close": {
         "value": "Close menu",
-        "comment": "",
+        "comment": "Button label for closing a menu. Used in various dropdown and context menus throughout the application.",
         "limit": 0
     },
     "menu.back": {
         "value": "Back to the parent menu",
-        "comment": "",
+        "comment": "Button label for navigating back to the parent menu in a nested menu structure. Used in hierarchical navigation.",
         "limit": 0
     }
 }
