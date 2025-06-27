@@ -487,6 +487,9 @@ export const selectSectionModification: (
         createSelector(
             selectWidgetsOverlay,
             (overlay): Required<IDashboardWidgetOverlay>["modification"][] => {
+                if (refs.length === 0) {
+                    return [];
+                }
                 const modifications = refs.map((ref) => {
                     const item = ref && overlay[objRefToString(ref)];
                     return item?.modification;

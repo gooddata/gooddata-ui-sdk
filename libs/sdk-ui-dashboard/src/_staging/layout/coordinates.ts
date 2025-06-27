@@ -41,9 +41,19 @@ export const areLayoutPathsEqual = (
     if (path1.length !== path2.length) {
         return false;
     }
-    return path1.every(
-        (path, index) =>
-            path.sectionIndex === path2[index].sectionIndex && path.itemIndex === path2[index].itemIndex,
+    return path1.every((path, index) => areSameCoordinates(path, path2[index]));
+};
+
+export const areSameCoordinates = (
+    coordinates1?: ILayoutCoordinates,
+    coordinates2?: ILayoutCoordinates,
+): boolean => {
+    if (coordinates1 === undefined || coordinates2 === undefined) {
+        return false;
+    }
+    return (
+        coordinates1.sectionIndex === coordinates2.sectionIndex &&
+        coordinates1.itemIndex === coordinates2.itemIndex
     );
 };
 

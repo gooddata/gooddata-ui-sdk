@@ -21,6 +21,7 @@ import {
     areItemsInSameSection,
     asSectionPath,
     getParentPath,
+    areSameCoordinates,
 } from "../../../_staging/layout/coordinates.js";
 
 import {
@@ -33,6 +34,8 @@ import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";
+import { hasSamePredPath } from "./moveSectionItemToNewSectionHandler.js";
 
 type MoveSectionItemContext = {
     readonly ctx: DashboardContext;
@@ -199,6 +202,54 @@ function validateAndResolve(commandCtx: MoveSectionItemContext) {
     }
 }
 
+function getCommonPath(fromItemPath: ILayoutItemPath, toItemPath: ILayoutItemPath) {
+    const emptyPath: ILayoutItemPath = [];
+    const shorterPath = fromItemPath.length < toItemPath.length ? fromItemPath : toItemPath;
+    return shorterPath.reduce((acc, item, index) => {
+        if (areSameCoordinates(fromItemPath[index], toItemPath[index])) {
+            acc.push(item);
+        }
+        return acc;
+    }, emptyPath);
+}
+
+function toIsBeforeFrom(toItemPath: ILayoutItemPath, fromItemPath: ILayoutItemPath) {
+    return (
+        getSectionIndex(toItemPath) <= getSectionIndex(fromItemPath) ||
+        (getSectionIndex(toItemPath) === getSectionIndex(fromItemPath) &&
+            getItemIndex(toItemPath) <= getItemIndex(fromItemPath))
+    );
+}
+
+function requiresItemShift(fromItemPath: ILayoutItemPath, toItemPath: ILayoutItemPath) {
+    const commonPath = fromItemPath.slice(0, toItemPath.length);
+    return (
+        hasSamePredPath(commonPath.slice(0, -1), toItemPath.slice(0, -1)) &&
+        toIsBeforeFrom(toItemPath, commonPath)
+    );
+}
+
+function getSectionPathWithItemsShifted(
+    fromItemPath: ILayoutItemPath,
+    toItemPath: ILayoutItemPath = [],
+): ILayoutSectionPath {
+    if (fromItemPath && toItemPath && requiresItemShift(fromItemPath, toItemPath)) {
+        const commonPath = getCommonPath(fromItemPath.slice(0, -1), toItemPath.slice(0, -1));
+
+        const pathWithShiftedIndex = [
+            ...commonPath,
+            {
+                sectionIndex: fromItemPath[commonPath.length].sectionIndex,
+                itemIndex: fromItemPath[commonPath.length].itemIndex + 1,
+            },
+            ...fromItemPath.slice(commonPath.length + 1),
+        ];
+
+        return asSectionPath(pathWithShiftedIndex);
+    }
+    return asSectionPath(fromItemPath);
+}
+
 export function* moveSectionItemHandler(
     ctx: DashboardContext,
     cmd: MoveSectionItem,
@@ -244,7 +295,7 @@ export function* moveSectionItemHandler(
                           index:
                               fromPath === undefined
                                   ? { parent: undefined, sectionIndex }
-                                  : asSectionPath(fromPath),
+                                  : getSectionPathWithItemsShifted(fromPath, targetIndex),
                           undo: {
                               cmd,
                           },
