@@ -732,9 +732,9 @@ export interface ISettings {
     enableDashboardShareDialogLink?: boolean;
 
     /**
-     * Enable destination test recipient
+     * Enable dashboard filters apply without loading
      */
-    enableDestinationTestRecipient?: boolean;
+    enableDashboardFiltersApplyWithoutLoading?: boolean;
 
     [key: string]: number | boolean | string | object | undefined | null;
 }

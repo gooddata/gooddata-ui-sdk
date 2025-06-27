@@ -152,7 +152,6 @@ export enum TigerFeaturesNames {
     EnableAttributeFilterVirtualised = "enableAttributeFilterVirtualised",
     EnableNotificationChannelIdentifiers = "enableNotificationChannelIdentifiers",
     EnableDashboardShareDialogLink = "enableDashboardShareDialogLink",
-    EnableDestinationTestRecipient = "enableDestinationTestRecipient",
     EnableDashboardFiltersApplyWithoutLoading = "enableDashboardFiltersApplyWithoutLoading",
 }
 
@@ -268,7 +267,6 @@ export type ITigerFeatureFlags = {
     enableAttributeFilterVirtualised: typeof FeatureFlagsValues["enableAttributeFilterVirtualised"][number];
     enableNotificationChannelIdentifiers: typeof FeatureFlagsValues["enableNotificationChannelIdentifiers"][number];
     enableDashboardShareDialogLink: typeof FeatureFlagsValues["enableDashboardShareDialogLink"][number];
-    enableDestinationTestRecipient: typeof FeatureFlagsValues["enableDestinationTestRecipient"][number];
     enableDashboardFiltersApplyWithoutLoading: typeof FeatureFlagsValues["enableDashboardFiltersApplyWithoutLoading"][number];
 };
 
@@ -384,7 +382,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAttributeFilterVirtualised: true,
     enableNotificationChannelIdentifiers: false,
     enableDashboardShareDialogLink: false,
-    enableDestinationTestRecipient: false,
     enableDashboardFiltersApplyWithoutLoading: false,
 };
 
@@ -504,6 +501,5 @@ export const FeatureFlagsValues = {
     enableAttributeFilterVirtualised: [true, false] as const,
     enableNotificationChannelIdentifiers: [true, false] as const,
     enableDashboardShareDialogLink: [true, false] as const,
-    enableDestinationTestRecipient: [true, false] as const,
     enableDashboardFiltersApplyWithoutLoading: [true, false] as const,
 };
