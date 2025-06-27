@@ -812,8 +812,6 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     appliedGrantees: GranteeItem[];
     // (undocumented)
-    applyShareGrantOnSelect?: boolean;
-    // (undocumented)
     currentUser: IUser;
     // (undocumented)
     currentUserPermissions: CurrentUserPermissions;
@@ -4275,7 +4273,7 @@ export interface IShareDialogBaseProps {
     // (undocumented)
     onShareLinkCopy?: (shareLink: string) => void;
     // (undocumented)
-    onSubmit: (grantees: GranteeItem[], granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[], isUnderLenientControl: boolean, isLocked: boolean) => void;
+    onSubmit: (grantees: GranteeItem[], granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[], isUnderLenientControl: boolean, isLocked: boolean, closeOnApply?: boolean) => void;
     // (undocumented)
     sharedObject: IAffectedSharedObject;
     // (undocumented)
@@ -4335,7 +4333,7 @@ export interface IShareDialogProps {
     // (undocumented)
     locale?: string;
     // (undocumented)
-    onApply: (payload: ISharingApplyPayload) => void;
+    onApply: (payload: ISharingApplyPayload, closeOnApply?: boolean) => void;
     // (undocumented)
     onCancel: () => void;
     // (undocumented)

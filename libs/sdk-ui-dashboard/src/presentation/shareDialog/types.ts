@@ -93,7 +93,7 @@ export interface IShareDialogProps {
     /**
      * Callback to be called when user apply share dialog
      */
-    onApply: (payload: ISharingApplyPayload) => void;
+    onApply: (payload: ISharingApplyPayload, closeOnApply?: boolean) => void;
 
     /**
      * Callback to be called, when error occurs.

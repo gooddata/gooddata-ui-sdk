@@ -61,7 +61,7 @@ export interface IShareDialogProps {
     sharedObject: ISharedObject;
     currentUser: IUser;
     locale?: string;
-    onApply: (payload: ISharingApplyPayload) => void;
+    onApply: (payload: ISharingApplyPayload, closeOnApply?: boolean) => void;
     onCancel: () => void;
     onError?: (error: GoodDataSdkError) => void;
     onInteraction?: (data: IShareDialogInteractionData) => void;

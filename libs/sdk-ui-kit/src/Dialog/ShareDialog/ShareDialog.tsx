@@ -82,6 +82,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
             granteesToDelete: GranteeItem[],
             isUnderLenientControl: boolean,
             isLocked: boolean,
+            closeOnApply?: boolean,
         ) => {
             const shareStatus = mapGranteesToShareStatus(grantees, granteesToAdd, granteesToDelete);
             const isUnderStrictControl = shareStatus !== "public" && !isUnderLenientControl;
@@ -89,13 +90,16 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
             const addAccess = mapGranteesToGranularAccessGrantees(granteesToAdd, true);
             const revokeAccess = mapGranteesToGranularAccessGrantees(granteesToDelete);
 
-            onApply({
-                shareStatus,
-                isUnderStrictControl,
-                isLocked,
-                granteesToAdd: addAccess,
-                granteesToDelete: revokeAccess,
-            });
+            onApply(
+                {
+                    shareStatus,
+                    isUnderStrictControl,
+                    isLocked,
+                    granteesToAdd: addAccess,
+                    granteesToDelete: revokeAccess,
+                },
+                closeOnApply,
+            );
         },
         [onApply],
     );

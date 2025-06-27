@@ -28,7 +28,6 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
         onDelete,
         onGranularGranteeChange,
         isGranteeShareLoading,
-        applyShareGrantOnSelect,
     } = props;
     const intl = useIntl();
     const {
@@ -56,7 +55,6 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             onCancel={onBackClick}
             onSubmit={onSubmit}
             onClose={onCancel}
-            hideSubmitButton={applyShareGrantOnSelect}
             headerLeftButtonRenderer={backButtonRenderer}
         >
             <AddGranteeContent
