@@ -21,10 +21,30 @@ import {
     findSection,
     findSections,
     getParentPath,
+    getCommonPath,
+    areSameCoordinates,
 } from "../coordinates";
 import { NESTED_LAYOUT } from "./coordinates.mock";
 
 describe("coordinates", () => {
+    describe("areSameCoordinates", () => {
+        it("should return false when one of the coordinates is undefined", () => {
+            expect(areSameCoordinates(undefined, { sectionIndex: 1, itemIndex: 2 })).toBe(false);
+        });
+
+        it("should return true when both coordinates are the same", () => {
+            expect(
+                areSameCoordinates({ sectionIndex: 1, itemIndex: 2 }, { sectionIndex: 1, itemIndex: 2 }),
+            ).toBe(true);
+        });
+
+        it("should return false when coordinates are different", () => {
+            expect(
+                areSameCoordinates({ sectionIndex: 1, itemIndex: 2 }, { sectionIndex: 1, itemIndex: 3 }),
+            ).toBe(false);
+        });
+    });
+
     describe("areLayoutPathsEqual", () => {
         const layoutPath: ILayoutItemPath = [{ itemIndex: 0, sectionIndex: 1 }];
         it.each([
@@ -1003,6 +1023,46 @@ describe("coordinates", () => {
                     { itemIndex: 0, sectionIndex: 1 },
                 ]);
             });
+        });
+    });
+
+    describe("getCommonPath", () => {
+        it("should return empty array when paths are empty", () => {
+            expect(getCommonPath([], [])).toStrictEqual([]);
+        });
+
+        it("should return empty array when paths are not related", () => {
+            expect(
+                getCommonPath([{ sectionIndex: 1, itemIndex: 0 }], [{ sectionIndex: 3, itemIndex: 2 }]),
+            ).toStrictEqual([]);
+        });
+
+        it("should return common path when paths are related", () => {
+            expect(
+                getCommonPath(
+                    [
+                        { sectionIndex: 0, itemIndex: 0 },
+                        { sectionIndex: 0, itemIndex: 0 },
+                    ],
+                    [
+                        { sectionIndex: 0, itemIndex: 0 },
+                        { sectionIndex: 1, itemIndex: 0 },
+                    ],
+                ),
+            ).toStrictEqual([{ sectionIndex: 0, itemIndex: 0 }]);
+        });
+
+        it("should return common path when paths are related and longer", () => {
+            const fromPath = [
+                { sectionIndex: 0, itemIndex: 0 },
+                { sectionIndex: 0, itemIndex: 0 },
+            ];
+            const toPath = [
+                { sectionIndex: 0, itemIndex: 0 },
+                { sectionIndex: 0, itemIndex: 0 },
+                { sectionIndex: 0, itemIndex: 0 },
+            ];
+            expect(getCommonPath(fromPath, toPath)).toStrictEqual(fromPath);
         });
     });
 });

@@ -27,6 +27,7 @@ import {
     getSectionIndex,
     getItemIndex,
     getParentPath,
+    areLayoutPathsEqual,
 } from "../../../_staging/layout/coordinates.js";
 import { ILayoutItemPath } from "../../../types.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
@@ -142,19 +143,14 @@ function toIsBeforeFrom(toItemPath: ILayoutItemPath, fromItemPath: ILayoutItemPa
     return getSectionIndex(toItemPath) <= getSectionIndex(fromItemPath);
 }
 
-function hasSamePredPath(fromItemPath: ILayoutItemPath, toItemPath: ILayoutItemPath) {
-    for (let i = 0; i < toItemPath.length; i++) {
-        if (fromItemPath[i] !== toItemPath[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
 function requiresSectionShift(fromItemPath: ILayoutItemPath, toItemPath: ILayoutItemPath) {
     const commonPath = fromItemPath.slice(0, toItemPath.length);
+    const commonPathParent = getParentPath(commonPath);
+    const toItemPathParent = getParentPath(toItemPath);
     return (
-        hasSamePredPath(commonPath.slice(0, -1), toItemPath.slice(0, -1)) &&
+        commonPathParent !== undefined &&
+        toItemPathParent !== undefined &&
+        areLayoutPathsEqual(commonPathParent, toItemPathParent) &&
         toIsBeforeFrom(toItemPath, commonPath)
     );
 }
