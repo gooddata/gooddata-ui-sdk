@@ -31,8 +31,10 @@ initializeAutoAuth(import.meta.url).catch((error) => {
 // Register custom elements with the browser
 window.customElements.define("gd-insight", Insight);
 window.customElements.define("gd-dashboard", Dashboard);
-window.customElements.define("gd-ai-chat", GenAIAssistant);
 window.customElements.define("gd-ai-assistant", GenAIAssistant);
+
+class GenAIChat extends GenAIAssistant {}
+window.customElements.define("gd-ai-chat", GenAIChat);
 
 // Expose context accessors in case user wants to configure custom
 //  authentication flow
