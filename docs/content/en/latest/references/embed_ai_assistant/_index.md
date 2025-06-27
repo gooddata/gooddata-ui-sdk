@@ -98,13 +98,16 @@ export interface ChatEventHandler<TEvent extends ChatEvent = any> {
 
 Here is a list of the relevant events:
 
-| Event name                    | Guard name                      | Description                        |
-| ----------------------------- | ------------------------------- | ---------------------------------- |
-| `ChatResetEvent`              | `isChatResetEvent`              | Chat history was reset             |
-| `ChatUserMessageEvent`        | `isChatUserMessageEvent`        | User sent a message                |
-| `ChatAssistantMessageEvent`   | `isChatAssistantMessageEvent`   | Assistant responded with a message |
-| `ChatFeedbackEvent`           | `isChatFeedbackEvent`           | User gave a feedback               |
-| `ChatVisualizationErrorEvent` | `isChatVisualizationErrorEvent` | Visualization failed to render     |
+| Event name                          | Guard name                            | Description                           |
+| ----------------------------------- | ------------------------------------- | ------------------------------------- |
+| `ChatResetEvent`                    | `isChatResetEvent`                    | Chat history was reset                |
+| `ChatUserMessageEvent`              | `isChatUserMessageEvent`              | User sent a message                   |
+| `ChatAssistantMessageEvent`         | `isChatAssistantMessageEvent`         | Assistant responded with a message    |
+| `ChatFeedbackEvent`                 | `isChatFeedbackEvent`                 | User gave a feedback                  |
+| `ChatVisualizationErrorEvent`       | `isChatVisualizationErrorEvent`       | Visualization failed to render        |
+| `ChatSaveVisualizationErrorEvent`   | `isChatSaveVisualizationErrorEvent`   | Chat failed to saved visualisation    |
+| `ChatSaveVisualizationSuccessEvent` | `isChatSaveVisualizationSuccessEvent` | Chat successfully saved visualisation |
+| `ChatCopyToClipboardEvent`          | `isChatCopyToClipboardEvent`          | Chat copy to clipboard event          |
 
 #### onLinkClick
 
