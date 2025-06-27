@@ -59,8 +59,8 @@ const useShareDialogDashboardHeader = () => {
     }, [closeShareDialog]);
 
     const onApplyShareDialog = useCallback(
-        (payload: ISharingApplyPayload) => {
-            if (!applyShareGrantOnSelect) {
+        (payload: ISharingApplyPayload, closeOnApply = true) => {
+            if (closeOnApply) {
                 closeShareDialog();
             }
             runChangeSharing(payload);

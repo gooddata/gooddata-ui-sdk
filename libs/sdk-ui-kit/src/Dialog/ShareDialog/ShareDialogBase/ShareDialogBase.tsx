@@ -114,7 +114,6 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         onBackClick={onAddGranteeBackClick}
                         onGranularGranteeChange={onGranularGranteeAddChange}
                         isGranteeShareLoading={isGranteeShareLoading}
-                        applyShareGrantOnSelect={applyShareGrantOnSelect}
                     />
                 )}
             </div>

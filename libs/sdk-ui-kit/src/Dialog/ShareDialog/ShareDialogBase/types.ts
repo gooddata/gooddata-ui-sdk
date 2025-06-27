@@ -240,6 +240,7 @@ export interface IShareDialogBaseProps {
         granteesToDelete: GranteeItem[],
         isUnderLenientControl: boolean,
         isLocked: boolean,
+        closeOnApply?: boolean,
     ) => void;
     onError: (err: Error) => void;
     onShareLinkCopy?: (shareLink: string) => void;
@@ -316,7 +317,6 @@ export interface IAddGranteeBaseProps {
     sharedObject: IAffectedSharedObject;
     previouslyFocusedRef?: React.MutableRefObject<HTMLElement>;
     isGranteeShareLoading?: boolean;
-    applyShareGrantOnSelect?: boolean;
     onBackClick?: () => void;
     onDelete: (grantee: GranteeItem) => void;
     onAddUserOrGroups?: (grantee: GranteeItem) => void; // rename
