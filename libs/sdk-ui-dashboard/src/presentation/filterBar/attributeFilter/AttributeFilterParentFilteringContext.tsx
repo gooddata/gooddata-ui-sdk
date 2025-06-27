@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useContext, useMemo, useCallback } from "react";
 import { invariant } from "ts-invariant";
 import {
@@ -117,10 +117,14 @@ export const AttributeFilterParentFilteringProvider: React.FC<
     );
 
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
-
     const attributeFilterDisplayFormsMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
-    const filterDisplayForm = attributeFilterDisplayFormsMap.get(currentFilter.attributeFilter.displayForm);
-    invariant(filterDisplayForm);
+    const filterDisplayForm =
+        attributeFilterDisplayFormsMap.get(currentFilter.attributeFilter.displayForm) ||
+        catalogDisplayFormsMap.get(currentFilter.attributeFilter.displayForm);
+    invariant(
+        filterDisplayForm,
+        "Display form not found." + JSON.stringify(currentFilter.attributeFilter.displayForm),
+    );
 
     const attributeByDisplayForm = memoizedAttributes.find((attribute) =>
         areObjRefsEqual(attribute.ref, filterDisplayForm.attribute),

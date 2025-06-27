@@ -11,6 +11,7 @@ import {
 import { invariant } from "ts-invariant";
 import {
     selectAllCatalogAttributesMap,
+    selectAllCatalogDisplayFormsMap,
     selectAttributeFilterDisplayFormsMap,
     selectDashboardFiltersApplyMode,
     selectEnableDashboardFiltersApplyModes,
@@ -21,9 +22,12 @@ import {
 
 function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef, attributes?: IAttributeMetadataObject[]) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
-    const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
-    const filterDisplayForm = dfMap.get(filterDisplayFormRef);
-    invariant(filterDisplayForm);
+    const attributeFilterDisplayFormsMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
+    const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
+    const filterDisplayForm =
+        attributeFilterDisplayFormsMap.get(filterDisplayFormRef) ||
+        catalogDisplayFormsMap.get(filterDisplayFormRef);
+    invariant(filterDisplayForm, "Display form not found." + JSON.stringify(filterDisplayFormRef));
 
     const attributesMap = useDashboardSelector(selectAllCatalogAttributesMap);
     if (!attributes) {
