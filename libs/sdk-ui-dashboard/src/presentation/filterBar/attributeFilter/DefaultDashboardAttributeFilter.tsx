@@ -452,9 +452,9 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 overlayPositionType={overlayPositionType}
                 onApply={(
                     newFilter,
-                    _isInverted,
-                    _selectionMode,
-                    _selectionTitles,
+                    isInverted,
+                    selectionMode,
+                    selectionTitles,
                     displayAsLabel,
                     isResultOfMigration,
                 ) => {
@@ -463,6 +463,9 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                             newFilter,
                             filter.attributeFilter.localIdentifier,
                             filter.attributeFilter.title,
+                            selectionTitles,
+                            isInverted,
+                            selectionMode,
                         ),
                         displayAsLabel,
                         false,
