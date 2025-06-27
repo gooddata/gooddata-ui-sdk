@@ -251,7 +251,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         }
 
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? false;
+        const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? true;
 
         const convertedExportMetadata = convertFromBackendExportMetadata(
             metadata,
@@ -1029,7 +1029,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
             const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
             const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-            const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? false;
+            const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? true;
 
             return this.authCall(async (client) => {
                 if (isDefault) {
@@ -1180,7 +1180,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         filterContext: IFilterContextDefinition,
     ): Promise<IFilterContext> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? false;
+        const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? true;
 
         const tigerFilterContext = convertFilterContextToBackend(
             filterContext,
@@ -1250,7 +1250,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         updatedFilterContext: IFilterContext | ITempFilterContext | IFilterContextDefinition | undefined,
     ): Promise<IFilterContext | undefined> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? false;
+        const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? true;
 
         const sanitizedFilterContext = useDateFilterLocalIdentifiers
             ? {
@@ -1280,7 +1280,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     private updateFilterContext = async (filterContext: IFilterContext): Promise<IFilterContext> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? false;
+        const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? true;
 
         const tigerFilterContext = convertFilterContextToBackend(
             filterContext,

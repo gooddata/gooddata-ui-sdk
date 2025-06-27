@@ -98,7 +98,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                     this.authCall,
                     this.requestParameters.workspaceId,
                 );
-                const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? false;
+                const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? true;
 
                 const items = await this.authCall((client) =>
                     client.entities.getAllEntitiesAutomations({
