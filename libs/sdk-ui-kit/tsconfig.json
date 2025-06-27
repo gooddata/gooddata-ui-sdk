@@ -1,6 +1,12 @@
 {
     "exclude": ["**/tests", "**/test"],
-    "include": ["src/**/*", "src/**/*.json", "scripts/validateCss.js", "scripts/generateDefaultThemeScss.js"],
+    "include": [
+        "src/**/*",
+        "src/**/*.json",
+        "scripts/validateCss.js",
+        "scripts/generateDefaultThemeScss.js",
+        "scripts/validateUiComponents.js"
+    ],
     "compilerOptions": {
         "baseUrl": ".",
         "rootDir": "./src",
