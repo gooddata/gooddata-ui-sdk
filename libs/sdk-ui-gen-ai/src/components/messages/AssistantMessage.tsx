@@ -3,7 +3,7 @@
 import React from "react";
 import cx from "classnames";
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
-import { defineMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import { connect } from "react-redux";
 
 import { AssistantMessage, isErrorContents } from "../../model.js";
@@ -17,8 +17,6 @@ type AssistantMessageProps = {
     setUserFeedback: typeof setUserFeedback;
     isLast?: boolean;
 };
-
-const labelMessage = defineMessage({ id: "gd.gen-ai.assistant-icon" });
 
 const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedComponentProps> = ({
     message,
@@ -34,12 +32,15 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
     const hasError = message.content.some(isErrorContents);
 
     return (
-        <section className={classNames}>
+        <div className={classNames}>
+            <span className="gd-gen-ai-chat__visually__hidden">
+                {intl.formatMessage({ id: "gd.gen-ai.message.label.assistant" })}
+            </span>
             <AgentIcon
                 loading={!message.complete}
                 error={hasError}
                 cancelled={message.cancelled}
-                aria-label={intl.formatMessage(labelMessage)}
+                aria-hidden="true"
             />
             <div className="gd-gen-ai-chat__messages__message__contents_wrap">
                 <MessageContents
@@ -97,7 +98,7 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                     </div>
                 ) : null}
             </div>
-        </section>
+        </div>
     );
 };
 

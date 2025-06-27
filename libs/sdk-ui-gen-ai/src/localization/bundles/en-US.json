@@ -49,13 +49,13 @@
         "comment": "Use ellipsis at the end …",
         "limit": 0
     },
-    "gd.gen-ai.input-label": {
-        "value": "Ask your question",
+    "gd.gen-ai.input-label.mac": {
+        "value": "Ask your question. Use control+space or cmd+I for suggestions.",
         "comment": "",
         "limit": 0
     },
-    "gd.gen-ai.assistant-icon": {
-        "value": "Chatbot response",
+    "gd.gen-ai.input-label.win": {
+        "value": "Ask your question. Use control+space or control+I for suggestions.",
         "comment": "",
         "limit": 0
     },
@@ -260,7 +260,12 @@
         "limit": 0
     },
     "gd.gen-ai.message.label.user": {
-        "value": "User input",
+        "value": "User:",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.message.label.assistant": {
+        "value": "Bot:",
         "comment": "",
         "limit": 0
     }

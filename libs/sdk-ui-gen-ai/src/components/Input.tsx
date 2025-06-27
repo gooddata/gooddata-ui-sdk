@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { ReactNode, useMemo } from "react";
+import React, { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import cx from "classnames";
 import { connect } from "react-redux";
 import { defineMessages, FormattedMessage, injectIntl } from "react-intl";
@@ -32,8 +32,11 @@ const messages = defineMessages({
     placeholder: {
         id: "gd.gen-ai.input-placeholder",
     },
-    label: {
-        id: "gd.gen-ai.input-label",
+    labelMac: {
+        id: "gd.gen-ai.input-label.mac",
+    },
+    labelWin: {
+        id: "gd.gen-ai.input-label.win",
     },
     send: {
         id: "gd.gen-ai.button.send",
@@ -54,9 +57,9 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     canManage,
     canAnalyze,
 }) => {
-    const [value, setValue] = React.useState("");
-    const [editorApi, setApi] = React.useState<EditorView | null>(null);
-    const [focused, setFocused] = React.useState(false);
+    const [value, setValue] = useState("");
+    const [editorApi, setApi] = useState<EditorView | null>(null);
+    const [focused, setFocused] = useState(false);
 
     const { onCompletion, used } = useCompletion(catalogItems, [], { canManage, canAnalyze });
     const highlightExtension = useHighlight(used);
@@ -64,16 +67,26 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     const extensions = useMemo(() => [highlightExtension], [highlightExtension]);
 
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
-    const forceFocusOnce = React.useRef<boolean>(autofocus);
-    React.useEffect(() => {
+    const forceFocusOnce = useRef<boolean>(autofocus);
+    useEffect(() => {
         // Autofocus the textarea when the chat is not disabled and the user is not focusing on another element
         // Important, given the disabled states changes depending on the agent's loading state
         // And it's loosing focus after the loading state changes
-        if (!isBusy && (forceFocusOnce.current || document.activeElement === document.body) && editorApi) {
+        if (isBusy || !editorApi) {
+            return;
+        }
+        const makeFocus = forceFocusOnce.current || document.activeElement === document.body;
+        if (makeFocus) {
             editorApi.focus();
-            forceFocusOnce.current = false;
+            forceFocusOnce.current = document.activeElement !== editorApi.contentDOM;
         }
     }, [isBusy, editorApi]);
+    useEffect(
+        () => () => {
+            forceFocusOnce.current = true;
+        },
+        [],
+    );
 
     const handleSubmit = () => {
         newMessage(makeUserMessage([makeTextContents(value, collectReferences(value, used.current))]));
@@ -124,7 +137,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
             <SyntaxHighlightingInput
                 className="gd-gen-ai-chat__input__mc"
                 placeholder={intl.formatMessage(messages.placeholder)}
-                label={intl.formatMessage(messages.label)}
+                label={isMac ? intl.formatMessage(messages.labelMac) : intl.formatMessage(messages.labelWin)}
                 value={value}
                 disabled={isBusy}
                 autocompletion={{
