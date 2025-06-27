@@ -56,8 +56,9 @@ const ARROW_OFFSETS: ArrowOffsets = {
  * @internal
  */
 export interface IBubbleProps {
+    id?: string;
     alignPoints?: IAlignPoint[];
-    alignTo?: string;
+    alignTo?: string | HTMLElement | null;
     arrowOffsets?: ArrowOffsets;
     arrowDirections?: ArrowDirections;
     arrowStyle?: React.CSSProperties;
@@ -189,6 +190,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
 
         return (
             <ZoomAwareOverlay
+                id={this.props.id}
                 className={this.props.overlayClassName}
                 alignTo={this.props.alignTo}
                 onAlign={this.onAlign}

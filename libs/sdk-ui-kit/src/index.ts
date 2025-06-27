@@ -91,6 +91,7 @@ export { UiButton } from "./@ui/UiButton/UiButton.js";
 export type { UiButtonProps, IUiButtonAccessibilityConfig } from "./@ui/UiButton/UiButton.js";
 export { UiIconButton } from "./@ui/UiIconButton/UiIconButton.js";
 export type { UiIconButtonProps } from "./@ui/UiIconButton/UiIconButton.js";
+export type { UiIconButtonPublicProps } from "./@ui/UiIconButton/UiIconButtonRenderer.js";
 export { UiChip } from "./@ui/UiChip/UiChip.js";
 export type { UiChipProps, IUiChipAccessibilityConfig } from "./@ui/UiChip/UiChip.js";
 export { UiIcon } from "./@ui/UiIcon/UiIcon.js";
@@ -141,6 +142,7 @@ export type {
     UiListboxStaticItemProps,
     IUiListboxInteractiveItem,
     UiListboxInteractiveItemProps,
+    UiListboxAriaAttributes,
 } from "./@ui/UiListbox/types.js";
 
 export { UiMenu } from "./@ui/UiMenu/UiMenu.js";
@@ -195,6 +197,8 @@ export { UiTabs } from "./@ui/UiTabs/UiTabs.js";
 export type { UiTabsProps, UiTab, UiTabsAccessibilityConfig } from "./@ui/UiTabs/UiTabs.js";
 export { UiTooltip } from "./@ui/UiTooltip/UiTooltip.js";
 export type { UiTooltipProps, TooltipArrowPlacement } from "./@ui/UiTooltip/types.js";
+export { UiDropdownIconButton } from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";
+export type { UiDropdownIconButtonProps } from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";
 
 export {
     makeMenuKeyboardNavigation,

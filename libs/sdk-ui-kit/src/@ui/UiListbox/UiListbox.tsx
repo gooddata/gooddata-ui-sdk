@@ -35,6 +35,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     shouldKeyboardActionStopPropagation,
     shouldCloseOnSelect = true,
     isDisabledFocusable = false,
+    isCompact = false,
 
     ariaAttributes,
 }: UiListboxProps<InteractiveItemData, StaticItemData>): React.ReactNode {
@@ -195,6 +196,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                                 item={item}
                                 isFocused={index === focusedIndex}
                                 isSelected={item.id === selectedItemId}
+                                isCompact={isCompact}
                             />
                         </li>
                     ) : (

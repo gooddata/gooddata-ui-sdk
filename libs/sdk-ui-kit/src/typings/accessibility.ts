@@ -21,7 +21,6 @@ export interface IMenuAccessibilityConfig extends IAccessibilityConfigBase {
     ariaDisabled?: React.AriaAttributes["aria-disabled"];
     // to support submenu
     ariaHasPopup?: "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
-    ariaControls?: string;
 }
 
 /**

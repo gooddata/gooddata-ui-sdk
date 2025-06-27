@@ -82,7 +82,7 @@ export class Widget {
     }
 
     removeVizWidget() {
-        this.getElement().click().get(".s-delete-insight-item").click();
+        this.getElement().click({ force: true }).get(".s-delete-insight-item").click();
         return this;
     }
 

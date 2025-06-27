@@ -102,6 +102,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         onClose: noop,
     };
 
+    private readonly id: string;
     private overlayRef = createRef<HTMLDivElement>();
     private containerRef = createRef<HTMLSpanElement>();
     private resizeHandler = debounce(() => {
@@ -111,7 +112,6 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     private portalNode: HTMLDivElement | null = null;
     private isComponentMounted: boolean;
     private clickedInside: boolean;
-    private id = uuid();
     private alignmentTimeoutId: number;
     private isInitialAlign: boolean;
     static contextType = OverlayContext;
@@ -140,6 +140,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         this.clickedInside = false;
         this.alignmentTimeoutId = 0;
         this.isInitialAlign = true;
+        this.id = props.id ?? uuid();
 
         bindAll(
             this,
@@ -215,6 +216,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
                 <Portal node={this.portalNode}>
                     {/* Do not prevent onScroll events - see ONE-4189 for details */}
                     <div
+                        id={this.id}
                         className={cx(this.props.containerClassName, OVERLAY_CONTENT_CLASS)}
                         onClick={this.props.onClick}
                         onMouseOver={this.props.onMouseOver}
@@ -241,7 +243,6 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         if (!alignPoints || !overlay) {
             return;
         }
-
         const isSameAsTarget = this.isSameAsTargetPosition(positionType);
         const optimalAlign = getOptimalAlignment({
             targetRegion: elementRegion(alignTo, isSameAsTarget),

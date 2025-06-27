@@ -137,7 +137,9 @@ export type NestedLayoutInteractionType =
     | "nestedLayoutDirectionRow"
     | "nestedLayoutRemoved"
     | "nestedLayoutHeaderEnabled"
-    | "nestedLayoutHeaderDisabled";
+    | "nestedLayoutHeaderDisabled"
+    | "nestedLayoutDirectionConfigurationOpened"
+    | "nestedLayoutDirectionConfigurationClosed";
 
 /**
  * @alpha
