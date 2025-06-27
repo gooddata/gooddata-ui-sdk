@@ -16,7 +16,17 @@ export function useCodemirrorOptions({ placeholderText, labelText }: IUseCodemir
 
     // Placeholder
     const placeholderExtension = useMemo(() => {
-        return placeholderText ? placeholder(placeholderText) : [];
+        return placeholderText
+            ? placeholder(() => {
+                  const dom = document.createElement("span");
+                  dom.textContent = placeholderText;
+                  // Hide from screen readers
+                  dom.setAttribute("aria-hidden", "true");
+                  // Prevent default aria-label
+                  dom.removeAttribute("aria-label");
+                  return dom;
+              })
+            : [];
     }, [placeholderText]);
 
     // ARIA
