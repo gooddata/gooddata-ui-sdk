@@ -371,7 +371,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardShareLink: true,
     enableHighchartsAccessibility: false,
     enableExecutionTimestamp: true,
-    enableAutomationFilterContext: false,
+    enableAutomationFilterContext: true,
     enableDateFilterIdentifiersRollout: true,
     enableAlertsEvaluationFrequencySetup: true,
     enableRichTooManyDatapointsErrors: false,

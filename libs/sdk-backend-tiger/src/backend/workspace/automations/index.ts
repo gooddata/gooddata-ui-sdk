@@ -158,6 +158,6 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
 
     private getEnableAutomationFilterContext = async (): Promise<boolean> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspaceId);
-        return userSettings.enableAutomationFilterContext ?? false;
+        return userSettings.enableAutomationFilterContext ?? true;
     };
 }

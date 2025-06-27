@@ -221,6 +221,6 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
 
     private getEnableAutomationFilterContext = async (): Promise<boolean> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        return userSettings.enableAutomationFilterContext ?? false;
+        return userSettings.enableAutomationFilterContext ?? true;
     };
 }

@@ -1009,7 +1009,7 @@ export const selectEnableDashboardShareLink: DashboardSelector<boolean> = create
 export const selectEnableAutomationFilterContext: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableAutomationFilterContext) ?? false;
+        return Boolean(state.settings?.enableAutomationFilterContext) ?? true;
     },
 );
 
@@ -1021,7 +1021,7 @@ export const selectEnableAutomationFilterContext: DashboardSelector<boolean> = c
 export const selectEnableDateFilterIdentifiers: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableDateFilterIdentifiersRollout) ?? false;
+        return Boolean(state.settings?.enableDateFilterIdentifiersRollout) ?? true;
     },
 );
 
