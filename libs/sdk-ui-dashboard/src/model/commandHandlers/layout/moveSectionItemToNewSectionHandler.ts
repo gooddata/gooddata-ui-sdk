@@ -27,6 +27,7 @@ import {
     getSectionIndex,
     getItemIndex,
     getParentPath,
+    areSameCoordinates,
 } from "../../../_staging/layout/coordinates.js";
 import { ILayoutItemPath } from "../../../types.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
@@ -142,9 +143,9 @@ function toIsBeforeFrom(toItemPath: ILayoutItemPath, fromItemPath: ILayoutItemPa
     return getSectionIndex(toItemPath) <= getSectionIndex(fromItemPath);
 }
 
-function hasSamePredPath(fromItemPath: ILayoutItemPath, toItemPath: ILayoutItemPath) {
+export function hasSamePredPath(fromItemPath: ILayoutItemPath, toItemPath: ILayoutItemPath) {
     for (let i = 0; i < toItemPath.length; i++) {
-        if (fromItemPath[i] !== toItemPath[i]) {
+        if (!areSameCoordinates(fromItemPath[i], toItemPath[i])) {
             return false;
         }
     }
