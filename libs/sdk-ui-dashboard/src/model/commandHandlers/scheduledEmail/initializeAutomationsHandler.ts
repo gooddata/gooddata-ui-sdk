@@ -266,15 +266,12 @@ function sanitizeDateFilters(
     filters: FilterContextItem[],
     dashboardCommonDateFilter: IDashboardDateFilter | undefined,
 ) {
-    const dateFilters = filters.filter(isDashboardDateFilter);
-    const foundCommonDateFilter =
-        dateFilters.find(
-            (filter) =>
-                filter.dateFilter.localIdentifier === dashboardCommonDateFilter?.dateFilter.localIdentifier,
-        ) ?? dateFilters[0];
-
     return filters.map((filter) => {
-        if (isDashboardDateFilter(filter) && filter === foundCommonDateFilter) {
+        if (
+            isDashboardDateFilter(filter) &&
+            dashboardCommonDateFilter &&
+            filter.dateFilter.localIdentifier === dashboardCommonDateFilter.dateFilter.localIdentifier
+        ) {
             return {
                 ...filter,
                 dateFilter: {
