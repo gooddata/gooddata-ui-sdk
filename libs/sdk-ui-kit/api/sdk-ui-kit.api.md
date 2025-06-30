@@ -5024,6 +5024,8 @@ export interface IUiNavigationBypassProps {
     label: string;
     // (undocumented)
     onItemClick?: (item: IUiNavigationItem) => void;
+    // (undocumented)
+    style?: React_2.CSSProperties;
 }
 
 // @internal (undocumented)

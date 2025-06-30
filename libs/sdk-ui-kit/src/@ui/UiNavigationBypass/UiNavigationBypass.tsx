@@ -23,6 +23,7 @@ export interface IUiNavigationItem {
 export interface IUiNavigationBypassProps {
     items: IUiNavigationItem[];
     label: string;
+    style?: React.CSSProperties;
     onItemClick?: (item: IUiNavigationItem) => void;
 }
 
@@ -38,7 +39,12 @@ interface IUiNavigationBypassItem {
 /**
  * @internal
  */
-export const UiNavigationBypass: React.FC<IUiNavigationBypassProps> = ({ label, items, onItemClick }) => {
+export const UiNavigationBypass: React.FC<IUiNavigationBypassProps> = ({
+    label,
+    items,
+    onItemClick,
+    style,
+}) => {
     const [isFocused, setIsFocused] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -109,6 +115,7 @@ export const UiNavigationBypass: React.FC<IUiNavigationBypassProps> = ({ label, 
             <div
                 role="menu"
                 className={b()}
+                style={style}
                 ref={containerRef}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
