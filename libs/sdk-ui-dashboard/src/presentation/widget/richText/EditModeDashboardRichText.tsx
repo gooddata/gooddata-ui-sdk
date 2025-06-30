@@ -60,7 +60,7 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
 
     const [richText, setRichText] = useState<string>(widget?.content);
 
-    const [isRichTextEditing, setIsRichTextEditing] = useState(true);
+    const [isRichTextEditing, setIsRichTextEditing] = useState(false);
     const [isConfirmDeleteDialogVisible, setIsConfirmDeleteDialogVisible] = useState(false);
     const theme = useTheme();
 
