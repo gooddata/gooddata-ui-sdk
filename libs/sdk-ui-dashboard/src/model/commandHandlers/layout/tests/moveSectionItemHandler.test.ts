@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
@@ -15,6 +15,9 @@ import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
+
+import { getSectionPathWithItemsShifted } from "../moveSectionItemHandler.js";
+import { ILayoutItemPath } from "../../../../types.js";
 
 describe("move layout section item handler", () => {
     describe("for any dashboard", () => {
@@ -201,6 +204,64 @@ describe("move layout section item handler", () => {
                 SecondSectionFirstItem,
                 SecondSectionSecondItem,
             ]);
+        });
+    });
+});
+
+describe("getSectionPathWithItemsShifted", () => {
+    it("should not shift if paths are unrelated", () => {
+        const fromPath: ILayoutItemPath = [
+            { sectionIndex: 0, itemIndex: 0 },
+            { sectionIndex: 1, itemIndex: 0 },
+        ];
+        const toPath: ILayoutItemPath = [
+            { sectionIndex: 2, itemIndex: 0 },
+            { sectionIndex: 3, itemIndex: 0 },
+        ];
+        const shiftedPath = getSectionPathWithItemsShifted(fromPath, toPath);
+        expect(shiftedPath).toEqual({
+            parent: [{ sectionIndex: 0, itemIndex: 0 }],
+            sectionIndex: 1,
+        });
+    });
+
+    it("should shift when moving within the same section before in order", () => {
+        const fromPath: ILayoutItemPath = [
+            { sectionIndex: 0, itemIndex: 0 },
+            { sectionIndex: 0, itemIndex: 0 },
+            { sectionIndex: 1, itemIndex: 2 },
+        ];
+        const toPath: ILayoutItemPath = [
+            { sectionIndex: 0, itemIndex: 0 },
+            { sectionIndex: 0, itemIndex: 0 },
+        ];
+        const shiftedPath = getSectionPathWithItemsShifted(fromPath, toPath);
+        expect(shiftedPath).toEqual({
+            parent: [
+                { sectionIndex: 0, itemIndex: 0 },
+                { sectionIndex: 0, itemIndex: 1 },
+            ],
+            sectionIndex: 1,
+        });
+    });
+
+    it("should not shift when moving after in order", () => {
+        const fromPath: ILayoutItemPath = [
+            { sectionIndex: 0, itemIndex: 0 },
+            { sectionIndex: 0, itemIndex: 0 },
+            { sectionIndex: 1, itemIndex: 2 },
+        ];
+        const toPath: ILayoutItemPath = [
+            { sectionIndex: 0, itemIndex: 0 },
+            { sectionIndex: 0, itemIndex: 1 },
+        ];
+        const shiftedPath = getSectionPathWithItemsShifted(fromPath, toPath);
+        expect(shiftedPath).toEqual({
+            parent: [
+                { sectionIndex: 0, itemIndex: 0 },
+                { sectionIndex: 0, itemIndex: 0 },
+            ],
+            sectionIndex: 1,
         });
     });
 });

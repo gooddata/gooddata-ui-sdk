@@ -21,6 +21,8 @@ import {
     areItemsInSameSection,
     asSectionPath,
     getParentPath,
+    areLayoutPathsEqual,
+    getCommonPath,
 } from "../../../_staging/layout/coordinates.js";
 
 import {
@@ -33,6 +35,7 @@ import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";
 
 type MoveSectionItemContext = {
     readonly ctx: DashboardContext;
@@ -199,6 +202,49 @@ function validateAndResolve(commandCtx: MoveSectionItemContext) {
     }
 }
 
+function toIsBeforeFrom(toItemPath: ILayoutItemPath, fromItemPath: ILayoutItemPath) {
+    return (
+        getSectionIndex(toItemPath) === getSectionIndex(fromItemPath) &&
+        getItemIndex(toItemPath) <= getItemIndex(fromItemPath)
+    );
+}
+
+function requiresItemShift(fromItemPath: ILayoutItemPath, toItemPath: ILayoutItemPath) {
+    const commonPath = fromItemPath.slice(0, toItemPath.length);
+    const commonPathParent = getParentPath(commonPath);
+    const toItemPathParent = getParentPath(toItemPath);
+    return (
+        commonPathParent !== undefined &&
+        toItemPathParent !== undefined &&
+        areLayoutPathsEqual(commonPathParent, toItemPathParent) &&
+        toIsBeforeFrom(toItemPath, commonPath)
+    );
+}
+
+export function getSectionPathWithItemsShifted(
+    fromItemPath: ILayoutItemPath,
+    toItemPath: ILayoutItemPath = [],
+): ILayoutSectionPath {
+    if (fromItemPath && toItemPath && requiresItemShift(fromItemPath, toItemPath)) {
+        const fromItemPathParent = getParentPath(fromItemPath);
+        const toItemPathParent = getParentPath(toItemPath);
+        const commonPath =
+            fromItemPathParent && toItemPathParent ? getCommonPath(fromItemPathParent, toItemPathParent) : [];
+
+        const pathWithShiftedIndex = [
+            ...commonPath,
+            {
+                sectionIndex: fromItemPath[commonPath.length].sectionIndex,
+                itemIndex: fromItemPath[commonPath.length].itemIndex + 1,
+            },
+            ...fromItemPath.slice(commonPath.length + 1),
+        ];
+
+        return asSectionPath(pathWithShiftedIndex);
+    }
+    return asSectionPath(fromItemPath);
+}
+
 export function* moveSectionItemHandler(
     ctx: DashboardContext,
     cmd: MoveSectionItem,
@@ -244,7 +290,7 @@ export function* moveSectionItemHandler(
                           index:
                               fromPath === undefined
                                   ? { parent: undefined, sectionIndex }
-                                  : asSectionPath(fromPath),
+                                  : getSectionPathWithItemsShifted(fromPath, targetIndex),
                           undo: {
                               cmd,
                           },
