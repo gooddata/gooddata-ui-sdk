@@ -44,7 +44,7 @@ jobs:
             rush build -t @gooddata/sdk-examples
 
       - name: Deploy to heroku
-        uses: akhileshns/heroku-deploy@v3.13.15
+        uses: akhileshns/heroku-deploy@v3.14.15
         with:
           appdir: "examples/sdk-examples"
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
