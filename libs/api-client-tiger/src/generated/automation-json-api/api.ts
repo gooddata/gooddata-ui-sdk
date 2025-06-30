@@ -191,6 +191,12 @@ export interface AutomationAdHocAutomation {
      */
     slidesExports?: Array<AutomationAutomationSlidesExport>;
     /**
+     *
+     * @type {Array<AutomationAutomationDashboardTabularExport>}
+     * @memberof AutomationAdHocAutomation
+     */
+    dashboardTabularExports?: Array<AutomationAutomationDashboardTabularExport>;
+    /**
      * External recipients of the automation action results.
      * @type {Array<AutomationAutomationExternalRecipient>}
      * @memberof AutomationAdHocAutomation
@@ -713,12 +719,65 @@ export type AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
     typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
 /**
+ * @type AutomationAttributeElements
+ * @export
+ */
+export type AutomationAttributeElements =
+    | AutomationAttributeElementsByRef
+    | AutomationAttributeElementsByValue;
+
+/**
+ *
+ * @export
+ * @interface AutomationAttributeElementsByRef
+ */
+export interface AutomationAttributeElementsByRef {
+    /**
+     * List of attribute elements by reference
+     * @type {Array<string>}
+     * @memberof AutomationAttributeElementsByRef
+     */
+    uris: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AutomationAttributeElementsByValue
+ */
+export interface AutomationAttributeElementsByValue {
+    /**
+     * List of attribute elements by value
+     * @type {Array<string>}
+     * @memberof AutomationAttributeElementsByValue
+     */
+    values: Array<string>;
+}
+/**
  * @type AutomationAttributeFilter
  * Abstract filter definition type attributes
  * @export
  */
 export type AutomationAttributeFilter = AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter;
 
+/**
+ *
+ * @export
+ * @interface AutomationAttributeFilterByDate
+ */
+export interface AutomationAttributeFilterByDate {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAttributeFilterByDate
+     */
+    filterLocalIdentifier: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AutomationAttributeFilterByDate
+     */
+    isCommonDate: boolean;
+}
 /**
  * Filter on specific set of label values.
  * @export
@@ -731,6 +790,25 @@ export interface AutomationAttributeFilterElements {
      * @memberof AutomationAttributeFilterElements
      */
     values: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AutomationAttributeFilterParent
+ */
+export interface AutomationAttributeFilterParent {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAttributeFilterParent
+     */
+    filterLocalIdentifier: string;
+    /**
+     *
+     * @type {AutomationOver}
+     * @memberof AutomationAttributeFilterParent
+     */
+    over: AutomationOver;
 }
 /**
  *
@@ -791,6 +869,19 @@ export const AutomationAutomationAlertTriggerEnum = {
 export type AutomationAutomationAlertTriggerEnum =
     typeof AutomationAutomationAlertTriggerEnum[keyof typeof AutomationAutomationAlertTriggerEnum];
 
+/**
+ *
+ * @export
+ * @interface AutomationAutomationDashboardTabularExport
+ */
+export interface AutomationAutomationDashboardTabularExport {
+    /**
+     *
+     * @type {AutomationDashboardTabularExportRequestV2}
+     * @memberof AutomationAutomationDashboardTabularExport
+     */
+    requestPayload: AutomationDashboardTabularExportRequestV2;
+}
 /**
  *
  * @export
@@ -1092,12 +1183,283 @@ export interface AutomationCustomOverride {
     metrics?: { [key: string]: AutomationCustomMetric };
 }
 /**
+ *
+ * @export
+ * @interface AutomationDashboardAttributeFilter
+ */
+export interface AutomationDashboardAttributeFilter {
+    /**
+     *
+     * @type {AutomationDashboardAttributeFilterAttributeFilter}
+     * @memberof AutomationDashboardAttributeFilter
+     */
+    attributeFilter: AutomationDashboardAttributeFilterAttributeFilter;
+}
+/**
+ *
+ * @export
+ * @interface AutomationDashboardAttributeFilterAttributeFilter
+ */
+export interface AutomationDashboardAttributeFilterAttributeFilter {
+    /**
+     *
+     * @type {AutomationIdentifierRef}
+     * @memberof AutomationDashboardAttributeFilterAttributeFilter
+     */
+    displayForm: AutomationIdentifierRef;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AutomationDashboardAttributeFilterAttributeFilter
+     */
+    negativeSelection: boolean;
+    /**
+     *
+     * @type {AutomationAttributeElements}
+     * @memberof AutomationDashboardAttributeFilterAttributeFilter
+     */
+    attributeElements: AutomationAttributeElements;
+    /**
+     *
+     * @type {Array<AutomationAttributeFilterParent>}
+     * @memberof AutomationDashboardAttributeFilterAttributeFilter
+     */
+    filterElementsBy?: Array<AutomationAttributeFilterParent>;
+    /**
+     *
+     * @type {Array<AutomationAttributeFilterByDate>}
+     * @memberof AutomationDashboardAttributeFilterAttributeFilter
+     */
+    filterElementsByDate?: Array<AutomationAttributeFilterByDate>;
+    /**
+     *
+     * @type {Array<AutomationIdentifierRef>}
+     * @memberof AutomationDashboardAttributeFilterAttributeFilter
+     */
+    validateElementsBy?: Array<AutomationIdentifierRef>;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationDashboardAttributeFilterAttributeFilter
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationDashboardAttributeFilterAttributeFilter
+     */
+    selectionMode?: AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationDashboardAttributeFilterAttributeFilter
+     */
+    localIdentifier?: string;
+}
+
+export const AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum = {
+    SINGLE: "single",
+    MULTI: "multi",
+} as const;
+
+export type AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum =
+    typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum[keyof typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum];
+
+/**
+ *
+ * @export
+ * @interface AutomationDashboardDateFilter
+ */
+export interface AutomationDashboardDateFilter {
+    /**
+     *
+     * @type {AutomationDashboardDateFilterDateFilter}
+     * @memberof AutomationDashboardDateFilter
+     */
+    dateFilter: AutomationDashboardDateFilterDateFilter;
+}
+/**
+ *
+ * @export
+ * @interface AutomationDashboardDateFilterDateFilter
+ */
+export interface AutomationDashboardDateFilterDateFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationDashboardDateFilterDateFilter
+     */
+    type: AutomationDashboardDateFilterDateFilterTypeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationDashboardDateFilterDateFilter
+     */
+    granularity: AutomationDashboardDateFilterDateFilterGranularityEnum;
+    /**
+     *
+     * @type {string | number}
+     * @memberof AutomationDashboardDateFilterDateFilter
+     */
+    from?: string | number;
+    /**
+     *
+     * @type {string | number}
+     * @memberof AutomationDashboardDateFilterDateFilter
+     */
+    to?: string | number;
+    /**
+     *
+     * @type {AutomationIdentifierRef}
+     * @memberof AutomationDashboardDateFilterDateFilter
+     */
+    dataSet?: AutomationIdentifierRef;
+    /**
+     *
+     * @type {AutomationIdentifierRef}
+     * @memberof AutomationDashboardDateFilterDateFilter
+     */
+    attribute?: AutomationIdentifierRef;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationDashboardDateFilterDateFilter
+     */
+    localIdentifier?: string;
+}
+
+export const AutomationDashboardDateFilterDateFilterTypeEnum = {
+    RELATIVE: "relative",
+    ABSOLUTE: "absolute",
+} as const;
+
+export type AutomationDashboardDateFilterDateFilterTypeEnum =
+    typeof AutomationDashboardDateFilterDateFilterTypeEnum[keyof typeof AutomationDashboardDateFilterDateFilterTypeEnum];
+export const AutomationDashboardDateFilterDateFilterGranularityEnum = {
+    ALL_TIME_GRANULARITY: "ALL_TIME_GRANULARITY",
+    GDC_TIME_YEAR: "GDC.time.year",
+    GDC_TIME_WEEK_US: "GDC.time.week_us",
+    GDC_TIME_WEEK_IN_YEAR: "GDC.time.week_in_year",
+    GDC_TIME_WEEK_IN_QUARTER: "GDC.time.week_in_quarter",
+    GDC_TIME_WEEK: "GDC.time.week",
+    GDC_TIME_EUWEEK_IN_YEAR: "GDC.time.euweek_in_year",
+    GDC_TIME_EUWEEK_IN_QUARTER: "GDC.time.euweek_in_quarter",
+    GDC_TIME_QUARTER: "GDC.time.quarter",
+    GDC_TIME_QUARTER_IN_YEAR: "GDC.time.quarter_in_year",
+    GDC_TIME_MONTH: "GDC.time.month",
+    GDC_TIME_MONTH_IN_QUARTER: "GDC.time.month_in_quarter",
+    GDC_TIME_MONTH_IN_YEAR: "GDC.time.month_in_year",
+    GDC_TIME_DAY_IN_YEAR: "GDC.time.day_in_year",
+    GDC_TIME_DAY_IN_QUARTER: "GDC.time.day_in_quarter",
+    GDC_TIME_DAY_IN_MONTH: "GDC.time.day_in_month",
+    GDC_TIME_DAY_IN_WEEK: "GDC.time.day_in_week",
+    GDC_TIME_DAY_IN_EUWEEK: "GDC.time.day_in_euweek",
+    GDC_TIME_DATE: "GDC.time.date",
+    GDC_TIME_HOUR: "GDC.time.hour",
+    GDC_TIME_HOUR_IN_DAY: "GDC.time.hour_in_day",
+    GDC_TIME_MINUTE: "GDC.time.minute",
+    GDC_TIME_MINUTE_IN_HOUR: "GDC.time.minute_in_hour",
+} as const;
+
+export type AutomationDashboardDateFilterDateFilterGranularityEnum =
+    typeof AutomationDashboardDateFilterDateFilterGranularityEnum[keyof typeof AutomationDashboardDateFilterDateFilterGranularityEnum];
+
+/**
+ * Additional settings.
+ * @export
+ * @interface AutomationDashboardExportSettings
+ */
+export interface AutomationDashboardExportSettings {
+    /**
+     * If true, the export will contain the information about the exported date and dashboard filters.
+     * @type {boolean}
+     * @memberof AutomationDashboardExportSettings
+     */
+    exportInfo?: boolean;
+    /**
+     * Merge equal headers in neighbouring cells. Used for [XLSX] format only.
+     * @type {boolean}
+     * @memberof AutomationDashboardExportSettings
+     */
+    mergeHeaders?: boolean;
+}
+/**
+ * @type AutomationDashboardFilter
+ * @export
+ */
+export type AutomationDashboardFilter = AutomationDashboardAttributeFilter | AutomationDashboardDateFilter;
+
+/**
+ * Export request object describing the export properties for dashboard tabular exports (v2 with dashboardId).
+ * @export
+ * @interface AutomationDashboardTabularExportRequestV2
+ */
+export interface AutomationDashboardTabularExportRequestV2 {
+    /**
+     * Requested tabular export type.
+     * @type {string}
+     * @memberof AutomationDashboardTabularExportRequestV2
+     */
+    format: AutomationDashboardTabularExportRequestV2FormatEnum;
+    /**
+     * Filename of downloaded file without extension.
+     * @type {string}
+     * @memberof AutomationDashboardTabularExportRequestV2
+     */
+    fileName: string;
+    /**
+     * List of filters that will be used instead of the default dashboard filters.
+     * @type {Array<AutomationDashboardFilter>}
+     * @memberof AutomationDashboardTabularExportRequestV2
+     */
+    dashboardFiltersOverride?: Array<AutomationDashboardFilter>;
+    /**
+     * Dashboard identifier
+     * @type {string}
+     * @memberof AutomationDashboardTabularExportRequestV2
+     */
+    dashboardId: string;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     * @type {Array<string>}
+     * @memberof AutomationDashboardTabularExportRequestV2
+     */
+    widgetIds?: Array<string>;
+    /**
+     *
+     * @type {AutomationDashboardExportSettings}
+     * @memberof AutomationDashboardTabularExportRequestV2
+     */
+    settings?: AutomationDashboardExportSettings;
+}
+
+export const AutomationDashboardTabularExportRequestV2FormatEnum = {
+    XLSX: "XLSX",
+} as const;
+
+export type AutomationDashboardTabularExportRequestV2FormatEnum =
+    typeof AutomationDashboardTabularExportRequestV2FormatEnum[keyof typeof AutomationDashboardTabularExportRequestV2FormatEnum];
+
+/**
  * @type AutomationDateFilter
  * Abstract filter definition type for dates.
  * @export
  */
 export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationRelativeDateFilter;
 
+/**
+ *
+ * @export
+ * @interface AutomationDateValue
+ */
+export interface AutomationDateValue {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationDateValue
+     */
+    value: string;
+}
 /**
  * An analytical dashboard identifier.
  * @export
@@ -1324,6 +1686,64 @@ export type AutomationFilterDefinition =
  * @export
  */
 export type AutomationFilterDefinitionForSimpleMeasure = AutomationAttributeFilter | AutomationDateFilter;
+
+/**
+ *
+ * @export
+ * @interface AutomationIdentifierRef
+ */
+export interface AutomationIdentifierRef {
+    /**
+     *
+     * @type {AutomationIdentifierRefIdentifier}
+     * @memberof AutomationIdentifierRef
+     */
+    identifier?: AutomationIdentifierRefIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface AutomationIdentifierRefIdentifier
+ */
+export interface AutomationIdentifierRefIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationIdentifierRefIdentifier
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationIdentifierRefIdentifier
+     */
+    type: AutomationIdentifierRefIdentifierTypeEnum;
+}
+
+export const AutomationIdentifierRefIdentifierTypeEnum = {
+    ANALYTICAL_DASHBOARD: "analyticalDashboard",
+    ATTRIBUTE: "attribute",
+    ATTRIBUTE_HIERARCHY: "attributeHierarchy",
+    DASHBOARD_PLUGIN: "dashboardPlugin",
+    DATASET: "dataset",
+    FACT: "fact",
+    LABEL: "label",
+    METRIC: "metric",
+    USER_DATA_FILTER: "userDataFilter",
+    EXPORT_DEFINITION: "exportDefinition",
+    AUTOMATION: "automation",
+    PROMPT: "prompt",
+    VISUALIZATION_OBJECT: "visualizationObject",
+    FILTER_CONTEXT: "filterContext",
+    WORKSPACE_SETTINGS: "workspaceSettings",
+    CUSTOM_APPLICATION_SETTING: "customApplicationSetting",
+    WORKSPACE_DATA_FILTER: "workspaceDataFilter",
+    WORKSPACE_DATA_FILTER_SETTING: "workspaceDataFilterSetting",
+    FILTER_VIEW: "filterView",
+} as const;
+
+export type AutomationIdentifierRefIdentifierTypeEnum =
+    typeof AutomationIdentifierRefIdentifierTypeEnum[keyof typeof AutomationIdentifierRefIdentifierTypeEnum];
 
 /**
  * Export request object describing the export properties and metadata for image exports.
@@ -1723,6 +2143,19 @@ export interface AutomationNotificationsMetaTotal {
      * @memberof AutomationNotificationsMetaTotal
      */
     all: number;
+}
+/**
+ *
+ * @export
+ * @interface AutomationOver
+ */
+export interface AutomationOver {
+    /**
+     *
+     * @type {Array<AutomationIdentifierRef>}
+     * @memberof AutomationOver
+     */
+    attributes: Array<AutomationIdentifierRef>;
 }
 /**
  * Custom CSS styles for the table. (PDF, HTML)
@@ -2941,6 +3374,12 @@ export interface AutomationWebhookMessageData {
      * @memberof AutomationWebhookMessageData
      */
     slidesExports?: Array<AutomationExportResult>;
+    /**
+     *
+     * @type {Array<AutomationExportResult>}
+     * @memberof AutomationWebhookMessageData
+     */
+    dashboardTabularExports?: Array<AutomationExportResult>;
     /**
      *
      * @type {AutomationAlertDescription}

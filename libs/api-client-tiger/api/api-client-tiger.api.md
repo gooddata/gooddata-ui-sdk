@@ -69,6 +69,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     resolveSettingsWithoutWorkspace(requestParameters: ActionsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
     retrieveTranslations(requestParameters: ActionsApiRetrieveTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<Xliff, any>>;
     setTranslations(requestParameters: ActionsApiSetTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    switchActiveIdentityProvider(requestParameters: ActionsApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     unsubscribeAllAutomations(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     unsubscribeAutomation(requestParameters: ActionsApiUnsubscribeAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
@@ -162,6 +163,7 @@ export const ActionsApiAxiosParamCreator: (configuration?: MetadataConfiguration
     resolveSettingsWithoutWorkspace: (resolveSettingsRequest: ResolveSettingsRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     retrieveTranslations: (workspaceId: string, localeRequest: LocaleRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     setTranslations: (workspaceId: string, xliff: Xliff, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    switchActiveIdentityProvider: (switchIdentityProviderRequest: SwitchIdentityProviderRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     unsubscribeAllAutomations: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     unsubscribeAutomation: (workspaceId: string, automationId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     unsubscribeWorkspaceAutomations: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -239,43 +241,6 @@ export interface ActionsApiComputeValidObjectsRequest {
 }
 
 // @public
-export interface ActionsApiCreateDashboardExportRequestRequest {
-    readonly dashboardId: string;
-    readonly dashboardTabularExportRequest: DashboardTabularExportRequest;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiCreateImageExportRequest {
-    readonly imageExportRequest: AfmExportImageExportRequest;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiCreatePdfExportRequest {
-    readonly visualExportRequest: VisualExportActionsRequest;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiCreateRawExportRequest {
-    readonly rawExportRequest: RawExportActionsRequest;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiCreateSlidesExportRequest {
-    readonly slidesExportRequest: AfmExportSlidesExportRequest;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiCreateTabularExportRequest {
-    readonly tabularExportRequest: TabularExportActionsRequest;
-    readonly workspaceId: string;
-}
-
-// @public
 export interface ActionsApiDashboardPermissionsRequest {
     readonly dashboardId: string;
     readonly workspaceId: string;
@@ -324,6 +289,7 @@ export const ActionsApiFactory: (configuration?: MetadataConfiguration, basePath
     resolveSettingsWithoutWorkspace(requestParameters: ActionsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
     retrieveTranslations(requestParameters: ActionsApiRetrieveTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<Xliff>;
     setTranslations(requestParameters: ActionsApiSetTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    switchActiveIdentityProvider(requestParameters: ActionsApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeAllAutomations(options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeAutomation(requestParameters: ActionsApiUnsubscribeAutomationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -377,6 +343,7 @@ export const ActionsApiFp: (configuration?: MetadataConfiguration) => {
     resolveSettingsWithoutWorkspace(resolveSettingsRequest: ResolveSettingsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ResolvedSetting>>>;
     retrieveTranslations(workspaceId: string, localeRequest: LocaleRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Xliff>>;
     setTranslations(workspaceId: string, xliff: Xliff, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    switchActiveIdentityProvider(switchIdentityProviderRequest: SwitchIdentityProviderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     unsubscribeAllAutomations(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     unsubscribeAutomation(workspaceId: string, automationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     unsubscribeWorkspaceAutomations(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
@@ -403,54 +370,6 @@ export interface ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest {
 
 // @public
 export interface ActionsApiGetDependentEntitiesGraphRequest {
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiGetExportedFileRequest {
-    readonly exportId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiGetImageExportMetadataRequest {
-    readonly exportId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiGetImageExportRequest {
-    readonly exportId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiGetMetadataRequest {
-    readonly exportId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiGetRawExportRequest {
-    readonly exportId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiGetSlidesExportMetadataRequest {
-    readonly exportId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiGetSlidesExportRequest {
-    readonly exportId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiGetTabularExportRequest {
-    readonly exportId: string;
     readonly workspaceId: string;
 }
 
@@ -507,6 +426,7 @@ export interface ActionsApiInterface {
     resolveSettingsWithoutWorkspace(requestParameters: ActionsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
     retrieveTranslations(requestParameters: ActionsApiRetrieveTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<Xliff>;
     setTranslations(requestParameters: ActionsApiSetTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    switchActiveIdentityProvider(requestParameters: ActionsApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeAllAutomations(options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeAutomation(requestParameters: ActionsApiUnsubscribeAutomationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -661,6 +581,11 @@ export interface ActionsApiStagingUploadRequest {
 }
 
 // @public
+export interface ActionsApiSwitchActiveIdentityProviderRequest {
+    readonly switchIdentityProviderRequest: SwitchIdentityProviderRequest;
+}
+
+// @public
 export interface ActionsApiTestDataSourceDefinitionRequest {
     readonly testDefinitionRequest: TestDefinitionRequest;
 }
@@ -788,6 +713,181 @@ export interface ActionsAutomationTriggerAutomationRequest {
 export interface ActionsAutomationTriggerExistingAutomationRequest {
     readonly automationId: string;
     readonly workspaceId: string;
+}
+
+// @public
+export class ActionsExport extends ExportBaseAPI implements ActionsExportInterface {
+    createDashboardExportRequest(requestParameters: ActionsExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    createImageExport(requestParameters: ActionsExportCreateImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    createPdfExport(requestParameters: ActionsExportCreatePdfExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    createRawExport(requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    createSlidesExport(requestParameters: ActionsExportCreateSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    createTabularExport(requestParameters: ActionsExportCreateTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getImageExport(requestParameters: ActionsExportGetImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getImageExportMetadata(requestParameters: ActionsExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getMetadata(requestParameters: ActionsExportGetMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getSlidesExportMetadata(requestParameters: ActionsExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+}
+
+// @public
+export const ActionsExportAxiosParamCreator: (configuration?: ExportConfiguration) => {
+    createDashboardExportRequest: (workspaceId: string, dashboardId: string, exportDashboardTabularExportRequest: ExportDashboardTabularExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    createImageExport: (workspaceId: string, exportImageExportRequest: ExportImageExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    createPdfExport: (workspaceId: string, exportVisualExportRequest: ExportVisualExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    createRawExport: (workspaceId: string, exportRawExportRequest: ExportRawExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    createSlidesExport: (workspaceId: string, exportSlidesExportRequest: ExportSlidesExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    createTabularExport: (workspaceId: string, exportTabularExportRequest: ExportTabularExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getExportedFile: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getImageExport: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getImageExportMetadata: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getMetadata: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getRawExport: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getSlidesExport: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getSlidesExportMetadata: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getTabularExport: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+};
+
+// @public
+export interface ActionsExportCreateDashboardExportRequestRequest {
+    readonly dashboardId: string;
+    readonly exportDashboardTabularExportRequest: ExportDashboardTabularExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportCreateImageExportRequest {
+    readonly exportImageExportRequest: ExportImageExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportCreatePdfExportRequest {
+    readonly exportVisualExportRequest: ExportVisualExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportCreateRawExportRequest {
+    readonly exportRawExportRequest: ExportRawExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportCreateSlidesExportRequest {
+    readonly exportSlidesExportRequest: ExportSlidesExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportCreateTabularExportRequest {
+    readonly exportTabularExportRequest: ExportTabularExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export const ActionsExportFactory: (configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    createDashboardExportRequest(requestParameters: ActionsExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createImageExport(requestParameters: ActionsExportCreateImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createPdfExport(requestParameters: ActionsExportCreatePdfExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createRawExport(requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createSlidesExport(requestParameters: ActionsExportCreateSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createTabularExport(requestParameters: ActionsExportCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getImageExport(requestParameters: ActionsExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getImageExportMetadata(requestParameters: ActionsExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getMetadata(requestParameters: ActionsExportGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getSlidesExportMetadata(requestParameters: ActionsExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+};
+
+// @public
+export const ActionsExportFp: (configuration?: ExportConfiguration) => {
+    createDashboardExportRequest(workspaceId: string, dashboardId: string, exportDashboardTabularExportRequest: ExportDashboardTabularExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    createImageExport(workspaceId: string, exportImageExportRequest: ExportImageExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    createPdfExport(workspaceId: string, exportVisualExportRequest: ExportVisualExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    createRawExport(workspaceId: string, exportRawExportRequest: ExportRawExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    createSlidesExport(workspaceId: string, exportSlidesExportRequest: ExportSlidesExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    createTabularExport(workspaceId: string, exportTabularExportRequest: ExportTabularExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    getExportedFile(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getImageExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getImageExportMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getRawExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getSlidesExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getSlidesExportMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getTabularExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+
+// @public
+export interface ActionsExportGetExportedFileRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportGetImageExportMetadataRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportGetImageExportRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportGetMetadataRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportGetRawExportRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportGetSlidesExportMetadataRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportGetSlidesExportRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportGetTabularExportRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportInterface {
+    createDashboardExportRequest(requestParameters: ActionsExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createImageExport(requestParameters: ActionsExportCreateImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createPdfExport(requestParameters: ActionsExportCreatePdfExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createRawExport(requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createSlidesExport(requestParameters: ActionsExportCreateSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createTabularExport(requestParameters: ActionsExportCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getImageExport(requestParameters: ActionsExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getImageExportMetadata(requestParameters: ActionsExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getMetadata(requestParameters: ActionsExportGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getSlidesExportMetadata(requestParameters: ActionsExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @internal
@@ -1048,491 +1148,6 @@ export interface AfmExecutionSettings {
     dataSamplingPercentage?: number;
     timestamp?: string;
 }
-
-// @public
-export interface AfmExport {
-    attributes: Array<AfmExportAttributeItem>;
-    auxMeasures?: Array<AfmExportMeasureItem>;
-    filters: Array<AfmExportFilterDefinition>;
-    measures: Array<AfmExportMeasureItem>;
-}
-
-// @public
-export interface AfmExportAbsoluteDateFilter {
-    absoluteDateFilter: AfmExportAbsoluteDateFilterAbsoluteDateFilter;
-}
-
-// @public
-export interface AfmExportAbsoluteDateFilterAbsoluteDateFilter {
-    applyOnResult?: boolean;
-    dataset: AfmExportAfmObjectIdentifierDataset;
-    from: string;
-    localIdentifier?: string;
-    to: string;
-}
-
-// @public
-export type AfmExportAfmIdentifier = AfmExportAfmLocalIdentifier | AfmExportObjectIdentifier;
-
-// @public
-export interface AfmExportAfmLocalIdentifier {
-    localIdentifier: string;
-}
-
-// @public
-export interface AfmExportAfmObjectIdentifierAttribute {
-    identifier: AfmExportAfmObjectIdentifierAttributeIdentifier;
-}
-
-// @public
-export interface AfmExportAfmObjectIdentifierAttributeIdentifier {
-    id: string;
-    type: AfmExportAfmObjectIdentifierAttributeIdentifierTypeEnum;
-}
-
-// @public (undocumented)
-export const AfmExportAfmObjectIdentifierAttributeIdentifierTypeEnum: {
-    readonly ATTRIBUTE: "attribute";
-};
-
-// @public (undocumented)
-export type AfmExportAfmObjectIdentifierAttributeIdentifierTypeEnum = typeof AfmExportAfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof AfmExportAfmObjectIdentifierAttributeIdentifierTypeEnum];
-
-// @public
-export interface AfmExportAfmObjectIdentifierCore {
-    identifier: AfmExportAfmObjectIdentifierCoreIdentifier;
-}
-
-// @public
-export interface AfmExportAfmObjectIdentifierCoreIdentifier {
-    id: string;
-    type: AfmExportAfmObjectIdentifierCoreIdentifierTypeEnum;
-}
-
-// @public (undocumented)
-export const AfmExportAfmObjectIdentifierCoreIdentifierTypeEnum: {
-    readonly ATTRIBUTE: "attribute";
-    readonly LABEL: "label";
-    readonly FACT: "fact";
-    readonly METRIC: "metric";
-};
-
-// @public (undocumented)
-export type AfmExportAfmObjectIdentifierCoreIdentifierTypeEnum = typeof AfmExportAfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof AfmExportAfmObjectIdentifierCoreIdentifierTypeEnum];
-
-// @public
-export interface AfmExportAfmObjectIdentifierDataset {
-    identifier: AfmExportAfmObjectIdentifierDatasetIdentifier;
-}
-
-// @public
-export interface AfmExportAfmObjectIdentifierDatasetIdentifier {
-    id: string;
-    type: AfmExportAfmObjectIdentifierDatasetIdentifierTypeEnum;
-}
-
-// @public (undocumented)
-export const AfmExportAfmObjectIdentifierDatasetIdentifierTypeEnum: {
-    readonly DATASET: "dataset";
-};
-
-// @public (undocumented)
-export type AfmExportAfmObjectIdentifierDatasetIdentifierTypeEnum = typeof AfmExportAfmObjectIdentifierDatasetIdentifierTypeEnum[keyof typeof AfmExportAfmObjectIdentifierDatasetIdentifierTypeEnum];
-
-// @public
-export interface AfmExportAfmObjectIdentifierIdentifier {
-    id: string;
-    type: AfmExportAfmObjectIdentifierIdentifierTypeEnum;
-}
-
-// @public (undocumented)
-export const AfmExportAfmObjectIdentifierIdentifierTypeEnum: {
-    readonly ANALYTICAL_DASHBOARD: "analyticalDashboard";
-    readonly ATTRIBUTE: "attribute";
-    readonly DASHBOARD_PLUGIN: "dashboardPlugin";
-    readonly DATASET: "dataset";
-    readonly FACT: "fact";
-    readonly LABEL: "label";
-    readonly METRIC: "metric";
-    readonly PROMPT: "prompt";
-    readonly VISUALIZATION_OBJECT: "visualizationObject";
-    readonly FILTER_CONTEXT: "filterContext";
-};
-
-// @public (undocumented)
-export type AfmExportAfmObjectIdentifierIdentifierTypeEnum = typeof AfmExportAfmObjectIdentifierIdentifierTypeEnum[keyof typeof AfmExportAfmObjectIdentifierIdentifierTypeEnum];
-
-// @public
-export interface AfmExportAfmObjectIdentifierLabel {
-    identifier: AfmExportAfmObjectIdentifierLabelIdentifier;
-}
-
-// @public
-export interface AfmExportAfmObjectIdentifierLabelIdentifier {
-    id: string;
-    type: AfmExportAfmObjectIdentifierLabelIdentifierTypeEnum;
-}
-
-// @public (undocumented)
-export const AfmExportAfmObjectIdentifierLabelIdentifierTypeEnum: {
-    readonly LABEL: "label";
-};
-
-// @public (undocumented)
-export type AfmExportAfmObjectIdentifierLabelIdentifierTypeEnum = typeof AfmExportAfmObjectIdentifierLabelIdentifierTypeEnum[keyof typeof AfmExportAfmObjectIdentifierLabelIdentifierTypeEnum];
-
-// @public
-export interface AfmExportArithmeticMeasureDefinition {
-    arithmeticMeasure: AfmExportArithmeticMeasureDefinitionArithmeticMeasure;
-}
-
-// @public
-export interface AfmExportArithmeticMeasureDefinitionArithmeticMeasure {
-    measureIdentifiers: Array<AfmExportAfmLocalIdentifier>;
-    operator: AfmExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
-}
-
-// @public (undocumented)
-export const AfmExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-};
-
-// @public (undocumented)
-export type AfmExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = typeof AfmExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof AfmExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
-
-// @public
-export type AfmExportAttributeFilter = AfmExportNegativeAttributeFilter | AfmExportPositiveAttributeFilter;
-
-// @public
-export interface AfmExportAttributeFilterElements {
-    values: Array<string>;
-}
-
-// @public
-export interface AfmExportAttributeItem {
-    label: AfmExportAfmObjectIdentifierLabel;
-    localIdentifier: string;
-    showAllValues?: boolean;
-}
-
-// @public
-export interface AfmExportComparisonMeasureValueFilter {
-    comparisonMeasureValueFilter: AfmExportComparisonMeasureValueFilterComparisonMeasureValueFilter;
-}
-
-// @public
-export interface AfmExportComparisonMeasureValueFilterComparisonMeasureValueFilter {
-    applyOnResult?: boolean;
-    dimensionality?: Array<AfmExportAfmIdentifier>;
-    localIdentifier?: string;
-    measure: AfmExportAfmIdentifier;
-    operator: AfmExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
-    treatNullValuesAs?: number;
-    value: number;
-}
-
-// @public (undocumented)
-export const AfmExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum: {
-    readonly GREATER_THAN: "GREATER_THAN";
-    readonly GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO";
-    readonly LESS_THAN: "LESS_THAN";
-    readonly LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO";
-    readonly EQUAL_TO: "EQUAL_TO";
-    readonly NOT_EQUAL_TO: "NOT_EQUAL_TO";
-};
-
-// @public (undocumented)
-export type AfmExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = typeof AfmExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof AfmExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
-
-// @public
-export type AfmExportDateFilter = AfmExportAbsoluteDateFilter | AfmExportRelativeDateFilter;
-
-// @public
-export interface AfmExportExecutionSettings {
-    dataSamplingPercentage?: number;
-    timestamp?: string;
-}
-
-// @public
-export type AfmExportFilterDefinition = AfmExportAbsoluteDateFilter | AfmExportComparisonMeasureValueFilter | AfmExportInlineFilterDefinition | AfmExportNegativeAttributeFilter | AfmExportPositiveAttributeFilter | AfmExportRangeMeasureValueFilter | AfmExportRankingFilter | AfmExportRelativeDateFilter;
-
-// @public
-export type AfmExportFilterDefinitionForSimpleMeasure = AfmExportAttributeFilter | AfmExportDateFilter;
-
-// @public
-export interface AfmExportImageExportRequest {
-    dashboardId: string;
-    fileName: string;
-    format: AfmExportImageExportRequestFormatEnum;
-    metadata?: object | null;
-    widgetIds: Array<string>;
-}
-
-// @public (undocumented)
-export const AfmExportImageExportRequestFormatEnum: {
-    readonly PNG: "PNG";
-};
-
-// @public (undocumented)
-export type AfmExportImageExportRequestFormatEnum = typeof AfmExportImageExportRequestFormatEnum[keyof typeof AfmExportImageExportRequestFormatEnum];
-
-// @public
-export interface AfmExportInlineFilterDefinition {
-    inline: AfmExportInlineFilterDefinitionInline;
-}
-
-// @public
-export interface AfmExportInlineFilterDefinitionInline {
-    applyOnResult?: boolean;
-    filter: string;
-    localIdentifier?: string;
-}
-
-// @public
-export interface AfmExportInlineMeasureDefinition {
-    inline: AfmExportInlineMeasureDefinitionInline;
-}
-
-// @public
-export interface AfmExportInlineMeasureDefinitionInline {
-    maql: string;
-}
-
-// @public
-export type AfmExportMeasureDefinition = AfmExportArithmeticMeasureDefinition | AfmExportInlineMeasureDefinition | AfmExportPopMeasureDefinition | AfmExportSimpleMeasureDefinition;
-
-// @public
-export interface AfmExportMeasureItem {
-    definition: AfmExportMeasureDefinition;
-    localIdentifier: string;
-}
-
-// @public
-export interface AfmExportNegativeAttributeFilter {
-    negativeAttributeFilter: AfmExportNegativeAttributeFilterNegativeAttributeFilter;
-}
-
-// @public
-export interface AfmExportNegativeAttributeFilterNegativeAttributeFilter {
-    applyOnResult?: boolean;
-    label: AfmExportAfmIdentifier;
-    localIdentifier?: string;
-    notIn: AfmExportAttributeFilterElements;
-}
-
-// @public
-export interface AfmExportObjectIdentifier {
-    identifier: AfmExportAfmObjectIdentifierIdentifier;
-}
-
-// @public
-export interface AfmExportPopDataset {
-    dataset: AfmExportAfmObjectIdentifierDataset;
-    periodsAgo: number;
-}
-
-// @public
-export interface AfmExportPopDatasetMeasureDefinition {
-    previousPeriodMeasure: AfmExportPopDatasetMeasureDefinitionPreviousPeriodMeasure;
-}
-
-// @public
-export interface AfmExportPopDatasetMeasureDefinitionPreviousPeriodMeasure {
-    dateDatasets: Array<AfmExportPopDataset>;
-    measureIdentifier: AfmExportAfmLocalIdentifier;
-}
-
-// @public
-export interface AfmExportPopDate {
-    attribute: AfmExportAfmObjectIdentifierAttribute;
-    periodsAgo: number;
-}
-
-// @public
-export interface AfmExportPopDateMeasureDefinition {
-    overPeriodMeasure: AfmExportPopDateMeasureDefinitionOverPeriodMeasure;
-}
-
-// @public
-export interface AfmExportPopDateMeasureDefinitionOverPeriodMeasure {
-    dateAttributes: Array<AfmExportPopDate>;
-    measureIdentifier: AfmExportAfmLocalIdentifier;
-}
-
-// @public
-export type AfmExportPopMeasureDefinition = AfmExportPopDatasetMeasureDefinition | AfmExportPopDateMeasureDefinition;
-
-// @public
-export interface AfmExportPositiveAttributeFilter {
-    positiveAttributeFilter: AfmExportPositiveAttributeFilterPositiveAttributeFilter;
-}
-
-// @public
-export interface AfmExportPositiveAttributeFilterPositiveAttributeFilter {
-    applyOnResult?: boolean;
-    in: AfmExportAttributeFilterElements;
-    label: AfmExportAfmIdentifier;
-    localIdentifier?: string;
-}
-
-// @public
-export interface AfmExportRangeMeasureValueFilter {
-    rangeMeasureValueFilter: AfmExportRangeMeasureValueFilterRangeMeasureValueFilter;
-}
-
-// @public
-export interface AfmExportRangeMeasureValueFilterRangeMeasureValueFilter {
-    applyOnResult?: boolean;
-    dimensionality?: Array<AfmExportAfmIdentifier>;
-    from: number;
-    localIdentifier?: string;
-    measure: AfmExportAfmIdentifier;
-    operator: AfmExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
-    to: number;
-    treatNullValuesAs?: number;
-}
-
-// @public (undocumented)
-export const AfmExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum: {
-    readonly BETWEEN: "BETWEEN";
-    readonly NOT_BETWEEN: "NOT_BETWEEN";
-};
-
-// @public (undocumented)
-export type AfmExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = typeof AfmExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof AfmExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
-
-// @public
-export interface AfmExportRankingFilter {
-    rankingFilter: AfmExportRankingFilterRankingFilter;
-}
-
-// @public
-export interface AfmExportRankingFilterRankingFilter {
-    applyOnResult?: boolean;
-    dimensionality?: Array<AfmExportAfmIdentifier>;
-    localIdentifier?: string;
-    measures: Array<AfmExportAfmIdentifier>;
-    operator: AfmExportRankingFilterRankingFilterOperatorEnum;
-    value: number;
-}
-
-// @public (undocumented)
-export const AfmExportRankingFilterRankingFilterOperatorEnum: {
-    readonly TOP: "TOP";
-    readonly BOTTOM: "BOTTOM";
-};
-
-// @public (undocumented)
-export type AfmExportRankingFilterRankingFilterOperatorEnum = typeof AfmExportRankingFilterRankingFilterOperatorEnum[keyof typeof AfmExportRankingFilterRankingFilterOperatorEnum];
-
-// @public
-export interface AfmExportRawCustomLabel {
-    title: string;
-}
-
-// @public
-export interface AfmExportRawCustomMetric {
-    title: string;
-}
-
-// @public
-export interface AfmExportRawCustomOverride {
-    labels?: {
-        [key: string]: AfmExportRawCustomLabel;
-    };
-    metrics?: {
-        [key: string]: AfmExportRawCustomMetric;
-    };
-}
-
-// @public
-export interface AfmExportRelativeDateFilter {
-    relativeDateFilter: AfmExportRelativeDateFilterRelativeDateFilter;
-}
-
-// @public
-export interface AfmExportRelativeDateFilterRelativeDateFilter {
-    applyOnResult?: boolean;
-    dataset: AfmExportAfmObjectIdentifierDataset;
-    from: number;
-    granularity: AfmExportRelativeDateFilterRelativeDateFilterGranularityEnum;
-    localIdentifier?: string;
-    to: number;
-}
-
-// @public (undocumented)
-export const AfmExportRelativeDateFilterRelativeDateFilterGranularityEnum: {
-    readonly MINUTE: "MINUTE";
-    readonly HOUR: "HOUR";
-    readonly DAY: "DAY";
-    readonly WEEK: "WEEK";
-    readonly MONTH: "MONTH";
-    readonly QUARTER: "QUARTER";
-    readonly YEAR: "YEAR";
-    readonly MINUTE_OF_HOUR: "MINUTE_OF_HOUR";
-    readonly HOUR_OF_DAY: "HOUR_OF_DAY";
-    readonly DAY_OF_WEEK: "DAY_OF_WEEK";
-    readonly DAY_OF_MONTH: "DAY_OF_MONTH";
-    readonly DAY_OF_YEAR: "DAY_OF_YEAR";
-    readonly WEEK_OF_YEAR: "WEEK_OF_YEAR";
-    readonly MONTH_OF_YEAR: "MONTH_OF_YEAR";
-    readonly QUARTER_OF_YEAR: "QUARTER_OF_YEAR";
-};
-
-// @public (undocumented)
-export type AfmExportRelativeDateFilterRelativeDateFilterGranularityEnum = typeof AfmExportRelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof AfmExportRelativeDateFilterRelativeDateFilterGranularityEnum];
-
-// @public
-export interface AfmExportSimpleMeasureDefinition {
-    measure: AfmExportSimpleMeasureDefinitionMeasure;
-}
-
-// @public
-export interface AfmExportSimpleMeasureDefinitionMeasure {
-    aggregation?: AfmExportSimpleMeasureDefinitionMeasureAggregationEnum;
-    computeRatio?: boolean;
-    filters?: Array<AfmExportFilterDefinitionForSimpleMeasure>;
-    item: AfmExportAfmObjectIdentifierCore;
-}
-
-// @public (undocumented)
-export const AfmExportSimpleMeasureDefinitionMeasureAggregationEnum: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-};
-
-// @public (undocumented)
-export type AfmExportSimpleMeasureDefinitionMeasureAggregationEnum = typeof AfmExportSimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof AfmExportSimpleMeasureDefinitionMeasureAggregationEnum];
-
-// @public
-export interface AfmExportSlidesExportRequest {
-    dashboardId?: string;
-    fileName: string;
-    format: AfmExportSlidesExportRequestFormatEnum;
-    metadata?: object | null;
-    templateId?: string | null;
-    visualizationIds?: Array<string>;
-    widgetIds?: Array<string>;
-}
-
-// @public (undocumented)
-export const AfmExportSlidesExportRequestFormatEnum: {
-    readonly PDF: "PDF";
-    readonly PPTX: "PPTX";
-};
-
-// @public (undocumented)
-export type AfmExportSlidesExportRequestFormatEnum = typeof AfmExportSlidesExportRequestFormatEnum[keyof typeof AfmExportSlidesExportRequestFormatEnum];
 
 // @public
 export type AfmFilterDefinition = AfmAbsoluteDateFilter | AfmComparisonMeasureValueFilter | AfmInlineFilterDefinition | AfmNegativeAttributeFilter | AfmPositiveAttributeFilter | AfmRangeMeasureValueFilter | AfmRankingFilter | AfmRelativeDateFilter;
@@ -2536,7 +2151,7 @@ export interface AttributeElementsByRef {
 
 // @public
 export interface AttributeElementsByValue {
-    values: Array<string>;
+    values: Array<string | null>;
 }
 
 // @public
@@ -2838,6 +2453,7 @@ export type AutomationAbstractMeasureValueFilter = AutomationComparisonMeasureVa
 export interface AutomationAdHocAutomation {
     alert?: AutomationAutomationAlert;
     analyticalDashboard?: AutomationDeclarativeAnalyticalDashboardIdentifier;
+    dashboardTabularExports?: Array<AutomationAutomationDashboardTabularExport>;
     description?: string;
     details?: {
         [key: string]: string;
@@ -3086,11 +2702,36 @@ export const AutomationArithmeticMeasureOperatorEnum: {
 export type AutomationArithmeticMeasureOperatorEnum = typeof AutomationArithmeticMeasureOperatorEnum[keyof typeof AutomationArithmeticMeasureOperatorEnum];
 
 // @public
+export type AutomationAttributeElements = AutomationAttributeElementsByRef | AutomationAttributeElementsByValue;
+
+// @public
+export interface AutomationAttributeElementsByRef {
+    uris: Array<string>;
+}
+
+// @public
+export interface AutomationAttributeElementsByValue {
+    values: Array<string>;
+}
+
+// @public
 export type AutomationAttributeFilter = AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter;
+
+// @public
+export interface AutomationAttributeFilterByDate {
+    filterLocalIdentifier: string;
+    isCommonDate: boolean;
+}
 
 // @public
 export interface AutomationAttributeFilterElements {
     values: Array<string>;
+}
+
+// @public
+export interface AutomationAttributeFilterParent {
+    filterLocalIdentifier: string;
+    over: AutomationOver;
 }
 
 // @public
@@ -3115,6 +2756,11 @@ export const AutomationAutomationAlertTriggerEnum: {
 
 // @public (undocumented)
 export type AutomationAutomationAlertTriggerEnum = typeof AutomationAutomationAlertTriggerEnum[keyof typeof AutomationAutomationAlertTriggerEnum];
+
+// @public
+export interface AutomationAutomationDashboardTabularExport {
+    requestPayload: AutomationDashboardTabularExportRequestV2;
+}
 
 // @public
 export interface AutomationAutomationExternalRecipient {
@@ -3280,7 +2926,126 @@ export interface AutomationCustomOverride {
 }
 
 // @public
+export interface AutomationDashboardAttributeFilter {
+    attributeFilter: AutomationDashboardAttributeFilterAttributeFilter;
+}
+
+// @public
+export interface AutomationDashboardAttributeFilterAttributeFilter {
+    attributeElements: AutomationAttributeElements;
+    displayForm: AutomationIdentifierRef;
+    filterElementsBy?: Array<AutomationAttributeFilterParent>;
+    filterElementsByDate?: Array<AutomationAttributeFilterByDate>;
+    localIdentifier?: string;
+    negativeSelection: boolean;
+    selectionMode?: AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum;
+    title?: string;
+    validateElementsBy?: Array<AutomationIdentifierRef>;
+}
+
+// @public (undocumented)
+export const AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum: {
+    readonly SINGLE: "single";
+    readonly MULTI: "multi";
+};
+
+// @public (undocumented)
+export type AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum = typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum[keyof typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum];
+
+// @public
+export interface AutomationDashboardDateFilter {
+    dateFilter: AutomationDashboardDateFilterDateFilter;
+}
+
+// @public
+export interface AutomationDashboardDateFilterDateFilter {
+    attribute?: AutomationIdentifierRef;
+    dataSet?: AutomationIdentifierRef;
+    from?: string | number;
+    granularity: AutomationDashboardDateFilterDateFilterGranularityEnum;
+    localIdentifier?: string;
+    to?: string | number;
+    type: AutomationDashboardDateFilterDateFilterTypeEnum;
+}
+
+// @public (undocumented)
+export const AutomationDashboardDateFilterDateFilterGranularityEnum: {
+    readonly ALL_TIME_GRANULARITY: "ALL_TIME_GRANULARITY";
+    readonly GDC_TIME_YEAR: "GDC.time.year";
+    readonly GDC_TIME_WEEK_US: "GDC.time.week_us";
+    readonly GDC_TIME_WEEK_IN_YEAR: "GDC.time.week_in_year";
+    readonly GDC_TIME_WEEK_IN_QUARTER: "GDC.time.week_in_quarter";
+    readonly GDC_TIME_WEEK: "GDC.time.week";
+    readonly GDC_TIME_EUWEEK_IN_YEAR: "GDC.time.euweek_in_year";
+    readonly GDC_TIME_EUWEEK_IN_QUARTER: "GDC.time.euweek_in_quarter";
+    readonly GDC_TIME_QUARTER: "GDC.time.quarter";
+    readonly GDC_TIME_QUARTER_IN_YEAR: "GDC.time.quarter_in_year";
+    readonly GDC_TIME_MONTH: "GDC.time.month";
+    readonly GDC_TIME_MONTH_IN_QUARTER: "GDC.time.month_in_quarter";
+    readonly GDC_TIME_MONTH_IN_YEAR: "GDC.time.month_in_year";
+    readonly GDC_TIME_DAY_IN_YEAR: "GDC.time.day_in_year";
+    readonly GDC_TIME_DAY_IN_QUARTER: "GDC.time.day_in_quarter";
+    readonly GDC_TIME_DAY_IN_MONTH: "GDC.time.day_in_month";
+    readonly GDC_TIME_DAY_IN_WEEK: "GDC.time.day_in_week";
+    readonly GDC_TIME_DAY_IN_EUWEEK: "GDC.time.day_in_euweek";
+    readonly GDC_TIME_DATE: "GDC.time.date";
+    readonly GDC_TIME_HOUR: "GDC.time.hour";
+    readonly GDC_TIME_HOUR_IN_DAY: "GDC.time.hour_in_day";
+    readonly GDC_TIME_MINUTE: "GDC.time.minute";
+    readonly GDC_TIME_MINUTE_IN_HOUR: "GDC.time.minute_in_hour";
+};
+
+// @public (undocumented)
+export type AutomationDashboardDateFilterDateFilterGranularityEnum = typeof AutomationDashboardDateFilterDateFilterGranularityEnum[keyof typeof AutomationDashboardDateFilterDateFilterGranularityEnum];
+
+// @public (undocumented)
+export const AutomationDashboardDateFilterDateFilterTypeEnum: {
+    readonly RELATIVE: "relative";
+    readonly ABSOLUTE: "absolute";
+};
+
+// @public (undocumented)
+export type AutomationDashboardDateFilterDateFilterTypeEnum = typeof AutomationDashboardDateFilterDateFilterTypeEnum[keyof typeof AutomationDashboardDateFilterDateFilterTypeEnum];
+
+// @public
+export interface AutomationDashboardExportSettings {
+    exportInfo?: boolean;
+    mergeHeaders?: boolean;
+}
+
+// @public
+export type AutomationDashboardFilter = AutomationDashboardAttributeFilter | AutomationDashboardDateFilter;
+
+// @public
+export interface AutomationDashboardTabularExport {
+    requestPayload: DashboardTabularExportRequestV2;
+}
+
+// @public
+export interface AutomationDashboardTabularExportRequestV2 {
+    dashboardFiltersOverride?: Array<AutomationDashboardFilter>;
+    dashboardId: string;
+    fileName: string;
+    format: AutomationDashboardTabularExportRequestV2FormatEnum;
+    settings?: AutomationDashboardExportSettings;
+    widgetIds?: Array<string>;
+}
+
+// @public (undocumented)
+export const AutomationDashboardTabularExportRequestV2FormatEnum: {
+    readonly XLSX: "XLSX";
+};
+
+// @public (undocumented)
+export type AutomationDashboardTabularExportRequestV2FormatEnum = typeof AutomationDashboardTabularExportRequestV2FormatEnum[keyof typeof AutomationDashboardTabularExportRequestV2FormatEnum];
+
+// @public
 export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationRelativeDateFilter;
+
+// @public
+export interface AutomationDateValue {
+    value: string;
+}
 
 // @public
 export interface AutomationDeclarativeAnalyticalDashboardIdentifier {
@@ -3379,6 +3144,43 @@ export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | Automati
 
 // @public
 export type AutomationFilterDefinitionForSimpleMeasure = AutomationAttributeFilter | AutomationDateFilter;
+
+// @public
+export interface AutomationIdentifierRef {
+    identifier?: AutomationIdentifierRefIdentifier;
+}
+
+// @public
+export interface AutomationIdentifierRefIdentifier {
+    id: string;
+    type: AutomationIdentifierRefIdentifierTypeEnum;
+}
+
+// @public (undocumented)
+export const AutomationIdentifierRefIdentifierTypeEnum: {
+    readonly ANALYTICAL_DASHBOARD: "analyticalDashboard";
+    readonly ATTRIBUTE: "attribute";
+    readonly ATTRIBUTE_HIERARCHY: "attributeHierarchy";
+    readonly DASHBOARD_PLUGIN: "dashboardPlugin";
+    readonly DATASET: "dataset";
+    readonly FACT: "fact";
+    readonly LABEL: "label";
+    readonly METRIC: "metric";
+    readonly USER_DATA_FILTER: "userDataFilter";
+    readonly EXPORT_DEFINITION: "exportDefinition";
+    readonly AUTOMATION: "automation";
+    readonly PROMPT: "prompt";
+    readonly VISUALIZATION_OBJECT: "visualizationObject";
+    readonly FILTER_CONTEXT: "filterContext";
+    readonly WORKSPACE_SETTINGS: "workspaceSettings";
+    readonly CUSTOM_APPLICATION_SETTING: "customApplicationSetting";
+    readonly WORKSPACE_DATA_FILTER: "workspaceDataFilter";
+    readonly WORKSPACE_DATA_FILTER_SETTING: "workspaceDataFilterSetting";
+    readonly FILTER_VIEW: "filterView";
+};
+
+// @public (undocumented)
+export type AutomationIdentifierRefIdentifierTypeEnum = typeof AutomationIdentifierRefIdentifierTypeEnum[keyof typeof AutomationIdentifierRefIdentifierTypeEnum];
 
 // @public
 export interface AutomationImageExport {
@@ -3520,6 +3322,11 @@ export interface AutomationNotificationsMeta {
 export interface AutomationNotificationsMetaTotal {
     all: number;
     unread: number;
+}
+
+// @public
+export interface AutomationOver {
+    attributes: Array<AutomationIdentifierRef>;
 }
 
 // @public
@@ -4147,6 +3954,7 @@ export interface AutomationWebhookMessage {
 export interface AutomationWebhookMessageData {
     alert?: AutomationAlertDescription;
     automation: AutomationWebhookAutomationInfo;
+    dashboardTabularExports?: Array<AutomationExportResult>;
     details?: {
         [key: string]: string;
     };
@@ -5137,21 +4945,22 @@ export const DashboardSlidesTemplateAppliedOnEnum: {
 export type DashboardSlidesTemplateAppliedOnEnum = typeof DashboardSlidesTemplateAppliedOnEnum[keyof typeof DashboardSlidesTemplateAppliedOnEnum];
 
 // @public
-export interface DashboardTabularExportRequest {
+export interface DashboardTabularExportRequestV2 {
     dashboardFiltersOverride?: Array<DashboardFilter>;
+    dashboardId: string;
     fileName: string;
-    format: DashboardTabularExportRequestFormatEnum;
+    format: DashboardTabularExportRequestV2FormatEnum;
     settings?: DashboardExportSettings;
     widgetIds?: Array<string>;
 }
 
 // @public (undocumented)
-export const DashboardTabularExportRequestFormatEnum: {
+export const DashboardTabularExportRequestV2FormatEnum: {
     readonly XLSX: "XLSX";
 };
 
 // @public (undocumented)
-export type DashboardTabularExportRequestFormatEnum = typeof DashboardTabularExportRequestFormatEnum[keyof typeof DashboardTabularExportRequestFormatEnum];
+export type DashboardTabularExportRequestV2FormatEnum = typeof DashboardTabularExportRequestV2FormatEnum[keyof typeof DashboardTabularExportRequestV2FormatEnum];
 
 // @public
 export interface DataColumnLocator {
@@ -5792,6 +5601,11 @@ export const DateRelativeFilterGranularityEnum: {
 export type DateRelativeFilterGranularityEnum = typeof DateRelativeFilterGranularityEnum[keyof typeof DateRelativeFilterGranularityEnum];
 
 // @public
+export interface DateValue {
+    value: string;
+}
+
+// @public
 export interface DeclarativeAnalyticalDashboard {
     content: object | null;
     createdAt?: string | null;
@@ -5955,6 +5769,7 @@ export interface DeclarativeAutomation {
     analyticalDashboard?: DeclarativeAnalyticalDashboardIdentifier;
     createdAt?: string | null;
     createdBy?: DeclarativeUserIdentifier;
+    dashboardTabularExports?: Array<AutomationDashboardTabularExport>;
     description?: string;
     details?: {
         [key: string]: string;
@@ -9970,65 +9785,414 @@ export interface ExecutionSettings {
 }
 
 // @public
-export interface ExportActionsApiInterface {
-    createDashboardExportRequest(requestParameters: ActionsApiCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): AxiosPromise<ExportResponse>;
-    createImageExport(requestParameters: ActionsApiCreateImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportResponse>;
-    createPdfExport(requestParameters: ActionsApiCreatePdfExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportResponse>;
-    createRawExport(requestParameters: ActionsApiCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportResponse>;
-    createSlidesExport(requestParameters: ActionsApiCreateSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportResponse>;
-    createTabularExport(requestParameters: ActionsApiCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportResponse>;
-    getExportedFile(requestParameters: ActionsApiGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getImageExport(requestParameters: ActionsApiGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getImageExportMetadata(requestParameters: ActionsApiGetImageExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getMetadata(requestParameters: ActionsApiGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getRawExport(requestParameters: ActionsApiGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getSlidesExport(requestParameters: ActionsApiGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getSlidesExportMetadata(requestParameters: ActionsApiGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getTabularExport(requestParameters: ActionsApiGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+export interface ExportAbsoluteDateFilter {
+    absoluteDateFilter: ExportAbsoluteDateFilterAbsoluteDateFilter;
 }
 
 // @public
-export interface ExportActionsCustomLabel {
+export interface ExportAbsoluteDateFilterAbsoluteDateFilter {
+    applyOnResult?: boolean;
+    dataset: ExportAfmObjectIdentifierDataset;
+    from: string;
+    localIdentifier?: string;
+    to: string;
+}
+
+// @public
+export type ExportAbstractMeasureValueFilter = ExportComparisonMeasureValueFilter | ExportRangeMeasureValueFilter | ExportRankingFilter;
+
+// @public
+export interface ExportAFM {
+    attributes: Array<ExportAttributeItem>;
+    auxMeasures?: Array<ExportMeasureItem>;
+    filters: Array<ExportFilterDefinition>;
+    measures: Array<ExportMeasureItem>;
+}
+
+// @public
+export type ExportAfmIdentifier = ExportAfmLocalIdentifier | ExportAfmObjectIdentifier;
+
+// @public
+export interface ExportAfmLocalIdentifier {
+    localIdentifier: string;
+}
+
+// @public
+export interface ExportAfmObjectIdentifier {
+    identifier: ExportAfmObjectIdentifierIdentifier;
+}
+
+// @public
+export interface ExportAfmObjectIdentifierAttribute {
+    identifier: ExportAfmObjectIdentifierAttributeIdentifier;
+}
+
+// @public
+export interface ExportAfmObjectIdentifierAttributeIdentifier {
+    id: string;
+    type: ExportAfmObjectIdentifierAttributeIdentifierTypeEnum;
+}
+
+// @public (undocumented)
+export const ExportAfmObjectIdentifierAttributeIdentifierTypeEnum: {
+    readonly ATTRIBUTE: "attribute";
+};
+
+// @public (undocumented)
+export type ExportAfmObjectIdentifierAttributeIdentifierTypeEnum = typeof ExportAfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierAttributeIdentifierTypeEnum];
+
+// @public
+export interface ExportAfmObjectIdentifierCore {
+    identifier: ExportAfmObjectIdentifierCoreIdentifier;
+}
+
+// @public
+export interface ExportAfmObjectIdentifierCoreIdentifier {
+    id: string;
+    type: ExportAfmObjectIdentifierCoreIdentifierTypeEnum;
+}
+
+// @public (undocumented)
+export const ExportAfmObjectIdentifierCoreIdentifierTypeEnum: {
+    readonly ATTRIBUTE: "attribute";
+    readonly LABEL: "label";
+    readonly FACT: "fact";
+    readonly METRIC: "metric";
+};
+
+// @public (undocumented)
+export type ExportAfmObjectIdentifierCoreIdentifierTypeEnum = typeof ExportAfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierCoreIdentifierTypeEnum];
+
+// @public
+export interface ExportAfmObjectIdentifierDataset {
+    identifier: ExportAfmObjectIdentifierDatasetIdentifier;
+}
+
+// @public
+export interface ExportAfmObjectIdentifierDatasetIdentifier {
+    id: string;
+    type: ExportAfmObjectIdentifierDatasetIdentifierTypeEnum;
+}
+
+// @public (undocumented)
+export const ExportAfmObjectIdentifierDatasetIdentifierTypeEnum: {
+    readonly DATASET: "dataset";
+};
+
+// @public (undocumented)
+export type ExportAfmObjectIdentifierDatasetIdentifierTypeEnum = typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum];
+
+// @public
+export interface ExportAfmObjectIdentifierIdentifier {
+    id: string;
+    type: ExportAfmObjectIdentifierIdentifierTypeEnum;
+}
+
+// @public (undocumented)
+export const ExportAfmObjectIdentifierIdentifierTypeEnum: {
+    readonly ANALYTICAL_DASHBOARD: "analyticalDashboard";
+    readonly ATTRIBUTE: "attribute";
+    readonly DASHBOARD_PLUGIN: "dashboardPlugin";
+    readonly DATASET: "dataset";
+    readonly FACT: "fact";
+    readonly LABEL: "label";
+    readonly METRIC: "metric";
+    readonly PROMPT: "prompt";
+    readonly VISUALIZATION_OBJECT: "visualizationObject";
+    readonly FILTER_CONTEXT: "filterContext";
+};
+
+// @public (undocumented)
+export type ExportAfmObjectIdentifierIdentifierTypeEnum = typeof ExportAfmObjectIdentifierIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierIdentifierTypeEnum];
+
+// @public
+export interface ExportAfmObjectIdentifierLabel {
+    identifier: ExportAfmObjectIdentifierLabelIdentifier;
+}
+
+// @public
+export interface ExportAfmObjectIdentifierLabelIdentifier {
+    id: string;
+    type: ExportAfmObjectIdentifierLabelIdentifierTypeEnum;
+}
+
+// @public (undocumented)
+export const ExportAfmObjectIdentifierLabelIdentifierTypeEnum: {
+    readonly LABEL: "label";
+};
+
+// @public (undocumented)
+export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = typeof ExportAfmObjectIdentifierLabelIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierLabelIdentifierTypeEnum];
+
+// @public
+export interface ExportArithmeticMeasureDefinition {
+    arithmeticMeasure: ExportArithmeticMeasureDefinitionArithmeticMeasure;
+}
+
+// @public
+export interface ExportArithmeticMeasureDefinitionArithmeticMeasure {
+    measureIdentifiers: Array<ExportAfmLocalIdentifier>;
+    operator: ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
+}
+
+// @public (undocumented)
+export const ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum: {
+    readonly SUM: "SUM";
+    readonly DIFFERENCE: "DIFFERENCE";
+    readonly MULTIPLICATION: "MULTIPLICATION";
+    readonly RATIO: "RATIO";
+    readonly CHANGE: "CHANGE";
+};
+
+// @public (undocumented)
+export type ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = typeof ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+
+// @public
+export type ExportAttributeElements = ExportAttributeElementsByRef | ExportAttributeElementsByValue;
+
+// @public
+export interface ExportAttributeElementsByRef {
+    uris: Array<string>;
+}
+
+// @public
+export interface ExportAttributeElementsByValue {
+    values: Array<string>;
+}
+
+// @public
+export type ExportAttributeFilter = ExportNegativeAttributeFilter | ExportPositiveAttributeFilter;
+
+// @public
+export interface ExportAttributeFilterByDate {
+    filterLocalIdentifier: string;
+    isCommonDate: boolean;
+}
+
+// @public
+export interface ExportAttributeFilterElements {
+    values: Array<string>;
+}
+
+// @public
+export interface ExportAttributeFilterParent {
+    filterLocalIdentifier: string;
+    over: ExportOver;
+}
+
+// @public
+export interface ExportAttributeItem {
+    label: ExportAfmObjectIdentifierLabel;
+    localIdentifier: string;
+    showAllValues?: boolean;
+}
+
+// @public
+export class ExportBaseAPI {
+    constructor(configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance);
+    // (undocumented)
+    protected axios: AxiosInstance;
+    // (undocumented)
+    protected basePath: string;
+    // (undocumented)
+    protected configuration: ExportConfiguration | undefined;
+}
+
+// @public
+export interface ExportComparisonMeasureValueFilter {
+    comparisonMeasureValueFilter: ExportComparisonMeasureValueFilterComparisonMeasureValueFilter;
+}
+
+// @public
+export interface ExportComparisonMeasureValueFilterComparisonMeasureValueFilter {
+    applyOnResult?: boolean;
+    dimensionality?: Array<ExportAfmIdentifier>;
+    localIdentifier?: string;
+    measure: ExportAfmIdentifier;
+    operator: ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
+    treatNullValuesAs?: number;
+    value: number;
+}
+
+// @public (undocumented)
+export const ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum: {
+    readonly GREATER_THAN: "GREATER_THAN";
+    readonly GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO";
+    readonly LESS_THAN: "LESS_THAN";
+    readonly LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO";
+    readonly EQUAL_TO: "EQUAL_TO";
+    readonly NOT_EQUAL_TO: "NOT_EQUAL_TO";
+};
+
+// @public (undocumented)
+export type ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = typeof ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+
+// @public (undocumented)
+export class ExportConfiguration {
+    constructor(param?: ExportConfigurationParameters);
+    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
+    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
+    baseOptions?: any;
+    basePath?: string;
+    formDataCtor?: new () => any;
+    isJsonMime(mime: string): boolean;
+    password?: string;
+    username?: string;
+}
+
+// @public
+export interface ExportConfigurationParameters {
+    // (undocumented)
+    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
+    // (undocumented)
+    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
+    // (undocumented)
+    baseOptions?: any;
+    // (undocumented)
+    basePath?: string;
+    // (undocumented)
+    formDataCtor?: new () => any;
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    username?: string;
+}
+
+// @public
+export interface ExportCustomLabel {
     title: string;
 }
 
 // @public
-export interface ExportActionsCustomMetric {
+export interface ExportCustomMetric {
     format: string;
     title: string;
 }
 
 // @public
-export interface ExportActionsCustomOverride {
+export interface ExportCustomOverride {
     labels?: {
-        [key: string]: ExportActionsCustomLabel;
+        [key: string]: ExportCustomLabel;
     };
     metrics?: {
-        [key: string]: ExportActionsCustomMetric;
+        [key: string]: ExportCustomMetric;
     };
 }
 
 // @public
-export interface ExportActionsPdfTableStyle {
-    properties?: Array<ExportActionsPdfTableStyleProperty>;
-    selector: string;
+export interface ExportDashboardAttributeFilter {
+    attributeFilter: ExportDashboardAttributeFilterAttributeFilter;
 }
 
 // @public
-export interface ExportActionsPdfTableStyleProperty {
-    key: string;
-    value: string;
+export interface ExportDashboardAttributeFilterAttributeFilter {
+    attributeElements: ExportAttributeElements;
+    displayForm: ExportIdentifierRef;
+    filterElementsBy?: Array<ExportAttributeFilterParent>;
+    filterElementsByDate?: Array<ExportAttributeFilterByDate>;
+    localIdentifier?: string;
+    negativeSelection: boolean;
+    selectionMode?: ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum;
+    title?: string;
+    validateElementsBy?: Array<ExportIdentifierRef>;
+}
+
+// @public (undocumented)
+export const ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum: {
+    readonly SINGLE: "single";
+    readonly MULTI: "multi";
+};
+
+// @public (undocumented)
+export type ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum = typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum[keyof typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum];
+
+// @public
+export interface ExportDashboardDateFilter {
+    dateFilter: ExportDashboardDateFilterDateFilter;
 }
 
 // @public
-export interface ExportActionsSettings {
+export interface ExportDashboardDateFilterDateFilter {
+    attribute?: ExportIdentifierRef;
+    dataSet?: ExportIdentifierRef;
+    from?: string | number;
+    granularity: ExportDashboardDateFilterDateFilterGranularityEnum;
+    localIdentifier?: string;
+    to?: string | number;
+    type: ExportDashboardDateFilterDateFilterTypeEnum;
+}
+
+// @public (undocumented)
+export const ExportDashboardDateFilterDateFilterGranularityEnum: {
+    readonly ALL_TIME_GRANULARITY: "ALL_TIME_GRANULARITY";
+    readonly GDC_TIME_YEAR: "GDC.time.year";
+    readonly GDC_TIME_WEEK_US: "GDC.time.week_us";
+    readonly GDC_TIME_WEEK_IN_YEAR: "GDC.time.week_in_year";
+    readonly GDC_TIME_WEEK_IN_QUARTER: "GDC.time.week_in_quarter";
+    readonly GDC_TIME_WEEK: "GDC.time.week";
+    readonly GDC_TIME_EUWEEK_IN_YEAR: "GDC.time.euweek_in_year";
+    readonly GDC_TIME_EUWEEK_IN_QUARTER: "GDC.time.euweek_in_quarter";
+    readonly GDC_TIME_QUARTER: "GDC.time.quarter";
+    readonly GDC_TIME_QUARTER_IN_YEAR: "GDC.time.quarter_in_year";
+    readonly GDC_TIME_MONTH: "GDC.time.month";
+    readonly GDC_TIME_MONTH_IN_QUARTER: "GDC.time.month_in_quarter";
+    readonly GDC_TIME_MONTH_IN_YEAR: "GDC.time.month_in_year";
+    readonly GDC_TIME_DAY_IN_YEAR: "GDC.time.day_in_year";
+    readonly GDC_TIME_DAY_IN_QUARTER: "GDC.time.day_in_quarter";
+    readonly GDC_TIME_DAY_IN_MONTH: "GDC.time.day_in_month";
+    readonly GDC_TIME_DAY_IN_WEEK: "GDC.time.day_in_week";
+    readonly GDC_TIME_DAY_IN_EUWEEK: "GDC.time.day_in_euweek";
+    readonly GDC_TIME_DATE: "GDC.time.date";
+    readonly GDC_TIME_HOUR: "GDC.time.hour";
+    readonly GDC_TIME_HOUR_IN_DAY: "GDC.time.hour_in_day";
+    readonly GDC_TIME_MINUTE: "GDC.time.minute";
+    readonly GDC_TIME_MINUTE_IN_HOUR: "GDC.time.minute_in_hour";
+};
+
+// @public (undocumented)
+export type ExportDashboardDateFilterDateFilterGranularityEnum = typeof ExportDashboardDateFilterDateFilterGranularityEnum[keyof typeof ExportDashboardDateFilterDateFilterGranularityEnum];
+
+// @public (undocumented)
+export const ExportDashboardDateFilterDateFilterTypeEnum: {
+    readonly RELATIVE: "relative";
+    readonly ABSOLUTE: "absolute";
+};
+
+// @public (undocumented)
+export type ExportDashboardDateFilterDateFilterTypeEnum = typeof ExportDashboardDateFilterDateFilterTypeEnum[keyof typeof ExportDashboardDateFilterDateFilterTypeEnum];
+
+// @public
+export interface ExportDashboardExportSettings {
     exportInfo?: boolean;
     mergeHeaders?: boolean;
-    pdfPageSize?: string;
-    pdfTableStyle?: Array<ExportActionsPdfTableStyle>;
-    pdfTopLeftContent?: string;
-    pdfTopRightContent?: string;
-    showFilters?: boolean;
+}
+
+// @public
+export type ExportDashboardFilter = ExportDashboardAttributeFilter | ExportDashboardDateFilter;
+
+// @public
+export interface ExportDashboardTabularExportRequest {
+    dashboardFiltersOverride?: Array<ExportDashboardFilter>;
+    fileName: string;
+    format: ExportDashboardTabularExportRequestFormatEnum;
+    settings?: ExportDashboardExportSettings;
+    widgetIds?: Array<string>;
+}
+
+// @public (undocumented)
+export const ExportDashboardTabularExportRequestFormatEnum: {
+    readonly XLSX: "XLSX";
+};
+
+// @public (undocumented)
+export type ExportDashboardTabularExportRequestFormatEnum = typeof ExportDashboardTabularExportRequestFormatEnum[keyof typeof ExportDashboardTabularExportRequestFormatEnum];
+
+// @public
+export type ExportDateFilter = ExportAbsoluteDateFilter | ExportRelativeDateFilter;
+
+// @public
+export interface ExportDateValue {
+    value: string;
 }
 
 // @public
@@ -10138,11 +10302,427 @@ export interface ExportDefinitionsApiUpdateEntityExportDefinitionsRequest {
 }
 
 // @public
+export interface ExportExecutionSettings {
+    dataSamplingPercentage?: number;
+    timestamp?: string;
+}
+
+// @public
+export interface ExportExportResponse {
+    exportResult: string;
+}
+
+// @public
+export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportComparisonMeasureValueFilter | ExportInlineFilterDefinition | ExportNegativeAttributeFilter | ExportPositiveAttributeFilter | ExportRangeMeasureValueFilter | ExportRankingFilter | ExportRelativeDateFilter;
+
+// @public
+export type ExportFilterDefinitionForSimpleMeasure = ExportAttributeFilter | ExportDateFilter;
+
+// @public
+export interface ExportIdentifierRef {
+    identifier?: ExportIdentifierRefIdentifier;
+}
+
+// @public
+export interface ExportIdentifierRefIdentifier {
+    id: string;
+    type: ExportIdentifierRefIdentifierTypeEnum;
+}
+
+// @public (undocumented)
+export const ExportIdentifierRefIdentifierTypeEnum: {
+    readonly ANALYTICAL_DASHBOARD: "analyticalDashboard";
+    readonly ATTRIBUTE: "attribute";
+    readonly ATTRIBUTE_HIERARCHY: "attributeHierarchy";
+    readonly DASHBOARD_PLUGIN: "dashboardPlugin";
+    readonly DATASET: "dataset";
+    readonly FACT: "fact";
+    readonly LABEL: "label";
+    readonly METRIC: "metric";
+    readonly USER_DATA_FILTER: "userDataFilter";
+    readonly EXPORT_DEFINITION: "exportDefinition";
+    readonly AUTOMATION: "automation";
+    readonly PROMPT: "prompt";
+    readonly VISUALIZATION_OBJECT: "visualizationObject";
+    readonly FILTER_CONTEXT: "filterContext";
+    readonly WORKSPACE_SETTINGS: "workspaceSettings";
+    readonly CUSTOM_APPLICATION_SETTING: "customApplicationSetting";
+    readonly WORKSPACE_DATA_FILTER: "workspaceDataFilter";
+    readonly WORKSPACE_DATA_FILTER_SETTING: "workspaceDataFilterSetting";
+    readonly FILTER_VIEW: "filterView";
+};
+
+// @public (undocumented)
+export type ExportIdentifierRefIdentifierTypeEnum = typeof ExportIdentifierRefIdentifierTypeEnum[keyof typeof ExportIdentifierRefIdentifierTypeEnum];
+
+// @public
+export interface ExportImageExportRequest {
+    dashboardId: string;
+    fileName: string;
+    format: ExportImageExportRequestFormatEnum;
+    metadata?: object | null;
+    widgetIds: Array<string>;
+}
+
+// @public (undocumented)
+export const ExportImageExportRequestFormatEnum: {
+    readonly PNG: "PNG";
+};
+
+// @public (undocumented)
+export type ExportImageExportRequestFormatEnum = typeof ExportImageExportRequestFormatEnum[keyof typeof ExportImageExportRequestFormatEnum];
+
+// @public
+export interface ExportInlineFilterDefinition {
+    inline: ExportInlineFilterDefinitionInline;
+}
+
+// @public
+export interface ExportInlineFilterDefinitionInline {
+    applyOnResult?: boolean;
+    filter: string;
+    localIdentifier?: string;
+}
+
+// @public
+export interface ExportInlineMeasureDefinition {
+    inline: ExportInlineMeasureDefinitionInline;
+}
+
+// @public
+export interface ExportInlineMeasureDefinitionInline {
+    maql: string;
+}
+
+// @public
+export interface ExportInlineResponse202 {
+    char?: string;
+    direct?: boolean;
+    double?: number;
+    float?: number;
+    int?: number;
+    long?: number;
+    readOnly?: boolean;
+    short?: number;
+}
+
+// @public
+export type ExportMeasureDefinition = ExportArithmeticMeasureDefinition | ExportInlineMeasureDefinition | ExportPopMeasureDefinition | ExportSimpleMeasureDefinition;
+
+// @public
+export interface ExportMeasureItem {
+    definition: ExportMeasureDefinition;
+    localIdentifier: string;
+}
+
+// @public
+export type ExportMeasureValueFilter = ExportComparisonMeasureValueFilter | ExportRangeMeasureValueFilter;
+
+// @public
+export interface ExportNegativeAttributeFilter {
+    negativeAttributeFilter: ExportNegativeAttributeFilterNegativeAttributeFilter;
+}
+
+// @public
+export interface ExportNegativeAttributeFilterNegativeAttributeFilter {
+    applyOnResult?: boolean;
+    label: ExportAfmIdentifier;
+    localIdentifier?: string;
+    notIn: ExportAttributeFilterElements;
+}
+
+// @public
+export interface ExportOver {
+    attributes: Array<ExportIdentifierRef>;
+}
+
+// @public
+export interface ExportPdfTableStyle {
+    properties?: Array<ExportPdfTableStyleProperty>;
+    selector: string;
+}
+
+// @public
+export interface ExportPdfTableStyleProperty {
+    key: string;
+    value: string;
+}
+
+// @public
+export interface ExportPopDataset {
+    dataset: ExportAfmObjectIdentifierDataset;
+    periodsAgo: number;
+}
+
+// @public
+export interface ExportPopDatasetMeasureDefinition {
+    previousPeriodMeasure: ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure;
+}
+
+// @public
+export interface ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure {
+    dateDatasets: Array<ExportPopDataset>;
+    measureIdentifier: ExportAfmLocalIdentifier;
+}
+
+// @public
+export interface ExportPopDate {
+    attribute: ExportAfmObjectIdentifierAttribute;
+    periodsAgo: number;
+}
+
+// @public
+export interface ExportPopDateMeasureDefinition {
+    overPeriodMeasure: ExportPopDateMeasureDefinitionOverPeriodMeasure;
+}
+
+// @public
+export interface ExportPopDateMeasureDefinitionOverPeriodMeasure {
+    dateAttributes: Array<ExportPopDate>;
+    measureIdentifier: ExportAfmLocalIdentifier;
+}
+
+// @public
+export type ExportPopMeasureDefinition = ExportPopDatasetMeasureDefinition | ExportPopDateMeasureDefinition;
+
+// @public
+export interface ExportPositiveAttributeFilter {
+    positiveAttributeFilter: ExportPositiveAttributeFilterPositiveAttributeFilter;
+}
+
+// @public
+export interface ExportPositiveAttributeFilterPositiveAttributeFilter {
+    applyOnResult?: boolean;
+    in: ExportAttributeFilterElements;
+    label: ExportAfmIdentifier;
+    localIdentifier?: string;
+}
+
+// @public
+export interface ExportRangeMeasureValueFilter {
+    rangeMeasureValueFilter: ExportRangeMeasureValueFilterRangeMeasureValueFilter;
+}
+
+// @public
+export interface ExportRangeMeasureValueFilterRangeMeasureValueFilter {
+    applyOnResult?: boolean;
+    dimensionality?: Array<ExportAfmIdentifier>;
+    from: number;
+    localIdentifier?: string;
+    measure: ExportAfmIdentifier;
+    operator: ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    to: number;
+    treatNullValuesAs?: number;
+}
+
+// @public (undocumented)
+export const ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum: {
+    readonly BETWEEN: "BETWEEN";
+    readonly NOT_BETWEEN: "NOT_BETWEEN";
+};
+
+// @public (undocumented)
+export type ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = typeof ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
+
+// @public
+export interface ExportRankingFilter {
+    rankingFilter: ExportRankingFilterRankingFilter;
+}
+
+// @public
+export interface ExportRankingFilterRankingFilter {
+    applyOnResult?: boolean;
+    dimensionality?: Array<ExportAfmIdentifier>;
+    localIdentifier?: string;
+    measures: Array<ExportAfmIdentifier>;
+    operator: ExportRankingFilterRankingFilterOperatorEnum;
+    value: number;
+}
+
+// @public (undocumented)
+export const ExportRankingFilterRankingFilterOperatorEnum: {
+    readonly TOP: "TOP";
+    readonly BOTTOM: "BOTTOM";
+};
+
+// @public (undocumented)
+export type ExportRankingFilterRankingFilterOperatorEnum = typeof ExportRankingFilterRankingFilterOperatorEnum[keyof typeof ExportRankingFilterRankingFilterOperatorEnum];
+
+// @public
+export interface ExportRawCustomLabel {
+    title: string;
+}
+
+// @public
+export interface ExportRawCustomMetric {
+    title: string;
+}
+
+// @public
+export interface ExportRawCustomOverride {
+    labels?: {
+        [key: string]: ExportRawCustomLabel;
+    };
+    metrics?: {
+        [key: string]: ExportRawCustomMetric;
+    };
+}
+
+// @public
+export interface ExportRawExportRequest {
+    customOverride?: ExportRawCustomOverride;
+    execution: ExportAFM;
+    executionSettings?: ExportExecutionSettings;
+    fileName: string;
+    format: ExportRawExportRequestFormatEnum;
+}
+
+// @public (undocumented)
+export const ExportRawExportRequestFormatEnum: {
+    readonly ARROW_FILE: "ARROW_FILE";
+    readonly ARROW_STREAM: "ARROW_STREAM";
+    readonly CSV: "CSV";
+};
+
+// @public (undocumented)
+export type ExportRawExportRequestFormatEnum = typeof ExportRawExportRequestFormatEnum[keyof typeof ExportRawExportRequestFormatEnum];
+
+// @public
+export interface ExportRelativeDateFilter {
+    relativeDateFilter: ExportRelativeDateFilterRelativeDateFilter;
+}
+
+// @public
+export interface ExportRelativeDateFilterRelativeDateFilter {
+    applyOnResult?: boolean;
+    dataset: ExportAfmObjectIdentifierDataset;
+    from: number;
+    granularity: ExportRelativeDateFilterRelativeDateFilterGranularityEnum;
+    localIdentifier?: string;
+    to: number;
+}
+
+// @public (undocumented)
+export const ExportRelativeDateFilterRelativeDateFilterGranularityEnum: {
+    readonly MINUTE: "MINUTE";
+    readonly HOUR: "HOUR";
+    readonly DAY: "DAY";
+    readonly WEEK: "WEEK";
+    readonly MONTH: "MONTH";
+    readonly QUARTER: "QUARTER";
+    readonly YEAR: "YEAR";
+    readonly MINUTE_OF_HOUR: "MINUTE_OF_HOUR";
+    readonly HOUR_OF_DAY: "HOUR_OF_DAY";
+    readonly DAY_OF_WEEK: "DAY_OF_WEEK";
+    readonly DAY_OF_MONTH: "DAY_OF_MONTH";
+    readonly DAY_OF_YEAR: "DAY_OF_YEAR";
+    readonly WEEK_OF_YEAR: "WEEK_OF_YEAR";
+    readonly MONTH_OF_YEAR: "MONTH_OF_YEAR";
+    readonly QUARTER_OF_YEAR: "QUARTER_OF_YEAR";
+};
+
+// @public (undocumented)
+export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum = typeof ExportRelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof ExportRelativeDateFilterRelativeDateFilterGranularityEnum];
+
+// @public
 export type ExportRequest = TabularExportRequest | VisualExportRequest;
 
 // @public
-export interface ExportResponse {
-    exportResult: string;
+export interface ExportRequestArgs {
+    // (undocumented)
+    options: AxiosRequestConfig;
+    // (undocumented)
+    url: string;
+}
+
+// @public
+export interface ExportSettings {
+    exportInfo?: boolean;
+    mergeHeaders?: boolean;
+    pdfPageSize?: string;
+    pdfTableStyle?: Array<ExportPdfTableStyle>;
+    pdfTopLeftContent?: string;
+    pdfTopRightContent?: string;
+    showFilters?: boolean;
+}
+
+// @public
+export interface ExportSimpleMeasureDefinition {
+    measure: ExportSimpleMeasureDefinitionMeasure;
+}
+
+// @public
+export interface ExportSimpleMeasureDefinitionMeasure {
+    aggregation?: ExportSimpleMeasureDefinitionMeasureAggregationEnum;
+    computeRatio?: boolean;
+    filters?: Array<ExportFilterDefinitionForSimpleMeasure>;
+    item: ExportAfmObjectIdentifierCore;
+}
+
+// @public (undocumented)
+export const ExportSimpleMeasureDefinitionMeasureAggregationEnum: {
+    readonly SUM: "SUM";
+    readonly COUNT: "COUNT";
+    readonly AVG: "AVG";
+    readonly MIN: "MIN";
+    readonly MAX: "MAX";
+    readonly MEDIAN: "MEDIAN";
+    readonly RUNSUM: "RUNSUM";
+    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
+};
+
+// @public (undocumented)
+export type ExportSimpleMeasureDefinitionMeasureAggregationEnum = typeof ExportSimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof ExportSimpleMeasureDefinitionMeasureAggregationEnum];
+
+// @public
+export interface ExportSlidesExportRequest {
+    dashboardId?: string;
+    fileName: string;
+    format: ExportSlidesExportRequestFormatEnum;
+    metadata?: object | null;
+    templateId?: string | null;
+    visualizationIds?: Array<string>;
+    widgetIds?: Array<string>;
+}
+
+// @public (undocumented)
+export const ExportSlidesExportRequestFormatEnum: {
+    readonly PDF: "PDF";
+    readonly PPTX: "PPTX";
+};
+
+// @public (undocumented)
+export type ExportSlidesExportRequestFormatEnum = typeof ExportSlidesExportRequestFormatEnum[keyof typeof ExportSlidesExportRequestFormatEnum];
+
+// @public
+export interface ExportTabularExportRequest {
+    customOverride?: ExportCustomOverride;
+    executionResult?: string;
+    fileName: string;
+    format: ExportTabularExportRequestFormatEnum;
+    metadata?: object | null;
+    relatedDashboardId?: string;
+    settings?: ExportSettings;
+    visualizationObject?: string;
+    visualizationObjectCustomFilters?: Array<object>;
+}
+
+// @public (undocumented)
+export const ExportTabularExportRequestFormatEnum: {
+    readonly CSV: "CSV";
+    readonly XLSX: "XLSX";
+    readonly HTML: "HTML";
+    readonly PDF: "PDF";
+};
+
+// @public (undocumented)
+export type ExportTabularExportRequestFormatEnum = typeof ExportTabularExportRequestFormatEnum[keyof typeof ExportTabularExportRequestFormatEnum];
+
+// @public
+export interface ExportVisualExportRequest {
+    dashboardId: string;
+    fileName: string;
+    metadata?: object;
 }
 
 // @public
@@ -10892,6 +11472,59 @@ export interface ILiveFeatures {
         };
         context: FeatureContext;
     };
+}
+
+// @public
+export class ImageExportExport extends ExportBaseAPI implements ImageExportExportInterface {
+    createImageExport(requestParameters: ImageExportExportCreateImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getImageExportMetadata(requestParameters: ImageExportExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+}
+
+// @public
+export const ImageExportExportAxiosParamCreator: (configuration?: ExportConfiguration) => {
+    createImageExport: (workspaceId: string, exportImageExportRequest: ExportImageExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getImageExport: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getImageExportMetadata: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+};
+
+// @public
+export interface ImageExportExportCreateImageExportRequest {
+    readonly exportImageExportRequest: ExportImageExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export const ImageExportExportFactory: (configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    createImageExport(requestParameters: ImageExportExportCreateImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getImageExportMetadata(requestParameters: ImageExportExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+};
+
+// @public
+export const ImageExportExportFp: (configuration?: ExportConfiguration) => {
+    createImageExport(workspaceId: string, exportImageExportRequest: ExportImageExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    getImageExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getImageExportMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+
+// @public
+export interface ImageExportExportGetImageExportMetadataRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ImageExportExportGetImageExportRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ImageExportExportInterface {
+    createImageExport(requestParameters: ImageExportExportCreateImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getImageExportMetadata(requestParameters: ImageExportExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public
@@ -11848,73 +12481,24 @@ export interface JsonApiAutomationOut {
 
 // @public
 export interface JsonApiAutomationOutAttributes {
-    alert?: JsonApiAutomationOutAttributesAlert;
+    alert?: JsonApiAutomationPatchAttributesAlert;
     areRelationsValid?: boolean;
     createdAt?: string;
+    dashboardTabularExports?: Array<JsonApiAutomationPatchAttributesDashboardTabularExports>;
     description?: string;
     details?: any;
-    externalRecipients?: Array<JsonApiAutomationOutAttributesExternalRecipients>;
-    imageExports?: Array<JsonApiAutomationOutAttributesImageExports>;
-    metadata?: JsonApiAutomationOutAttributesMetadata | null;
+    externalRecipients?: Array<JsonApiAutomationPatchAttributesExternalRecipients>;
+    imageExports?: Array<JsonApiAutomationPatchAttributesImageExports>;
+    metadata?: JsonApiAutomationPatchAttributesMetadata | null;
     modifiedAt?: string;
-    rawExports?: Array<JsonApiAutomationOutAttributesRawExports>;
-    schedule?: JsonApiAutomationOutAttributesSchedule;
-    slidesExports?: Array<JsonApiAutomationOutAttributesSlidesExports>;
+    rawExports?: Array<JsonApiAutomationPatchAttributesRawExports>;
+    schedule?: JsonApiAutomationPatchAttributesSchedule;
+    slidesExports?: Array<JsonApiAutomationPatchAttributesSlidesExports>;
     state?: JsonApiAutomationOutAttributesStateEnum;
-    tabularExports?: Array<JsonApiAutomationOutAttributesTabularExports>;
+    tabularExports?: Array<JsonApiAutomationPatchAttributesTabularExports>;
     tags?: Array<string>;
     title?: string;
-    visualExports?: Array<JsonApiAutomationOutAttributesVisualExports>;
-}
-
-// @public
-export interface JsonApiAutomationOutAttributesAlert {
-    condition: AlertCondition;
-    execution: AlertAfm;
-    trigger?: JsonApiAutomationOutAttributesAlertTriggerEnum;
-}
-
-// @public (undocumented)
-export const JsonApiAutomationOutAttributesAlertTriggerEnum: {
-    readonly ALWAYS: "ALWAYS";
-    readonly ONCE: "ONCE";
-};
-
-// @public (undocumented)
-export type JsonApiAutomationOutAttributesAlertTriggerEnum = typeof JsonApiAutomationOutAttributesAlertTriggerEnum[keyof typeof JsonApiAutomationOutAttributesAlertTriggerEnum];
-
-// @public
-export interface JsonApiAutomationOutAttributesExternalRecipients {
-    email: string;
-}
-
-// @public
-export interface JsonApiAutomationOutAttributesImageExports {
-    requestPayload: ImageExportRequest;
-}
-
-// @public
-export interface JsonApiAutomationOutAttributesMetadata {
-    visibleFilters?: Array<VisibleFilter>;
-    widget?: string;
-}
-
-// @public
-export interface JsonApiAutomationOutAttributesRawExports {
-    requestPayload: RawExportRequest;
-}
-
-// @public
-export interface JsonApiAutomationOutAttributesSchedule {
-    cron: string;
-    cronDescription?: string;
-    firstRun?: string;
-    timezone: string;
-}
-
-// @public
-export interface JsonApiAutomationOutAttributesSlidesExports {
-    requestPayload: SlidesExportRequest;
+    visualExports?: Array<JsonApiAutomationPatchAttributesVisualExports>;
 }
 
 // @public (undocumented)
@@ -11925,16 +12509,6 @@ export const JsonApiAutomationOutAttributesStateEnum: {
 
 // @public (undocumented)
 export type JsonApiAutomationOutAttributesStateEnum = typeof JsonApiAutomationOutAttributesStateEnum[keyof typeof JsonApiAutomationOutAttributesStateEnum];
-
-// @public
-export interface JsonApiAutomationOutAttributesTabularExports {
-    requestPayload: TabularExportRequest;
-}
-
-// @public
-export interface JsonApiAutomationOutAttributesVisualExports {
-    requestPayload: VisualExportRequest;
-}
 
 // @public
 export interface JsonApiAutomationOutDocument {
@@ -11956,27 +12530,12 @@ export interface JsonApiAutomationOutList {
 
 // @public
 export interface JsonApiAutomationOutRelationships {
-    analyticalDashboard?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
+    analyticalDashboard?: JsonApiAutomationPatchRelationshipsAnalyticalDashboard;
     createdBy?: JsonApiVisualizationObjectOutRelationshipsCreatedBy;
-    exportDefinitions?: JsonApiAutomationOutRelationshipsExportDefinitions;
+    exportDefinitions?: JsonApiAutomationPatchRelationshipsExportDefinitions;
     modifiedBy?: JsonApiVisualizationObjectOutRelationshipsCreatedBy;
-    notificationChannel?: JsonApiAutomationOutRelationshipsNotificationChannel;
-    recipients?: JsonApiAutomationOutRelationshipsRecipients;
-}
-
-// @public
-export interface JsonApiAutomationOutRelationshipsExportDefinitions {
-    data: Array<JsonApiExportDefinitionLinkage>;
-}
-
-// @public
-export interface JsonApiAutomationOutRelationshipsNotificationChannel {
-    data: JsonApiNotificationChannelToOneLinkage | null;
-}
-
-// @public
-export interface JsonApiAutomationOutRelationshipsRecipients {
-    data: Array<JsonApiUserLinkage>;
+    notificationChannel?: JsonApiAutomationPatchRelationshipsNotificationChannel;
+    recipients?: JsonApiAutomationPatchRelationshipsRecipients;
 }
 
 // @public (undocumented)
@@ -12015,21 +12574,77 @@ export interface JsonApiAutomationPatch {
 
 // @public
 export interface JsonApiAutomationPatchAttributes {
-    alert?: JsonApiAutomationOutAttributesAlert;
+    alert?: JsonApiAutomationPatchAttributesAlert;
     areRelationsValid?: boolean;
+    dashboardTabularExports?: Array<JsonApiAutomationPatchAttributesDashboardTabularExports>;
     description?: string;
     details?: any;
-    externalRecipients?: Array<JsonApiAutomationOutAttributesExternalRecipients>;
-    imageExports?: Array<JsonApiAutomationOutAttributesImageExports>;
-    metadata?: JsonApiAutomationOutAttributesMetadata | null;
-    rawExports?: Array<JsonApiAutomationOutAttributesRawExports>;
-    schedule?: JsonApiAutomationOutAttributesSchedule;
-    slidesExports?: Array<JsonApiAutomationOutAttributesSlidesExports>;
+    externalRecipients?: Array<JsonApiAutomationPatchAttributesExternalRecipients>;
+    imageExports?: Array<JsonApiAutomationPatchAttributesImageExports>;
+    metadata?: JsonApiAutomationPatchAttributesMetadata | null;
+    rawExports?: Array<JsonApiAutomationPatchAttributesRawExports>;
+    schedule?: JsonApiAutomationPatchAttributesSchedule;
+    slidesExports?: Array<JsonApiAutomationPatchAttributesSlidesExports>;
     state?: JsonApiAutomationPatchAttributesStateEnum;
-    tabularExports?: Array<JsonApiAutomationOutAttributesTabularExports>;
+    tabularExports?: Array<JsonApiAutomationPatchAttributesTabularExports>;
     tags?: Array<string>;
     title?: string;
-    visualExports?: Array<JsonApiAutomationOutAttributesVisualExports>;
+    visualExports?: Array<JsonApiAutomationPatchAttributesVisualExports>;
+}
+
+// @public
+export interface JsonApiAutomationPatchAttributesAlert {
+    condition: AlertCondition;
+    execution: AlertAfm;
+    trigger?: JsonApiAutomationPatchAttributesAlertTriggerEnum;
+}
+
+// @public (undocumented)
+export const JsonApiAutomationPatchAttributesAlertTriggerEnum: {
+    readonly ALWAYS: "ALWAYS";
+    readonly ONCE: "ONCE";
+};
+
+// @public (undocumented)
+export type JsonApiAutomationPatchAttributesAlertTriggerEnum = typeof JsonApiAutomationPatchAttributesAlertTriggerEnum[keyof typeof JsonApiAutomationPatchAttributesAlertTriggerEnum];
+
+// @public
+export interface JsonApiAutomationPatchAttributesDashboardTabularExports {
+    requestPayload: DashboardTabularExportRequestV2;
+}
+
+// @public
+export interface JsonApiAutomationPatchAttributesExternalRecipients {
+    email: string;
+}
+
+// @public
+export interface JsonApiAutomationPatchAttributesImageExports {
+    requestPayload: ImageExportRequest;
+}
+
+// @public
+export interface JsonApiAutomationPatchAttributesMetadata {
+    visibleFilters?: Array<VisibleFilter>;
+    widget?: string;
+}
+
+// @public
+export interface JsonApiAutomationPatchAttributesRawExports {
+    requestPayload: RawExportRequest;
+}
+
+// @public
+export interface JsonApiAutomationPatchAttributesSchedule {
+    cron: string;
+    cronDescription?: string;
+    firstRun?: string;
+    timezone: string;
+}
+
+// @public
+export interface JsonApiAutomationPatchAttributesSlidesExports {
+    requestPayload: SlidesExportRequest;
 }
 
 // @public (undocumented)
@@ -12042,16 +12657,46 @@ export const JsonApiAutomationPatchAttributesStateEnum: {
 export type JsonApiAutomationPatchAttributesStateEnum = typeof JsonApiAutomationPatchAttributesStateEnum[keyof typeof JsonApiAutomationPatchAttributesStateEnum];
 
 // @public
+export interface JsonApiAutomationPatchAttributesTabularExports {
+    requestPayload: TabularExportRequest;
+}
+
+// @public
+export interface JsonApiAutomationPatchAttributesVisualExports {
+    requestPayload: VisualExportRequest;
+}
+
+// @public
 export interface JsonApiAutomationPatchDocument {
     data: JsonApiAutomationPatch;
 }
 
 // @public
 export interface JsonApiAutomationPatchRelationships {
-    analyticalDashboard?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
-    exportDefinitions?: JsonApiAutomationOutRelationshipsExportDefinitions;
-    notificationChannel?: JsonApiAutomationOutRelationshipsNotificationChannel;
-    recipients?: JsonApiAutomationOutRelationshipsRecipients;
+    analyticalDashboard?: JsonApiAutomationPatchRelationshipsAnalyticalDashboard;
+    exportDefinitions?: JsonApiAutomationPatchRelationshipsExportDefinitions;
+    notificationChannel?: JsonApiAutomationPatchRelationshipsNotificationChannel;
+    recipients?: JsonApiAutomationPatchRelationshipsRecipients;
+}
+
+// @public
+export interface JsonApiAutomationPatchRelationshipsAnalyticalDashboard {
+    data: JsonApiAnalyticalDashboardToOneLinkage | null;
+}
+
+// @public
+export interface JsonApiAutomationPatchRelationshipsExportDefinitions {
+    data: Array<JsonApiExportDefinitionLinkage>;
+}
+
+// @public
+export interface JsonApiAutomationPatchRelationshipsNotificationChannel {
+    data: JsonApiNotificationChannelToOneLinkage | null;
+}
+
+// @public
+export interface JsonApiAutomationPatchRelationshipsRecipients {
+    data: Array<JsonApiUserLinkage>;
 }
 
 // @public (undocumented)
@@ -12163,7 +12808,7 @@ export type JsonApiColorPalettePatchTypeEnum = typeof JsonApiColorPalettePatchTy
 
 // @public
 export interface JsonApiCookieSecurityConfigurationIn {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationInTypeEnum;
 }
@@ -12183,9 +12828,15 @@ export type JsonApiCookieSecurityConfigurationInTypeEnum = typeof JsonApiCookieS
 
 // @public
 export interface JsonApiCookieSecurityConfigurationOut {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationOutTypeEnum;
+}
+
+// @public
+export interface JsonApiCookieSecurityConfigurationOutAttributes {
+    lastRotation?: string;
+    rotationInterval?: string;
 }
 
 // @public
@@ -12204,15 +12855,9 @@ export type JsonApiCookieSecurityConfigurationOutTypeEnum = typeof JsonApiCookie
 
 // @public
 export interface JsonApiCookieSecurityConfigurationPatch {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationPatchTypeEnum;
-}
-
-// @public
-export interface JsonApiCookieSecurityConfigurationPatchAttributes {
-    lastRotation?: string;
-    rotationInterval?: string;
 }
 
 // @public
@@ -13283,16 +13928,11 @@ export interface JsonApiExportDefinitionOutList {
 
 // @public
 export interface JsonApiExportDefinitionOutRelationships {
-    analyticalDashboard?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
+    analyticalDashboard?: JsonApiAutomationPatchRelationshipsAnalyticalDashboard;
     automation?: JsonApiExportDefinitionOutRelationshipsAutomation;
     createdBy?: JsonApiVisualizationObjectOutRelationshipsCreatedBy;
     modifiedBy?: JsonApiVisualizationObjectOutRelationshipsCreatedBy;
     visualizationObject?: JsonApiExportDefinitionOutRelationshipsVisualizationObject;
-}
-
-// @public
-export interface JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard {
-    data: JsonApiAnalyticalDashboardToOneLinkage | null;
 }
 
 // @public
@@ -13355,7 +13995,7 @@ export interface JsonApiExportDefinitionPatchDocument {
 
 // @public
 export interface JsonApiExportDefinitionPatchRelationships {
-    analyticalDashboard?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
+    analyticalDashboard?: JsonApiAutomationPatchRelationshipsAnalyticalDashboard;
     visualizationObject?: JsonApiExportDefinitionOutRelationshipsVisualizationObject;
 }
 
@@ -13802,7 +14442,7 @@ export type JsonApiFilterContextPostOptionalIdTypeEnum = typeof JsonApiFilterCon
 export interface JsonApiFilterViewIn {
     attributes: JsonApiFilterViewOutAttributes;
     id: string;
-    relationships?: JsonApiFilterViewOutRelationships;
+    relationships?: JsonApiFilterViewPatchRelationships;
     type: JsonApiFilterViewInTypeEnum;
 }
 
@@ -13823,7 +14463,7 @@ export type JsonApiFilterViewInTypeEnum = typeof JsonApiFilterViewInTypeEnum[key
 export interface JsonApiFilterViewOut {
     attributes: JsonApiFilterViewOutAttributes;
     id: string;
-    relationships?: JsonApiFilterViewOutRelationships;
+    relationships?: JsonApiFilterViewPatchRelationships;
     type: JsonApiFilterViewOutTypeEnum;
 }
 
@@ -13855,12 +14495,6 @@ export interface JsonApiFilterViewOutList {
     meta?: JsonApiApiTokenOutListMeta;
 }
 
-// @public
-export interface JsonApiFilterViewOutRelationships {
-    analyticalDashboard?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
-    user?: JsonApiOrganizationOutRelationshipsBootstrapUser;
-}
-
 // @public (undocumented)
 export const JsonApiFilterViewOutTypeEnum: {
     readonly FILTER_VIEW: "filterView";
@@ -13874,7 +14508,7 @@ export interface JsonApiFilterViewOutWithLinks {
     attributes: JsonApiFilterViewOutAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiFilterViewOutRelationships;
+    relationships?: JsonApiFilterViewPatchRelationships;
     type: JsonApiFilterViewOutWithLinksTypeEnum;
 }
 
@@ -13890,7 +14524,7 @@ export type JsonApiFilterViewOutWithLinksTypeEnum = typeof JsonApiFilterViewOutW
 export interface JsonApiFilterViewPatch {
     attributes: JsonApiFilterViewPatchAttributes;
     id: string;
-    relationships?: JsonApiFilterViewOutRelationships;
+    relationships?: JsonApiFilterViewPatchRelationships;
     type: JsonApiFilterViewPatchTypeEnum;
 }
 
@@ -13907,6 +14541,12 @@ export interface JsonApiFilterViewPatchAttributes {
 // @public
 export interface JsonApiFilterViewPatchDocument {
     data: JsonApiFilterViewPatch;
+}
+
+// @public
+export interface JsonApiFilterViewPatchRelationships {
+    analyticalDashboard?: JsonApiAutomationPatchRelationshipsAnalyticalDashboard;
+    user?: JsonApiOrganizationOutRelationshipsBootstrapUser;
 }
 
 // @public (undocumented)
@@ -14305,6 +14945,7 @@ export interface JsonApiLlmEndpointInAttributes {
 // @public (undocumented)
 export const JsonApiLlmEndpointInAttributesProviderEnum: {
     readonly OPENAI: "OPENAI";
+    readonly AZURE_OPENAI: "AZURE_OPENAI";
 };
 
 // @public (undocumented)
@@ -14342,6 +14983,7 @@ export interface JsonApiLlmEndpointOutAttributes {
 // @public (undocumented)
 export const JsonApiLlmEndpointOutAttributesProviderEnum: {
     readonly OPENAI: "OPENAI";
+    readonly AZURE_OPENAI: "AZURE_OPENAI";
 };
 
 // @public (undocumented)
@@ -14404,6 +15046,7 @@ export interface JsonApiLlmEndpointPatchAttributes {
 // @public (undocumented)
 export const JsonApiLlmEndpointPatchAttributesProviderEnum: {
     readonly OPENAI: "OPENAI";
+    readonly AZURE_OPENAI: "AZURE_OPENAI";
 };
 
 // @public (undocumented)
@@ -14964,7 +15607,7 @@ export type JsonApiOrganizationOutMetaPermissionsEnum = typeof JsonApiOrganizati
 export interface JsonApiOrganizationOutRelationships {
     bootstrapUser?: JsonApiOrganizationOutRelationshipsBootstrapUser;
     bootstrapUserGroup?: JsonApiOrganizationOutRelationshipsBootstrapUserGroup;
-    identityProvider?: JsonApiOrganizationPatchRelationshipsIdentityProvider;
+    identityProvider?: JsonApiOrganizationOutRelationshipsIdentityProvider;
 }
 
 // @public
@@ -14975,6 +15618,11 @@ export interface JsonApiOrganizationOutRelationshipsBootstrapUser {
 // @public
 export interface JsonApiOrganizationOutRelationshipsBootstrapUserGroup {
     data: JsonApiUserGroupToOneLinkage | null;
+}
+
+// @public
+export interface JsonApiOrganizationOutRelationshipsIdentityProvider {
+    data: JsonApiIdentityProviderToOneLinkage | null;
 }
 
 // @public (undocumented)
@@ -15019,12 +15667,7 @@ export interface JsonApiOrganizationPatchDocument {
 
 // @public
 export interface JsonApiOrganizationPatchRelationships {
-    identityProvider?: JsonApiOrganizationPatchRelationshipsIdentityProvider;
-}
-
-// @public
-export interface JsonApiOrganizationPatchRelationshipsIdentityProvider {
-    data: JsonApiIdentityProviderToOneLinkage | null;
+    identityProvider?: JsonApiOrganizationOutRelationshipsIdentityProvider;
 }
 
 // @public (undocumented)
@@ -15037,7 +15680,7 @@ export type JsonApiOrganizationPatchTypeEnum = typeof JsonApiOrganizationPatchTy
 
 // @public
 export interface JsonApiOrganizationSettingIn {
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     id: string;
     type: JsonApiOrganizationSettingInTypeEnum;
 }
@@ -15057,7 +15700,7 @@ export type JsonApiOrganizationSettingInTypeEnum = typeof JsonApiOrganizationSet
 
 // @public
 export interface JsonApiOrganizationSettingOut {
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     id: string;
     type: JsonApiOrganizationSettingOutTypeEnum;
 }
@@ -15085,7 +15728,7 @@ export type JsonApiOrganizationSettingOutTypeEnum = typeof JsonApiOrganizationSe
 
 // @public
 export interface JsonApiOrganizationSettingOutWithLinks {
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiOrganizationSettingOutWithLinksTypeEnum;
@@ -15101,7 +15744,7 @@ export type JsonApiOrganizationSettingOutWithLinksTypeEnum = typeof JsonApiOrgan
 
 // @public
 export interface JsonApiOrganizationSettingPatch {
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     id: string;
     type: JsonApiOrganizationSettingPatchTypeEnum;
 }
@@ -15663,39 +16306,19 @@ export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typ
 
 // @public
 export interface JsonApiUserSettingIn {
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     id: string;
     type: JsonApiUserSettingInTypeEnum;
 }
 
 // @public
-export interface JsonApiUserSettingInDocument {
-    data: JsonApiUserSettingIn;
-}
-
-// @public (undocumented)
-export const JsonApiUserSettingInTypeEnum: {
-    readonly USER_SETTING: "userSetting";
-};
-
-// @public (undocumented)
-export type JsonApiUserSettingInTypeEnum = typeof JsonApiUserSettingInTypeEnum[keyof typeof JsonApiUserSettingInTypeEnum];
-
-// @public
-export interface JsonApiUserSettingOut {
-    attributes?: JsonApiUserSettingOutAttributes;
-    id: string;
-    type: JsonApiUserSettingOutTypeEnum;
-}
-
-// @public
-export interface JsonApiUserSettingOutAttributes {
+export interface JsonApiUserSettingInAttributes {
     content?: object;
-    type?: JsonApiUserSettingOutAttributesTypeEnum;
+    type?: JsonApiUserSettingInAttributesTypeEnum;
 }
 
 // @public (undocumented)
-export const JsonApiUserSettingOutAttributesTypeEnum: {
+export const JsonApiUserSettingInAttributesTypeEnum: {
     readonly TIMEZONE: "TIMEZONE";
     readonly ACTIVE_THEME: "ACTIVE_THEME";
     readonly ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE";
@@ -15724,7 +16347,27 @@ export const JsonApiUserSettingOutAttributesTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserSettingOutAttributesTypeEnum = typeof JsonApiUserSettingOutAttributesTypeEnum[keyof typeof JsonApiUserSettingOutAttributesTypeEnum];
+export type JsonApiUserSettingInAttributesTypeEnum = typeof JsonApiUserSettingInAttributesTypeEnum[keyof typeof JsonApiUserSettingInAttributesTypeEnum];
+
+// @public
+export interface JsonApiUserSettingInDocument {
+    data: JsonApiUserSettingIn;
+}
+
+// @public (undocumented)
+export const JsonApiUserSettingInTypeEnum: {
+    readonly USER_SETTING: "userSetting";
+};
+
+// @public (undocumented)
+export type JsonApiUserSettingInTypeEnum = typeof JsonApiUserSettingInTypeEnum[keyof typeof JsonApiUserSettingInTypeEnum];
+
+// @public
+export interface JsonApiUserSettingOut {
+    attributes?: JsonApiUserSettingInAttributes;
+    id: string;
+    type: JsonApiUserSettingOutTypeEnum;
+}
 
 // @public
 export interface JsonApiUserSettingOutDocument {
@@ -15749,7 +16392,7 @@ export type JsonApiUserSettingOutTypeEnum = typeof JsonApiUserSettingOutTypeEnum
 
 // @public
 export interface JsonApiUserSettingOutWithLinks {
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiUserSettingOutWithLinksTypeEnum;
@@ -16090,9 +16733,9 @@ export type JsonApiWorkspaceDataFilterPatchTypeEnum = typeof JsonApiWorkspaceDat
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingIn {
-    attributes?: JsonApiWorkspaceDataFilterSettingOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterSettingPatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceDataFilterSettingOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterSettingPatchRelationships;
     type: JsonApiWorkspaceDataFilterSettingInTypeEnum;
 }
 
@@ -16125,18 +16768,11 @@ export type JsonApiWorkspaceDataFilterSettingLinkageTypeEnum = typeof JsonApiWor
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingOut {
-    attributes?: JsonApiWorkspaceDataFilterSettingOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterSettingPatchAttributes;
     id: string;
     meta?: JsonApiVisualizationObjectOutMeta;
-    relationships?: JsonApiWorkspaceDataFilterSettingOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterSettingPatchRelationships;
     type: JsonApiWorkspaceDataFilterSettingOutTypeEnum;
-}
-
-// @public
-export interface JsonApiWorkspaceDataFilterSettingOutAttributes {
-    description?: string;
-    filterValues?: Array<string>;
-    title?: string;
 }
 
 // @public
@@ -16154,16 +16790,6 @@ export interface JsonApiWorkspaceDataFilterSettingOutList {
     meta?: JsonApiApiTokenOutListMeta;
 }
 
-// @public
-export interface JsonApiWorkspaceDataFilterSettingOutRelationships {
-    workspaceDataFilter?: JsonApiWorkspaceDataFilterSettingOutRelationshipsWorkspaceDataFilter;
-}
-
-// @public
-export interface JsonApiWorkspaceDataFilterSettingOutRelationshipsWorkspaceDataFilter {
-    data: JsonApiWorkspaceDataFilterToOneLinkage | null;
-}
-
 // @public (undocumented)
 export const JsonApiWorkspaceDataFilterSettingOutTypeEnum: {
     readonly WORKSPACE_DATA_FILTER_SETTING: "workspaceDataFilterSetting";
@@ -16174,11 +16800,11 @@ export type JsonApiWorkspaceDataFilterSettingOutTypeEnum = typeof JsonApiWorkspa
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingOutWithLinks {
-    attributes?: JsonApiWorkspaceDataFilterSettingOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterSettingPatchAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiVisualizationObjectOutMeta;
-    relationships?: JsonApiWorkspaceDataFilterSettingOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterSettingPatchRelationships;
     type: JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum;
 }
 
@@ -16192,15 +16818,32 @@ export type JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum = typeof JsonA
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingPatch {
-    attributes?: JsonApiWorkspaceDataFilterSettingOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterSettingPatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceDataFilterSettingOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterSettingPatchRelationships;
     type: JsonApiWorkspaceDataFilterSettingPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiWorkspaceDataFilterSettingPatchAttributes {
+    description?: string;
+    filterValues?: Array<string>;
+    title?: string;
 }
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingPatchDocument {
     data: JsonApiWorkspaceDataFilterSettingPatch;
+}
+
+// @public
+export interface JsonApiWorkspaceDataFilterSettingPatchRelationships {
+    workspaceDataFilter?: JsonApiWorkspaceDataFilterSettingPatchRelationshipsWorkspaceDataFilter;
+}
+
+// @public
+export interface JsonApiWorkspaceDataFilterSettingPatchRelationshipsWorkspaceDataFilter {
+    data: JsonApiWorkspaceDataFilterToOneLinkage | null;
 }
 
 // @public (undocumented)
@@ -16391,7 +17034,7 @@ export type JsonApiWorkspacePatchTypeEnum = typeof JsonApiWorkspacePatchTypeEnum
 
 // @public
 export interface JsonApiWorkspaceSettingIn {
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     id: string;
     type: JsonApiWorkspaceSettingInTypeEnum;
 }
@@ -16411,7 +17054,7 @@ export type JsonApiWorkspaceSettingInTypeEnum = typeof JsonApiWorkspaceSettingIn
 
 // @public
 export interface JsonApiWorkspaceSettingOut {
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     id: string;
     meta?: JsonApiVisualizationObjectOutMeta;
     type: JsonApiWorkspaceSettingOutTypeEnum;
@@ -16440,7 +17083,7 @@ export type JsonApiWorkspaceSettingOutTypeEnum = typeof JsonApiWorkspaceSettingO
 
 // @public
 export interface JsonApiWorkspaceSettingOutWithLinks {
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiVisualizationObjectOutMeta;
@@ -16457,7 +17100,7 @@ export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = typeof JsonApiWorkspac
 
 // @public
 export interface JsonApiWorkspaceSettingPatch {
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     id: string;
     type: JsonApiWorkspaceSettingPatchTypeEnum;
 }
@@ -16477,7 +17120,7 @@ export type JsonApiWorkspaceSettingPatchTypeEnum = typeof JsonApiWorkspaceSettin
 
 // @public
 export interface JsonApiWorkspaceSettingPostOptionalId {
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     id?: string;
     type: JsonApiWorkspaceSettingPostOptionalIdTypeEnum;
 }
@@ -18065,6 +18708,36 @@ export const OptionsApiFp: (configuration?: MetadataConfiguration) => {
 // @public
 export interface OptionsApiInterface {
     getAllOptions(options?: AxiosRequestConfig): AxiosPromise<object>;
+}
+
+// @public
+export class OrganizationApi extends MetadataBaseApi implements OrganizationApiInterface {
+    switchActiveIdentityProvider(requestParameters: OrganizationApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+}
+
+// @public
+export const OrganizationApiAxiosParamCreator: (configuration?: MetadataConfiguration) => {
+    switchActiveIdentityProvider: (switchIdentityProviderRequest: SwitchIdentityProviderRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const OrganizationApiFactory: (configuration?: MetadataConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    switchActiveIdentityProvider(requestParameters: OrganizationApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+};
+
+// @public
+export const OrganizationApiFp: (configuration?: MetadataConfiguration) => {
+    switchActiveIdentityProvider(switchIdentityProviderRequest: SwitchIdentityProviderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+
+// @public
+export interface OrganizationApiInterface {
+    switchActiveIdentityProvider(requestParameters: OrganizationApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface OrganizationApiSwitchActiveIdentityProviderRequest {
+    readonly switchIdentityProviderRequest: SwitchIdentityProviderRequest;
 }
 
 // @public
@@ -19996,23 +20669,46 @@ export interface RawCustomOverride {
 }
 
 // @public
-export interface RawExportActionsRequest {
-    customOverride?: AfmExportRawCustomOverride;
-    execution: AfmExport;
-    executionSettings?: AfmExportExecutionSettings;
-    fileName: string;
-    format: RawExportActionsRequestFormatEnum;
+export class RawExportExport extends ExportBaseAPI implements RawExportExportInterface {
+    createRawExport(requestParameters: RawExportExportCreateRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
 }
 
-// @public (undocumented)
-export const RawExportActionsRequestFormatEnum: {
-    readonly ARROW_FILE: "ARROW_FILE";
-    readonly ARROW_STREAM: "ARROW_STREAM";
-    readonly CSV: "CSV";
+// @public
+export const RawExportExportAxiosParamCreator: (configuration?: ExportConfiguration) => {
+    createRawExport: (workspaceId: string, exportRawExportRequest: ExportRawExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getRawExport: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
 };
 
-// @public (undocumented)
-export type RawExportActionsRequestFormatEnum = typeof RawExportActionsRequestFormatEnum[keyof typeof RawExportActionsRequestFormatEnum];
+// @public
+export interface RawExportExportCreateRawExportRequest {
+    readonly exportRawExportRequest: ExportRawExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export const RawExportExportFactory: (configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    createRawExport(requestParameters: RawExportExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+};
+
+// @public
+export const RawExportExportFp: (configuration?: ExportConfiguration) => {
+    createRawExport(workspaceId: string, exportRawExportRequest: ExportRawExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    getRawExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+
+// @public
+export interface RawExportExportGetRawExportRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface RawExportExportInterface {
+    createRawExport(requestParameters: RawExportExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
 
 // @public
 export interface RawExportRequest {
@@ -20604,6 +21300,59 @@ export interface Skeleton {
 }
 
 // @public
+export class SlidesExportExport extends ExportBaseAPI implements SlidesExportExportInterface {
+    createSlidesExport(requestParameters: SlidesExportExportCreateSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    getSlidesExport(requestParameters: SlidesExportExportGetSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getSlidesExportMetadata(requestParameters: SlidesExportExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+}
+
+// @public
+export const SlidesExportExportAxiosParamCreator: (configuration?: ExportConfiguration) => {
+    createSlidesExport: (workspaceId: string, exportSlidesExportRequest: ExportSlidesExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getSlidesExport: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getSlidesExportMetadata: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+};
+
+// @public
+export interface SlidesExportExportCreateSlidesExportRequest {
+    readonly exportSlidesExportRequest: ExportSlidesExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export const SlidesExportExportFactory: (configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    createSlidesExport(requestParameters: SlidesExportExportCreateSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getSlidesExport(requestParameters: SlidesExportExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getSlidesExportMetadata(requestParameters: SlidesExportExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+};
+
+// @public
+export const SlidesExportExportFp: (configuration?: ExportConfiguration) => {
+    createSlidesExport(workspaceId: string, exportSlidesExportRequest: ExportSlidesExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    getSlidesExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getSlidesExportMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+
+// @public
+export interface SlidesExportExportGetSlidesExportMetadataRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface SlidesExportExportGetSlidesExportRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface SlidesExportExportInterface {
+    createSlidesExport(requestParameters: SlidesExportExportCreateSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getSlidesExport(requestParameters: SlidesExportExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getSlidesExportMetadata(requestParameters: SlidesExportExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
 export interface SlidesExportRequest {
     dashboardId?: string;
     fileName: string;
@@ -20793,6 +21542,11 @@ export interface SqlQuery {
 }
 
 // @public
+export interface SwitchIdentityProviderRequest {
+    idpId: string;
+}
+
+// @public
 export interface Table {
     tableName: string;
 }
@@ -20811,28 +21565,58 @@ export interface TableWarning {
 }
 
 // @public
-export interface TabularExportActionsRequest {
-    customOverride?: ExportActionsCustomOverride;
-    executionResult?: string;
-    fileName: string;
-    format: TabularExportActionsRequestFormatEnum;
-    metadata?: object | null;
-    relatedDashboardId?: string;
-    settings?: ExportActionsSettings;
-    visualizationObject?: string;
-    visualizationObjectCustomFilters?: Array<object>;
+export class TabularExportExport extends ExportBaseAPI implements TabularExportExportInterface {
+    createDashboardExportRequest(requestParameters: TabularExportExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    createTabularExport(requestParameters: TabularExportExportCreateTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    getTabularExport(requestParameters: TabularExportExportGetTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
 }
 
-// @public (undocumented)
-export const TabularExportActionsRequestFormatEnum: {
-    readonly CSV: "CSV";
-    readonly XLSX: "XLSX";
-    readonly HTML: "HTML";
-    readonly PDF: "PDF";
+// @public
+export const TabularExportExportAxiosParamCreator: (configuration?: ExportConfiguration) => {
+    createDashboardExportRequest: (workspaceId: string, dashboardId: string, exportDashboardTabularExportRequest: ExportDashboardTabularExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    createTabularExport: (workspaceId: string, exportTabularExportRequest: ExportTabularExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getTabularExport: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
 };
 
-// @public (undocumented)
-export type TabularExportActionsRequestFormatEnum = typeof TabularExportActionsRequestFormatEnum[keyof typeof TabularExportActionsRequestFormatEnum];
+// @public
+export interface TabularExportExportCreateDashboardExportRequestRequest {
+    readonly dashboardId: string;
+    readonly exportDashboardTabularExportRequest: ExportDashboardTabularExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface TabularExportExportCreateTabularExportRequest {
+    readonly exportTabularExportRequest: ExportTabularExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export const TabularExportExportFactory: (configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    createDashboardExportRequest(requestParameters: TabularExportExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createTabularExport(requestParameters: TabularExportExportCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getTabularExport(requestParameters: TabularExportExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+};
+
+// @public
+export const TabularExportExportFp: (configuration?: ExportConfiguration) => {
+    createDashboardExportRequest(workspaceId: string, dashboardId: string, exportDashboardTabularExportRequest: ExportDashboardTabularExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    createTabularExport(workspaceId: string, exportTabularExportRequest: ExportTabularExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    getTabularExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+
+// @public
+export interface TabularExportExportGetTabularExportRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface TabularExportExportInterface {
+    createDashboardExportRequest(requestParameters: TabularExportExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createTabularExport(requestParameters: TabularExportExportCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getTabularExport(requestParameters: TabularExportExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
 
 // @public
 export interface TabularExportRequest {
@@ -20957,7 +21741,7 @@ export const tigerExecutionClientFactory: (axios: AxiosInstance) => Pick<AfmActi
 export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "retrieveResult">;
 
 // @public (undocumented)
-export const tigerExportClientFactory: (axios: AxiosInstance) => ExportActionsApiInterface;
+export const tigerExportClientFactory: (axios: AxiosInstance) => ActionsExportInterface;
 
 // @public
 export const tigerGenAIClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory">;
@@ -22101,10 +22885,56 @@ export interface VisibleFilter {
 }
 
 // @public
-export interface VisualExportActionsRequest {
-    dashboardId: string;
-    fileName: string;
-    metadata?: object;
+export class VisualExportExport extends ExportBaseAPI implements VisualExportExportInterface {
+    createPdfExport(requestParameters: VisualExportExportCreatePdfExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
+    getExportedFile(requestParameters: VisualExportExportGetExportedFileRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getMetadata(requestParameters: VisualExportExportGetMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+}
+
+// @public
+export const VisualExportExportAxiosParamCreator: (configuration?: ExportConfiguration) => {
+    createPdfExport: (workspaceId: string, exportVisualExportRequest: ExportVisualExportRequest, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getExportedFile: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+    getMetadata: (workspaceId: string, exportId: string, options?: AxiosRequestConfig) => Promise<ExportRequestArgs>;
+};
+
+// @public
+export interface VisualExportExportCreatePdfExportRequest {
+    readonly exportVisualExportRequest: ExportVisualExportRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export const VisualExportExportFactory: (configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    createPdfExport(requestParameters: VisualExportExportCreatePdfExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getExportedFile(requestParameters: VisualExportExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getMetadata(requestParameters: VisualExportExportGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+};
+
+// @public
+export const VisualExportExportFp: (configuration?: ExportConfiguration) => {
+    createPdfExport(workspaceId: string, exportVisualExportRequest: ExportVisualExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
+    getExportedFile(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+
+// @public
+export interface VisualExportExportGetExportedFileRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface VisualExportExportGetMetadataRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface VisualExportExportInterface {
+    createPdfExport(requestParameters: VisualExportExportCreatePdfExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getExportedFile(requestParameters: VisualExportExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getMetadata(requestParameters: VisualExportExportGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public

@@ -34,21 +34,7 @@ import {
     isLiveFeatures,
     isStaticFeatures,
 } from "./profile.js";
-import {
-    tigerExportClientFactory,
-    ExportActionsApiInterface,
-    VisualExportActionsRequest,
-    ExportActionsCustomMetric,
-    ExportActionsCustomLabel,
-    TabularExportActionsRequestFormatEnum,
-    RawExportActionsRequestFormatEnum,
-    ExportActionsSettings,
-    ExportActionsPdfTableStyle,
-    ExportActionsPdfTableStyleProperty,
-    ExportActionsCustomOverride,
-    TabularExportActionsRequest,
-    RawExportActionsRequest,
-} from "./export.js";
+import { tigerExportClientFactory } from "./export.js";
 import {
     ScanModelConfiguration,
     ScanModelConfigurationParameters,
@@ -77,17 +63,7 @@ export type {
     ScanModelConfigurationParameters,
     ScanModelRequestArgs,
     ScanModelActionsApiInterface,
-    ExportActionsApiInterface,
-    VisualExportActionsRequest,
-    ExportActionsCustomMetric,
-    ExportActionsCustomLabel,
-    ExportActionsSettings,
-    ExportActionsPdfTableStyle,
-    ExportActionsCustomOverride,
-    TabularExportActionsRequest,
-    RawExportActionsRequest,
     ResultActionsApiInterface,
-    ExportActionsPdfTableStyleProperty,
 };
 export {
     tigerExecutionClientFactory,
@@ -116,8 +92,6 @@ export {
     isStaticFeatures,
     ScanModelConfiguration,
     ScanModelBaseApi,
-    TabularExportActionsRequestFormatEnum,
-    RawExportActionsRequestFormatEnum,
 };
 
 export interface ITigerClient {
