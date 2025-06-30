@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { Button, Typography } from "@gooddata/sdk-ui-kit";
+import { Button, Typography, UiNavigationBypass, useKeyboardNavigationTarget } from "@gooddata/sdk-ui-kit";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
@@ -34,6 +34,7 @@ type GenAIChatWrapperProps = {
 
 const GEN_AI_SECTION = "ai";
 const CREATE_LLM_PROVIDER_ACTION = "create-llm-provider";
+const GEN_AI_INPUT_ANCHOR_ID = "gd-gen-ai-input";
 
 /**
  * UI component that renders the Gen AI chat.
@@ -57,6 +58,11 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
         initializing: initializing || checking,
         loadThread,
         cancelLoading,
+    });
+
+    const { targetRef } = useKeyboardNavigationTarget({
+        navigationId: GEN_AI_INPUT_ANCHOR_ID,
+        tabIndex: -1,
     });
 
     const onSettingClick = useCallback(
@@ -105,8 +111,10 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
     return (
         <ErrorBoundary>
             <div className="gd-gen-ai-chat">
+                <NavigationBypass />
                 <Messages />
                 <Input
+                    targetRef={targetRef}
                     autofocus={autofocus}
                     catalogItems={catalogItems}
                     canManage={canManage}
@@ -117,6 +125,23 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
                 </Typography>
             </div>
         </ErrorBoundary>
+    );
+};
+
+const NavigationBypass: React.FC = () => {
+    const intl = useIntl();
+    const bypassBlocks = [
+        {
+            id: "skip-to-ask-question",
+            name: intl.formatMessage({ id: "gd.gen-ai.skip-messages-history" }),
+            targetId: GEN_AI_INPUT_ANCHOR_ID,
+        },
+    ];
+    return (
+        <UiNavigationBypass
+            label={intl.formatMessage({ id: "gd.gen-ai.skip-navigation" })}
+            items={bypassBlocks}
+        />
     );
 };
 

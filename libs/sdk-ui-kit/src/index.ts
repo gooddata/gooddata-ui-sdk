@@ -205,8 +205,16 @@ export {
     modifierNegator,
 } from "./@ui/@utils/keyboardNavigation.js";
 export type { IHandleActionOptions, IModifier } from "./@ui/@utils/keyboardNavigation.js";
+export { useKeyboardNavigationTarget } from "./@ui/@utils/useKeyboardNavigationTarget.js";
+export type { IUseKeyboardNavigationTargetProps } from "./@ui/@utils/useKeyboardNavigationTarget.js";
 
 export {
     useListWithActionsKeyboardNavigation,
     SELECT_ITEM_ACTION,
 } from "./@ui/hooks/useListWithActionsKeyboardNavigation.js";
+
+export { UiNavigationBypass } from "./@ui/UiNavigationBypass/UiNavigationBypass.js";
+export type {
+    IUiNavigationBypassProps,
+    IUiNavigationItem,
+} from "./@ui/UiNavigationBypass/UiNavigationBypass.js";

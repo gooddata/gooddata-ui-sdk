@@ -47,7 +47,13 @@ const isMac =
     typeof navigator !== "undefined" &&
     (navigator.platform.toUpperCase().indexOf("MAC") >= 0 || navigator.userAgent.includes("Macintosh"));
 
-const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedComponentProps> = ({
+const InputComponent: React.FC<
+    InputStateProps &
+        InputDispatchProps &
+        WrappedComponentProps & {
+            targetRef?: React.LegacyRef<HTMLDivElement>;
+        }
+> = ({
     isBusy,
     isEvaluating,
     newMessage,
@@ -56,6 +62,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     catalogItems,
     canManage,
     canAnalyze,
+    targetRef,
 }) => {
     const [value, setValue] = useState("");
     const [editorApi, setApi] = useState<EditorView | null>(null);
@@ -113,6 +120,12 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
                 focused,
             })}
         >
+            <div
+                ref={targetRef}
+                onFocus={() => {
+                    editorApi?.focus();
+                }}
+            />
             <div
                 className={cx("gd-gen-ai-chat__input__info", {
                     hidden: !focused,
