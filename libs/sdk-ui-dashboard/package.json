@@ -29,6 +29,7 @@
         "esm/**/*.d.ts",
         "esm/**/*.map",
         "esm/**/*.svg",
+        "esm/**/*.gif",
         "styles",
         "NOTICE"
     ],
