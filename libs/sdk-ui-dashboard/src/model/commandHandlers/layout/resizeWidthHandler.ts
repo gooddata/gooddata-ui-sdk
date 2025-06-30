@@ -2,15 +2,16 @@
 
 import {
     IWidget,
-    IDashboardLayoutContainerDirection,
-    IDashboardLayout,
     isDashboardLayout,
+    ScreenSize,
+    IDashboardLayout,
+    IDashboardLayoutContainerDirection,
 } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { put, select, call } from "redux-saga/effects";
+
 import { ResizeWidth } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-
 import { determineWidthForScreen, getMinWidth } from "../../../_staging/layout/sizing.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { layoutActions } from "../../store/layout/index.js";
@@ -30,11 +31,13 @@ import {
     getItemIndex,
     getParentPath,
 } from "../../../_staging/layout/coordinates.js";
-import { resizeParentContainers } from "./containerHeightSanitization.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
-import { ILayoutItemPath } from "../../../types.js";
+import { getContainerDirectionAtPath } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
-import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { ILayoutItemPath } from "../../../types.js";
+
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { getChildWidgetLayoutPaths, getUpdatedSizesOnly } from "./containerWidthSanitization.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,
@@ -86,6 +89,38 @@ function validateLayoutIndexes(
     }
 }
 
+function mapNestedItemsToNewWidth(
+    layout: IDashboardLayout<ExtendedDashboardWidget>,
+    parentLayoutDirection: IDashboardLayoutContainerDirection,
+    itemPath: ILayoutItemPath,
+    newItemWidth: number,
+) {
+    const modifiedItem = findItem(layout, itemPath);
+    if (parentLayoutDirection === "column" && isDashboardLayout(modifiedItem.widget)) {
+        const childLayoutPaths = getChildWidgetLayoutPaths(modifiedItem.widget, itemPath);
+        return childLayoutPaths.map((itemPath) => ({ itemPath, width: newItemWidth }));
+    }
+    return [];
+}
+
+function findItemsWithChangedWidth(
+    layout: IDashboardLayout<ExtendedDashboardWidget>,
+    parentLayoutDirection: IDashboardLayoutContainerDirection,
+    itemPath: ILayoutItemPath,
+    newItemWidth: number,
+    screen: ScreenSize,
+) {
+    const nestedItemsWithNewWidth = mapNestedItemsToNewWidth(
+        layout,
+        parentLayoutDirection,
+        itemPath,
+        newItemWidth,
+    );
+    const itemWithNewWidth = { itemPath, width: newItemWidth };
+    const allItemsWithNewWidth = [itemWithNewWidth, ...nestedItemsWithNewWidth];
+    return getUpdatedSizesOnly(layout, allItemsWithNewWidth, screen);
+}
+
 export function* resizeWidthHandler(
     ctx: DashboardContext,
     cmd: ResizeWidth,
@@ -102,41 +137,35 @@ export function* resizeWidthHandler(
     validateLayoutIndexes(ctx, layout, cmd);
     validateWidth(ctx, layout, insightsMap, cmd, settings, screen);
 
-    const layoutPath = itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
-
-    yield put(
-        layoutActions.changeItemWidth({
-            layoutPath,
-            width,
-        }),
+    const parentLayoutDirection = getContainerDirectionAtPath(layout, itemPath);
+    const itemLayoutPath = itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
+    const itemsWithChangedWidth = findItemsWithChangedWidth(
+        layout,
+        parentLayoutDirection,
+        itemLayoutPath,
+        width,
+        screen,
     );
 
-    yield call(resizeParentContainers, getParentPath(layoutPath));
+    if (itemsWithChangedWidth.length > 0) {
+        yield put(
+            layoutActions.updateWidthOfMultipleItems({
+                itemsWithSizes: itemsWithChangedWidth,
+            }),
+        );
+    }
+
+    yield call(resizeParentContainers, getParentPath(itemLayoutPath));
 
     return layoutSectionItemWidthResized(
         ctx,
-        getSectionIndex(layoutPath),
-        getItemIndex(layoutPath),
-        layoutPath,
+        getSectionIndex(itemLayoutPath),
+        getItemIndex(itemLayoutPath),
+        itemLayoutPath,
         width,
         cmd.correlationId,
     );
 }
-
-const getContainerDirection = (
-    layout: IDashboardLayout<ExtendedDashboardWidget>,
-    itemPath: ILayoutItemPath | undefined,
-): IDashboardLayoutContainerDirection => {
-    if (itemPath === undefined) {
-        return "row"; // compatibility with the old layout or when there is no parent
-    }
-    const parent = findItem(layout, itemPath);
-    if (!isDashboardLayout(parent.widget)) {
-        return "row"; // return row in the case when we are not resizing a layout
-    }
-    const { direction } = getLayoutConfiguration(parent.widget);
-    return direction;
-};
 
 function validateWidth(
     ctx: DashboardContext,
@@ -155,7 +184,7 @@ function validateWidth(
             ? (layout.sections[sectionIndex].items[itemIndex].widget as IWidget)
             : (findItem(layout, itemPath).widget as IWidget);
 
-    const direction = getContainerDirection(layout, itemPath);
+    const direction = getContainerDirectionAtPath(layout, itemPath);
     const minLimit = getMinWidth(widget, insightsMap, screen, settings, direction);
     const parent =
         itemPath !== undefined && itemPath.slice(0, -1).length > 0 && findItem(layout, itemPath.slice(0, -1));

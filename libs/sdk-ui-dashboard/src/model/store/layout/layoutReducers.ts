@@ -46,6 +46,7 @@ import {
     StashedDashboardItemsId,
     isCustomWidget,
     IItemWithHeight,
+    IItemWithWidth,
 } from "../../types/layoutTypes.js";
 import { addArrayElements, removeArrayElement } from "../../utils/arrayOps.js";
 
@@ -268,6 +269,33 @@ const updateHeightOfMultipleItems: LayoutReducer<updateHeightOfMultipleItemsActi
             xl: {
                 ...item.size.xl,
                 gridHeight: height,
+            },
+        };
+    });
+};
+
+type updateWidthOfMultipleItemsActionPayload = {
+    itemsWithSizes: IItemWithWidth[];
+};
+
+const updateWidthOfMultipleItems: LayoutReducer<updateWidthOfMultipleItemsActionPayload> = (
+    state,
+    action,
+) => {
+    invariant(state.layout);
+    const rootLayout = state.layout;
+    const { itemsWithSizes } = action.payload;
+
+    itemsWithSizes.forEach(({ itemPath, width }) => {
+        const item = findItem(rootLayout, itemPath);
+        if (isCustomWidget(item.widget)) {
+            return;
+        }
+        item.size = {
+            ...item.size,
+            xl: {
+                ...item.size.xl,
+                gridWidth: width,
             },
         };
     });
@@ -1020,4 +1048,5 @@ export const layoutReducers = {
     toggleLayoutSectionHeaders: withUndo(toggleLayoutSectionHeaders),
     toggleLayoutDirection: withUndo(toggleLayoutDirection),
     updateHeightOfMultipleItems,
+    updateWidthOfMultipleItems,
 };

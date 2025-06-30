@@ -200,7 +200,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
 
     if (!isValid) {
         console.error(
-            `DashboardLayoutWidget: Widget ID: ${widget.identifier} has width set to ${currentSize.gridWidth} which is bigger than the parent container's width ${parentWidth}!`,
+            `DashboardLayoutWidget: Widget ID: ${widget.identifier} has width set to ${currentSize.gridWidth} which is bigger than the parent container's width ${parentWidth} or parent container has a column direction set and the widget width is smaller than the parent!`,
         );
     }
 
