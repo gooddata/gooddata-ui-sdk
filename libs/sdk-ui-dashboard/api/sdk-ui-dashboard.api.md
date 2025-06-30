@@ -7227,7 +7227,7 @@ export interface MoveSectionItemToNewSectionPayload {
 }
 
 // @beta (undocumented)
-export type NestedLayoutInteractionType = "nestedLayoutDirectionColumn" | "nestedLayoutDirectionRow" | "nestedLayoutRemoved" | "nestedLayoutHeaderEnabled" | "nestedLayoutHeaderDisabled";
+export type NestedLayoutInteractionType = "nestedLayoutDirectionColumn" | "nestedLayoutDirectionRow" | "nestedLayoutRemoved" | "nestedLayoutHeaderEnabled" | "nestedLayoutHeaderDisabled" | "nestedLayoutDirectionConfigurationOpened" | "nestedLayoutDirectionConfigurationClosed";
 
 // @public
 export function newCustomWidget<TExtra = void>(identifier: string, customType: string, extras?: TExtra & Partial<IFilterableWidget>): TExtra & ICustomWidget;

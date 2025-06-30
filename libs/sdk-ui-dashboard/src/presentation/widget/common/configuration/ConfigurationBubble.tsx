@@ -13,11 +13,12 @@ import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../constants/index
 import { useDashboardSelector, selectEnableFlexibleLayout } from "../../../../model/index.js";
 
 interface IConfigurationBubbleProps {
+    id?: string;
     classNames?: string;
     onClose?: () => void;
     closeOnEscape?: boolean;
     children?: React.ReactNode;
-    alignTo?: string;
+    alignTo: string | HTMLElement | null;
     alignPoints?: IAlignPoint[];
     arrowOffsets?: ArrowOffsets;
     overlayPositionType?: OverlayPositionType;
@@ -55,17 +56,22 @@ export const defaultArrowDirections: ArrowDirections = {
 
 export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) => {
     const {
+        id,
         children,
         classNames,
         onClose,
         closeOnEscape,
-        alignTo = ".s-dash-item.is-selected",
+        alignTo,
         alignPoints = defaultAlignPoints,
         arrowOffsets,
         overlayPositionType,
         arrowDirections = defaultArrowDirections,
     } = props;
-    const ignoreClicksOnByClass = [alignTo, `.${IGNORED_CONFIGURATION_MENU_CLICK_CLASS}`]; // do not close on click to the widget
+
+    // do not close on click to the widget
+    const ignoredClassSelector = `.${IGNORED_CONFIGURATION_MENU_CLICK_CLASS}`;
+    const ignoreClicksOnByClass =
+        typeof alignTo === "string" ? [alignTo, ignoredClassSelector] : [ignoredClassSelector];
 
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     const bubbleArrowOffsets =
@@ -77,6 +83,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
 
     return (
         <Bubble
+            id={id}
             className={cx("bubble-light gd-configuration-bubble s-gd-configuration-bubble", classNames)}
             overlayClassName="gd-configuration-bubble-wrapper sdk-edit-mode-on"
             alignTo={alignTo}

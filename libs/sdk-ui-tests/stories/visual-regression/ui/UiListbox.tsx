@@ -1,13 +1,12 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-
+import noop from "lodash/noop.js";
 import { UiListbox, separatorStaticItem, IUiListboxItem } from "@gooddata/sdk-ui-kit";
 
 import { storiesOf } from "../../_infra/storyRepository.js";
 import { UiStories } from "../../_infra/storyGroups.js";
 import { wrapWithTheme } from "../themeWrapper.js";
-import noop from "lodash/noop.js";
 
 // Mock items for the listbox
 const interactiveItems: IUiListboxItem<string>[] = [
@@ -15,6 +14,19 @@ const interactiveItems: IUiListboxItem<string>[] = [
     { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
     { type: "interactive", id: "item3", stringTitle: "Item 3", isDisabled: true, data: "data3" },
     { type: "interactive", id: "item4", stringTitle: "Item 4", data: "data4" },
+];
+
+const interactiveItemsWithIcons: IUiListboxItem<string>[] = [
+    { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1", icon: "trash" },
+    { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2", icon: "folder" },
+    {
+        type: "interactive",
+        id: "item3",
+        stringTitle: "Item 3",
+        isDisabled: true,
+        data: "data3",
+        icon: "book",
+    },
 ];
 
 const mixedItems: IUiListboxItem<string, React.ReactNode>[] = [
@@ -72,6 +84,23 @@ const UiListboxExamples = () => (
                 items={interactiveItems}
                 maxWidth={150}
                 onSelect={noop}
+                ariaAttributes={defaultAriaAttributes}
+            />
+        </Example>
+
+        <Example title="Listbox with Icons">
+            <UiListbox
+                items={interactiveItemsWithIcons}
+                onSelect={noop}
+                ariaAttributes={defaultAriaAttributes}
+            />
+        </Example>
+
+        <Example title="Compact Listbox">
+            <UiListbox
+                items={interactiveItemsWithIcons}
+                onSelect={noop}
+                isCompact={true}
                 ariaAttributes={defaultAriaAttributes}
             />
         </Example>
