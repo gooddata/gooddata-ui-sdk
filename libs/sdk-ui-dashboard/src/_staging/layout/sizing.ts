@@ -327,21 +327,15 @@ function getVisSwitcherDimension(
 
 function getMaximumItemDefaultWidth(
     item: IDashboardLayoutItem<ExtendedDashboardWidget>,
-    parentContainerDirection: IDashboardLayoutContainerDirection,
     screen: ScreenSize,
     settings: ISettings,
     insightMap: ObjRefMap<IInsight>,
 ): number {
     const widget = item.widget!;
     if (isDashboardLayout(widget)) {
-        return parentContainerDirection === "column"
-            ? getMaximumDefaultWidthOfRecursiveLayoutItems(
-                  widget,
-                  getLayoutConfiguration(widget).direction,
-                  screen,
-                  insightMap,
-                  settings,
-              )
+        const direction = getLayoutConfiguration(widget).direction;
+        return direction === "column"
+            ? getMaximumDefaultWidthOfRecursiveLayoutItems(widget, screen, insightMap, settings)
             : determineWidthForScreen(screen, item.size);
     } else {
         return getDashboardLayoutWidgetMinGridWidth(
@@ -358,14 +352,12 @@ function getMaximumItemDefaultWidth(
  * the function goes into the container and processes its children. If the container has the direction set
  * to rows, the function does not go into the container and instead takes its width.
  * @param container - container we are interested in
- * @param direction - direction of the parent container
  * @param screen - the current screen size
  * @param insightMap - map of insights, used to get their type and subsequently its dimensions
  * @param settings - settings to determine the current feature flags
  */
 function getMaximumDefaultWidthOfRecursiveLayoutItems(
     container: IDashboardLayout<ExtendedDashboardWidget>,
-    direction: IDashboardLayoutContainerDirection,
     screen: ScreenSize,
     insightMap: ObjRefMap<IInsight>,
     settings: ISettings,
@@ -373,7 +365,7 @@ function getMaximumDefaultWidthOfRecursiveLayoutItems(
     return container.sections
         .flatMap((section) => section.items)
         .filter((item) => item.widget)
-        .map((item) => getMaximumItemDefaultWidth(item, direction, screen, settings, insightMap))
+        .map((item) => getMaximumItemDefaultWidth(item, screen, settings, insightMap))
         .reduce((maxWidth, itemWidth) => Math.max(maxWidth, itemWidth), 0);
 }
 
@@ -421,7 +413,7 @@ export function getMinWidth(
     } else if (isDashboardLayout(widget)) {
         const emptyLayoutMinWidth = getDashboardLayoutWidgetMinGridWidth(settings, widget.type);
         return direction === "column"
-            ? getMaximumDefaultWidthOfRecursiveLayoutItems(widget, direction, screen, insightMap, settings)
+            ? getMaximumDefaultWidthOfRecursiveLayoutItems(widget, screen, insightMap, settings)
             : getMaximumCurrentWidthOfTopLevelLayoutItems(widget, screen, emptyLayoutMinWidth);
     }
     return getDashboardLayoutWidgetMinGridWidth(

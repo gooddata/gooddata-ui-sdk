@@ -318,3 +318,13 @@ export interface IItemWithHeight {
     itemPath: ILayoutItemPath;
     height: number;
 }
+
+/**
+ * Item with its width
+ *
+ * @internal
+ */
+export interface IItemWithWidth {
+    itemPath: ILayoutItemPath;
+    width: number;
+}
