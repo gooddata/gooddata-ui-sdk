@@ -75,7 +75,7 @@
         "limit": 0
     },
     "gd.gen-ai.dialog.label": {
-        "value": "AI assistant chatbot dialog",
+        "value": "AI assistant conversation",
         "comment": "",
         "limit": 0
     },
@@ -266,6 +266,16 @@
     },
     "gd.gen-ai.message.label.assistant": {
         "value": "Bot:",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.skip-messages-history": {
+        "value": "Skip to AI assistant input",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.skip-navigation": {
+        "value": "Skip navigation",
         "comment": "",
         "limit": 0
     }

@@ -5103,6 +5103,28 @@ export interface IUiMenuStaticItemProps<T extends IUiMenuItemData = object> {
 }
 
 // @internal (undocumented)
+export interface IUiNavigationBypassProps {
+    // (undocumented)
+    items: IUiNavigationItem[];
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onItemClick?: (item: IUiNavigationItem) => void;
+}
+
+// @internal (undocumented)
+export interface IUiNavigationItem {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    tabIndex?: number;
+    // (undocumented)
+    targetId: string;
+}
+
+// @internal (undocumented)
 export interface IUiReturnFocusOnUnmountOptions {
     // (undocumented)
     returnFocusTo?: string | React_2.RefObject<HTMLElement>;
@@ -5112,6 +5134,18 @@ export interface IUiReturnFocusOnUnmountOptions {
 export interface IUiSettings {
     // (undocumented)
     displayAccountPage: boolean;
+}
+
+// @internal (undocumented)
+export interface IUseKeyboardNavigationTargetProps {
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    navigationId: string;
+    // (undocumented)
+    onFocus?: () => void;
+    // (undocumented)
+    tabIndex?: number;
 }
 
 // @internal (undocumented)
@@ -6101,6 +6135,9 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> ext
 }
 
 // @internal (undocumented)
+export const UiNavigationBypass: React_2.FC<IUiNavigationBypassProps>;
+
+// @internal (undocumented)
 export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
@@ -6267,6 +6304,11 @@ export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInvert
 
 // @internal
 export const useIsZoomed: (baseZoomLevel?: number) => boolean;
+
+// @internal (undocumented)
+export const useKeyboardNavigationTarget: ({ navigationId, label, tabIndex, onFocus, }: IUseKeyboardNavigationTargetProps) => {
+    targetRef: (node: HTMLElement | null) => void;
+};
 
 // @internal (undocumented)
 export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, focusedIndex: focusedIndexProp, }: {

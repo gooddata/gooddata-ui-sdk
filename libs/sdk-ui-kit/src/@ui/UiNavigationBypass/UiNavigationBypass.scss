@@ -1,0 +1,52 @@
+// (C) 2025 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+
+$navigation-bypass-z-index: 1000;
+$navigation-bypass-top: 10px;
+$navigation-bypass-left: -10000px;
+$navigation-bypass-left-focused: 10px;
+$navigation-bypass-padding: 6px;
+$navigation-bypass-border-radius: 3px;
+$navigation-bypass-box-shadow: 0 2px 20px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2));
+
+$navigation-bypass-item-gap: 10px;
+$navigation-bypass-item-padding: 5px;
+$navigation-bypass-item-font-size: 12px;
+$navigation-bypass-item-line-height: 18px;
+
+.gd-ui-kit-navigation-bypass {
+    position: relative;
+
+    &__dropdown {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        z-index: $navigation-bypass-z-index;
+        top: $navigation-bypass-top;
+        left: $navigation-bypass-left;
+        margin: 0;
+        padding: $navigation-bypass-padding 0;
+        border-radius: $navigation-bypass-border-radius;
+        box-shadow: $navigation-bypass-box-shadow;
+        background: variables.$gd-color-light;
+
+        &--isFocused {
+            left: $navigation-bypass-left-focused;
+        }
+    }
+
+    &__dropdown-item {
+        display: flex;
+        align-items: center;
+        align-self: stretch;
+        font-style: normal;
+        font-weight: 400;
+        gap: $navigation-bypass-item-gap;
+        padding: $navigation-bypass-item-padding $navigation-bypass-item-gap;
+        font-size: $navigation-bypass-item-font-size;
+        line-height: $navigation-bypass-item-line-height;
+        color: variables.$gd-color-text;
+    }
+}
