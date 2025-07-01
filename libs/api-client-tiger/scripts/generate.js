@@ -64,7 +64,8 @@ const specs = [
     {
         path: "/api/v1/schemas/export",
         name: "export-json-api",
-        // modelNamePrefix: "Export" // we should consider prefixing in next major, due to lot of name clashes
+        modelNamePrefix: "Export",
+        apiNameSuffix: "Export",
     },
     {
         path: "/api/v1/schemas/result",

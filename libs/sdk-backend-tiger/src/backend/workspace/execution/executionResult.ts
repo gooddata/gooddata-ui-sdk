@@ -4,7 +4,7 @@ import {
     ITigerClient,
     AfmExecutionResponse,
     ExecutionResult,
-    ActionsApiGetTabularExportRequest,
+    ActionsExportGetTabularExportRequest,
     TabularExportRequest,
     TabularExportRequestFormatEnum,
     Settings,
@@ -279,7 +279,7 @@ export class TigerExecutionResult implements IExecutionResult {
         return this.authCall(async (client) => {
             const tabularExport = await client.export.createTabularExport({
                 workspaceId: this.workspace,
-                tabularExportRequest: payload,
+                exportTabularExportRequest: payload,
             });
 
             return await this.handleExportResultPolling(
@@ -322,7 +322,7 @@ export class TigerExecutionResult implements IExecutionResult {
 
     private async handleExportResultPolling(
         client: ITigerClient,
-        payload: ActionsApiGetTabularExportRequest,
+        payload: ActionsExportGetTabularExportRequest,
         format: TabularExportRequestFormatEnum,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {

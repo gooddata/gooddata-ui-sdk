@@ -476,6 +476,13 @@
                             "$ref": "#/components/schemas/AutomationSlidesExport"
                         }
                     },
+                    "dashboardTabularExports": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AutomationDashboardTabularExport"
+                        }
+                    },
                     "externalRecipients": {
                         "uniqueItems": true,
                         "type": "array",
@@ -750,6 +757,45 @@
                 },
                 "description": "Metric representing arithmetics between other metrics."
             },
+            "AttributeElements": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AttributeElementsByRef"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AttributeElementsByValue"
+                    }
+                ]
+            },
+            "AttributeElementsByRef": {
+                "required": ["uris"],
+                "type": "object",
+                "properties": {
+                    "uris": {
+                        "type": "array",
+                        "description": "List of attribute elements by reference",
+                        "items": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                }
+            },
+            "AttributeElementsByValue": {
+                "required": ["values"],
+                "type": "object",
+                "properties": {
+                    "values": {
+                        "type": "array",
+                        "description": "List of attribute elements by value",
+                        "items": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                }
+            },
             "AttributeFilter": {
                 "type": "object",
                 "description": "Abstract filter definition type attributes",
@@ -761,6 +807,18 @@
                         "$ref": "#/components/schemas/PositiveAttributeFilter"
                     }
                 ]
+            },
+            "AttributeFilterByDate": {
+                "required": ["filterLocalIdentifier", "isCommonDate"],
+                "type": "object",
+                "properties": {
+                    "filterLocalIdentifier": {
+                        "type": "string"
+                    },
+                    "isCommonDate": {
+                        "type": "boolean"
+                    }
+                }
             },
             "AttributeFilterElements": {
                 "required": ["values"],
@@ -778,6 +836,18 @@
                     }
                 },
                 "description": "Filter on specific set of label values."
+            },
+            "AttributeFilterParent": {
+                "required": ["filterLocalIdentifier", "over"],
+                "type": "object",
+                "properties": {
+                    "filterLocalIdentifier": {
+                        "type": "string"
+                    },
+                    "over": {
+                        "$ref": "#/components/schemas/Over"
+                    }
+                }
             },
             "AttributeItem": {
                 "required": ["label", "localIdentifier"],
@@ -824,6 +894,15 @@
                         "description": "Trigger behavior for the alert.\nALWAYS - alert is triggered every time the condition is met.\nONCE - alert is triggered only once when the condition is met.\n",
                         "default": "ALWAYS",
                         "enum": ["ALWAYS", "ONCE"]
+                    }
+                }
+            },
+            "AutomationDashboardTabularExport": {
+                "required": ["requestPayload"],
+                "type": "object",
+                "properties": {
+                    "requestPayload": {
+                        "$ref": "#/components/schemas/DashboardTabularExportRequestV2"
                     }
                 }
             },
@@ -1028,6 +1107,201 @@
                 },
                 "description": "Custom cell value overrides (IDs will be replaced with specified values)."
             },
+            "DashboardAttributeFilter": {
+                "required": ["attributeFilter"],
+                "type": "object",
+                "properties": {
+                    "attributeFilter": {
+                        "required": ["attributeElements", "displayForm", "negativeSelection"],
+                        "type": "object",
+                        "properties": {
+                            "displayForm": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "negativeSelection": {
+                                "type": "boolean"
+                            },
+                            "attributeElements": {
+                                "$ref": "#/components/schemas/AttributeElements"
+                            },
+                            "filterElementsBy": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/AttributeFilterParent"
+                                }
+                            },
+                            "filterElementsByDate": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/AttributeFilterByDate"
+                                }
+                            },
+                            "validateElementsBy": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/IdentifierRef"
+                                }
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "selectionMode": {
+                                "type": "string",
+                                "enum": ["single", "multi"]
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "DashboardDateFilter": {
+                "required": ["dateFilter"],
+                "type": "object",
+                "properties": {
+                    "dateFilter": {
+                        "required": ["granularity", "type"],
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["relative", "absolute"]
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "ALL_TIME_GRANULARITY",
+                                    "GDC.time.year",
+                                    "GDC.time.week_us",
+                                    "GDC.time.week_in_year",
+                                    "GDC.time.week_in_quarter",
+                                    "GDC.time.week",
+                                    "GDC.time.euweek_in_year",
+                                    "GDC.time.euweek_in_quarter",
+                                    "GDC.time.quarter",
+                                    "GDC.time.quarter_in_year",
+                                    "GDC.time.month",
+                                    "GDC.time.month_in_quarter",
+                                    "GDC.time.month_in_year",
+                                    "GDC.time.day_in_year",
+                                    "GDC.time.day_in_quarter",
+                                    "GDC.time.day_in_month",
+                                    "GDC.time.day_in_week",
+                                    "GDC.time.day_in_euweek",
+                                    "GDC.time.date",
+                                    "GDC.time.hour",
+                                    "GDC.time.hour_in_day",
+                                    "GDC.time.minute",
+                                    "GDC.time.minute_in_hour"
+                                ]
+                            },
+                            "from": {
+                                "oneOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                ]
+                            },
+                            "to": {
+                                "oneOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                ]
+                            },
+                            "dataSet": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "attribute": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "DashboardExportSettings": {
+                "type": "object",
+                "properties": {
+                    "exportInfo": {
+                        "type": "boolean",
+                        "description": "If true, the export will contain the information about the exported date and dashboard filters.",
+                        "example": true,
+                        "default": false
+                    },
+                    "mergeHeaders": {
+                        "type": "boolean",
+                        "description": "Merge equal headers in neighbouring cells. Used for [XLSX] format only.",
+                        "example": true,
+                        "default": false
+                    }
+                },
+                "description": "Additional settings."
+            },
+            "DashboardFilter": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/DashboardAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DashboardDateFilter"
+                    }
+                ]
+            },
+            "DashboardTabularExportRequestV2": {
+                "required": ["dashboardId", "fileName", "format"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Requested tabular export type.",
+                        "example": "XLSX",
+                        "enum": ["XLSX"]
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "Filename of downloaded file without extension.",
+                        "example": "result"
+                    },
+                    "dashboardFiltersOverride": {
+                        "type": "array",
+                        "description": "List of filters that will be used instead of the default dashboard filters.",
+                        "items": {
+                            "$ref": "#/components/schemas/DashboardFilter"
+                        }
+                    },
+                    "dashboardId": {
+                        "type": "string",
+                        "description": "Dashboard identifier",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
+                    },
+                    "widgetIds": {
+                        "maxItems": 1,
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "List of widget identifiers to be exported. Note that only one widget is currently supported.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "settings": {
+                        "$ref": "#/components/schemas/DashboardExportSettings"
+                    }
+                },
+                "description": "Export request object describing the export properties for dashboard tabular exports (v2 with dashboardId)."
+            },
             "DateFilter": {
                 "type": "object",
                 "description": "Abstract filter definition type for dates.",
@@ -1039,6 +1313,15 @@
                         "$ref": "#/components/schemas/RelativeDateFilter"
                     }
                 ]
+            },
+            "DateValue": {
+                "required": ["value"],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                }
             },
             "DeclarativeAnalyticalDashboardIdentifier": {
                 "required": ["id", "type"],
@@ -1158,6 +1441,44 @@
                         "$ref": "#/components/schemas/AttributeFilter"
                     }
                 ]
+            },
+            "IdentifierRef": {
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": ["id", "type"],
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "analyticalDashboard",
+                                    "attribute",
+                                    "attributeHierarchy",
+                                    "dashboardPlugin",
+                                    "dataset",
+                                    "fact",
+                                    "label",
+                                    "metric",
+                                    "userDataFilter",
+                                    "exportDefinition",
+                                    "automation",
+                                    "prompt",
+                                    "visualizationObject",
+                                    "filterContext",
+                                    "workspaceSettings",
+                                    "customApplicationSetting",
+                                    "workspaceDataFilter",
+                                    "workspaceDataFilterSetting",
+                                    "filterView"
+                                ]
+                            }
+                        }
+                    }
+                }
             },
             "ImageExportRequest": {
                 "required": ["dashboardId", "fileName", "format", "widgetIds"],
@@ -1359,6 +1680,18 @@
                     }
                 },
                 "description": "Filter able to limit element values by label and related selected negated elements."
+            },
+            "Over": {
+                "required": ["attributes"],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/IdentifierRef"
+                        }
+                    }
+                }
             },
             "PdfTableStyle": {
                 "required": ["selector"],
@@ -2519,7 +2852,8 @@
                 "type": "object",
                 "properties": {
                     "timestamp": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "data": {
                         "$ref": "#/components/schemas/WebhookMessageData"
@@ -2578,6 +2912,12 @@
                         }
                     },
                     "slidesExports": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ExportResult"
+                        }
+                    },
+                    "dashboardTabularExports": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/ExportResult"

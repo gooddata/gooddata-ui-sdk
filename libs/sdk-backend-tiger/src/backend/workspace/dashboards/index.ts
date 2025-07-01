@@ -13,14 +13,14 @@ import {
     ITigerClient,
     JsonApiFilterViewOutDocument,
     isDataSetItem,
-    RawExportActionsRequest,
-    AfmExport,
-    ActionsApiGetExportedFileRequest,
-    ActionsApiGetRawExportRequest,
-    ActionsApiGetSlidesExportRequest,
-    ActionsApiGetTabularExportRequest,
-    ActionsApiGetImageExportRequest,
+    ActionsExportGetExportedFileRequest,
+    ActionsExportGetRawExportRequest,
+    ActionsExportGetSlidesExportRequest,
+    ActionsExportGetTabularExportRequest,
+    ActionsExportGetImageExportRequest,
     ImageExportRequest,
+    ExportRawExportRequest,
+    ExportAFM,
 } from "@gooddata/api-client-tiger";
 import {
     IExportResult,
@@ -468,7 +468,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             };
             const pdfExport = await client.export.createPdfExport({
                 workspaceId: this.workspace,
-                visualExportRequest,
+                exportVisualExportRequest: visualExportRequest,
             });
 
             return await this.handleExportResultPolling(client, "application/pdf", {
@@ -519,7 +519,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             };
             const slideshowExport = await client.export.createSlidesExport({
                 workspaceId: this.workspace,
-                slidesExportRequest,
+                exportSlidesExportRequest: slidesExportRequest,
             });
 
             return await this.handleExportSlidesResultPolling(
@@ -562,8 +562,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 ? { dashboardFiltersOverride: cloneWithSanitizedIds(options?.dashboardFiltersOverride) }
                 : {};
 
-            const slideshowExport = await client.export.createDashboardExportRequest({
-                dashboardTabularExportRequest: {
+            const tabularExport = await client.export.createDashboardExportRequest({
+                exportDashboardTabularExportRequest: {
                     fileName: title || "export",
                     format: "XLSX",
                     settings: {
@@ -582,7 +582,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 {
                     workspaceId: this.workspace,
-                    exportId: slideshowExport?.data?.exportResult,
+                    exportId: tabularExport?.data?.exportResult,
                 },
             );
         });
@@ -594,9 +594,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         customOverrides?: IRawExportCustomOverrides,
     ): Promise<IExportResult> => {
         const execution = toAfmExecution(definition);
-        const payload: RawExportActionsRequest = {
+        const payload: ExportRawExportRequest = {
             format: "CSV",
-            execution: execution.execution as AfmExport,
+            execution: execution.execution as ExportAFM,
             fileName: filename,
             executionSettings: execution.settings,
             customOverride: !isEmpty(customOverrides)
@@ -610,7 +610,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         return this.authCall(async (client) => {
             const rawExport = await client.export.createRawExport({
                 workspaceId: this.workspace,
-                rawExportRequest: payload,
+                exportRawExportRequest: payload,
             });
 
             return await this.handleExportRawResultPolling(client, {
@@ -623,7 +623,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private async handleExportResultPolling(
         client: ITigerClient,
         type: "application/pdf",
-        payload: ActionsApiGetExportedFileRequest,
+        payload: ActionsExportGetExportedFileRequest,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getExportedFile(payload, {
@@ -651,7 +651,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private async handleExportSlidesResultPolling(
         client: ITigerClient,
         type: "application/pdf" | "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation",
-        payload: ActionsApiGetSlidesExportRequest,
+        payload: ActionsExportGetSlidesExportRequest,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getSlidesExport(payload, {
@@ -679,7 +679,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private async handleExportTabularResultPolling(
         client: ITigerClient,
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        payload: ActionsApiGetTabularExportRequest,
+        payload: ActionsExportGetTabularExportRequest,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getTabularExport(payload, {
@@ -706,7 +706,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     private async handleExportRawResultPolling(
         client: ITigerClient,
-        payload: ActionsApiGetRawExportRequest,
+        payload: ActionsExportGetRawExportRequest,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getRawExport(payload, {
@@ -735,7 +735,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private async handleExportImageResultPolling(
         client: ITigerClient,
         type: "image/png",
-        payload: ActionsApiGetImageExportRequest,
+        payload: ActionsExportGetImageExportRequest,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getImageExport(payload, {
@@ -791,7 +791,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
             const imageExport = await client.export.createImageExport({
                 workspaceId: this.workspace,
-                imageExportRequest,
+                exportImageExportRequest: imageExportRequest,
             });
 
             return await this.handleExportImageResultPolling(client, "image/png", {
