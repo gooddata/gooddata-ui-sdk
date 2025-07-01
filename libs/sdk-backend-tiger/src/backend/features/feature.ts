@@ -795,13 +795,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDestinationTestRecipient,
-            "enableDestinationTestRecipient",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDestinationTestRecipient,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableDashboardFiltersApplyWithoutLoading,
             "enableDashboardFiltersApplyWithoutLoading",
             "BOOLEAN",

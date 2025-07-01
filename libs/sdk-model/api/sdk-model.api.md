@@ -3437,6 +3437,7 @@ export interface ISettings {
     enableCustomColorPicker?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFiltersApplyModes?: boolean;
+    enableDashboardFiltersApplyWithoutLoading?: boolean;
     enableDashboardFilterViews?: boolean;
     enableDashboardFlexibleLayout?: boolean;
     enableDashboardFlexibleLayoutContainer?: boolean;
@@ -3450,7 +3451,6 @@ export interface ISettings {
     enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
     enableDestinationTesting?: boolean;
-    enableDestinationTestRecipient?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDrilledTooltip?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
