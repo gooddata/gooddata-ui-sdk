@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { program } from "commander";
 
@@ -46,6 +46,7 @@ program
     .option("-h, --html", "enable html check")
     .option("-r, --insightToReport", "enable insightToReport check")
     .option("-u, --usage", "enable usage of messages check")
+    .option("-m, --comments", "enable comment validation check")
     .option("-d, --debug", "enable debug mode")
     .action(async (opts: ToolkitOptions) => {
         const cwd = opts.cwd || process.cwd();

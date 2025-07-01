@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 export const DefaultLocale = "en-US.json";
 
@@ -17,6 +17,7 @@ export type ToolkitOptions = {
     html?: boolean;
     insightToReport?: boolean;
     usage?: boolean;
+    comments?: boolean;
     debug?: boolean;
 };
 
