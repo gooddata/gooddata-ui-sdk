@@ -1,8 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ISemanticSearchResultItem, ITheme } from "@gooddata/sdk-model";
 import { IIconProps, Icon, InsightIcon } from "@gooddata/sdk-ui-kit";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { ListItem } from "../types.js";
 
 /**
@@ -11,23 +11,63 @@ import { ListItem } from "../types.js";
 export const renderItemIcon = ({ item }: ListItem<ISemanticSearchResultItem>, theme?: ITheme) => {
     const props: IIconProps = { color: theme?.palette?.complementary?.c5 ?? "#B0BECA" };
 
+    const Wrapper = ({ children }: PropsWithChildren) => {
+        return (
+            <span aria-label={item.type} role="img">
+                {children}
+            </span>
+        );
+    };
+
     switch (item.type) {
         case "dashboard":
-            return <Icon.Dashboard {...props} />;
+            return (
+                <Wrapper>
+                    <Icon.Dashboard {...props} />
+                </Wrapper>
+            );
         case "visualization":
-            return <InsightIcon visualizationUrl={item.visualizationUrl} iconProps={props} />;
+            return (
+                <Wrapper>
+                    <InsightIcon visualizationUrl={item.visualizationUrl} iconProps={props} />
+                </Wrapper>
+            );
         case "dataset":
-            return <Icon.Dataset {...props} />;
+            return (
+                <Wrapper>
+                    <Icon.Dataset {...props} />
+                </Wrapper>
+            );
         case "attribute":
-            return <Icon.Attribute {...props} />;
+            return (
+                <Wrapper>
+                    <Icon.Attribute {...props} />
+                </Wrapper>
+            );
         case "label":
-            return <Icon.Label {...props} />;
+            return (
+                <Wrapper>
+                    <Icon.Label {...props} />
+                </Wrapper>
+            );
         case "fact":
-            return <Icon.Fact {...props} />;
+            return (
+                <Wrapper>
+                    <Icon.Fact {...props} />
+                </Wrapper>
+            );
         case "metric":
-            return <Icon.Metric {...props} />;
+            return (
+                <Wrapper>
+                    <Icon.Metric {...props} />
+                </Wrapper>
+            );
         case "date":
-            return <Icon.Date {...props} />;
+            return (
+                <Wrapper>
+                    <Icon.Date {...props} />
+                </Wrapper>
+            );
         default:
             return exhaustiveCheck(item.type);
     }

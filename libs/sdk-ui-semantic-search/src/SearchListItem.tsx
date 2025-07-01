@@ -48,15 +48,14 @@ export const SearchListItem = <T,>({
     return (
         <span className={wrapperClassName}>
             <Tag
+                aria-label={areaLabel}
                 href={listItem.url}
                 className="gd-semantic-search__results-item__content"
                 onPointerOver={onPointerOver}
                 onClick={onClick}
                 onAuxClick={onClick}
             >
-                <span className="gd-semantic-search__results-item__icon" aria-label={areaLabel}>
-                    {renderIcon(listItem, theme)}
-                </span>
+                <span className="gd-semantic-search__results-item__icon">{renderIcon(listItem, theme)}</span>
                 <span className="gd-semantic-search__results-item__text">{children}</span>
                 {renderDetails && isActive ? renderDetails(listItem, theme) : null}
             </Tag>
