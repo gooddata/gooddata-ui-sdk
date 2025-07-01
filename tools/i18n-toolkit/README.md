@@ -63,6 +63,10 @@ Turn on validation of HTML marks inside localisation messages.
 
 Turn on localisation message id usage validation. This fill turn on feature that try to find if key is really used in application or not. There are more options related to this see [Configuration file](#configuration-file).
 
+#### Option `-m, --comments`
+
+Turn on validation of translation comments. This will check that all translation entries have non-empty comment fields to provide context for translators. The validation will fail with a clear error message when comments are missing.
+
 #### Option `-d, --debug`
 
 Turn on debug mode that shows more info on errors and spam console more often that in normal mode.
@@ -104,6 +108,7 @@ module.exports = {
     intl: true, //OPTIONAL, same as "--intl" option on command line
     html: true, //OPTIONAL, same as "--html" option on command line
     usage: true, //OPTIONAL, same as "--usage" option on command line
+    comments: true, //OPTIONAL, same as "--comments" option on command line
     debug: true, //OPTIONAL, same as "--debug" option on command line
     //REQUIRED if usage=true, source files with code from tool reads and parse usage of localisations messages
     source: "src/**/*.{ts,js,tsx,jsx}",

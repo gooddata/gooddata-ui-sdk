@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import * as path from "path";
 import { ToolkitConfigFile } from "./data.js";
@@ -9,6 +9,7 @@ import { getIntlMessageFormatCheck } from "./validations/messageFormat.js";
 import { getHtmlSyntaxCheck } from "./validations/htmlSyntax.js";
 import { getInsightToReportCheck } from "./validations/insightToReport.js";
 import { getUsageMessagesCheck } from "./validations/messagesUsage.js";
+import { getCommentValidationCheck } from "./validations/commentValidation.js";
 
 export async function validate(cwd: string, opts: ToolkitConfigFile) {
     const { paths = [], insightToReport } = opts;
@@ -24,6 +25,7 @@ export async function validate(cwd: string, opts: ToolkitConfigFile) {
 
     await getDefaultLocalesCheck(localizationPaths, localizations, opts.debug);
     await getStructureCheck(localizations, opts.structure || false, opts.debug);
+    await getCommentValidationCheck(localizations, opts.comments || false, opts.debug);
     await getIntlMessageFormatCheck(localizationValues, opts.intl || false, opts.debug);
     await getHtmlSyntaxCheck(localizationValues, opts.html || false, opts.debug);
     await getInsightToReportCheck(localizations, opts.insightToReport || false, opts.debug);
