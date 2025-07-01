@@ -1,9 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
-import { defaultImport } from "default-import";
 import { act, render, screen } from "@testing-library/react";
-import defaultUserEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 
 import OrientationDropdownControl, {
     IOrientationDropdownControl,
@@ -11,7 +10,6 @@ import OrientationDropdownControl, {
 } from "../OrientationDropdownControl.js";
 import { IVisualizationProperties, InternalIntlWrapper } from "../../../../internal/index.js";
 
-const userEvent = defaultImport(defaultUserEvent);
 describe("Test OrientationDropdownControl", () => {
     const defaultProperties: Partial<IVisualizationProperties> = {
         controls: {

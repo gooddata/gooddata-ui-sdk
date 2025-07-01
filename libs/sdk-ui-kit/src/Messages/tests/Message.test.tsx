@@ -2,18 +2,12 @@
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { render, screen, waitFor } from "@testing-library/react";
-import defaultUserEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop.js";
 import { describe, it, expect, vi } from "vitest";
-import { defaultImport } from "default-import";
 
 import { Message } from "../Message.js";
 import { IMessageProps } from "../typings.js";
-
-// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
-// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
-// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-const userEvent = defaultImport(defaultUserEvent);
 
 const DefaultLocale = "en-US";
 const messages = {

@@ -1,17 +1,11 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import noop from "lodash/noop.js";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import defaultUserEvent from "@testing-library/user-event";
-import { defaultImport } from "default-import";
+import userEvent from "@testing-library/user-event";
 
 import { ISaveAsDialogRendererOwnProps, SaveAsDialogRenderer } from "../SaveAsDialogRenderer.js";
-
-// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
-// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
-// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-const userEvent = defaultImport(defaultUserEvent);
 
 describe("Test SaveAsNewDashboardDialog: ", () => {
     const defaultProps: ISaveAsDialogRendererOwnProps = {

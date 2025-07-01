@@ -1,22 +1,16 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import defaultUserEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { ITheme } from "@gooddata/sdk-model";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { defaultImport } from "default-import";
 
 import { defaultItemMock, customItemsMock } from "./mocks.js";
 
 import * as useMediaQuery from "../../responsive/useMediaQuery.js";
 import { StylingSettingWidget, IStylingSettingWidgetProps } from "../StylingSettingWidget/index.js";
-
-// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
-// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
-// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-const userEvent = defaultImport(defaultUserEvent);
 
 const expectedButtonsState = (buttons: HTMLElement[], disabled = true) => {
     return buttons.forEach((item) => {

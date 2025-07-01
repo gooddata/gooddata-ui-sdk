@@ -1,7 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import defaultUserEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import ColorPalette, { IColorPaletteProps } from "../ColorPalette.js";
@@ -11,12 +11,6 @@ import {
     colorPaletteWithOneColor,
 } from "../../../../../tests/mocks/testColorHelper.js";
 import { describe, it, expect, vi } from "vitest";
-import { defaultImport } from "default-import";
-
-// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
-// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
-// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-const userEvent = defaultImport(defaultUserEvent);
 
 const defaultProps: IColorPaletteProps = {
     selectedColorGuid: undefined,

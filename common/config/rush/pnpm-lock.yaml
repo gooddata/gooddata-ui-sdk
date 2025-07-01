@@ -2006,9 +2006,6 @@ importers:
       '@testing-library/react':
         specifier: 16.0.1
         version: 16.0.1(@testing-library/dom@10.4.0)(@types/react-dom@18.3.7)(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
-      '@testing-library/user-event':
-        specifier: ^14.4.3
-        version: 14.5.1(@testing-library/dom@10.4.0)
       '@types/hoist-non-react-statics':
         specifier: ^3.3.1
         version: 3.3.5
@@ -2574,8 +2571,8 @@ importers:
         specifier: 16.0.1
         version: 16.0.1(@testing-library/dom@10.4.0)(@types/react-dom@18.3.7)(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@testing-library/user-event':
-        specifier: ^14.4.3
-        version: 14.5.1(@testing-library/dom@10.4.0)
+        specifier: ^14.6.1
+        version: 14.6.1(@testing-library/dom@10.4.0)
       '@types/json-stable-stringify':
         specifier: ^1.0.32
         version: 1.0.36
@@ -2845,8 +2842,8 @@ importers:
         specifier: 16.0.1
         version: 16.0.1(@testing-library/dom@10.4.0)(@types/react-dom@18.3.7)(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@testing-library/user-event':
-        specifier: ^14.4.3
-        version: 14.5.1(@testing-library/dom@10.4.0)
+        specifier: ^14.6.1
+        version: 14.6.1(@testing-library/dom@10.4.0)
       '@types/debounce-promise':
         specifier: ^3.1.4
         version: 3.1.9
@@ -3299,9 +3296,6 @@ importers:
       '@testing-library/react':
         specifier: 16.0.1
         version: 16.0.1(@testing-library/dom@10.4.0)(@types/react-dom@18.3.7)(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
-      '@testing-library/user-event':
-        specifier: ^14.4.3
-        version: 14.5.1(@testing-library/dom@10.4.0)
       '@types/node':
         specifier: ^18.17.6
         version: 18.19.3
@@ -3758,8 +3752,8 @@ importers:
         specifier: 16.0.1
         version: 16.0.1(@testing-library/dom@10.4.0)(@types/react-dom@18.3.7)(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
       '@testing-library/user-event':
-        specifier: ^14.4.3
-        version: 14.5.1(@testing-library/dom@10.4.0)
+        specifier: ^14.6.1
+        version: 14.6.1(@testing-library/dom@10.4.0)
       '@types/debounce-promise':
         specifier: ^3.1.4
         version: 3.1.9
@@ -12568,8 +12562,8 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
     dev: true
 
-  /@testing-library/user-event@14.5.1(@testing-library/dom@10.4.0):
-    resolution: {integrity: sha512-UCcUKrUYGj7ClomOo2SpNVvx4/fkd/2BbIHDCle8A0ax+P3bU7yJwDBDrS6ZwdTMARWTGODX1hEsCcO+7beJjg==}
+  /@testing-library/user-event@14.6.1(@testing-library/dom@10.4.0):
+    resolution: {integrity: sha512-vq7fv0rnt+QTXgPxr5Hjc210p6YKq2kmdziLgnsZGgLJ9e6VAShx1pACLuRjd/AS/sr7phAR58OIIpf0LlmQNw==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'

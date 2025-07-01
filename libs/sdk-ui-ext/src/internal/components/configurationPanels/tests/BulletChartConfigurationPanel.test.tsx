@@ -1,22 +1,16 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import defaultUserEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IBucket, IInsightDefinition } from "@gooddata/sdk-model";
 import { describe, it, expect } from "vitest";
-import { defaultImport } from "default-import";
 
 import BulletChartConfigurationPanel from "../BulletChartConfigurationPanel.js";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 
 import { attributeItemA1, attributeItemA2 } from "../../../tests/mocks/visualizationObjectMocks.js";
 import { emptyInsight } from "../../../tests/mocks/testMocks.js";
-
-// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
-// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
-// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-const userEvent = defaultImport(defaultUserEvent);
 
 function testInsight(buckets: IBucket[]): IInsightDefinition {
     return {
