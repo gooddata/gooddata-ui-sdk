@@ -1,9 +1,9 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "variables";
 @use "Button/variables" as button-variables;
 @use "indigoFont";
 
-$base-path: "~@gooddata/sdk-ui-kit/styles/images/visualization-types/";
+$base-path: "@gooddata/sdk-ui-kit/styles/images/visualization-types/";
 $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, funnel, pyramid, headline,
     heatmap, line, pie, scatter, table, treemap, unknown, xirr, pushpin, region, bullet, dependencywheel,
     sankey, waterfall, repeater;

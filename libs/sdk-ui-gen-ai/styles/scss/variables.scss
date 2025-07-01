@@ -6,7 +6,7 @@ $x-spacing: 15px;
 $y-spacing: 10px;
 $info-height: 35px;
 
-$base_path: "~@gooddata/sdk-ui-kit/styles";
+$base_path: "@gooddata/sdk-ui-kit/styles";
 
 @mixin gd-svg-icon-base {
     &::before {

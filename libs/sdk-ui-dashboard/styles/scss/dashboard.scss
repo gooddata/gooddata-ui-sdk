@@ -482,7 +482,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 
 .dash-item-action.dash-item-action-alert {
     &.disabled {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/alert-bell-na.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/alert-bell-na.svg");
         background-repeat: no-repeat;
         background-position: center;
         background-size: 16px;
@@ -606,7 +606,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     background-color: kit-variables.$gd-palette-primary-base;
 
     &.gd-icon-trash::before {
-        content: url("~@gooddata/sdk-ui-dashboard/esm/assets/trash.svg");
+        content: url("@gooddata/sdk-ui-dashboard/esm/assets/trash.svg");
         display: inline-block;
         width: 20px;
         height: 20px;

@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 .gd-attribute-hierarchy-detail-panel {
@@ -43,7 +43,7 @@
         content: "";
         width: 18px;
         height: 20px;
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/attribute.svg");
+        background-image: url("@gooddata/sdk-ui-kit/styles/icons/attribute.svg");
         background-repeat: no-repeat;
         background-position: left center;
         background-size: contain;
@@ -53,7 +53,7 @@
         content: "";
         width: 18px;
         height: 20px;
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/date.svg");
+        background-image: url("@gooddata/sdk-ui-kit/styles/icons/date.svg");
         background-repeat: no-repeat;
         background-position: left center;
         background-size: contain;
@@ -86,7 +86,7 @@
                 content: "";
                 width: 16px;
                 height: 16px;
-                background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/attribute-hierarchy.svg");
+                background-image: url("@gooddata/sdk-ui-ext/esm/internal/assets/icons/attribute-hierarchy.svg");
                 background-size: 16px 16px;
                 background-repeat: no-repeat;
             }

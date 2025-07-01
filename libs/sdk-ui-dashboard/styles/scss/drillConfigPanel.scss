@@ -116,7 +116,7 @@
             display: block;
             width: 18px;
             height: 24px;
-            background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/measure.svg");
+            background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/measure.svg");
             background-repeat: no-repeat;
             background-position: left top;
             background-size: contain;
@@ -128,20 +128,20 @@
     }
 
     .gd-drill-measure-selector-list-item::before {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/measure.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/measure.svg");
     }
     .gd-drill-metric-selector-list-item::before {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/metric.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/metric.svg");
         top: 8px;
         height: 18px;
     }
     .gd-drill-attribute-selector-list-item::before {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/attribute.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/attribute.svg");
     }
     .gd-drill-attribute-date-selector-list-item::before {
         top: 9px;
         height: 16px;
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/date-dropdown.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/date-dropdown.svg");
     }
 }
 
@@ -227,7 +227,7 @@
         display: block;
         width: 18px;
         height: 24px;
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/attribute-hierarchy.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/attribute-hierarchy.svg");
         background-repeat: no-repeat;
         background-position: left top;
         background-size: contain;
@@ -262,16 +262,16 @@
     }
 
     .dm-button-icon-metric {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/metric.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/metric.svg");
     }
     .dm-button-icon-measure {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/measure.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/measure.svg");
     }
     .dm-button-icon-attribute {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/attribute.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/attribute.svg");
     }
     .dm-button-icon-date {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/date-dropdown.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/date-dropdown.svg");
     }
 
     .dm-button-title {
@@ -434,21 +434,21 @@
     }
 
     .gd-icon-drill-to-dashboard::before {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/drill-to-dashboard.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/drill-to-dashboard.svg");
     }
 
     .gd-icon-drill-to-insight::before {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/drill-to-insight.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/drill-to-insight.svg");
     }
 
     .gd-icon-drill-down::before {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/drill-down.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/drill-down.svg");
         background-repeat: no-repeat;
         top: 1px;
     }
 
     .gd-icon-attribute-hierarchy::before {
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/attribute-hierarchy.svg");
+        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/attribute-hierarchy.svg");
         background-repeat: no-repeat;
         top: 1px;
     }
