@@ -3703,8 +3703,8 @@ importers:
         specifier: ~1.1.0
         version: 1.1.0
       react-portal:
-        specifier: ^4.1.5
-        version: 4.2.2(react-dom@18.3.1)(react@18.3.1)
+        specifier: ^4.3.0
+        version: 4.3.0(react-dom@18.3.1)(react@18.3.1)
       react-responsive:
         specifier: ^10.0.1
         version: 10.0.1(react@18.3.1)
@@ -3788,7 +3788,7 @@ importers:
         specifier: ^2.0.8
         version: 2.0.12
       '@types/react-portal':
-        specifier: ^4.0.2
+        specifier: ^4.0.7
         version: 4.0.7
       '@types/react-transition-group':
         specifier: ^4.4.4
@@ -22915,11 +22915,11 @@ packages:
     engines: {node: '>= 0.10.0'}
     dev: false
 
-  /react-portal@4.2.2(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-vS18idTmevQxyQpnde0Td6ZcUlv+pD8GTyR42n3CHUQq9OHi1C4jDE4ZWEbEsrbrLRhSECYiao58cvocwMtP7Q==}
+  /react-portal@4.3.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-qs/2uKq1ifB3J1+K8ExfgUvCDZqlqCkfOEhqTELEDTfosloKiuzOzc7hl7IQ/7nohiFZD41BUYU0boAsIsGYHw==}
     peerDependencies:
-      react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
-      react-dom: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
+      react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0 || ^19.0.0
+      react-dom: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0 || ^19.0.0
     dependencies:
       prop-types: 15.8.1
       react: 18.3.1
