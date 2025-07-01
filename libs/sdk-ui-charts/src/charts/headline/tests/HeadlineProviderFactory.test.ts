@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { IBucket, IMeasure, newBucket } from "@gooddata/sdk-model";
@@ -7,7 +7,6 @@ import { IChartConfig } from "../../../interfaces/index.js";
 import { createHeadlineProvider } from "../HeadlineProviderFactory.js";
 import ComparisonProvider from "../internal/providers/ComparisonProvider.js";
 import MultiMeasuresProvider from "../internal/providers/MultiMeasuresProvider.js";
-import LegacyProvider from "../internal/providers/LegacyProvider.js";
 
 describe("HeadlineProviderFactory", () => {
     describe("createHeadlineProvider", () => {
@@ -28,13 +27,6 @@ describe("HeadlineProviderFactory", () => {
                       comparison: { enabled: enabledComparison },
                   };
         };
-
-        it("should create LegacyProvider in case enableNewHeadline is off", () => {
-            const buckets = createBuckets(ReferenceMd.Amount, [ReferenceMd.Amount_1.Sum]);
-            const config = createConfig(true);
-
-            expect(createHeadlineProvider(buckets, config, false)).toBeInstanceOf(LegacyProvider);
-        });
 
         it("should create ComparisonProvider in case 1 primaryMeasure, 1 secondaryMeasure and comparison is enabled have provided", () => {
             const buckets = createBuckets(ReferenceMd.Amount, [ReferenceMd.Amount_1.Sum]);
