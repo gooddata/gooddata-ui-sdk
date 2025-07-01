@@ -25,7 +25,7 @@ export interface ILlmEndpointOpenAI extends ILlmEndpointBase {
     /**
      * A discriminating type of the endpoint
      */
-    provider: "OPENAI";
+    provider: "OPENAI" | "AZURE_OPENAI";
     /**
      * Optional organization identifier for OpenAI
      */
