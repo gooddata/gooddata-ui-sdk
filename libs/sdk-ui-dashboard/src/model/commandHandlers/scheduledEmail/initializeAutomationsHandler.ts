@@ -133,6 +133,10 @@ export function* initializeAutomationsHandler(
                 selectInsightByWidgetRef(targetWidget ? idRef(targetWidget) : undefined),
             );
 
+            const dashboardCommonDateFilter: ReturnType<typeof selectFilterContextDateFilter> = yield select(
+                selectFilterContextDateFilter,
+            );
+
             const {
                 targetAlertFilters,
                 targetExportDefinition,
@@ -145,12 +149,14 @@ export function* initializeAutomationsHandler(
                 const widget: ReturnType<ReturnType<typeof selectWidgetByRef>> = yield select(
                     selectWidgetByRef(idRef(targetWidget)),
                 );
-                const commonFilter: ReturnType<typeof selectFilterContextDateFilter> = yield select(
-                    selectFilterContextDateFilter,
-                );
                 const filtersToSet =
                     insight && isInsightWidget(widget)
-                        ? getDashboardFiltersOnly(targetAlertFilters, commonFilter, insight, widget)
+                        ? getDashboardFiltersOnly(
+                              targetAlertFilters,
+                              dashboardCommonDateFilter,
+                              insight,
+                              widget,
+                          )
                         : targetAlertFilters;
 
                 // Empty alert execution filters = reset all filters (set them to all).
@@ -164,9 +170,6 @@ export function* initializeAutomationsHandler(
 
             // Set filters to the dashboard based on export definition filters
             if (targetExportDefinition && targetExportDefinitionFilters) {
-                const dashboardCommonDateFilter: ReturnType<typeof selectFilterContextDateFilter> =
-                    yield select(selectFilterContextDateFilter);
-
                 const filtersToSet =
                     targetExportDefinitionFilters?.filter((filter) => {
                         if (targetExportVisibleFilters) {
@@ -309,13 +312,12 @@ function getDashboardFiltersOnly(
 
     // Find common date filter by local id
     const dateFilters = withoutInsightDateFilters.filter(isDateFilter);
-    const foundCommonFilter =
-        dateFilters.find((f) => {
-            if (isRelativeDateFilter(f)) {
-                return f.relativeDateFilter.localIdentifier === common?.dateFilter.localIdentifier;
-            }
-            return f.absoluteDateFilter.localIdentifier === common?.dateFilter.localIdentifier;
-        }) ?? dateFilters[0];
+    const foundCommonFilter = dateFilters.find((f) => {
+        if (isRelativeDateFilter(f)) {
+            return common && f.relativeDateFilter.localIdentifier === common.dateFilter.localIdentifier;
+        }
+        return common && f.absoluteDateFilter.localIdentifier === common.dateFilter.localIdentifier;
+    });
 
     // Remove dataSet from date filters, as it's not relevant for the dashboard date filter.
     return withoutInsightDateFilters.map((f) => {
