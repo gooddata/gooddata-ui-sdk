@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "10.33.0-alpha.8",
+    "version": "10.33.0-alpha.9",
     "author": "GoodData",
     "description": "GoodData SDK - Reference Workspace for tests",
     "repository": {
