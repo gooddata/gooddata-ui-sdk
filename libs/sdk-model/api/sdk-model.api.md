@@ -2320,7 +2320,7 @@ export interface ILlmEndpointBase {
 export interface ILlmEndpointOpenAI extends ILlmEndpointBase {
     model: string;
     organization?: string;
-    provider: "OPENAI";
+    provider: "OPENAI" | "AZURE_OPENAI";
 }
 
 // @public

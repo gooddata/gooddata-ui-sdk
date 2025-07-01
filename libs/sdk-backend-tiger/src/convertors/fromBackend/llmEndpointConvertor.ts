@@ -12,6 +12,15 @@ export function convertLlmEndpoint(endpoint: JsonApiLlmEndpointOutWithLinks): IL
             organization: endpoint.attributes?.llmOrganization,
         } as ILlmEndpointOpenAI;
     }
+    if (endpoint.attributes?.provider === "AZURE_OPENAI") {
+        return {
+            id: endpoint.id,
+            title: endpoint.attributes?.title,
+            provider: "AZURE_OPENAI",
+            model: endpoint.attributes?.llmModel,
+            organization: endpoint.attributes?.llmOrganization,
+        } as ILlmEndpointOpenAI;
+    }
 
     throw new Error(`Unknown llm endpoint provider: ${endpoint.attributes?.provider}`);
 }
