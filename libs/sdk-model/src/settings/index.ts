@@ -731,11 +731,6 @@ export interface ISettings {
      */
     enableDashboardShareDialogLink?: boolean;
 
-    /**
-     * Enable dashboard filters apply without loading
-     */
-    enableDashboardFiltersApplyWithoutLoading?: boolean;
-
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

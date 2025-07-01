@@ -638,6 +638,7 @@ function updateNonResettingFilter(
 
         // If the filter changes are commited without apply, we want to avoid loading based on FF.
         // This is experimental and will be removed after the feature is fully tested and released.
+        // enableDashboardFiltersApplyWithoutLoading should default to true in the future.
         if (enableDashboardFiltersApplyWithoutLoading && enableDashboardFiltersApplyModes && withoutApply) {
             return undefined;
         }

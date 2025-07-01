@@ -3437,7 +3437,6 @@ export interface ISettings {
     enableCustomColorPicker?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFiltersApplyModes?: boolean;
-    enableDashboardFiltersApplyWithoutLoading?: boolean;
     enableDashboardFilterViews?: boolean;
     enableDashboardFlexibleLayout?: boolean;
     enableDashboardFlexibleLayoutContainer?: boolean;

@@ -323,7 +323,7 @@ export interface IAttributeFilterCoreProps {
      * This is a temporary flag to enable the new apply all filters at once mode without loading on every change.
      * It will be removed after the feature is fully tested and released.
      *
-     * @alpha
+     * @deprecated Do not use, this will be removed in future release and turned on by default.
      */
     enableDashboardFiltersApplyWithoutLoading?: boolean;
 }

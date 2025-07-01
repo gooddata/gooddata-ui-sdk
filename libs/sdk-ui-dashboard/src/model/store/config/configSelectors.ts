@@ -1096,15 +1096,3 @@ export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean> = 
         return Boolean(state.settings?.enableDashboardShareDialogLink) ?? false;
     },
 );
-
-/**
- * Selector for the dashboard filters apply without loading feature flag
- *
- * @internal
- */
-export const selectEnableDashboardFiltersApplyWithoutLoading: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return Boolean(state.settings?.enableDashboardFiltersApplyWithoutLoading) ?? false;
-    },
-);
