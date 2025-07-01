@@ -410,7 +410,7 @@ export interface IAttributeFilterCoreProps {
     displayAsLabel?: ObjRef;
     enableAttributeFilterVirtualised?: boolean;
     enableDashboardFiltersApplyModes?: boolean;
-    // @alpha
+    // @deprecated
     enableDashboardFiltersApplyWithoutLoading?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;

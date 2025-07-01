@@ -8836,9 +8836,6 @@ export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<bo
 export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableDashboardFiltersApplyWithoutLoading: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean>;
 
 // @internal
