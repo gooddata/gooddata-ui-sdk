@@ -848,6 +848,8 @@ export type {
     EarlyAccessFeatureStatus,
     IEarlyAccessFeatureConfig,
     IEarlyAccessFeaturesConfig,
+    IProductionFeatureConfig,
+    IProductionFeaturesConfig,
 } from "./settings/index.js";
 
 export type { IWorkspaceUserGroup } from "./userGroup/index.js";

@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import { IEarlyAccessFeaturesConfig } from "@gooddata/sdk-model";
+import { IEarlyAccessFeaturesConfig, IProductionFeaturesConfig } from "@gooddata/sdk-model";
 
 /**
  * This is list of feature flags managed on Panther by FeatureHub
@@ -152,6 +152,8 @@ export enum TigerFeaturesNames {
     EnableAttributeFilterVirtualised = "enableAttributeFilterVirtualised",
     EnableNotificationChannelIdentifiers = "enableNotificationChannelIdentifiers",
     EnableDashboardShareDialogLink = "enableDashboardShareDialogLink",
+    ProductionFeatures = "productionFeatures",
+    EnableProductionFeaturesRollout = "enableProductionFeaturesRollout",
 }
 
 export type ITigerFeatureFlags = {
@@ -266,6 +268,8 @@ export type ITigerFeatureFlags = {
     enableAttributeFilterVirtualised: typeof FeatureFlagsValues["enableAttributeFilterVirtualised"][number];
     enableNotificationChannelIdentifiers: typeof FeatureFlagsValues["enableNotificationChannelIdentifiers"][number];
     enableDashboardShareDialogLink: typeof FeatureFlagsValues["enableDashboardShareDialogLink"][number];
+    productionFeatures: typeof FeatureFlagsValues["productionFeatures"][number];
+    enableProductionFeaturesRollout: typeof FeatureFlagsValues["enableProductionFeaturesRollout"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -380,6 +384,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAttributeFilterVirtualised: true,
     enableNotificationChannelIdentifiers: false,
     enableDashboardShareDialogLink: false,
+    productionFeatures: undefined,
+    enableProductionFeaturesRollout: false,
 };
 
 export const FeatureFlagsValues = {
@@ -498,4 +504,6 @@ export const FeatureFlagsValues = {
     enableAttributeFilterVirtualised: [true, false] as const,
     enableNotificationChannelIdentifiers: [true, false] as const,
     enableDashboardShareDialogLink: [true, false] as const,
+    productionFeatures: [undefined, {} as IProductionFeaturesConfig] as const,
+    enableProductionFeaturesRollout: [true, false] as const,
 };

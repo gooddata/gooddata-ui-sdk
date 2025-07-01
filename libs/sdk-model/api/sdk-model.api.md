@@ -2899,6 +2899,25 @@ export interface IPreviousPeriodMeasureDefinitionBody {
     measureIdentifier: Identifier;
 }
 
+// @alpha (undocumented)
+export interface IProductionFeatureConfig {
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    docs?: string;
+    // (undocumented)
+    earlyAccess: string;
+    globalRollout: string;
+    // (undocumented)
+    title: string;
+}
+
+// @alpha (undocumented)
+export interface IProductionFeaturesConfig {
+    // (undocumented)
+    features: IProductionFeatureConfig[];
+}
+
 // @public (undocumented)
 export interface IRangeCondition {
     // (undocumented)
@@ -3511,6 +3530,7 @@ export interface ISettings {
     enablePivotTableTransposition?: boolean;
     // (undocumented)
     enablePixelPerfectExperience?: boolean;
+    enableProductionFeaturesRollout?: boolean;
     enablePushpinGeoChart?: boolean;
     enableRawExports?: boolean;
     enableRenamingMeasureToMetric?: boolean;
@@ -3554,6 +3574,8 @@ export interface ISettings {
     // @alpha
     openAiConfig?: IOpenAiConfig;
     platformEdition?: PlatformEdition;
+    // @alpha
+    productionFeatures?: IProductionFeaturesConfig;
     responsiveUiDateFormat?: string;
     showHiddenCatalogItems?: boolean;
     timezone?: string;
