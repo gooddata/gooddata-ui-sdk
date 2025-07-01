@@ -1000,23 +1000,23 @@ a.gd-list-help-menu-item.gd-list-item {
         border-bottom-right-radius: 0;
         border-top-right-radius: 0;
 
-        &.is-normal::before {
-            background: url("~@gooddata/sdk-ui-kit/esm/assets/data_source_normal_state.svg") no-repeat;
-        }
-
         &.is-active::before {
             background: url("~@gooddata/sdk-ui-kit/esm/assets/data_source_active_state.svg") no-repeat;
-        }
-
-        &.disabled::before {
-            background: url("~@gooddata/sdk-ui-kit/esm/assets/data_source_disabled_state.svg") no-repeat;
         }
 
         &::before {
             top: 11px;
             margin-top: 1px;
+        }
 
-            @include gd-icon-state;
+        &.disabled::before {
+            background: url("~@gooddata/sdk-ui-kit/esm/assets/data_source_disabled_state.svg") no-repeat;
+            color: variables.$gd-color-disabled;
+        }
+
+        &.is-normal::before {
+            background: url("~@gooddata/sdk-ui-kit/esm/assets/data_source_normal_state.svg") no-repeat;
+            color: variables.$gd-color-link;
         }
 
         @include hover-effect;
@@ -1025,15 +1025,18 @@ a.gd-list-help-menu-item.gd-list-item {
     .gd-icon-model {
         border-radius: 0;
 
-        &.is-normal::before {
-            background: url("~@gooddata/sdk-ui-kit/esm/assets/model-normal-state.svg") no-repeat;
-        }
-
         &::before {
             top: 11px;
             margin-top: 1px;
+        }
 
-            @include gd-icon-state;
+        &.disabled::before {
+            color: variables.$gd-color-disabled;
+        }
+
+        &.is-normal::before {
+            background: url("~@gooddata/sdk-ui-kit/esm/assets/model-normal-state.svg") no-repeat;
+            color: variables.$gd-color-link;
         }
 
         @include hover-effect;
@@ -1045,18 +1048,17 @@ a.gd-list-help-menu-item.gd-list-item {
 
         &::before {
             top: 11px;
-            &.disabled {
-                color: variables.$gd-color-disabled;
-            }
-
-            @include gd-icon-state;
         }
 
-        @include hover-effect;
+        &.disabled::before {
+            color: variables.$gd-color-disabled;
+        }
 
         &.is-normal::before {
             color: variables.$gd-color-link;
         }
+
+        @include hover-effect;
     }
 
     button.is-active[class*="gd-button-"]::before,
