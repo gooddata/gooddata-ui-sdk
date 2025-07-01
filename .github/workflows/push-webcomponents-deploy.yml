@@ -95,7 +95,7 @@ jobs:
           name: web-components-artifact
           path: ./${{ env.WEB_COMPONENTS_DIR }}
       - name: Docker build and push image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ./${{ env.WEB_COMPONENTS_DIR }}
           file: ./${{ env.WEB_COMPONENTS_DIR }}/Dockerfile
