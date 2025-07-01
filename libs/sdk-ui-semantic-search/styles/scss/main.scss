@@ -56,6 +56,9 @@
 
         &__icon {
             @include icon(26px);
+            & > span {
+                @include icon(26px);
+            }
         }
 
         &__text {
