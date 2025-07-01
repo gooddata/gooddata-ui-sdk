@@ -110,12 +110,14 @@
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
-    max-width: 240px;
+    max-width: 260px;
 
     &__image {
-        width: 100%;
-        aspect-ratio: 3/2;
-        background: fuchsia;
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/flexible-layouts-tooltip.gif");
+        background-repeat: no-repeat;
+        background-position: left top;
+        background-size: contain;
+        aspect-ratio: 44/27; // This needs to be updated if the image is ever changed
     }
 
     &__actions {

@@ -38,8 +38,7 @@ export const AddDashboardLayoutWidgetButton: React.FC = () => {
                         arrowPlacement={"left"}
                         content={({ onClose }) => (
                             <div className={tooltipBem.b()}>
-                                {/* Temporarily disabled until a proper image is supplied */}
-                                {/*<div className={tooltipBem.e("image")} />*/}
+                                <div className={tooltipBem.e("image")} />
 
                                 <div className={tooltipBem.e("text")}>
                                     <FormattedMessage id="addPanel.dashboardLayout.tooltip" />
