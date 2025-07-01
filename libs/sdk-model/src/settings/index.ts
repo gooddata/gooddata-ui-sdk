@@ -731,6 +731,18 @@ export interface ISettings {
      */
     enableDashboardShareDialogLink?: boolean;
 
+    /**
+     * Enable production features
+     *
+     * @alpha
+     */
+    productionFeatures?: IProductionFeaturesConfig;
+
+    /**
+     * Enable production features rollout
+     */
+    enableProductionFeaturesRollout?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 
@@ -875,4 +887,25 @@ export interface IEarlyAccessFeatureConfig {
  */
 export interface IEarlyAccessFeaturesConfig {
     features: IEarlyAccessFeatureConfig[];
+}
+
+/**
+ * @alpha
+ */
+export interface IProductionFeatureConfig {
+    title: string;
+    description: string;
+    docs?: string;
+    earlyAccess: string;
+    /**
+     * Expect global rollout date in ISO-8601 calendar date format (YYYY-MM-DD)
+     */
+    globalRollout: string;
+}
+
+/**
+ * @alpha
+ */
+export interface IProductionFeaturesConfig {
+    features: IProductionFeatureConfig[];
 }
