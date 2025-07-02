@@ -3230,7 +3230,7 @@ importers:
         specifier: ^2.3.1
         version: 2.3.2
       copy-to-clipboard:
-        specifier: ^3.3.1
+        specifier: ^3.3.3
         version: 3.3.3
       default-import:
         specifier: 1.1.5
@@ -3643,7 +3643,7 @@ importers:
         specifier: ^2.3.1
         version: 2.3.2
       copy-to-clipboard:
-        specifier: ^3.3.1
+        specifier: ^3.3.3
         version: 3.3.3
       cron-parser:
         specifier: ^5.1.1
@@ -26186,7 +26186,7 @@ packages:
       dom-accessibility-api: 0.6.3
       lodash-es: 4.17.21
       redent: 4.0.0
-      vitest: 3.0.8(@types/node@18.19.3)(happy-dom@15.10.2)
+      vitest: 3.0.8(@types/node@18.19.3)(jsdom@26.0.0)(sass@1.69.5)
     dev: true
 
   /vitest@3.0.8(@types/node@18.19.3)(happy-dom@15.10.2):
