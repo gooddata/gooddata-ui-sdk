@@ -97,4 +97,5 @@ export type IconType =
     | "table"
     | "directionColumn"
     | "directionRow"
-    | "header";
+    | "header"
+    | "box";
