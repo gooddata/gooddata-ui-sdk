@@ -104,6 +104,21 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
         }
     }, [isOver, desiredDestination, handleDragHoverStart]);
 
+    const [canBeDisplayed, setCanBeDisplayed] = React.useState(false);
+    const isDragging = !!item;
+    React.useEffect(() => {
+        // There is a bug in Chrome that calls dragstop immediately after dragstart unless we defer the visibility
+        // of the hotspot to setTimeout. Chrome doesn't like a new element suddenly appearing under the mouse cursor
+        // immediately when dragging starts and just aborts the whole thing.
+
+        const timeout = setTimeout(() => {
+            setCanBeDisplayed(isDragging);
+        }, 0);
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [isDragging]);
+
     const debugStyle = getDropZoneDebugStyle({ isOver });
     const canDropSafe = useCallback(
         (item: unknown) => {
@@ -129,7 +144,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
     return (
         <div
             className={cx(classNames, "dropzone", dropZoneType, {
-                hidden: !canDrop || !canDropSafe(item),
+                hidden: !canBeDisplayed || !canDrop || !canDropSafe(item),
                 full: isEndingHotspot,
                 active: isOver,
                 [`s-dropzone-${serializeLayoutItemPath(layoutPath)}`]: !!layoutPath,
