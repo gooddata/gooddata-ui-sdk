@@ -74,6 +74,7 @@ const ToggleDirectionButton: React.FC<{
                                 }}
                                 ariaAttributes={ariaAttributes}
                                 accessibilityConfig={accessibilityConfig}
+                                size="large"
                             />
                         }
                     />
@@ -123,7 +124,8 @@ const ToggleSectionHeaderButton: React.FC<{
                 anchor={
                     <UiIconButton
                         icon="header"
-                        variant={"tertiary"}
+                        variant="tertiary"
+                        size="large"
                         isActive={areSectionHeadersEnabled}
                         dataTestId="s-nested-layout__button--headers"
                         onClick={onButtonClick}
@@ -156,6 +158,7 @@ const RemoveContainerButton: React.FC<{
                     <UiIconButton
                         icon="trash"
                         variant="tertiary"
+                        size="large"
                         dataTestId="s-nested-layout__button--remove"
                         onClick={onButtonClick}
                         label={tooltipContent}
