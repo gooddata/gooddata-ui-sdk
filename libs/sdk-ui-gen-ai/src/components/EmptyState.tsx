@@ -60,7 +60,7 @@ const EmptyStateComponent: React.FC<EmptyStateDispatchProps & WrappedComponentPr
                     variant="secondary"
                 >
                     <span role="presentation" className="gd-gen-ai-chat__messages__empty__icon">
-                        <option.Icon width={18} height={18} />
+                        <option.Icon width={18} height={18} ariaHidden />
                     </span>
                     <FormattedMessage tagName="span" id={option.title.id} />
                 </Button>

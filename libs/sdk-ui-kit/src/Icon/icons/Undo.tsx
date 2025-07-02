@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 
 import { IIconProps } from "../typings.js";
@@ -6,7 +6,7 @@ import { IIconProps } from "../typings.js";
 /**
  * @internal
  */
-export const Undo: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export const Undo: React.FC<IIconProps> = ({ color, className, width, height, ariaHidden }) => {
     return (
         <svg
             className={className}
@@ -15,6 +15,7 @@ export const Undo: React.FC<IIconProps> = ({ color, className, width, height }) 
             viewBox="0 0 20 17"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <path
