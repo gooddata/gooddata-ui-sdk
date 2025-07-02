@@ -37,6 +37,8 @@ import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 import { resizeParentContainers } from "./containerHeightSanitization.js";
 import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";
 
+import { buildRowContainerSanitizationActions } from "./rowContainerSanitization.js";
+
 type MoveSectionItemContext = {
     readonly ctx: DashboardContext;
     readonly cmd: MoveSectionItem;
@@ -271,15 +273,27 @@ export function* moveSectionItemHandler(
         insightsMap,
         screen,
     );
+    const currentItemIndex = fromPath === undefined ? [{ sectionIndex, itemIndex }] : fromPath;
+    const toItemIndex =
+        targetIndex === undefined
+            ? [{ sectionIndex: targetSectionIndex, itemIndex: targetItemIndex }]
+            : targetIndex;
+
+    const rowContainerSanitizationActions = buildRowContainerSanitizationActions(
+        cmd,
+        commandCtx.layout,
+        itemWithNormalizedSize,
+        currentItemIndex,
+        toItemIndex,
+        screen!,
+    );
 
     yield put(
         batchActions([
+            ...rowContainerSanitizationActions, // process first to avoid remapping of the paths
             layoutActions.moveSectionItem({
-                itemIndex: fromPath === undefined ? [{ sectionIndex, itemIndex }] : fromPath,
-                toItemIndex:
-                    targetIndex === undefined
-                        ? [{ sectionIndex: targetSectionIndex, itemIndex: targetItemIndex }]
-                        : targetIndex,
+                itemIndex: currentItemIndex,
+                toItemIndex,
                 undo: {
                     cmd,
                 },
@@ -300,10 +314,7 @@ export function* moveSectionItemHandler(
             ...(shouldChangeSize
                 ? [
                       layoutActions.changeItemWidth({
-                          layoutPath:
-                              targetIndex === undefined
-                                  ? [{ sectionIndex: targetSectionIndex, itemIndex: targetItemIndex }]
-                                  : targetIndex,
+                          layoutPath: toItemIndex,
                           width: itemWithNormalizedSize.size.xl.gridWidth,
                       }),
                   ]

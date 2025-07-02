@@ -27,17 +27,24 @@ const getLayoutDirection = (layout: IDashboardLayout<ExtendedDashboardWidget>) =
 /**
  * Collects layout paths of all child widgets that need width updates when a nested layout is resized.
  * For nested layouts with a "column" direction, it processes children recursively.
- * For other widgets (including nested layouts with "row" direction), it returns their paths directly.
+ * For other widgets (including nested layouts with "row" direction), it returns their paths directly unless
+ * the processAllContainers is true.
+ *
+ * @param layoutItem - The layout item to process
+ * @param layoutItemPath - The path to the provided layout item (this could be a nested layout, and we need to know his preceding path)
+ * @param processAllContainers - If true, process all containers, including those with a "row" direction, otherwise only process containers with a "column" direction
  */
 export function getChildWidgetLayoutPaths(
-    layout: IDashboardLayout<ExtendedDashboardWidget>,
-    parentPath: ILayoutItemPath,
+    layoutItem: IDashboardLayout<ExtendedDashboardWidget>,
+    layoutItemPath: ILayoutItemPath,
+    processAllContainers = false,
 ): ILayoutItemPath[] {
-    return layout.sections.flatMap((section, sectionIndex) =>
+    return layoutItem.sections.flatMap((section, sectionIndex) =>
         section.items.flatMap((item, itemIndex) => {
-            const currentPath: ILayoutItemPath = [...parentPath, { sectionIndex, itemIndex }];
-            return isDashboardLayout(item.widget) && getLayoutDirection(item.widget) === "column"
-                ? [...getChildWidgetLayoutPaths(item.widget, currentPath), currentPath]
+            const currentPath: ILayoutItemPath = [...layoutItemPath, { sectionIndex, itemIndex }];
+            return isDashboardLayout(item.widget) &&
+                (processAllContainers || getLayoutDirection(item.widget) === "column")
+                ? [currentPath, ...getChildWidgetLayoutPaths(item.widget, currentPath, processAllContainers)]
                 : [currentPath];
         }),
     );
