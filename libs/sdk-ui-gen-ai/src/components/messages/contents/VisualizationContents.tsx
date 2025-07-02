@@ -28,7 +28,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { makeTextContents, makeUserMessage, VisualizationContents } from "../../../model.js";
-import { getAbsoluteVisualizationHref, getVisualizationHref } from "../../../utils.js";
+import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
 import {
     RootState,
@@ -570,6 +570,7 @@ const renderHeadline = (
         filters={filters}
         config={{
             ...visualizationTooltipOptions,
+            ...getHeadlineComparison(metrics),
             colorPalette,
         }}
         onError={onError}
