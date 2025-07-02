@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { IAttributeOrMeasure } from "@gooddata/sdk-model";
+
 export function getVisualizationHref(wsId: string, visId: string) {
     return `/analyze/#/${wsId}/${visId}/edit`;
 }
@@ -14,4 +16,12 @@ export function getSettingHref(section: string, action: string) {
 
 export function getAbsoluteSettingHref(section: string, action: string) {
     return `${window.location.origin}${getSettingHref(section, action)}`;
+}
+
+export function getHeadlineComparison(metrics: IAttributeOrMeasure[]) {
+    return {
+        comparison: {
+            enabled: metrics.filter(Boolean).length > 1,
+        },
+    };
 }

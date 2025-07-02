@@ -17,6 +17,7 @@ import {
 import { prepareExecution } from "../../components/messages/contents/useExecution.js";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { saveVisualizationErrorAction, saveVisualizationSuccessAction } from "../messages/messagesSlice.js";
+import { getHeadlineComparison } from "../../utils.js";
 
 export function* onVisualizationSave({
     payload,
@@ -253,7 +254,11 @@ const buildHeadlineChart = (
             buckets,
             filters: exec.filters,
             sorts: [],
-            properties: {},
+            properties: {
+                controls: {
+                    ...getHeadlineComparison(metrics),
+                },
+            },
         },
     };
 };
