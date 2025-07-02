@@ -241,9 +241,11 @@ function extractRelevantFilters(
 
 function extractExportDefinitionFilters(
     content?: IExportDefinitionVisualizationObjectRequestPayload | IExportDefinitionDashboardRequestPayload,
-): FilterContextItem[] {
+): FilterContextItem[] | undefined {
     if (isExportDefinitionDashboardRequestPayload(content)) {
-        return compact(content.content.filters);
+        // The filters in dashboard case may be undefined or an array depending
+        // on whether they should override filter context or use live filter context.
+        return content.content.filters ? compact(content.content.filters) : undefined;
     }
     if (isExportDefinitionVisualizationObjectRequestPayload(content)) {
         return compact(
