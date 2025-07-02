@@ -1,14 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import {
     bemFactory,
     Icon,
     OverlayController,
     OverlayControllerProvider,
-    UiButton,
     UiLink,
     UiTooltip,
     useMediaQuery,
@@ -26,7 +25,6 @@ export const AddDashboardLayoutWidgetButton: React.FC = () => {
     const isMobileDevice = useMediaQuery("mobileDevice");
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const theme = useTheme();
-    const { formatMessage } = useIntl();
 
     return (
         <div className="add-item-placeholder add-panel-item s-add-dashboard-layout">
@@ -36,7 +34,7 @@ export const AddDashboardLayoutWidgetButton: React.FC = () => {
                 <OverlayControllerProvider overlayController={overlayController}>
                     <UiTooltip
                         arrowPlacement={"left"}
-                        content={({ onClose }) => (
+                        content={
                             <div className={tooltipBem.b()}>
                                 <div className={tooltipBem.e("image")} />
 
@@ -59,17 +57,9 @@ export const AddDashboardLayoutWidgetButton: React.FC = () => {
                                             />
                                         </UiLink>
                                     ) : null}
-                                    <UiButton
-                                        variant={"secondary"}
-                                        onClick={onClose}
-                                        size={"small"}
-                                        label={formatMessage({
-                                            id: "addPanel.dashboardLayout.tooltip.button",
-                                        })}
-                                    />
                                 </div>
                             </div>
-                        )}
+                        }
                         anchor={
                             <div
                                 className={cx("s-description-trigger gd-add-item-placeholder-help-trigger", {
@@ -80,7 +70,7 @@ export const AddDashboardLayoutWidgetButton: React.FC = () => {
                             </div>
                         }
                         optimalPlacement
-                        triggerBy={["hover", "focus", "click"]}
+                        triggerBy={["hover"]}
                     />
                 </OverlayControllerProvider>
             </div>

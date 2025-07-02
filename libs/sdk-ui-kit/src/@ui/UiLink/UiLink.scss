@@ -4,7 +4,11 @@
 
 .gd-ui-kit-link {
     &--variant-primary {
-        color: variables.$gd-palette-primary-base;
+        &,
+        &:focus,
+        &:active {
+            color: variables.$gd-palette-primary-base;
+        }
 
         &:hover {
             color: variables.$gd-palette-primary-base-darken06;
@@ -12,7 +16,11 @@
     }
 
     &--variant-secondary {
-        color: variables.$gd-color-link;
+        &,
+        &:focus,
+        &:active {
+            color: variables.$gd-color-link;
+        }
 
         &:hover {
             color: variables.$gd-color-text;
@@ -20,7 +28,11 @@
     }
 
     &--variant-inverse {
-        color: variables.$gd-color-text-light;
+        &,
+        &:focus,
+        &:active {
+            color: variables.$gd-color-text-light;
+        }
 
         &:hover {
             color: variables.$gd-color-text-light;
