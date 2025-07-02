@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 
@@ -7,9 +7,16 @@ import { IIconProps } from "../typings.js";
 /**
  * @internal
  */
-export const Search: React.FC<IIconProps> = ({ color = "#B0BECA", className, width = 18, height = 19 }) => {
+export const Search: React.FC<IIconProps> = ({
+    color = "#B0BECA",
+    className,
+    width = 18,
+    height = 19,
+    ariaHidden,
+}) => {
     return (
         <svg
+            aria-hidden={ariaHidden}
             className={className}
             width={width}
             height={height}

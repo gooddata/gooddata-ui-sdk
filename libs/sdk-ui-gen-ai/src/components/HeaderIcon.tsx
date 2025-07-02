@@ -31,7 +31,7 @@ export const HeaderIcon: React.FC<HeaderIconProps> = ({ className, tooltip, Icon
                         ariaLabel: tooltip,
                     }}
                 >
-                    <Icon />
+                    <Icon ariaHidden />
                 </Button>
                 {!disabled && tooltip ? (
                     <Bubble alignTo={randClassName} alignPoints={ALIGN_POINTS_TOOLTIP}>

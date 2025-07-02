@@ -104,13 +104,13 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
             className={classNames}
             type={type}
             onClick={handleClick}
-            tabIndex={tabIndex}
             aria-disabled={disabled}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledBy}
             aria-describedby={ariaDescribedBy}
             {...ariaDropdownProps}
-            role={role}
+            {...(tagName !== "button" ? { tabIndex } : {})}
+            {...(tagName !== "button" || role !== "button" ? { role } : {})}
         >
             <Icon icon={iconLeft} />
 
