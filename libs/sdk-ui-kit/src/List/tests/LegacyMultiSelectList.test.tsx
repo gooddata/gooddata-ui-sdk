@@ -1,20 +1,14 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import includes from "lodash/includes.js";
 import { withIntl } from "@gooddata/sdk-ui";
 import { render, screen } from "@testing-library/react";
-import defaultUserEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
-import { defaultImport } from "default-import";
 
 import { customMessages } from "./customDictionary.js";
 
 import LegacyMultiSelectList, { ILegacyMultiSelectListProps } from "../LegacyMultiSelectList.js";
-
-// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
-// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
-// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-const userEvent = defaultImport(defaultUserEvent);
 
 describe("LegacyMultiSelectList", () => {
     const firstItem: any = {

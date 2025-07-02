@@ -1,17 +1,11 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import defaultUserEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { ColorFormats } from "tinycolor2";
 import { describe, it, expect, vi } from "vitest";
-import { defaultImport } from "default-import";
 
 import { HexColorInput, IHexColorInputProps } from "../HexColorInput.js";
-
-// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
-// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
-// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-const userEvent = defaultImport(defaultUserEvent);
 
 const initColor: ColorFormats.HSL = {
     h: 3,

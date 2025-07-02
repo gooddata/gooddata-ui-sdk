@@ -1,10 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import defaultUserEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
-import { defaultImport } from "default-import";
 
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
 
@@ -13,11 +12,6 @@ import {
     IHubspotFormField,
 } from "../HubspotConversionTouchPointDialogBase.js";
 import { IHubspotConversionTouchPointDialogBaseProps } from "../index.js";
-
-// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
-// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
-// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-const userEvent = defaultImport(defaultUserEvent);
 
 interface IFormReadyProps {
     onFormReady: ($form: IHubspotFormField[]) => void;

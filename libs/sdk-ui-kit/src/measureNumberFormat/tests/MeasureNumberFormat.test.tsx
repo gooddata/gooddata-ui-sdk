@@ -1,22 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import defaultUserEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop.js";
 import cx from "classnames";
 import { ISeparators, withIntl } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
-import { defaultImport } from "default-import";
 import "vitest-dom/extend-expect";
 import { EditorView } from "@codemirror/view";
 import { MeasureNumberFormat, IMeasureNumberFormatOwnProps } from "../MeasureNumberFormat.js";
 
 import { IFormatTemplate, IToggleButtonProps } from "../typings.js";
-
-// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
-// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
-// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-const userEvent = defaultImport(defaultUserEvent);
 
 // CodeMirror window method requirements
 (window as any).document.body.createTextRange = vi.fn(() => {
