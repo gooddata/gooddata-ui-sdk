@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
@@ -15,7 +15,7 @@ import {
 import { UiKit } from "../../../_infra/storyGroups.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-import { defaultUser, defaultUserPermissions, grantees, inactiveUser, owner } from "./GranteeMock.js";
+import { defaultUserPermissions, grantees, inactiveUser, owner } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -46,7 +46,6 @@ const BasicExample: React.FC<BasicExampleProps> = ({
         <ComponentLabelsProvider labels={LabelsMock}>
             <div id="Share-Grantee-base-basic-example">
                 <ShareGranteeBase
-                    currentUser={defaultUser}
                     isDirty={isDirty}
                     isLoading={false}
                     sharedObject={{
