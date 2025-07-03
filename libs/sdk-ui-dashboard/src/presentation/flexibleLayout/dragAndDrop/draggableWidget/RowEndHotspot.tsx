@@ -78,8 +78,6 @@ export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<unknown>) =
                     {
                         "gd-fluidlayout-column-dropzone__text--hidden": remainingRowGridWidth < 2,
                         "gd-first-container-row-dropzone": rowIndex === 0,
-                        "gd-fluidlayout-column-row-end-hotspot--row": direction === "row",
-                        "gd-fluidlayout-column-row-end-hotspot--column": direction === "column",
                     },
                 )}
             >
@@ -90,9 +88,10 @@ export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<unknown>) =
                 />
                 <Hotspot
                     dropZoneType="prev"
+                    direction={direction}
                     layoutPath={layoutPathForEndHotspot}
                     isEndingHotspot={true}
-                    hideBorder={true}
+                    hideDropTarget={true}
                 />
             </GridLayoutElement>
         </>

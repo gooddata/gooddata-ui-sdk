@@ -1,6 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
 import React, { useCallback, useEffect, useRef, useMemo } from "react";
+import { IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
+import { bemFactory } from "@gooddata/sdk-ui-kit";
 
 import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
 import {
@@ -11,12 +13,6 @@ import {
     isVisualizationSwitcherDraggableItem,
 } from "../../../dragAndDrop/types.js";
 import { useDashboardDrop } from "../../../dragAndDrop/index.js";
-import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
-import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
-import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
-import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
-import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
-import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
 import { ILayoutItemPath } from "../../../../types.js";
 import {
     areLayoutPathsEqual,
@@ -25,18 +21,37 @@ import {
     serializeLayoutItemPath,
 } from "../../../../_staging/layout/coordinates.js";
 import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
+
+import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
+import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
+import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
+import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
+import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
+import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 
 interface IHotspotProps {
     layoutPath: ILayoutItemPath;
     dropZoneType: "prev" | "next";
+    direction: IDashboardLayoutContainerDirection;
     isEndingHotspot?: boolean;
-    classNames?: string;
-    hideBorder?: boolean;
+    hideDropTarget?: boolean;
+    isOverNestedLayout?: boolean;
+    isInFirstRow?: boolean;
 }
 
+const { e: dropzoneBemElement, b: dropzoneBemBlock } = bemFactory("gd-grid-layout-dropzone");
+
 export const Hotspot: React.FC<IHotspotProps> = (props) => {
-    const { layoutPath, classNames, dropZoneType, isEndingHotspot, hideBorder = false } = props;
+    const {
+        layoutPath,
+        dropZoneType,
+        direction,
+        isEndingHotspot = false,
+        hideDropTarget = false,
+        isInFirstRow = false,
+        isOverNestedLayout = false,
+    } = props;
     const isOverLastValue = useRef(false);
 
     const currentItemIndex = getItemIndex(layoutPath);
@@ -143,31 +158,30 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
 
     return (
         <div
-            className={cx(classNames, "dropzone", dropZoneType, {
-                hidden: !canBeDisplayed || !canDrop || !canDropSafe(item),
-                full: isEndingHotspot,
-                active: isOver,
-                [`s-dropzone-${serializeLayoutItemPath(layoutPath)}`]: !!layoutPath,
-            })}
+            className={cx(
+                dropzoneBemBlock({
+                    direction,
+                    type: dropZoneType,
+                    active: isOver,
+                    full: isEndingHotspot,
+                    hidden: !canBeDisplayed || !canDrop || !canDropSafe(item),
+                    isInFirstRow,
+                    isOverNestedLayout,
+                }),
+                {
+                    [`s-dropzone-${serializeLayoutItemPath(layoutPath)}`]: !!layoutPath,
+                },
+            )}
             style={debugStyle}
             ref={dropRef}
         >
-            {hideBorder ? null : <HotspotBorder />}
-        </div>
-    );
-};
-
-/**
- * A functional component that render hotspot border as dropzone
- * @returns A JSX element representing the hotspot border.
- */
-const HotspotBorder: React.FC = () => {
-    const status = "active";
-    return (
-        <div className="gd-hotspot-border__container">
-            <div className={`gd-hotspot-border__drop-target ${status}`}>
-                <div className="drop-target-inner" />
-            </div>
+            {hideDropTarget ? null : (
+                <div className={dropzoneBemElement("drop-target", { direction })}>
+                    <div className={dropzoneBemElement("drop-target-border")}>
+                        <div className={dropzoneBemElement("drop-target-inner")} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

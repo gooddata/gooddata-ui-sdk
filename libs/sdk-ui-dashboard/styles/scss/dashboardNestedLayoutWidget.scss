@@ -46,12 +46,6 @@
     }
 }
 
-.gd-nested-layout-widget-renderer {
-    .gd-nested-layout-hotspot.dropzone {
-        width: 50px;
-    }
-}
-
 .gd-dashboard-nested-layout-tab {
     display: none;
     width: auto;
@@ -115,109 +109,130 @@
             min-height: 300px;
         }
     }
-
-    .gd-hotspot-border__container {
-        display: none;
-        position: absolute;
-        padding: 10px 0;
-        width: 10px;
-        height: 100%;
-    }
-
-    .gd-first-container-row-dropzone .gd-hotspot-border__container {
-        padding-top: 0;
-    }
-
-    .gd-hotspot-border__drop-target {
-        width: 100%;
-        height: 100%;
-        padding: 2px;
-        border: 1px dashed kit-variables.$gd-palette-primary-base;
-        border-radius: 15px;
-        background-color: kit-variables.$gd-palette-primary-dimmed;
-
-        .drop-target-inner {
-            width: 4px;
-            height: 100%;
-            padding: 0;
-            border-radius: 2px;
-            background-color: kit-variables.$gd-palette-primary-base;
-        }
-    }
-
-    .dropzone.prev.active {
-        .gd-hotspot-border__container {
-            left: -15px;
-            display: block;
-        }
-    }
-
-    .dropzone.next.active {
-        .gd-hotspot-border__container {
-            right: -15px;
-            display: block;
-        }
-    }
 }
 
-// The class is used in the nested layout, no need to nest this inside of .gd-grid-layout.
-// The block redefines the vertical hot zones and drop zones to horizontal one for column layout.
-.gd-dashboard-nested-layout-widget--column {
-    .dropzone {
-        &.prev,
-        &.next {
-            top: unset;
-            right: 0;
-            bottom: unset;
-            left: 0;
-            width: 100%;
-            height: 50%;
+// Definition of horizontal and vertical hot and drop zones.
+.gd-grid-layout-dropzone {
+    $dropzoneRoot: &;
+    z-index: zIndexes.$drag-and-drop-drop-zone;
+
+    &--type-prev,
+    &--type-next {
+        position: absolute;
+    }
+
+    &--type-prev {
+        .drop-hint {
+            float: left;
+            margin-left: -3px;
+        }
+    }
+
+    &--type-next {
+        .drop-hint {
+            float: right;
+            margin-left: 3px;
+        }
+    }
+
+    &--hidden {
+        display: none;
+    }
+
+    // definition of horizontal drop zones
+    &--direction-row {
+        &#{$dropzoneRoot}--type-prev,
+        &#{$dropzoneRoot}--type-next {
+            top: 0;
+            bottom: 0;
+            width: 50%;
+
+            &#{$dropzoneRoot}--full {
+                width: 100%;
+            }
         }
 
-        &.prev {
-            top: 0;
+        &#{$dropzoneRoot}--type-prev {
+            left: 0;
 
-            &.full {
+            &#{$dropzoneRoot}--active {
+                #{$dropzoneRoot}__drop-target--direction-row {
+                    left: -15px;
+                }
+            }
+        }
+
+        &#{$dropzoneRoot}--type-next {
+            right: 0;
+
+            &#{$dropzoneRoot}--active {
+                #{$dropzoneRoot}__drop-target--direction-row {
+                    right: -15px;
+                }
+            }
+        }
+
+        &#{$dropzoneRoot}--extended {
+            width: 100%;
+        }
+
+        &#{$dropzoneRoot}--isOverNestedLayout {
+            &#{$dropzoneRoot}--type-prev,
+            &#{$dropzoneRoot}--type-next {
+                // nested container has has narrower hotspot so it is possible to drop widget into it, while
+                // the non-container widgets inside of it are split half and half (50%)
+                width: 50px;
+            }
+        }
+    }
+
+    // definition of vertical drop zones
+    &--direction-column {
+        &#{$dropzoneRoot}--type-prev,
+        &#{$dropzoneRoot}--type-next {
+            right: 0;
+            left: 0;
+            height: 50%;
+
+            &#{$dropzoneRoot}--full {
                 width: 50%;
             }
+        }
 
-            &.active {
-                .gd-hotspot-border__container {
-                    left: unset; // remove left shift defined for vertical hotspot
+        &#{$dropzoneRoot}--type-prev {
+            top: 0;
+
+            &#{$dropzoneRoot}--active {
+                #{$dropzoneRoot}__drop-target--direction-column {
                     top: -5px; // shift above the widget, in the middle of space between two widgets
                 }
             }
         }
 
-        &.next {
+        &#{$dropzoneRoot}--type-next {
             bottom: 0;
 
-            &.full {
-                width: 50%;
-            }
-
-            &.active {
-                .gd-hotspot-border__container {
-                    right: unset; // remove right shift defined for vertical hotspot
+            &#{$dropzoneRoot}--active {
+                #{$dropzoneRoot}__drop-target--direction-column {
                     bottom: -5px; // shift below the widget, in the middle of space between two widgets
                 }
             }
         }
 
-        &.gd-nested-layout-hotspot {
-            &.prev,
-            &.next {
+        &#{$dropzoneRoot}--isOverNestedLayout {
+            &#{$dropzoneRoot}--type-prev,
+            &#{$dropzoneRoot}--type-next {
                 // nested container has has narrower hotspot so it is possible to drop widget into it, while
                 // the non-container widgets inside of it are split half and half (50%)
                 height: 50px;
             }
         }
 
-        &.gd-first-container-row-dropzone {
-            &.prev {
-                &.active {
+        &#{$dropzoneRoot}--isInFirstRow {
+            &#{$dropzoneRoot}--type-prev {
+                &#{$dropzoneRoot}--active {
                     // stylelint-disable-next-line max-nesting-depth
-                    .gd-hotspot-border__container {
+                    #{$dropzoneRoot}__drop-target--direction-column {
                         top: -15px; // the first widget does not have same padding as the subsequent ones
                     }
                 }
@@ -225,15 +240,55 @@
         }
     }
 
-    .gd-hotspot-border__container {
-        padding: 0; // remove padding defined for vertical hotspot to have drop zone same width as widget
-        width: 100%;
-        height: 10px;
+    // drop target inside of the drop zone
+    &__drop-target {
+        display: none;
+        position: absolute;
+
+        &--direction-row {
+            padding: 10px 0;
+            width: 10px;
+            height: 100%;
+
+            #{$dropzoneRoot}__drop-target-inner {
+                width: 4px;
+            }
+        }
+
+        &--direction-column {
+            padding: 0;
+            width: 100%;
+            height: 10px;
+
+            #{$dropzoneRoot}__drop-target-inner {
+                width: 100%;
+            }
+        }
+
+        &#{$dropzoneRoot}--isInFirstRow {
+            padding-top: 0;
+        }
     }
 
-    .gd-hotspot-border__drop-target {
-        .drop-target-inner {
-            width: 100%;
+    &--active {
+        #{$dropzoneRoot}__drop-target {
+            display: block;
         }
+    }
+
+    &__drop-target-border {
+        width: 100%;
+        height: 100%;
+        padding: 2px;
+        border: 1px dashed kit-variables.$gd-palette-primary-base;
+        border-radius: 15px;
+        background-color: kit-variables.$gd-palette-primary-dimmed;
+    }
+
+    &__drop-target-inner {
+        height: 100%;
+        padding: 0;
+        border-radius: 2px;
+        background-color: kit-variables.$gd-palette-primary-base;
     }
 }
