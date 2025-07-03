@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { Button, Icon, Typography } from "@gooddata/sdk-ui-kit";
+import { Button, Icon } from "@gooddata/sdk-ui-kit";
 import { connect } from "react-redux";
 import { makeAssistantMessage, makeTextContents, makeUserMessage } from "../model.js";
 import { setMessagesAction } from "../store/index.js";
@@ -37,12 +37,13 @@ const EmptyStateComponent: React.FC<EmptyStateDispatchProps & WrappedComponentPr
 }) => {
     return (
         <div className="gd-gen-ai-chat__messages__empty">
-            <Typography tagName="h1" className="gd-gen-ai-chat__messages__empty__h1--accent">
-                <FormattedMessage id="gd.gen-ai.welcome.line-1" />
-            </Typography>
-            <Typography tagName="h1">
+            <h3 className="gd-typography gd-typography--h1">
+                <span className="gd-gen-ai-chat__messages__empty__h1--accent">
+                    <FormattedMessage id="gd.gen-ai.welcome.line-1" />
+                </span>
+                <br />
                 <FormattedMessage id="gd.gen-ai.welcome.line-2" />
-            </Typography>
+            </h3>
             {quickOptions.map((option) => (
                 <Button
                     key={option.title.id}

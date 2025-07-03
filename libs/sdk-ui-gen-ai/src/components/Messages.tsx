@@ -18,11 +18,16 @@ type MessagesComponentProps = {
 const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading, initializing }) => {
     const { scrollerRef } = useMessageScroller(messages);
     const isLoading = loading === "loading" || loading === "clearing" || initializing;
+    const isEmpty = !messages.length && !isLoading;
 
     return (
         <div className="gd-gen-ai-chat__messages" ref={scrollerRef}>
-            <div className="gd-gen-ai-chat__messages__scroll" role="log" aria-relevant="additions">
-                {!messages.length && !isLoading ? <EmptyState /> : null}
+            <div
+                className="gd-gen-ai-chat__messages__scroll"
+                role="log"
+                aria-relevant={isEmpty || isLoading ? undefined : "additions"}
+            >
+                {isEmpty ? <EmptyState /> : null}
                 {isLoading ? <Skeleton count={3} height="2em" /> : null}
                 {!isLoading
                     ? messages.map((message, index) => {
