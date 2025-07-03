@@ -766,5 +766,12 @@
     "filterBar.label": "Filter",
     "controlButtons.asTable": "Als Tabelle anzeigen",
     "controlButtons.asOriginal": "Originalvisualisierung anzeigen",
-    "messages.shareLinkCopied": "Link kopiert."
+    "messages.shareLinkCopied": "Link kopiert.",
+    "addPanel.dashboardLayout.tooltip.learnMore": "Weitere Informationen",
+    "nestedLayoutToolbar.direction.title": "Layout-Richtung",
+    "nestedLayoutToolbar.direction.row": "Horizontal mit Umhüllung",
+    "nestedLayoutToolbar.direction.row.tooltip": "Horizontales Layout mit Umbruch.",
+    "nestedLayoutToolbar.direction.column": "Vertikal",
+    "nestedLayoutToolbar.direction.column.tooltip": "Vertikales Layout.",
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "Die Richtung kann nicht in eine Vertikale geändert werden, wenn der Container verschachtelte Container mit horizontaler Richtung enthält."
 }

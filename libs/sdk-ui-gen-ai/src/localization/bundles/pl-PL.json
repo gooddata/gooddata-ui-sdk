@@ -46,7 +46,7 @@
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Zapisz jako nowy…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Otwórz w Analyze",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Skopiuj link wizualizacji",
-    "gd.gen-ai.message.label.user": "Dane wejściowe użytkownika",
+    "gd.gen-ai.message.label.user": "Użytkownik:",
     "gd.gen-ai.global-no-llm": "Nie skonfigurowano dostawcy LLM",
     "gd.gen-ai.global-no-llm.description": "Skonfiguruj dostawcę, aby włączyć chatbota.",
     "gd.gen-ai.global-no-llm.button-create-llm": "Skonfiguruj dostawcę",
@@ -54,5 +54,10 @@
     "gd.gen-ai.permission-error.description": "Nie masz dostępu do chatbota. Skontaktuj się z administratorem, aby uzyskać dostęp.",
     "gd.gen-ai.feedback.like": "Oznacz tę wiadomość jako pomocną",
     "gd.gen-ai.feedback.dislike": "Oznacz tę wiadomość jako nieprzydatną",
-    "gd.gen-ai.dialog.label": "Dialog czatu asystenta AI"
+    "gd.gen-ai.dialog.label": "Rozmowa z asystentem AI",
+    "gd.gen-ai.input-label.mac": "Zadaj swoje pytanie. Użyj ctrl+spacja lub cmd+I, aby uzyskać sugestie.",
+    "gd.gen-ai.input-label.win": "Zadaj swoje pytanie. Użyj ctrl+spacja lub ctrl+I, aby uzyskać sugestie.",
+    "gd.gen-ai.message.label.assistant": "Bot:",
+    "gd.gen-ai.skip-messages-history": "Przejdź do wprowadzania asystenta AI",
+    "gd.gen-ai.skip-navigation": "Pomiń nawigację"
 }

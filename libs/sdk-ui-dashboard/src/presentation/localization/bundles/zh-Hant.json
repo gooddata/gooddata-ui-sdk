@@ -766,5 +766,12 @@
     "filterBar.label": "過濾器",
     "controlButtons.asTable": "以表格形式顯示",
     "controlButtons.asOriginal": "顯示原始可視化",
-    "messages.shareLinkCopied": "連結已複製。"
+    "messages.shareLinkCopied": "連結已複製。",
+    "addPanel.dashboardLayout.tooltip.learnMore": "了解更多",
+    "nestedLayoutToolbar.direction.title": "佈局方向",
+    "nestedLayoutToolbar.direction.row": "水平包裝",
+    "nestedLayoutToolbar.direction.row.tooltip": "水平佈局，附換行。",
+    "nestedLayoutToolbar.direction.column": "垂直的",
+    "nestedLayoutToolbar.direction.column.tooltip": "垂直佈局。",
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "如果容器包含水平方向的巢狀容器，則方向不能變更為垂直。"
 }

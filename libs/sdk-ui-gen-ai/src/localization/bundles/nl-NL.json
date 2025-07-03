@@ -20,7 +20,7 @@
     "gd.gen-ai.state.cancelled": "Evaluatie geannuleerd…",
     "gd.gen-ai.state.in-progress": "U antwoord genereren…",
     "gd.gen-ai.global-error.description": "Probeer de chatbot opnieuw op te starten en opnieuw beginnen.",
-    "gd.gen-ai.button.send": "Sturen",
+    "gd.gen-ai.button.send": "Verstuur bericht",
     "gd.gen-ai.input-label": "Stel uw vraag",
     "gd.gen-ai.assistant-icon": "Chatbot-antwoord",
     "gd.gen-ai.button.save": "Opslaan",
@@ -46,7 +46,7 @@
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Opslaan als nieuw…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Openen in Analyseren",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Link naar visualisatie kopiëren",
-    "gd.gen-ai.message.label.user": "Invoer gebruiker",
+    "gd.gen-ai.message.label.user": "Gebruiker:",
     "gd.gen-ai.global-no-llm": "Geen LLM-provider geconfigureerd",
     "gd.gen-ai.global-no-llm.description": "Configureer een provider om de chatbot in te schakelen.",
     "gd.gen-ai.global-no-llm.button-create-llm": "Configureer provider",
@@ -54,5 +54,10 @@
     "gd.gen-ai.permission-error.description": "Je hebt geen toegang tot de chatbot. Neem contact op met je beheerder om toegang aan te vragen.",
     "gd.gen-ai.feedback.like": "Markeer dit bericht als nuttig",
     "gd.gen-ai.feedback.dislike": "Markeer dit bericht als niet nuttig",
-    "gd.gen-ai.dialog.label": "AI assistent chatbot dialoog"
+    "gd.gen-ai.dialog.label": "AI assistent gesprek",
+    "gd.gen-ai.input-label.mac": "Stel je vraag. Gebruik control+space of cmd+I voor suggesties.",
+    "gd.gen-ai.input-label.win": "Stel je vraag. Gebruik control+space of control+I voor suggesties.",
+    "gd.gen-ai.message.label.assistant": "Bot:",
+    "gd.gen-ai.skip-messages-history": "Doorgaan naar invoer AI-assistent",
+    "gd.gen-ai.skip-navigation": "Navigatie overslaan"
 }

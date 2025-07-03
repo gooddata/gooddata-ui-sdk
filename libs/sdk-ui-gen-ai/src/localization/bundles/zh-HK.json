@@ -20,10 +20,10 @@
     "gd.gen-ai.state.cancelled": "評估已取消…",
     "gd.gen-ai.state.in-progress": "正在生成您的響應…",
     "gd.gen-ai.global-error.description": "嘗試重新啟動聊天機械人並重新開始。",
-    "gd.gen-ai.button.send": "發送",
+    "gd.gen-ai.button.send": "發送消息",
     "gd.gen-ai.input-label": "提出您的問題",
     "gd.gen-ai.assistant-icon": "Chatbot響應",
-    "gd.gen-ai.button.save": "救",
+    "gd.gen-ai.button.save": "儲存",
     "gd.gen-ai.button.cancel": "取消",
     "gd.gen-ai.button.edit": "編輯",
     "gd.gen-ai.save-dialog.label": "名字",
@@ -46,7 +46,7 @@
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "另存為新…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "在Analyze中打開",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "複製可視化效果link",
-    "gd.gen-ai.message.label.user": "用戶輸入",
+    "gd.gen-ai.message.label.user": "用戶：",
     "gd.gen-ai.global-no-llm": "未配置LLM提供程序",
     "gd.gen-ai.global-no-llm.description": "配置提供商以啟用聊天機械人。",
     "gd.gen-ai.global-no-llm.button-create-llm": "配置提供程序",
@@ -54,5 +54,10 @@
     "gd.gen-ai.permission-error.description": "你無權訪問聊天機械人。 請與您的管理員聯繫以請求訪問權限。",
     "gd.gen-ai.feedback.like": "將此消息標記為有用",
     "gd.gen-ai.feedback.dislike": "將此消息標記為無用",
-    "gd.gen-ai.dialog.label": "AI助手傾偈機械人對話"
+    "gd.gen-ai.dialog.label": "AI助手對話",
+    "gd.gen-ai.input-label.mac": "提出您的問題。 使用control+space或cmd+I獲取建議。",
+    "gd.gen-ai.input-label.win": "提出您的問題。 使用control+space或control+I獲取建議。",
+    "gd.gen-ai.message.label.assistant": "機械人：",
+    "gd.gen-ai.skip-messages-history": "跳到AI助手輸入",
+    "gd.gen-ai.skip-navigation": "跳过導航"
 }

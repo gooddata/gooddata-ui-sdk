@@ -766,5 +766,12 @@
     "filterBar.label": "Filtros",
     "controlButtons.asTable": "Mostrar como tabla",
     "controlButtons.asOriginal": "Mostrar visualización original",
-    "messages.shareLinkCopied": "Enlace copiado."
+    "messages.shareLinkCopied": "Enlace copiado.",
+    "addPanel.dashboardLayout.tooltip.learnMore": "Más información",
+    "nestedLayoutToolbar.direction.title": "Dirección del diseño",
+    "nestedLayoutToolbar.direction.row": "Horizontal con envoltura",
+    "nestedLayoutToolbar.direction.row.tooltip": "Disposición horizontal con envoltura.",
+    "nestedLayoutToolbar.direction.column": "Vertical",
+    "nestedLayoutToolbar.direction.column.tooltip": "Disposición vertical.",
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "La dirección no puede cambiarse a vertical si el contenedor contiene contenedores anidados con dirección horizontal."
 }

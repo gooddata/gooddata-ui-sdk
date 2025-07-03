@@ -46,7 +46,7 @@
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Yeni olarak kaydet…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Analyze'da Aç",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Görselleştirme bağlantısını kopyala",
-    "gd.gen-ai.message.label.user": "Kullanıcı girişi",
+    "gd.gen-ai.message.label.user": "Kullanıcı:",
     "gd.gen-ai.global-no-llm": "LLM sağlayıcısı yapılandırılmadı",
     "gd.gen-ai.global-no-llm.description": "Sohbet robotunu etkinleştirmek için bir sağlayıcı yapılandırın.",
     "gd.gen-ai.global-no-llm.button-create-llm": "Sağlayıcıyı yapılandır",
@@ -54,5 +54,10 @@
     "gd.gen-ai.permission-error.description": "Sohbet botuna erişiminiz yok. Erişim talep etmek için yöneticinizle iletişime geçin.",
     "gd.gen-ai.feedback.like": "Bu mesajı faydalı olarak işaretle",
     "gd.gen-ai.feedback.dislike": "Bu mesajı yararlı değil olarak işaretle",
-    "gd.gen-ai.dialog.label": "Yapay zeka asistanı sohbet penceresi"
+    "gd.gen-ai.dialog.label": "AI asistanı konuşması",
+    "gd.gen-ai.input-label.mac": "Sorunuzu sorun. Öneriler için control+space veya cmd+I kullanın.",
+    "gd.gen-ai.input-label.win": "Sorunuzu sorun. Öneriler için kontrol+boşluk veya kontrol+I kullanın.",
+    "gd.gen-ai.message.label.assistant": "Bot:",
+    "gd.gen-ai.skip-messages-history": "Yapay zeka asistanı girdisine atla",
+    "gd.gen-ai.skip-navigation": "Gezintiyi atla"
 }

@@ -766,5 +766,12 @@
     "filterBar.label": "Filters",
     "controlButtons.asTable": "Als tabel weergeven",
     "controlButtons.asOriginal": "Toon originele visualisatie",
-    "messages.shareLinkCopied": "Link gekopieerd."
+    "messages.shareLinkCopied": "Link gekopieerd.",
+    "addPanel.dashboardLayout.tooltip.learnMore": "Meer informatie",
+    "nestedLayoutToolbar.direction.title": "Lay-out richting",
+    "nestedLayoutToolbar.direction.row": "Horizontaal met wikkel",
+    "nestedLayoutToolbar.direction.row.tooltip": "Horizontale lay-out met omslag.",
+    "nestedLayoutToolbar.direction.column": "Verticaal",
+    "nestedLayoutToolbar.direction.column.tooltip": "Verticale lay-out.",
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "De richting kan niet worden gewijzigd in verticaal als de container geneste containers bevat met een horizontale richting."
 }

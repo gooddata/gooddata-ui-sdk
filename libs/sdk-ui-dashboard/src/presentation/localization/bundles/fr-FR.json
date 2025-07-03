@@ -766,5 +766,12 @@
     "filterBar.label": "Filtres",
     "controlButtons.asTable": "Afficher sous forme de tableau",
     "controlButtons.asOriginal": "Afficher la visualisation originale",
-    "messages.shareLinkCopied": "Lien copié."
+    "messages.shareLinkCopied": "Lien copié.",
+    "addPanel.dashboardLayout.tooltip.learnMore": "En savoir plus",
+    "nestedLayoutToolbar.direction.title": "Sens de la mise en page",
+    "nestedLayoutToolbar.direction.row": "Horizontal avec enveloppement",
+    "nestedLayoutToolbar.direction.row.tooltip": "Mise en page horizontale avec habillage.",
+    "nestedLayoutToolbar.direction.column": "Vertical",
+    "nestedLayoutToolbar.direction.column.tooltip": "Disposition verticale.",
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "La direction ne peut pas être changée en verticale si le conteneur contient des conteneurs imbriqués avec une direction horizontale."
 }

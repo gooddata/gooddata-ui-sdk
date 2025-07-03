@@ -20,7 +20,7 @@
     "gd.gen-ai.state.cancelled": "Arviointi peruutettu…",
     "gd.gen-ai.state.in-progress": "Luodaan vastaustasi…",
     "gd.gen-ai.global-error.description": "Yritä käynnistää chatbotti uudelleen ja aloittaa alusta.",
-    "gd.gen-ai.button.send": "Lähetä",
+    "gd.gen-ai.button.send": "Lähetä viesti",
     "gd.gen-ai.input-label": "Esitä kysymyksesi",
     "gd.gen-ai.assistant-icon": "Chatbotin vastaus",
     "gd.gen-ai.button.save": "Tallenna",
@@ -46,7 +46,7 @@
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Tallenna uutena…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Avaa kohdassa Analysoi",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Kopioi visualisointilinkki",
-    "gd.gen-ai.message.label.user": "Käyttäjän syöttö",
+    "gd.gen-ai.message.label.user": "Käyttäjä:",
     "gd.gen-ai.global-no-llm": "LLM-palveluntarjoajaa ei ole määritetty",
     "gd.gen-ai.global-no-llm.description": "Määritä palveluntarjoaja ottamaan chatbotti käyttöön.",
     "gd.gen-ai.global-no-llm.button-create-llm": "Määritä palveluntarjoaja",
@@ -54,5 +54,10 @@
     "gd.gen-ai.permission-error.description": "Sinulla ei ole pääsyä chatbottiin. Ota yhteyttä järjestelmänvalvojaan pyytääksesi käyttöoikeutta.",
     "gd.gen-ai.feedback.like": "Merkitse tämä viesti hyödylliseksi",
     "gd.gen-ai.feedback.dislike": "Merkitse tämä viesti tarpeettomaksi",
-    "gd.gen-ai.dialog.label": "Tekoälyavustajan chatbot-valintaikkuna"
+    "gd.gen-ai.dialog.label": "Tekoälyavustajan keskustelu",
+    "gd.gen-ai.input-label.mac": "Esitä kysymyksesi. Käytä ehdotuksiin ohjausta+tilaa tai cmd+I: tä.",
+    "gd.gen-ai.input-label.win": "Esitä kysymyksesi. Käytä ehdotuksiin ohjausta+tilaa tai ohjausta+I.",
+    "gd.gen-ai.message.label.assistant": "Bot:",
+    "gd.gen-ai.skip-messages-history": "Siirry tekoälyavustajan syöttöön",
+    "gd.gen-ai.skip-navigation": "Ohita navigointi"
 }

@@ -766,5 +766,12 @@
     "filterBar.label": "Filters",
     "controlButtons.asTable": "Show as table",
     "controlButtons.asOriginal": "Show original visualisation",
-    "messages.shareLinkCopied": "Link copied"
+    "messages.shareLinkCopied": "Link copied",
+    "addPanel.dashboardLayout.tooltip.learnMore": "Learn more",
+    "nestedLayoutToolbar.direction.title": "Layout orientation",
+    "nestedLayoutToolbar.direction.row": "Horizontal with wrap",
+    "nestedLayoutToolbar.direction.row.tooltip": "Horizontal layout with wrap",
+    "nestedLayoutToolbar.direction.column": "Vertical",
+    "nestedLayoutToolbar.direction.column.tooltip": "Vertical layout",
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "Direction cannot be changed to vertical if the container contains nested containers with a horizontal direction"
 }
