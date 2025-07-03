@@ -30,19 +30,19 @@ const DocumentHeader: React.FC<IDocumentHeaderProps> = ({
 
         document.title = getEffectiveTitle(pageTitle, brandTitle);
 
-        const linkApple = (document.querySelector("link[rel='apple-touch-icon']") ||
-            document.createElement("link")) as HTMLLinkElement;
+        const linkAppleQuery = document.querySelector("link[rel='apple-touch-icon']");
+        const linkApple = (linkAppleQuery || document.createElement("link")) as HTMLLinkElement;
         linkApple.rel = "apple-touch-icon";
         linkApple.type = "image/png";
         linkApple.href = appleTouchIconUrl;
-        document.head.appendChild(linkApple);
+        if (!linkAppleQuery) document.head.appendChild(linkApple);
 
-        const linkFavicon = (document.querySelector("link[rel~='icon']") ||
-            document.createElement("link")) as HTMLLinkElement;
+        const linkFaviconQuery = document.querySelector("link[rel~='icon']");
+        const linkFavicon = (linkFaviconQuery || document.createElement("link")) as HTMLLinkElement;
         linkFavicon.rel = "shortcut icon";
         linkFavicon.type = "image/x-icon";
         linkFavicon.href = faviconUrl;
-        document.head.appendChild(linkFavicon);
+        if (!linkFaviconQuery) document.head.appendChild(linkFavicon);
     }, [pageTitle, brandTitle, appleTouchIconUrl, faviconUrl]);
 
     return null;
