@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
     ObjRef,
     IInsight,
@@ -30,6 +30,7 @@ export const getMemoizedWidgetSanitizer =
     (
         getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
         enableKDWidgetCustomHeight: boolean,
+        enableDashboardFlexibleLayout: boolean,
     ): DashboardLayoutItemModifications<TWidget> => {
         return (item) => {
             const widget = item.facade().widget();
@@ -41,7 +42,11 @@ export const getMemoizedWidgetSanitizer =
             if (!cache.has(cacheKey)) {
                 const resultBuilder: IDashboardLayoutItemBuilder<TWidget> = flow(
                     polluteWidgetRefsWithBothIdAndUri(getInsightByRef),
-                    validateItemsSize(getInsightByRef, enableKDWidgetCustomHeight),
+                    validateItemsSize(
+                        getInsightByRef,
+                        enableKDWidgetCustomHeight,
+                        enableDashboardFlexibleLayout,
+                    ),
                 )(item);
                 cache.set(cacheKey, resultBuilder.build());
             }
@@ -100,6 +105,7 @@ export function polluteWidgetRefsWithBothIdAndUri<TWidget = IDashboardWidget>(
 export function validateItemsSize<TWidget = IDashboardWidget>(
     getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
     enableKDWidgetCustomHeight: boolean,
+    enableDashboardFlexibleLayout: boolean,
 ): DashboardLayoutItemModifications<TWidget> {
     return (item) => {
         const widget = item.facade().widget();
@@ -121,7 +127,7 @@ export function validateItemsSize<TWidget = IDashboardWidget>(
                 currentHeight,
                 "insight",
                 insight,
-                { enableKDWidgetCustomHeight },
+                { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout },
             );
             if (currentWidth !== validWidth || currentHeight !== validHeight) {
                 const gridWidthProp = currentWidth !== validWidth ? { gridWidth: validWidth } : {};

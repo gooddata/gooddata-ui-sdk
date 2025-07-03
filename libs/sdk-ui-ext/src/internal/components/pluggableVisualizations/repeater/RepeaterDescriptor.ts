@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { IRepeaterProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -41,9 +41,9 @@ export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualiz
                 max: layoutDescriptor.gridColumnsCount,
             },
             height: {
-                default: this.getDefaultHeight(settings.enableKDWidgetCustomHeight),
-                min: this.getMinHeight(settings.enableKDWidgetCustomHeight),
-                max: this.getMaxHeight(settings.enableKDWidgetCustomHeight),
+                default: this.getDefaultHeight(settings),
+                min: this.getMinHeight(settings),
+                max: this.getMaxHeight(settings),
             },
         };
     }
