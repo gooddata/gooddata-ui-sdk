@@ -3678,9 +3678,6 @@ importers:
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.2
-      react-helmet:
-        specifier: ^6.1.0
-        version: 6.1.0(react@18.3.1)
       react-intl:
         specifier: 6.8.9
         version: 6.8.9(react@18.3.1)(typescript@5.3.3)
@@ -3775,9 +3772,6 @@ importers:
       '@types/react-dom':
         specifier: 18.3.7
         version: 18.3.7(@types/react@18.3.23)
-      '@types/react-helmet':
-        specifier: ^6.1.4
-        version: 6.1.11
       '@types/react-measure':
         specifier: ^2.0.8
         version: 2.0.12
@@ -12980,12 +12974,6 @@ packages:
       '@types/react': ^18.0.0
     dependencies:
       '@types/react': 18.3.23
-
-  /@types/react-helmet@6.1.11:
-    resolution: {integrity: sha512-0QcdGLddTERotCXo3VFlUSWO3ztraw8nZ6e3zJSgG7apwV5xt+pJUS8ewPBqT4NYB1optGLprNQzFleIY84u/g==}
-    dependencies:
-      '@types/react': 18.3.23
-    dev: true
 
   /@types/react-lines-ellipsis@0.15.5:
     resolution: {integrity: sha512-4WeU8aDsYZtpA3a3iuOZjs0sss6ra2dbTeGIfN2UJEnbYwlEE8Ar+Cpisvuk9thu7ClYGwOIBMkj/o3Unrj+tw==}
@@ -22802,18 +22790,6 @@ packages:
       react: 18.3.1
     dev: false
 
-  /react-helmet@6.1.0(react@18.3.1):
-    resolution: {integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==}
-    peerDependencies:
-      react: '>=16.3.0'
-    dependencies:
-      object-assign: 4.1.1
-      prop-types: 15.8.1
-      react: 18.3.1
-      react-fast-compare: 3.2.2
-      react-side-effect: 2.1.2(react@18.3.1)
-    dev: false
-
   /react-intl@6.8.9(react@18.3.1)(typescript@5.3.3):
     resolution: {integrity: sha512-TUfj5E7lyUDvz/GtovC9OMh441kBr08rtIbgh3p0R8iF3hVY+V2W9Am7rb8BpJ/29BH1utJOqOOhmvEVh3GfZg==}
     peerDependencies:
@@ -23041,14 +23017,6 @@ packages:
     transitivePeerDependencies:
       - '@types/react'
       - supports-color
-    dev: false
-
-  /react-side-effect@2.1.2(react@18.3.1):
-    resolution: {integrity: sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==}
-    peerDependencies:
-      react: ^16.3.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.3.1
     dev: false
 
   /react-textarea-autosize@8.4.0(@types/react@18.3.23)(react@18.3.1):
@@ -26186,7 +26154,7 @@ packages:
       dom-accessibility-api: 0.6.3
       lodash-es: 4.17.21
       redent: 4.0.0
-      vitest: 3.0.8(@types/node@18.19.3)(jsdom@26.0.0)(sass@1.69.5)
+      vitest: 3.0.8(@types/node@18.19.3)(happy-dom@15.10.2)
     dev: true
 
   /vitest@3.0.8(@types/node@18.19.3)(happy-dom@15.10.2):
