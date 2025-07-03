@@ -28,7 +28,7 @@ export interface InputPureProps extends IDomNativeProps {
     isSmall: boolean;
     maxlength: number;
     onChange: (value: string | number, e?: React.ChangeEvent<HTMLInputElement>) => void;
-    onKeyPress?: (e: React.KeyboardEvent) => void;
+    onKeyDown?: (e: React.KeyboardEvent) => void;
     onEscKeyPress: (e: React.KeyboardEvent) => void;
     onEnterKeyPress: () => void;
     onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -255,7 +255,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                     onChange={this.onChange}
                     onBlur={onBlur}
                     onFocus={onFocus}
-                    onKeyDown={this.props.onKeyPress ?? this.onKeyPress}
+                    onKeyDown={this.props.onKeyDown ?? this.onKeyPress}
                     placeholder={placeholder}
                     readOnly={readonly}
                     value={value}

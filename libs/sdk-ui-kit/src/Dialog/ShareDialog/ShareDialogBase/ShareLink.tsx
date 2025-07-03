@@ -32,7 +32,7 @@ export const ShareLink: React.FC<IShareLinkProps> = ({
         onShareLinkCopy?.(shareLink);
     }, [shareLink, onShareLinkCopy]);
 
-    const onKeyPress = useCallback(
+    const onKeyDown = useCallback(
         (e: React.KeyboardEvent) => {
             if (isCopyKey(e)) {
                 onShareLinkCopy?.(shareLink);
@@ -54,7 +54,7 @@ export const ShareLink: React.FC<IShareLinkProps> = ({
                 iconButton="copy"
                 onIconButtonClick={onIconButtonClick}
                 iconButtonLabel={buttonLabel}
-                onKeyPress={onKeyPress}
+                onKeyDown={onKeyDown}
                 accessibilityConfig={{
                     ariaDescribedBy: SHARE_LINK_HELPER_TEXT_ID,
                     ariaLabelledBy: SHARE_LINK_HEADLINE_ID,

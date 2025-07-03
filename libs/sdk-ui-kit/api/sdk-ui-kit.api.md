@@ -3549,7 +3549,7 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     onIconButtonClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
     // (undocumented)
-    onKeyPress?: (e: React_2.KeyboardEvent) => void;
+    onKeyDown?: (e: React_2.KeyboardEvent) => void;
     // (undocumented)
     placeholder: string;
     // (undocumented)
