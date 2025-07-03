@@ -315,6 +315,9 @@ export enum ComputeRatioRule {
 }
 
 // @alpha
+export type DashboardAttachmentType = "PDF" | "XLSX" | "PPTX" | "PDF_SLIDES";
+
+// @alpha
 export type DashboardAttributeFilterConfigMode = "readonly" | "hidden" | "active";
 
 // @internal
@@ -1907,7 +1910,7 @@ export interface IExportDefinitionDashboardContent {
 export type IExportDefinitionDashboardRequestPayload = {
     type: "dashboard";
     fileName: string;
-    format: "PDF";
+    format: DashboardAttachmentType;
     settings?: IExportDefinitionDashboardSettings;
     content: IExportDefinitionDashboardContent;
 };
@@ -1915,7 +1918,11 @@ export type IExportDefinitionDashboardRequestPayload = {
 // @alpha
 export interface IExportDefinitionDashboardSettings {
     // (undocumented)
-    orientation: "portrait" | "landscape";
+    exportInfo?: boolean;
+    // (undocumented)
+    mergeHeaders?: boolean;
+    // (undocumented)
+    orientation?: "portrait" | "landscape";
 }
 
 // @alpha
@@ -1947,13 +1954,15 @@ export interface IExportDefinitionVisualizationObjectContent {
 export type IExportDefinitionVisualizationObjectRequestPayload = {
     type: "visualizationObject";
     fileName: string;
-    format: "CSV" | "XLSX" | "HTML" | "PDF";
+    format: WidgetAttachmentType;
     settings?: IExportDefinitionVisualizationObjectSettings;
     content: IExportDefinitionVisualizationObjectContent;
 };
 
 // @alpha
 export interface IExportDefinitionVisualizationObjectSettings {
+    // (undocumented)
+    exportInfo?: boolean;
     // (undocumented)
     mergeHeaders?: boolean;
     // (undocumented)
@@ -3520,6 +3529,7 @@ export interface ISettings {
     enableNewHeadline?: boolean;
     // (undocumented)
     enableNewNavigationForResponsiveUi?: boolean;
+    enableNewScheduledExport?: boolean;
     enableNewUserCreationFlow?: boolean;
     enableNotificationChannelIdentifiers?: boolean;
     enableNumberSeparators?: boolean;
@@ -4980,6 +4990,9 @@ export type WebhookRecipient = {
 
 // @public
 export type WeekStart = "Sunday" | "Monday";
+
+// @alpha
+export type WidgetAttachmentType = "CSV" | "XLSX" | "CSV_RAW" | "PNG" | "PPTX" | "PDF" | "HTML";
 
 // @alpha
 export function widgetId(widget: IWidget): string;

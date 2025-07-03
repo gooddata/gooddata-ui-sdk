@@ -1539,7 +1539,7 @@ export interface IWorkspaceDescriptorUpdate {
     title?: string;
 }
 
-// @alpha
+// @alpha @deprecated
 export interface IWorkspaceExportDefinitionsService {
     createExportDefinition(exportDefinition: IExportDefinitionMetadataObjectDefinition): Promise<IExportDefinitionMetadataObject>;
     deleteExportDefinition(ref: ObjRef): Promise<void>;

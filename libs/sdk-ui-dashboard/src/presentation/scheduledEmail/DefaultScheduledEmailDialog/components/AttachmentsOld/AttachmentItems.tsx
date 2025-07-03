@@ -11,7 +11,7 @@ import {
     isSpaceKey,
     OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
-import { AttachmentType, WidgetAttachmentType } from "../../types.js";
+import { OldAttachmentType, OldWidgetAttachmentType } from "../../types.js";
 import { FormattedMessage, useIntl } from "react-intl";
 import { IExportDefinitionVisualizationObjectSettings } from "@gooddata/sdk-model";
 
@@ -28,7 +28,7 @@ const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
 
 const AttachmentItem: React.FC<{
     id?: string;
-    format: AttachmentType;
+    format: OldAttachmentType;
     checked: boolean;
     disabled?: boolean;
     onChange: () => void;
@@ -83,7 +83,7 @@ export const AttachmentWidgets: React.FC<{
     csvSelected: boolean;
     xlsxSelected: boolean;
     settings: IExportDefinitionVisualizationObjectSettings;
-    onSelectionChange: (format: WidgetAttachmentType) => void;
+    onSelectionChange: (format: OldWidgetAttachmentType) => void;
     onSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
     closeOnParentScroll?: boolean;
     overlayPositionType?: OverlayPositionType;

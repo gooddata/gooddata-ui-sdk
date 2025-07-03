@@ -5,6 +5,7 @@ import {
     ArithmeticMeasureOperatorEnum,
     JsonApiAutomationIn,
     JsonApiAutomationPatchAttributesAlert,
+    JsonApiAutomationPatchAttributes,
 } from "@gooddata/api-client-tiger";
 import {
     IAutomationAlert,
@@ -23,11 +24,19 @@ import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
 import { fixNumber } from "../../utils/fixNumber.js";
 import { convertAttribute } from "./afm/AttributeConverter.js";
-import { convertExportDefinitionRequestPayload } from "./ExportDefinitionsConverter.js";
+import {
+    convertExportDefinitionRequestPayload,
+    convertToDashboardTabularExportRequest,
+    convertToImageExportRequest,
+    convertToSlidesExportRequest,
+    convertToTabularExportRequest,
+    convertToVisualExportRequest,
+} from "./ExportDefinitionsConverter.js";
 
 export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
     enableAutomationFilterContext: boolean,
+    enableNewScheduledExport: boolean,
 ): JsonApiAutomationIn {
     const {
         id,
@@ -84,7 +93,7 @@ export function convertAutomation(
           }
         : {};
 
-    const tabularExports = exportDefinitions
+    const tabularExportsOld = exportDefinitions
         ?.filter((ed) => isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload))
         .map((ed) => ({
             requestPayload: convertExportDefinitionRequestPayload(
@@ -93,7 +102,7 @@ export function convertAutomation(
                 ed.title,
             ),
         }));
-    const visualExports = exportDefinitions
+    const visualExportsOld = exportDefinitions
         ?.filter((ed) => isExportDefinitionDashboardRequestPayload(ed.requestPayload))
         .map((ed) => ({
             requestPayload: convertExportDefinitionRequestPayload(
@@ -103,6 +112,119 @@ export function convertAutomation(
             ),
         }));
 
+    const {
+        tabularExports,
+        visualExports,
+        imageExports,
+        slidesExports,
+        dashboardTabularExports,
+        // rawExports,
+    } = (exportDefinitions ?? []).reduce((acc, ed) => {
+        switch (ed.requestPayload.format) {
+            case "CSV":
+            case "XLSX":
+                return {
+                    ...acc,
+                    ...(isExportDefinitionDashboardRequestPayload(ed.requestPayload)
+                        ? {
+                              dashboardTabularExports: [
+                                  ...(acc.dashboardTabularExports ?? []),
+                                  {
+                                      requestPayload: convertToDashboardTabularExportRequest(
+                                          ed.requestPayload,
+                                      ),
+                                  },
+                              ],
+                          }
+                        : {
+                              tabularExports: [
+                                  ...(acc.tabularExports ?? []),
+                                  {
+                                      requestPayload: convertToTabularExportRequest(
+                                          ed.requestPayload,
+                                          ed.title,
+                                      ),
+                                  },
+                              ],
+                          }),
+                };
+            case "PDF":
+                return {
+                    ...acc,
+                    visualExports: [
+                        ...(acc.visualExports ?? []),
+                        ...(isExportDefinitionDashboardRequestPayload(ed.requestPayload)
+                            ? [
+                                  {
+                                      requestPayload: convertToVisualExportRequest(
+                                          ed.requestPayload,
+                                          ed.title,
+                                      ),
+                                  },
+                              ]
+                            : []),
+                    ],
+                    slidesExports: [
+                        ...(acc.slidesExports ?? []),
+                        ...(isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload)
+                            ? [
+                                  {
+                                      requestPayload: convertToSlidesExportRequest(
+                                          ed.requestPayload,
+                                          ed.title,
+                                      ),
+                                  },
+                              ]
+                            : []),
+                    ],
+                };
+            case "PNG":
+                return {
+                    ...acc,
+                    imageExports: [
+                        ...(acc.imageExports ?? []),
+                        ...(isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload)
+                            ? [
+                                  {
+                                      requestPayload: convertToImageExportRequest(
+                                          ed.requestPayload,
+                                          ed.title,
+                                      ),
+                                  },
+                              ]
+                            : []),
+                    ],
+                };
+            case "PPTX":
+            case "PDF_SLIDES":
+                return {
+                    ...acc,
+                    slidesExports: [
+                        ...(acc.slidesExports ?? []),
+                        {
+                            requestPayload: convertToSlidesExportRequest(ed.requestPayload, ed.title),
+                        },
+                    ],
+                };
+            // case "CSV_RAW":
+            //     return {
+            //         ...acc,
+            //         rawExports: [
+            //             ...(acc.rawExports ?? []),
+            //             {
+            //                 requestPayload: convertToRawExportRequest(
+            //                     ed.requestPayload,
+            //                     enableAutomationFilterContext,
+            //                     ed.title,
+            //                 ),
+            //             },
+            //         ],
+            //     };
+            default:
+                return acc;
+        }
+    }, {} as JsonApiAutomationPatchAttributes);
+
     const attributes = omitBy(
         {
             title,
@@ -110,8 +232,12 @@ export function convertAutomation(
             tags,
             details,
             state,
-            tabularExports,
-            visualExports,
+            tabularExports: enableNewScheduledExport ? tabularExports : tabularExportsOld,
+            visualExports: enableNewScheduledExport ? visualExports : visualExportsOld,
+            imageExports,
+            slidesExports,
+            dashboardTabularExports,
+            // rawExports,
             externalRecipients,
             ...metadataObj,
             ...scheduleObj,

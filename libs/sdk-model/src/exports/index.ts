@@ -14,7 +14,9 @@ import { FilterContextItem } from "../dashboard/filterContext.js";
  * @alpha
  */
 export interface IExportDefinitionDashboardSettings {
-    orientation: "portrait" | "landscape";
+    mergeHeaders?: boolean;
+    exportInfo?: boolean;
+    orientation?: "portrait" | "landscape";
 }
 
 /**
@@ -24,6 +26,7 @@ export interface IExportDefinitionDashboardSettings {
  */
 export interface IExportDefinitionVisualizationObjectSettings {
     mergeHeaders?: boolean;
+    exportInfo?: boolean;
     orientation?: "portrait" | "landscape";
 }
 
@@ -58,6 +61,12 @@ export interface IExportDefinitionDashboardContent {
 }
 
 /**
+ * Dashboard attachment types.
+ * @alpha
+ */
+export type DashboardAttachmentType = "PDF" | "XLSX" | "PPTX" | "PDF_SLIDES";
+
+/**
  * Export definition dashboard request payload
  *
  * @alpha
@@ -65,7 +74,7 @@ export interface IExportDefinitionDashboardContent {
 export type IExportDefinitionDashboardRequestPayload = {
     type: "dashboard";
     fileName: string;
-    format: "PDF";
+    format: DashboardAttachmentType;
     settings?: IExportDefinitionDashboardSettings;
     content: IExportDefinitionDashboardContent;
 };
@@ -81,6 +90,12 @@ export function isExportDefinitionDashboardRequestPayload(
 }
 
 /**
+ * Widget attachment types.
+ * @alpha
+ */
+export type WidgetAttachmentType = "CSV" | "XLSX" | "CSV_RAW" | "PNG" | "PPTX" | "PDF" | "HTML";
+
+/**
  * Export definition visualization object request payload
  *
  * @alpha
@@ -88,7 +103,7 @@ export function isExportDefinitionDashboardRequestPayload(
 export type IExportDefinitionVisualizationObjectRequestPayload = {
     type: "visualizationObject";
     fileName: string;
-    format: "CSV" | "XLSX" | "HTML" | "PDF";
+    format: WidgetAttachmentType;
     settings?: IExportDefinitionVisualizationObjectSettings;
     content: IExportDefinitionVisualizationObjectContent;
 };

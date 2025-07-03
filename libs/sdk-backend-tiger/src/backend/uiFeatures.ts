@@ -154,6 +154,7 @@ export enum TigerFeaturesNames {
     EnableDashboardShareDialogLink = "enableDashboardShareDialogLink",
     ProductionFeatures = "productionFeatures",
     EnableProductionFeaturesRollout = "enableProductionFeaturesRollout",
+    EnableNewScheduledExport = "enableNewScheduledExport",
 }
 
 export type ITigerFeatureFlags = {
@@ -270,6 +271,7 @@ export type ITigerFeatureFlags = {
     enableDashboardShareDialogLink: typeof FeatureFlagsValues["enableDashboardShareDialogLink"][number];
     productionFeatures: typeof FeatureFlagsValues["productionFeatures"][number];
     enableProductionFeaturesRollout: typeof FeatureFlagsValues["enableProductionFeaturesRollout"][number];
+    enableNewScheduledExport: typeof FeatureFlagsValues["enableNewScheduledExport"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -386,6 +388,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardShareDialogLink: false,
     productionFeatures: undefined,
     enableProductionFeaturesRollout: false,
+    enableNewScheduledExport: false,
 };
 
 export const FeatureFlagsValues = {
@@ -506,4 +509,5 @@ export const FeatureFlagsValues = {
     enableDashboardShareDialogLink: [true, false] as const,
     productionFeatures: [undefined, {} as IProductionFeaturesConfig] as const,
     enableProductionFeaturesRollout: [true, false] as const,
+    enableNewScheduledExport: [true, false] as const,
 };

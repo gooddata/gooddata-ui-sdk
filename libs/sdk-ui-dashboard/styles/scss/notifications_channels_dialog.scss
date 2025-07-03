@@ -145,6 +145,22 @@ $min-content-height: 110px;
     .gd-attachment-list {
         display: flex;
         flex-direction: row;
+        align-items: center;
+        flex: 1;
+        overflow: hidden;
+        margin: -2px 0;
+        flex-wrap: wrap;
+        gap: 5px;
+        scroll-margin-bottom: 40px;
+
+        @media #{kit-variables.$small-only} {
+            max-width: none;
+        }
+    }
+
+    .gd-attachment-list-old {
+        display: flex;
+        flex-direction: row;
         align-items: end;
         flex: 1;
         overflow: hidden;
@@ -322,6 +338,7 @@ $min-content-height: 110px;
         display: flex;
         flex-direction: column;
         padding: 15px 10px;
+        gap: var(--gd-spacing-10px);
     }
 
     .gd-attachment-settings-dropdown-footer {
@@ -896,4 +913,75 @@ $min-content-height: 110px;
 // Fix label width for recurrence form
 .gd-recurrence-form .gd-input-component .gd-label {
     min-width: unset;
+}
+
+.gd-attachment-type-label {
+    display: inline-flex;
+    gap: var(--gd-spacing-10px);
+    align-items: center;
+    margin-inline-start: 5px;
+}
+
+.gd-attachment-types-content {
+    padding: var(--gd-spacing-10px);
+}
+
+.gd-attachment-type-item {
+    padding: 3px 0;
+    font-size: 12px;
+}
+
+.gd-attachment-chip {
+    height: 27px;
+    max-width: 245px;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 20px;
+    padding-left: var(--gd-spacing-10px);
+    font-size: 12px;
+    border: 1px solid var(--gd-palette-complementary-4);
+    background-color: var(--gd-palette-complementary-0);
+    color: var(--gd-palette-complementary-7);
+    &:has(.gd-attachment-chip-delete:hover) {
+        background-color: var(--gd-palette-error-dimmed);
+        color: var(--gd-palette-error-base);
+        border: 1px solid var(--gd-palette-error-base-t85);
+    }
+}
+
+.gd-attachment-chip-label {
+    display: inline-flex;
+    gap: var(--gd-spacing-5px);
+    align-items: center;
+}
+
+.gd-attachment-chip-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    color: var(--gd-palette-complementary-6);
+    display: grid;
+    place-items: center;
+    width: 27px;
+    height: 100%;
+    &:hover {
+        color: var(--gd-palette-complementary-8);
+    }
+}
+
+.gd-attachment-chip-delete {
+    &:hover {
+        color: var(--gd-palette-error-base);
+    }
+}
+
+.gd-attachment-list-error {
+    color: var(--gd-palette-error-base);
+    font-size: 12px;
 }

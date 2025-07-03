@@ -24,8 +24,14 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
+    convertDashboardTabularExportRequest,
     convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend,
+    convertImageExportRequest,
     convertInlineExportDefinitionMdObject,
+    convertSlidesExportRequest,
+    convertTabularExportRequest,
+    convertVisualExportRequest,
+    wrapExportDefinition,
 } from "./ExportDefinitionsConverter.js";
 import compact from "lodash/compact.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
@@ -71,6 +77,7 @@ export function convertAutomation(
     automation: JsonApiAutomationOutWithLinks,
     included: JsonApiAutomationOutIncludes[],
     enableAutomationFilterContext: boolean,
+    enableNewScheduleExport: boolean,
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
     const {
@@ -86,6 +93,9 @@ export function convertAutomation(
         state,
         visualExports,
         tabularExports,
+        imageExports,
+        slidesExports,
+        dashboardTabularExports,
         externalRecipients,
     } = attributes;
     const { createdBy, modifiedBy } = relationships;
@@ -107,11 +117,23 @@ export function convertAutomation(
             ),
         ),
         ...(visualExports?.map((ve) =>
-            convertInlineExportDefinitionMdObject(ve, enableAutomationFilterContext),
+            enableNewScheduleExport
+                ? wrapExportDefinition(convertVisualExportRequest(ve, enableAutomationFilterContext))
+                : convertInlineExportDefinitionMdObject(ve, enableAutomationFilterContext),
         ) ?? []),
         ...(tabularExports?.map((te) =>
-            convertInlineExportDefinitionMdObject(te, enableAutomationFilterContext),
+            enableNewScheduleExport
+                ? wrapExportDefinition(convertTabularExportRequest(te))
+                : convertInlineExportDefinitionMdObject(te, enableAutomationFilterContext),
         ) ?? []),
+        ...(imageExports?.map((ie) => wrapExportDefinition(convertImageExportRequest(ie))) ?? []),
+        ...(slidesExports?.map((se) => wrapExportDefinition(convertSlidesExportRequest(se))) ?? []),
+        ...(dashboardTabularExports?.map((dte) =>
+            wrapExportDefinition(convertDashboardTabularExportRequest(dte)),
+        ) ?? []),
+        // ...(rawExports?.map((re) =>
+        //     convertInlineExportDefinitionMdObject(re, enableAutomationFilterContext),
+        // ) ?? []),
     ];
 
     const recipients = [
@@ -171,9 +193,15 @@ export function convertAutomation(
 export const convertAutomationListToAutomations = (
     automationList: JsonApiAutomationOutList,
     enableAutomationFilterContext: boolean,
+    enableNewScheduledExport: boolean,
 ): IAutomationMetadataObject[] => {
     return automationList.data.map((automationObject) =>
-        convertAutomation(automationObject, automationList.included ?? [], enableAutomationFilterContext),
+        convertAutomation(
+            automationObject,
+            automationList.included ?? [],
+            enableAutomationFilterContext,
+            enableNewScheduledExport,
+        ),
     );
 };
 

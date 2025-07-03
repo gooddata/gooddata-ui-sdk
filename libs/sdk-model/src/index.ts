@@ -1012,6 +1012,8 @@ export type {
     IExportDefinitionMetadataObjectDefinition,
     IExportResult,
     IExportResultStatus,
+    DashboardAttachmentType,
+    WidgetAttachmentType,
 } from "./exports/index.js";
 export {
     exportDefinitionTitle,

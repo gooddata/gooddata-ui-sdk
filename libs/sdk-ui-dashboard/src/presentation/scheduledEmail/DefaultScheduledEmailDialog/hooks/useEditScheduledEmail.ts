@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
     IAutomationMetadataObjectDefinition,
     IExportDefinitionMetadataObjectDefinition,
@@ -19,6 +19,9 @@ import {
     isAutomationUnknownUserRecipient,
     IAutomationVisibleFilter,
     isInsightWidget,
+    DashboardAttachmentType,
+    WidgetAttachmentType,
+    IExportDefinitionDashboardSettings,
 } from "@gooddata/sdk-model";
 import {
     useDashboardSelector,
@@ -32,7 +35,7 @@ import {
     selectDashboardHiddenFilters,
     selectAutomationCommonDateFilterId,
 } from "../../../../model/index.js";
-import { WidgetAttachmentType } from "../types.js";
+import { OldWidgetAttachmentType } from "../types.js";
 import {
     areAutomationsEqual,
     convertCurrentUserToAutomationRecipient,
@@ -79,6 +82,7 @@ export interface IUseEditScheduledEmailProps {
     enableAutomationFilterContext?: boolean;
     filtersForNewAutomation: FilterContextItem[];
     externalRecipientOverride?: string;
+    enableNewScheduledExport: boolean;
 }
 
 export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
@@ -98,6 +102,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         enableAutomationFilterContext,
         filtersForNewAutomation,
         externalRecipientOverride,
+        enableNewScheduledExport,
     } = props;
 
     const intl = useIntl();
@@ -167,6 +172,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           recipient: defaultRecipient,
                           widgetFilters: effectiveWidgetFilters,
                           visibleFiltersMetadata: effectiveVisibleWidgetFilters,
+                          enableNewScheduledExport,
                       }
                     : {
                           timezone,
@@ -176,11 +182,20 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           recipient: defaultRecipient,
                           dashboardFilters: effectiveDashboardFilters,
                           visibleFiltersMetadata: effectiveVisibleDashboardFilters,
+                          enableNewScheduledExport,
                       },
             ),
     );
 
     const [originalAutomation] = useState(editedAutomation);
+
+    const selectedAttachments = useMemo(() => {
+        return (
+            editedAutomation.exportDefinitions
+                ?.map((exportDefinition) => exportDefinition.requestPayload.format)
+                .filter(Boolean) ?? []
+        );
+    }, [editedAutomation.exportDefinitions]);
 
     const onTitleChange = (value: string, isValid: boolean) => {
         setIsTitleValid(isValid);
@@ -236,6 +251,63 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     };
 
     const onDashboardAttachmentsChange = (
+        formats: DashboardAttachmentType[],
+        dashboardFilters?: FilterContextItem[],
+    ): void => {
+        if (formats.length > 0) {
+            // Create export definitions for all selected formats
+            const exportDefinitions = formats.map((format) =>
+                newDashboardExportDefinitionMetadataObjectDefinition({
+                    dashboardId: dashboardId!,
+                    dashboardTitle,
+                    dashboardFilters: storeFilters ? dashboardFilters : undefined,
+                    format,
+                }),
+            );
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions,
+            }));
+        } else {
+            // Remove all dashboard export definitions
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.filter(
+                    (exportDefinition) =>
+                        !isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
+                ),
+            }));
+        }
+    };
+
+    const onWidgetAttachmentsChange = (formats: WidgetAttachmentType[]): void => {
+        invariant(isWidget, "Widget or insight is missing in scheduling dialog context.");
+        if (formats.length > 0) {
+            // Create export definitions for all selected formats
+            const exportDefinitions = formats.map((format) =>
+                newWidgetExportDefinitionMetadataObjectDefinition({
+                    insight,
+                    widget,
+                    dashboardId: dashboardId!,
+                    format,
+                    scheduledExportToEdit,
+                    widgetFilters: effectiveWidgetFilters,
+                }),
+            );
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions,
+            }));
+        } else {
+            // Remove all widget export definitions
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: [],
+            }));
+        }
+    };
+
+    const onDashboardAttachmentsChangeOld = (
         dashboardSelected: boolean,
         dashboardFilters?: FilterContextItem[],
     ): void => {
@@ -244,6 +316,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                 dashboardId: dashboardId!,
                 dashboardTitle,
                 dashboardFilters,
+                format: "PDF",
             });
             const dashboardExportDefinitionExists = isDashboardAutomation(editedAutomation);
             const updatedExportDefinitions = dashboardExportDefinitionExists
@@ -269,9 +342,9 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         }
     };
 
-    const onWidgetAttachmentsChange = (
+    const onWidgetAttachmentsChangeOld = (
         selected: boolean,
-        format: WidgetAttachmentType,
+        format: OldWidgetAttachmentType,
         /**
          * This prop may be removed in the future, once all automations are using new
          * automation filter context. (enableAutomationFilterContext)
@@ -316,16 +389,14 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         }
     };
 
-    const onWidgetAttachmentsSettingsChange = ({
+    const onAttachmentsSettingsChange = ({
         mergeHeaders,
-    }: IExportDefinitionVisualizationObjectSettings) => {
+        exportInfo,
+    }: IExportDefinitionVisualizationObjectSettings | IExportDefinitionDashboardSettings) => {
         setEditedAutomation((s) => ({
             ...s,
             exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                if (
-                    isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
-                    exportDefinition.requestPayload.format === "XLSX"
-                ) {
+                if (exportDefinition.requestPayload.format === "XLSX") {
                     return {
                         ...exportDefinition,
                         requestPayload: {
@@ -333,6 +404,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                             settings: {
                                 ...exportDefinition.requestPayload?.settings,
                                 mergeHeaders,
+                                exportInfo,
                             },
                         },
                     };
@@ -484,13 +556,13 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
 
     const settings = {
         mergeHeaders:
-            editedAutomation.exportDefinitions?.some((exportDefinition) => {
-                if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
-                    return exportDefinition.requestPayload.settings?.mergeHeaders;
-                }
-
-                return false;
-            }) ?? true,
+            editedAutomation.exportDefinitions?.some(
+                (exportDefinition) => exportDefinition.requestPayload.settings?.mergeHeaders,
+            ) ?? true,
+        exportInfo:
+            editedAutomation.exportDefinitions?.some(
+                (exportDefinition) => exportDefinition.requestPayload.settings?.exportInfo,
+            ) ?? true,
     };
 
     const startDate = toNormalizedStartDate(
@@ -563,6 +635,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         validationErrorMessage,
         isSubmitDisabled,
         storeFilters,
+        selectedAttachments,
         onTitleChange,
         onRecurrenceChange,
         onDestinationChange,
@@ -570,8 +643,10 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         onSubjectChange,
         onMessageChange,
         onDashboardAttachmentsChange,
+        onDashboardAttachmentsChangeOld,
         onWidgetAttachmentsChange,
-        onWidgetAttachmentsSettingsChange,
+        onWidgetAttachmentsChangeOld,
+        onAttachmentsSettingsChange,
         onFiltersChange,
         onApplyCurrentFilters,
         onStoreFiltersChange,
@@ -582,12 +657,16 @@ function newDashboardExportDefinitionMetadataObjectDefinition({
     dashboardId,
     dashboardTitle,
     dashboardFilters,
+    format,
 }: {
     dashboardId: string;
     dashboardTitle: string;
     dashboardFilters?: FilterContextItem[];
+    format: DashboardAttachmentType;
 }): IExportDefinitionMetadataObjectDefinition {
     const filtersObj = dashboardFilters ? { filters: dashboardFilters } : {};
+
+    const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true, exportInfo: true } } : {};
 
     return {
         type: "exportDefinition",
@@ -595,11 +674,12 @@ function newDashboardExportDefinitionMetadataObjectDefinition({
         requestPayload: {
             type: "dashboard",
             fileName: dashboardTitle,
-            format: "PDF",
+            format,
             content: {
                 dashboard: dashboardId,
                 ...filtersObj,
             },
+            ...settingsObj,
         },
     };
 }
@@ -626,7 +706,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     const allFilters = scheduledExportToEdit ? existingScheduleFilters : widgetFilters ?? [];
 
     const filtersObj = allFilters.length > 0 ? { filters: allFilters } : {};
-    const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true } } : {};
+    const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true, exportInfo: true } } : {};
 
     return {
         type: "exportDefinition",
@@ -657,6 +737,7 @@ function newAutomationMetadataObjectDefinition({
     dashboardFilters,
     widgetFilters,
     visibleFiltersMetadata,
+    enableNewScheduledExport,
 }: {
     timezone?: string;
     dashboardId: string;
@@ -668,6 +749,7 @@ function newAutomationMetadataObjectDefinition({
     dashboardFilters?: FilterContextItem[];
     widgetFilters?: IFilter[];
     visibleFiltersMetadata?: IAutomationVisibleFilter[];
+    enableNewScheduledExport: boolean;
 }): IAutomationMetadataObjectDefinition {
     const { firstRun, cron } = toNormalizedFirstRunAndCron(timezone);
     const exportDefinition =
@@ -676,13 +758,14 @@ function newAutomationMetadataObjectDefinition({
                   insight,
                   widget,
                   dashboardId,
-                  format: "XLSX", // default checked format
+                  format: enableNewScheduledExport ? "PNG" : "XLSX",
                   widgetFilters,
               })
             : newDashboardExportDefinitionMetadataObjectDefinition({
                   dashboardId,
                   dashboardTitle: title ?? "",
                   dashboardFilters,
+                  format: "PDF",
               });
 
     const metadataObj = visibleFiltersMetadata

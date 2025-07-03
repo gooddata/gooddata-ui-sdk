@@ -8928,6 +8928,9 @@ export const selectEnableKPIDashboardScheduleRecipients: DashboardSelector<boole
 // @internal
 export const selectEnableMultipleDateFilters: DashboardSelector<boolean>;
 
+// @internal
+export const selectEnableNewScheduledExport: DashboardSelector<boolean>;
+
 // @internal (undocumented)
 export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean>;
 

@@ -99,6 +99,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                     this.requestParameters.workspaceId,
                 );
                 const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? true;
+                const enableNewScheduledExport = userSettings.enableNewScheduledExport ?? false;
 
                 const items = await this.authCall((client) =>
                     client.entities.getAllEntitiesAutomations({
@@ -123,7 +124,11 @@ export class AutomationsQuery implements IAutomationsQuery {
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
                         !isNil(totalCount) && this.setTotalCount(totalCount);
-                        return convertAutomationListToAutomations(data, enableAutomationFilterContext);
+                        return convertAutomationListToAutomations(
+                            data,
+                            enableAutomationFilterContext,
+                            enableNewScheduledExport,
+                        );
                     });
 
                 return { items, totalCount: this.totalCount! };

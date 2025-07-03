@@ -1,100 +1,81 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactNode, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { FilterContextItem, IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { Message, OverlayPositionType } from "@gooddata/sdk-ui-kit";
-import { AttachmentFilters, AttachmentFilterType } from "./AttachmentFilters.js";
-import { getAutomationDashboardFilters } from "../../../../../_staging/automation/index.js";
-import { AttachmentDashboard } from "./AttachmentItems.js";
-import { IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
+import React, { ReactNode, useRef } from "react";
+import {
+    DashboardAttachmentType,
+    FilterContextItem,
+    IExportDefinitionVisualizationObjectSettings,
+} from "@gooddata/sdk-model";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
+import { AttachmentsSelect } from "./AttachmentsSelect.js";
+import { AttachmentsList } from "./AttachmentsList.js";
+import { FormattedMessage } from "react-intl";
+import { Message } from "@gooddata/sdk-ui-kit";
+
+const SUPPORTED_DASHBOARD_ATTACHMENTS: DashboardAttachmentType[] = ["PDF", "PDF_SLIDES", "PPTX", "XLSX"];
 
 export interface IDashboardAttachmentsProps {
-    scheduledExportToEdit?: IAutomationMetadataObject;
-    dashboardSelected: boolean;
-    areDashboardFiltersChanged: boolean;
+    selectedAttachments: DashboardAttachmentType[];
     dashboardFilters?: FilterContextItem[];
     isCrossFiltering: boolean;
-    filtersToDisplayInfo: IAttachmentFilterInfo[];
-    onDashboardAttachmentsSelectionChange: (
-        dashboardSelected: boolean,
-        filters?: FilterContextItem[],
-    ) => void;
-    enableAutomationFilterContext?: boolean;
-    overlayPositionType?: OverlayPositionType;
+    onDashboardAttachmentsChange: (formats: DashboardAttachmentType[], filters?: FilterContextItem[]) => void;
+    xlsxSettings: IExportDefinitionVisualizationObjectSettings;
+    onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
 }
 
-export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
-    const {
-        dashboardSelected,
-        scheduledExportToEdit,
-        areDashboardFiltersChanged,
-        dashboardFilters,
-        isCrossFiltering,
-        filtersToDisplayInfo,
-        onDashboardAttachmentsSelectionChange,
-        enableAutomationFilterContext,
-        overlayPositionType,
-    } = props;
+export const DashboardAttachments = ({
+    dashboardFilters,
+    isCrossFiltering,
+    onDashboardAttachmentsChange,
+    selectedAttachments,
+    xlsxSettings,
+    onXlsxSettingsChange,
+}: IDashboardAttachmentsProps) => {
+    const attachmentListRef = useRef<HTMLDivElement>(null);
 
-    /**
-     * When editing a schedule, we need to get the filters from the export definition and we don't care
-     * about the actual filters on the dashboard.
-     */
-    const savedFilters = getAutomationDashboardFilters(scheduledExportToEdit);
-
-    const isEditing = !!scheduledExportToEdit;
-
-    const [attachmentFilterType, setAttachmentFilterType] = useState<AttachmentFilterType>(
-        /**
-         * We use "edited" by default when creating a new schedule or editing
-         * an existing schedule with filters.
-         * "default" is used when editing without filters.
-         */
-        !isEditing || savedFilters ? "edited" : "default",
-    );
-
-    const showAttachmentFilters = enableAutomationFilterContext
-        ? false
-        : isEditing
-        ? attachmentFilterType !== "default"
-        : areDashboardFiltersChanged && dashboardSelected;
-
-    const includeFilters = attachmentFilterType === "edited" && areDashboardFiltersChanged;
-
-    const handleAttachmentFilterTypeChange = (type: AttachmentFilterType) => {
-        const includeFilters = type === "edited" && areDashboardFiltersChanged;
-        setAttachmentFilterType(type);
-        onDashboardAttachmentsSelectionChange(
-            dashboardSelected,
-            includeFilters ? dashboardFilters : undefined,
-        );
+    const handleDashboardAttachmentSelectionSave = (formats: DashboardAttachmentType[]) => {
+        onDashboardAttachmentsChange(formats, dashboardFilters);
     };
 
-    const handleDashboardAttachmentSelectionChange = () => {
-        onDashboardAttachmentsSelectionChange(
-            !dashboardSelected,
-            includeFilters ? dashboardFilters : undefined,
-        );
+    const handleDelete = (attachment: DashboardAttachmentType) => {
+        const newAttachments = selectedAttachments.filter((att) => att !== attachment);
+        onDashboardAttachmentsChange(newAttachments, dashboardFilters);
+    };
+
+    const handleChange = (attachments: { type: DashboardAttachmentType; selected: boolean }[]) => {
+        const formats = attachments
+            .filter(
+                (attachment) =>
+                    attachment.selected && SUPPORTED_DASHBOARD_ATTACHMENTS.includes(attachment.type),
+            )
+            .map((attachment) => attachment.type);
+        handleDashboardAttachmentSelectionSave(formats);
+        if (attachmentListRef.current) {
+            setTimeout(() => {
+                attachmentListRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }, 100);
+        }
     };
 
     return (
-        <AttachmentsWrapper>
-            <div className="gd-attachment-list">
-                <AttachmentDashboard
-                    disabled
-                    pdfSelected={dashboardSelected}
-                    onSelectionChange={handleDashboardAttachmentSelectionChange}
+        <AttachmentsWrapper key={selectedAttachments.join()}>
+            <div className="gd-attachment-list" ref={attachmentListRef}>
+                <AttachmentsList
+                    attachments={selectedAttachments}
+                    onDelete={handleDelete}
+                    xlsxSettings={xlsxSettings}
+                    onXlsxSettingsChange={onXlsxSettingsChange}
+                    mode="dashboard"
                 />
-                <AttachmentFilters
-                    filterType={attachmentFilterType}
-                    onChange={handleAttachmentFilterTypeChange}
-                    hidden={!showAttachmentFilters}
-                    disabled={isEditing}
-                    filters={filtersToDisplayInfo}
-                    overlayPositionType={overlayPositionType}
+                <AttachmentsSelect<DashboardAttachmentType>
+                    key={selectedAttachments.join()}
+                    attachments={SUPPORTED_DASHBOARD_ATTACHMENTS.map((format) => ({
+                        type: format,
+                        selected: selectedAttachments.includes(format),
+                    }))}
+                    onChange={handleChange}
+                    mode="dashboard"
                 />
-                {isCrossFiltering && dashboardSelected ? (
+                {isCrossFiltering && selectedAttachments.length > 0 ? (
                     <Message type="progress" className="gd-attachment-list-message">
                         <FormattedMessage
                             id="dialogs.schedule.management.attachments.message"
