@@ -334,8 +334,16 @@ function getMaximumItemDefaultWidth(
     const widget = item.widget!;
     if (isDashboardLayout(widget)) {
         const direction = getLayoutConfiguration(widget).direction;
+        const emptyLayoutMinWidth = getDashboardLayoutWidgetMinGridWidth(settings, widget.type);
+
         return direction === "column"
-            ? getMaximumDefaultWidthOfRecursiveLayoutItems(widget, screen, insightMap, settings)
+            ? getMaximumDefaultWidthOfRecursiveLayoutItems(
+                  widget,
+                  screen,
+                  insightMap,
+                  settings,
+                  emptyLayoutMinWidth,
+              )
             : determineWidthForScreen(screen, item.size);
     } else {
         return getDashboardLayoutWidgetMinGridWidth(
@@ -355,18 +363,20 @@ function getMaximumItemDefaultWidth(
  * @param screen - the current screen size
  * @param insightMap - map of insights, used to get their type and subsequently its dimensions
  * @param settings - settings to determine the current feature flags
+ * @param emptyLayoutMinWidth - minimum size of the empty layout (used when the container is empty)
  */
 function getMaximumDefaultWidthOfRecursiveLayoutItems(
     container: IDashboardLayout<ExtendedDashboardWidget>,
     screen: ScreenSize,
     insightMap: ObjRefMap<IInsight>,
     settings: ISettings,
+    emptyLayoutMinWidth: number,
 ): number {
     return container.sections
         .flatMap((section) => section.items)
         .filter((item) => item.widget)
         .map((item) => getMaximumItemDefaultWidth(item, screen, settings, insightMap))
-        .reduce((maxWidth, itemWidth) => Math.max(maxWidth, itemWidth), 0);
+        .reduce((maxWidth, itemWidth) => Math.max(maxWidth, itemWidth), emptyLayoutMinWidth);
 }
 
 /**
@@ -413,7 +423,13 @@ export function getMinWidth(
     } else if (isDashboardLayout(widget)) {
         const emptyLayoutMinWidth = getDashboardLayoutWidgetMinGridWidth(settings, widget.type);
         return direction === "column"
-            ? getMaximumDefaultWidthOfRecursiveLayoutItems(widget, screen, insightMap, settings)
+            ? getMaximumDefaultWidthOfRecursiveLayoutItems(
+                  widget,
+                  screen,
+                  insightMap,
+                  settings,
+                  emptyLayoutMinWidth,
+              )
             : getMaximumCurrentWidthOfTopLevelLayoutItems(widget, screen, emptyLayoutMinWidth);
     }
     return getDashboardLayoutWidgetMinGridWidth(

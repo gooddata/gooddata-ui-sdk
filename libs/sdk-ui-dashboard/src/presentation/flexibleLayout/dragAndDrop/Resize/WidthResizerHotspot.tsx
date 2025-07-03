@@ -20,6 +20,7 @@ import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 
 import { WidthResizer } from "./WidthResizer.js";
+import { DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN } from "../../../../_staging/dashboard/flexibleLayout/config.js";
 
 export type WidthResizerHotspotProps = {
     item: IDashboardLayoutItemFacade<unknown>;
@@ -68,7 +69,7 @@ export function WidthResizerHotspot({
     const onMouseLeave = () => setResizerVisibility(false);
     const layoutPath = item.index();
 
-    const currentWidth = item.sizeForScreen(screen)!.gridWidth;
+    const currentWidth = item.sizeForScreen(screen)?.gridWidth || DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN;
     const minLimit = getMinWidth(widget, insightsMap, screen, settings, itemDirection);
     const maxLimit = getDashboardLayoutItemMaxGridWidth(item, screen);
 

@@ -66,6 +66,7 @@ import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
 import { useShouldShowRowEndHotspot } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
 import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
 import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
+import { DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN } from "../../_staging/dashboard/flexibleLayout/config.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -179,7 +180,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     }
 
     function getGridColumnWidth(): number {
-        const columnWidthInGC = item.sizeForScreen(screen)?.gridWidth as number;
+        const columnWidthInGC = item.sizeForScreen(screen)?.gridWidth || DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN;
         const columnWidthInPx = getWidthInPx();
         return (columnWidthInPx + 20) / columnWidthInGC;
     }
