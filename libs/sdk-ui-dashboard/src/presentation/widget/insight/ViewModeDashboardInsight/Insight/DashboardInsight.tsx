@@ -40,6 +40,7 @@ import {
     selectEnableExecutionCancelling,
     selectExecutionTimestamp,
     selectEnableSnapshotExportAccessibility,
+    selectIsInExportMode,
 } from "../../../../../model/index.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
 import { useMinimalSizeValidation, useVisualizationExportData } from "../../../../export/index.js";
@@ -273,6 +274,11 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         loading,
     );
 
+    const isExportSlidesMode = useDashboardSelector(selectIsInExportMode);
+    const loadingClassNames = cx("insight-view-loader", {
+        isInvisible: isExportSlidesMode && !loading,
+    });
+
     const renderComponent = () => {
         if (effectiveError) {
             return (
@@ -286,8 +292,8 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         } else {
             return (
                 <>
-                    {loading ? (
-                        <div className="insight-view-loader">
+                    {loading || isExportSlidesMode ? (
+                        <div className={loadingClassNames}>
                             <LoadingComponent />
                         </div>
                     ) : null}
