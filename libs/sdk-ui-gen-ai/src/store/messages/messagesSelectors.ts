@@ -11,6 +11,11 @@ export const messagesSelector: (state: RootState) => Message[] = createSelector(
     (state) => state.messageOrder.map((id) => state.messages[id]),
 );
 
+export const loadedSelector: (state: RootState) => boolean = createSelector(
+    messagesSliceSelector,
+    (state) => state.loaded,
+);
+
 export const isVerboseSelector: (state: RootState) => boolean = createSelector(
     messagesSliceSelector,
     (state) => state.verbose,
