@@ -1,9 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import DefaultNativeListener from "react-native-listener";
 import noop from "lodash/noop.js";
-import { defaultImport } from "default-import";
 
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
 import { IDomNative, IDomNativeProps } from "../typings/domNative.js";
@@ -11,8 +9,6 @@ import { runAutofocus } from "./focus.js";
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 import { IconType } from "../@ui/@types/icon.js";
 import { UiIconButton } from "../@ui/UiIconButton/UiIconButton.js";
-
-const NativeListener = defaultImport(DefaultNativeListener);
 
 /**
  * @internal
@@ -178,15 +174,17 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
 
     renderClearIcon(clearOnEsc: boolean): React.ReactNode {
         return clearOnEsc && (this.props.value as string).length > 0 ? (
-            // react events use delegation and don't bubble, click on clear needs to be kept local
-            // to avoid handling by overlay close handler and others
-            <NativeListener onClick={this.onClear}>
-                <span
-                    role="button"
-                    className="gd-input-icon-clear gd-icon-clear s-input-clear"
-                    aria-label="Input clear"
-                />
-            </NativeListener>
+            <span
+                role="button"
+                className="gd-input-icon-clear gd-icon-clear s-input-clear"
+                aria-label="Input clear"
+                onClick={(e) => {
+                    // react events use delegation and don't bubble, click on clear needs to be kept local
+                    // to avoid handling by overlay close handler and others
+                    e.stopPropagation();
+                    this.onClear();
+                }}
+            />
         ) : (
             false
         );
