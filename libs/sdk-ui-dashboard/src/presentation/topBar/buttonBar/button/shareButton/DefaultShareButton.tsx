@@ -11,6 +11,7 @@ import {
     useDashboardSelector,
 } from "../../../../../model/index.js";
 import { HiddenShareButton } from "./HiddenShareButton.js";
+import { useDashboardSearchParams } from "../../../../dashboard/hooks/useDashboardUrlParams.js";
 
 const ALIGN_POINTS_TOOLTIP = [{ align: "bc tr" }];
 
@@ -19,8 +20,10 @@ const ALIGN_POINTS_TOOLTIP = [{ align: "bc tr" }];
  */
 export function useShareButtonProps(): IShareButtonProps {
     const dispatch = useDashboardDispatch();
+    const { isDashboardShareButtonDisabledFromUrl } = useDashboardSearchParams();
     const onShareButtonClick = useCallback(() => dispatch(uiActions.openShareDialog()), [dispatch]);
-    const isVisible = useDashboardSelector(selectIsShareButtonVisible);
+    const isVisible =
+        useDashboardSelector(selectIsShareButtonVisible) && !isDashboardShareButtonDisabledFromUrl;
 
     return {
         isVisible,

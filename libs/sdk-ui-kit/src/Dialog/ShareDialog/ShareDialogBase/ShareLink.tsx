@@ -5,6 +5,8 @@ import { Input } from "../../../Form/index.js";
 import { Typography } from "../../../Typography/index.js";
 import { compressForUrl } from "@gooddata/sdk-ui";
 import { IShareLinkProps } from "./types.js";
+import { isCopyKey } from "../../../utils/events.js";
+import { SHARE_LINK_HEADLINE_ID, SHARE_LINK_HELPER_TEXT_ID } from "./utils.js";
 
 /**
  * @internal
@@ -13,7 +15,7 @@ export const ShareLink: React.FC<IShareLinkProps> = ({
     dashboardFilters,
     headline,
     helperText,
-    buttonText,
+    buttonLabel,
     onShareLinkCopy,
 }) => {
     const shareLink = useMemo(() => {
@@ -30,19 +32,37 @@ export const ShareLink: React.FC<IShareLinkProps> = ({
         onShareLinkCopy?.(shareLink);
     }, [shareLink, onShareLinkCopy]);
 
+    const onKeyPress = useCallback(
+        (e: React.KeyboardEvent) => {
+            if (isCopyKey(e)) {
+                onShareLinkCopy?.(shareLink);
+            }
+        },
+        [shareLink, onShareLinkCopy],
+    );
+
     return (
         <>
             <div className="gd-share-dialog-grantee-content-header">
-                <Typography tagName="h3">{headline}</Typography>
+                <Typography id={SHARE_LINK_HEADLINE_ID} tagName="h3">
+                    {headline}
+                </Typography>
             </div>
             <Input
                 value={shareLink}
                 readonly={true}
                 iconButton="copy"
                 onIconButtonClick={onIconButtonClick}
-                iconButtonLabel={buttonText}
+                iconButtonLabel={buttonLabel}
+                onKeyPress={onKeyPress}
+                accessibilityConfig={{
+                    ariaDescribedBy: SHARE_LINK_HELPER_TEXT_ID,
+                    ariaLabelledBy: SHARE_LINK_HEADLINE_ID,
+                }}
             />
-            <div className="gd-share-dialog-share-link-helper-text">{helperText}</div>
+            <div id={SHARE_LINK_HELPER_TEXT_ID} className="gd-share-dialog-share-link-helper-text">
+                {helperText}
+            </div>
         </>
     );
 };

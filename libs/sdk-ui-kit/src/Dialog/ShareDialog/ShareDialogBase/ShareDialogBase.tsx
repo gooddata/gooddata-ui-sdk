@@ -82,7 +82,6 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         showDashboardShareLink={showDashboardShareLink}
                         onShareLinkCopy={onShareLinkCopy}
                         isGranteeShareLoading={isGranteeShareLoading}
-                        currentUser={currentUser}
                         isLoading={isGranteesLoading}
                         isDirty={isShareDialogDirty}
                         isLockedNow={isLockedNow}

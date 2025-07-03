@@ -1846,7 +1846,7 @@
         "limit": 0
     },
     "shareDialog.share.link.buttonText": {
-        "value": "Copy",
+        "value": "Copy dashboard link",
         "comment": "Label of button that copies the share link to the clipboard.",
         "limit": 0
     },
