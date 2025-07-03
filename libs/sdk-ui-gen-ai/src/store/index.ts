@@ -33,6 +33,7 @@ export {
     hasMessagesSelector,
     asyncProcessSelector,
     globalErrorSelector,
+    loadedSelector,
 } from "./messages/messagesSelectors.js";
 
 export { setOpenAction, setFullscreenAction, copyToClipboardAction } from "./chatWindow/chatWindowSlice.js";

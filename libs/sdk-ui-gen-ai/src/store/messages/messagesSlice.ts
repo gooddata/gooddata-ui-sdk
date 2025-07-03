@@ -19,6 +19,10 @@ type MessagesSliceState = {
      */
     verbose: boolean;
     /**
+     * If the thread is loaded.
+     */
+    loaded: boolean;
+    /**
      * A normalized map of messages indexed by their localId.
      */
     messages: Record<string, Message>;
@@ -67,6 +71,7 @@ const initialState: MessagesSliceState = {
     asyncProcess: "loading",
     messageOrder: [],
     messages: {},
+    loaded: false,
     verbose: getInitialVerboseState(),
 };
 
@@ -76,6 +81,7 @@ const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) =
         return acc;
     }, {} as MessagesSliceState["messages"]);
     state.messageOrder = messages.map((message) => message.localId);
+    state.loaded = true;
 };
 
 const getAssistantMessageStrict = (
@@ -127,6 +133,7 @@ const messagesSlice = createSlice({
         clearThreadSuccessAction: (state) => {
             state.messages = {};
             state.messageOrder = [];
+            state.loaded = false;
             delete state.asyncProcess;
             delete state.globalError;
         },
@@ -136,6 +143,7 @@ const messagesSlice = createSlice({
         newMessageAction: (state, action: PayloadAction<Message>) => {
             state.messages[action.payload.localId] = action.payload;
             state.messageOrder.push(action.payload.localId);
+            state.loaded = true;
         },
         /**
          * Start the message evaluation, adding new assistant message as an incomplete placeholder
