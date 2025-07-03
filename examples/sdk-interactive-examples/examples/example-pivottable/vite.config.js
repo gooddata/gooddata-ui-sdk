@@ -21,11 +21,6 @@ export default defineConfig({
     define: {
         WORKSPACE_ID: JSON.stringify(workspaceId),
     },
-    resolve: {
-        alias: {
-            "~@gooddata": "/node_modules/@gooddata",
-        },
-    },
     build: {
         outDir: "esm",
         chunkSizeWarningLimit: 10000,

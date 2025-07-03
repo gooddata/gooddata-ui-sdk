@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:math";
 .loading-mask {
     position: relative;
@@ -22,7 +22,7 @@
 
 .gd-spinner {
     display: inline-block;
-    background-image: url("~@gooddata/sdk-ui-kit/esm/assets/loading.svg");
+    background-image: url("@gooddata/sdk-ui-kit/esm/assets/loading.svg");
     background-repeat: no-repeat;
     background-position: top left;
     background-size: contain;

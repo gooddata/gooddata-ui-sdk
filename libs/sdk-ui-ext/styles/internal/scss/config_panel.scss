@@ -226,7 +226,7 @@ $color-picker-spacing: 5px;
 }
 
 .gd-icon-code {
-    background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/icon-code.svg");
+    background-image: url("@gooddata/sdk-ui-ext/esm/internal/assets/icons/icon-code.svg");
 }
 
 .gd-advanced-customization-dialog {
@@ -347,7 +347,7 @@ $color-picker-spacing: 5px;
 }
 
 @mixin code-mirror-icon--error {
-    background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/icon-error.svg");
+    background-image: url("@gooddata/sdk-ui-ext/esm/internal/assets/icons/icon-error.svg");
     background-size: 12px 12px;
 }
 

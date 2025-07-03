@@ -35,7 +35,7 @@
         }
 
         &::before {
-            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/trend-positive.svg") no-repeat center;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/trend-positive.svg") no-repeat center;
         }
 
         &.is-selected {
@@ -53,7 +53,7 @@
         }
 
         &::before {
-            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/trend-negative.svg") no-repeat center;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/trend-negative.svg") no-repeat center;
         }
 
         &.is-selected {
@@ -66,20 +66,20 @@
     }
 
     &.type-measure::before {
-        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/measure.svg") no-repeat center;
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/measure.svg") no-repeat center;
     }
 
     &.type-metric::before {
         margin-top: 0;
-        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/metric.svg") no-repeat center;
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/metric.svg") no-repeat center;
     }
 
     &.type-attribute::before {
-        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/attribute.svg") no-repeat center;
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/attribute.svg") no-repeat center;
     }
 
     &.type-date::before {
-        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/date-dropdown.svg") no-repeat center;
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/date-dropdown.svg") no-repeat center;
     }
 
     &.type-comparison::before {
@@ -102,7 +102,7 @@
     .gd-icon-list {
         &::before {
             content: "";
-            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/list.svg") no-repeat center;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/list.svg") no-repeat center;
             width: 16px;
             height: 16px;
             display: inline-block;
@@ -111,7 +111,7 @@
     .gd-icon-save-as-new {
         &::before {
             content: "";
-            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/save-as-new.svg") no-repeat center;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/save-as-new.svg") no-repeat center;
             width: 16px;
             height: 16px;
             display: inline-block;
@@ -120,7 +120,7 @@
     .gd-icon-filter {
         &::before {
             content: "";
-            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/filter.svg") no-repeat center;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/filter.svg") no-repeat center;
             width: 16px;
             height: 16px;
             display: inline-block;
@@ -129,7 +129,7 @@
     .gd-icon-type-pdf {
         &::before {
             content: "";
-            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-pdf.svg") no-repeat center;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-pdf.svg") no-repeat center;
             width: 16px;
             height: 16px;
             display: inline-block;
@@ -138,7 +138,7 @@
     .gd-icon-type-sheet {
         &::before {
             content: "";
-            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-sheet.svg") no-repeat center;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-sheet.svg") no-repeat center;
             width: 16px;
             height: 16px;
             display: inline-block;
@@ -147,7 +147,7 @@
     .gd-icon-type-slides {
         &::before {
             content: "";
-            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-slides.svg") no-repeat center;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-slides.svg") no-repeat center;
             width: 16px;
             height: 16px;
             display: inline-block;
@@ -156,7 +156,7 @@
     .gd-icon-type-image {
         &::before {
             content: "";
-            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-image.svg") no-repeat center;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-image.svg") no-repeat center;
             width: 16px;
             height: 16px;
             display: inline-block;
@@ -165,7 +165,7 @@
     .gd-icon-type-csv-raw {
         &::before {
             content: "";
-            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-csv-raw.svg") no-repeat center;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-csv-raw.svg") no-repeat center;
             width: 16px;
             height: 16px;
             display: inline-block;
@@ -174,7 +174,7 @@
     .gd-icon-type-csv-formatted {
         &::before {
             content: "";
-            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-csv-formatted.svg") no-repeat center;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-csv-formatted.svg") no-repeat center;
             width: 16px;
             height: 16px;
             display: inline-block;

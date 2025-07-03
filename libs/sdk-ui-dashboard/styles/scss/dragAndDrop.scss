@@ -179,7 +179,7 @@
 
 .add-kpi-placeholder::before,
 .move-kpi-placeholder::before {
-    background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-kpi-placeholder.svg");
+    background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/add-kpi-placeholder.svg");
 }
 
 .add-attribute-filter-placeholder.disabled::before {
@@ -187,7 +187,7 @@
 }
 
 .add-attribute-filter-placeholder::before {
-    background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-attribute-filter-placeholder.svg");
+    background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/add-attribute-filter-placeholder.svg");
 }
 
 .dropzone {
@@ -441,7 +441,7 @@
 
     .gd-icon-insight {
         &::before {
-            content: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-insight-placeholder.svg");
+            content: url("@gooddata/sdk-ui-dashboard/esm/assets/add-insight-placeholder.svg");
             display: inline-block;
             margin-right: 10px;
         }
@@ -561,7 +561,7 @@
     cursor: pointer;
 
     &.select-measure {
-        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/dummy-kpi-simple.svg") no-repeat center center;
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/dummy-kpi-simple.svg") no-repeat center center;
         background-size: 130px;
     }
 }
