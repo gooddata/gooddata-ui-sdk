@@ -1,6 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React from "react";
-import { Helmet } from "react-helmet";
+// (C) 2007-2025 GoodData Corporation
+import React, { useEffect } from "react";
 import compact from "lodash/compact.js";
 
 /**
@@ -20,16 +19,33 @@ function getEffectiveTitle(pageTitle: string, brandTitle: string): string {
 /**
  * @internal
  */
-const DocumentHeader: React.FC<IDocumentHeaderProps> = (props) => {
-    const { pageTitle = "", brandTitle = "", appleTouchIconUrl = "", faviconUrl = "" } = props;
+const DocumentHeader: React.FC<IDocumentHeaderProps> = ({
+    pageTitle = "",
+    brandTitle = "",
+    appleTouchIconUrl = "",
+    faviconUrl = "",
+}) => {
+    useEffect(() => {
+        if (!document) return;
 
-    return (
-        <Helmet>
-            <title>{getEffectiveTitle(pageTitle, brandTitle)}</title>
-            <link rel="apple-touch-icon" type="image/png" href={appleTouchIconUrl} />
-            <link rel="shortcut icon" type="image/x-icon" href={faviconUrl} />
-        </Helmet>
-    );
+        document.title = getEffectiveTitle(pageTitle, brandTitle);
+
+        const linkApple = (document.querySelector("link[rel='apple-touch-icon']") ||
+            document.createElement("link")) as HTMLLinkElement;
+        linkApple.rel = "apple-touch-icon";
+        linkApple.type = "image/png";
+        linkApple.href = appleTouchIconUrl;
+        document.head.appendChild(linkApple);
+
+        const linkFavicon = (document.querySelector("link[rel~='icon']") ||
+            document.createElement("link")) as HTMLLinkElement;
+        linkFavicon.rel = "shortcut icon";
+        linkFavicon.type = "image/x-icon";
+        linkFavicon.href = faviconUrl;
+        document.head.appendChild(linkFavicon);
+    }, [pageTitle, brandTitle, appleTouchIconUrl, faviconUrl]);
+
+    return null;
 };
 
 export default DocumentHeader;

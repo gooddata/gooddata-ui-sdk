@@ -1,8 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
 import DocumentHeader, { IDocumentHeaderProps } from "../DocumentHeader.js";
-import { Helmet } from "react-helmet";
 import { describe, it, expect } from "vitest";
 
 describe("DocumentHeader", () => {
@@ -18,8 +17,7 @@ describe("DocumentHeader", () => {
             faviconUrl: "url",
         });
 
-        const helmet = Helmet.peek();
-        expect(helmet.title).toEqual("Title - brand");
+        expect(document.title).toEqual("Title - brand");
     });
 
     it("should set document title to 'Title' when no brand is provided", () => {
@@ -29,8 +27,7 @@ describe("DocumentHeader", () => {
             faviconUrl: "url",
         });
 
-        const helmet = Helmet.peek();
-        expect(helmet.title).toEqual("Title");
+        expect(document.title).toEqual("Title");
     });
 
     it("should set document title to 'brand' when no Title is provided", () => {
@@ -41,8 +38,7 @@ describe("DocumentHeader", () => {
             faviconUrl: "url",
         });
 
-        const helmet = Helmet.peek();
-        expect(helmet.title).toEqual("brand");
+        expect(document.title).toEqual("brand");
     });
 
     it("should set the icons", () => {
@@ -52,7 +48,6 @@ describe("DocumentHeader", () => {
             faviconUrl: "FAVICON_URL",
         });
 
-        const helmet = Helmet.peek();
-        expect(helmet.linkTags).toMatchSnapshot();
+        expect(Array.from(document.querySelectorAll("link"))).toMatchSnapshot();
     });
 });

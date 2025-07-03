@@ -2,15 +2,15 @@
 
 exports[`DocumentHeader > should set the icons 1`] = `
 [
-  {
-    "href": "APPLE_URL",
-    "rel": "apple-touch-icon",
-    "type": "image/png",
-  },
-  {
-    "href": "FAVICON_URL",
-    "rel": "shortcut icon",
-    "type": "image/x-icon",
-  },
+  <link
+    href="APPLE_URL"
+    rel="apple-touch-icon"
+    type="image/png"
+  />,
+  <link
+    href="FAVICON_URL"
+    rel="shortcut icon"
+    type="image/x-icon"
+  />,
 ]
 `;
