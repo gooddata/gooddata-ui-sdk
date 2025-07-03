@@ -771,5 +771,12 @@
     "filterBar.label": "Фильтры",
     "controlButtons.asTable": "Показать в виде таблицы",
     "controlButtons.asOriginal": "Показать исходную визуализацию",
-    "messages.shareLinkCopied": "Ссылка скопирована."
+    "messages.shareLinkCopied": "Ссылка скопирована.",
+    "addPanel.dashboardLayout.tooltip.learnMore": "Подробнее",
+    "nestedLayoutToolbar.direction.title": "Направление макета",
+    "nestedLayoutToolbar.direction.row": "Горизонтально с переносом",
+    "nestedLayoutToolbar.direction.row.tooltip": "Горизонтальная компоновка с переносом.",
+    "nestedLayoutToolbar.direction.column": "Вертикальная",
+    "nestedLayoutToolbar.direction.column.tooltip": "Вертикальная компоновка.",
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "Направление не может быть изменено на вертикальное, если контейнер содержит вложенные контейнеры с горизонтальным направлением."
 }

@@ -767,5 +767,12 @@
     "filterBar.label": "필터(들)",
     "controlButtons.asTable": "표로 표시",
     "controlButtons.asOriginal": "원본 시각화 보기",
-    "messages.shareLinkCopied": "링크가 복사되었습니다."
+    "messages.shareLinkCopied": "링크가 복사되었습니다.",
+    "addPanel.dashboardLayout.tooltip.learnMore": "자세히 알아보기",
+    "nestedLayoutToolbar.direction.title": "레이아웃 방향",
+    "nestedLayoutToolbar.direction.row": "가로로 감싸기",
+    "nestedLayoutToolbar.direction.row.tooltip": "가로 레이아웃으로 감싸기",
+    "nestedLayoutToolbar.direction.column": "수직",
+    "nestedLayoutToolbar.direction.column.tooltip": "수직 레이아웃",
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "컨테이너에 수평 방향의 중첩된 컨테이너가 포함되어 있는 경우 방향을 수직으로 변경할 수 없습니다."
 }

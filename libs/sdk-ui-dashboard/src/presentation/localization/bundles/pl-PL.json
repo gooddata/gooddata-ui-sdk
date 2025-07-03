@@ -767,5 +767,12 @@
     "filterBar.label": "Filtry",
     "controlButtons.asTable": "Pokaż jako tabelę",
     "controlButtons.asOriginal": "Pokaż oryginalną wizualizację",
-    "messages.shareLinkCopied": "Link skopiowany."
+    "messages.shareLinkCopied": "Link skopiowany.",
+    "addPanel.dashboardLayout.tooltip.learnMore": "Dowiedz się więcej",
+    "nestedLayoutToolbar.direction.title": "Kierunek układu",
+    "nestedLayoutToolbar.direction.row": "Poziomo z zawijaniem",
+    "nestedLayoutToolbar.direction.row.tooltip": "Układ poziomy z zawijaniem.",
+    "nestedLayoutToolbar.direction.column": "Pionowy",
+    "nestedLayoutToolbar.direction.column.tooltip": "Układ pionowy.",
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "Kierunek nie może zostać zmieniony na pionowy, jeśli kontener zawiera zagnieżdżone kontenery z kierunkiem poziomym."
 }

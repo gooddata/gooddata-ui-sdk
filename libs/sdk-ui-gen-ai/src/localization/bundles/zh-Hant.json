@@ -20,7 +20,7 @@
     "gd.gen-ai.state.cancelled": "評估取消…",
     "gd.gen-ai.state.in-progress": "正在產生您的回覆…",
     "gd.gen-ai.global-error.description": "嘗試重新啟動聊天機器人並重新開始。",
-    "gd.gen-ai.button.send": "傳送",
+    "gd.gen-ai.button.send": "發送訊息",
     "gd.gen-ai.input-label": "問你的問題",
     "gd.gen-ai.assistant-icon": "聊天機器人回應",
     "gd.gen-ai.button.save": "節省",
@@ -46,7 +46,7 @@
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "另存為新…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "在分析中打開",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "複製視覺化連結",
-    "gd.gen-ai.message.label.user": "使用者輸入",
+    "gd.gen-ai.message.label.user": "用戶：",
     "gd.gen-ai.global-no-llm": "未配置 LLM 提供者",
     "gd.gen-ai.global-no-llm.description": "配置提供者以啟用聊天機器人。",
     "gd.gen-ai.global-no-llm.button-create-llm": "配置提供程式",
@@ -54,5 +54,10 @@
     "gd.gen-ai.permission-error.description": "您無權存取聊天機器人。請聯絡您的管理員申請存取權限。",
     "gd.gen-ai.feedback.like": "將此訊息標記為有用",
     "gd.gen-ai.feedback.dislike": "將此訊息標記為無幫助",
-    "gd.gen-ai.dialog.label": "AI助理聊天機器人對話"
+    "gd.gen-ai.dialog.label": "AI助理對話",
+    "gd.gen-ai.input-label.mac": "提出你的問題。使用 control+space 或 cmd+I 取得建議。",
+    "gd.gen-ai.input-label.win": "提出你的問題。使用 Control+Space 或 Control+I 取得建議。",
+    "gd.gen-ai.message.label.assistant": "機器人：",
+    "gd.gen-ai.skip-messages-history": "跳至AI助理輸入",
+    "gd.gen-ai.skip-navigation": "跳過導航"
 }

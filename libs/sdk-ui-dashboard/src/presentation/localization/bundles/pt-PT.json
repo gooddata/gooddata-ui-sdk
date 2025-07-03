@@ -766,5 +766,12 @@
     "filterBar.label": "Filtros",
     "controlButtons.asTable": "Mostrar como tabela",
     "controlButtons.asOriginal": "Mostrar visualização original",
-    "messages.shareLinkCopied": "Link copiado."
+    "messages.shareLinkCopied": "Link copiado.",
+    "addPanel.dashboardLayout.tooltip.learnMore": "Saber mais",
+    "nestedLayoutToolbar.direction.title": "Direção do layout",
+    "nestedLayoutToolbar.direction.row": "Horizontal com envoltório",
+    "nestedLayoutToolbar.direction.row.tooltip": "Layout horizontal com envoltório.",
+    "nestedLayoutToolbar.direction.column": "Vertical",
+    "nestedLayoutToolbar.direction.column.tooltip": "Layout vertical.",
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "A direção não pode ser alterada para vertical se o contêiner contiver contêineres aninhados com uma direção horizontal."
 }

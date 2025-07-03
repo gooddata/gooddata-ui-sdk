@@ -766,5 +766,12 @@
     "filterBar.label": "フィルター",
     "controlButtons.asTable": "表として表示",
     "controlButtons.asOriginal": "オリジナルのビジュアライゼーションを表示",
-    "messages.shareLinkCopied": "リンクをコピーした。"
+    "messages.shareLinkCopied": "リンクをコピーした。",
+    "addPanel.dashboardLayout.tooltip.learnMore": "詳細",
+    "nestedLayoutToolbar.direction.title": "レイアウト方向",
+    "nestedLayoutToolbar.direction.row": "ラップ付き横型",
+    "nestedLayoutToolbar.direction.row.tooltip": "ラップ付きの横型レイアウト。",
+    "nestedLayoutToolbar.direction.column": "縦",
+    "nestedLayoutToolbar.direction.column.tooltip": "縦のレイアウト。",
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "コンテナが水平方向を持つ入れ子コンテナを含む場合、方向を垂直に変更することはできない。"
 }

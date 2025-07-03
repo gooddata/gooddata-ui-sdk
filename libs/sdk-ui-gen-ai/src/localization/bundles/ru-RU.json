@@ -46,7 +46,7 @@
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Сохранить как новый…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Открыть в Analyze",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Скопировать ссылку на визуализацию",
-    "gd.gen-ai.message.label.user": "Ввод пользователя",
+    "gd.gen-ai.message.label.user": "Пользователь:",
     "gd.gen-ai.global-no-llm": "Поставщик LLM не настроен",
     "gd.gen-ai.global-no-llm.description": "Настройте провайдера для активации чат-бота.",
     "gd.gen-ai.global-no-llm.button-create-llm": "Настроить провайдера",
@@ -54,5 +54,10 @@
     "gd.gen-ai.permission-error.description": "У вас нет доступа к чат-боту. Обратитесь к администратору, чтобы запросить доступ.",
     "gd.gen-ai.feedback.like": "Отметить это сообщение как полезное",
     "gd.gen-ai.feedback.dislike": "Отметить это сообщение как не полезное",
-    "gd.gen-ai.dialog.label": "Диалог чат-бота с ИИ ассистентом"
+    "gd.gen-ai.dialog.label": "Разговор с AI-ассистентом",
+    "gd.gen-ai.input-label.mac": "Задайте свой вопрос. Используйте control+space или cmd+I для предложений.",
+    "gd.gen-ai.input-label.win": "Задайте ваш вопрос. Используйте control+space или control+I для предложений.",
+    "gd.gen-ai.message.label.assistant": "Бот:",
+    "gd.gen-ai.skip-messages-history": "Перейти к вводу AI-ассистента",
+    "gd.gen-ai.skip-navigation": "Пропустить навигацию"
 }

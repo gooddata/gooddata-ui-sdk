@@ -20,7 +20,7 @@
     "gd.gen-ai.state.cancelled": "Évaluation annulée…",
     "gd.gen-ai.state.in-progress": "Génération de votre réponse…",
     "gd.gen-ai.global-error.description": "Essayez de redémarrer le robot conversationnel et de recommencer.",
-    "gd.gen-ai.button.send": "Envoyer",
+    "gd.gen-ai.button.send": "Envoyer un message",
     "gd.gen-ai.input-label": "Posez votre question",
     "gd.gen-ai.assistant-icon": "Réponse du chatbot",
     "gd.gen-ai.button.save": "Enregistrer",
@@ -46,7 +46,7 @@
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Enregistrer comme nouveau…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Ouvrir dans Analyser",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Copier le lien de visualisation",
-    "gd.gen-ai.message.label.user": "Données de l'utilisateur",
+    "gd.gen-ai.message.label.user": "Utilisateur:",
     "gd.gen-ai.global-no-llm": "Pas de fournisseur LLM configuré",
     "gd.gen-ai.global-no-llm.description": "Configurer un fournisseur pour activer le chatbot.",
     "gd.gen-ai.global-no-llm.button-create-llm": "Configurer le fournisseur",
@@ -54,5 +54,10 @@
     "gd.gen-ai.permission-error.description": "Vous n'avez pas accès au chatbot. Contactez votre administrateur pour demander un accès.",
     "gd.gen-ai.feedback.like": "Marquer ce message comme utile",
     "gd.gen-ai.feedback.dislike": "Marquer ce message comme non utile",
-    "gd.gen-ai.dialog.label": "Assistant IA chatbot dialogue"
+    "gd.gen-ai.dialog.label": "Conversation avec un assistant IA",
+    "gd.gen-ai.input-label.mac": "Posez votre question. Utilisez contrôle+espace ou cmd+I pour obtenir des suggestions.",
+    "gd.gen-ai.input-label.win": "Posez votre question. Utilisez contrôle+espace ou contrôle+I pour les suggestions.",
+    "gd.gen-ai.message.label.assistant": "Bot:",
+    "gd.gen-ai.skip-messages-history": "Passer à l'entrée de l'assistant AI",
+    "gd.gen-ai.skip-navigation": "Passer la navigation"
 }

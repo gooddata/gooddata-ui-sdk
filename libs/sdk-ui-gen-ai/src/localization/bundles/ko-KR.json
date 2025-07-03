@@ -46,7 +46,7 @@
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "새로 저장…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Analyze에서 열기",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "시각화 링크 복사",
-    "gd.gen-ai.message.label.user": "사용자 입력",
+    "gd.gen-ai.message.label.user": "사용자:",
     "gd.gen-ai.global-no-llm": "LLM 제공자가 구성되지 않음",
     "gd.gen-ai.global-no-llm.description": "챗봇을 활성화하려면 공급자를 구성하십시오.",
     "gd.gen-ai.global-no-llm.button-create-llm": "공급자 구성",
@@ -54,5 +54,10 @@
     "gd.gen-ai.permission-error.description": "챗봇에 대한 접근 권한이 없습니다. 접근 권한 요청을 위해 관리자에게 문의하십시오.",
     "gd.gen-ai.feedback.like": "이 메시지를 유용하다고 표시",
     "gd.gen-ai.feedback.dislike": "이 메시지를 도움이 되지 않는 것으로 표시",
-    "gd.gen-ai.dialog.label": "AI 어시스턴트 챗봇 대화"
+    "gd.gen-ai.dialog.label": "AI 어시스턴트 대화",
+    "gd.gen-ai.input-label.mac": "질문을 입력하세요. 제안 사항을 보려면 control+space 또는 cmd+I를 사용하세요.",
+    "gd.gen-ai.input-label.win": "질문을 입력하세요. 제안 사항을 보려면 control+space 또는 control+I를 사용하세요.",
+    "gd.gen-ai.message.label.assistant": "봇:",
+    "gd.gen-ai.skip-messages-history": "AI 어시스턴트 입력으로 건너뛰기",
+    "gd.gen-ai.skip-navigation": "탐색 건너뛰기"
 }
