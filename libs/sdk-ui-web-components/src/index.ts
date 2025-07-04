@@ -10,6 +10,13 @@
  * @packageDocumentation
  */
 
+declare let __webpack_public_path__: string;
+
+const w = window as any;
+if (window && typeof w.__GD_ASSET_PATH__ === "string") {
+    __webpack_public_path__ = w.__GD_ASSET_PATH__;
+}
+
 import { CustomElementContext, getContext, setContext } from "./context.js";
 import { Insight } from "./visualizations/Insight.js";
 import { Dashboard } from "./visualizations/Dashboard.js";
