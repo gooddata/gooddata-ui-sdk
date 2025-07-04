@@ -21,6 +21,7 @@ module.exports = (env, argv) => ({
         // Force .js extension instead of .mjs
         filename: "[name].js",
         chunkFilename: "assets/[chunkhash].js",
+        publicPath: "auto",
         library: {
             type: "module",
         },
