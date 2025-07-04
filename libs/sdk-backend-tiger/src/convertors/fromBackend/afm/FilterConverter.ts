@@ -15,6 +15,7 @@ import {
 import { IFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { toLocalRef, toObjRef } from "../ObjRefConverter.js";
 import { toSdkGranularity } from "../dateGranularityConversions.js";
+import isNil from "lodash/isNil.js";
 
 const isPositiveAttributeFilter = (filter: unknown): filter is PositiveAttributeFilter => {
     return (filter as PositiveAttributeFilter).positiveAttributeFilter !== undefined;
@@ -30,6 +31,16 @@ const isAbsoluteDateFilter = (filter: unknown): filter is AbsoluteDateFilter => 
 
 const isRelativeDateFilter = (filter: unknown): filter is RelativeDateFilter => {
     return (filter as RelativeDateFilter).relativeDateFilter !== undefined;
+};
+
+const isRelativeBoundingDateFilter = (
+    filter: unknown,
+): filter is RelativeDateFilter & {
+    relativeDateFilter: RelativeDateFilter & { boundingFilter: RelativeDateFilter };
+} => {
+    return (
+        isRelativeDateFilter(filter) && (filter.relativeDateFilter as any).boundingFilter !== undefined // TODO
+    );
 };
 
 const isComparisonMeasureValueFilter = (filter: unknown): filter is ComparisonMeasureValueFilter => {
@@ -102,6 +113,27 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         // the present value instead of 0. This can be removed once we also start using optional bounds.
         const effectiveFrom = from ?? to ?? 0;
         const effectiveTo = to ?? from ?? 0;
+
+        if (isRelativeBoundingDateFilter(filter)) {
+            const { from, to } = filter.relativeDateFilter.boundingFilter as any;
+            const bound = !isNil(from) ? { from } : !isNil(to) ? { to } : {};
+
+            return {
+                relativeDateFilter: {
+                    dataSet: toObjRef(filter.relativeDateFilter.dataset),
+                    localIdentifier: filter.relativeDateFilter.localIdentifier,
+                    from: effectiveFrom,
+                    to: effectiveTo,
+                    granularity: toSdkGranularity(filter.relativeDateFilter.granularity),
+                    boundingFilter: {
+                        ...bound,
+                        granularity: toSdkGranularity(
+                            (filter.relativeDateFilter.boundingFilter as any).granularity,
+                        ),
+                    } as any,
+                },
+            };
+        }
 
         return {
             relativeDateFilter: {

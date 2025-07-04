@@ -164,7 +164,39 @@ export type IRelativeDateFilter =
       }
     | {
           relativeDateFilter: IRelativeDateFilterAllTimeBody;
+      }
+    | {
+          relativeDateFilter: IRelativeBoundingDateFilterBody;
       };
+
+/**
+ * Object defining the {@link IRelativeDateFilter} object body.
+ *
+ * @public
+ */
+export interface IRelativeBoundingDateFilterBody extends IRelativeDateFilterBody {
+    boundingFilter: IUpperBoundingFilter | ILowerBoundingFilter;
+}
+
+/**
+ * Object defining the {@link IUpperBoundingFilter} object body.
+ *
+ * @public
+ */
+export interface IUpperBoundingFilter {
+    granularity: DateAttributeGranularity;
+    to: number;
+}
+
+/**
+ * Object defining the {@link ILowerBoundingFilter} object body.
+ *
+ * @public
+ */
+export interface ILowerBoundingFilter {
+    granularity: DateAttributeGranularity;
+    from: number;
+}
 
 /**
  * Object defining the {@link IRelativeDateFilter} object body.
@@ -395,6 +427,75 @@ export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter {
  */
 export function isRelativeDateFilter(obj: unknown): obj is IRelativeDateFilter {
     return !isEmpty(obj) && (obj as IRelativeDateFilter).relativeDateFilter !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided object is a relative date filter body with bounding.
+ *
+ * @public
+ */
+export function isRelativeBoundingDateFilterBody(obj: unknown): obj is IRelativeBoundingDateFilterBody {
+    return (obj as IRelativeBoundingDateFilterBody).boundingFilter !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided filter body has a bounding filter with upper bounding.
+ *
+ * @public
+ */
+export function isRelativeUpperBoundingDateFilterBody(
+    obj: unknown,
+): obj is IRelativeBoundingDateFilterBody & { boundingFilter: IUpperBoundingFilter } {
+    return (
+        isRelativeBoundingDateFilterBody(obj) && (obj.boundingFilter as IUpperBoundingFilter).to !== undefined
+    );
+}
+
+/**
+ * Type guard checking whether the provided filter body has a bounding filter with lower bounding.
+ *
+ * @public
+ */
+export function isRelativeLowerBoundingDateFilterBody(
+    obj: unknown,
+): obj is IRelativeBoundingDateFilterBody & { boundingFilter: ILowerBoundingFilter } {
+    return (
+        isRelativeBoundingDateFilterBody(obj) &&
+        (obj.boundingFilter as ILowerBoundingFilter).from !== undefined
+    );
+}
+
+/**
+ * Type guard checking whether the provided object is a relative date filter with bounding.
+ *
+ * @public
+ */
+export function isRelativeBoundingDateFilter(
+    obj: unknown,
+): obj is IRelativeDateFilter & { relativeDateFilter: IRelativeBoundingDateFilterBody } {
+    return isRelativeDateFilter(obj) && isRelativeBoundingDateFilterBody(obj.relativeDateFilter);
+}
+
+/**
+ * Type guard checking whether the provided filter is a relative date filter with upper bounding.
+ *
+ * @public
+ */
+export function isRelativeUpperBoundingDateFilter(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: IRelativeBoundingDateFilterBody & { boundingFilter: IUpperBoundingFilter };
+} {
+    return isRelativeDateFilter(obj) && isRelativeUpperBoundingDateFilterBody(obj.relativeDateFilter);
+}
+
+/**
+ * Type guard checking whether the provided filter is a relative date filter with lower bounding.
+ *
+ * @public
+ */
+export function isRelativeLowerBoundingDateFilter(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: IRelativeBoundingDateFilterBody & { boundingFilter: ILowerBoundingFilter };
+} {
+    return isRelativeDateFilter(obj) && isRelativeLowerBoundingDateFilterBody(obj.relativeDateFilter);
 }
 
 /**

@@ -32,6 +32,9 @@ import {
     isRangeCondition,
     isRankingFilter,
     isRelativeDateFilter,
+    isRelativeBoundingDateFilter,
+    isRelativeUpperBoundingDateFilter,
+    isRelativeLowerBoundingDateFilter,
 } from "@gooddata/sdk-model";
 import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions.js";
 import {
@@ -40,6 +43,7 @@ import {
     toDateDataSetQualifier,
     toLocalIdentifier,
 } from "../ObjRefConverter.js";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 
 /**
  * Tiger specific wrapper for IFilter, adding 'applyOnResult' property influencing the place of filter application.
@@ -166,8 +170,12 @@ function convertRelativeDateFilter(
 ): RelativeDateFilter | null {
     const { relativeDateFilter } = filter;
 
-    if (relativeDateFilter.from === undefined || !relativeDateFilter.to === undefined) {
+    if (relativeDateFilter.from === undefined || relativeDateFilter.to === undefined) {
         return null;
+    }
+
+    if (isRelativeBoundingDateFilter(filter)) {
+        return convertRelativeBoundingDateFilter(filter, applyOnResultProp);
     }
 
     const datasetRef = relativeDateFilter.dataSet;
@@ -183,6 +191,58 @@ function convertRelativeDateFilter(
             ...applyOnResultProp,
         },
     };
+}
+
+function convertRelativeBoundingDateFilter(
+    filter: IRelativeDateFilter,
+    applyOnResultProp: ApplyOnResultProp,
+): RelativeDateFilter {
+    const { relativeDateFilter } = filter;
+    const datasetRef = relativeDateFilter.dataSet;
+    const dataset = toDateDataSetQualifier(datasetRef);
+    const localIdentifier = relativeDateFilter.localIdentifier;
+
+    if (isRelativeUpperBoundingDateFilter(filter)) {
+        const upperBoundingFilter = filter.relativeDateFilter.boundingFilter;
+        return {
+            relativeDateFilter: {
+                dataset,
+                granularity: toTigerGranularity(relativeDateFilter.granularity as any),
+                from: Number(relativeDateFilter.from),
+                to: Number(relativeDateFilter.to),
+                localIdentifier,
+                boundingFilter: {
+                    relativeDateFilter: {
+                        dataset,
+                        granularity: toTigerGranularity(upperBoundingFilter.granularity as any),
+                        to: Number(upperBoundingFilter.to),
+                    },
+                },
+                ...applyOnResultProp,
+            } as any, // TODO: remove any once API client is updated with bounding filter
+        };
+    } else if (isRelativeLowerBoundingDateFilter(filter)) {
+        const lowerBoundingFilter = filter.relativeDateFilter.boundingFilter;
+        return {
+            relativeDateFilter: {
+                dataset,
+                granularity: toTigerGranularity(relativeDateFilter.granularity as any),
+                from: Number(relativeDateFilter.from),
+                to: Number(relativeDateFilter.to),
+                localIdentifier,
+                boundingFilter: {
+                    relativeDateFilter: {
+                        dataset,
+                        granularity: toTigerGranularity(lowerBoundingFilter.granularity as any),
+                        from: Number(lowerBoundingFilter.from),
+                    },
+                },
+                ...applyOnResultProp,
+            } as any, // TODO: remove any once API client is updated with bounding filter
+        };
+    } else {
+        throw new NotSupported("Invalid bounding filter: neither upper nor lower bound detected.");
+    }
 }
 
 function convertMeasureValueFilter(
