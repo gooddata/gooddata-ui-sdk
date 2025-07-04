@@ -1,8 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 import {
+    DashboardAttachmentType,
     FilterContextItem,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    WidgetAttachmentType,
 } from "@gooddata/sdk-model";
 import {
     Button,
@@ -34,6 +36,7 @@ import {
     selectLocale,
     selectWeekStart,
     useDashboardSelector,
+    selectEnableNewScheduledExport,
 } from "../../../model/index.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
 import { validateAllFilterLocalIdentifiers } from "../../automationFilters/utils.js";
@@ -47,6 +50,8 @@ import { IScheduledEmailDialogProps } from "../types.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
 import { isMobileView } from "../utils/responsive.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
+import { DashboardAttachments as DashboardAttachmentsOld } from "./components/AttachmentsOld/DashboardAttachments.js";
+import { WidgetAttachments as WidgetAttachmentsOld } from "./components/AttachmentsOld/WidgetAttachments.js";
 import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
 import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
 import { DestinationSelect } from "./components/DestinationSelect/DestinationSelect.js";
@@ -166,6 +171,7 @@ export function ScheduledMailDialogRenderer({
         isCrossFiltering,
         isExecutionTimestampMode,
         enableAutomationFilterContext,
+        enableNewScheduledExport,
     } = useDefaultScheduledEmailDialogData({ filters: availableFilters ?? [] });
 
     const {
@@ -182,9 +188,12 @@ export function ScheduledMailDialogRenderer({
         isXlsxExportSelected,
         areDashboardFiltersChanged,
         validationErrorMessage,
+        selectedAttachments,
         onDashboardAttachmentsChange,
+        onDashboardAttachmentsChangeOld,
         onWidgetAttachmentsChange,
-        onWidgetAttachmentsSettingsChange,
+        onWidgetAttachmentsChangeOld,
+        onAttachmentsSettingsChange,
         onDestinationChange,
         onMessageChange,
         onRecipientsChange,
@@ -210,6 +219,7 @@ export function ScheduledMailDialogRenderer({
         enableAutomationFilterContext,
         filtersForNewAutomation,
         externalRecipientOverride,
+        enableNewScheduledExport,
     });
 
     const { isValid } = useValidateExistingAutomationFilters({
@@ -232,7 +242,11 @@ export function ScheduledMailDialogRenderer({
 
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
-    const errorMessage = savingErrorMessage ?? validationErrorMessage;
+    const missingAttachmentsErrorMessage =
+        selectedAttachments.length === 0 &&
+        intl.formatMessage({ id: "scheduledEmail.attachments.error.noAttachmentsSelected" });
+
+    const errorMessage = savingErrorMessage ?? validationErrorMessage ?? missingAttachmentsErrorMessage;
 
     const dashboardScheduledExportFiltersInfo = useFiltersForDashboardScheduledExportInfo({
         effectiveFilters: dashboardFilters,
@@ -418,29 +432,47 @@ export function ScheduledMailDialogRenderer({
                                 </>
                             ) : null}
                             {widget ? (
-                                <WidgetAttachments
-                                    widgetFilters={widgetFilters}
-                                    areDashboardFiltersChanged={areDashboardFiltersChanged}
+                                enableNewScheduledExport ? (
+                                    <WidgetAttachments
+                                        selectedAttachments={selectedAttachments as WidgetAttachmentType[]}
+                                        onWidgetAttachmentsChange={onWidgetAttachmentsChange}
+                                        xlsxSettings={settings}
+                                        onXlsxSettingsChange={onAttachmentsSettingsChange}
+                                    />
+                                ) : (
+                                    <WidgetAttachmentsOld
+                                        widgetFilters={widgetFilters}
+                                        areDashboardFiltersChanged={areDashboardFiltersChanged}
+                                        isCrossFiltering={isCrossFiltering}
+                                        scheduledExportToEdit={scheduledExportToEdit}
+                                        csvSelected={isCsvExportSelected}
+                                        xlsxSelected={isXlsxExportSelected}
+                                        settings={settings}
+                                        onWidgetAttachmentsSelectionChange={onWidgetAttachmentsChangeOld}
+                                        onAttachmentsSettingsChange={onAttachmentsSettingsChange}
+                                        enableAutomationFilterContext={enableAutomationFilterContext}
+                                        closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                        overlayPositionType={OVERLAY_POSITION_TYPE}
+                                    />
+                                )
+                            ) : enableNewScheduledExport ? (
+                                <DashboardAttachments
+                                    selectedAttachments={selectedAttachments as DashboardAttachmentType[]}
+                                    dashboardFilters={dashboardFilters}
                                     isCrossFiltering={isCrossFiltering}
-                                    scheduledExportToEdit={scheduledExportToEdit}
-                                    csvSelected={isCsvExportSelected}
-                                    xlsxSelected={isXlsxExportSelected}
-                                    settings={settings}
-                                    onWidgetAttachmentsSelectionChange={onWidgetAttachmentsChange}
-                                    onWidgetAttachmentsSettingsChange={onWidgetAttachmentsSettingsChange}
-                                    enableAutomationFilterContext={enableAutomationFilterContext}
-                                    closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                    overlayPositionType={OVERLAY_POSITION_TYPE}
+                                    onDashboardAttachmentsChange={onDashboardAttachmentsChange}
+                                    xlsxSettings={settings}
+                                    onXlsxSettingsChange={onAttachmentsSettingsChange}
                                 />
                             ) : (
-                                <DashboardAttachments
+                                <DashboardAttachmentsOld
                                     dashboardSelected={isDashboardExportSelected}
                                     scheduledExportToEdit={scheduledExportToEdit}
                                     areDashboardFiltersChanged={areDashboardFiltersChanged}
                                     dashboardFilters={dashboardFilters}
                                     isCrossFiltering={isCrossFiltering}
                                     filtersToDisplayInfo={dashboardScheduledExportFiltersInfo}
-                                    onDashboardAttachmentsSelectionChange={onDashboardAttachmentsChange}
+                                    onDashboardAttachmentsSelectionChange={onDashboardAttachmentsChangeOld}
                                     enableAutomationFilterContext={enableAutomationFilterContext}
                                 />
                             )}
@@ -519,6 +551,7 @@ function useDefaultScheduledEmailDialogData({ filters }: { filters: FilterContex
         const doAllDashboardFiltersHaveLocalIdentifiers = validateAllFilterLocalIdentifiers(filters);
         return enableAutomationFilterContextFlag && doAllDashboardFiltersHaveLocalIdentifiers;
     }, [filters, enableAutomationFilterContextFlag]);
+    const enableNewScheduledExport = useDashboardSelector(selectEnableNewScheduledExport);
 
     return {
         locale,
@@ -530,5 +563,6 @@ function useDefaultScheduledEmailDialogData({ filters }: { filters: FilterContex
         isCrossFiltering,
         isExecutionTimestampMode,
         enableAutomationFilterContext,
+        enableNewScheduledExport,
     };
 }

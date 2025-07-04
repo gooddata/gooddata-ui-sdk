@@ -98,87 +98,85 @@
     }
 }
 
-.gd-list-item {
-    .gd-icon-list {
-        &::before {
-            content: "";
-            background: url("@gooddata/sdk-ui-dashboard/esm/assets/list.svg") no-repeat center;
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-        }
+.gd-icon-list {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/list.svg") no-repeat center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
     }
-    .gd-icon-save-as-new {
-        &::before {
-            content: "";
-            background: url("@gooddata/sdk-ui-dashboard/esm/assets/save-as-new.svg") no-repeat center;
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-        }
+}
+.gd-icon-save-as-new {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/save-as-new.svg") no-repeat center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
     }
-    .gd-icon-filter {
-        &::before {
-            content: "";
-            background: url("@gooddata/sdk-ui-dashboard/esm/assets/filter.svg") no-repeat center;
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-        }
+}
+.gd-icon-filter {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/filter.svg") no-repeat center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
     }
-    .gd-icon-type-pdf {
-        &::before {
-            content: "";
-            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-pdf.svg") no-repeat center;
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-        }
+}
+.gd-icon-type-pdf {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-pdf.svg") no-repeat center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
     }
-    .gd-icon-type-sheet {
-        &::before {
-            content: "";
-            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-sheet.svg") no-repeat center;
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-        }
+}
+.gd-icon-type-sheet {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-sheet.svg") no-repeat center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
     }
-    .gd-icon-type-slides {
-        &::before {
-            content: "";
-            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-slides.svg") no-repeat center;
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-        }
+}
+.gd-icon-type-slides {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-slides.svg") no-repeat center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
     }
-    .gd-icon-type-image {
-        &::before {
-            content: "";
-            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-image.svg") no-repeat center;
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-        }
+}
+.gd-icon-type-image {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-image.svg") no-repeat center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
     }
-    .gd-icon-type-csv-raw {
-        &::before {
-            content: "";
-            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-csv-raw.svg") no-repeat center;
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-        }
+}
+.gd-icon-type-csv-raw {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-csv-raw.svg") no-repeat center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
     }
-    .gd-icon-type-csv-formatted {
-        &::before {
-            content: "";
-            background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-csv-formatted.svg") no-repeat center;
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-        }
+}
+.gd-icon-type-csv-formatted {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-dashboard/esm/assets/type-csv-formatted.svg") no-repeat center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
     }
 }
 

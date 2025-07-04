@@ -24,6 +24,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
     public getAutomations = async (options: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]> => {
         const { loadUserData = false } = options ?? {};
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
+        const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClient) => {
             const result = await client.entities.getAllEntitiesAutomations({
@@ -44,6 +45,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                     automation,
                     result.data.included ?? [],
                     enableAutomationFilterContext,
+                    enableNewScheduledExport,
                 ),
             );
         });
@@ -61,6 +63,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
+        const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClient) => {
             const result = await client.entities.getEntityAutomations({
@@ -78,6 +81,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                 result.data.data,
                 result.data.included ?? [],
                 enableAutomationFilterContext,
+                enableNewScheduledExport,
             );
         });
     };
@@ -88,9 +92,14 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
+        const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClient) => {
-            const convertedAutomation = convertAutomationToBackend(automation, enableAutomationFilterContext);
+            const convertedAutomation = convertAutomationToBackend(
+                automation,
+                enableAutomationFilterContext,
+                enableNewScheduledExport,
+            );
             const result = await client.entities.createEntityAutomations({
                 workspaceId: this.workspaceId,
                 jsonApiAutomationInDocument: {
@@ -109,6 +118,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                 result.data.data,
                 result.data.included ?? [],
                 enableAutomationFilterContext,
+                enableNewScheduledExport,
             );
         });
     };
@@ -119,9 +129,14 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
+        const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClient) => {
-            const convertedAutomation = convertAutomationToBackend(automation, enableAutomationFilterContext);
+            const convertedAutomation = convertAutomationToBackend(
+                automation,
+                enableAutomationFilterContext,
+                enableNewScheduledExport,
+            );
             const result = await client.entities.updateEntityAutomations({
                 objectId: automation.id,
                 workspaceId: this.workspaceId,
@@ -140,6 +155,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                 result.data.data,
                 result.data.included ?? [],
                 enableAutomationFilterContext,
+                enableNewScheduledExport,
             );
         });
     };
@@ -159,5 +175,10 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
     private getEnableAutomationFilterContext = async (): Promise<boolean> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspaceId);
         return userSettings.enableAutomationFilterContext ?? true;
+    };
+
+    private getEnableNewScheduledExport = async (): Promise<boolean> => {
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspaceId);
+        return userSettings.enableNewScheduledExport ?? false;
     };
 }

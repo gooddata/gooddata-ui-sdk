@@ -1,92 +1,71 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactNode } from "react";
-import { FormattedMessage } from "react-intl";
-import {
-    IAutomationMetadataObject,
-    IExportDefinitionVisualizationObjectSettings,
-    IFilter,
-} from "@gooddata/sdk-model";
-import { Message, OverlayPositionType } from "@gooddata/sdk-ui-kit";
-import { AttachmentWidgets } from "./AttachmentItems.js";
-import { WidgetAttachmentType } from "../../types.js";
+import React, { useRef } from "react";
+import { IExportDefinitionVisualizationObjectSettings, WidgetAttachmentType } from "@gooddata/sdk-model";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
+import { AttachmentsSelect } from "./AttachmentsSelect.js";
+import { AttachmentsList } from "./AttachmentsList.js";
+
+const SUPPORTED_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = ["PNG", "PPTX", "PDF", "XLSX", "CSV"];
 
 export interface IWidgetAttachmentsProps {
-    widgetFilters?: IFilter[];
-    areDashboardFiltersChanged: boolean;
-    isCrossFiltering: boolean;
-    scheduledExportToEdit?: IAutomationMetadataObject;
-    csvSelected: boolean;
-    xlsxSelected: boolean;
-    settings: IExportDefinitionVisualizationObjectSettings;
-    onWidgetAttachmentsSelectionChange: (
-        selected: boolean,
-        format: WidgetAttachmentType,
-        filters?: IFilter[],
-    ) => void;
-    onWidgetAttachmentsSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
-    enableAutomationFilterContext?: boolean;
-    closeOnParentScroll?: boolean;
-    overlayPositionType?: OverlayPositionType;
+    selectedAttachments: WidgetAttachmentType[];
+    onWidgetAttachmentsChange: (formats: WidgetAttachmentType[]) => void;
+    xlsxSettings: IExportDefinitionVisualizationObjectSettings;
+    onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
 }
 
-export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
-    const {
-        widgetFilters,
-        areDashboardFiltersChanged,
-        isCrossFiltering,
-        csvSelected,
-        xlsxSelected,
-        settings,
-        scheduledExportToEdit,
-        onWidgetAttachmentsSelectionChange,
-        onWidgetAttachmentsSettingsChange,
-        enableAutomationFilterContext,
-        closeOnParentScroll,
-        overlayPositionType,
-    } = props;
+export const WidgetAttachments = ({
+    selectedAttachments,
+    onWidgetAttachmentsChange,
+    xlsxSettings,
+    onXlsxSettingsChange,
+}: IWidgetAttachmentsProps) => {
+    const attachmentListRef = useRef<HTMLDivElement>(null);
 
-    const renderFiltersMessage = !enableAutomationFilterContext;
-    const isEditing = !!scheduledExportToEdit;
+    const handleWidgetAttachmentSelectionSave = (formats: WidgetAttachmentType[]) => {
+        onWidgetAttachmentsChange(formats);
+    };
 
-    const handleWidgetAttachmentSelectionChange = (format: WidgetAttachmentType) => {
-        if (format === "CSV") {
-            onWidgetAttachmentsSelectionChange(!csvSelected, format, widgetFilters);
-        } else {
-            onWidgetAttachmentsSelectionChange(!xlsxSelected, format, widgetFilters);
+    const handleDelete = (attachment: WidgetAttachmentType) => {
+        const newAttachments = selectedAttachments.filter((att) => att !== attachment);
+        onWidgetAttachmentsChange(newAttachments);
+    };
+
+    const handleChange = (attachments: { type: WidgetAttachmentType; selected: boolean }[]) => {
+        const formats = attachments
+            .filter(
+                (attachment): attachment is { type: WidgetAttachmentType; selected: true } =>
+                    attachment.selected && SUPPORTED_WIDGET_ATTACHMENTS.includes(attachment.type),
+            )
+            .map((attachment) => attachment.type);
+        handleWidgetAttachmentSelectionSave(formats);
+        // Scroll the attachment list into view after change
+        if (attachmentListRef.current) {
+            setTimeout(() => {
+                attachmentListRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }, 100);
         }
     };
 
     return (
-        <AttachmentsWrapper>
-            <div className="gd-attachment-list">
-                <AttachmentWidgets
-                    csvSelected={csvSelected}
-                    xlsxSelected={xlsxSelected}
-                    settings={settings}
-                    onSelectionChange={handleWidgetAttachmentSelectionChange}
-                    onSettingsChange={onWidgetAttachmentsSettingsChange}
-                    closeOnParentScroll={closeOnParentScroll}
-                    overlayPositionType={overlayPositionType}
+        <AttachmentsWrapper key={selectedAttachments.join()}>
+            <div className="gd-attachment-list" ref={attachmentListRef}>
+                <AttachmentsList
+                    attachments={selectedAttachments}
+                    onDelete={handleDelete}
+                    xlsxSettings={xlsxSettings}
+                    onXlsxSettingsChange={onXlsxSettingsChange}
+                    mode="widget"
                 />
-                {renderFiltersMessage &&
-                (isEditing || areDashboardFiltersChanged) &&
-                (csvSelected || xlsxSelected) ? (
-                    <div className="s-scheduled-email-attachments-filters-message">
-                        <FormattedMessage id="dialogs.schedule.management.attachments.filters.using" />{" "}
-                        <FormattedMessage id="dialogs.schedule.management.attachments.filters.edited" />
-                    </div>
-                ) : null}
-                {isCrossFiltering ? (
-                    <Message type="progress" className="gd-attachment-list-message">
-                        <FormattedMessage
-                            id="dialogs.schedule.management.attachments.message"
-                            values={{
-                                strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
-                            }}
-                        />
-                    </Message>
-                ) : null}
+                <AttachmentsSelect<WidgetAttachmentType>
+                    key={selectedAttachments.join()}
+                    attachments={SUPPORTED_WIDGET_ATTACHMENTS.map((format) => ({
+                        type: format,
+                        selected: selectedAttachments.includes(format),
+                    }))}
+                    onChange={handleChange}
+                    mode="widget"
+                />
             </div>
         </AttachmentsWrapper>
     );

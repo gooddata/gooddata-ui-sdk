@@ -743,6 +743,11 @@ export interface ISettings {
      */
     enableProductionFeaturesRollout?: boolean;
 
+    /**
+     * Enable new scheduled export
+     */
+    enableNewScheduledExport?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

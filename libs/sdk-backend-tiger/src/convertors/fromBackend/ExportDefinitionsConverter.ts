@@ -1,5 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 import {
+    JsonApiAutomationPatchAttributesDashboardTabularExports,
+    JsonApiAutomationPatchAttributesImageExports,
+    JsonApiAutomationPatchAttributesSlidesExports,
     JsonApiAutomationPatchAttributesTabularExports,
     JsonApiAutomationPatchAttributesVisualExports,
     JsonApiExportDefinitionOutIncludes,
@@ -10,20 +13,170 @@ import {
 import {
     FilterContextItem,
     idRef,
+    IExportDefinitionDashboardRequestPayload,
     IExportDefinitionMetadataObject,
     IExportDefinitionRequestPayload,
+    IExportDefinitionVisualizationObjectRequestPayload,
     IExportDefinitionVisualizationObjectSettings,
     IFilter,
 } from "@gooddata/sdk-model";
 import { v4 as uuid } from "uuid";
-import { convertUserIdentifier } from "./UsersConverter.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
+import { convertUserIdentifier } from "./UsersConverter.js";
 import isEmpty from "lodash/isEmpty.js";
 
 type MetadataObjectDefinition = {
     widget?: string;
     title?: string;
     filters?: FilterContextItem[];
+};
+
+export const wrapExportDefinition = (
+    requestPayload: IExportDefinitionRequestPayload,
+    metadata?: MetadataObjectDefinition,
+): IExportDefinitionMetadataObject => {
+    const id = uuid();
+    return {
+        type: "exportDefinition",
+        id,
+        uri: id,
+        ref: idRef(id, "exportDefinition"),
+        title: metadata?.title ?? "",
+        description: "",
+        tags: [],
+        requestPayload,
+        production: true,
+        deprecated: false,
+        unlisted: false,
+    };
+};
+
+export const convertDashboardTabularExportRequest = (
+    exportRequest: JsonApiAutomationPatchAttributesDashboardTabularExports,
+): IExportDefinitionDashboardRequestPayload => {
+    const {
+        requestPayload: { fileName, format, dashboardId, settings, dashboardFiltersOverride },
+    } = exportRequest;
+    return {
+        type: "dashboard",
+        fileName,
+        format,
+        settings,
+        content: {
+            dashboard: dashboardId,
+            filters: dashboardFiltersOverride?.map(cloneWithSanitizedIds) ?? undefined,
+        },
+    };
+};
+
+export const convertVisualExportRequest = (
+    exportRequest: JsonApiAutomationPatchAttributesVisualExports,
+    enableAutomationFilterContext: boolean,
+): IExportDefinitionDashboardRequestPayload => {
+    const {
+        requestPayload: { fileName, dashboardId, metadata: metadataObj },
+    } = exportRequest;
+
+    const metadata = metadataObj as MetadataObjectDefinition | undefined;
+    const filters = enableAutomationFilterContext
+        ? metadata?.filters?.map(cloneWithSanitizedIds)
+        : metadata?.filters;
+    const filtersObj = filters ? { filters } : {};
+    return {
+        type: "dashboard",
+        fileName,
+        format: "PDF",
+        content: {
+            dashboard: dashboardId,
+            ...filtersObj,
+        },
+    };
+};
+
+export const convertImageExportRequest = (
+    exportRequest: JsonApiAutomationPatchAttributesImageExports,
+): IExportDefinitionVisualizationObjectRequestPayload => {
+    const {
+        requestPayload: { fileName, dashboardId, metadata, format, widgetIds },
+    } = exportRequest;
+    return {
+        type: "visualizationObject",
+        fileName,
+        format,
+        content: {
+            visualizationObject: widgetIds?.[0] ?? "",
+            widget: widgetIds?.[0] ?? "",
+            dashboard: dashboardId,
+            filters:
+                (metadata as MetadataObjectDefinition | undefined)?.filters?.map(cloneWithSanitizedIds) ??
+                undefined,
+        },
+    };
+};
+
+export const convertSlidesExportRequest = (
+    exportRequest: JsonApiAutomationPatchAttributesSlidesExports,
+): IExportDefinitionVisualizationObjectRequestPayload | IExportDefinitionDashboardRequestPayload => {
+    const {
+        requestPayload: { fileName, format, dashboardId, widgetIds, metadata },
+    } = exportRequest;
+
+    if (Array.isArray(widgetIds) && widgetIds.length > 0) {
+        return {
+            type: "visualizationObject",
+            fileName,
+            format,
+            content: {
+                visualizationObject: widgetIds?.[0] ?? "",
+                dashboard: dashboardId,
+                widget: (metadata as MetadataObjectDefinition | undefined)?.widget,
+                filters:
+                    (metadata as MetadataObjectDefinition | undefined)?.filters?.map(cloneWithSanitizedIds) ??
+                    undefined,
+            },
+        };
+    }
+
+    return {
+        type: "dashboard",
+        fileName,
+        format: format === "PDF" ? "PDF_SLIDES" : format,
+        content: {
+            dashboard: dashboardId,
+            filters:
+                (metadata as MetadataObjectDefinition | undefined)?.filters?.map(cloneWithSanitizedIds) ??
+                undefined,
+        },
+    } as IExportDefinitionDashboardRequestPayload;
+};
+
+export const convertTabularExportRequest = (
+    exportRequest: JsonApiAutomationPatchAttributesTabularExports,
+): IExportDefinitionVisualizationObjectRequestPayload => {
+    const {
+        requestPayload: {
+            fileName,
+            metadata: metadataObj,
+            format,
+            visualizationObject,
+            relatedDashboardId,
+            visualizationObjectCustomFilters,
+            settings,
+        },
+    } = exportRequest;
+    const metadata = metadataObj as MetadataObjectDefinition | undefined;
+    return {
+        type: "visualizationObject",
+        fileName,
+        format,
+        settings,
+        content: {
+            visualizationObject: visualizationObject ?? "",
+            filters: visualizationObjectCustomFilters?.map(cloneWithSanitizedIds) ?? undefined,
+            dashboard: relatedDashboardId,
+            widget: metadata?.widget,
+        },
+    };
 };
 
 export const convertExportDefinitionMdObject = (
@@ -73,7 +226,7 @@ export const convertInlineExportDefinitionMdObject = (
 ): IExportDefinitionMetadataObject => {
     const id = uuid();
     const request = convertExportDefinitionRequestPayload(
-        exportDefinitionOut.requestPayload as VisualExportRequest | TabularExportRequest,
+        exportDefinitionOut.requestPayload,
         enableAutomationFilterContext,
     );
     const metadata = exportDefinitionOut.requestPayload.metadata as MetadataObjectDefinition | undefined;

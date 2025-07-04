@@ -1096,3 +1096,15 @@ export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean> = 
         return Boolean(state.settings?.enableDashboardShareDialogLink) ?? false;
     },
 );
+
+/**
+ * Selector for the new scheduled export feature flag
+ *
+ * @internal
+ */
+export const selectEnableNewScheduledExport: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableNewScheduledExport) ?? false;
+    },
+);

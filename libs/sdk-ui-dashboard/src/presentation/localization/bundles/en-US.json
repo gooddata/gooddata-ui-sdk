@@ -933,6 +933,11 @@
         "comment": "Label of a checkbox field",
         "limit": 0
     },
+    "dialogs.schedule.management.attachments.exportInfo": {
+        "value": "Include sheet with export info",
+        "comment": "Label of a checkbox field",
+        "limit": 0
+    },
     "dialogs.schedule.management.attachments.filters.title": {
         "value": "Dashboard filters",
         "comment": "Title of dropdown for selected type of dashboard filters for attachment",
@@ -976,6 +981,71 @@
     "dialogs.schedule.management.attachments.message": {
         "value": "<strong>Note</strong>. Cross-filtering will not be applied in the scheduled export.",
         "comment": "Message about used filters. Do not translate HTML tags.",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.title": {
+        "value": "Attachments",
+        "comment": "",
+        "limit": 0
+    },
+    "scheduledEmail.attachmentFormat.widget.png": {
+        "value": "Snapshot (.png)",
+        "comment": "",
+        "limit": 0
+    },
+    "scheduledEmail.attachmentFormat.widget.pptx": {
+        "value": "Single Slide (.pptx)",
+        "comment": "",
+        "limit": 0
+    },
+    "scheduledEmail.attachmentFormat.widget.pdf": {
+        "value": "Single Slide (.pdf)",
+        "comment": "",
+        "limit": 0
+    },
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": {
+        "value": "Formatted data (.xlsx)",
+        "comment": "",
+        "limit": 0
+    },
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": {
+        "value": "Formatted data (.csv)",
+        "comment": "",
+        "limit": 0
+    },
+    "scheduledEmail.attachmentFormat.widget.rawCSV": {
+        "value": "Raw data (.csv)",
+        "comment": "",
+        "limit": 0
+    },
+    "scheduledEmail.attachmentFormat.dashboard.pptx": {
+        "value": "Slide Deck (.pptx)",
+        "comment": "",
+        "limit": 0
+    },
+    "scheduledEmail.attachmentFormat.dashboard.pdf": {
+        "value": "Snapshot (.pdf)",
+        "comment": "",
+        "limit": 0
+    },
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": {
+        "value": "Data (.xlsx)",
+        "comment": "",
+        "limit": 0
+    },
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": {
+        "value": "Slide Deck (.pdf)",
+        "comment": "",
+        "limit": 0
+    },
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": {
+        "value": "<strong>Warning:</strong> Scheduled exports require at least one attachment — select an option to continue.",
+        "comment": "Do not translate HTML tags.",
+        "limit": 0
+    },
+    "scheduledEmail.attachments.error.noAttachmentsSelected": {
+        "value": "Error: No attachments selected — select at least one attachment to schedule an export.",
+        "comment": "",
         "limit": 0
     },
     "dialogs.schedule.management.load.error": {

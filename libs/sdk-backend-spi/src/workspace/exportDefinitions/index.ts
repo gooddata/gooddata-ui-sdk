@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     ObjRef,
@@ -11,6 +11,7 @@ import { IPagedResource } from "../../common/paging.js";
  * Service to query, update or delete exportDefinitions, and other methods related to exportDefinitions.
  * Check IExportDefinitionMetadataObject for more details.
  *
+ * @deprecated Not supported for write anymore
  * @alpha
  */
 export interface IWorkspaceExportDefinitionsService {
