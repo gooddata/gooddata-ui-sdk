@@ -1943,7 +1943,7 @@
                 "type": "object",
                 "properties": {
                     "relativeDateFilter": {
-                        "required": ["from", "granularity", "to", "dataset"],
+                        "required": ["granularity", "dataset"],
                         "type": "object",
                         "properties": {
                             "granularity": {
@@ -1970,14 +1970,16 @@
                             },
                             "from": {
                                 "type": "integer",
-                                "description": "Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for '2 days/weeks, ... ago').",
+                                "description": "Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for '2 days/weeks, ... ago'). If null, then start of the range is unbounded.",
                                 "format": "int32",
+                                "nullable": true,
                                 "example": -6
                             },
                             "to": {
                                 "type": "integer",
-                                "description": "End of the filtering interval. Specified by number of periods (with respect to given granularity). Value 'O' is representing current time-interval (current day, week, ...).",
+                                "description": "End of the filtering interval. Specified by number of periods (with respect to given granularity). Value 'O' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.",
                                 "format": "int32",
+                                "nullable": true,
                                 "example": 0
                             },
                             "localIdentifier": {
@@ -1992,7 +1994,7 @@
                         }
                     }
                 },
-                "description": "A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension."
+                "description": "A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The 'from' and 'to' properties mark the boundaries of the interval. If 'from' is omitted, all values earlier than 'to' are included. If 'to' is omitted, all values later than 'from' are included. It is not allowed to omit both."
             },
             "SimpleMeasureDefinition": {
                 "required": ["measure"],
