@@ -15,6 +15,7 @@ import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { stringUtils } from "@gooddata/util";
+import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 
 /**
  * @internal
@@ -94,11 +95,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                 onKeyDown={onKeyDown}
                 data-id={dataId}
                 data-testid={testId}
-                aria-label={accessibilityConfig?.ariaLabel}
-                aria-labelledby={accessibilityConfig?.ariaLabelledBy}
-                aria-describedby={accessibilityConfig?.ariaDescribedBy}
-                aria-expanded={accessibilityConfig?.ariaExpanded}
-                role={accessibilityConfig?.role}
+                {...accessibilityConfigToAttributes(accessibilityConfig)}
             >
                 {iconBefore ? (
                     <UiIcon

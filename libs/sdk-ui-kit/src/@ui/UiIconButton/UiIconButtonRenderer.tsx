@@ -16,6 +16,7 @@ import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 import { getButtonIconSize } from "../@utils/size.js";
 import { IDropdownButtonRenderProps } from "../../Dropdown/Dropdown.js";
+import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 
 /**
  * @internal
@@ -84,7 +85,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
                 data-testid={testId}
                 aria-disabled={isDisabled}
                 {...ariaAttributes}
-                {...accessibilityConfig}
+                {...accessibilityConfigToAttributes(accessibilityConfig)}
             >
                 <UiIcon type={icon} size={iconSize} ariaHidden />
                 {iconAfter ? (
