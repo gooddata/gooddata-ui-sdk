@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IGeoPushpinChartLatitudeLongitudeProps, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
@@ -11,7 +11,11 @@ import {
 } from "../../../interfaces/VisualizationDescriptor.js";
 import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart.js";
-import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants.js";
+import {
+    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
+    MAX_VISUALIZATION_HEIGHT,
+    MIDDLE_VISUALIZATION_HEIGHT,
+} from "../constants.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     executionConfigInsightConversion,
@@ -44,11 +48,27 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
                 max: layoutDescriptor.gridColumnsCount,
             },
             height: {
-                default: this.getDefaultHeight(settings.enableKDWidgetCustomHeight),
-                min: this.getDefaultHeight(settings.enableKDWidgetCustomHeight),
-                max: this.getMaxHeight(settings.enableKDWidgetCustomHeight),
+                default: this.getDefaultHeight(settings),
+                min: this.getDefaultHeight(settings),
+                max: this.getMaxHeight(settings),
             },
         };
+    }
+
+    protected getDefaultHeight(settings: ISettings): number {
+        const { enableKDWidgetCustomHeight } = settings;
+        if (!enableKDWidgetCustomHeight) {
+            return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
+        }
+        return MIDDLE_VISUALIZATION_HEIGHT;
+    }
+
+    protected getMaxHeight(settings: ISettings) {
+        const { enableKDWidgetCustomHeight } = settings;
+        if (!enableKDWidgetCustomHeight) {
+            return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
+        }
+        return MAX_VISUALIZATION_HEIGHT;
     }
 
     public getEmbeddingCode = getReactEmbeddingCodeGenerator({
@@ -94,12 +114,5 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
             supportsExport: true,
             supportsZooming: false,
         };
-    }
-
-    protected getMinHeight(enableCustomHeight: boolean): number {
-        if (!enableCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
-        }
-        return MIDDLE_VISUALIZATION_HEIGHT;
     }
 }

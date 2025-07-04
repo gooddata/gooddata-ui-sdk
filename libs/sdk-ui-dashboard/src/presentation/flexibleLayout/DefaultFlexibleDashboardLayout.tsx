@@ -21,6 +21,7 @@ import {
     selectEnableWidgetCustomHeight,
     selectRenderMode,
     selectFocusObject,
+    selectEnableFlexibleLayout,
 } from "../../model/index.js";
 import { serializeLayoutItemPath } from "../../_staging/layout/coordinates.js";
 
@@ -105,6 +106,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
     const selectedLayout = useDashboardSelector(selectLayout);
 
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
+    const enableDashboardFlexibleLayout = useDashboardSelector(selectEnableFlexibleLayout);
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
@@ -144,10 +146,20 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
 
         return DashboardLayoutBuilder.for(layout, layoutItemPath)
             .modifySections((section) =>
-                section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
+                section.modifyItems(
+                    sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight, enableDashboardFlexibleLayout),
+                ),
             )
             .build();
-    }, [isExport, layout, layoutItemPath, sanitizeWidgets, getInsightByRef, enableWidgetCustomHeight]);
+    }, [
+        isExport,
+        layout,
+        layoutItemPath,
+        sanitizeWidgets,
+        getInsightByRef,
+        enableWidgetCustomHeight,
+        enableDashboardFlexibleLayout,
+    ]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {

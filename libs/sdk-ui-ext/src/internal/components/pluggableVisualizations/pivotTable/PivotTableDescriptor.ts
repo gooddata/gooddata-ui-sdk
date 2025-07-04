@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IInsight, IInsightDefinition, insightSanitize, ISettings } from "@gooddata/sdk-model";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -32,6 +32,11 @@ import {
 } from "../../../utils/embeddingCodeGenerator/index.js";
 import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight.js";
 import { pivotTableAdditionalFactories } from "./pivotTableAdditionalFactories.js";
+import {
+    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
+    MIN_VISUALIZATION_HEIGHT,
+    MIN_VISUALIZATION_HEIGHT_TABLE_FLEXIBLE_LAYOUT,
+} from "../constants.js";
 
 export class PivotTableDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -50,11 +55,22 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
                 max: layoutDescriptor.gridColumnsCount,
             },
             height: {
-                default: this.getDefaultHeight(settings.enableKDWidgetCustomHeight),
-                min: this.getMinHeight(settings.enableKDWidgetCustomHeight),
-                max: this.getMaxHeight(settings.enableKDWidgetCustomHeight),
+                default: this.getDefaultHeight(settings),
+                min: this.getMinHeight(settings),
+                max: this.getMaxHeight(settings),
             },
         };
+    }
+
+    protected getMinHeight(settings: ISettings): number {
+        const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
+        if (!enableKDWidgetCustomHeight) {
+            return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
+        }
+        if (enableDashboardFlexibleLayout) {
+            return MIN_VISUALIZATION_HEIGHT_TABLE_FLEXIBLE_LAYOUT;
+        }
+        return MIN_VISUALIZATION_HEIGHT;
     }
 
     public applyDrillDown(

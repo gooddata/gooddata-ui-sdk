@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import {
@@ -10,9 +10,12 @@ import {
 import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
-    MAX_VISUALIZATION_HEIGHT,
     MIN_VISUALIZATION_HEIGHT,
     MIDDLE_VISUALIZATION_HEIGHT,
+    MIDDLE_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
+    MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
+    MAX_NEW_VISUALIZATION_HEIGHT,
+    MAX_VISUALIZATION_HEIGHT,
 } from "../constants.js";
 import { IDrillDownContext } from "../../../interfaces/Visualization.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
@@ -33,30 +36,42 @@ export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
                 max: layoutDescriptor.gridColumnsCount,
             },
             height: {
-                default: this.getDefaultHeight(settings.enableKDWidgetCustomHeight),
-                min: this.getMinHeight(settings.enableKDWidgetCustomHeight),
-                max: this.getMaxHeight(settings.enableKDWidgetCustomHeight),
+                default: this.getDefaultHeight(settings),
+                min: this.getMinHeight(settings),
+                max: this.getMaxHeight(settings),
             },
         };
     }
 
-    protected getDefaultHeight(enableCustomHeight: boolean): number {
-        if (!enableCustomHeight) {
+    protected getDefaultHeight(settings: ISettings): number {
+        const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
+        if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
+        }
+        if (enableDashboardFlexibleLayout) {
+            return MIDDLE_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT;
         }
         return MIDDLE_VISUALIZATION_HEIGHT;
     }
 
-    protected getMinHeight(enableCustomHeight: boolean): number {
-        if (!enableCustomHeight) {
+    protected getMinHeight(settings: ISettings): number {
+        const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
+        if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
+        }
+        if (enableDashboardFlexibleLayout) {
+            return MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT;
         }
         return MIN_VISUALIZATION_HEIGHT;
     }
 
-    protected getMaxHeight(enableCustomHeight: boolean): number {
-        if (!enableCustomHeight) {
+    protected getMaxHeight(settings: ISettings) {
+        const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
+        if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
+        }
+        if (enableDashboardFlexibleLayout) {
+            return MAX_NEW_VISUALIZATION_HEIGHT;
         }
         return MAX_VISUALIZATION_HEIGHT;
     }
