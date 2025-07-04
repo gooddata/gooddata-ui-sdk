@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
 import { useIntl } from "react-intl";
 import { Input, InputPureProps } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject, ISeparators } from "@gooddata/sdk-model";

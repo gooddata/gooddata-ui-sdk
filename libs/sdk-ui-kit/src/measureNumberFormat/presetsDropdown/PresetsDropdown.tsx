@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 
@@ -22,7 +22,7 @@ interface IMeasureNumberFormatDropdownOwnProps {
 
 type IMeasureNumberFormatDropdownProps = IMeasureNumberFormatDropdownOwnProps & WrappedComponentProps;
 
-export class PresetsDropdown extends React.PureComponent<IMeasureNumberFormatDropdownProps> {
+export class PresetsDropdown extends PureComponent<IMeasureNumberFormatDropdownProps> {
     public static defaultProps: Pick<IMeasureNumberFormatDropdownProps, "positioning"> = {
         positioning: [
             { snapPoints: { parent: SnapPoint.BottomLeft, child: SnapPoint.TopLeft } },

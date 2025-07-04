@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { PureComponent, ReactNode } from "react";
 import ReactMeasure, { Rect } from "react-measure";
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -48,7 +48,7 @@ export interface ILegendProps {
 /**
  * @internal
  */
-export class Legend extends React.PureComponent<ILegendProps> {
+export class Legend extends PureComponent<ILegendProps> {
     public static defaultProps = {
         responsive: false,
         legendItemsEnabled: [] as any,
@@ -80,7 +80,7 @@ export class Legend extends React.PureComponent<ILegendProps> {
         return seriesWithVisibility;
     };
 
-    public renderPopUpLegend = (): React.ReactNode => {
+    public renderPopUpLegend = (): ReactNode => {
         const { legendLabel, maximumRows, enableBorderRadius, containerId = "" } = this.props;
 
         return (
@@ -95,7 +95,7 @@ export class Legend extends React.PureComponent<ILegendProps> {
         );
     };
 
-    public renderFluid = (): React.ReactNode => {
+    public renderFluid = (): ReactNode => {
         const { enableBorderRadius } = this.props;
 
         return (
@@ -117,7 +117,7 @@ export class Legend extends React.PureComponent<ILegendProps> {
         );
     };
 
-    public renderStatic = (): React.ReactNode => {
+    public renderStatic = (): ReactNode => {
         const { position, height, enableBorderRadius, responsive, legendLabel: label } = this.props;
 
         const classNames = cx("viz-static-legend-wrap", `position-${position}`);
@@ -176,7 +176,7 @@ export class Legend extends React.PureComponent<ILegendProps> {
         return this.renderStatic();
     }
 
-    private renderHeatmapLegend = (contentDimensions: { width: number; height: number }): React.ReactNode => {
+    private renderHeatmapLegend = (contentDimensions: { width: number; height: number }): ReactNode => {
         const { locale, format, responsive, position, legendLabel } = this.props;
         const { showFluidLegend } = this.props;
         const series = this.getSeries();

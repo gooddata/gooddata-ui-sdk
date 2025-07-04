@@ -1,11 +1,11 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IMeasure, INullableFilter, ISeparators } from "@gooddata/sdk-model";
 import { IRawExecuteProps, IWithLoadingEvents, RawExecute } from "../execution/index.js";
 import { FormattedNumber } from "./FormattedNumber.js";
 import { KpiError } from "./KpiError.js";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import isNil from "lodash/isNil.js";
 import isArray from "lodash/isArray.js";
 import {
@@ -24,7 +24,7 @@ import { invariant } from "ts-invariant";
 
 const KpiLoading = () => <LoadingComponent inline={true} />;
 
-const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = (props) => {
+function CoreKpi(props: IKpiProps) {
     const {
         backend,
         workspace,
@@ -37,8 +37,9 @@ const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = (props) => {
         onLoadingChanged,
         onLoadingFinish,
         onLoadingStart,
-        intl,
     } = props;
+
+    const intl = useIntl();
 
     invariant(
         backend && workspace,
@@ -86,7 +87,7 @@ const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = (props) => {
             }}
         </RawExecute>
     );
-};
+}
 
 const getMeasureData = (result: DataViewFacade) => {
     const data = result.rawData().data();
@@ -105,16 +106,13 @@ const getMeasureFormat = (result: DataViewFacade) => {
     return headerItems?.[0]?.measureHeaderItem?.format;
 };
 
-const IntlKpi = injectIntl(CoreKpi);
-
-const RenderKpi: React.FC<IKpiProps> = (props) => {
-    const { locale } = props;
+function RenderKpi({ locale, ...props }: IKpiProps) {
     return (
         <IntlWrapper locale={locale}>
-            <IntlKpi {...props} />
+            <CoreKpi {...props} />
         </IntlWrapper>
     );
-};
+}
 
 //
 // Public interface
@@ -165,12 +163,12 @@ export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
     /**
      * Specify react component to render while the data is loading.
      */
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
 
     /**
      * Specify react component to render if execution fails.
      */
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
 }
 
 /**

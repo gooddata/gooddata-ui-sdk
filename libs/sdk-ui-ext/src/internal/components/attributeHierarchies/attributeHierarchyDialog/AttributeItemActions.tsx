@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useRef, useState } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useRef, useState } from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
@@ -9,10 +9,10 @@ interface IAttributeItemCellProps {
     rowIndex: number;
 }
 
-const AttributeItemActions: React.FC<IAttributeItemCellProps> = ({ rowIndex }) => {
+export default function AttributeItemActions({ rowIndex }: IAttributeItemCellProps) {
     const [shouldDisplayAddActions, setDisplayAddActions] = useState<boolean>(false);
     const { onDeleteAttribute } = useAttributeHierarchyDialog();
-    const addAttributeRef = useRef();
+    const addAttributeRef = useRef(undefined);
 
     const handleAddAttribute = () => {
         setDisplayAddActions(true);
@@ -47,6 +47,4 @@ const AttributeItemActions: React.FC<IAttributeItemCellProps> = ({ rowIndex }) =
             ) : null}
         </div>
     );
-};
-
-export default AttributeItemActions;
+}

@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { MouseEvent } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -14,20 +14,20 @@ export interface IDateDatasetsListItemProps {
     isHeader?: boolean;
     isSelected?: boolean;
     isUnrelated?: boolean;
-    onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 /**
  * @internal
  */
-export const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
+export function DateDatasetsListItem({
     id,
     title,
     isHeader,
     isSelected,
     isUnrelated,
     onClick,
-}) => {
+}: IDateDatasetsListItemProps) {
     if (isHeader) {
         return (
             <div className="gd-list-item gd-list-item-header">
@@ -57,4 +57,4 @@ export const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
             <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
         </div>
     );
-};
+}

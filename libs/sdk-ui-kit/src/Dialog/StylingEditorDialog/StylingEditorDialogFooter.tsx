@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import noop from "lodash/noop.js";
 import { Button } from "../../Button/index.js";
 import { useIntl } from "react-intl";

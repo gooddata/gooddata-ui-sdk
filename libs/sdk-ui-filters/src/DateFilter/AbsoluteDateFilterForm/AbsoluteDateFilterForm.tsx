@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
-import { DayPickerRangeProps } from "react-day-picker";
+import { DayPickerProps } from "react-day-picker";
 import { IAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";
 
 import { DateRangePicker } from "../DateRangePicker/DateRangePicker.js";
@@ -23,7 +22,7 @@ export interface IAbsoluteDateFilterFormProps {
     submitForm: () => void;
 }
 
-const dayPickerProps: DayPickerRangeProps = {
+const dayPickerProps: DayPickerProps = {
     mode: "range",
     weekStartsOn: 0, // Sunday, regardless of locale
 };
@@ -31,7 +30,7 @@ const dayPickerProps: DayPickerRangeProps = {
 /**
  * @internal
  */
-export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
+export function AbsoluteDateFilterForm({
     dateFormat,
     isMobile,
     selectedFilterOption,
@@ -40,7 +39,7 @@ export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
     shouldOverlayDatePicker,
     onSelectedFilterOptionChange,
     submitForm,
-}) => {
+}: IAbsoluteDateFilterFormProps) {
     const handleRangeChange = (range: IDateRange): void => {
         onSelectedFilterOptionChange(
             dateRangeToDateFilterValue(range, selectedFilterOption.localIdentifier, isTimeEnabled),
@@ -60,4 +59,4 @@ export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
             submitForm={submitForm}
         />
     );
-};
+}

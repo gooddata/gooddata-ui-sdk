@@ -335,31 +335,7 @@ export const isTigerType: (obj: unknown) => obj is TigerObjectType;
 export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
 
 // @alpha (undocumented)
-export const objectTypeToTigerIdType: {
-    variable: TigerObjectType;
-    user: TigerObjectType;
-    measure: TigerObjectType;
-    fact: TigerObjectType;
-    attribute: TigerObjectType;
-    displayForm: TigerObjectType;
-    dataSet: TigerObjectType;
-    insight: TigerObjectType;
-    analyticalDashboard: TigerObjectType;
-    theme: TigerObjectType;
-    colorPalette: TigerObjectType;
-    filterContext: TigerObjectType;
-    dashboardPlugin: TigerObjectType;
-    attributeHierarchy: TigerObjectType;
-    userGroup: TigerObjectType;
-    dateHierarchyTemplate: TigerObjectType;
-    dateAttributeHierarchy: TigerObjectType;
-    exportDefinition: TigerObjectType;
-    automation: TigerObjectType;
-    filterView: TigerObjectType;
-    workspaceDataFilter: TigerObjectType;
-    workspaceDataFilterSetting: TigerObjectType;
-    notificationChannel: TigerObjectType;
-};
+export const objectTypeToTigerIdType: { [objectType in TigerCompatibleObjectType]: TigerObjectType; };
 
 // @internal (undocumented)
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;

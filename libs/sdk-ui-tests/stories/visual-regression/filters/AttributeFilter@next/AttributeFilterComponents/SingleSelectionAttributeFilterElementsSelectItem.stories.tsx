@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { IAttributeElement } from "@gooddata/sdk-model";
 
@@ -20,7 +20,7 @@ const longTitleItem: IAttributeElement = {
     uri: "some uri",
 };
 
-const SingleSelectionAttributeFilterElementsSelectItemExamples = (): JSX.Element => {
+const SingleSelectionAttributeFilterElementsSelectItemExamples = (): ReactElement => {
     return (
         <IntlWrapper>
             <div style={{ width: 300 }}>

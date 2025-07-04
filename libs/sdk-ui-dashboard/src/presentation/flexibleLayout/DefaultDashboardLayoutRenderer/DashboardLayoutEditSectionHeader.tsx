@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
 import cx from "classnames";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
@@ -20,11 +20,11 @@ export interface IDashboardLayoutSectionHeaderProps {
     parentLayoutItemSize: IDashboardLayoutSizeByScreenSize | undefined;
 }
 
-export const DashboardLayoutEditSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = ({
+export function DashboardLayoutEditSectionHeader({
     section,
     parentLayoutItemSize,
     isEmptySection,
-}) => {
+}: IDashboardLayoutSectionHeaderProps) {
     const { sections } = getLayoutConfiguration(section.layout().raw());
     const refs = getRefsForSection(section);
     const isEditingDisabled = useDashboardSelector(selectIsSectionInsertedByPlugin(refs));
@@ -53,4 +53,4 @@ export const DashboardLayoutEditSectionHeader: React.FC<IDashboardLayoutSectionH
             </div>
         </div>
     );
-};
+}

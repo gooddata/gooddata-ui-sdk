@@ -1,5 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
@@ -10,7 +9,7 @@ import img from "./assets/gooddata-logo.svg";
 // Workspace ID is injected by WebPack based on the value in package.json
 const workspaceId = WORKSPACE_ID;
 
-export const App: React.FC = () => {
+export function App() {
     return (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={workspaceId}>
@@ -43,4 +42,4 @@ export const App: React.FC = () => {
             </WorkspaceProvider>
         </BackendProvider>
     );
-};
+}

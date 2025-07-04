@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
@@ -12,23 +12,22 @@ import { IAddGranteeBaseProps } from "./types.js";
 /**
  * @internal
  */
-export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
-    const {
-        appliedGrantees,
-        addedGrantees,
-        currentUser,
-        isDirty,
-        currentUserPermissions,
-        sharedObject,
-        previouslyFocusedRef,
-        onCancel,
-        onSubmit,
-        onBackClick,
-        onAddUserOrGroups,
-        onDelete,
-        onGranularGranteeChange,
-        isGranteeShareLoading,
-    } = props;
+export function AddGranteeBase({
+    appliedGrantees,
+    addedGrantees,
+    currentUser,
+    isDirty,
+    currentUserPermissions,
+    sharedObject,
+    previouslyFocusedRef,
+    onCancel,
+    onSubmit,
+    onBackClick,
+    onAddUserOrGroups,
+    onDelete,
+    onGranularGranteeChange,
+    isGranteeShareLoading,
+}: IAddGranteeBaseProps) {
     const intl = useIntl();
     const {
         isLocked: isSharedObjectLocked,
@@ -73,4 +72,4 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             <ContentDivider />
         </ConfirmDialogBase>
     );
-};
+}

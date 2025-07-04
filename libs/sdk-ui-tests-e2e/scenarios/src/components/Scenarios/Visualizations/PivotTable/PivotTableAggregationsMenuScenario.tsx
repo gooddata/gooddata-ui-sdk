@@ -1,5 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { TotalsOrPlaceholders, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
@@ -45,9 +44,7 @@ interface IPivotTableAggregationsMenuCoreProps {
     totals?: TotalsOrPlaceholders;
 }
 
-const PivotTableAggregationsMenuCore: React.FC<IPivotTableAggregationsMenuCoreProps> = (props) => {
-    const { totals, config } = props;
-
+function PivotTableAggregationsMenuCore({ totals, config }: IPivotTableAggregationsMenuCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -68,32 +65,32 @@ const PivotTableAggregationsMenuCore: React.FC<IPivotTableAggregationsMenuCorePr
             />
         </div>
     );
-};
+}
 
-export const PivotTableAggregationsMenuScenario = () => {
+export function PivotTableAggregationsMenuScenario() {
     return <PivotTableAggregationsMenuCore config={pivotTableConfig} />;
-};
+}
 
-export const PivotTableAggregationsMenuAllTotalScenario = () => {
+export function PivotTableAggregationsMenuAllTotalScenario() {
     return <PivotTableAggregationsMenuCore config={pivotTableConfig} totals={totalsAll} />;
-};
+}
 
-export const PivotTableAggregationsMenuOneTotalScenario = () => {
+export function PivotTableAggregationsMenuOneTotalScenario() {
     return <PivotTableAggregationsMenuCore config={pivotTableConfig} totals={totalsOne} />;
-};
+}
 
-export const PivotTableColumnsAggegationsMenuScenario = () => {
+export function PivotTableColumnsAggegationsMenuScenario() {
     return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} />;
-};
+}
 
-export const PivotTableAggregationsMenuOneColumnTotalScenario = () => {
+export function PivotTableAggregationsMenuOneColumnTotalScenario() {
     return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} totals={columnTotalsOne} />;
-};
+}
 
-export const PivotTableColumnsAggregationsMenuAllTotalScenario = () => {
+export function PivotTableColumnsAggregationsMenuAllTotalScenario() {
     return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} totals={columnTotalsAll} />;
-};
+}
 
-export const PivotTableColumnsAggregationsMenuOneSubtotalScenario = () => {
+export function PivotTableColumnsAggregationsMenuOneSubtotalScenario() {
     return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} totals={rowSubtotalsOne} />;
-};
+}

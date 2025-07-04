@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { useMemo, useState } from "react";
+import { ReactElement, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import { Tabs, Overlay, IAlignPoint, Message } from "@gooddata/sdk-ui-kit";
@@ -46,12 +46,12 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     changeUserMembership?: boolean;
     onSuccess: () => void;
     onClose: () => void;
-    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
     areFilterViewsEnabled?: boolean;
     selectedTab?: UserTabId;
 }
 
-const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
+function UserEditDialogComponent({
     userId,
     organizationId,
     isAdmin,
@@ -62,7 +62,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
     renderDataSourceIcon,
     areFilterViewsEnabled = false,
     selectedTab = undefined,
-}) => {
+}: IUserEditDialogProps) {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserDialogMode(initialView);
     const {
@@ -314,7 +314,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
             </Overlay>
         </OrganizationIdProvider>
     );
-};
+}
 
 /**
  * @internal

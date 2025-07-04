@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { ComponentType } from 'react';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
@@ -43,11 +41,14 @@ import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
+import { JSX } from 'react/jsx-runtime';
+import { MutableRefObject } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
-import { default as React_2 } from 'react';
+import { PureComponent } from 'react';
 import { ReactNode } from 'react';
+import { RefObject } from 'react';
 import { RelativeDateFilterGranularityOffset } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { WeekStart } from '@gooddata/sdk-model';
@@ -59,30 +60,30 @@ export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDate
 export type AsyncOperationStatus = "pending" | "loading" | "success" | "error" | "canceled";
 
 // @internal (undocumented)
-export const AttributeDatasetInfo: React_2.FC<IAttributeDatasetInfoProps>;
+export function AttributeDatasetInfo({ title, defaultAttributeFilterTitle, attributeDataSet, }: IAttributeDatasetInfoProps): JSX.Element;
 
 // @internal
-export const AttributeDisplayFormSelect: React_2.FC<IAttributeDisplayFormSelectProps>;
+export function AttributeDisplayFormSelect(props: IAttributeDisplayFormSelectProps): JSX.Element;
 
 // @public
 export type AttributeElementKey = string | null;
 
 // @public
-export const AttributeFilter: React_2.FC<IAttributeFilterProps>;
+export function AttributeFilter(props: IAttributeFilterProps): JSX.Element;
 
 // @beta
-export const AttributeFilterAllValuesFilteredResult: React_2.FC<IAttributeFilterAllValuesFilteredResultProps>;
+export function AttributeFilterAllValuesFilteredResult({ parentFilterTitles, searchString, enableShowingFilteredElements, }: IAttributeFilterAllValuesFilteredResultProps): JSX.Element;
 
 // @public
-export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonProps>;
+export function AttributeFilterButton(props: IAttributeFilterButtonProps): JSX.Element;
 
 // @beta
-export const AttributeFilterButtonTooltip: React_2.FC<{
-    children?: React_2.ReactNode;
-}>;
+export function AttributeFilterButtonTooltip({ children }: {
+    children?: ReactNode;
+}): JSX.Element;
 
 // @internal (undocumented)
-export const AttributeFilterConfigurationButton: React_2.VFC<IAttributeFilterConfigurationButtonProps>;
+export function AttributeFilterConfigurationButton({ onConfiguration, }: IAttributeFilterConfigurationButtonProps): JSX.Element;
 
 // @public
 export type AttributeFilterController = AttributeFilterControllerData & AttributeFilterControllerCallbacks;
@@ -136,67 +137,67 @@ export type AttributeFilterControllerData = {
 };
 
 // @internal (undocumented)
-export const AttributeFilterDeleteButton: React_2.VFC<IAttributeFilterDeleteButtonProps>;
+export function AttributeFilterDeleteButton({ onDelete }: IAttributeFilterDeleteButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export const AttributeFilterDependencyTooltip: React_2.FC<IAttributeFilterDependencyTooltipProps>;
+export function AttributeFilterDependencyTooltip({ tooltipContent }: IAttributeFilterDependencyTooltipProps): JSX.Element;
 
 // @beta
-export const AttributeFilterDropdownActions: React_2.VFC<IAttributeFilterDropdownActionsProps>;
+export function AttributeFilterDropdownActions({ isApplyDisabled, onApplyButtonClick, onCancelButtonClick, withoutApply, }: IAttributeFilterDropdownActionsProps): JSX.Element;
 
 // @beta
-export const AttributeFilterDropdownBody: React_2.FC<IAttributeFilterDropdownBodyProps>;
+export function AttributeFilterDropdownBody(props: IAttributeFilterDropdownBodyProps): JSX.Element;
 
 // @beta
-export const AttributeFilterDropdownButton: React_2.VFC<IAttributeFilterDropdownButtonProps>;
+export function AttributeFilterDropdownButton({ isOpen, title, selectedItemsCount, showSelectionCount, subtitle, disabled, customIcon, isFiltering, isLoading, isLoaded, isError, isDraggable, icon, TooltipContentComponent, titleExtension, onClick, className, buttonRef, dropdownId, }: IAttributeFilterDropdownButtonProps): JSX.Element;
 
 // @beta
-export const AttributeFilterElementsActions: React_2.VFC<IAttributeFilterElementsActionsProps>;
+export function AttributeFilterElementsActions({ checked, isVisible, onChange, onToggle, onApplyButtonClick, isApplyDisabled, isFiltered, totalItemsCount, isPartialSelection, }: IAttributeFilterElementsActionsProps): JSX.Element;
 
 // @beta
-export const AttributeFilterElementsSearchBar: React_2.VFC<IAttributeFilterElementsSearchBarProps>;
+export function AttributeFilterElementsSearchBar(props: IAttributeFilterElementsSearchBarProps): JSX.Element;
 
 // @beta
-export const AttributeFilterElementsSelect: React_2.FC<IAttributeFilterElementsSelectProps>;
+export function AttributeFilterElementsSelect({ items, totalItemsCount, totalItemsCountWithCurrentSettings, isInverted, selectedItems, onSelect, searchString, onSearch, isLoading, isLoadingNextPage, nextPageSize, onLoadNextPage, error, attributeTitle, isFilteredByParentFilters, parentFilterTitles, enableShowingFilteredElements, onShowFilteredElements, irrelevantSelection, onClearIrrelevantSelection, onApplyButtonClick, isApplyDisabled, isFilteredByDependentDateFilters, enableAttributeFilterVirtualised, withoutApply, }: IAttributeFilterElementsSelectProps): JSX.Element;
 
 // @beta
-export const AttributeFilterElementsSelectError: React_2.VFC;
+export function AttributeFilterElementsSelectError(): JSX.Element;
 
 // @beta
-export const AttributeFilterElementsSelectItem: React_2.VFC<IAttributeFilterElementsSelectItemProps>;
+export function AttributeFilterElementsSelectItem({ item, isSelected, focusedAction, onSelect, onSelectOnly, onDeselect, primaryLabelTitle, }: IAttributeFilterElementsSelectItemProps): JSX.Element;
 
 // @beta
-export const AttributeFilterElementsSelectLoading: React_2.VFC<IAttributeFilterElementsSelectLoadingProps>;
+export function AttributeFilterElementsSelectLoading({ height }: IAttributeFilterElementsSelectLoadingProps): JSX.Element;
 
 // @beta
-export const AttributeFilterEmptyAttributeResult: React_2.VFC;
+export function AttributeFilterEmptyAttributeResult(): JSX.Element;
 
 // @beta
-export const AttributeFilterEmptyResult: React_2.VFC<IAttributeFilterEmptyResultProps>;
+export function AttributeFilterEmptyResult({ height, totalItemsCount, searchString, isFilteredByParentFilters, isFilteredByDependentDateFilters, parentFilterTitles, enableShowingFilteredElements, }: IAttributeFilterEmptyResultProps): JSX.Element;
 
 // @beta
-export const AttributeFilterEmptySearchResult: React_2.VFC;
+export function AttributeFilterEmptySearchResult(): JSX.Element;
 
 // @beta
-export const AttributeFilterError: React_2.VFC<IAttributeFilterErrorProps>;
+export function AttributeFilterError({ isOpen, isDraggable }: IAttributeFilterErrorProps): JSX.Element;
 
 // @beta
-export const AttributeFilterFilteredStatus: React_2.FC<IAttributeFilterFilteredStatusProps>;
+export function AttributeFilterFilteredStatus({ parentFilterTitles }: IAttributeFilterFilteredStatusProps): JSX.Element;
 
 // @beta
-export const AttributeFilterLoading: React_2.FC<IAttributeFilterLoadingProps>;
+export function AttributeFilterLoading({ onClick }: IAttributeFilterLoadingProps): JSX.Element;
 
 // @beta
-export const AttributeFilterSelectionStatus: React_2.FC<IAttributeFilterSelectionStatusProps>;
+export function AttributeFilterSelectionStatus({ isInverted, selectedItems, getItemTitle, selectedItemsLimit, }: IAttributeFilterSelectionStatusProps): JSX.Element;
 
 // @beta
-export const AttributeFilterSimpleDropdownButton: React_2.VFC<IAttributeFilterDropdownButtonProps>;
+export function AttributeFilterSimpleDropdownButton(props: IAttributeFilterDropdownButtonProps): JSX.Element;
 
 // @beta
-export const AttributeFilterSimpleDropdownButtonWithSelection: React_2.VFC<IAttributeFilterDropdownButtonProps>;
+export function AttributeFilterSimpleDropdownButtonWithSelection({ isOpen, subtitle, title, selectedItemsCount, onClick, isLoading, isFiltering, showSelectionCount, }: IAttributeFilterDropdownButtonProps): JSX.Element;
 
 // @beta
-export const AttributeFilterStatusBar: React_2.FC<IAttributeFilterStatusBarProps>;
+export function AttributeFilterStatusBar({ attributeTitle, isFilteredByParentFilters, parentFilterTitles, totalElementsCountWithCurrentSettings, getItemTitle, isInverted, selectedItems, selectedItemsLimit, enableShowingFilteredElements, onShowFilteredElements, irrelevantSelection, onClearIrrelevantSelection, isFilteredByLimitingValidationItems, isFilteredByDependentDateFilters, withoutApply, }: IAttributeFilterStatusBarProps): JSX.Element;
 
 // @public (undocumented)
 export type Callback<T> = (payload: T) => void;
@@ -213,7 +214,7 @@ export type CallbackRegistration<T> = (cb: Callback<T>) => Unsubscribe;
 export type Correlation = string;
 
 // @public
-export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFilterState> {
+export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState> {
     constructor(props: IDateFilterProps);
     // (undocumented)
     componentDidMount(): void;
@@ -222,7 +223,7 @@ export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFil
     // (undocumented)
     static getDerivedStateFromProps(nextProps: IDateFilterProps, prevState: IDateFilterState): IDateFilterState;
     // (undocumented)
-    render(): React_2.JSX.Element;
+    render(): JSX.Element;
 }
 
 // @beta (undocumented)
@@ -240,11 +241,11 @@ export const DateFilterHelpers: {
         "GDC.time.hour": GranularityIntlKey_2;
         "GDC.time.minute": GranularityIntlKey_2;
     };
-    applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption_2, excludeCurrentPeriod: boolean) => DateFilterOption_2;
+    applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption_2 | undefined, excludeCurrentPeriod: boolean) => DateFilterOption_2;
     defaultDateFilterOptions: IDateFilterOptionsByType_2;
     canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption_2) => boolean;
     mapOptionToAfm: (value: DateFilterOption_2, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter;
-    formatAbsoluteDateRange: (from: string | Date, to: string | Date, dateFormat: string) => string;
+    formatAbsoluteDateRange: (from: Date | string, to: Date | string, dateFormat: string) => string;
     formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator_2) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
@@ -264,7 +265,7 @@ export type DateRangePosition = "from" | "to";
 export const defaultDateFilterOptions: IDateFilterOptionsByType;
 
 // @internal
-export const EmptyElementsSearchBar: React_2.VFC<IAttributeFilterElementsSearchBarProps>;
+export function EmptyElementsSearchBar(_props: IAttributeFilterElementsSearchBarProps): JSX.Element;
 
 // @public
 export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): IDateFilterOptionsByType;
@@ -441,31 +442,31 @@ export interface IAttributeFilterCoreProps {
 // @public
 export interface IAttributeFilterCustomComponentProps {
     // @beta
-    DropdownActionsComponent?: React.ComponentType<IAttributeFilterDropdownActionsProps>;
+    DropdownActionsComponent?: ComponentType<IAttributeFilterDropdownActionsProps>;
     // @beta
-    DropdownBodyComponent?: React.ComponentType<IAttributeFilterDropdownBodyProps>;
+    DropdownBodyComponent?: ComponentType<IAttributeFilterDropdownBodyProps>;
     // @beta
-    DropdownButtonComponent?: React.ComponentType<IAttributeFilterDropdownButtonProps>;
+    DropdownButtonComponent?: ComponentType<IAttributeFilterDropdownButtonProps>;
     // @beta
-    ElementsSearchBarComponent?: React.ComponentType<IAttributeFilterElementsSearchBarProps>;
+    ElementsSearchBarComponent?: ComponentType<IAttributeFilterElementsSearchBarProps>;
     // @beta
-    ElementsSelectActionsComponent?: React.ComponentType<IAttributeFilterElementsActionsProps>;
+    ElementsSelectActionsComponent?: ComponentType<IAttributeFilterElementsActionsProps>;
     // @beta
-    ElementsSelectComponent?: React.ComponentType<IAttributeFilterElementsSelectProps>;
+    ElementsSelectComponent?: ComponentType<IAttributeFilterElementsSelectProps>;
     // @beta
-    ElementsSelectErrorComponent?: React.ComponentType<IAttributeFilterElementsSelectErrorProps>;
+    ElementsSelectErrorComponent?: ComponentType<IAttributeFilterElementsSelectErrorProps>;
     // @beta
-    ElementsSelectItemComponent?: React.ComponentType<IAttributeFilterElementsSelectItemProps>;
+    ElementsSelectItemComponent?: ComponentType<IAttributeFilterElementsSelectItemProps>;
     // @beta
-    ElementsSelectLoadingComponent?: React.ComponentType<IAttributeFilterElementsSelectLoadingProps>;
+    ElementsSelectLoadingComponent?: ComponentType<IAttributeFilterElementsSelectLoadingProps>;
     // @beta
-    EmptyResultComponent?: React.ComponentType<IAttributeFilterEmptyResultProps>;
+    EmptyResultComponent?: ComponentType<IAttributeFilterEmptyResultProps>;
     // @beta
-    ErrorComponent?: React.ComponentType<IAttributeFilterErrorProps>;
+    ErrorComponent?: ComponentType<IAttributeFilterErrorProps>;
     // @beta
-    LoadingComponent?: React.ComponentType<IAttributeFilterLoadingProps>;
+    LoadingComponent?: ComponentType<IAttributeFilterLoadingProps>;
     // @beta
-    StatusBarComponent?: React.ComponentType<IAttributeFilterStatusBarProps>;
+    StatusBarComponent?: ComponentType<IAttributeFilterStatusBarProps>;
 }
 
 // @internal (undocumented)
@@ -477,7 +478,7 @@ export interface IAttributeFilterDeleteButtonProps {
 // @internal (undocumented)
 export interface IAttributeFilterDependencyTooltipProps {
     // (undocumented)
-    tooltipContent: React_2.ReactNode;
+    tooltipContent: ReactNode;
 }
 
 // @beta
@@ -498,7 +499,7 @@ export interface IAttributeFilterDropdownBodyProps {
 
 // @beta
 export interface IAttributeFilterDropdownButtonProps {
-    buttonRef?: React_2.MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement>;
     className?: string;
     // @alpha
     customIcon?: IFilterButtonCustomIcon;
@@ -521,7 +522,7 @@ export interface IAttributeFilterDropdownButtonProps {
     title?: string;
     // @alpha
     titleExtension?: ReactNode;
-    TooltipContentComponent?: React_2.ComponentType;
+    TooltipContentComponent?: ComponentType;
 }
 
 // @beta
@@ -733,9 +734,9 @@ export interface IDateFilterAbsoluteDateTimeFormErrors {
 // @alpha (undocumented)
 export interface IDateFilterButtonProps {
     // (undocumented)
-    buttonRef?: React_2.MutableRefObject<HTMLElement | null>;
+    buttonRef?: RefObject<HTMLElement | null>;
     // (undocumented)
-    children?: React_2.ReactNode;
+    children?: ReactNode;
     // (undocumented)
     customFilterName?: string;
     // (undocumented)
@@ -755,7 +756,7 @@ export interface IDateFilterButtonProps {
     // (undocumented)
     textTitle?: string;
     // (undocumented)
-    title: React_2.ReactNode;
+    title: ReactNode;
 }
 
 // @public
@@ -797,7 +798,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     dateFormat?: string;
     enableDashboardFiltersApplyModes?: boolean;
     // @alpha
-    FilterConfigurationComponent?: React_2.ComponentType<IFilterConfigurationProps>;
+    FilterConfigurationComponent?: ComponentType<IFilterConfigurationProps>;
     // (undocumented)
     filterOptions: IDateFilterOptionsByType;
     // (undocumented)
@@ -1178,21 +1179,21 @@ export type IWarningMessage = {
 };
 
 // @beta (undocumented)
-export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilterProps, IMeasureValueFilterState> {
+export class MeasureValueFilter extends PureComponent<IMeasureValueFilterProps, IMeasureValueFilterState> {
     // (undocumented)
     static defaultProps: Partial<IMeasureValueFilterProps>;
     // (undocumented)
-    render(): React_2.JSX.Element;
+    render(): JSX.Element;
     // (undocumented)
     state: IMeasureValueFilterState;
 }
 
 // @beta (undocumented)
-export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureValueFilterDropdownProps> {
+export class MeasureValueFilterDropdown extends PureComponent<IMeasureValueFilterDropdownProps> {
     // (undocumented)
     static defaultProps: Pick<IMeasureValueFilterDropdownProps, "displayTreatNullAsZeroOption" | "treatNullAsZeroDefaultValue" | "enableOperatorSelection">;
     // (undocumented)
-    render(): React_2.JSX.Element;
+    render(): JSX.Element;
 }
 
 // @public (undocumented)
@@ -1321,19 +1322,19 @@ export type OnSelectionCommittedCallbackPayload<T> = {
 export type ParentFilterOverAttributeType = ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
 
 // @beta (undocumented)
-export const RankingFilter: React_2.FC<IRankingFilterProps>;
+export function RankingFilter({ measureItems, attributeItems, filter, onApply, onCancel, buttonTitle, onDropDownItemMouseOver, onDropDownItemMouseOut, customGranularitySelection, locale, enableRenamingMeasureToMetric, }: IRankingFilterProps): JSX.Element;
 
 // @beta (undocumented)
-export const RankingFilterDropdown: React_2.FC<IRankingFilterDropdownProps>;
+export function RankingFilterDropdown(props: IRankingFilterDropdownProps): JSX.Element;
 
 // @public
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
 
 // @beta
-export const SingleSelectionAttributeFilterElementsSelectItem: React_2.VFC<IAttributeFilterElementsSelectItemProps>;
+export function SingleSelectionAttributeFilterElementsSelectItem({ item, onSelectOnly, isSelected, focusedAction, fullscreenOnMobile, primaryLabelTitle, }: IAttributeFilterElementsSelectItemProps): JSX.Element;
 
 // @beta
-export const SingleSelectionAttributeFilterStatusBar: React_2.FC<IAttributeFilterStatusBarProps>;
+export function SingleSelectionAttributeFilterStatusBar({ enableShowingFilteredElements, isFilteredByParentFilters, parentFilterTitles, totalElementsCountWithCurrentSettings, attributeTitle, onShowFilteredElements, irrelevantSelection, isFilteredByLimitingValidationItems, isFilteredByDependentDateFilters, }: IAttributeFilterStatusBarProps): JSX.Element;
 
 // @public (undocumented)
 export type Unsubscribe = () => void;

@@ -1,10 +1,10 @@
-// (C) 2021 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { IHeaderUpsellButtonProps } from "./typings.js";
 
-export const HeaderUpsellButton: React.FC<IHeaderUpsellButtonProps> = ({ onUpsellButtonClick }) => {
+export function HeaderUpsellButton({ onUpsellButtonClick }: IHeaderUpsellButtonProps) {
     const intl = useIntl();
+
     return (
         <button className="gd-button-small gd-button-primary gd-upsell-button" onClick={onUpsellButtonClick}>
             <i className="gd-icon-star" />
@@ -13,4 +13,4 @@ export const HeaderUpsellButton: React.FC<IHeaderUpsellButtonProps> = ({ onUpsel
             </span>
         </button>
     );
-};
+}

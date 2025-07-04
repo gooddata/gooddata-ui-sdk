@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useRef, useState } from "react";
+import { ComponentType, ReactElement, useCallback, useRef, useState } from "react";
 import {
     idRef,
     IInsight,
@@ -97,7 +97,7 @@ const getInsightWidgetDescription = (
 
 const DRILL_MODAL_EXECUTION_PSEUDO_REF = idRef("@@GDC_DRILL_MODAL");
 
-export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element => {
+export const InsightDrillDialog = (props: InsightDrillDialogProps): ReactElement => {
     const {
         widget,
         locale,
@@ -297,7 +297,7 @@ interface InsightDrillDialogDescriptionContentProps {
     isOpen: boolean;
     description: string;
     widgetFilters?: IFilter[];
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
 }
 
 function InsightDrillDialogDescriptionContent({

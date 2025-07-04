@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { PureComponent } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize.js";
@@ -22,7 +22,7 @@ interface IOperatorDropdownState {
     opened: boolean;
 }
 
-export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps, IOperatorDropdownState> {
+export class OperatorDropdown extends PureComponent<IOperatorDropdownProps, IOperatorDropdownState> {
     public state: IOperatorDropdownState = {
         opened: false,
     };

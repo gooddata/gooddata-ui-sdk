@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { SyntheticEvent } from "react";
+import { SyntheticEvent } from "react";
 import cx from "classnames";
 import compact from "lodash/compact.js";
 import { Icon, IUiMenuInteractiveItemProps } from "@gooddata/sdk-ui-kit";
@@ -16,9 +16,9 @@ const DRILL_ICON_NAME: Record<DrillType, string> = {
     [DrillType.CROSS_FILTERING]: "AttributeFilter",
 };
 
-export const DrillSelectDropdownMenuItem: React.FC<
-    IUiMenuInteractiveItemProps<IDrillSelectDropdownMenuItemData>
-> = (props) => {
+export function DrillSelectDropdownMenuItem(
+    props: IUiMenuInteractiveItemProps<IDrillSelectDropdownMenuItemData>,
+) {
     const {
         item: {
             data: { type, name, attributeValue, onSelect },
@@ -72,4 +72,4 @@ export const DrillSelectDropdownMenuItem: React.FC<
             )}
         </button>
     );
-};
+}

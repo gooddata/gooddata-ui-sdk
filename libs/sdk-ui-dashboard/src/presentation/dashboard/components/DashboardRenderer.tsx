@@ -11,7 +11,6 @@ import {
     ToastMessageContextProvider,
 } from "@gooddata/sdk-ui-kit";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
-import React from "react";
 import { DashboardStoreProvider } from "../../../model/index.js";
 import {
     ExportDialogContextProvider,
@@ -57,7 +56,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_Z_IND
 /**
  * @internal
  */
-export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+export function DashboardRenderer(props: IDashboardProps) {
     const {
         backend,
         workspace,
@@ -229,4 +228,4 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
     }
 
     return dashboardRender;
-};
+}

@@ -1,13 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Dataset: React.FC<IIconProps> = ({ color, className, width = 13, height = 11, ariaHidden }) => {
+export function Dataset({ color, className, width = 13, height = 11, ariaHidden }: IIconProps) {
     return (
         <svg
             className={className}
@@ -27,4 +25,4 @@ export const Dataset: React.FC<IIconProps> = ({ color, className, width = 13, he
             </g>
         </svg>
     );
-};
+}

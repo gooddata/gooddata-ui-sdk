@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { Overlay } from "../../../Overlay/index.js";
 import { IAlignPoint } from "../../../typings/positioning.js";
@@ -15,7 +15,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 /**
  * @internal
  */
-export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
+export function ShareDialogBase(props: IShareDialogBaseProps) {
     const {
         onCancel,
         sharedObject,
@@ -118,4 +118,4 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
             </div>
         </Overlay>
     );
-};
+}

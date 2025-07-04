@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+// (C) 2019-2025 GoodData Corporation
+import { useCallback, useMemo, useState } from "react";
 import { idRef } from "@gooddata/sdk-model";
 import { IEmbeddedPlugin, useDashboardLoaderWithPluginManipulation } from "@gooddata/sdk-ui-loaders";
 // this import will be renamed in plugin-toolkit

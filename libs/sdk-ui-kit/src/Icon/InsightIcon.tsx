@@ -1,9 +1,9 @@
-// (C) 2022-2024 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ComponentType } from "react";
 import { Icon } from "./Icon.js";
 import { IIconProps } from "./typings.js";
 
-const INSIGHT_ICON_MAP: Record<string, React.FC<IIconProps>> = {
+const INSIGHT_ICON_MAP: Record<string, ComponentType<IIconProps>> = {
     "local:scatter": Icon.ScatterPlot,
     "local:donut": Icon.Donut,
     "local:headline": Icon.HeadlineChart,
@@ -38,10 +38,11 @@ export interface IInsightIconProps {
 /**
  * @internal
  */
-export const InsightIcon: React.FC<IInsightIconProps> = ({ visualizationUrl, iconProps = {} }) => {
+export function InsightIcon({ visualizationUrl, iconProps = {} }: IInsightIconProps) {
     if (!visualizationUrl || !INSIGHT_ICON_MAP[visualizationUrl]) {
         return null;
     }
 
-    return INSIGHT_ICON_MAP[visualizationUrl](iconProps);
-};
+    const IconComponent = INSIGHT_ICON_MAP[visualizationUrl];
+    return <IconComponent {...iconProps} />;
+}

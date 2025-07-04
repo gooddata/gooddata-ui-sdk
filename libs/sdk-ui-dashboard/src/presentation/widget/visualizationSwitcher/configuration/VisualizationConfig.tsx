@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import noop from "lodash/noop.js";
 import { DashboardInsightMenuBody } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/index.js";
@@ -12,10 +11,7 @@ interface IVisualizationConfigProps {
     onVisualizationDeleted: (visualizationWidgetId: string) => void;
 }
 
-export const VisualizationConfig: React.FC<IVisualizationConfigProps> = ({
-    widget,
-    onVisualizationDeleted,
-}) => {
+export function VisualizationConfig({ widget, onVisualizationDeleted }: IVisualizationConfigProps) {
     const insights = useDashboardSelector(selectInsightsMap);
     const insight = insights.get(widget.insight);
 
@@ -34,7 +30,7 @@ export const VisualizationConfig: React.FC<IVisualizationConfigProps> = ({
             onVisualizationDeleted={onVisualizationDeleted}
         />
     );
-};
+}
 
 interface IVisualizationConfigContentProps {
     widget: IInsightWidget;
@@ -42,11 +38,11 @@ interface IVisualizationConfigContentProps {
     onVisualizationDeleted: (visualizationWidgetId: string) => void;
 }
 
-const VisualizationConfigContent: React.FC<IVisualizationConfigContentProps> = ({
+function VisualizationConfigContent({
     widget,
     insight,
     onVisualizationDeleted,
-}) => {
+}: IVisualizationConfigContentProps) {
     const { menuItems } = useVisualizationSwitcherEditableInsightMenu(
         widget,
         insight,
@@ -66,4 +62,4 @@ const VisualizationConfigContent: React.FC<IVisualizationConfigContentProps> = (
             onClose={noop}
         />
     );
-};
+}

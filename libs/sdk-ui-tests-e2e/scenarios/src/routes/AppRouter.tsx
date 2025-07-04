@@ -1,12 +1,11 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { WorkspaceProvider } from "../contexts/Workspace";
 
 import ComponentResolver from "./ComponentResolver";
 
-const AppRouter: React.FC = () => {
+export default function AppRouter() {
     return (
         <div>
             <Router>
@@ -16,6 +15,4 @@ const AppRouter: React.FC = () => {
             </Router>
         </div>
     );
-};
-
-export default AppRouter;
+}

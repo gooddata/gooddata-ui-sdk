@@ -1,5 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { ITheme } from "@gooddata/sdk-model";
 import { fireEvent, render, screen } from "@testing-library/react";
 import {

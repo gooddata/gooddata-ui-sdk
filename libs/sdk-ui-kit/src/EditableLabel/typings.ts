@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 /**
  * @internal
  */
 export interface IEditableLabelProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
     className?: string;
     maxLength?: number;
     maxRows?: number;

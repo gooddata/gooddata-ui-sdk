@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { createElement, ReactElement } from "react";
 import { createRoot, Root } from "react-dom/client";
 import { invariant } from "ts-invariant";
 import { LoadingComponent } from "@gooddata/sdk-ui";
@@ -81,7 +81,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
         // Ensure all dependencies are ready and we are mounted
         if (!this.isConnected || !this[COMPONENT] || !this[CONTEXT]) {
             // Render LoadingComponent instead
-            this.root?.render(React.createElement(LoadingComponent));
+            this.root?.render(createElement(LoadingComponent));
             return;
         }
 
@@ -118,7 +118,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
      * @remarks
      * A helper for easier custom event dispatching.
      * We can afford passing a new function with every update, as it's optimized for this
-     * at React component level down the stream (with React.Ref)
+     * at React component level down the stream (with Ref)
      *
      * @internal
      */
@@ -136,7 +136,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
      * @internal
      * @returns A ReactElement to be mounted into the Shadow DOM for this component
      */
-    abstract [GET_COMPONENT](Component: C, context: CustomElementContext): React.ReactElement;
+    abstract [GET_COMPONENT](Component: C, context: CustomElementContext): ReactElement;
 
     /**
      * @remarks

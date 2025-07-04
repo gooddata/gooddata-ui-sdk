@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
     getOccupiedMeasureBucketsLocalIdentifiers,
     isComparativeSeries,
@@ -31,7 +31,7 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color.js";
 
-class BulletChartColorStrategy extends ColorStrategy {
+export default class BulletChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
@@ -134,5 +134,3 @@ class BulletChartColorStrategy extends ColorStrategy {
         });
     }
 }
-
-export default BulletChartColorStrategy;

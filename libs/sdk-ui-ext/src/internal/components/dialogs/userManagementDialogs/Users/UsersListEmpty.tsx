@@ -1,5 +1,4 @@
-// (C) 2021 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 
 import { ListMode } from "../types.js";
@@ -9,7 +8,7 @@ export interface IUsersListEmptyProps {
     mode: ListMode;
 }
 
-export const UsersListEmpty: React.FC<IUsersListEmptyProps> = ({ mode }) => {
+export function UsersListEmpty({ mode }: IUsersListEmptyProps) {
     const intl = useIntl();
     return (
         <div className="gd-share-dialog-grantee-list-empty-selection s-user-management-empty-selection gd-user-management-dialog-list-empty">
@@ -19,4 +18,4 @@ export const UsersListEmpty: React.FC<IUsersListEmptyProps> = ({ mode }) => {
             </span>
         </div>
     );
-};
+}

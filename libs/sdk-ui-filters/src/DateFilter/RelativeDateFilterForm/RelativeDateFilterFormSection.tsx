@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback, useRef } from "react";
+import { KeyboardEvent, useCallback, useRef } from "react";
 import cx from "classnames";
 import {
     DateFilterOption,
@@ -36,7 +36,7 @@ interface IAllTimeFilterSectionProps {
     onApplyClick: () => void;
 }
 
-export const RelativeDateFilterFormSection: React.FC<IAllTimeFilterSectionProps> = ({
+export function RelativeDateFilterFormSection({
     filterOptions,
     selectedFilterOption,
     isMobile,
@@ -47,13 +47,13 @@ export const RelativeDateFilterFormSection: React.FC<IAllTimeFilterSectionProps>
     changeRoute,
     closeDropdown,
     onApplyClick,
-}) => {
+}: IAllTimeFilterSectionProps) {
     const relativeDateFilterRef = useRef<HTMLDivElement>(null);
     const tabGranularityRef = useRef<HTMLDivElement>(null);
     const relativeDateFilterId = useId();
 
     const handleRelativeDateFilterKeydown = useCallback(
-        (event: React.KeyboardEvent, closeDropdown: () => void) => {
+        (event: KeyboardEvent, closeDropdown: () => void) => {
             const keyboardHandler = createDateFilterRelativeFormKeyboardHandler({
                 relativeDateFilterRef,
                 tabGranularityRef,
@@ -128,4 +128,4 @@ export const RelativeDateFilterFormSection: React.FC<IAllTimeFilterSectionProps>
             ) : null}
         </>
     );
-};
+}

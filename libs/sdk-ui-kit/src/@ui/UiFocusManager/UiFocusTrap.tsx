@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import * as React from "react";
+import { ReactNode, useCallback, useMemo, useState } from "react";
 import { getFocusableElements } from "../../utils/domUtilities.js";
 import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { focusAndEnsureReachableElement, getNextFocusableElement } from "./utils.js";
@@ -11,9 +11,9 @@ import { IUiFocusHelperConnectors, NavigationDirection } from "./types.js";
 export const useUiFocusTrapConnectors = <
     T extends HTMLElement = HTMLElement,
 >(): IUiFocusHelperConnectors<T> => {
-    const [element, setElement] = React.useState<null | HTMLElement>(null);
+    const [element, setElement] = useState<null | HTMLElement>(null);
 
-    const handleMoveFocus = React.useCallback(
+    const handleMoveFocus = useCallback(
         (direction: NavigationDirection) => () => {
             const { focusableElements } = getFocusableElements(element);
 
@@ -26,7 +26,7 @@ export const useUiFocusTrapConnectors = <
         [element],
     );
 
-    const handleKeyDown = React.useMemo(
+    const handleKeyDown = useMemo(
         () =>
             makeKeyboardNavigation({
                 onFocusNext: [{ code: "Tab", modifiers: ["!Shift"] }],
@@ -41,13 +41,13 @@ export const useUiFocusTrapConnectors = <
         [handleMoveFocus],
     );
 
-    return React.useMemo(() => ({ ref: setElement, onKeyDown: handleKeyDown }), [handleKeyDown]);
+    return useMemo(() => ({ ref: setElement, onKeyDown: handleKeyDown }), [handleKeyDown]);
 };
 
 /**
  * @internal
  */
-export const UiFocusTrap: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export function UiFocusTrap({ children }: { children: ReactNode }) {
     const connectors = useUiFocusTrapConnectors<HTMLDivElement>();
 
     return (
@@ -55,4 +55,4 @@ export const UiFocusTrap: React.FC<{ children: React.ReactNode }> = ({ children 
             {children}
         </div>
     );
-};
+}

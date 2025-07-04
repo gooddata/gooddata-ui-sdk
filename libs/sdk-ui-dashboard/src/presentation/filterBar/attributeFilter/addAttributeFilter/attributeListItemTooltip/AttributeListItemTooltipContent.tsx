@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { ICatalogAttribute, IDataSetMetadataObject } from "@gooddata/sdk-model";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -41,13 +40,13 @@ interface IAttributeListItemTooltipContentProps {
 /**
  * @internal
  */
-export const AttributeListItemTooltipContent: React.FC<IAttributeListItemTooltipContentProps> = ({
+export function AttributeListItemTooltipContent({
     item,
     attributesDataSetLoading,
     attributesElementsLoading,
     attributeDataSet,
     attributeElements,
-}) => {
+}: IAttributeListItemTooltipContentProps) {
     return (
         <div className="gd-attribute-dropdown-list-tooltip-content s-attribute-dropdown-item-list-tooltip-content">
             <h3 className="s-attribute-filter-tooltip-header">{item.attribute.title}</h3>
@@ -72,4 +71,4 @@ export const AttributeListItemTooltipContent: React.FC<IAttributeListItemTooltip
             </p>
         </div>
     );
-};
+}

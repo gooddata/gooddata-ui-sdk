@@ -1,14 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import cx from "classnames";
 import { IntlProvider } from "react-intl";
 import { pickCorrectWording, messagesMap } from "@gooddata/sdk-ui";
 import { UiMenu } from "../UiMenu.js";
 import { describe, it, expect, vi } from "vitest";
-import { e, b } from "../menuBem.js";
-import { IUiMenuItem, IUiMenuInteractiveItemProps, IUiMenuStaticItemProps, IUiMenuProps } from "../types.js";
+import { b } from "../menuBem.js";
+import { IUiMenuItem, IUiMenuInteractiveItemProps, IUiMenuStaticItemProps, UiMenuProps } from "../types.js";
 import { typedUiMenuContextStore } from "../context.js";
 
 describe("UiMenu", () => {
@@ -47,7 +46,7 @@ describe("UiMenu", () => {
         enableRenamingMeasureToMetric: true,
     });
 
-    const renderMenu = (props: Partial<IUiMenuProps> = {}) => {
+    const renderMenu = (props: Partial<UiMenuProps> = {}) => {
         const defaultAriaAttributes = {
             id: "test-dropdown-menu",
             "aria-labelledby": "test-dropdown-button",

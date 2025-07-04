@@ -1,12 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const HistoryBack: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function HistoryBack({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={className}
@@ -22,4 +21,4 @@ export const HistoryBack: React.FC<IIconProps> = ({ color, className, width, hei
             />
         </svg>
     );
-};
+}

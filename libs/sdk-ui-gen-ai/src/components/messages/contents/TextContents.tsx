@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { TextContents } from "../../../model.js";
 import cx from "classnames";
 import { MarkdownComponent } from "./Markdown.js";
@@ -10,7 +9,7 @@ export type TextContentsProps = {
     useMarkdown?: boolean;
 };
 
-export const TextContentsComponent: React.FC<TextContentsProps> = ({ content, useMarkdown = false }) => {
+export function TextContentsComponent({ content, useMarkdown = false }: TextContentsProps) {
     const className = cx("gd-gen-ai-chat__messages__content", "gd-gen-ai-chat__messages__content--text");
 
     return (
@@ -20,4 +19,4 @@ export const TextContentsComponent: React.FC<TextContentsProps> = ({ content, us
             </MarkdownComponent>
         </div>
     );
-};
+}

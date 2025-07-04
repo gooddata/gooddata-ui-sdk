@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import ReactLoadingSkeleton from "react-loading-skeleton";
 import { bem } from "../@utils/bem.js";
 

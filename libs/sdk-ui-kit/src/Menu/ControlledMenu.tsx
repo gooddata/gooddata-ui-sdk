@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { Component, ReactNode } from "react";
 
 import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "./MenuSharedTypes.js";
 import { MenuOpener } from "./menuOpener/MenuOpener.js";
@@ -10,12 +10,12 @@ export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
     closeOnScroll: boolean;
     portalTarget: Element | undefined;
     onOpenedChange: OnOpenedChange;
-    toggler: React.ReactNode;
+    toggler: ReactNode;
     togglerWrapperClassName?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
-export class ControlledMenu extends React.Component<IControlledMenuProps> {
+export class ControlledMenu extends Component<IControlledMenuProps> {
     public componentDidMount(): void {
         if (this.props.closeOnScroll) {
             this.addScrollListeners();

@@ -51,7 +51,7 @@
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
         "@microsoft/api-documenter": "^7.17.0",
-        "@microsoft/api-extractor": "^7.36.0",
+        "@microsoft/api-extractor": "^7.52.8",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
         "concurrently": "^6.0.2",

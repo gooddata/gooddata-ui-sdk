@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { CSSProperties, useMemo } from "react";
+import { CSSProperties, useMemo } from "react";
 import cx from "classnames";
 import { IDashboardLayoutWidgetRenderProps } from "./interfaces.js";
 import {
@@ -8,20 +8,18 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 
-export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRenderProps<any>): JSX.Element {
-    const {
-        item,
-        screen,
-        debug,
-        className,
-        contentRef,
-        isResizedByLayoutSizingStrategy,
-        minHeight,
-        height,
-        allowOverflow,
-        children,
-    } = props;
-
+export function DashboardLayoutWidgetRenderer({
+    item,
+    screen,
+    debug,
+    className,
+    contentRef,
+    isResizedByLayoutSizingStrategy,
+    minHeight,
+    height,
+    allowOverflow,
+    children,
+}: IDashboardLayoutWidgetRenderProps<any>) {
     const isExport = useDashboardSelector(selectIsExport);
     const isSnapshotAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
 

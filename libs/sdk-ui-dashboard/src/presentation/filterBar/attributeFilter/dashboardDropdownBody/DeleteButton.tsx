@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
+
 import { Bubble, BubbleHoverTrigger, Button, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 
@@ -9,7 +9,7 @@ interface IDeleteButton {
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc", offset: { x: -1, y: 5 } }];
 
-export const DeleteButton: React.FC<IDeleteButton> = ({ deleteFilter }) => {
+export function DeleteButton({ deleteFilter }: IDeleteButton) {
     return (
         <div className="delete-button-wrapper">
             <BubbleHoverTrigger>
@@ -25,4 +25,4 @@ export const DeleteButton: React.FC<IDeleteButton> = ({ deleteFilter }) => {
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

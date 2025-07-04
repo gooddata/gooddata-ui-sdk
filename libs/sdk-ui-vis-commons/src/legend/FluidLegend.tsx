@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { PureComponent, ReactNode } from "react";
 import cx from "classnames";
 import noop from "lodash/noop.js";
 import { LegendList } from "./LegendList.js";
@@ -20,7 +20,7 @@ export interface IFluidLegendProps {
 /**
  * @internal
  */
-export class FluidLegend extends React.PureComponent<IFluidLegendProps> {
+export class FluidLegend extends PureComponent<IFluidLegendProps> {
     public state = {
         showAll: false,
     };
@@ -31,7 +31,7 @@ export class FluidLegend extends React.PureComponent<IFluidLegendProps> {
         });
     };
 
-    public renderSeries = (itemWidth: number, visibleItemsCount: number): React.ReactNode => {
+    public renderSeries = (itemWidth: number, visibleItemsCount: number): ReactNode => {
         const { series, onItemClick = noop, enableBorderRadius } = this.props;
 
         const limit = this.state.showAll ? series.length : visibleItemsCount;
@@ -49,7 +49,7 @@ export class FluidLegend extends React.PureComponent<IFluidLegendProps> {
         );
     };
 
-    public renderPaging = (): React.ReactNode => {
+    public renderPaging = (): ReactNode => {
         const classes = cx("gd-button-link", "gd-button-icon-only", "paging-button", {
             "gd-icon-chevron-up": this.state.showAll,
             "gd-icon-chevron-down": !this.state.showAll,

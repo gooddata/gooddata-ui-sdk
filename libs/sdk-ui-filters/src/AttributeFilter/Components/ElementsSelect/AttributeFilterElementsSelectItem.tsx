@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useRef } from "react";
+import { FocusEvent, KeyboardEvent, MouseEvent, useCallback, useRef } from "react";
 import cx from "classnames";
 import camelCase from "lodash/camelCase.js";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -18,10 +18,15 @@ const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }]
  *
  * @beta
  */
-export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElementsSelectItemProps> = (
-    props,
-) => {
-    const { item, isSelected, focusedAction, onSelect, onSelectOnly, onDeselect, primaryLabelTitle } = props;
+export function AttributeFilterElementsSelectItem({
+    item,
+    isSelected,
+    focusedAction,
+    onSelect,
+    onSelectOnly,
+    onDeselect,
+    primaryLabelTitle,
+}: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
     const itemRef = useRef<HTMLDivElement>(null);
 
@@ -34,14 +39,14 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
     }, [onSelect, onDeselect, isSelected]);
 
     const onOnlyItemClick = useCallback(
-        (event: React.MouseEvent) => {
+        (event: MouseEvent) => {
             event.stopPropagation();
             onSelectOnly();
         },
         [onSelectOnly],
     );
 
-    const onFocus = (event: React.FocusEvent<HTMLDivElement>) => {
+    const onFocus = (event: FocusEvent<HTMLDivElement>) => {
         // Prevent focus from moving from item inside to the checkbox
         if (event.target.tagName === "INPUT") {
             event.preventDefault();
@@ -76,7 +81,7 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
     const itemTitle = getElementTitle(item, intl);
     const itemPrimaryTitle = getElementPrimaryTitle(item);
 
-    const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         if (isSpaceKey(event)) {
             event.preventDefault(); // Prevent scrolling on Space
             onItemClick();
@@ -133,4 +138,4 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
             />
         </div>
     );
-};
+}

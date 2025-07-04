@@ -1,5 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { FormattedMessage, useIntl } from "react-intl";
 import { AddButton, SeparatorLine } from "@gooddata/sdk-ui-kit";
 
@@ -10,7 +9,7 @@ interface INoAvailableMeasuresProps {
     onBack: () => void;
 }
 
-export const NoAvailableMeasures: React.FC<INoAvailableMeasuresProps> = ({ onClose, onBack }) => {
+export function NoAvailableMeasures({ onClose, onBack }: INoAvailableMeasuresProps) {
     const intl = useIntl();
 
     return (
@@ -42,4 +41,4 @@ export const NoAvailableMeasures: React.FC<INoAvailableMeasuresProps> = ({ onClo
             </div>
         </DashboardInsightSubmenuContainer>
     );
-};
+}

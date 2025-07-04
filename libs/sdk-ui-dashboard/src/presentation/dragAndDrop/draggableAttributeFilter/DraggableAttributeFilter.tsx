@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import { RefObject, useCallback, useMemo } from "react";
 import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import classNames from "classnames";
 import {
@@ -92,7 +92,7 @@ export function DraggableAttributeFilter({
                     "dash-filter-is-edit-mode": isInEditMode,
                     "is-dragging": isDragging,
                 })}
-                ref={dragRef}
+                ref={dragRef as unknown as RefObject<HTMLDivElement>}
             >
                 <FilterComponent
                     filter={filterToUse}

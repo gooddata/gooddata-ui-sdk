@@ -2,7 +2,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-    addons: ["@storybook/addon-actions", "@storybook/preset-scss"],
+    addons: ["@storybook/preset-scss"],
     stories: ["../stories/**/*.stories.@(ts|tsx)"],
     features: {
         // suppress the warning with deprecated implicit PostCSS loader, we do not need it anyway

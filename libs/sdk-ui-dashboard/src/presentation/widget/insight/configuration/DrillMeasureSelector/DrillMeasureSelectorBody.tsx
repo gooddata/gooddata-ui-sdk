@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { UIEvent } from "react";
 import { FormattedMessage } from "react-intl";
 import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
@@ -11,10 +11,12 @@ export interface IDrillMeasureSelectorBodyProps {
     onCloseDropdown: () => void;
 }
 
-const DrillMeasureSelectorBody: React.FunctionComponent<IDrillMeasureSelectorBodyProps> = (props) => {
-    const { supportedItems, onSelect, onCloseDropdown } = props;
-
-    const stopPropagation = (e: React.UIEvent<HTMLDivElement>) => {
+export default function DrillMeasureSelectorBody({
+    supportedItems,
+    onSelect,
+    onCloseDropdown,
+}: IDrillMeasureSelectorBodyProps) {
+    const stopPropagation = (e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
     };
 
@@ -37,6 +39,4 @@ const DrillMeasureSelectorBody: React.FunctionComponent<IDrillMeasureSelectorBod
             </div>
         </div>
     );
-};
-
-export default DrillMeasureSelectorBody;
+}

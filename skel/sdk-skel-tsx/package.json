@@ -55,13 +55,13 @@
         "tslib": "^2.5.0"
     },
     "peerDependencies": {
-        "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
+        "react": "^18.0.0 ^19.0.0",
+        "react-dom": "^18.0.0 ^19.0.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
         "@microsoft/api-documenter": "^7.17.0",
-        "@microsoft/api-extractor": "^7.36.0",
+        "@microsoft/api-extractor": "^7.52.8",
         "@testing-library/dom": "10.4.0",
         "@testing-library/react": "16.3.0",
         "@types/lodash": "^4.14.202",
@@ -88,6 +88,6 @@
         "react": "19.1.0",
         "react-dom": "19.1.0",
         "typescript": "5.8.3",
-        "vitest": "3.0.8"
+        "vitest": "3.2.4"
     }
 }

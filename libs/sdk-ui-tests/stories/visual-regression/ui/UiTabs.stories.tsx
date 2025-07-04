@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import { UiTabs, UiTabsProps, UiTab, propCombinationsFor, ComponentTable } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -25,19 +25,21 @@ const propCombination = propCombinationsFor({
 
 const allSizes = propCombination("size", ["large", "medium", "small"]);
 
-const UiTabsTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
-    <div className="screenshot-target">
-        <ComponentTable
-            rowsBy={[allSizes]}
-            Component={UiTabs}
-            codeSnippet={showCode ? "UiTabs" : undefined}
-            align="flex-start"
-            cellWidth={400}
-        />
-    </div>
-);
+function UiTabsTest({ showCode }: { showCode?: boolean }) {
+    return (
+        <div className="screenshot-target">
+            <ComponentTable
+                rowsBy={[allSizes]}
+                Component={UiTabs}
+                codeSnippet={showCode ? "UiTabs" : undefined}
+                align="flex-start"
+                cellWidth={400}
+            />
+        </div>
+    );
+}
 
-const InteractiveUiTabsTest: React.FC = () => {
+function InteractiveUiTabsTest() {
     const [selectedTabId, setSelectedTabId] = useState<string>("tab1");
     return (
         <UiTabs
@@ -47,7 +49,7 @@ const InteractiveUiTabsTest: React.FC = () => {
             size="large"
         />
     );
-};
+}
 
 export default {
     title: "15 Ui/UiTabs",

@@ -1,5 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { render } from "@testing-library/react";
 import noop from "lodash/noop.js";
 
@@ -8,7 +7,7 @@ import { HighChartsRenderer } from "../adapter/HighChartsRenderer.js";
 import { IChartConfig } from "../../interfaces/index.js";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
-import { VisualizationTypes, IntlWrapper, withIntl } from "@gooddata/sdk-ui";
+import { VisualizationTypes, IntlWrapper } from "@gooddata/sdk-ui";
 import { TOP, BOTTOM, MIDDLE } from "../constants/alignments.js";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import * as fixtures from "../../../__mocks__/fixtures.js";
@@ -55,8 +54,7 @@ describe("ChartTransformation", () => {
 
     function createComponent(customProps: any = {}) {
         const props = { ...defaultProps, ...customProps };
-        const Wrapped = withIntl(ChartTransformation);
-        return <Wrapped {...props} />;
+        return <ChartTransformation {...props} />;
     }
 
     it("should use custom renderer", () => {

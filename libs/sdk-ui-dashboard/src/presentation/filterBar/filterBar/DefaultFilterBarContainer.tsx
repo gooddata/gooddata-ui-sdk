@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useRef, useState } from "react";
+import { ReactNode, RefObject, useCallback, useRef, useState } from "react";
 import DefaultMeasure from "react-measure";
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -35,7 +35,7 @@ import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js"
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const Measure = defaultImport(DefaultMeasure);
 
-const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
     const { rows, height, isFilterBarExpanded, scrollable, setFilterBarExpanded, setCalculatedRows } =
         useFilterBarState();
 
@@ -84,7 +84,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
         <>
             <div
                 className="dash-filters-wrapper s-gd-dashboard-filter-bar"
-                ref={dropRef}
+                ref={dropRef as unknown as RefObject<HTMLDivElement>}
                 onFocus={onContainerFocus}
                 onBlur={onContainerBlur}
             >
@@ -167,12 +167,15 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
             ) : null}
         </>
     );
-};
+}
 
-const AllFiltersContainer: React.FC<{
+function AllFiltersContainer({
+    setCalculatedRows,
+    children,
+}: {
     setCalculatedRows: (data: CalculatedRows) => void;
-    children?: React.ReactNode;
-}> = ({ setCalculatedRows, children }) => {
+    children?: ReactNode;
+}) {
     const ref = useRef<Element | null>(null);
     const rowCalculator = useRowsCalculator(ref);
 
@@ -244,7 +247,9 @@ const AllFiltersContainer: React.FC<{
     return (
         <Measure
             bounds
-            innerRef={(rf) => (ref.current = rf)}
+            innerRef={(rf) => {
+                ref.current = rf;
+            }}
             onResize={(dimensions) => setCalculatedRows(rowCalculator(dimensions))}
         >
             {({ measureRef }) => (
@@ -263,9 +268,9 @@ const AllFiltersContainer: React.FC<{
             )}
         </Measure>
     );
-};
+}
 
-const FiltersRows: React.FC<{ rows: number[] }> = ({ rows }) => {
+function FiltersRows({ rows }: { rows: number[] }) {
     return (
         <>
             {rows.length > 1 && (
@@ -277,12 +282,12 @@ const FiltersRows: React.FC<{ rows: number[] }> = ({ rows }) => {
             )}
         </>
     );
-};
+}
 
 /**
  * @internal
  */
-export const DefaultFilterBarContainer: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function DefaultFilterBarContainer({ children }: { children?: ReactNode }) {
     const locale = useDashboardSelector(selectLocale);
 
     return (
@@ -290,4 +295,4 @@ export const DefaultFilterBarContainer: React.FC<{ children?: React.ReactNode }>
             <DefaultFilterBarContainerCore>{children}</DefaultFilterBarContainerCore>
         </IntlWrapper>
     );
-};
+}

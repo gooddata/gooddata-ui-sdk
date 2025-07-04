@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import {
     BackendProvider,
     IntlWrapper,
@@ -26,28 +26,27 @@ import noop from "lodash/noop.js";
 /**
  * @internal
  */
-export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
-    const {
-        backend,
-        workspace,
-        locale,
-        sharedObject,
-        currentUser,
-        onApply,
-        onCancel,
-        onError,
-        onInteraction = noop,
-        isLockingSupported,
-        isCurrentUserWorkspaceManager,
-        isGranteeShareLoading,
-        labels,
-        currentUserPermissions,
-        dashboardFilters,
-        isShareGrantHidden,
-        applyShareGrantOnSelect,
-        showDashboardShareLink,
-        onShareLinkCopy,
-    } = props;
+export function ShareDialog({
+    backend,
+    workspace,
+    locale,
+    sharedObject,
+    currentUser,
+    onApply,
+    onCancel,
+    onError,
+    onInteraction = noop,
+    isLockingSupported,
+    isCurrentUserWorkspaceManager,
+    isGranteeShareLoading,
+    labels,
+    currentUserPermissions,
+    dashboardFilters,
+    isShareGrantHidden,
+    applyShareGrantOnSelect,
+    showDashboardShareLink,
+    onShareLinkCopy,
+}: IShareDialogProps) {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const areGranularPermissionsSupported = effectiveBackend.capabilities.supportsGranularAccessControl;
@@ -158,4 +157,4 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
             </BackendProvider>
         </IntlWrapper>
     );
-};
+}

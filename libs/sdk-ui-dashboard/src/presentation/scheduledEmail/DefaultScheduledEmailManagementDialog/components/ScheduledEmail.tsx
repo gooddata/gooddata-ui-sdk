@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import {
@@ -38,10 +38,14 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
     { align: "bc tc", offset: { x: 0, y: 0 } },
 ];
 
-export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
+export function ScheduledEmail({
+    scheduledEmail,
+    onDelete,
+    onEdit,
+    notificationChannels,
+    focusedAction,
+}: IScheduledEmailProps) {
     const theme = useTheme();
-
-    const { scheduledEmail, onDelete, onEdit, notificationChannels, focusedAction } = props;
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
@@ -128,4 +132,4 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
             </div>
         </div>
     );
-};
+}

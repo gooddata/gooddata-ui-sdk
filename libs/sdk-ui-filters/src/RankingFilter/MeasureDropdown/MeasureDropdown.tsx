@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { useState } from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import cx from "classnames";
@@ -15,14 +15,14 @@ interface IMeasureDropdownProps {
     enableRenamingMeasureToMetric?: boolean;
 }
 
-export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
+export function MeasureDropdown({
     items,
     selectedItemRef,
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     enableRenamingMeasureToMetric,
-}) => {
+}: IMeasureDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     const onButtonClick = () => {
@@ -72,4 +72,4 @@ export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
             ) : null}
         </>
     );
-};
+}

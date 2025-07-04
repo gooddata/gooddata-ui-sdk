@@ -1,6 +1,5 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
-import React from "react";
 
 /**
  * @internal

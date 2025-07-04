@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
@@ -25,17 +25,16 @@ interface IGranularGranteeGroupItemProps {
     onDelete: (grantee: GranteeItem) => void;
 }
 
-export const GranularGranteeGroupItem: React.FC<IGranularGranteeGroupItemProps> = (props) => {
-    const {
-        grantee,
-        currentUserPermissions,
-        isSharedObjectLocked,
-        onChange,
-        onDelete,
-        mode,
-        id,
-        isGranteeShareLoading,
-    } = props;
+export function GranularGranteeGroupItem({
+    grantee,
+    currentUserPermissions,
+    isSharedObjectLocked,
+    onChange,
+    onDelete,
+    mode,
+    id,
+    isGranteeShareLoading,
+}: IGranularGranteeGroupItemProps) {
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const { permissionsDropdownOpenInteraction } = useShareDialogInteraction();
     const intl = useIntl();
@@ -97,4 +96,4 @@ export const GranularGranteeGroupItem: React.FC<IGranularGranteeGroupItemProps> 
             <GranteeGroupIcon />
         </div>
     );
-};
+}

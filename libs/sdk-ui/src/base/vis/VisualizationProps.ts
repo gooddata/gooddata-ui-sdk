@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { ExplicitDrill, OnFiredDrillEvent } from "./DrillEvents.js";
-import React from "react";
+import { ComponentType } from "react";
 import { IErrorProps } from "../react/ErrorComponent.js";
 import { ILoadingProps } from "../react/LoadingComponent.js";
 import { IPushData, OnDataView, OnError, OnExportReady, OnLoadingChanged } from "./Events.js";
@@ -43,12 +43,12 @@ export interface IVisualizationProps {
      * React component to display in the event when there is an error with either obtaining the data from
      * backend or with the data itself.
      */
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
 
     /**
      * React component to display while loading data from the backend.
      */
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
 }
 
 /**

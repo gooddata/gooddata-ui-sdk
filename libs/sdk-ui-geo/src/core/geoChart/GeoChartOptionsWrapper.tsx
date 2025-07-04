@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { Component, ReactNode } from "react";
 import { invariant } from "ts-invariant";
 import { IGeoData, IValidationResult } from "../../GeoChart.js";
 import { getGeoAttributeHeaderItems, isDataOfReasonableSize } from "./helpers/geoChart/common.js";
@@ -22,7 +22,7 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 import { getColorStrategy } from "./colorStrategy/geoChart.js";
 
-export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps> {
+export class GeoChartOptionsWrapper extends Component<IGeoChartInnerProps> {
     private readonly emptyHeaderString: string;
     private readonly nullHeaderString: string;
     private readonly errorMap: IErrorDescriptors;
@@ -62,7 +62,7 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
         return this.renderVisualization();
     }
 
-    public renderVisualization(): React.ReactNode {
+    public renderVisualization(): ReactNode {
         const { dataView, onDataTooLarge } = this.props;
 
         const dv = DataViewFacade.for(dataView!);

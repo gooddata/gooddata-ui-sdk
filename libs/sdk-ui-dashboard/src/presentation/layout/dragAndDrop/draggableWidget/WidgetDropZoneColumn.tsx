@@ -1,7 +1,7 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Col } from "react-grid-system";
 import {
     selectDraggingWidgetTargetLayoutPath,

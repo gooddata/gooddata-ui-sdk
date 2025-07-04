@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 import {
     selectFilterValidationIncompatibleDefaultFiltersOverride,
@@ -11,8 +11,8 @@ import {
 import { IMessage } from "@gooddata/sdk-ui-kit";
 
 const commonReplacements = {
-    b: (chunks: React.ReactNode) => <b>{chunks}</b>,
-    i: (chunks: React.ReactNode) => <i>{chunks}</i>,
+    b: (chunks: ReactNode) => <b>{chunks}</b>,
+    i: (chunks: ReactNode) => <i>{chunks}</i>,
 };
 
 const localizationMessages = defineMessages({

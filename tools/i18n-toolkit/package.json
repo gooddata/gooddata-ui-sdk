@@ -74,7 +74,7 @@
         "mkdirp": "^1.0.4",
         "prettier": "~2.5.0",
         "typescript": "5.8.3",
-        "vitest": "3.0.8"
+        "vitest": "3.2.4"
     },
     "bin": {
         "i18n-toolkit": "index.js"

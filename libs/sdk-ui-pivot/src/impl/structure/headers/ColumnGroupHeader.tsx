@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { IHeaderGroupParams } from "ag-grid-community";
-import React from "react";
+import { Component } from "react";
 
 import { IMenu } from "../../../publicTypes.js";
 
@@ -11,7 +11,7 @@ export interface IProps extends ICommonHeaderParams, IHeaderGroupParams {
     menu?: () => IMenu;
 }
 
-export default class ColumnGroupHeader extends React.Component<IProps> {
+export default class ColumnGroupHeader extends Component<IProps> {
     public render() {
         const { menu, intl, getTableDescriptor } = this.props;
         const colGroupDef = this.props.columnGroup.getColGroupDef()!;

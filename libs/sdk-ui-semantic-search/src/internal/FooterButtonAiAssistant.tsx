@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import * as React from "react";
+import { MouseEvent } from "react";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
 export interface FooterButtonAiAssistantProps {
-    onClick?: (e: React.MouseEvent) => void;
+    onClick?: (e: MouseEvent) => void;
 }
 
 export function FooterButtonAiAssistant({ onClick }: FooterButtonAiAssistantProps) {

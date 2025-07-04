@@ -1,5 +1,4 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
 import { INotification } from "@gooddata/sdk-model";
 import { bem } from "../bem.js";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";

@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import { MouseEvent, ReactElement, ReactNode, useCallback } from "react";
 import cx from "classnames";
 import {
     IUiMenuInteractiveItemProps,
@@ -18,10 +18,10 @@ import { useIntl } from "react-intl";
 import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
 
 export type FocusableItemData = {
-    icon?: JSX.Element | string;
+    icon?: ReactElement | string;
     className?: string;
-    tooltip?: string | React.ReactNode;
-    onClick?: (event: React.MouseEvent) => void;
+    tooltip?: string | ReactNode;
+    onClick?: (event: MouseEvent) => void;
     subMenu?: boolean;
     renderSubmenuComponentOnly?: boolean;
 };
@@ -33,11 +33,15 @@ export type IMenuItemData = {
 
 export type IMenuData = IDashboardInsightMenuTitleProps;
 
-const FocusableItemComponent: React.FC<{
+function FocusableItemComponent({
+    item,
+    isFocused,
+    onClick,
+}: {
     item: IUiMenuInteractiveItemProps<IMenuItemData>["item"] | IUiMenuContentItemProps<IMenuItemData>["item"];
     isFocused: boolean;
-    onClick: (event: React.MouseEvent) => void;
-}> = ({ item, isFocused, onClick }) => {
+    onClick: (event: MouseEvent) => void;
+}) {
     const { id, isDisabled, stringTitle } = item;
     const { icon, className, subMenu, tooltip } = item.data ?? {};
 
@@ -59,25 +63,25 @@ const FocusableItemComponent: React.FC<{
             tooltip={tooltip}
         />
     );
-};
+}
 
-export const CustomUiMenuInteractiveItemComponent: React.FC<IUiMenuInteractiveItemProps<IMenuItemData>> = ({
+export function CustomUiMenuInteractiveItemComponent({
     item,
     isFocused,
     onSelect,
-}) => {
+}: IUiMenuInteractiveItemProps<IMenuItemData>) {
     return <FocusableItemComponent item={item} isFocused={isFocused} onClick={onSelect} />;
-};
+}
 
-export const CustomUiMenuContentItemComponent: React.FC<IUiMenuContentItemProps<IMenuItemData>> = ({
+export function CustomUiMenuContentItemComponent({
     item,
     isFocused,
     onSelect,
-}) => {
+}: IUiMenuContentItemProps<IMenuItemData>) {
     return <FocusableItemComponent item={item} isFocused={isFocused} onClick={onSelect} />;
-};
+}
 
-export const CustomUiMenuContentComponent: React.FC<IUiMenuContentProps<IMenuItemData>> = ({ item }) => {
+export function CustomUiMenuContentComponent({ item }: IUiMenuContentProps<IMenuItemData>) {
     const { useContextStore, createSelector } = typedUiMenuContextStore<IMenuItemData>();
     const selector = createSelector((ctx) => ({
         onClose: ctx.onClose,
@@ -86,7 +90,7 @@ export const CustomUiMenuContentComponent: React.FC<IUiMenuContentProps<IMenuIte
 
     const { onClose, setShownCustomContentItemId } = useContextStore(selector);
 
-    const handleBack = React.useCallback(() => {
+    const handleBack = useCallback(() => {
         setShownCustomContentItemId(undefined);
     }, [setShownCustomContentItemId]);
 
@@ -104,9 +108,9 @@ export const CustomUiMenuContentComponent: React.FC<IUiMenuContentProps<IMenuIte
             <DefaultUiMenuContent item={itemWithoutDefaultHeader} />
         </DashboardInsightSubmenuContainer>
     );
-};
+}
 
-export const CustomUiMenuHeaderComponent: React.FC = () => {
+export function CustomUiMenuHeaderComponent() {
     const { formatMessage } = useIntl();
     const { useContextStore, createSelector } = typedUiMenuContextStore<IMenuItemData, IMenuData>();
     const selector = createSelector((ctx) => ({
@@ -140,4 +144,4 @@ export const CustomUiMenuHeaderComponent: React.FC = () => {
     ) : (
         <DefaultUiMenuHeader />
     );
-};
+}

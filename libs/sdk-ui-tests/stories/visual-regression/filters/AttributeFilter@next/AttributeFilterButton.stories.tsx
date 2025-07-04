@@ -1,11 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import {
     AttributeFilterButton,
     AttributeFilterError as FiltersAttributeFilterError,

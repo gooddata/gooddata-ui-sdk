@@ -1,5 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { DropdownButton } from "@gooddata/sdk-ui-kit";
 
 export interface IButtonWithTypeIcon {

@@ -1,10 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { FilterLabel } from "@gooddata/sdk-ui-kit";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-const FilterLabelExamples: React.FC = () => {
+function FilterLabelExamples() {
     return (
         <div className="library-component screenshot-target">
             <h4>Example for title/selection</h4>
@@ -17,7 +16,7 @@ const FilterLabelExamples: React.FC = () => {
             <FilterLabel title="Attribute" selectionSize={0} />
         </div>
     );
-};
+}
 
 const customMessages = {
     "gs.filterLabel.none": "None",

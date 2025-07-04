@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { AriaAttributes, forwardRef, KeyboardEvent, useMemo } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
@@ -8,8 +8,8 @@ import { DateInput } from "./DateInput.js";
 import { InputErrorMessageTexts, IDateTimePickerErrors, ITime } from "./types.js";
 
 export interface IDateTimePickerAccessibilityConfig {
-    dateAriaLabel?: React.AriaAttributes["aria-label"];
-    timeAriaLabel?: React.AriaAttributes["aria-label"];
+    dateAriaLabel?: AriaAttributes["aria-label"];
+    timeAriaLabel?: AriaAttributes["aria-label"];
     dateInputHintId?: string;
     timeInputHintId?: string;
 }
@@ -22,7 +22,7 @@ interface IDateTimePickerOwnProps {
     onDateChange: (date: Date | undefined, shouldSubmitForm?: boolean) => void;
     onTimeChange: (time: ITime | undefined, shouldSubmitForm?: boolean) => void;
     onDayClick: () => void;
-    onDateInputKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onDateInputKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
     dateFormat: string;
     isMobile: boolean;
     isTimeEnabled: boolean;
@@ -35,7 +35,7 @@ interface IDateTimePickerOwnProps {
 
 export type DateTimePickerComponentProps = IDateTimePickerOwnProps & WrappedComponentProps;
 
-const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePickerComponentProps>(
+const DateTimePickerComponent = forwardRef<HTMLInputElement, DateTimePickerComponentProps>(
     (
         {
             date,

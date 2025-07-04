@@ -1,5 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { DropdownButton } from "@gooddata/sdk-ui-kit";
@@ -15,9 +14,7 @@ import { IAttributeFilterDropdownButtonProps } from "./AttributeFilterDropdownBu
  *
  * @beta
  */
-export const AttributeFilterSimpleDropdownButton: React.VFC<IAttributeFilterDropdownButtonProps> = (
-    props,
-) => {
+export function AttributeFilterSimpleDropdownButton(props: IAttributeFilterDropdownButtonProps) {
     const { isOpen, title, isLoading, isFiltering, onClick } = props;
     const intl = useIntl();
 
@@ -37,7 +34,7 @@ export const AttributeFilterSimpleDropdownButton: React.VFC<IAttributeFilterDrop
             onClick={onClick}
         />
     );
-};
+}
 
 /**
  * Component using the {@link IAttributeFilterDropdownButtonProps} props showing the attribute title and selection.
@@ -50,19 +47,16 @@ export const AttributeFilterSimpleDropdownButton: React.VFC<IAttributeFilterDrop
  *
  * @beta
  */
-export const AttributeFilterSimpleDropdownButtonWithSelection: React.VFC<
-    IAttributeFilterDropdownButtonProps
-> = (props) => {
-    const {
-        isOpen,
-        subtitle,
-        title,
-        selectedItemsCount,
-        onClick,
-        isLoading,
-        isFiltering,
-        showSelectionCount = true,
-    } = props;
+export function AttributeFilterSimpleDropdownButtonWithSelection({
+    isOpen,
+    subtitle,
+    title,
+    selectedItemsCount,
+    onClick,
+    isLoading,
+    isFiltering,
+    showSelectionCount = true,
+}: IAttributeFilterDropdownButtonProps) {
     const intl = useIntl();
 
     let buttonTitle = `${title}: ${subtitle}`;
@@ -108,4 +102,4 @@ export const AttributeFilterSimpleDropdownButtonWithSelection: React.VFC<
             </button>
         </div>
     );
-};
+}

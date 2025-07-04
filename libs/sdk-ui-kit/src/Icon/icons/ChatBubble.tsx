@@ -1,19 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const ChatBubble: React.FC<IIconProps> = ({
+export function ChatBubble({
     color = "#B0BECA",
     className,
     width = 19,
     height = 16,
     ariaHidden,
-}) => {
+}: IIconProps) {
     return (
         <svg
             className={className}
@@ -30,4 +28,4 @@ export const ChatBubble: React.FC<IIconProps> = ({
             />
         </svg>
     );
-};
+}

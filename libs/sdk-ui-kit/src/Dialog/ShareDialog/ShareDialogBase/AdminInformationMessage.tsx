@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { Message } from "../../../Messages/index.js";
@@ -9,7 +9,7 @@ interface IAdminInformationMessageProps {
     isVisible: boolean;
 }
 
-export const AdminInformationMessage: React.FC<IAdminInformationMessageProps> = ({ isVisible }) => {
+export function AdminInformationMessage({ isVisible }: IAdminInformationMessageProps) {
     if (!isVisible) {
         return null;
     }
@@ -27,4 +27,4 @@ export const AdminInformationMessage: React.FC<IAdminInformationMessageProps> = 
             </span>
         </Message>
     );
-};
+}

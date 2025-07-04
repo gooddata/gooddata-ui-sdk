@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { SizeLarge, SizeMedium, SizeSmall } from "../@types/size.js";
-import React, { useMemo, useRef } from "react";
+import { HTMLAttributes, useMemo, useRef } from "react";
 import { bem } from "../@utils/bem.js";
 import { makeTabsKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
@@ -10,7 +10,7 @@ import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
  * @internal
  */
 export interface UiTabsAccessibilityConfig extends IAccessibilityConfigBase {
-    tabRole?: React.HTMLAttributes<HTMLElement>["role"];
+    tabRole?: HTMLAttributes<HTMLElement>["role"];
 }
 
 /**
@@ -37,13 +37,13 @@ const { b, e } = bem("gd-ui-kit-tabs");
 /**
  * @internal
  */
-export const UiTabs: React.FC<UiTabsProps> = ({
+export function UiTabs({
     size = "medium",
     tabs,
     onTabSelect,
     selectedTabId,
     accessibilityConfig,
-}) => {
+}: UiTabsProps) {
     const tabRefs = useRef<HTMLButtonElement[]>([]);
     const focusedIndexRef = useRef<number | null>(null);
 
@@ -93,7 +93,9 @@ export const UiTabs: React.FC<UiTabsProps> = ({
                     role={accessibilityConfig?.tabRole}
                     aria-selected={tab.id === selectedTabId}
                     tabIndex={tab.id === selectedTabId ? 0 : -1}
-                    ref={(el) => (tabRefs.current[index] = el)}
+                    ref={(el) => {
+                        tabRefs.current[index] = el;
+                    }}
                     onKeyDown={handleKeyDown}
                     onFocus={() => (focusedIndexRef.current = index)}
                 >
@@ -102,4 +104,4 @@ export const UiTabs: React.FC<UiTabsProps> = ({
             ))}
         </div>
     );
-};
+}

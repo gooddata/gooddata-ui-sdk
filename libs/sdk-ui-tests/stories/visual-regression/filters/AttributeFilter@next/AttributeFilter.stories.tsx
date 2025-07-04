@@ -1,10 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";

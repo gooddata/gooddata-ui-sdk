@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { Component } from "react";
 import reject from "lodash/reject.js";
 import keys from "lodash/keys.js";
 import { v4 as uuid } from "uuid";
@@ -62,7 +62,7 @@ interface IMessagesExamplesState {
     messages: Array<IMessage>;
 }
 
-class MessagesExamples extends React.Component<unknown, IMessagesExamplesState> {
+class MessagesExamples extends Component<unknown, IMessagesExamplesState> {
     constructor() {
         super({});
 

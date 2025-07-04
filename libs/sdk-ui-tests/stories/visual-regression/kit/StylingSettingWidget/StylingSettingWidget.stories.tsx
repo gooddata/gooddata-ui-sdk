@@ -1,6 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
 import { idRef, ITheme } from "@gooddata/sdk-model";
 import {
     defaultThemeMetadataObject,
@@ -9,7 +8,7 @@ import {
     StylingSettingWidget,
 } from "@gooddata/sdk-ui-kit";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { customThemeItems } from "./itemsMock.js";
@@ -30,7 +29,7 @@ const defaultItem: IStylingPickerItem<ITheme> = {
     name: defaultThemeMetadataObject.title,
 };
 
-const StylingSettingWidgetTest: React.FC = () => {
+function StylingSettingWidgetTest() {
     return (
         <InternalIntlWrapper>
             <div style={{ maxWidth: "580px" }}>
@@ -84,7 +83,7 @@ const StylingSettingWidgetTest: React.FC = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/StylingSettingWidget",

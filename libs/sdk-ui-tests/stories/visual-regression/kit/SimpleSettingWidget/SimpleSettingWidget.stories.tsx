@@ -1,6 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
-
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { SimpleSettingWidget } from "@gooddata/sdk-ui-kit";
 

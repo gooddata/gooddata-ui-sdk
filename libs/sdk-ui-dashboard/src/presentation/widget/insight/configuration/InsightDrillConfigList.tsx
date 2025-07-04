@@ -1,5 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import InsightDrillConfigItem from "./InsightDrillConfigItem.js";
 import { IDrillConfigItem, IDrillDownAttributeHierarchyDefinition } from "../../../drill/types.js";
 import { useDrillTargetTypeItems } from "./useDrillTargetTypeItems.js";
@@ -17,7 +16,7 @@ export interface IDrillConfigListProps {
     disableDrillDown?: boolean;
 }
 
-export const InsightDrillConfigList: React.FunctionComponent<IDrillConfigListProps> = (props) => {
+export function InsightDrillConfigList(props: IDrillConfigListProps) {
     const { drillConfigItems = [], disableDrillDown, onDelete, onSetup, onIncompleteChange } = props;
     const enabledDrillTargetTypeItems = useDrillTargetTypeItems(disableDrillDown);
 
@@ -51,4 +50,4 @@ export const InsightDrillConfigList: React.FunctionComponent<IDrillConfigListPro
             })}
         </div>
     );
-};
+}

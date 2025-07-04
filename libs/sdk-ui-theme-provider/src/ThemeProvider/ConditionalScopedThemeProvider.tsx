@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
+import { ReactNode } from "react";
 import { useIsScopeThemed, useTheme } from "./Context.js";
 import { ScopedThemeProvider } from "./ScopedThemeProvider.js";
-import React from "react";
 
 /**
  * This component is used to wrap portal rendered components that are not part of the regular component tree
@@ -10,7 +10,7 @@ import React from "react";
  *
  * @internal
  */
-export const ConditionalScopedThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export function ConditionalScopedThemeProvider({ children }: { children: ReactNode }) {
     const theme = useTheme();
     const isScopeThemed = useIsScopeThemed();
 
@@ -19,4 +19,4 @@ export const ConditionalScopedThemeProvider: React.FC<{ children: React.ReactNod
     ) : (
         children
     );
-};
+}

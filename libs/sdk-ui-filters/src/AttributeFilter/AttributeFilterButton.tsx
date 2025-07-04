@@ -1,5 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { AttributeFilterBase } from "./AttributeFilterBase.js";
 import { AttributeFilterDropdownButton } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
 import { IAttributeFilterBaseProps } from "./types.js";
@@ -17,7 +16,7 @@ export type IAttributeFilterButtonProps = Omit<IAttributeFilterBaseProps, "disab
  * for specified attribute display form.
  * @public
  */
-export const AttributeFilterButton: React.FC<IAttributeFilterButtonProps> = (props) => {
+export function AttributeFilterButton(props: IAttributeFilterButtonProps) {
     const { attributeFilterMode, ...filterBaseProps } = props;
     return attributeFilterMode !== "hidden" ? (
         <AttributeFilterBase
@@ -26,4 +25,4 @@ export const AttributeFilterButton: React.FC<IAttributeFilterButtonProps> = (pro
             DropdownButtonComponent={props.DropdownButtonComponent ?? AttributeFilterDropdownButton}
         />
     ) : null;
-};
+}

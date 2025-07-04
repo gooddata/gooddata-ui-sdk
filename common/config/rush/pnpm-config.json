@@ -90,6 +90,8 @@
      * PNPM documentation: https://pnpm.io/package_json#pnpmoverrides
      */
     "globalOverrides": {
+      "@emotion/react": "11.14.0",
+      "hast-util-to-jsx-runtime": "2.3.6"
       // "example1": "^1.0.0",
       // "example2": "npm:@company/example2@^1.0.0"
     },
@@ -183,7 +185,7 @@
      *
      * PNPM documentation: https://pnpm.io/package_json#pnpmpatcheddependencies
      */
-    "globalPatchedDependencies": { },
+    "globalPatchedDependencies": {"@aaronhayes/react-use-hubspot-form@2.1.1":"patches/@aaronhayes__react-use-hubspot-form@2.1.1.patch","react-content-loader@7.0.2":"patches/react-content-loader@7.0.2.patch","react-dnd@14.0.5":"patches/react-dnd@14.0.5.patch" },
   
     /**
      * (USE AT YOUR OWN RISK)  This is a free-form property bag that will be copied into

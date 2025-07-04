@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { useEffect, useRef } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { useEffect, useRef } from "react";
 import { FlexDimensions } from "@gooddata/sdk-ui-kit";
 
 import { DraggableInsightListCore } from "./DraggableInsightListCore.js";
@@ -12,14 +12,12 @@ interface IDraggableInsightListProps {
     enableDescriptions?: boolean;
 }
 
-export const DraggableInsightList: React.FC<IDraggableInsightListProps> = (props) => {
-    const {
-        recalculateSizeReference,
-        searchAutofocus,
-        enableDescriptions,
-        WrapInsightListItemWithDragComponent,
-    } = props;
-
+export function DraggableInsightList({
+    recalculateSizeReference,
+    searchAutofocus,
+    enableDescriptions,
+    WrapInsightListItemWithDragComponent,
+}: IDraggableInsightListProps) {
     const flexRef = useRef<FlexDimensions>(null);
 
     useEffect(() => {
@@ -42,4 +40,4 @@ export const DraggableInsightList: React.FC<IDraggableInsightListProps> = (props
             </FlexDimensions>
         </div>
     );
-};
+}

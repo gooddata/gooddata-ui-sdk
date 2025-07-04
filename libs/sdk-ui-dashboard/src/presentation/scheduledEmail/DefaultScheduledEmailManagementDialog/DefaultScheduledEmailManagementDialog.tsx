@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { AddButton, Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
@@ -26,17 +26,16 @@ import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDi
 /**
  * @alpha
  */
-export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementDialogProps> = (props) => {
-    const {
-        onAdd,
-        onEdit,
-        onDeleteSuccess: onDelete,
-        onClose,
-        onDeleteError,
-        isLoadingScheduleData,
-        automations,
-        notificationChannels,
-    } = props;
+export function ScheduledEmailManagementDialog({
+    onAdd,
+    onEdit,
+    onDeleteSuccess: onDelete,
+    onClose,
+    onDeleteError,
+    isLoadingScheduleData,
+    automations,
+    notificationChannels,
+}: IScheduledEmailManagementDialogProps) {
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<IAutomationMetadataObject | null>(
         null,
     );
@@ -151,4 +150,4 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
             </Dialog>
         </>
     );
-};
+}

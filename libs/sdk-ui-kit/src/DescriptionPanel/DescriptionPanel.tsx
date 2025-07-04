@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { ComponentType } from "react";
 import isEmpty from "lodash/isEmpty.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { EllipsisText } from "./EllipsisText.js";
@@ -71,7 +71,7 @@ export interface IDescriptionPanelProps {
     arrowOffsets?: ArrowOffsets;
     useRichText?: boolean;
     useReferences?: boolean;
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
     filters?: IFilter[];
     separators?: ISeparators;
     execConfig?: IExecutionConfig;
@@ -80,24 +80,28 @@ export interface IDescriptionPanelProps {
 /**
  * @internal
  */
-export const DescriptionPanel: React.FC<IDescriptionPanelProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <DescriptionPanelCore {...props} />
-    </IntlWrapper>
-);
+export function DescriptionPanel({ locale, ...props }: IDescriptionPanelProps) {
+    return (
+        <IntlWrapper locale={locale}>
+            <DescriptionPanelCore {...props} />
+        </IntlWrapper>
+    );
+}
 
 /**
  * @internal
  */
-export const DescriptionPanelContent: React.FC<IDescriptionPanelProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <DescriptionPanelContentCore {...props} />
-    </IntlWrapper>
-);
+export function DescriptionPanelContent({ locale, ...props }: IDescriptionPanelProps) {
+    return (
+        <IntlWrapper locale={locale}>
+            <DescriptionPanelContentCore {...props} />
+        </IntlWrapper>
+    );
+}
 /**
  * @internal
  */
-export const DescriptionIcon: React.FC<IDescriptionTriggerProps> = ({ className }) => {
+export function DescriptionIcon({ className }: IDescriptionTriggerProps) {
     const isMobileDevice = useMediaQuery("mobileDevice");
     return (
         <div
@@ -113,9 +117,9 @@ export const DescriptionIcon: React.FC<IDescriptionTriggerProps> = ({ className 
             <div className="gd-icon-circle-question" />
         </div>
     );
-};
+}
 
-const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
+function DescriptionPanelCore(props: IDescriptionPanelProps) {
     const { arrowOffsets = DESCRIPTION_PANEL_ARROW_OFFSETS } = props;
     return (
         <BubbleHoverTrigger onBubbleOpen={props.onBubbleOpen} showDelay={0} eventsOnBubble={true}>
@@ -131,20 +135,18 @@ const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
-const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) => {
-    const {
-        title,
-        description,
-        useRichText = false,
-        useReferences = false,
-        LoadingComponent,
-        filters,
-        separators,
-        execConfig,
-    } = props;
-
+function DescriptionPanelContentCore({
+    title,
+    description,
+    useRichText = false,
+    useReferences = false,
+    LoadingComponent,
+    filters,
+    separators,
+    execConfig,
+}: IDescriptionPanelProps) {
     const isZoomed = useIsZoomed(ZOOM_THRESHOLD); // ignore slight zoom in
 
     const className = cx("gd-description-panel s-gd-description-panel", {
@@ -173,4 +175,4 @@ const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) =>
             )}
         </div>
     );
-};
+}

@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter, IAttributeFilterElementsSearchBarProps } from "@gooddata/sdk-ui-filters";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend.js";
 import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper.js";
@@ -34,9 +34,9 @@ const CustomElementsSearchBar = (props: IAttributeFilterElementsSearchBarProps) 
     );
 };
 
-const EmptyElementsSearchBar: React.VFC<IAttributeFilterElementsSearchBarProps> = (_props) => {
+function EmptyElementsSearchBar(_props: IAttributeFilterElementsSearchBarProps) {
     return <div style={{ paddingBottom: 10 }} />;
-};
+}
 
 export default {
     title: "10 Filters@next/Customization/ElementsSearchBarComponent",

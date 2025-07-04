@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { PureComponent } from "react";
+import { PureComponent } from "react";
 
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 import { WrappedComponentProps } from "react-intl";

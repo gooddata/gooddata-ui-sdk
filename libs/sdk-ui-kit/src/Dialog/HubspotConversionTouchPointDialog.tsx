@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 
 import { Dialog } from "./Dialog.js";
@@ -12,9 +11,7 @@ import { useId } from "../utils/useId.js";
 /**
  * @public
  */
-export const HubspotConversionTouchPointDialog: React.FC<IHubspotConversionTouchPointDialogBaseProps> = (
-    props,
-) => {
+export function HubspotConversionTouchPointDialog(props: IHubspotConversionTouchPointDialogBaseProps) {
     const submitButtonClasses = `hs-button primary large ${props.submitButtonClass || "s-hs-submit"}`;
 
     const onDialogSubmit = () => {
@@ -42,4 +39,4 @@ export const HubspotConversionTouchPointDialog: React.FC<IHubspotConversionTouch
             </HubspotProvider>
         </Dialog>
     );
-};
+}

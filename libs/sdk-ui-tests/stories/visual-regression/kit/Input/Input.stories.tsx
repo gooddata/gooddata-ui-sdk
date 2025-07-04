@@ -1,11 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { PureComponent } from "react";
 import { Input } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
 
-class AutofocsExamples extends React.PureComponent {
+class AutofocsExamples extends PureComponent {
     public state = {
         autofocus1: false,
     };

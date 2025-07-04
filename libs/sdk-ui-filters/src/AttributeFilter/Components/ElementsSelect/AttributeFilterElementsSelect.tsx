@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { InvertableSelect, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { IAttributeElement } from "@gooddata/sdk-model";
@@ -26,43 +26,41 @@ const VISIBLE_ITEMS_COUNT = 10;
  *
  * @beta
  */
-export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSelectProps> = (props) => {
-    const {
-        items,
-        totalItemsCount,
-        totalItemsCountWithCurrentSettings,
+export function AttributeFilterElementsSelect({
+    items,
+    totalItemsCount,
+    totalItemsCountWithCurrentSettings,
 
-        isInverted,
-        selectedItems,
-        onSelect,
+    isInverted,
+    selectedItems,
+    onSelect,
 
-        searchString,
-        onSearch,
+    searchString,
+    onSearch,
 
-        isLoading,
-        isLoadingNextPage,
-        nextPageSize,
-        onLoadNextPage,
-        error,
+    isLoading,
+    isLoadingNextPage,
+    nextPageSize,
+    onLoadNextPage,
+    error,
 
-        attributeTitle,
-        isFilteredByParentFilters,
-        parentFilterTitles,
+    attributeTitle,
+    isFilteredByParentFilters,
+    parentFilterTitles,
 
-        enableShowingFilteredElements,
-        onShowFilteredElements,
+    enableShowingFilteredElements,
+    onShowFilteredElements,
 
-        irrelevantSelection,
-        onClearIrrelevantSelection,
+    irrelevantSelection,
+    onClearIrrelevantSelection,
 
-        onApplyButtonClick,
-        isApplyDisabled,
+    onApplyButtonClick,
+    isApplyDisabled,
 
-        isFilteredByDependentDateFilters,
-        enableAttributeFilterVirtualised,
-        withoutApply,
-    } = props;
-
+    isFilteredByDependentDateFilters,
+    enableAttributeFilterVirtualised,
+    withoutApply,
+}: IAttributeFilterElementsSelectProps) {
     const intl = useIntl();
     const isMobile = useMediaQuery("mobileDevice");
     const { fullscreenOnMobile, selectionMode, attribute } = useAttributeFilterContext();
@@ -230,4 +228,4 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
             )}
         </>
     );
-};
+}

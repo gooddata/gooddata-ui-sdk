@@ -1,5 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
@@ -26,8 +25,7 @@ const createTabs = (props?: Partial<IGranularityTabsProps>) => {
         onSelectedGranularityChange: noop,
         selectedGranularity: "GDC.time.date",
     };
-    const Wrapped = withIntl(GranularityTabs);
-    return render(<Wrapped {...defaultProps} {...props} />);
+    return render(<GranularityTabs {...defaultProps} {...props} />);
 };
 
 describe("GranularityTabs", () => {

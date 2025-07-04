@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { RichText } from "@gooddata/sdk-ui-kit";
 import { BackendProvider, IntlWrapper, WorkspaceProvider } from "@gooddata/sdk-ui";
 
@@ -42,7 +42,7 @@ const emptyElement = (
 
 const headerStyle = { marginBottom: "6px" };
 
-const RichTextTest: React.FC = () => {
+function RichTextTest() {
     const workspace = "foo";
     const backend = recordedBackend(ReferenceRecordings.Recordings);
 
@@ -104,7 +104,7 @@ const RichTextTest: React.FC = () => {
             </BackendProvider>
         </IntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/RichText",

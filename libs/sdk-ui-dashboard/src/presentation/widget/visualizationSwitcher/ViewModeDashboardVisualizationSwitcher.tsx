@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
@@ -32,20 +32,16 @@ import { supportsShowAsTable } from "../insight/insightToTable.js";
 /**
  * @internal
  */
-export const ViewModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualizationSwitcherProps> = (
-    props,
-) => {
-    const {
-        widget,
-        activeVisualizationId: initialActiveVisualizationId,
-        onError,
-        onExportReady,
-        onLoadingChanged,
-        screen,
-        exportData,
-    } = props;
-
-    const [activeVisualizationId, setActiveVisualizationId] = React.useState(initialActiveVisualizationId);
+export function ViewModeDashboardVisualizationSwitcher({
+    widget,
+    activeVisualizationId: initialActiveVisualizationId,
+    onError,
+    onExportReady,
+    onLoadingChanged,
+    screen,
+    exportData,
+}: IDashboardVisualizationSwitcherProps) {
+    const [activeVisualizationId, setActiveVisualizationId] = useState(initialActiveVisualizationId);
 
     const activeVisualization =
         widget.visualizations.find((visualization) => visualization.identifier === activeVisualizationId) ??
@@ -71,11 +67,11 @@ export const ViewModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualiz
             />
         );
     }
-};
+}
 
-export const ViewModeDashboardVisualizationSwitcherEmpty: React.FC = () => {
+export function ViewModeDashboardVisualizationSwitcherEmpty() {
     return <div className="gd-visualization-switcher-widget-empty-content" />;
-};
+}
 
 export interface IViewModeDashboardVisualizationSwitcherContentProps
     extends IDashboardVisualizationSwitcherProps {
@@ -84,9 +80,7 @@ export interface IViewModeDashboardVisualizationSwitcherContentProps
     onActiveVisualizationChange: (activeVisualizationId: string) => void;
 }
 
-export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
-    IViewModeDashboardVisualizationSwitcherContentProps
-> = ({
+export function ViewModeDashboardVisualizationSwitcherContent({
     widget,
     insight,
     activeVisualization,
@@ -96,7 +90,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
     onExportReady,
     onLoadingChanged,
     exportData,
-}) => {
+}: IViewModeDashboardVisualizationSwitcherContentProps) {
     const intl = useIntl();
     const visType = insightVisualizationType(insight) as VisType;
     const settings = useDashboardSelector(selectSettings);
@@ -304,4 +298,4 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
             </DashboardItemVisualization>
         </DashboardItem>
     );
-};
+}

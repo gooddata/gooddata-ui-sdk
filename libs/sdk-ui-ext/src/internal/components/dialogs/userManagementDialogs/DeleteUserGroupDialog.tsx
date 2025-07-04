@@ -1,6 +1,5 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./locales.js";
@@ -18,12 +17,12 @@ export interface IDeleteUserGroupDialogProps extends IWithTelemetryProps {
     onClose: () => void;
 }
 
-const DeleteUserGroupDialogComponent: React.FC<IDeleteUserGroupDialogProps> = ({
+function DeleteUserGroupDialogComponent({
     userGroupId,
     organizationId,
     onSuccess,
     onClose,
-}) => {
+}: IDeleteUserGroupDialogProps) {
     const intl = useIntl();
     const { deleteUserGroup, isDeleteUserGroupProcessing } = useDeleteUserGroup(
         userGroupId,
@@ -40,7 +39,7 @@ const DeleteUserGroupDialogComponent: React.FC<IDeleteUserGroupDialogProps> = ({
             onCancel={onClose}
         />
     );
-};
+}
 
 /**
  * @internal

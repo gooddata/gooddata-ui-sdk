@@ -1,9 +1,9 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 
-export default class UnsupportedProperties extends React.Component {
+export default class UnsupportedProperties extends Component {
     public render() {
         return (
             <div className={this.getClassNames()}>

@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { IReactOptions, UnitsType } from "../types.js";
@@ -18,9 +18,8 @@ export interface ICodeOptionsProps {
 /**
  * @internal
  */
-export const CodeOptions: React.VFC<ICodeOptionsProps> = (props) => {
+export function CodeOptions({ option, onChange }: ICodeOptionsProps) {
     const intl = useIntl();
-    const { option, onChange } = props;
 
     const onDisplayConfigurationChange = useCallback(() => {
         const opt = { ...option, displayConfiguration: !option.displayConfiguration };
@@ -73,4 +72,4 @@ export const CodeOptions: React.VFC<ICodeOptionsProps> = (props) => {
             ) : null}
         </div>
     );
-};
+}
