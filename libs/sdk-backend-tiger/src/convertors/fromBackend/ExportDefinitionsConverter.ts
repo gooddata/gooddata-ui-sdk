@@ -108,7 +108,8 @@ export const convertImageExportRequest = (
             widget: widgetIds?.[0] ?? "",
             dashboard: dashboardId,
             filters:
-                (metadata as MetadataObjectDefinition | undefined)?.filters?.map(cloneWithSanitizedIds) ?? [],
+                (metadata as MetadataObjectDefinition | undefined)?.filters?.map(cloneWithSanitizedIds) ??
+                undefined,
         },
     };
 };
@@ -171,7 +172,7 @@ export const convertTabularExportRequest = (
         settings,
         content: {
             visualizationObject: visualizationObject ?? "",
-            filters: visualizationObjectCustomFilters?.map(cloneWithSanitizedIds) ?? [],
+            filters: visualizationObjectCustomFilters?.map(cloneWithSanitizedIds) ?? undefined,
             dashboard: relatedDashboardId,
             widget: metadata?.widget,
         },

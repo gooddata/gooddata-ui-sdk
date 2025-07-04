@@ -48,7 +48,7 @@ export const WidgetAttachments = ({
     };
 
     return (
-        <AttachmentsWrapper>
+        <AttachmentsWrapper key={selectedAttachments.join()}>
             <div className="gd-attachment-list" ref={attachmentListRef}>
                 <AttachmentsList
                     attachments={selectedAttachments}

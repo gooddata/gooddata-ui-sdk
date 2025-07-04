@@ -50,8 +50,7 @@ export const convertToImageExportRequest = (
     if (exportRequest.format === "PNG") {
         const { dashboard, widget, filters } = exportRequest.content;
         if (!widget || !dashboard) {
-            console.error("Export definition must have a widget");
-            throw new UnexpectedError("Export definition must have a widget");
+            throw new UnexpectedError("Export definition must have a widget or dashboard");
         }
         const isMetadataFilled = title || filters;
         const metadataObj = {
@@ -119,7 +118,6 @@ export const convertToSlidesExportRequest = (
     const { filters, widget, dashboard } = exportRequest.content;
 
     if (!widget) {
-        console.error("Export definition must have a widget");
         throw new UnexpectedError("Export definition must have a widget");
     }
 
@@ -187,7 +185,7 @@ export const convertToDashboardTabularExportRequest = (
             dashboardFiltersOverride: filters?.map(cloneWithSanitizedIds),
         };
     }
-    throw new UnexpectedError("Export definition must be tabular");
+    throw new UnexpectedError("Export definition must be dashboard and XLSX");
 };
 
 export const convertToTabularExportRequest = (
@@ -221,7 +219,7 @@ export const convertToTabularExportRequest = (
             },
         };
     }
-    throw new UnexpectedError("Export definition must be tabular");
+    throw new UnexpectedError("Export definition must be CSV or XLSX tabular");
 };
 
 export const convertExportDefinitionRequestPayload = (
