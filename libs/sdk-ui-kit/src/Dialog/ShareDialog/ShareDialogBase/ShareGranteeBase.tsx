@@ -10,7 +10,6 @@ import { ShareGranteeContent } from "./ShareGranteeContent.js";
 import { IShareGranteeBaseProps } from "./types.js";
 import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientControl.js";
 import { SharedObjectLockControl } from "./SharedObjectLockControl.js";
-import { useAdminInformationMessageState } from "./useAdminInformationMessage.js";
 import { AdminInformationMessage } from "./AdminInformationMessage.js";
 import { ADD_GRANTEE_ID } from "./utils.js";
 import { ShareLink } from "./ShareLink.js";
@@ -20,7 +19,6 @@ import { ShareLink } from "./ShareLink.js";
  */
 export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
     const {
-        currentUser,
         isLoading,
         isLockedNow,
         isUnderLenientControlNow,
@@ -53,7 +51,6 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         canWorkspaceManagerSeeEverySharedObject,
     } = sharedObject;
     const intl = useIntl();
-    const { isMessageVisible, handleMessageClose } = useAdminInformationMessageState(currentUser.ref);
 
     const granteeList = useMemo(() => {
         return compact([owner, ...grantees]);
@@ -69,19 +66,15 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             shareGrantHeadline: showDashboardShareLink ? shareDashboardListTitle : shareGranteeListTitle,
             linkHeadline: intl.formatMessage({ id: "shareDialog.share.link.title" }),
             linkHelperText: intl.formatMessage({ id: "shareDialog.share.link.helperText" }),
-            linkButtonText: intl.formatMessage({ id: "shareDialog.share.link.buttonText" }),
-            cancelButtonText: intl.formatMessage({ id: "cancel" }),
+            linkButtonLabel: intl.formatMessage({ id: "shareDialog.share.link.buttonText" }),
+            cancelButtonText: intl.formatMessage({ id: "close" }),
             submitButtonText: intl.formatMessage({ id: "save" }),
         };
     }, [intl, showDashboardShareLink]);
 
     const shouldDisplayAdminMessage = useMemo(
-        () =>
-            canWorkspaceManagerSeeEverySharedObject &&
-            isCurrentUserWorkspaceManager &&
-            !isLoading &&
-            isMessageVisible,
-        [canWorkspaceManagerSeeEverySharedObject, isCurrentUserWorkspaceManager, isLoading, isMessageVisible],
+        () => canWorkspaceManagerSeeEverySharedObject && isCurrentUserWorkspaceManager && !isLoading,
+        [canWorkspaceManagerSeeEverySharedObject, isCurrentUserWorkspaceManager, isLoading],
     );
 
     return (
@@ -98,8 +91,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             hideSubmitButton={applyShareGrantOnSelect}
             initialFocus={ADD_GRANTEE_ID}
         >
-            <AdminInformationMessage isVisible={shouldDisplayAdminMessage} onClose={handleMessageClose} />
-
+            <AdminInformationMessage isVisible={shouldDisplayAdminMessage} />
             {!isShareGrantHidden ? (
                 <ShareGranteeContent
                     currentUserPermissions={currentUserPermissions}
@@ -122,7 +114,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
                     onShareLinkCopy={onShareLinkCopy}
                     headline={dialogLabels.linkHeadline}
                     helperText={dialogLabels.linkHelperText}
-                    buttonText={dialogLabels.linkButtonText}
+                    buttonLabel={dialogLabels.linkButtonLabel}
                 />
             ) : null}
 

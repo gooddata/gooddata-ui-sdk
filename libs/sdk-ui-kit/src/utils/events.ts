@@ -60,3 +60,15 @@ export const isArrowKey = (event: KeyboardEvent): boolean => {
 export const isEscapeKey = (event: KeyboardEvent): boolean => {
     return event.key === "Escape";
 };
+
+/**
+ * Checks if the given keyboard event is triggered by a Copy key.
+ *
+ * @param event - The keyboard event to check.
+ * @returns `true` if the event has been triggered by ctrl+c or cmd+c, `false` otherwise.
+ *
+ * @internal
+ */
+export const isCopyKey = (event: KeyboardEvent): boolean => {
+    return event.key === "c" && (event.ctrlKey || event.metaKey);
+};

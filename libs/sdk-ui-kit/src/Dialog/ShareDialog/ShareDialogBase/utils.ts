@@ -42,6 +42,16 @@ export const ALL_WORKSPACE_USERS = "allWorkspaceUsers";
 /**
  * @internal
  */
+export const SHARE_LINK_HELPER_TEXT_ID = "share-link-helper-text";
+
+/**
+ * @internal
+ */
+export const SHARE_LINK_HEADLINE_ID = "share-link-headline";
+
+/**
+ * @internal
+ */
 export const GranteeRules: IGranteeRules = {
     type: ALL_WORKSPACE_USERS,
     id: {
