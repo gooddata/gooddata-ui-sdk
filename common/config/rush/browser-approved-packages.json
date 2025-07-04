@@ -1151,6 +1151,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "storybook",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "stringify-object",
       "allowedCategories": [ "production" ]
     },
