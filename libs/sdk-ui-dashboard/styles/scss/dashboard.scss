@@ -771,7 +771,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     left: 0;
     bottom: 0;
     right: 0;
-    &.isInvisible {
+    &.is-invisible {
         visibility: hidden;
     }
 }
