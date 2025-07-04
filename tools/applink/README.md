@@ -77,7 +77,7 @@ and reload the browser.
 
 ## Technical Notes
 
-The tool has its own file change watch logic (using chokidar) and does not rely on TypeScript 'watch' mode - this is
+The tool has its own file change watch logic (using watchpack) and does not rely on TypeScript 'watch' mode - this is
 mostly to have better control and messaging. The tool will watch source files of the packages that the target app
 depends on, link the source file changes to the respective packages and run incremental builds for them.
 

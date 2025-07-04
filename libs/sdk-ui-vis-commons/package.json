@@ -78,7 +78,7 @@
         "@testing-library/dom": "10.4.0",
         "@testing-library/react": "16.3.0",
         "@types/lodash": "^4.14.202",
-        "@types/node": "^18.17.6",
+        "@types/node": "^22.13.0",
         "@types/react-dom": "19.1.6",
         "@types/react-measure": "^2.0.12",
         "@types/react": "19.1.8",
