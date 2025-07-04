@@ -2925,7 +2925,7 @@ export type RankingFilterRankingFilterOperatorEnum =
     typeof RankingFilterRankingFilterOperatorEnum[keyof typeof RankingFilterRankingFilterOperatorEnum];
 
 /**
- * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension.
+ * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
  * @export
  * @interface RelativeDateFilter
  */
@@ -2950,17 +2950,17 @@ export interface RelativeDateFilterRelativeDateFilter {
      */
     granularity: RelativeDateFilterRelativeDateFilterGranularityEnum;
     /**
-     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
      * @type {number}
      * @memberof RelativeDateFilterRelativeDateFilter
      */
-    from: number;
+    from?: number | null;
     /**
-     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
      * @type {number}
      * @memberof RelativeDateFilterRelativeDateFilter
      */
-    to: number;
+    to?: number | null;
     /**
      *
      * @type {string}
