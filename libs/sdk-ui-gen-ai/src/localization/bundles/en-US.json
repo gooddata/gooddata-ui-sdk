@@ -259,6 +259,11 @@
         "comment": "",
         "limit": 0
     },
+    "gd.gen-ai.messages.label": {
+        "value": "Chat messages",
+        "comment": "",
+        "limit": 0
+    },
     "gd.gen-ai.message.label.user": {
         "value": "User:",
         "comment": "",
