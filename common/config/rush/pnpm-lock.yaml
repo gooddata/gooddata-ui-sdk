@@ -2527,9 +2527,6 @@ importers:
       react-select:
         specifier: ^5.7.3
         version: 5.7.3(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
-      react-transition-group:
-        specifier: ^4.4.2
-        version: 4.4.5(react-dom@18.3.1)(react@18.3.1)
       redux-batched-actions:
         specifier: ^0.5.0
         version: 0.5.0
@@ -2600,9 +2597,6 @@ importers:
       '@types/react-redux':
         specifier: ^7.1.16
         version: 7.1.33
-      '@types/react-transition-group':
-        specifier: ^4.4.4
-        version: 4.4.10
       '@types/uuid':
         specifier: ^8.3.4
         version: 8.3.4
@@ -2801,9 +2795,6 @@ importers:
       react-select-async-paginate:
         specifier: ^0.7.3
         version: 0.7.3(react-select@5.7.3)(react@18.3.1)
-      react-transition-group:
-        specifier: ^4.4.2
-        version: 4.4.5(react-dom@18.3.1)(react@18.3.1)
       ts-invariant:
         specifier: ^0.7.5
         version: 0.7.5
@@ -2874,9 +2865,6 @@ importers:
       '@types/react-measure':
         specifier: ^2.0.8
         version: 2.0.12
-      '@types/react-transition-group':
-        specifier: ^4.4.4
-        version: 4.4.10
       '@types/uuid':
         specifier: ^8.3.4
         version: 8.3.4
@@ -3699,9 +3687,6 @@ importers:
       react-textarea-autosize:
         specifier: 8.4.0
         version: 8.4.0(@types/react@18.3.23)(react@18.3.1)
-      react-transition-group:
-        specifier: ^4.4.2
-        version: 4.4.5(react-dom@18.3.1)(react@18.3.1)
       tinycolor2:
         specifier: ^1.4.2
         version: 1.6.0
@@ -3772,9 +3757,6 @@ importers:
       '@types/react-portal':
         specifier: ^4.0.7
         version: 4.0.7
-      '@types/react-transition-group':
-        specifier: ^4.4.4
-        version: 4.4.10
       '@types/tinycolor2':
         specifier: ^1.4.2
         version: 1.4.6
@@ -4464,7 +4446,7 @@ importers:
         version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
       babel-loader:
         specifier: ^8.0.5
-        version: 8.3.0(@babel/core@7.26.10)(webpack@5.89.0)
+        version: 8.3.0(@babel/core@7.26.10)(webpack@4.47.0)
       babel-plugin-require-context-hook:
         specifier: ^1.0.0
         version: 1.0.0
@@ -13030,6 +13012,7 @@ packages:
     resolution: {integrity: sha512-hT/+s0VQs2ojCX823m60m5f0sL5idt9SO6Tj6Dg+rdphGPIeJbJ6CxvBYkgkGKrYeDjvIpKTR38UzmtHJOGW3Q==}
     dependencies:
       '@types/react': 18.3.23
+    dev: false
 
   /@types/react-window@1.8.8:
     resolution: {integrity: sha512-8Ls660bHR1AUA2kuRvVG9D/4XpRC6wjAaPT9dil7Ckc76eP9TKWZwwmgfq8Q1LANX3QNDnoU4Zp48A3w+zK69Q==}

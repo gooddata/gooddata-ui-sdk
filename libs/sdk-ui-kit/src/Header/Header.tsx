@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { Component, createRef } from "react";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 import cx from "classnames";
 import differenceInMonths from "date-fns/differenceInMonths/index.js";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays/index.js";
@@ -422,11 +421,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     this.setOverlayMenu(false);
                 }}
             >
-                <TransitionGroup>
-                    <CSSTransition classNames="gd-header" timeout={300}>
-                        {content}
-                    </CSSTransition>
-                </TransitionGroup>
+                {content}
             </Overlay>
         );
     };

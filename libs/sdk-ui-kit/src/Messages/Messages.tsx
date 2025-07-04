@@ -1,6 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useState, useCallback } from "react";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { v4 as uuid } from "uuid";
 import noop from "lodash/noop.js";
 import cx from "classnames";
@@ -26,50 +25,42 @@ export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClo
     return (
         <Overlay>
             <div className="gd-messages">
-                <TransitionGroup>
-                    <CSSTransition classNames="gd-message" timeout={220}>
-                        <div>
-                            {messages.map((message) => {
-                                const { id, component: Component, type, contrast, intensive } = message;
-                                const isExpanded = expandedMessageIds.includes(message.id);
-                                return (
-                                    <div key={id}>
-                                        <Message
-                                            className="gd-message-overlay"
-                                            type={type}
-                                            onClose={() => handleMessageClose(id)}
-                                            contrast={contrast}
-                                            intensive={intensive}
-                                        >
-                                            {Component ? (
-                                                <Component />
-                                            ) : (
-                                                <>
-                                                    <MessageWithShowMore
-                                                        message={message}
-                                                        shouldShowMore={!isExpanded}
-                                                        handleShowMore={() => {
-                                                            if (isExpanded) {
-                                                                setExpandedMessageIds((old) =>
-                                                                    old.filter(
-                                                                        (expandedId) => expandedId !== id,
-                                                                    ),
-                                                                );
-                                                            } else {
-                                                                setExpandedMessageIds((old) => [...old, id]);
-                                                            }
-                                                        }}
-                                                    />
-                                                    <MessageSimple message={message} />
-                                                </>
-                                            )}
-                                        </Message>
-                                    </div>
-                                );
-                            })}
+                {messages.map((message) => {
+                    const { id, component: Component, type, contrast, intensive } = message;
+                    const isExpanded = expandedMessageIds.includes(message.id);
+                    return (
+                        <div key={id}>
+                            <Message
+                                className="gd-message-overlay"
+                                type={type}
+                                onClose={() => handleMessageClose(id)}
+                                contrast={contrast}
+                                intensive={intensive}
+                            >
+                                {Component ? (
+                                    <Component />
+                                ) : (
+                                    <>
+                                        <MessageWithShowMore
+                                            message={message}
+                                            shouldShowMore={!isExpanded}
+                                            handleShowMore={() => {
+                                                if (isExpanded) {
+                                                    setExpandedMessageIds((old) =>
+                                                        old.filter((expandedId) => expandedId !== id),
+                                                    );
+                                                } else {
+                                                    setExpandedMessageIds((old) => [...old, id]);
+                                                }
+                                            }}
+                                        />
+                                        <MessageSimple message={message} />
+                                    </>
+                                )}
+                            </Message>
                         </div>
-                    </CSSTransition>
-                </TransitionGroup>
+                    );
+                })}
             </div>
         </Overlay>
     );
