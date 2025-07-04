@@ -1,6 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
-import { attributeFilterConfigsInitialState } from "./attributeFilterConfigsState.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
+import {
+    attributeFilterConfigsInitialState,
+    AttributeFilterConfigsState,
+} from "./attributeFilterConfigsState.js";
 import { attributeFilterConfigsReducers } from "./attributeFilterConfigsReducers.js";
 
 const configSlice = createSlice({
@@ -9,5 +12,7 @@ const configSlice = createSlice({
     reducers: attributeFilterConfigsReducers,
 });
 
-export const attributeFilterConfigsSliceReducer = configSlice.reducer;
-export const attributeFilterConfigsActions = configSlice.actions;
+export const attributeFilterConfigsSliceReducer: Reducer<AttributeFilterConfigsState> = configSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const attributeFilterConfigsActions = { ...configSlice.actions };

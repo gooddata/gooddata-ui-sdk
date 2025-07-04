@@ -2,7 +2,7 @@
 // in current version of @reduxjs/toolkit esm export are not defined
 // we need direct import from esm module otherwise import ar not node compatible
 // https://github.com/reduxjs/redux-toolkit/issues/1960
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSelector } from "@reduxjs/toolkit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { selectState } from "../common/selectors.js";

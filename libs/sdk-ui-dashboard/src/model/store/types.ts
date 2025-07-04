@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { AnyAction, Dispatch, EntityState } from "@reduxjs/toolkit";
+import { AnyAction, Dispatch, EntityId, EntityState } from "@reduxjs/toolkit";
 import { IInsight, IListedDashboard } from "@gooddata/sdk-model";
 import { LoadingState } from "./loading/loadingState.js";
 import { SavingState } from "./saving/savingState.js";
@@ -80,15 +80,15 @@ export interface DashboardState {
     drill: DrillState;
     // Entities
     /** @beta */
-    insights: EntityState<IInsight>;
+    insights: EntityState<IInsight, EntityId>;
     /** @alpha */
-    drillTargets: EntityState<IDrillTargets>;
+    drillTargets: EntityState<IDrillTargets, EntityId>;
     /** @beta */
-    listedDashboards: EntityState<IListedDashboard>;
+    listedDashboards: EntityState<IListedDashboard, EntityId>;
     /** @beta */
     accessibleDashboards: AccessibleDashboardsState;
     /** @alpha */
-    inaccessibleDashboards: EntityState<IInaccessibleDashboard>;
+    inaccessibleDashboards: EntityState<IInaccessibleDashboard, EntityId>;
     dashboardPermissions: DashboardPermissionsState;
     /** @alpha */
     automations: AutomationsState;
@@ -113,7 +113,7 @@ export interface DashboardState {
      * Part of state where execution results of the individual widgets are stored.
      * @beta
      */
-    executionResults: EntityState<IExecutionResultEnvelope>;
+    executionResults: EntityState<IExecutionResultEnvelope, EntityId>;
 
     /**
      * Part of state where the different dashboard component queries may cache their results.

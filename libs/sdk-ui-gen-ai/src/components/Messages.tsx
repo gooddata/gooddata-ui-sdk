@@ -91,4 +91,4 @@ const mapStateToProps = (state: RootState): MessagesComponentProps => ({
     loading: asyncProcessSelector(state),
 });
 
-export const Messages = connect(mapStateToProps)(MessagesComponent);
+export const Messages: any = connect(mapStateToProps)(MessagesComponent);

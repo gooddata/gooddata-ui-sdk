@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { insightsAdapter } from "./insightsEntityAdapter.js";
 import { DashboardSelector, DashboardState } from "../types.js";
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSelector } from "@reduxjs/toolkit";
 import {
     areObjRefsEqual,
     attributeAlias,

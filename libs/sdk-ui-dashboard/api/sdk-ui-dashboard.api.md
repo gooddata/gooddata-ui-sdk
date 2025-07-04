@@ -8,10 +8,12 @@
 
 import { AccessGranularPermission } from '@gooddata/sdk-model';
 import { Action } from '@reduxjs/toolkit';
+import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit';
+import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { AnyAction } from '@reduxjs/toolkit';
 import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
-import { CatalogState as CatalogState_2 } from './catalogState.js';
 import { CommandProcessingStatus as CommandProcessingStatus_2 } from '../../../model/index.js';
 import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
@@ -100,7 +102,6 @@ import { DashboardLayoutSectionItemReplaced as DashboardLayoutSectionItemReplace
 import { DashboardLayoutSectionItemsAdded as DashboardLayoutSectionItemsAdded_2 } from '../events/layout.js';
 import { DashboardLayoutSectionMoved as DashboardLayoutSectionMoved_2 } from '../events/layout.js';
 import { DashboardLayoutSectionRemoved as DashboardLayoutSectionRemoved_2 } from '../events/layout.js';
-import { DashboardMetaState as DashboardMetaState_2 } from './metaState.js';
 import { DashboardQueryCompleted as DashboardQueryCompleted_2 } from '../events/general.js';
 import { DashboardQueryFailed as DashboardQueryFailed_2 } from '../events/general.js';
 import { DashboardQueryRejected as DashboardQueryRejected_2 } from '../events/general.js';
@@ -115,7 +116,6 @@ import { DashboardSaved as DashboardSaved_2 } from '../events/dashboard.js';
 import { DashboardScheduledEmailCreated as DashboardScheduledEmailCreated_2 } from '../events/scheduledEmail.js';
 import { DashboardScheduledEmailSaved as DashboardScheduledEmailSaved_2 } from '../events/scheduledEmail.js';
 import { DashboardSharingChanged as DashboardSharingChanged_2 } from '../events/dashboard.js';
-import { DashboardState as DashboardState_2 } from '../index.js';
 import { DashboardUserInteractionTriggered as DashboardUserInteractionTriggered_2 } from '../events/userInteraction.js';
 import { DashboardVisualizationSwitcherWidgetVisualizationAdded as DashboardVisualizationSwitcherWidgetVisualizationAdded_2 } from '../events/visualizationSwitcher.js';
 import { DashboardVisualizationSwitcherWidgetVisualizationsUpdated as DashboardVisualizationSwitcherWidgetVisualizationsUpdated_2 } from '../events/visualizationSwitcher.js';
@@ -133,7 +133,6 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { Dispatch as Dispatch_2 } from 'react';
 import { DraggableLayoutItem as DraggableLayoutItem_2 } from '../../../index.js';
 import { DrillDefinition } from '@gooddata/sdk-model';
-import { DrillState as DrillState_2 } from './drillState.js';
 import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
@@ -297,13 +296,11 @@ import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
-import { QueryCacheEntryResult as QueryCacheEntryResult_2 } from '../store/_infra/queryService.js';
 import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
 import { RenderMode as RenderMode_2 } from '../../../types.js';
-import { RenderModeState as RenderModeState_2 } from './renderModeState.js';
 import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
@@ -313,17 +310,15 @@ import { SetStateAction } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { ShowWidgetAsTableSet as ShowWidgetAsTableSet_2 } from '../events/showWidgetAsTable.js';
 import { TypedUseSelectorHook } from 'react-redux';
-import { UiState as UiState_2 } from './uiState.js';
 import { Uri } from '@gooddata/sdk-model';
 import { UriRef } from '@gooddata/sdk-model';
 import { UseCancelablePromiseCallbacks } from '@gooddata/sdk-ui';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 import { WeekStart } from '@gooddata/sdk-model';
-import { WritableDraft } from 'immer/dist/internal.js';
 
 // @alpha (undocumented)
-export interface AccessibleDashboardsState extends EntityState<IListedDashboard> {
+export interface AccessibleDashboardsState extends EntityState<IListedDashboard, EntityId> {
     // (undocumented)
     isLoaded: boolean;
 }
@@ -689,28 +684,13 @@ export const CancelEditDialog: React_2.FC<ICancelEditDialogProps>;
 export function cancelEditRenderMode(correlationId?: string): ChangeRenderMode;
 
 // @internal (undocumented)
-export const catalogActions: CaseReducerActions<    {
-setCatalogItems: (state: WritableDraft<CatalogState_2>, action: {
-payload: SetCatalogItemsPayload;
-type: string;
-}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
-setCatalogMeasuresAndFacts: (state: WritableDraft<CatalogState_2>, action: {
-payload: SetCatalogMeasuresAndFactsPayload;
-type: string;
-}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
-addAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
-payload: ICatalogAttributeHierarchy;
-type: string;
-}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
-updateAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
-payload: ICatalogAttributeHierarchy;
-type: string;
-}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
-deleteAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
-payload: ICatalogAttributeHierarchy;
-type: string;
-}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
-}, "catalog">;
+export const catalogActions: {
+    setCatalogItems: ActionCreatorWithPayload<SetCatalogItemsPayload, "catalog/setCatalogItems">;
+    setCatalogMeasuresAndFacts: ActionCreatorWithPayload<SetCatalogMeasuresAndFactsPayload, "catalog/setCatalogMeasuresAndFacts">;
+    addAttributeHierarchy: ActionCreatorWithPayload<ICatalogAttributeHierarchy, "catalog/addAttributeHierarchy">;
+    updateAttributeHierarchy: ActionCreatorWithPayload<ICatalogAttributeHierarchy, "catalog/updateAttributeHierarchy">;
+    deleteAttributeHierarchy: ActionCreatorWithPayload<ICatalogAttributeHierarchy, "catalog/deleteAttributeHierarchy">;
+};
 
 // @public (undocumented)
 export interface CatalogState {
@@ -3155,25 +3135,25 @@ export interface DashboardState {
     // @beta (undocumented)
     drill: DrillState;
     // @alpha (undocumented)
-    drillTargets: EntityState<IDrillTargets>;
+    drillTargets: EntityState<IDrillTargets, EntityId>;
     // @beta (undocumented)
     entitlements: EntitlementsState;
     // (undocumented)
     executed: ExecutedState;
     // @beta
-    executionResults: EntityState<IExecutionResultEnvelope>;
+    executionResults: EntityState<IExecutionResultEnvelope, EntityId>;
     // (undocumented)
     filterContext: FilterContextState;
     // (undocumented)
     filterViews: FilterViewsState;
     // @alpha (undocumented)
-    inaccessibleDashboards: EntityState<IInaccessibleDashboard>;
+    inaccessibleDashboards: EntityState<IInaccessibleDashboard, EntityId>;
     // @beta (undocumented)
-    insights: EntityState<IInsight>;
+    insights: EntityState<IInsight, EntityId>;
     // @alpha (undocumented)
     layout: LayoutState;
     // @beta (undocumented)
-    listedDashboards: EntityState<IListedDashboard>;
+    listedDashboards: EntityState<IListedDashboard, EntityId>;
     // @beta (undocumented)
     loading: LoadingState;
     // @beta (undocumented)
@@ -3716,17 +3696,11 @@ export enum DRILL_TO_URL_PLACEHOLDER {
 }
 
 // @internal (undocumented)
-export const drillActions: CaseReducerActions<    {
-setDrillableItems: (state: WritableDraft<DrillState_2>, action: {
-payload: ExplicitDrill[];
-type: string;
-}) => void | DrillState_2 | WritableDraft<DrillState_2>;
-crossFilterByWidget: (state: WritableDraft<DrillState_2>, action: {
-payload: ICrossFilteringItem_2;
-type: string;
-}) => void | DrillState_2 | WritableDraft<DrillState_2>;
-resetCrossFiltering: (state: WritableDraft<DrillState_2>, action: Action<any>) => void | DrillState_2 | WritableDraft<DrillState_2>;
-}, "drill">;
+export const drillActions: {
+    setDrillableItems: ActionCreatorWithPayload<ExplicitDrill[], "drill/setDrillableItems">;
+    crossFilterByWidget: ActionCreatorWithPayload<ICrossFilteringItem_2, "drill/crossFilterByWidget">;
+    resetCrossFiltering: ActionCreatorWithoutPayload<"drill/resetCrossFiltering">;
+};
 
 // @alpha (undocumented)
 export interface DrillDown extends IDashboardCommand {
@@ -6991,40 +6965,19 @@ export interface MeasureDateDatasets {
 // @internal (undocumented)
 export const MenuButton: (props: IMenuButtonProps) => JSX.Element;
 
-// @internal
-export const metaActions: CaseReducerActions<    {
-setMeta: (state: WritableDraft<DashboardMetaState_2>, action: {
-payload: {
-dashboard?: IDashboard<IDashboardWidget> | undefined;
-initialContent?: boolean | undefined;
+// @internal (undocumented)
+export const metaActions: {
+    setMeta: ActionCreatorWithPayload<    {
+    dashboard?: IDashboard<IDashboardWidget> | undefined;
+    initialContent?: boolean | undefined;
+    }, "meta/setMeta">;
+    setDashboardTitle: ActionCreatorWithPayload<string, "meta/setDashboardTitle">;
+    setDisableCrossFiltering: ActionCreatorWithPayload<boolean, "meta/setDisableCrossFiltering">;
+    setDisableUserFilterReset: ActionCreatorWithPayload<boolean, "meta/setDisableUserFilterReset">;
+    setDisableUserFilterSave: ActionCreatorWithPayload<boolean, "meta/setDisableUserFilterSave">;
+    setDisableFilterViews: ActionCreatorWithPayload<boolean, "meta/setDisableFilterViews">;
+    setEvaluationFrequency: ActionCreatorWithOptionalPayload<string | undefined, "meta/setEvaluationFrequency">;
 };
-type: string;
-}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
-setDashboardTitle: (state: WritableDraft<DashboardMetaState_2>, action: {
-payload: string;
-type: string;
-}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
-setDisableCrossFiltering: (state: WritableDraft<DashboardMetaState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
-setDisableUserFilterReset: (state: WritableDraft<DashboardMetaState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
-setDisableUserFilterSave: (state: WritableDraft<DashboardMetaState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
-setDisableFilterViews: (state: WritableDraft<DashboardMetaState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
-setEvaluationFrequency: (state: WritableDraft<DashboardMetaState_2>, action: {
-payload: string | undefined;
-type: string;
-}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
-}, "meta">;
 
 // @alpha
 export type MetaExportData = {
@@ -7520,7 +7473,7 @@ export function queryAvailableDatasetsForItems(items: IAttributeOrMeasure[], cor
 // @internal
 export type QueryCache<TQuery extends IDashboardQuery, TResult> = {
     cacheName: string;
-    reducer: Reducer<EntityState<QueryCacheEntry<TQuery, TResult>>>;
+    reducer: Reducer<EntityState<QueryCacheEntry<TQuery, TResult>, EntityId>>;
     actions: QueryActions<TQuery, TResult>;
     selectById: (id: EntityId) => Selector<DashboardState, QueryCacheEntryResult<TResult> | undefined>;
     selectQueryResult: (query: TQuery) => Selector<DashboardState, QueryCacheEntryResult<TResult> | undefined>;
@@ -7539,7 +7492,7 @@ export type QueryCacheEntryResult<TResult> = {
 };
 
 // @internal
-export type QueryCacheReducer<TQuery extends IDashboardQuery, TResult, TPayload> = CaseReducer<EntityState<QueryCacheEntry<TQuery, TResult>>, PayloadAction<TPayload>>;
+export type QueryCacheReducer<TQuery extends IDashboardQuery, TResult, TPayload> = CaseReducer<EntityState<QueryCacheEntry<TQuery, TResult>, EntityId>, PayloadAction<TPayload>>;
 
 // @alpha (undocumented)
 export interface QueryConnectedAttributes extends IDashboardQuery {
@@ -7946,15 +7899,12 @@ export interface RenderingWorkerConfiguration {
 export type RenderMode = "view" | "edit" | "export";
 
 // @internal
-export const renderModeActions: CaseReducerActions<    {
-setRenderMode: (state: WritableDraft<RenderModeState_2>, action: {
-payload: RenderMode_2;
-type: string;
-}) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
-setEditRenderMode: (state: WritableDraft<RenderModeState_2>, action: AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
-setExportRenderMode: (state: WritableDraft<RenderModeState_2>, action: AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
-setViewRenderMode: (state: WritableDraft<RenderModeState_2>, action: AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
-}, "renderModeSlice">;
+export const renderModeActions: {
+    setRenderMode: ActionCreatorWithPayload<RenderMode_2, "renderModeSlice/setRenderMode">;
+    setEditRenderMode: ActionCreatorWithoutPayload<"renderModeSlice/setEditRenderMode">;
+    setExportRenderMode: ActionCreatorWithoutPayload<"renderModeSlice/setExportRenderMode">;
+    setViewRenderMode: ActionCreatorWithoutPayload<"renderModeSlice/setViewRenderMode">;
+};
 
 // @internal
 export function renderModeAware<T extends ComponentType<any>>(components: {
@@ -8698,10 +8648,16 @@ export const selectDashboardUserAutomationSchedulesInContext: (widgetLocalIdenti
 export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefinition<IDashboardWidget>>;
 
 // @internal
-export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => (state: DashboardState_2, ...params: any[]) => QueryCacheEntryResult_2<InsightDateDatasets> | undefined;
+export const selectDateDatasetsForInsight: selectDateDatasetsForInsightType;
 
 // @internal
-export const selectDateDatasetsForMeasure: (query: QueryMeasureDateDatasets) => (state: DashboardState_2, ...params: any[]) => QueryCacheEntryResult_2<MeasureDateDatasets> | undefined;
+export type selectDateDatasetsForInsightType = (query: QueryInsightDateDatasets) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<InsightDateDatasets> | undefined;
+
+// @internal
+export const selectDateDatasetsForMeasure: selectDateDatasetsForMeasureType;
+
+// @internal
+export type selectDateDatasetsForMeasureType = (query: QueryMeasureDateDatasets) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<MeasureDateDatasets> | undefined;
 
 // @public
 export const selectDateFilterConfig: DashboardSelector<IDateFilterConfig>;
@@ -8986,7 +8942,13 @@ export const selectErrorUsers: DashboardSelector<GoodDataSdkError | undefined>;
 export const selectEvaluationFrequency: DashboardSelector<string | undefined>;
 
 // @alpha (undocumented)
-export const selectExecutionResult: (state: DashboardState, id: EntityId) => IExecutionResultEnvelope | undefined;
+export const selectExecutionResult: (state: DashboardState, id: EntityId) => {
+    id: string;
+    isLoading: boolean;
+    executionResult?: IExecutionResult | undefined;
+    error?: GoodDataSdkError | undefined;
+    warnings?: IResultWarning[] | undefined;
+};
 
 // @alpha (undocumented)
 export const selectExecutionResultByRef: (ref: ObjRef | undefined) => DashboardSelector<IExecutionResultEnvelope | undefined>;
@@ -9091,7 +9053,10 @@ export const selectInaccessibleDashboards: (state: DashboardState) => IInaccessi
 export const selectInaccessibleDashboardsMap: DashboardSelector<ObjRefMap<IInaccessibleDashboard>>;
 
 // @internal
-export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => (state: DashboardState_2, ...params: any[]) => QueryCacheEntryResult_2<InsightAttributesMeta> | undefined;
+export const selectInsightAttributesMeta: selectInsightAttributesMetaType;
+
+// @internal
+export type selectInsightAttributesMetaType = (query: QueryInsightAttributesMeta) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<InsightAttributesMeta> | undefined;
 
 // @alpha
 export const selectInsightByRef: (ref: ObjRef | undefined) => DashboardSelector<IInsight | undefined>;
@@ -10002,173 +9967,80 @@ export interface TriggerEventPayload {
 }
 
 // @internal
-export const uiActions: CaseReducerActions<    {
-openSettingsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-closeSettingsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: {
-payload: IScheduleEmailContext_2 & {
-openedFrom?: string | undefined;
+export const uiActions: {
+    openSettingsDialog: ActionCreatorWithoutPayload<"uiSlice/openSettingsDialog">;
+    closeSettingsDialog: ActionCreatorWithoutPayload<"uiSlice/closeSettingsDialog">;
+    openScheduleEmailDialog: ActionCreatorWithPayload<IScheduleEmailContext_2 & {
+    openedFrom?: string | undefined;
+    }, "uiSlice/openScheduleEmailDialog">;
+    closeScheduleEmailDialog: ActionCreatorWithoutPayload<"uiSlice/closeScheduleEmailDialog">;
+    setScheduleEmailDialogDefaultAttachment: ActionCreatorWithPayload<ObjRef, "uiSlice/setScheduleEmailDialogDefaultAttachment">;
+    resetScheduleEmailDialogDefaultAttachment: ActionCreatorWithoutPayload<"uiSlice/resetScheduleEmailDialogDefaultAttachment">;
+    openScheduleEmailManagementDialog: ActionCreatorWithPayload<IScheduleEmailContext_2 & {
+    openedFrom?: string | undefined;
+    }, "uiSlice/openScheduleEmailManagementDialog">;
+    closeScheduleEmailManagementDialog: ActionCreatorWithoutPayload<"uiSlice/closeScheduleEmailManagementDialog">;
+    openAlertingManagementDialog: ActionCreatorWithoutPayload<"uiSlice/openAlertingManagementDialog">;
+    closeAlertingManagementDialog: ActionCreatorWithoutPayload<"uiSlice/closeAlertingManagementDialog">;
+    openAlertingDialog: ActionCreatorWithPayload<IAlertDialogContext_2, "uiSlice/openAlertingDialog">;
+    closeAlertingDialog: ActionCreatorWithoutPayload<"uiSlice/closeAlertingDialog">;
+    openSaveAsDialog: ActionCreatorWithoutPayload<"uiSlice/openSaveAsDialog">;
+    closeSaveAsDialog: ActionCreatorWithoutPayload<"uiSlice/closeSaveAsDialog">;
+    setFilterBarExpanded: ActionCreatorWithPayload<boolean, "uiSlice/setFilterBarExpanded">;
+    closeKpiAlertDialog: ActionCreatorWithoutPayload<"uiSlice/closeKpiAlertDialog">;
+    openKpiAlertDialog: ActionCreatorWithPayload<ObjRef, "uiSlice/openKpiAlertDialog">;
+    highlightKpiAlert: ActionCreatorWithPayload<ObjRef, "uiSlice/highlightKpiAlert">;
+    openShareDialog: ActionCreatorWithoutPayload<"uiSlice/openShareDialog">;
+    closeShareDialog: ActionCreatorWithoutPayload<"uiSlice/closeShareDialog">;
+    openDeleteDialog: ActionCreatorWithoutPayload<"uiSlice/openDeleteDialog">;
+    closeDeleteDialog: ActionCreatorWithoutPayload<"uiSlice/closeDeleteDialog">;
+    openKpiDeleteDialog: ActionCreatorWithPayload<ILayoutItemPath_2, "uiSlice/openKpiDeleteDialog">;
+    closeKpiDeleteDialog: ActionCreatorWithoutPayload<"uiSlice/closeKpiDeleteDialog">;
+    setMenuButtonItemsVisibility: ActionCreatorWithPayload<IMenuButtonItemsVisibility_2, "uiSlice/setMenuButtonItemsVisibility">;
+    selectWidget: ActionCreatorWithPayload<ObjRef, "uiSlice/selectWidget">;
+    clearWidgetSelection: ActionCreatorWithoutPayload<"uiSlice/clearWidgetSelection">;
+    setConfigurationPanelOpened: ActionCreatorWithPayload<boolean, "uiSlice/setConfigurationPanelOpened">;
+    setWidgetDateDatasetAutoSelect: ActionCreatorWithPayload<boolean, "uiSlice/setWidgetDateDatasetAutoSelect">;
+    requestInsightListUpdate: ActionCreatorWithoutPayload<"uiSlice/requestInsightListUpdate">;
+    setWidgetLoadingAdditionalDataStarted: ActionCreatorWithPayload<ObjRef, "uiSlice/setWidgetLoadingAdditionalDataStarted">;
+    setWidgetLoadingAdditionalDataStopped: ActionCreatorWithPayload<ObjRef, "uiSlice/setWidgetLoadingAdditionalDataStopped">;
+    setFilterAttributeSelectionOpen: ActionCreatorWithPayload<boolean, "uiSlice/setFilterAttributeSelectionOpen">;
+    selectFilterIndex: ActionCreatorWithPayload<number, "uiSlice/selectFilterIndex">;
+    clearFilterIndexSelection: ActionCreatorWithoutPayload<"uiSlice/clearFilterIndexSelection">;
+    setActiveSection: ActionCreatorWithPayload<ILayoutSectionPath_2, "uiSlice/setActiveSection">;
+    clearActiveSection: ActionCreatorWithoutPayload<"uiSlice/clearActiveSection">;
+    openCancelEditModeDialog: ActionCreatorWithoutPayload<"uiSlice/openCancelEditModeDialog">;
+    closeCancelEditModeDialog: ActionCreatorWithoutPayload<"uiSlice/closeCancelEditModeDialog">;
+    resetInvalidDrillWidgetRefs: ActionCreatorWithoutPayload<"uiSlice/resetInvalidDrillWidgetRefs">;
+    resetAllInvalidCustomUrlDrillParameterWidgets: ActionCreatorWithoutPayload<"uiSlice/resetAllInvalidCustomUrlDrillParameterWidgets">;
+    resetAllInvalidCustomUrlDrillParameterWidgetsWarnings: ActionCreatorWithoutPayload<"uiSlice/resetAllInvalidCustomUrlDrillParameterWidgetsWarnings">;
+    addInvalidDrillWidgetRefs: ActionCreatorWithPayload<ObjRef[], "uiSlice/addInvalidDrillWidgetRefs">;
+    setInvalidCustomUrlDrillParameterWidgets: ActionCreatorWithPayload<    {
+    widget: IInsightWidget;
+    invalidDrills: IDrillToCustomUrl[];
+    }[], "uiSlice/setInvalidCustomUrlDrillParameterWidgets">;
+    removeInvalidDrillWidgetRefs: ActionCreatorWithPayload<ObjRef[], "uiSlice/removeInvalidDrillWidgetRefs">;
+    resetInvalidCustomUrlDrillParameterWidget: ActionCreatorWithPayload<IInsightWidget[], "uiSlice/resetInvalidCustomUrlDrillParameterWidget">;
+    setDraggingWidgetSource: ActionCreatorWithPayload<DraggableLayoutItem_2, "uiSlice/setDraggingWidgetSource">;
+    clearDraggingWidgetSource: ActionCreatorWithoutPayload<"uiSlice/clearDraggingWidgetSource">;
+    setDraggingWidgetTarget: ActionCreatorWithPayload<ILayoutItemPath_2, "uiSlice/setDraggingWidgetTarget">;
+    clearDraggingWidgetTarget: ActionCreatorWithoutPayload<"uiSlice/clearDraggingWidgetTarget">;
+    toggleWidgetsOverlay: ActionCreatorWithPayload<    {
+    refs: (ObjRef | undefined)[];
+    visible: boolean;
+    }, "uiSlice/toggleWidgetsOverlay">;
+    setWidgetsOverlay: ActionCreatorWithPayload<Record<string, IDashboardWidgetOverlay_2>, "uiSlice/setWidgetsOverlay">;
+    hideAllWidgetsOverlay: ActionCreatorWithoutPayload<"uiSlice/hideAllWidgetsOverlay">;
+    toggleFilterViewsDialog: ActionCreatorWithOptionalPayload<    {
+    open?: boolean | undefined;
+    mode?: FilterViewDialogMode_2 | undefined;
+    } | undefined, "uiSlice/toggleFilterViewsDialog">;
+    openWidgetDeleteDialog: ActionCreatorWithPayload<ObjRef, "uiSlice/openWidgetDeleteDialog">;
+    closeWidgetDeleteDialog: ActionCreatorWithoutPayload<"uiSlice/closeWidgetDeleteDialog">;
+    changeIgnoreExecutionTimestamp: ActionCreatorWithPayload<boolean, "uiSlice/changeIgnoreExecutionTimestamp">;
+    setIncompatibleDefaultFiltersOverrideMessage: ActionCreatorWithoutPayload<"uiSlice/setIncompatibleDefaultFiltersOverrideMessage">;
+    resetIncompatibleDefaultFiltersOverrideMessage: ActionCreatorWithoutPayload<"uiSlice/resetIncompatibleDefaultFiltersOverrideMessage">;
 };
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-resetScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: {
-payload: IScheduleEmailContext_2 & {
-openedFrom?: string | undefined;
-};
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openAlertingManagementDialog: (state: WritableDraft<UiState_2>, action: {
-payload: void;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeAlertingManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openAlertingDialog: (state: WritableDraft<UiState_2>, action: {
-payload: IAlertDialogContext_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeAlertingDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openSaveAsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-closeSaveAsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setFilterBarExpanded: (state: WritableDraft<UiState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeKpiAlertDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openKpiAlertDialog: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-highlightKpiAlert: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-openShareDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-closeShareDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-closeDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openKpiDeleteDialog: (state: WritableDraft<UiState_2>, action: {
-payload: ILayoutItemPath_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeKpiDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setMenuButtonItemsVisibility: (state: WritableDraft<UiState_2>, action: {
-payload: IMenuButtonItemsVisibility_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-selectWidget: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-clearWidgetSelection: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setConfigurationPanelOpened: (state: WritableDraft<UiState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setWidgetDateDatasetAutoSelect: (state: WritableDraft<UiState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-requestInsightListUpdate: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setWidgetLoadingAdditionalDataStarted: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setWidgetLoadingAdditionalDataStopped: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setFilterAttributeSelectionOpen: (state: WritableDraft<UiState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-selectFilterIndex: (state: WritableDraft<UiState_2>, action: {
-payload: number;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-clearFilterIndexSelection: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setActiveSection: (state: WritableDraft<UiState_2>, action: {
-payload: ILayoutSectionPath_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-clearActiveSection: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openCancelEditModeDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-closeCancelEditModeDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-resetInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-resetAllInvalidCustomUrlDrillParameterWidgets: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-resetAllInvalidCustomUrlDrillParameterWidgetsWarnings: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-addInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef[];
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setInvalidCustomUrlDrillParameterWidgets: (state: WritableDraft<UiState_2>, action: {
-payload: {
-widget: IInsightWidget;
-invalidDrills: IDrillToCustomUrl[];
-}[];
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-removeInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef[];
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-resetInvalidCustomUrlDrillParameterWidget: (state: WritableDraft<UiState_2>, action: {
-payload: IInsightWidget[];
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setDraggingWidgetSource: (state: WritableDraft<UiState_2>, action: {
-payload: DraggableLayoutItem_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-clearDraggingWidgetSource: (state: WritableDraft<UiState_2>, action: {
-payload: void;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setDraggingWidgetTarget: (state: WritableDraft<UiState_2>, action: {
-payload: ILayoutItemPath_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-clearDraggingWidgetTarget: (state: WritableDraft<UiState_2>, action: {
-payload: void;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-toggleWidgetsOverlay: (state: WritableDraft<UiState_2>, action: {
-payload: {
-refs: (ObjRef | undefined)[];
-visible: boolean;
-};
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setWidgetsOverlay: (state: WritableDraft<UiState_2>, action: {
-payload: Record<string, IDashboardWidgetOverlay_2>;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-hideAllWidgetsOverlay: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-toggleFilterViewsDialog: (state: WritableDraft<UiState_2>, action: {
-payload: {
-open?: boolean | undefined;
-mode?: FilterViewDialogMode_2 | undefined;
-} | undefined;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-openWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-changeIgnoreExecutionTimestamp: (state: WritableDraft<UiState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setIncompatibleDefaultFiltersOverrideMessage: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-resetIncompatibleDefaultFiltersOverrideMessage: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-}, "uiSlice">;
 
 // @beta (undocumented)
 export interface UiState {
@@ -10874,7 +10746,7 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
 };
 
 // @alpha (undocumented)
-export const useDashboardDispatch: () => Dispatch<AnyAction>;
+export const useDashboardDispatch: () => Dispatch<Action>;
 
 // @alpha
 export const useDashboardEventDispatch: () => (eventBody: DashboardEventBody<DashboardEvents | ICustomDashboardEvent>) => void;

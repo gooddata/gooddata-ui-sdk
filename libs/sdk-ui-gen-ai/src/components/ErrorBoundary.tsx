@@ -1,5 +1,5 @@
-// (C) 2024 GoodData Corporation
-import React from "react";
+// (C) 2024-2025 GoodData Corporation
+import React, { PropsWithChildren } from "react";
 import { connect } from "react-redux";
 import { GlobalError } from "./GlobalError.js";
 import { extractError } from "../store/sideEffects/utils.js";
@@ -70,4 +70,7 @@ const mapDispatchToProps = {
     clearThread: clearThreadAction,
 };
 
-export const ErrorBoundary = connect(mapStateToProps, mapDispatchToProps)(ErrorBoundaryComponent);
+export const ErrorBoundary: React.FC<PropsWithChildren> = connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ErrorBoundaryComponent) as any;

@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { PayloadAction } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, select } from "redux-saga/effects";
 import { extractError } from "./utils.js";
 import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";

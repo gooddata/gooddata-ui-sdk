@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSelector } from "@reduxjs/toolkit";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import union from "lodash/union.js";
 import filter from "lodash/filter.js";

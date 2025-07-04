@@ -28,3 +28,16 @@ export const AllQueryServices = [
     QueryMetricsAndFactsService,
     QueryAvailableDatasetForItemsService,
 ];
+
+export {
+    selectDateDatasetsForInsight,
+    type selectDateDatasetsForInsightType,
+} from "./queryInsightDateDatasets.js";
+export {
+    selectInsightAttributesMeta,
+    type selectInsightAttributesMetaType,
+} from "./queryInsightAttributesMeta.js";
+export {
+    selectDateDatasetsForMeasure,
+    type selectDateDatasetsForMeasureType,
+} from "./queryMeasureDateDatasets.js";
