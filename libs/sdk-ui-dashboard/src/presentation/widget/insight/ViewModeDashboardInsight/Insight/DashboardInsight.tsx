@@ -275,8 +275,15 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     );
 
     const isExportSlidesMode = useDashboardSelector(selectIsInExportMode);
-    const loadingClassNames = cx("insight-view-loader", {
-        isInvisible: isExportSlidesMode && !loading,
+    const shouldLoadingBeHidden = isExportSlidesMode && !loading;
+
+    const loadingWrapperClassNames = cx("insight-view-loader", {
+        "is-invisible": shouldLoadingBeHidden,
+    });
+
+    const loadingClassNames = cx({
+        "s-loading-invisible": shouldLoadingBeHidden,
+        "s-loading": !shouldLoadingBeHidden,
     });
 
     const renderComponent = () => {
@@ -293,8 +300,8 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
             return (
                 <>
                     {loading || isExportSlidesMode ? (
-                        <div className={loadingClassNames}>
-                            <LoadingComponent />
+                        <div className={loadingWrapperClassNames}>
+                            <LoadingComponent className={loadingClassNames} />
                         </div>
                     ) : null}
                     {filtersStatus === "success" ? (
