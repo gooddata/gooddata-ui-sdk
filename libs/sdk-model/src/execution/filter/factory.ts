@@ -12,6 +12,8 @@ import {
     RangeConditionOperator,
     IRankingFilter,
     RankingFilterOperator,
+    IUpperBoundedFilter,
+    ILowerBoundedFilter,
 } from "./index.js";
 import { attributeDisplayFormRef, IAttribute, isAttribute, attributeLocalId } from "../attribute/index.js";
 import {
@@ -146,6 +148,7 @@ export function newAbsoluteDateFilter(
  * @param granularity - granularity of the filters (month, year, etc.)
  * @param from - start of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @param to - end of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
+ * @param boundedFilter - optional bounded filter to use in the filter
  * @param localIdentifier - filter local identifier
  *
  * See also {@link DateAttributeGranularity} and {@link DateGranularity}
@@ -157,6 +160,7 @@ export function newRelativeDateFilter(
     from: number,
     to: number,
     localIdentifier?: string,
+    boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter,
 ): IRelativeDateFilter {
     const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
     return {
@@ -165,6 +169,7 @@ export function newRelativeDateFilter(
             granularity,
             from,
             to,
+            ...(boundedFilter ? { boundedFilter } : {}),
             ...(localIdentifier ? { localIdentifier } : {}),
         },
     };

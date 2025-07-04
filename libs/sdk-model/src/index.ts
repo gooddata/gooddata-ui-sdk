@@ -199,6 +199,9 @@ export type {
     IAbsoluteDateFilterBody,
     IRelativeDateFilterBody,
     IRelativeDateFilterAllTimeBody,
+    IRelativeBoundedDateFilterBody,
+    IUpperBoundedFilter,
+    ILowerBoundedFilter,
 } from "./execution/filter/index.js";
 export {
     isRankingFilter,
@@ -232,6 +235,12 @@ export {
     measureValueFilterCondition,
     measureValueFilterMeasure,
     measureValueFilterOperator,
+    isRelativeBoundedDateFilterBody,
+    isRelativeUpperBoundedDateFilterBody,
+    isRelativeLowerBoundedDateFilterBody,
+    isRelativeBoundedDateFilter,
+    isRelativeUpperBoundedDateFilter,
+    isRelativeLowerBoundedDateFilter,
 } from "./execution/filter/index.js";
 
 export {

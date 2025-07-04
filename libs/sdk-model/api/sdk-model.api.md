@@ -2335,6 +2335,14 @@ export interface ILlmEndpointOpenAI extends ILlmEndpointBase {
 // @public
 export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem | ITotalLocatorItem;
 
+// @public
+export interface ILowerBoundedFilter {
+    // (undocumented)
+    from: number;
+    // (undocumented)
+    granularity: DateAttributeGranularity;
+}
+
 // @beta
 export type ImageUri = string;
 
@@ -2964,10 +2972,18 @@ export interface IRankingFilterBody extends IIdentifiableFilter {
 }
 
 // @public
+export interface IRelativeBoundedDateFilterBody extends IRelativeDateFilterBody {
+    // (undocumented)
+    boundedFilter: IUpperBoundedFilter | ILowerBoundedFilter;
+}
+
+// @public
 export type IRelativeDateFilter = {
     relativeDateFilter: IRelativeDateFilterBody;
 } | {
     relativeDateFilter: IRelativeDateFilterAllTimeBody;
+} | {
+    relativeDateFilter: IRelativeBoundedDateFilterBody;
 };
 
 // @public
@@ -3785,6 +3801,14 @@ export function isRangeConditionOperator(obj: unknown): obj is RangeConditionOpe
 // @public
 export function isRankingFilter(obj: unknown): obj is IRankingFilter;
 
+// @public
+export function isRelativeBoundedDateFilter(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: IRelativeBoundedDateFilterBody;
+};
+
+// @public
+export function isRelativeBoundedDateFilterBody(obj: unknown): obj is IRelativeBoundedDateFilterBody;
+
 // @alpha
 export function isRelativeDashboardDateFilter(dateFilter: IDashboardDateFilter): boolean;
 
@@ -3796,6 +3820,30 @@ export const isRelativeDateFilterForm: (obj: unknown) => obj is IRelativeDateFil
 
 // @alpha
 export const isRelativeDateFilterPreset: (obj: unknown) => obj is IRelativeDateFilterPreset;
+
+// @public
+export function isRelativeLowerBoundedDateFilter(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: IRelativeBoundedDateFilterBody & {
+        boundedFilter: ILowerBoundedFilter;
+    };
+};
+
+// @public
+export function isRelativeLowerBoundedDateFilterBody(obj: unknown): obj is IRelativeBoundedDateFilterBody & {
+    boundedFilter: ILowerBoundedFilter;
+};
+
+// @public
+export function isRelativeUpperBoundedDateFilter(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: IRelativeBoundedDateFilterBody & {
+        boundedFilter: IUpperBoundedFilter;
+    };
+};
+
+// @public
+export function isRelativeUpperBoundedDateFilterBody(obj: unknown): obj is IRelativeBoundedDateFilterBody & {
+    boundedFilter: IUpperBoundedFilter;
+};
 
 // @public
 export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader;
@@ -4230,6 +4278,14 @@ export interface ITotalLocatorItem {
 export interface ITotalLocatorItemBody {
     attributeIdentifier: Identifier;
     totalFunction: string;
+}
+
+// @public
+export interface IUpperBoundedFilter {
+    // (undocumented)
+    granularity: DateAttributeGranularity;
+    // (undocumented)
+    to: number;
 }
 
 // @public
@@ -4789,7 +4845,7 @@ export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string
 export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number, dataSet?: ObjRef, localIdentifier?: string): IDashboardDateFilter;
 
 // @public
-export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number, localIdentifier?: string): IRelativeDateFilter;
+export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter): IRelativeDateFilter;
 
 // @public
 export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, attributeOrId: IAttribute | Identifier, alias?: string): ITotal;
