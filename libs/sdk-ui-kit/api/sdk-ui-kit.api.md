@@ -57,6 +57,9 @@ import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
+export function accessibilityConfigToAttributes(accessibilityConfig?: IAccessibilityConfigBase): React_2.HTMLAttributes<HTMLElement>;
+
+// @internal (undocumented)
 export type ActionType = "LinkButton" | "Button" | "Switcher";
 
 // @internal (undocumented)
