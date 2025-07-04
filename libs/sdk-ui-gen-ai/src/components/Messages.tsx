@@ -3,6 +3,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import Skeleton from "react-loading-skeleton";
+import { useIntl } from "react-intl";
+
 import { asyncProcessSelector, RootState, messagesSelector } from "../store/index.js";
 import { isAssistantMessage, isUserMessage } from "../model.js";
 
@@ -17,6 +19,7 @@ type MessagesComponentProps = {
 
 const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading, initializing }) => {
     const { scrollerRef } = useMessageScroller(messages);
+    const intl = useIntl();
     const isLoading = loading === "loading" || loading === "clearing" || initializing;
     const isEmpty = !messages.length && !isLoading;
 
@@ -26,6 +29,7 @@ const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading
                 className="gd-gen-ai-chat__messages__scroll"
                 role="log"
                 aria-relevant={isEmpty || isLoading ? undefined : "additions"}
+                aria-label={intl.formatMessage({ id: "gd.gen-ai.messages.label" })}
             >
                 {isEmpty ? <EmptyState /> : null}
                 {isLoading ? <Skeleton count={3} height="2em" /> : null}
