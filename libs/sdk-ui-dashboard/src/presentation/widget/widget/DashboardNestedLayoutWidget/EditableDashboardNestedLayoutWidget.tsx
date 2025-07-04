@@ -19,7 +19,6 @@ import { DashboardLayout } from "../../dashboardLayout/DashboardLayout.js";
 import { IDashboardLayoutProps } from "../../dashboardLayout/types.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
 import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
-import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 
 import { Toolbar } from "./Toolbar.js";
 
@@ -35,7 +34,6 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
 }) => {
     const screen = useScreenSize();
     const dispatch = useDashboardDispatch();
-    const { direction } = getLayoutConfiguration(layout!);
 
     const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
         widget?.ref,
@@ -54,8 +52,6 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
                     "is-edit-mode",
                     {
                         "is-selected": isSelected,
-                        "gd-dashboard-nested-layout-widget--row": direction === "row",
-                        "gd-dashboard-nested-layout-widget--column": direction === "column",
                     },
                 )}
                 screen={screen}

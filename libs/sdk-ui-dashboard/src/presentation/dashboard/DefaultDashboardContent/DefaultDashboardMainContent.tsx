@@ -58,6 +58,7 @@ export const DefaultDashboardMainContent = (_: IDashboardProps) => {
     }, [handleDragHoverEnd, isOver]);
 
     const classNames = cx("gd-flex-container", "root-flex-maincontent", {
+        "gd-fluid-layout": !isFlexibleLayoutEnabled,
         "gd-grid-layout": isFlexibleLayoutEnabled,
         "gd-auto-resized-dashboard-descriptions": isFlexibleLayoutEnabled || isDescriptionDynamicHeight,
     });

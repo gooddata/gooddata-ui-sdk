@@ -51,6 +51,7 @@ import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContex
 import { useWidgetDragEndHandler } from "../dragAndDrop/draggableWidget/useWidgetDragEndHandler.js";
 import { DashboardItemPathAndSizeProvider } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { useWidgetExportData } from "../export/index.js";
+import { getLayoutConfiguration } from "../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
 import {
@@ -127,6 +128,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const isNestedLayout = isExtendedDashboardLayoutWidget(widget);
     const exportData = useWidgetExportData(widget);
     const { enableRowEndHotspot } = useShouldShowRowEndHotspot(item, rowIndex);
+    const { direction } = getLayoutConfiguration(item.section().layout().raw());
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
@@ -192,11 +194,6 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
         "gd-nested-layout-widget-renderer": isNestedLayout,
     });
 
-    const hotspotClassNames = cx({
-        "gd-nested-layout-hotspot": isNestedLayout,
-        "gd-first-container-row-dropzone": rowIndex === 0,
-    });
-
     const { isValid, parentWidth } = useWidthValidation(item.size());
 
     if (!isValid) {
@@ -229,7 +226,13 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 ])}
             >
                 {canShowHotspot && !isAnyPlaceholderWidget(widget) && !isCustomWidget(widget) ? (
-                    <Hotspot dropZoneType="prev" layoutPath={item.index()} classNames={hotspotClassNames} />
+                    <Hotspot
+                        dropZoneType="prev"
+                        direction={direction}
+                        layoutPath={item.index()}
+                        isOverNestedLayout={isNestedLayout}
+                        isInFirstRow={rowIndex === 0}
+                    />
                 ) : null}
                 <DashboardItemPathAndSizeProvider layoutItem={item}>
                     <HoverDetector widgetRef={widget.ref}>
@@ -265,9 +268,11 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                             <>
                                 <Hotspot
                                     dropZoneType="next"
+                                    direction={direction}
                                     layoutPath={item.index()}
-                                    classNames={hotspotClassNames}
-                                    hideBorder={enableRowEndHotspot}
+                                    hideDropTarget={enableRowEndHotspot}
+                                    isOverNestedLayout={isNestedLayout}
+                                    isInFirstRow={rowIndex === 0}
                                 />
                             </>
                         )}

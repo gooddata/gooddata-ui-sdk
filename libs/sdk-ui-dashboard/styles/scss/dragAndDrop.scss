@@ -190,48 +190,51 @@
     background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/add-attribute-filter-placeholder.svg");
 }
 
-.dropzone {
-    z-index: zIndexes.$drag-and-drop-drop-zone;
-    &.next,
-    &.prev {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 50%;
-    }
+.gd-fluid-layout {
+    .dropzone {
+        z-index: zIndexes.$drag-and-drop-drop-zone;
 
-    &.next {
-        right: 0;
-
-        .drop-hint {
-            float: right;
-            margin-left: 3px;
+        &.next,
+        &.prev {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
         }
 
-        &.full {
+        &.next {
+            right: 0;
+
+            .drop-hint {
+                float: right;
+                margin-left: 3px;
+            }
+
+            &.full {
+                width: 100%;
+            }
+        }
+
+        &.prev {
+            left: 0;
+
+            .drop-hint {
+                float: left;
+                margin-left: -3px;
+            }
+
+            &.full {
+                width: 100%;
+            }
+        }
+
+        &.hidden {
+            display: none;
+        }
+
+        &.extended {
             width: 100%;
         }
-    }
-
-    &.prev {
-        left: 0;
-
-        .drop-hint {
-            float: left;
-            margin-left: -3px;
-        }
-
-        &.full {
-            width: 100%;
-        }
-    }
-
-    &.hidden {
-        display: none;
-    }
-
-    &.extended {
-        width: 100%;
     }
 }
 
@@ -707,14 +710,6 @@
             bottom: $inner-padding;
             left: $inner-padding;
             align-content: center;
-        }
-    }
-
-    .dropzone {
-        &.next {
-            .drop-hint {
-                float: unset;
-            }
         }
     }
 

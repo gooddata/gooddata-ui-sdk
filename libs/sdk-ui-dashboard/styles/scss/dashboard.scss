@@ -827,6 +827,11 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
                 border-color: kit-variables.$is-focused-background;
             }
         }
+        &.gd-dashboard-nested-layout-widget {
+            .gd-dashboard-nested-layout-widget {
+                padding: 10px 0 0 0; // make space for column drop zone in second level and below
+            }
+        }
         &:not(.gd-dashboard-nested-layout-widget):not(.gd-first-container-row-widget):not(.drag-info-placeholder) {
             padding: 10px 0; // no place between widgets, render only containers for resizers
         }
