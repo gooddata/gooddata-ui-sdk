@@ -168,6 +168,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                     isInFirstRow,
                     isOverNestedLayout,
                 }),
+                `s-dropzone-${dropZoneType}`,
                 {
                     [`s-dropzone-${serializeLayoutItemPath(layoutPath)}`]: !!layoutPath,
                 },
