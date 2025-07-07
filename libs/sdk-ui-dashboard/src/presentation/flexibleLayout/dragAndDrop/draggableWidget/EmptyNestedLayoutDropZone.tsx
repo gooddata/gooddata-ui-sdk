@@ -43,7 +43,7 @@ export const DropZoneMessage: React.FC<{ canDrop?: boolean }> = ({ canDrop = fal
 
 export const DefaultEmptyNestedLayoutDropZoneBody: React.FC = () => {
     return (
-        <div className="drag-info-placeholder-box s-drag-info-placeholder-box">
+        <div className="drag-info-placeholder-box drag-info-empty-nested-layout s-drag-info-placeholder-box">
             <DropZoneMessage />
         </div>
     );
