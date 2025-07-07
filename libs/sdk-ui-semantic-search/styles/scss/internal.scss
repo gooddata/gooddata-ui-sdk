@@ -22,6 +22,51 @@
                 margin-bottom: 10px;
             }
         }
+
+        &__ai_assistant_button {
+            display: flex;
+            width: 100%;
+            height: 50px;
+            padding: 5px 10px;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid kit-variables.$gd-color-white;
+            border-top-color: kit-variables.$gd-border-color;
+            background: kit-variables.$gd-color-white;
+            margin-bottom: -10px;
+            cursor: pointer;
+
+            &:hover {
+                color: kit-variables.$gd-color-dark;
+                background: kit-variables.$is-focused-background;
+                border: 1px solid kit-variables.$is-focused-background;
+                border-top-color: kit-variables.$gd-border-color;
+            }
+
+            &_content {
+                display: flex;
+                height: 20px;
+                padding: 6px 0;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+            }
+
+            &_text {
+                color: kit-variables.$gd-color-link;
+                text-align: center;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                text-decoration-line: underline;
+                text-decoration-style: solid;
+                text-decoration-skip-ink: none;
+                text-decoration-thickness: auto;
+                text-underline-offset: auto;
+                text-underline-position: from-font;
+            }
+        }
     }
 
     &__overlay-input {

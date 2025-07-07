@@ -49,6 +49,11 @@
         "comment": "",
         "limit": 0
     },
+    "semantic-search.ask.ai.assistant": {
+        "value": "Ask AI Assistant",
+        "comment": "Button label for the ask ai assistant feature. This button is on search results list on bottom of drop down.",
+        "limit": 0
+    },
     "gs.date.today": {
         "value": "Today",
         "comment": "",

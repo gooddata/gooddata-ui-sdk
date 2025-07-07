@@ -3,6 +3,7 @@
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
+import { EnhancedStore } from "@reduxjs/toolkit";
 import { ChatEventHandler, EventDispatcher } from "../store/events.js";
 import { getStore } from "../store/index.js";
 import { OptionsDispatcher } from "../store/options.js";
@@ -15,7 +16,7 @@ export const useGenAIStore = (
         eventHandlers?: ChatEventHandler[];
         colorPalette?: IColorPalette;
     },
-) => {
+): EnhancedStore => {
     const { eventHandlers, colorPalette } = opts;
 
     // Instantiate EventDispatcher. It's a designed to hold a reference to the handlers, so that

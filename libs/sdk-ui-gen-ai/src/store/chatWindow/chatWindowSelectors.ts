@@ -3,6 +3,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { IColorPalette } from "@gooddata/sdk-model";
 
 import { RootState } from "../types.js";
+
 import { chatWindowSliceName } from "./chatWindowSlice.js";
 
 const chatWindowSliceSelector = (state: RootState) => state[chatWindowSliceName];
