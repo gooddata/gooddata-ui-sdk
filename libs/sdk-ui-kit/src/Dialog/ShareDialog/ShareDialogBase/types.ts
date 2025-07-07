@@ -264,7 +264,6 @@ export interface IGranteeItemProps {
  * @internal
  */
 export interface IShareGranteeBaseProps {
-    currentUser: IUser;
     isDirty: boolean;
     isLoading: boolean;
     isLockedNow: boolean;
@@ -363,7 +362,7 @@ export interface IShareLinkProps {
     dashboardFilters?: FilterContextItem[];
     headline: string;
     helperText: string;
-    buttonText: string;
+    buttonLabel: string;
     onShareLinkCopy?: (shareLink: string) => void;
 }
 

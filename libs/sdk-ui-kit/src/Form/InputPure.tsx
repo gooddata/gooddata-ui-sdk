@@ -24,6 +24,7 @@ export interface InputPureProps extends IDomNativeProps {
     isSmall: boolean;
     maxlength: number;
     onChange: (value: string | number, e?: React.ChangeEvent<HTMLInputElement>) => void;
+    onKeyDown?: (e: React.KeyboardEvent) => void;
     onEscKeyPress: (e: React.KeyboardEvent) => void;
     onEnterKeyPress: () => void;
     onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -203,6 +204,9 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                     size="medium"
                     variant="tertiary"
                     onClick={onIconButtonClick}
+                    accessibilityConfig={{
+                        "aria-label": iconButtonLabel,
+                    }}
                 />
             </span>
         ) : (
@@ -249,13 +253,14 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                     onChange={this.onChange}
                     onBlur={onBlur}
                     onFocus={onFocus}
-                    onKeyDown={this.onKeyPress}
+                    onKeyDown={this.props.onKeyDown ?? this.onKeyPress}
                     placeholder={placeholder}
                     readOnly={readonly}
                     value={value}
                     aria-label={accessibilityConfig?.ariaLabel ?? undefined}
                     aria-describedby={accessibilityConfig?.ariaDescribedBy}
                     aria-labelledby={accessibilityConfig?.ariaLabelledBy}
+                    aria-readonly={readonly || undefined}
                     autoComplete={isSearch ? "off" : autocomplete}
                 />
                 {this.renderSearch(isSearch)}

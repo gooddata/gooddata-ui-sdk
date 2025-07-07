@@ -3552,6 +3552,8 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     onIconButtonClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
     // (undocumented)
+    onKeyDown?: (e: React_2.KeyboardEvent) => void;
+    // (undocumented)
     placeholder: string;
     // (undocumented)
     prefix: string;
@@ -4035,6 +4037,9 @@ export const isActionKey: (event: KeyboardEvent_2) => boolean;
 // @internal
 export const isArrowKey: (event: KeyboardEvent_2) => boolean;
 
+// @internal
+export const isCopyKey: (event: KeyboardEvent_2) => boolean;
+
 // @internal (undocumented)
 export interface IScrollableItemProps {
     // (undocumented)
@@ -4273,8 +4278,6 @@ export interface ISharedObject extends IAccessControlAware, IAuditableUsers {
 export interface IShareGranteeBaseProps {
     // (undocumented)
     applyShareGrantOnSelect?: boolean;
-    // (undocumented)
-    currentUser: IUser;
     // (undocumented)
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
@@ -5933,7 +5936,7 @@ export type UiIconButtonProps = UiIconButtonPublicProps;
 // @internal (undocumented)
 export interface UiIconButtonPublicProps {
     // (undocumented)
-    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
+    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"] & Pick<React_2.AriaAttributes, "aria-label">;
     // (undocumented)
     ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
     // (undocumented)
