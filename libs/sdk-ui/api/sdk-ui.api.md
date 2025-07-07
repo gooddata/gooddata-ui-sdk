@@ -538,6 +538,40 @@ export interface IArithmeticMeasureTitleProps {
     operator: string;
 }
 
+// @alpha (undocumented)
+export interface IAttributeData2D {
+    // (undocumented)
+    coordinates: [rowIndex: number, columnIndex: number];
+    // (undocumented)
+    descriptor: IAttributeDescriptor;
+    // (undocumented)
+    dimensionIndex: number;
+    // (undocumented)
+    header: IResultAttributeHeader;
+    // (undocumented)
+    type: "attributeData";
+}
+
+// @alpha (undocumented)
+export interface IAttributeDescriptor2D {
+    // (undocumented)
+    descriptor: IAttributeDescriptor;
+    // (undocumented)
+    dimensionIndex: number;
+    // (undocumented)
+    type: "attributeDescriptor";
+}
+
+// @alpha (undocumented)
+export interface IAttributeHeaders2D {
+    // (undocumented)
+    dimensionIndex: number;
+    // (undocumented)
+    headers: IResultAttributeHeader[];
+    // (undocumented)
+    type: "attributeHeaders";
+}
+
 // @internal (undocumented)
 export interface IAvailableDrillTargetAttribute {
     // (undocumented)
@@ -672,13 +706,28 @@ export interface ICorrelationProviderProps {
     correlationData: Record<string, string>;
 }
 
+// @alpha
+export interface IData2D {
+    descriptors: IDescriptor2D[];
+    headers: IHeaders2D[];
+    rows: IDataPointIntersection2D[][];
+}
+
 // @public
 export interface IDataAccessMethods {
+    // @alpha (undocumented)
+    as2D(): IData2D;
     // (undocumented)
     series(): IDataSeriesCollection;
     // (undocumented)
     slices(): IDataSliceCollection;
 }
+
+// @alpha
+export type IDataPoint2D = IAttributeData2D | IMeasureData2D;
+
+// @alpha
+export type IDataPointIntersection2D = IDataPoint2D[];
 
 // @public
 export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataPoint> {
@@ -732,6 +781,9 @@ export interface IDataVisualizationProps extends IVisualizationProps, IVisualiza
 
 // @public
 export function identifierMatch(identifier: string): IHeaderPredicate;
+
+// @alpha
+export type IDescriptor2D = IAttributeDescriptor2D | IMeasureGroupDescriptor2D;
 
 // @public (undocumented)
 export type IDrillableItem = IDrillableItemUri | IDrillableItemIdentifier | (IDrillableItemUri & IDrillableItemIdentifier);
@@ -1019,6 +1071,9 @@ export interface IHeaderPredicateContext {
     dv: DataViewFacade;
 }
 
+// @alpha (undocumented)
+export type IHeaders2D = IAttributeHeaders2D | IMeasureGroupHeaders2D;
+
 // @public (undocumented)
 export interface IHighchartsCategoriesTree {
     // (undocumented)
@@ -1098,6 +1153,44 @@ export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" 
 
 // @public (undocumented)
 export type IMappingHeader = IAttributeDescriptor | IResultAttributeHeader | IMeasureDescriptor | ITotalDescriptor | IColorDescriptor;
+
+// @alpha (undocumented)
+export interface IMeasureData2D {
+    // (undocumented)
+    coordinates: [rowIndex: number, columnIndex: number];
+    // (undocumented)
+    descriptor: IMeasureDescriptor;
+    // (undocumented)
+    dimensionIndex: number;
+    // (undocumented)
+    formattedValue: string | null;
+    // (undocumented)
+    header: IResultMeasureHeader;
+    // (undocumented)
+    type: "measureData";
+    // (undocumented)
+    value: DataValue;
+}
+
+// @alpha (undocumented)
+export interface IMeasureGroupDescriptor2D {
+    // (undocumented)
+    descriptor: IMeasureGroupDescriptor;
+    // (undocumented)
+    dimensionIndex: number;
+    // (undocumented)
+    type: "measureGroupDescriptor";
+}
+
+// @alpha (undocumented)
+export interface IMeasureGroupHeaders2D {
+    // (undocumented)
+    dimensionIndex: number;
+    // (undocumented)
+    headers: (IResultMeasureHeader | IResultTotalHeader)[];
+    // (undocumented)
+    type: "measureGroupHeaders";
+}
 
 // @internal
 export interface IMeasureTitleProps {
