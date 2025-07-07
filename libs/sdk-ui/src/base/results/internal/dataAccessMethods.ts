@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IDataAccessMethods,
@@ -6,6 +6,7 @@ import {
     IDataSeriesCollection,
     IDataSlice,
     IDataSliceCollection,
+    IData2D,
 } from "../dataAccess.js";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { DataAccessImpl } from "./dataAccessImpl.js";
@@ -18,6 +19,7 @@ import {
     IMeasureDescriptor,
     IAttributeDescriptor,
 } from "@gooddata/sdk-model";
+import { dataViewToData2D } from "./dataViewToData2D.js";
 
 class FilteredIterator<T> implements Iterator<T> {
     private idx = 0;
@@ -136,11 +138,13 @@ class DataAccessMethods implements IDataAccessMethods {
     private readonly dataAccess: DataAccessImpl;
     private readonly seriesCollection: IDataSeriesCollection;
     private readonly slicesCollection: IDataSliceCollection;
+    private readonly _dataIntersections: IData2D;
 
     constructor(dataView: IDataView, config: DataAccessConfig) {
         this.dataAccess = new DataAccessImpl(dataView, config);
         this.seriesCollection = new DataSeriesCollection(this.dataAccess);
         this.slicesCollection = new DataSliceCollection(this.dataAccess);
+        this._dataIntersections = dataViewToData2D(dataView, config);
     }
 
     public series(): IDataSeriesCollection {
@@ -149,6 +153,10 @@ class DataAccessMethods implements IDataAccessMethods {
 
     public slices(): IDataSliceCollection {
         return this.slicesCollection;
+    }
+
+    public as2D(): IData2D {
+        return this._dataIntersections;
     }
 }
 
