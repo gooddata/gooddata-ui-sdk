@@ -61,16 +61,18 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         const shareGranteeTitle = intl.formatMessage({ id: "shareDialog.share.grantee.title" });
         const shareDashboardListTitle = intl.formatMessage({ id: "shareDialog.share.dashboard.list.title" });
         const shareGranteeListTitle = intl.formatMessage({ id: "shareDialog.share.grantee.list.title" });
+        const cancelButtonText = intl.formatMessage({ id: "cancel" });
+        const closeButtonText = intl.formatMessage({ id: "close" });
         return {
             headline: showDashboardShareLink ? shareDashboardTitle : shareGranteeTitle,
             shareGrantHeadline: showDashboardShareLink ? shareDashboardListTitle : shareGranteeListTitle,
+            cancelButtonText: applyShareGrantOnSelect ? closeButtonText : cancelButtonText,
             linkHeadline: intl.formatMessage({ id: "shareDialog.share.link.title" }),
             linkHelperText: intl.formatMessage({ id: "shareDialog.share.link.helperText" }),
             linkButtonLabel: intl.formatMessage({ id: "shareDialog.share.link.buttonText" }),
-            cancelButtonText: intl.formatMessage({ id: "close" }),
             submitButtonText: intl.formatMessage({ id: "save" }),
         };
-    }, [intl, showDashboardShareLink]);
+    }, [intl, showDashboardShareLink, applyShareGrantOnSelect]);
 
     const shouldDisplayAdminMessage = useMemo(
         () => canWorkspaceManagerSeeEverySharedObject && isCurrentUserWorkspaceManager && !isLoading,
