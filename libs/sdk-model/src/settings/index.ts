@@ -912,5 +912,5 @@ export interface IProductionFeatureConfig {
  * @alpha
  */
 export interface IProductionFeaturesConfig {
-    features: IProductionFeatureConfig[];
+    features?: IProductionFeatureConfig[];
 }
