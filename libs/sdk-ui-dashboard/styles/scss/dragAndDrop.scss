@@ -767,6 +767,12 @@
         padding: 10px;
     }
 
+    .gd-fluidlayout-column-dropzone__text--hidden {
+        .drop-target-inner {
+            padding: 4px;
+        }
+    }
+
     .drop-target-message {
         position: unset;
         top: unset;
@@ -828,15 +834,25 @@
 
     .gd-fluidlayout-column-row-end-hotspot {
         min-height: unset;
+
         .widget-dropzone-box {
             padding: 10px 0;
         }
+
         .drag-info-placeholder-inner {
             padding: 0;
         }
+
+        &.gd-fluidlayout-column-row-end-hotspot--direction-column.gd-fluidlayout-column-dropzone__text--hidden {
+            .widget-dropzone-box {
+                padding: 0;
+            }
+        }
+
         &.gd-first-container-row-dropzone .widget-dropzone-box {
             padding-top: 0;
         }
+
         .drag-info-placeholder-drop-target,
         .drop-target-inner {
             position: unset;

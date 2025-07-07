@@ -7,7 +7,7 @@
 .gd-dashboard-nested-layout-widget {
     .gd-dashboard-nested-layout-content.dash-item-content {
         border-radius: 0;
-        padding: 19px 10px 18px 10px;
+        padding: 19px 10px 15px 10px;
     }
     & .is-selectable {
         &.gd-dashboard-nested-layout-content.dash-item-content:not(.is-selected):hover,
@@ -195,7 +195,8 @@
             height: 50%;
 
             &#{$dropzoneRoot}--full {
-                width: 50%;
+                width: 100%;
+                height: 100%;
             }
         }
 
