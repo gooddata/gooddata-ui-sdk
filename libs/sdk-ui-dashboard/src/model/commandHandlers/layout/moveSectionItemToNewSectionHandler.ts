@@ -149,10 +149,11 @@ function requiresSectionShift(fromItemPath: ILayoutItemPath, toItemPath: ILayout
     const commonPathParent = getParentPath(commonPath);
     const toItemPathParent = getParentPath(toItemPath);
     return (
-        commonPathParent !== undefined &&
-        toItemPathParent !== undefined &&
-        areLayoutPathsEqual(commonPathParent, toItemPathParent) &&
-        toIsBeforeFrom(toItemPath, commonPath)
+        (commonPathParent === undefined && toItemPathParent === undefined) ||
+        (commonPathParent !== undefined &&
+            toItemPathParent !== undefined &&
+            areLayoutPathsEqual(commonPathParent, toItemPathParent) &&
+            toIsBeforeFrom(toItemPath, commonPath))
     );
 }
 
