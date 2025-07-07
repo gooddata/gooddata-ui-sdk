@@ -31,7 +31,8 @@ export type IEntitlementsName =
     | "UnlimitedDailyScheduledActions"
     | "ScheduledActionMinimumRecurrenceMinutes"
     | "FederatedIdentityManagement"
-    | "AuditLogging";
+    | "AuditLogging"
+    | "ControlledFeatureRollout";
 /**
  * Entitlement descriptor
  *

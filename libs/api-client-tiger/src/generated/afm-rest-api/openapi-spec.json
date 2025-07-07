@@ -371,7 +371,8 @@
                                 "OPT_QT",
                                 "OPT_QT_SVG",
                                 "SQL",
-                                "SETTINGS"
+                                "SETTINGS",
+                                "COMPRESSED_SQL"
                             ]
                         }
                     }
