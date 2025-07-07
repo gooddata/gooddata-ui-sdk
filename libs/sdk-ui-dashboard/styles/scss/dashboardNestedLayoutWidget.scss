@@ -87,6 +87,15 @@
     .drag-info-placeholder {
         padding: 0 0 0 10px;
     }
+
+    .drag-info-empty-nested-layout {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        height: 100%;
+        justify-content: center;
+    }
 }
 
 .gd-grid-layout {
