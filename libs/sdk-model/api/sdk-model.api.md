@@ -4354,6 +4354,7 @@ export interface IWebhookMessageDataAlert extends IWebhookMessageDataBase {
 // @public
 export interface IWebhookMessageDataBase {
     automation: IWebhookAutomationInfo;
+    dashboardTabularExports?: IExportResult[];
     details?: IAutomationDetails;
     filters?: AlertFilters[];
     imageExports?: IExportResult[];

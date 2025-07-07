@@ -69,6 +69,7 @@ export function Notification({
         notification.details.data.imageExports,
         notification.details.data.rawExports,
         notification.details.data.slidesExports,
+        notification.details.data.dashboardTabularExports,
     ]).flatMap((arr) => arr ?? []);
 
     const hasExports = exports.length > 0;

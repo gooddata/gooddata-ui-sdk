@@ -90,7 +90,11 @@ function convertWebhookMessageData(
         details: data.details,
         remainingActionCount: data.remainingActionCount,
         tabularExports: data.tabularExports,
+        dashboardTabularExports: data.dashboardTabularExports,
         visualExports: data.visualExports,
+        imageExports: data.imageExports,
+        rawExports: data.rawExports,
+        slidesExports: data.slidesExports,
         alert: data.alert ? convertAlertDescription(data.alert) : undefined,
         filters: data.filters,
     };
