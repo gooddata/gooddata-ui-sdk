@@ -7,7 +7,7 @@ export const enum DropZone {
 }
 
 export const enum WidgetDropZone {
-    PREV = ".dropzone.prev,.gd-grid-layout-dropzone.prev",
-    NEXT = ".dropzone.next,.gd-grid-layout-dropzone.next",
+    PREV = ".dropzone.prev,.s-dropzone-prev",
+    NEXT = ".dropzone.next,.s-dropzone-next",
     LAST = ".s-last-drop-position",
 }
