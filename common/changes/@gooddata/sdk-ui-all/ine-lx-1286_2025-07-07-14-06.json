@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Exclude width resizer preview from auto scroll behavior. It prevents dashboard content from vertical scroll when only horizontal movement of resizer is happening",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

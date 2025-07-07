@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useDragDropManager } from "react-dnd";
 import { RefObject, useEffect, useState } from "react";
 import { DraggableItemType } from "./types.js";
@@ -20,7 +20,6 @@ const SCROLLING_ITEM_TYPES: DraggableItemType[] = [
     "visualizationSwitcherListItem",
     "dashboardLayout",
     "dashboardLayoutListItem",
-    "internal-width-resizer",
     "internal-height-resizer",
 ];
 
