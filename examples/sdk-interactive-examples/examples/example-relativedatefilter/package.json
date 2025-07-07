@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-relativedatefilter",
-    "version": "10.33.0-alpha.51",
+    "version": "10.33.0-alpha.52",
     "title": "RelativeDateFilter",
     "description": "Example demonstrates how to set relative DateFilter for visualization.",
     "author": "GoodData",
