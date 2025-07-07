@@ -2924,7 +2924,7 @@ export interface IProductionFeatureConfig {
 // @alpha (undocumented)
 export interface IProductionFeaturesConfig {
     // (undocumented)
-    features: IProductionFeatureConfig[];
+    features?: IProductionFeatureConfig[];
 }
 
 // @public (undocumented)
