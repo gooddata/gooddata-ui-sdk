@@ -215,6 +215,10 @@ export interface IWebhookMessageDataBase {
      * Slides export results
      */
     slidesExports?: IExportResult[];
+    /**
+     * Dashboard tabular export results
+     */
+    dashboardTabularExports?: IExportResult[];
 }
 
 /**
