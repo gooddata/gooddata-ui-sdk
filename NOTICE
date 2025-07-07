@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-7-5
+Date generated: 2025-7-7
 
-Revision ID: e6f7b63fab22e2a55c7bf9707997ef4071d6797b
+Revision ID: dd8e52d5baa1a38e55c413230cb31c700e29ade3
 
 ================================================================================
 ================================================================================
@@ -251,7 +251,7 @@ Revision ID: e6f7b63fab22e2a55c7bf9707997ef4071d6797b
 - @redux-saga/is (1.1.3) [MIT]
 - @redux-saga/symbols (1.1.3) [MIT]
 - @redux-saga/types (1.2.1) [MIT]
-- @reduxjs/toolkit (1.9.7) [MIT]
+- @reduxjs/toolkit (2.6.1) [MIT]
 - @seznam/compose-react-refs (1.0.6) [ISC]
 - @sidvind/better-ajv-errors (4.0.0) [Apache-2.0]
 - @sindresorhus/is (4.6.0) [MIT]
@@ -289,7 +289,7 @@ Revision ID: e6f7b63fab22e2a55c7bf9707997ef4071d6797b
 - @types/qs (6.9.10) [MIT]
 - @types/range-parser (1.2.7) [MIT]
 - @types/react (18.3.23) [MIT]
-- @types/react-dom (18.3.7) [MIT]
+- @types/react-redux (7.1.34) [MIT]
 - @types/react-transition-group (4.4.10) [MIT]
 - @types/retry (0.12.0) [MIT]
 - @types/send (0.17.4) [MIT]
@@ -298,7 +298,6 @@ Revision ID: e6f7b63fab22e2a55c7bf9707997ef4071d6797b
 - @types/sockjs (0.3.36) [MIT]
 - @types/unist (3.0.3) [MIT]
 - @types/unist (2.0.10) [MIT]
-- @types/use-sync-external-store (0.0.3) [MIT]
 - @types/ws (8.5.10) [MIT]
 - @ungap/structured-clone (1.2.0) [ISC]
 - @vitest/expect (3.0.8) [MIT]
@@ -599,7 +598,7 @@ Revision ID: e6f7b63fab22e2a55c7bf9707997ef4071d6797b
 - iconv-lite (0.4.24) [MIT]
 - iconv-lite (0.6.3) [MIT]
 - ieee754 (1.2.1) [BSD-3-Clause]
-- immer (9.0.21) [MIT]
+- immer (10.1.1) [MIT]
 - immutable (4.3.4) [MIT]
 - import-fresh (3.3.0) [MIT]
 - import-local (3.1.0) [MIT]
@@ -831,14 +830,14 @@ Revision ID: e6f7b63fab22e2a55c7bf9707997ef4071d6797b
 - react-grid-system (8.1.9) [MIT]
 - react-intl (6.8.9) [BSD-3-Clause]
 - react-is (16.13.1) [MIT]
-- react-is (18.1.0) [MIT]
+- react-is (17.0.2) [MIT]
 - react-lifecycles-compat (3.0.4) [MIT]
 - react-lines-ellipsis (0.15.4) [MIT]
 - react-loading-skeleton (3.4.0) [MIT]
 - react-markdown (9.0.1) [MIT]
 - react-measure (2.5.2) [MIT]
 - react-portal (4.3.0) [MIT]
-- react-redux (8.1.3) [MIT]
+- react-redux (7.2.9) [MIT]
 - react-responsive (10.0.1) [MIT, BSD-3-Clause]
 - react-select (5.10.1) [MIT]
 - react-select-async-paginate (0.7.11) [MIT]
@@ -850,9 +849,10 @@ Revision ID: e6f7b63fab22e2a55c7bf9707997ef4071d6797b
 - readdirp (3.6.0) [MIT]
 - rechoir (0.7.1) [MIT]
 - redux (4.2.1) [MIT]
+- redux (5.0.1) [MIT]
 - redux-batched-actions (0.5.0) [MIT]
 - redux-saga (1.2.3) [MIT]
-- redux-thunk (2.4.2) [MIT]
+- redux-thunk (3.1.0) [MIT]
 - regenerate (1.4.2) [MIT]
 - regenerate-unicode-properties (10.1.1) [MIT]
 - regenerator-runtime (0.14.0) [MIT]
@@ -864,6 +864,7 @@ Revision ID: e6f7b63fab22e2a55c7bf9707997ef4071d6797b
 - remark-rehype (11.1.0) [MIT]
 - require-from-string (2.0.2) [MIT]
 - requires-port (1.0.0) [MIT]
+- reselect (5.1.1) [MIT]
 - reselect (4.1.8) [MIT]
 - resize-observer-polyfill (1.5.1) [MIT]
 - resolve (1.22.8) [MIT, ISC]
@@ -1008,7 +1009,6 @@ Revision ID: e6f7b63fab22e2a55c7bf9707997ef4071d6797b
 - use-isomorphic-layout-effect (1.2.1) [MIT]
 - use-latest (1.2.1) [MIT]
 - use-latest (1.3.0) [MIT]
-- use-sync-external-store (1.5.0) [MIT]
 - util (0.12.5) [MIT]
 - util-deprecate (1.0.2) [MIT]
 - utils-merge (1.0.1) [MIT]
@@ -11871,9 +11871,9 @@ Authors: yelouafi@gmail.com, mateuszburzynski@gmail.com, mateuszburzynski+redux-
 Package Download URL: https://registry.npmjs.org/@redux-saga/types/-/types-1.2.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @reduxjs/toolkit (1.9.7)
+Package Title: @reduxjs/toolkit (2.6.1)
 
-Package Locator: npm+@reduxjs/toolkit$1.9.7
+Package Locator: npm+@reduxjs/toolkit$2.6.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -11910,7 +11910,7 @@ SOFTWARE.
 
 Authors: mark.erikson@gmail.com, timdorr@timdorr.com, dan.abramov@gmail.com, mail@lenzw.de, crutchcorn@gmail.com, ben.j.durrant@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@reduxjs/toolkit/-/toolkit-1.9.7.tgz
+Package Download URL: https://registry.npmjs.org/@reduxjs/toolkit/-/toolkit-2.6.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @seznam/compose-react-refs (1.0.6)
@@ -13643,9 +13643,9 @@ Authors: ts-npm-types@microsoft.com
 Package Download URL: https://registry.npmjs.org/@types/react/-/react-18.3.23.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @types/react-dom (18.3.7)
+Package Title: @types/react-redux (7.1.34)
 
-Package Locator: npm+@types/react-dom$18.3.7
+Package Locator: npm+@types/react-redux$7.1.34
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -13682,7 +13682,7 @@ MIT
 
 Authors: ts-npm-types@microsoft.com
 
-Package Download URL: https://registry.npmjs.org/@types/react-dom/-/react-dom-18.3.7.tgz
+Package Download URL: https://registry.npmjs.org/@types/react-redux/-/react-redux-7.1.34.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @types/react-transition-group (4.4.10)
@@ -14019,48 +14019,6 @@ MIT
 Authors: ts-npm-types@microsoft.com
 
 Package Download URL: https://registry.npmjs.org/@types/unist/-/unist-2.0.10.tgz
-
---------------------------------------------------------------------------------
-Package Title: @types/use-sync-external-store (0.0.3)
-
-Package Locator: npm+@types/use-sync-external-store$0.0.3
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-
-* Package Info *
-
-Authors: ts-npm-types@microsoft.com
-
-Package Download URL: https://registry.npmjs.org/@types/use-sync-external-store/-/use-sync-external-store-0.0.3.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @types/ws (8.5.10)
@@ -28276,9 +28234,9 @@ Authors: feross@feross.org
 Package Download URL: https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: immer (9.0.21)
+Package Title: immer (10.1.1)
 
-Package Locator: npm+immer$9.0.21
+Package Locator: npm+immer$10.1.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -28315,7 +28273,7 @@ SOFTWARE.
 
 Authors: mweststrate@gmail.com, alec.stanford.larson@gmail.com
 
-Package Download URL: https://registry.npmjs.org/immer/-/immer-9.0.21.tgz
+Package Download URL: https://registry.npmjs.org/immer/-/immer-10.1.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: immutable (4.3.4)
@@ -38528,9 +38486,9 @@ Authors: opensource+npm@fb.com, react-core@meta.com
 Package Download URL: https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: react-is (18.1.0)
+Package Title: react-is (17.0.2)
 
-Package Locator: npm+react-is$18.1.0
+Package Locator: npm+react-is$17.0.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -38567,7 +38525,7 @@ SOFTWARE.
 
 Authors: opensource+npm@fb.com, react-core@meta.com
 
-Package Download URL: https://registry.npmjs.org/react-is/-/react-is-18.1.0.tgz
+Package Download URL: https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz
 
 --------------------------------------------------------------------------------
 Package Title: react-lifecycles-compat (3.0.4)
@@ -38803,9 +38761,9 @@ Authors: vojtech@miksu.cz
 Package Download URL: https://registry.npmjs.org/react-portal/-/react-portal-4.3.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: react-redux (8.1.3)
+Package Title: react-redux (7.2.9)
 
-Package Locator: npm+react-redux$8.1.3
+Package Locator: npm+react-redux$7.2.9
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -38842,7 +38800,7 @@ SOFTWARE.
 
 Authors: dan.abramov@gmail.com, timdorr@timdorr.com, mark.erikson@gmail.com
 
-Package Download URL: https://registry.npmjs.org/react-redux/-/react-redux-8.1.3.tgz
+Package Download URL: https://registry.npmjs.org/react-redux/-/react-redux-7.2.9.tgz
 
 --------------------------------------------------------------------------------
 Package Title: react-responsive (10.0.1)
@@ -39389,6 +39347,48 @@ Authors: dan.abramov@gmail.com, timdorr@timdorr.com, npm@andrewclark.io, mail@le
 Package Download URL: https://registry.npmjs.org/redux/-/redux-4.2.1.tgz
 
 --------------------------------------------------------------------------------
+Package Title: redux (5.0.1)
+
+Package Locator: npm+redux$5.0.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+The MIT License (MIT)
+
+Copyright (c) 2015-present Dan Abramov
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: dan.abramov@gmail.com, timdorr@timdorr.com, npm@andrewclark.io, mail@lenzw.de, mark.erikson@gmail.com, ben.j.durrant@gmail.com
+
+Package Download URL: https://registry.npmjs.org/redux/-/redux-5.0.1.tgz
+
+--------------------------------------------------------------------------------
 Package Title: redux-batched-actions (0.5.0)
 
 Package Locator: npm+redux-batched-actions$0.5.0
@@ -39473,9 +39473,9 @@ Authors: yelouafi@gmail.com, mateuszburzynski@gmail.com, mateuszburzynski+redux-
 Package Download URL: https://registry.npmjs.org/redux-saga/-/redux-saga-1.2.3.tgz
 
 --------------------------------------------------------------------------------
-Package Title: redux-thunk (2.4.2)
+Package Title: redux-thunk (3.1.0)
 
-Package Locator: npm+redux-thunk$2.4.2
+Package Locator: npm+redux-thunk$3.1.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -39510,7 +39510,7 @@ SOFTWARE.
 
 Authors: dan.lytkin@gmail.com, dan.abramov@gmail.com, timdorr@timdorr.com
 
-Package Download URL: https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.4.2.tgz
+Package Download URL: https://registry.npmjs.org/redux-thunk/-/redux-thunk-3.1.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: regenerate (1.4.2)
@@ -39960,11 +39960,53 @@ Authors: info@3rd-Eden.com, npm@3rd-Eden.com
 Package Download URL: https://registry.npmjs.org/requires-port/-/requires-port-1.0.0.tgz
 
 --------------------------------------------------------------------------------
+Package Title: reselect (5.1.1)
+
+Package Locator: npm+reselect$5.1.1
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+The MIT License (MIT)
+
+Copyright (c) 2015-2018 Reselect Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: dan.abramov@gmail.com, timdorr@timdorr.com, l_bannard@yahoo.co.uk, mail@lenzw.de, mark.erikson@gmail.com, ben.j.durrant@gmail.com
+
+Package Download URL: https://registry.npmjs.org/reselect/-/reselect-5.1.1.tgz
+
+--------------------------------------------------------------------------------
 Package Title: reselect (4.1.8)
 
 Package Locator: npm+reselect$4.1.8
 
-Package Depth: Direct
+Package Depth: Transitive
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
@@ -49084,48 +49126,6 @@ SOFTWARE.
 Authors: mateuszburzynski@gmail.com
 
 Package Download URL: https://registry.npmjs.org/use-latest/-/use-latest-1.3.0.tgz
-
---------------------------------------------------------------------------------
-Package Title: use-sync-external-store (1.5.0)
-
-Package Locator: npm+use-sync-external-store$1.5.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) Meta Platforms, Inc. and affiliates.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: react-core@meta.com
-
-Package Download URL: https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.5.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: util (0.12.5)
@@ -79146,31 +79146,6 @@ SOFTWARE.
 
 MIT License
 
-Copyright (c) Meta Platforms, Inc. and affiliates.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* MIT *
-
-MIT License
-
 Copyright (c) Pooya Parsa <pooya@pi0.io>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -83969,4 +83944,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-7-5
+Report Generated by FOSSA on 2025-7-7
