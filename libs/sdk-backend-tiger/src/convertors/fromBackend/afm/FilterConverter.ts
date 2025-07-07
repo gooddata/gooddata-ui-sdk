@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import {
     FilterDefinition,
@@ -96,12 +96,19 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
             },
         };
     } else if (isRelativeDateFilter(filter)) {
+        const { from, to } = filter.relativeDateFilter;
+        // After the backend enabled `from` and `to` to be optional, we need to handle the case
+        // where some is missing for now. It was agreed to replace the missing value with
+        // the present value instead of 0. This can be removed once we also start using optional bounds.
+        const effectiveFrom = from ?? to ?? 0;
+        const effectiveTo = to ?? from ?? 0;
+
         return {
             relativeDateFilter: {
                 dataSet: toObjRef(filter.relativeDateFilter.dataset),
                 localIdentifier: filter.relativeDateFilter.localIdentifier,
-                from: filter.relativeDateFilter.from,
-                to: filter.relativeDateFilter.to,
+                from: effectiveFrom,
+                to: effectiveTo,
                 granularity: toSdkGranularity(filter.relativeDateFilter.granularity),
             },
         };
