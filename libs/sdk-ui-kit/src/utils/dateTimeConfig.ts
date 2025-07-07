@@ -1,9 +1,9 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import toDate from "date-fns-tz/toDate";
-import subDays from "date-fns/subDays/index.js";
-import isSameDay from "date-fns/isSameDay/index.js";
-import isSameYear from "date-fns/isSameYear/index.js";
+import { subDays } from "date-fns/subDays";
+import { isSameDay } from "date-fns/isSameDay";
+import { isSameYear } from "date-fns/isSameYear";
 
 /**
  * @internal

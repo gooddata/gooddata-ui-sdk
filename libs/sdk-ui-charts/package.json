@@ -85,7 +85,7 @@
         "@gooddata/sdk-ui-vis-commons": "workspace:*",
         "@gooddata/util": "workspace:*",
         "classnames": "^2.3.1",
-        "date-fns": "^2.22.1",
+        "date-fns": "^3.6.0",
         "default-import": "1.1.5",
         "highcharts": "12.2.0",
         "hoist-non-react-statics": "^3.3.0",

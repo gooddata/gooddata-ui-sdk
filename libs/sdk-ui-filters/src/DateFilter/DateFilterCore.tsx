@@ -3,7 +3,7 @@ import React, { ComponentType, useCallback, useMemo, useRef, useState } from "re
 import flow from "lodash/flow.js";
 import noop from "lodash/noop.js";
 import { MediaQuery } from "react-responsive";
-import format from "date-fns/format/index.js";
+import { format } from "date-fns/format";
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
 import { Dropdown, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces/index.js";

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 @use "sass:color";
-@use "react-day-picker/dist/style.css";
+@use "react-day-picker/src/style.css";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $gd-date-range-picker-hover-bgcolor: kit-variables.$is-focused-background;
