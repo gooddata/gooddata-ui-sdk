@@ -101,6 +101,12 @@ export type SearchOverlayProps = {
      * Timezone in which metadata created and updated dates are saved.
      */
     metadataTimezone?: string;
+    /**
+     * A function to render the footer of the search overlay.
+     */
+    renderFooter?: (
+        props: SearchOverlayProps & { status: "idle" | "loading" | "error" | "success"; value: string },
+    ) => React.ReactNode;
 };
 
 /**
@@ -108,18 +114,20 @@ export type SearchOverlayProps = {
  */
 const SearchOverlayCore: React.FC<
     WrappedComponentProps & Omit<SearchOverlayProps, "locale" | "metadataTimezone">
-> = ({
-    onSelect,
-    onSearch,
-    backend,
-    workspace,
-    objectTypes,
-    deepSearch,
-    limit = LIMIT,
-    className,
-    intl,
-    threshold = THRESHOLD,
-}) => {
+> = (props) => {
+    const {
+        onSelect,
+        onSearch,
+        backend,
+        workspace,
+        objectTypes,
+        deepSearch,
+        limit = LIMIT,
+        className,
+        intl,
+        threshold = THRESHOLD,
+        renderFooter,
+    } = props;
     const { toggleOpen } = useHeaderSearch();
 
     // Input value handling
@@ -253,6 +261,25 @@ const SearchOverlayCore: React.FC<
         [value],
     );
 
+    const Wrapper = ({
+        children,
+        status,
+    }: {
+        children: React.ReactNode;
+        status: "idle" | "loading" | "error" | "success";
+    }) => {
+        const comp = renderFooter?.({ ...props, status, value });
+        if (comp) {
+            return (
+                <div>
+                    {children}
+                    {comp}
+                </div>
+            );
+        }
+        return <>{children}</>;
+    };
+
     return (
         <div ref={ref} className={classnames("gd-semantic-search__overlay", className)}>
             <Input
@@ -271,45 +298,57 @@ const SearchOverlayCore: React.FC<
             {(() => {
                 switch (searchStatus) {
                     case "loading":
-                        return <LoadingMask height={LOADING_HEIGHT} />;
+                        return (
+                            <Wrapper status={searchStatus}>
+                                <LoadingMask height={LOADING_HEIGHT} />
+                            </Wrapper>
+                        );
                     case "error":
                         return (
-                            <div className="gd-semantic-search__overlay-error">
-                                <Message type="error">
-                                    <FormattedMessage tagName="strong" id="semantic-search.error.title" />{" "}
-                                    <FormattedMessage id="semantic-search.error.text" />
-                                </Message>
-                            </div>
+                            <Wrapper status={searchStatus}>
+                                <div className="gd-semantic-search__overlay-error">
+                                    <Message type="error">
+                                        <FormattedMessage tagName="strong" id="semantic-search.error.title" />{" "}
+                                        <FormattedMessage id="semantic-search.error.text" />
+                                    </Message>
+                                </div>
+                            </Wrapper>
                         );
                     case "success":
                         if (!searchResults.length) {
                             return (
-                                <div className="gd-semantic-search__overlay-no-results">
-                                    <FormattedMessage
-                                        id="semantic-search.no-results"
-                                        values={{ query: searchTerm }}
-                                    />
-                                </div>
+                                <Wrapper status={searchStatus}>
+                                    <div className="gd-semantic-search__overlay-no-results">
+                                        <FormattedMessage
+                                            id="semantic-search.no-results"
+                                            values={{ query: searchTerm }}
+                                        />
+                                    </div>
+                                </Wrapper>
                             );
                         }
 
                         return (
-                            <SearchList
-                                items={searchResultsItems}
-                                width={width}
-                                onSelect={onResultSelect}
-                                ItemComponent={AnnotatedResultsItem}
-                            />
+                            <Wrapper status={searchStatus}>
+                                <SearchList
+                                    items={searchResultsItems}
+                                    width={width}
+                                    onSelect={onResultSelect}
+                                    ItemComponent={AnnotatedResultsItem}
+                                />
+                            </Wrapper>
                         );
                     case "idle":
                         if (searchHistoryItems.length) {
                             return (
-                                <SearchList
-                                    items={searchHistoryItems}
-                                    width={width}
-                                    onSelect={onHistorySelect}
-                                    ItemComponent={HistoryItem}
-                                />
+                                <Wrapper status={searchStatus}>
+                                    <SearchList
+                                        items={searchHistoryItems}
+                                        width={width}
+                                        onSelect={onHistorySelect}
+                                        ItemComponent={HistoryItem}
+                                    />
+                                </Wrapper>
                             );
                         }
                     // fallthrough

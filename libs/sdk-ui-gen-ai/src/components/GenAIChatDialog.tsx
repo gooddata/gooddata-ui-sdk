@@ -5,6 +5,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider, useOverlayController } from "@gooddata/sdk-ui-kit";
 import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
+import { EnhancedStore } from "@reduxjs/toolkit";
 
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
@@ -27,6 +28,7 @@ export type GenAIChatDialogProps = {
     colorPalette?: IColorPalette;
     catalogItems?: CatalogItem[];
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
+    onStore?: (store: EnhancedStore) => void;
 };
 
 // Default z-index:
@@ -47,6 +49,7 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     catalogItems,
     colorPalette,
     onLinkClick,
+    onStore,
 }) => {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -63,6 +66,10 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
             genAIStore.dispatch(setOpenAction({ isOpen }));
         }
     }, [genAIStore, isOpen]);
+
+    React.useEffect(() => {
+        onStore?.(genAIStore);
+    }, [genAIStore, onStore]);
 
     // Some apps, like Dashboards, already have an overlay controller, so we need to use that one
     const parentOverlayController = useOverlayController();

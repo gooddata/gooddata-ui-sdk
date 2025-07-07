@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 
 import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
 import {
+    RootState,
     loadThreadAction,
     cancelAsyncAction,
     clearThreadAction,
-    RootState,
     asyncProcessSelector,
 } from "../store/index.js";
 
@@ -32,6 +32,8 @@ type GenAIChatWrapperProps = GenAIChatOwnProps & {
     loadThread: typeof loadThreadAction;
     cancelLoading: typeof cancelAsyncAction;
     clearThread: typeof clearThreadAction;
+    autofocus?: boolean;
+    initializing?: boolean;
     isClearing?: boolean;
 };
 
@@ -53,8 +55,8 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
 }) => {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
-    const { linkHandler, allowNativeLinks } = useConfig();
-    const { catalogItems, canManage, canAnalyze, canFullControl } = useConfig();
+    const { linkHandler, allowNativeLinks, catalogItems, canManage, canAnalyze, canFullControl } =
+        useConfig();
     const { checking, evaluated, count, restart } = useEndpointCheck(canFullControl);
 
     useThreadLoading({
