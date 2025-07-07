@@ -22,7 +22,7 @@ import {
     selectDateFilterConfigsOverrides,
 } from "../../store/index.js";
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSelector } from "@reduxjs/toolkit";
 
 const commonDateFilter: FilterContextItem = newAllTimeDashboardDateFilter(
     undefined,

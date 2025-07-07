@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
 import compact from "lodash/compact.js";
@@ -20,7 +20,7 @@ import {
     isCatalogDateDataset,
 } from "@gooddata/sdk-model";
 
-import { createCachedQueryService } from "../store/_infra/queryService.js";
+import { createCachedQueryService, QueryCacheEntryResult } from "../store/_infra/queryService.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import {
     InsightAttributesMeta,
@@ -43,6 +43,7 @@ import {
     sortByRelevanceAndTitle,
 } from "../../_staging/catalog/dateDatasetOrdering.js";
 import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets.js";
+import { DashboardState } from "../store/index.js";
 
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
@@ -58,6 +59,14 @@ export const QueryDateDatasetsForInsightService = createCachedQueryService(
 );
 
 /**
+ * Type of the selector that will return date datasets for insight.
+ * @internal
+ */
+export type selectDateDatasetsForInsightType = (
+    query: QueryInsightDateDatasets,
+) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<InsightDateDatasets> | undefined;
+
+/**
  * Selector that will return date datasets for insight. The input to the selector is the dashboard query that is used
  * to obtain and cache the data.
  *
@@ -68,7 +77,8 @@ export const QueryDateDatasetsForInsightService = createCachedQueryService(
  * @remarks see {@link QueryInsightDateDatasets}
  * @internal
  */
-export const selectDateDatasetsForInsight = QueryDateDatasetsForInsightService.cache.selectQueryResult;
+export const selectDateDatasetsForInsight: selectDateDatasetsForInsightType =
+    QueryDateDatasetsForInsightService.cache.selectQueryResult;
 
 //
 // Query implementation

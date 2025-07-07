@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { dateFilterConfigReducers } from "./dateFilterConfigReducers.js";
-import { dateFilterConfigInitialState } from "./dateFilterConfigState.js";
+import { dateFilterConfigInitialState, DateFilterConfigState } from "./dateFilterConfigState.js";
 
 const configSlice = createSlice({
     name: "dateFilterConfig",
@@ -9,5 +9,7 @@ const configSlice = createSlice({
     reducers: dateFilterConfigReducers,
 });
 
-export const dateFilterConfigSliceReducer = configSlice.reducer;
-export const dateFilterConfigActions = configSlice.actions;
+export const dateFilterConfigSliceReducer: Reducer<DateFilterConfigState> = configSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const dateFilterConfigActions = { ...configSlice.actions };

@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { filterContextReducers } from "./filterContextReducers.js";
-import { filterContextInitialState } from "./filterContextState.js";
+import { filterContextInitialState, FilterContextState } from "./filterContextState.js";
 
 const filterContextSlice = createSlice({
     name: "filterContext",
@@ -9,5 +9,7 @@ const filterContextSlice = createSlice({
     reducers: filterContextReducers,
 });
 
-export const filterContextSliceReducer = filterContextSlice.reducer;
-export const filterContextActions = filterContextSlice.actions;
+export const filterContextSliceReducer: Reducer<FilterContextState> = filterContextSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const filterContextActions = { ...filterContextSlice.actions };

@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 
-import { filterViewsInitialState } from "./filterViewsState.js";
+import { filterViewsInitialState, FilterViewsState } from "./filterViewsState.js";
 import { filterViewsReducers } from "./filterViewsReducers.js";
 
 const filterViewsSlice = createSlice({
@@ -11,8 +11,10 @@ const filterViewsSlice = createSlice({
     reducers: filterViewsReducers,
 });
 
-export const filterViewsSliceReducer = filterViewsSlice.reducer;
-export const filterViewsActions = filterViewsSlice.actions;
+export const filterViewsSliceReducer: Reducer<FilterViewsState> = filterViewsSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const filterViewsActions = { ...filterViewsSlice.actions };
 
 export { selectFilterViews, selectFilterViewsAreLoading } from "./filterViewsReducersSelectors.js";
 export type { FilterViewsState, IFilterViews } from "./filterViewsState.js";

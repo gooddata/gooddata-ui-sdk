@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { entitlementsReducers } from "./entitlementsReducers.js";
-import { entitlementsInitialState } from "./entitlementsState.js";
+import { entitlementsInitialState, EntitlementsState } from "./entitlementsState.js";
 
 const entitlementsSlice = createSlice({
     name: "entitlements",
@@ -9,5 +9,7 @@ const entitlementsSlice = createSlice({
     reducers: entitlementsReducers,
 });
 
-export const entitlementsSliceReducer = entitlementsSlice.reducer;
-export const entitlementsActions = entitlementsSlice.actions;
+export const entitlementsSliceReducer: Reducer<EntitlementsState> = entitlementsSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const entitlementsActions = { ...entitlementsSlice.actions };

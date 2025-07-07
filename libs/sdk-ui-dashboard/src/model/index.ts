@@ -112,9 +112,14 @@ export * from "./events/index.js";
 export * from "./queries/index.js";
 export * from "./store/index.js";
 
-export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets.js";
-export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta.js";
-export { selectDateDatasetsForMeasure } from "./queryServices/queryMeasureDateDatasets.js";
+export {
+    selectDateDatasetsForInsight,
+    selectInsightAttributesMeta,
+    selectDateDatasetsForMeasure,
+    type selectDateDatasetsForInsightType,
+    type selectInsightAttributesMetaType,
+    type selectDateDatasetsForMeasureType,
+} from "./queryServices/index.js";
 
 export type { RenderingWorkerConfiguration } from "./commandHandlers/render/types.js";
 export type {

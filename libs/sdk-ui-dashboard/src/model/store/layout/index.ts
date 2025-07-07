@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
-import { layoutInitialState } from "./layoutState.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { layoutInitialState, LayoutState } from "./layoutState.js";
 import { layoutReducers } from "./layoutReducers.js";
 
 const layoutSlice = createSlice({
@@ -9,10 +9,12 @@ const layoutSlice = createSlice({
     reducers: layoutReducers,
 });
 
-export const layoutSliceReducer = layoutSlice.reducer;
+export const layoutSliceReducer: Reducer<LayoutState> = layoutSlice.reducer;
+
+// Spread "fixes" TS2742 error
 /**
  * Actions to control dashboard layout.
  *
  * @internal
  */
-export const layoutActions = layoutSlice.actions;
+export const layoutActions = { ...layoutSlice.actions };

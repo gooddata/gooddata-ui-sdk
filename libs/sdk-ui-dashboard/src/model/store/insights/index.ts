@@ -1,7 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { insightsAdapter } from "./insightsEntityAdapter.js";
+
+export type InsightsState = ReturnType<typeof insightsAdapter.getInitialState>;
 
 const insightsSlice = createSlice({
     name: "insights",
@@ -13,5 +15,7 @@ const insightsSlice = createSlice({
     },
 });
 
-export const insightsSliceReducer = insightsSlice.reducer;
-export const insightsActions = insightsSlice.actions;
+export const insightsSliceReducer: Reducer<InsightsState> = insightsSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const insightsActions = { ...insightsSlice.actions };

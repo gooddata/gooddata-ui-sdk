@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSelector } from "@reduxjs/toolkit";
 
 import { IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
 import { DashboardSelector, DashboardState } from "../types.js";

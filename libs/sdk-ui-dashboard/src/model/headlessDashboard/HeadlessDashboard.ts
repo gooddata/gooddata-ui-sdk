@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { Middleware, PayloadAction } from "@reduxjs/toolkit";
 import { DashboardState } from "../store/index.js";
@@ -42,11 +42,12 @@ export class HeadlessDashboard {
 
     constructor(ctx: DashboardContext, config?: HeadlessDashboardConfig) {
         // Middleware to store the actions and create promises
-        const actionsMiddleware: Middleware = () => (next) => (action) => {
-            if (action.type.startsWith("@@redux/")) {
+        const actionsMiddleware: Middleware = () => (next) => (action: unknown) => {
+            const typedAction = action as PayloadAction;
+            if (typedAction.type?.startsWith("@@redux/")) {
                 //
             } else {
-                this.onActionCaptured(action);
+                this.onActionCaptured(typedAction);
             }
 
             return next(action);
@@ -119,7 +120,7 @@ export class HeadlessDashboard {
          * captured event.
          */
         this.monitoredActions = {};
-        this.reduxedStore.store.dispatch(action);
+        this.reduxedStore.store.dispatch(action as PayloadAction);
     }
 
     /**
