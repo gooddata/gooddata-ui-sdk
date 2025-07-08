@@ -23,6 +23,11 @@ import {
 } from "../../../utils/embeddingCodeGenerator/index.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import {
+    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
+    MIN_VISUALIZATION_HEIGHT,
+    MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT,
+} from "../constants.js";
 
 export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -46,6 +51,17 @@ export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualiz
                 max: this.getMaxHeight(settings),
             },
         };
+    }
+
+    protected getMinHeight(settings: ISettings): number {
+        const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
+        if (!enableKDWidgetCustomHeight) {
+            return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
+        }
+        if (enableDashboardFlexibleLayout) {
+            return MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT;
+        }
+        return MIN_VISUALIZATION_HEIGHT;
     }
 
     public getEmbeddingCode = getReactEmbeddingCodeGenerator({

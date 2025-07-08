@@ -35,7 +35,7 @@ import { pivotTableAdditionalFactories } from "./pivotTableAdditionalFactories.j
 import {
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
     MIN_VISUALIZATION_HEIGHT,
-    MIN_VISUALIZATION_HEIGHT_TABLE_FLEXIBLE_LAYOUT,
+    MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT,
 } from "../constants.js";
 
 export class PivotTableDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
@@ -68,7 +68,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
         }
         if (enableDashboardFlexibleLayout) {
-            return MIN_VISUALIZATION_HEIGHT_TABLE_FLEXIBLE_LAYOUT;
+            return MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT;
         }
         return MIN_VISUALIZATION_HEIGHT;
     }
