@@ -7,7 +7,7 @@ import { LoadingComponent } from "./components/LoadingComponent.js";
 import { IPivotTableNextProps } from "./types/public.js";
 import { useInitExecution } from "./hooks/useInitExecution.js";
 import { useServerSideRowModel } from "./hooks/useServerSideRowModel.js";
-import { getIsPivotMode, getMeasureGroupDimension } from "./mapProps/props.js";
+import { getIsPivotMode, getMeasureGroupDimension, getExecutionProps } from "./mapProps/props.js";
 import { mapDimensionsToColDefs } from "./mapProps/mapDimensionsToColDefs.js";
 import { AG_GRID_DEFAULT_PROPS } from "./constants/agGrid.js";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
@@ -38,13 +38,20 @@ function PivotTableNextInit(props: IPivotTableNextProps) {
     return <PivotTableNextRenderAgGrid {...props} executionResult={executionResult} />;
 }
 
-function PivotTableNextRenderAgGrid(props: IPivotTableNextProps & { executionResult: IExecutionResult }) {
+function PivotTableNextRenderAgGrid(
+    props: IPivotTableNextProps & {
+        executionResult: IExecutionResult;
+    },
+) {
     const { executionResult } = props;
     const serverSideRowModelProps = useServerSideRowModel({ ...props, executionResult });
     const measureGroupDimension = getMeasureGroupDimension(props);
+    const { sortBy } = getExecutionProps(props);
+
     const columnDefs = executionResult?.dimensions
-        ? mapDimensionsToColDefs(executionResult.dimensions, measureGroupDimension)
+        ? mapDimensionsToColDefs(executionResult.dimensions, measureGroupDimension, sortBy)
         : [];
+
     const isPivotMode = getIsPivotMode(props);
 
     return (

@@ -6,8 +6,14 @@ import {
     MeasureGroupDimension,
     PivotTableNextConfig,
 } from "../types/public.js";
-import { EMPTY_CONFIG, EMPTY_ATTRIBUTES, EMPTY_METRICS, EMPTY_FILTERS } from "../constants/internal.js";
-import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
+import {
+    EMPTY_CONFIG,
+    EMPTY_ATTRIBUTES,
+    EMPTY_METRICS,
+    EMPTY_FILTERS,
+    EMPTY_SORT_BY,
+} from "../constants/internal.js";
+import { IAttribute, IFilter, IMeasure, ISortItem } from "@gooddata/sdk-model";
 
 export function getConfig(props: IPivotTableNextProps): PivotTableNextConfig {
     const { config = EMPTY_CONFIG } = props;
@@ -81,13 +87,22 @@ export function getFilters(props: IPivotTableNextProps): IFilter[] {
 /**
  * @internal
  */
+export function getSortBy(props: IPivotTableNextProps): ISortItem[] {
+    const { sortBy = EMPTY_SORT_BY } = props;
+    return sortBy;
+}
+
+/**
+ * @internal
+ */
 export function getExecutionProps(props: IPivotTableNextProps) {
     const columns = getColumns(props);
     const rows = getRows(props);
     const measures = getMeasures(props);
     const filters = getFilters(props);
+    const sortBy = getSortBy(props);
 
-    return { columns, rows, measures, filters };
+    return { columns, rows, measures, filters, sortBy };
 }
 
 //

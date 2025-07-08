@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IFilter, IMeasure, ITotal } from "@gooddata/sdk-model";
+import { IAttribute, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
 
 /**
  * Whether to display measures in columns or rows (transposed).
@@ -86,6 +86,11 @@ export interface IPivotTableNextProps {
      * Totals to display in the pivot table.
      */
     totals?: ITotal[];
+
+    /**
+     * Sort by to apply to the pivot table.
+     */
+    sortBy?: ISortItem[];
 
     /**
      * Configuration for the pivot table.

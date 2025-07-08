@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
+import { IAttribute, IFilter, IMeasure, ISortItem } from "@gooddata/sdk-model";
 import { PivotTableNextConfig } from "../types/public.js";
 
 /**
@@ -39,6 +39,11 @@ export const EMPTY_FILTERS: IFilter[] = [];
  * @internal
  */
 export const EMPTY_CONFIG: PivotTableNextConfig = {};
+
+/**
+ * @internal
+ */
+export const EMPTY_SORT_BY: ISortItem[] = [];
 
 /**
  * @internal

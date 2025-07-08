@@ -2,5 +2,6 @@
 
 import base from "./base.js";
 import transposition from "./transposition.js";
+import sorting from "./sorting.js";
 
-export default [base, transposition];
+export default [base, transposition, sorting];

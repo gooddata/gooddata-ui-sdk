@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend, IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IFilter, IMeasure, newBucket } from "@gooddata/sdk-model";
+import { IAttribute, IFilter, IMeasure, ISortItem, newBucket } from "@gooddata/sdk-model";
 import { COLUMNS_PER_PAGE } from "../constants/internal.js";
 import { MeasureGroupDimension } from "../types/public.js";
 
@@ -15,6 +15,7 @@ export interface IGetExecutionParams {
     rows: IAttribute[];
     measures: IMeasure[];
     filters: IFilter[];
+    sortBy: ISortItem[];
     measureGroupDimension: MeasureGroupDimension;
     signal: AbortSignal;
 }
@@ -71,6 +72,7 @@ export async function getExecution({
     rows,
     measures,
     filters,
+    sortBy,
     signal,
     measureGroupDimension,
 }: IGetExecutionParams) {
@@ -94,8 +96,7 @@ export async function getExecution({
             dimensions,
             filters,
             buckets,
-            // TODO: handle sorts
-            sortBy: [],
+            sortBy,
             // TODO: if this is missing, it's causing recordings not matching
             postProcessing: {},
         })

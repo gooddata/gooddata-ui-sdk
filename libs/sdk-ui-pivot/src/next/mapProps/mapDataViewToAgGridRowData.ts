@@ -6,7 +6,7 @@ import {
     IData2D,
     IDataPointIntersection2D,
 } from "@gooddata/sdk-ui";
-import { IResultAttributeHeader } from "@gooddata/sdk-model";
+import { IResultAttributeHeader, IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../constants/agGrid.js";
 import {
@@ -31,6 +31,23 @@ interface TableConfiguration {
 }
 
 /**
+ * Metadata for pivot result fields
+ */
+export interface IPivotResultFieldMetadata {
+    attributeHeaders: IResultAttributeHeader[];
+    columnAttributes: IAttributeDescriptor[];
+    rowAttributes: IAttributeDescriptor[];
+    measure?: IMeasureDescriptor;
+}
+
+/**
+ * Object of pivot result field metadata
+ */
+export interface IPivotResultFieldMetadataObject {
+    [pivotOrLocalId: string]: IPivotResultFieldMetadata;
+}
+
+/**
  * Map data view to ag-grid row data and pivot result fields.
  *
  * For standard data without pivoting, keys are metric or attribute local identifiers, and values are formatted values.
@@ -45,12 +62,16 @@ export function mapDataViewToAgGridRowData(
 ): {
     rowData: AgGridRowData[];
     pivotResultFields: string[];
+    metadata: IPivotResultFieldMetadataObject;
 } {
     const data2D = dataView.data().as2D();
     const config = analyzeTableConfiguration(data2D);
 
+    // Create metadata collector for pivot mode
+    const metadata: { [pivotOrLocalId: string]: IPivotResultFieldMetadata } = {};
+
     const rowData = data2D.rows
-        .map((row) => processRow(row, config, columnHeadersPosition))
+        .map((row) => processRow(row, config, columnHeadersPosition, metadata))
         .filter((rowData) => !isEmpty(rowData));
 
     // Pivot result fields are only relevant when there are column attributes
@@ -59,6 +80,7 @@ export function mapDataViewToAgGridRowData(
     return {
         rowData,
         pivotResultFields,
+        metadata,
     };
 }
 
@@ -84,10 +106,11 @@ function processRow(
     row: IDataPointIntersection2D[],
     config: TableConfiguration,
     columnHeadersPosition: ColumnHeadersPosition,
+    metadata: IPivotResultFieldMetadataObject,
 ): AgGridRowData {
     return row.reduce((acc, column): AgGridRowData => {
         const cell = extractCellData(column);
-        const cellRowData = processCellByConfiguration(cell, config, columnHeadersPosition);
+        const cellRowData = processCellByConfiguration(cell, config, columnHeadersPosition, metadata);
         return { ...acc, ...cellRowData };
     }, {});
 }
@@ -125,6 +148,7 @@ function processCellByConfiguration(
     cell: ProcessedCell,
     config: TableConfiguration,
     columnHeadersPosition: ColumnHeadersPosition,
+    metadata: IPivotResultFieldMetadataObject,
 ): AgGridRowData {
     const result: AgGridRowData = {};
 
@@ -137,13 +161,13 @@ function processCellByConfiguration(
         addMeasuresAsColumns(result, cell.measures);
     } else if (config.isPivoted && !config.isTransposed) {
         // Pivoted: column attributes, measures in columns
-        addPivotedMeasures(result, cell, columnHeadersPosition);
+        addPivotedMeasures(result, cell, columnHeadersPosition, metadata);
     } else if (!config.isPivoted && config.isTransposed) {
         // Transposed: no column attributes, measures in rows
         addTransposedMeasures(result, cell.measures);
     } else {
         // Pivoted AND transposed: column attributes, measures in rows
-        addPivotedAndTransposedMeasures(result, cell, columnHeadersPosition);
+        addPivotedAndTransposedMeasures(result, cell, columnHeadersPosition, metadata);
     }
 
     return result;
@@ -177,6 +201,7 @@ function addPivotedMeasures(
     result: AgGridRowData,
     cell: ProcessedCell,
     columnHeadersPosition: ColumnHeadersPosition,
+    metadata: IPivotResultFieldMetadataObject,
 ): void {
     if (cell.columnAttributes.length === 0) {
         return;
@@ -185,6 +210,16 @@ function addPivotedMeasures(
     const measure = cell.measures[0];
     const pivotKey = buildPivotKey(cell.columnAttributes, measure, columnHeadersPosition);
     result[pivotKey] = measure ? measure.formattedValue : null;
+
+    // Add to metadata if not already present
+    if (!metadata[pivotKey]) {
+        metadata[pivotKey] = {
+            attributeHeaders: cell.columnAttributes.map((attr) => attr.header),
+            columnAttributes: cell.columnAttributes.map((attr) => attr.descriptor),
+            rowAttributes: cell.rowAttributes.map((attr) => attr.descriptor),
+            measure: measure?.descriptor,
+        };
+    }
 }
 
 /**
@@ -207,6 +242,7 @@ function addPivotedAndTransposedMeasures(
     result: AgGridRowData,
     cell: ProcessedCell,
     columnHeadersPosition: ColumnHeadersPosition,
+    metadata: IPivotResultFieldMetadataObject,
 ): void {
     if (cell.columnAttributes.length === 0) return;
 
@@ -233,6 +269,16 @@ function addPivotedAndTransposedMeasures(
     // Add measure value
     const pivotKey = buildPivotKey(cell.columnAttributes, measure, columnHeadersPosition);
     result[pivotKey] = measure.formattedValue;
+
+    // Add to metadata if not already present
+    if (!metadata[pivotKey]) {
+        metadata[pivotKey] = {
+            attributeHeaders: cell.columnAttributes.map((attr) => attr.header),
+            columnAttributes: cell.columnAttributes.map((attr) => attr.descriptor),
+            rowAttributes: cell.rowAttributes.map((attr) => attr.descriptor),
+            measure: measure?.descriptor,
+        };
+    }
 }
 
 /**
