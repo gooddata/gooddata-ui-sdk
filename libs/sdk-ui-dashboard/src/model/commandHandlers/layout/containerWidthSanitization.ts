@@ -1,10 +1,21 @@
 // (C) 2025 GoodData Corporation
 
-import { IDashboardLayout, ScreenSize, IInsight, ISettings, isDashboardLayout } from "@gooddata/sdk-model";
+import {
+    IDashboardLayout,
+    ScreenSize,
+    IInsight,
+    ISettings,
+    isDashboardLayout,
+    IDashboardLayoutContainerDirection,
+} from "@gooddata/sdk-model";
 
 import { ExtendedDashboardWidget, IItemWithWidth } from "../../types/layoutTypes.js";
 import { findItem } from "../../../_staging/layout/coordinates.js";
-import { implicitLayoutItemSizeFromXlSize, getMinWidth } from "../../../_staging/layout/sizing.js";
+import {
+    implicitLayoutItemSizeFromXlSize,
+    getMinWidth,
+    determineWidthForScreen,
+} from "../../../_staging/layout/sizing.js";
 import { ILayoutItemPath } from "../../../types.js";
 import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
@@ -62,6 +73,7 @@ export function getChildWidgetLayoutPathsWithMinWidths(
     settings: ISettings,
     insightMap: ObjRefMap<IInsight>,
     screen: ScreenSize,
+    parentDirection: IDashboardLayoutContainerDirection,
 ): IItemWithWidth[] {
     return layout.sections.flatMap((section, sectionIndex) =>
         section.items.flatMap((item, itemIndex) => {
@@ -69,23 +81,29 @@ export function getChildWidgetLayoutPathsWithMinWidths(
             if (item.widget === undefined) {
                 return [];
             }
+
             if (isDashboardLayout(item.widget) && getLayoutDirection(item.widget) === "column") {
                 // For nested layouts with a column direction, process children recursively and include
                 // the container itself
+                const containerMinWidth = getMinWidth(item.widget, insightMap, screen, settings, "column");
                 const childItems = getChildWidgetLayoutPathsWithMinWidths(
                     item.widget,
                     currentPath,
                     settings,
                     insightMap,
                     screen,
+                    "column",
                 );
-                const containerMinWidth = getMinWidth(item.widget, insightMap, screen, settings, "column");
+
                 return [...childItems, { itemPath: currentPath, width: containerMinWidth }];
             } else {
                 // For other widgets (including nested layouts with a row direction, layout will never be
-                // a column at this point), return their path and minimum default width.
+                // a column at this point), return their path and minimum default width or
+                // current width when they are inside of column group (= stretched and can not be smaller).
                 const minWidth = getMinWidth(item.widget, insightMap, screen, settings, "row");
-                return [{ itemPath: currentPath, width: minWidth }];
+                const currentWidth = determineWidthForScreen(screen, item.size);
+                const width = parentDirection === "column" ? currentWidth : minWidth;
+                return [{ itemPath: currentPath, width }];
             }
         }),
     );
