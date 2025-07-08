@@ -46,8 +46,11 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     box-sizing: border-box;
     display: flex;
     align-items: stretch;
-    min-height: variables.$item-min-height;
     padding: variables.$item-outer-padding;
+
+    &.dash-item-height {
+        min-height: variables.$item-min-height;
+    }
 
     // Grid definition
 
