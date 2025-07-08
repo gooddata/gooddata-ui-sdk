@@ -39,6 +39,11 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
     const intl = useIntl();
     const [mergeHeaders, setMergeHeaders] = useState(xlsxSettings.mergeHeaders ?? true);
     const [exportInfo, setExportInfo] = useState(xlsxSettings.exportInfo ?? true);
+
+    const isSettingsDirty =
+        mergeHeaders !== (xlsxSettings.mergeHeaders ?? true) ||
+        exportInfo !== (xlsxSettings.exportInfo ?? true);
+
     return (
         <>
             {attachments.map((attachment) => (
@@ -54,6 +59,12 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                             overlayPositionType={OVERLAY_POSITION_TYPE}
                             alignPoints={DROPDOWN_ALIGN_POINTS}
                             autofocusOnOpen={true}
+                            onOpenStateChanged={(isOpen) => {
+                                if (!isOpen) {
+                                    setMergeHeaders(xlsxSettings.mergeHeaders ?? true);
+                                    setExportInfo(xlsxSettings.exportInfo ?? true);
+                                }
+                            }}
                             renderButton={({ toggleDropdown, buttonRef }) => (
                                 <button
                                     className="gd-attachment-chip-button"
@@ -130,6 +141,7 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                                                 });
                                                 closeDropdown();
                                             }}
+                                            disabled={!isSettingsDirty}
                                         />
                                     </div>
                                 </div>
