@@ -36,6 +36,7 @@ import { getAvailableDrillTargets } from "./availableDrillTargets.js";
 interface IDataViewLoadState {
     isLoading: boolean;
     error?: string | null;
+    seType?: GoodDataSdkError["seType"] | null;
     executionResult?: IExecutionResult | null;
     dataView?: IDataView | null;
 }
@@ -62,6 +63,10 @@ export interface ILoadingInjectedProps {
      * If loading fails, then this prop contains description of the error. Otherwise is undefined.
      */
     error?: string;
+    /**
+     * If loading fails, then this prop contains description of the se error. Otherwise is undefined.
+     */
+    seType?: GoodDataSdkError["seType"];
 
     // TODO: take this out of here
     intl: IntlShape;
@@ -132,7 +137,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         }
 
         public render() {
-            const { isLoading, error, dataView } = this.state;
+            const { isLoading, error, dataView, seType } = this.state;
             const { intl } = this.props;
 
             // lower-level components do not need workspace
@@ -145,6 +150,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     onDataTooLarge={this.onDataTooLarge}
                     onNegativeValues={this.onNegativeValues}
                     error={error}
+                    seType={seType}
                     isLoading={isLoading}
                     intl={intl}
                 />
@@ -211,7 +217,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
             if (!isForecastNotReceived(error) && !isClusteringNotReceived(error)) {
                 const err = error as GoodDataSdkError;
-                this.setState({ error: err.getMessage(), dataView: null });
+                this.setState({ error: err.getMessage(), seType: err.seType, dataView: null });
             }
             this.onLoadingChanged({ isLoading: false });
 

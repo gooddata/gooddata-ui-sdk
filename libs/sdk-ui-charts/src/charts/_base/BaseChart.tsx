@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces/index.js";
 import { getValidColorPalette, ChartTransformation } from "../../highcharts/index.js";
@@ -54,18 +54,19 @@ class StatelessBaseChart extends React.Component<Props> {
     }
 
     public render(): JSX.Element {
-        const { dataView, error, isLoading } = this.props;
+        const { dataView, error, seType, isLoading } = this.props;
 
         const ErrorComponent = this.props.ErrorComponent as React.ComponentType<IErrorProps>;
         const LoadingComponent = this.props.LoadingComponent as React.ComponentType<ILoadingProps>;
 
         if (error) {
-            const errorProps =
-                this.errorMap[
-                    Object.prototype.hasOwnProperty.call(this.errorMap, error)
-                        ? error
-                        : ErrorCodes.UNKNOWN_ERROR
-                ];
+            const key = Object.prototype.hasOwnProperty.call(this.errorMap, seType)
+                ? seType
+                : Object.prototype.hasOwnProperty.call(this.errorMap, error)
+                ? error
+                : ErrorCodes.UNKNOWN_ERROR;
+
+            const errorProps = this.errorMap[key];
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }
 

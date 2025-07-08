@@ -1065,6 +1065,7 @@ export interface ILoadingInjectedProps {
     onDataTooLarge(data: any, errorMessage?: string): void;
     onExportReady(exportFunction: IExportFunction): void;
     onNegativeValues(): void;
+    seType?: GoodDataSdkError["seType"];
 }
 
 // @public
