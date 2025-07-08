@@ -4,9 +4,14 @@ import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { ColumnHeadersPosition } from "../types/public.js";
 import { AgGridRowData } from "../types/internal.js";
 import { getPaginatedExecutionDataView } from "../execution/getExecution.js";
-import { mapDataViewToAgGridRowData } from "../mapProps/mapDataViewToAgGridRowData.js";
+import {
+    IPivotResultFieldMetadataObject,
+    mapDataViewToAgGridRowData,
+} from "../mapProps/mapDataViewToAgGridRowData.js";
 import { AG_GRID_DEFAULT_CACHE_BLOCK_SIZE } from "../constants/agGrid.js";
-import { IAttribute, IMeasure } from "@gooddata/sdk-model";
+import { IAttribute, IMeasure, ISortItem } from "@gooddata/sdk-model";
+import { getDesiredSorts } from "../mapProps/mapSortModelToSortItems.js";
+import isEqual from "lodash/isEqual.js";
 
 /**
  * @internal
@@ -14,6 +19,7 @@ import { IAttribute, IMeasure } from "@gooddata/sdk-model";
 interface ICreateServerSideDataSourceParams {
     measures: IMeasure[];
     rows: IAttribute[];
+    sortBy: ISortItem[];
     executionResult: IExecutionResult;
     isPivotMode: boolean;
     columnHeadersPosition: ColumnHeadersPosition;
@@ -22,26 +28,49 @@ interface ICreateServerSideDataSourceParams {
 export const createServerSideDataSource = ({
     measures,
     rows,
+    sortBy,
     executionResult,
     isPivotMode,
     columnHeadersPosition = "top",
 }: ICreateServerSideDataSourceParams): IServerSideDatasource<AgGridRowData> => {
     const abortController = new AbortController();
+    let isFirstRequest = true;
+    let resultMetadata: IPivotResultFieldMetadataObject = {};
 
     return {
         destroy: () => {
             abortController.abort();
         },
-        getRows: (params: IServerSideGetRowsParams<AgGridRowData>) => {
+        getRows: async (params: IServerSideGetRowsParams<AgGridRowData>) => {
             const startRow = params.request.startRow ?? 0;
             const endRow = params.request.endRow ?? AG_GRID_DEFAULT_CACHE_BLOCK_SIZE;
+            const sortModel = params.request.sortModel;
+
+            const desiredSorts = getDesiredSorts(
+                isFirstRequest,
+                sortModel,
+                sortBy,
+                rows,
+                measures,
+                isPivotMode,
+                resultMetadata,
+            );
+
+            let effectiveExecutionResult = executionResult;
+            if (!isEqual(desiredSorts, sortBy)) {
+                effectiveExecutionResult = await executionResult
+                    .transform()
+                    .withSorting(...desiredSorts)
+                    .execute();
+            }
+
             getPaginatedExecutionDataView({
-                executionResult,
+                executionResult: effectiveExecutionResult,
                 startRow,
                 endRow,
             })
                 .then((dataView) => {
-                    const { rowData, pivotResultFields } = mapDataViewToAgGridRowData(
+                    const { rowData, pivotResultFields, metadata } = mapDataViewToAgGridRowData(
                         dataView,
                         columnHeadersPosition,
                     );
@@ -59,10 +88,14 @@ export const createServerSideDataSource = ({
                     if (isPivotMode) {
                         successParam.pivotResultFields = pivotResultFields;
                     }
+                    resultMetadata = metadata;
                     params.success(successParam);
                 })
                 .catch(() => {
                     params.fail();
+                })
+                .finally(() => {
+                    isFirstRequest = false;
                 });
         },
     };

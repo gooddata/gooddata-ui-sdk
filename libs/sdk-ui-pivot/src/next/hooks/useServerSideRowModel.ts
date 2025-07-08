@@ -17,18 +17,19 @@ export const useServerSideRowModel = (
     const { executionResult } = props;
     const isPivotMode = getIsPivotMode(props);
     const columnHeadersPosition = getColumnHeadersPosition(props);
-    const { rows, measures } = getExecutionProps(props);
+    const { rows, measures, sortBy } = getExecutionProps(props);
 
     const dataSource = useMemo(
         () =>
             createServerSideDataSource({
                 rows,
                 measures,
+                sortBy,
                 isPivotMode,
                 executionResult,
                 columnHeadersPosition,
             }),
-        [columnHeadersPosition, executionResult, isPivotMode, measures, rows],
+        [columnHeadersPosition, executionResult, isPivotMode, measures, rows, sortBy],
     );
 
     return {

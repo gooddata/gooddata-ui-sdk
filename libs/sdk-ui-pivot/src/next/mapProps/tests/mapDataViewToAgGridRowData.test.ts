@@ -28,6 +28,7 @@ const DEFAULT_PARAMS: IGetExecutionParams = {
     rows: [],
     measures: [],
     filters: [],
+    sortBy: [],
     measureGroupDimension: "columns",
     signal,
 };

@@ -17,7 +17,7 @@ export const useInitExecution = (props: IPivotTableNextProps) => {
     const backend = useBackendStrict(props.backend, "useInitExecution");
     const workspace = useWorkspaceStrict(props.workspace, "useInitExecution");
     const measureGroupDimension = getMeasureGroupDimension(props);
-    const { columns, rows, measures, filters } = getExecutionProps(props);
+    const { columns, rows, measures, filters, sortBy } = getExecutionProps(props);
 
     return useCancelablePromise<IExecutionResult, GoodDataSdkError>(
         {
@@ -29,11 +29,12 @@ export const useInitExecution = (props: IPivotTableNextProps) => {
                     rows,
                     measures,
                     filters,
+                    sortBy,
                     measureGroupDimension,
                     signal,
                 }),
             enableAbortController: true,
         },
-        [backend, workspace, columns, rows, measures, measureGroupDimension],
+        [backend, workspace, columns, rows, measures, measureGroupDimension, sortBy],
     );
 };

@@ -60,6 +60,13 @@ const PAGING_PROPS: AgGridReactProps = {
     cacheBlockSize: AG_GRID_DEFAULT_CACHE_BLOCK_SIZE,
 };
 
+const SORTING_PROPS: AgGridReactProps = {
+    defaultColDef: {
+        sortable: true,
+        sortingOrder: ["desc", "asc", null],
+    },
+};
+
 /**
  * @internal
  */
@@ -72,4 +79,5 @@ export const AG_GRID_DEFAULT_PROPS: AgGridReactProps = merge(
     TEXT_WRAPPING_PROPS,
     AGGREGATION_PROPS,
     PAGING_PROPS,
+    SORTING_PROPS,
 );
