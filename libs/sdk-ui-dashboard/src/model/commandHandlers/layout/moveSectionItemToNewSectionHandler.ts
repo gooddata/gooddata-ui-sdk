@@ -148,13 +148,13 @@ function requiresSectionShift(fromItemPath: ILayoutItemPath, toItemPath: ILayout
     const commonPath = fromItemPath.slice(0, toItemPath.length);
     const commonPathParent = getParentPath(commonPath);
     const toItemPathParent = getParentPath(toItemPath);
-    return (
+
+    const emptyOrSameParent =
         (commonPathParent === undefined && toItemPathParent === undefined) ||
         (commonPathParent !== undefined &&
             toItemPathParent !== undefined &&
-            areLayoutPathsEqual(commonPathParent, toItemPathParent) &&
-            toIsBeforeFrom(toItemPath, commonPath))
-    );
+            areLayoutPathsEqual(commonPathParent, toItemPathParent));
+    return emptyOrSameParent && toIsBeforeFrom(toItemPath, commonPath);
 }
 
 function getItemPathWithSectionsShifted(
