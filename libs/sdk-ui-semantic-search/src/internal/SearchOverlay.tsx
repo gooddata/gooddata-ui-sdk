@@ -106,6 +106,9 @@ export type SearchOverlayProps = {
      */
     renderFooter?: (
         props: SearchOverlayProps & { status: "idle" | "loading" | "error" | "success"; value: string },
+        handlers: {
+            closeSearch: () => void;
+        },
     ) => React.ReactNode;
 };
 
@@ -268,7 +271,12 @@ const SearchOverlayCore: React.FC<
         children: React.ReactNode;
         status: "idle" | "loading" | "error" | "success";
     }) => {
-        const comp = renderFooter?.({ ...props, status, value });
+        const comp = renderFooter?.(
+            { ...props, status, value },
+            {
+                closeSearch: toggleOpen,
+            },
+        );
         if (comp) {
             return (
                 <div>
