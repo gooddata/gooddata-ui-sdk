@@ -28,7 +28,7 @@ export type GenAIChatDialogProps = {
     colorPalette?: IColorPalette;
     catalogItems?: CatalogItem[];
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
-    onStore?: (store: EnhancedStore) => void;
+    onDispatcher?: (dispatch: EnhancedStore["dispatch"]) => void;
 };
 
 // Default z-index:
@@ -49,7 +49,7 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     catalogItems,
     colorPalette,
     onLinkClick,
-    onStore,
+    onDispatcher,
 }) => {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -68,8 +68,8 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     }, [genAIStore, isOpen]);
 
     React.useEffect(() => {
-        onStore?.(genAIStore);
-    }, [genAIStore, onStore]);
+        onDispatcher?.(genAIStore.dispatch);
+    }, [genAIStore, onDispatcher]);
 
     // Some apps, like Dashboards, already have an overlay controller, so we need to use that one
     const parentOverlayController = useOverlayController();
