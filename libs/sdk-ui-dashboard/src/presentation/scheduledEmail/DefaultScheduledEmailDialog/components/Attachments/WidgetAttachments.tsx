@@ -58,7 +58,6 @@ export const WidgetAttachments = ({
                     mode="widget"
                 />
                 <AttachmentsSelect<WidgetAttachmentType>
-                    key={selectedAttachments.join()}
                     attachments={SUPPORTED_WIDGET_ATTACHMENTS.map((format) => ({
                         type: format,
                         selected: selectedAttachments.includes(format),

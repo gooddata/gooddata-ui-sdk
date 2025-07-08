@@ -8,7 +8,6 @@ import {
     IAlignPoint,
     isEscapeKey,
     Message,
-    OverlayPositionType,
     UiIconButton,
 } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -60,16 +59,12 @@ type AttachmentItem<T extends WidgetAttachmentType | DashboardAttachmentType> = 
 
 interface AttachmentsSelectProps<T extends WidgetAttachmentType | DashboardAttachmentType> {
     attachments: AttachmentItem<T>[];
-    closeOnParentScroll?: boolean;
-    overlayPositionType?: OverlayPositionType;
     onChange: (attachments: AttachmentItem<T>[]) => void;
     mode: "widget" | "dashboard";
 }
 
 export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAttachmentType>({
     attachments: initialAttachments,
-    closeOnParentScroll,
-    overlayPositionType,
     onChange,
     mode,
 }: AttachmentsSelectProps<T>) {
@@ -84,13 +79,20 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
 
     const isSomeSelected = attachments.some((item) => item.selected);
 
+    const isDirty = !areAttachmentsEqual<T>(attachments, initialAttachments);
+
     return (
         <>
             <Dropdown
-                closeOnParentScroll={closeOnParentScroll}
-                overlayPositionType={overlayPositionType}
+                closeOnParentScroll
+                overlayPositionType="sameAsTarget"
                 alignPoints={DROPDOWN_ALIGN_POINTS}
                 autofocusOnOpen={true}
+                onOpenStateChanged={(isOpen) => {
+                    if (!isOpen) {
+                        setAttachments(initialAttachments);
+                    }
+                }}
                 renderButton={({ toggleDropdown, buttonRef }) => (
                     <UiIconButton
                         icon="plus"
@@ -174,7 +176,7 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
                                     onChange(attachments);
                                     closeDropdown();
                                 }}
-                                disabled={!isSomeSelected}
+                                disabled={!isSomeSelected || !isDirty}
                             />
                         </div>
                     </div>
@@ -183,3 +185,19 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
         </>
     );
 }
+
+const areAttachmentsEqual = <T extends WidgetAttachmentType | DashboardAttachmentType>(
+    a: AttachmentItem<T>[],
+    b: AttachmentItem<T>[],
+) => {
+    const aSelected = a
+        .filter((item) => item.selected)
+        .map((item) => item.type)
+        .sort();
+    const bSelected = b
+        .filter((item) => item.selected)
+        .map((item) => item.type)
+        .sort();
+    if (aSelected.length !== bSelected.length) return false;
+    return aSelected.every((type, idx) => type === bSelected[idx]);
+};

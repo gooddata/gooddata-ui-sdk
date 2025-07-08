@@ -67,7 +67,6 @@ export const DashboardAttachments = ({
                     mode="dashboard"
                 />
                 <AttachmentsSelect<DashboardAttachmentType>
-                    key={selectedAttachments.join()}
                     attachments={SUPPORTED_DASHBOARD_ATTACHMENTS.map((format) => ({
                         type: format,
                         selected: selectedAttachments.includes(format),
