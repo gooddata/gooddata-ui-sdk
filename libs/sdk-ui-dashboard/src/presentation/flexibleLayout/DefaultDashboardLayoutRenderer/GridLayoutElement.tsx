@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { CSSProperties, MouseEventHandler, forwardRef } from "react";
+import React, { CSSProperties, MouseEventHandler, forwardRef, useMemo } from "react";
 import cx from "classnames";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
@@ -73,10 +73,13 @@ export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementPr
             `gd-grid-layout__item--span-${validWidth}`, // CSS Grid columns size class name
             className,
         );
-        const sanitizedStyle = {
-            ...style,
-            ...exportStyles,
-        };
+        const sanitizedStyle = useMemo(
+            () => ({
+                ...style,
+                ...exportStyles,
+            }),
+            [style, exportStyles],
+        );
 
         return type === "section" ? (
             <section

@@ -1,6 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import cx from "classnames";
 import React, { useMemo } from "react";
+import cx from "classnames";
+import isNil from "lodash/isNil.js";
+import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+
 import {
     selectDraggingWidgetTargetLayoutPath,
     useDashboardDispatch,
@@ -19,17 +22,20 @@ import { ILayoutItemPath } from "../../../../types.js";
 import { areLayoutPathsEqual } from "../../../../_staging/layout/coordinates.js";
 import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
 import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
+import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
 
 export type WidgetDropZoneColumnProps = {
     layoutPath: ILayoutItemPath;
     isLastInSection?: boolean;
     gridWidthOverride?: number;
+    gridHeightOverride?: number;
 };
 
 export const WidgetDropZoneColumn = ({
     layoutPath,
     isLastInSection = false,
     gridWidthOverride,
+    gridHeightOverride,
 }: WidgetDropZoneColumnProps) => {
     const dropzoneCoordinates = useDashboardSelector(selectDraggingWidgetTargetLayoutPath);
 
@@ -97,19 +103,24 @@ export const WidgetDropZoneColumn = ({
     const { gridWidth = 12, gridHeight } = (collectedProps.item as BaseDraggableLayoutItem).size;
 
     const usedWidth = gridWidthOverride ?? gridWidth;
+    const usedHeight = gridHeightOverride ?? gridHeight;
 
+    const gridHeightProp = usedHeight === undefined ? {} : { gridHeight: usedHeight };
+    const computedHeight = getDashboardLayoutItemHeight({ gridWidth: usedWidth, ...gridHeightProp });
+    const style: React.CSSProperties = computedHeight === undefined ? {} : { height: computedHeight };
+    const classNames = cx(
+        "gd-fluidlayout-column",
+        "gd-fluidlayout-column-dropzone",
+        "s-fluid-layout-column",
+        {
+            [`s-fluid-layout-column-height-${usedHeight}`]: !isNil(usedHeight),
+        },
+    );
+    const layoutItemSize: IDashboardLayoutSizeByScreenSize = {
+        xl: { gridWidth: usedWidth, gridHeight: usedHeight },
+    };
     return (
-        <GridLayoutElement
-            type="item"
-            layoutItemSize={{
-                xl: { gridWidth: usedWidth, gridHeight },
-                lg: { gridWidth: usedWidth, gridHeight },
-                md: { gridWidth: usedWidth, gridHeight },
-                sm: { gridWidth: usedWidth, gridHeight },
-                xs: { gridWidth: usedWidth, gridHeight },
-            }}
-            className={cx("gd-fluidlayout-column", "gd-fluidlayout-column-dropzone", "s-fluid-layout-column")}
-        >
+        <GridLayoutElement type="item" layoutItemSize={layoutItemSize} className={classNames} style={style}>
             <WidgetDropZone isLastInSection={isLastInSection} layoutPath={layoutPath} dropRef={dropRef} />
         </GridLayoutElement>
     );
