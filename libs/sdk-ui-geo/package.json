@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "10.33.0-alpha.66",
+    "version": "10.33.0-alpha.67",
     "description": "GoodData.UI SDK - Geo Charts",
     "repository": {
         "type": "git",
