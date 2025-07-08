@@ -9,7 +9,7 @@ import { ListItem } from "../types.js";
  * Pick an icon according to the item type.
  */
 export const renderItemIcon = ({ item }: ListItem<ISemanticSearchResultItem>, theme?: ITheme) => {
-    const props: IIconProps = { color: theme?.palette?.complementary?.c5 ?? "#B0BECA" };
+    const props: IIconProps = { color: theme?.palette?.complementary?.c5 ?? "#B0BECA", ariaHidden: true };
 
     const Wrapper = ({ children }: PropsWithChildren) => {
         return (
