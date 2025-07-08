@@ -11,7 +11,7 @@
     },
     "semantic-search.no-results": {
         "value": "No results found for “{query}”.",
-        "comment": "Message shown when semantic search did not return any results. Do not translate placeholder {query}.",
+        "comment": "Message shown when semantic search returns no results. The {query} placeholder shows the search term entered by the user.",
         "limit": 0
     },
     "semantic-search.label": {
@@ -36,7 +36,7 @@
     },
     "semantic-search.match": {
         "value": "{score}% match",
-        "comment": "Label of column that contains match score of the search results object. Do not translate placeholder {score}.",
+        "comment": "Label showing match percentage in search results. The {score} placeholder displays the relevance score as a number.",
         "limit": 0
     },
     "semantic-search.previous-search": {
@@ -46,7 +46,7 @@
     },
     "semantic-search.date.at": {
         "value": "at",
-        "comment": "",
+        "comment": "Label for the date range filter identifying hour. Example: Today at 4:30.",
         "limit": 0
     },
     "semantic-search.ask.ai.assistant": {
@@ -56,12 +56,12 @@
     },
     "gs.date.today": {
         "value": "Today",
-        "comment": "",
+        "comment": "Label for the current day in date filters and selectors.",
         "limit": 0
     },
     "gs.date.yesterday": {
         "value": "Yesterday",
-        "comment": "",
+        "comment": "Label for the day before today in date filters and selectors.",
         "limit": 0
     }
 }

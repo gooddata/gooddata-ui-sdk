@@ -18,6 +18,33 @@ if (!fs.existsSync(bundleDir)) {
     process.exit(1);
 }
 
+function hasComplexStructure(jsonObj) {
+    const keys = Object.keys(jsonObj);
+    if (keys.length === 0) return false;
+    
+    // Just check the first key - if it's complex, assume the whole file follows the same pattern
+    const firstKey = keys[0];
+    const firstValue = jsonObj[firstKey];
+    
+    return typeof firstValue === 'object' && firstValue !== null && 'value' in firstValue;
+}
+
+function flattenComplexObject(jsonObj) {
+    const flattened = {};
+    
+    Object.keys(jsonObj).forEach(key => {
+        const value = jsonObj[key];
+        
+        if (typeof value === 'object' && value !== null && 'value' in value) {
+            flattened[key] = value.value;
+        } else {
+            flattened[key] = value;
+        }
+    });
+    
+    return flattened;
+}
+
 // Process all JSON files in the directory
 try {
     const files = fs.readdirSync(bundleDir);
@@ -37,17 +64,25 @@ try {
 
             // Read the JSON file
             const jsonData = fs.readFileSync(filePath, 'utf8');
-            const bundle = JSON.parse(jsonData);
+            const originalBundle = JSON.parse(jsonData);
+            
+            // Determine if the bundle has a complex structure and flatten if needed
+            let bundle = originalBundle;
+            if (hasComplexStructure(originalBundle)) {
+                console.log(`Detected complex structure in ${file}, flattening to key-value pairs`);
+                bundle = flattenComplexObject(originalBundle);
+            }
 
             // Create TypeScript output
             const tsContent = [
-                '// (C) 2021 GoodData Corporation',
+                '// (C) 2021-2024 GoodData Corporation',
                 '// DO NOT CHANGE THIS FILE, IT IS RE-GENERATED ON EVERY BUILD',
                 `export const ${bundleName} = ${JSON.stringify(bundle, null, 4)};`
             ].join('\n');
 
             // Write the TypeScript file
             fs.writeFileSync(outputPath, tsContent);
+            console.log(`Successfully processed ${file}`);
         } catch (fileError) {
             console.error(`Error processing file ${file}: ${fileError.message}`);
         }
