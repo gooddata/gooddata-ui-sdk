@@ -17,6 +17,7 @@ import {
     selectIsWorkingFilterContextChanged,
     selectDashboardFiltersApplyMode,
     selectEnableDashboardFiltersApplyModes,
+    selectIsInEditMode,
 } from "../../../model/index.js";
 
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
@@ -49,6 +50,8 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
     const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
+
     const { showExecutionTimestampMessage, formattedDate, onShowCurrentTimestampDashboard } =
         useExecutionTimestampMessage();
     const dispatch = useDashboardDispatch();
@@ -122,7 +125,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                     isVisible={rows.length > 1}
                     onToggle={(isExpanded) => setFilterBarExpanded(isExpanded)}
                 />
-                {isFlexibleLayoutEnabled ? <FlexibleBulletsBar /> : <FluidBulletsBar />}
+                {isInEditMode ? isFlexibleLayoutEnabled ? <FlexibleBulletsBar /> : <FluidBulletsBar /> : null}
             </div>
             {isWorkingFilterContextChanged &&
             filtersApplyMode.mode === "ALL_AT_ONCE" &&

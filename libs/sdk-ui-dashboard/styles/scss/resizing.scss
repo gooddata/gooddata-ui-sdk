@@ -385,6 +385,7 @@
     left: 0;
     right: 0;
     display: flex;
+    pointer-events: none;
 
     &__grid {
         flex-grow: 1;
