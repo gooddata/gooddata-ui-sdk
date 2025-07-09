@@ -144,12 +144,15 @@ const getContainersWithUpdatedHeights = (
                 getPreviouslyComputedHeight,
             );
 
-            return row.flatMap((item, itemIndex) => {
+            return row.flatMap((item) => {
                 if (!isDashboardLayout(item.widget)) {
                     return [];
                 }
-
-                const itemPath: ILayoutItemPath = [...currentPath, { sectionIndex, itemIndex }];
+                const itemIndexInSection = section.items.findIndex((currentItem) => currentItem === item);
+                const itemPath: ILayoutItemPath = [
+                    ...currentPath,
+                    { sectionIndex, itemIndex: itemIndexInSection },
+                ];
 
                 // Current container with its row height
                 const currentContainer: IItemWithHeight = {
