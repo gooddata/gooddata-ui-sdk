@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-pivottable",
-    "version": "10.33.0-alpha.71",
+    "version": "10.33.0-alpha.72",
     "title": "PivotTable",
     "description": "Basic PivotTable manipulation.",
     "author": "GoodData",
