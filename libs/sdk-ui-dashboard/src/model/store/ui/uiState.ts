@@ -7,6 +7,7 @@ import {
     ILayoutSectionPath,
     IAlertDialogContext,
     IScheduleEmailContext,
+    DropZoneType,
 } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
@@ -107,6 +108,8 @@ export interface UiState {
     /** @internal */
     draggingWidgetSource: DraggableLayoutItem | undefined;
     draggingWidgetTarget: ILayoutItemPath | undefined;
+    /** @internal */
+    draggingWidgetTriggeringDropZoneType: DropZoneType | undefined;
     widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
 }
 
@@ -177,6 +180,7 @@ export const uiInitialState: UiState = {
     },
     draggingWidgetSource: undefined,
     draggingWidgetTarget: undefined,
+    draggingWidgetTriggeringDropZoneType: undefined,
     widgetsOverlay: {},
     ignoreExecutionTimestamp: false,
 };

@@ -17,6 +17,7 @@ import {
     ILayoutItemPath,
     ILayoutSectionPath,
     IAlertDialogContext,
+    DropZoneType,
 } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
@@ -333,16 +334,21 @@ const clearDraggingWidgetSource: UiReducer<PayloadAction<void>> = (state) => {
     state.draggingWidgetSource = undefined;
 };
 
-const setDraggingWidgetTarget: UiReducer<PayloadAction<ILayoutItemPath>> = (state, action) => {
-    state.draggingWidgetTarget = action.payload;
+const setDraggingWidgetTarget: UiReducer<
+    PayloadAction<{ path: ILayoutItemPath; triggeringDropZoneType: DropZoneType }>
+> = (state, action) => {
+    const { path, triggeringDropZoneType } = action.payload;
+    state.draggingWidgetTarget = path;
+    state.draggingWidgetTriggeringDropZoneType = triggeringDropZoneType;
     state.activeSection = {
-        parent: action.payload.length > 1 ? action.payload.slice(0, -1) : undefined, // cut last item out to get parent of the item of section with sectionIndex used below
-        sectionIndex: action.payload[action.payload.length - 1].sectionIndex, // use sectionIndex from the last item
+        parent: path.length > 1 ? path.slice(0, -1) : undefined, // cut last item out to get parent of the item of section with sectionIndex used below
+        sectionIndex: path[path.length - 1].sectionIndex, // use sectionIndex from the last item
     };
 };
 
 const clearDraggingWidgetTarget: UiReducer<PayloadAction<void>> = (state) => {
     state.draggingWidgetTarget = undefined;
+    state.draggingWidgetTriggeringDropZoneType = undefined;
     state.activeSection = undefined;
 };
 

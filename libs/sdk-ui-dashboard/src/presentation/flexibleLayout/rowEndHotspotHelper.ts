@@ -6,19 +6,28 @@ import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../_staging/dashboard/fl
 import { IDashboardLayoutItemFacade } from "../../_staging/dashboard/flexibleLayout/index.js";
 import { getContainerHeight } from "../../_staging/layout/sizing.js";
 import { ExtendedDashboardWidget } from "../../model/index.js";
+import { areLayoutPathsEqual } from "../../_staging/layout/coordinates.js";
+import { ILayoutItemPath } from "../../types.js";
 
 export function getRemainingWidthInRow(
     item: IDashboardLayoutItemFacade<unknown>,
     screen: ScreenSize,
     rowIndex: number,
+    currentlyDraggedItemLayoutPath: ILayoutItemPath | undefined,
 ): number {
     const parentWidth = item.section().layout().size()?.gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
     const rows = item.section().items().asGridRows(screen);
-    const lastRowLength = rows[rowIndex].reduce(
-        (acc, rowItem) => acc + rowItem.sizeForScreenWithFallback(screen).gridWidth,
-        0,
-    );
-    return parentWidth - lastRowLength;
+
+    const rowLength = rows[rowIndex].reduce((acc, rowItem) => {
+        // do not count the width of the currently dragged item if it is in the current row,
+        // so the last drop zone will span the whole remaining space when the item is hidden during
+        // the drag
+        if (areLayoutPathsEqual(currentlyDraggedItemLayoutPath, rowItem.index())) {
+            return acc;
+        }
+        return acc + rowItem.sizeForScreenWithFallback(screen).gridWidth;
+    }, 0);
+    return parentWidth - rowLength;
 }
 
 export function getRemainingHeightInColumn(

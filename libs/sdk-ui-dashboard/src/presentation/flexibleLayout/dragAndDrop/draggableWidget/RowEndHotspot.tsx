@@ -8,6 +8,7 @@ import {
     ExtendedDashboardWidget,
     useDashboardSelector,
     selectSettings,
+    selectDraggingWidgetSource,
 } from "../../../../model/index.js";
 import {
     IDashboardLayoutItemFacade,
@@ -19,10 +20,13 @@ import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayo
 import { getRemainingWidthInRow, getRemainingHeightInColumn } from "../../rowEndHotspotHelper.js";
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
+import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
 
 import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
 import { Hotspot } from "./Hotspot.js";
-import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
+
+const MINIMUM_DROPZONE_WIDTH_TO_RENDER_TEXT = 2;
+const MINIMUM_DROPZONE_HEIGHT_TO_RENDER_TEXT = 7;
 
 export const useShouldShowRowEndHotspot = (
     item: IDashboardLayoutItemFacade<ExtendedDashboardWidget | unknown>,
@@ -32,6 +36,7 @@ export const useShouldShowRowEndHotspot = (
     const settings = useDashboardSelector(selectSettings);
     const { layoutItem: parentLayoutItem } = useDashboardItemPathAndSize();
     const { direction } = getLayoutConfiguration(item.section().layout().raw());
+    const draggedItem = useDashboardSelector(selectDraggingWidgetSource);
 
     if (direction === "column") {
         const parentLayoutItemGridWidth =
@@ -43,19 +48,18 @@ export const useShouldShowRowEndHotspot = (
             enableRowEndHotspot: item.isLastInSection() && remainingHeightInColumn > 1,
             gridWidth: parentLayoutItemGridWidth,
             gridHeight: remainingHeightInColumn,
-            hideDropzoneText: remainingHeightInColumn < 7,
+            hideDropzoneText: remainingHeightInColumn < MINIMUM_DROPZONE_HEIGHT_TO_RENDER_TEXT,
         };
     } else {
         const remainingGridWidthInRow = isCustomWidget(item.widget())
             ? 0
-            : getRemainingWidthInRow(item, screen, rowIndex);
+            : getRemainingWidthInRow(item, screen, rowIndex, draggedItem?.layoutPath);
         const rowGridHeight = item.size()[screen]?.gridHeight ?? 0;
         return {
-            enableRowEndHotspot:
-                (item.isLastInSection() || item.isLastInRow(screen)) && remainingGridWidthInRow > 0,
+            enableRowEndHotspot: item.isLastInRow(screen) && remainingGridWidthInRow > 0,
             gridWidth: remainingGridWidthInRow,
             gridHeight: rowGridHeight,
-            hideDropzoneText: remainingGridWidthInRow < 2,
+            hideDropzoneText: remainingGridWidthInRow < MINIMUM_DROPZONE_WIDTH_TO_RENDER_TEXT,
         };
     }
 };
@@ -76,7 +80,7 @@ export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<ExtendedDas
         const gridHeightProp = gridHeight > 0 ? { gridHeight: gridHeight } : {};
         return {
             xl: {
-                gridWidth: gridWidth,
+                gridWidth,
                 ...gridHeightProp,
             },
         };
