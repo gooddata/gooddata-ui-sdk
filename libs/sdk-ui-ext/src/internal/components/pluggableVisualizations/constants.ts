@@ -134,7 +134,7 @@ export const DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSiz
     },
     height: {
         default: MIDDLE_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
-        min: 12,
+        min: MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
         max: MAX_NEW_VISUALIZATION_HEIGHT,
     },
 };

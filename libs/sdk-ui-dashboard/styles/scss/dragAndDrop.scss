@@ -427,6 +427,10 @@
     );
     text-align: center;
 
+    &.drag-info-empty-nested-layout {
+        padding: 0;
+    }
+
     h2 {
         font-weight: bold;
         font-size: 20px;
