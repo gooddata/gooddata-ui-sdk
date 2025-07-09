@@ -88,13 +88,6 @@ export const LayoutDirectionConfigurationDialog: React.FC<ILayoutDirectionConfig
     const items = useMemo<IUiListboxItem<IDashboardLayoutContainerDirection, never>[]>(
         () => [
             {
-                id: "row",
-                type: "interactive",
-                icon: "directionRow",
-                stringTitle: intl.formatMessage({ id: "nestedLayoutToolbar.direction.row" }),
-                data: "row",
-            },
-            {
                 id: "column",
                 type: "interactive",
                 icon: "directionColumn",
@@ -106,6 +99,13 @@ export const LayoutDirectionConfigurationDialog: React.FC<ILayoutDirectionConfig
                     : intl.formatMessage({
                           id: "nestedLayoutToolbar.direction.column.disabledTooltip",
                       }),
+            },
+            {
+                id: "row",
+                type: "interactive",
+                icon: "directionRow",
+                stringTitle: intl.formatMessage({ id: "nestedLayoutToolbar.direction.row" }),
+                data: "row",
             },
         ],
         [intl, isColumnDirectionEnabled],

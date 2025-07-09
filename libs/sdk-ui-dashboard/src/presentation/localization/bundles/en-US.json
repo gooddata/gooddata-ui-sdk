@@ -2753,23 +2753,23 @@
         "limit": 0
     },
     "nestedLayoutToolbar.direction.row": {
-        "value": "Horizontal with wrap",
+        "value": "Wrapped Row",
         "comment": "Option for horizontal layout direction with wrapping in the nested layout toolbar",
         "limit": 0
     },
     "nestedLayoutToolbar.direction.row.tooltip": {
-        "value": "Horizontal layout with wrap.",
-        "comment": "Tooltip explaining the horizontal with wrap layout option",
+        "value": "Layout direction: Wrapped Row",
+        "comment": "Tooltip explaining the wrapped row layout direction option",
         "limit": 0
     },
     "nestedLayoutToolbar.direction.column": {
-        "value": "Vertical",
+        "value": "Column",
         "comment": "Option for vertical layout direction in the nested layout toolbar",
         "limit": 0
     },
     "nestedLayoutToolbar.direction.column.tooltip": {
-        "value": "Vertical layout.",
-        "comment": "Tooltip explaining the vertical layout option",
+        "value": "Layout direction: Column",
+        "comment": "Tooltip explaining the column layout direction option",
         "limit": 0
     },
     "nestedLayoutToolbar.direction.column.disabledTooltip": {
