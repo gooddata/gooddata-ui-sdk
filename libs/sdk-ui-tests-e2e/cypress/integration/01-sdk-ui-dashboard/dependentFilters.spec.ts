@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+/* eslint-disable jest/no-identical-title */
 import * as Navigation from "../../tools/navigation";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
 import { TopBar, Dashboard } from "../../tools/dashboards";
@@ -11,14 +12,236 @@ const stateFilter = new AttributeFilter("State");
 const cityFilter = new AttributeFilter("City");
 const product = new AttributeFilter("Product");
 const stageName = new AttributeFilter("Stage Name");
-const table = new Table(".s-dash-item-0");
+const table = new Table(".s-dash-item-0_0");
 const topBar = new TopBar();
 const filterBar = new FilterBar();
 
 describe("Dependent filter", () => {
     beforeEach(() => {
         Navigation.visit("dashboard/dashboard-dependent-filters");
-        new Dashboard().waitForDashboardLoaded();
+    });
+
+    it("should test parent - child interaction in view mode", { tags: "checklist_integrated_tiger" }, () => {
+        table
+            .waitLoaded()
+            .getColumnValues(2)
+            .should("deep.equal", [
+                "Bridgeport",
+                "Hartford",
+                "Boston",
+                "Nashua",
+                "New York",
+                "Poughkeepsie",
+                "Portland",
+                "Philadelphia",
+                "Providence",
+            ]);
+
+        stateFilter.isLoaded().open().selectAttribute(["Connecticut"]).apply();
+
+        table
+            .waitLoadStarted()
+            .waitLoaded()
+            .getColumnValues(2)
+            .should("deep.equal", ["Bridgeport", "Hartford"]);
+
+        cityFilter
+            .isLoaded()
+            .open()
+            .hasSubtitle("All")
+            .hasFilterListSize(6)
+            .hasSelectedValueList(["Bridgeport", "Danbury", "Hartford", "New Haven", "Norwich", "Waterbury"])
+            .hasValueList(["Bridgeport", "Danbury", "Hartford", "New Haven", "Norwich", "Waterbury"])
+            .showAllElementValuesIsVisible(true)
+            .showAllElementValues()
+            .showAllElementValuesIsVisible(false)
+            .hasFilterListSize(300)
+            .selectAttribute(["Hartford"])
+            .apply()
+            .isLoaded()
+            .hasSubtitle("Hartford");
+
+        table.waitLoadStarted().waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
+
+        stateFilter.open().selectAttribute(["Oregon"]).apply();
+
+        table.isEmpty();
+
+        cityFilter
+            .open()
+            .hasSubtitle("Hartford")
+            .hasFilterListSize(4)
+            .hasSelectedValueList([])
+            .hasValueList(["Eugene", "Medford", "Portland", "Salem"])
+            .containElementsListStatus("Hartford")
+            .clearIrrelevantElementValuesIsVisible(true)
+            .clearIrrelevantElementValues()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .containElementsListStatus("None")
+            .showAllElementValuesIsVisible(true)
+            .showAllElementValues()
+            .showAllElementValuesIsVisible(false)
+            .containElementsListStatus("None")
+            .hasFilterListSize(300)
+            .selectAttribute(["New York"])
+            .containElementsListStatus("New York")
+            .close()
+            .open()
+            .hasSubtitle("Hartford")
+            .hasFilterListSize(4)
+            .hasSelectedValueList([])
+            .hasValueList(["Eugene", "Medford", "Portland", "Salem"])
+            .clearIrrelevantElementValuesIsVisible(true)
+            .showAllElementValuesIsVisible(true)
+            .showAllElementValues()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(false)
+            .close()
+            .open()
+            .searchAndSelectFilterItem("Medford")
+            .containElementsListStatus("Hartford, Medford")
+            .clearIrrelevantElementValues()
+            .clearSearch()
+            .elementsAreLoaded()
+            .hasSelectedValueList(["Medford"]);
+
+        stateFilter.open().selectAttribute(["Connecticut", "Oregon"]).apply();
+
+        table.waitLoadStarted().waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
+
+        cityFilter.open().hasSubtitle("Hartford").hasFilterListSize(10).hasSelectedValueList(["Hartford"]);
+    });
+
+    it("should test parent - child interaction in edit mode", { tags: "checklist_integrated_tiger" }, () => {
+        topBar.enterEditMode().editButtonIsVisible(false);
+        table
+            .waitLoaded()
+            .getColumnValues(1)
+            .should("deep.equal", [
+                "Connecticut",
+                "Connecticut",
+                "Massachusetts",
+                "New Hampshire",
+                "New York",
+                "New York",
+                "Oregon",
+                "Pennsylvania",
+                "Rhode Island",
+            ]);
+
+        stateFilter
+            .isLoaded()
+            .open()
+            .hasSubtitle("All")
+            .hasFilterListSize(48)
+            .configureLimitingParentFilterDependency("Region")
+            .hasFilterListSize(7)
+            .hasSelectedValueList([
+                "Connecticut",
+                "Massachusetts",
+                "New Hampshire",
+                "New York",
+                "Oregon",
+                "Pennsylvania",
+                "Rhode Island",
+            ]);
+
+        table
+            .waitLoaded()
+            .getColumnValues(1)
+            .should("deep.equal", [
+                "Connecticut",
+                "Connecticut",
+                "Massachusetts",
+                "New Hampshire",
+                "New York",
+                "New York",
+                "Oregon",
+                "Pennsylvania",
+                "Rhode Island",
+            ]);
+
+        regionFilter.open().selectAttribute(["West Coast"]).apply();
+        table.waitLoadStarted().waitLoaded();
+
+        stateFilter
+            .open()
+            .hasSubtitle("All")
+            .hasFilterListSize(3)
+            .hasSelectedValueList(["California", "Oregon", "Washington"])
+            .hasValueList(["California", "Oregon", "Washington"])
+            .selectAttribute(["California"])
+            .apply()
+            .isLoaded()
+            .hasSubtitle("California");
+
+        cy.wait(1000);
+
+        cityFilter
+            .open()
+            .hasSubtitle("All")
+            .hasFilterListSize(50)
+            .configureLimitingParentFilterDependency("Region")
+            .hasFilterListSize(7)
+            .selectAttribute(["Sacramento"])
+            .apply();
+
+        table.waitLoadStarted().waitLoaded();
+
+        cityFilter.isLoaded().hasSubtitle("Sacramento");
+
+        table.getColumnValues(0).should("deep.equal", ["West Coast"]);
+        table.getColumnValues(1).should("deep.equal", ["California"]);
+        table.getColumnValues(2).should("deep.equal", ["Sacramento"]);
+
+        regionFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(false)
+            .selectAttribute(["East Coast"])
+            .apply();
+
+        cy.wait(1000);
+
+        stateFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(true)
+            .showAllElementValuesIsVisible(true);
+        cityFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(true)
+            .showAllElementValuesIsVisible(true);
+        regionFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(false)
+            .selectAttribute(["West Coast"])
+            .apply();
+
+        cy.wait(1000);
+
+        stateFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(true);
+        cityFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(true);
+
+        topBar.cancelEditMode().discardChanges().editButtonIsVisible(true);
+
+        table.waitLoaded();
+
+        regionFilter.isLoaded().open().hasSubtitle("East Coast").hasFilterListSize(4);
+        stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
+        cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(300);
     });
 
     it(
