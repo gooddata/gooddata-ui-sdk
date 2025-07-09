@@ -18,18 +18,6 @@ module.exports = {
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "error",
         "import/no-unassigned-import": "off",
-        "no-restricted-imports": [
-            "error",
-            {
-                paths: [
-                    {
-                        name: "@storybook/react",
-                        importNames: ["storiesOf"],
-                        message: "Please use storiesOf from stories/_infra/storyRepository instead.",
-                    },
-                ],
-            },
-        ],
     },
     parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
 };
