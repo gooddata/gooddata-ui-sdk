@@ -37,8 +37,9 @@ module.exports = async (env, argv) => {
 
     const isProduction = argv.mode === "production";
 
-    const proxy = {
-        "/api": {
+    const proxy = [
+        {
+            context: ["/api"],
             changeOrigin: true,
             cookieDomainRewrite: "localhost",
             secure: false,
@@ -54,7 +55,7 @@ module.exports = async (env, argv) => {
                 proxyReq.setHeader("accept-encoding", "identity");
             },
         },
-    };
+    ];
 
     const plugins = [
         new CleanWebpackPlugin(),

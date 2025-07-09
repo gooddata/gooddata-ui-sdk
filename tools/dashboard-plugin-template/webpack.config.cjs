@@ -37,8 +37,9 @@ module.exports = (_env, argv) => {
     const effectiveBackendUrl = process.env.BACKEND_URL || DEFAULT_BACKEND_URL;
     const protocol = new URL(effectiveBackendUrl).protocol;
 
-    const proxy = {
-        "/api": {
+    const proxy = [
+        {
+            context: ["/api"],
             changeOrigin: true,
             cookieDomainRewrite: "127.0.0.1",
             secure: false,
@@ -54,7 +55,7 @@ module.exports = (_env, argv) => {
                 proxyReq.setHeader("accept-encoding", "identity");
             },
         },
-    };
+    ];
 
     const commonConfig = {
         mode: isProduction ? "production" : "development",
@@ -155,7 +156,12 @@ module.exports = (_env, argv) => {
                 port: PORT,
                 host: "127.0.0.1",
                 proxy,
-                https: protocol === "https:",
+                server: protocol === "https:" ? "https" : "http",
+                // webpack-dev-server v5 compatible options
+                compress: true,
+                historyApiFallback: true,
+                hot: true,
+                liveReload: true,
             },
             plugins: [
                 ...commonConfig.plugins,

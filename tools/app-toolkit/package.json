@@ -65,7 +65,9 @@
         "strip-ansi": "^6.0.0",
         "tar": "^6.2.1",
         "tslib": "^2.5.0",
-        "validate-npm-package-name": "^5.0.0"
+        "validate-npm-package-name": "^5.0.0",
+        "webpack-dev-server": "5.2.2",
+        "webpack-cli": "6.0.1"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",

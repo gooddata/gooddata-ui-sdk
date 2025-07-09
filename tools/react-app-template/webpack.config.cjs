@@ -133,6 +133,11 @@ module.exports = (_env, argv) => {
                 proxy,
                 server: protocol === "https:" ? "https" : "http",
                 open: true,
+                // webpack-dev-server v5 compatible options
+                compress: true,
+                historyApiFallback: true,
+                hot: true,
+                liveReload: true,
             },
             optimization: {
                 minimizer: [new EsbuildPlugin()],
