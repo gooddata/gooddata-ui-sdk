@@ -116,9 +116,10 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
         [layoutItems, insightsMap, customWidgetsRestrictions.heightLimit, screen, settings],
     );
 
+    const isItemNested = !!section.index().parent;
     useEffect(() => {
         if (isDragging) {
-            resizeStart("height", widgetIdentifiers);
+            resizeStart("height", widgetIdentifiers, isItemNested);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to run this only when isDragging changes
     }, [isDragging]);

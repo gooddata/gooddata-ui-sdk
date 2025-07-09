@@ -87,7 +87,7 @@ export function WidthResizerHotspot({
 
     useEffect(() => {
         if (isDragging) {
-            resizeStart("width", [widgetIdentifier], getLayoutDimensions);
+            resizeStart("width", [widgetIdentifier], false, getLayoutDimensions);
         } else {
             resizeEnd();
         }

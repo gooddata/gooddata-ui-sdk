@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { createContext, ReactNode, useCallback, useContext, useRef, useState } from "react";
 import noop from "lodash/noop.js";
 import { XYCoord } from "react-dnd";
@@ -20,6 +20,7 @@ export type LayoutResizeState = {
     heightLimitReached: ReachedResizingLimit;
     widthState: null | WidthState;
     initialDashboardDimensions: DOMRect;
+    isItemNested: undefined | boolean;
 };
 
 const initState: LayoutResizeState = {
@@ -28,12 +29,14 @@ const initState: LayoutResizeState = {
     heightLimitReached: "none",
     widthState: null,
     initialDashboardDimensions: emptyDOMRect,
+    isItemNested: undefined,
 };
 
 export type LayoutResizeHandlers = {
     resizeStart: (
         direction: Exclude<ResizeDirection, "none">,
         resizeIdentifiers: string[],
+        isItemNested: boolean,
         getDashboardDimensions?: () => DOMRect,
     ) => void;
     resizeEnd: () => void;
@@ -57,6 +60,7 @@ const LayoutResizeStateContext = createContext<LayoutResizeContext>({
     getScrollCorrection: () => ({ x: 0, y: 0 }),
     setWidthState: noop,
     toggleHeightLimitReached: noop,
+    isItemNested: undefined,
 });
 
 export type LayoutResizeStateProviderProps = {
@@ -71,6 +75,7 @@ export function LayoutResizeStateProvider({ children }: LayoutResizeStateProvide
         (
             direction: Exclude<ResizeDirection, "none">,
             identifiers: string[],
+            isItemNested: boolean,
             getDashboardDimensions?: () => DOMRect,
         ) => {
             setResizeState({
@@ -79,6 +84,7 @@ export function LayoutResizeStateProvider({ children }: LayoutResizeStateProvide
                 resizeDirection: direction,
                 resizeItemIdentifiers: identifiers,
                 widthState: null,
+                isItemNested,
             });
         },
         [],
@@ -166,10 +172,11 @@ export function useResizeWidthItemStatus(identifier: string) {
 
 export function useResizeWidthStatus():
     | { isResizingWidth: false }
-    | ({ isResizingWidth: true } & WidthState) {
+    | ({ isResizingWidth: true; isItemNested: boolean } & WidthState) {
     const context = useResizeContext();
     return {
         isResizingWidth: context.resizeDirection === "width",
+        isItemNested: !!context.isItemNested,
         ...(context.widthState as WidthState),
     };
 }
