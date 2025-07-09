@@ -979,6 +979,52 @@
                     }
                 }
             },
+            "BoundedFilter": {
+                "required": ["dataset", "granularity"],
+                "type": "object",
+                "properties": {
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                    },
+                    "granularity": {
+                        "type": "string",
+                        "description": "Date granularity specifying particular date attribute in given dimension.",
+                        "example": "DAY",
+                        "enum": [
+                            "MINUTE",
+                            "HOUR",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "QUARTER",
+                            "YEAR",
+                            "MINUTE_OF_HOUR",
+                            "HOUR_OF_DAY",
+                            "DAY_OF_WEEK",
+                            "DAY_OF_MONTH",
+                            "DAY_OF_YEAR",
+                            "WEEK_OF_YEAR",
+                            "MONTH_OF_YEAR",
+                            "QUARTER_OF_YEAR"
+                        ]
+                    },
+                    "from": {
+                        "type": "integer",
+                        "description": "Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for '2 days/weeks, ... ago'). If null, then start of the range is unbounded.",
+                        "format": "int32",
+                        "nullable": true,
+                        "example": -6
+                    },
+                    "to": {
+                        "type": "integer",
+                        "description": "End of the filtering interval. Specified by number of periods (with respect to given granularity). Value 'O' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.",
+                        "format": "int32",
+                        "nullable": true,
+                        "example": 0
+                    }
+                },
+                "description": "Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range."
+            },
             "Comparison": {
                 "required": ["left", "operator", "right"],
                 "type": "object",
@@ -2061,7 +2107,7 @@
                 "type": "object",
                 "properties": {
                     "relativeDateFilter": {
-                        "required": ["granularity", "dataset"],
+                        "required": ["from", "granularity", "to", "dataset"],
                         "type": "object",
                         "properties": {
                             "granularity": {
@@ -2088,16 +2134,14 @@
                             },
                             "from": {
                                 "type": "integer",
-                                "description": "Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for '2 days/weeks, ... ago'). If null, then start of the range is unbounded.",
+                                "description": "Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for '2 days/weeks, ... ago').",
                                 "format": "int32",
-                                "nullable": true,
                                 "example": -6
                             },
                             "to": {
                                 "type": "integer",
-                                "description": "End of the filtering interval. Specified by number of periods (with respect to given granularity). Value 'O' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.",
+                                "description": "End of the filtering interval. Specified by number of periods (with respect to given granularity). Value 'O' is representing current time-interval (current day, week, ...).",
                                 "format": "int32",
-                                "nullable": true,
                                 "example": 0
                             },
                             "localIdentifier": {
@@ -2105,6 +2149,9 @@
                             },
                             "applyOnResult": {
                                 "type": "boolean"
+                            },
+                            "boundedFilter": {
+                                "$ref": "#/components/schemas/BoundedFilter"
                             },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"

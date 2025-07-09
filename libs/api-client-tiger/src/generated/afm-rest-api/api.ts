@@ -852,6 +852,59 @@ export interface AttributeResultHeader {
     primaryLabelValue: string;
 }
 /**
+ * Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range.
+ * @export
+ * @interface BoundedFilter
+ */
+export interface BoundedFilter {
+    /**
+     *
+     * @type {AfmObjectIdentifierDataset}
+     * @memberof BoundedFilter
+     */
+    dataset: AfmObjectIdentifierDataset;
+    /**
+     * Date granularity specifying particular date attribute in given dimension.
+     * @type {string}
+     * @memberof BoundedFilter
+     */
+    granularity: BoundedFilterGranularityEnum;
+    /**
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
+     * @type {number}
+     * @memberof BoundedFilter
+     */
+    from?: number | null;
+    /**
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
+     * @type {number}
+     * @memberof BoundedFilter
+     */
+    to?: number | null;
+}
+
+export const BoundedFilterGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type BoundedFilterGranularityEnum =
+    typeof BoundedFilterGranularityEnum[keyof typeof BoundedFilterGranularityEnum];
+
+/**
  * List of chat history interactions.
  * @export
  * @interface ChatHistoryInteraction
@@ -2950,17 +3003,17 @@ export interface RelativeDateFilterRelativeDateFilter {
      */
     granularity: RelativeDateFilterRelativeDateFilterGranularityEnum;
     /**
-     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
      * @type {number}
      * @memberof RelativeDateFilterRelativeDateFilter
      */
-    from?: number | null;
+    from: number;
     /**
-     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
      * @type {number}
      * @memberof RelativeDateFilterRelativeDateFilter
      */
-    to?: number | null;
+    to: number;
     /**
      *
      * @type {string}
@@ -2973,6 +3026,12 @@ export interface RelativeDateFilterRelativeDateFilter {
      * @memberof RelativeDateFilterRelativeDateFilter
      */
     applyOnResult?: boolean;
+    /**
+     *
+     * @type {BoundedFilter}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    boundedFilter?: BoundedFilter;
     /**
      *
      * @type {AfmObjectIdentifierDataset}
@@ -3002,6 +3061,38 @@ export const RelativeDateFilterRelativeDateFilterGranularityEnum = {
 export type RelativeDateFilterRelativeDateFilterGranularityEnum =
     typeof RelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof RelativeDateFilterRelativeDateFilterGranularityEnum];
 
+/**
+ *
+ * @export
+ * @interface ResolvedLlmEndpoint
+ */
+export interface ResolvedLlmEndpoint {
+    /**
+     * Endpoint Id
+     * @type {string}
+     * @memberof ResolvedLlmEndpoint
+     */
+    id: string;
+    /**
+     * Endpoint Title
+     * @type {string}
+     * @memberof ResolvedLlmEndpoint
+     */
+    title: string;
+}
+/**
+ *
+ * @export
+ * @interface ResolvedLlmEndpoints
+ */
+export interface ResolvedLlmEndpoints {
+    /**
+     *
+     * @type {Array<ResolvedLlmEndpoint>}
+     * @memberof ResolvedLlmEndpoints
+     */
+    data: Array<ResolvedLlmEndpoint>;
+}
 /**
  * Object identifier.
  * @export
@@ -3730,6 +3821,62 @@ export interface ValidateByItem {
      * @memberof ValidateByItem
      */
     type: string;
+}
+/**
+ *
+ * @export
+ * @interface ValidateLLMEndpointRequest
+ */
+export interface ValidateLLMEndpointRequest {
+    /**
+     * Provider for the LLM endpoint validation
+     * @type {string}
+     * @memberof ValidateLLMEndpointRequest
+     */
+    provider: string;
+    /**
+     * Base URL for the LLM endpoint validation
+     * @type {string}
+     * @memberof ValidateLLMEndpointRequest
+     */
+    baseUrl?: string;
+    /**
+     * Token for the LLM endpoint validation
+     * @type {string}
+     * @memberof ValidateLLMEndpointRequest
+     */
+    token: string;
+    /**
+     * Organization name for the LLM endpoint validation
+     * @type {string}
+     * @memberof ValidateLLMEndpointRequest
+     */
+    llmOrganization?: string;
+    /**
+     * LLM model for the LLM endpoint validation
+     * @type {string}
+     * @memberof ValidateLLMEndpointRequest
+     */
+    llmModel?: string;
+}
+/**
+ *
+ * @export
+ * @interface ValidateLLMEndpointResponse
+ */
+export interface ValidateLLMEndpointResponse {
+    /**
+     * Whether the LLM endpoint validation was successful
+     * @type {boolean}
+     * @memberof ValidateLLMEndpointResponse
+     */
+    success: boolean;
+    /**
+     * Additional message about the LLM endpoint validation
+     * @type {string}
+     * @memberof ValidateLLMEndpointResponse
+     */
+    message: string;
 }
 
 /**
@@ -4819,6 +4966,46 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Returns a list of available LLM Endpoints
+         * @summary Get Active LLM Endpoints for this workspace
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolveLlmEndpoints: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("resolveLlmEndpoints", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -4926,6 +5113,55 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 ...headersFromBaseOptions,
                 ...options.headers,
             };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Validates LLM endpointw with provided parameters.
+         * @summary Validate LLM Endpoint
+         * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateLLMEndpoint: async (
+            validateLLMEndpointRequest: ValidateLLMEndpointRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'validateLLMEndpointRequest' is not null or undefined
+            assertParamExists(
+                "validateLLMEndpoint",
+                "validateLLMEndpointRequest",
+                validateLLMEndpointRequest,
+            );
+            const localVarPath = `/api/v1/actions/ai/validateLlmEndpoint`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof validateLLMEndpointRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(validateLLMEndpointRequest !== undefined ? validateLLMEndpointRequest : {})
+                : validateLLMEndpointRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5391,6 +5627,23 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns a list of available LLM Endpoints
+         * @summary Get Active LLM Endpoints for this workspace
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async resolveLlmEndpoints(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResolvedLlmEndpoints>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.resolveLlmEndpoints(
+                workspaceId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -5438,6 +5691,23 @@ export const ActionsApiFp = function (configuration?: Configuration) {
                 limit,
                 excludedTotalDimensions,
                 xGDCCANCELTOKEN,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Validates LLM endpointw with provided parameters.
+         * @summary Validate LLM Endpoint
+         * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async validateLLMEndpoint(
+            validateLLMEndpointRequest: ValidateLLMEndpointRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.validateLLMEndpoint(
+                validateLLMEndpointRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -5815,6 +6085,21 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Returns a list of available LLM Endpoints
+         * @summary Get Active LLM Endpoints for this workspace
+         * @param {ActionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolveLlmEndpoints(
+            requestParameters: ActionsApiResolveLlmEndpointsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ResolvedLlmEndpoints> {
+            return localVarFp
+                .resolveLlmEndpoints(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
@@ -5850,6 +6135,21 @@ export const ActionsApiFactory = function (
                     requestParameters.xGDCCANCELTOKEN,
                     options,
                 )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Validates LLM endpointw with provided parameters.
+         * @summary Validate LLM Endpoint
+         * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateLLMEndpoint(
+            requestParameters: ActionsApiValidateLLMEndpointRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ValidateLLMEndpointResponse> {
+            return localVarFp
+                .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
                 .then((request) => request(axios, basePath));
         },
     };
@@ -6109,6 +6409,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<KeyDriversResult>;
 
     /**
+     * Returns a list of available LLM Endpoints
+     * @summary Get Active LLM Endpoints for this workspace
+     * @param {ActionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    resolveLlmEndpoints(
+        requestParameters: ActionsApiResolveLlmEndpointsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ResolvedLlmEndpoints>;
+
+    /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
      * @summary Get a single execution result\'s metadata.
      * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
@@ -6133,6 +6446,19 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiRetrieveResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExecutionResult>;
+
+    /**
+     * Validates LLM endpointw with provided parameters.
+     * @summary Validate LLM Endpoint
+     * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    validateLLMEndpoint(
+        requestParameters: ActionsApiValidateLLMEndpointRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ValidateLLMEndpointResponse>;
 }
 
 /**
@@ -6686,6 +7012,20 @@ export interface ActionsApiKeyDriverAnalysisResultRequest {
 }
 
 /**
+ * Request parameters for resolveLlmEndpoints operation in ActionsApi.
+ * @export
+ * @interface ActionsApiResolveLlmEndpointsRequest
+ */
+export interface ActionsApiResolveLlmEndpointsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiResolveLlmEndpoints
+     */
+    readonly workspaceId: string;
+}
+
+/**
  * Request parameters for retrieveExecutionMetadata operation in ActionsApi.
  * @export
  * @interface ActionsApiRetrieveExecutionMetadataRequest
@@ -6753,6 +7093,20 @@ export interface ActionsApiRetrieveResultRequest {
      * @memberof ActionsApiRetrieveResult
      */
     readonly xGDCCANCELTOKEN?: string;
+}
+
+/**
+ * Request parameters for validateLLMEndpoint operation in ActionsApi.
+ * @export
+ * @interface ActionsApiValidateLLMEndpointRequest
+ */
+export interface ActionsApiValidateLLMEndpointRequest {
+    /**
+     *
+     * @type {ValidateLLMEndpointRequest}
+     * @memberof ActionsApiValidateLLMEndpoint
+     */
+    readonly validateLLMEndpointRequest: ValidateLLMEndpointRequest;
 }
 
 /**
@@ -7129,6 +7483,23 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Returns a list of available LLM Endpoints
+     * @summary Get Active LLM Endpoints for this workspace
+     * @param {ActionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public resolveLlmEndpoints(
+        requestParameters: ActionsApiResolveLlmEndpointsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .resolveLlmEndpoints(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
      * @summary Get a single execution result\'s metadata.
      * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
@@ -7164,6 +7535,23 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.xGDCCANCELTOKEN,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Validates LLM endpointw with provided parameters.
+     * @summary Validate LLM Endpoint
+     * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public validateLLMEndpoint(
+        requestParameters: ActionsApiValidateLLMEndpointRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }
@@ -9377,6 +9765,95 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Returns a list of available LLM Endpoints
+         * @summary Get Active LLM Endpoints for this workspace
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolveLlmEndpoints: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("resolveLlmEndpoints", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Validates LLM endpointw with provided parameters.
+         * @summary Validate LLM Endpoint
+         * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateLLMEndpoint: async (
+            validateLLMEndpointRequest: ValidateLLMEndpointRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'validateLLMEndpointRequest' is not null or undefined
+            assertParamExists(
+                "validateLLMEndpoint",
+                "validateLLMEndpointRequest",
+                validateLLMEndpointRequest,
+            );
+            const localVarPath = `/api/v1/actions/ai/validateLlmEndpoint`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof validateLLMEndpointRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(validateLLMEndpointRequest !== undefined ? validateLLMEndpointRequest : {})
+                : validateLLMEndpointRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     };
 };
 
@@ -9637,6 +10114,40 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Returns a list of available LLM Endpoints
+         * @summary Get Active LLM Endpoints for this workspace
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async resolveLlmEndpoints(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResolvedLlmEndpoints>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.resolveLlmEndpoints(
+                workspaceId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Validates LLM endpointw with provided parameters.
+         * @summary Validate LLM Endpoint
+         * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async validateLLMEndpoint(
+            validateLLMEndpointRequest: ValidateLLMEndpointRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.validateLLMEndpoint(
+                validateLLMEndpointRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     };
 };
 
@@ -9852,6 +10363,36 @@ export const SmartFunctionsApiFactory = function (
                 )
                 .then((request) => request(axios, basePath));
         },
+        /**
+         * Returns a list of available LLM Endpoints
+         * @summary Get Active LLM Endpoints for this workspace
+         * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolveLlmEndpoints(
+            requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ResolvedLlmEndpoints> {
+            return localVarFp
+                .resolveLlmEndpoints(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Validates LLM endpointw with provided parameters.
+         * @summary Validate LLM Endpoint
+         * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateLLMEndpoint(
+            requestParameters: SmartFunctionsApiValidateLLMEndpointRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ValidateLLMEndpointResponse> {
+            return localVarFp
+                .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
+                .then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -10003,6 +10544,32 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiForecastResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ForecastResult>;
+
+    /**
+     * Returns a list of available LLM Endpoints
+     * @summary Get Active LLM Endpoints for this workspace
+     * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    resolveLlmEndpoints(
+        requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ResolvedLlmEndpoints>;
+
+    /**
+     * Validates LLM endpointw with provided parameters.
+     * @summary Validate LLM Endpoint
+     * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    validateLLMEndpoint(
+        requestParameters: SmartFunctionsApiValidateLLMEndpointRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ValidateLLMEndpointResponse>;
 }
 
 /**
@@ -10314,6 +10881,34 @@ export interface SmartFunctionsApiForecastResultRequest {
 }
 
 /**
+ * Request parameters for resolveLlmEndpoints operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiResolveLlmEndpointsRequest
+ */
+export interface SmartFunctionsApiResolveLlmEndpointsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiResolveLlmEndpoints
+     */
+    readonly workspaceId: string;
+}
+
+/**
+ * Request parameters for validateLLMEndpoint operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiValidateLLMEndpointRequest
+ */
+export interface SmartFunctionsApiValidateLLMEndpointRequest {
+    /**
+     *
+     * @type {ValidateLLMEndpointRequest}
+     * @memberof SmartFunctionsApiValidateLLMEndpoint
+     */
+    readonly validateLLMEndpointRequest: ValidateLLMEndpointRequest;
+}
+
+/**
  * SmartFunctionsApi - object-oriented interface
  * @export
  * @class SmartFunctionsApi
@@ -10525,6 +11120,40 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
                 requestParameters.limit,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of available LLM Endpoints
+     * @summary Get Active LLM Endpoints for this workspace
+     * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public resolveLlmEndpoints(
+        requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .resolveLlmEndpoints(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Validates LLM endpointw with provided parameters.
+     * @summary Validate LLM Endpoint
+     * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public validateLLMEndpoint(
+        requestParameters: SmartFunctionsApiValidateLLMEndpointRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }

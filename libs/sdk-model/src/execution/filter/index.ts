@@ -164,7 +164,39 @@ export type IRelativeDateFilter =
       }
     | {
           relativeDateFilter: IRelativeDateFilterAllTimeBody;
+      }
+    | {
+          relativeDateFilter: IRelativeBoundedDateFilterBody;
       };
+
+/**
+ * Object defining the {@link IRelativeDateFilter} object body.
+ *
+ * @public
+ */
+export interface IRelativeBoundedDateFilterBody extends IRelativeDateFilterBody {
+    boundedFilter: IUpperBoundedFilter | ILowerBoundedFilter;
+}
+
+/**
+ * Object defining the {@link IUpperBoundedFilter} object body.
+ *
+ * @public
+ */
+export interface IUpperBoundedFilter {
+    granularity: DateAttributeGranularity;
+    to: number;
+}
+
+/**
+ * Object defining the {@link ILowerBoundedFilter} object body.
+ *
+ * @public
+ */
+export interface ILowerBoundedFilter {
+    granularity: DateAttributeGranularity;
+    from: number;
+}
 
 /**
  * Object defining the {@link IRelativeDateFilter} object body.
@@ -395,6 +427,74 @@ export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter {
  */
 export function isRelativeDateFilter(obj: unknown): obj is IRelativeDateFilter {
     return !isEmpty(obj) && (obj as IRelativeDateFilter).relativeDateFilter !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided object is a relative date filter body with bounded.
+ *
+ * @public
+ */
+export function isRelativeBoundedDateFilterBody(obj: unknown): obj is IRelativeBoundedDateFilterBody {
+    return (obj as IRelativeBoundedDateFilterBody).boundedFilter !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided filter body has a bounded filter with upper bounded.
+ *
+ * @public
+ */
+export function isRelativeUpperBoundedDateFilterBody(
+    obj: unknown,
+): obj is IRelativeBoundedDateFilterBody & { boundedFilter: IUpperBoundedFilter } {
+    return (
+        isRelativeBoundedDateFilterBody(obj) && (obj.boundedFilter as IUpperBoundedFilter).to !== undefined
+    );
+}
+
+/**
+ * Type guard checking whether the provided filter body has a bounded filter with lower bounded.
+ *
+ * @public
+ */
+export function isRelativeLowerBoundedDateFilterBody(
+    obj: unknown,
+): obj is IRelativeBoundedDateFilterBody & { boundedFilter: ILowerBoundedFilter } {
+    return (
+        isRelativeBoundedDateFilterBody(obj) && (obj.boundedFilter as ILowerBoundedFilter).from !== undefined
+    );
+}
+
+/**
+ * Type guard checking whether the provided object is a relative date filter with bounded.
+ *
+ * @public
+ */
+export function isRelativeBoundedDateFilter(
+    obj: unknown,
+): obj is IRelativeDateFilter & { relativeDateFilter: IRelativeBoundedDateFilterBody } {
+    return isRelativeDateFilter(obj) && isRelativeBoundedDateFilterBody(obj.relativeDateFilter);
+}
+
+/**
+ * Type guard checking whether the provided filter is a relative date filter with upper bounded.
+ *
+ * @public
+ */
+export function isRelativeUpperBoundedDateFilter(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: IRelativeBoundedDateFilterBody & { boundedFilter: IUpperBoundedFilter };
+} {
+    return isRelativeDateFilter(obj) && isRelativeUpperBoundedDateFilterBody(obj.relativeDateFilter);
+}
+
+/**
+ * Type guard checking whether the provided filter is a relative date filter with lower bounded.
+ *
+ * @public
+ */
+export function isRelativeLowerBoundedDateFilter(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: IRelativeBoundedDateFilterBody & { boundedFilter: ILowerBoundedFilter };
+} {
+    return isRelativeDateFilter(obj) && isRelativeLowerBoundedDateFilterBody(obj.relativeDateFilter);
 }
 
 /**

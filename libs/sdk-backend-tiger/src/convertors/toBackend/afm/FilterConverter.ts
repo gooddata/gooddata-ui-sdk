@@ -32,6 +32,9 @@ import {
     isRangeCondition,
     isRankingFilter,
     isRelativeDateFilter,
+    isRelativeBoundedDateFilter,
+    isRelativeUpperBoundedDateFilter,
+    isRelativeLowerBoundedDateFilter,
 } from "@gooddata/sdk-model";
 import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions.js";
 import {
@@ -40,6 +43,7 @@ import {
     toDateDataSetQualifier,
     toLocalIdentifier,
 } from "../ObjRefConverter.js";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 
 /**
  * Tiger specific wrapper for IFilter, adding 'applyOnResult' property influencing the place of filter application.
@@ -170,6 +174,10 @@ function convertRelativeDateFilter(
         return null;
     }
 
+    if (isRelativeBoundedDateFilter(filter)) {
+        return convertRelativeBoundedDateFilter(filter, applyOnResultProp);
+    }
+
     const datasetRef = relativeDateFilter.dataSet;
     const localIdentifier = relativeDateFilter.localIdentifier;
 
@@ -183,6 +191,59 @@ function convertRelativeDateFilter(
             ...applyOnResultProp,
         },
     };
+}
+
+function convertRelativeBoundedDateFilter(
+    filter: IRelativeDateFilter,
+    applyOnResultProp: ApplyOnResultProp,
+): RelativeDateFilter {
+    const { relativeDateFilter } = filter;
+    const datasetRef = relativeDateFilter.dataSet;
+    const dataset = toDateDataSetQualifier(datasetRef);
+    const granularity = toTigerGranularity(relativeDateFilter.granularity as any);
+    const from = Number(relativeDateFilter.from);
+    const to = Number(relativeDateFilter.to);
+    const localIdentifier = relativeDateFilter.localIdentifier;
+
+    if (isRelativeUpperBoundedDateFilter(filter)) {
+        const upperBoundedFilter = filter.relativeDateFilter.boundedFilter;
+
+        return {
+            relativeDateFilter: {
+                dataset,
+                granularity,
+                from,
+                to,
+                localIdentifier,
+                boundedFilter: {
+                    dataset,
+                    granularity: toTigerGranularity(upperBoundedFilter.granularity as any),
+                    to: Number(upperBoundedFilter.to),
+                },
+                ...applyOnResultProp,
+            },
+        };
+    } else if (isRelativeLowerBoundedDateFilter(filter)) {
+        const lowerBoundedFilter = filter.relativeDateFilter.boundedFilter;
+
+        return {
+            relativeDateFilter: {
+                dataset,
+                granularity,
+                from,
+                to,
+                localIdentifier,
+                boundedFilter: {
+                    dataset,
+                    granularity: toTigerGranularity(lowerBoundedFilter.granularity as any),
+                    from: Number(lowerBoundedFilter.from),
+                },
+                ...applyOnResultProp,
+            },
+        };
+    } else {
+        throw new NotSupported("Invalid bounded filter: neither upper nor lower bound detected.");
+    }
 }
 
 function convertMeasureValueFilter(

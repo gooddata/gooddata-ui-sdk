@@ -11,10 +11,13 @@ import {
     RelativeDateFilter,
     isAfmObjectIdentifier,
     isAfmObjectLocalIdentifier,
+    BoundedFilter,
 } from "@gooddata/api-client-tiger";
-import { IFilter, ObjRefInScope } from "@gooddata/sdk-model";
+import { IFilter, ObjRefInScope, ILowerBoundedFilter, IUpperBoundedFilter } from "@gooddata/sdk-model";
 import { toLocalRef, toObjRef } from "../ObjRefConverter.js";
 import { toSdkGranularity } from "../dateGranularityConversions.js";
+import isNil from "lodash/isNil.js";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 
 const isPositiveAttributeFilter = (filter: unknown): filter is PositiveAttributeFilter => {
     return (filter as PositiveAttributeFilter).positiveAttributeFilter !== undefined;
@@ -30,6 +33,14 @@ const isAbsoluteDateFilter = (filter: unknown): filter is AbsoluteDateFilter => 
 
 const isRelativeDateFilter = (filter: unknown): filter is RelativeDateFilter => {
     return (filter as RelativeDateFilter).relativeDateFilter !== undefined;
+};
+
+const isRelativeBoundedDateFilter = (
+    filter: unknown,
+): filter is RelativeDateFilter & {
+    relativeDateFilter: RelativeDateFilter & { boundedFilter: BoundedFilter };
+} => {
+    return isRelativeDateFilter(filter) && filter.relativeDateFilter.boundedFilter !== undefined;
 };
 
 const isComparisonMeasureValueFilter = (filter: unknown): filter is ComparisonMeasureValueFilter => {
@@ -97,19 +108,34 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         };
     } else if (isRelativeDateFilter(filter)) {
         const { from, to } = filter.relativeDateFilter;
-        // After the backend enabled `from` and `to` to be optional, we need to handle the case
-        // where some is missing for now. It was agreed to replace the missing value with
-        // the present value instead of 0. This can be removed once we also start using optional bounds.
-        const effectiveFrom = from ?? to ?? 0;
-        const effectiveTo = to ?? from ?? 0;
+
+        let boundedFilter: ILowerBoundedFilter | IUpperBoundedFilter | undefined;
+        if (isRelativeBoundedDateFilter(filter)) {
+            const { from: boundedFrom, to: boundedTo } = filter.relativeDateFilter.boundedFilter;
+
+            if (!isNil(boundedFrom)) {
+                boundedFilter = {
+                    from: boundedFrom,
+                    granularity: toSdkGranularity(filter.relativeDateFilter.boundedFilter.granularity),
+                };
+            } else if (!isNil(boundedTo)) {
+                boundedFilter = {
+                    to: boundedTo,
+                    granularity: toSdkGranularity(filter.relativeDateFilter.boundedFilter.granularity),
+                };
+            } else {
+                throw new NotSupported("Invalid bounded filter: must have one of the bounds.");
+            }
+        }
 
         return {
             relativeDateFilter: {
                 dataSet: toObjRef(filter.relativeDateFilter.dataset),
                 localIdentifier: filter.relativeDateFilter.localIdentifier,
-                from: effectiveFrom,
-                to: effectiveTo,
+                from,
+                to,
                 granularity: toSdkGranularity(filter.relativeDateFilter.granularity),
+                ...(boundedFilter ? { boundedFilter } : {}),
             },
         };
     } else if (isComparisonMeasureValueFilter(filter)) {

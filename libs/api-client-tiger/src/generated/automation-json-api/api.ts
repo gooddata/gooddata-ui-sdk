@@ -1006,6 +1006,59 @@ export interface AutomationAutomationVisualExport {
     requestPayload: AutomationVisualExportRequest;
 }
 /**
+ * Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range.
+ * @export
+ * @interface AutomationBoundedFilter
+ */
+export interface AutomationBoundedFilter {
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierDataset}
+     * @memberof AutomationBoundedFilter
+     */
+    dataset: AutomationAfmObjectIdentifierDataset;
+    /**
+     * Date granularity specifying particular date attribute in given dimension.
+     * @type {string}
+     * @memberof AutomationBoundedFilter
+     */
+    granularity: AutomationBoundedFilterGranularityEnum;
+    /**
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
+     * @type {number}
+     * @memberof AutomationBoundedFilter
+     */
+    from?: number | null;
+    /**
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
+     * @type {number}
+     * @memberof AutomationBoundedFilter
+     */
+    to?: number | null;
+}
+
+export const AutomationBoundedFilterGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type AutomationBoundedFilterGranularityEnum =
+    typeof AutomationBoundedFilterGranularityEnum[keyof typeof AutomationBoundedFilterGranularityEnum];
+
+/**
  *
  * @export
  * @interface AutomationComparison
@@ -2697,17 +2750,17 @@ export interface AutomationRelativeDateFilterRelativeDateFilter {
      */
     granularity: AutomationRelativeDateFilterRelativeDateFilterGranularityEnum;
     /**
-     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
      * @type {number}
      * @memberof AutomationRelativeDateFilterRelativeDateFilter
      */
-    from?: number | null;
+    from: number;
     /**
-     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
      * @type {number}
      * @memberof AutomationRelativeDateFilterRelativeDateFilter
      */
-    to?: number | null;
+    to: number;
     /**
      *
      * @type {string}
@@ -2720,6 +2773,12 @@ export interface AutomationRelativeDateFilterRelativeDateFilter {
      * @memberof AutomationRelativeDateFilterRelativeDateFilter
      */
     applyOnResult?: boolean;
+    /**
+     *
+     * @type {AutomationBoundedFilter}
+     * @memberof AutomationRelativeDateFilterRelativeDateFilter
+     */
+    boundedFilter?: AutomationBoundedFilter;
     /**
      *
      * @type {AutomationAfmObjectIdentifierDataset}
