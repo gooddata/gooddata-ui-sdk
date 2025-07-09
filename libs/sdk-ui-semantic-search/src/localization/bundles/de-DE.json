@@ -10,5 +10,6 @@
     "semantic-search.date.at": "um",
     "gs.date.today": "Heute",
     "gs.date.yesterday": "Gestern",
-    "semantic-search.label": "Dashboards oder Visualisierung durchsuchen"
+    "semantic-search.label": "Dashboards oder Visualisierung durchsuchen",
+    "semantic-search.ask.ai.assistant": "KI-Assistent fragen"
 }

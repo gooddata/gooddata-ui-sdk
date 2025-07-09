@@ -732,5 +732,5 @@
     "shareDialog.share.dashboard.list.title": "Utilisateurs et groupes",
     "shareDialog.share.link.helperText": "Le lien reflète les filtres actuels. Uniquement accessible aux utilisateurs ayant accès au tableau de bord.",
     "shareDialog.share.link.title": "Lien",
-    "shareDialog.share.link.buttonText": "Copie"
+    "shareDialog.share.link.buttonText": "Copier le lien du tableau de bord"
 }

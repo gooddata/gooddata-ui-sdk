@@ -10,5 +10,6 @@
     "semantic-search.date.at": "в",
     "gs.date.today": "Сегодня",
     "gs.date.yesterday": "Вчера",
-    "semantic-search.label": "Поиск панелей или визуализаций"
+    "semantic-search.label": "Поиск панелей или визуализаций",
+    "semantic-search.ask.ai.assistant": "Спросить AI Ассистента"
 }

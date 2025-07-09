@@ -773,5 +773,19 @@
     "nestedLayoutToolbar.direction.row.tooltip": "Layout orizzontale con avvolgimento.",
     "nestedLayoutToolbar.direction.column": "Verticale",
     "nestedLayoutToolbar.direction.column.tooltip": "Layout verticale.",
-    "nestedLayoutToolbar.direction.column.disabledTooltip": "La direzione non può essere modificata in verticale se il contenitore contiene contenitori annidati con direzione orizzontale."
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "La direzione non può essere modificata in verticale se il contenitore contiene contenitori annidati con direzione orizzontale.",
+    "dialogs.schedule.management.attachments.exportInfo": "Includere il foglio con le informazioni sull'esportazione",
+    "dialogs.schedule.management.attachments.title": "Allegati",
+    "scheduledEmail.attachmentFormat.widget.png": "Istantanea (.png)",
+    "scheduledEmail.attachmentFormat.widget.pptx": "Singola diapositiva (.pptx)",
+    "scheduledEmail.attachmentFormat.widget.pdf": "Singola diapositiva (.pdf)",
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": "Dati formattati (.xlsx)",
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": "Dati formattati (.csv)",
+    "scheduledEmail.attachmentFormat.widget.rawCSV": "Dati grezzi (.csv)",
+    "scheduledEmail.attachmentFormat.dashboard.pptx": "Programma di diapositive (.pptx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdf": "Istantanea (.pdf)",
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Dati (.xlsx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Slide Deck (.pdf)",
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Attenzione:</strong> Le esportazioni pianificate richiedono almeno un allegato: selezionare un'opzione per continuare.",
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Errore: Nessun allegato selezionato - selezionare almeno un allegato per pianificare un'esportazione."
 }

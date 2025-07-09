@@ -59,5 +59,6 @@
     "gd.gen-ai.input-label.win": "Stel je vraag. Gebruik control+space of control+I voor suggesties.",
     "gd.gen-ai.message.label.assistant": "Bot:",
     "gd.gen-ai.skip-messages-history": "Doorgaan naar invoer AI-assistent",
-    "gd.gen-ai.skip-navigation": "Navigatie overslaan"
+    "gd.gen-ai.skip-navigation": "Navigatie overslaan",
+    "gd.gen-ai.messages.label": "Chatberichten"
 }

@@ -732,5 +732,5 @@
     "shareDialog.share.dashboard.list.title": "使用者和群組",
     "shareDialog.share.link.helperText": "連結反映當前篩選條件。僅具有儀表板存取權限的使用者可存取。",
     "shareDialog.share.link.title": "關聯",
-    "shareDialog.share.link.buttonText": "複製"
+    "shareDialog.share.link.buttonText": "複製儀表板鏈接"
 }

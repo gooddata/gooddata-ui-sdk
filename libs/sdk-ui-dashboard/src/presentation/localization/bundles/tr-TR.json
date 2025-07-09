@@ -774,5 +774,19 @@
     "nestedLayoutToolbar.direction.row.tooltip": "Sarmalayan yatay düzen.",
     "nestedLayoutToolbar.direction.column": "Dikey",
     "nestedLayoutToolbar.direction.column.tooltip": "Dikey düzen.",
-    "nestedLayoutToolbar.direction.column.disabledTooltip": "Yön, yatay yönlü iç içe kaplar içeriyorsa dikey olarak değiştirilemez."
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "Yön, yatay yönlü iç içe kaplar içeriyorsa dikey olarak değiştirilemez.",
+    "dialogs.schedule.management.attachments.exportInfo": "Dışa aktarma bilgileriyle sayfayı dahil et",
+    "dialogs.schedule.management.attachments.title": "Ekler",
+    "scheduledEmail.attachmentFormat.widget.png": "Anlık Görüntü (.png)",
+    "scheduledEmail.attachmentFormat.widget.pptx": "Tek Slayt (.pptx)",
+    "scheduledEmail.attachmentFormat.widget.pdf": "Tek Slayt (.pdf)",
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": "Biçimlendirilmiş veri (.xlsx)",
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": "Biçimlendirilmiş veri (.csv)",
+    "scheduledEmail.attachmentFormat.widget.rawCSV": "Ham veri (.csv)",
+    "scheduledEmail.attachmentFormat.dashboard.pptx": "Slayt Destesi (.pptx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdf": "Anlık Görüntü (.pdf)",
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Veri (.xlsx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Sunum Dosyası (.pdf)",
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Uyarı:</strong> Zamanlanmış dışa aktarımlar en az bir ek gerektirir — devam etmek için bir seçenek seçin.",
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Hata: Hiçbir ek seçilmedi — bir dışa aktarma planlamak için en az bir ek seçin."
 }

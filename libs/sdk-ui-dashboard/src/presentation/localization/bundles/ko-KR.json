@@ -774,5 +774,19 @@
     "nestedLayoutToolbar.direction.row.tooltip": "가로 레이아웃으로 감싸기",
     "nestedLayoutToolbar.direction.column": "수직",
     "nestedLayoutToolbar.direction.column.tooltip": "수직 레이아웃",
-    "nestedLayoutToolbar.direction.column.disabledTooltip": "컨테이너에 수평 방향의 중첩된 컨테이너가 포함되어 있는 경우 방향을 수직으로 변경할 수 없습니다."
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "컨테이너에 수평 방향의 중첩된 컨테이너가 포함되어 있는 경우 방향을 수직으로 변경할 수 없습니다.",
+    "dialogs.schedule.management.attachments.exportInfo": "내보내기 정보 포함 시트",
+    "dialogs.schedule.management.attachments.title": "첨부 파일",
+    "scheduledEmail.attachmentFormat.widget.png": "스냅샷(.png)",
+    "scheduledEmail.attachmentFormat.widget.pptx": "단일 슬라이드 (.pptx)",
+    "scheduledEmail.attachmentFormat.widget.pdf": "단일 슬라이드 (.pdf)",
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": "서식이 지정된 데이터 (.xlsx)",
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": "서식이 지정된 데이터 (.csv)",
+    "scheduledEmail.attachmentFormat.widget.rawCSV": "원시 데이터 (.csv)",
+    "scheduledEmail.attachmentFormat.dashboard.pptx": "슬라이드 데크(.pptx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdf": "스냅샷(.pdf)",
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "데이터(.xlsx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "슬라이드 데크(.pdf)",
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>경고:</strong> 예약된 내보내기에는 최소 하나의 첨부 파일이 필요합니다. 계속하려면 옵션을 선택하세요.",
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "오류: 첨부 파일이 선택되지 않았습니다 — 내보내기를 예약하려면 적어도 하나의 첨부 파일을 선택하십시오."
 }

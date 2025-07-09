@@ -59,5 +59,6 @@
     "gd.gen-ai.input-label.win": "Sorunuzu sorun. Öneriler için kontrol+boşluk veya kontrol+I kullanın.",
     "gd.gen-ai.message.label.assistant": "Bot:",
     "gd.gen-ai.skip-messages-history": "Yapay zeka asistanı girdisine atla",
-    "gd.gen-ai.skip-navigation": "Gezintiyi atla"
+    "gd.gen-ai.skip-navigation": "Gezintiyi atla",
+    "gd.gen-ai.messages.label": "Sohbet mesajları"
 }

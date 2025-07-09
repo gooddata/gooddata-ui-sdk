@@ -778,5 +778,19 @@
     "nestedLayoutToolbar.direction.row.tooltip": "Горизонтальная компоновка с переносом.",
     "nestedLayoutToolbar.direction.column": "Вертикальная",
     "nestedLayoutToolbar.direction.column.tooltip": "Вертикальная компоновка.",
-    "nestedLayoutToolbar.direction.column.disabledTooltip": "Направление не может быть изменено на вертикальное, если контейнер содержит вложенные контейнеры с горизонтальным направлением."
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "Направление не может быть изменено на вертикальное, если контейнер содержит вложенные контейнеры с горизонтальным направлением.",
+    "dialogs.schedule.management.attachments.exportInfo": "Включить лист с информацией об экспорте",
+    "dialogs.schedule.management.attachments.title": "Вложения:",
+    "scheduledEmail.attachmentFormat.widget.png": "Снимок экрана (.png)",
+    "scheduledEmail.attachmentFormat.widget.pptx": "Один слайд (.pptx)",
+    "scheduledEmail.attachmentFormat.widget.pdf": "Один слайд (.pdf)",
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": "Форматированные данные (.xlsx)",
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": "Форматированные данные (.csv)",
+    "scheduledEmail.attachmentFormat.widget.rawCSV": "Исходные данные (.csv)",
+    "scheduledEmail.attachmentFormat.dashboard.pptx": "Презентация (.pptx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdf": "Экспорт в PDF",
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Данные (.xlsx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Презентация (.pdf)",
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Предупреждение:</strong> Запланированные экспорты требуют как минимум одного вложения — выберите вариант, чтобы продолжить.",
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Ошибка: Вложения не выбраны — выберите хотя бы одно вложение для планирования экспорта."
 }

@@ -773,5 +773,19 @@
     "nestedLayoutToolbar.direction.row.tooltip": "Vaaka-asettelu kääreellä.",
     "nestedLayoutToolbar.direction.column": "Pystysuora",
     "nestedLayoutToolbar.direction.column.tooltip": "Pystysuora asettelu.",
-    "nestedLayoutToolbar.direction.column.disabledTooltip": "Suuntaa ei voi muuttaa pystysuoraksi, jos säiliö sisältää sisäkkäisiä säiliöitä, joissa on vaakasuunta."
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "Suuntaa ei voi muuttaa pystysuoraksi, jos säiliö sisältää sisäkkäisiä säiliöitä, joissa on vaakasuunta.",
+    "dialogs.schedule.management.attachments.exportInfo": "Sisällytä taulukko vientitietoihin",
+    "dialogs.schedule.management.attachments.title": "Liitteet",
+    "scheduledEmail.attachmentFormat.widget.png": "Tilannekuva (.png)",
+    "scheduledEmail.attachmentFormat.widget.pptx": "Yksittäinen dia (.pptx)",
+    "scheduledEmail.attachmentFormat.widget.pdf": "Yksittäinen dia (.pdf)",
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": "Alustetut tiedot (.xlsx)",
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": "Muotoillut tiedot (.csv)",
+    "scheduledEmail.attachmentFormat.widget.rawCSV": "Raakadata (.csv)",
+    "scheduledEmail.attachmentFormat.dashboard.pptx": "Liukukansi (.pptx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdf": "Tilannekuva (.pdf)",
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Tiedot (.xlsx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Liukukansi (.pdf)",
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Varoitus:</strong> Ajastetut viennit edellyttävät vähintään yhtä liitettä — valitse vaihtoehto jatkaaksesi.",
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Virhe: Liitetiedostoja ei ole valittu — valitse vähintään yksi liite viennin ajoittamiseksi."
 }

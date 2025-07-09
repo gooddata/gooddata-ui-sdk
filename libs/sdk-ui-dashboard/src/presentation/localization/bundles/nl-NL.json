@@ -773,5 +773,19 @@
     "nestedLayoutToolbar.direction.row.tooltip": "Horizontale lay-out met omslag.",
     "nestedLayoutToolbar.direction.column": "Verticaal",
     "nestedLayoutToolbar.direction.column.tooltip": "Verticale lay-out.",
-    "nestedLayoutToolbar.direction.column.disabledTooltip": "De richting kan niet worden gewijzigd in verticaal als de container geneste containers bevat met een horizontale richting."
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "De richting kan niet worden gewijzigd in verticaal als de container geneste containers bevat met een horizontale richting.",
+    "dialogs.schedule.management.attachments.exportInfo": "Blad met exportinformatie opnemen",
+    "dialogs.schedule.management.attachments.title": "Bijlagen",
+    "scheduledEmail.attachmentFormat.widget.png": "Momentopname (.png)",
+    "scheduledEmail.attachmentFormat.widget.pptx": "Enkele dia (.pptx)",
+    "scheduledEmail.attachmentFormat.widget.pdf": "Enkele dia (.pdf)",
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": "Opgemaakte gegevens (.xlsx)",
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": "Opgemaakte gegevens (.csv)",
+    "scheduledEmail.attachmentFormat.widget.rawCSV": "Ruwe gegevens (.csv)",
+    "scheduledEmail.attachmentFormat.dashboard.pptx": "Diadeck (.pptx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdf": "Momentopname (.pdf)",
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Gegevens (.xlsx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Slide Deck (.pdf)",
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Waarschuwing:</strong> Voor geplande export is ten minste één bijlage vereist - selecteer een optie om door te gaan.",
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Fout: Geen bijlagen geselecteerd - selecteer ten minste één bijlage om een export te plannen."
 }

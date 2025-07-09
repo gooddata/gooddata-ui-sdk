@@ -773,5 +773,19 @@
     "nestedLayoutToolbar.direction.row.tooltip": "Mise en page horizontale avec habillage.",
     "nestedLayoutToolbar.direction.column": "Vertical",
     "nestedLayoutToolbar.direction.column.tooltip": "Disposition verticale.",
-    "nestedLayoutToolbar.direction.column.disabledTooltip": "La direction ne peut pas être changée en verticale si le conteneur contient des conteneurs imbriqués avec une direction horizontale."
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "La direction ne peut pas être changée en verticale si le conteneur contient des conteneurs imbriqués avec une direction horizontale.",
+    "dialogs.schedule.management.attachments.exportInfo": "Inclure une feuille avec des informations sur l'exportation",
+    "dialogs.schedule.management.attachments.title": "Pièces jointes",
+    "scheduledEmail.attachmentFormat.widget.png": "Instantané (.png)",
+    "scheduledEmail.attachmentFormat.widget.pptx": "Diapositive unique (.pptx)",
+    "scheduledEmail.attachmentFormat.widget.pdf": "Diapositive unique (.pdf)",
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": "Données formatées (.xlsx)",
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": "Données formatées (.csv)",
+    "scheduledEmail.attachmentFormat.widget.rawCSV": "Données brutes (.csv)",
+    "scheduledEmail.attachmentFormat.dashboard.pptx": "Diaporama (.pptx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdf": "Aperçu (.pdf)",
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Données (.xlsx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Diaporama (.pdf)",
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Avertissement</strong> : Les exportations programmées nécessitent au moins une pièce jointe - sélectionnez une option pour continuer.",
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Erreur : Aucune pièce jointe sélectionnée - sélectionnez au moins une pièce jointe pour planifier une exportation."
 }

@@ -59,5 +59,6 @@
     "gd.gen-ai.input-label.win": "Stellen Sie Ihre Frage. Verwenden Sie Strg+Leerzeichen oder Strg+I für Vorschläge.",
     "gd.gen-ai.message.label.assistant": "Bot:",
     "gd.gen-ai.skip-messages-history": "Zur Eingabe des KI-Assistenten springen",
-    "gd.gen-ai.skip-navigation": "Navigation überspringen"
+    "gd.gen-ai.skip-navigation": "Navigation überspringen",
+    "gd.gen-ai.messages.label": "Chat-Nachrichten"
 }

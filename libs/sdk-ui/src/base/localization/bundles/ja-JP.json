@@ -732,5 +732,5 @@
     "shareDialog.share.dashboard.list.title": "ユーザーとグループ",
     "shareDialog.share.link.helperText": "リンクは現在のフィルターを反映しています。ダッシュボードにアクセスできるユーザーのみがアクセスできます。",
     "shareDialog.share.link.title": "リンク",
-    "shareDialog.share.link.buttonText": "コピー"
+    "shareDialog.share.link.buttonText": "ダッシュボードのリンクをコピーする"
 }

@@ -59,5 +59,6 @@
     "gd.gen-ai.input-label.win": "질문을 입력하세요. 제안 사항을 보려면 control+space 또는 control+I를 사용하세요.",
     "gd.gen-ai.message.label.assistant": "봇:",
     "gd.gen-ai.skip-messages-history": "AI 어시스턴트 입력으로 건너뛰기",
-    "gd.gen-ai.skip-navigation": "탐색 건너뛰기"
+    "gd.gen-ai.skip-navigation": "탐색 건너뛰기",
+    "gd.gen-ai.messages.label": "채팅 메시지"
 }

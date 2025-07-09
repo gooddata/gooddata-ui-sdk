@@ -732,5 +732,5 @@
     "shareDialog.share.dashboard.list.title": "Usuários e grupos",
     "shareDialog.share.link.helperText": "O link reflete os filtros atuais. Acessível apenas a usuários com acesso ao painel.",
     "shareDialog.share.link.title": "Link",
-    "shareDialog.share.link.buttonText": "Copiar"
+    "shareDialog.share.link.buttonText": "Copiar link do painel"
 }

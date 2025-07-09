@@ -773,5 +773,19 @@
     "nestedLayoutToolbar.direction.row.tooltip": "Disposición horizontal con envoltura.",
     "nestedLayoutToolbar.direction.column": "Vertical",
     "nestedLayoutToolbar.direction.column.tooltip": "Disposición vertical.",
-    "nestedLayoutToolbar.direction.column.disabledTooltip": "La dirección no puede cambiarse a vertical si el contenedor contiene contenedores anidados con dirección horizontal."
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "La dirección no puede cambiarse a vertical si el contenedor contiene contenedores anidados con dirección horizontal.",
+    "dialogs.schedule.management.attachments.exportInfo": "Incluir hoja con información de exportación",
+    "dialogs.schedule.management.attachments.title": "Archivos adjuntos",
+    "scheduledEmail.attachmentFormat.widget.png": "Instantánea (.png)",
+    "scheduledEmail.attachmentFormat.widget.pptx": "Diapositiva única (.pptx)",
+    "scheduledEmail.attachmentFormat.widget.pdf": "Diapositiva única (.pdf)",
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": "Datos formateados (.xlsx)",
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": "Datos formateados (.csv)",
+    "scheduledEmail.attachmentFormat.widget.rawCSV": "Datos brutos (.csv)",
+    "scheduledEmail.attachmentFormat.dashboard.pptx": "Diapositivas (.pptx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdf": "Instantánea (.pdf)",
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Datos (.xlsx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Diapositivas (.pdf)",
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Advertencia:</strong> Las exportaciones programadas requieren al menos un archivo adjunto - seleccione una opción para continuar.",
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Error: No hay archivos adjuntos seleccionados - seleccione al menos un archivo adjunto para programar una exportación."
 }

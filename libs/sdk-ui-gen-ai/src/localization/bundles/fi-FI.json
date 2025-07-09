@@ -59,5 +59,6 @@
     "gd.gen-ai.input-label.win": "Esitä kysymyksesi. Käytä ehdotuksiin ohjausta+tilaa tai ohjausta+I.",
     "gd.gen-ai.message.label.assistant": "Bot:",
     "gd.gen-ai.skip-messages-history": "Siirry tekoälyavustajan syöttöön",
-    "gd.gen-ai.skip-navigation": "Ohita navigointi"
+    "gd.gen-ai.skip-navigation": "Ohita navigointi",
+    "gd.gen-ai.messages.label": "Chat-viestit"
 }
