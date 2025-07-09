@@ -1,19 +1,20 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { IDataSetMetadataObject, IMetadataObjectBase } from "@gooddata/sdk-model";
+import { IDataSetMetadataObject, IMetadataObjectBase, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
 import { IntlShape } from "react-intl";
 
 interface IInfoComponentProps {
     id: string;
     item: IMetadataObjectBase;
     intl: IntlShape;
+    group?: ObjRef;
     dataset?: IDataSetMetadataObject;
     canManage?: boolean;
     canAnalyze?: boolean;
 }
 
-function InfoComponent({ item, intl, canManage, canAnalyze, dataset, id }: IInfoComponentProps) {
+function InfoComponent({ item, intl, canManage, canAnalyze, dataset, group, id }: IInfoComponentProps) {
     return (
         <div className="gd-gen-ai-chat__autocomplete__info">
             <h3>{item.title}</h3>
@@ -43,6 +44,14 @@ function InfoComponent({ item, intl, canManage, canAnalyze, dataset, id }: IInfo
                     <div className="gd-gen-ai-chat__autocomplete__info__item__value">{dataset?.title}</div>
                 </div>
             ) : null}
+            {group && isIdentifierRef(group) ? (
+                <div className="gd-gen-ai-chat__autocomplete__info__item">
+                    <div className="gd-gen-ai-chat__autocomplete__info__item__title">
+                        {intl.formatMessage({ id: "gd.gen-ai.autocomplete.dataset" })}
+                    </div>
+                    <div className="gd-gen-ai-chat__autocomplete__info__item__value">{group?.identifier}</div>
+                </div>
+            ) : null}
             {canManage || canAnalyze ? (
                 <div className="gd-gen-ai-chat__autocomplete__info__item">
                     <div className="gd-gen-ai-chat__autocomplete__info__item__title">
@@ -61,9 +70,11 @@ export function getInfo(
     item: IMetadataObjectBase,
     {
         dataset,
+        group,
         canManage,
         canAnalyze,
     }: {
+        group?: ObjRef;
         dataset?: IDataSetMetadataObject;
         canManage?: boolean;
         canAnalyze?: boolean;
@@ -78,6 +89,7 @@ export function getInfo(
                 id={id}
                 item={item}
                 dataset={dataset}
+                group={group}
                 canManage={canManage}
                 canAnalyze={canAnalyze}
             />,
