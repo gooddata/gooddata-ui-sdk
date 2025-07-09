@@ -115,6 +115,7 @@ export function getItems(
                 type: "fact",
                 label: item.fact.title,
                 info: getInfo(intl, item.fact.id, item.fact, {
+                    group: item.groups[0],
                     canManage,
                     canAnalyze,
                 }),
