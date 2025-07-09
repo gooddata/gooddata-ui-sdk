@@ -6,6 +6,7 @@ import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import {
     selectDraggingWidgetTargetLayoutPath,
+    selectDraggingWidgetTriggeringDropZoneType,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
@@ -38,6 +39,7 @@ export const WidgetDropZoneColumn = ({
     gridHeightOverride,
 }: WidgetDropZoneColumnProps) => {
     const dropzoneCoordinates = useDashboardSelector(selectDraggingWidgetTargetLayoutPath);
+    const dropzoneTriggerType = useDashboardSelector(selectDraggingWidgetTriggeringDropZoneType);
 
     const handleInsightListItemDrop = useInsightListItemDropHandler(layoutPath);
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler(layoutPath);
@@ -88,10 +90,11 @@ export const WidgetDropZoneColumn = ({
     );
 
     const showDropZone = useMemo(
-        () => areLayoutPathsEqual(dropzoneCoordinates, layoutPath),
-        [dropzoneCoordinates, layoutPath],
+        // show row end dropzone only when triggered by the "next" dropzone; otherwise it would render
+        // also on the previous row, causing unintended layout items reshuffles
+        () => dropzoneTriggerType === "next" && areLayoutPathsEqual(dropzoneCoordinates, layoutPath),
+        [dropzoneCoordinates, layoutPath, dropzoneTriggerType],
     );
-
     if (!showDropZone) {
         return null;
     }

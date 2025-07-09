@@ -16,6 +16,7 @@ import {
     ILayoutItemPath,
     ILayoutSectionPath,
     ILayoutCoordinates,
+    DropZoneType,
 } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./uiState.js";
@@ -421,6 +422,12 @@ export const selectDraggingWidgetSource: DashboardSelector<DraggableLayoutItem |
  */
 export const selectDraggingWidgetTargetLayoutPath: DashboardSelector<ILayoutItemPath | undefined> =
     createSelector(selectSelf, (state) => state.draggingWidgetTarget);
+
+/**
+ * @internal
+ */
+export const selectDraggingWidgetTriggeringDropZoneType: DashboardSelector<DropZoneType | undefined> =
+    createSelector(selectSelf, (state) => state.draggingWidgetTriggeringDropZoneType);
 
 /**
  * @internal

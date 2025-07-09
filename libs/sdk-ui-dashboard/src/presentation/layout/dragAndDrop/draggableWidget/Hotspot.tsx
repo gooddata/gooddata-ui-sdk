@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
@@ -21,6 +21,7 @@ import {
     isVisualizationSwitcherDraggableItem,
 } from "../../../dragAndDrop/index.js";
 import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
+import { DropZoneType } from "../../../../types.js";
 
 interface IHotspotProps {
     sectionIndex: number;
@@ -28,7 +29,7 @@ interface IHotspotProps {
     isLastInSection?: boolean;
     isEndingHotspot?: boolean;
     classNames?: string;
-    dropZoneType: "prev" | "next";
+    dropZoneType: DropZoneType;
 }
 
 export const Hotspot: React.FC<IHotspotProps> = (props) => {

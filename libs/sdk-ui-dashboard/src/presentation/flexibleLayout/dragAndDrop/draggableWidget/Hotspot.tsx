@@ -13,7 +13,7 @@ import {
     isVisualizationSwitcherDraggableItem,
 } from "../../../dragAndDrop/types.js";
 import { useDashboardDrop } from "../../../dragAndDrop/index.js";
-import { ILayoutItemPath } from "../../../../types.js";
+import { ILayoutItemPath, DropZoneType } from "../../../../types.js";
 import {
     areLayoutPathsEqual,
     updateItem,
@@ -32,7 +32,7 @@ import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 
 interface IHotspotProps {
     layoutPath: ILayoutItemPath;
-    dropZoneType: "prev" | "next";
+    dropZoneType: DropZoneType;
     direction: IDashboardLayoutContainerDirection;
     isEndingHotspot?: boolean;
     hideDropTarget?: boolean;
@@ -114,10 +114,16 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
 
     useEffect(() => {
         if (isOver) {
-            handleDragHoverStart(desiredDestination);
+            // Special case for the last hotspot: it is triggered only when the mouse is over the "next"
+            // dropzone, otherwise it would render also on the previous row when there is a space on that
+            // row and the mouse is on the "prev" hotspot on the left most item of the row. However, the
+            // ending hotspot is registered as "prev" for insertion indexes being set up correctly. When
+            // a user would hover over the hotspot, "prev" would be reported by the handler below and the drop
+            // zone would be hidden. Therefore, we need to send "next" to satisfy the condition.
+            handleDragHoverStart(desiredDestination, isEndingHotspot ? "next" : dropZoneType);
             isOverLastValue.current = isOver;
         }
-    }, [isOver, desiredDestination, handleDragHoverStart]);
+    }, [isOver, desiredDestination, handleDragHoverStart, dropZoneType, isEndingHotspot]);
 
     const [canBeDisplayed, setCanBeDisplayed] = React.useState(false);
     const isDragging = !!item;

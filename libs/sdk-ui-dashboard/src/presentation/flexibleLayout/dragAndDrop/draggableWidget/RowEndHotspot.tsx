@@ -3,7 +3,13 @@ import { IDashboardWidget } from "@gooddata/sdk-model";
 import cx from "classnames";
 import React, { useMemo } from "react";
 
-import { isCustomWidget, ExtendedDashboardWidget } from "../../../../model/index.js";
+import {
+    isCustomWidget,
+    ExtendedDashboardWidget,
+    useDashboardSelector,
+    selectSettings,
+    selectDraggingWidgetSource,
+} from "../../../../model/index.js";
 import {
     IDashboardLayoutItemFacade,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
@@ -11,42 +17,51 @@ import {
 import { updateItem } from "../../../../_staging/layout/coordinates.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
 import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
-import { getRemainingWidthInRow, useRemainingHeightInColumn } from "../../rowEndHotspotHelper.js";
+import { getRemainingWidthInRow, getRemainingHeightInColumn } from "../../rowEndHotspotHelper.js";
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
+import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
 
 import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
 import { Hotspot } from "./Hotspot.js";
+
+const MINIMUM_DROPZONE_WIDTH_TO_RENDER_TEXT = 2;
+const MINIMUM_DROPZONE_HEIGHT_TO_RENDER_TEXT = 7;
 
 export const useShouldShowRowEndHotspot = (
     item: IDashboardLayoutItemFacade<ExtendedDashboardWidget | unknown>,
     rowIndex: number,
 ) => {
     const screen = useScreenSize();
-    const remainingRowGridWidth = useMemo(
-        () => (isCustomWidget(item.widget()) ? 0 : getRemainingWidthInRow(item, screen, rowIndex)),
-        [item, screen, rowIndex],
-    );
-
+    const settings = useDashboardSelector(selectSettings);
+    const { layoutItem: parentLayoutItem } = useDashboardItemPathAndSize();
     const { direction } = getLayoutConfiguration(item.section().layout().raw());
-    const showEndingHotspot = item.isLastInSection() || item.isLastInRow(screen);
-    const isColumnContainer = direction === "column";
-    const isLastInColumn = isColumnContainer && item.isLastInSection();
-    const isDropZoneVisible = remainingRowGridWidth > 0;
-    const hotZoneWidth = isColumnContainer
-        ? item.section().layout().size()?.gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT
-        : remainingRowGridWidth;
+    const draggedItem = useDashboardSelector(selectDraggingWidgetSource);
 
-    const remainingColumnGridHeight = useRemainingHeightInColumn(item, isLastInColumn);
-
-    return {
-        // Column dropzone is styled to have at least 40 px; therefore, we should not show it when there is
-        // no space for it. If there is less space, a single line drop zone is rendered instead.
-        enableRowEndHotspot:
-            (isLastInColumn && remainingColumnGridHeight > 1) || (showEndingHotspot && isDropZoneVisible),
-        remainingRowGridWidth: hotZoneWidth,
-        remainingColumnGridHeight,
-    };
+    if (direction === "column") {
+        const parentLayoutItemGridWidth =
+            item.section().layout().size()?.gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
+        const remainingHeightInColumn = getRemainingHeightInColumn(item, screen, parentLayoutItem, settings);
+        return {
+            // Column dropzone is styled to have at least 40 px; therefore, we should not show it when there
+            // is no space for it. If there is less space, a single line drop zone is rendered instead.
+            enableRowEndHotspot: item.isLastInSection() && remainingHeightInColumn > 1,
+            gridWidth: parentLayoutItemGridWidth,
+            gridHeight: remainingHeightInColumn,
+            hideDropzoneText: remainingHeightInColumn < MINIMUM_DROPZONE_HEIGHT_TO_RENDER_TEXT,
+        };
+    } else {
+        const remainingGridWidthInRow = isCustomWidget(item.widget())
+            ? 0
+            : getRemainingWidthInRow(item, screen, rowIndex, draggedItem?.layoutPath);
+        const rowGridHeight = item.size()[screen]?.gridHeight ?? 0;
+        return {
+            enableRowEndHotspot: item.isLastInRow(screen) && remainingGridWidthInRow > 0,
+            gridWidth: remainingGridWidthInRow,
+            gridHeight: rowGridHeight,
+            hideDropzoneText: remainingGridWidthInRow < MINIMUM_DROPZONE_WIDTH_TO_RENDER_TEXT,
+        };
+    }
 };
 
 export type RowEndHotspotProps<TWidget = IDashboardWidget> = {
@@ -55,24 +70,21 @@ export type RowEndHotspotProps<TWidget = IDashboardWidget> = {
 };
 
 export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<ExtendedDashboardWidget | unknown>) => {
-    const { enableRowEndHotspot, remainingRowGridWidth, remainingColumnGridHeight } =
-        useShouldShowRowEndHotspot(item, rowIndex);
+    const { enableRowEndHotspot, gridWidth, gridHeight, hideDropzoneText } = useShouldShowRowEndHotspot(
+        item,
+        rowIndex,
+    );
     const { direction } = getLayoutConfiguration(item.section().layout().raw());
 
-    // hide text if the dropzone is too small to render the text
-    const hideDropzoneText =
-        (direction === "row" && remainingRowGridWidth < 2) ||
-        (direction === "column" && remainingColumnGridHeight < 7);
-
     const layoutItemSize = useMemo(() => {
-        const gridHeightProp = remainingColumnGridHeight > 0 ? { gridHeight: remainingColumnGridHeight } : {};
+        const gridHeightProp = gridHeight > 0 ? { gridHeight: gridHeight } : {};
         return {
             xl: {
-                gridWidth: remainingRowGridWidth,
+                gridWidth,
                 ...gridHeightProp,
             },
         };
-    }, [remainingRowGridWidth, remainingColumnGridHeight]);
+    }, [gridWidth, gridHeight]);
 
     const layoutPathForEndHotspot = useMemo(() => {
         const layoutPath = item.index();
@@ -107,18 +119,15 @@ export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<ExtendedDas
                         "gd-first-container-row-dropzone": rowIndex === 0,
                         "gd-fluidlayout-column-row-end-hotspot--direction-row": direction === "row",
                         "gd-fluidlayout-column-row-end-hotspot--direction-column": direction === "column",
-                        [`s-fluid-layout-column-height-${remainingColumnGridHeight}`]:
-                            remainingColumnGridHeight > 0,
+                        [`s-fluid-layout-column-height-${gridHeight}`]: gridHeight > 0,
                     },
                 )}
                 style={style}
             >
                 <WidgetDropZoneColumn
                     layoutPath={layoutPathForEndHotspot}
-                    gridWidthOverride={remainingRowGridWidth}
-                    gridHeightOverride={
-                        remainingColumnGridHeight === 0 ? undefined : remainingColumnGridHeight
-                    }
+                    gridWidthOverride={gridWidth}
+                    gridHeightOverride={gridHeight}
                     isLastInSection={true}
                 />
                 <Hotspot

@@ -298,6 +298,12 @@ export function isLayoutCoordinates(obj: unknown): obj is ILayoutCoordinates {
 }
 
 /**
+ * The type of drop zone.
+ * @internal
+ */
+export type DropZoneType = "prev" | "next";
+
+/**
  *  Coordinates of an item in a nested layout.
  *  @alpha
  */

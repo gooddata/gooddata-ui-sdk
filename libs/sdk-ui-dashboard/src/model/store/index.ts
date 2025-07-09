@@ -431,6 +431,7 @@ export {
     selectIsCancelEditModeDialogOpen,
     selectDraggingWidgetSource,
     selectDraggingWidgetTargetLayoutPath,
+    selectDraggingWidgetTriggeringDropZoneType,
     selectDraggingWidgetTarget,
     selectWidgetsOverlay,
     selectWidgetsOverlayState,

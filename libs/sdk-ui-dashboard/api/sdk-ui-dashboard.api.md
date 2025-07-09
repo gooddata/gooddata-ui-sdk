@@ -133,6 +133,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { Dispatch as Dispatch_2 } from 'react';
 import { DraggableLayoutItem as DraggableLayoutItem_2 } from '../../../index.js';
 import { DrillDefinition } from '@gooddata/sdk-model';
+import { DropZoneType as DropZoneType_2 } from '../../../types.js';
 import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
@@ -3857,6 +3858,9 @@ export type DropTarget = {
 // @internal (undocumented)
 export interface DropTargetComponentProps {
 }
+
+// @internal
+export type DropZoneType = "prev" | "next";
 
 // @alpha
 export function eagerRemoveNestedLayoutSectionItem(itemPath: ILayoutItemPath, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
@@ -8713,6 +8717,9 @@ export const selectDraggingWidgetTarget: DashboardSelector<ILayoutCoordinates | 
 // @internal (undocumented)
 export const selectDraggingWidgetTargetLayoutPath: DashboardSelector<ILayoutItemPath | undefined>;
 
+// @internal (undocumented)
+export const selectDraggingWidgetTriggeringDropZoneType: DashboardSelector<DropZoneType | undefined>;
+
 // @alpha
 export const selectDrillableItems: DashboardSelector<ExplicitDrill[]>;
 
@@ -10023,7 +10030,10 @@ export const uiActions: {
     resetInvalidCustomUrlDrillParameterWidget: ActionCreatorWithPayload<IInsightWidget[], "uiSlice/resetInvalidCustomUrlDrillParameterWidget">;
     setDraggingWidgetSource: ActionCreatorWithPayload<DraggableLayoutItem_2, "uiSlice/setDraggingWidgetSource">;
     clearDraggingWidgetSource: ActionCreatorWithoutPayload<"uiSlice/clearDraggingWidgetSource">;
-    setDraggingWidgetTarget: ActionCreatorWithPayload<ILayoutItemPath_2, "uiSlice/setDraggingWidgetTarget">;
+    setDraggingWidgetTarget: ActionCreatorWithPayload<    {
+    path: ILayoutItemPath_2;
+    triggeringDropZoneType: DropZoneType_2;
+    }, "uiSlice/setDraggingWidgetTarget">;
     clearDraggingWidgetTarget: ActionCreatorWithoutPayload<"uiSlice/clearDraggingWidgetTarget">;
     toggleWidgetsOverlay: ActionCreatorWithPayload<    {
     refs: (ObjRef | undefined)[];
@@ -10069,6 +10079,8 @@ export interface UiState {
     draggingWidgetSource: DraggableLayoutItem | undefined;
     // (undocumented)
     draggingWidgetTarget: ILayoutItemPath | undefined;
+    // @internal (undocumented)
+    draggingWidgetTriggeringDropZoneType: DropZoneType | undefined;
     // @alpha (undocumented)
     drillValidationMessages: {
         invalidDrillWidgetRefs: ObjRef[];

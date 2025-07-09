@@ -2,7 +2,7 @@
 import { useCallback } from "react";
 
 import { uiActions, useDashboardDispatch } from "../../../../model/index.js";
-import { ILayoutItemPath } from "../../../../types.js";
+import { ILayoutItemPath, DropZoneType } from "../../../../types.js";
 
 /**
  * @internal
@@ -11,8 +11,8 @@ export function useWidgetDragHoverHandlers() {
     const dispatch = useDashboardDispatch();
 
     const handleDragHoverStart = useCallback(
-        (coordinates: ILayoutItemPath) => {
-            dispatch(uiActions.setDraggingWidgetTarget(coordinates));
+        (coordinates: ILayoutItemPath, triggeringDropZoneType: DropZoneType) => {
+            dispatch(uiActions.setDraggingWidgetTarget({ path: coordinates, triggeringDropZoneType }));
         },
         [dispatch],
     );
