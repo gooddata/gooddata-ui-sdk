@@ -109,19 +109,20 @@ export function WidthResizerHotspot({
         [widget, insightsMap, layoutPath, currentWidth, minLimit, maxLimit, rowIndex],
     );
 
+    const isItemNested = layoutPath.length > 1;
     useEffect(() => {
         if (isDragging) {
-            resizeStart("width", [widgetIdentifier], getLayoutDimensions);
+            resizeStart("width", [widgetIdentifier], isItemNested, getLayoutDimensions);
         } else {
             resizeEnd();
         }
-    }, [isDragging]);
+    }, [getLayoutDimensions, isDragging, isItemNested, resizeEnd, resizeStart, widgetIdentifier]);
 
     const isThisResizing = isWidthResizing && isActive;
 
     const isColumnContainer = parentLayoutDirection === "column";
     const showHotspot = (!isDragging || isWidthResizing || isResizerVisible) && !isColumnContainer;
-    const showResizer = isResizerVisible || isThisResizing;
+    const showResizer = isResizerVisible || isThisResizing || isHovered(widget.ref);
     const status = isDragging ? "muted" : isHovered(widget.ref) ? "default" : "active";
 
     if (!showHotspot) {
@@ -134,11 +135,6 @@ export function WidthResizerHotspot({
                 "gd-first-container-row-widget": rowIndex === 0,
             })}
         >
-            {status === "default" ? (
-                <div className="dash-width-resizer-hotspot s-dash-width-resizer-hotspot">
-                    {<WidthResizer status={status} />}
-                </div>
-            ) : null}
             <div
                 className="dash-width-resizer-hotspot s-dash-width-resizer-hotspot"
                 onMouseEnter={onMouseEnter}

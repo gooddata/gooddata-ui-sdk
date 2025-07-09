@@ -8,7 +8,6 @@
     top: 0;
     right: 20px;
     bottom: 100%;
-    width: 0;
     height: 100%;
 }
 
@@ -23,8 +22,8 @@
 .dash-width-resizer-hotspot,
 .resizer-drag-preview {
     display: flex;
-    width: 40px;
-    padding: 0 0 0 5px;
+    justify-content: center;
+    width: 20px;
     cursor: col-resize;
 }
 
@@ -209,7 +208,6 @@
 }
 
 .gd-grid-layout-width-resizer-drag-preview {
-    padding: 0 0 0 10px;
     &.gd-first-container-row-widget {
         .gd-fluidlayout-width-resizer__container {
             padding-top: 0;
@@ -224,15 +222,14 @@
         border-radius: 4px;
     }
     .gd-fluidlayout-width-resizer {
-        padding: 4px 0;
         display: flex;
         flex-direction: column;
         border-radius: 4px;
+        align-items: center;
 
         .width-resizer-line {
             flex: 1 0 auto;
             width: 0;
-            margin-left: 4px;
             height: unset;
         }
     }
@@ -289,10 +286,11 @@
 
 .gd-grid-layout {
     .dash-width-resizer-container {
-        position: relative;
-        left: -10px;
-        right: 0;
-        width: 0;
+        position: absolute;
+        right: -20px;
+        width: 20px;
+        display: flex;
+        justify-content: center;
         &.gd-first-container-row-widget {
             .gd-fluidlayout-width-resizer__container {
                 padding-top: 0;
@@ -302,7 +300,9 @@
 
     .gd-fluidlayout-width-resizer__container {
         background: variables.$gd-dashboards-content-backgroundColor;
-        width: 100%;
+        width: 20px;
+        display: flex;
+        justify-content: center;
     }
 
     .dash-height-resizer-hotspot {
@@ -331,9 +331,10 @@
 
 .sdk-edit-mode-on .gd-grid-layout {
     .dash-width-resizer-hotspot {
-        position: unset;
+        position: static;
         width: 20px;
-        padding: 0 0 0 10px;
+        display: flex;
+        justify-content: center;
     }
 
     .gd-resize-overlay-text {
@@ -369,5 +370,73 @@
         top: 0;
         right: -13px;
         left: unset;
+    }
+}
+
+.gd-grid-layout-ruler {
+    $root: &;
+
+    --bullet-size: 6px;
+    --bullet-size-active: 9px;
+    --gap: 20px;
+
+    padding: 20px 0 20px var(--gap);
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+
+    &__grid {
+        flex-grow: 1;
+        flex-shrink: 0;
+        display: grid;
+        gap: var(--gap);
+        grid-template-columns: repeat(var(--columns-num), 1fr);
+        grid-template-rows: auto;
+        justify-content: start;
+        align-items: stretch;
+    }
+
+    &__bullet-container {
+        width: var(--gap);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        left: calc(var(--gap) * -1);
+
+        &--last {
+            left: 0;
+        }
+    }
+
+    &__bullet {
+        width: var(--bullet-size);
+        height: var(--bullet-size);
+        border-radius: 100%;
+        background-color: var(
+            --gd-palette-complementary-6-from-theme,
+            kit-variables.$default-gd-color-disabled
+        );
+        position: absolute;
+
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: transform 0.2s ease-out, opacity 0.1s ease-in, width 0.1s ease-out, height 0.1s ease-out;
+
+        #{$root}--active & {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        &--active {
+            background-color: kit-variables.$gd-palette-primary-base;
+            width: var(--bullet-size-active);
+            height: var(--bullet-size-active);
+        }
+
+        &--initial {
+            background-color: var(--gd-palette-complementary-9, #000);
+        }
     }
 }

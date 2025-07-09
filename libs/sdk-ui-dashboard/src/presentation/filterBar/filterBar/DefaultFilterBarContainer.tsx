@@ -24,7 +24,7 @@ import { useRowsCalculator, CalculatedRows } from "./hooks/useRowsCalculator.js"
 import { useFilterBarState } from "./hooks/useFilterBarState.js";
 import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";
 import { FilterViews } from "./filterViews/FilterViews.js";
-import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
+import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar.js";
 import { BulletsBar as FluidBulletsBar } from "../../layout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";

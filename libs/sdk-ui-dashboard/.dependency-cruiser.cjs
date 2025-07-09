@@ -125,7 +125,7 @@ options = {
             "src/presentation/dashboardContexts",
             "src/presentation/dragAndDrop",
             "src/presentation/layout/dragAndDrop/Resize/BulletsBar/BulletsBar.tsx",
-            "src/presentation/flexibleLayout/dragAndDrop/Resize/BulletsBar/BulletsBar.tsx",
+            "src/presentation/flexibleLayout/dragAndDrop/Resize/BulletsBar.tsx",
             "src/presentation/localization",
             "src/presentation/widget/common/configuration/ConfigurationBubble.tsx",
             "src/presentation/scheduledEmail/utils/date.ts",

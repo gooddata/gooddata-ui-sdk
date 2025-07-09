@@ -103,7 +103,7 @@ export function HeightResizerHotspot({
 
     useEffect(() => {
         if (isDragging) {
-            resizeStart("height", widgetIdentifiers);
+            resizeStart("height", widgetIdentifiers, false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to run this only when isDragging changes
     }, [isDragging]);
