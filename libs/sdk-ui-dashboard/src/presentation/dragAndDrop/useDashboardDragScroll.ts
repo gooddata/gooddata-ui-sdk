@@ -6,7 +6,7 @@ import { useInterval } from "./useInterval.js";
 
 const SCROLLING_STEP = 3;
 const SCROLLING_INTERVAL = 5;
-const SCROLLING_BOTTOM_ZONE_HEIGHT = 100;
+const SCROLLING_ZONE_HEIGHT = 100;
 
 const SCROLLING_ITEM_TYPES: DraggableItemType[] = [
     "insightListItem",
@@ -41,6 +41,8 @@ export function useDashboardDragScroll(
         return dragDropManager.getMonitor().subscribeToOffsetChange(() => {
             const itemType = dragDropManager.getMonitor().getItemType() as DraggableItemType;
             const clientOffset = dragDropManager.getMonitor().getSourceClientOffset();
+            const initialClientOffset = dragDropManager.getMonitor().getInitialClientOffset();
+            const initialSourceClientOffset = dragDropManager.getMonitor().getInitialSourceClientOffset();
 
             const headerCoordinations = stickyHeaderRef.current?.getBoundingClientRect();
             const footerCoordinations = stickyFooterRef.current?.getBoundingClientRect();
@@ -51,23 +53,31 @@ export function useDashboardDragScroll(
                 !clientOffset ||
                 !headerCoordinations ||
                 !footerCoordinations ||
-                !contentCoordinations
+                !contentCoordinations ||
+                !initialClientOffset ||
+                !initialSourceClientOffset
             ) {
                 setScrollingDirection(ScrollingDirection.None);
                 return;
             }
 
+            const initialPointerOffsetY = initialClientOffset.y - initialSourceClientOffset.y;
+
+            const normalizedClientOffsetY = clientOffset.y + initialPointerOffsetY;
+
             const shouldScrollUp =
-                clientOffset.y <= headerCoordinations?.bottom &&
+                normalizedClientOffsetY <= headerCoordinations?.bottom + SCROLLING_ZONE_HEIGHT &&
                 headerCoordinations?.bottom > contentCoordinations?.top;
+
             if (shouldScrollUp) {
                 setScrollingDirection(ScrollingDirection.Up);
                 return;
             }
 
             const shouldScrollDown =
-                clientOffset.y > footerCoordinations?.bottom - SCROLLING_BOTTOM_ZONE_HEIGHT &&
+                normalizedClientOffsetY > footerCoordinations?.bottom - SCROLLING_ZONE_HEIGHT &&
                 contentCoordinations?.bottom > footerCoordinations?.bottom;
+
             if (shouldScrollDown) {
                 setScrollingDirection(ScrollingDirection.Down);
                 return;
