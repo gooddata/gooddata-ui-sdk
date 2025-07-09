@@ -188,7 +188,7 @@ export function getContainerHeight(
     settings: ISettings,
 ): number {
     const emptyLayoutMinHeight = getDashboardLayoutWidgetMinGridHeight(settings, container.widget!.type);
-    if (!isDashboardLayout(container.widget)) {
+    if (!isDashboardLayout(container.widget) || container.widget!.sections.length === 0) {
         return emptyLayoutMinHeight;
     }
     return container.widget!.sections.reduce((allSectionsHeight, section) => {
