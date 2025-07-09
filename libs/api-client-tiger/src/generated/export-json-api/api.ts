@@ -506,6 +506,59 @@ export interface ExportAttributeItem {
     showAllValues?: boolean;
 }
 /**
+ * Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range.
+ * @export
+ * @interface ExportBoundedFilter
+ */
+export interface ExportBoundedFilter {
+    /**
+     *
+     * @type {ExportAfmObjectIdentifierDataset}
+     * @memberof ExportBoundedFilter
+     */
+    dataset: ExportAfmObjectIdentifierDataset;
+    /**
+     * Date granularity specifying particular date attribute in given dimension.
+     * @type {string}
+     * @memberof ExportBoundedFilter
+     */
+    granularity: ExportBoundedFilterGranularityEnum;
+    /**
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
+     * @type {number}
+     * @memberof ExportBoundedFilter
+     */
+    from?: number | null;
+    /**
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
+     * @type {number}
+     * @memberof ExportBoundedFilter
+     */
+    to?: number | null;
+}
+
+export const ExportBoundedFilterGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type ExportBoundedFilterGranularityEnum =
+    typeof ExportBoundedFilterGranularityEnum[keyof typeof ExportBoundedFilterGranularityEnum];
+
+/**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
  * @export
  * @interface ExportComparisonMeasureValueFilter
@@ -1723,17 +1776,17 @@ export interface ExportRelativeDateFilterRelativeDateFilter {
      */
     granularity: ExportRelativeDateFilterRelativeDateFilterGranularityEnum;
     /**
-     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
      * @type {number}
      * @memberof ExportRelativeDateFilterRelativeDateFilter
      */
-    from?: number | null;
+    from: number;
     /**
-     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
      * @type {number}
      * @memberof ExportRelativeDateFilterRelativeDateFilter
      */
-    to?: number | null;
+    to: number;
     /**
      *
      * @type {string}
@@ -1746,6 +1799,12 @@ export interface ExportRelativeDateFilterRelativeDateFilter {
      * @memberof ExportRelativeDateFilterRelativeDateFilter
      */
     applyOnResult?: boolean;
+    /**
+     *
+     * @type {ExportBoundedFilter}
+     * @memberof ExportRelativeDateFilterRelativeDateFilter
+     */
+    boundedFilter?: ExportBoundedFilter;
     /**
      *
      * @type {ExportAfmObjectIdentifierDataset}

@@ -796,6 +796,36 @@
                 }
             }
         },
+        "/api/v1/actions/ai/validateLlmEndpoint": {
+            "post": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "Validate LLM Endpoint",
+                "description": "Validates LLM endpointw with provided parameters.",
+                "operationId": "validateLLMEndpoint",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ValidateLLMEndpointRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidateLLMEndpointResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}": {
             "get": {
                 "tags": ["Smart Functions", "actions"],
@@ -1186,6 +1216,38 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints": {
+            "get": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "Get Active LLM Endpoints for this workspace",
+                "description": "Returns a list of available LLM Endpoints",
+                "operationId": "resolveLlmEndpoints",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResolvedLlmEndpoints"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/chatUsage": {
             "get": {
                 "tags": ["Smart Functions", "actions"],
@@ -1529,6 +1591,52 @@
                 },
                 "description": "Filter on specific set of label values."
             },
+            "BoundedFilter": {
+                "required": ["dataset", "granularity"],
+                "type": "object",
+                "properties": {
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                    },
+                    "granularity": {
+                        "type": "string",
+                        "description": "Date granularity specifying particular date attribute in given dimension.",
+                        "example": "DAY",
+                        "enum": [
+                            "MINUTE",
+                            "HOUR",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "QUARTER",
+                            "YEAR",
+                            "MINUTE_OF_HOUR",
+                            "HOUR_OF_DAY",
+                            "DAY_OF_WEEK",
+                            "DAY_OF_MONTH",
+                            "DAY_OF_YEAR",
+                            "WEEK_OF_YEAR",
+                            "MONTH_OF_YEAR",
+                            "QUARTER_OF_YEAR"
+                        ]
+                    },
+                    "from": {
+                        "type": "integer",
+                        "description": "Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for '2 days/weeks, ... ago'). If null, then start of the range is unbounded.",
+                        "format": "int32",
+                        "nullable": true,
+                        "example": -6
+                    },
+                    "to": {
+                        "type": "integer",
+                        "description": "End of the filtering interval. Specified by number of periods (with respect to given granularity). Value 'O' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.",
+                        "format": "int32",
+                        "nullable": true,
+                        "example": 0
+                    }
+                },
+                "description": "Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range."
+            },
             "DateFilter": {
                 "type": "object",
                 "description": "Abstract filter definition type for dates.",
@@ -1770,7 +1878,7 @@
                 "type": "object",
                 "properties": {
                     "relativeDateFilter": {
-                        "required": ["granularity", "dataset"],
+                        "required": ["from", "granularity", "to", "dataset"],
                         "type": "object",
                         "properties": {
                             "granularity": {
@@ -1797,16 +1905,14 @@
                             },
                             "from": {
                                 "type": "integer",
-                                "description": "Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for '2 days/weeks, ... ago'). If null, then start of the range is unbounded.",
+                                "description": "Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for '2 days/weeks, ... ago').",
                                 "format": "int32",
-                                "nullable": true,
                                 "example": -6
                             },
                             "to": {
                                 "type": "integer",
-                                "description": "End of the filtering interval. Specified by number of periods (with respect to given granularity). Value 'O' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.",
+                                "description": "End of the filtering interval. Specified by number of periods (with respect to given granularity). Value 'O' is representing current time-interval (current day, week, ...).",
                                 "format": "int32",
-                                "nullable": true,
                                 "example": 0
                             },
                             "localIdentifier": {
@@ -1814,6 +1920,9 @@
                             },
                             "applyOnResult": {
                                 "type": "boolean"
+                            },
+                            "boundedFilter": {
+                                "$ref": "#/components/schemas/BoundedFilter"
                             },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
@@ -3718,6 +3827,46 @@
                     }
                 }
             },
+            "ValidateLLMEndpointRequest": {
+                "required": ["provider", "token"],
+                "type": "object",
+                "properties": {
+                    "provider": {
+                        "type": "string",
+                        "description": "Provider for the LLM endpoint validation"
+                    },
+                    "baseUrl": {
+                        "type": "string",
+                        "description": "Base URL for the LLM endpoint validation"
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Token for the LLM endpoint validation"
+                    },
+                    "llmOrganization": {
+                        "type": "string",
+                        "description": "Organization name for the LLM endpoint validation"
+                    },
+                    "llmModel": {
+                        "type": "string",
+                        "description": "LLM model for the LLM endpoint validation"
+                    }
+                }
+            },
+            "ValidateLLMEndpointResponse": {
+                "required": ["message", "success"],
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "description": "Whether the LLM endpoint validation was successful"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Additional message about the LLM endpoint validation"
+                    }
+                }
+            },
             "ForecastResult": {
                 "required": ["attribute", "lowerBound", "origin", "prediction", "upperBound"],
                 "type": "object",
@@ -4111,6 +4260,32 @@
                     }
                 },
                 "description": "Header containing the information related to a subtotal."
+            },
+            "ResolvedLlmEndpoint": {
+                "required": ["id", "title"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Endpoint Id"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Endpoint Title"
+                    }
+                }
+            },
+            "ResolvedLlmEndpoints": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ResolvedLlmEndpoint"
+                        }
+                    }
+                }
             },
             "ChatUsageResponse": {
                 "required": ["interactionCount", "interactionLimit", "timeWindowHours"],
