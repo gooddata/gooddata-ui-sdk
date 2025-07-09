@@ -10,7 +10,7 @@ describe("validate structure tests", () => {
     const scenarios: Scenario[] = [
         [
             "basic format with required only",
-            { "message.id": { value: "This is value", comment: "This is comment", limit: 0 } },
+            { "message.id": { value: "This is value", comment: "This is comment" } },
             null,
         ],
         ["basic format with string", { "message.id": "This is value" }, null],
@@ -20,7 +20,6 @@ describe("validate structure tests", () => {
                 "message.id": {
                     value: "This is value",
                     comment: "This is comment",
-                    limit: 0,
                     translate: false,
                 },
             },
@@ -32,15 +31,14 @@ describe("validate structure tests", () => {
                 "message.id": {
                     value: "This is value",
                     comment: "This is comment",
-                    limit: 0,
                     translate: false,
                     test: 2,
                 } as any,
             },
-            `Structure of localizations is not correct, see: [{"value":"This is value","comment":"This is comment","limit":0,"translate":false,"test":2}]`,
+            `Structure of localizations is not correct, see: [{"value":"This is value","comment":"This is comment","translate":false,"test":2}]`,
         ],
         [
-            "basic format with missing comment and limit",
+            "basic format with missing comment",
             {
                 "message.id": {
                     value: "This is value",
@@ -49,24 +47,13 @@ describe("validate structure tests", () => {
             `Structure of localizations is not correct, see: [{"value":"This is value"}]`,
         ],
         [
-            "basic format with missing limit",
-            {
-                "message.id": {
-                    value: "This is value",
-                    comment: "",
-                } as any,
-            },
-            `Structure of localizations is not correct, see: [{"value":"This is value","comment":""}]`,
-        ],
-        [
             "basic format with missing value",
             {
                 "message.id": {
                     comment: "",
-                    limit: 0,
                 } as any,
             },
-            `Structure of localizations is not correct, see: [{"comment":"","limit":0}]`,
+            `Structure of localizations is not correct, see: [{"comment":""}]`,
         ],
     ];
 
