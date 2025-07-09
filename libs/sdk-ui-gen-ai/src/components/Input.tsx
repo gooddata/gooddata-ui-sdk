@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import cx from "classnames";
 import { connect } from "react-redux";
 import { defineMessages, FormattedMessage, injectIntl } from "react-intl";
@@ -75,6 +75,7 @@ const InputComponent: React.FC<
 
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
     const forceFocusOnce = useRef<boolean>(autofocus);
+    const [updates, update] = useReducer((x) => x + 1, 0);
     useEffect(() => {
         // Autofocus the textarea when the chat is not disabled and the user is not focusing on another element
         // Important, given the disabled states changes depending on the agent's loading state
@@ -84,10 +85,14 @@ const InputComponent: React.FC<
         }
         const makeFocus = forceFocusOnce.current || document.activeElement === document.body;
         if (makeFocus) {
-            editorApi.focus();
-            forceFocusOnce.current = document.activeElement !== editorApi.contentDOM;
+            if (!editorApi.inView) {
+                update();
+            } else {
+                editorApi.focus();
+                forceFocusOnce.current = document.activeElement !== editorApi.contentDOM;
+            }
         }
-    }, [isBusy, editorApi]);
+    }, [isBusy, editorApi, updates]);
     useEffect(
         () => () => {
             forceFocusOnce.current = true;
