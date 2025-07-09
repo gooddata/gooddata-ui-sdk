@@ -10,5 +10,6 @@
     "semantic-search.date.at": "係",
     "gs.date.today": "今日",
     "gs.date.yesterday": "琴日",
-    "semantic-search.label": "搜索儀錶板或可視化"
+    "semantic-search.label": "搜索儀錶板或可視化",
+    "semantic-search.ask.ai.assistant": "詢問AI Assistant"
 }

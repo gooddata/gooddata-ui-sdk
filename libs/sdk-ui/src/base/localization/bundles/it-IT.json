@@ -732,5 +732,5 @@
     "shareDialog.share.dashboard.list.title": "Utenti e gruppi",
     "shareDialog.share.link.helperText": "Il link riflette i filtri attuali. Accessibile solo agli utenti con accesso al dashboard.",
     "shareDialog.share.link.title": "Collegamento",
-    "shareDialog.share.link.buttonText": "Copia"
+    "shareDialog.share.link.buttonText": "Copiare il link del cruscotto"
 }

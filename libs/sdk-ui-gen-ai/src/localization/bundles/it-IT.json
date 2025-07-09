@@ -59,5 +59,6 @@
     "gd.gen-ai.input-label.win": "Poni la tua domanda. Per i suggerimenti, utilizzare control+spazio o control+I.",
     "gd.gen-ai.message.label.assistant": "Bot:",
     "gd.gen-ai.skip-messages-history": "Passa all'input dell'assistente AI",
-    "gd.gen-ai.skip-navigation": "Salta la navigazione"
+    "gd.gen-ai.skip-navigation": "Salta la navigazione",
+    "gd.gen-ai.messages.label": "Messaggi di chat"
 }

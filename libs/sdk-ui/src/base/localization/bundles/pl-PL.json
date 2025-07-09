@@ -741,5 +741,5 @@
     "shareDialog.share.dashboard.list.title": "Użytkownicy i grupy",
     "shareDialog.share.link.helperText": "Link odzwierciedla bieżące filtry. Dostępny tylko dla użytkowników z dostępem do pulpitu nawigacyjnego.",
     "shareDialog.share.link.title": "Link",
-    "shareDialog.share.link.buttonText": "Kopiuj"
+    "shareDialog.share.link.buttonText": "Skopiuj link do pulpitu nawigacyjnego"
 }

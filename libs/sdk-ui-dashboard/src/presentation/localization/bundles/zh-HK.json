@@ -773,5 +773,19 @@
     "nestedLayoutToolbar.direction.row.tooltip": "帶換行嘅水平布局。",
     "nestedLayoutToolbar.direction.column": "垂直",
     "nestedLayoutToolbar.direction.column.tooltip": "垂直布局。",
-    "nestedLayoutToolbar.direction.column.disabledTooltip": "如果容器包含具有水平方向嘅嵌套容器，則無法把Direction更改為vertical。"
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "如果容器包含具有水平方向嘅嵌套容器，則無法把Direction更改為vertical。",
+    "dialogs.schedule.management.attachments.exportInfo": "包含包含導出信息嘅工作表",
+    "dialogs.schedule.management.attachments.title": "附件",
+    "scheduledEmail.attachmentFormat.widget.png": "快照（.png）",
+    "scheduledEmail.attachmentFormat.widget.pptx": "單滑軌（.pptx）",
+    "scheduledEmail.attachmentFormat.widget.pdf": "單滑軌（.pdf）",
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": "格式化數據（.xlsx）",
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": "格式化數據（.csv）",
+    "scheduledEmail.attachmentFormat.widget.rawCSV": "原始數據（.csv）",
+    "scheduledEmail.attachmentFormat.dashboard.pptx": "幻燈片（.pptx）",
+    "scheduledEmail.attachmentFormat.dashboard.pdf": "快照（.pdf）",
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "數據（.xlsx）",
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "幻燈片（.pdf）",
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>警告：</strong>計劃導出至少需要一個附件-選擇一個選項以繼續。",
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "錯誤：未選擇任何附件-至少選擇一個附件以計劃導出。"
 }

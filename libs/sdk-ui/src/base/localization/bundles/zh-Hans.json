@@ -732,5 +732,5 @@
     "shareDialog.share.dashboard.list.title": "用户和群组",
     "shareDialog.share.link.helperText": "链接反映当前筛选条件。仅具有仪表板访问权限的用户可访问。",
     "shareDialog.share.link.title": "关联",
-    "shareDialog.share.link.buttonText": "复制"
+    "shareDialog.share.link.buttonText": "复制仪表板链接"
 }

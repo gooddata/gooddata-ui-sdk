@@ -741,5 +741,5 @@
     "shareDialog.share.dashboard.list.title": "Пользователи и группы",
     "shareDialog.share.link.helperText": "Ссылка отражает текущие фильтры. Доступна только пользователям с доступом к дашборду.",
     "shareDialog.share.link.title": "Ссылка",
-    "shareDialog.share.link.buttonText": "Копировать"
+    "shareDialog.share.link.buttonText": "Скопировать ссылку на дашборд"
 }

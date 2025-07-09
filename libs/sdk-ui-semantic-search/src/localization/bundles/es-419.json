@@ -10,5 +10,6 @@
     "semantic-search.date.at": "en",
     "gs.date.today": "Hoy",
     "gs.date.yesterday": "Ayer",
-    "semantic-search.label": "Búsqueda en paneles de control o visualización"
+    "semantic-search.label": "Búsqueda en paneles de control o visualización",
+    "semantic-search.ask.ai.assistant": "Pregúntale a AI Assistant"
 }

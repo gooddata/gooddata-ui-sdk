@@ -774,5 +774,19 @@
     "nestedLayoutToolbar.direction.row.tooltip": "Układ poziomy z zawijaniem.",
     "nestedLayoutToolbar.direction.column": "Pionowy",
     "nestedLayoutToolbar.direction.column.tooltip": "Układ pionowy.",
-    "nestedLayoutToolbar.direction.column.disabledTooltip": "Kierunek nie może zostać zmieniony na pionowy, jeśli kontener zawiera zagnieżdżone kontenery z kierunkiem poziomym."
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "Kierunek nie może zostać zmieniony na pionowy, jeśli kontener zawiera zagnieżdżone kontenery z kierunkiem poziomym.",
+    "dialogs.schedule.management.attachments.exportInfo": "Dołącz arkusz z informacjami o eksporcie",
+    "dialogs.schedule.management.attachments.title": "Załączniki",
+    "scheduledEmail.attachmentFormat.widget.png": "Zrzut ekranu (.png)",
+    "scheduledEmail.attachmentFormat.widget.pptx": "Pojedynczy slajd (.pptx)",
+    "scheduledEmail.attachmentFormat.widget.pdf": "Pojedynczy slajd (.pdf)",
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": "Sformatowane dane (.xlsx)",
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": "Sformatowane dane (.csv)",
+    "scheduledEmail.attachmentFormat.widget.rawCSV": "Dane surowe (.csv)",
+    "scheduledEmail.attachmentFormat.dashboard.pptx": "Prezentacja (.pptx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdf": "Migawka (.pdf)",
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Dane (.xlsx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Prezentacja (.pdf)",
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Ostrzeżenie:</strong> Zaplanowane eksporty wymagają co najmniej jednego załącznika — wybierz opcję, aby kontynuować.",
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Błąd: Nie wybrano załączników — wybierz co najmniej jeden załącznik, aby zaplanować eksport."
 }

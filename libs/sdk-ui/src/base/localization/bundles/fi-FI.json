@@ -732,5 +732,5 @@
     "shareDialog.share.dashboard.list.title": "Käyttäjät ja ryhmät",
     "shareDialog.share.link.helperText": "Linkki heijastaa nykyisiä suodattimia. Käytettävissä vain käyttäjille, joilla on ohjauspaneelin käyttöoikeus.",
     "shareDialog.share.link.title": "Linkki",
-    "shareDialog.share.link.buttonText": "Kopioi"
+    "shareDialog.share.link.buttonText": "Kopioi ohjauspaneelin linkki"
 }

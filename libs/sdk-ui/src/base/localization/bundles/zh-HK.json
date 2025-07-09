@@ -732,5 +732,5 @@
     "shareDialog.share.dashboard.list.title": "用戶和群組",
     "shareDialog.share.link.helperText": "Link反映當前嘅過濾器。 只有具有控制面板訪問權限嘅用戶才能訪問。",
     "shareDialog.share.link.title": "連結",
-    "shareDialog.share.link.buttonText": "複製"
+    "shareDialog.share.link.buttonText": "複製控制面板連結"
 }

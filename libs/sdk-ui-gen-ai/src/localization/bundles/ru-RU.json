@@ -59,5 +59,6 @@
     "gd.gen-ai.input-label.win": "Задайте ваш вопрос. Используйте control+space или control+I для предложений.",
     "gd.gen-ai.message.label.assistant": "Бот:",
     "gd.gen-ai.skip-messages-history": "Перейти к вводу AI-ассистента",
-    "gd.gen-ai.skip-navigation": "Пропустить навигацию"
+    "gd.gen-ai.skip-navigation": "Пропустить навигацию",
+    "gd.gen-ai.messages.label": "Чат-сообщения"
 }

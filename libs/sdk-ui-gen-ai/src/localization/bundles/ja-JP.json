@@ -59,5 +59,6 @@
     "gd.gen-ai.input-label.win": "ご質問ください。control+spaceまたはcontrol+Iを使用してください。",
     "gd.gen-ai.message.label.assistant": "ボットだ：",
     "gd.gen-ai.skip-messages-history": "AIアシスタント入力へスキップ",
-    "gd.gen-ai.skip-navigation": "ナビゲーションをスキップする"
+    "gd.gen-ai.skip-navigation": "ナビゲーションをスキップする",
+    "gd.gen-ai.messages.label": "チャットメッセージ"
 }

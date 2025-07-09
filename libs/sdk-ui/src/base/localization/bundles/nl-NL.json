@@ -732,5 +732,5 @@
     "shareDialog.share.dashboard.list.title": "Gebruikers en groepen",
     "shareDialog.share.link.helperText": "Link geeft huidige filters weer. Alleen toegankelijk voor gebruikers met toegang tot het dashboard.",
     "shareDialog.share.link.title": "Link",
-    "shareDialog.share.link.buttonText": "Kopie"
+    "shareDialog.share.link.buttonText": "Koppeling naar dashboard kopiëren"
 }

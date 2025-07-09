@@ -59,5 +59,6 @@
     "gd.gen-ai.input-label.win": "提出你的問題。使用 Control+Space 或 Control+I 取得建議。",
     "gd.gen-ai.message.label.assistant": "機器人：",
     "gd.gen-ai.skip-messages-history": "跳至AI助理輸入",
-    "gd.gen-ai.skip-navigation": "跳過導航"
+    "gd.gen-ai.skip-navigation": "跳過導航",
+    "gd.gen-ai.messages.label": "聊天訊息"
 }

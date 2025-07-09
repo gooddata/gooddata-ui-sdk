@@ -732,5 +732,5 @@
     "shareDialog.share.dashboard.list.title": "Benutzer & Gruppen",
     "shareDialog.share.link.helperText": "Link spiegelt aktuelle Filter wider. Nur für Benutzer mit Dashboard-Zugriff zugänglich.",
     "shareDialog.share.link.title": "Link",
-    "shareDialog.share.link.buttonText": "Kopie"
+    "shareDialog.share.link.buttonText": "Dashboard-Link kopieren"
 }

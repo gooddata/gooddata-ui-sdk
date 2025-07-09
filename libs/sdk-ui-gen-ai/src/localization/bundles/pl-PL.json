@@ -59,5 +59,6 @@
     "gd.gen-ai.input-label.win": "Zadaj swoje pytanie. Użyj ctrl+spacja lub ctrl+I, aby uzyskać sugestie.",
     "gd.gen-ai.message.label.assistant": "Bot:",
     "gd.gen-ai.skip-messages-history": "Przejdź do wprowadzania asystenta AI",
-    "gd.gen-ai.skip-navigation": "Pomiń nawigację"
+    "gd.gen-ai.skip-navigation": "Pomiń nawigację",
+    "gd.gen-ai.messages.label": "Wiadomości czatu"
 }

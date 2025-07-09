@@ -773,5 +773,19 @@
     "nestedLayoutToolbar.direction.row.tooltip": "Horizontales Layout mit Umbruch.",
     "nestedLayoutToolbar.direction.column": "Vertikal",
     "nestedLayoutToolbar.direction.column.tooltip": "Vertikales Layout.",
-    "nestedLayoutToolbar.direction.column.disabledTooltip": "Die Richtung kann nicht in eine Vertikale geändert werden, wenn der Container verschachtelte Container mit horizontaler Richtung enthält."
+    "nestedLayoutToolbar.direction.column.disabledTooltip": "Die Richtung kann nicht in eine Vertikale geändert werden, wenn der Container verschachtelte Container mit horizontaler Richtung enthält.",
+    "dialogs.schedule.management.attachments.exportInfo": "Blatt mit Exportinformationen einfügen",
+    "dialogs.schedule.management.attachments.title": "Anhänge",
+    "scheduledEmail.attachmentFormat.widget.png": "Schnappschuss (.png)",
+    "scheduledEmail.attachmentFormat.widget.pptx": "Einzelfolie (.pptx)",
+    "scheduledEmail.attachmentFormat.widget.pdf": "Einzelfolie (.pdf)",
+    "scheduledEmail.attachmentFormat.widget.formattedXLSX": "Formatierte Daten (.xlsx)",
+    "scheduledEmail.attachmentFormat.widget.formattedCSV": "Formatierte Daten (.csv)",
+    "scheduledEmail.attachmentFormat.widget.rawCSV": "Rohdaten (.csv)",
+    "scheduledEmail.attachmentFormat.dashboard.pptx": "Slide Deck (.pptx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdf": "Schnappschuss (.pdf)",
+    "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Daten (.xlsx)",
+    "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Slide Deck (.pdf)",
+    "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Warnung:</strong> Geplante Exporte erfordern mindestens einen Anhang — wählen Sie eine Option, um fortzufahren.",
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Fehler: Keine Anlagen ausgewählt — Wählen Sie mindestens eine Anlage aus, um einen Export zu planen."
 }
