@@ -47,15 +47,17 @@ module.exports = (_env, argv) => {
             target: "web",
             devtool: isProduction ? false : "eval-cheap-module-source-map",
             experiments: {
-                outputModule: true,
+                outputModule: isProduction,
             },
             output: {
                 path: path.resolve("./esm"),
                 // Force .js extension instead of .mjs
                 filename: "[name].js",
-                library: {
-                    type: "module",
-                },
+                ...(isProduction && {
+                    library: {
+                        type: "module",
+                    },
+                }),
             },
             resolve: {
                 // Alias for ESM imports with .js suffix because
