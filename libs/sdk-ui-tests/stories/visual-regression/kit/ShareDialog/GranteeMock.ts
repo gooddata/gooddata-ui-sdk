@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IWorkspaceUser, uriRef } from "@gooddata/sdk-model";
 import {
     GranteeItem,

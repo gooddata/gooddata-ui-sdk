@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 const stories = require("./stories");
 
@@ -15,7 +15,7 @@ const stories = require("./stories");
  * Where
  *
  * - idRegex is regular expression to match against the scenario identifier. Scenario identifier is
- *   constructed as "storybookKind_storybookName".
+ *   constructed as "storybookKind_storybookName", e.g. "14 GenAI/SemanticSearch/short".
  *
  * - config is object with BackstopJS configuration; typically should contain at least the readySelector. This
  *   object will be passed to BackstopJS as-is.
@@ -76,7 +76,7 @@ const ScenarioConfig = [
         /*
          * Tests for pluggable pivot table.
          *
-         * For these we want want to have increased mismatch threshold as tables can be large which can make bugs
+         * For these we want to have increased mismatch threshold as tables can be large which can make bugs
          * related to first (sticky) row slip through.
          */
         idRegex: /04.*Pivot.*/g,
@@ -186,15 +186,18 @@ function scenarioUrlForId(id) {
 function scenarioGlobalConfig(kind, name) {
     const id = `${kind}_${name}`;
 
-    const foundConfig = ScenarioConfig.find(({ idRegex }) => {
+    const configurations = ScenarioConfig.filter(({ idRegex }) => {
         return id.match(idRegex) !== null;
     });
 
-    if (foundConfig === undefined) {
+    if (configurations.length === 0) {
         return {};
     }
 
-    return foundConfig.config;
+    let object = {};
+    for (const configuration of configurations) object = { ...configuration.config, ...object };
+
+    return object;
 }
 
 module.exports = stories

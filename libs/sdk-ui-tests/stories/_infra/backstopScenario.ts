@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 /*
  * These types were taken mostly as-is from the @types/backstopjs package. renamed interfaces to start with 'I'

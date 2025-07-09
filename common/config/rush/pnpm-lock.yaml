@@ -4330,9 +4330,6 @@ importers:
       '@babel/runtime':
         specifier: ^7.23.5
         version: 7.23.6
-      '@componentdriven/csf':
-        specifier: ^0.0.2-alpha.0
-        version: 0.0.2-alpha.0
       '@gooddata/eslint-config':
         specifier: ^4.1.1
         version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
@@ -9401,12 +9398,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@componentdriven/csf@0.0.2-alpha.0:
-    resolution: {integrity: sha512-x3HJNDispcZSY90COxoCGxajqDNw28yWf8cn9r4dZzpPQd/nGmTThJoHMhH90o4SGJQaPl/NhHHoor31rmFD/A==}
-    dependencies:
-      lodash: 4.17.21
-    dev: true
 
   /@csstools/color-helpers@5.0.2:
     resolution: {integrity: sha512-JqWH1vsgdGcw2RR6VliXXdA0/59LttzlU8UlRT/iUUsEeWfYq8I+K0yhihEUTTHLRm1EXvpsCx3083EU15ecsA==}

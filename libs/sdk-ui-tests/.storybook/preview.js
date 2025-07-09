@@ -1,5 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
+import "@gooddata/sdk-ui-kit/styles/css/main.css";
+import "../stories/visual-regression/kit/styles/goodstrap.scss";
 import "./polyfills";
 
 export const preview = {
