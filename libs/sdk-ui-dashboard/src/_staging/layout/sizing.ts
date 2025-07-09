@@ -325,82 +325,67 @@ function getVisSwitcherDimension(
     });
 }
 
-function getMaximumItemDefaultWidth(
+/**
+ * Calculates width for a single item based on the container direction
+ */
+function calculateItemWidth(
     item: IDashboardLayoutItem<ExtendedDashboardWidget>,
+    direction: IDashboardLayoutContainerDirection,
     screen: ScreenSize,
     settings: ISettings,
     insightMap: ObjRefMap<IInsight>,
+    emptyLayoutMinWidth: number,
 ): number {
     const widget = item.widget!;
-    if (isDashboardLayout(widget)) {
-        const direction = getLayoutConfiguration(widget).direction;
-        const emptyLayoutMinWidth = getDashboardLayoutWidgetMinGridWidth(settings, widget.type);
 
-        return direction === "column"
-            ? getMaximumDefaultWidthOfRecursiveLayoutItems(
-                  widget,
-                  screen,
-                  insightMap,
-                  settings,
-                  emptyLayoutMinWidth,
-              )
-            : determineWidthForScreen(screen, item.size);
-    } else {
-        return getDashboardLayoutWidgetMinGridWidth(
+    if (isDashboardLayout(widget)) {
+        const itemDirection = getLayoutConfiguration(widget).direction;
+        const layoutMinWidth = getDashboardLayoutWidgetMinGridWidth(settings, widget.type);
+
+        return calculateRecursiveLayoutWidth(
+            widget,
+            itemDirection,
+            screen,
+            insightMap,
             settings,
-            getExtendedWidgetType(widget),
-            getWidgetContent(widget, insightMap),
+            layoutMinWidth,
         );
     }
+
+    return direction === "row"
+        ? determineWidthForScreen(screen, item.size) ?? emptyLayoutMinWidth
+        : getDashboardLayoutWidgetMinGridWidth(
+              settings,
+              getExtendedWidgetType(widget),
+              getWidgetContent(widget, insightMap),
+          );
 }
 
 /**
- * The function finds the maximum width of items in the container, recursively. It does not take their
- * current width but their default minimum width. If the container has the direction set to columns,
- * the function goes into the container and processes its children. If the container has the direction set
- * to rows, the function does not go into the container and instead takes its width.
- * @param container - container we are interested in
- * @param screen - the current screen size
- * @param insightMap - map of insights, used to get their type and subsequently its dimensions
- * @param settings - settings to determine the current feature flags
- * @param emptyLayoutMinWidth - minimum size of the empty layout (used when the container is empty)
+ * Calculates the maximum width of items in a container recursively based on direction
  */
-function getMaximumDefaultWidthOfRecursiveLayoutItems(
+function calculateRecursiveLayoutWidth(
     container: IDashboardLayout<ExtendedDashboardWidget>,
+    direction: IDashboardLayoutContainerDirection,
     screen: ScreenSize,
     insightMap: ObjRefMap<IInsight>,
     settings: ISettings,
     emptyLayoutMinWidth: number,
 ): number {
-    return container.sections
-        .flatMap((section) => section.items)
-        .filter((item) => item.widget)
-        .map((item) => getMaximumItemDefaultWidth(item, screen, settings, insightMap))
-        .reduce((maxWidth, itemWidth) => Math.max(maxWidth, itemWidth), emptyLayoutMinWidth);
-}
+    const items = container.sections.flatMap((section) => section.items).filter((item) => item.widget);
 
-/**
- * The function finds the current widths maximum of the top level items of the container.
- * The function does not go inside the containers it finds. It takes their reported width.
- *
- * @param container - container we are interested in.
- * @param screen - the current screen size
- * @param emptyLayoutMinWidth - minimum size of the empty layout (used as a fallback)
- * @returns the width of the container that takes the most space.
- */
-function getMaximumCurrentWidthOfTopLevelLayoutItems(
-    container: IDashboardLayout<ExtendedDashboardWidget>,
-    screen: ScreenSize,
-    emptyLayoutMinWidth: number,
-): number {
-    return container.sections.reduce((maxWidth, section) => {
-        return Math.max(
-            maxWidth,
-            section.items.reduce((acc, item) => {
-                return Math.max(acc, determineWidthForScreen(screen, item.size) ?? emptyLayoutMinWidth);
-            }, emptyLayoutMinWidth),
-        );
-    }, emptyLayoutMinWidth);
+    if (items.length === 0) {
+        return emptyLayoutMinWidth;
+    }
+
+    return items
+        .map((item) => {
+            const itemDirection = isDashboardLayout(item.widget)
+                ? getLayoutConfiguration(item.widget).direction
+                : direction;
+            return calculateItemWidth(item, itemDirection, screen, settings, insightMap, emptyLayoutMinWidth);
+        })
+        .reduce((maxWidth, itemWidth) => Math.max(maxWidth, itemWidth), emptyLayoutMinWidth);
 }
 
 /**
@@ -420,17 +405,18 @@ export function getMinWidth(
         return Math.max(
             ...getVisSwitcherDimension(widget, insightMap, getDashboardLayoutWidgetMinGridWidth, settings),
         );
-    } else if (isDashboardLayout(widget)) {
+    }
+
+    if (isDashboardLayout(widget)) {
         const emptyLayoutMinWidth = getDashboardLayoutWidgetMinGridWidth(settings, widget.type);
-        return direction === "column"
-            ? getMaximumDefaultWidthOfRecursiveLayoutItems(
-                  widget,
-                  screen,
-                  insightMap,
-                  settings,
-                  emptyLayoutMinWidth,
-              )
-            : getMaximumCurrentWidthOfTopLevelLayoutItems(widget, screen, emptyLayoutMinWidth);
+        return calculateRecursiveLayoutWidth(
+            widget,
+            direction,
+            screen,
+            insightMap,
+            settings,
+            emptyLayoutMinWidth,
+        );
     }
     return getDashboardLayoutWidgetMinGridWidth(
         settings,
