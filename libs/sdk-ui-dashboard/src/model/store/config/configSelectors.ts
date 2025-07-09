@@ -823,7 +823,7 @@ export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean> =
 export const selectEnableFlexibleLayout: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableDashboardFlexibleLayout ?? false;
+        return state.settings?.enableDashboardFlexibleLayout ?? true;
     },
 );
 
@@ -835,7 +835,7 @@ export const selectEnableFlexibleLayout: DashboardSelector<boolean> = createSele
 export const selectEnableFlexibleLayoutContainer: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableDashboardFlexibleLayoutContainer ?? false;
+        return state.settings?.enableDashboardFlexibleLayoutContainer ?? true;
     },
 );
 
