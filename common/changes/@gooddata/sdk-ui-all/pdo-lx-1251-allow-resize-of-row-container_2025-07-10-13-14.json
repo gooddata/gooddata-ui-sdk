@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "fix(sdk-ui-dashboard): documentation link displayed in tooltip shown over the new Column container item of dashboard leads to the related part of documentation page now",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}
