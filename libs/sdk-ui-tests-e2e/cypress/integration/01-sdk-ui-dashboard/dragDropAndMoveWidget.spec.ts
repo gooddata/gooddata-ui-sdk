@@ -44,8 +44,7 @@ describe("Insight on dashboard", () => {
         },
     );
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("shows placeholder text during drag", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    it("shows placeholder text during drag", { tags: ["pre-merge_isolated_tiger"] }, () => {
         //create a new row, between 2 existing rows
         dashboard.getRow(1).dragAbove("ComboChart");
         dashboard.hasPlaceholderText("Drop to create a new section");
