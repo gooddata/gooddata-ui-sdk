@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/app-toolkit",
-    "version": "10.34.0-alpha.5",
+    "version": "10.34.0-alpha.6",
     "author": "GoodData",
     "description": "CLI with useful tools for creating and maintaining GoodData web applications.",
     "repository": {
