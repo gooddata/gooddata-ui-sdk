@@ -39,14 +39,7 @@ function findChildItemsWithNewWidth(
 
     if (isDashboardLayoutItem(parent) && isDashboardLayout(parent.widget)) {
         return direction === "row"
-            ? getChildWidgetLayoutPathsWithMinWidths(
-                  parent.widget,
-                  parentPath,
-                  settings,
-                  insightMap,
-                  screen,
-                  direction,
-              )
+            ? getChildWidgetLayoutPathsWithMinWidths(parent.widget, parentPath, settings, insightMap, screen)
             : getChildWidgetLayoutPaths(parent.widget, parentPath).map((itemPath) => ({
                   itemPath,
                   width: parent.size.xl.gridWidth,
