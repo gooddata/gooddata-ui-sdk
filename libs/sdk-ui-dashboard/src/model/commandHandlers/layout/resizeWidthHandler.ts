@@ -1,12 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import {
-    IWidget,
-    isDashboardLayout,
-    ScreenSize,
-    IDashboardLayout,
-    IDashboardLayoutContainerDirection,
-} from "@gooddata/sdk-model";
+import { IWidget, isDashboardLayout, ScreenSize, IDashboardLayout } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { put, select, call } from "redux-saga/effects";
 
@@ -91,13 +85,12 @@ function validateLayoutIndexes(
 
 function mapNestedItemsToNewWidth(
     layout: IDashboardLayout<ExtendedDashboardWidget>,
-    parentLayoutDirection: IDashboardLayoutContainerDirection,
     itemPath: ILayoutItemPath,
     newItemWidth: number,
 ) {
     const modifiedItem = findItem(layout, itemPath);
-    if (parentLayoutDirection === "column" && isDashboardLayout(modifiedItem.widget)) {
-        const childLayoutPaths = getChildWidgetLayoutPaths(modifiedItem.widget, itemPath);
+    if (isDashboardLayout(modifiedItem.widget)) {
+        const childLayoutPaths = getChildWidgetLayoutPaths(modifiedItem.widget, itemPath, true);
         return childLayoutPaths.map((itemPath) => ({ itemPath, width: newItemWidth }));
     }
     return [];
@@ -105,17 +98,11 @@ function mapNestedItemsToNewWidth(
 
 function findItemsWithChangedWidth(
     layout: IDashboardLayout<ExtendedDashboardWidget>,
-    parentLayoutDirection: IDashboardLayoutContainerDirection,
     itemPath: ILayoutItemPath,
     newItemWidth: number,
     screen: ScreenSize,
 ) {
-    const nestedItemsWithNewWidth = mapNestedItemsToNewWidth(
-        layout,
-        parentLayoutDirection,
-        itemPath,
-        newItemWidth,
-    );
+    const nestedItemsWithNewWidth = mapNestedItemsToNewWidth(layout, itemPath, newItemWidth);
     const itemWithNewWidth = { itemPath, width: newItemWidth };
     const allItemsWithNewWidth = [itemWithNewWidth, ...nestedItemsWithNewWidth];
     return getUpdatedSizesOnly(layout, allItemsWithNewWidth, screen);
@@ -137,15 +124,8 @@ export function* resizeWidthHandler(
     validateLayoutIndexes(ctx, layout, cmd);
     validateWidth(ctx, layout, insightsMap, cmd, settings, screen);
 
-    const parentLayoutDirection = getContainerDirectionAtPath(layout, itemPath);
     const itemLayoutPath = itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
-    const itemsWithChangedWidth = findItemsWithChangedWidth(
-        layout,
-        parentLayoutDirection,
-        itemLayoutPath,
-        width,
-        screen,
-    );
+    const itemsWithChangedWidth = findItemsWithChangedWidth(layout, itemLayoutPath, width, screen);
 
     if (itemsWithChangedWidth.length > 0) {
         yield put(
