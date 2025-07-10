@@ -88,7 +88,7 @@ export class Dashboard {
     }
 
     hasDropTargetBorderActive() {
-        cy.get(".gd-hotspot-border__drop-target.active").should("exist");
+        cy.get(".gd-grid-layout-dropzone__drop-target-border").should("exist");
         return this;
     }
 
