@@ -1064,5 +1064,19 @@ describe("coordinates", () => {
             ];
             expect(getCommonPath(fromPath, toPath)).toStrictEqual(fromPath);
         });
+
+        it("should return common path when paths are different in the middle", () => {
+            const fromPath = [
+                { sectionIndex: 0, itemIndex: 0 },
+                { sectionIndex: 0, itemIndex: 1 },
+                { sectionIndex: 0, itemIndex: 0 },
+            ];
+            const toPath = [
+                { sectionIndex: 0, itemIndex: 0 },
+                { sectionIndex: 0, itemIndex: 0 },
+                { sectionIndex: 0, itemIndex: 0 },
+            ];
+            expect(getCommonPath(fromPath, toPath)).toStrictEqual([{ sectionIndex: 0, itemIndex: 0 }]);
+        });
     });
 });
