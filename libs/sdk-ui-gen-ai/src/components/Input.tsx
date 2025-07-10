@@ -84,14 +84,20 @@ const InputComponent: React.FC<
             return;
         }
         const makeFocus = forceFocusOnce.current || document.activeElement === document.body;
+        let timeout: number | undefined;
         if (makeFocus) {
-            if (!editorApi.inView) {
-                update();
+            editorApi.focus();
+            if (document.activeElement !== editorApi.contentDOM) {
+                timeout = window.setTimeout(update, 25);
             } else {
-                editorApi.focus();
-                forceFocusOnce.current = document.activeElement !== editorApi.contentDOM;
+                forceFocusOnce.current = false;
             }
         }
+        return () => {
+            if (timeout) {
+                window.clearTimeout(timeout);
+            }
+        };
     }, [isBusy, editorApi, updates]);
     useEffect(
         () => () => {
