@@ -21,6 +21,7 @@ import { getRemainingWidthInRow, getRemainingHeightInColumn } from "../../rowEnd
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
 import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
+import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 
 import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
 import { Hotspot } from "./Hotspot.js";
@@ -70,6 +71,7 @@ export type RowEndHotspotProps<TWidget = IDashboardWidget> = {
 };
 
 export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<ExtendedDashboardWidget | unknown>) => {
+    const isDraggingWidget = useIsDraggingWidget();
     const { enableRowEndHotspot, gridWidth, gridHeight, hideDropzoneText } = useShouldShowRowEndHotspot(
         item,
         rowIndex,
@@ -100,7 +102,7 @@ export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<ExtendedDas
         return computedHeight === undefined ? {} : { height: computedHeight };
     }, [layoutItemSize]);
 
-    if (!enableRowEndHotspot) {
+    if (!enableRowEndHotspot || !isDraggingWidget) {
         return null;
     }
 

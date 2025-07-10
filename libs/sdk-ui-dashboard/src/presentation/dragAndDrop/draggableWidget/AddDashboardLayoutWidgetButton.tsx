@@ -29,35 +29,29 @@ export const AddDashboardLayoutWidgetButton: React.FC = () => {
     return (
         <div className="add-item-placeholder add-panel-item s-add-dashboard-layout">
             <Icon.ColumnContainer color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
-            <div className={"add-panel-item__text"}>
+            <div className="add-panel-item__text">
                 <FormattedMessage id="addPanel.dashboardLayout" />
                 <OverlayControllerProvider overlayController={overlayController}>
                     <UiTooltip
-                        arrowPlacement={"left"}
+                        arrowPlacement="left"
                         content={
                             <div className={tooltipBem.b()}>
                                 <div className={tooltipBem.e("image")} />
-
                                 <div className={tooltipBem.e("text")}>
                                     <FormattedMessage id="addPanel.dashboardLayout.tooltip" />
                                 </div>
-
-                                <div className={tooltipBem.e("actions")}>
-                                    {!isWhiteLabeled ? (
+                                {isWhiteLabeled ? null : (
+                                    <div className={tooltipBem.e("actions")}>
                                         <UiLink
-                                            variant={"inverse"}
-                                            rel={"noreferrer noopener"}
-                                            target={"_blank"}
-                                            href={
-                                                "https://www.gooddata.com/docs/cloud/create-dashboards/dashboard-layout/"
-                                            }
+                                            variant="inverse"
+                                            rel="noreferrer noopener"
+                                            target="_blank"
+                                            href="https://www.gooddata.com/docs/cloud/create-dashboards/dashboard-layout/#column-container"
                                         >
-                                            <FormattedMessage
-                                                id={"addPanel.dashboardLayout.tooltip.learnMore"}
-                                            />
+                                            <FormattedMessage id="addPanel.dashboardLayout.tooltip.learnMore" />
                                         </UiLink>
-                                    ) : null}
-                                </div>
+                                    </div>
+                                )}
                             </div>
                         }
                         anchor={
