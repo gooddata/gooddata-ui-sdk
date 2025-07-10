@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 
 import { IIconProps } from "../typings.js";
@@ -6,7 +6,7 @@ import { IIconProps } from "../typings.js";
 /**
  * @internal
  */
-export const Date: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export const Date: React.FC<IIconProps> = ({ color, className, width, height, ariaHidden }) => {
     return (
         <svg
             className={className}
@@ -20,6 +20,7 @@ export const Date: React.FC<IIconProps> = ({ color, className, width, height }) 
             viewBox="-40 -40 100 100"
             enableBackground="new -40 -40 100 100"
             xmlSpace="preserve"
+            aria-hidden={ariaHidden}
         >
             <g>
                 <g>

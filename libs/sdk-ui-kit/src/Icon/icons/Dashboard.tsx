@@ -1,11 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Dashboard: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export const Dashboard: React.FC<IIconProps> = ({ color, className, width, height, ariaHidden }) => {
     return (
         <svg
             width={width}
@@ -15,6 +15,7 @@ export const Dashboard: React.FC<IIconProps> = ({ color, className, width, heigh
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             stroke={color ?? "#B0BECA"}
+            aria-hidden={ariaHidden}
         >
             <path d="M17 1H2C1.44772 1 1 1.44772 1 2V13C1 13.5523 1.44772 14 2 14H17C17.5523 14 18 13.5523 18 13V2C18 1.44772 17.5523 1 17 1Z" />
             <path d="M15 12H4C3.44772 12 3 12.4477 3 13C3 13.5523 3.44772 14 4 14H15C15.5523 14 16 13.5523 16 13C16 12.4477 15.5523 12 15 12Z" />

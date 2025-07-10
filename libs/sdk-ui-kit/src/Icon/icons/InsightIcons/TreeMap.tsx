@@ -1,11 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { IIconProps } from "../../typings.js";
 
 /**
  * @internal
  */
-export const TreeMap: React.FC<IIconProps> = ({ className, width, height, color }) => {
+export const TreeMap: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
     return (
         <svg
             width={width}
@@ -13,6 +13,7 @@ export const TreeMap: React.FC<IIconProps> = ({ className, width, height, color 
             className={className}
             viewBox="0 0 26 26"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <g fill={color ?? "#B0BECA"} fillRule="evenodd">
                 <path fillOpacity=".4" d="M0 0h26v10H0z" />

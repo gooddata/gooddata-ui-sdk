@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 
@@ -7,7 +7,7 @@ import { IIconProps } from "../typings.js";
 /**
  * @internal
  */
-export const Metric: React.FC<IIconProps> = ({ color, className, width = 14, height = 14 }) => {
+export const Metric: React.FC<IIconProps> = ({ color, className, width = 14, height = 14, ariaHidden }) => {
     const fill = color ?? "#00C18D";
     return (
         <svg
@@ -17,6 +17,7 @@ export const Metric: React.FC<IIconProps> = ({ color, className, width = 14, hei
             viewBox="0 0 14 14"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <path
                 d="M8 4.49762C8 4.28927 8.1689 4.12036 8.37726 4.12036L11.6227 4.12037C11.8311 4.12037 12 4.28927 12 4.49762C12 4.70598 11.8311 4.87488 11.6227 4.87488H8.37726C8.1689 4.87488 8 4.70598 8 4.49762Z"
