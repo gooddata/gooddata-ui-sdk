@@ -31,6 +31,7 @@ describe("Header section", () => {
 
                 cy.fixture("headerDataTest").then((data) => {
                     data["DataTest"].forEach((result: { rowIndex: number; sectionName: string }) => {
+                        cy.scrollTo("bottom");
                         new LayoutRow(result.rowIndex)
                             .getHeader()
                             .setTitle(result.sectionName)
