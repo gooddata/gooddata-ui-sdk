@@ -1,11 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { IIconProps } from "../../typings.js";
 
 /**
  * @internal
  */
-export const Pyramid: React.FC<IIconProps> = ({ className, width, height, color }) => {
+export const Pyramid: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
     return (
         <svg
             width={width}
@@ -13,6 +13,7 @@ export const Pyramid: React.FC<IIconProps> = ({ className, width, height, color 
             className={className}
             viewBox="0 0 22 20"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <g fill={color ?? "#B0BECA"} fillRule="evenodd">
                 <path d="M8.24995 5L4.94995 11H17.05L13.75 5H8.24995Z" fillOpacity="0.6" />

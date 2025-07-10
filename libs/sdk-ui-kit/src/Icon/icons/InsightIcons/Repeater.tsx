@@ -1,11 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { IIconProps } from "../../typings.js";
 
 /**
  * @internal
  */
-export const Repeater: React.FC<IIconProps> = ({ className, width = 32, height = 30, color }) => {
+export const Repeater: React.FC<IIconProps> = ({ className, width = 32, height = 30, color, ariaHidden }) => {
     return (
         <svg
             width={width}
@@ -14,6 +14,7 @@ export const Repeater: React.FC<IIconProps> = ({ className, width = 32, height =
             viewBox="0 0 32 30"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <path
                 fillRule="evenodd"

@@ -1,11 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { IIconProps } from "../../typings.js";
 
 /**
  * @internal
  */
-export const Donut: React.FC<IIconProps> = ({ className, width, height, color }) => {
+export const Donut: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
     return (
         <svg
             width={width}
@@ -13,6 +13,7 @@ export const Donut: React.FC<IIconProps> = ({ className, width, height, color })
             className={className}
             viewBox="0.5 0 21.5 21.5"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <g fill={color ?? "#B0BECA"} fillRule="evenodd">
                 <path d="M17.5594482 11.1287126c0-2.34623052-1.3466846-4.37792602-3.309253-5.36428565l1.9595689-3.90660584c3.2773041 1.75240812 5.5213606 5.18451065 5.5820761 9.14621419a10.73274186 10.73274186 0 0 1-.002635.1246773h-4.229757z" />

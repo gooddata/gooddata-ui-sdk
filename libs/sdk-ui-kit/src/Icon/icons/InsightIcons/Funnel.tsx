@@ -1,11 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { IIconProps } from "../../typings.js";
 
 /**
  * @internal
  */
-export const Funnel: React.FC<IIconProps> = ({ className, width, height, color }) => {
+export const Funnel: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
     return (
         <svg
             width={width}
@@ -13,6 +13,7 @@ export const Funnel: React.FC<IIconProps> = ({ className, width, height, color }
             className={className}
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <g fill={color ?? "#B0BECA"} fillRule="evenodd">
                 <path d="M5.25002 15H14.75L16.85 9H3.15002L5.25002 15Z" fillOpacity="0.6" />

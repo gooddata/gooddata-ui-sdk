@@ -1,11 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { IIconProps } from "../../typings.js";
 
 /**
  * @internal
  */
-export const Line: React.FC<IIconProps> = ({ className, width, height, color }) => {
+export const Line: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
     return (
         <svg
             width={width}
@@ -13,6 +13,7 @@ export const Line: React.FC<IIconProps> = ({ className, width, height, color }) 
             className={className}
             viewBox="0 0 26 22"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <g fill={color ?? "#B0BECA"} fillRule="evenodd">
                 <path d="M0 0h2v22H0V0zm2 20h24v2H2v-2z" fillOpacity=".45" />
