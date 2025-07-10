@@ -69,13 +69,13 @@ export function WidthResizerHotspot({
     const onMouseLeave = () => setResizerVisibility(false);
     const layoutPath = item.index();
 
-    const currentWidth = item.sizeForScreen(screen)?.gridWidth || DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN;
-    const minLimit = getMinWidth(widget, insightsMap, screen, settings, itemDirection);
-    const maxLimit = getDashboardLayoutItemMaxGridWidth(item, screen);
-
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
             dragItem: () => {
+                const currentWidth =
+                    item.sizeForScreen(screen)?.gridWidth || DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN;
+                const minLimit = getMinWidth(widget, insightsMap, screen, settings, itemDirection);
+                const maxLimit = getDashboardLayoutItemMaxGridWidth(item, screen);
                 const initialLayoutDimensions = getLayoutDimensions();
                 return {
                     type: "internal-width-resizer",
@@ -106,7 +106,7 @@ export function WidthResizerHotspot({
             },
         },
 
-        [widget, insightsMap, layoutPath, currentWidth, minLimit, maxLimit, rowIndex],
+        [widget, insightsMap, layoutPath, rowIndex, item, screen, itemDirection, settings],
     );
 
     const isItemNested = layoutPath.length > 1;
