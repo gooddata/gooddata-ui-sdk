@@ -2,6 +2,39 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.33.0",
+            "tag": "@gooddata/sdk-ui-all_v10.33.0",
+            "date": "Thu, 10 Jul 2025 06:54:29 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Updated state management libraries, like @reduxjs/toolkit, immer, redux, reselect"
+                    },
+                    {
+                        "comment": "Exclude width resizer preview from auto scroll behavior. It prevents dashboard content from vertical scroll when only horizontal movement of resizer is happening"
+                    },
+                    {
+                        "comment": "Replace ~@gooddata/ imports in scss files with @gooddata/ to allow integration with next.js"
+                    },
+                    {
+                        "comment": "Enable flexible dashboard layouts with nesting support by default."
+                    },
+                    {
+                        "comment": "Allow resizing of flexible layout containers with nested row containers inside of them."
+                    },
+                    {
+                        "comment": "Make the last column drop zone in flexible layouts take all the remaining space of the column."
+                    },
+                    {
+                        "comment": "Size flexible layout containers to full row height to have the last drop zone fill the remaining space of the column."
+                    },
+                    {
+                        "comment": "Do not render the flexible layout previous row's row end drop zone."
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.32.0",
             "tag": "@gooddata/sdk-ui-all_v10.32.0",
             "date": "Mon, 30 Jun 2025 11:32:45 GMT",
