@@ -229,7 +229,17 @@ export function* moveSectionItemToNewSectionHandler(
 
     yield put(
         batchActions([
-            ...rowContainerSanitizationActions, // process first to avoid remapping of the paths
+            // process actions not mutating layout paths first to avoid remapping of the paths in them
+            ...rowContainerSanitizationActions,
+            ...(shouldChangeSize
+                ? [
+                      layoutActions.changeItemWidth({
+                          layoutPath: sourceItemIndex,
+                          width: itemWithNormalizedSize.size.xl.gridWidth,
+                      }),
+                  ]
+                : []),
+            // changes section index
             layoutActions.addSection({
                 index:
                     toItemIndex === undefined
@@ -241,6 +251,7 @@ export function* moveSectionItemToNewSectionHandler(
                     cmd,
                 },
             }),
+            // changes item index
             layoutActions.moveSectionItem({
                 itemIndex:
                     itemPathWithSectionsShifted === undefined
@@ -251,14 +262,6 @@ export function* moveSectionItemToNewSectionHandler(
                     cmd,
                 },
             }),
-            ...(shouldChangeSize
-                ? [
-                      layoutActions.changeItemWidth({
-                          layoutPath: destinationItemIndex,
-                          width: itemWithNormalizedSize.size.xl.gridWidth,
-                      }),
-                  ]
-                : []),
             ...(shouldRemoveSection
                 ? [
                       layoutActions.removeSection({

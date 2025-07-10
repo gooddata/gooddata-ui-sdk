@@ -83,21 +83,31 @@ export const areItemsInSameSection = (
 };
 
 /**
- * Returns the common path between two item paths.
+ * Returns the common path between two item paths. After first difference rest is not included.
  *
  * @param fromItemPath - the path of the item from which the move is starting
  * @param toItemPath - the path of the item to which the move is going
  * @returns the common path between the two item paths. If the paths are not related, returns an empty path.
  */
 export function getCommonPath(fromItemPath: ILayoutItemPath, toItemPath: ILayoutItemPath): ILayoutItemPath {
-    const emptyPath: ILayoutItemPath = [];
-    const shorterPath = fromItemPath.length < toItemPath.length ? fromItemPath : toItemPath;
-    return shorterPath.reduce((acc, item, index) => {
-        if (areSameCoordinates(fromItemPath[index], toItemPath[index])) {
-            acc.push(item);
+    const commonPath: ILayoutItemPath = [];
+    const minLength = Math.min(fromItemPath.length, toItemPath.length);
+
+    // Early return for empty paths
+    if (minLength === 0) {
+        return commonPath;
+    }
+
+    // Find common path with early termination
+    for (let i = 0; i < minLength; i++) {
+        if (areSameCoordinates(fromItemPath[i], toItemPath[i])) {
+            commonPath.push(fromItemPath[i]);
+        } else {
+            break; // Stop at first difference
         }
-        return acc;
-    }, emptyPath);
+    }
+
+    return commonPath;
 }
 
 export const serializeLayoutItemPath = (path: ILayoutItemPath | undefined): string => {
