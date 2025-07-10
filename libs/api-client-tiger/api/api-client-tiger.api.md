@@ -10943,6 +10943,7 @@ export type FeatureContext = {
     earlyAccessValues: string[];
     tier: string;
     jsSdkVersion: string;
+    controlledFeatureRollout: boolean;
 };
 
 // @public

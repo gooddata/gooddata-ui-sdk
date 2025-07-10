@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import axios from "axios";
 import { ApiEntitlement, ILiveFeatures } from "@gooddata/api-client-tiger";
@@ -22,10 +22,17 @@ describe("live features", () => {
         organizationId = "",
         tier = "",
         jsSdkVersion = "",
+        controlledFeatureRollout = false,
     ): ILiveFeatures["live"] {
         return {
             configuration: { host: "/", key: "" },
-            context: { earlyAccessValues, organizationId, tier, jsSdkVersion },
+            context: {
+                earlyAccessValues,
+                organizationId,
+                tier,
+                jsSdkVersion,
+                controlledFeatureRollout,
+            },
         };
     }
 

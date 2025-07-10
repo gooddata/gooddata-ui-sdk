@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ILiveFeatures, FeatureContext } from "@gooddata/api-client-tiger";
 import axios, { AxiosResponse } from "axios";
 
@@ -106,6 +106,12 @@ async function getFeatureHubData(
 
     if (context.jsSdkVersion) {
         featureHubFlags.push(`jsSdkVersion=${encodeURIComponent(context.jsSdkVersion)}`);
+    }
+
+    if (context.controlledFeatureRollout) {
+        featureHubFlags.push(
+            `ControlledFeatureRollout=${encodeURIComponent(context.controlledFeatureRollout)}`,
+        );
     }
 
     return axios.get("/features", {
