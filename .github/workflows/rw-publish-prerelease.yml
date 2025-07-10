@@ -122,7 +122,7 @@ jobs:
     steps:
       - name: Notify to slack with author name
         if: ${{ inputs.author-name != '' }}
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: slackapi/slack-github-action@v2.1.1
         with:
           channel-id: "#javascript-notifications"
           slack-message: "The latest *${{env.PRERELEASE}}* version, *gooddata-ui-sdk@${{env.RELEASE_VERSION}}*, has been successfully published on NPM by the github user *${{env.GITHUB_USER}}*. :tada:"
@@ -133,7 +133,7 @@ jobs:
           PRERELEASE: ${{ needs.setup-params.outputs.prerelease-tag }}
       - name: Notify to slack with without author name
         if: ${{ inputs.author-name == '' }}
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: slackapi/slack-github-action@v2.1.1
         with:
           channel-id: "#javascript-notifications"
           slack-message: "The latest *${{env.PRERELEASE}}* version, *gooddata-ui-sdk@${{env.RELEASE_VERSION}}*, has been successfully published on NPM. :tada:"

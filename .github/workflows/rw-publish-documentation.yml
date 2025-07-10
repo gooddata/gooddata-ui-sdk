@@ -38,7 +38,7 @@ jobs:
         needs: [publish-netlify, update-apidocs-version, get-version]
         steps:
           - name: Notify to slack
-            uses: slackapi/slack-github-action@v1.25.0
+            uses: slackapi/slack-github-action@v2.1.1
             with:
               channel-id: "#javascript-notifications"
               slack-message: "The documentation for ui sdk *${{ env.RELEASE_VERSION }}* was successfully released by *${{ env.GITHUB_USER }}*"
