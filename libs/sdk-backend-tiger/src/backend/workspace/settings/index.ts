@@ -7,7 +7,11 @@ import {
 import { IAlertDefault, ISeparators, ISettings, type DashboardFiltersApplyMode } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types/index.js";
-import { getOrganizationTier, TigerFeaturesService } from "../../features/index.js";
+import {
+    getControlledFeatureRollout,
+    getOrganizationTier,
+    TigerFeaturesService,
+} from "../../features/index.js";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
 import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
 import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
@@ -280,9 +284,14 @@ export function getSettingsForCurrentUser(
             : [];
 
         const tier = getOrganizationTier(profile.entitlements);
+        const controlledFeatureRollout = getControlledFeatureRollout(profile.entitlements);
 
         if (tier !== undefined) {
             context.tier = tier;
+        }
+
+        if (controlledFeatureRollout) {
+            context.controlledFeatureRollout = controlledFeatureRollout;
         }
 
         if (profile?.organizationId) {

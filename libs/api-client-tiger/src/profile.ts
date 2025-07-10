@@ -8,6 +8,7 @@ export type FeatureContext = {
     earlyAccessValues: string[];
     tier: string;
     jsSdkVersion: string;
+    controlledFeatureRollout: boolean;
 };
 
 export interface ILiveFeatures {

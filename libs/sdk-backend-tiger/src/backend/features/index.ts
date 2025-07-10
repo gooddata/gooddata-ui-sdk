@@ -92,6 +92,7 @@ export function pickContext(
     };
 
     const tier = getOrganizationTier(entitlements);
+    const controlledFeatureRollout = getControlledFeatureRollout(entitlements);
 
     if (attributes?.earlyAccessValues !== undefined) {
         context.earlyAccessValues = attributes.earlyAccessValues;
@@ -105,6 +106,10 @@ export function pickContext(
         context.tier = tier.toUpperCase();
     }
 
+    if (controlledFeatureRollout) {
+        context.controlledFeatureRollout = controlledFeatureRollout;
+    }
+
     return context;
 }
 
@@ -114,4 +119,12 @@ export const getOrganizationTier = (entitlements: ApiEntitlement[] = []) => {
     );
 
     return tierEntitlement?.value;
+};
+
+export const getControlledFeatureRollout = (entitlements: ApiEntitlement[] = []) => {
+    const controlledFeatureRolloutEntitlement = entitlements.find(
+        (entitlement) => entitlement.name === ApiEntitlementNameEnum.CONTROLLED_FEATURE_ROLLOUT,
+    );
+
+    return !!controlledFeatureRolloutEntitlement;
 };
