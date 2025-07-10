@@ -290,7 +290,17 @@ export function* moveSectionItemHandler(
 
     yield put(
         batchActions([
-            ...rowContainerSanitizationActions, // process first to avoid remapping of the paths
+            // process actions not mutating layout paths first to avoid remapping of the paths in them
+            ...rowContainerSanitizationActions,
+            ...(shouldChangeSize
+                ? [
+                      layoutActions.changeItemWidth({
+                          layoutPath: currentItemIndex,
+                          width: itemWithNormalizedSize.size.xl.gridWidth,
+                      }),
+                  ]
+                : []),
+            // changes item index
             layoutActions.moveSectionItem({
                 itemIndex: currentItemIndex,
                 toItemIndex,
@@ -308,14 +318,6 @@ export function* moveSectionItemHandler(
                           undo: {
                               cmd,
                           },
-                      }),
-                  ]
-                : []),
-            ...(shouldChangeSize
-                ? [
-                      layoutActions.changeItemWidth({
-                          layoutPath: toItemIndex,
-                          width: itemWithNormalizedSize.size.xl.gridWidth,
                       }),
                   ]
                 : []),
