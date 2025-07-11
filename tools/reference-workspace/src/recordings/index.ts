@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-05-07T11:21:04.989Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-07-11T08:24:28.153Z; */
 const fp_004031cbc9081950b7284311b004fe11 = {
     definition: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json"),
     executionResult: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json"),
@@ -197,6 +197,12 @@ const fp_2fb05a685de09ac7bcfee93b373efde7 = {
     definition: require("./uiTestScenarios/executions/2fb05a685de09ac7bcfee93b373efde7/definition.json"),
     executionResult: require("./uiTestScenarios/executions/2fb05a685de09ac7bcfee93b373efde7/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/2fb05a685de09ac7bcfee93b373efde7/dataView_all.json"),
+};
+const fp_300c0b908199156a328388972230be9a = {
+    definition: require("./uiTestScenarios/executions/300c0b908199156a328388972230be9a/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/300c0b908199156a328388972230be9a/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/300c0b908199156a328388972230be9a/dataView_o0_0s100_1000.json"),
+    scenarios: require("./uiTestScenarios/executions/300c0b908199156a328388972230be9a/scenarios.json"),
 };
 const fp_3014bf2b850217c6e41b106f1f63aa2e = {
     definition: require("./uiTestScenarios/executions/3014bf2b850217c6e41b106f1f63aa2e/definition.json"),
@@ -1119,12 +1125,6 @@ const fp_e6587a76491e11317f5bc7379eb29cab = {
     executionResult: require("./uiTestScenarios/executions/e6587a76491e11317f5bc7379eb29cab/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/e6587a76491e11317f5bc7379eb29cab/dataView_all.json"),
 };
-const fp_ea3ba97511ee18ece1e428c4b694abc2 = {
-    definition: require("./uiTestScenarios/executions/ea3ba97511ee18ece1e428c4b694abc2/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/ea3ba97511ee18ece1e428c4b694abc2/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/ea3ba97511ee18ece1e428c4b694abc2/dataView_all.json"),
-    scenarios: require("./uiTestScenarios/executions/ea3ba97511ee18ece1e428c4b694abc2/scenarios.json"),
-};
 const fp_ea7171a44b29651da69295e0556ed18a = {
     definition: require("./uiTestScenarios/executions/ea7171a44b29651da69295e0556ed18a/definition.json"),
     executionResult: require("./uiTestScenarios/executions/ea7171a44b29651da69295e0556ed18a/executionResult.json"),
@@ -1672,10 +1672,6 @@ export const Scenarios = {
             scenarioIndex: 3,
             execution: fp_e480af73cb3da22e143deba5b7f4b3e3,
         },
-        MultiplePrimaryAndSecondaryMeasuresWithViewBy: {
-            scenarioIndex: 0,
-            execution: fp_ea3ba97511ee18ece1e428c4b694abc2,
-        },
         OnePrimaryAndSecondaryMeasureNoViewBy: {
             scenarioIndex: 1,
             execution: fp_f39ed708ee551a9ff3e9acc3ec249a8c,
@@ -1867,6 +1863,28 @@ export const Scenarios = {
         SingleMeasureViewByAndSegment: { scenarioIndex: 0, execution: fp_f950ae585fdee44ac65839426d307654 },
         Themed: { scenarioIndex: 1, execution: fp_f950ae585fdee44ac65839426d307654 },
         Font: { scenarioIndex: 2, execution: fp_f950ae585fdee44ac65839426d307654 },
+    },
+    PivotTableNext: {
+        SingleMeasurePivotSortedByFirstRowAndSecondAttr: {
+            scenarioIndex: 0,
+            execution: fp_300c0b908199156a328388972230be9a,
+        },
+        SingleMeasurePivotSortedBySecondRowAttr: {
+            scenarioIndex: 1,
+            execution: fp_6ad17cce441c93f0c1f6c5cfffb7d7af,
+        },
+        SingleMeasurePivotSortedByFirstRowAttr: {
+            scenarioIndex: 1,
+            execution: fp_9bbaf756a6a44325dc1a9315de17d0fb,
+        },
+        TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: {
+            scenarioIndex: 1,
+            execution: fp_f304c0180efbca32eeccaa096410dc8f,
+        },
+        TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: {
+            scenarioIndex: 1,
+            execution: fp_f5008c073c235b861044fc2ec3f4b0bc,
+        },
     },
     DonutChart: {
         SingleMeasureWithViewBy: { scenarioIndex: 5, execution: fp_334febec1d24c565faab8bb5138542f7 },
@@ -5407,6 +5425,21 @@ const i_PivotTable_f859c3e05d9f78d4722bb20eabda7fc2 = {
 const i_PivotTable_fff21a04fbd4b7be1c351eda8937cd60 = {
     obj: require("./uiTestScenarios/insights/PivotTable.fff21a04fbd4b7be1c351eda8937cd60/obj.json"),
 };
+const i_PivotTableNext_024009c936ed73ce9f78c31f9610922c = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.024009c936ed73ce9f78c31f9610922c/obj.json"),
+};
+const i_PivotTableNext_03402d49a1a4ee909a0f839253891d15 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.03402d49a1a4ee909a0f839253891d15/obj.json"),
+};
+const i_PivotTableNext_1fc9a36652046d654165c3ca9681e728 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.1fc9a36652046d654165c3ca9681e728/obj.json"),
+};
+const i_PivotTableNext_44314abb3279a4ec38e0c622e0496112 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.44314abb3279a4ec38e0c622e0496112/obj.json"),
+};
+const i_PivotTableNext_460f35ddd6bfbc6d32f6aa28bf70c343 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.460f35ddd6bfbc6d32f6aa28bf70c343/obj.json"),
+};
 const i_PyramidChart_05aea2e4135f05f4f3e5ce52711e1686 = {
     obj: require("./uiTestScenarios/insights/PyramidChart.05aea2e4135f05f4f3e5ce52711e1686/obj.json"),
 };
@@ -6656,6 +6689,13 @@ export const Insights = {
         TwoMeasuresAndSingleColumnGrandTotalForEach: i_PivotTable_f5ac7b9d629b8859810f1533d9c83bbe,
         SingleMeasurePivotWithGroupingSortedByFirstRowAttr: i_PivotTable_f859c3e05d9f78d4722bb20eabda7fc2,
     },
+    PivotTableNext: {
+        TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: i_PivotTableNext_024009c936ed73ce9f78c31f9610922c,
+        TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: i_PivotTableNext_03402d49a1a4ee909a0f839253891d15,
+        SingleMeasurePivotSortedBySecondRowAttr: i_PivotTableNext_1fc9a36652046d654165c3ca9681e728,
+        SingleMeasurePivotSortedByFirstRowAndSecondAttr: i_PivotTableNext_44314abb3279a4ec38e0c622e0496112,
+        SingleMeasurePivotSortedByFirstRowAttr: i_PivotTableNext_460f35ddd6bfbc6d32f6aa28bf70c343,
+    },
     PyramidChart: {
         Font: i_PyramidChart_1009bf223b82efe816a16ccb1d1f7744,
         Themed: i_PyramidChart_33d920b92ca4575ce35c637de927dc9c,
@@ -6774,6 +6814,7 @@ export const Recordings = {
         fp_2eb966d16acbb32e1d4c79db521ae692,
         fp_2f0d37f1da514db95959c120a62ffd4c,
         fp_2fb05a685de09ac7bcfee93b373efde7,
+        fp_300c0b908199156a328388972230be9a,
         fp_3014bf2b850217c6e41b106f1f63aa2e,
         fp_31e13a5611cf85a7e0b275b8beeb923d,
         fp_31fb4f2ee42e8414a1a92bc2f4eaae12,
@@ -6931,7 +6972,6 @@ export const Recordings = {
         fp_e360914bfbf78ceb2e1c8d0f74408a38,
         fp_e480af73cb3da22e143deba5b7f4b3e3,
         fp_e6587a76491e11317f5bc7379eb29cab,
-        fp_ea3ba97511ee18ece1e428c4b694abc2,
         fp_ea7171a44b29651da69295e0556ed18a,
         fp_eae1c9a65cf05e9e0a8fde6173ef7141,
         fp_ebdb85c15f6c241e047d0784d2327b33,
@@ -8118,6 +8158,11 @@ export const Recordings = {
             i_PivotTable_f5ac7b9d629b8859810f1533d9c83bbe,
             i_PivotTable_f859c3e05d9f78d4722bb20eabda7fc2,
             i_PivotTable_fff21a04fbd4b7be1c351eda8937cd60,
+            i_PivotTableNext_024009c936ed73ce9f78c31f9610922c,
+            i_PivotTableNext_03402d49a1a4ee909a0f839253891d15,
+            i_PivotTableNext_1fc9a36652046d654165c3ca9681e728,
+            i_PivotTableNext_44314abb3279a4ec38e0c622e0496112,
+            i_PivotTableNext_460f35ddd6bfbc6d32f6aa28bf70c343,
             i_PyramidChart_05aea2e4135f05f4f3e5ce52711e1686,
             i_PyramidChart_1009bf223b82efe816a16ccb1d1f7744,
             i_PyramidChart_11a6118f2fcc03ee66a9e651e00dd644,

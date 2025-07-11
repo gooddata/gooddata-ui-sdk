@@ -3894,6 +3894,31 @@
     "PivotTable.fff21a04fbd4b7be1c351eda8937cd60": {
         "comment": "Auto-generated insight for test scenario PivotTable - simple table with custom attribute column size."
     },
+    "PivotTableNext.024009c936ed73ce9f78c31f9610922c": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures with single row attr sorted by first measure.",
+        "scenarioName": "two measures with single row attr sorted by first measure",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.03402d49a1a4ee909a0f839253891d15": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures with single row attr sorted by second measure.",
+        "scenarioName": "two measures with single row attr sorted by second measure",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.1fc9a36652046d654165c3ca9681e728": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure pivot sorted by second row attr.",
+        "scenarioName": "single measure pivot sorted by second row attr",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.44314abb3279a4ec38e0c622e0496112": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure pivot sorted by first row and second attr.",
+        "scenarioName": "single measure pivot sorted by first row and second attr",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.460f35ddd6bfbc6d32f6aa28bf70c343": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure pivot sorted by first row attr.",
+        "scenarioName": "single measure pivot sorted by first row attr",
+        "visName": "PivotTableNext"
+    },
     "PyramidChart.05aea2e4135f05f4f3e5ce52711e1686": {
         "comment": "Auto-generated insight for test scenario PyramidChart - assign color to measures."
     },

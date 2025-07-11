@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 
 import {
@@ -16,6 +16,8 @@ import { pivotConfigToVisProperties } from "./pivotConfigToVisProps.js";
 
 function visNameToUri(name: string): string {
     if (name === "PivotTable") {
+        return "local:table";
+    } else if (name === "PivotTableNext") {
         return "local:table";
     } else if (name === "ComboChart") {
         return "local:combo2";
