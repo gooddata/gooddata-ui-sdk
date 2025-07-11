@@ -3558,6 +3558,7 @@ export interface ISettings {
     enablePivotTableTransposition?: boolean;
     // (undocumented)
     enablePixelPerfectExperience?: boolean;
+    enablePreAggregationDatasets?: boolean;
     enableProductionFeaturesRollout?: boolean;
     enablePushpinGeoChart?: boolean;
     enableRawExports?: boolean;

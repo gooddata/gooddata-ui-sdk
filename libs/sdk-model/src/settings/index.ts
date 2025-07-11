@@ -753,6 +753,11 @@ export interface ISettings {
      */
     enableSeamlessIdpSwitch?: boolean;
 
+    /**
+     * Enable pre-aggregation datasets support in LDM Modeler.
+     */
+    enablePreAggregationDatasets?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 
