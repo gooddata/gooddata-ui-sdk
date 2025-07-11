@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import {
     IOrganization,
@@ -45,7 +45,7 @@ export class TigerOrganization implements IOrganization {
                 client.entities.getEntityOrganizations({
                     id: this.organizationId,
                     // we are interested only in these for now (can be extended in future)
-                    include: ["bootstrapUser", "bootstrapUserGroup"],
+                    include: ["bootstrapUser", "bootstrapUserGroup", "identityProvider"],
                 }),
             );
 
@@ -56,6 +56,8 @@ export class TigerOrganization implements IOrganization {
             // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             const bootstrapUserGroup = result.data.data?.relationships?.bootstrapUserGroup?.data!;
 
+            const identityProviderType = result.data.data?.relationships?.identityProvider?.data?.type;
+
             return {
                 id: this.organizationId,
                 title: organizationName,
@@ -63,6 +65,7 @@ export class TigerOrganization implements IOrganization {
                 bootstrapUserGroup: idRef(bootstrapUserGroup.id, bootstrapUserGroup.type),
                 earlyAccess: result.data.data.attributes?.earlyAccess ?? undefined,
                 earlyAccessValues: result.data.data.attributes?.earlyAccessValues ?? undefined,
+                identityProviderType,
             };
         }
 

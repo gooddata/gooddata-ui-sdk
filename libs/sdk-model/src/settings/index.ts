@@ -748,6 +748,11 @@ export interface ISettings {
      */
     enableNewScheduledExport?: boolean;
 
+    /**
+     * Enable custom Identity Provider
+     */
+    enableSeamlessIdpSwitch?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 
