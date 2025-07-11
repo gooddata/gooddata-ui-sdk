@@ -8,7 +8,7 @@ ENV FORCE_COLOR 0
 
 RUN npm run build-scenarios
 
-FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/nginxinc/nginx-unprivileged:1.25.2-alpine
+FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/nginxinc/nginx-unprivileged:1.26.0-alpine
 
 COPY --from=build-stage ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build-stage ./scenarios/build /usr/share/nginx/html/gooddata-ui-sdk/
