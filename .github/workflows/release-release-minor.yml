@@ -153,7 +153,7 @@ jobs:
       needs: [publish-netlify, update-apidocs-version, publish-release]
       steps:
         - name: Notify to slack
-          uses: slackapi/slack-github-action@v1.25.0
+          uses: slackapi/slack-github-action@v2.1.1
           with:
               channel-id: ${{ matrix.channels }}
               slack-message: "The release of *gooddata-ui-sdk@${{ needs.publish-release.outputs.version }}*, has been successful. :tada:"
