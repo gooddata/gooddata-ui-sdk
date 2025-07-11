@@ -2797,6 +2797,8 @@ export interface IOrganizationDescriptor {
     // (undocumented)
     id: string;
     // (undocumented)
+    identityProviderType?: string;
+    // (undocumented)
     title: string;
 }
 
@@ -3568,6 +3570,7 @@ export interface ISettings {
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
     enableScheduling?: boolean;
+    enableSeamlessIdpSwitch?: boolean;
     enableSemanticSearch?: boolean;
     enableSemanticSearchRollout?: boolean;
     enableSeparateTotalLabels?: boolean;

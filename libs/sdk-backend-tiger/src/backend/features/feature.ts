@@ -814,6 +814,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableNewScheduledExport,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableSeamlessIdpSwitch,
+            "enableSeamlessIdpSwitch",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSeamlessIdpSwitch,
+        ),
     };
 }
 

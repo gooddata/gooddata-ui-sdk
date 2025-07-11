@@ -155,6 +155,7 @@ export enum TigerFeaturesNames {
     ProductionFeatures = "productionFeatures",
     EnableProductionFeaturesRollout = "enableProductionFeaturesRollout",
     EnableNewScheduledExport = "enableNewScheduledExport",
+    EnableSeamlessIdpSwitch = "enableSeamlessIdpSwitch",
 }
 
 export type ITigerFeatureFlags = {
@@ -272,6 +273,7 @@ export type ITigerFeatureFlags = {
     productionFeatures: typeof FeatureFlagsValues["productionFeatures"][number];
     enableProductionFeaturesRollout: typeof FeatureFlagsValues["enableProductionFeaturesRollout"][number];
     enableNewScheduledExport: typeof FeatureFlagsValues["enableNewScheduledExport"][number];
+    enableSeamlessIdpSwitch: typeof FeatureFlagsValues["enableSeamlessIdpSwitch"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -389,6 +391,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     productionFeatures: undefined,
     enableProductionFeaturesRollout: false,
     enableNewScheduledExport: false,
+    enableSeamlessIdpSwitch: false,
 };
 
 export const FeatureFlagsValues = {
@@ -510,4 +513,5 @@ export const FeatureFlagsValues = {
     productionFeatures: [undefined, {} as IProductionFeaturesConfig] as const,
     enableProductionFeaturesRollout: [true, false] as const,
     enableNewScheduledExport: [true, false] as const,
+    enableSeamlessIdpSwitch: [true, false] as const,
 };
