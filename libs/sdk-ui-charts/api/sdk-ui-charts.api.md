@@ -146,7 +146,7 @@ export const CoreRepeater: React_2.FC<ICoreRepeaterChartProps>;
 export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
 
 // @internal
-export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig, enableNewHeadline: boolean) => IHeadlineProvider;
+export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig) => IHeadlineProvider;
 
 // @internal (undocumented)
 export const DEFAULT_COMPARISON_PALETTE: IColorPalette;

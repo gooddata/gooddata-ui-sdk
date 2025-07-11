@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { bucketMeasure, bucketMeasures, bucketsFind, IBucket, IMeasure } from "@gooddata/sdk-model";
 import { IChartConfig, IComparison } from "../../interfaces/index.js";
 import MultiMeasuresProvider from "./internal/providers/MultiMeasuresProvider.js";
@@ -6,7 +6,6 @@ import ComparisonProvider from "./internal/providers/ComparisonProvider.js";
 import { BucketNames } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty.js";
 import { IHeadlineProvider } from "./HeadlineProvider.js";
-import LegacyProvider from "./internal/providers/LegacyProvider.js";
 
 enum HeadlineType {
     MULTI_MEASURES,
@@ -20,20 +19,11 @@ enum HeadlineType {
  *
  * @internal
  */
-const createHeadlineProvider = (
-    buckets: IBucket[],
-    config: IChartConfig,
-    enableNewHeadline: boolean,
-): IHeadlineProvider => {
-    if (!enableNewHeadline) {
-        return new LegacyProvider();
-    }
-
+const createHeadlineProvider = (buckets: IBucket[], config: IChartConfig): IHeadlineProvider => {
     const headlineType = getHeadlineType(buckets, config);
     if (headlineType === HeadlineType.COMPARISON) {
         return new ComparisonProvider(config?.comparison);
     }
-
     return new MultiMeasuresProvider();
 };
 

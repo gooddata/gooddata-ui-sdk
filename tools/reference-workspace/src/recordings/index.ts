@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-05-07T11:21:04.989Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-06-06T14:35:40.844Z; */
 const fp_004031cbc9081950b7284311b004fe11 = {
     definition: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json"),
     executionResult: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json"),
@@ -791,11 +791,6 @@ const fp_a88209ff899d0aab5cdbce9321916202 = {
     dataView_all: require("./uiTestScenarios/executions/a88209ff899d0aab5cdbce9321916202/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/a88209ff899d0aab5cdbce9321916202/scenarios.json"),
 };
-const fp_a91841b4a40b47732574e4aba12b936f = {
-    definition: require("./uiTestScenarios/executions/a91841b4a40b47732574e4aba12b936f/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/a91841b4a40b47732574e4aba12b936f/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/a91841b4a40b47732574e4aba12b936f/dataView_all.json"),
-};
 const fp_a987c14f422c16be1788cb94e3f256e9 = {
     definition: require("./uiTestScenarios/executions/a987c14f422c16be1788cb94e3f256e9/definition.json"),
     executionResult: require("./uiTestScenarios/executions/a987c14f422c16be1788cb94e3f256e9/executionResult.json"),
@@ -1581,8 +1576,9 @@ export const Scenarios = {
             scenarioIndex: 0,
             execution: fp_3014bf2b850217c6e41b106f1f63aa2e,
         },
+        TwoMeasuresOnePoP: { scenarioIndex: 0, execution: fp_420e7d54c04ecb3b38b29322a4204e82 },
         ComparisonWithDefaultConfigWithSecondaryMeasureIsPoP: {
-            scenarioIndex: 0,
+            scenarioIndex: 1,
             execution: fp_420e7d54c04ecb3b38b29322a4204e82,
         },
         ComparisonWithCalculateAsChangeDifferenceAndDefaultSubFormat: {
@@ -1593,24 +1589,23 @@ export const Scenarios = {
             scenarioIndex: 1,
             execution: fp_466cd63df0b7a28ca110a49c9319d692,
         },
-        TwoMeasuresOnePoP: { scenarioIndex: 0, execution: fp_798df950f4dbb5d1df536bb33ba80a11 },
         MultiMeasuresWithTwoMeasuresOnePoP: {
-            scenarioIndex: 1,
+            scenarioIndex: 0,
             execution: fp_798df950f4dbb5d1df536bb33ba80a11,
         },
         MultiMeasuresWithThreeMeasures: { scenarioIndex: 0, execution: fp_914d0eda9a14c9ad9d6f77412f57134d },
-        TwoMeasures: { scenarioIndex: 0, execution: fp_a028b9af8e61d7a059883415bdea675d },
-        TwoMeasuresWithGermanSeparators: { scenarioIndex: 1, execution: fp_a028b9af8e61d7a059883415bdea675d },
-        MultiMeasuresWithTwoMeasures: { scenarioIndex: 2, execution: fp_a028b9af8e61d7a059883415bdea675d },
+        MultiMeasuresWithTwoMeasures: { scenarioIndex: 0, execution: fp_a028b9af8e61d7a059883415bdea675d },
         MultiMeasuresWithTwoMeasuresWithGermanSeparators: {
-            scenarioIndex: 3,
+            scenarioIndex: 1,
             execution: fp_a028b9af8e61d7a059883415bdea675d,
         },
-        Themed: { scenarioIndex: 4, execution: fp_a028b9af8e61d7a059883415bdea675d },
-        Font: { scenarioIndex: 5, execution: fp_a028b9af8e61d7a059883415bdea675d },
-        ComparisonWithNegativeArrow: { scenarioIndex: 0, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
+        TwoMeasures: { scenarioIndex: 0, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
+        TwoMeasuresWithGermanSeparators: { scenarioIndex: 1, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
+        Themed: { scenarioIndex: 2, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
+        Font: { scenarioIndex: 3, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
+        ComparisonWithNegativeArrow: { scenarioIndex: 4, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
         ComparisonWithNegativeArrowAndColor: {
-            scenarioIndex: 1,
+            scenarioIndex: 5,
             execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50,
         },
     },
@@ -6878,7 +6873,6 @@ export const Recordings = {
         fp_a523e44f3523b4d118c53712590ba3ca,
         fp_a5d8e7aae0bf69665b31d1b4602b9b12,
         fp_a88209ff899d0aab5cdbce9321916202,
-        fp_a91841b4a40b47732574e4aba12b936f,
         fp_a987c14f422c16be1788cb94e3f256e9,
         fp_a9c716ad99eb48aa765104c9275cc6e3,
         fp_ab512ffee181d65e86c4064a9168fc7e,
