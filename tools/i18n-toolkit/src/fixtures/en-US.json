@@ -1,39 +1,32 @@
 {
     "properly.obj": {
         "value": "test <span class='addon'>test</span>",
-        "comment": "test",
-        "limit": 0
+        "comment": "test"
     },
     "text.without.insight": {
         "value": "Test text",
-        "comment": "test",
-        "limit": 0
+        "comment": "test"
     },
     "text.with.insight|insight": {
         "value": "Test text with insight",
-        "comment": "test",
-        "limit": 0
+        "comment": "test"
     },
     "text.with.insight|report": {
         "value": "Test text with report",
         "comment": "test",
-        "limit": 0,
         "translate": false
     },
     "text.with.1": {
         "value": "Test text 1 2 3",
-        "comment": "test",
-        "limit": 0
+        "comment": "test"
     },
     "text.big.insight|insight": {
         "value": "Test text with Insight",
-        "comment": "test",
-        "limit": 0
+        "comment": "test"
     },
     "text.big.insight|report": {
         "value": "Test text with report",
         "comment": "test",
-        "limit": 0,
         "translate": false
     }
 }

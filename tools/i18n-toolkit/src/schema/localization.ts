@@ -1,9 +1,8 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 export type LocalesItem = {
     value: string;
     comment: string;
-    limit: number;
     translate?: boolean;
 };
 export type LocalesStructure = Record<string, LocalesItem | string>;
@@ -19,10 +18,9 @@ export const LocalizationSchema = {
                     properties: {
                         value: { type: "string" },
                         comment: { type: "string" },
-                        limit: { type: "number" },
                         translate: { type: "boolean" },
                     },
-                    required: ["value", "comment", "limit"],
+                    required: ["value", "comment"],
                     additionalProperties: false,
                 },
             ],

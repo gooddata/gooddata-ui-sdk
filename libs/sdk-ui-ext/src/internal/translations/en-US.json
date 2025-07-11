@@ -1,2176 +1,1746 @@
 {
     "or": {
         "value": "or",
-        "comment": "Connects two or more conditions in a filter expression, e.g., 'Product is Shoes or Product is Socks'. Appears in filter components.",
-        "limit": 0
+        "comment": "Connects two or more conditions in a filter expression, e.g., 'Product is Shoes or Product is Socks'. Appears in filter components."
     },
     "dashboard.bucket.measures_title.column._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.column._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.bar._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.bar._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.line._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.line._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.area._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.area._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.pie._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.pie._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.funnel._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.funnel._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.pyramid._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.pyramid._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.treemap._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.treemap._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.donut._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.donut._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.heatmap._measure": {
         "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.heatmap._metric": {
         "value": "Metric",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.headline._measure": {
         "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.headline._metric": {
         "value": "Metric",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_subtitle.headline": {
         "value": "primary",
-        "comment": "Label for the primary measures subtitle in headline chart",
-        "limit": 0
+        "comment": "Label for the primary measures subtitle in headline chart"
     },
     "dashboard.bucket.secondary_measures_title.headline._measure": {
         "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.secondary_measures_title.headline._metric": {
         "value": "Metric",
-        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.secondary_measures_subtitle.headline": {
         "value": "secondary",
-        "comment": "Label for the secondary measures subtitle in headline chart",
-        "limit": 0
+        "comment": "Label for the secondary measures subtitle in headline chart"
     },
     "dashboard.bucket.measures_title.scatter._measure": {
         "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.scatter._metric": {
         "value": "Metric",
-        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.secondary_measures_title.scatter._measure": {
         "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.secondary_measures_title.scatter._metric": {
         "value": "Metric",
-        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_subtitle.scatter": {
         "value": "X-axis",
-        "comment": "Horizontal axis of a scatter plot.",
-        "limit": 0
+        "comment": "Horizontal axis of a scatter plot."
     },
     "dashboard.bucket.secondary_measures_subtitle.scatter": {
         "value": "Y-axis",
-        "comment": "Vertical axis of a scatter plot.",
-        "limit": 0
+        "comment": "Vertical axis of a scatter plot."
     },
     "dashboard.bucket.attribute_title.scatter": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.segment_title.scatter": {
         "value": "Segment by",
-        "comment": "Label for the segment bucket in scatter chart",
-        "limit": 0
+        "comment": "Label for the segment bucket in scatter chart"
     },
     "dashboard.bucket.measures_title.combo._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.combo._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_subtitle.combo": {
         "value": "Column",
-        "comment": "Label for the column subtitle in combo chart",
-        "limit": 0
+        "comment": "Label for the column subtitle in combo chart"
     },
     "dashboard.bucket.secondary_measures_title.combo._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.secondary_measures_title.combo._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.secondary_measures_subtitle.combo": {
         "value": "Line",
-        "comment": "Label for the line subtitle in combo chart",
-        "limit": 0
+        "comment": "Label for the line subtitle in combo chart"
     },
     "dashboard.bucket.measures_title.xirr._measure": {
         "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.xirr._metric": {
         "value": "Metric",
-        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.waterfall._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.waterfall._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.attribute_title.xirr": {
         "value": "Date attribute",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.attribute_from_title.sankey": {
         "value": "Attribute",
-        "comment": "Label for a categorical data field used to define the starting node in a flow diagram",
-        "limit": 0
+        "comment": "Label for a categorical data field used to define the starting node in a flow diagram"
     },
     "dashboard.bucket.attribute_from_subtitle.sankey": {
         "value": "from",
-        "comment": "Directional indicator for the origin point in a relationship between two attributes",
-        "limit": 0
+        "comment": "Directional indicator for the origin point in a relationship between two attributes"
     },
     "dashboard.bucket.attribute_to_title.sankey": {
         "value": "Attribute",
-        "comment": "Label for a categorical data field used to define the destination node in a flow diagram",
-        "limit": 0
+        "comment": "Label for a categorical data field used to define the destination node in a flow diagram"
     },
     "dashboard.bucket.attribute_to_subtitle.sankey": {
         "value": "to",
-        "comment": "Directional indicator for the origin point in a relationship between two attributes",
-        "limit": 0
+        "comment": "Directional indicator for the origin point in a relationship between two attributes"
     },
     "dashboard.bucket.attribute_from_title.dependencywheel": {
         "value": "Attribute",
-        "comment": "Label for a categorical data field used to define the starting node in a dependency relationship",
-        "limit": 0
+        "comment": "Label for a categorical data field used to define the starting node in a dependency relationship"
     },
     "dashboard.bucket.attribute_from_subtitle.dependencywheel": {
         "value": "from",
-        "comment": "Directional indicator for the origin point in a relationship between two attributes",
-        "limit": 0
+        "comment": "Directional indicator for the origin point in a relationship between two attributes"
     },
     "dashboard.bucket.attribute_to_title.dependencywheel": {
         "value": "Attribute",
-        "comment": "Label for a categorical data field used to define the destination node in a dependency relationship",
-        "limit": 0
+        "comment": "Label for a categorical data field used to define the destination node in a dependency relationship"
     },
     "dashboard.bucket.attribute_to_subtitle.dependencywheel": {
         "value": "to",
-        "comment": "Directional indicator for the destination point in a relationship between two attributes",
-        "limit": 0
+        "comment": "Directional indicator for the destination point in a relationship between two attributes"
     },
     "dashboard.bucket.combo.subtitle.column": {
         "value": "as columns",
-        "comment": "Display measures in column chart 'as columns'.",
-        "limit": 0
+        "comment": "Display measures in column chart 'as columns'."
     },
     "dashboard.bucket.combo.subtitle.line": {
         "value": "as lines",
-        "comment": "Display measures in line chart 'as lines'.",
-        "limit": 0
+        "comment": "Display measures in line chart 'as lines'."
     },
     "dashboard.bucket.combo.subtitle.area": {
         "value": "as areas",
-        "comment": "Display measures in area chart 'as areas'.",
-        "limit": 0
+        "comment": "Display measures in area chart 'as areas'."
     },
     "dashboard.bucket.measures_title.bubble._measure": {
         "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.bubble._metric": {
         "value": "Metric",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.secondary_measures_title.bubble._measure": {
         "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.secondary_measures_title.bubble._metric": {
         "value": "Metric",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.tertiary_measures_title.bubble._measure": {
         "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.tertiary_measures_title.bubble._metric": {
         "value": "Metric",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_subtitle.bubble": {
         "value": "X-axis",
-        "comment": "Horizontal axis of a bubble plot.",
-        "limit": 0
+        "comment": "Horizontal axis of a bubble plot."
     },
     "dashboard.bucket.secondary_measures_subtitle.bubble": {
         "value": "Y-axis",
-        "comment": "Vertical axis of a bubble plot.",
-        "limit": 0
+        "comment": "Vertical axis of a bubble plot."
     },
     "dashboard.bucket.tertiary_measures_subtitle.bubble": {
         "value": "Size",
-        "comment": "Label for a measure that determines the size of visual elements in a chart (e.g., bubble size)",
-        "limit": 0
+        "comment": "Label for a measure that determines the size of visual elements in a chart (e.g., bubble size)"
     },
     "dashboard.bucket.location_title.pushpin": {
         "value": "Location",
-        "comment": "Position of a pin pushed to a map.",
-        "limit": 0
+        "comment": "Position of a pin pushed to a map."
     },
     "dashboard.bucket.size_title.pushpin._measure": {
         "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.size_title.pushpin._metric": {
         "value": "Metric",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.size_subtitle.pushpin": {
         "value": "Size",
-        "comment": "Size of a pin pushed to a map",
-        "limit": 0
+        "comment": "Size of a pin pushed to a map"
     },
     "dashboard.bucket.color_title.pushpin._measure": {
         "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.color_title.pushpin._metric": {
         "value": "Metric",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.color_subtitle.pushpin": {
         "value": "Color",
-        "comment": "Color of a pin pushed to a map",
-        "limit": 0
+        "comment": "Color of a pin pushed to a map"
     },
     "dashboard.bucket.view_title.bubble": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.pie": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.treemap": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.donut": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.funnel": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.pyramid": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.column": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.bar": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.area": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.bullet": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.waterfall": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.heatmap": {
         "value": "Rows",
-        "comment": "Label for categorical data fields that will be displayed as rows in a tabular visualization",
-        "limit": 0
+        "comment": "Label for categorical data fields that will be displayed as rows in a tabular visualization"
     },
     "dashboard.bucket.trend_title.line": {
         "value": "Trend by",
-        "comment": "Label for a time-based field showing how data changes over time periods (e.g., Month, Year, Quarter)",
-        "limit": 0
+        "comment": "Label for a time-based field showing how data changes over time periods (e.g., Month, Year, Quarter)"
     },
     "dashboard.bucket.view_title.combo": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.stack_title.column": {
         "value": "Stack by",
-        "comment": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)",
-        "limit": 0
+        "comment": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)"
     },
     "dashboard.bucket.stack_title.bar": {
         "value": "Stack by",
-        "comment": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)",
-        "limit": 0
+        "comment": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)"
     },
     "dashboard.bucket.stack_title.area": {
         "value": "Stack by",
-        "comment": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)",
-        "limit": 0
+        "comment": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)"
     },
     "dashboard.bucket.stack_title.heatmap": {
         "value": "Columns",
-        "comment": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization",
-        "limit": 0
+        "comment": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization"
     },
     "dashboard.bucket.segment_title.line": {
         "value": "Segment by",
-        "comment": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)",
-        "limit": 0
+        "comment": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
     },
     "dashboard.bucket.segment_title.treemap": {
         "value": "Segment by",
-        "comment": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)",
-        "limit": 0
+        "comment": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
     },
     "dashboard.bucket.segment_title.pushpin": {
         "value": "Segment by",
-        "comment": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)",
-        "limit": 0
+        "comment": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
     },
     "dashboard.bucket.metric_segment_by_warning._measure": {
         "value": "To add additional measure, remove {icons} from '<span class=\"stack-by\">'segment by'</span>'",
-        "comment": "Warning message about measure limitations when using segment by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'segment by' text.",
-        "limit": 0
+        "comment": "Warning message about measure limitations when using segment by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'segment by' text."
     },
     "dashboard.bucket.metric_segment_by_warning._metric": {
         "value": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'segment by'</span>'",
-        "comment": "Warning message about metric limitations when using segment by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'segment by' text.",
-        "limit": 0
+        "comment": "Warning message about metric limitations when using segment by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'segment by' text."
     },
     "dashboard.bucket.metric_stack_by_warning._measure": {
         "value": "To add additional measure, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
-        "comment": "Warning message about measure limitations when using stack by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'stack by' text.",
-        "limit": 0
+        "comment": "Warning message about measure limitations when using stack by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'stack by' text."
     },
     "dashboard.bucket.metric_stack_by_warning._metric": {
         "value": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
-        "comment": "Warning message about metric limitations when using stack by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'stack by' text.",
-        "limit": 0
+        "comment": "Warning message about metric limitations when using stack by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'stack by' text."
     },
     "dashboard.bucket.metric_view_by_warning._measure": {
         "value": "To add additional measure, remove {icons} from '<span class=\"stack-by\">'view by'</span>'",
-        "comment": "Warning message about measure limitations when using view by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'view by' text.",
-        "limit": 0
+        "comment": "Warning message about measure limitations when using view by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'view by' text."
     },
     "dashboard.bucket.metric_view_by_warning._metric": {
         "value": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'view by'</span>'",
-        "comment": "Warning message about metric limitations when using view by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'view by' text.",
-        "limit": 0
+        "comment": "Warning message about metric limitations when using view by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'view by' text."
     },
     "dashboard.bucket.category_view_by_warning._measure|insight": {
         "value": "To view by another attribute, an visualization can have only one measure",
-        "comment": "Warning message explaining View By configuration limitations based on measure/metric count",
-        "limit": 0
+        "comment": "Warning message explaining View By configuration limitations based on measure/metric count"
     },
     "dashboard.bucket.category_view_by_warning._metric|insight": {
         "value": "To view by another attribute, an visualization can have only one metric",
-        "comment": "Warning message explaining View By configuration limitations based on measure/metric count",
-        "limit": 0
+        "comment": "Warning message explaining View By configuration limitations based on measure/metric count"
     },
     "dashboard.bucket.category_view_by_warning._measure|report": {
         "value": "To view by another attribute, a report can have only one measure",
         "comment": "Warning message explaining View By configuration limitations based on measure/metric count",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.category_view_by_warning._metric|report": {
         "value": "To view by another attribute, a report can have only one metric",
         "comment": "Warning message explaining View By configuration limitations based on measure/metric count",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.view_stack_by_warning": {
         "value": "To add additional attribute, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
-        "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count",
-        "limit": 0
+        "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count"
     },
     "dashboard.bucket.category_stack_by_warning._measure|insight": {
         "value": "To stack by, an visualization can have only one measure",
-        "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count",
-        "limit": 0
+        "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count"
     },
     "dashboard.bucket.category_stack_by_warning._metric|insight": {
         "value": "To stack by, an visualization can have only one metric",
-        "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count",
-        "limit": 0
+        "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count"
     },
     "dashboard.bucket.category_stack_by_warning._measure|report": {
         "value": "To stack by, a report can have only one measure",
         "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.category_stack_by_warning._metric|report": {
         "value": "To stack by, a report can have only one metric",
         "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.stack_view_by_warning|insight": {
         "value": "To stack by, an visualization can have only one attribute in view by",
-        "comment": "Warning message explaining Stack By limitations when using View By",
-        "limit": 0
+        "comment": "Warning message explaining Stack By limitations when using View By"
     },
     "dashboard.bucket.stack_view_by_warning|report": {
         "value": "To stack by, a report can have only one attribute in view by",
         "comment": "Warning message explaining Stack By limitations when using View By",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.measure_stack_by_warning._measure|insight": {
         "value": "To stack by an attribute, an visualization can have only one measure",
-        "comment": "Warning message explaining that stacking requires limiting to one measure in insights",
-        "limit": 0
+        "comment": "Warning message explaining that stacking requires limiting to one measure in insights"
     },
     "dashboard.bucket.measure_stack_by_warning._metric|insight": {
         "value": "To stack by an attribute, an visualization can have only one metric",
-        "comment": "Warning message explaining that stacking requires limiting to one metric in insights",
-        "limit": 0
+        "comment": "Warning message explaining that stacking requires limiting to one metric in insights"
     },
     "dashboard.bucket.measure_stack_by_warning._measure|report": {
         "value": "To stack by an attribute, a report can have only one measure",
         "comment": "Warning message explaining that stacking requires limiting to one measure in reports",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.measure_stack_by_warning._metric|report": {
         "value": "To stack by an attribute, a report can have only one metric",
         "comment": "Warning message explaining that stacking requires limiting to one metric in reports",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.category_columns_warning._measure": {
         "value": "Cannot add columns: limit is {oldLimit} measures and {oldRowsLimit} rows. Follow the limits to add more",
-        "comment": "Warning message when trying to add too many columns. The placeholders {oldLimit} and {oldRowsLimit} will be replaced with numbers, e.g., 'Cannot add columns: limit is 10 measures and 20 rows. Follow the limits to add more'.",
-        "limit": 0
+        "comment": "Warning message when trying to add too many columns. The placeholders {oldLimit} and {oldRowsLimit} will be replaced with numbers, e.g., 'Cannot add columns: limit is 10 measures and 20 rows. Follow the limits to add more'."
     },
     "dashboard.bucket.category_columns_warning._metric": {
         "value": "Cannot add columns: limit is {oldLimit} metrics and {oldRowsLimit} rows. Follow the limits to add more",
-        "comment": "Warning message when trying to add too many columns. The placeholders {oldLimit} and {oldRowsLimit} will be replaced with numbers, e.g., 'Cannot add columns: limit is 10 metrics and 20 rows. Follow the limits to add more'.",
-        "limit": 0
+        "comment": "Warning message when trying to add too many columns. The placeholders {oldLimit} and {oldRowsLimit} will be replaced with numbers, e.g., 'Cannot add columns: limit is 10 metrics and 20 rows. Follow the limits to add more'."
     },
     "dashboard.bucket.category_measures_rows_warning": {
         "value": "To add up to {limit} more, remove all items from columns section",
-        "comment": "Warning message when trying to add more items. The placeholder {limit} will be replaced with a number, e.g., 'To add up to 5 more, remove all items from columns section'.",
-        "limit": 0
+        "comment": "Warning message when trying to add more items. The placeholder {limit} will be replaced with a number, e.g., 'To add up to 5 more, remove all items from columns section'."
     },
     "dashboard.bucket.category_category_by_warning._measure|insight": {
         "value": "To view by, an visualization can have only one measure",
-        "comment": "Warning message explaining that 'View by' requires limiting to one measure in insights",
-        "limit": 0
+        "comment": "Warning message explaining that 'View by' requires limiting to one measure in insights"
     },
     "dashboard.bucket.category_category_by_warning._metric|insight": {
         "value": "To view by, an visualization can have only one metric",
-        "comment": "Warning message explaining that 'View by' requires limiting to one metric in insights",
-        "limit": 0
+        "comment": "Warning message explaining that 'View by' requires limiting to one metric in insights"
     },
     "dashboard.bucket.category_category_by_warning._measure|report": {
         "value": "To view by, a report can have only one measure",
         "comment": "Warning message explaining that 'View by' requires limiting to one measure in reports",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.category_category_by_warning._metric|report": {
         "value": "To view by, a report can have only one metric",
         "comment": "Warning message explaining that 'View by' requires limiting to one metric in reports",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.category_segment_by_warning._measure|insight": {
         "value": "To segment by, an visualization can have only one measure",
-        "comment": "Warning message explaining that 'Segment by' requires limiting to one measure in insights",
-        "limit": 0
+        "comment": "Warning message explaining that 'Segment by' requires limiting to one measure in insights"
     },
     "dashboard.bucket.category_segment_by_warning._metric|insight": {
         "value": "To segment by, an visualization can have only one metric",
-        "comment": "Warning message explaining that 'Segment by' requires limiting to one metric in insights",
-        "limit": 0
+        "comment": "Warning message explaining that 'Segment by' requires limiting to one metric in insights"
     },
     "dashboard.bucket.category_segment_by_warning._measure|report": {
         "value": "To segment by, a report can have only one measure",
         "comment": "Warning message explaining that 'Segment by' requires limiting to one measure in reports",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.category_segment_by_warning._metric|report": {
         "value": "To segment by, a report can have only one metric",
         "comment": "Warning message explaining that 'Segment by' requires limiting to one metric in reports",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.measures_title.table._measure": {
         "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.table._metric": {
         "value": "Metrics",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.sankey._measure": {
         "value": "MEASURE",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.sankey._metric": {
         "value": "METRIC",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.dependencywheel._measure": {
         "value": "MEASURE",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)",
-        "limit": 0
+        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
     },
     "dashboard.bucket.measures_title.dependencywheel._metric": {
         "value": "METRIC",
-        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)",
-        "limit": 0
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.attribute_title.table": {
         "value": "Rows",
-        "comment": "Label for categorical data fields that will be displayed as rows in a table visualization",
-        "limit": 0
+        "comment": "Label for categorical data fields that will be displayed as rows in a table visualization"
     },
     "dashboard.bucket.columns_title.table": {
         "value": "Columns",
-        "comment": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization",
-        "limit": 0
+        "comment": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization"
     },
     "dashboard.bucket.attribute_title.repeater": {
         "value": "Rows",
-        "comment": "Label for categorical data fields that will be displayed as rows in a repeater visualization",
-        "limit": 0
+        "comment": "Label for categorical data fields that will be displayed as rows in a repeater visualization"
     },
     "dashboard.bucket.view_title.repeater": {
         "value": "View by",
-        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)",
-        "limit": 0
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.columns_title.repeater": {
         "value": "Columns",
-        "comment": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization",
-        "limit": 0
+        "comment": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization"
     },
     "dashboard.error.missing_primary_bucket_item.heading._measure|insight": {
         "value": "No primary measure in your visualization",
-        "comment": "Error message shown when a required data item is missing from a visualization or report",
-        "limit": 0
+        "comment": "Error message shown when a required data item is missing from a visualization or report"
     },
     "dashboard.error.missing_primary_bucket_item.heading._metric|insight": {
         "value": "No primary metric in your visualization",
-        "comment": "Error message shown when a required data item is missing from a visualization or report",
-        "limit": 0
+        "comment": "Error message shown when a required data item is missing from a visualization or report"
     },
     "dashboard.error.missing_primary_bucket_item.heading._measure|report": {
         "value": "No primary measure in your report",
         "comment": "Error message shown when a required data item is missing from a visualization or report",
-        "limit": 0,
         "translate": false
     },
     "dashboard.error.missing_primary_bucket_item.heading._metric|report": {
         "value": "No primary metric in your report",
         "comment": "Error message shown when a required data item is missing from a visualization or report",
-        "limit": 0,
         "translate": false
     },
     "dashboard.error.missing_primary_bucket_item.text._measure|insight": {
         "value": "Add a primary measure to your visualization, or switch to table.\nOnce done, you'll be able to save it.",
-        "comment": "Instructional message explaining how to fix a missing primary measure error in a visualization",
-        "limit": 0
+        "comment": "Instructional message explaining how to fix a missing primary measure error in a visualization"
     },
     "dashboard.error.missing_primary_bucket_item.text._metric|insight": {
         "value": "Add a primary metric to your visualization, or switch to table.\nOnce done, you'll be able to save it.",
-        "comment": "Instructional message explaining how to fix a missing primary metric error in a visualization",
-        "limit": 0
+        "comment": "Instructional message explaining how to fix a missing primary metric error in a visualization"
     },
     "dashboard.error.missing_primary_bucket_item.text._measure|report": {
         "value": "Add a primary measure to your report, or switch to table.\nOnce done, you'll be able to save it.",
         "comment": "Instructional message explaining how to fix a missing primary measure error in a report",
-        "limit": 0,
         "translate": false
     },
     "dashboard.error.missing_primary_bucket_item.text._metric|report": {
         "value": "Add a primary metric to your report, or switch to table.\nOnce done, you'll be able to save it.",
         "comment": "Instructional message explaining how to fix a missing primary metric error in a report",
-        "limit": 0,
         "translate": false
     },
     "dashboard.xirr.error.invalid_buckets.heading": {
         "value": "Incomplete configuration",
-        "comment": "Informs the user that they have not provided all the necessary configuration items (one measure and one date attribute)",
-        "limit": 0
+        "comment": "Informs the user that they have not provided all the necessary configuration items (one measure and one date attribute)"
     },
     "dashboard.xirr.error.invalid_buckets.text._measure": {
         "value": "Make sure you have selected one measure and one date attribute",
-        "comment": "The user should be instructed to review that they have added one measure and one date attribute to the visualization",
-        "limit": 0
+        "comment": "The user should be instructed to review that they have added one measure and one date attribute to the visualization"
     },
     "dashboard.xirr.error.invalid_buckets.text._metric": {
         "value": "Make sure you have selected one metric and one date attribute",
-        "comment": "The user should be instructed to review that they have added one metric and one date attribute to the visualization",
-        "limit": 0
+        "comment": "The user should be instructed to review that they have added one metric and one date attribute to the visualization"
     },
     "properties.unsupported": {
         "value": "This visualization doesn’t support configuration",
-        "comment": "Message displayed when a visualization type does not support configuration options",
-        "limit": 0
+        "comment": "Message displayed when a visualization type does not support configuration options"
     },
     "properties.config.not_applicable|insight": {
         "value": "Configuration Panel is not applicable for this configuration of the visualization",
-        "comment": "Message shown when configuration panel is not available for current insight setup",
-        "limit": 0
+        "comment": "Message shown when configuration panel is not available for current insight setup"
     },
     "properties.config.not_applicable|report": {
         "value": "Configuration Panel is not applicable for this configuration of the report",
         "comment": "Message shown when configuration panel is not available for current report setup",
-        "limit": 0,
         "translate": false
     },
     "properties.not_applicable|insight": {
         "value": "Property is not applicable for this configuration of the visualization",
-        "comment": "Message shown when a specific property is not applicable for current insight configuration",
-        "limit": 0
+        "comment": "Message shown when a specific property is not applicable for current insight configuration"
     },
     "properties.not_applicable|report": {
         "value": "Property is not applicable for this configuration of the report",
         "comment": "Message shown when a specific property is not applicable for current report configuration",
-        "limit": 0,
         "translate": false
     },
     "properties.auto_placeholder": {
         "value": "auto",
-        "comment": "Label for automatic setting option in configuration",
-        "limit": 0
+        "comment": "Label for automatic setting option in configuration"
     },
     "properties.auto_default": {
         "value": "auto (default)",
-        "comment": "Label indicating automatic setting is the default option",
-        "limit": 0
+        "comment": "Label indicating automatic setting is the default option"
     },
     "properties.legend.title": {
         "value": "Legend",
-        "comment": "Title for legend configuration section",
-        "limit": 0
+        "comment": "Title for legend configuration section"
     },
     "properties.legend.position": {
         "value": "Position",
-        "comment": "Label for legend position setting",
-        "limit": 0
+        "comment": "Label for legend position setting"
     },
     "properties.total.title": {
         "value": "Total",
-        "comment": "Title for total/sum configuration section",
-        "limit": 0
+        "comment": "Title for total/sum configuration section"
     },
     "properties.total.name": {
         "value": "Name",
-        "comment": "Label for total row name configuration",
-        "limit": 0
+        "comment": "Label for total row name configuration"
     },
     "properties.total.tooltip": {
         "value": "Add sum of all values as a column at the end.",
-        "comment": "Tooltip explaining how total column functionality works",
-        "limit": 0
+        "comment": "Tooltip explaining how total column functionality works"
     },
     "properties.total.measures.tooltip": {
         "value": "Disable “is total” options in metric to add sum of all values as a column at the end.",
-        "comment": "The tooltip for the toggle total section when there is any metric set to total metric",
-        "limit": 0
+        "comment": "The tooltip for the toggle total section when there is any metric set to total metric"
     },
     "properties.color.total": {
         "value": "Total",
-        "comment": "Label for total values color configuration",
-        "limit": 0
+        "comment": "Label for total values color configuration"
     },
     "properties.color.positive": {
         "value": "Positive",
-        "comment": "Label for positive values color configuration",
-        "limit": 0
+        "comment": "Label for positive values color configuration"
     },
     "properties.color.negative": {
         "value": "Negative",
-        "comment": "Label for negative values color configuration",
-        "limit": 0
+        "comment": "Label for negative values color configuration"
     },
     "properties.canvas.title": {
         "value": "Canvas",
-        "comment": "Title for canvas configuration section",
-        "limit": 0
+        "comment": "Title for canvas configuration section"
     },
     "properties.canvas.gridline": {
         "value": "Gridline",
-        "comment": "Label for gridline configuration option",
-        "limit": 0
+        "comment": "Label for gridline configuration option"
     },
     "properties.canvas.labels.percentages": {
         "value": "Percentage",
-        "comment": "applicable for funnel chart special data labels which can include percentages",
-        "limit": 0
+        "comment": "applicable for funnel chart special data labels which can include percentages"
     },
     "properties.canvas.labels.percentages.info": {
         "value": "Display percentages on each slice, with the top-most slice as 100% and the others as fractions of that value.",
-        "comment": "this is an explanation tooltip for the Percentage option for funnel chart (properties.canvas.labels.percentages)",
-        "limit": 0
+        "comment": "this is an explanation tooltip for the Percentage option for funnel chart (properties.canvas.labels.percentages)"
     },
     "properties.canvas.labels.percentages.disabled": {
         "value": "Percentages are hidden due to hidden data labels.",
-        "comment": "this is an explanation tooltip when the Percentage option for funnel chart is disabled (properties.canvas.labels.percentages)",
-        "limit": 0
+        "comment": "this is an explanation tooltip when the Percentage option for funnel chart is disabled (properties.canvas.labels.percentages)"
     },
     "properties.canvas.continuousLine.label": {
         "value": "Continuous line",
-        "comment": "Label for continuous line configuration option",
-        "limit": 0
+        "comment": "Label for continuous line configuration option"
     },
     "properties.canvas.continuousLine.tooltip": {
         "value": "Draw a line between points with missing values.",
-        "comment": "Tooltip for continuous line configuration option",
-        "limit": 0
+        "comment": "Tooltip for continuous line configuration option"
     },
     "properties.canvas.dataLabels": {
         "value": "Data Labels",
-        "comment": "Label for data labels configuration option",
-        "limit": 0
+        "comment": "Label for data labels configuration option"
     },
     "properties.canvas.dataLabels.auto": {
         "value": "auto (default)",
-        "comment": "Label for automatic data labels configuration option",
-        "limit": 0
+        "comment": "Label for automatic data labels configuration option"
     },
     "properties.canvas.dataLabels.show": {
         "value": "show",
-        "comment": "Label for show data labels configuration option",
-        "limit": 0
+        "comment": "Label for show data labels configuration option"
     },
     "properties.canvas.dataLabels.hide": {
         "value": "hide",
-        "comment": "Label for hide data labels configuration option",
-        "limit": 0
+        "comment": "Label for hide data labels configuration option"
     },
     "properties.canvas.rowHeight": {
         "value": "Row height",
-        "comment": "Label of the dropdown for configuring the row height of the chart",
-        "limit": 0
+        "comment": "Label of the dropdown for configuring the row height of the chart"
     },
     "properties.canvas.rowHeight.small": {
         "value": "small",
-        "comment": "Option of the dropdown for configuring the row height of the chart (small)",
-        "limit": 0
+        "comment": "Option of the dropdown for configuring the row height of the chart (small)"
     },
     "properties.canvas.rowHeight.medium": {
         "value": "medium",
-        "comment": "Option of the dropdown for configuring the row height of the chart (medium)",
-        "limit": 0
+        "comment": "Option of the dropdown for configuring the row height of the chart (medium)"
     },
     "properties.canvas.rowHeight.large": {
         "value": "large",
-        "comment": "Option of the dropdown for configuring the row height of the chart (large)",
-        "limit": 0
+        "comment": "Option of the dropdown for configuring the row height of the chart (large)"
     },
     "properties.canvas.verticalAlign": {
         "value": "Vertical align",
-        "comment": "Label of the dropdown for configuring vertical alignment of the chart cells",
-        "limit": 0
+        "comment": "Label of the dropdown for configuring vertical alignment of the chart cells"
     },
     "properties.canvas.verticalAlign.top": {
         "value": "top",
-        "comment": "Option of the dropdown for configuring vertical alignment of the chart cells (top)",
-        "limit": 0
+        "comment": "Option of the dropdown for configuring vertical alignment of the chart cells (top)"
     },
     "properties.canvas.verticalAlign.middle": {
         "value": "middle",
-        "comment": "Vertical center (between top and bottom)",
-        "limit": 0
+        "comment": "Vertical center (between top and bottom)"
     },
     "properties.canvas.verticalAlign.bottom": {
         "value": "bottom",
-        "comment": "Option of the dropdown for configuring vertical alignment of the chart cells (bottom)",
-        "limit": 0
+        "comment": "Option of the dropdown for configuring vertical alignment of the chart cells (bottom)"
     },
     "properties.canvas.textWrapping": {
         "value": "Text wrapping",
-        "comment": "Label of the dropdown for configuring text wrapping of the chart cells",
-        "limit": 0
+        "comment": "Label of the dropdown for configuring text wrapping of the chart cells"
     },
     "properties.canvas.textWrapping.clip": {
         "value": "clip",
-        "comment": "Option of the dropdown for configuring the text wrapping of the chart cell (clip)",
-        "limit": 0
+        "comment": "Option of the dropdown for configuring the text wrapping of the chart cell (clip)"
     },
     "properties.canvas.textWrapping.wrap": {
         "value": "wrap",
-        "comment": "Option of the dropdown for configuring the text wrapping of the chart cell (wrap)",
-        "limit": 0
+        "comment": "Option of the dropdown for configuring the text wrapping of the chart cell (wrap)"
     },
     "properties.canvas.image": {
         "value": "Image",
-        "comment": "Label of the dropdown for configuring image sizing of the chart cells",
-        "limit": 0
+        "comment": "Label of the dropdown for configuring image sizing of the chart cells"
     },
     "properties.canvas.image.fit": {
         "value": "fit",
-        "comment": "Option of the dropdown for configuring the image sizing of the chart cell (fit)",
-        "limit": 0
+        "comment": "Option of the dropdown for configuring the image sizing of the chart cell (fit)"
     },
     "properties.canvas.image.fill": {
         "value": "fill",
-        "comment": "Option of the dropdown for configuring the image sizing of the chart cell (fill)",
-        "limit": 0
+        "comment": "Option of the dropdown for configuring the image sizing of the chart cell (fill)"
     },
     "properties.forecast.title": {
         "value": "Forecast",
-        "comment": "Title for forecast configuration section",
-        "limit": 0
+        "comment": "Title for forecast configuration section"
     },
     "properties.forecastDisabled.title": {
         "value": "Forecast is not available for this combination of buckets",
-        "comment": "Message shown when forecast feature is not available for current chart configuration",
-        "limit": 0
+        "comment": "Message shown when forecast feature is not available for current chart configuration"
     },
     "properties.forecastPeriod.title": {
         "value": "Period",
-        "comment": "Label for forecast period configuration",
-        "limit": 0
+        "comment": "Label for forecast period configuration"
     },
     "properties.forecastPeriod.placeholder": {
         "value": "Period",
-        "comment": "Placeholder text for forecast period input field",
-        "limit": 0
+        "comment": "Placeholder text for forecast period input field"
     },
     "properties.forecastSeasonal.title": {
         "value": "Seasonality",
-        "comment": "Label for forecast seasonality configuration",
-        "limit": 0
+        "comment": "Label for forecast seasonality configuration"
     },
     "properties.forecastConfidence.title": {
         "value": "Confidence",
-        "comment": "Label for confidence level when forecasting measure/metric trends",
-        "limit": 0
+        "comment": "Label for confidence level when forecasting measure/metric trends"
     },
     "properties.forecastConfidence.70": {
         "value": "70%",
-        "comment": "70% confidence level option for measure/metric trend forecasting",
-        "limit": 0
+        "comment": "70% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastConfidence.75": {
         "value": "75%",
-        "comment": "75% confidence level option for measure/metric trend forecasting",
-        "limit": 0
+        "comment": "75% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastConfidence.80": {
         "value": "80%",
-        "comment": "80% confidence level option for measure/metric trend forecasting",
-        "limit": 0
+        "comment": "80% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastConfidence.85": {
         "value": "85%",
-        "comment": "85% confidence level option for measure/metric trend forecasting",
-        "limit": 0
+        "comment": "85% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastConfidence.90": {
         "value": "90%",
-        "comment": "90% confidence level option for measure/metric trend forecasting",
-        "limit": 0
+        "comment": "90% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastConfidence.95": {
         "value": "95%",
-        "comment": "95% confidence level option for measure/metric trend forecasting",
-        "limit": 0
+        "comment": "95% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastSliced.title": {
         "value": "Showing partial forecast.",
-        "comment": "Message title shown when measure/metric trend forecast is not available for the entire selected period",
-        "limit": 0
+        "comment": "Message title shown when measure/metric trend forecast is not available for the entire selected period"
     },
     "properties.forecastSliced.description": {
         "value": "The available data point don`t cover the entire selected period.",
-        "comment": "Message description that is shown when measure/metric trend forecast is not available for the entire selected period",
-        "limit": 0
+        "comment": "Message description that is shown when measure/metric trend forecast is not available for the entire selected period"
     },
     "properties.clustering.title": {
         "value": "Cluster",
-        "comment": "Title of the clustering configuration section.",
-        "limit": 0
+        "comment": "Title of the clustering configuration section."
     },
     "properties.clustering.amount": {
         "value": "Amount",
-        "comment": "Label of the input for configuring the number of clusters.",
-        "limit": 0
+        "comment": "Label of the input for configuring the number of clusters."
     },
     "properties.clustering.amount.placeholder": {
         "value": "3",
-        "comment": "Placeholder of the input for configuring the number of clusters.",
-        "limit": 0
+        "comment": "Placeholder of the input for configuring the number of clusters."
     },
     "properties.clustering.threshold": {
         "value": "Threshold",
-        "comment": "Label of the input for configuring the clustering threshold.",
-        "limit": 0
+        "comment": "Label of the input for configuring the clustering threshold."
     },
     "properties.clustering.threshold.placeholder": {
         "value": "0.03",
-        "comment": "Placeholder of the input for configuring the clustering threshold. This placeholder is used to show the default value and format in which the threshold is expected.",
-        "limit": 0
+        "comment": "Placeholder of the input for configuring the clustering threshold. This placeholder is used to show the default value and format in which the threshold is expected."
     },
     "properties.clustering.threshold.tooltip": {
         "value": "The threshold is a limit that determines when to group data. <link>Learn more</link>",
-        "comment": "Tooltip message of the clustering threshold input.",
-        "limit": 0
+        "comment": "Tooltip message of the clustering threshold input."
     },
     "properties.clustering.amount.partial.title": {
         "value": "Showing partial clusters",
-        "comment": "Message title that is shown when clustering amount is higher than the number of visualization data points.",
-        "limit": 0
+        "comment": "Message title that is shown when clustering amount is higher than the number of visualization data points."
     },
     "properties.clustering.amount.partial.description": {
         "value": "The available data points don't cover the entire selected amount.",
-        "comment": "Message description that is shown when clustering amount is higher than the number of visualization data points.",
-        "limit": 0
+        "comment": "Message description that is shown when clustering amount is higher than the number of visualization data points."
     },
     "properties.clustering.disabled": {
         "value": "Clustering requires 2 Metrics and View by, without Segment by.",
-        "comment": "Tooltip message of the disabled toggle that enables clustering",
-        "limit": 0
+        "comment": "Tooltip message of the disabled toggle that enables clustering"
     },
     "properties.canvas.totalLabels": {
         "value": "Total Labels",
-        "comment": "Label for total labels configuration option",
-        "limit": 0
+        "comment": "Label for total labels configuration option"
     },
     "properties.canvas.totalLabels.auto": {
         "value": "auto (default)",
-        "comment": "Label for automatic total labels configuration option",
-        "limit": 0
+        "comment": "Label for automatic total labels configuration option"
     },
     "properties.canvas.totalLabels.show": {
         "value": "show",
-        "comment": "Label for show total labels configuration option",
-        "limit": 0
+        "comment": "Label for show total labels configuration option"
     },
     "properties.canvas.totalLabels.hide": {
         "value": "hide",
-        "comment": "Label for hide total labels configuration option",
-        "limit": 0
+        "comment": "Label for hide total labels configuration option"
     },
     "properties.canvas.dataPoints": {
         "value": "Data Points",
-        "comment": "Label for data points configuration option",
-        "limit": 0
+        "comment": "Label for data points configuration option"
     },
     "properties.canvas.dataPoints.auto": {
         "value": "auto (default)",
-        "comment": "Label for automatic data points configuration option",
-        "limit": 0
+        "comment": "Label for automatic data points configuration option"
     },
     "properties.canvas.dataPoints.show": {
         "value": "show",
-        "comment": "Label for show data points configuration option",
-        "limit": 0
+        "comment": "Label for show data points configuration option"
     },
     "properties.canvas.dataPoints.hide": {
         "value": "hide",
-        "comment": "Label for hide data points configuration option",
-        "limit": 0
+        "comment": "Label for hide data points configuration option"
     },
     "properties.yaxis.title": {
         "value": "Y-Axis",
-        "comment": "Vertical axis of a plot.",
-        "limit": 0
+        "comment": "Vertical axis of a plot."
     },
     "properties.axis.labels": {
         "value": "labels",
-        "comment": "Label for axis labels configuration option",
-        "limit": 0
+        "comment": "Label for axis labels configuration option"
     },
     "properties.axis.rotation": {
         "value": "Rotation",
-        "comment": "Label for axis rotation configuration option",
-        "limit": 0
+        "comment": "Label for axis rotation configuration option"
     },
     "properties.axis.format": {
         "value": "Format",
-        "comment": "Label for axis format configuration option",
-        "limit": 0
+        "comment": "Label for axis format configuration option"
     },
     "properties.axis.format.inherit": {
         "value": "inherit",
-        "comment": "Axis format option to inherit formatting from used measure.",
-        "limit": 0
+        "comment": "Axis format option to inherit formatting from used measure."
     },
     "properties.axis.format.info.inherit._measure|insight": {
         "value": "The format is inherited from the first measure in the visualization.",
-        "comment": "Info text for axis format option.",
-        "limit": 0
+        "comment": "Info text for axis format option."
     },
     "properties.axis.format.info.inherit._metric|insight": {
         "value": "The format is inherited from the first metric in the visualization.",
-        "comment": "Info text for axis format option.",
-        "limit": 0
+        "comment": "Info text for axis format option."
     },
     "properties.axis.format.info.inherit._measure|report": {
         "value": "The format is inherited from the first measure in the report.",
         "comment": "Info text for axis format option for measures in reports",
-        "limit": 0,
         "translate": false
     },
     "properties.axis.format.info.inherit._metric|report": {
         "value": "The format is inherited from the first metric in the report.",
         "comment": "Info text for axis format option for metrics in reports",
-        "limit": 0,
         "translate": false
     },
     "properties.axis.name": {
         "value": "name",
-        "comment": "Name of the axis of a chart",
-        "limit": 0
+        "comment": "Name of the axis of a chart"
     },
     "properties.axis.name.position": {
         "value": "Position",
-        "comment": "Position of the axis of a chart",
-        "limit": 0
+        "comment": "Position of the axis of a chart"
     },
     "properties.axis.name.position.left": {
         "value": "left",
-        "comment": "Left position option for axis name",
-        "limit": 0
+        "comment": "Left position option for axis name"
     },
     "properties.axis.name.position.center": {
         "value": "center",
-        "comment": "Horizontal center (between left and right)",
-        "limit": 0
+        "comment": "Horizontal center (between left and right)"
     },
     "properties.axis.name.position.right": {
         "value": "right",
-        "comment": "Right position option for axis name",
-        "limit": 0
+        "comment": "Right position option for axis name"
     },
     "properties.axis.name.position.top": {
         "value": "top",
-        "comment": "Top position option for axis name",
-        "limit": 0
+        "comment": "Top position option for axis name"
     },
     "properties.axis.name.position.middle": {
         "value": "middle",
-        "comment": "Vertical center (between top and bottom)",
-        "limit": 0
+        "comment": "Vertical center (between top and bottom)"
     },
     "properties.axis.name.position.bottom": {
         "value": "bottom",
-        "comment": "Bottom position option for axis name",
-        "limit": 0
+        "comment": "Bottom position option for axis name"
     },
     "properties.axis.min": {
         "value": "Min",
-        "comment": "Label for minimum axis value configuration",
-        "limit": 0
+        "comment": "Label for minimum axis value configuration"
     },
     "properties.axis.min.warning": {
         "value": "Min value cannot be greater than max value",
-        "comment": "Warning message when minimum axis value exceeds maximum value",
-        "limit": 0
+        "comment": "Warning message when minimum axis value exceeds maximum value"
     },
     "properties.axis.max": {
         "value": "Max",
-        "comment": "Label for maximum axis value configuration",
-        "limit": 0
+        "comment": "Label for maximum axis value configuration"
     },
     "properties.axis.max.warning": {
         "value": "Max value cannot be smaller than min value",
-        "comment": "Warning message when maximum axis value is less than minimum value",
-        "limit": 0
+        "comment": "Warning message when maximum axis value is less than minimum value"
     },
     "properties.xaxis.title": {
         "value": "X-Axis",
-        "comment": "Horizontal axis of a plot.",
-        "limit": 0
+        "comment": "Horizontal axis of a plot."
     },
     "properties.axis.scale": {
         "value": "scale",
-        "comment": "Label for axis scale configuration",
-        "limit": 0
+        "comment": "Label for axis scale configuration"
     },
     "properties.axis.left": {
         "value": "Left",
-        "comment": "Left axis position option",
-        "limit": 0
+        "comment": "Left axis position option"
     },
     "properties.axis.right": {
         "value": "Right",
-        "comment": "Right axis position option",
-        "limit": 0
+        "comment": "Right axis position option"
     },
     "properties.axis.top": {
         "value": "Top",
-        "comment": "Top axis position option",
-        "limit": 0
+        "comment": "Top axis position option"
     },
     "properties.axis.bottom": {
         "value": "Bottom",
-        "comment": "Bottom axis position option",
-        "limit": 0
+        "comment": "Bottom axis position option"
     },
     "properties.rotation.0": {
         "value": "0°",
-        "comment": "0 degrees rotation option",
-        "limit": 0
+        "comment": "0 degrees rotation option"
     },
     "properties.rotation.30": {
         "value": "30°",
-        "comment": "30 degrees rotation option",
-        "limit": 0
+        "comment": "30 degrees rotation option"
     },
     "properties.rotation.45": {
         "value": "45°",
-        "comment": "45 degrees rotation option",
-        "limit": 0
+        "comment": "45 degrees rotation option"
     },
     "properties.rotation.60": {
         "value": "60°",
-        "comment": "60 degrees rotation option",
-        "limit": 0
+        "comment": "60 degrees rotation option"
     },
     "properties.rotation.90": {
         "value": "90°",
-        "comment": "90 degrees rotation option",
-        "limit": 0
+        "comment": "90 degrees rotation option"
     },
     "properties.legend.position.up": {
         "value": "top",
-        "comment": "Top legend position option",
-        "limit": 0
+        "comment": "Top legend position option"
     },
     "properties.legend.position.down": {
         "value": "bottom",
-        "comment": "Bottom legend position option",
-        "limit": 0
+        "comment": "Bottom legend position option"
     },
     "properties.legend.position.right": {
         "value": "right",
-        "comment": "Right legend position option",
-        "limit": 0
+        "comment": "Right legend position option"
     },
     "properties.legend.position.left": {
         "value": "left",
-        "comment": "Left legend position option",
-        "limit": 0
+        "comment": "Left legend position option"
     },
     "properties.orientation.title": {
         "value": "Orientation",
-        "comment": "The title for the orientation configuration section",
-        "limit": 0
+        "comment": "The title for the orientation configuration section"
     },
     "properties.orientation.horizontal": {
         "value": "Horizontal (default)",
-        "comment": "The chart orientation configuration",
-        "limit": 0
+        "comment": "The chart orientation configuration"
     },
     "properties.orientation.vertical": {
         "value": "Vertical",
-        "comment": "The chart orientation configuration",
-        "limit": 0
+        "comment": "The chart orientation configuration"
     },
     "properties.points.title": {
         "value": "Points",
-        "comment": "Points on map",
-        "limit": 0
+        "comment": "Points on map"
     },
     "properties.points.groupNearbyPoints": {
         "value": "Group nearby points",
-        "comment": "Option to group nearby points on map visualizations",
-        "limit": 0
+        "comment": "Option to group nearby points on map visualizations"
     },
     "properties.points.size.title": {
         "value": "Point Size",
-        "comment": "Size of a point on a map",
-        "limit": 0
+        "comment": "Size of a point on a map"
     },
     "properties.points.size.extra_small": {
         "value": "0.5x",
-        "comment": "Multiplicator of size of a point on map. Means 50% of size.",
-        "limit": 0
+        "comment": "Multiplicator of size of a point on map. Means 50% of size."
     },
     "properties.points.size.small": {
         "value": "0.75x",
-        "comment": "Multiplicator of size of a point on map. Means 75% of size.",
-        "limit": 0
+        "comment": "Multiplicator of size of a point on map. Means 75% of size."
     },
     "properties.points.size.normal": {
         "value": "normal",
-        "comment": "Multiplicator of size of a point on map. Means 100% of size.",
-        "limit": 0
+        "comment": "Multiplicator of size of a point on map. Means 100% of size."
     },
     "properties.points.size.large": {
         "value": "1.25x",
-        "comment": "Multiplicator of size of a point on map. Means 125% of size.",
-        "limit": 0
+        "comment": "Multiplicator of size of a point on map. Means 125% of size."
     },
     "properties.points.size.extra_large": {
         "value": "1.5x",
-        "comment": "Multiplicator of size of a point on map. Means 150% of size.",
-        "limit": 0
+        "comment": "Multiplicator of size of a point on map. Means 150% of size."
     },
     "properties.points.size.min.title": {
         "value": "Smallest",
-        "comment": "Smallest size of a point on a map",
-        "limit": 0
+        "comment": "Smallest size of a point on a map"
     },
     "properties.points.size.max.title": {
         "value": "Largest",
-        "comment": "Largest size of a point on a map",
-        "limit": 0
+        "comment": "Largest size of a point on a map"
     },
     "properties.map.title": {
         "value": "Map",
-        "comment": "Map configuration",
-        "limit": 0
+        "comment": "Map configuration"
     },
     "properties.viewport.area.title": {
         "value": "Default viewport",
-        "comment": "Default viewport configuration",
-        "limit": 0
+        "comment": "Default viewport configuration"
     },
     "properties.viewport.area.auto_default": {
         "value": "Include all data",
-        "comment": "All data will be visibled on the map",
-        "limit": 0
+        "comment": "All data will be visibled on the map"
     },
     "properties.viewport.area.continents": {
         "value": "continents",
-        "comment": "Viewport area option for continent-level map view",
-        "limit": 0
+        "comment": "Viewport area option for continent-level map view"
     },
     "properties.viewport.area.continent_af": {
         "value": "Africa",
-        "comment": "Continent Africa",
-        "limit": 0
+        "comment": "Continent Africa"
     },
     "properties.viewport.area.continent_as": {
         "value": "Asia",
-        "comment": "Continent Asia",
-        "limit": 0
+        "comment": "Continent Asia"
     },
     "properties.viewport.area.continent_au": {
         "value": "Australia",
-        "comment": "Continent Australia",
-        "limit": 0
+        "comment": "Continent Australia"
     },
     "properties.viewport.area.continent_eu": {
         "value": "Europe",
-        "comment": "Continent Europe",
-        "limit": 0
+        "comment": "Continent Europe"
     },
     "properties.viewport.area.continent_na": {
         "value": "America (North)",
-        "comment": "Continent North America",
-        "limit": 0
+        "comment": "Continent North America"
     },
     "properties.viewport.area.continent_sa": {
         "value": "America (South)",
-        "comment": "Continent South America",
-        "limit": 0
+        "comment": "Continent South America"
     },
     "properties.viewport.area.world": {
         "value": "World",
-        "comment": "Viewport area option for global world map view",
-        "limit": 0
+        "comment": "Viewport area option for global world map view"
     },
     "gs.color-dropdown.custom-color": {
         "value": "Custom color",
-        "comment": "Option to select custom color in color dropdown",
-        "limit": 0
+        "comment": "Option to select custom color in color dropdown"
     },
     "properties.colors.reset-colors": {
         "value": "Reset Colors",
-        "comment": "Button to reset colors to default values",
-        "limit": 0
+        "comment": "Button to reset colors to default values"
     },
     "properties.colors": {
         "value": "Colors",
-        "comment": "Label for colors configuration section",
-        "limit": 0
+        "comment": "Label for colors configuration section"
     },
     "properties.colors.unsupported|insight": {
         "value": "There are no colors for this configuration of the visualization",
-        "comment": "Message when color configuration is not supported for insight visualization",
-        "limit": 0
+        "comment": "Message when color configuration is not supported for insight visualization"
     },
     "properties.colors.unsupported|report": {
         "value": "There are no colors for this configuration of the report",
         "comment": "Message when color configuration is not supported for report",
-        "limit": 0,
         "translate": false
     },
     "export_unsupported.colors|insight": {
         "value": "The visualization is not compatible with custom colors. To open the visualization as a report, click Reset Colors in Configuration —> Colors.",
-        "comment": "Message when insight visualization doesn't support custom colors",
-        "limit": 0
+        "comment": "Message when insight visualization doesn't support custom colors"
     },
     "export_unsupported.colors|report": {
         "value": "The report is not compatible with custom colors. Click Reset Colors in Configuration —> Colors.",
         "comment": "Message when report doesn't support custom colors",
-        "limit": 0,
         "translate": false
     },
     "dashboard.bucket.measures_title.bullet._measure": {
         "value": "Measure",
-        "comment": "Label for primary measure bucket in bullet chart",
-        "limit": 0
+        "comment": "Label for primary measure bucket in bullet chart"
     },
     "dashboard.bucket.measures_title.bullet._metric": {
         "value": "Metric",
-        "comment": "Label for primary metric bucket in bullet chart",
-        "limit": 0
+        "comment": "Label for primary metric bucket in bullet chart"
     },
     "dashboard.bucket.secondary_measures_title.bullet._measure": {
         "value": "Measure",
-        "comment": "Label for secondary measure bucket in bullet chart",
-        "limit": 0
+        "comment": "Label for secondary measure bucket in bullet chart"
     },
     "dashboard.bucket.secondary_measures_title.bullet._metric": {
         "value": "Metric",
-        "comment": "Label for secondary metric bucket in bullet chart",
-        "limit": 0
+        "comment": "Label for secondary metric bucket in bullet chart"
     },
     "dashboard.bucket.tertiary_measures_title.bullet._measure": {
         "value": "Measure",
-        "comment": "Label for tertiary measure bucket in bullet chart",
-        "limit": 0
+        "comment": "Label for tertiary measure bucket in bullet chart"
     },
     "dashboard.bucket.tertiary_measures_title.bullet._metric": {
         "value": "Metric",
-        "comment": "Label for tertiary metric bucket in bullet chart",
-        "limit": 0
+        "comment": "Label for tertiary metric bucket in bullet chart"
     },
     "dashboard.bucket.measures_subtitle.bullet": {
         "value": "Primary",
-        "comment": "Primary measure of a bullet chart.",
-        "limit": 0
+        "comment": "Primary measure of a bullet chart."
     },
     "dashboard.bucket.secondary_measures_subtitle.bullet": {
         "value": "Target",
-        "comment": "Target of a bullet chart.",
-        "limit": 0
+        "comment": "Target of a bullet chart."
     },
     "dashboard.bucket.tertiary_measures_subtitle.bullet": {
         "value": "Comparative",
-        "comment": "Comparative measures of a bullet chart",
-        "limit": 0
+        "comment": "Comparative measures of a bullet chart"
     },
     "sorting.disabled.explanation.attribute|insight": {
         "value": "Sorting is not possible for this visualization configuration.",
-        "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "limit": 0
+        "comment": "Explains why sort button is disabled. Shown as tooltip"
     },
     "sorting.disabled.explanation.attribute|report": {
         "value": "Sorting is not possible for this report configuration.",
         "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "limit": 0,
         "translate": false
     },
     "sorting.disabled.explanation.measure._measure|insight": {
         "value": "You must add at least one attribute to sort the visualization. You can also adjust the position of items in the Measures section to change their position in the visualization.",
-        "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "limit": 0
+        "comment": "Explains why sort button is disabled. Shown as tooltip"
     },
     "sorting.disabled.explanation.measure._measure|report": {
         "value": "You must add at least one attribute to sort the report. You can also adjust the position of items in the Measures section to change their position in the report.",
         "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "limit": 0,
         "translate": false
     },
     "sorting.disabled.explanation.measure._metric|insight": {
         "value": "You must add at least one attribute to sort the visualization. You can also adjust the position of items in the Metrics section to change their position in the visualization.",
-        "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "limit": 0
+        "comment": "Explains why sort button is disabled. Shown as tooltip"
     },
     "sorting.disabled.explanation.measure._metric|report": {
         "value": "You must add at least one attribute to sort the report. You can also adjust the position of items in the Metrics section to change their position in the report.",
         "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "limit": 0,
         "translate": false
     },
     "properties.metrics.title._measure": {
         "value": "Measures",
-        "comment": "Title for measures section in table properties",
-        "limit": 0
+        "comment": "Title for measures section in table properties"
     },
     "properties.metrics.title._metric": {
         "value": "Metrics",
-        "comment": "Title for metrics section in table properties",
-        "limit": 0
+        "comment": "Title for metrics section in table properties"
     },
     "properties.metrics.position": {
         "value": "Position",
-        "comment": "Label for metrics position setting in table",
-        "limit": 0
+        "comment": "Label for metrics position setting in table"
     },
     "properties.metrics.position.columns": {
         "value": "columns (default)",
-        "comment": "Option to position metrics in columns (default layout)",
-        "limit": 0
+        "comment": "Option to position metrics in columns (default layout)"
     },
     "properties.metrics.position.rows": {
         "value": "rows",
-        "comment": "Option to position metrics in rows",
-        "limit": 0
+        "comment": "Option to position metrics in rows"
     },
     "properties.column.headers.title": {
         "value": "Column Headers",
-        "comment": "Title for column headers configuration section",
-        "limit": 0
+        "comment": "Title for column headers configuration section"
     },
     "properties.column.headers.position": {
         "value": "Position",
-        "comment": "Label for column headers position setting",
-        "limit": 0
+        "comment": "Label for column headers position setting"
     },
     "properties.column.headers.position.top": {
         "value": "top (default)",
-        "comment": "Option to position column headers at top (default)",
-        "limit": 0
+        "comment": "Option to position column headers at top (default)"
     },
     "properties.column.headers.position.left": {
         "value": "left",
-        "comment": "Option to position column headers on left side",
-        "limit": 0
+        "comment": "Option to position column headers on left side"
     },
     "dashboard.bucket.table.subtitle.columns": {
         "value": "in columns",
-        "comment": "Subtitle indicating table data is arranged in columns",
-        "limit": 0
+        "comment": "Subtitle indicating table data is arranged in columns"
     },
     "dashboard.bucket.table.subtitle.rows": {
         "value": "in rows",
-        "comment": "Subtitle indicating table data is arranged in rows",
-        "limit": 0
+        "comment": "Subtitle indicating table data is arranged in rows"
     },
     "properties.interactions.title": {
         "value": "Interactions",
-        "comment": "The title for the interactions configuration section",
-        "limit": 0
+        "comment": "The title for the interactions configuration section"
     },
     "properties.advanced.title": {
         "value": "Advanced customizations",
-        "comment": "The title for the advanced configuration section",
-        "limit": 0
+        "comment": "The title for the advanced configuration section"
     },
     "properties.advanced.chartConfigOverride.noValueLabel": {
         "value": "No customizations yet.",
-        "comment": "Text show when user did not define any customization yet.",
-        "limit": 0
+        "comment": "Text show when user did not define any customization yet."
     },
     "properties.advanced.chartConfigOverride.link": {
         "value": "Learn more",
-        "comment": "Text of link that leads to feature documentation.",
-        "limit": 0
+        "comment": "Text of link that leads to feature documentation."
     },
     "properties.advanced.chartConfigOverride.editorButton": {
         "value": "Open editor",
-        "comment": "Text of button that opens editor of configuration.",
-        "limit": 0
+        "comment": "Text of button that opens editor of configuration."
     },
     "properties.advanced.chartConfigOverride.title": {
         "value": "Advanced customization",
-        "comment": "Text of dialog that defines advanced customization of visualization.",
-        "limit": 0
+        "comment": "Text of dialog that defines advanced customization of visualization."
     },
     "properties.advanced.chartConfigOverride.snippets.header": {
         "value": "Snippets",
-        "comment": "The header of list that contains snippets (recipes) of various charts configurations.",
-        "limit": 0
+        "comment": "The header of list that contains snippets (recipes) of various charts configurations."
     },
     "properties.advanced.chartConfigOverride.button.apply": {
         "value": "Apply",
-        "comment": "The label of button in dialog that applies the dialog value.",
-        "limit": 0
+        "comment": "The label of button in dialog that applies the dialog value."
     },
     "properties.advanced.chartConfigOverride.button.cancel": {
         "value": "Cancel",
-        "comment": "The label of button in dialog that closes the dialog.",
-        "limit": 0
+        "comment": "The label of button in dialog that closes the dialog."
     },
     "properties.interactions.drillDown": {
         "value": "Drill down",
-        "comment": "The text for the drill down checkbox",
-        "limit": 0
+        "comment": "The text for the drill down checkbox"
     },
     "properties.interactions.alerts": {
         "value": "Alert",
-        "comment": "Label of the checkbox that enables/disables alerts configuration for particular visualization.",
-        "limit": 0
+        "comment": "Label of the checkbox that enables/disables alerts configuration for particular visualization."
     },
     "properties.interactions.alerts.tooltip": {
         "value": "Enable users to create alerts for this visualization on dashboards.",
-        "comment": "Tooltip for the checkbox that enables/disables alerts configuration for particular visualization.",
-        "limit": 0
+        "comment": "Tooltip for the checkbox that enables/disables alerts configuration for particular visualization."
     },
     "properties.interactions.scheduledExports": {
         "value": "Scheduled exports",
-        "comment": "Label of the checkbox that enables/disables scheduled exports configuration for particular visualization.",
-        "limit": 0
+        "comment": "Label of the checkbox that enables/disables scheduled exports configuration for particular visualization."
     },
     "properties.interactions.scheduledExports.tooltip": {
         "value": "Enable users to create scheduled exports for this visualization on dashboards.",
-        "comment": "Tooltip for the checkbox that enables/disables scheduled exports configuration for particular visualization.",
-        "limit": 0
+        "comment": "Tooltip for the checkbox that enables/disables scheduled exports configuration for particular visualization."
     },
     "properties.comparison.title": {
         "value": "Comparison",
-        "comment": "The title of comparison section",
-        "limit": 0
+        "comment": "The title of comparison section"
     },
     "properties.comparison.calculationType.title": {
         "value": "Calculated as",
-        "comment": "The label of calculation type dropdown",
-        "limit": 0
+        "comment": "The label of calculation type dropdown"
     },
     "properties.comparison.calculationType.as.change": {
         "value": "Change",
-        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the change between two values.",
-        "limit": 0
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the change between two values."
     },
     "properties.comparison.calculationType.as.ratio": {
         "value": "Ratio",
-        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the ratio between two values.",
-        "limit": 0
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the ratio between two values."
     },
     "properties.comparison.calculationType.as.difference": {
         "value": "Difference",
-        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the difference between two values.",
-        "limit": 0
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the difference between two values."
     },
     "properties.comparison.calculationType.as.changeDifference": {
         "value": "Change (difference)",
-        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the change and difference between two values.",
-        "limit": 0
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the change and difference between two values."
     },
     "properties.comparison.calculationType.as.change.tooltip.useIn._metric": {
         "value": "Calculates the relative change between primary and secondary metric values.",
-        "comment": "The content describes the pertinent scenarios for the change calculation.",
-        "limit": 0
+        "comment": "The content describes the pertinent scenarios for the change calculation."
     },
     "properties.comparison.calculationType.as.change.tooltip.useIn._measure": {
         "value": "Calculates the relative change between primary and secondary measure values.",
-        "comment": "The content describes the pertinent scenarios for the change calculation.",
-        "limit": 0
+        "comment": "The content describes the pertinent scenarios for the change calculation."
     },
     "properties.comparison.calculationType.as.ratio.tooltip.useIn._metric": {
         "value": "Quantifies the share of the primary metric value in the secondary metric value.",
-        "comment": "The content describes the pertinent scenarios for the ratio calculation.",
-        "limit": 0
+        "comment": "The content describes the pertinent scenarios for the ratio calculation."
     },
     "properties.comparison.calculationType.as.ratio.tooltip.useIn._measure": {
         "value": "Quantifies the share of the primary measure value in the secondary measure value.",
-        "comment": "The content describes the pertinent scenarios for the ratio calculation.",
-        "limit": 0
+        "comment": "The content describes the pertinent scenarios for the ratio calculation."
     },
     "properties.comparison.calculationType.as.difference.tooltip.useIn._metric": {
         "value": "Calculates the absolute difference between primary and secondary metric values.",
-        "comment": "The content describes the pertinent scenarios for the difference calculation.",
-        "limit": 0
+        "comment": "The content describes the pertinent scenarios for the difference calculation."
     },
     "properties.comparison.calculationType.as.difference.tooltip.useIn._measure": {
         "value": "Calculates the absolute difference between primary and secondary measure values.",
-        "comment": "The content describes the pertinent scenarios for the difference calculation.",
-        "limit": 0
+        "comment": "The content describes the pertinent scenarios for the difference calculation."
     },
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn._metric": {
         "value": "Calculates both the relative change and absolute difference between primary and secondary metric values.",
-        "comment": "The content describes the pertinent scenarios for the change (difference) calculation.",
-        "limit": 0
+        "comment": "The content describes the pertinent scenarios for the change (difference) calculation."
     },
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn._measure": {
         "value": "Calculates both the relative change and absolute difference between primary and secondary measure values.",
-        "comment": "The content describes the pertinent scenarios for the change (difference) calculation.",
-        "limit": 0
+        "comment": "The content describes the pertinent scenarios for the change (difference) calculation."
     },
     "properties.comparison.calculationType.tooltip.formula.section": {
         "value": "Formula",
-        "comment": "The title of the section that describes the formula for the calculation",
-        "limit": 0
+        "comment": "The title of the section that describes the formula for the calculation"
     },
     "properties.comparison.calculationType.tooltip.formulaChange.section": {
         "value": "Formula (relative change)",
-        "comment": "The title of the section that describes the formula for the change calculation",
-        "limit": 0
+        "comment": "The title of the section that describes the formula for the change calculation"
     },
     "properties.comparison.calculationType.tooltip.formulaDifference.section": {
         "value": "Formula (absolute difference)",
-        "comment": "The title of the section that describes the formula for the difference calculation",
-        "limit": 0
+        "comment": "The title of the section that describes the formula for the difference calculation"
     },
     "properties.comparison.calculationType.as.change.tooltip.formula": {
         "value": "(Primary - Secondary) / Secondary",
-        "comment": "The content describes the formula of the change calculation.",
-        "limit": 0
+        "comment": "The content describes the formula of the change calculation."
     },
     "properties.comparison.calculationType.as.ratio.tooltip.formula": {
         "value": "Primary / Secondary",
-        "comment": "The content describes the formula of the ratio calculation.",
-        "limit": 0
+        "comment": "The content describes the formula of the ratio calculation."
     },
     "properties.comparison.calculationType.as.difference.tooltip.formula": {
         "value": "Primary - Secondary",
-        "comment": "The content describes the formula of the difference calculation.",
-        "limit": 0
+        "comment": "The content describes the formula of the difference calculation."
     },
     "properties.comparison.calculationType.tooltip.example.section": {
         "value": "Example",
-        "comment": "The title of the section that provides an example for the calculation",
-        "limit": 0
+        "comment": "The title of the section that provides an example for the calculation"
     },
     "properties.comparison.calculationType.as.change.tooltip.example": {
         "value": "Year-over-year sales change = (the current year's sales - the previous year's sales) / the previous year's sales",
-        "comment": "The example illustrating the change calculation.",
-        "limit": 0
+        "comment": "The example illustrating the change calculation."
     },
     "properties.comparison.calculationType.as.ratio.tooltip.example": {
         "value": "Current sales compared to a quota = current sales / quota",
-        "comment": "The example illustrating the ratio calculation.",
-        "limit": 0
+        "comment": "The example illustrating the ratio calculation."
     },
     "properties.comparison.calculationType.as.difference.tooltip.example": {
         "value": "Year-over-year sales difference = the current year's sales - the previous year's sales",
-        "comment": "The example illustrating the difference calculation.",
-        "limit": 0
+        "comment": "The example illustrating the difference calculation."
     },
     "properties.comparison.calculationType.as.changeDifference.tooltip.example": {
         "value": "Year-over-year sales change = [(the current year's sales - the previous year's sales) / the previous year's sales] AND [the current year's sales - the previous year's sales]",
-        "comment": "The example illustrating the change (difference) calculation.",
-        "limit": 0
+        "comment": "The example illustrating the change (difference) calculation."
     },
     "properties.comparison.measureNumber.format.preset.inherit": {
         "value": "Inherit",
-        "comment": "An item in list of formatting presets. Means: use inherited measure format",
-        "limit": 0
+        "comment": "An item in list of formatting presets. Means: use inherited measure format"
     },
     "properties.comparison.measureNumber.format.preset.rounded": {
         "value": "Rounded",
-        "comment": "An item in list of formatting presets. Whole number without decimal numbers.",
-        "limit": 0
+        "comment": "An item in list of formatting presets. Whole number without decimal numbers."
     },
     "properties.comparison.measureNumber.format.preset.decimal1": {
         "value": "Decimal (1)",
-        "comment": "An item in list of formatting presets. Decimal number measure format with one decimal number.",
-        "limit": 0
+        "comment": "An item in list of formatting presets. Decimal number measure format with one decimal number."
     },
     "properties.comparison.measureNumber.format.preset.decimal2": {
         "value": "Decimal (2)",
-        "comment": "An item in list of formatting presets. Decimal number measure format with two decimal numbers.",
-        "limit": 0
+        "comment": "An item in list of formatting presets. Decimal number measure format with two decimal numbers."
     },
     "properties.comparison.measureNumber.format.preset.percentRounded": {
         "value": "Percent (rounded)",
-        "comment": "An item in list of formatting presets. Whole number without decimal numbers and with % sign at the end.",
-        "limit": 0
+        "comment": "An item in list of formatting presets. Whole number without decimal numbers and with % sign at the end."
     },
     "properties.comparison.measureNumber.format.preset.percent1": {
         "value": "Percent (1)",
-        "comment": "An item in list of formatting presets. Decimal number with one decimal number and % sign at the end.",
-        "limit": 0
+        "comment": "An item in list of formatting presets. Decimal number with one decimal number and % sign at the end."
     },
     "properties.comparison.measureNumber.format.preset.percent2": {
         "value": "Percent (2)",
-        "comment": "An item in list of formatting presets. Decimal number with two decimal numbers and % sign at the end.",
-        "limit": 0
+        "comment": "An item in list of formatting presets. Decimal number with two decimal numbers and % sign at the end."
     },
     "properties.comparison.measureNumber.format.template.rounded": {
         "value": "Rounded",
-        "comment": "An item in list of formatting templates. Whole number without decimal numbers.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Whole number without decimal numbers."
     },
     "properties.comparison.measureNumber.format.template.decimal1": {
         "value": "Decimal (1)",
-        "comment": "An item in list of formatting templates. Decimal number measure format with one decimal number.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Decimal number measure format with one decimal number."
     },
     "properties.comparison.measureNumber.format.template.decimal2": {
         "value": "Decimal (2)",
-        "comment": "An item in list of formatting templates. Decimal number measure format with two decimal numbers.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Decimal number measure format with two decimal numbers."
     },
     "properties.comparison.measureNumber.format.template.percentRounded": {
         "value": "Percent (rounded)",
-        "comment": "An item in list of formatting templates. Whole number without decimal numbers and with % sign at the end.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Whole number without decimal numbers and with % sign at the end."
     },
     "properties.comparison.measureNumber.format.template.percent1": {
         "value": "Percent (1)",
-        "comment": "An item in list of formatting templates. Decimal number with one decimal number and % sign at the end.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Decimal number with one decimal number and % sign at the end."
     },
     "properties.comparison.measureNumber.format.template.percent2": {
         "value": "Percent (2)",
-        "comment": "An item in list of formatting templates. Decimal number with two decimal numbers and % sign at the end.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Decimal number with two decimal numbers and % sign at the end."
     },
     "properties.comparison.measureNumber.format.template.currency": {
         "value": "Currency",
-        "comment": "An item in list of formatting templates. Number with currency sign.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Number with currency sign."
     },
     "properties.comparison.measureNumber.format.template.currencyShortened": {
         "value": "Currency shortened",
-        "comment": "An item in list of formatting templates. Number with currency sign shortened with K, M, B and T characters.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Number with currency sign shortened with K, M, B and T characters."
     },
     "properties.comparison.measureNumber.format.template.largeNumbersShortened": {
         "value": "Large numbers shortened",
-        "comment": "An item in list of formatting templates. Number shortened with K, M, B and T characters.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Number shortened with K, M, B and T characters."
     },
     "properties.comparison.measureNumber.format.template.largeNumbersShortenedWithColors": {
         "value": "Large numbers shortened with colors",
-        "comment": "An item in list of formatting templates. Colored number shortened with K, M, B and T characters.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Colored number shortened with K, M, B and T characters."
     },
     "properties.comparison.measureNumber.format.template.negativeNumbersRed": {
         "value": "Negative numbers in red",
-        "comment": "An item in list of formatting templates. Number is formatted in red color if negative.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Number is formatted in red color if negative."
     },
     "properties.comparison.measureNumber.format.template.financial": {
         "value": "Financial",
-        "comment": "An item in list of formatting templates. Number is in brackets if negative.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Number is in brackets if negative."
     },
     "properties.comparison.measureNumber.format.template.decimalWithoutThousandsSeparator": {
         "value": "Decimal (2) without thousands separator",
-        "comment": "An item in list of formatting templates.",
-        "limit": 0
+        "comment": "An item in list of formatting templates."
     },
     "properties.comparison.measureNumber.format.template.conditionalColors": {
         "value": "Conditional colors",
-        "comment": "An item in list of formatting templates. Numbers is formatted in different colors based on its value.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Numbers is formatted in different colors based on its value."
     },
     "properties.comparison.measureNumber.format.template.trendSymbols": {
         "value": "Trend symbols",
-        "comment": "An item in list of formatting templates. Numbers is formatted in different colors prefixed with arrow symbol based on its value.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Numbers is formatted in different colors prefixed with arrow symbol based on its value."
     },
     "properties.comparison.measureNumber.format.template.timeFromSeconds": {
         "value": "Time (from seconds)",
-        "comment": "An item in list of formatting templates. Seconds are formatted properly in hours, minutes and seconds.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Seconds are formatted properly in hours, minutes and seconds."
     },
     "properties.comparison.measureNumber.format.template.zeroInsteadOfNull": {
         "value": "Zero instead of blank value",
-        "comment": "An item in list of formatting templates. Null value is replaced with 0.",
-        "limit": 0
+        "comment": "An item in list of formatting templates. Null value is replaced with 0."
     },
     "properties.comparison.valueSubSection.title": {
         "value": "Value",
-        "comment": "The label of comparison value sub section.",
-        "limit": 0
+        "comment": "The label of comparison value sub section."
     },
     "properties.comparison.format.title": {
         "value": "Format",
-        "comment": "The label of comparison format control.",
-        "limit": 0
+        "comment": "The label of comparison format control."
     },
     "properties.comparison.subFormat.title": {
         "value": "(Format)",
-        "comment": "The label of comparison sub format control.",
-        "limit": 0
+        "comment": "The label of comparison sub format control."
     },
     "properties.comparison.indicator.title": {
         "value": "Indicator",
-        "comment": "The label of comparison indicator sub section",
-        "limit": 0
+        "comment": "The label of comparison indicator sub section"
     },
     "properties.comparison.indicator.arrow.title": {
         "value": "Arrow",
-        "comment": "The label of the checkbox that controls whether to use the arrow indicator or not.",
-        "limit": 0
+        "comment": "The label of the checkbox that controls whether to use the arrow indicator or not."
     },
     "properties.comparison.indicator.colorConfig.title": {
         "value": "Color",
-        "comment": "The label of the checkbox that controls whether to use the color or not.",
-        "limit": 0
+        "comment": "The label of the checkbox that controls whether to use the color or not."
     },
     "properties.comparison.indicator.colorConfig.equals": {
         "value": "Primary = Secondary",
-        "comment": "The label of the color item will be set when the primary value is equal to the secondary value.",
-        "limit": 0
+        "comment": "The label of the color item will be set when the primary value is equal to the secondary value."
     },
     "properties.comparison.indicator.colorConfig.positive": {
         "value": "Primary > Secondary",
-        "comment": "The label of the color item will be set when the primary value is greater than the secondary value.",
-        "limit": 0
+        "comment": "The label of the color item will be set when the primary value is greater than the secondary value."
     },
     "properties.comparison.indicator.colorConfig.negative": {
         "value": "Primary < Secondary",
-        "comment": "The label of the color item will be set when the primary value is less than the secondary value.",
-        "limit": 0
+        "comment": "The label of the color item will be set when the primary value is less than the secondary value."
     },
     "properties.comparison.labelSubSection.title": {
         "value": "Label",
-        "comment": "The label of comparison label sub section.",
-        "limit": 0
+        "comment": "The label of comparison label sub section."
     },
     "properties.comparison.labelSubSection.positionOnTop.disabled": {
         "value": "Labels not applicable for value position top.",
-        "comment": "Disable tooltip message when the comparison position is set to top.",
-        "limit": 0
+        "comment": "Disable tooltip message when the comparison position is set to top."
     },
     "properties.comparison.labelSubSection.conditional.disabled": {
         "value": "Conditional labels are not applicable to ratio calculations.",
-        "comment": "Disable tooltip message when the calculation is ratio.",
-        "limit": 0
+        "comment": "Disable tooltip message when the calculation is ratio."
     },
     "properties.comparison.labelName.title": {
         "value": "Name",
-        "comment": "The label of name input control.",
-        "limit": 0
+        "comment": "The label of name input control."
     },
     "properties.comparison.labelConditional.title": {
         "value": "Conditional",
-        "comment": "The label of conditional checkbox control.",
-        "limit": 0
+        "comment": "The label of conditional checkbox control."
     },
     "properties.comparison.labelPositive.title": {
         "value": "Primary > Secondary",
-        "comment": "The label of the input control will be set when the primary value is greater than the secondary value.",
-        "limit": 0
+        "comment": "The label of the input control will be set when the primary value is greater than the secondary value."
     },
     "properties.comparison.labelNegative.title": {
         "value": "Primary < Secondary",
-        "comment": "The label of the input control will be set when the primary value is less than the secondary value.",
-        "limit": 0
+        "comment": "The label of the input control will be set when the primary value is less than the secondary value."
     },
     "properties.comparison.labelEquals.title": {
         "value": "Primary = Secondary",
-        "comment": "The label of the input control will be set when the primary value is equal the secondary value.",
-        "limit": 0
+        "comment": "The label of the input control will be set when the primary value is equal the secondary value."
     },
     "properties.comparison.position.title": {
         "value": "Position",
-        "comment": "The label of comparison position control.",
-        "limit": 0
+        "comment": "The label of comparison position control."
     },
     "properties.comparison.position.top": {
         "value": "top",
-        "comment": "The title of dropdown option that specifies the position of comparison to be on top.",
-        "limit": 0
+        "comment": "The title of dropdown option that specifies the position of comparison to be on top."
     },
     "properties.comparison.position.right": {
         "value": "right",
-        "comment": "The title of dropdown option that specifies the position of comparison to be on right.",
-        "limit": 0
+        "comment": "The title of dropdown option that specifies the position of comparison to be on right."
     },
     "properties.comparison.position.left": {
         "value": "left",
-        "comment": "The title of dropdown option that specifies the position of comparison to be on left.",
-        "limit": 0
+        "comment": "The title of dropdown option that specifies the position of comparison to be on left."
     },
     "visualizations.headline.tertiary.title": {
         "value": "Versus",
-        "comment": "Means comparison of two values - for example '100 (this week) VERSUS 10 (last week)'.",
-        "limit": 0
+        "comment": "Means comparison of two values - for example '100 (this week) VERSUS 10 (last week)'."
     },
     "gs.date.yesterday": {
         "value": "Yesterday",
-        "comment": "Label for yesterday date option",
-        "limit": 0
+        "comment": "Label for yesterday date option"
     },
     "notifications.panel.button.label": {
         "value": "Notifications",
-        "comment": "A global notifications button label in the main menu",
-        "limit": 0
+        "comment": "A global notifications button label in the main menu"
     },
     "notifications.panel.notifications.list.label": {
         "value": "Notifications",
-        "comment": "Label for notifications list in panel",
-        "limit": 0
+        "comment": "Label for notifications list in panel"
     },
     "notifications.panel.tab.unread": {
         "value": "Unread ({count})",
-        "comment": "Tab label showing unread notifications count",
-        "limit": 0
+        "comment": "Tab label showing unread notifications count"
     },
     "notifications.panel.tab.all": {
         "value": "All",
-        "comment": "Tab label for all notifications",
-        "limit": 0
+        "comment": "Tab label for all notifications"
     },
     "notifications.panel.markAllAsRead": {
         "value": "Mark all as read",
-        "comment": "Button to mark all notifications as read",
-        "limit": 0
+        "comment": "Button to mark all notifications as read"
     },
     "notifications.panel.error.loading": {
         "value": "Error loading notifications",
-        "comment": "Error message when notifications fail to load",
-        "limit": 0
+        "comment": "Error message when notifications fail to load"
     },
     "notifications.panel.empty.all": {
         "value": "No notifications",
-        "comment": "Message when there are no notifications at all",
-        "limit": 0
+        "comment": "Message when there are no notifications at all"
     },
     "notifications.panel.empty.unread": {
         "value": "No unread notifications",
-        "comment": "Message when there are no unread notifications",
-        "limit": 0
+        "comment": "Message when there are no unread notifications"
     },
     "notifications.panel.unsupported.notification.type": {
         "value": "Unsupported notification type",
-        "comment": "Message for unsupported notification types",
-        "limit": 0
+        "comment": "Message for unsupported notification types"
     },
     "notifications.panel.markAsRead": {
         "value": "Mark as read",
-        "comment": "Button to mark individual notification as read",
-        "limit": 0
+        "comment": "Button to mark individual notification as read"
     },
     "notifications.panel.alert.notification.type.label": {
         "value": "Alert notification",
-        "comment": "Label for alert type notifications",
-        "limit": 0
+        "comment": "Label for alert type notifications"
     },
     "notifications.panel.download": {
         "value": "Download",
-        "comment": "Button label for downloading notification files",
-        "limit": 0
+        "comment": "Button label for downloading notification files"
     },
     "notifications.panel.expiresOn": {
         "value": "Expires on {date}",
-        "comment": "Message showing when notification expires",
-        "limit": 0
+        "comment": "Message showing when notification expires"
     },
     "notifications.panel.linkHasExpired": {
         "value": "Link has expired",
-        "comment": "Message when download link has expired",
-        "limit": 0
+        "comment": "Message when download link has expired"
     },
     "notifications.panel.toast.warning.filesExpired": {
         "value": "<strong>Download link expired</strong> — wait for the next export or create one manually.",
-        "comment": "Warning toast message when export files have expired",
-        "limit": 0
+        "comment": "Warning toast message when export files have expired"
     },
     "notifications.panel.dashboardLinkHint": {
         "value": "Open the dashboard used for this export",
-        "comment": "Hint text for dashboard link in notifications panel",
-        "limit": 0
+        "comment": "Hint text for dashboard link in notifications panel"
     },
     "notifications.panel.dashboardLink": {
         "value": "From {dashboardTitle}",
-        "comment": "Link text showing which dashboard an export came from",
-        "limit": 0
+        "comment": "Link text showing which dashboard an export came from"
     },
     "notifications.panel.downloadFilesHint": {
         "value": "Download the exported files",
-        "comment": "Hint text for download files action",
-        "limit": 0
+        "comment": "Hint text for download files action"
     },
     "notifications.filters.buttonLabel": {
         "value": "{count, plural, one {# filter} other {# filters}}",
-        "comment": "Follow this guide for pluralization per locale https://formatjs.github.io/docs/core-concepts/icu-syntax#plural-format",
-        "limit": 0
+        "comment": "Follow this guide for pluralization per locale https://formatjs.github.io/docs/core-concepts/icu-syntax#plural-format"
     },
     "notifications.filters.dialog.title": {
         "value": "Filters",
-        "comment": "Title for filters dialog in notifications",
-        "limit": 0
+        "comment": "Title for filters dialog in notifications"
     },
     "notifications.filters.dialog.dateRange": {
         "value": "Date Range",
-        "comment": "Label for date range filter in notifications dialog",
-        "limit": 0
+        "comment": "Label for date range filter in notifications dialog"
     },
     "notifications.panel.triggers.title": {
         "value": "for {triggeredCount}/{totalCount} items",
-        "comment": "Title showing triggered count vs total count for notification items",
-        "limit": 0
+        "comment": "Title showing triggered count vs total count for notification items"
     },
     "notifications.panel.triggers.dialog.newValue": {
         "value": "New value",
-        "comment": "Label for new value in notification triggers dialog",
-        "limit": 0
+        "comment": "Label for new value in notification triggers dialog"
     },
     "notifications.panel.triggers.dialog.truncatedValues": {
         "value": "…and {count} more",
-        "comment": "Label for truncated values in notification triggers dialog",
-        "limit": 0
+        "comment": "Label for truncated values in notification triggers dialog"
     },
     "close": {
         "value": "Close",
-        "comment": "Label of a button for closing a dialog window",
-        "limit": 0
+        "comment": "Label of a button for closing a dialog window"
     },
     "notifications.panel.triggers.dialog.title": {
         "value": "Triggered for",
-        "comment": "Title for notification triggers dialog",
-        "limit": 0
+        "comment": "Title for notification triggers dialog"
     },
     "notifications.panel.error.learnMore": {
         "value": "Learn more",
-        "comment": "Link text to learn more about an error",
-        "limit": 0
+        "comment": "Link text to learn more about an error"
     },
     "notifications.panel.error.traceId": {
         "value": "Trace ID",
-        "comment": "Label for trace ID in error message",
-        "limit": 0
+        "comment": "Label for trace ID in error message"
     },
     "notifications.panel.error.alert.title": {
         "value": "The alert could not be processed.",
-        "comment": "Error message when alert cannot be processed",
-        "limit": 0
+        "comment": "Error message when alert cannot be processed"
     },
     "notifications.panel.error.schedule.title": {
         "value": "Scheduled export failed.",
-        "comment": "Error message when scheduled export cannot be processed",
-        "limit": 0
+        "comment": "Error message when scheduled export cannot be processed"
     },
     "notifications.panel.error.limitExceeded.message": {
         "value": "Your export could not be sent, because your organization has reached the limit for maximum number of daily alerts and scheduled exports. Please contact your administrator.",
-        "comment": "Error message when export cannot be sent due to limit reached",
-        "limit": 0
+        "comment": "Error message when export cannot be sent due to limit reached"
     }
 }
