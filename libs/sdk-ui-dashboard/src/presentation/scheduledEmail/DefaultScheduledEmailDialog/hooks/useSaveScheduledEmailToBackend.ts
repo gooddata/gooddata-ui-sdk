@@ -136,7 +136,7 @@ function sanitizeAutomation(
 
     /**
      * Remove all-time date filters from export definitions.
-     * They are not required for the execution and not event valid as AFM date granularity.
+     * They are not required for the execution and not even valid as AFM date granularity.
      * They are added ad-hoc to be visible in the UI in useAutomationFiltersSelect hook,
      * depending on whether they are ignored or not.
      */
@@ -149,20 +149,24 @@ function sanitizeAutomation(
     return automation;
 }
 
-function removeAllTimeDateFiltersFromExportDefinitions(
-    exportDefinitions: (IExportDefinitionMetadataObject | IExportDefinitionMetadataObjectDefinition)[],
-) {
+function removeAllTimeDateFiltersFromExportDefinitions<
+    T extends IExportDefinitionMetadataObject | IExportDefinitionMetadataObjectDefinition,
+>(exportDefinitions: T[]): T[] {
     return exportDefinitions.map((exportDefinition) => {
         if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
+            const filters = exportDefinition.requestPayload.content.filters;
+            const format = exportDefinition.requestPayload.format;
+            const isTabularFormat = format === "XLSX" || format === "CSV";
+            const appliedFilters = isTabularFormat
+                ? filters?.filter((f) => !isAllTimeDateFilter(f))
+                : filters?.filter((f) => !isAllTimeDashboardDateFilter(f));
             return {
                 ...exportDefinition,
                 requestPayload: {
                     ...exportDefinition.requestPayload,
                     content: {
                         ...exportDefinition.requestPayload.content,
-                        filters: exportDefinition.requestPayload.content.filters?.filter(
-                            (f) => !isAllTimeDateFilter(f),
-                        ),
+                        filters: appliedFilters,
                     },
                 },
             };

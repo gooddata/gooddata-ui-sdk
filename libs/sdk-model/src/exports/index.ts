@@ -45,7 +45,7 @@ export interface IExportDefinitionVisualizationObjectContent {
      * Dashboard context of visualization object.
      */
     dashboard?: Identifier;
-    filters?: IFilter[];
+    filters?: IFilter[] | FilterContextItem[];
 }
 
 /**
