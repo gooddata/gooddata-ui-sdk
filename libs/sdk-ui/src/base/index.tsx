@@ -377,6 +377,17 @@ export type {
     DataSeriesHeaders,
     DataSliceHeaders,
     DataPointCoordinates,
+    IData2D,
+    IAttributeData2D,
+    IMeasureData2D,
+    IDataPoint2D,
+    IDataPointIntersection2D,
+    IDescriptor2D,
+    IAttributeDescriptor2D,
+    IMeasureGroupDescriptor2D,
+    IAttributeHeaders2D,
+    IMeasureGroupHeaders2D,
+    IHeaders2D,
 } from "./results/dataAccess.js";
 export type { DataAccessConfig, ValueFormatter, HeaderTranslator } from "./results/dataAccessConfig.js";
 export { createNumberJsFormatter, DefaultDataAccessConfig } from "./results/dataAccessConfig.js";

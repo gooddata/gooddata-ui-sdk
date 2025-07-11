@@ -2236,11 +2236,11 @@ importers:
         specifier: workspace:*
         version: link:../util
       ag-grid-community:
-        specifier: 33.1.0
-        version: 33.1.0
+        specifier: 33.3.2
+        version: 33.3.2
       ag-grid-react:
-        specifier: 33.1.0
-        version: 33.1.0(react-dom@18.3.1)(react@18.3.1)
+        specifier: 33.3.2
+        version: 33.3.2(react-dom@18.3.1)(react@18.3.1)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -4005,11 +4005,14 @@ importers:
         specifier: workspace:*
         version: link:../sdk-ui-vis-commons
       ag-grid-community:
-        specifier: 33.1.0
-        version: 33.1.0
+        specifier: 33.3.2
+        version: 33.3.2
+      ag-grid-enterprise:
+        specifier: 33.3.2
+        version: 33.3.2
       ag-grid-react:
-        specifier: 33.1.0
-        version: 33.1.0(react-dom@18.3.1)(react@18.3.1)
+        specifier: 33.3.2
+        version: 33.3.2(react-dom@18.3.1)(react@18.3.1)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -4038,6 +4041,9 @@ importers:
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
+      '@gooddata/sdk-backend-base':
+        specifier: workspace:*
+        version: link:../sdk-backend-base
       '@gooddata/sdk-backend-mockingbird':
         specifier: workspace:*
         version: link:../sdk-backend-mockingbird
@@ -13823,23 +13829,65 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: true
 
-  /ag-charts-types@11.1.0:
-    resolution: {integrity: sha512-9cu2vJuFZNrhf7o5USG5n/meTIJKhJfTIds5ziRV+FI3mT1QZME2nchu4WQnoIE8gft9ACkuhtCUgOyW44A2iQ==}
-    dev: false
-
-  /ag-grid-community@33.1.0:
-    resolution: {integrity: sha512-xPEgNjRuudfimbGytoDttjlgAjz/N+muq7Tgw2GTMuUeSG0z54kBObvJxhezOEEashVMKBpqb/YhzIE6e+opqQ==}
+  /ag-charts-community@11.3.2:
+    resolution: {integrity: sha512-4ZshRqfeCoQKgJ8WNxLfgkKtLszIxEF9WWOSuT2Uvyyy3x0rUUPQbl98+kVh+sRyGGQ6Qj8uoStqHAhwPwgTOQ==}
+    requiresBuild: true
     dependencies:
-      ag-charts-types: 11.1.0
+      ag-charts-core: 11.3.2
+      ag-charts-locale: 11.3.2
+      ag-charts-types: 11.3.2
+    dev: false
+    optional: true
+
+  /ag-charts-core@11.3.2:
+    resolution: {integrity: sha512-D66lTBVXRDI6vFTcmL91KeBghOx63MmWrgDSJEEhsrK1ioWeYnFcRXStX0msx60D12i+Ba+uhM9xrxgRmqzM5w==}
+    requiresBuild: true
+    dependencies:
+      ag-charts-types: 11.3.2
+    dev: false
+    optional: true
+
+  /ag-charts-enterprise@11.3.2:
+    resolution: {integrity: sha512-5HRfEI2w0IxfyWy6bpu9Db2UVPxPyxYihSHJdlJLmmCCgPNoyUqnghZqr7vnRSrh/mVSeSo2WBzxZuuphr+Wtg==}
+    requiresBuild: true
+    dependencies:
+      ag-charts-community: 11.3.2
+      ag-charts-core: 11.3.2
+    dev: false
+    optional: true
+
+  /ag-charts-locale@11.3.2:
+    resolution: {integrity: sha512-6DrHD53PfdVNqFAlmNkHTnlQ9QY9EzME0vvaiotUpO8boKflGivgqmfx/uNTp6AsvOrsnRBBZW4b4XSg0LKG2w==}
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /ag-charts-types@11.3.2:
+    resolution: {integrity: sha512-trPGqgGYiTeLgtf9nLuztDYOPOFOLbqHn1g2D99phf7QowcwdX0TPx0wfWG8Hm90LjB8IH+G2s3AZe2vrdAtMQ==}
     dev: false
 
-  /ag-grid-react@33.1.0(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-YB/t6U+P7HPcGY+ukJiVYtQNbDsNVVocDITPANsy21pfh5ojvoNfKEdieC904IPTdgjSMTpNDQJogBzTpMLTCA==}
+  /ag-grid-community@33.3.2:
+    resolution: {integrity: sha512-9bx0e/+ykOyLvUxHqmdy0cRVANH6JAtv0yZdnBZEXYYqBAwN+G5a4NY+2I1KvoOCYzbk8SnStG7y4hCdVAAWOQ==}
+    dependencies:
+      ag-charts-types: 11.3.2
+    dev: false
+
+  /ag-grid-enterprise@33.3.2:
+    resolution: {integrity: sha512-wf1JMDdAk9GhWbB0WF5RIOYp4p/y6h7zJoscFsymEeFV7325Zyx0ZBQ/kQQ9R9MqnhIYp5xjpjYJ4r2rpIXH+A==}
+    dependencies:
+      ag-grid-community: 33.3.2
+    optionalDependencies:
+      ag-charts-community: 11.3.2
+      ag-charts-enterprise: 11.3.2
+    dev: false
+
+  /ag-grid-react@33.3.2(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-5bv4JIJvGov23sduIUIyQTqpa/qhoQrRkQm5pFOQb7RMwusfx6xBPrkLwIIlCJiQ8g0OOinxWzZ2kQ2Zml6tLw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     dependencies:
-      ag-grid-community: 33.1.0
+      ag-grid-community: 33.3.2
       prop-types: 15.8.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
