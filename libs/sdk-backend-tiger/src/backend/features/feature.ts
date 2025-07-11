@@ -821,6 +821,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableSeamlessIdpSwitch,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnablePreAggregationDatasets,
+            "enablePreAggregationDatasets",
+            "BOOLEAN",
+            FeatureFlagsValues.enablePreAggregationDatasets,
+        ),
     };
 }
 
