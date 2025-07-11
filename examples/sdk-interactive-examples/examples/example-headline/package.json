@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-headline",
-    "version": "10.34.0-alpha.12",
+    "version": "10.34.0-alpha.13",
     "title": "Headline",
     "description": "This example shows how to use the Headline component.",
     "author": "GoodData",
