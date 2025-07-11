@@ -1708,7 +1708,7 @@ export interface IDropdownButtonProps {
 
 // @internal (undocumented)
 export interface IDropdownButtonRenderProps {
-    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId">;
+    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId" | "ariaLabel">;
     ariaAttributes: {
         role: React_2.AriaRole;
     } & Pick<React_2.AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
@@ -5936,7 +5936,7 @@ export type UiIconButtonProps = UiIconButtonPublicProps;
 // @internal (undocumented)
 export interface UiIconButtonPublicProps {
     // (undocumented)
-    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"] & Pick<React_2.AriaAttributes, "aria-label">;
+    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
     // (undocumented)
     ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
     // (undocumented)

@@ -64,7 +64,7 @@ export interface IDropdownButtonRenderProps {
     /**
      * Props supporting accessibility that can be passed down to a <Button/>
      */
-    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId">;
+    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId" | "ariaLabel">;
 }
 
 /**
