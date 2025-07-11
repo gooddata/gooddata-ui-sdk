@@ -19,6 +19,14 @@
         height: 100%;
         overflow-y: auto;
         overflow-x: hidden;
+
+        &--container-bottom-padding-small {
+            padding-bottom: 8px;
+        }
+
+        &--container-bottom-padding-medium {
+            padding-bottom: 10px;
+        }
     }
 
     @media #{variables.$small-only} {

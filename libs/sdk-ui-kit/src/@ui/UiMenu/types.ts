@@ -192,19 +192,14 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object>
     extends Partial<IUiMenuPluggableComponents<T>> {
     items: IUiMenuItem<T>[];
 
-    /**
-     * @deprecated use `dataTestId` instead. Prop will be removed.
-     */
-    className?: ((context: IUiMenuContext<T>) => string | undefined) | string;
     dataTestId?: ((context: IUiMenuContext<T>) => string | undefined) | string;
 
-    /**
-     * @deprecated use `itemDataTestId` instead. Prop will be removed.
-     */
-    itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
 
     maxWidth?: number;
+    maxHeight?: ((context: IUiMenuContext<T>) => number | undefined) | number;
+
+    containerBottomPadding?: "none" | "small" | "medium";
 
     onSelect?: (item: IUiMenuInteractiveItem<T>) => void;
     onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;
