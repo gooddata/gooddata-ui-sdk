@@ -103,9 +103,10 @@
         {
             "attributeSortItem": {
                 "attributeIdentifier": "a_label.f_product.product.name",
-                "direction": "desc"
+                "direction": "asc"
             }
-        }
+        },
+        { "attributeSortItem": { "attributeIdentifier": "a_f_owner.department_id", "direction": "desc" } }
     ],
     "workspace": "reference-workspace"
 }

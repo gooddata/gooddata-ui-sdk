@@ -55,10 +55,7 @@
         },
         { "items": [], "localIdentifier": "columns" }
     ],
-    "dimensions": [
-        { "itemIdentifiers": ["a_label.f_product.product.name"] },
-        { "itemIdentifiers": ["measureGroup"] }
-    ],
+    "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
     "filters": [],
     "measures": [
         {
@@ -89,7 +86,7 @@
                 "locators": [
                     {
                         "measureLocatorItem": {
-                            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3"
+                            "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
                         }
                     }
                 ]

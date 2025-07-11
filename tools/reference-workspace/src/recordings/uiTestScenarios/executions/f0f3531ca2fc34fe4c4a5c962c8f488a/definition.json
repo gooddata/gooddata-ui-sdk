@@ -83,7 +83,7 @@
         }
     ],
     "dimensions": [
-        { "itemIdentifiers": ["a_label.f_product.product.name", "a_f_owner.department_id"] },
+        { "itemIdentifiers": [] },
         { "itemIdentifiers": ["a_attr.f_stage.stagename", "a_f_owner.region_id", "measureGroup"] }
     ],
     "filters": [],
@@ -99,13 +99,6 @@
             }
         }
     ],
-    "sortBy": [
-        {
-            "attributeSortItem": {
-                "attributeIdentifier": "a_label.f_product.product.name",
-                "direction": "desc"
-            }
-        }
-    ],
+    "sortBy": [],
     "workspace": "reference-workspace"
 }
