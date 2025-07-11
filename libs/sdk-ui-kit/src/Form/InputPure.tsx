@@ -205,7 +205,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                     variant="tertiary"
                     onClick={onIconButtonClick}
                     accessibilityConfig={{
-                        "aria-label": iconButtonLabel,
+                        ariaLabel: iconButtonLabel,
                     }}
                 />
             </span>
