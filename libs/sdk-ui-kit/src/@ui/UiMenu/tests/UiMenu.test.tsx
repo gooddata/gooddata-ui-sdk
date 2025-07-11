@@ -358,15 +358,6 @@ describe("UiMenu", () => {
         expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item4"));
     });
 
-    it("should add itemClassName to items", () => {
-        renderMenu({
-            itemClassName: "test-item-class",
-        });
-
-        const items = screen.getByRole("menu").querySelectorAll(".test-item-class");
-        expect(items).toHaveLength(7); // All items should have the class (including group and its items)
-    });
-
     it("should add data-test-id to items", () => {
         renderMenu({
             itemDataTestId: "item-data-test-id",

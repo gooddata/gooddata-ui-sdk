@@ -6049,18 +6049,18 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
 export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> extends Partial<IUiMenuPluggableComponents<T>> {
     // (undocumented)
     ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
-    // @deprecated (undocumented)
-    className?: ((context: IUiMenuContext<T>) => string | undefined) | string;
+    // (undocumented)
+    containerBottomPadding?: "none" | "small" | "medium";
     // (undocumented)
     dataTestId?: ((context: IUiMenuContext<T>) => string | undefined) | string;
     // (undocumented)
     isDisabledFocusable?: boolean;
-    // @deprecated (undocumented)
-    itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     // (undocumented)
     itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     // (undocumented)
     items: IUiMenuItem<T>[];
+    // (undocumented)
+    maxHeight?: ((context: IUiMenuContext<T>) => number | undefined) | number;
     // (undocumented)
     maxWidth?: number;
     // (undocumented)
