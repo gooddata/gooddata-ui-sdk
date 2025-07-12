@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 /**
  * This file does not export and only configures the mock backend with Web Components,
  * as a side effect. Backend only has to be defined once per runtime.

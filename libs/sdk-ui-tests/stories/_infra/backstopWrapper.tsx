@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 
 const SCREENSHOT_WRAPPER_CLASS = "screenshot-wrapper";

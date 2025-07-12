@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { ChartSortingOwnProps } from "@gooddata/sdk-ui-kit";
 import { attributeLocalId, localIdRef, measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
