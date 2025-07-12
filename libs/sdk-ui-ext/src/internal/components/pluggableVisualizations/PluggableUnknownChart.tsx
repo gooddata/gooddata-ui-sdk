@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useEffect } from "react";
+import { useIntl } from "react-intl";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
@@ -15,31 +15,20 @@ import {
     UnmountFunction,
 } from "../../interfaces/Visualization.js";
 
-export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps & { onAfterRender?: () => void };
-export class LocalizedUnknownVisualizationClass extends React.Component<IIntlLocalizedUnknownVisualizationClass> {
-    private errorDetails: {
-        message: string;
-        description: string;
-    };
+export function LocalizedUnknownVisualizationClass({ onAfterRender }: { onAfterRender?: () => void }) {
+    const intl = useIntl();
 
-    public componentDidMount(): void {
-        this.props.onAfterRender?.();
-    }
+    useEffect(() => {
+        if (onAfterRender) {
+            onAfterRender();
+        }
+    }, [onAfterRender]);
 
-    constructor(props: IIntlLocalizedUnknownVisualizationClass) {
-        super(props);
-        this.errorDetails = newErrorMapping(props.intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN];
-    }
+    const errorDetails = newErrorMapping(intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN];
+    const { message, description } = errorDetails;
 
-    public render(): JSX.Element {
-        const { message, description } = this.errorDetails;
-        return <ErrorComponent message={message} description={description} />;
-    }
+    return <ErrorComponent message={message} description={description} />;
 }
-export const IntlLocalizedUnknownVisualizationClass = injectIntl<
-    "intl",
-    IIntlLocalizedUnknownVisualizationClass
->(LocalizedUnknownVisualizationClass);
 
 export class PluggableUnknownChart extends AbstractPluggableVisualization {
     private renderFun: RenderFunction;
@@ -72,7 +61,7 @@ export class PluggableUnknownChart extends AbstractPluggableVisualization {
     ): void {
         this.renderFun(
             <IntlWrapper locale={options.locale}>
-                <IntlLocalizedUnknownVisualizationClass onAfterRender={this.afterRender} />
+                <LocalizedUnknownVisualizationClass onAfterRender={this.afterRender} />
             </IntlWrapper>,
             this.getElement(),
         );

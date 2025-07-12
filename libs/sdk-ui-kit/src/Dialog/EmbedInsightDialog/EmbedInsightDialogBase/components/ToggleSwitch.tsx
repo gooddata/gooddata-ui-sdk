@@ -1,5 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger } from "../../../../Bubble/index.js";
 
@@ -15,9 +14,15 @@ export interface IToggleSwitchProps {
     onChange: () => void;
 }
 
-export const ToggleSwitch: React.VFC<IToggleSwitchProps> = (props) => {
-    const { id, label, checked, disabled, questionMarkMessage, className, onChange } = props;
-
+export function ToggleSwitch({
+    id,
+    label,
+    checked,
+    disabled,
+    questionMarkMessage,
+    className,
+    onChange,
+}: IToggleSwitchProps) {
     const css = cx("toggle-wrapper-revers-label", className);
 
     return (
@@ -45,4 +50,4 @@ export const ToggleSwitch: React.VFC<IToggleSwitchProps> = (props) => {
             ) : null}
         </div>
     );
-};
+}

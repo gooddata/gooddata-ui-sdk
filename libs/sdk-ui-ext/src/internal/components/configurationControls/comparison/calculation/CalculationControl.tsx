@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { CalculationType } from "@gooddata/sdk-ui-charts";
@@ -25,13 +25,13 @@ const CALCULATION_DROPDOWN_WIDTH = 194;
 
 const DISABLED_MESSAGE_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 0, y: 7 } }];
 
-const CalculationControl: React.FC<ICalculationControlProps> = ({
+export default function CalculationControl({
     disabled,
     defaultCalculationType,
     properties,
     showDisabledMessage,
     pushData,
-}) => {
+}: ICalculationControlProps) {
     const { formatMessage } = useIntl();
     const calculationType: CalculationType =
         properties.controls?.comparison?.calculationType || defaultCalculationType;
@@ -62,6 +62,4 @@ const CalculationControl: React.FC<ICalculationControlProps> = ({
             />
         </div>
     );
-};
-
-export default CalculationControl;
+}

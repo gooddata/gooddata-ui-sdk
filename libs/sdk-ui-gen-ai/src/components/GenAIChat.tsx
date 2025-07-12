@@ -1,5 +1,4 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
@@ -82,7 +81,7 @@ export type GenAIChatProps = GenAIAssistantProps;
  * UI component that renders the Gen AI assistant.
  * @public
  */
-export const GenAIAssistant: React.FC<GenAIAssistantProps> = (props) => {
+export function GenAIAssistant(props: GenAIAssistantProps) {
     const { backend, workspace, locale, colorPalette, eventHandlers } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -104,7 +103,7 @@ export const GenAIAssistant: React.FC<GenAIAssistantProps> = (props) => {
             </StoreProvider>
         </IntlWrapper>
     );
-};
+}
 
 /**
  * UI component that renders the Gen AI chat.
@@ -113,7 +112,7 @@ export const GenAIAssistant: React.FC<GenAIAssistantProps> = (props) => {
  */
 export const GenAIChat = GenAIAssistant;
 
-const GenAIContent: React.FC<GenAIChatProps> = (props) => {
+function GenAIContent(props: GenAIChatProps) {
     const { onLinkClick, catalogItems } = props;
     const { permissions, loading } = usePermissions();
 
@@ -129,4 +128,4 @@ const GenAIContent: React.FC<GenAIChatProps> = (props) => {
             <GenAIChatWrapper initializing={loading} />
         </ConfigProvider>
     );
-};
+}

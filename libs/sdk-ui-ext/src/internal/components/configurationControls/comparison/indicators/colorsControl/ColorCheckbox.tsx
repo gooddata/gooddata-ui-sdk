@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+
 import { useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
@@ -20,12 +20,12 @@ interface IColorItemProps {
     pushData: PushDataCallback;
 }
 
-const ColorCheckbox: React.FC<IColorItemProps> = ({
+export default function ColorCheckbox({
     disabled,
     showDisabledMessage,
     properties,
     pushData,
-}) => {
+}: IColorItemProps) {
     const { formatMessage } = useIntl();
 
     const checked = !properties?.controls?.comparison?.colorConfig?.disabled;
@@ -43,6 +43,4 @@ const ColorCheckbox: React.FC<IColorItemProps> = ({
             <Checkbox text={label} value={checked} disabled={disabled} onChange={handleChange} />
         </DisabledBubbleMessage>
     );
-};
-
-export default ColorCheckbox;
+}

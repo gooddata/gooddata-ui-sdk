@@ -1,12 +1,12 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { Component } from "react";
 import ReactDOM from "react-dom";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 
 import { IRenderChildrenInPortalProps } from "../RenderChildrenInPortal.js";
 
-class MockedRenderChildrenInPortal extends React.Component {
+class MockedRenderChildrenInPortal extends Component {
     portalNode: HTMLElement;
     constructor(props: IRenderChildrenInPortalProps) {
         super(props);

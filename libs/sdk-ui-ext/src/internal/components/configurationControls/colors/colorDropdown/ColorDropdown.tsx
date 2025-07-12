@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { cloneElement, Fragment, ReactElement, ReactNode, PureComponent } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
@@ -26,7 +26,7 @@ export interface IColorDropdownOwnProps {
     showCustomPicker: boolean;
     onColorSelected: (color: IColor) => void;
     disabled?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export interface IColorDropdownState {
@@ -42,7 +42,7 @@ const COLOR_FOR_UNKNOWN_ITEM: IRgbColorValue = {
     b: 0,
 };
 
-class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropdownState> {
+class ColorDropdown extends PureComponent<IColorDropdownProps, IColorDropdownState> {
     private id: string;
 
     constructor(props: IColorDropdownOwnProps & WrappedComponentProps) {
@@ -56,7 +56,7 @@ class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropd
 
     public render() {
         return (
-            <React.Fragment>
+            <Fragment>
                 <div className={this.getClassName()} onClick={this.onDropdownButtonClick}>
                     {this.setupDropdownChild()}
                 </div>
@@ -74,7 +74,7 @@ class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropd
                         </div>
                     </ColorOverlay>
                 ) : null}
-            </React.Fragment>
+            </Fragment>
         );
     }
 
@@ -84,7 +84,7 @@ class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropd
             position: this.getIconPosition(),
             disabled: this.props.disabled,
         };
-        return React.cloneElement(this.props.children as React.ReactElement<ISelectableChild>, childProps);
+        return cloneElement(this.props.children as ReactElement<ISelectableChild>, childProps);
     }
 
     private getIconPosition(): IconPosition {

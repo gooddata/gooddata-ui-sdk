@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
@@ -16,9 +16,7 @@ export interface IForecastConfidenceControl {
     pushData: (data: any) => any;
 }
 
-class ForecastConfidenceControl extends React.PureComponent<
-    IForecastConfidenceControl & WrappedComponentProps
-> {
+class ForecastConfidenceControl extends PureComponent<IForecastConfidenceControl & WrappedComponentProps> {
     public render() {
         return (
             <DropdownControl

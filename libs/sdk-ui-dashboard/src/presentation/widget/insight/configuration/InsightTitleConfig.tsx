@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Typography, Checkbox } from "@gooddata/sdk-ui-kit";
 import { IInsightWidget } from "@gooddata/sdk-model";

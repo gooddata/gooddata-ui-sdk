@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { IExportDefinitionVisualizationObjectSettings, WidgetAttachmentType } from "@gooddata/sdk-model";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
 import { AttachmentsSelect } from "./AttachmentsSelect.js";

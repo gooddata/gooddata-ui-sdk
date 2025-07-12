@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import React, { useMemo, useState } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { useMemo, useState } from "react";
 import {
     Dashboard,
     DashboardEvents,
@@ -9,7 +9,7 @@ import { idRef } from "@gooddata/sdk-model";
 
 const dashboardIdRef = idRef("aackEGSRSdLz");
 
-export const ImplicitDrillToAttributeUrlScenario: React.FC = () => {
+export function ImplicitDrillToAttributeUrlScenario() {
     const [attributeUrl, setAttributeUrl] = useState(null);
 
     const eventHandlers = useMemo(
@@ -30,4 +30,4 @@ export const ImplicitDrillToAttributeUrlScenario: React.FC = () => {
             <Dashboard dashboard={dashboardIdRef} eventHandlers={eventHandlers} />
         </>
     );
-};
+}

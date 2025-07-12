@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2019-2025 GoodData Corporation
+import { useCallback } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { IMeasure, IMeasureDefinition, newMeasure } from "@gooddata/sdk-model";
 import { describe, it, expect } from "vitest";

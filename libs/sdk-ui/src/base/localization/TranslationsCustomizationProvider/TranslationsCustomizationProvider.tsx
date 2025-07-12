@@ -1,6 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IAnalyticalBackend, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import React, { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useBackend } from "../../react/BackendContext.js";
 import { useWorkspace } from "../../react/WorkspaceContext.js";
 import { TranslationsCustomizationContextProvider } from "./Context.js";
@@ -19,7 +19,7 @@ export interface ITranslationsCustomizationProviderProps {
     /**
      * Component that will be render (Render Props pattern).
      */
-    render(translations: Record<string, string>): JSX.Element;
+    render(translations: Record<string, string>): ReactElement;
 
     /**
      * Customization function that will change final translations.
@@ -64,13 +64,13 @@ const defaultTranslationsParam: ITranslationsCustomizationProviderProps["transla
  *
  * @beta
  */
-export const TranslationsCustomizationProvider: React.FC<ITranslationsCustomizationProviderProps> = ({
+export function TranslationsCustomizationProvider({
     render,
     customize = pickCorrectWording,
     translations: translationsParam = defaultTranslationsParam,
     backend: backendParam,
     workspace: workspaceParam,
-}) => {
+}: ITranslationsCustomizationProviderProps) {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
     const [translations, setTranslations] = useState(() => customize(translationsParam));
@@ -106,4 +106,4 @@ export const TranslationsCustomizationProvider: React.FC<ITranslationsCustomizat
             {render(translations)}
         </TranslationsCustomizationContextProvider>
     );
-};
+}

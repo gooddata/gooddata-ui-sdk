@@ -1,17 +1,17 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 type ConfigDummySectionProps = {
     id: string;
     children: ReactNode;
 };
 
-export const ConfigDummySection: React.FC<ConfigDummySectionProps> = ({ id, children }) => {
+export function ConfigDummySection({ id, children }: ConfigDummySectionProps) {
     const className = `adi-bucket-configuration s-config-section-${id}`;
     return (
         <div className={className} aria-label="Configuration section">
             {children}
         </div>
     );
-};
+}

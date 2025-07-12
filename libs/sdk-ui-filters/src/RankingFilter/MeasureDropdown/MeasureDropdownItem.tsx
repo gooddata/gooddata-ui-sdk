@@ -1,5 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { stringUtils } from "@gooddata/util";
 import { ObjRefInScope } from "@gooddata/sdk-model";
 import cx from "classnames";
@@ -14,14 +13,14 @@ interface IMeasureDropdownItemProps {
     enableRenamingMeasureToMetric?: boolean;
 }
 
-export const MeasureDropdownItem: React.FC<IMeasureDropdownItemProps> = ({
+export function MeasureDropdownItem({
     item,
     isSelected,
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     enableRenamingMeasureToMetric,
-}) => {
+}: IMeasureDropdownItemProps) {
     const { title, ref, sequenceNumber } = item;
 
     const className = cx(
@@ -59,4 +58,4 @@ export const MeasureDropdownItem: React.FC<IMeasureDropdownItemProps> = ({
             {sequenceNumber ? <span className="gd-rf-sequence-number">{sequenceNumber}</span> : null}
         </button>
     );
-};
+}

@@ -1,5 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { AttributeFilterBase } from "./AttributeFilterBase.js";
 import {
     AttributeFilterSimpleDropdownButton,
@@ -20,7 +19,7 @@ export interface IAttributeFilterProps extends IAttributeFilterBaseProps {
  *
  * @public
  */
-export const AttributeFilter: React.FC<IAttributeFilterProps> = (props) => {
+export function AttributeFilter(props: IAttributeFilterProps) {
     const { titleWithSelection, ...baseProps } = props;
 
     const DropdownButtonComponent = titleWithSelection
@@ -33,4 +32,4 @@ export const AttributeFilter: React.FC<IAttributeFilterProps> = (props) => {
             DropdownButtonComponent={props.DropdownButtonComponent ?? DropdownButtonComponent}
         />
     );
-};
+}

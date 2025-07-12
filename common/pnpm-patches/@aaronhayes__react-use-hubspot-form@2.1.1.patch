@@ -1,0 +1,23 @@
+diff --git a/build/main/HubspotProvider.d.ts b/build/main/HubspotProvider.d.ts
+index b0806a1e650c89591b59177887fa3f13cafc4a49..d1205a7bcc78c19eff0cb0b0c6c5c6aba448b934 100644
+--- a/build/main/HubspotProvider.d.ts
++++ b/build/main/HubspotProvider.d.ts
+@@ -1,14 +1,14 @@
+-import React from 'react';
++import { Context, ReactElement, ReactNode } from 'react';
+ export interface HubspotContextProps {
+     readonly loaded: boolean;
+     readonly error: boolean;
+ }
+-export declare const HubspotContext: React.Context<HubspotContextProps>;
++export declare const HubspotContext: Context<HubspotContextProps>;
+ export declare const useHubspotContext: () => HubspotContextProps;
+ interface HubspotProviderProps {
+     readonly async?: boolean;
+     readonly addToHead?: boolean;
+-    readonly children: React.ReactNode;
++    readonly children: ReactNode;
+ }
+-declare const HubspotProvider: ({ async, addToHead, children }: HubspotProviderProps) => JSX.Element;
++declare const HubspotProvider: ({ async, addToHead, children }: HubspotProviderProps) => ReactElement;
+ export default HubspotProvider;

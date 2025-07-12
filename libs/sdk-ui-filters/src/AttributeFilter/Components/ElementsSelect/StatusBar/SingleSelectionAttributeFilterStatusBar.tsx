@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 import { AttributeFilterFilteredStatus } from "./AttributeFilterFilteredStatus.js";
 import { AttributeFilterIrrelevantSelectionStatus } from "./AttributeFilterIrrelevantSelectionStatus.js";
 import { AttributeFilterShowFilteredElements } from "./AttributeFilterShowFilteredElements.js";
@@ -11,19 +10,17 @@ import type { IAttributeFilterStatusBarProps } from "./types.js";
  *
  * @beta
  */
-export const SingleSelectionAttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> = (props) => {
-    const {
-        enableShowingFilteredElements,
-        isFilteredByParentFilters,
-        parentFilterTitles,
-        totalElementsCountWithCurrentSettings,
-        attributeTitle,
-        onShowFilteredElements,
-        irrelevantSelection,
-        isFilteredByLimitingValidationItems,
-        isFilteredByDependentDateFilters,
-    } = props;
-
+export function SingleSelectionAttributeFilterStatusBar({
+    enableShowingFilteredElements,
+    isFilteredByParentFilters,
+    parentFilterTitles,
+    totalElementsCountWithCurrentSettings,
+    attributeTitle,
+    onShowFilteredElements,
+    irrelevantSelection,
+    isFilteredByLimitingValidationItems,
+    isFilteredByDependentDateFilters,
+}: IAttributeFilterStatusBarProps) {
     if (enableShowingFilteredElements) {
         return (
             <div className="gd-attribute-filter-status-bar__next">
@@ -54,4 +51,4 @@ export const SingleSelectionAttributeFilterStatusBar: React.FC<IAttributeFilterS
             ) : null}
         </div>
     );
-};
+}

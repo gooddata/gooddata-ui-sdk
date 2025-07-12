@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 import { messages } from "@gooddata/sdk-ui";
@@ -8,7 +7,7 @@ import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.
 
 const ATTRIBUTE_HIERARCHY_TITLE_ROW = 1;
 
-const AttributeHierarchyDialogHeader: React.FC = () => {
+export default function AttributeHierarchyDialogHeader() {
     const { formatMessage } = useIntl();
     const { title, onUpdateTitle } = useAttributeHierarchyDialog();
 
@@ -26,6 +25,4 @@ const AttributeHierarchyDialogHeader: React.FC = () => {
             />
         </div>
     );
-};
-
-export default AttributeHierarchyDialogHeader;
+}

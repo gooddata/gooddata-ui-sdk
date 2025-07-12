@@ -1,6 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useEffect } from "react";
+import {
+    ComponentType,
+    ReactNode,
+    CSSProperties,
+    useRef,
+    useMemo,
+    useEffect,
+    useState,
+    KeyboardEvent,
+} from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
 import { bem } from "../@utils/bem.js";
@@ -27,7 +36,7 @@ export interface UiPagedVirtualListProps<T> {
     skeletonItemsCount: number;
     hasNextPage?: boolean;
     loadNextPage?: () => void;
-    customKeyboardNavigationHandler?: (event: React.KeyboardEvent<Element>) => void;
+    customKeyboardNavigationHandler?: (event: KeyboardEvent<Element>) => void;
     onKeyDownSelect?: (item: T) => void;
     closeDropdown?: () => void;
     isLoading?: boolean;
@@ -44,8 +53,8 @@ export interface UiPagedVirtualListProps<T> {
      * If not provided, object identity (`===`) is used for comparison.
      */
     scrollToItemKeyExtractor?: (item: T) => string | number;
-    children: (item: T) => React.ReactNode;
-    SkeletonItem?: React.ComponentType<UiPagedVirtualListSkeletonItemProps>;
+    children: (item: T) => ReactNode;
+    SkeletonItem?: ComponentType<UiPagedVirtualListSkeletonItemProps>;
 }
 
 /**
@@ -98,7 +107,7 @@ export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
                         const item = items?.[virtualRow.index];
                         const isSkeletonItem = virtualRow.index > itemsCount - 1;
 
-                        const style: React.CSSProperties = {
+                        const style: CSSProperties = {
                             width: `calc(100% + ${hasScroll ? "10px" : "0px"})`,
                             height: `${virtualRow.size}px`,
                             transform: `translateY(${virtualRow.start}px)`,
@@ -141,7 +150,7 @@ function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
         scrollToItemKeyExtractor,
     } = props;
 
-    const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     const itemsCount = items ? items.length : 0;
 
@@ -228,13 +237,13 @@ function useVirtualListKeyboardNavigation<T>(
     onKeyDownSelect?: (item: T) => void,
     closeDropdown?: () => void,
 ) {
-    const [focusedIndex, setFocusedIndex] = React.useState<number>(0);
+    const [focusedIndex, setFocusedIndex] = useState<number>(0);
 
     useEffect(() => {
         setFocusedIndex(0);
     }, [items]);
 
-    const virtualListKeyboardNavigationHandler = React.useMemo(
+    const virtualListKeyboardNavigationHandler = useMemo(
         () =>
             makeLinearKeyboardNavigation({
                 onFocusNext: () => {

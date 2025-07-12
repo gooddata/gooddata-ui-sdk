@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import {
     IAttribute,
     IDimension,
@@ -374,7 +373,6 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                 onError={this.onError}
                 onDataView={this.onDataView}
                 onColumnResized={this.onColumnResized}
-                intl={this.intl}
             />,
             this.getElement(),
         );

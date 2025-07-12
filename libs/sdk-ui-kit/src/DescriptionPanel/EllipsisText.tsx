@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { useMemo, useState } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
@@ -30,8 +30,7 @@ export interface IEllipsisTextProps {
  *
  * @internal
  */
-export const EllipsisText: React.FC<IEllipsisTextProps> = (props) => {
-    const { text, maxLines = LINE_NUMBER } = props;
+export function EllipsisText({ text, maxLines = LINE_NUMBER }: IEllipsisTextProps) {
     const [collapsed, setCollapsed] = useState(true);
     const intl = useIntl();
 
@@ -80,4 +79,4 @@ export const EllipsisText: React.FC<IEllipsisTextProps> = (props) => {
             ) : null}
         </div>
     );
-};
+}

@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useMemo } from "react";
 import {
     isAttributeMetadataObject,
     isDashboardAttributeFilter,
@@ -25,8 +25,7 @@ interface IFilterConfigurationProps {
     widget: IWidget;
 }
 
-export const FilterConfiguration: React.FC<IFilterConfigurationProps> = (props) => {
-    const { widget } = props;
+export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
     const allFilters = useDashboardSelector(selectFilterContextFilters);
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
@@ -103,4 +102,4 @@ export const FilterConfiguration: React.FC<IFilterConfigurationProps> = (props) 
             })}
         </div>
     );
-};
+}

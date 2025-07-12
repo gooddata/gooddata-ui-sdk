@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { ChangeEvent } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ChangeEvent } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 

@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useState } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import {
     IAttributeElements,
@@ -25,7 +25,7 @@ const childAttrFilter = newNegativeAttributeFilter(attributeDisplayFormRef(Md.De
 
 const parentFilterOverAttribute = idRef("attr.opportunitysnapshot.id");
 
-export const AttributeFilterParentChildExampleScenario: React.FC = () => {
+export function AttributeFilterParentChildExampleScenario() {
     const [parentFilter, setParentFilter] = useState<IAttributeFilter>(parentAttrFilter);
     const [childFilter, setChildFilter] = useState<IAttributeFilter>(childAttrFilter);
 
@@ -46,7 +46,7 @@ export const AttributeFilterParentChildExampleScenario: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 function getCount(filter: IAttributeFilter) {
     if (isPositiveAttributeFilter(filter)) {

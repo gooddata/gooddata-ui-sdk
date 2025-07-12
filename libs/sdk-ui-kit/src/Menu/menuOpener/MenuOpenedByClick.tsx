@@ -1,18 +1,18 @@
-// (C) 2007-2018 GoodData Corporation
-import React, { useRef } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { ReactNode, useRef } from "react";
 
 import { OutsideClickHandler } from "../utils/OutsideClickHandler.js";
 import { MenuPosition } from "../positioning/MenuPosition.js";
 
 import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 
-export const MenuOpenedByClick = (props: IMenuOpenedBySharedProps): JSX.Element => {
+export function MenuOpenedByClick(props: IMenuOpenedBySharedProps) {
     const outsideClick = () => props.onOpenedChange({ opened: false, source: "OUTSIDE_CLICK" });
     const togglerWrapperClick = () =>
         props.onOpenedChange({ opened: !props.opened, source: "TOGGLER_BUTTON_CLICK" });
     const togglerRef = useRef<HTMLDivElement>(null);
 
-    const OutsideClickHandlerWrapped = (props: { children: React.ReactNode }) => (
+    const OutsideClickHandlerWrapped = (props: { children: ReactNode }) => (
         // If UseCapture is set to false (default event bubbling), the disadvantage is that we will not
         // get notified of click events with preventDefault or stopPropagation methods called on them. On the
         // other hand it greatly simplifies event handling with toggler elements, for example if we have
@@ -46,4 +46,4 @@ export const MenuOpenedByClick = (props: IMenuOpenedBySharedProps): JSX.Element 
             {props.children}
         </MenuPosition>
     );
-};
+}

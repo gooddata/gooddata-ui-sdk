@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
 import { ResultsItem } from "./ResultsItem.js";
@@ -41,13 +40,13 @@ type SearchResultsDropdownListProps = {
  * A dropdown list with the search results.
  * @internal
  */
-export const SearchResultsDropdownList: React.FC<SearchResultsDropdownListProps> = ({
+export function SearchResultsDropdownList({
     searchResults,
     searchLoading,
     isMobile,
     width,
     onSelect,
-}) => {
+}: SearchResultsDropdownListProps) {
     const onListItemSelect = (item: ListItem<ISemanticSearchResultItem>) => onSelect(item.item);
     const [active, setActive, direction] = useListSelector(searchResults, onListItemSelect);
     const [scrollToItem, scrollDirection] = useListScroll(active, direction);
@@ -74,4 +73,4 @@ export const SearchResultsDropdownList: React.FC<SearchResultsDropdownListProps>
             items={searchResults}
         />
     );
-};
+}

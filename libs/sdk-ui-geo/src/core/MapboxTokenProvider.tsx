@@ -1,48 +1,38 @@
-// (C) 2021-2022 GoodData Corporation
-import React, { useContext } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { ComponentType, createContext, ReactElement, ReactNode, useContext } from "react";
 import { invariant } from "ts-invariant";
 import { IGeoConfig } from "../GeoChart.js";
 
 /**
  * @alpha
  */
-export const MapboxTokenContext = React.createContext<{ mapboxToken: string | undefined }>({
+export const MapboxTokenContext = createContext<{ mapboxToken: string | undefined }>({
     mapboxToken: undefined,
 });
 
 /**
  * @alpha
  */
-export const MapboxTokenProvider: React.FC<{ token: string; children?: React.ReactNode }> = ({
-    token,
-    children,
-}) => {
+export function MapboxTokenProvider({ token, children }: { token: string; children?: ReactNode }) {
     return (
         <MapboxTokenContext.Provider value={{ mapboxToken: token }}>{children}</MapboxTokenContext.Provider>
     );
-};
+}
 
 /**
  * @internal
  */
 export function withMapboxToken<T extends { config?: IGeoConfig }>(
-    InnerComponent: React.ComponentType<T>,
-): React.ComponentType<T> {
-    return class MapboxTokenHOC extends React.Component<T> {
-        static contextType = MapboxTokenContext;
-        declare context: React.ContextType<typeof MapboxTokenContext>;
+    InnerComponent: ComponentType<T>,
+): ComponentType<T> {
+    function MapboxTokenHOC(props: T): ReactElement {
+        const { mapboxToken } = useContext(MapboxTokenContext);
+        const enrichedConfig = enrichMapboxToken(props.config, mapboxToken);
 
-        public render() {
-            const { mapboxToken } = this.context;
-            const props = this.props;
+        return <InnerComponent {...props} config={enrichedConfig} />;
+    }
 
-            return (
-                <>
-                    <InnerComponent {...props} config={enrichMapboxToken(props.config, mapboxToken)} />
-                </>
-            );
-        }
-    };
+    return MapboxTokenHOC;
 }
 
 /**

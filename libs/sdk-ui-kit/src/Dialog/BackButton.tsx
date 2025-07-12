@@ -1,6 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
@@ -17,7 +16,7 @@ export interface IBackButtonProps {
 /**
  * @internal
  */
-export const BackButton: React.FC<IBackButtonProps> = ({ onClick, className }) => {
+export function BackButton({ onClick, className }: IBackButtonProps) {
     const intl = useIntl();
 
     return (
@@ -33,4 +32,4 @@ export const BackButton: React.FC<IBackButtonProps> = ({ onClick, className }) =
             }}
         />
     );
-};
+}

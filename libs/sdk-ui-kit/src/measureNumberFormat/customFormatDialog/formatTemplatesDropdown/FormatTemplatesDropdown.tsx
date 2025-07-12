@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { Component } from "react";
 import { ISeparators } from "@gooddata/sdk-ui";
 import DropdownItem from "./DropdownItem.js";
 import DropdownToggleButton from "./DropdownToggleButton.js";
@@ -18,7 +18,7 @@ export interface ICustomFormatTemplatesProps {
     templates: ReadonlyArray<IFormatTemplate>;
 }
 
-export class FormatTemplatesDropdown extends React.Component<
+export class FormatTemplatesDropdown extends Component<
     ICustomFormatTemplatesProps,
     ICustomFormatTemplatesState
 > {

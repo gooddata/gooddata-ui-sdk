@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 
@@ -8,19 +8,19 @@ import { messages } from "../locales.js";
 
 export interface IDeleteConfirmDialogProps {
     titleText: string;
-    bodyText: string | React.ReactNode;
+    bodyText: string | ReactNode;
     isProcessing: boolean;
     onConfirm: () => void;
     onCancel: () => void;
 }
 
-export const DeleteConfirmDialog: React.FC<IDeleteConfirmDialogProps> = ({
+export function DeleteConfirmDialog({
     titleText,
     bodyText,
     isProcessing,
     onConfirm,
     onCancel,
-}) => {
+}: IDeleteConfirmDialogProps) {
     const intl = useIntl();
     return (
         <ConfirmDialog
@@ -37,4 +37,4 @@ export const DeleteConfirmDialog: React.FC<IDeleteConfirmDialogProps> = ({
             <Typography tagName="p">{bodyText}</Typography>
         </ConfirmDialog>
     );
-};
+}

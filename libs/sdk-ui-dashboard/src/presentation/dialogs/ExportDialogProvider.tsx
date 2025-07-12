@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 import { useIntl } from "react-intl";
 import { ExportDialog } from "@gooddata/sdk-ui-kit";
 import { useExportDialogContext } from "../dashboardContexts/index.js";
@@ -7,7 +6,7 @@ import { useExportDialogContext } from "../dashboardContexts/index.js";
 /**
  * @internal
  */
-export const ExportDialogProvider: React.FC = () => {
+export function ExportDialogProvider() {
     const { closeDialog, dialogConfig, isOpen } = useExportDialogContext();
     const intl = useIntl();
 
@@ -24,4 +23,4 @@ export const ExportDialogProvider: React.FC = () => {
             {...dialogConfig}
         />
     ) : null;
-};
+}

@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React, { Fragment } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { Fragment } from "react";
 import { Overlay, Separator } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { defineMessages, FormattedMessage } from "react-intl";
@@ -13,14 +13,14 @@ interface IDropdownItemProps {
     separator?: "up" | "down";
 }
 
-const DropdownItem: React.FC<IDropdownItemProps> = ({ onClick, labelIntlKey, classNames }) => {
+function DropdownItem({ onClick, labelIntlKey, classNames }: IDropdownItemProps) {
     const cssClasses = cx("gd-list-item gd-menu-item", classNames);
     return (
         <div className={cssClasses} onClick={onClick}>
             <FormattedMessage id={labelIntlKey} />
         </div>
     );
-};
+}
 
 const labelMessages = defineMessages({
     delete: { id: "alerting.alert.menu.delete" },
@@ -29,9 +29,16 @@ const labelMessages = defineMessages({
     edit: { id: "alerting.alert.menu.edit" },
 });
 
-export const AlertDropdown: React.FC<IAlertDropdownProps> = (props) => {
-    const { isReadOnly, paused, alignTo, onClose, onEdit, onPause, onDelete, onResume } = props;
-
+export function AlertDropdown({
+    isReadOnly,
+    paused,
+    alignTo,
+    onClose,
+    onEdit,
+    onPause,
+    onDelete,
+    onResume,
+}: IAlertDropdownProps) {
     const editItem = {
         labelIntlKey: labelMessages.edit.id,
         classNames: "s-edit-alert-button",
@@ -91,4 +98,4 @@ export const AlertDropdown: React.FC<IAlertDropdownProps> = (props) => {
             </div>
         </Overlay>
     );
-};
+}

@@ -1,5 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { Button } from "../../Button/index.js";
 import { LoadingSpinner } from "../../LoadingSpinner/index.js";
 import { SettingWidget } from "../SettingWidget.js";
@@ -30,19 +29,17 @@ export interface ISimpleSettingWidgetProps {
  *
  * @internal
  */
-export const SimpleSettingWidget: React.FC<ISimpleSettingWidgetProps> = (props) => {
-    const {
-        title,
-        currentSettingStatus,
-        titleTooltip,
-        helpLinkText,
-        helpLinkUrl,
-        actionButtonText,
-        isLoading,
-        onSubmit,
-        onHelpLinkClick,
-    } = props;
-
+export function SimpleSettingWidget({
+    title,
+    currentSettingStatus,
+    titleTooltip,
+    helpLinkText,
+    helpLinkUrl,
+    actionButtonText,
+    isLoading,
+    onSubmit,
+    onHelpLinkClick,
+}: ISimpleSettingWidgetProps) {
     return (
         <SettingWidget>
             <Header>
@@ -76,4 +73,4 @@ export const SimpleSettingWidget: React.FC<ISimpleSettingWidgetProps> = (props) 
             </Footer>
         </SettingWidget>
     );
-};
+}

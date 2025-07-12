@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useState, ChangeEvent } from "react";
+import { useCallback, useState, ChangeEvent, KeyboardEvent } from "react";
 import cx from "classnames";
 import moment, { Moment } from "moment/moment.js";
 import { useId, isEnterKey, isArrowKey } from "@gooddata/sdk-ui-kit";
@@ -28,14 +28,14 @@ const stringifyTime = (time: ITime) =>
 const asTime = (time: Moment | undefined): ITime =>
     time === undefined || !time.isValid() ? undefined : { hours: time.hours(), minutes: time.minutes() };
 
-export const TimeInput: React.FC<ITimeInputProps> = ({
+export function TimeInput({
     value,
     inputLabel,
     onChange,
     accessibilityConfig,
     errorText,
     isMobile,
-}) => {
+}: ITimeInputProps) {
     const [stringValue, setStringValue] = useState<string>(stringifyTime(value));
 
     const inputLabelId = useId();
@@ -71,7 +71,7 @@ export const TimeInput: React.FC<ITimeInputProps> = ({
     const onTimeInputBlur = useCallback(() => onSubmit(false), [onSubmit]);
 
     const onTimeInputKeyDown = useCallback(
-        (e: React.KeyboardEvent<HTMLInputElement>) => {
+        (e: KeyboardEvent<HTMLInputElement>) => {
             if (isEnterKey(e)) {
                 onSubmit(true);
             } else if (isArrowKey(e)) {
@@ -115,4 +115,4 @@ export const TimeInput: React.FC<ITimeInputProps> = ({
             <InputErrorMessage descriptionId={inputErrorId} errorText={errorText} />
         </div>
     );
-};
+}

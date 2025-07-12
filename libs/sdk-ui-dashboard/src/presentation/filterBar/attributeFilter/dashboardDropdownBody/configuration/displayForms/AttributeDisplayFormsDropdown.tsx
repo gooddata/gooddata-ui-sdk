@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     areObjRefsEqual,
     IAttributeDisplayFormMetadataObject,
@@ -7,7 +7,6 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import React from "react";
 import { AttributeDisplayFormDropdownButton } from "./AttributeDisplayFormDropdownButton.js";
 import { AttributeDisplayFormDropDownItem } from "./AttributeDisplayFormDropDownItem.js";
 
@@ -30,11 +29,11 @@ const ALIGN_POINTS: IAlignPoint[] = [
     },
 ];
 
-export const AttributeDisplayFormsDropdown: React.FC<IAttributeFilterDisplayFormDropdownProps> = ({
+export function AttributeDisplayFormsDropdown({
     displayForms,
     selectedDisplayForm,
     onChange,
-}) => {
+}: IAttributeFilterDisplayFormDropdownProps) {
     // try matching both uri and id in case the type of ref is different from what is in the ref field
     const selectedDisplayFormTitle = displayForms.find(
         (df) =>
@@ -82,4 +81,4 @@ export const AttributeDisplayFormsDropdown: React.FC<IAttributeFilterDisplayForm
             )}
         />
     );
-};
+}

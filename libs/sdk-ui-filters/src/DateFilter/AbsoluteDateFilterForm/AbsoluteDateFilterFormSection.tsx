@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { isAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -31,7 +31,7 @@ interface IAbsoluteDateFilterFormSection {
     onApplyClick: () => void;
 }
 
-export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSection> = ({
+export function AbsoluteDateFilterFormSection({
     filterOptions,
     selectedFilterOption,
     dateFormat,
@@ -43,7 +43,7 @@ export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSect
     onSelectedFilterOptionChange,
     closeDropdown,
     onApplyClick,
-}) => {
+}: IAbsoluteDateFilterFormSection) {
     const submitForm = useCallback(() => {
         onApplyClick();
         closeDropdown();
@@ -95,4 +95,4 @@ export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSect
             ) : null}
         </>
     );
-};
+}

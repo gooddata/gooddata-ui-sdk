@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useState, useCallback } from "react";
+import { useState, useCallback, KeyboardEvent } from "react";
 import cx from "classnames";
 import { WeekStart } from "@gooddata/sdk-model";
 import { Datepicker } from "../Datepicker/index.js";
@@ -20,7 +20,7 @@ interface IDateTimeProps {
     timeFormat?: string;
     onDateChange: (date: Date | null, valid: boolean) => void;
     closeOnParentScroll?: boolean;
-    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+    onKeyDownSubmit?: (e: KeyboardEvent) => void;
 }
 
 const errorMessages = defineMessages({
@@ -28,20 +28,18 @@ const errorMessages = defineMessages({
     wrongFormat: { id: "recurrence.datetime.wrong.format.error" },
 });
 
-export const DateTime: React.FC<IDateTimeProps> = (props) => {
-    const {
-        label,
-        date,
-        dateFormat,
-        locale,
-        timezone,
-        onDateChange,
-        weekStart,
-        timeFormat,
-        closeOnParentScroll,
-        onKeyDownSubmit,
-    } = props;
-
+export function DateTime({
+    label,
+    date,
+    dateFormat,
+    locale,
+    timezone,
+    onDateChange,
+    weekStart,
+    timeFormat,
+    closeOnParentScroll,
+    onKeyDownSubmit,
+}: IDateTimeProps) {
     const [errorDate, setErrorDate] = useState<string | null>(null);
 
     const errorId = useIdPrefixed("error");
@@ -93,7 +91,7 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
         [date, onDateChange],
     );
 
-    const handleOnDateInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleOnDateInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         validate(e.currentTarget.value);
         onKeyDownSubmit?.(e);
     };
@@ -150,4 +148,4 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
             ) : null}
         </div>
     );
-};
+}

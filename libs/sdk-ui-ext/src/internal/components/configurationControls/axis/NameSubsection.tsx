@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
 import NamePositionControl from "./NamePositionControl.js";
@@ -7,7 +7,7 @@ import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { messages } from "../../../../locales.js";
 
-class NameSubsection extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps> {
+class NameSubsection extends PureComponent<IConfigItemSubsection & WrappedComponentProps> {
     public render() {
         const { axisVisible, axisNameVisible } = this.getControlProperties();
         const { axis, properties, pushData, disabled, configPanelDisabled } = this.props;

@@ -39,10 +39,12 @@
         }
     }
 
-    transition: text-decoration-color 0.1s ease-in-out;
-    text-decoration: underline;
+    & {
+        transition: text-decoration-color 0.1s ease-in-out;
+        text-decoration: underline;
+        text-decoration-color: currentColor;
+    }
 
-    text-decoration-color: currentColor;
     &:hover {
         text-decoration-color: transparent;
     }

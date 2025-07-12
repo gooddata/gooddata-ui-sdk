@@ -1,13 +1,11 @@
-// (C) 2024 GoodData Corporation
-
-import React from "react";
+// (C) 2024-2025 GoodData Corporation
 
 import { IIconProps } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
  */
-export const SendIcon: React.FC<IIconProps> = ({ color = "#6D7680", className, width = 17, height = 15 }) => {
+export function SendIcon({ color = "#6D7680", className, width = 17, height = 15 }: IIconProps) {
     return (
         <svg
             className={className}
@@ -23,4 +21,4 @@ export const SendIcon: React.FC<IIconProps> = ({ color = "#6D7680", className, w
             />
         </svg>
     );
-};
+}

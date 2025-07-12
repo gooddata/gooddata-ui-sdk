@@ -1,5 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 import { ObjRef, IInsight } from "@gooddata/sdk-model";
 import { IntlShape, useIntl } from "react-intl";
@@ -38,12 +37,7 @@ export interface IInsightDropdownProps {
     onSelect: (targetItem: IInsight) => void;
 }
 
-export const InsightDropdown: React.FC<IInsightDropdownProps> = ({
-    insight,
-    insightRef,
-    insightType,
-    onSelect,
-}) => {
+export function InsightDropdown({ insightRef, insightType, onSelect, insight }: IInsightDropdownProps) {
     const intl = useIntl();
     const buttonText = getButtonValue(insight?.insight.title ?? "", intl, insightRef);
 
@@ -81,4 +75,4 @@ export const InsightDropdown: React.FC<IInsightDropdownProps> = ({
             }}
         />
     );
-};
+}

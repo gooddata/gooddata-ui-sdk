@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import { IExecutionConfig, IFilter, IInsight, IInsightWidget, ScreenSize } from "@gooddata/sdk-model";
-import React from "react";
+import { ComponentType } from "react";
 
 import { DescriptionExportData } from "../../export/index.js";
 
@@ -17,7 +17,7 @@ export interface IDescriptionClickTriggerProps {
     onOpen?: () => void;
     useRichText?: boolean;
     useReferences?: boolean;
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
     filters?: IFilter[];
     execConfig?: IExecutionConfig;
 }

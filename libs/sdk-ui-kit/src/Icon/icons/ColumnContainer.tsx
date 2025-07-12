@@ -1,12 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const ColumnContainer: React.FC<IIconProps> = ({ color = "#94A1AD", className, width, height }) => {
+export function ColumnContainer({ color = "#94A1AD", className, width, height }: IIconProps) {
     return (
         <svg
             className={className}
@@ -50,4 +49,4 @@ export const ColumnContainer: React.FC<IIconProps> = ({ color = "#94A1AD", class
             <path d="M14.4 1.7H9.6V0.5H14.4V1.7Z" fill={color} />
         </svg>
     );
-};
+}

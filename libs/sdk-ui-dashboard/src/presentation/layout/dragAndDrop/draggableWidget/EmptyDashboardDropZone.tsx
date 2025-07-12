@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { ReactNode } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ReactNode, RefObject } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -35,7 +35,7 @@ const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     visualizationSwitcherListItem: "visualizationSwitcher",
 };
 
-export const EmptyDashboardDropZone: React.FC = () => {
+export function EmptyDashboardDropZone() {
     const dispatch = useDashboardDispatch();
     const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
 
@@ -117,7 +117,7 @@ export const EmptyDashboardDropZone: React.FC = () => {
         >
             <div
                 className={cx("drag-info-placeholder-inner", { "can-drop": canDrop, "is-over": isOver })}
-                ref={dropRef}
+                ref={dropRef as unknown as RefObject<HTMLDivElement>}
             >
                 <EmptyLayoutDropZoneBodyComponent />
                 <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
@@ -133,4 +133,4 @@ export const EmptyDashboardDropZone: React.FC = () => {
             </div>
         </Col>
     );
-};
+}

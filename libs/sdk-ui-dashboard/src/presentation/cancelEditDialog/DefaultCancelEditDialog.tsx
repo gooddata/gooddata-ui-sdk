@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useCallback } from "react";
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 import { ICancelEditDialogProps } from "./types.js";
@@ -32,7 +32,7 @@ export const useCancelEditDialog = () => {
 /**
  * @internal
  */
-export const DefaultCancelEditDialog: React.FC<ICancelEditDialogProps> = (props) => {
+export function DefaultCancelEditDialog({ onCancel, onSubmit }: ICancelEditDialogProps) {
     const intl = useIntl();
 
     const showCancelEditDialog = useDashboardSelector(selectIsCancelEditModeDialogOpen);
@@ -46,8 +46,8 @@ export const DefaultCancelEditDialog: React.FC<ICancelEditDialogProps> = (props)
             headline={intl.formatMessage({ id: "cancelConfirmationDialog.headline" })}
             submitButtonText={intl.formatMessage({ id: "cancelConfirmationDialog.submitButtonText" })}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
-            onCancel={props.onCancel}
-            onSubmit={props.onSubmit}
+            onCancel={onCancel}
+            onSubmit={onSubmit}
             isPositive={false}
             className="s-dialog s-cancel_confirmation_dialog"
         >
@@ -56,4 +56,4 @@ export const DefaultCancelEditDialog: React.FC<ICancelEditDialogProps> = (props)
             </Typography>
         </ConfirmDialog>
     );
-};
+}

@@ -1,5 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { AttributeDisplayFormDropdown } from "./AttributeDisplayFormDropdown.js";
@@ -19,7 +18,7 @@ export interface IAttributeDisplayFormSelectProps {
  * Component that render Attribute display forms selector as dropdown.
  * @internal
  */
-export const AttributeDisplayFormSelect: React.FC<IAttributeDisplayFormSelectProps> = (props) => {
+export function AttributeDisplayFormSelect(props: IAttributeDisplayFormSelectProps) {
     const { onSelect, alignPoints } = props;
 
     const { displayForms, currentDisplayAsDisplayFormRef } = useAttributeFilterContext();
@@ -32,4 +31,4 @@ export const AttributeDisplayFormSelect: React.FC<IAttributeDisplayFormSelectPro
             onSelect={onSelect}
         />
     );
-};
+}

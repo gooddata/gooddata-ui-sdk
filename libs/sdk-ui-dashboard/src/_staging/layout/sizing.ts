@@ -268,7 +268,7 @@ export function getMaxHeight(
 
     const maxHeights: number[] = layoutItems
         .filter((layoutItem) => isDashboardWidget(layoutItem))
-        .map((layoutItem) => {
+        .map((layoutItem: IDashboardLayoutItem<ExtendedDashboardWidget>) => {
             const widget = layoutItem.widget!;
             if (isVisualizationSwitcherWidget(widget) && widget.visualizations.length > 0) {
                 return Math.min(

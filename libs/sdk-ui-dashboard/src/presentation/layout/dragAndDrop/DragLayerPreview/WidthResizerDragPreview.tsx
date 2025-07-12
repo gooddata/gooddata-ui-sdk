@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React, { useEffect } from "react";
+// (C) 2019-2025 GoodData Corporation
+import { CSSProperties, useEffect } from "react";
 import { XYCoord } from "react-dnd";
 
 import { WidthResizer } from "../Resize/WidthResizer.js";
@@ -110,7 +110,7 @@ function getWidthResizerStyle({
     gridColumnHeightInPx: number;
     dragLayerOffset: XYCoord;
     scrollCorrection: XYCoord;
-}): React.CSSProperties {
+}): CSSProperties {
     return {
         position: "absolute",
         top: `${initialOffset.y - dragLayerOffset.y + scrollCorrection.y}px`,

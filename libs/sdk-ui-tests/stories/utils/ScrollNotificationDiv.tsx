@@ -1,17 +1,17 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { CSSProperties, PureComponent, createRef, ReactNode } from "react";
 
 interface IScrollNotificationDiv {
-    style?: React.CSSProperties;
-    children?: React.ReactNode;
+    style?: CSSProperties;
+    children?: ReactNode;
 }
 
-export class ScrollNotificationDiv extends React.PureComponent<IScrollNotificationDiv> {
+export class ScrollNotificationDiv extends PureComponent<IScrollNotificationDiv> {
     private divRef: any;
 
     constructor(props: IScrollNotificationDiv) {
         super(props);
-        this.divRef = (React as any).createRef();
+        this.divRef = createRef();
     }
 
     public render() {

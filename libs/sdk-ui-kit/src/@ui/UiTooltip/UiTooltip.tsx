@@ -16,7 +16,7 @@ import {
     Middleware,
     safePolygon,
 } from "@floating-ui/react";
-import React, { useRef, useMemo, useState } from "react";
+import { useRef, useMemo, useState, useCallback } from "react";
 import { bem } from "../@utils/bem.js";
 import { UiTooltipProps } from "./types.js";
 import {
@@ -36,7 +36,7 @@ const { b, e } = bem("gd-ui-kit-tooltip");
 /**
  * @internal
  */
-export const UiTooltip: React.FC<UiTooltipProps> = ({
+export function UiTooltip({
     anchor,
     content,
     arrowPlacement = "top",
@@ -48,7 +48,7 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
     offset: offsetProp,
     optimalPlacement = false,
     accessibilityConfig,
-}) => {
+}: UiTooltipProps) {
     const [isOpen, setIsOpen] = useState(false);
     const arrowRef = useRef<SVGSVGElement>(null);
     const themeFromContext = useTheme();
@@ -117,7 +117,7 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
         enabled: triggerBy.includes("click"),
     });
 
-    const handleClose = React.useCallback(() => {
+    const handleClose = useCallback(() => {
         setIsOpen(false);
     }, []);
 
@@ -173,4 +173,4 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
             ) : null}
         </>
     );
-};
+}

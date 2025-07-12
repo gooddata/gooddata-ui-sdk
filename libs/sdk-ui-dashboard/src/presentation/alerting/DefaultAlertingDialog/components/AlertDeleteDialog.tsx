@@ -1,14 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export const AlertDeleteDialog: React.FC<{ title: string; onDelete: () => void; onCancel: () => void }> = ({
+export function AlertDeleteDialog({
     title,
     onDelete,
     onCancel,
-}) => {
+}: {
+    title: string;
+    onDelete: () => void;
+    onCancel: () => void;
+}) {
     const intl = useIntl();
 
     return (
@@ -31,4 +35,4 @@ export const AlertDeleteDialog: React.FC<{ title: string; onDelete: () => void; 
             />
         </ConfirmDialog>
     );
-};
+}

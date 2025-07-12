@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 import { useDashboardSelector, selectInsightsMap } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../../presentation/dashboardContexts/index.js";
@@ -22,7 +21,7 @@ export interface IAllVisualizationsDashInsightsProps {
     exportData?: WidgetExportDataAttributes;
 }
 
-export const AllVisualizationsDashInsights: React.FC<IAllVisualizationsDashInsightsProps> = ({
+export function AllVisualizationsDashInsights({
     visualizations,
     onError,
     onExportReady,
@@ -33,7 +32,7 @@ export const AllVisualizationsDashInsights: React.FC<IAllVisualizationsDashInsig
     clientWidth,
     visualizationClassName,
     exportData,
-}) => {
+}: IAllVisualizationsDashInsightsProps) {
     const insights = useDashboardSelector(selectInsightsMap);
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
 
@@ -71,4 +70,4 @@ export const AllVisualizationsDashInsights: React.FC<IAllVisualizationsDashInsig
                 })}
         </>
     );
-};
+}

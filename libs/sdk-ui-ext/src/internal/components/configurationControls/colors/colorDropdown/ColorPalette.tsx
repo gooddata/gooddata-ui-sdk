@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent, ReactNode } from "react";
 import cx from "classnames";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import { IColor, IColorPaletteItem, IColorPalette } from "@gooddata/sdk-model";
@@ -12,7 +12,7 @@ export interface IColorPaletteProps {
     onColorSelected: (color: IColor) => void;
 }
 
-export default class ColorPalette extends React.PureComponent<IColorPaletteProps> {
+export default class ColorPalette extends PureComponent<IColorPaletteProps> {
     public render() {
         return (
             <div aria-label="Color palette" className={this.getClassNames()}>
@@ -32,7 +32,7 @@ export default class ColorPalette extends React.PureComponent<IColorPaletteProps
         );
     }
 
-    private renderItems(): React.ReactNode {
+    private renderItems(): ReactNode {
         return this.props.colorPalette.map((item: IColorPaletteItem) => {
             return (
                 <ColorPaletteItem

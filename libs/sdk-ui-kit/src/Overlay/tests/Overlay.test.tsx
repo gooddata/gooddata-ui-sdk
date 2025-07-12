@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, forwardRef, createRef } from "react";
-// eslint-disable-next-line react/no-deprecated
-import ReactDOM, { unmountComponentAtNode } from "react-dom";
-import { render, screen } from "@testing-library/react";
+import { Component, forwardRef, createRef, RefObject } from "react";
+import { flushSync } from "react-dom";
+import { createRoot, Root } from "react-dom/client";
+import { render, screen, waitFor, act } from "@testing-library/react";
 
 import { Overlay } from "../Overlay.js";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
@@ -66,6 +66,7 @@ function createEvent(options = {}) {
 
 describe("Overlay", () => {
     let div: HTMLDivElement;
+    let root: Root | null = null;
 
     beforeEach(() => {
         div = document.createElement("div");
@@ -75,14 +76,27 @@ describe("Overlay", () => {
     });
 
     afterEach(() => {
+        if (root) {
+            root.unmount();
+            root = null;
+        }
         document.body.innerHTML = "";
     });
 
-    function renderOverlaySetup(where: HTMLDivElement, props = {}): React.RefObject<unknown> {
+    async function renderOverlaySetup(where: HTMLDivElement, props = {}): Promise<RefObject<unknown>> {
         const ref = createRef();
 
-        // eslint-disable-next-line react/no-deprecated
-        ReactDOM.render(<ComposedOverlay {...props} ref={ref} />, where);
+        await act(async () => {
+            root = createRoot(where);
+            flushSync(() => {
+                root!.render(<ComposedOverlay {...props} ref={ref} />);
+            });
+        });
+
+        // Wait for component to be fully mounted and ref to be set
+        await waitFor(() => {
+            expect(ref.current).toBeTruthy();
+        });
 
         return ref;
     }
@@ -126,7 +140,7 @@ describe("Overlay", () => {
                 return clickedElement;
             }
 
-            it("should call onClose method on body click", () => {
+            it("should call onClose method on body click", async () => {
                 const props = {
                     overlay: {
                         closeOnOutsideClick: true,
@@ -134,20 +148,27 @@ describe("Overlay", () => {
                     },
                 };
 
-                const overlay: any = renderOverlaySetup(div, props).current;
-                overlay.align();
-                overlay.closeOnOutsideClick(
-                    createEvent({
-                        target: document.body,
-                    }),
-                );
+                const ref = await renderOverlaySetup(div, props);
+                const overlay: any = ref.current;
 
-                unmountComponentAtNode(div);
+                await act(async () => {
+                    overlay.align();
+                    // Wait for alignment to be set
+                    await new Promise((resolve) => setTimeout(resolve, 20));
+                });
+
+                act(() => {
+                    overlay.closeOnOutsideClick(
+                        createEvent({
+                            target: document.body,
+                        }),
+                    );
+                });
 
                 expect(props.overlay.onClose).toHaveBeenCalledTimes(1);
             });
 
-            it("should not call onClose when clicking on ignored element by ref", () => {
+            it("should not call onClose when clicking on ignored element by ref", async () => {
                 const clickedElement = renderClickedElement();
                 const props = {
                     overlay: {
@@ -157,21 +178,23 @@ describe("Overlay", () => {
                     },
                 };
 
-                const overlay: any = renderOverlaySetup(div, props).current;
+                const ref = await renderOverlaySetup(div, props);
+                const overlay: any = ref.current;
 
-                overlay.closeOnOutsideClick(
-                    createEvent({
-                        target: clickedElement,
-                    }),
-                );
+                act(() => {
+                    overlay.closeOnOutsideClick(
+                        createEvent({
+                            target: clickedElement,
+                        }),
+                    );
+                });
 
-                unmountComponentAtNode(div);
                 clickedElement.remove();
 
                 expect(props.overlay.onClose).not.toHaveBeenCalled();
             });
 
-            it("should not call onClose when clicking on ignored element by class", () => {
+            it("should not call onClose when clicking on ignored element by class", async () => {
                 const clickedElement = renderClickedElement("ignored-element");
                 const props = {
                     overlay: {
@@ -181,21 +204,23 @@ describe("Overlay", () => {
                     },
                 };
 
-                const overlay: any = renderOverlaySetup(div, props).current;
+                const ref = await renderOverlaySetup(div, props);
+                const overlay: any = ref.current;
 
-                overlay.closeOnOutsideClick(
-                    createEvent({
-                        target: clickedElement,
-                    }),
-                );
+                act(() => {
+                    overlay.closeOnOutsideClick(
+                        createEvent({
+                            target: clickedElement,
+                        }),
+                    );
+                });
 
-                unmountComponentAtNode(div);
                 clickedElement.remove();
 
                 expect(props.overlay.onClose).not.toHaveBeenCalled();
             });
 
-            it("should call shouldCloseOnClick when clicked element is not ignored element", () => {
+            it("should call shouldCloseOnClick when clicked element is not ignored element", async () => {
                 const clickedElement = renderClickedElement();
                 const shouldCloseOnClick = vi.fn(() => false);
                 const props = {
@@ -206,15 +231,23 @@ describe("Overlay", () => {
                     },
                 };
 
-                const overlay: any = renderOverlaySetup(div, props).current;
-                overlay.align();
+                const ref = await renderOverlaySetup(div, props);
+                const overlay: any = ref.current;
+
                 const event = createEvent({
                     target: clickedElement,
                 });
 
-                overlay.closeOnOutsideClick(event);
+                await act(async () => {
+                    overlay.align();
+                    // Wait for alignment to be set
+                    await new Promise((resolve) => setTimeout(resolve, 20));
+                });
 
-                unmountComponentAtNode(div);
+                act(() => {
+                    overlay.closeOnOutsideClick(event);
+                });
+
                 clickedElement.remove();
 
                 expect(props.overlay.onClose).not.toHaveBeenCalled();
@@ -222,7 +255,7 @@ describe("Overlay", () => {
                 expect(shouldCloseOnClick).toHaveBeenCalledWith(event);
             });
 
-            it("should add overlay element to the list of ignored elements", () => {
+            it("should add overlay element to the list of ignored elements", async () => {
                 const props = {
                     overlay: {
                         closeOnOutsideClick: true,
@@ -230,17 +263,18 @@ describe("Overlay", () => {
                     },
                 };
 
-                const overlay: any = renderOverlaySetup(div, props).current;
-                const target = overlay.overlayRef.current;
+                const ref = await renderOverlaySetup(div, props);
+                const overlay: any = ref.current;
 
-                overlay.closeOnOutsideClick(createEvent({ target }));
-
-                unmountComponentAtNode(div);
+                act(() => {
+                    const target = overlay.overlayRef.current;
+                    overlay.closeOnOutsideClick(createEvent({ target }));
+                });
 
                 expect(props.overlay.onClose).not.toHaveBeenCalled();
             });
 
-            it('should call onClose when clicking on a "parent" overlay', () => {
+            it('should call onClose when clicking on a "parent" overlay', async () => {
                 const clickedElement = renderClickedElement("overlay-wrapper");
                 const props = {
                     overlay: {
@@ -249,21 +283,29 @@ describe("Overlay", () => {
                     },
                 };
 
-                const overlay: any = renderOverlaySetup(div, props).current;
-                overlay.align();
-                overlay.closeOnOutsideClick(
-                    createEvent({
-                        target: clickedElement,
-                    }),
-                );
+                const ref = await renderOverlaySetup(div, props);
+                const overlay: any = ref.current;
 
-                unmountComponentAtNode(div);
+                await act(async () => {
+                    overlay.align();
+                    // Wait for alignment to be set
+                    await new Promise((resolve) => setTimeout(resolve, 20));
+                });
+
+                act(() => {
+                    overlay.closeOnOutsideClick(
+                        createEvent({
+                            target: clickedElement,
+                        }),
+                    );
+                });
+
                 clickedElement.remove();
 
                 expect(props.overlay.onClose).toHaveBeenCalledTimes(1);
             });
 
-            it('should not call onClose when clicking on a "parent" overlay when overlay is not aligned', () => {
+            it('should not call onClose when clicking on a "parent" overlay when overlay is not aligned', async () => {
                 const clickedElement = renderClickedElement("overlay-wrapper");
                 const props = {
                     overlay: {
@@ -272,14 +314,17 @@ describe("Overlay", () => {
                     },
                 };
 
-                const overlay: any = renderOverlaySetup(div, props).current;
-                overlay.closeOnOutsideClick(
-                    createEvent({
-                        target: clickedElement,
-                    }),
-                );
+                const ref = await renderOverlaySetup(div, props);
+                const overlay: any = ref.current;
 
-                unmountComponentAtNode(div);
+                act(() => {
+                    overlay.closeOnOutsideClick(
+                        createEvent({
+                            target: clickedElement,
+                        }),
+                    );
+                });
+
                 clickedElement.remove();
 
                 expect(props.overlay.onClose).toHaveBeenCalledTimes(0);
@@ -306,17 +351,19 @@ describe("Overlay", () => {
         });
 
         describe("call handler on align", () => {
-            it("should call onAlign method on align", () => {
+            it("should call onAlign method on align", async () => {
                 const onAlignHandler = vi.fn();
 
-                const overlay: any = renderOverlaySetup(div, {
+                const ref = await renderOverlaySetup(div, {
                     overlay: {
                         onAlign: onAlignHandler,
                     },
-                }).current;
-                overlay.align();
+                });
+                const overlay: any = ref.current;
 
-                unmountComponentAtNode(div);
+                act(() => {
+                    overlay.align();
+                });
 
                 expect(onAlignHandler).toHaveBeenCalled();
             });

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { createRef } from "react";
+import { Component, createRef, MouseEvent } from "react";
 import ReactMeasure, { MeasuredComponentProps } from "react-measure";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -39,7 +39,7 @@ export interface IHeadlineVisualizationProps {
 /**
  * The React component that renders the Headline visualisation.
  */
-export default class LegacyHeadline extends React.Component<IHeadlineVisualizationProps> {
+export default class LegacyHeadline extends Component<IHeadlineVisualizationProps> {
     public static defaultProps: Pick<
         IHeadlineVisualizationProps,
         "onDrill" | "onAfterRender" | "config" | "disableDrillUnderline"
@@ -137,7 +137,7 @@ export default class LegacyHeadline extends React.Component<IHeadlineVisualizati
         }
     }
 
-    private handleClickOnPrimaryItem = (event: React.MouseEvent<EventTarget>) => {
+    private handleClickOnPrimaryItem = (event: MouseEvent<EventTarget>) => {
         const {
             data: { primaryItem },
         } = this.props;
@@ -145,7 +145,7 @@ export default class LegacyHeadline extends React.Component<IHeadlineVisualizati
         this.fireDrillEvent(primaryItem, "primaryValue", event.target);
     };
 
-    private handleClickOnSecondaryItem = (event: React.MouseEvent<EventTarget>) => {
+    private handleClickOnSecondaryItem = (event: MouseEvent<EventTarget>) => {
         const {
             data: { secondaryItem },
         } = this.props;

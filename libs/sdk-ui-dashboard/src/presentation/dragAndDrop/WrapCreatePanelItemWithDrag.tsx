@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
+import { RefObject } from "react";
 import cx from "classnames";
 
 import { useDashboardDrag } from "./useDashboardDrag.js";
@@ -12,7 +12,7 @@ import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandl
 /**
  * @internal
  */
-export const WrapCreatePanelItemWithDrag: React.FC<IWrapCreatePanelItemWithDragProps> = (props) => {
+export function WrapCreatePanelItemWithDrag(props: IWrapCreatePanelItemWithDragProps) {
     const { canDrag, dragItem, hideDefaultPreview, onDragEnd, onDragStart, children } =
         useWrapCreatePanelItemWithDrag(props);
 
@@ -30,11 +30,14 @@ export const WrapCreatePanelItemWithDrag: React.FC<IWrapCreatePanelItemWithDragP
     );
 
     return (
-        <div ref={dragRef} className={cx({ "is-dragging": isDragging })}>
+        <div
+            ref={dragRef as unknown as RefObject<HTMLDivElement>}
+            className={cx({ "is-dragging": isDragging })}
+        >
             {children}
         </div>
     );
-};
+}
 
 /**
  * @internal

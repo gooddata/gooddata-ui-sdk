@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 import { act } from "react-dom/test-utils";
 import { render, RenderResult } from "@testing-library/react";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -13,7 +13,7 @@ import { withTheme } from "../Context.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { isDarkTheme } from "../isDarkTheme.js";
 
-const renderComponent = async (component: React.ReactElement): Promise<RenderResult> => {
+const renderComponent = async (component: ReactElement): Promise<RenderResult> => {
     let wrappedComponent;
     await act(async () => {
         wrappedComponent = render(component);

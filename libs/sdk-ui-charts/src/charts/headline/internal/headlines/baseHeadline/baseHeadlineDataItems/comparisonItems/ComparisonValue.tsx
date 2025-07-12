@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { CSSProperties } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { CSSProperties } from "react";
 import cx from "classnames";
 
 import { IBaseHeadlineValueItem } from "../../../../interfaces/BaseHeadlines.js";
@@ -11,7 +11,7 @@ interface IComparisonValueProps {
     isSubItem?: boolean;
 }
 
-const ComparisonValue: React.FC<IComparisonValueProps> = ({ dataItem, comparisonStyle, isSubItem }) => {
+export default function ComparisonValue({ dataItem, comparisonStyle, isSubItem }: IComparisonValueProps) {
     const { formattedItem } = useBaseHeadlineDataItem(dataItem);
     const style: CSSProperties = {
         ...(formattedItem?.cssStyle || {}),
@@ -31,6 +31,4 @@ const ComparisonValue: React.FC<IComparisonValueProps> = ({ dataItem, comparison
             {isSubItem ? `(${formattedItem?.value})` : formattedItem?.value}
         </div>
     );
-};
-
-export default ComparisonValue;
+}

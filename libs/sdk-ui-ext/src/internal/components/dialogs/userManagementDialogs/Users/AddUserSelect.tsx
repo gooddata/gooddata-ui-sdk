@@ -1,5 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
-import React, { KeyboardEventHandler, useCallback, useMemo } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { KeyboardEventHandler, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { OnChangeValue } from "react-select";
 import { useBackendStrict } from "@gooddata/sdk-ui";
@@ -28,7 +28,7 @@ export interface IAddUserSelectProps {
     grantedUsers: IUserMember[];
 }
 
-export const AddUserSelect: React.FC<IAddUserSelectProps> = ({ addedUsers, grantedUsers, onSelect }) => {
+export function AddUserSelect({ addedUsers, grantedUsers, onSelect }: IAddUserSelectProps) {
     const intl = useIntl();
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
@@ -110,4 +110,4 @@ export const AddUserSelect: React.FC<IAddUserSelectProps> = ({ addedUsers, grant
             />
         </div>
     );
-};
+}

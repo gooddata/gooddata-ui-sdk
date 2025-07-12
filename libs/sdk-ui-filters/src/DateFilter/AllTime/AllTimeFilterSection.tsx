@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
 import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
 import { AllTimeFilterItem } from "./AllTimeFilterItem.js";
 
@@ -12,12 +11,12 @@ interface IAllTimeFilterSectionProps {
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 }
 
-export const AllTimeFilterSection: React.FC<IAllTimeFilterSectionProps> = ({
+export function AllTimeFilterSection({
     filterOptions,
     selectedFilterOption,
     isMobile,
     onSelectedFilterOptionChange,
-}) => {
+}: IAllTimeFilterSectionProps) {
     if (!filterOptions.allTime) {
         return null;
     }
@@ -30,4 +29,4 @@ export const AllTimeFilterSection: React.FC<IAllTimeFilterSectionProps> = ({
             className={isMobile ? ITEM_CLASS_MOBILE : undefined}
         />
     );
-};
+}

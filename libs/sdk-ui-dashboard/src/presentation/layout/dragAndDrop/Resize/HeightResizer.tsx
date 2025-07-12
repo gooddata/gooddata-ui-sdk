@@ -1,10 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import cx from "classnames";
 import { ResizerProps } from "./types.js";
 
-export const HeightResizer: React.FC<ResizerProps> = (props) => {
-    const { status } = props;
+export function HeightResizer({ status }: ResizerProps) {
     const boxClassName = cx("s-gd-fluidlayout-height-resizer", "gd-fluidlayout-height-resizer", status);
     const lineClassName = cx("height-resizer-line", status);
     return (
@@ -12,4 +10,4 @@ export const HeightResizer: React.FC<ResizerProps> = (props) => {
             <div className={lineClassName} />
         </div>
     );
-};
+}

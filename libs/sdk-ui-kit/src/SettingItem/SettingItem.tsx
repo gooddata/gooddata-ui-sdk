@@ -1,6 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactElement } from "react";
 import cx from "classnames";
 
 import { ActionType, ISettingItem } from "./typings.js";
@@ -17,7 +17,7 @@ const getActionElement = (
     value: string | boolean,
     isDisableAction: boolean,
     onActionCallback: () => void,
-): JSX.Element => {
+): ReactElement => {
     switch (actionType) {
         case "LinkButton":
             return (
@@ -56,7 +56,7 @@ const getActionElement = (
 /**
  * @internal
  */
-export const SettingItem: React.FC<ISettingItem> = ({
+export function SettingItem({
     className,
     title,
     titleTooltipText,
@@ -72,7 +72,7 @@ export const SettingItem: React.FC<ISettingItem> = ({
     onAction,
     renderSubtitle,
     titleTooltipHideDelay = 0,
-}) => {
+}: ISettingItem) {
     return (
         <div className={cx(className, "gd-setting-item-container", { divider: hasDivider })}>
             <div className="gd-setting-item-title">
@@ -115,4 +115,4 @@ export const SettingItem: React.FC<ISettingItem> = ({
             </div>
         </div>
     );
-};
+}

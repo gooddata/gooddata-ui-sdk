@@ -1,12 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const LegendMenu: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function LegendMenu({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={className}
@@ -26,4 +25,4 @@ export const LegendMenu: React.FC<IIconProps> = ({ color, className, width, heig
             </g>
         </svg>
     );
-};
+}

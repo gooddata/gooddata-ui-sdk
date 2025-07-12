@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { waitFor, render, screen, fireEvent } from "@testing-library/react";
 import { Button } from "../Button.js";
 import { IButtonProps } from "../typings.js";
@@ -14,7 +13,7 @@ describe("ReactButton", () => {
         it("should call onClick callback on click", async () => {
             const onClick = vi.fn();
             renderButton({
-                type: "primary",
+                variant: "primary",
                 disabled: false,
                 onClick,
             });
@@ -28,7 +27,7 @@ describe("ReactButton", () => {
         it("should not call onClick callback on click when disabled", async () => {
             const onClick = vi.fn();
             renderButton({
-                type: "primary",
+                variant: "primary",
                 disabled: true,
                 onClick,
             });

@@ -2,7 +2,7 @@
 import { DateGranularity, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Button, Dropdown, SingleSelectListItem, OverlayPositionType, UiListbox } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AlertMetric, AlertMetricComparator, AlertMetricComparatorType } from "../../types.js";

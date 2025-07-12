@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { createContext, useContext, useEffect, useState, useMemo } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { createContext, useContext, useEffect, useState, useMemo, ReactNode } from "react";
 import noop from "lodash/noop.js";
 import isEmpty from "lodash/isEmpty.js";
 import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
@@ -27,7 +27,7 @@ interface IAttributeHierarchyDialogProviderProps {
     onDeleteSuccess?: EmptyParamCallback;
     onAddAttributeClicked?: () => void;
     onCreateHierarchyClicked?: () => void;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export interface IAttributeHierarchyDialogProviderData {
@@ -71,7 +71,7 @@ export const AttributeHierarchyDialogProviderContext = createContext<IAttributeH
 export const useAttributeHierarchyDialog = () =>
     useContext<IAttributeHierarchyDialogProviderData>(AttributeHierarchyDialogProviderContext);
 
-export const AttributeHierarchyDialogProvider: React.FC<IAttributeHierarchyDialogProviderProps> = ({
+export function AttributeHierarchyDialogProvider({
     initialAttributeRef,
     editingAttributeHierarchy,
     children,
@@ -80,7 +80,7 @@ export const AttributeHierarchyDialogProvider: React.FC<IAttributeHierarchyDialo
     onDeleteSuccess,
     onAddAttributeClicked,
     onCreateHierarchyClicked,
-}) => {
+}: IAttributeHierarchyDialogProviderProps) {
     const initialTitle = editingAttributeHierarchy?.attributeHierarchy?.title ?? "";
     const [isLoading, setLoading] = useState<boolean>(true);
     const [title, setTitle] = useState(initialTitle);
@@ -182,4 +182,4 @@ export const AttributeHierarchyDialogProvider: React.FC<IAttributeHierarchyDialo
             {children}
         </AttributeHierarchyDialogProviderContext.Provider>
     );
-};
+}

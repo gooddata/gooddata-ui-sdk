@@ -1,5 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { IRichTextDraggingComponentProps } from "../../componentDefinition/types.js";
 import { AddRichTextWidgetButton } from "./AddRichTextWidgetButton.js";
 

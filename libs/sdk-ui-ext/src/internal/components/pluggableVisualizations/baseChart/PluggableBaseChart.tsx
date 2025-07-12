@@ -18,7 +18,6 @@ import {
     updateConfigWithSettings,
     updateForecastWithSettings,
 } from "@gooddata/sdk-ui-charts";
-import React from "react";
 import compact from "lodash/compact.js";
 
 import { BUCKETS } from "../../../constants/bucket.js";

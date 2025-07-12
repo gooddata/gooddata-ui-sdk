@@ -8,10 +8,10 @@ import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
-import * as React_2 from 'react';
+import { JSX } from 'react/jsx-runtime';
 
 // @beta
-export const SemanticSearch: React_2.FC<SemanticSearchProps>;
+export function SemanticSearch({ locale, ...coreProps }: SemanticSearchProps): JSX.Element;
 
 // @beta
 export type SemanticSearchHookInput = {

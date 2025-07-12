@@ -1,6 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import React from "react";
 import { areObjRefsEqual, ObjRef, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
@@ -26,11 +25,11 @@ export interface IAttributeDisplayFormDropdownProps {
     onChange: (displayForm: ObjRef) => void;
 }
 
-export const DisplayFormDropdown: React.FC<IAttributeDisplayFormDropdownProps> = ({
+export function DisplayFormDropdown({
     displayForms,
     selectedDisplayForm,
     onChange,
-}) => {
+}: IAttributeDisplayFormDropdownProps) {
     const getButtonLabel = () =>
         displayForms.find((displayForm) => {
             return areObjRefsEqual(displayForm.ref, selectedDisplayForm);
@@ -73,4 +72,4 @@ export const DisplayFormDropdown: React.FC<IAttributeDisplayFormDropdownProps> =
             )}
         />
     );
-};
+}

@@ -1,5 +1,13 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { Component, ReactNode, RefObject } from "react";
+// (C) 2007-2025 GoodData Corporation
+import {
+    Component,
+    ReactNode,
+    RefObject,
+    createRef,
+    ChangeEvent,
+    KeyboardEvent,
+    MouseEvent as ReactMouseEvent,
+} from "react";
 import identity from "lodash/identity.js";
 
 import { ITextAreaWithSubmitProps, ITextAreaWithSubmitState } from "./typings.js";
@@ -32,8 +40,8 @@ export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITex
             isEditing: false,
         };
 
-        this.root = React.createRef();
-        this.textarea = React.createRef();
+        this.root = createRef();
+        this.textarea = createRef();
     }
 
     componentDidMount(): void {
@@ -69,11 +77,11 @@ export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITex
         }
     };
 
-    onSelectStart(e: React.MouseEvent): void {
+    onSelectStart(e: MouseEvent): void {
         e.stopPropagation();
     }
 
-    onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+    onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
         const isSubmit = e.key === "Enter" && !e.shiftKey;
         const isCancel = e.key === "Escape";
 
@@ -125,14 +133,14 @@ export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITex
         this.removeListeners();
     };
 
-    onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    onChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
         const { value } = e.target;
         this.setState({ value }, () => {
             this.props.onChange(value);
         });
     };
 
-    edit = (_e?: React.MouseEvent<HTMLDivElement>): void => {
+    edit = (_e?: ReactMouseEvent<HTMLDivElement>): void => {
         if (!this.state.isEditing) {
             this.setState(
                 {

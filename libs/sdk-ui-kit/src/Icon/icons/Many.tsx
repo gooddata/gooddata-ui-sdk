@@ -1,13 +1,11 @@
-// (C) 2022 GoodData Corporation
-
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Many: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function Many({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={className}
@@ -23,4 +21,4 @@ export const Many: React.FC<IIconProps> = ({ color, className, width, height }) 
             <path d="M15 9H18.4118C18.7366 9 19 8.72448 19 8.38462V1.61538C19 1.27552 18.7366 1 18.4118 1H9.58824C9.26336 1 9 1.27552 9 1.61538V4" />
         </svg>
     );
-};
+}

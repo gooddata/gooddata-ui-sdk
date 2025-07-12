@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cx from "classnames";
-import React from "react";
+import { Component } from "react";
 import { IntlShape } from "react-intl";
 import {
     IExecutionDefinition,
@@ -71,7 +71,7 @@ const MenuToggler = () => {
     );
 };
 
-export default class AggregationsMenu extends React.Component<IAggregationsMenuProps> {
+export default class AggregationsMenu extends Component<IAggregationsMenuProps> {
     public render() {
         const { intl, colId, getTableDescriptor, isMenuOpened, onMenuOpenedChange, showColumnsSubMenu } =
             this.props;

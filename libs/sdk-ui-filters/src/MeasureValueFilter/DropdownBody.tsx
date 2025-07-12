@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
@@ -43,7 +43,7 @@ interface IDropdownBodyState {
 
 const DefaultValuePrecision = 6;
 
-class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropdownBodyState> {
+class DropdownBodyWrapped extends PureComponent<IDropdownBodyProps, IDropdownBodyState> {
     constructor(props: IDropdownBodyProps) {
         super(props);
 
@@ -283,7 +283,7 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
 
 export const DropdownBodyWithIntl = injectIntl(DropdownBodyWrapped);
 
-export class DropdownBody extends React.PureComponent<IDropdownBodyOwnProps> {
+export class DropdownBody extends PureComponent<IDropdownBodyOwnProps> {
     public render() {
         return (
             <IntlWrapper locale={this.props.locale}>

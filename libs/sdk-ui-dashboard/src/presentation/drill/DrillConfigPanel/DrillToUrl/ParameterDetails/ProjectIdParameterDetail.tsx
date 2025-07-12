@@ -1,5 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 
 import { ParameterDetail } from "./ParameterDetail.js";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -9,7 +8,7 @@ interface IdentifierDetailProps {
     title: string;
 }
 
-export const ProjectIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title }) => {
+export function ProjectIdParameterDetail({ title }: IdentifierDetailProps) {
     const value = useWorkspaceStrict();
     const intl = useIntl();
 
@@ -23,4 +22,4 @@ export const ProjectIdParameterDetail: React.FC<IdentifierDetailProps> = ({ titl
             values={[value]}
         />
     );
-};
+}

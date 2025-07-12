@@ -1,11 +1,10 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { useDashboardSelector, selectDashboardLoading } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import { IDashboardProps } from "../types.js";
 import { DashboardInner } from "./DashboardInner.js";
 
-export const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+export function DashboardLoading(props: IDashboardProps) {
     const { loading, error, result } = useDashboardSelector(selectDashboardLoading);
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
 
@@ -18,4 +17,4 @@ export const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardPro
     }
 
     return <DashboardInner {...props} />;
-};
+}

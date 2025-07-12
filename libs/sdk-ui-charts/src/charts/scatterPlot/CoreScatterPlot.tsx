@@ -1,9 +1,9 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { BaseChart, IBaseChartProps } from "../_base/BaseChart.js";
 import { ICoreChartProps } from "../../interfaces/index.js";
 
-export class CoreScatterPlot extends React.PureComponent<ICoreChartProps, null> {
+export class CoreScatterPlot extends PureComponent<ICoreChartProps, null> {
     public render() {
         const { config } = this.props;
         const clusteringConfig: Partial<IBaseChartProps> = config?.clustering

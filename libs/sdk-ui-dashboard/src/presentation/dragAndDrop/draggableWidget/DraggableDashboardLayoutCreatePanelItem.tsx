@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 
 import { CustomCreatePanelItemComponent } from "../../componentDefinition/index.js";
@@ -29,9 +28,10 @@ const getDragItem = (): DraggableItem => {
 /**
  * @internal
  */
-export const DraggableDashboardLayoutCreatePanelItem: React.FC<
-    IDraggableDashboardLayoutCreatePanelItemProps
-> = ({ CreatePanelItemComponent, WrapCreatePanelItemWithDragComponent }) => {
+export function DraggableDashboardLayoutCreatePanelItem({
+    CreatePanelItemComponent,
+    WrapCreatePanelItemWithDragComponent,
+}: IDraggableDashboardLayoutCreatePanelItemProps) {
     const dragItem = getDragItem();
     const { deselectWidgets } = useWidgetSelection();
 
@@ -44,4 +44,4 @@ export const DraggableDashboardLayoutCreatePanelItem: React.FC<
             onDragStart={() => deselectWidgets()}
         />
     );
-};
+}

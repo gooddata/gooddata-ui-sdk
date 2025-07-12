@@ -1,0 +1,19 @@
+diff --git a/dist/web/index.d.ts b/dist/web/index.d.ts
+index 2e1b61f1bfa5165959b4b146330f393891cd17e9..713b8c8411d61aeaebe8e42aead3a376a4ed56cd 100644
+--- a/dist/web/index.d.ts
++++ b/dist/web/index.d.ts
+@@ -1,4 +1,4 @@
+-import { SVGAttributes } from 'react';
++import { ReactElement, SVGAttributes } from 'react';
+ import ContentLoader from './ContentLoader';
+ export interface IContentLoaderProps extends SVGAttributes<SVGElement> {
+     animate?: boolean;
+@@ -12,7 +12,7 @@ export interface IContentLoaderProps extends SVGAttributes<SVGElement> {
+     speed?: number;
+     title?: string;
+     uniqueKey?: string;
+-    beforeMask?: JSX.Element;
++    beforeMask?: ReactElement;
+ }
+ export { default as Facebook } from './presets/FacebookStyle';
+ export { default as Instagram } from './presets/InstagramStyle';

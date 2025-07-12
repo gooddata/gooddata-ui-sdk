@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { ReactNode, Component, createRef } from "react";
 import sumBy from "lodash/sumBy.js";
 
 /**
@@ -12,14 +12,14 @@ export interface IScreenshotReadyWrapperProps {
     resolver: ReadyResolverFunction;
     interval?: number;
     className?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export interface IScreenshotReadyWrapperState {
     ready: boolean;
 }
 
-export class ScreenshotReadyWrapper extends React.Component<
+export class ScreenshotReadyWrapper extends Component<
     IScreenshotReadyWrapperProps,
     IScreenshotReadyWrapperState
 > {
@@ -37,7 +37,7 @@ export class ScreenshotReadyWrapper extends React.Component<
         super(props);
 
         this.state = { ready: false };
-        this.componentRef = React.createRef();
+        this.componentRef = createRef();
     }
 
     public componentDidMount() {
