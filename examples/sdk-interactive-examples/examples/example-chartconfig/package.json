@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-chartconfig",
-    "version": "10.34.0-alpha.15",
+    "version": "10.34.0-alpha.16",
     "title": "Chart config manipulation",
     "description": "This interactive example demonstrates how to manipulate the chart config.",
     "author": "GoodData",
