@@ -16,41 +16,6 @@ We develop GoodData.UI with the following javascript libraries in mind:
 -   TypeScript >= 5.0.2
 -   Node ^16.20.0 LTS
 
-## Supported Web Browsers
-
-GoodData is tested against and supports the following desktop browsers:
-
--   Microsoft Windows 10 and newer
--   Google Chrome (latest stable version)
--   Firefox (latest stable version)
--   Microsoft Edge (latest stable version; Chromium-based only)
-
-MacOS 10.12 and newer
-
--   Google Chrome (latest stable version)
--   Safari (latest stable version)
-
-For best results, use the latest version of Google Chrome.
-
-{{% alert color="warning" title="Server-side rendering" %}}
-Server-side rendering is not supported.
-{{% /alert %}}
-
-### Mobile Web Browsers
-
-You can view dashboards through the following mobile browser:
-
-Android 5 and newer
-
--   Google Chrome (latest stable version)
-
-iOS 10 and newer
-
--   Google Chrome (latest stable version)
--   Safari (latest stable version)
-
-Dashboard viewing only. Other functions of GoodData are not currently supported. Some functions may work now but have not been thoroughly tested yet.
-
 ## Supported Versions
 
 Different versions of GoodData.UI go through the life cycle phases and they recieve a different level of support depending on what stage of their life cycle they're in.
