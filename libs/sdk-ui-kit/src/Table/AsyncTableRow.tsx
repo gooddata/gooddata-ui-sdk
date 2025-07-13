@@ -63,16 +63,20 @@ const useRenderCellContent = <T extends { id: string }>() => {
 
     const renderMenuIcon = useCallback(
         (renderMenu: (item: T) => React.ReactNode, item: T) => {
+            const label = intl.formatMessage(messages.moreActions);
             return (
                 <Dropdown
                     renderButton={({ toggleDropdown, isOpen }) => (
                         <UiIconButton
                             size="xlarge"
                             icon="ellipsis"
-                            label={intl.formatMessage(messages.moreActions)}
+                            label={label}
                             variant="table"
                             onClick={() => toggleDropdown()}
                             isActive={isOpen}
+                            accessibilityConfig={{
+                                ariaLabel: label,
+                            }}
                         />
                     )}
                     alignPoints={[{ align: "br tr" }]}

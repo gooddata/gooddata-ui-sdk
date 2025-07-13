@@ -62,9 +62,10 @@ function AsyncTableCore<T extends { id: string }>(props: IAsyncTableProps<T>) {
                 items={items}
             />
 
-            {renderHeader()}
-
-            {items.length === 0 && !isLoading && <AsyncTableEmptyState />}
+            <div role="grid">
+                {renderHeader()}
+                {items.length === 0 && !isLoading && <AsyncTableEmptyState />}
+            </div>
 
             <UiPagedVirtualList<T>
                 maxHeight={maxHeight}

@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+@use "./mixins";
 
 .gd-ui-kit-async-table {
     $root: &;
@@ -24,6 +25,15 @@
         height: var(--gd-table-row-height-normal);
         line-height: var(--gd-table-row-line-height);
         color: var(--gd-palette-complementary-6);
+
+        &:focus-visible {
+            outline: none;
+
+            #{$root}__cell--isFocused {
+                transition: outline 0s ease-in-out;
+                @include mixins.focus-ring;
+            }
+        }
 
         #{$root}__cell {
             transition: var(--gd-transition-all);

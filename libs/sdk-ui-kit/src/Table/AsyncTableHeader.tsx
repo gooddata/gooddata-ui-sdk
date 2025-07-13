@@ -1,18 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback } from "react";
-import { IColumn, IAsyncTableHeaderProps } from "./types.js";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { IAsyncTableHeaderProps, IColumn } from "./types.js";
 import { e } from "./asyncTableBem.js";
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { AsyncTableCheckbox } from "./AsyncTableCheckbox.js";
 import { MENU_COLUMN_WIDTH } from "./constants.js";
-import { makeKeyboardNavigation } from "../@ui/@utils/keyboardNavigation.js";
+import { makeTabsKeyboardNavigation } from "../@ui/@utils/keyboardNavigation.js";
 
 const arrowIcon = <UiIcon type="dropDown" size={14} color="complementary-6" />;
-
-const headerCellKeyboardNavigation = makeKeyboardNavigation({
-    onSelect: [{ code: ["Enter", "Space"] }],
-});
 
 export function AsyncTableHeader<T>({
     columns,
@@ -22,20 +18,10 @@ export function AsyncTableHeader<T>({
     hasCheckbox,
     width,
 }: IAsyncTableHeaderProps<T>) {
-    const handleKeyDown = useCallback(
-        (column: IColumn<T>) =>
-            headerCellKeyboardNavigation({
-                onSelect: () => {
-                    if (column.sortable) {
-                        handleColumnClick(column.key);
-                    }
-                },
-            }),
-        [handleColumnClick],
-    );
+    const { handleKeyDown, isFocused } = useHeaderKeyboardNavigation(columns, handleColumnClick);
 
     return (
-        <div className={e("header")} style={{ width }}>
+        <div tabIndex={0} className={e("header")} role="row" onKeyDown={handleKeyDown} style={{ width }}>
             {hasCheckbox ? <AsyncTableCheckbox /> : null}
             {columns.map((column, index) => {
                 const width = column.renderMenu ? MENU_COLUMN_WIDTH : column.width;
@@ -45,11 +31,11 @@ export function AsyncTableHeader<T>({
                 return (
                     <div
                         key={index}
-                        tabIndex={sortable ? 0 : -1}
-                        onKeyDown={handleKeyDown(column)}
                         onClick={() => sortable && handleColumnClick(column.key)}
-                        className={e("cell", { sorted, desc, sortable })}
+                        className={e("cell", { sorted, desc, sortable, isFocused: isFocused(index) })}
                         style={{ width }}
+                        role="columnheader"
+                        aria-sort={sorted ? (desc ? "descending" : "ascending") : "none"}
                     >
                         <span className={e("text")}>{column.label}</span>
                         {sortable ? <div className={e("sort")}>{arrowIcon}</div> : null}
@@ -58,4 +44,58 @@ export function AsyncTableHeader<T>({
             })}
         </div>
     );
+}
+
+function useHeaderKeyboardNavigation<T>(
+    columns: Array<IColumn<T>>,
+    handleColumnClick: (key?: keyof T) => void,
+) {
+    const [focusedIndexPosition, setFocusedIndexPosition] = useState(0);
+
+    useEffect(() => {
+        setFocusedIndexPosition(0);
+    }, [columns]);
+
+    const focusableIndexes = useMemo(
+        () => columns.map((_, index) => index).filter((index) => columns[index].sortable),
+        [columns],
+    );
+
+    const handleKeyDown = useMemo(() => {
+        return makeTabsKeyboardNavigation({
+            onSelect: () => {
+                if (columns[focusableIndexes[focusedIndexPosition]].sortable) {
+                    handleColumnClick(columns[focusableIndexes[focusedIndexPosition]].key);
+                }
+            },
+            onFocusNext: () => {
+                setFocusedIndexPosition(
+                    focusedIndexPosition >= focusableIndexes.length - 1 ? 0 : focusedIndexPosition + 1,
+                );
+            },
+            onFocusPrevious: () => {
+                setFocusedIndexPosition(
+                    focusedIndexPosition <= 0 ? focusableIndexes.length - 1 : focusedIndexPosition - 1,
+                );
+            },
+            onFocusFirst: () => {
+                setFocusedIndexPosition(0);
+            },
+            onFocusLast: () => {
+                setFocusedIndexPosition(focusableIndexes.length - 1);
+            },
+        });
+    }, [handleColumnClick, focusedIndexPosition, setFocusedIndexPosition, focusableIndexes, columns]);
+
+    const isFocused = useCallback(
+        (index: number) => {
+            return focusableIndexes[focusedIndexPosition] === index;
+        },
+        [focusableIndexes, focusedIndexPosition],
+    );
+
+    return {
+        handleKeyDown,
+        isFocused,
+    };
 }
