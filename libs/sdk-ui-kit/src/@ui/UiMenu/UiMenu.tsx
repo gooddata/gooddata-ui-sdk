@@ -31,13 +31,14 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
     props: UiMenuProps<T, M>,
 ): React.ReactNode {
     const {
-        className,
         dataTestId,
         maxWidth,
+        maxHeight,
         ariaAttributes,
         onUnhandledKeyDown,
         shouldKeyboardActionPreventDefault,
         shouldKeyboardActionStopPropagation,
+        containerBottomPadding = "none",
     } = props;
 
     const menuComponentRef = React.useRef<HTMLMenuElement>(null);
@@ -85,14 +86,14 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
         }
     }, [shownCustomContentItemId, menuComponentRef]);
 
-    const menuClassName = typeof className === "function" ? className(contextStoreValue) : className;
     const menuDataTestId = typeof dataTestId === "function" ? dataTestId(contextStoreValue) : dataTestId;
+    const maxHeightValue = typeof maxHeight === "function" ? maxHeight(contextStoreValue) : maxHeight;
 
     return (
         <UiMenuContextStore value={contextStoreValue}>
             <div
-                className={cx(b(), b({ controlType }), menuClassName)}
-                style={{ maxWidth }}
+                className={cx(b(), b({ controlType }))}
+                style={{ maxWidth, maxHeight: maxHeightValue }}
                 onKeyDownCapture={() => setControlType("keyboard")}
                 onMouseMoveCapture={() => setControlType("mouse")}
                 data-testid={menuDataTestId}
@@ -105,7 +106,9 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
                     <>
                         <MenuHeader />
                         <div
-                            className={e("items-container")}
+                            className={e("items-container", {
+                                "container-bottom-padding": containerBottomPadding,
+                            })}
                             ref={itemsContainerRef as React.MutableRefObject<HTMLDivElement>}
                         >
                             <menu

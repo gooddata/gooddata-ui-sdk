@@ -35,8 +35,7 @@ export interface UiIconButtonPublicProps {
     dataId?: string;
     dataTestId?: string;
     ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
-    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"] &
-        Pick<React.AriaAttributes, "aria-label">;
+    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
 }
 
 export interface UiIconButtonInternalProps {

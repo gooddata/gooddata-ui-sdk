@@ -187,7 +187,8 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
                             shouldCloseOnSelect={false}
                             onClose={onClose}
                             onUnhandledKeyDown={handleKeyDown}
-                            className="gd-drill-modal-picker-body"
+                            maxHeight={160}
+                            containerBottomPadding="medium"
                             ariaAttributes={{
                                 id: "drill-select-menu",
                                 "aria-label": intl.formatMessage({ id: "drill_modal_picker.label" }),

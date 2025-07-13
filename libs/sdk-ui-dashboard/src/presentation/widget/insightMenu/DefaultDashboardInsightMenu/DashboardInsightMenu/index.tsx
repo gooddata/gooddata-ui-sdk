@@ -8,7 +8,7 @@ import {
     separatorStaticItem,
     UiFocusManager,
 } from "@gooddata/sdk-ui-kit";
-import cx from "classnames";
+
 import {
     IDashboardInsightMenuProps,
     IInsightMenuSubmenu,
@@ -133,15 +133,19 @@ export const DashboardInsightMenuBody: React.FC<
     const menuId = `insight-menu-${widgetRefAsString}`;
     const menuLabelId = `${menuId}-label`;
 
-    const menuClassName = (context: IUiMenuContext<IMenuItemData, unknown>) => {
-        return cx("insight-configuration-menu", getSelectedMenuId(context));
+    const getMaxHeight = (context: IUiMenuContext<IMenuItemData, unknown>) => {
+        if (getSelectedMenuId(context) === "Alerts") {
+            return 500;
+        }
+        return 350;
     };
 
     return (
         <UiFocusManager enableAutofocus={{ initialFocus: menuId }} enableFocusTrap enableReturnFocusOnUnmount>
             <DashboardInsightMenuContainer>
                 <UiMenu<IMenuItemData, IMenuData>
-                    className={menuClassName}
+                    maxHeight={getMaxHeight}
+                    containerBottomPadding="small"
                     items={uiMenuItems}
                     onClose={onClose}
                     InteractiveItem={CustomUiMenuInteractiveItemComponent}

@@ -185,22 +185,6 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
     }
     .insight-configuration .gd-menu-wrapper {
         border-radius: 0 0 3px 3px;
-
-        .insight-configuration-menu {
-            max-height: 350px;
-
-            &.Alerts {
-                max-height: 500px;
-            }
-
-            .gd-ui-kit-menu__content-container {
-                width: 100%;
-                display: flex;
-            }
-            .gd-ui-kit-menu__items-container {
-                padding-bottom: 8px;
-            }
-        }
     }
 }
 

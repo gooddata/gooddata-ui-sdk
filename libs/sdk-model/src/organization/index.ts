@@ -17,6 +17,7 @@ export interface IOrganizationDescriptor {
      */
     earlyAccess?: string;
     earlyAccessValues?: string[];
+    identityProviderType?: string;
 }
 
 /**
