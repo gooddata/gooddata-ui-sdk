@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pivot",
-    "version": "10.34.0-alpha.8",
+    "version": "10.34.0-alpha.16",
     "description": "GoodData.UI SDK - Pivot Table",
     "repository": {
         "type": "git",

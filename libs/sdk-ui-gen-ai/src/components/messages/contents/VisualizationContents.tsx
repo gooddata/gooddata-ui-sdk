@@ -278,6 +278,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                               return (
                                   <>
                                       <Button
+                                          dataTestId="gen-ai-visualization-menu-button"
                                           onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
                                           value="&#8943;"
                                           id={MORE_MENU_BUTTON_ID}

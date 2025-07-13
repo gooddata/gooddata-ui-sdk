@@ -1708,7 +1708,7 @@ export interface IDropdownButtonProps {
 
 // @internal (undocumented)
 export interface IDropdownButtonRenderProps {
-    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId">;
+    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId" | "ariaLabel">;
     ariaAttributes: {
         role: React_2.AriaRole;
     } & Pick<React_2.AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
@@ -5936,7 +5936,7 @@ export type UiIconButtonProps = UiIconButtonPublicProps;
 // @internal (undocumented)
 export interface UiIconButtonPublicProps {
     // (undocumented)
-    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"] & Pick<React_2.AriaAttributes, "aria-label">;
+    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
     // (undocumented)
     ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
     // (undocumented)
@@ -6049,18 +6049,18 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
 export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> extends Partial<IUiMenuPluggableComponents<T>> {
     // (undocumented)
     ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
-    // @deprecated (undocumented)
-    className?: ((context: IUiMenuContext<T>) => string | undefined) | string;
+    // (undocumented)
+    containerBottomPadding?: "none" | "small" | "medium";
     // (undocumented)
     dataTestId?: ((context: IUiMenuContext<T>) => string | undefined) | string;
     // (undocumented)
     isDisabledFocusable?: boolean;
-    // @deprecated (undocumented)
-    itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     // (undocumented)
     itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     // (undocumented)
     items: IUiMenuItem<T>[];
+    // (undocumented)
+    maxHeight?: ((context: IUiMenuContext<T>) => number | undefined) | number;
     // (undocumented)
     maxWidth?: number;
     // (undocumented)

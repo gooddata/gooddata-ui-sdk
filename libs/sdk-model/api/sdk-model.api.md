@@ -2797,6 +2797,8 @@ export interface IOrganizationDescriptor {
     // (undocumented)
     id: string;
     // (undocumented)
+    identityProviderType?: string;
+    // (undocumented)
     title: string;
 }
 
@@ -3556,6 +3558,7 @@ export interface ISettings {
     enablePivotTableTransposition?: boolean;
     // (undocumented)
     enablePixelPerfectExperience?: boolean;
+    enablePreAggregationDatasets?: boolean;
     enableProductionFeaturesRollout?: boolean;
     enablePushpinGeoChart?: boolean;
     enableRawExports?: boolean;
@@ -3568,6 +3571,7 @@ export interface ISettings {
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
     enableScheduling?: boolean;
+    enableSeamlessIdpSwitch?: boolean;
     enableSemanticSearch?: boolean;
     enableSemanticSearchRollout?: boolean;
     enableSeparateTotalLabels?: boolean;

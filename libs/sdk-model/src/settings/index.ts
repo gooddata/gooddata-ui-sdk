@@ -748,6 +748,16 @@ export interface ISettings {
      */
     enableNewScheduledExport?: boolean;
 
+    /**
+     * Enable custom Identity Provider
+     */
+    enableSeamlessIdpSwitch?: boolean;
+
+    /**
+     * Enable pre-aggregation datasets support in LDM Modeler.
+     */
+    enablePreAggregationDatasets?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 
