@@ -10,6 +10,7 @@ import {
     VariantPrimary,
     VariantSecondary,
     VariantTertiary,
+    VariantLink,
 } from "../@types/variant.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
@@ -35,7 +36,8 @@ export interface UiButtonProps {
         | VariantTertiary
         | VariantPopOut
         | VariantDanger
-        | VariantTooltip;
+        | VariantTooltip
+        | VariantLink;
     iconBefore?: IconType;
     iconAfter?: IconType;
     label: string;

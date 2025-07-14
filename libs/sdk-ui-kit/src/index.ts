@@ -92,6 +92,7 @@ export type {
     VariantDanger,
     VariantTooltip,
     VariantTable,
+    VariantLink,
 } from "./@ui/@types/variant.js";
 export type { ThemeColor } from "./@ui/@types/themeColors.js";
 export { useElementSize } from "./@ui/hooks/useElementSize.js";

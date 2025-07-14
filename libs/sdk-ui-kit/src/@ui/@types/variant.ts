@@ -33,3 +33,8 @@ export type VariantTooltip = "tooltip";
  * @internal
  */
 export type VariantTable = "table";
+
+/**
+ * @internal
+ */
+export type VariantLink = "link";
