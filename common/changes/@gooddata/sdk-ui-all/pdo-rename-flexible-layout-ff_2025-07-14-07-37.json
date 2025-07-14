@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "fix(sdk-ui-dashboard): introduce and use a new feature flag to enable Flexible Layout to not enable the uncomplete feature in previously released SDKs",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

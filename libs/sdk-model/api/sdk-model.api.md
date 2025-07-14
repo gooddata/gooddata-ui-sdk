@@ -3484,8 +3484,6 @@ export interface ISettings {
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFiltersApplyModes?: boolean;
     enableDashboardFilterViews?: boolean;
-    enableDashboardFlexibleLayout?: boolean;
-    enableDashboardFlexibleLayoutContainer?: boolean;
     enableDashboardShareDialogLink?: boolean;
     enableDashboardShareLink?: boolean;
     enableDashboardTabularExport?: boolean;
@@ -3506,6 +3504,7 @@ export interface ISettings {
     enableExecutionTimestamp?: boolean;
     enableExportToDocumentStorage?: boolean;
     enableExternalRecipients?: boolean;
+    enableFlexibleDashboardLayout?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
     enableHeadlineExport?: boolean;

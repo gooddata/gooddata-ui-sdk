@@ -7,7 +7,7 @@ import { useDashboardSelector, selectSettings } from "../../../../model/index.js
 import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../constants/index.js";
 
 export const useInsightPositionStyle = (insight: IInsight, clientWidth?: number) => {
-    const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } =
+    const { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout } =
         useDashboardSelector(selectSettings);
 
     const isPositionRelative =
@@ -17,7 +17,7 @@ export const useInsightPositionStyle = (insight: IInsight, clientWidth?: number)
         !enableKDWidgetCustomHeight &&
         // The relative positioning causes flickering of headline text when flexible layout is enabled.
         // Everything works correctly when absolute position is used in this case.
-        !enableDashboardFlexibleLayout;
+        !enableFlexibleDashboardLayout;
 
     const insightPositionStyle: CSSProperties = useMemo(() => {
         return {
