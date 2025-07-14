@@ -24,7 +24,7 @@ export abstract class BigChartDescriptor extends BaseChartDescriptor {
     ): IVisualizationSizeInfo {
         return {
             width: {
-                default: settings.enableDashboardFlexibleLayout ? 4 : 6,
+                default: settings.enableFlexibleDashboardLayout ? 4 : 6,
                 min: 2,
                 max: layoutDescriptor.gridColumnsCount,
             },
@@ -37,11 +37,11 @@ export abstract class BigChartDescriptor extends BaseChartDescriptor {
     }
 
     protected getMinHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
+        const { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
         }
-        if (enableDashboardFlexibleLayout) {
+        if (enableFlexibleDashboardLayout) {
             return MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT;
         }
         return MIDDLE_VISUALIZATION_HEIGHT;

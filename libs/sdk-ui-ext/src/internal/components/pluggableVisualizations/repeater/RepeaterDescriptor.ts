@@ -41,7 +41,7 @@ export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualiz
     ): IVisualizationSizeInfo {
         return {
             width: {
-                default: settings.enableDashboardFlexibleLayout ? 4 : layoutDescriptor.gridColumnsCount,
+                default: settings.enableFlexibleDashboardLayout ? 4 : layoutDescriptor.gridColumnsCount,
                 min: 2,
                 max: layoutDescriptor.gridColumnsCount,
             },
@@ -54,11 +54,11 @@ export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualiz
     }
 
     protected getMinHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
+        const { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
         }
-        if (enableDashboardFlexibleLayout) {
+        if (enableFlexibleDashboardLayout) {
             return MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT;
         }
         return MIN_VISUALIZATION_HEIGHT;

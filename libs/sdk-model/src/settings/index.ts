@@ -493,15 +493,9 @@ export interface ISettings {
     enableSingleStoreDataSource?: boolean;
 
     /**
-     * Enables new dashboard layout renderer with nesting support.
-     * The nesting itself needs to be enabled by enableDashboardFlexibleLayoutContainer.
+     * Enables a new dashboard layout renderer with the nesting support.
      */
-    enableDashboardFlexibleLayout?: boolean;
-
-    /**
-     * Enables container support in the new dashboard layout renderer.
-     */
-    enableDashboardFlexibleLayoutContainer?: boolean;
+    enableFlexibleDashboardLayout?: boolean;
 
     /**
      * Enable GenAI-powered functionality, such as semantic-search.

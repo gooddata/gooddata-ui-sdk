@@ -31,7 +31,7 @@ export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
     ): IVisualizationSizeInfo {
         return {
             width: {
-                default: settings.enableDashboardFlexibleLayout ? 4 : 6,
+                default: settings.enableFlexibleDashboardLayout ? 4 : 6,
                 min: 2,
                 max: layoutDescriptor.gridColumnsCount,
             },
@@ -44,33 +44,33 @@ export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
     }
 
     protected getDefaultHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
+        const { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
         }
-        if (enableDashboardFlexibleLayout) {
+        if (enableFlexibleDashboardLayout) {
             return MIDDLE_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT;
         }
         return MIDDLE_VISUALIZATION_HEIGHT;
     }
 
     protected getMinHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
+        const { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
         }
-        if (enableDashboardFlexibleLayout) {
+        if (enableFlexibleDashboardLayout) {
             return MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT;
         }
         return MIN_VISUALIZATION_HEIGHT;
     }
 
     protected getMaxHeight(settings: ISettings) {
-        const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
+        const { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
         }
-        if (enableDashboardFlexibleLayout) {
+        if (enableFlexibleDashboardLayout) {
             return MAX_NEW_VISUALIZATION_HEIGHT;
         }
         return MAX_VISUALIZATION_HEIGHT;

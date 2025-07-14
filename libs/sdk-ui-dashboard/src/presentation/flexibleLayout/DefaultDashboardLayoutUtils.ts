@@ -30,7 +30,7 @@ export const getMemoizedWidgetSanitizer =
     (
         getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
         enableKDWidgetCustomHeight: boolean,
-        enableDashboardFlexibleLayout: boolean,
+        enableFlexibleDashboardLayout: boolean,
     ): DashboardLayoutItemModifications<TWidget> => {
         return (item) => {
             const widget = item.facade().widget();
@@ -45,7 +45,7 @@ export const getMemoizedWidgetSanitizer =
                     validateItemsSize(
                         getInsightByRef,
                         enableKDWidgetCustomHeight,
-                        enableDashboardFlexibleLayout,
+                        enableFlexibleDashboardLayout,
                     ),
                 )(item);
                 cache.set(cacheKey, resultBuilder.build());
@@ -105,7 +105,7 @@ export function polluteWidgetRefsWithBothIdAndUri<TWidget = IDashboardWidget>(
 export function validateItemsSize<TWidget = IDashboardWidget>(
     getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
     enableKDWidgetCustomHeight: boolean,
-    enableDashboardFlexibleLayout: boolean,
+    enableFlexibleDashboardLayout: boolean,
 ): DashboardLayoutItemModifications<TWidget> {
     return (item) => {
         const widget = item.facade().widget();
@@ -127,7 +127,7 @@ export function validateItemsSize<TWidget = IDashboardWidget>(
                 currentHeight,
                 "insight",
                 insight,
-                { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout },
+                { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout },
             );
             if (currentWidth !== validWidth || currentHeight !== validHeight) {
                 const gridWidthProp = currentWidth !== validWidth ? { gridWidth: validWidth } : {};

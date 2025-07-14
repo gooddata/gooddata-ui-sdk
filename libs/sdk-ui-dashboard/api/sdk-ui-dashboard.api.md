@@ -8835,9 +8835,6 @@ export const selectEnableFilterViews: DashboardSelector<boolean>;
 export const selectEnableFlexibleLayout: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableFlexibleLayoutContainer: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean>;
 
 // @internal
