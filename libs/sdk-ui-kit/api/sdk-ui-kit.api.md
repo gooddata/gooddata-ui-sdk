@@ -6014,7 +6014,7 @@ export interface UiButtonProps {
     // (undocumented)
     tooltip?: React_2.ReactNode;
     // (undocumented)
-    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip;
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip | VariantLink;
 }
 
 // @internal (undocumented)
@@ -6496,6 +6496,9 @@ export const useZoom: () => IZoomContextState;
 
 // @internal (undocumented)
 export type VariantDanger = "danger";
+
+// @internal (undocumented)
+export type VariantLink = "link";
 
 // @internal (undocumented)
 export type VariantPopOut = "popout";

@@ -160,7 +160,8 @@
             }
         }
 
-        &-popout {
+        &-popout,
+        &-link {
             --gd-icon-fill-color: var(--gd-palette-primary-base);
             color: var(--gd-palette-primary-base);
             padding: 0;
@@ -178,6 +179,13 @@
             &:disabled {
                 color: var(--gd-palette-complementary-5);
             }
+        }
+
+        &-link {
+            text-decoration: underline;
+            border: 0;
+            padding: 0;
+            height: auto;
         }
 
         &-danger {
