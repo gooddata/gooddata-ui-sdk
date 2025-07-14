@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
+import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IAttribute, IFilter, IMeasure, ISortItem, ITheme, ITotal } from "@gooddata/sdk-model";
+import { IVisualizationCallbacks } from "@gooddata/sdk-ui";
 
 /**
  * Whether to display measures in columns or rows (transposed).
@@ -96,4 +97,20 @@ export interface IPivotTableNextProps {
      * Configuration for the pivot table.
      */
     config?: PivotTableNextConfig;
+
+    /**
+     * Customize size of page when fetching data from backend.
+     *
+     * @remarks
+     * Default is 100.
+     */
+    pageSize?: number;
+}
+
+/**
+ * @alpha
+ */
+export interface ICorePivotTableNextProps extends IPivotTableNextProps, IVisualizationCallbacks {
+    execution: IPreparedExecution;
+    theme?: ITheme;
 }

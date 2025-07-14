@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { AgGridReactProps } from "ag-grid-react";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { IPivotTableNextProps } from "../types/public.js";
+import { ICorePivotTableNextProps } from "../types/public.js";
 import { AgGridRowData } from "../types/internal.js";
 import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../constants/agGrid.js";
 import { createServerSideDataSource } from "../dataSource/createServerSideDataSource.js";
@@ -12,7 +12,7 @@ import { getColumnHeadersPosition, getExecutionProps, getIsPivotMode } from "../
  * @alpha
  */
 export const useServerSideRowModel = (
-    props: IPivotTableNextProps & { executionResult: IExecutionResult },
+    props: ICorePivotTableNextProps & { executionResult: IExecutionResult },
 ): AgGridReactProps<AgGridRowData> => {
     const { executionResult } = props;
     const isPivotMode = getIsPivotMode(props);

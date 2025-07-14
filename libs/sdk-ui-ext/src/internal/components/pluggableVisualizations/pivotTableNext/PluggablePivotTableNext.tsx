@@ -1,56 +1,41 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2025 GoodData Corporation
 
+import React from "react";
 import {
-    addIntersectionFiltersToInsight,
-    modifyBucketsAttributesForDrillDown,
-    sanitizeTableProperties,
-} from "../drillDownUtil.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import flatMap from "lodash/flatMap.js";
-import isNil from "lodash/isNil.js";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
-import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import {
-    bucketAttribute,
+    bucketAttributes,
+    bucketMeasures,
     IDimension,
     IInsight,
     IInsightDefinition,
     insightBucket,
-    insightBuckets,
     insightHasDataDefined,
     insightProperties,
+    insightFilters,
+    insightBuckets,
     insightSanitize,
-    insightSorts,
-    ISortItem,
-    newAttributeSort,
     ISettings,
+    ISortItem,
 } from "@gooddata/sdk-model";
-import { defaultImport } from "default-import";
-
+import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
-    ColumnHeadersPosition,
-    ColumnWidthItem,
-    CorePivotTable,
-    IColumnSizing,
-    ICorePivotTableProps,
-    IPivotTableConfig,
-    MeasureGroupDimension,
-    pivotTableMenuForCapabilities,
-} from "@gooddata/sdk-ui-pivot";
-import React from "react";
+    CorePivotTableNext,
+    ICorePivotTableNextProps,
+    PivotTableNextConfig,
+} from "@gooddata/sdk-ui-pivot/next";
+import { ColumnHeadersPosition, ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
+import { defaultImport } from "default-import";
 import Measure from "react-measure";
-
-import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
-import { DASHBOARDS_ENVIRONMENT, ANALYTICAL_ENVIRONMENT } from "../../../constants/properties.js";
+import isNil from "lodash/isNil.js";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+import flatMap from "lodash/flatMap.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import {
     IBucketFilter,
-    IBucketItem,
-    IBucketOfFun,
     IDrillDownContext,
     IExtendedReferencePoint,
-    IGdcConfig,
     IReferencePoint,
     IVisConstruct,
     IVisProps,
@@ -58,114 +43,97 @@ import {
     RenderFunction,
     UnmountFunction,
 } from "../../../interfaces/Visualization.js";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
-
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
+import { METRIC } from "../../../constants/bucket.js";
 import {
-    getAllItemsByType,
-    getItemsFromBuckets,
-    getTotalsFromBucket,
-    removeDuplicateBucketItems,
-    sanitizeFilters,
-    limitNumberOfMeasuresInBuckets,
-} from "../../../utils/bucketHelper.js";
-import { generateDimensions } from "../../../utils/dimensions.js";
-import {
-    getColumnHeadersPositionFromProperties,
-    getColumnWidthsFromProperties,
-    getReferencePointWithSupportedProperties,
     getMeasureGroupDimensionFromProperties,
+    getReferencePointWithSupportedProperties,
+    getColumnWidthsFromProperties,
+    getColumnHeadersPositionFromProperties,
     getSupportedPropertiesControls,
     getPivotTableProperties,
 } from "../../../utils/propertiesHelper.js";
 import { sanitizePivotTableConfig } from "../../../utils/pivotTableConfigUtils.js";
-
-import {
-    getPivotTableDefaultUiConfig,
-    setPivotTableUiConfig,
-    getPivotTableMeasuresLimit,
-} from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper.js";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel.js";
-import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
+import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
+import {
+    getPivotTableNextDefaultUiConfig,
+    getPivotTableNextMeasuresLimit,
+    setPivotTableNextUiConfig,
+} from "../../../utils/uiConfigHelpers/pivotTableNextUiConfigHelper.js";
+import {
+    getAllItemsByType,
+    getTotalsFromBucket,
+    limitNumberOfMeasuresInBuckets,
+    removeDuplicateBucketItems,
+    sanitizeFilters,
+} from "../../../utils/bucketHelper.js";
 import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
+import { generateDimensions } from "../../../utils/dimensions.js";
+import { isSetColumnHeadersPositionToLeftAllowed } from "../../../utils/controlsHelper.js";
+import {
+    addIntersectionFiltersToInsight,
+    modifyBucketsAttributesForDrillDown,
+    sanitizeTableProperties,
+} from "../drillDownUtil.js";
+import {
+    getColumnAttributes,
+    getRowAttributes,
+    isManualResizingEnabled,
+    multipleDatesEnabled,
+    shouldAdjustColumnHeadersPositionToTop,
+    tableColumnHeadersPositionEnabled,
+    tableSortingCheckDisabled,
+    tableTranspositionEnabled,
+} from "./helpers.js";
+import {
+    adaptReferencePointSortItemsToPivotTable,
+    addDefaultSort,
+    getPivotTableSortItems,
+    getSanitizedSortItems,
+    sanitizePivotTableSorts,
+} from "./sortHelpers.js";
 import {
     adaptMdObjectWidthItemsToPivotTable,
     adaptReferencePointWidthItemsToPivotTable,
 } from "./widthItemsHelpers.js";
-import {
-    adaptReferencePointSortItemsToPivotTable,
-    addDefaultSort,
-    getSanitizedSortItems,
-    sanitizePivotTableSorts,
-} from "./sortItemsHelpers.js";
 import { removeInvalidTotals } from "./totalsHelpers.js";
-import { isSetColumnHeadersPositionToLeftAllowed } from "../../../utils/controlsHelper.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const ReactMeasure = defaultImport(Measure);
 
-export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
-    return getItemsFromBuckets(
-        buckets,
-        [BucketNames.COLUMNS, BucketNames.STACK, BucketNames.SEGMENT],
-        [ATTRIBUTE, DATE],
-    );
-};
-
-export const getRowAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
-    return getItemsFromBuckets(
-        buckets,
-        [
-            BucketNames.ATTRIBUTE,
-            BucketNames.ATTRIBUTES,
-            BucketNames.ATTRIBUTE_FROM,
-            BucketNames.ATTRIBUTE_TO,
-            BucketNames.VIEW,
-            BucketNames.TREND,
-            BucketNames.LOCATION,
-        ],
-        [ATTRIBUTE, DATE],
-    );
-};
-
 const PROPERTIES_AFFECTING_REFERENCE_POINT = ["measureGroupDimension"];
 
-/**
- * PluggablePivotTable
- *
- * ## Buckets
- *
- * | Name     | Id         | Accepts             |
- * |----------|------------|---------------------|
- * | Measures | measures   | measures only       |
- * | Rows     | attributes | attributes or dates |
- * | Columns  | columns    | attributes or dates |
- *
- * The Rows and Columns can each accept one date at most, unless "enableMultipleDates" FF is on.
- *
- * ### Bucket axioms
- *
- * - |Measures| ≤ 20
- * - |Rows| ≤ 20
- * - |Columns| ≤ 20
- * - |Measures| + |Rows| + |Columns| ≥ 1
- *
- * ## Dimensions
- *
- * The PluggablePivotTable always creates two dimensional execution.
- *
- * - |Measures| ≥ 1 ⇒ [[...Rows], [...Columns, MeasureGroupIdentifier]]
- * - |Measures| = 0 ⇒ [[...Rows], [...Columns]]
- *
- * ## Sorts
- *
- * Unless the user specifies otherwise, the sorts used by default are:
- *
- * - |Rows| ≥ 1 ⇒ [attributeSort(Rows[0])]
- */
-export class PluggablePivotTable extends AbstractPluggableVisualization {
+// Memoized wrapper component to prevent unnecessary re-renders
+// as we are sending down all the props created here
+const MemoizedCorePivotTableNext = React.memo(CorePivotTableNext, (prevProps, nextProps) => {
+    // More specific comparison to avoid unnecessary re-renders
+    const executionChanged = prevProps.execution.fingerprint() !== nextProps.execution.fingerprint();
+    const configChanged = !isEqual(prevProps.config, nextProps.config);
+    const measuresChanged = !isEqual(prevProps.measures, nextProps.measures);
+    const rowsChanged = !isEqual(prevProps.rows, nextProps.rows);
+    const columnsChanged = !isEqual(prevProps.columns, nextProps.columns);
+    const filtersChanged = !isEqual(prevProps.filters, nextProps.filters);
+    const sortChanged = !isEqual(prevProps.sortBy, nextProps.sortBy);
+    const themeChanged = prevProps.theme !== nextProps.theme;
+
+    // Return true if props are equal (no re-render needed)
+    return !(
+        executionChanged ||
+        configChanged ||
+        measuresChanged ||
+        rowsChanged ||
+        columnsChanged ||
+        filtersChanged ||
+        sortChanged ||
+        themeChanged
+    );
+});
+
+export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     private environment: VisualizationEnvironment;
     private renderFun: RenderFunction;
     private unmountFun: UnmountFunction;
@@ -198,12 +166,12 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const clonedReferencePoint = cloneDeep(referencePoint);
         const newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
-            uiConfig: getPivotTableDefaultUiConfig(multipleDatesEnabled(this.settings)),
+            uiConfig: getPivotTableNextDefaultUiConfig(multipleDatesEnabled(this.settings)),
         };
 
         const buckets = newReferencePoint.buckets;
 
-        const limit = getPivotTableMeasuresLimit(this.settings, buckets);
+        const limit = getPivotTableNextMeasuresLimit(this.settings, buckets);
         const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, limit, true);
         const measures = getAllItemsByType(limitedBuckets, [METRIC]);
         const rowAttributes = getRowAttributes(buckets);
@@ -270,36 +238,19 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             originalMeasureGroupDimension,
         );
 
-        const measureGroupDimensionProp =
-            tableTranspositionEnabled(this.settings) && originalMeasureGroupDimension
-                ? {
-                      measureGroupDimension: originalMeasureGroupDimension,
-                  }
-                : {};
-
-        const columnHeaderPositionProp =
-            tableColumnHeadersPositionEnabled(this.settings) && originalColumnHeadersPosition
-                ? {
-                      columnHeadersPosition: originalColumnHeadersPosition,
-                  }
-                : {};
-
-        const controlsObj = columnWidths
-            ? {
-                  controls: {
-                      ...newReferencePoint.properties?.controls,
-                      columnWidths,
-                      ...measureGroupDimensionProp,
-                      ...columnHeaderPositionProp,
-                  },
-              }
-            : {
-                  controls: {
-                      ...newReferencePoint.properties?.controls,
-                      ...measureGroupDimensionProp,
-                      ...columnHeaderPositionProp,
-                  },
-              };
+        // Build controls object with conditional properties
+        const controls = {
+            ...newReferencePoint.properties?.controls,
+            ...(columnWidths && { columnWidths }),
+            ...(tableTranspositionEnabled(this.settings) &&
+                originalMeasureGroupDimension && {
+                    measureGroupDimension: originalMeasureGroupDimension,
+                }),
+            ...(tableColumnHeadersPositionEnabled(this.settings) &&
+                originalColumnHeadersPosition && {
+                    columnHeadersPosition: originalColumnHeadersPosition,
+                }),
+        };
 
         newReferencePoint.properties = {
             sortItems: addDefaultSort(
@@ -315,10 +266,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 columnAttributes,
                 tableSortingCheckDisabled(this.settings),
             ),
-            ...controlsObj,
+            controls,
         };
 
-        setPivotTableUiConfig(newReferencePoint, this.intl, VisualizationTypes.TABLE, this.settings);
+        setPivotTableNextUiConfig(newReferencePoint, this.intl, VisualizationTypes.TABLE, this.settings);
         configurePercent(newReferencePoint, false);
         configureOverTimeComparison(newReferencePoint, !!this.settings?.["enableWeekFilters"]);
         Object.assign(
@@ -426,43 +377,43 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             return;
         }
 
-        const { locale, custom, dimensions, config = {}, customVisualizationConfig = {}, theme } = options;
-        const { maxHeight, maxWidth } = config;
+        const { dimensions, customVisualizationConfig = {}, theme } = options;
         const height = dimensions?.height;
-        const { drillableItems } = custom;
         const execution = this.getExecution(options, insight, executionFactory);
 
-        const columnWidths: ColumnWidthItem[] | undefined = getColumnWidthsFromProperties(
-            insightProperties(insight),
-        );
+        // Extract bucket data to send down the pivot table
+        const measuresBucket = insightBucket(insight, BucketNames.MEASURES);
+        const rowsBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
+        const columnsBucket = insightBucket(insight, BucketNames.COLUMNS);
+
+        const measures = measuresBucket ? bucketMeasures(measuresBucket) : [];
+        const rows = rowsBucket ? bucketAttributes(rowsBucket) : [];
+        const columns = columnsBucket ? bucketAttributes(columnsBucket) : [];
+        const filters = insightFilters(insight) || [];
+        const sortBy = getPivotTableSortItems(insight);
+
+        const measureGroupDimension =
+            getMeasureGroupDimensionFromProperties(insightProperties(insight)) || "columns";
 
         const columnHeadersPosition: ColumnHeadersPosition = !isSetColumnHeadersPositionToLeftAllowed(insight)
             ? "top"
             : getColumnHeadersPositionFromProperties(insightProperties(insight));
 
-        const measureGroupDimension = getMeasureGroupDimensionFromProperties(insightProperties(insight));
-
-        const tableConfig: IPivotTableConfig = {
-            ...createPivotTableConfig(
-                config,
-                this.environment,
-                this.settings,
-                this.backendCapabilities,
-                columnWidths,
-            ),
+        const tableConfig: PivotTableNextConfig = {
             ...customVisualizationConfig,
-            maxHeight,
-            maxWidth,
-            columnHeadersPosition,
             measureGroupDimension,
+            columnHeadersPosition,
         };
 
-        const pivotTableProps: ICorePivotTableProps = {
+        const pivotTableProps: ICorePivotTableNextProps = {
             ...this.createCorePivotTableProps(),
             execution,
-            drillableItems,
+            measures,
+            rows,
+            columns,
+            filters,
+            sortBy,
             config: tableConfig,
-            locale,
             theme,
         };
 
@@ -480,7 +431,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                             flexDirection: "column",
                         };
 
-                        const configWithMaxHeight: IPivotTableConfig = {
+                        const configWithMaxHeight: PivotTableNextConfig = {
                             ...tableConfig,
                             maxHeight: clientHeight,
                             ...customVisualizationConfig,
@@ -492,7 +443,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                                 style={pivotWrapperStyle}
                                 className="gd-table-dashboard-wrapper"
                             >
-                                <CorePivotTable {...pivotTableProps} config={configWithMaxHeight} />
+                                <MemoizedCorePivotTableNext
+                                    {...pivotTableProps}
+                                    config={configWithMaxHeight}
+                                />
                             </div>
                         );
                     }}
@@ -500,7 +454,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 this.getElement(),
             );
         } else {
-            this.renderFun(<CorePivotTable {...pivotTableProps} />, this.getElement());
+            this.renderFun(<MemoizedCorePivotTableNext {...pivotTableProps} />, this.getElement());
         }
     }
 
@@ -615,167 +569,19 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
     private handlePushData(data: any) {
         if (data?.properties?.sortItems) {
-            const addTotals = data?.properties?.totals
-                ? {
-                      totals: data?.properties?.totals,
-                      bucketType: data?.properties?.bucketType,
-                  }
-                : {};
-            this.pushData({
-                properties: {
-                    sortItems: data.properties.sortItems,
-                    ...(data.properties.controls ? { controls: data.properties.controls } : {}),
-                    ...addTotals,
-                },
-            });
+            // Handle sort items with optional totals
+            const properties = {
+                sortItems: data.properties.sortItems,
+                ...(data.properties.controls && { controls: data.properties.controls }),
+                ...(data.properties.totals && {
+                    totals: data.properties.totals,
+                    bucketType: data.properties.bucketType,
+                }),
+            };
+
+            this.pushData({ properties });
         } else {
             this.pushData(data);
         }
     }
-}
-
-function isManualResizingEnabled(settings: ISettings): boolean {
-    return settings.enableTableColumnsManualResizing === true;
-}
-
-function multipleDatesEnabled(settings: ISettings): boolean {
-    return settings.enableMultipleDates === true;
-}
-
-function tableSortingCheckDisabled(settings: ISettings): boolean {
-    return settings.tableSortingCheckDisabled === true;
-}
-
-function tableTranspositionEnabled(settings: ISettings): boolean {
-    return settings.enablePivotTableTransposition === true;
-}
-
-function tableColumnHeadersPositionEnabled(settings: ISettings): boolean {
-    return settings.enableColumnHeadersPosition === true;
-}
-
-/**
- * Given plug viz GDC config, current environment and platform settings, this creates pivot table config.
- *
- * @internal
- */
-export function createPivotTableConfig(
-    config: IGdcConfig,
-    environment: VisualizationEnvironment,
-    settings: ISettings,
-    capabilities: IBackendCapabilities,
-    columnWidths: ColumnWidthItem[],
-): IPivotTableConfig {
-    let tableConfig: IPivotTableConfig = {
-        separators: config.separators,
-        enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
-    };
-
-    const enableTableTotalRows = settings.enableTableTotalRows;
-
-    if (environment !== DASHBOARDS_ENVIRONMENT) {
-        tableConfig = {
-            ...tableConfig,
-            menu: pivotTableMenuForCapabilities(capabilities, {
-                aggregations: true,
-                aggregationsSubMenu: true,
-            }),
-        };
-    }
-
-    if (enableTableTotalRows) {
-        tableConfig = {
-            ...tableConfig,
-            menu: {
-                ...tableConfig.menu,
-                aggregationsSubMenuForRows: true,
-            },
-        };
-    }
-
-    const autoSize = settings.enableTableColumnsAutoResizing;
-
-    // the growToFit can only be enabled in dashboards
-    const growToFit = environment === DASHBOARDS_ENVIRONMENT && settings.enableTableColumnsGrowToFit;
-
-    const manualResizing = settings.enableTableColumnsManualResizing;
-
-    let columnSizing: Partial<IColumnSizing> = {};
-    if (autoSize) {
-        columnSizing = {
-            defaultWidth: config.isExportMode ? "viewport" : "autoresizeAll",
-        };
-    }
-    if (growToFit) {
-        columnSizing = {
-            ...columnSizing,
-            growToFit: true,
-        };
-    }
-    if (manualResizing && columnWidths && columnWidths.length > 0) {
-        columnSizing = {
-            ...columnSizing,
-            columnWidths,
-        };
-    }
-
-    if (environment === ANALYTICAL_ENVIRONMENT) {
-        columnSizing = {
-            ...columnSizing,
-            growToFit: false,
-        };
-    }
-
-    return {
-        ...tableConfig,
-        columnSizing,
-    };
-}
-
-/**
- * This function exists to overcome AD weirdness where AD will sometimes send insight without any
- * sorts even if the pivot table should be sorted by default by the first row attribute in ascending order. Code here
- * fixes this symptom and ensures the default sort is in place.
- *
- * Note: while this may seem small thing, it's actually a messy business. When rendering / switching to the pivot
- * table the AD will call update/render multiple times. Sometimes with sort items, sometimes without sort items. This
- * can seriously mess up the pivot table in return: the column resizing is susceptible to race conditions and timing
- * issues. Because of the flurry of calls, the table may not render or may render not resized at all.
- */
-function getPivotTableSortItems(insight: IInsightDefinition): ISortItem[] {
-    const sorts = insightSorts(insight);
-    const mesureGroupDimension = getMeasureGroupDimensionFromProperties(insightProperties(insight));
-
-    if (!isEmpty(sorts)) {
-        /*
-         * This is here to ensure that when rendering pivot table in KD, all invalid sort items
-         * are filtered out. At this moment, core pivot table does not handle invalid sorts so well and
-         * they can knock it off balance and it won't show up (interplay with resizing).
-         *
-         * Fixing core pivot to strip out invalid sorts has to happen one day - however regardless of that,
-         * it is still the responsibility of the PluggablePivotTable to call the CorePivot correctly and so this
-         * sanitization here also makes sense.
-         */
-        return sanitizePivotTableSorts(sorts, insightBuckets(insight), mesureGroupDimension);
-    }
-
-    const rowBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
-    const rowAttribute = rowBucket && bucketAttribute(rowBucket);
-
-    if (rowAttribute) {
-        return [newAttributeSort(rowAttribute, "asc")];
-    }
-
-    return undefined;
-}
-
-function shouldAdjustColumnHeadersPositionToTop(
-    newReferencePoint: IExtendedReferencePoint,
-    rowAttributes: IBucketItem[],
-    measureGroupDimension: MeasureGroupDimension,
-) {
-    return (
-        newReferencePoint.properties?.controls?.columnHeadersPosition &&
-        (rowAttributes.length > 0 || measureGroupDimension === "columns")
-    );
 }
