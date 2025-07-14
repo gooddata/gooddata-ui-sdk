@@ -68,6 +68,7 @@ export * from "./RichText/index.js";
 export * from "./RecurrenceForm/index.js";
 export * from "./AddButton/index.js";
 export * from "./ZoomContext/ZoomContext.js";
+export * from "./Table/index.js";
 /**
  * New components
  */
@@ -75,7 +76,14 @@ export { ComponentTable, propCombinationsFor } from "./@ui/@dev/ComponentTable.j
 export type { IComponentTableProps, IPropCombination } from "./@ui/@dev/ComponentTable.js";
 export type { StyleProps } from "./@ui/@utils/bem.js";
 export { bem, bemFactory } from "./@ui/@utils/bem.js";
-export type { SizeXSmall, SizeSmall, SizeMedium, SizeLarge } from "./@ui/@types/size.js";
+export type {
+    SizeXSmall,
+    SizeSmall,
+    SizeMedium,
+    SizeLarge,
+    SizeXLarge,
+    SizeXXLarge,
+} from "./@ui/@types/size.js";
 export type {
     VariantPrimary,
     VariantSecondary,
@@ -83,6 +91,7 @@ export type {
     VariantPopOut,
     VariantDanger,
     VariantTooltip,
+    VariantTable,
 } from "./@ui/@types/variant.js";
 export type { ThemeColor } from "./@ui/@types/themeColors.js";
 export { useElementSize } from "./@ui/hooks/useElementSize.js";
@@ -94,6 +103,8 @@ export type { UiIconButtonProps } from "./@ui/UiIconButton/UiIconButton.js";
 export type { UiIconButtonPublicProps } from "./@ui/UiIconButton/UiIconButtonRenderer.js";
 export { UiChip } from "./@ui/UiChip/UiChip.js";
 export type { UiChipProps, IUiChipAccessibilityConfig } from "./@ui/UiChip/UiChip.js";
+export { UiCheckbox } from "./@ui/UiCheckbox/UiCheckbox.js";
+export type { UiCheckboxProps } from "./@ui/UiCheckbox/UiCheckbox.js";
 export { UiIcon } from "./@ui/UiIcon/UiIcon.js";
 export type { UiIconProps } from "./@ui/UiIcon/UiIcon.js";
 export { iconPaths } from "./@ui/UiIcon/icons.js";
@@ -199,6 +210,8 @@ export { UiTooltip } from "./@ui/UiTooltip/UiTooltip.js";
 export type { UiTooltipProps, TooltipArrowPlacement } from "./@ui/UiTooltip/types.js";
 export { UiDropdownIconButton } from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";
 export type { UiDropdownIconButtonProps } from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";
+export { UiBadge } from "./@ui/UiBadge/UiBadge.js";
+export type { UiBadgeProps } from "./@ui/UiBadge/UiBadge.js";
 
 export {
     makeMenuKeyboardNavigation,

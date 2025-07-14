@@ -44,7 +44,10 @@ export interface UiPagedVirtualListProps<T> {
      * If not provided, object identity (`===`) is used for comparison.
      */
     scrollToItemKeyExtractor?: (item: T) => string | number;
+    scrollToIndex?: number;
+    shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) => boolean;
     children: (item: T) => React.ReactNode;
+    scrollbarHoverEffect?: boolean;
     SkeletonItem?: React.ComponentType<UiPagedVirtualListSkeletonItemProps>;
 }
 
@@ -63,6 +66,7 @@ export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
         closeDropdown,
         customKeyboardNavigationHandler,
         children,
+        scrollbarHoverEffect,
     } = props;
 
     const { itemsCount, scrollContainerRef, height, hasScroll, rowVirtualizer, virtualItems } =
@@ -84,7 +88,7 @@ export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
         >
             <div
                 ref={scrollContainerRef}
-                className={e("scroll-container")}
+                className={e("scroll-container", { hover: scrollbarHoverEffect })}
                 style={{ height, paddingTop: itemsGap }}
             >
                 <div
@@ -139,6 +143,9 @@ function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
         maxHeight,
         scrollToItem,
         scrollToItemKeyExtractor,
+        scrollToIndex,
+        shouldLoadNextPage = (lastItemIndex, itemsCount, skeletonItemsCount) =>
+            lastItemIndex >= itemsCount - 1 - skeletonItemsCount,
     } = props;
 
     const scrollContainerRef = React.useRef<HTMLDivElement>(null);
@@ -181,10 +188,18 @@ function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
             return;
         }
 
-        if (lastItem.index >= itemsCount - 1 - skeletonItemsCount && hasNextPage && !isLoading) {
+        if (shouldLoadNextPage(lastItem.index, itemsCount, skeletonItemsCount) && hasNextPage && !isLoading) {
             loadNextPage?.();
         }
-    }, [hasNextPage, loadNextPage, itemsCount, isLoading, virtualItems, skeletonItemsCount]);
+    }, [
+        hasNextPage,
+        loadNextPage,
+        itemsCount,
+        isLoading,
+        virtualItems,
+        skeletonItemsCount,
+        shouldLoadNextPage,
+    ]);
 
     // Add scroll into view effect
     useEffect(() => {
@@ -212,6 +227,15 @@ function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
             behavior: "smooth",
         });
     }, [scrollToItem, items, rowVirtualizer, itemHeight, itemsGap, scrollToItemKeyExtractor]);
+
+    useEffect(() => {
+        if (scrollToIndex !== undefined) {
+            rowVirtualizer.scrollToIndex(scrollToIndex, {
+                align: "center",
+                behavior: "smooth",
+            });
+        }
+    }, [scrollToIndex, rowVirtualizer]);
 
     return {
         itemsCount,
