@@ -4,8 +4,13 @@ import { ThemeInternalCssVariable } from "../types.js";
 export const internalButtonThemeVariables: ThemeInternalCssVariable[] = [
     {
         type: "internal",
+        variableName: "--gd-button-XXL",
+        defaultValue: "55px",
+    },
+    {
+        type: "internal",
         variableName: "--gd-button-XL",
-        defaultValue: "44px",
+        defaultValue: "45px",
     },
     {
         type: "internal",

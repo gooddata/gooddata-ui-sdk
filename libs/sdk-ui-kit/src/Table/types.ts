@@ -11,6 +11,7 @@ export interface IAsyncTableProps<T extends { id: string }> {
     //default: add up all column widths
     width?: number;
     maxHeight?: number;
+    smallHeader?: boolean;
 
     //loading
     skeletonItemsCount?: number;
@@ -60,6 +61,7 @@ export interface IColumn<T> {
     renderPrefixIcon?: (item: T) => React.ReactNode;
     renderSuffixIcon?: (item: T) => React.ReactNode;
     renderBadge?: (item: T) => React.ReactNode;
+    getMultiLineContent?: (item: T) => Array<string>;
     bold?: boolean;
     sortable?: boolean;
 }
@@ -112,6 +114,8 @@ export interface IAsyncTableHeaderProps<T> {
     sortDirection?: SortDirection;
     hasCheckbox?: boolean;
     width?: number;
+    small?: boolean;
+    largeRow?: boolean;
 }
 
 export interface IAsyncTableRowProps<T extends { id: string }> {
@@ -120,6 +124,7 @@ export interface IAsyncTableRowProps<T extends { id: string }> {
     onSelect?: (item: T) => void;
     isSelected?: boolean;
     hasCheckbox?: boolean;
+    isLarge?: boolean;
 }
 
 export type IAsyncTableCheckboxProps = {

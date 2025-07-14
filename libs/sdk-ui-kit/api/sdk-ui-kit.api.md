@@ -1049,6 +1049,8 @@ export interface IAsyncTableProps<T extends {
     // (undocumented)
     skeletonItemsCount?: number;
     // (undocumented)
+    smallHeader?: boolean;
+    // (undocumented)
     sortBy?: keyof T;
     // (undocumented)
     sortDirection?: SortDirection;
@@ -1325,6 +1327,8 @@ export interface IColorPreviewProps {
 export interface IColumn<T> {
     // (undocumented)
     bold?: boolean;
+    // (undocumented)
+    getMultiLineContent?: (item: T) => Array<string>;
     // (undocumented)
     key?: keyof T;
     // (undocumented)
@@ -5737,6 +5741,9 @@ export type SizeXLarge = "xlarge";
 export type SizeXSmall = "xsmall";
 
 // @internal (undocumented)
+export type SizeXXLarge = "xxlarge";
+
+// @internal (undocumented)
 export enum SnapPoint {
     // (undocumented)
     BottomCenter = "bc",
@@ -6105,7 +6112,7 @@ export interface UiIconButtonPublicProps {
     // (undocumented)
     onKeyDown?: (e: React_2.KeyboardEvent<HTMLButtonElement>) => void;
     // (undocumented)
-    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge;
+    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
     // (undocumented)
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTable;
 }
@@ -6297,7 +6304,7 @@ export interface UiSkeletonProps {
     direction?: "row" | "column";
     itemBorderRadius?: number;
     itemHeight?: (number | string) | (number | string)[];
-    itemPadding?: number;
+    itemPadding?: number | number[];
     itemsCount?: number;
     itemsGap?: number;
     itemWidth?: (number | string) | (number | string)[];

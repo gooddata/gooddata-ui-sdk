@@ -4,7 +4,7 @@ import React, { forwardRef } from "react";
 import { stringUtils } from "@gooddata/util";
 
 import { IconType } from "../@types/icon.js";
-import { SizeLarge, SizeMedium, SizeSmall, SizeXLarge, SizeXSmall } from "../@types/size.js";
+import { SizeLarge, SizeMedium, SizeSmall, SizeXLarge, SizeXSmall, SizeXXLarge } from "../@types/size.js";
 import {
     VariantDanger,
     VariantPopOut,
@@ -25,7 +25,7 @@ import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 export interface UiIconButtonPublicProps {
     icon: IconType;
     label?: string;
-    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge;
+    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
 
     variant?:
         | VariantPrimary

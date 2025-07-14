@@ -27,7 +27,7 @@ export interface UiSkeletonProps {
     /**
      * Padding of the item, or items.
      */
-    itemPadding?: number;
+    itemPadding?: number | number[];
 
     /**
      * Gap between the items.

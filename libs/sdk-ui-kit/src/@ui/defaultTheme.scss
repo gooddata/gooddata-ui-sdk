@@ -219,7 +219,8 @@
     --gd-spacing-16px: 16px;
     --gd-spacing-34px: 34px;
     --gd-transition-all: all 0.25s ease-in-out;
-    --gd-button-XL: 44px;
+    --gd-button-XXL: 55px;
+    --gd-button-XL: 45px;
     --gd-button-L: 38px;
     --gd-button-M: 32px;
     --gd-button-S: 27px;
@@ -228,12 +229,17 @@
     --gd-tabs-height-M: 27px;
     --gd-tabs-height-S: 23px;
     --gd-table-font-size: 14px;
-    --gd-table-row-height-normal: 42px;
+    --gd-table-row-height-normal: 45px;
+    --gd-table-row-height-large: 55px;
     --gd-table-row-height-small: 27px;
     --gd-table-row-line-height: 27px;
     --gd-table-label-font-size: 11px;
     --gd-table-counter-font-size: 12px;
     --gd-table-dropdown-item-font-size: 12px;
+    --gd-table-multi-line-font-size: 12px;
+    --gd-table-multi-line-line-height: 17px;
+    --gd-table-multi-line-font-size-large: 14px;
+    --gd-table-multi-line-line-height-large: 23px;
     --gd-table-dropdown-item-height: 28px;
     --gd-table-title-font-size: 24px;
 }

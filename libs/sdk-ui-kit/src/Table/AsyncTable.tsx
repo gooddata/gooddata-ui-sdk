@@ -6,17 +6,19 @@ import { AsyncTableRow } from "./AsyncTableRow.js";
 import { b } from "./asyncTableBem.js";
 import { AsyncTableHeader } from "./AsyncTableHeader.js";
 import { skeletonItemFactory } from "./SkeletonItemFactory.js";
-import { CHECKBOX_COLUMN_WIDTH, MENU_COLUMN_WIDTH, SCROLLBAR_WIDTH } from "./constants.js";
+import { CHECKBOX_COLUMN_WIDTH, ROW_HEIGHT_LARGE, ROW_HEIGHT_NORMAL, SCROLLBAR_WIDTH } from "./constants.js";
 import { AsyncTableToolbar } from "./AsyncTableToolbar.js";
 import { AsyncTableEmptyState } from "./AsyncTableEmptyState.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AsyncTableTitle } from "./AsyncTableTitle.js";
 import { IAsyncTableProps } from "./types.js";
+import { getColumnWidth } from "./utils.js";
 
 function AsyncTableCore<T extends { id: string }>(props: IAsyncTableProps<T>) {
     const {
         width,
         scrollToIndex,
+        itemHeight,
         renderHeader,
         renderItem,
         shouldLoadNextPage,
@@ -69,7 +71,7 @@ function AsyncTableCore<T extends { id: string }>(props: IAsyncTableProps<T>) {
 
             <UiPagedVirtualList<T>
                 maxHeight={maxHeight}
-                itemHeight={42}
+                itemHeight={itemHeight}
                 itemsGap={0}
                 itemPadding={0}
                 items={items}
@@ -101,6 +103,7 @@ const useAsyncTable = <T extends { id: string }>({
     sortDirection,
     selectedItemIds,
     setSelectedItemIds,
+    smallHeader,
 }: IAsyncTableProps<T>) => {
     const [scrollToIndex, setScrollToIndex] = useState<number | undefined>(undefined);
 
@@ -141,15 +144,21 @@ const useAsyncTable = <T extends { id: string }>({
         [selectedItemIds],
     );
 
+    const largeRow = useMemo(() => columns.some((column) => column.getMultiLineContent), [columns]);
+
+    const itemHeight = useMemo(() => {
+        return largeRow ? ROW_HEIGHT_LARGE : ROW_HEIGHT_NORMAL;
+    }, [largeRow]);
+
     const width = useMemo(() => {
         return (
             widthProp ??
             columns.reduce((acc, column) => {
-                const columnWidth = column.renderMenu ? MENU_COLUMN_WIDTH : column.width;
+                const columnWidth = getColumnWidth(!!column.renderMenu, largeRow, column.width);
                 return acc + columnWidth;
             }, SCROLLBAR_WIDTH + (!!bulkActions && CHECKBOX_COLUMN_WIDTH))
         );
-    }, [columns, bulkActions, widthProp]);
+    }, [columns, bulkActions, widthProp, largeRow]);
 
     const renderItem = useCallback(
         (item: T) => {
@@ -162,10 +171,11 @@ const useAsyncTable = <T extends { id: string }>({
                     onSelect={onItemSelect}
                     isSelected={isItemSelected(item)}
                     hasCheckbox={!!bulkActions}
+                    isLarge={largeRow}
                 />
             );
         },
-        [columns, renderItemProp, onItemSelect, isItemSelected, bulkActions],
+        [columns, renderItemProp, onItemSelect, isItemSelected, bulkActions, largeRow],
     );
 
     const renderHeader = useCallback(() => {
@@ -179,9 +189,21 @@ const useAsyncTable = <T extends { id: string }>({
                 sortDirection={sortDirection}
                 hasCheckbox={!!bulkActions}
                 width={width}
+                small={smallHeader}
+                largeRow={largeRow}
             />
         );
-    }, [columns, renderHeaderProp, handleColumnClick, bulkActions, width, sortBy, sortDirection]);
+    }, [
+        columns,
+        renderHeaderProp,
+        handleColumnClick,
+        bulkActions,
+        width,
+        sortBy,
+        sortDirection,
+        largeRow,
+        smallHeader,
+    ]);
 
     const shouldLoadNextPage = useCallback((lastItemIndex: number, itemsCount: number) => {
         return lastItemIndex >= itemsCount - 1;
@@ -190,6 +212,7 @@ const useAsyncTable = <T extends { id: string }>({
     return {
         width,
         scrollToIndex,
+        itemHeight,
         renderHeader,
         renderItem,
         shouldLoadNextPage,

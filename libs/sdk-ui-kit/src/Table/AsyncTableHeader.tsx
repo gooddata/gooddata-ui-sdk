@@ -5,8 +5,8 @@ import { IAsyncTableHeaderProps, IColumn } from "./types.js";
 import { e } from "./asyncTableBem.js";
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { AsyncTableCheckbox } from "./AsyncTableCheckbox.js";
-import { MENU_COLUMN_WIDTH } from "./constants.js";
 import { makeTabsKeyboardNavigation } from "../@ui/@utils/keyboardNavigation.js";
+import { getColumnWidth } from "./utils.js";
 
 const arrowIcon = <UiIcon type="dropDown" size={14} color="complementary-6" />;
 
@@ -17,14 +17,22 @@ export function AsyncTableHeader<T>({
     sortDirection,
     hasCheckbox,
     width,
+    small,
+    largeRow,
 }: IAsyncTableHeaderProps<T>) {
     const { handleKeyDown, isFocused } = useHeaderKeyboardNavigation(columns, handleColumnClick);
 
     return (
-        <div tabIndex={0} className={e("header")} role="row" onKeyDown={handleKeyDown} style={{ width }}>
+        <div
+            tabIndex={0}
+            className={e("header", { small })}
+            role="row"
+            onKeyDown={handleKeyDown}
+            style={{ width }}
+        >
             {hasCheckbox ? <AsyncTableCheckbox /> : null}
             {columns.map((column, index) => {
-                const width = column.renderMenu ? MENU_COLUMN_WIDTH : column.width;
+                const width = getColumnWidth(!!column.renderMenu, largeRow, column.width);
                 const sorted = sortBy && sortBy === column.key;
                 const desc = sorted && sortDirection === "desc";
                 const { sortable } = column;

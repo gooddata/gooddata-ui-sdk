@@ -5,10 +5,10 @@ import { e } from "./asyncTableBem.js";
 import { AsyncTableCheckbox } from "./AsyncTableCheckbox.js";
 import { UiIconButton } from "../@ui/UiIconButton/UiIconButton.js";
 import { Dropdown } from "../Dropdown/Dropdown.js";
-import { MENU_COLUMN_WIDTH } from "./constants.js";
 import { useIntl } from "react-intl";
 import { messages } from "./locales.js";
 import { IAsyncTableRowProps, IColumn } from "./types.js";
+import { getColumnWidth } from "./utils.js";
 
 export function AsyncTableRow<T extends { id: string }>({
     item,
@@ -16,15 +16,16 @@ export function AsyncTableRow<T extends { id: string }>({
     onSelect,
     isSelected,
     hasCheckbox,
+    isLarge,
 }: IAsyncTableRowProps<T>) {
-    const { renderCellContent } = useRenderCellContent<T>();
+    const { renderCellContent } = useRenderCellContent<T>({ isLarge });
 
     return (
-        <div className={e("row")}>
+        <div className={e("row", { large: isLarge })}>
             {hasCheckbox ? <AsyncTableCheckbox checked={isSelected} onChange={() => onSelect(item)} /> : null}
             {columns.map((column, index) => {
                 const { bold, renderMenu, width: widthProp } = column;
-                const width = renderMenu ? MENU_COLUMN_WIDTH : widthProp;
+                const width = getColumnWidth(!!renderMenu, isLarge, widthProp);
                 const key = index;
                 return (
                     <div style={{ width }} key={key} className={e("cell", { bold })}>
@@ -36,7 +37,7 @@ export function AsyncTableRow<T extends { id: string }>({
     );
 }
 
-const useRenderCellContent = <T extends { id: string }>() => {
+const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: boolean }) => {
     const intl = useIntl();
 
     const renderRoleIconWithWrapper = useCallback((renderRoleIcon: (item: T) => React.ReactNode, item: T) => {
@@ -68,7 +69,7 @@ const useRenderCellContent = <T extends { id: string }>() => {
                 <Dropdown
                     renderButton={({ toggleDropdown, isOpen }) => (
                         <UiIconButton
-                            size="xlarge"
+                            size={isLarge ? "xxlarge" : "xlarge"}
                             icon="ellipsis"
                             label={label}
                             variant="table"
@@ -84,7 +85,7 @@ const useRenderCellContent = <T extends { id: string }>() => {
                 />
             );
         },
-        [intl],
+        [intl, isLarge],
     );
 
     const renderCellContent = useCallback(
@@ -96,6 +97,7 @@ const useRenderCellContent = <T extends { id: string }>() => {
                 renderPrefixIcon,
                 renderSuffixIcon,
                 renderBadge,
+                getMultiLineContent,
                 key,
             }: IColumn<T>,
             item: T,
@@ -113,9 +115,11 @@ const useRenderCellContent = <T extends { id: string }>() => {
                 <>
                     {renderRoleIconWithWrapper(renderRoleIcon, item)}
                     {renderPrefixIconWithWrapper(renderPrefixIcon, item)}
-                    <span title={textContent} className={e("text")}>
-                        {textContent}
-                    </span>
+                    <div title={textContent} className={e("text", { "multi-line": !!getMultiLineContent })}>
+                        {getMultiLineContent
+                            ? getMultiLineContent(item).map((line, index) => <span key={index}>{line}</span>)
+                            : textContent}
+                    </div>
                     {renderSuffixIconWithWrapper(renderSuffixIcon, item)}
                     {renderBadgeWithWrapper(renderBadge, item)}
                 </>

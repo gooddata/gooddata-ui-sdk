@@ -10,7 +10,12 @@ export const internalTableThemeVariables: ThemeInternalCssVariable[] = [
     {
         type: "internal",
         variableName: "--gd-table-row-height-normal",
-        defaultValue: "42px",
+        defaultValue: "45px",
+    },
+    {
+        type: "internal",
+        variableName: "--gd-table-row-height-large",
+        defaultValue: "55px",
     },
     {
         type: "internal",
@@ -36,6 +41,26 @@ export const internalTableThemeVariables: ThemeInternalCssVariable[] = [
         type: "internal",
         variableName: "--gd-table-dropdown-item-font-size",
         defaultValue: "12px",
+    },
+    {
+        type: "internal",
+        variableName: "--gd-table-multi-line-font-size",
+        defaultValue: "12px",
+    },
+    {
+        type: "internal",
+        variableName: "--gd-table-multi-line-line-height",
+        defaultValue: "17px",
+    },
+    {
+        type: "internal",
+        variableName: "--gd-table-multi-line-font-size-large",
+        defaultValue: "14px",
+    },
+    {
+        type: "internal",
+        variableName: "--gd-table-multi-line-line-height-large",
+        defaultValue: "23px",
     },
     {
         type: "internal",

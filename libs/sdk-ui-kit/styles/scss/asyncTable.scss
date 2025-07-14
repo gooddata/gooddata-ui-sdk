@@ -13,6 +13,9 @@
         display: flex;
         height: var(--gd-table-row-height-normal);
 
+        &--large {
+            height: var(--gd-table-row-height-large);
+        }
         &:hover {
             #{$root}__cell {
                 background-color: var(--gd-palette-complementary-2);
@@ -25,6 +28,10 @@
         height: var(--gd-table-row-height-normal);
         line-height: var(--gd-table-row-line-height);
         color: var(--gd-palette-complementary-6);
+
+        &--small {
+            height: var(--gd-table-row-height-small);
+        }
 
         &:focus-visible {
             outline: none;
@@ -100,6 +107,18 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+
+        &--multi-line {
+            display: flex;
+            flex-direction: column;
+            font-size: var(--gd-table-multi-line-font-size);
+            line-height: var(--gd-table-multi-line-line-height);
+            > span:first-child {
+                font-size: var(--gd-table-multi-line-font-size-large);
+                line-height: var(--gd-table-multi-line-line-height-large);
+                font-weight: 700;
+            }
+        }
     }
 
     &__role-icon,
@@ -152,6 +171,9 @@
         &--checkbox {
             #{$root}__cell {
                 visibility: visible;
+                height: 100%;
+                border: 1px solid var(--gd-palette-complementary-3);
+                border-radius: 3px;
             }
         }
     }

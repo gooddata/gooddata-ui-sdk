@@ -63,6 +63,14 @@
                 width: var(--gd-button-XL);
             }
         }
+
+        &-xxlarge {
+            height: var(--gd-button-XXL);
+
+            &#{$root}--type-button {
+                width: var(--gd-button-XXL);
+            }
+        }
     }
 
     /**

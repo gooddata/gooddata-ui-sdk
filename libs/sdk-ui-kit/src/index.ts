@@ -76,7 +76,14 @@ export { ComponentTable, propCombinationsFor } from "./@ui/@dev/ComponentTable.j
 export type { IComponentTableProps, IPropCombination } from "./@ui/@dev/ComponentTable.js";
 export type { StyleProps } from "./@ui/@utils/bem.js";
 export { bem, bemFactory } from "./@ui/@utils/bem.js";
-export type { SizeXSmall, SizeSmall, SizeMedium, SizeLarge, SizeXLarge } from "./@ui/@types/size.js";
+export type {
+    SizeXSmall,
+    SizeSmall,
+    SizeMedium,
+    SizeLarge,
+    SizeXLarge,
+    SizeXXLarge,
+} from "./@ui/@types/size.js";
 export type {
     VariantPrimary,
     VariantSecondary,

@@ -24,7 +24,7 @@ export const UiCheckbox: React.FC<UiCheckboxProps> = ({
     preventDefault = false,
     indeterminate = false,
 }) => (
-    <label className={b({ remove: indeterminate })}>
+    <label className={b()}>
         <input
             type="checkbox"
             className={e("input")}
