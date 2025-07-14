@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 /* eslint-disable sonarjs/cognitive-complexity */
 
 import { spawn, execSync } from "child_process";
@@ -74,9 +74,9 @@ export function runCypress(configParams = {}) {
         cypressProps["CYPRESS_IS_RECORDING"] = recording;
     }
 
-    cypressProps["CYPRESS_WORKING_DIR"] = workingDir
-        ? workingDir
-        : "/gooddata-ui-sdk-e2e/libs/sdk-ui-tests-e2e";
+    const isGdcUi = !!process.env.GDC_UI;
+    const defaultDir = `/gooddata-ui-sdk-e2e/${isGdcUi ? "sdk/" : ""}libs/sdk-ui-tests-e2e`;
+    cypressProps["CYPRESS_WORKING_DIR"] = workingDir ? workingDir : defaultDir;
 
     const args = [visual ? "open" : "run", "--e2e"];
 

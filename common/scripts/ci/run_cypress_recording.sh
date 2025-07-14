@@ -38,7 +38,14 @@ if [[ "$GITHUB_ACTIONS" != "true" ]]; then
     export USER_GID=$(id -g $USER)
 fi
 PROJECT_NAME=tiger-sdk-ui-tests-e2e-${EXECUTOR_NUMBER:-default}
-MODE=record NO_COLOR=1 docker compose -f docker-compose-isolated.yaml -p "$PROJECT_NAME" up \
+
+if [ -n "$GDC_UI" ]; then
+  COMPOSE_FILE="docker-compose-isolated-gdcui.yaml"
+else
+  COMPOSE_FILE="docker-compose-isolated.yaml"
+fi
+
+MODE=record NO_COLOR=1 docker compose -f $COMPOSE_FILE -p "$PROJECT_NAME" up \
     --abort-on-container-exit --exit-code-from isolated-tests \
     --force-recreate --always-recreate-deps --renew-anon-volumes --no-color
 
