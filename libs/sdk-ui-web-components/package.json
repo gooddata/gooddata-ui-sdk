@@ -36,6 +36,7 @@
         "build": "concurrently \"webpack --mode production\" \"tsc -p tsconfig.json --emitDeclarationOnly\" && npm run api-extractor",
         "build-dev": "webpack --mode development",
         "build-analyze": "webpack --mode production --env analyze",
+        "pack-build": "tar -czf sdk-ui-web-components.tgz -C esm .",
         "dev": "webpack --mode development --watch",
         "proxy": "node ./scripts/proxy.js",
         "test": "vitest watch",
