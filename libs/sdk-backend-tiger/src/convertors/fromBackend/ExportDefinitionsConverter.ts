@@ -41,7 +41,7 @@ export const wrapExportDefinition = (
         id,
         uri: id,
         ref: idRef(id, "exportDefinition"),
-        title: metadata?.title ?? "",
+        title: metadata?.title ?? requestPayload.fileName,
         description: "",
         tags: [],
         requestPayload,
