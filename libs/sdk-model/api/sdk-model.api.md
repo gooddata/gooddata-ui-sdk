@@ -1944,7 +1944,7 @@ export type IExportDefinitionRequestPayload = IExportDefinitionDashboardRequestP
 export interface IExportDefinitionVisualizationObjectContent {
     dashboard?: Identifier;
     // (undocumented)
-    filters?: IFilter[];
+    filters?: IFilter[] | FilterContextItem[];
     // (undocumented)
     visualizationObject: Identifier;
     widget?: Identifier;
