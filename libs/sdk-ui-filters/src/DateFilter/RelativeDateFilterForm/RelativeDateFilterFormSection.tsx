@@ -30,6 +30,7 @@ interface IAllTimeFilterSectionProps {
     route: string;
     availableGranularities: DateFilterGranularity[];
     errors: IExtendedDateFilterErrors;
+    withoutApply?: boolean;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     changeRoute: (newRoute?: DateFilterRoute) => void;
     closeDropdown: () => void;
@@ -43,6 +44,7 @@ export const RelativeDateFilterFormSection: React.FC<IAllTimeFilterSectionProps>
     route,
     availableGranularities,
     errors,
+    withoutApply,
     onSelectedFilterOptionChange,
     changeRoute,
     closeDropdown,
@@ -118,6 +120,7 @@ export const RelativeDateFilterFormSection: React.FC<IAllTimeFilterSectionProps>
                                 submitRelativeDateFilterForm(
                                     event,
                                     isEmpty(errors),
+                                    withoutApply,
                                     closeDropdown,
                                     onApplyClick,
                                 )

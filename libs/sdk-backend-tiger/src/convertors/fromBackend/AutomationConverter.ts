@@ -118,16 +118,26 @@ export function convertAutomation(
         ),
         ...(visualExports?.map((ve) =>
             enableNewScheduleExport
-                ? wrapExportDefinition(convertVisualExportRequest(ve, enableAutomationFilterContext))
+                ? wrapExportDefinition(
+                      convertVisualExportRequest(ve, enableAutomationFilterContext),
+                      ve.requestPayload.metadata,
+                  )
                 : convertInlineExportDefinitionMdObject(ve, enableAutomationFilterContext),
         ) ?? []),
         ...(tabularExports?.map((te) =>
             enableNewScheduleExport
-                ? wrapExportDefinition(convertTabularExportRequest(te))
+                ? wrapExportDefinition(
+                      convertTabularExportRequest(te),
+                      te.requestPayload.metadata ?? undefined,
+                  )
                 : convertInlineExportDefinitionMdObject(te, enableAutomationFilterContext),
         ) ?? []),
-        ...(imageExports?.map((ie) => wrapExportDefinition(convertImageExportRequest(ie))) ?? []),
-        ...(slidesExports?.map((se) => wrapExportDefinition(convertSlidesExportRequest(se))) ?? []),
+        ...(imageExports?.map((ie) =>
+            wrapExportDefinition(convertImageExportRequest(ie), ie.requestPayload.metadata ?? undefined),
+        ) ?? []),
+        ...(slidesExports?.map((se) =>
+            wrapExportDefinition(convertSlidesExportRequest(se), se.requestPayload.metadata ?? undefined),
+        ) ?? []),
         ...(dashboardTabularExports?.map((dte) =>
             wrapExportDefinition(convertDashboardTabularExportRequest(dte)),
         ) ?? []),

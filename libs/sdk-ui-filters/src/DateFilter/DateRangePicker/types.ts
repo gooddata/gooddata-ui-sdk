@@ -23,6 +23,7 @@ export interface IDateRangeInputFieldProps {
     isTimeEnabled: boolean;
     errors?: IDateTimePickerErrors;
     intl: IntlShape;
+    withoutApply?: boolean;
 }
 
 export interface IDateRange {

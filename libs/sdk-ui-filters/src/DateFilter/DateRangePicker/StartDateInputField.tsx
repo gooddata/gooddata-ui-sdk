@@ -28,6 +28,7 @@ export const StartDateInputField = forwardRef<HTMLInputElement, IDateRangeInputF
             isTimeEnabled,
             errors,
             intl,
+            withoutApply,
         },
         ref,
     ) => {
@@ -79,6 +80,7 @@ export const StartDateInputField = forwardRef<HTMLInputElement, IDateRangeInputF
                 defaultTime={DAY_START_TIME}
                 inputErrorMessageTexts={inputErrorMessageTexts}
                 errors={errors}
+                withoutApply={withoutApply}
             />
         );
     },

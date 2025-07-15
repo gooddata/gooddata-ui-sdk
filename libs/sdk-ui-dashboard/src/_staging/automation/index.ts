@@ -116,7 +116,7 @@ export const getAutomationVisualizationFilters = (
         automation.exportDefinitions?.find((exportDefinition) => {
             return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
         })?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload
-    )?.content.filters?.filter((f) => isFilter(f));
+    )?.content.filters?.filter((f) => isFilter(f)) as IFilter[];
 };
 
 export const getAutomationAlertFilters = (

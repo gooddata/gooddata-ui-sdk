@@ -50,6 +50,7 @@ export const ShareLink: React.FC<IShareLinkProps> = ({
             </div>
             <Input
                 value={shareLink}
+                type="url"
                 readonly={true}
                 iconButton="copy"
                 onIconButtonClick={onIconButtonClick}

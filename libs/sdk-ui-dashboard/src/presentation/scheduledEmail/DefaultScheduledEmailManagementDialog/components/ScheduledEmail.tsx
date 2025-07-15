@@ -55,7 +55,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const webhookTitle = notificationChannels.find(
         (channel) => channel.id === scheduledEmail.notificationChannel,
     )?.title;
-    const dashboardTitle = scheduledEmail.exportDefinitions?.[0]?.title;
+    const dashboardTitle = scheduledEmail.exportDefinitions?.find((def) => def.title)?.title;
     const isWidget = isVisualisationAutomation(scheduledEmail);
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;

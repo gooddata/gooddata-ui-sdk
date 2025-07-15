@@ -31,6 +31,7 @@ interface IDateTimePickerOwnProps {
     accessibilityConfig: IDateTimePickerAccessibilityConfig;
     inputErrorMessageTexts: InputErrorMessageTexts;
     errors?: IDateTimePickerErrors;
+    withoutApply?: boolean;
 }
 
 export type DateTimePickerComponentProps = IDateTimePickerOwnProps & WrappedComponentProps;
@@ -53,6 +54,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
             accessibilityConfig,
             inputErrorMessageTexts,
             errors,
+            withoutApply,
         }: DateTimePickerComponentProps,
         ref,
     ) => {
@@ -91,6 +93,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                         isDateOrderError={errors?.isDateOrderError}
                         isMobile={isMobile}
                         isTimeEnabled={isTimeEnabled}
+                        withoutApply={withoutApply}
                     />
                     {isTimeEnabled ? (
                         <TimeInput
@@ -100,6 +103,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                             accessibilityConfig={timeInputAccessibilityConfig}
                             errorText={timeInputErrorText}
                             isMobile={isMobile}
+                            withoutApply={withoutApply}
                         />
                     ) : null}
                 </fieldset>

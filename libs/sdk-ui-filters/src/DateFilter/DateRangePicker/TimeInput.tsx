@@ -18,6 +18,7 @@ export interface ITimeInputProps {
     accessibilityConfig: IInputAccessibilityConfig;
     errorText?: string;
     isMobile: boolean;
+    withoutApply?: boolean;
 }
 
 const padTo2Digits = (num: number) => String(num).padStart(2, "0");
@@ -35,6 +36,7 @@ export const TimeInput: React.FC<ITimeInputProps> = ({
     accessibilityConfig,
     errorText,
     isMobile,
+    withoutApply,
 }) => {
     const [stringValue, setStringValue] = useState<string>(stringifyTime(value));
 
@@ -72,13 +74,13 @@ export const TimeInput: React.FC<ITimeInputProps> = ({
 
     const onTimeInputKeyDown = useCallback(
         (e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (isEnterKey(e)) {
+            if (isEnterKey(e) && !withoutApply) {
                 onSubmit(true);
             } else if (isArrowKey(e)) {
                 e.stopPropagation(); // allow navigation in the input
             }
         },
-        [onSubmit],
+        [withoutApply, onSubmit],
     );
 
     return (

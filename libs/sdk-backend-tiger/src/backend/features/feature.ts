@@ -550,17 +550,10 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDashboardFlexibleLayout,
-            "enableDashboardFlexibleLayout",
+            TigerFeaturesNames.EnableFlexibleDashboardLayout,
+            "enableFlexibleDashboardLayout",
             "BOOLEAN",
-            FeatureFlagsValues.enableDashboardFlexibleLayout,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableDashboardFlexibleLayoutContainer,
-            "enableDashboardFlexibleLayoutContainer",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDashboardFlexibleLayoutContainer,
+            FeatureFlagsValues.enableFlexibleDashboardLayout,
         ),
         ...loadFeature(
             features,

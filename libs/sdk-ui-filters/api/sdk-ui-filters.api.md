@@ -130,6 +130,7 @@ export type AttributeFilterControllerData = {
     enableShowingFilteredElements?: boolean;
     irrelevantSelection?: IAttributeElement[];
     limitingValidationItems?: ObjRef[];
+    isFilteredByLimitingValidationItems?: boolean;
     isFilteredByDependentDateFilters?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableAttributeFilterVirtualised?: boolean;
@@ -580,6 +581,7 @@ export interface IAttributeFilterElementsSelectProps {
     // (undocumented)
     isApplyDisabled?: boolean;
     isFilteredByDependentDateFilters?: boolean;
+    isFilteredByLimitingValidationItems?: boolean;
     isFilteredByParentFilters: boolean;
     isInverted: boolean;
     isLoading: boolean;

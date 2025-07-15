@@ -1,6 +1,19 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 10 Jul 2025 06:54:29 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Jul 2025 09:23:49 GMT and should not be manually modified.
+
+## 10.34.0
+
+Mon, 14 Jul 2025 09:23:49 GMT
+
+### Updates
+
+-   remove obsolete UiMenu props
+-   fix(sdk-ui-dashboard): documentation link displayed in tooltip shown over the new Column container item of dashboard leads to the related part of documentation page now
+-   fix(sdk-ui-dashboard): render row end hotspot only when a widget is dragged to fix the row height resizer offset in the column container
+-   fix(sdk-ui-dashboard): make widget a width resizer the same thickness as a height resizer
+-   feat: introduce a new feature flag for pre-aggregated facts
+-   fix(sdk-ui-dashboard): introduce and use a new feature flag to enable Flexible Layout to not enable the uncomplete feature in previously released SDKs
 
 ## 10.33.0
 

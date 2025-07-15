@@ -234,12 +234,13 @@ export const createDateFilterRelativeFormKeyboardHandler = ({
 export const submitRelativeDateFilterForm = (
     event: React.KeyboardEvent,
     canSubmit: boolean,
+    withoutApply: boolean,
     onSubmit: () => void,
     submit: () => void,
 ) => {
     if (event.key === "Enter") {
         const canSubmitForm = canSubmit && document.activeElement instanceof HTMLInputElement;
-        if (canSubmitForm) {
+        if (canSubmitForm && !withoutApply) {
             submit();
             onSubmit();
         }

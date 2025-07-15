@@ -76,6 +76,11 @@ export function useAttributeFilterControllerData(
         initialElementsPageStatus === "success" &&
         !isEmpty(limitingDateFilters);
 
+    const isFilteredByLimitingValidationItems =
+        shouldIncludeLimitingFilters &&
+        initialElementsPageStatus === "success" &&
+        !isEmpty(limitingValidationItems);
+
     const isFiltering = useIsFiltering(handler);
 
     const parentFilterAttributes = handler.getLimitingAttributeFiltersAttributes();
@@ -137,6 +142,7 @@ export function useAttributeFilterControllerData(
         irrelevantSelection,
 
         limitingValidationItems,
+        isFilteredByLimitingValidationItems,
     };
 }
 
