@@ -9114,6 +9114,9 @@ export const selectIsAlternativeDisplayFormSelectionEnabled: DashboardSelector<b
 export const selectIsAnalyticalDesignerEnabled: DashboardSelector<boolean>;
 
 // @internal
+export const selectIsApplyFiltersAllAtOnceEnabledAndSet: DashboardSelector<boolean>;
+
+// @internal
 export const selectIsAttributeFilterDependentByLocalIdentifier: (attributeFilterLocalIdentifier: string) => DashboardSelector<boolean>;
 
 // @internal (undocumented)

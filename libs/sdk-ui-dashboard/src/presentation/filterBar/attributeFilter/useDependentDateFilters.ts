@@ -4,10 +4,9 @@ import { invariant } from "ts-invariant";
 import { IDashboardAttributeFilter, IDashboardDateFilter, objRefToString } from "@gooddata/sdk-model";
 
 import {
-    selectDashboardFiltersApplyMode,
-    selectEnableDashboardFiltersApplyModes,
     selectFilterContextDateFilter,
     selectFilterContextDateFiltersWithDimension,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectWorkingFilterContextDateFilter,
     selectWorkingFilterContextDateFiltersWithDimension,
     useDashboardSelector,
@@ -29,22 +28,17 @@ export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "dependentD
  * @beta
  */
 export const useDependentDateFilters = (filter: IDashboardAttributeFilter): UseParentFiltersResult => {
-    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
-    const dashboardFiltersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
     const allAppliedDateFilters = useDashboardSelector(selectFilterContextDateFiltersWithDimension);
     const allWorkingDateFilters = useDashboardSelector(selectWorkingFilterContextDateFiltersWithDimension);
-    const allDateFilters =
-        dashboardFiltersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes
-            ? allWorkingDateFilters
-            : allAppliedDateFilters;
+    const allDateFilters = isApplyAllAtOnceEnabledAndSet ? allWorkingDateFilters : allAppliedDateFilters;
 
     const commonAppliedDateFilter = useDashboardSelector(selectFilterContextDateFilter);
     const commonWorkingDateFilter = useDashboardSelector(selectWorkingFilterContextDateFilter);
-    const commonDateFilter =
-        dashboardFiltersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes
-            ? commonWorkingDateFilter
-            : commonAppliedDateFilter;
+    const commonDateFilter = isApplyAllAtOnceEnabledAndSet
+        ? commonWorkingDateFilter
+        : commonAppliedDateFilter;
     const commonDateFilterWithAllTime = getCommonDateFilterWithAllTime(commonDateFilter);
 
     const dependentDateFilters = useMemo(() => {

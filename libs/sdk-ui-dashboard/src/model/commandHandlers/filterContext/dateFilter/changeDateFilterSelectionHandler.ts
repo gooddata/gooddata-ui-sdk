@@ -20,7 +20,7 @@ import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering }
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
-import { selectEnableDashboardFiltersApplyModes } from "../../../store/config/configSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../store/config/configSelectors.js";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,
@@ -44,9 +44,9 @@ export function* changeDateFilterSelectionHandler(
         );
     }
 
-    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
-        yield select(selectEnableDashboardFiltersApplyModes);
-    const isWorkingSelectionChange = cmd.payload.isWorkingSelectionChange && enableDashboardFiltersApplyModes;
+    const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
+        yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
+    const isWorkingSelectionChange = cmd.payload.isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet;
     const localIdentifierObj = cmd.payload.localIdentifier
         ? { localIdentifier: cmd.payload.localIdentifier }
         : {};

@@ -25,8 +25,8 @@ import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/
 import isEmpty from "lodash/isEmpty.js";
 import {
     selectEnableCrossFilteringAliasTitles,
-    selectEnableDashboardFiltersApplyModes,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../store/config/configSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
@@ -127,9 +127,10 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
 
     const correlation = `crossFiltering_${uuid()}`;
 
-    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
-        yield select(selectEnableDashboardFiltersApplyModes);
-    if (enableDashboardFiltersApplyModes) {
+    const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
+        yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
+    // Reset working selection if apply modes are enabled
+    if (isApplyAllAtOnceEnabledAndSet) {
         yield put(resetFilterContextWorkingSelection());
     }
 

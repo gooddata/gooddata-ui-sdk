@@ -15,8 +15,7 @@ import {
     selectEnableFlexibleLayout,
     applyFilterContextWorkingSelection,
     selectIsWorkingFilterContextChanged,
-    selectDashboardFiltersApplyMode,
-    selectEnableDashboardFiltersApplyModes,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsInEditMode,
 } from "../../../model/index.js";
 
@@ -48,8 +47,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
-    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
-    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
 
     const { showExecutionTimestampMessage, formattedDate, onShowCurrentTimestampDashboard } =
@@ -93,8 +91,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                     className={cx("dash-filters-visible", {
                         scrollable: scrollable,
                         "s-dash-filters-visible-all": isFilterBarExpanded,
-                        "apply-all-at-once":
-                            filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes,
+                        "apply-all-at-once": isApplyAllAtOnceEnabledAndSet,
                     })}
                 >
                     <AllFiltersContainer setCalculatedRows={setCalculatedRows}>
@@ -104,13 +101,11 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                     <div
                         className="filter-bar-configuration"
                         style={{
-                            alignItems: enableDashboardFiltersApplyModes ? "center" : undefined,
-                            paddingRight: enableDashboardFiltersApplyModes ? "10px" : undefined,
+                            alignItems: isApplyAllAtOnceEnabledAndSet ? "center" : undefined,
+                            paddingRight: isApplyAllAtOnceEnabledAndSet ? "10px" : undefined,
                         }}
                     >
-                        {filtersApplyMode.mode === "ALL_AT_ONCE" &&
-                        enableDashboardFiltersApplyModes &&
-                        isWorkingFilterContextChanged ? (
+                        {isApplyAllAtOnceEnabledAndSet && isWorkingFilterContextChanged ? (
                             <UiButton
                                 label={intl.formatMessage({ id: "apply" })}
                                 variant="primary"
@@ -127,9 +122,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                 />
                 {isInEditMode ? isFlexibleLayoutEnabled ? <FlexibleBulletsBar /> : <FluidBulletsBar /> : null}
             </div>
-            {isWorkingFilterContextChanged &&
-            filtersApplyMode.mode === "ALL_AT_ONCE" &&
-            enableDashboardFiltersApplyModes ? (
+            {isWorkingFilterContextChanged && isApplyAllAtOnceEnabledAndSet ? (
                 <div className="filters-message" style={{ marginTop: rows.length > 1 ? "35px" : "10px" }}>
                     <Message type="progress">
                         <FormattedMessage
