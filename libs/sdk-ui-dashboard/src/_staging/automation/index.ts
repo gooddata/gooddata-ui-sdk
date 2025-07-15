@@ -107,16 +107,27 @@ export const getAutomationDashboardFilters = (
 
 export const getAutomationVisualizationFilters = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
-): IFilter[] | undefined => {
+): { executionFilters: IFilter[] | undefined; filterContextItems: FilterContextItem[] | undefined } => {
     if (!automation) {
-        return undefined;
+        return { executionFilters: undefined, filterContextItems: undefined };
     }
 
-    return (
+    const executionFilters = (
         automation.exportDefinitions?.find((exportDefinition) => {
             return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
         })?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload
-    )?.content.filters?.filter((f) => isFilter(f)) as IFilter[];
+    )?.content.filters?.filter((f) => isFilter(f)) as IFilter[] | undefined;
+
+    const filterContextItems = (
+        automation.exportDefinitions?.find((exportDefinition) => {
+            return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
+        })?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload
+    )?.content.filters?.filter((f) => isFilterContextItem(f)) as FilterContextItem[] | undefined;
+
+    return {
+        executionFilters: (executionFilters ?? []).length > 0 ? executionFilters : undefined,
+        filterContextItems: (filterContextItems ?? []).length > 0 ? filterContextItems : undefined,
+    };
 };
 
 export const getAutomationAlertFilters = (

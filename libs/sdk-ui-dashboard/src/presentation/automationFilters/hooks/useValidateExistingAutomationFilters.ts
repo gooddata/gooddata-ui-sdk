@@ -97,7 +97,8 @@ export function useValidateExistingAutomationFilters({
 
     const ignoredFilters = widget ? dashboardFilters.filter((f) => isFilterIgnoredByWidget(f, widget)) : [];
 
-    const savedScheduleFilters = getAutomationVisualizationFilters(automationToEdit);
+    const { executionFilters: savedScheduleFilters, filterContextItems: savedScheduleFilterContextItems } =
+        getAutomationVisualizationFilters(automationToEdit);
     const savedAlertFilters = getAutomationAlertFilters(automationToEdit);
     const savedDashboardFilters = getAutomationDashboardFilters(automationToEdit);
 
@@ -113,8 +114,26 @@ export function useValidateExistingAutomationFilters({
         return filter;
     });
 
+    const savedScheduleFiltersAsExecutionFilters =
+        savedScheduleFilterContextItems === undefined
+            ? undefined
+            : filterContextItemsToDashboardFiltersByWidget(savedScheduleFilterContextItems).map(
+                  (filter): IDashboardFilter => {
+                      // Sanitize common date filters by removing date dataSet
+                      if (isDateFilter(filter) && filterLocalIdentifier(filter) === commonDateFilterId) {
+                          return isRelativeDateFilter(filter)
+                              ? (omit(filter, "relativeDateFilter.dataSet") as IRelativeDateFilter)
+                              : (omit(filter, "absoluteDateFilter.dataSet") as IAbsoluteDateFilter);
+                      }
+                      return filter;
+                  },
+              );
+
     const savedAutomationFilters =
-        savedScheduleFilters ?? savedAlertFilters ?? savedDashboardFiltersAsExecutionFilters;
+        savedScheduleFilters ??
+        savedScheduleFiltersAsExecutionFilters ??
+        savedAlertFilters ??
+        savedDashboardFiltersAsExecutionFilters;
 
     const skipValidation =
         !enableAutomationFilterContext ||

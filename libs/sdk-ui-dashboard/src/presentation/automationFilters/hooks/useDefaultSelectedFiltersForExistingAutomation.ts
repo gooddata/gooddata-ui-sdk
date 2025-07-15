@@ -34,7 +34,10 @@ export function useDefaultSelectedFiltersForExistingAutomation(
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
 
     const savedWidgetAlertFilters = getAutomationAlertFilters(automationToEdit);
-    const savedWidgetScheduleFilters = getAutomationVisualizationFilters(automationToEdit);
+    const {
+        executionFilters: savedWidgetScheduleFilters,
+        filterContextItems: savedWidgetScheduleFilterContextItems,
+    } = getAutomationVisualizationFilters(automationToEdit);
     const savedDashboardScheduleFilters = getAutomationDashboardFilters(automationToEdit);
 
     // Convert saved filters to FilterContextItem[] with correct titles
@@ -44,10 +47,15 @@ export function useDefaultSelectedFiltersForExistingAutomation(
             ?.filter(isDashboardFilter)
             .map((filter) => convertAndSanitizeFilter(filter, availableVisibleFilters));
 
-        return savedDashboardScheduleFilters ?? convertedSavedWidgetFilters;
+        return (
+            savedDashboardScheduleFilters ??
+            savedWidgetScheduleFilterContextItems ??
+            convertedSavedWidgetFilters
+        );
     }, [
         savedWidgetAlertFilters,
         savedWidgetScheduleFilters,
+        savedWidgetScheduleFilterContextItems,
         savedDashboardScheduleFilters,
         availableVisibleFilters,
     ]);

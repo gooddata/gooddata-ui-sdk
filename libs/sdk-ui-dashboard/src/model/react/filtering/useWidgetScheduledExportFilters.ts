@@ -48,7 +48,8 @@ export function useWidgetScheduledExportFilters({
 }: IUseWidgetScheduledExportFiltersProps): QueryProcessingState<IFilter[]> {
     const newScheduledExportFiltersQuery = useFiltersForNewWidgetScheduledExport(widget, insight);
 
-    const existingWidgetScheduledExportFilters = getAutomationVisualizationFilters(scheduledExportToEdit);
+    const { executionFilters: existingWidgetScheduledExportFilters } =
+        getAutomationVisualizationFilters(scheduledExportToEdit);
 
     if (existingWidgetScheduledExportFilters) {
         return {
