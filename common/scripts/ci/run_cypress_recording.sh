@@ -18,15 +18,23 @@ export CYPRESS_TEST_TAGS=pre-merge_isolated_tiger
 export FIXTURE_TYPE=goodsales
 export FILTER=${FILTER:-}
 
+if [ -n "$GDC_UI" ]; then
+  RUSH_REPO_ROOT="../../.."
+else
+  RUSH_REPO_ROOT="../.."
+fi
+
 echo "⭐️ Create reference workspace"
-(cd libs/sdk-ui-tests-e2e && node ../../common/scripts/install-run-rushx.js create-ref-workspace)
+(cd $ROOT_DIR/libs/sdk-ui-tests-e2e && node $RUSH_REPO_ROOT/common/scripts/install-run-rushx.js create-ref-workspace)
 
 echo "⭐️ Build gooddata-ui-sdk-scenarios"
-(cd libs/sdk-ui-tests-e2e && node ../../common/scripts/install-run-rushx.js build-scenarios)
+(cd $ROOT_DIR/libs/sdk-ui-tests-e2e && node $RUSH_REPO_ROOT/common/scripts/install-run-rushx.js build-scenarios)
 
 echo "⭐️ Build docker container from gooddata-ui-sdk-scenarios"
 export IMAGE_ID=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER:-default}
 trap "docker rmi --force $IMAGE_ID || true" EXIT
+
+
 pushd $E2E_TEST_DIR
 rm -rf ./recordings/mappings
 mkdir -p ./recordings/mappings/TIGER
@@ -50,4 +58,4 @@ MODE=record NO_COLOR=1 docker compose -f $COMPOSE_FILE -p "$PROJECT_NAME" up \
     --force-recreate --always-recreate-deps --renew-anon-volumes --no-color
 
 echo "⭐️ Delete reference workspace on the host"
-node $ROOT_DIR/common/scripts/install-run-rushx.js delete-ref-workspace
+(cd $ROOT_DIR/libs/sdk-ui-tests-e2e && node $RUSH_REPO_ROOT/common/scripts/install-run-rushx.js delete-ref-workspace)
