@@ -179,6 +179,7 @@ export const DateFilterBody = React.forwardRef<HTMLDivElement, IDateFilterBodyPr
                         isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
                         weekStart={weekStart}
                         availableGranularities={availableGranularities}
+                        withoutApply={withoutApply}
                     />
                 ) : (
                     <VisibleScrollbar className={visibleScrollbarClassName} style={scrollerStyle}>
@@ -196,6 +197,7 @@ export const DateFilterBody = React.forwardRef<HTMLDivElement, IDateFilterBodyPr
                             isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
                             weekStart={weekStart}
                             availableGranularities={availableGranularities}
+                            withoutApply={withoutApply}
                         />
                     </VisibleScrollbar>
                 )}
