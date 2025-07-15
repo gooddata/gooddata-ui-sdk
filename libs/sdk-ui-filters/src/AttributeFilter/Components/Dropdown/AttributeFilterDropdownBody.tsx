@@ -42,6 +42,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         parentFilterAttributes,
         isFilteredByParentFilters,
         isFilteredByDependentDateFilters,
+        isFilteredByLimitingValidationItems,
         fullscreenOnMobile,
         selectionMode,
         title,
@@ -102,6 +103,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
                 attributeTitle={title}
                 enableShowingFilteredElements={enableShowingFilteredElements}
                 isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
+                isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
                 onShowFilteredElements={onShowFilteredElements}
                 irrelevantSelection={irrelevantSelection}
                 onClearIrrelevantSelection={onClearIrrelevantSelection}

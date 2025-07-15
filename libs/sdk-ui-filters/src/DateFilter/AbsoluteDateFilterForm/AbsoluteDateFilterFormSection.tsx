@@ -25,6 +25,7 @@ interface IAbsoluteDateFilterFormSection {
     isTimeForAbsoluteRangeEnabled: boolean;
     isMobile: boolean;
     route: DateFilterRoute;
+    withoutApply?: boolean;
     changeRoute: (newRoute?: DateFilterRoute) => void;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     closeDropdown: () => void;
@@ -39,6 +40,7 @@ export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSect
     isTimeForAbsoluteRangeEnabled,
     isMobile,
     route,
+    withoutApply,
     changeRoute,
     onSelectedFilterOptionChange,
     closeDropdown,
@@ -90,6 +92,7 @@ export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSect
                         isTimeEnabled={isTimeForAbsoluteRangeEnabled}
                         weekStart={weekStart}
                         submitForm={submitForm}
+                        withoutApply={withoutApply}
                     />
                 </DateFilterFormWrapper>
             ) : null}
