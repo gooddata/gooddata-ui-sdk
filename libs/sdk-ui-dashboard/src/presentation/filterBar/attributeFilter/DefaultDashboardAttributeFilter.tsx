@@ -400,9 +400,6 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                         {...props}
                         onShowFilteredElements={handleShowFilteredElements}
                         enableShowingFilteredElements={enableShowingFilteredElements}
-                        isFilteredByLimitingValidationItems={
-                            (filter.attributeFilter.validateElementsBy?.length ?? 0) > 0
-                        }
                     />
                 );
             }
@@ -418,9 +415,6 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                         );
                     }}
                     enableShowingFilteredElements={enableShowingFilteredElements}
-                    isFilteredByLimitingValidationItems={
-                        (filter.attributeFilter.validateElementsBy?.length ?? 0) > 0
-                    }
                 />
             );
         };

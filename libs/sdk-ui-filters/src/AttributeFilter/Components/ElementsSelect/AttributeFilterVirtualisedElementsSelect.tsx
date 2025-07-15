@@ -34,6 +34,7 @@ interface IAttributeFilterVirtualisedElementsSelect {
     error?: GoodDataSdkError;
     enableShowingFilteredElements?: boolean;
     isFilteredByDependentDateFilters?: boolean;
+    isFilteredByLimitingValidationItems: boolean;
     attributeTitle?: string;
     onShowFilteredElements?: () => void;
     irrelevantSelection?: IAttributeElement[];
@@ -89,6 +90,7 @@ export const AttributeFilterVirtualisedElementsSelect: React.FC<IAttributeFilter
         isApplyDisabled,
 
         isFilteredByDependentDateFilters,
+        isFilteredByLimitingValidationItems,
         withoutApply,
     } = props;
 
@@ -195,6 +197,7 @@ export const AttributeFilterVirtualisedElementsSelect: React.FC<IAttributeFilter
                         getItemTitle={getItemTitle}
                         isFilteredByParentFilters={isFilteredByParentFilters}
                         isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
+                        isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
                         isInverted={isInverted}
                         parentFilterTitles={parentFilterTitles}
                         selectedItems={selectedItems}

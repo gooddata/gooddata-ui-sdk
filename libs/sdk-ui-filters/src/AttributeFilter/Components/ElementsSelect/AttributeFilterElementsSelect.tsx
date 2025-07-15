@@ -59,6 +59,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
         isApplyDisabled,
 
         isFilteredByDependentDateFilters,
+        isFilteredByLimitingValidationItems,
         enableAttributeFilterVirtualised,
         withoutApply,
     } = props;
@@ -119,6 +120,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                     onApplyButtonClick={onApplyButtonClick}
                     isApplyDisabled={isApplyDisabled}
                     isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
+                    isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
                     withoutApply={withoutApply}
                 />
             ) : (
@@ -188,6 +190,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                             <StatusBarComponent
                                 getItemTitle={getItemTitle}
                                 isFilteredByParentFilters={isFilteredByParentFilters}
+                                isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
                                 isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
                                 isInverted={isInverted}
                                 parentFilterTitles={parentFilterTitles}

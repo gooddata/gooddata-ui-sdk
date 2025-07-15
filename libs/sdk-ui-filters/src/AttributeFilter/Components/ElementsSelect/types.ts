@@ -128,6 +128,14 @@ export interface IAttributeFilterElementsSelectProps {
     isFilteredByDependentDateFilters?: boolean;
 
     /**
+     * Indicate that elements are filtered by limiting validation items
+     *
+     * @beta
+     * @remarks Use only when platform supports limiting validation items.
+     */
+    isFilteredByLimitingValidationItems?: boolean;
+
+    /**
      * Title of the attribute
      * @remarks Used only when showing filtered elements is enabled.
      */
