@@ -263,6 +263,7 @@ export interface IDateRangePickerProps {
     isTimeEnabled: boolean;
     weekStart?: WeekStart;
     shouldOverlayDatePicker?: boolean;
+    withoutApply?: boolean;
     submitForm: () => void;
 }
 
@@ -278,6 +279,7 @@ const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
     isTimeEnabled,
     weekStart = "Sunday",
     shouldOverlayDatePicker = false,
+    withoutApply = false,
     submitForm,
 }) => {
     const {
@@ -320,6 +322,7 @@ const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
             isTimeEnabled={isTimeEnabled}
             errors={startDateTimeErrors}
             intl={intl}
+            withoutApply={withoutApply}
         />
     );
 

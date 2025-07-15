@@ -20,6 +20,7 @@ export interface IAbsoluteDateFilterFormProps {
     isTimeEnabled: boolean;
     weekStart?: WeekStart;
     shouldOverlayDatePicker?: boolean;
+    withoutApply?: boolean;
     submitForm: () => void;
 }
 
@@ -38,6 +39,7 @@ export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
     isTimeEnabled,
     weekStart,
     shouldOverlayDatePicker,
+    withoutApply,
     onSelectedFilterOptionChange,
     submitForm,
 }) => {
@@ -58,6 +60,7 @@ export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
             weekStart={weekStart}
             shouldOverlayDatePicker={shouldOverlayDatePicker}
             submitForm={submitForm}
+            withoutApply={withoutApply}
         />
     );
 };
