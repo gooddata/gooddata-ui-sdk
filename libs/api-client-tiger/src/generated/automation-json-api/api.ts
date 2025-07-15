@@ -961,10 +961,10 @@ export interface AutomationAutomationNotificationAllOf {
 export interface AutomationAutomationRawExport {
     /**
      *
-     * @type {AutomationRawExportRequest}
+     * @type {AutomationRawExportAutomationRequest}
      * @memberof AutomationAutomationRawExport
      */
-    requestPayload: AutomationRawExportRequest;
+    requestPayload: AutomationRawExportAutomationRequest;
 }
 /**
  *
@@ -1780,6 +1780,7 @@ export const AutomationIdentifierRefIdentifierTypeEnum = {
     DASHBOARD_PLUGIN: "dashboardPlugin",
     DATASET: "dataset",
     FACT: "fact",
+    AGGREGATED_FACT: "aggregatedFact",
     LABEL: "label",
     METRIC: "metric",
     USER_DATA_FILTER: "userDataFilter",
@@ -2645,49 +2646,55 @@ export interface AutomationRawCustomOverride {
 /**
  * Export request object describing the export properties and overrides for raw exports.
  * @export
- * @interface AutomationRawExportRequest
+ * @interface AutomationRawExportAutomationRequest
  */
-export interface AutomationRawExportRequest {
+export interface AutomationRawExportAutomationRequest {
     /**
      * Requested resulting file type.
      * @type {string}
-     * @memberof AutomationRawExportRequest
+     * @memberof AutomationRawExportAutomationRequest
      */
-    format: AutomationRawExportRequestFormatEnum;
+    format: AutomationRawExportAutomationRequestFormatEnum;
     /**
      *
      * @type {AutomationAFM}
-     * @memberof AutomationRawExportRequest
+     * @memberof AutomationRawExportAutomationRequest
      */
     execution: AutomationAFM;
     /**
      * Filename of downloaded file without extension.
      * @type {string}
-     * @memberof AutomationRawExportRequest
+     * @memberof AutomationRawExportAutomationRequest
      */
     fileName: string;
     /**
      *
      * @type {AutomationRawCustomOverride}
-     * @memberof AutomationRawExportRequest
+     * @memberof AutomationRawExportAutomationRequest
      */
     customOverride?: AutomationRawCustomOverride;
     /**
      *
      * @type {AutomationExecutionSettings}
-     * @memberof AutomationRawExportRequest
+     * @memberof AutomationRawExportAutomationRequest
      */
     executionSettings?: AutomationExecutionSettings;
+    /**
+     * Metadata definition in free-form JSON format.
+     * @type {object}
+     * @memberof AutomationRawExportAutomationRequest
+     */
+    metadata?: object | null;
 }
 
-export const AutomationRawExportRequestFormatEnum = {
+export const AutomationRawExportAutomationRequestFormatEnum = {
     ARROW_FILE: "ARROW_FILE",
     ARROW_STREAM: "ARROW_STREAM",
     CSV: "CSV",
 } as const;
 
-export type AutomationRawExportRequestFormatEnum =
-    typeof AutomationRawExportRequestFormatEnum[keyof typeof AutomationRawExportRequestFormatEnum];
+export type AutomationRawExportAutomationRequestFormatEnum =
+    typeof AutomationRawExportAutomationRequestFormatEnum[keyof typeof AutomationRawExportAutomationRequestFormatEnum];
 
 /**
  *

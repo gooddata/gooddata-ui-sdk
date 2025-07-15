@@ -800,7 +800,7 @@
             "post": {
                 "tags": ["Smart Functions", "actions"],
                 "summary": "Validate LLM Endpoint",
-                "description": "Validates LLM endpointw with provided parameters.",
+                "description": "Validates LLM endpoint with provided parameters.",
                 "operationId": "validateLLMEndpoint",
                 "requestBody": {
                     "content": {
@@ -3854,10 +3854,10 @@
                 }
             },
             "ValidateLLMEndpointResponse": {
-                "required": ["message", "success"],
+                "required": ["message", "successful"],
                 "type": "object",
                 "properties": {
-                    "success": {
+                    "successful": {
                         "type": "boolean",
                         "description": "Whether the LLM endpoint validation was successful"
                     },
