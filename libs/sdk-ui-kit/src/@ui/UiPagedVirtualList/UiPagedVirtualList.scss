@@ -39,6 +39,23 @@
             background-color: var(--gd-palette-complementary-2);
             border-radius: 3px;
         }
+
+        &--hover {
+            &::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                border: 2px solid transparent;
+                border-radius: 5px;
+                background-clip: padding-box;
+
+                &:hover {
+                    border: 0;
+                    background-color: var(--gd-palette-complementary-5);
+                }
+            }
+        }
     }
 
     &__item {

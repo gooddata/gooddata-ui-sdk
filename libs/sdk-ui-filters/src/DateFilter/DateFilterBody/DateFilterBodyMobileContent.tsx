@@ -28,6 +28,7 @@ interface IDateFilterBodyMobileContentProps {
     weekStart: WeekStart;
     availableGranularities: DateFilterGranularity[];
     errors?: IExtendedDateFilterErrors;
+    withoutApply?: boolean;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     closeDropdown: () => void;
     changeRoute: (newRoute?: DateFilterRoute) => void;
@@ -44,6 +45,7 @@ export const DateFilterBodyMobileContent: React.FC<IDateFilterBodyMobileContentP
     isTimeForAbsoluteRangeEnabled,
     weekStart,
     availableGranularities,
+    withoutApply,
     closeDropdown,
     changeRoute,
     onApplyClick,
@@ -67,6 +69,7 @@ export const DateFilterBodyMobileContent: React.FC<IDateFilterBodyMobileContentP
                     isMobile={isMobile}
                     isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
                     weekStart={weekStart}
+                    withoutApply={withoutApply}
                 />
             </>
         );
@@ -88,6 +91,7 @@ export const DateFilterBodyMobileContent: React.FC<IDateFilterBodyMobileContentP
                     route={route}
                     onApplyClick={onApplyClick}
                     closeDropdown={closeDropdown}
+                    withoutApply={withoutApply}
                 />
             </>
         );

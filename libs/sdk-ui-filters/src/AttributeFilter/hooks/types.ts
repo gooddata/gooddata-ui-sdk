@@ -163,6 +163,11 @@ export type AttributeFilterControllerData = {
     limitingValidationItems?: ObjRef[];
 
     /**
+     * If true, AttributeFilter is filtering elements by validation items.
+     */
+    isFilteredByLimitingValidationItems?: boolean;
+
+    /**
      * If true, AttributeFilter is filtering elements by dependent date filters.
      *
      * @beta

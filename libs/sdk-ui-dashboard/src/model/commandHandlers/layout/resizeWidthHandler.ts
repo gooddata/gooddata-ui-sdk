@@ -1,6 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IWidget, isDashboardLayout, ScreenSize, IDashboardLayout } from "@gooddata/sdk-model";
+import {
+    IWidget,
+    isDashboardLayout,
+    ScreenSize,
+    IDashboardLayout,
+    IDashboardLayoutItem,
+} from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { put, select, call } from "redux-saga/effects";
 
@@ -26,12 +32,15 @@ import {
     getParentPath,
 } from "../../../_staging/layout/coordinates.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
-import { getContainerDirectionAtPath } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
-import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import {
+    getContainerDirectionAtPath,
+    getLayoutConfiguration,
+} from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { ExtendedDashboardWidget, IItemWithWidth } from "../../types/layoutTypes.js";
 import { ILayoutItemPath } from "../../../types.js";
 
 import { resizeParentContainers } from "./containerHeightSanitization.js";
-import { getChildWidgetLayoutPaths, getUpdatedSizesOnly } from "./containerWidthSanitization.js";
+import { getUpdatedSizesOnly } from "./containerWidthSanitization.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,
@@ -83,15 +92,46 @@ function validateLayoutIndexes(
     }
 }
 
+function processChildren(
+    layoutItem: IDashboardLayoutItem<ExtendedDashboardWidget>,
+    itemPath: ILayoutItemPath,
+    targetItemWidth: number,
+): IItemWithWidth[] {
+    if (!isDashboardLayout(layoutItem.widget)) {
+        return []; // at this point, we only process nested layouts - this is required by the type check
+    }
+    const parentContainerDirection = getLayoutConfiguration(layoutItem.widget).direction;
+
+    return layoutItem.widget.sections.flatMap((section, sectionIndex) => {
+        return section.items.flatMap((item, itemIndex) => {
+            const currentPath: ILayoutItemPath = [...itemPath, { sectionIndex, itemIndex }];
+            const itemWidth = item.size.xl.gridWidth;
+            // Only the column children will get resized to the parent width (including the container itself).
+            // The row children will shrink when they are too big for the new parent size, but will never
+            // grow, otherwise they would behave as if they were inside the column container.
+            const newItemWidth =
+                parentContainerDirection === "column"
+                    ? targetItemWidth
+                    : Math.min(targetItemWidth, itemWidth);
+            if (isDashboardLayout(item.widget)) {
+                return [
+                    { itemPath: currentPath, width: newItemWidth },
+                    ...processChildren(item, currentPath, targetItemWidth),
+                ];
+            }
+            return [{ itemPath: currentPath, width: newItemWidth }];
+        });
+    });
+}
+
 function mapNestedItemsToNewWidth(
     layout: IDashboardLayout<ExtendedDashboardWidget>,
     itemPath: ILayoutItemPath,
     newItemWidth: number,
-) {
+): IItemWithWidth[] {
     const modifiedItem = findItem(layout, itemPath);
     if (isDashboardLayout(modifiedItem.widget)) {
-        const childLayoutPaths = getChildWidgetLayoutPaths(modifiedItem.widget, itemPath, true);
-        return childLayoutPaths.map((itemPath) => ({ itemPath, width: newItemWidth }));
+        return processChildren(modifiedItem, itemPath, newItemWidth);
     }
     return [];
 }
@@ -101,10 +141,10 @@ function findItemsWithChangedWidth(
     itemPath: ILayoutItemPath,
     newItemWidth: number,
     screen: ScreenSize,
-) {
+): IItemWithWidth[] {
+    const modifiedItemWithNewWidth = { itemPath, width: newItemWidth };
     const nestedItemsWithNewWidth = mapNestedItemsToNewWidth(layout, itemPath, newItemWidth);
-    const itemWithNewWidth = { itemPath, width: newItemWidth };
-    const allItemsWithNewWidth = [itemWithNewWidth, ...nestedItemsWithNewWidth];
+    const allItemsWithNewWidth = [modifiedItemWithNewWidth, ...nestedItemsWithNewWidth];
     return getUpdatedSizesOnly(layout, allItemsWithNewWidth, screen);
 }
 
@@ -126,7 +166,6 @@ export function* resizeWidthHandler(
 
     const itemLayoutPath = itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
     const itemsWithChangedWidth = findItemsWithChangedWidth(layout, itemLayoutPath, width, screen);
-
     if (itemsWithChangedWidth.length > 0) {
         yield put(
             layoutActions.updateWidthOfMultipleItems({

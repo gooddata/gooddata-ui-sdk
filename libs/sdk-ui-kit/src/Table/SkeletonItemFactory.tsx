@@ -1,0 +1,33 @@
+// (C) 2025 GoodData Corporation
+
+import React from "react";
+import { IColumn } from "./types.js";
+import { UiSkeleton } from "../@ui/UiSkeleton/UiSkeleton.js";
+import { UiPagedVirtualListSkeletonItemProps } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+import {
+    CHECKBOX_COLUMN_WIDTH,
+    COLUMN_PADDING,
+    MENU_COLUMN_WIDTH,
+    SKELETON_ITEM_HEIGHT,
+} from "./constants.js";
+
+export function skeletonItemFactory<T extends { id: string }>(
+    columns: IColumn<T>[],
+    hasCheckbox?: boolean,
+): React.ComponentType<UiPagedVirtualListSkeletonItemProps> {
+    return function SkeletonItem() {
+        const columnWidths = columns.map((col) => (col.renderMenu ? MENU_COLUMN_WIDTH : col.width));
+        const widths = hasCheckbox ? [CHECKBOX_COLUMN_WIDTH, ...columnWidths] : columnWidths;
+
+        return (
+            <UiSkeleton
+                itemHeight={SKELETON_ITEM_HEIGHT}
+                itemWidth={widths}
+                itemPadding={COLUMN_PADDING}
+                itemsCount={widths.length}
+                direction="row"
+                itemsGap={0}
+            />
+        );
+    };
+}

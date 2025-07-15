@@ -30,6 +30,7 @@ export interface IDateInputProps {
     isDateOrderError?: boolean;
     errorMessageTexts: IDateInputErrorMessageTexts;
     accessibilityConfig: IInputAccessibilityConfig;
+    withoutApply?: boolean;
 }
 
 type ErrorCause = "empty" | "invalid" | undefined;
@@ -51,7 +52,13 @@ const getErrorMessage = (
 
 type DateInputHookProps = Pick<
     IDateInputProps,
-    "value" | "dateFormat" | "onChange" | "onKeyDown" | "isDateOrderError" | "errorMessageTexts"
+    | "value"
+    | "dateFormat"
+    | "onChange"
+    | "onKeyDown"
+    | "isDateOrderError"
+    | "errorMessageTexts"
+    | "withoutApply"
 >;
 
 const useDateInput = ({
@@ -61,6 +68,7 @@ const useDateInput = ({
     onKeyDown,
     isDateOrderError = false,
     errorMessageTexts,
+    withoutApply = false,
 }: DateInputHookProps) => {
     const [inputValue, setInputValue] = useState<string>(formatDate(value, dateFormat));
     const [errorCause, setErrorCause] = useState<ErrorCause>(undefined);
@@ -126,7 +134,7 @@ const useDateInput = ({
 
     const onDateInputKeyDown = useCallback(
         (e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (isEnterKey(e)) {
+            if (isEnterKey(e) && !withoutApply) {
                 onSubmitValue(true);
             } else if (isArrowKey(e)) {
                 e.stopPropagation(); // allow navigation in the input
@@ -134,7 +142,7 @@ const useDateInput = ({
                 onKeyDown(e);
             }
         },
-        [onSubmitValue, onKeyDown],
+        [withoutApply, onSubmitValue, onKeyDown],
     );
 
     return {
@@ -161,6 +169,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
             isTimeEnabled,
             isDateOrderError,
             errorMessageTexts,
+            withoutApply,
         },
         ref,
     ) => {
@@ -178,6 +187,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
             onKeyDown,
             isDateOrderError,
             errorMessageTexts,
+            withoutApply,
         });
 
         const inputLabelId = useId();

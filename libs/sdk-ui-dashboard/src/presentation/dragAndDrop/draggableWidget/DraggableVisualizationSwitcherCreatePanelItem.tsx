@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import {
@@ -25,7 +25,7 @@ const getDragItem = (settings: ISettings): DraggableItem => {
         type: "visualizationSwitcherListItem",
         size: {
             gridHeight: VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT.height.default,
-            gridWidth: settings.enableDashboardFlexibleLayout
+            gridWidth: settings.enableFlexibleDashboardLayout
                 ? VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT.width.default
                 : VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT.width.default,
         },
