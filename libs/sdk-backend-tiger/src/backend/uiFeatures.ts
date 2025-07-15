@@ -117,8 +117,7 @@ export enum TigerFeaturesNames {
     EnableEarlyAccessFeaturesRollout = "enableEarlyAccessFeaturesRollout",
     EnableCrossFilteringAliasTitles = "enableCrossFilteringAliasTitles",
     EnableDefaultSmtp = "enableDefaultSmtp",
-    EnableDashboardFlexibleLayout = "enableDashboardFlexibleLayout",
-    EnableDashboardFlexibleLayoutContainer = "enableDashboardFlexibleLayoutContainer",
+    EnableFlexibleDashboardLayout = "enableFlexibleDashboardLayout",
     EnableNumberSeparators = "enableNumberSeparators",
     EnableNewUserCreationFlow = "enableNewUserCreationFlow",
     EnableDestinationTesting = "enableDestinationTesting",
@@ -235,8 +234,7 @@ export type ITigerFeatureFlags = {
     enableEarlyAccessFeaturesRollout: typeof FeatureFlagsValues["enableEarlyAccessFeaturesRollout"][number];
     enableCrossFilteringAliasTitles: typeof FeatureFlagsValues["enableCrossFilteringAliasTitles"][number];
     enableDefaultSmtp: typeof FeatureFlagsValues["enableDefaultSmtp"][number];
-    enableDashboardFlexibleLayout: typeof FeatureFlagsValues["enableDashboardFlexibleLayout"][number];
-    enableDashboardFlexibleLayoutContainer: typeof FeatureFlagsValues["enableDashboardFlexibleLayoutContainer"][number];
+    enableFlexibleDashboardLayout: typeof FeatureFlagsValues["enableFlexibleDashboardLayout"][number];
     enableNumberSeparators: typeof FeatureFlagsValues["enableNumberSeparators"][number];
     enableNewUserCreationFlow: typeof FeatureFlagsValues["enableNewUserCreationFlow"][number];
     enableDestinationTesting: typeof FeatureFlagsValues["enableDestinationTesting"][number];
@@ -354,8 +352,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableEarlyAccessFeaturesRollout: false,
     enableCrossFilteringAliasTitles: true,
     enableDefaultSmtp: false,
-    enableDashboardFlexibleLayout: true,
-    enableDashboardFlexibleLayoutContainer: true,
+    enableFlexibleDashboardLayout: true,
     enableNumberSeparators: true,
     enableNewUserCreationFlow: false,
     enableDestinationTesting: true,
@@ -477,8 +474,7 @@ export const FeatureFlagsValues = {
     enableEarlyAccessFeaturesRollout: [true, false] as const,
     enableCrossFilteringAliasTitles: [true, false] as const,
     enableDefaultSmtp: [true, false] as const,
-    enableDashboardFlexibleLayout: [true, false] as const,
-    enableDashboardFlexibleLayoutContainer: [true, false] as const,
+    enableFlexibleDashboardLayout: [true, false] as const,
     enableNumberSeparators: [true, false] as const,
     enableNewUserCreationFlow: [true, false] as const,
     enableDestinationTesting: [true, false] as const,

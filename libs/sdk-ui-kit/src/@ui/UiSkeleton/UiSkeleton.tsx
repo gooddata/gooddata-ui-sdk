@@ -25,6 +25,11 @@ export interface UiSkeletonProps {
     itemWidth?: (number | string) | (number | string)[];
 
     /**
+     * Padding of the item, or items.
+     */
+    itemPadding?: number | number[];
+
+    /**
      * Gap between the items.
      */
     itemsGap?: number;
@@ -46,6 +51,7 @@ export interface UiSkeletonProps {
 export function UiSkeleton({
     itemsCount = 1,
     itemHeight = 24,
+    itemPadding = 0,
     itemWidth,
     itemsGap = 10,
     direction = "column",
@@ -64,6 +70,10 @@ export function UiSkeleton({
                     typeof itemWidth === "number" || typeof itemWidth === "undefined"
                         ? itemWidth
                         : itemWidth[idx],
+                padding:
+                    typeof itemPadding === "number"
+                        ? `0 ${itemPadding ?? 0}px`
+                        : `0 ${itemPadding[idx] ?? 0}px`,
             }}
         >
             <ReactLoadingSkeleton borderRadius={itemBorderRadius} />

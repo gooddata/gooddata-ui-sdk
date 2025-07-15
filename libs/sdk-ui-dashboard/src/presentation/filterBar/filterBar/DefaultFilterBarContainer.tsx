@@ -137,7 +137,11 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                             values={{
                                 link: (chunks) => (
                                     <strong>
-                                        <a onClick={applyAllDashboardFilters}>{chunks}</a>
+                                        <UiButton
+                                            variant="link"
+                                            onClick={applyAllDashboardFilters}
+                                            label={chunks as unknown as string}
+                                        />
                                     </strong>
                                 ),
                             }}

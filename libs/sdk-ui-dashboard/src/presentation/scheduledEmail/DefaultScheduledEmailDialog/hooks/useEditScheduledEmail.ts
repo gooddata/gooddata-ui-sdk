@@ -148,7 +148,11 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         : undefined;
 
     const effectiveDashboardFilters = enableAutomationFilterContext
-        ? getAppliedDashboardFilters(editedAutomationFilters ?? [], dashboardHiddenFilters, storeFilters)
+        ? getAppliedDashboardFilters(
+              editedAutomationFilters ?? [],
+              dashboardHiddenFilters,
+              isWidget ? true : storeFilters,
+          )
         : dashboardFilters;
 
     const effectiveVisibleDashboardFilters = enableAutomationFilterContext
@@ -171,6 +175,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           widget,
                           recipient: defaultRecipient,
                           widgetFilters: effectiveWidgetFilters,
+                          dashboardFilters: effectiveDashboardFilters,
                           visibleFiltersMetadata: effectiveVisibleWidgetFilters,
                           enableNewScheduledExport,
                       }
@@ -292,6 +297,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                     format,
                     scheduledExportToEdit,
                     widgetFilters: effectiveWidgetFilters,
+                    dashboardFilters: effectiveDashboardFilters,
                 }),
             );
             setEditedAutomation((s) => ({
@@ -463,7 +469,12 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                 }
 
                 setEditedAutomation((s) => {
-                    const appliedFilters = getAppliedWidgetFilters(
+                    const appliedDashboardFilters = getAppliedDashboardFilters(
+                        filters,
+                        dashboardHiddenFilters,
+                        true,
+                    );
+                    const appliedWidgetFilters = getAppliedWidgetFilters(
                         filters,
                         dashboardHiddenFilters,
                         widget,
@@ -484,6 +495,11 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                                     exportDefinition.requestPayload,
                                 )
                             ) {
+                                const format = exportDefinition.requestPayload.format;
+                                const isTabularFormat = format === "XLSX" || format === "CSV";
+                                const appliedFilters = isTabularFormat
+                                    ? appliedWidgetFilters
+                                    : appliedDashboardFilters;
                                 return {
                                     ...exportDefinition,
                                     requestPayload: {
@@ -691,6 +707,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     format,
     widgetFilters,
     scheduledExportToEdit,
+    dashboardFilters,
 }: {
     insight: IInsight;
     widget: ExtendedDashboardWidget;
@@ -698,14 +715,21 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     format: WidgetAttachmentType;
     widgetFilters?: IFilter[];
     scheduledExportToEdit?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
+    dashboardFilters?: FilterContextItem[];
 }): IExportDefinitionMetadataObjectDefinition {
     const widgetTitle = isWidget(widget) ? widget?.title : widget?.identifier;
     const existingScheduleFilters = [...(getAutomationVisualizationFilters(scheduledExportToEdit) ?? [])];
 
     // in case of editing widget schedule, we never overwrite already stored filters
-    const allFilters = scheduledExportToEdit ? existingScheduleFilters : widgetFilters ?? [];
+    const allWidgetFilters = scheduledExportToEdit ? existingScheduleFilters : widgetFilters ?? [];
 
-    const filtersObj = allFilters.length > 0 ? { filters: allFilters } : {};
+    const isTabularExport = format === "XLSX" || format === "CSV";
+    const filtersObj =
+        isTabularExport && allWidgetFilters.length > 0
+            ? { filters: allWidgetFilters }
+            : !isTabularExport && dashboardFilters && dashboardFilters.length > 0
+            ? { filters: dashboardFilters }
+            : {};
     const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true, exportInfo: true } } : {};
 
     return {
@@ -760,6 +784,7 @@ function newAutomationMetadataObjectDefinition({
                   dashboardId,
                   format: enableNewScheduledExport ? "PNG" : "XLSX",
                   widgetFilters,
+                  dashboardFilters,
               })
             : newDashboardExportDefinitionMetadataObjectDefinition({
                   dashboardId,

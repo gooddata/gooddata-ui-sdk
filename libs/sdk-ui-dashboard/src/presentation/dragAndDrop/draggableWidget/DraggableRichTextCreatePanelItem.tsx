@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 
 import {
@@ -24,7 +24,7 @@ const getDragItem = (settings: ISettings): DraggableItem => {
         type: "richTextListItem",
         size: {
             gridHeight: RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT.height.default,
-            gridWidth: settings.enableDashboardFlexibleLayout
+            gridWidth: settings.enableFlexibleDashboardLayout
                 ? RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT.width.default
                 : RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT.width.default,
         },

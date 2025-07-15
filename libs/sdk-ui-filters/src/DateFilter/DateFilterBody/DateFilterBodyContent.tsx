@@ -30,6 +30,7 @@ interface IDateFilterBodyContentProps {
     weekStart: WeekStart;
     availableGranularities: DateFilterGranularity[];
     errors?: IExtendedDateFilterErrors;
+    withoutApply?: boolean;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     closeDropdown: () => void;
     changeRoute: (newRoute?: DateFilterRoute) => void;
@@ -46,6 +47,7 @@ export const DateFilterBodyContent: React.FC<IDateFilterBodyContentProps> = ({
     isTimeForAbsoluteRangeEnabled,
     weekStart,
     availableGranularities,
+    withoutApply,
     closeDropdown,
     changeRoute,
     onApplyClick,
@@ -71,6 +73,7 @@ export const DateFilterBodyContent: React.FC<IDateFilterBodyContentProps> = ({
                 isMobile={isMobile}
                 isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
                 weekStart={weekStart}
+                withoutApply={withoutApply}
             />
             {!isEmpty(availableGranularities) ? (
                 <RelativeDateFilterFormSection
@@ -84,6 +87,7 @@ export const DateFilterBodyContent: React.FC<IDateFilterBodyContentProps> = ({
                     errors={errors || undefined}
                     onApplyClick={onApplyClick}
                     closeDropdown={closeDropdown}
+                    withoutApply={withoutApply}
                 />
             ) : null}
             {filterOptions.absolutePreset && filterOptions.absolutePreset.length > 0 ? (

@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { UiButton, UiButtonProps, ComponentTable, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 import React from "react";
 
@@ -9,7 +9,14 @@ import { wrapWithTheme } from "../themeWrapper.js";
 const propCombination = propCombinationsFor({ label: "Apply" } as UiButtonProps);
 
 const allSizes = propCombination("size", ["small", "medium", "large"]);
-const allVariants = propCombination("variant", ["primary", "secondary", "tertiary", "popout", "danger"]);
+const allVariants = propCombination("variant", [
+    "primary",
+    "secondary",
+    "tertiary",
+    "popout",
+    "link",
+    "danger",
+]);
 const allIconLeft = propCombination("iconBefore", ["check", "plus", "sync"]);
 const allIconRight = propCombination("iconAfter", ["check", "plus", "sync"]);
 const disabled = propCombination("isDisabled", [true]);

@@ -19,3 +19,13 @@ export type SizeMedium = "medium";
  * @internal
  */
 export type SizeLarge = "large";
+
+/**
+ * @internal
+ */
+export type SizeXLarge = "xlarge";
+
+/**
+ * @internal
+ */
+export type SizeXXLarge = "xxlarge";
