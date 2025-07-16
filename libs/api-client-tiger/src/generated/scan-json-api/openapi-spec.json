@@ -238,7 +238,7 @@
         },
         "/api/v1/actions/dataSources/{dataSourceId}/computeColumnStatistics": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Computation", "actions"],
                 "summary": "(EXPERIMENTAL) Compute column statistics",
                 "description": "(EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.",
                 "operationId": "columnStatistics",

@@ -2406,6 +2406,7 @@
                                     "dashboardPlugin",
                                     "dataset",
                                     "fact",
+                                    "aggregatedFact",
                                     "label",
                                     "metric",
                                     "userDataFilter",

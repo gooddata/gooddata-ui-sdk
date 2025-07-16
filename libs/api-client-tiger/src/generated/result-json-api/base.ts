@@ -19,7 +19,7 @@ import { Configuration } from "./configuration.js";
 // @ts-ignore
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from "axios";
 
-export const BASE_PATH = "https://staging.dev-latest.stg11.panther.intgdc.com".replace(/\/+$/, "");
+export const BASE_PATH = "https://internal-testing.staging.stg11.panther.intgdc.com".replace(/\/+$/, "");
 
 /**
  *

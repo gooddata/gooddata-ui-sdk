@@ -3870,7 +3870,7 @@ export interface ValidateLLMEndpointResponse {
      * @type {boolean}
      * @memberof ValidateLLMEndpointResponse
      */
-    success: boolean;
+    successful: boolean;
     /**
      * Additional message about the LLM endpoint validation
      * @type {string}
@@ -5120,7 +5120,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Validates LLM endpointw with provided parameters.
+         * Validates LLM endpoint with provided parameters.
          * @summary Validate LLM Endpoint
          * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
          * @param {*} [options] Override http request option.
@@ -5696,7 +5696,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Validates LLM endpointw with provided parameters.
+         * Validates LLM endpoint with provided parameters.
          * @summary Validate LLM Endpoint
          * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
          * @param {*} [options] Override http request option.
@@ -6138,7 +6138,7 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         * Validates LLM endpointw with provided parameters.
+         * Validates LLM endpoint with provided parameters.
          * @summary Validate LLM Endpoint
          * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6448,7 +6448,7 @@ export interface ActionsApiInterface {
     ): AxiosPromise<ExecutionResult>;
 
     /**
-     * Validates LLM endpointw with provided parameters.
+     * Validates LLM endpoint with provided parameters.
      * @summary Validate LLM Endpoint
      * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7539,7 +7539,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Validates LLM endpointw with provided parameters.
+     * Validates LLM endpoint with provided parameters.
      * @summary Validate LLM Endpoint
      * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -9806,7 +9806,7 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * Validates LLM endpointw with provided parameters.
+         * Validates LLM endpoint with provided parameters.
          * @summary Validate LLM Endpoint
          * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
          * @param {*} [options] Override http request option.
@@ -10132,7 +10132,7 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Validates LLM endpointw with provided parameters.
+         * Validates LLM endpoint with provided parameters.
          * @summary Validate LLM Endpoint
          * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
          * @param {*} [options] Override http request option.
@@ -10379,7 +10379,7 @@ export const SmartFunctionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         * Validates LLM endpointw with provided parameters.
+         * Validates LLM endpoint with provided parameters.
          * @summary Validate LLM Endpoint
          * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -10559,7 +10559,7 @@ export interface SmartFunctionsApiInterface {
     ): AxiosPromise<ResolvedLlmEndpoints>;
 
     /**
-     * Validates LLM endpointw with provided parameters.
+     * Validates LLM endpoint with provided parameters.
      * @summary Validate LLM Endpoint
      * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -11141,7 +11141,7 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
-     * Validates LLM endpointw with provided parameters.
+     * Validates LLM endpoint with provided parameters.
      * @summary Validate LLM Endpoint
      * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

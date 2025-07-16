@@ -1050,6 +1050,7 @@ export const ExportIdentifierRefIdentifierTypeEnum = {
     DASHBOARD_PLUGIN: "dashboardPlugin",
     DATASET: "dataset",
     FACT: "fact",
+    AGGREGATED_FACT: "aggregatedFact",
     LABEL: "label",
     METRIC: "metric",
     USER_DATA_FILTER: "userDataFilter",

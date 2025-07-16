@@ -948,7 +948,7 @@
                 "type": "object",
                 "properties": {
                     "requestPayload": {
-                        "$ref": "#/components/schemas/RawExportRequest"
+                        "$ref": "#/components/schemas/RawExportAutomationRequest"
                     }
                 }
             },
@@ -1507,6 +1507,7 @@
                                     "dashboardPlugin",
                                     "dataset",
                                     "fact",
+                                    "aggregatedFact",
                                     "label",
                                     "metric",
                                     "userDataFilter",
@@ -2058,7 +2059,7 @@
                 },
                 "description": "Custom cell value overrides (IDs will be replaced with specified values)."
             },
-            "RawExportRequest": {
+            "RawExportAutomationRequest": {
                 "required": ["execution", "fileName", "format"],
                 "type": "object",
                 "properties": {
@@ -2081,6 +2082,9 @@
                     },
                     "executionSettings": {
                         "$ref": "#/components/schemas/ExecutionSettings"
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/JsonNode"
                     }
                 },
                 "description": "Export request object describing the export properties and overrides for raw exports."
