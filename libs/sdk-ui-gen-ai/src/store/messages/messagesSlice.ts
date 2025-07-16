@@ -319,10 +319,8 @@ export const {
     loadThreadAction,
     loadThreadErrorAction,
     loadThreadSuccessAction,
-    clearThreadAction,
     clearThreadErrorAction,
     clearThreadSuccessAction,
-    newMessageAction,
     evaluateMessageAction,
     evaluateMessageErrorAction,
     evaluateMessageStreamingAction,
@@ -336,4 +334,13 @@ export const {
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
     visualizationErrorAction,
+
+    /**
+     * @public
+     */
+    clearThreadAction,
+    /**
+     * @public
+     */
+    newMessageAction,
 } = messagesSlice.actions;

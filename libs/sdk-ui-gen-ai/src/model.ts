@@ -31,7 +31,7 @@ export type TextContents = {
 export const isTextContents = (contents: Contents): contents is TextContents => contents.type === "text";
 
 /**
- * @internal
+ * @public
  */
 export const makeTextContents = (text: string, objects: TextContentObject[]): TextContents => ({
     type: "text",
@@ -191,7 +191,7 @@ export type UserMessage = BaseMessage & {
 export const isUserMessage = (message?: Message): message is UserMessage => message?.role === "user";
 
 /**
- * @internal
+ * @public
  */
 export const makeUserMessage = (content: Contents[]): UserMessage => ({
     localId: uuidv4(),

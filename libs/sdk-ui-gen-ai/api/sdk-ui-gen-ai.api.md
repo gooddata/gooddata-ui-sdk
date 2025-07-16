@@ -4,6 +4,8 @@
 
 ```ts
 
+import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
@@ -107,6 +109,9 @@ export type ChatVisualizationErrorEvent = BaseEvent & {
 };
 
 // @public (undocumented)
+export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThreadAction">;
+
+// @public (undocumented)
 export type Contents = TextContents | RoutingContents | SearchContents | VisualizationContents | ErrorContents;
 
 // @public (undocumented)
@@ -129,6 +134,7 @@ export interface GenAIAssistantProps {
     disableManage?: boolean;
     eventHandlers?: ChatEventHandler[];
     locale?: string;
+    onDispatcher?: (dispatch: (action: unknown) => void) => void;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
     workspace?: string;
 }
@@ -180,8 +186,17 @@ export type LinkHandlerEvent = {
     section?: "ai";
 };
 
+// @public (undocumented)
+export const makeTextContents: (text: string, objects: TextContentObject[]) => TextContents;
+
+// @public (undocumented)
+export const makeUserMessage: (content: Contents[]) => UserMessage;
+
 // @public
 export type Message = UserMessage | AssistantMessage;
+
+// @public (undocumented)
+export const newMessageAction: ActionCreatorWithPayload<Message, "messages/newMessageAction">;
 
 // @public (undocumented)
 export type RoutingContents = {

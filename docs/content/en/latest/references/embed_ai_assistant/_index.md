@@ -56,6 +56,10 @@ const App = () => {
                     // E.g. when user asks the chatbot to find
                     // a specific dashboard and clicks on the result
                 }}
+                // Optionally, provide dispatcher for sending messages in the chat
+                onDispatcher={(dispatch) => {
+                    // Save dispatcher and use it to send messages
+                }}
             />
         </div>
     );
@@ -64,18 +68,20 @@ const App = () => {
 
 ### Props
 
-| Name             | Type                       | Default | Description                                                                                                          |
-| ---------------- | -------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
-| locale           | ILocale                    | "en-US" | Specifies the locale for internationalization                                                                        |
-| backend          | IAnalyticalBackend         | -       | Backend instance. Falls back to BackendProvider context if not specified                                             |
-| workspace        | string                     | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                                               |
-| colorPalette     | IColorPalette              | -       | Color palette used for rendering the visualizations. If not provided, the default color palette will be used         |
-| catalogItems     | CatalogItem[]              | -       | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed                             |
-| eventHandlers    | ChatEventHandler[]         | -       | Event handlers for user interactions with the chat UI                                                                |
-| onLinkClick      | (LinkHandlerEvent) => void | -       | Handle user clicks on the catalog items mentioned in chat.                                                           |
-| allowNativeLinks | boolean                    | false   | Whether to allow native links in chat messages. If false, `onLinkClick` handler will be fired when clicking on links |
-| disableManage    | boolean                    | false   | This will disable manage permissions for the user even if the user has them defined.                                 |
-| disableAnalyze   | boolean                    | false   | This will disable analyze permissions for the user even if the user has them defined.                                |
+| Name               | Type                                          | Default | Description                                                                                                          |
+| ------------------ | --------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
+| locale             | ILocale                                       | "en-US" | Specifies the locale for internationalization                                                                        |
+| backend            | IAnalyticalBackend                            | -       | Backend instance. Falls back to BackendProvider context if not specified                                             |
+| workspace          | string                                        | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                                               |
+| colorPalette       | IColorPalette                                 | -       | Color palette used for rendering the visualizations. If not provided, the default color palette will be used         |
+| catalogItems       | CatalogItem[]                                 | -       | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed                             |
+| eventHandlers      | ChatEventHandler[]                            | -       | Event handlers for user interactions with the chat UI                                                                |
+| onLinkClick        | (LinkHandlerEvent) => void                    | -       | Handle user clicks on the catalog items mentioned in chat.                                                           |
+| allowNativeLinks   | boolean                                       | false   | Whether to allow native links in chat messages. If false, `onLinkClick` handler will be fired when clicking on links |
+| disableManage      | boolean                                       | false   | This will disable manage permissions for the user even if the user has them defined.                                 |
+| disableAnalyze     | boolean                                       | false   | This will disable analyze permissions for the user even if the user has them defined.                                |
+| disableFullControl | boolean                                       | false   | This will disable full control permissions for the user even if the user has them defined.                           |
+| onDispatcher       | (dispatch: (action: unknown) => void) => void | -       | Dispatcher for sending messages in the chat.                                                                         |
 
 #### eventHandlers
 
@@ -133,6 +139,35 @@ To reset the chat thread, use the `reset` method on the ChatThread interface.
 const chatThread = backend.workspace(workspaceId).genAI().getChatThread();
 
 await chatThread.reset();
+```
+
+or dispatch clear thread action by using dispatcher
+
+```typescript jsx
+import { clearThreadAction } from "@gooddata/sdk-ui-gen-ai";
+
+// Retreve dispatcher from chat UI
+dispatcher(clearThreadAction());
+```
+
+## Actions that are now available
+
+-   `clearThreadAction` - reset the chat thread
+-   `newMessageAction` - add message to the stack and get response from the assistant
+
+### Example usage:
+
+```tsx
+import {
+    clearThreadAction,
+    newMessageAction,
+    makeUserMessage,
+    makeTextContents,
+} from "@gooddata/sdk-ui-gen-ai";
+
+// Retreve dispatcher from chat UI
+dispatcher(clearThreadAction());
+dispatcher(newMessageAction(makeUserMessage([makeTextContents("Hello", [])])));
 ```
 
 [ai assistant]: https://www.gooddata.com/platform/artificial-intelligence/

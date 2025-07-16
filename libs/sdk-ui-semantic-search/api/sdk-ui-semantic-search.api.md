@@ -10,6 +10,15 @@ import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import * as React_2 from 'react';
 
+// @public (undocumented)
+export function FooterButtonAiAssistant({ onClick }: FooterButtonAiAssistantProps): React_2.JSX.Element;
+
+// @public (undocumented)
+export interface FooterButtonAiAssistantProps {
+    // (undocumented)
+    onClick?: (e: React_2.MouseEvent) => void;
+}
+
 // @beta
 export const SemanticSearch: React_2.FC<SemanticSearchProps>;
 
@@ -43,6 +52,12 @@ export type SemanticSearchProps = {
     deepSearch?: boolean;
     limit?: number;
     placeholder?: string;
+    renderFooter?: (props: SemanticSearchProps & {
+        status: "idle" | "loading" | "error" | "success";
+        value: string;
+    }, handlers: {
+        closeSearch: () => void;
+    }) => React_2.ReactNode;
 };
 
 // @beta

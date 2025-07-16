@@ -50,6 +50,10 @@ const App = () => {
                 limit={10}
                 // Optional: Custom placeholder
                 placeholder="Search for dashboards, metrics..."
+                // Optional: Custom footer in search results
+                renderFooter={(props, { closeSearch }) => {
+                    return null;
+                }}
             />
         </div>
     );
@@ -58,18 +62,19 @@ const App = () => {
 
 ### Props
 
-| Name        | Type                                      | Default | Description                                                                             |
-| ----------- | ----------------------------------------- | ------- | --------------------------------------------------------------------------------------- |
-| locale      | string                                    | -       | Specifies the locale for internationalization. Falls back to context if not specified   |
-| backend     | IAnalyticalBackend                        | -       | Backend instance. Falls back to BackendProvider context if not specified                |
-| workspace   | string                                    | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                  |
-| onSelect    | (item: ISemanticSearchResultItem) => void | -       | Required callback function called when the user selects an item from the search results |
-| onError     | (errorMessage: string) => void            | -       | Optional callback function called when an error occurs during the search                |
-| className   | string                                    | -       | Additional CSS class for the component                                                  |
-| objectTypes | GenAIObjectType[]                         | -       | A list of object types to search for (e.g., "dashboard", "metric", "insight")           |
-| deepSearch  | boolean                                   | false   | Enable deep search to find dashboards by their contents                                 |
-| limit       | number                                    | 10      | Target number of search results to return. See note below about actual result count     |
-| placeholder | string                                    | -       | Placeholder text for the search input                                                   |
+| Name         | Type                                                                                        | Default | Description                                                                             |
+| ------------ | ------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------- |
+| locale       | string                                                                                      | -       | Specifies the locale for internationalization. Falls back to context if not specified   |
+| backend      | IAnalyticalBackend                                                                          | -       | Backend instance. Falls back to BackendProvider context if not specified                |
+| workspace    | string                                                                                      | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                  |
+| onSelect     | (item: ISemanticSearchResultItem) => void                                                   | -       | Required callback function called when the user selects an item from the search results |
+| onError      | (errorMessage: string) => void                                                              | -       | Optional callback function called when an error occurs during the search                |
+| className    | string                                                                                      | -       | Additional CSS class for the component                                                  |
+| objectTypes  | GenAIObjectType[]                                                                           | -       | A list of object types to search for (e.g., "dashboard", "metric", "insight")           |
+| deepSearch   | boolean                                                                                     | false   | Enable deep search to find dashboards by their contents                                 |
+| limit        | number                                                                                      | 10      | Target number of search results to return. See note below about actual result count     |
+| placeholder  | string                                                                                      | -       | Placeholder text for the search input                                                   |
+| renderFooter | (props: SemanticSearchFooterProps, context: SemanticSearchFooterContext) => React.ReactNode | -       | Optional function to render a custom footer in the search results                       |
 
 > **Note about result limits:** The `limit` parameter specifies a target number of results, but the actual number of returned items may vary:
 >
@@ -215,5 +220,96 @@ interface ISemanticSearchRelationship {
     type: string;
 }
 ```
+
+## Connecting Semantic Search with AI Assistant
+
+GoodData.UI allows you to seamlessly integrate the Semantic Search component with the AI Assistant, enabling users to transition from searching for analytical objects to having a conversation with the AI about their search query.
+
+### Integration Overview
+
+The integration works by:
+
+1. Using the `FooterButtonAiAssistant` component in the Semantic Search footer
+2. Passing the search query from Semantic Search to the AI Assistant when the user clicks the button
+3. Managing the AI Assistant chat thread using the dispatcher pattern
+
+### Required Components
+
+-   `SemanticSearch` from `@gooddata/sdk-ui-semantic-search`
+-   `FooterButtonAiAssistant` from `@gooddata/sdk-ui-semantic-search`
+-   `GenAIAssistant` from `@gooddata/sdk-ui-gen-ai`
+-   Chat actions from `@gooddata/sdk-ui-gen-ai`
+
+### Implementation Example
+
+```typescript jsx
+import * as React from "react";
+import {
+    SemanticSearch,
+    ISemanticSearchResultItem,
+    FooterButtonAiAssistant,
+} from "@gooddata/sdk-ui-semantic-search";
+import {
+    GenAIAssistant,
+    clearThreadAction,
+    newMessageAction,
+    makeUserMessage,
+    makeTextContents,
+} from "@gooddata/sdk-ui-gen-ai";
+
+const MyCustomSearchComponentWithAiAssistant = () => {
+    const [chatDispatcher, setDispatcher] = React.useState(null);
+    const [askedQuestion, setAskedQuestion] = React.useState("");
+    const onDispatcher = useCallback(
+        (dispatcher) => {
+            setDispatcher(() => dispatcher);
+        },
+        [setDispatcher],
+    );
+
+    useEffect(() => {
+        if (!chatDispatcher || !askedQuestion) {
+            return;
+        }
+
+        chatDispatcher(clearThreadAction());
+        chatDispatcher(newMessageAction(makeUserMessage([makeTextContents(askedQuestion, [])])));
+    }, [chatDispatcher, askedQuestion]);
+
+    return (
+        <>
+            <SemanticSearch
+                onSelect={(item: ISemanticSearchResultItem) => {
+                    console.log(`Selected item: ${item.title}`);
+                }}
+                objectTypes={["dashboard", "visualization", "metric"]}
+                renderFooter={({ value }, { closeSearch }) => (
+                    <FooterButtonAiAssistant
+                        onClick={() => {
+                            setAskedQuestion(value);
+                            closeSearch();
+                        }}
+                    />
+                )}
+            />
+            <GenAIAssistant onDispatcher={onDispatcher} />
+        </>
+    );
+};
+```
+
+### User Experience Flow
+
+1. User enters a search query in the Semantic Search component
+2. User can either:
+    - Select a search result using the standard `onSelect` handler
+    - Click the "Ask AI Assistant" button to transition to a conversation
+3. When the AI Assistant button is clicked:
+    - The search query is captured
+    - The search dropdown closes
+    - The query is automatically sent to the AI Assistant as a user message
+    - The AI Assistant responds to the query
+
+This integration provides a seamless transition from searching for analytical objects to having a conversation with the AI Assistant about the same topic.
 
 [theme provider]: ../../learn/apply_theming/
