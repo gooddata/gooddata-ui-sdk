@@ -1,9 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { createElementCountResolver, ScreenshotReadyWrapper } from "../../_infra/ScreenshotReadyWrapper.js";
 import React from "react";
-import groupBy from "lodash/groupBy.js";
-import sortBy from "lodash/sortBy.js";
-import values from "lodash/values.js";
 
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
@@ -12,19 +9,23 @@ import { ISettings } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { withCustomWorkspaceSettings } from "@gooddata/sdk-backend-base";
 
-import allScenarios from "../../../scenarios/index.js";
 import { ScenarioGroup } from "../../../src/index.js";
 import { StorybookBackend } from "../../_infra/backend.js";
-import { storyGroupFor } from "./storyGroupFactory.js";
-import { ScenarioStories } from "../../_infra/storyGroups.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
-const DefaultWrapperStyle = { width: 800, height: 400 };
+import allScenarios from "../../../scenarios/index.js";
+import groupBy from "lodash/groupBy.js";
+import sortBy from "lodash/sortBy.js";
+import values from "lodash/values.js";
 
-const backend = StorybookBackend();
-const ScenarioGroupsByVis = values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis));
+export const backend = StorybookBackend();
 
-function buildStory(Component: React.ComponentType, props: any, wrapperStyle: any, tags: string[] = []) {
+export function buildStory(
+    Component: React.ComponentType,
+    props: any,
+    wrapperStyle: any,
+    tags: string[] = [],
+) {
     return () => {
         return wrapWithTheme(
             <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
@@ -37,7 +38,7 @@ function buildStory(Component: React.ComponentType, props: any, wrapperStyle: an
     };
 }
 
-function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
+export function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
     const scenarios = group.asScenarioDescAndScenario();
 
     return function Grouped() {
@@ -64,7 +65,7 @@ function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
     };
 }
 
-function withCustomSetting(backend: IAnalyticalBackend, customSettings: ISettings) {
+export function withCustomSetting(backend: IAnalyticalBackend, customSettings: ISettings) {
     return withCustomWorkspaceSettings(backend, {
         commonSettingsWrapper: (settings: ISettings) => {
             return {
@@ -75,46 +76,16 @@ function withCustomSetting(backend: IAnalyticalBackend, customSettings: ISetting
     });
 }
 
-ScenarioGroupsByVis.forEach((groups) => {
-    /*
-     * Sort groups; the order in which stories for the group are created is important as that is the order
-     * in which the groups appear in storybook.
-     */
+const ScenarioGroupsByVis = values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis));
+
+export function getScenariosGroupByIndexes(groupsIndex: number, groupIndex: number): ScenarioGroup<any> {
+    const groups = ScenarioGroupsByVis[groupsIndex];
+
     const sortedGroups = sortBy(groups, (g) => g.groupNames.join("/"));
 
-    for (const group of sortedGroups) {
-        const storiesForChart = storyGroupFor(ScenarioStories, group);
-        // only interested in scenarios for visual regression
-        const visualOnly: ScenarioGroup<any> = group.forTestTypes("visual");
+    const group = sortedGroups[groupIndex];
 
-        if (visualOnly.isEmpty()) {
-            // it is completely valid that some groups have no scenarios for visual regression
-            continue;
-        }
+    const visualOnly: ScenarioGroup<any> = group.forTestTypes("visual");
 
-        // group may specify the size for its screenshots; if not there, use the default
-        const wrapperStyle = group.testConfig.visual.screenshotSize || DefaultWrapperStyle;
-
-        if (group.testConfig.visual.groupUnder) {
-            // group may specify, that the scenarios should be grouped under a single story
-            storiesForChart.add(group.testConfig.visual.groupUnder, groupedStory(visualOnly, wrapperStyle), {
-                screenshot: true,
-            });
-        } else {
-            // otherwise there will be story-per-scenario
-            const scenarios = visualOnly.asScenarioDescAndScenario();
-
-            scenarios.forEach(([name, scenario]) => {
-                const { propsFactory, workspaceType, component: Component } = scenario;
-                const props = propsFactory(
-                    withCustomSetting(backend, scenario.backendSettings),
-                    workspaceType,
-                );
-
-                storiesForChart.add(name, buildStory(Component, props, wrapperStyle, scenario.tags), {
-                    screenshot: true,
-                });
-            });
-        }
-    }
-});
+    return visualOnly;
+}

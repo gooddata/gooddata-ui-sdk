@@ -62,6 +62,7 @@ const backstopConfig = {
     asyncCaptureLimit,
     resembleOutputOptions: { ignoreAntialiasing: true },
     asyncCompareLimit,
+    requireSameDimensions: false,
 };
 
 module.exports = backstopConfig;

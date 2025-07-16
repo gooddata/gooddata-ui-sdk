@@ -5,6 +5,5 @@ DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
 
 cd $ROOT_DIR/libs/sdk-ui-tests
-npm run build-storybook
-npm run story-extractor
+npm run backstop-prepare
 ./backstop/run-backstop-compose.sh test

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { idRef, ITheme } from "@gooddata/sdk-model";
 import { IStylingPickerItem } from "@gooddata/sdk-ui-kit";
