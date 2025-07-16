@@ -63,6 +63,18 @@ Once authentication is set and ready, you can embed Dashboard, single visualizat
 <gd-ai-assistant />
 ```
 
+You can also specify the path to load static files from a different location.
+The path is modified by setting the `__GD_ASSET_PATH__` window property before the script is loaded.
+By default, the library will load static files from the same location as the script itself,
+hence the default behavior is as if `__GD_ASSET_PATH__` was set to `.`.
+
+```html
+<script>
+    window.__GD_ASSET_PATH__ = "https://cdn.example.com/assets/";
+</script>
+<script type="module" src="https://example.gooddata.com/components/my-workspace-id.js?auth=sso"></script>
+```
+
 ### Dashboard Custom Element
 
 `gd-dashboard` supports the following attributes:
