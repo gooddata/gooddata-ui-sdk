@@ -75,7 +75,7 @@
         "@gooddata/sdk-ui-vis-commons": "workspace:*",
         "@gooddata/util": "workspace:*",
         "classnames": "^2.3.1",
-        "date-fns": "^2.22.1",
+        "date-fns": "^3.6.0",
         "debounce-promise": "^3.1.2",
         "default-import": "1.1.5",
         "fixed-data-table-2": "^1.2.0",
