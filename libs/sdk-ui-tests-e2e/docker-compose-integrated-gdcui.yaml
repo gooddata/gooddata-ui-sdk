@@ -1,0 +1,35 @@
+# (C) 2023 GoodData Corporation
+version: "3.7"
+services:
+    gooddata-ui-sdk-scenarios:
+        image: $IMAGE_ID
+        environment:
+            - TEST_BACKEND=${TEST_BACKEND:?Check README.md for more detail}
+            - TEST_BACKEND_NO_PREFIX=${TEST_BACKEND_NO_PREFIX:?Check README.md for more detail}
+        volumes:
+            - ./nginx/templates:/etc/nginx/templates/
+
+    integrated-tests:
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/cypress/included:13.17.0
+        entrypoint: node ./scripts/run_integrated.js
+        volumes:
+            - ../../../:/gooddata-ui-sdk-e2e:rw
+        working_dir: /gooddata-ui-sdk-e2e/sdk/libs/sdk-ui-tests-e2e
+        user: "$USER_UID:$USER_GID"
+        depends_on:
+            - gooddata-ui-sdk-scenarios
+        environment:
+            - CYPRESS_HOST=http://gooddata-ui-sdk-scenarios:9500
+            - MODE
+            - GDC_UI
+            - FILTER
+            - BUILD_URL
+            - HOST=http://gooddata-ui-sdk-scenarios:9500
+            - TEST_WORKSPACE_ID
+            - TIGER_API_TOKEN
+            - VISUAL_MODE=false
+            - CYPRESS_TEST_TAGS
+            - FIXTURE_TYPE
+            - TIGER_DATASOURCES_NAME
+            - NO_COLOR
+            - EXECUTION_ENV=$EXECUTION_ENV
