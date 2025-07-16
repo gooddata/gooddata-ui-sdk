@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
 import { Icon } from "@gooddata/sdk-ui-kit";
@@ -15,7 +15,7 @@ const previousSearch = defineMessage({ id: "semantic-search.previous-search" });
 
 const getAreaLabel = (intl: IntlShape) => () => intl.formatMessage(previousSearch);
 
-const HistoryItemComponent: React.FC<ListItemProps<string> & WrappedComponentProps> = ({
+const HistoryItemComponent: React.FC<ListItemProps<string, undefined> & WrappedComponentProps> = ({
     intl,
     ...props
 }) => {
@@ -25,13 +25,14 @@ const HistoryItemComponent: React.FC<ListItemProps<string> & WrappedComponentPro
             renderIcon={renderIcon}
             getAreaLabel={getAreaLabel(intl)}
             className="gd-semantic-search__results-item--history"
-        >
-            <span className="gd-semantic-search__results-item__text__row">
-                <span className="gd-semantic-search__results-item__text__ellipsis">
-                    {props.listItem.item}
-                </span>
-            </span>
-        </SearchListItem>
+            renderItem={(item) => (
+                <>
+                    <span className="gd-semantic-search__results-item__text__row">
+                        <span className="gd-semantic-search__results-item__text__ellipsis">{item.item}</span>
+                    </span>
+                </>
+            )}
+        />
     );
 };
 
