@@ -433,8 +433,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
             <AttributeFilterComponent
                 title={filter.attributeFilter.title}
                 resetOnParentFilterChange={false}
-                filter={attributeFilter}
-                workingFilter={isApplyAllAtOnceEnabledAndSet ? workingAttributeFilter : undefined}
+                filter={isApplyAllAtOnceEnabledAndSet ? workingAttributeFilter : attributeFilter}
                 displayAsLabel={displayAsLabel}
                 overlayPositionType={overlayPositionType}
                 onApply={(
