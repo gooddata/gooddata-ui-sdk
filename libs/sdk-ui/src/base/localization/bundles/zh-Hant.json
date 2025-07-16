@@ -732,5 +732,13 @@
     "shareDialog.share.dashboard.list.title": "使用者和群組",
     "shareDialog.share.link.helperText": "連結反映當前篩選條件。僅具有儀表板存取權限的使用者可存取。",
     "shareDialog.share.link.title": "關聯",
-    "shareDialog.share.link.buttonText": "複製儀表板鏈接"
+    "shareDialog.share.link.buttonText": "複製儀表板鏈接",
+    "table.moreActions": "更多的",
+    "table.title.searchPlaceholder": "搜尋...",
+    "table.filter.label": "篩選",
+    "table.filter.searchPlaceholder": "搜尋...",
+    "table.bulkActions.chooseAction": "選擇一個動作...",
+    "table.bulkActions.selectedCount": "{selectedCount} 的 {totalCount} 已選擇",
+    "table.emptyState.noMatch": "未找到匹配項",
+    "table.emptyState.tryAdjustingFilters": "檢查拼字或調整過濾器。"
 }

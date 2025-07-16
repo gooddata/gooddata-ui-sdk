@@ -732,5 +732,13 @@
     "shareDialog.share.dashboard.list.title": "Utilisateurs et groupes",
     "shareDialog.share.link.helperText": "Le lien reflète les filtres actuels. Uniquement accessible aux utilisateurs ayant accès au tableau de bord.",
     "shareDialog.share.link.title": "Lien",
-    "shareDialog.share.link.buttonText": "Copier le lien du tableau de bord"
+    "shareDialog.share.link.buttonText": "Copier le lien du tableau de bord",
+    "table.moreActions": "Plus",
+    "table.title.searchPlaceholder": "Rechercher...",
+    "table.filter.label": "Filtrer",
+    "table.filter.searchPlaceholder": "Rechercher...",
+    "table.bulkActions.chooseAction": "Choisissez une action...",
+    "table.bulkActions.selectedCount": "{selectedCount} de {totalCount} sélectionné",
+    "table.emptyState.noMatch": "Aucune correspondance trouvée",
+    "table.emptyState.tryAdjustingFilters": "Vérifier l'orthographe ou ajuster les filtres."
 }

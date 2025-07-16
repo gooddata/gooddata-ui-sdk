@@ -732,5 +732,13 @@
     "shareDialog.share.dashboard.list.title": "ユーザーとグループ",
     "shareDialog.share.link.helperText": "リンクは現在のフィルターを反映しています。ダッシュボードにアクセスできるユーザーのみがアクセスできます。",
     "shareDialog.share.link.title": "リンク",
-    "shareDialog.share.link.buttonText": "ダッシュボードのリンクをコピーする"
+    "shareDialog.share.link.buttonText": "ダッシュボードのリンクをコピーする",
+    "table.moreActions": "さらに表示",
+    "table.title.searchPlaceholder": "検索...",
+    "table.filter.label": "フィルター",
+    "table.filter.searchPlaceholder": "検索...",
+    "table.bulkActions.chooseAction": "アクションを選択...",
+    "table.bulkActions.selectedCount": "{selectedCount} / {totalCount} 選択済み",
+    "table.emptyState.noMatch": "一致するものがありません",
+    "table.emptyState.tryAdjustingFilters": "スペルをチェックするか、フィルターを調整する。"
 }

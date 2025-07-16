@@ -732,5 +732,13 @@
     "shareDialog.share.dashboard.list.title": "用户和群组",
     "shareDialog.share.link.helperText": "链接反映当前筛选条件。仅具有仪表板访问权限的用户可访问。",
     "shareDialog.share.link.title": "关联",
-    "shareDialog.share.link.buttonText": "复制仪表板链接"
+    "shareDialog.share.link.buttonText": "复制仪表板链接",
+    "table.moreActions": "更多",
+    "table.title.searchPlaceholder": "搜索...",
+    "table.filter.label": "筛选器",
+    "table.filter.searchPlaceholder": "搜索...",
+    "table.bulkActions.chooseAction": "选择一个动作...",
+    "table.bulkActions.selectedCount": "{selectedCount} 的 {totalCount} 已选择",
+    "table.emptyState.noMatch": "未找到匹配项",
+    "table.emptyState.tryAdjustingFilters": "检查拼写或调整过滤器。"
 }

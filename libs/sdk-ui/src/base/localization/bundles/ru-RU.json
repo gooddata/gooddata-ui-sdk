@@ -741,5 +741,13 @@
     "shareDialog.share.dashboard.list.title": "Пользователи и группы",
     "shareDialog.share.link.helperText": "Ссылка отражает текущие фильтры. Доступна только пользователям с доступом к дашборду.",
     "shareDialog.share.link.title": "Ссылка",
-    "shareDialog.share.link.buttonText": "Скопировать ссылку на дашборд"
+    "shareDialog.share.link.buttonText": "Скопировать ссылку на дашборд",
+    "table.moreActions": "Еще",
+    "table.title.searchPlaceholder": "Поиск...",
+    "table.filter.label": "Фильтр",
+    "table.filter.searchPlaceholder": "Поиск...",
+    "table.bulkActions.chooseAction": "Выберите действие...",
+    "table.bulkActions.selectedCount": "{selectedCount} из {totalCount} выбрано",
+    "table.emptyState.noMatch": "Совпадений не найдено",
+    "table.emptyState.tryAdjustingFilters": "Проверьте правописание или настройте фильтры."
 }

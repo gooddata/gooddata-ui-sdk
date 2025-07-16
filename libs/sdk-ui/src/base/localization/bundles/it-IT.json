@@ -732,5 +732,13 @@
     "shareDialog.share.dashboard.list.title": "Utenti e gruppi",
     "shareDialog.share.link.helperText": "Il link riflette i filtri attuali. Accessibile solo agli utenti con accesso al dashboard.",
     "shareDialog.share.link.title": "Collegamento",
-    "shareDialog.share.link.buttonText": "Copiare il link del cruscotto"
+    "shareDialog.share.link.buttonText": "Copiare il link del cruscotto",
+    "table.moreActions": "Altro",
+    "table.title.searchPlaceholder": "Cerca...",
+    "table.filter.label": "Filtro",
+    "table.filter.searchPlaceholder": "Cerca...",
+    "table.bulkActions.chooseAction": "Scegliere un'azione...",
+    "table.bulkActions.selectedCount": " selectedCount} di {totalCount} selezionato",
+    "table.emptyState.noMatch": "Nessuna corrispondenza trovata",
+    "table.emptyState.tryAdjustingFilters": "Controllare l'ortografia o regolare i filtri."
 }

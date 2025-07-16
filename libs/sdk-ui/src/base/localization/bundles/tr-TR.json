@@ -741,5 +741,13 @@
     "shareDialog.share.dashboard.list.title": "Kullanıcılar ve gruplar",
     "shareDialog.share.link.helperText": "Bağlantı mevcut filtreleri yansıtır. Yalnızca panoya erişimi olan kullanıcılar tarafından erişilebilir.",
     "shareDialog.share.link.title": "Bağlantı",
-    "shareDialog.share.link.buttonText": "Gösterge tablosu bağlantısını kopyala"
+    "shareDialog.share.link.buttonText": "Gösterge tablosu bağlantısını kopyala",
+    "table.moreActions": "Daha Fazla",
+    "table.title.searchPlaceholder": "Ara...",
+    "table.filter.label": "Filtre",
+    "table.filter.searchPlaceholder": "Ara...",
+    "table.bulkActions.chooseAction": "Bir eylem seçin...",
+    "table.bulkActions.selectedCount": "{selectedCount} / {totalCount} seçildi",
+    "table.emptyState.noMatch": "Eşleşme bulunamadı",
+    "table.emptyState.tryAdjustingFilters": "Yazımı kontrol edin veya filtreleri ayarlayın."
 }

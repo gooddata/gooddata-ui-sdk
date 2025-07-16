@@ -732,5 +732,13 @@
     "shareDialog.share.dashboard.list.title": "Usuários e grupos",
     "shareDialog.share.link.helperText": "O link reflete os filtros atuais. Acessível apenas a usuários com acesso ao painel.",
     "shareDialog.share.link.title": "Link",
-    "shareDialog.share.link.buttonText": "Copiar link do painel"
+    "shareDialog.share.link.buttonText": "Copiar link do painel",
+    "table.moreActions": "Mais",
+    "table.title.searchPlaceholder": "Pesquisar...",
+    "table.filter.label": "Filtrar",
+    "table.filter.searchPlaceholder": "Pesquisar...",
+    "table.bulkActions.chooseAction": "Escolha uma ação...",
+    "table.bulkActions.selectedCount": "{selectedCount} dos {totalCount} selecionados",
+    "table.emptyState.noMatch": "Nenhuma correspondência encontrada",
+    "table.emptyState.tryAdjustingFilters": "Verifique a ortografia ou ajuste os filtros."
 }

@@ -734,5 +734,13 @@
     "shareDialog.share.dashboard.list.title": "Usuarios y grupos",
     "shareDialog.share.link.helperText": "El enlace refleja los filtros actuales. Solo accesible para usuarios con acceso al panel de control.",
     "shareDialog.share.link.title": "Enlace",
-    "shareDialog.share.link.buttonText": "Copiar enlace del panel de control"
+    "shareDialog.share.link.buttonText": "Copiar enlace del panel de control",
+    "table.moreActions": "Más",
+    "table.title.searchPlaceholder": "Buscar...",
+    "table.filter.label": "Filtro",
+    "table.filter.searchPlaceholder": "Buscar...",
+    "table.bulkActions.chooseAction": "Elige una acción...",
+    "table.bulkActions.selectedCount": "{selectedCount} de {totalCount} seleccionados",
+    "table.emptyState.noMatch": "No se encontró ninguna coincidencia",
+    "table.emptyState.tryAdjustingFilters": "Corregir la ortografía o ajustar los filtros."
 }

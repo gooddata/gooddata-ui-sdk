@@ -732,5 +732,13 @@
     "shareDialog.share.dashboard.list.title": "Käyttäjät ja ryhmät",
     "shareDialog.share.link.helperText": "Linkki heijastaa nykyisiä suodattimia. Käytettävissä vain käyttäjille, joilla on ohjauspaneelin käyttöoikeus.",
     "shareDialog.share.link.title": "Linkki",
-    "shareDialog.share.link.buttonText": "Kopioi ohjauspaneelin linkki"
+    "shareDialog.share.link.buttonText": "Kopioi ohjauspaneelin linkki",
+    "table.moreActions": "Lisää",
+    "table.title.searchPlaceholder": "Etsi...",
+    "table.filter.label": "Suodata",
+    "table.filter.searchPlaceholder": "Etsi...",
+    "table.bulkActions.chooseAction": "Valitse toiminto...",
+    "table.bulkActions.selectedCount": "{selectedCount} / {totalCount} valittu",
+    "table.emptyState.noMatch": "Ei osumia",
+    "table.emptyState.tryAdjustingFilters": "Tarkista oikeinkirjoitus tai säädä suodattimia."
 }

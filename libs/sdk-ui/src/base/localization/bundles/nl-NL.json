@@ -732,5 +732,13 @@
     "shareDialog.share.dashboard.list.title": "Gebruikers en groepen",
     "shareDialog.share.link.helperText": "Link geeft huidige filters weer. Alleen toegankelijk voor gebruikers met toegang tot het dashboard.",
     "shareDialog.share.link.title": "Link",
-    "shareDialog.share.link.buttonText": "Koppeling naar dashboard kopiëren"
+    "shareDialog.share.link.buttonText": "Koppeling naar dashboard kopiëren",
+    "table.moreActions": "Meer",
+    "table.title.searchPlaceholder": "Zoeken...",
+    "table.filter.label": "Filter",
+    "table.filter.searchPlaceholder": "Zoeken...",
+    "table.bulkActions.chooseAction": "Kies een actie...",
+    "table.bulkActions.selectedCount": "{selectedCount} van {totalCount} geselecteerd",
+    "table.emptyState.noMatch": "Geen overeenkomst gevonden",
+    "table.emptyState.tryAdjustingFilters": "Controleer de spelling of pas filters aan."
 }
