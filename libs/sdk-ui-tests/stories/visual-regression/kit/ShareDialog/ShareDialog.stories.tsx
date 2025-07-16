@@ -6,7 +6,7 @@ import { Button, ComponentLabelsProvider, getGranteeItemTestId, ShareDialogBase 
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { uriRef } from "@gooddata/sdk-model";
 
 import { wrapWithTheme } from "../../themeWrapper.js";

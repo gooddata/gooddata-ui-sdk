@@ -1,58 +1,57 @@
-const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
+const { mergeConfig } = require("vite");
+const { viteStaticCopy } = require("vite-plugin-static-copy");
 
 module.exports = {
-    addons: ["@storybook/addon-actions", "@storybook/preset-scss"],
     stories: ["../stories/**/*.stories.@(ts|tsx)"],
     features: {
-        // suppress the warning with deprecated implicit PostCSS loader, we do not need it anyway
-        // this makes the eventual upgrade to Storybook 7 easier since we opt-out of the deprecated feature explicitly
-        postcss: false,
+        addons: true,
     },
     core: {
-        builder: "webpack5",
+        builder: "@storybook/builder-vite",
     },
     framework: {
-        name: "@storybook/react-webpack5",
+        name: "@storybook/react-vite",
         options: { fastRefresh: true },
     },
-    webpackFinal: async (config) => ({
-        ...config,
-        externals: { module: "module" },
-        resolve: {
-            ...config.resolve,
-            extensionAlias: {
-                ".js": [".ts", ".tsx", ".js", ".jsx"],
-            },
-            alias: {
-                ...config.resolve.alias,
-                // fixes internal exports from sdk-ui-ext
-                "@gooddata/sdk-ui-ext/internal": path.resolve(
-                    "./node_modules/@gooddata/sdk-ui-ext/esm/internal",
-                ),
-            },
-        },
-        plugins: [
-            ...config.plugins,
-            new CopyPlugin({
-                patterns: [
-                    {
-                        from: "./node_modules/@gooddata/sdk-ui-web-components/esm",
-                        to: "./static/web-components/",
-                    },
-                ],
-            }),
-        ],
-        module: {
-            ...config.module,
-            rules: [
-                {
-                    test: /\.js$/,
-                    enforce: "pre",
-                    use: ["source-map-loader"],
+    async viteFinal(config) {
+        return mergeConfig(config, {
+            resolve: {
+                alias: {
+                    // fixes internal exports from sdk-ui-ext
+                    "@gooddata/sdk-ui-ext/internal": path.resolve(
+                        "./node_modules/@gooddata/sdk-ui-ext/esm/internal",
+                    ),
                 },
-                ...config.module.rules
-            ]
-        },
-    }),
+            },
+            server: {
+                fs: {
+                    allow: [
+                        path.resolve(__dirname, "../../../"),
+                    ],
+                },
+            },
+            plugins: [
+                viteStaticCopy({
+                    targets: [
+                        {
+                            src: "./node_modules/@gooddata/sdk-ui-web-components/esm/**/*",
+                            dest: "web-components",
+                        },
+                    ],
+                    hook: "buildStart",
+                }),
+            ],
+            optimizeDeps: {
+                exclude: ["module"],
+            },
+            build: {
+                sourcemap: true,
+            },
+            define: {
+                'process.env': process.env,
+                'process': {}
+            }
+        });
+    },
 };

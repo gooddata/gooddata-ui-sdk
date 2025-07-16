@@ -9,7 +9,7 @@ import {
     StylingSettingWidget,
 } from "@gooddata/sdk-ui-kit";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { customThemeItems } from "./itemsMock.js";

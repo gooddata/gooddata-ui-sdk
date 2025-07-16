@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { NumericInput } from "@gooddata/sdk-ui-kit";
 
 const NumericInputExamples: React.VFC = () => {

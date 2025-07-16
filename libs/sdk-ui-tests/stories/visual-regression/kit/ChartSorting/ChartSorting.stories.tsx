@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { ChartSortingDialog, IBucketItemDescriptors } from "@gooddata/sdk-ui-kit";
 import { measureLocalId, attributeLocalId } from "@gooddata/sdk-model";

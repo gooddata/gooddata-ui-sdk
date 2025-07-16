@@ -5,7 +5,7 @@
 // import { storiesOf } from "../../../../_infra/storyRepository";
 
 // import { IAttributeElement } from "@gooddata/sdk-model";
-// import { action } from "@storybook/addon-actions";
+// import { action } from "storybook/actions";
 
 // import { AttributeFilterListItem } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterListItem";
 // import { EmptyListItem } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/types";

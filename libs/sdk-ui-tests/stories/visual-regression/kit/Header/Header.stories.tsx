@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 // storiesOf removed for CSF migration
 import { withIntl } from "@gooddata/sdk-ui";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import {
     AppHeader,
     IAppHeaderProps,

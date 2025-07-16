@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import React, { useState } from "react";
 import { InternalIntlWrapper, NameSubsection } from "@gooddata/sdk-ui-ext/internal";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";

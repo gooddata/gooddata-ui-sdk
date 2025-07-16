@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { SemanticSearch } from "@gooddata/sdk-ui-semantic-search";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { StorybookBackend, ReferenceWorkspaceId } from "../../_infra/backend.js";
 
 import { wrapWithTheme } from "../themeWrapper.js";

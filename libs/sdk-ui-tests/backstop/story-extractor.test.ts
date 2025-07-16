@@ -1,8 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
+// @vitest-environment node
 import { resolve } from "path";
 import { existsSync, writeFileSync } from "fs";
 import { describe, it, expect } from "vitest";
 import { toBackstopJson } from "../stories/_infra/toBackstop";
+
+import "./mockWindow";
 
 const targetFile = resolve(__dirname, "stories.json");
 
