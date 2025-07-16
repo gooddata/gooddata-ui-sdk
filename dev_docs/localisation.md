@@ -15,8 +15,6 @@ Localisation `*.json` has defined schema and properties what needs to be defined
     "value": "value",
     //REQUIRED. Some comment and explanation what this message means. Read more info bellow.
     "comment": "comment",
-    ////REQUIRED. Number that limit maximum count of latters that can be in value. Read more info bellow.
-    "limit": 0,
     //Mark for translate by external company. Read more info bellow
     "translate": false
   },
@@ -32,14 +30,6 @@ can easily understand context of message and will be easy to them translate it c
 > **Caveats about `comment`**
 >
 > Always fill this property and try to describe usage very precisely. External translators can raise some questions if they are not sure how to correctly translate message and took long time and lots of effort to communicate this context!
-
-### Property `limit`
-
-Limit property is used to limit maximum allowed count of character that can be used in final message. This is helpful when we have a limited space for showing our message, and we need to ensure that user will see this message whole.
-
-_In english text can be only 20 chars long, but in another language will have length for example 60 characters. But we have space safely only for 40 characters. In this case set limit property on 40._
-
-**Meaning of value `0`** - Value **`0`** means that limit is turned off, and we do not want to check it.
 
 ### Property `translate`
 

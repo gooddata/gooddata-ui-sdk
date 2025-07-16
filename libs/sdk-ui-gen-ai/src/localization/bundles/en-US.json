@@ -1,287 +1,230 @@
 {
     "gd.gen-ai.global-error": {
         "value": "Something went wrong",
-        "comment": "Generic error message displayed when the AI chatbot encounters an unexpected error",
-        "limit": 0
+        "comment": "Generic error message displayed when the AI chatbot encounters an unexpected error"
     },
     "gd.gen-ai.global-error.description": {
         "value": "Try restarting the chatbot and starting over.",
-        "comment": "User instruction on how to recover from a global error in the AI chatbot",
-        "limit": 0
+        "comment": "User instruction on how to recover from a global error in the AI chatbot"
     },
     "gd.gen-ai.global-error.button-details": {
         "value": "See details",
-        "comment": "Button label to show more detailed error information",
-        "limit": 0
+        "comment": "Button label to show more detailed error information"
     },
     "gd.gen-ai.global-error.button-clear": {
         "value": "Restart chatbot",
-        "comment": "Button label to restart the AI chatbot and clear the current session",
-        "limit": 0
+        "comment": "Button label to restart the AI chatbot and clear the current session"
     },
     "gd.gen-ai.global-no-llm": {
         "value": "No LLM provider configured",
-        "comment": "Error message when no LLM provider is configured",
-        "limit": 0
+        "comment": "Error message when no LLM provider is configured"
     },
     "gd.gen-ai.global-no-llm.description": {
         "value": "Configure a provider to enable the chatbot.",
-        "comment": "User instruction on how to configure a provider for the AI chatbot",
-        "limit": 0
+        "comment": "User instruction on how to configure a provider for the AI chatbot"
     },
     "gd.gen-ai.global-no-llm.button-create-llm": {
         "value": "Configure provider",
-        "comment": "Button label to configure a provider for the AI chatbot",
-        "limit": 0
+        "comment": "Button label to configure a provider for the AI chatbot"
     },
     "gd.gen-ai.permission-error": {
         "value": "Insufficient permissions",
-        "comment": "Error message when user does not have sufficient permissions to access the chatbot",
-        "limit": 0
+        "comment": "Error message when user does not have sufficient permissions to access the chatbot"
     },
     "gd.gen-ai.permission-error.description": {
         "value": "You don’t have access to the chatbot. Contact your administrator to request access.",
-        "comment": "User instruction on how to request access to the AI chatbot",
-        "limit": 0
+        "comment": "User instruction on how to request access to the AI chatbot"
     },
     "gd.gen-ai.input-placeholder": {
         "value": "Ask here…",
-        "comment": "Placeholder text in the input field where users type their questions to the AI chatbot",
-        "limit": 0
+        "comment": "Placeholder text in the input field where users type their questions to the AI chatbot"
     },
     "gd.gen-ai.input-label.mac": {
         "value": "Ask your question. Use control+space or cmd+I for suggestions.",
-        "comment": "Label for the input field where users type their questions to the AI chatbot",
-        "limit": 0
+        "comment": "Label for the input field where users type their questions to the AI chatbot"
     },
     "gd.gen-ai.input-label.win": {
         "value": "Ask your question. Use control+space or control+I for suggestions.",
-        "comment": "Label for the input field where Windows users type their questions to the AI chatbot",
-        "limit": 0
+        "comment": "Label for the input field where Windows users type their questions to the AI chatbot"
     },
     "gd.gen-ai.feedback.like": {
         "value": "Mark this message as helpful",
-        "comment": "Button label to mark a message as helpful in the AI chatbot",
-        "limit": 0
+        "comment": "Button label to mark a message as helpful in the AI chatbot"
     },
     "gd.gen-ai.feedback.dislike": {
         "value": "Mark this message as not helpful",
-        "comment": "Button label to mark a message as not helpful in the AI chatbot",
-        "limit": 0
+        "comment": "Button label to mark a message as not helpful in the AI chatbot"
     },
     "gd.gen-ai.disclaimer": {
         "value": "AI assistants can make mistakes. Check before relying on these answers.",
-        "comment": "Warning disclaimer about AI response accuracy shown to users",
-        "limit": 0
+        "comment": "Warning disclaimer about AI response accuracy shown to users"
     },
     "gd.gen-ai.dialog.label": {
         "value": "AI assistant conversation",
-        "comment": "Label for the dialog containing the AI chatbot interface",
-        "limit": 0
+        "comment": "Label for the dialog containing the AI chatbot interface"
     },
     "gd.gen-ai.header.reset-tooltip": {
         "value": "Reset",
-        "comment": "Tooltip for button that resets the AI chatbot conversation",
-        "limit": 0
+        "comment": "Tooltip for button that resets the AI chatbot conversation"
     },
     "gd.gen-ai.header.contract-tooltip": {
         "value": "Contract",
-        "comment": "Tooltip for button that contracts the AI chatbot interface",
-        "limit": 0
+        "comment": "Tooltip for button that contracts the AI chatbot interface"
     },
     "gd.gen-ai.header.expand-tooltip": {
         "value": "Expand",
-        "comment": "Tooltip for button that expands the AI chatbot interface",
-        "limit": 0
+        "comment": "Tooltip for button that expands the AI chatbot interface"
     },
     "gd.gen-ai.header.close-tooltip": {
         "value": "Close",
-        "comment": "Tooltip for button that closes the AI chatbot interface",
-        "limit": 0
+        "comment": "Tooltip for button that closes the AI chatbot interface"
     },
     "gd.gen-ai.welcome.line-1": {
         "value": "Hi there,",
-        "comment": "First line of the AI chatbot's welcome greeting",
-        "limit": 0
+        "comment": "First line of the AI chatbot's welcome greeting"
     },
     "gd.gen-ai.welcome.line-2": {
         "value": "How can I help you?",
-        "comment": "Second line of the AI chatbot's welcome greeting asking how to assist",
-        "limit": 0
+        "comment": "Second line of the AI chatbot's welcome greeting asking how to assist"
     },
     "gd.gen-ai.welcome.option-1.title": {
         "value": "Search for a dashboard or visualization",
-        "comment": "Title for the first suggested action option in the welcome screen",
-        "limit": 0
+        "comment": "Title for the first suggested action option in the welcome screen"
     },
     "gd.gen-ai.welcome.option-1.answer": {
         "value": "Sure thing, what kind of dashboard or visualization would you like to see?",
-        "comment": "AI chatbot's response when user selects the search option",
-        "limit": 0
+        "comment": "AI chatbot's response when user selects the search option"
     },
     "gd.gen-ai.welcome.option-2.title": {
         "value": "Create a new visualization",
-        "comment": "Title for the second suggested action option in the welcome screen",
-        "limit": 0
+        "comment": "Title for the second suggested action option in the welcome screen"
     },
     "gd.gen-ai.welcome.option-2.answer": {
         "value": "Sure thing, what kind of visualization would you like to create?",
-        "comment": "AI chatbot's response when user selects the create visualization option",
-        "limit": 0
+        "comment": "AI chatbot's response when user selects the create visualization option"
     },
     "gd.gen-ai.welcome.option-3.title": {
         "value": "Answer a business question",
-        "comment": "Title for the third suggested action option in the welcome screen",
-        "limit": 0
+        "comment": "Title for the third suggested action option in the welcome screen"
     },
     "gd.gen-ai.welcome.option-3.answer": {
         "value": "Sure thing, what business question would you like to answer?",
-        "comment": "AI chatbot's response when user selects the business question option",
-        "limit": 0
+        "comment": "AI chatbot's response when user selects the business question option"
     },
     "gd.gen-ai.state.cancelled": {
         "value": "Evaluation cancelled…",
-        "comment": "Status message displayed when the AI chatbot's evaluation is cancelled",
-        "limit": 0
+        "comment": "Status message displayed when the AI chatbot's evaluation is cancelled"
     },
     "gd.gen-ai.state.generating": {
         "value": "Generating your response…",
-        "comment": "Status message displayed while the AI chatbot is generating a response",
-        "limit": 0
+        "comment": "Status message displayed while the AI chatbot is generating a response"
     },
     "gd.gen-ai.button.send": {
         "value": "Send message",
-        "comment": "Button label to send a message to the AI chatbot",
-        "limit": 0
+        "comment": "Button label to send a message to the AI chatbot"
     },
     "gd.gen-ai.button.save": {
         "value": "Save",
-        "comment": "Button label to save a visualization created by the AI",
-        "limit": 0
+        "comment": "Button label to save a visualization created by the AI"
     },
     "gd.gen-ai.button.save_and_explore": {
         "value": "Save & Open",
-        "comment": "Button label to save a visualization and immediately open it for exploration",
-        "limit": 0
+        "comment": "Button label to save a visualization and immediately open it for exploration"
     },
     "gd.gen-ai.button.cancel": {
         "value": "Cancel",
-        "comment": "Button label to cancel the current operation",
-        "limit": 0
+        "comment": "Button label to cancel the current operation"
     },
     "gd.gen-ai.save-dialog.label": {
         "value": "Name",
-        "comment": "Label for the input field where users enter a name for their visualization",
-        "limit": 0
+        "comment": "Label for the input field where users enter a name for their visualization"
     },
     "gd.gen-ai.save-dialog.title": {
         "value": "Name your visualization",
-        "comment": "Title of the dialog for naming a visualization before saving",
-        "limit": 0
+        "comment": "Title of the dialog for naming a visualization before saving"
     },
     "gd.gen-ai.save-dialog.description": {
         "value": "Give your new visualization a new descriptive name, so it's easier to find it later on.",
-        "comment": "Description explaining why users should provide a descriptive name for their visualization",
-        "limit": 0
+        "comment": "Description explaining why users should provide a descriptive name for their visualization"
     },
     "gd.gen-ai.save-dialog.description.explore": {
         "value": "To open this visualization, it needs to be saved first. You can give it a name below.",
-        "comment": "Description explaining that the visualization must be saved before it can be opened",
-        "limit": 0
+        "comment": "Description explaining that the visualization must be saved before it can be opened"
     },
     "gd.gen-ai.autocomplete.type": {
         "value": "Type",
-        "comment": "Column header in autocomplete suggestions showing the type of data object",
-        "limit": 0
+        "comment": "Column header in autocomplete suggestions showing the type of data object"
     },
     "gd.gen-ai.autocomplete.dataset": {
         "value": "Dataset",
-        "comment": "Column header in autocomplete suggestions showing the dataset name",
-        "limit": 0
+        "comment": "Column header in autocomplete suggestions showing the dataset name"
     },
     "gd.gen-ai.autocomplete.id": {
         "value": "Id",
-        "comment": "Column header in autocomplete suggestions showing the object identifier",
-        "limit": 0
+        "comment": "Column header in autocomplete suggestions showing the object identifier"
     },
     "gd.gen-ai.autocomplete.attribute": {
         "value": "Attribute",
-        "comment": "Column header in autocomplete suggestions showing the attribute name",
-        "limit": 0
+        "comment": "Column header in autocomplete suggestions showing the attribute name"
     },
     "gd.gen-ai.autocomplete.metric": {
         "value": "Metric",
-        "comment": "Column header in autocomplete suggestions showing the metric name",
-        "limit": 0
+        "comment": "Column header in autocomplete suggestions showing the metric name"
     },
     "gd.gen-ai.autocomplete.fact": {
         "value": "Fact",
-        "comment": "Column header in autocomplete suggestions showing the fact name",
-        "limit": 0
+        "comment": "Column header in autocomplete suggestions showing the fact name"
     },
     "gd.gen-ai.autocomplete.date": {
         "value": "Date",
-        "comment": "Column header in autocomplete suggestions showing the date",
-        "limit": 0
+        "comment": "Column header in autocomplete suggestions showing the date"
     },
     "gd.gen-ai.autocomplete.input-info.mac": {
         "value": "<code>^+Space</code> or <code>⌘+I</code> for suggestions",
-        "comment": "Keyboard shortcut instructions for Mac users to trigger autocomplete suggestions",
-        "limit": 0
+        "comment": "Keyboard shortcut instructions for Mac users to trigger autocomplete suggestions"
     },
     "gd.gen-ai.autocomplete.input-info.win": {
         "value": "<code>Ctrl+Space</code> or <code>Ctrl+I</code> for suggestions",
-        "comment": "Keyboard shortcut instructions for Windows users to trigger autocomplete suggestions",
-        "limit": 0
+        "comment": "Keyboard shortcut instructions for Windows users to trigger autocomplete suggestions"
     },
     "gd.gen-ai.visualisation.menu": {
         "value": "{name}, more actions",
-        "comment": "Accessibility label for the visualization actions menu",
-        "limit": 0
+        "comment": "Accessibility label for the visualization actions menu"
     },
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": {
         "value": "Save visualization",
-        "comment": "Menu option to save the current visualization",
-        "limit": 0
+        "comment": "Menu option to save the current visualization"
     },
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": {
         "value": "Save as new…",
-        "comment": "Menu option to save the current visualization as a new copy",
-        "limit": 0
+        "comment": "Menu option to save the current visualization as a new copy"
     },
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": {
         "value": "Open in Analyze",
-        "comment": "Menu option to open the visualization in the full Analyze interface",
-        "limit": 0
+        "comment": "Menu option to open the visualization in the full Analyze interface"
     },
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": {
         "value": "Copy visualization link",
-        "comment": "Menu option to copy a shareable link to the visualization",
-        "limit": 0
+        "comment": "Menu option to copy a shareable link to the visualization"
     },
     "gd.gen-ai.messages.label": {
         "value": "Chat messages",
-        "comment": "Label for the chat messages section in the AI chatbot interface",
-        "limit": 0
+        "comment": "Label for the chat messages section in the AI chatbot interface"
     },
     "gd.gen-ai.message.label.user": {
         "value": "User:",
-        "comment": "Label identifying messages sent by the user in the chat conversation",
-        "limit": 0
+        "comment": "Label identifying messages sent by the user in the chat conversation"
     },
     "gd.gen-ai.message.label.assistant": {
         "value": "Bot:",
-        "comment": "Label identifying messages sent by the AI assistant in the chat conversation",
-        "limit": 0
+        "comment": "Label identifying messages sent by the AI assistant in the chat conversation"
     },
     "gd.gen-ai.skip-messages-history": {
         "value": "Skip to AI assistant input",
-        "comment": "Accessibility link to skip past the message history and go directly to the input field",
-        "limit": 0
+        "comment": "Accessibility link to skip past the message history and go directly to the input field"
     },
     "gd.gen-ai.skip-navigation": {
         "value": "Skip navigation",
-        "comment": "Accessibility link to skip past navigation elements in the interface",
-        "limit": 0
+        "comment": "Accessibility link to skip past navigation elements in the interface"
     }
 }
