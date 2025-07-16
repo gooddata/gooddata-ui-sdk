@@ -14,14 +14,25 @@ export interface UiIconProps {
     label?: string;
     size?: number;
     ariaHidden?: boolean;
+    /**
+     * SVGs are inline by default. The icon can be set to block to behave better in flex layouts and similar.
+     * @defaultValue "inline"
+     */
+    layout?: "block" | "inline";
 }
 
 /**
  * @internal
  */
-export const UiIcon = ({ type, label, color, ariaHidden, size = 20 }: UiIconProps) => {
+export const UiIcon = ({ type, label, color, layout = "inline", ariaHidden, size = 20 }: UiIconProps) => {
     return (
-        <svg className={b({ color })} width={size} height={size} viewBox="0 0 20 20" aria-hidden={ariaHidden}>
+        <svg
+            className={b({ color, layout })}
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            aria-hidden={ariaHidden}
+        >
             {label ? <title>{label}</title> : null}
             {iconPaths[type]}
         </svg>

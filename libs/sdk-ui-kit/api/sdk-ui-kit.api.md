@@ -6081,7 +6081,7 @@ export const UiFocusTrap: React_3.FC<{
 }>;
 
 // @internal (undocumented)
-export const UiIcon: ({ type, label, color, ariaHidden, size }: UiIconProps) => React_2.JSX.Element;
+export const UiIcon: ({ type, label, color, layout, ariaHidden, size }: UiIconProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export const UiIconButton: React_2.ForwardRefExoticComponent<UiIconButtonPublicProps & React_2.RefAttributes<HTMLButtonElement>>;
@@ -6125,6 +6125,7 @@ export interface UiIconProps {
     color?: ThemeColor;
     // (undocumented)
     label?: string;
+    layout?: "block" | "inline";
     // (undocumented)
     size?: number;
     // (undocumented)

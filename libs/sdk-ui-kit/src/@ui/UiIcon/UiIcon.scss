@@ -1,6 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 .gd-ui-kit-icon {
     fill: var(--gd-icon-fill-color);
+
+    &--layout {
+        &-block {
+            display: block;
+        }
+
+        &-inline {
+            display: inline;
+        }
+    }
+
     &--color {
         &-primary {
             --gd-icon-fill-color: var(--gd-palette-primary-base);
