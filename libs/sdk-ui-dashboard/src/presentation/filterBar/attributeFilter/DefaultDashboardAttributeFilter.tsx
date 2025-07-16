@@ -499,7 +499,6 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 }
                 enableAttributeFilterVirtualised={enableAttributeFilterVirtualisedList}
                 withoutApply={isApplyAllAtOnceEnabledAndSet}
-                enableDashboardFiltersApplyModes={isApplyAllAtOnceEnabledAndSet}
                 enableDashboardFiltersApplyWithoutLoading={true}
             />
         </AttributeFilterParentFilteringProvider>

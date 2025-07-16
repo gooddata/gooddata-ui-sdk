@@ -34,6 +34,8 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         selectFirst = false,
         disabled,
         customIcon,
+        withoutApply,
+        overlayPositionType,
         onApply,
         onSelect,
         onError,
@@ -54,6 +56,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         enableAttributeFilterVirtualised,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
         enableDashboardFiltersApplyWithoutLoading = false,
+        enableDashboardFiltersApplyModes = false,
     } = props;
 
     const DefaultComponents = getAttributeFilterDefaultComponents(props);
@@ -117,9 +120,8 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                         enableImmediateAttributeFilterDisplayAsLabelMigration
                     }
                     enableAttributeFilterVirtualised={enableAttributeFilterVirtualised}
-                    withoutApply={props.withoutApply}
-                    enableDashboardFiltersApplyModes={props.enableDashboardFiltersApplyModes}
-                    overlayPositionType={props.overlayPositionType}
+                    withoutApply={withoutApply ?? enableDashboardFiltersApplyModes}
+                    overlayPositionType={overlayPositionType}
                     enableDashboardFiltersApplyWithoutLoading={enableDashboardFiltersApplyWithoutLoading}
                 >
                     {children}

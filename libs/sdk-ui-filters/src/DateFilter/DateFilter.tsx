@@ -91,6 +91,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
 
     /**
      * If new apply all filters at once mode is enabled
+     * @deprecated dont use. Will be removed in future releases. Use `withoutApply` instead
      */
     enableDashboardFiltersApplyModes?: boolean;
 
@@ -162,8 +163,9 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         nextProps: IDateFilterProps,
         prevState: IDateFilterState,
     ): IDateFilterState {
+        const withoutApply = nextProps.withoutApply ?? nextProps.enableDashboardFiltersApplyModes;
         if (
-            nextProps.enableDashboardFiltersApplyModes &&
+            withoutApply &&
             nextProps.workingSelectedFilterOption &&
             nextProps.excludeCurrentPeriod !== undefined &&
             (!isEqual(nextProps.workingSelectedFilterOption, prevState.initWorkingSelectedFilterOption) ||
@@ -265,11 +267,12 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             customIcon,
             showDropDownHeaderMessage,
             FilterConfigurationComponent,
-            withoutApply,
+            withoutApply: withoutApplyProp,
             enableDashboardFiltersApplyModes,
             ButtonComponent,
             overlayPositionType,
         } = this.props;
+        const withoutApply = withoutApplyProp ?? enableDashboardFiltersApplyModes;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
             <DateFilterCore
@@ -297,7 +300,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 weekStart={weekStart}
                 customIcon={customIcon}
                 FilterConfigurationComponent={FilterConfigurationComponent}
-                withoutApply={enableDashboardFiltersApplyModes ? withoutApply : undefined}
+                withoutApply={withoutApply}
                 ButtonComponent={ButtonComponent}
                 overlayPositionType={overlayPositionType}
             />
@@ -310,10 +313,10 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
     };
 
     private onChangesDiscarded = () => {
-        if (!this.props.withoutApply || !this.props.enableDashboardFiltersApplyModes) {
+        if (!this.props.withoutApply) {
             this.setState(() => DateFilter.getStateFromProps(this.props), this.handleSelectChange);
         } else if (
-            this.props.enableDashboardFiltersApplyModes &&
+            this.props.withoutApply &&
             !isEmpty(validateFilterOption(this.state.selectedFilterOption))
         ) {
             this.setState(() => DateFilter.getStateFromWorkingProps(this.props));

@@ -410,6 +410,7 @@ export interface IAttributeFilterCoreProps {
     // @alpha
     displayAsLabel?: ObjRef;
     enableAttributeFilterVirtualised?: boolean;
+    // @deprecated
     enableDashboardFiltersApplyModes?: boolean;
     // @deprecated
     enableDashboardFiltersApplyWithoutLoading?: boolean;
@@ -797,6 +798,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     dateFilterMode: VisibilityMode;
     // (undocumented)
     dateFormat?: string;
+    // @deprecated
     enableDashboardFiltersApplyModes?: boolean;
     // @alpha
     FilterConfigurationComponent?: React_2.ComponentType<IFilterConfigurationProps>;
