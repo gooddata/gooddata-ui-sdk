@@ -13,6 +13,7 @@
     "browser": "./esm/index.js",
     "exports": {
         ".": "./esm/index.js",
+        "./next": "./esm/next/index.js",
         "./styles/css/*": "./styles/css/*",
         "./styles/scss/*": "./styles/scss/*",
         "./internal-tests/CorePivotTableAgImpl": "./esm/CorePivotTable.js"
@@ -55,8 +56,9 @@
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-pivot\"'"
     },
     "dependencies": {
-        "ag-grid-community": "33.1.0",
-        "ag-grid-react": "33.1.0",
+        "ag-grid-community": "33.3.2",
+        "ag-grid-enterprise": "33.3.2",
+        "ag-grid-react": "33.3.2",
         "@gooddata/number-formatter": "^1.0.6",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
@@ -79,6 +81,7 @@
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
         "@gooddata/reference-workspace": "workspace:*",
+        "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.17.0",

@@ -9,6 +9,7 @@ import {
     IResultAttributeHeader,
     IResultMeasureHeader,
     IResultTotalHeader,
+    IMeasureGroupDescriptor,
 } from "@gooddata/sdk-model";
 
 /**
@@ -442,4 +443,118 @@ export interface IDataAccessMethods {
      * @returns collection of data slices that are available in the data view
      */
     slices(): IDataSliceCollection;
+
+    /**
+     * @returns data as a two-dimensional data intersections.
+     * @alpha
+     */
+    as2D(): IData2D;
+}
+
+/**
+ * @alpha
+ */
+export interface IAttributeData2D {
+    type: "attributeData";
+    header: IResultAttributeHeader;
+    descriptor: IAttributeDescriptor;
+    dimensionIndex: number;
+    coordinates: [rowIndex: number, columnIndex: number];
+}
+
+/**
+ * @alpha
+ */
+export interface IMeasureData2D {
+    type: "measureData";
+    header: IResultMeasureHeader;
+    descriptor: IMeasureDescriptor;
+    value: DataValue;
+    formattedValue: string | null;
+    dimensionIndex: number;
+    coordinates: [rowIndex: number, columnIndex: number];
+}
+
+/**
+ * @alpha
+ */
+export interface IMeasureGroupDescriptor2D {
+    type: "measureGroupDescriptor";
+    descriptor: IMeasureGroupDescriptor;
+    dimensionIndex: number;
+}
+
+/**
+ * @alpha
+ */
+export interface IMeasureGroupHeaders2D {
+    type: "measureGroupHeaders";
+    headers: (IResultMeasureHeader | IResultTotalHeader)[];
+    dimensionIndex: number;
+}
+
+/**
+ * @alpha
+ */
+export interface IAttributeDescriptor2D {
+    type: "attributeDescriptor";
+    descriptor: IAttributeDescriptor;
+    dimensionIndex: number;
+}
+
+/**
+ * @alpha
+ */
+export interface IAttributeHeaders2D {
+    type: "attributeHeaders";
+    headers: IResultAttributeHeader[];
+    dimensionIndex: number;
+}
+
+/**
+ * @alpha
+ */
+export type IHeaders2D = IAttributeHeaders2D | IMeasureGroupHeaders2D;
+
+/**
+ * Descriptor of the data.
+ *
+ * @alpha
+ */
+export type IDescriptor2D = IAttributeDescriptor2D | IMeasureGroupDescriptor2D;
+
+/**
+ * Represents a single data point in 2D data structure.
+ *
+ * @alpha
+ */
+export type IDataPoint2D = IAttributeData2D | IMeasureData2D;
+
+/**
+ * Intersection of the data for single data point (in table context, you can treat this as a single cell).
+ *
+ * @alpha
+ */
+export type IDataPointIntersection2D = IDataPoint2D[];
+
+/**
+ * Represents data as 2D array of data intersections for each data point.
+ *
+ * @alpha
+ */
+export interface IData2D {
+    /**
+     * Headers of the data - index is 1:1 to cell intersection index
+     */
+    headers: IHeaders2D[];
+
+    /**
+     * Descriptors of the data - index is 1:1 to cell intersection index.
+     */
+    descriptors: IDescriptor2D[];
+
+    /**
+     * First index is the row index (top to bottom dimension), second index is the column index (left to right dimension).
+     */
+    rows: IDataPointIntersection2D[][];
 }
