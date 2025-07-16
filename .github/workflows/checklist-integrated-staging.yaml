@@ -128,7 +128,7 @@ jobs:
           allowed-skips: checklist-SDK, checklist-export, checklist-boiler-app
           jobs: ${{ toJSON(needs) }}
       - name: Send Slack notification
-        uses: slackapi/slack-github-action@v1.27.1
+        uses: slackapi/slack-github-action@v2.1.1
         if: ${{ !cancelled() && needs.setup-stage.outputs.send_message_to_slack_channel == 'true' }}
         with:
           channel-id: team-qa
