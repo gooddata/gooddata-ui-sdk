@@ -14,8 +14,8 @@
 #
 # The subsequent build / rebuild will then overwrite the dummy file and everything will be on track.
 #
-
-FILE="tools/mock-handling/esm/index.js"
+CURRENT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
+FILE="$CURRENT_DIR/../../tools/mock-handling/esm/index.js";
 DIR=`dirname ${FILE}`
 
 if [ ! -f ${FILE} ]; then
