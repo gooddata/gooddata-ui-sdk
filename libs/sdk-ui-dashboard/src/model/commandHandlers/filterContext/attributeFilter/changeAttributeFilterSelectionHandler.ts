@@ -19,7 +19,7 @@ import {
     selectIsFilterFromCrossFilteringByLocalIdentifier,
 } from "../../../store/drill/drillSelectors.js";
 import {
-    selectEnableDashboardFiltersApplyModes,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
 } from "../../../store/config/configSelectors.js";
 
@@ -38,9 +38,8 @@ export function* changeAttributeFilterSelectionHandler(
         throw invalidArgumentsProvided(ctx, cmd, `Filter with filterLocalId ${filterLocalId} not found.`);
     }
 
-    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
-        yield select(selectEnableDashboardFiltersApplyModes);
-
+    const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
+        yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
         typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
     > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
@@ -50,7 +49,7 @@ export function* changeAttributeFilterSelectionHandler(
             elements,
             filterLocalId,
             negativeSelection: selectionType === "NOT_IN",
-            isWorkingSelectionChange: isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+            isWorkingSelectionChange: isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
             enableImmediateAttributeFilterDisplayAsLabelMigration,
             isResultOfMigration,
         }),
@@ -75,8 +74,7 @@ export function* changeAttributeFilterSelectionHandler(
                             uris: [],
                         },
                         negativeSelection: true,
-                        isWorkingSelectionChange:
-                            isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                        isWorkingSelectionChange: isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
                     }),
                 ),
             ),
@@ -90,7 +88,7 @@ export function* changeAttributeFilterSelectionHandler(
     if (
         isCrossFiltering &&
         !isCurrentFilterCrossFiltering &&
-        (!isWorkingSelectionChange || !enableDashboardFiltersApplyModes)
+        (!isWorkingSelectionChange || !isApplyAllAtOnceEnabledAndSet)
     ) {
         yield call(resetCrossFiltering, cmd);
     }

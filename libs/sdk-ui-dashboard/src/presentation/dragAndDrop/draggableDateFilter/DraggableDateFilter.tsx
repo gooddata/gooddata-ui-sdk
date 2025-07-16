@@ -6,7 +6,7 @@ import {
     useDashboardSelector,
     selectIsInEditMode,
     selectCanAddMoreFilters,
-    selectEnableDashboardFiltersApplyModes,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../model/index.js";
 import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { CustomDashboardDateFilterComponent, IDashboardDateFilterConfig } from "../../filterBar/types.js";
@@ -57,7 +57,7 @@ export function DraggableDateFilter({
 
     const showDropZones = isInEditMode && !isDragging;
 
-    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
     return (
         <div className="draggable-attribute-filter">
@@ -79,7 +79,7 @@ export function DraggableDateFilter({
             >
                 <FilterComponent
                     filter={filter}
-                    workingFilter={enableDashboardFiltersApplyModes ? workingFilter : undefined}
+                    workingFilter={isApplyAllAtOnceEnabledAndSet ? workingFilter : undefined}
                     config={config}
                     onFilterChanged={onDateFilterChanged}
                     isDraggable={isInEditMode}

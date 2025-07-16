@@ -109,6 +109,7 @@ export {
     selectEnableDashboardFiltersApplyModes,
     selectEnableAttributeFilterVirtualisedList,
     selectDashboardFiltersApplyMode,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectEnableExecutionCancelling,
     selectEnableOrchestratedTabularExports,
     selectEnableDashboardTabularExport,

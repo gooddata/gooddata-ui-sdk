@@ -39,9 +39,8 @@ import {
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectPreloadedAttributesWithReferences,
-    selectDashboardFiltersApplyMode,
-    selectEnableDashboardFiltersApplyModes,
     selectEnableAttributeFilterVirtualisedList,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../model/index.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { getVisibilityIcon } from "../utils.js";
@@ -119,8 +118,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     const enableImmediateAttributeFilterDisplayAsLabelMigration = useDashboardSelector(
         selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     );
-    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
-    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const enableAttributeFilterVirtualisedList = useDashboardSelector(
         selectEnableAttributeFilterVirtualisedList,
     );
@@ -254,8 +252,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
             const { currentDisplayFormRef, committedSelectionElements } = useAttributeFilterContext();
-            const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
-            const withoutApply = filtersApplyMode.mode === "ALL_AT_ONCE";
+            const withoutApply = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
             const {
                 title,
@@ -437,7 +434,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 title={filter.attributeFilter.title}
                 resetOnParentFilterChange={false}
                 filter={attributeFilter}
-                workingFilter={enableDashboardFiltersApplyModes ? workingAttributeFilter : undefined}
+                workingFilter={isApplyAllAtOnceEnabledAndSet ? workingAttributeFilter : undefined}
                 displayAsLabel={displayAsLabel}
                 overlayPositionType={overlayPositionType}
                 onApply={(
@@ -463,7 +460,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     );
                 }}
                 onSelect={(newFilter, isInverted, selectionMode, selectionTitles, displayAsLabel) => {
-                    if (enableDashboardFiltersApplyModes) {
+                    if (isApplyAllAtOnceEnabledAndSet) {
                         onFilterChanged(
                             attributeFilterToDashboardAttributeFilter(
                                 newFilter,
@@ -501,8 +498,8 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     enableImmediateAttributeFilterDisplayAsLabelMigration
                 }
                 enableAttributeFilterVirtualised={enableAttributeFilterVirtualisedList}
-                withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
-                enableDashboardFiltersApplyModes={enableDashboardFiltersApplyModes}
+                withoutApply={isApplyAllAtOnceEnabledAndSet}
+                enableDashboardFiltersApplyModes={isApplyAllAtOnceEnabledAndSet}
                 enableDashboardFiltersApplyWithoutLoading={true}
             />
         </AttributeFilterParentFilteringProvider>

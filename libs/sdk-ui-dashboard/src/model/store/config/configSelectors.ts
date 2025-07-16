@@ -968,6 +968,18 @@ export const selectDashboardFiltersApplyMode: DashboardSelector<DashboardFilters
 );
 
 /**
+ * Feature flag is enabled and setting set to ALL_AT_ONCE
+ * @internal
+ */
+export const selectIsApplyFiltersAllAtOnceEnabledAndSet: DashboardSelector<boolean> = createSelector(
+    selectEnableDashboardFiltersApplyModes,
+    selectDashboardFiltersApplyMode,
+    (enableDashboardFiltersApplyModes, dashboardFiltersApplyMode) => {
+        return enableDashboardFiltersApplyModes && dashboardFiltersApplyMode.mode === "ALL_AT_ONCE";
+    },
+);
+
+/**
  * @internal
  */
 export const selectEnableExecutionCancelling: DashboardSelector<boolean> = createSelector(

@@ -20,7 +20,7 @@ import { query } from "../../../store/_infra/queryCall.js";
 import { queryAttributeByDisplayForm } from "../../../queries/index.js";
 import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 import {
-    selectEnableDashboardFiltersApplyModes,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
 } from "../../../store/config/configSelectors.js";
@@ -78,8 +78,8 @@ export function* changeAttributeDisplayFormHandler(
     const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
         typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
     > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
-    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
-        yield select(selectEnableDashboardFiltersApplyModes);
+    const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
+        yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
     yield put(
         batchActions([
@@ -93,7 +93,7 @@ export function* changeAttributeDisplayFormHandler(
                 isWorkingSelectionChange:
                     isWorkingSelectionChange &&
                     !enableImmediateAttributeFilterDisplayAsLabelMigration &&
-                    enableDashboardFiltersApplyModes,
+                    isApplyAllAtOnceEnabledAndSet,
                 enableImmediateAttributeFilterDisplayAsLabelMigration,
                 isResultOfMigration,
             }),

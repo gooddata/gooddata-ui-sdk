@@ -5,11 +5,10 @@ import { IAttributeFilter, ObjRef, IDashboardAttributeFilter } from "@gooddata/s
 
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import {
-    selectDashboardFiltersApplyMode,
-    selectEnableDashboardFiltersApplyModes,
     selectFilterContextAttributeFilters,
     selectSupportsSettingConnectingAttributes,
     selectWorkingFilterContextAttributeFilters,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
@@ -32,14 +31,12 @@ export type UseParentFiltersResult = Pick<
  * @public
  */
 export const useParentFilters = (filter: IDashboardAttributeFilter): UseParentFiltersResult => {
-    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
-    const dashboardFiltersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const allAppliedAttributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
     const allWorkingAttributeFilters = useDashboardSelector(selectWorkingFilterContextAttributeFilters);
-    const allAttributeFilters =
-        dashboardFiltersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes
-            ? allWorkingAttributeFilters
-            : allAppliedAttributeFilters;
+    const allAttributeFilters = isApplyAllAtOnceEnabledAndSet
+        ? allWorkingAttributeFilters
+        : allAppliedAttributeFilters;
     const supportsSettingConnectingAttributes = useDashboardSelector(
         selectSupportsSettingConnectingAttributes,
     );

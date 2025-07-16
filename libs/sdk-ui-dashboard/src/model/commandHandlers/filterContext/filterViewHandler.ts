@@ -43,10 +43,7 @@ import { PromiseFnReturnType } from "../../types/sagas.js";
 import { resetCrossFiltering } from "./common.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { filterContextActions } from "../../store/filterContext/index.js";
-import {
-    selectDashboardFiltersApplyMode,
-    selectEnableDashboardFiltersApplyModes,
-} from "../../store/config/configSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../store/config/configSelectors.js";
 
 function createFilterView(
     ctx: DashboardContext,
@@ -67,15 +64,9 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: SaveFilterVie
     const workingFilterContext: ReturnType<typeof selectWorkingFilterContextDefinition> = yield select(
         selectWorkingFilterContextDefinition,
     );
-    const filtersApplyMode: ReturnType<typeof selectDashboardFiltersApplyMode> = yield select(
-        selectDashboardFiltersApplyMode,
-    );
-    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
-        yield select(selectEnableDashboardFiltersApplyModes);
-    const filterContext =
-        filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes
-            ? workingFilterContext
-            : appliedFilterContext;
+    const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
+        yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
+    const filterContext = isApplyAllAtOnceEnabledAndSet ? workingFilterContext : appliedFilterContext;
 
     const virtualFilters: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiers> = yield select(
         selectCrossFilteringFiltersLocalIdentifiers,
@@ -153,9 +144,9 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterV
 
     if (filterView) {
         yield call(resetCrossFiltering, cmd);
-        const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
-            yield select(selectEnableDashboardFiltersApplyModes);
-        if (enableDashboardFiltersApplyModes) {
+        const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
+            yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
+        if (isApplyAllAtOnceEnabledAndSet) {
             yield put(filterContextActions.resetWorkingSelection());
         }
         yield put(

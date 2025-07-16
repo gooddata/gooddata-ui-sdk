@@ -21,8 +21,7 @@ import { IDashboardDateFilterProps } from "./types.js";
 import {
     selectBackendCapabilities,
     selectCatalogDateDatasets,
-    selectDashboardFiltersApplyMode,
-    selectEnableDashboardFiltersApplyModes,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsInEditMode,
     selectLocale,
     selectSettings,
@@ -47,8 +46,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const locale = useDashboardSelector(selectLocale);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const weekStart = useDashboardSelector(selectWeekStart);
-    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
-    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const {
         filter,
         workingFilter,
@@ -164,9 +162,9 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             excludeCurrentPeriod={excludeCurrentPeriod}
             selectedFilterOption={dateFilterOption}
             workingExcludeCurrentPeriod={
-                enableDashboardFiltersApplyModes ? workingExcludeCurrentPeriod : undefined
+                isApplyAllAtOnceEnabledAndSet ? workingExcludeCurrentPeriod : undefined
             }
-            workingSelectedFilterOption={enableDashboardFiltersApplyModes ? workingFilterOption : undefined}
+            workingSelectedFilterOption={isApplyAllAtOnceEnabledAndSet ? workingFilterOption : undefined}
             dateFilterMode={
                 readonly
                     ? DashboardDateFilterConfigModeValues.READONLY
@@ -176,7 +174,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             availableGranularities={config.availableGranularities}
             customFilterName={title}
             onApply={onApply}
-            onSelect={enableDashboardFiltersApplyModes ? onSelect : undefined}
+            onSelect={isApplyAllAtOnceEnabledAndSet ? onSelect : undefined}
             dateFormat={dateFormat}
             locale={locale}
             isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
@@ -186,8 +184,8 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             customIcon={visibilityIcon}
             showDropDownHeaderMessage={!filter?.dateFilter.dataSet}
             FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
-            withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
-            enableDashboardFiltersApplyModes={enableDashboardFiltersApplyModes}
+            withoutApply={isApplyAllAtOnceEnabledAndSet}
+            enableDashboardFiltersApplyModes={isApplyAllAtOnceEnabledAndSet}
             ButtonComponent={ButtonComponent}
             overlayPositionType={overlayPositionType}
         />

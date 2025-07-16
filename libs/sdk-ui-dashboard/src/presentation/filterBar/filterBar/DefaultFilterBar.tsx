@@ -40,13 +40,12 @@ import {
     setAttributeFilterDisplayForm,
     setDashboardAttributeFilterConfigDisplayAsLabel,
     changeWorkingAttributeFilterSelection,
-    selectEnableDashboardFiltersApplyModes,
     selectWorkingFilterContextFilters,
     selectCrossFilteringFiltersLocalIdentifiers,
     selectIsWorkingFilterContextChanged,
-    selectDashboardFiltersApplyMode,
     selectCatalogAttributes,
     selectEnableDateFilterIdentifiers,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -82,7 +81,8 @@ export const useFilterBarProps = (): IFilterBarProps => {
     const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
         selectEnableDuplicatedLabelValuesInAttributeFilter,
     );
-    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+
+    const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
 
     const dispatch = useDashboardDispatch();
@@ -120,7 +120,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         setAttributeFilterDisplayForm(
                             localIdentifier!,
                             filter.attributeFilter.displayForm,
-                            isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                            isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
                             isResultOfMigration,
                         ),
                     );
@@ -132,7 +132,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                 }
             }
 
-            if (isWorkingSelectionChange && enableDashboardFiltersApplyModes) {
+            if (isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet) {
                 dispatch(
                     changeWorkingAttributeFilterSelection(
                         localIdentifier!,
@@ -163,7 +163,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
             supportElementUris,
             enableDuplicatedLabelValuesInAttributeFilter,
             filters,
-            enableDashboardFiltersApplyModes,
+            isApplyAllAtOnceEnabledAndSet,
         ],
     );
 
@@ -178,7 +178,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                     clearDateFilterSelection(
                         undefined,
                         undefined,
-                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                        isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
                     ),
                 );
             } else if (isAllTimeDashboardDateFilter(filter)) {
@@ -191,7 +191,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                     clearDateFilterSelection(
                         undefined,
                         filter?.dateFilter.dataSet,
-                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                        isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
                         localIdentifier,
                     ),
                 );
@@ -213,13 +213,13 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         dateFilterOptionLocalId,
                         undefined,
                         dataSet,
-                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                        isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
                         localIdentifier ?? newLocalIdentifier,
                     ),
                 );
             }
         },
-        [dispatch, enableDashboardFiltersApplyModes, filters],
+        [dispatch, isApplyAllAtOnceEnabledAndSet, filters, enableDateFilterIdentifiers],
     );
 
     return { filters, workingFilters, onAttributeFilterChanged, onDateFilterChanged, DefaultFilterBar };
@@ -274,8 +274,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
 
     const crossFilterLocalIds = useDashboardSelector(selectCrossFilteringFiltersLocalIdentifiers);
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
-    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
-    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
     if (isExport || haveAllFiltersHidden) {
         return <HiddenFilterBar {...props} />;
@@ -302,7 +301,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                         <CustomCommonDateFilterComponent
                             filter={commonDateFilter}
                             workingFilter={
-                                enableDashboardFiltersApplyModes ? commonWorkingDateFilter : undefined
+                                isApplyAllAtOnceEnabledAndSet ? commonWorkingDateFilter : undefined
                             }
                             onFilterChanged={onDateFilterChanged}
                             config={commonDateFilterComponentConfig}
@@ -364,8 +363,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                         filter.attributeFilter.localIdentifier &&
                         crossFilterLocalIds.includes(filter.attributeFilter.localIdentifier) &&
                         isWorkingFilterContextChanged &&
-                        filtersApplyMode.mode === "ALL_AT_ONCE" &&
-                        enableDashboardFiltersApplyModes
+                        isApplyAllAtOnceEnabledAndSet
                     ) {
                         return null;
                     }
@@ -377,7 +375,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             }`}
                             autoOpen={areObjRefsEqual(filter.attributeFilter.displayForm, autoOpenFilter)}
                             filter={filter}
-                            workingFilter={enableDashboardFiltersApplyModes ? workingFilter : undefined}
+                            workingFilter={isApplyAllAtOnceEnabledAndSet ? workingFilter : undefined}
                             filterIndex={filterIndex}
                             readonly={
                                 attributeFilterMode === DashboardAttributeFilterConfigModeValues.READONLY
@@ -415,7 +413,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                                     autoOpenFilter,
                                 )}
                                 filter={filter}
-                                workingFilter={enableDashboardFiltersApplyModes ? workingFilter : undefined}
+                                workingFilter={isApplyAllAtOnceEnabledAndSet ? workingFilter : undefined}
                                 filterIndex={filterIndex}
                                 config={{
                                     ...commonDateFilterComponentConfig,
