@@ -4,9 +4,8 @@ set -e
 
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
+
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
-_RUSH="${DIR}/docker_rush.sh"
-_RUSHX="${DIR}/docker_rushx.sh"
 
 if [[ ! "${TEST_BACKEND:?}" =~ https?:// ]]; then
     export TEST_BACKEND="https://${TEST_BACKEND}"
@@ -22,10 +21,16 @@ export FILTER=${FILTER:-}
 export TIGER_API_TOKEN=${TIGER_API_TOKEN:?}
 export TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME:?}
 
-(cd libs/sdk-ui-tests-e2e && node ../../common/scripts/install-run-rushx.js create-ref-workspace)
+if [ -n "$GDC_UI" ]; then
+  RUSH_REPO_ROOT="../../.."
+else
+  RUSH_REPO_ROOT="../.."
+fi
+
+(cd $ROOT_DIR/libs/sdk-ui-tests-e2e && node $RUSH_REPO_ROOT/common/scripts/install-run-rushx.js create-ref-workspace)
 WORKSPACE_CREATED=true
 DELETE_MODE="${DELETE_MODE:-delete_always}"
-(cd libs/sdk-ui-tests-e2e && node ../../common/scripts/install-run-rushx.js build-scenarios)
+(cd $ROOT_DIR/libs/sdk-ui-tests-e2e && node $RUSH_REPO_ROOT/common/scripts/install-run-rushx.js build-scenarios)
 export IMAGE_ID=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER:-default}
 
 cleanup() {
@@ -35,7 +40,7 @@ cleanup() {
       if [ $DELETE_MODE = "delete_never" ]; then
         echo "DELETE_MODE is delete_never, skip deleting the created workspace"
       else
-        node $ROOT_DIR/common/scripts/install-run-rushx.js delete-ref-workspace
+        node $RUSH_REPO_ROOT/common/scripts/install-run-rushx.js delete-ref-workspace
       fi
     fi
     rm -f $E2E_TEST_DIR/.env
@@ -43,7 +48,7 @@ cleanup() {
 }
 
 trap cleanup EXIT
-  
+
 pushd $E2E_TEST_DIR
 
 # Use Dockerfile_local as scenarios have been build in previous steps
@@ -54,7 +59,14 @@ if [[ "$GITHUB_ACTIONS" != "true" ]]; then
     export USER_GID=$(id -g $USER)
 fi
 
+
+if [ -n "$GDC_UI" ]; then
+  COMPOSE_FILE="docker-compose-integrated-gdcui.yaml"
+else
+  COMPOSE_FILE="docker-compose-integrated.yaml"
+fi
+
 PROJECT_NAME=tiger-sdk-ui-tests-e2e-${EXECUTOR_NUMBER:-default}
-docker compose -f docker-compose-integrated.yaml -p "$PROJECT_NAME" up \
+docker compose -f $COMPOSE_FILE -p "$PROJECT_NAME" up \
   --abort-on-container-exit --exit-code-from integrated-tests \
   --force-recreate --always-recreate-deps --renew-anon-volumes
