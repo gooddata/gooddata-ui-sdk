@@ -185,7 +185,6 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             showDropDownHeaderMessage={!filter?.dateFilter.dataSet}
             FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
             withoutApply={isApplyAllAtOnceEnabledAndSet}
-            enableDashboardFiltersApplyModes={isApplyAllAtOnceEnabledAndSet}
             ButtonComponent={ButtonComponent}
             overlayPositionType={overlayPositionType}
         />

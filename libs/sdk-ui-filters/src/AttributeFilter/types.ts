@@ -303,6 +303,7 @@ export interface IAttributeFilterCoreProps {
 
     /**
      * Enables the new apply all filters at once mode
+     * @deprecated Use withoutApply instead
      */
     enableDashboardFiltersApplyModes?: boolean;
 
