@@ -70,7 +70,10 @@ describe("UiListbox", () => {
 
         fireEvent.click(screen.getByText("Item 1"));
 
-        expect(onSelect).toHaveBeenCalledWith(mockItems[0]);
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0], {
+            newTab: false,
+            type: "mouse",
+        });
     });
 
     it("should not call onSelect when disabled item is clicked", () => {
@@ -123,7 +126,10 @@ describe("UiListbox", () => {
         // Select with Enter
         fireEvent.keyDown(listbox, { code: "Enter" });
 
-        expect(onSelect).toHaveBeenCalledWith(mockItems[1]);
+        expect(onSelect).toHaveBeenCalledWith(mockItems[1], {
+            newTab: false,
+            type: "keyboard",
+        });
     });
 
     it("should select with Space key", () => {
@@ -138,7 +144,10 @@ describe("UiListbox", () => {
         // Select with Space
         fireEvent.keyDown(listbox, { code: "Space" });
 
-        expect(onSelect).toHaveBeenCalledWith(mockItems[1]);
+        expect(onSelect).toHaveBeenCalledWith(mockItems[1], {
+            newTab: false,
+            type: "keyboard",
+        });
     });
 
     it("should close with Escape key", () => {
@@ -199,7 +208,10 @@ describe("UiListbox", () => {
         // Click on an item
         fireEvent.click(screen.getByText("Item 1"));
 
-        expect(onSelect).toHaveBeenCalledWith(mockItems[0]);
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0], {
+            newTab: false,
+            type: "mouse",
+        });
         expect(onClose).toHaveBeenCalled();
     });
 
@@ -473,7 +485,10 @@ describe("UiListbox", () => {
         fireEvent.click(screen.getByText("Item 1"));
 
         // onSelect should be called
-        expect(onSelect).toHaveBeenCalledWith(mockItems[0]);
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0], {
+            newTab: false,
+            type: "mouse",
+        });
 
         // onClose should not be called
         expect(onClose).not.toHaveBeenCalled();

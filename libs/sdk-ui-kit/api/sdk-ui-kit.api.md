@@ -413,6 +413,9 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
 export const DefaultUiMenuStaticItem: React_2.MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuStaticItemProps<T>) => React_2.ReactElement)>;
 
 // @internal (undocumented)
+export function DefaultUiTreeViewItemComponent<Level>({ item, type, level, classNames, isExpanded, onToggle, onSelect, }: IUiTreeviewItemProps<Level>): React_2.ReactNode;
+
+// @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
     align: string;
 }[];
@@ -4914,6 +4917,16 @@ export type IUiFocusManagerProps = {
 };
 
 // @internal (undocumented)
+export interface IUiLeveledTreeViewProps<Levels extends any[]> extends IUiTreeViewProps<Levels, undefined> {
+    // (undocumented)
+    ItemComponent?: React_2.ComponentType<IUiTreeviewItemProps<LevelTypesUnion<Levels>>>;
+    // (undocumented)
+    items: UiLeveledTreeView<Levels>[];
+    // (undocumented)
+    onSelect?: OnLeveledSelectFn<Levels>;
+}
+
+// @internal (undocumented)
 export interface IUiLinkProps extends Omit<React_2.HTMLProps<HTMLAnchorElement>, "className"> {
     // (undocumented)
     flipUnderline?: boolean;
@@ -5182,6 +5195,110 @@ export interface IUiSettings {
 }
 
 // @internal (undocumented)
+export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<any[], Level> {
+    // (undocumented)
+    ItemComponent?: React_2.ComponentType<IUiTreeviewItemProps<Level>>;
+    // (undocumented)
+    items: UiStaticTreeView<Level>[];
+    // (undocumented)
+    onSelect?: OnStaticSelectFn<Level>;
+}
+
+// @internal (undocumented)
+export interface IUiTreeviewContext<Levels extends any[], Level> {
+    // (undocumented)
+    isItemFocusable: (item?: UiStaticTreeView<Level> | UiStaticTreeView<LevelTypesUnion<Levels>>) => boolean;
+    // (undocumented)
+    items: UiLeveledTreeView<LevelTypesUnion<Levels>>[] | UiStaticTreeView<Level>[];
+    // (undocumented)
+    itemsRef: React_2.MutableRefObject<UiRefsTree[]>;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSelect: (e: React_2.MouseEvent | React_2.KeyboardEvent, path: number[], item?: UiStaticTreeView<Level | LevelTypesUnion<Levels>>) => void;
+    // (undocumented)
+    selectedItemId: string | undefined;
+    // (undocumented)
+    setFocusedPath: React_2.Dispatch<React_2.SetStateAction<number[] | undefined>>;
+}
+
+// @internal (undocumented)
+export interface IUiTreeViewItem<T> {
+    // (undocumented)
+    data: T;
+    // (undocumented)
+    icon?: IconType;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    stringTitle: string;
+    // (undocumented)
+    tooltip?: string;
+}
+
+// @internal (undocumented)
+export interface IUiTreeviewItemProps<T> {
+    // (undocumented)
+    classNames: string[];
+    // (undocumented)
+    isCompact: boolean;
+    // (undocumented)
+    isExpanded: boolean;
+    // (undocumented)
+    isFocused: boolean;
+    // (undocumented)
+    isSelected: boolean;
+    // (undocumented)
+    item: IUiTreeViewItem<T>;
+    // (undocumented)
+    level: number;
+    // (undocumented)
+    onSelect: (e: React_2.MouseEvent | React_2.KeyboardEvent) => void;
+    // (undocumented)
+    onToggle: (e: React_2.MouseEvent | React_2.KeyboardEvent, state: boolean) => void;
+    // (undocumented)
+    type: "leaf" | "group";
+}
+
+// @internal (undocumented)
+export interface IUiTreeViewProps<Levels extends any[], Level> {
+    // (undocumented)
+    ariaAttributes: UiTreeviewAriaAttributes;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    expandedMode?: "default-expanded" | "default-collapsed";
+    // (undocumented)
+    isCompact?: boolean;
+    // (undocumented)
+    isDisabledFocusable?: boolean;
+    // (undocumented)
+    itemDataTestId?: string;
+    // (undocumented)
+    maxHeight?: number;
+    // (undocumented)
+    maxWidth?: number;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onUnhandledKeyDown?: (event: React_2.KeyboardEvent, context: IUiTreeviewContext<Levels, Level>) => void;
+    // (undocumented)
+    selectedItemId?: string;
+    // (undocumented)
+    selectionMode?: "groups-and-leafs" | "groups-only" | "leafs-only";
+    // (undocumented)
+    shouldCloseOnSelect?: boolean;
+    // (undocumented)
+    shouldKeyboardActionPreventDefault?: boolean;
+    // (undocumented)
+    shouldKeyboardActionStopPropagation?: boolean;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
 export interface IUseKeyboardNavigationTargetProps {
     // (undocumented)
     label?: string;
@@ -5352,6 +5469,9 @@ export class LegacySingleSelectListItem extends Component<ILegacySingleSelectLis
 }
 
 // @internal (undocumented)
+export type LevelTypesUnion<Levels extends any[]> = Levels[number];
+
+// @internal (undocumented)
 export function List<T>(props: IListProps<T>): JSX.Element;
 
 // @internal (undocumented)
@@ -5482,7 +5602,19 @@ export function normalizeTime(time?: Date, date?: Date, timeAnchor?: number): Da
 export const NumericInput: React_2.FC<INumericInputProps>;
 
 // @internal (undocumented)
+export type OnLeveledSelectFn<Levels extends any[]> = (item: LevelTypesUnion<Levels>, mods: {
+    type?: "mouse" | "keyboard";
+    newTab?: boolean;
+}) => void;
+
+// @internal (undocumented)
 export type OnOpenedChange = (params: IOnOpenedChangeParams) => void;
+
+// @internal (undocumented)
+export type OnStaticSelectFn<Level> = (item: Level, mods: {
+    type?: "mouse" | "keyboard";
+    newTab?: boolean;
+}) => void;
 
 // @internal (undocumented)
 export type OpenAction = "click" | "hover";
@@ -6133,10 +6265,16 @@ export interface UiIconProps {
 }
 
 // @internal (undocumented)
+export type UiLeveledTreeView<Levels extends any[]> = UiTreeViewNode<Levels>;
+
+// @internal
+export function UiLeveledTreeview<Levels extends any[]>(props: IUiLeveledTreeViewProps<Levels>): React_2.JSX.Element;
+
+// @internal (undocumented)
 export const UiLink: React_2.FC<IUiLinkProps>;
 
 // @internal
-export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
+export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, width, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
 
 // @internal (undocumented)
 export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
@@ -6152,7 +6290,7 @@ export interface UiListboxInteractiveItemProps<T> {
     // (undocumented)
     item: IUiListboxInteractiveItem<T>;
     // (undocumented)
-    onSelect: () => void;
+    onSelect: (e: React_2.MouseEvent) => void;
 }
 
 // @internal (undocumented)
@@ -6178,7 +6316,10 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React_2.Re
     // (undocumented)
     onClose?: () => void;
     // (undocumented)
-    onSelect?: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
+    onSelect?: (item: IUiListboxInteractiveItem<InteractiveItemData>, mods: {
+        type?: "mouse" | "keyboard";
+        newTab?: boolean;
+    }) => void;
     // (undocumented)
     onUnhandledKeyDown?: (event: React_2.KeyboardEvent, context: IUiListboxContext<InteractiveItemData, StaticItemData>) => void;
     // (undocumented)
@@ -6191,6 +6332,8 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React_2.Re
     shouldKeyboardActionStopPropagation?: boolean;
     // (undocumented)
     StaticItemComponent?: React_2.ComponentType<UiListboxStaticItemProps<StaticItemData>>;
+    // (undocumented)
+    width?: number;
 }
 
 // @internal (undocumented)
@@ -6293,6 +6436,12 @@ export interface UiPagedVirtualListSkeletonItemProps {
 }
 
 // @internal (undocumented)
+export type UiRefsTree = {
+    item: HTMLLIElement;
+    children?: UiRefsTree[];
+};
+
+// @internal (undocumented)
 export const UiReturnFocusOnUnmount: React_2.FC<IUiReturnFocusOnUnmountOptions & {
     children: React_2.ReactNode;
 }>;
@@ -6310,6 +6459,17 @@ export interface UiSkeletonProps {
     itemsGap?: number;
     itemWidth?: (number | string) | (number | string)[];
 }
+
+// @internal (undocumented)
+export type UiStateTreeItem = {
+    expanded: boolean;
+};
+
+// @internal (undocumented)
+export type UiStaticTreeView<Level> = UiTreeViewTree<Level>;
+
+// @internal
+export function UiStaticTreeview<Level>(props: IUiStaticTreeViewProps<Level>): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiTab {
@@ -6367,6 +6527,27 @@ export interface UiTooltipProps {
     triggerBy?: Array<"hover" | "focus" | "click">;
     width?: number | "auto";
 }
+
+// @internal (undocumented)
+export type UiTreeViewAddLevel<N extends number> = [...Array<N>, unknown]["length"];
+
+// @internal (undocumented)
+export type UiTreeviewAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
+
+// @internal (undocumented)
+export type UiTreeViewNode<Levels extends any[], Depth extends number = 0> = Levels extends [
+infer Current,
+...infer Rest
+] ? {
+    item: IUiTreeViewItem<Current>;
+    children?: UiTreeViewNode<Rest, UiTreeViewAddLevel<Depth>>[];
+} : never;
+
+// @internal (undocumented)
+export type UiTreeViewTree<T> = {
+    item: IUiTreeViewItem<T>;
+    children?: UiTreeViewTree<T>[];
+};
 
 // @internal (undocumented)
 export type UnitsType = "px" | "%" | "rem" | "em";

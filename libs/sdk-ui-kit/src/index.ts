@@ -156,6 +156,27 @@ export type {
     UiListboxInteractiveItemProps,
     UiListboxAriaAttributes,
 } from "./@ui/UiListbox/types.js";
+export { UiLeveledTreeview, UiStaticTreeview } from "./@ui/UiTreeview/UiTreeview.js";
+export { DefaultUiTreeViewItemComponent } from "./@ui/UiTreeview/defaults/DefaultUiTreeViewItemComponent.js";
+export type {
+    IUiStaticTreeViewProps,
+    IUiTreeViewItem,
+    IUiLeveledTreeViewProps,
+    IUiTreeviewItemProps,
+    IUiTreeViewProps,
+    IUiTreeviewContext,
+    OnLeveledSelectFn,
+    OnStaticSelectFn,
+    UiStaticTreeView,
+    UiLeveledTreeView,
+    LevelTypesUnion,
+    UiRefsTree,
+    UiStateTreeItem,
+    UiTreeviewAriaAttributes,
+    UiTreeViewAddLevel,
+    UiTreeViewNode,
+    UiTreeViewTree,
+} from "./@ui/UiTreeview/types.js";
 
 export { UiMenu } from "./@ui/UiMenu/UiMenu.js";
 export {
