@@ -7,6 +7,6 @@
  * @internal
  */
 
+export * from "./FooterButtonAiAssistant.js";
 export * from "./internal/SearchOverlay.js";
 export * from "./hooks/useSearchMetrics.js";
-export * from "./internal/FooterButtonAiAssistant.js";

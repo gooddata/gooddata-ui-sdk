@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 /**
  * This package provides React hooks and components for semantic search.
@@ -7,4 +7,5 @@
  */
 
 export * from "./hooks/useSemanticSearch.js";
+export * from "./FooterButtonAiAssistant.js";
 export * from "./SemanticSearch.js";

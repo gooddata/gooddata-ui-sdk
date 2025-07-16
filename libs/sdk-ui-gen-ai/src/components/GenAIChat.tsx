@@ -69,6 +69,12 @@ export interface GenAIAssistantProps {
      * This will disable full control permissions for the user even if the user has them defined.
      */
     disableFullControl?: boolean;
+
+    /**
+     * When provided, the function will be called with the store dispatch function
+     * after the store has been initialized.
+     */
+    onDispatcher?: (dispatch: (action: unknown) => void) => void;
 }
 
 /**
@@ -83,13 +89,17 @@ export type GenAIChatProps = GenAIAssistantProps;
  * @public
  */
 export const GenAIAssistant: React.FC<GenAIAssistantProps> = (props) => {
-    const { backend, workspace, locale, colorPalette, eventHandlers } = props;
+    const { backend, workspace, locale, colorPalette, eventHandlers, onDispatcher } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
         colorPalette,
         eventHandlers,
     });
+
+    React.useEffect(() => {
+        onDispatcher?.(genAIStore.dispatch as (action: unknown) => void);
+    }, [genAIStore, onDispatcher]);
 
     return (
         <IntlWrapper locale={locale}>

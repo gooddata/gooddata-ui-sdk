@@ -55,6 +55,15 @@ export type SemanticSearchProps = {
      * Placeholder text for the search input.
      */
     placeholder?: string;
+    /**
+     * A function to render the footer of the search overlay.
+     */
+    renderFooter?: (
+        props: SemanticSearchProps & { status: "idle" | "loading" | "error" | "success"; value: string },
+        handlers: {
+            closeSearch: () => void;
+        },
+    ) => React.ReactNode;
 };
 
 /**
@@ -67,17 +76,19 @@ const DEBOUNCE = 300;
  * Semantic search component core.
  * @beta
  */
-const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = ({
-    backend,
-    workspace,
-    onSelect,
-    onError,
-    objectTypes,
-    deepSearch = false,
-    limit = 10,
-    className,
-    placeholder,
-}) => {
+const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props) => {
+    const {
+        backend,
+        workspace,
+        onSelect,
+        onError,
+        objectTypes,
+        deepSearch = false,
+        limit = 10,
+        className,
+        placeholder,
+        renderFooter,
+    } = props;
     // Input value handling
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
     const inputRef = React.useRef<Input>(null);
@@ -108,6 +119,32 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = ({
         }
     }, [onError, searchError, searchStatus]);
 
+    const Wrapper = ({
+        children,
+        status,
+        closeSearch,
+    }: {
+        children: React.ReactNode;
+        status: "idle" | "loading" | "error" | "success";
+        closeSearch: () => void;
+    }) => {
+        const comp = renderFooter?.(
+            { ...props, status, value },
+            {
+                closeSearch,
+            },
+        );
+        if (comp) {
+            return (
+                <div>
+                    {children}
+                    {comp}
+                </div>
+            );
+        }
+        return <>{children}</>;
+    };
+
     return (
         <Dropdown
             className={classnames("gd-semantic-search", className)}
@@ -124,24 +161,26 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = ({
                 }
 
                 return (
-                    <SearchResultsDropdownList
-                        width={width}
-                        isMobile={isMobile}
-                        searchResults={listItems}
-                        searchLoading={searchStatus === "loading"}
-                        onSelect={(item) => {
-                            // Blur and clear the state
-                            const input = inputRef.current?.inputNodeRef?.inputNodeRef;
-                            if (input) {
-                                input.blur();
-                            }
-                            setImmediate("");
-                            closeDropdown();
+                    <Wrapper status={searchStatus} closeSearch={closeDropdown}>
+                        <SearchResultsDropdownList
+                            width={width}
+                            isMobile={isMobile}
+                            searchResults={listItems}
+                            searchLoading={searchStatus === "loading"}
+                            onSelect={(item) => {
+                                // Blur and clear the state
+                                const input = inputRef.current?.inputNodeRef?.inputNodeRef;
+                                if (input) {
+                                    input.blur();
+                                }
+                                setImmediate("");
+                                closeDropdown();
 
-                            // Report the selected item
-                            onSelect(item);
-                        }}
-                    />
+                                // Report the selected item
+                                onSelect(item);
+                            }}
+                        />
+                    </Wrapper>
                 );
             }}
             renderButton={({ openDropdown }) => {
