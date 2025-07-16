@@ -741,5 +741,13 @@
     "shareDialog.share.dashboard.list.title": "Users & groups",
     "shareDialog.share.link.helperText": "Link reflects current filters. Only accessible to users with dashboard access",
     "shareDialog.share.link.title": "Link",
-    "shareDialog.share.link.buttonText": "Copy dashboard link"
+    "shareDialog.share.link.buttonText": "Copy dashboard link",
+    "table.moreActions": "More",
+    "table.title.searchPlaceholder": "Search...",
+    "table.filter.label": "Filter",
+    "table.filter.searchPlaceholder": "Search...",
+    "table.bulkActions.chooseAction": "Select an action...",
+    "table.bulkActions.selectedCount": "{selectedCount} of {totalCount} chosen",
+    "table.emptyState.noMatch": "No match found",
+    "table.emptyState.tryAdjustingFilters": "Verify the spelling or modify the filters."
 }

@@ -741,5 +741,13 @@
     "shareDialog.share.dashboard.list.title": "Użytkownicy i grupy",
     "shareDialog.share.link.helperText": "Link odzwierciedla bieżące filtry. Dostępny tylko dla użytkowników z dostępem do pulpitu nawigacyjnego.",
     "shareDialog.share.link.title": "Link",
-    "shareDialog.share.link.buttonText": "Skopiuj link do pulpitu nawigacyjnego"
+    "shareDialog.share.link.buttonText": "Skopiuj link do pulpitu nawigacyjnego",
+    "table.moreActions": "Więcej",
+    "table.title.searchPlaceholder": "Szukaj...",
+    "table.filter.label": "Filtr",
+    "table.filter.searchPlaceholder": "Szukaj...",
+    "table.bulkActions.chooseAction": "Wybierz działanie...",
+    "table.bulkActions.selectedCount": "{selectedCount} z {totalCount} wybranych",
+    "table.emptyState.noMatch": "Nie znaleziono dopasowania",
+    "table.emptyState.tryAdjustingFilters": "Sprawdź pisownię lub dostosuj filtry."
 }

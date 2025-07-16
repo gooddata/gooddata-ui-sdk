@@ -732,5 +732,13 @@
     "shareDialog.share.dashboard.list.title": "Benutzer & Gruppen",
     "shareDialog.share.link.helperText": "Link spiegelt aktuelle Filter wider. Nur für Benutzer mit Dashboard-Zugriff zugänglich.",
     "shareDialog.share.link.title": "Link",
-    "shareDialog.share.link.buttonText": "Dashboard-Link kopieren"
+    "shareDialog.share.link.buttonText": "Dashboard-Link kopieren",
+    "table.moreActions": "Mehr",
+    "table.title.searchPlaceholder": "Suchen...",
+    "table.filter.label": "Filter",
+    "table.filter.searchPlaceholder": "Suchen...",
+    "table.bulkActions.chooseAction": "Wählen Sie eine Aktion...",
+    "table.bulkActions.selectedCount": "{selectedCount} von {totalCount} ausgewählten",
+    "table.emptyState.noMatch": "Keine Übereinstimmung gefunden",
+    "table.emptyState.tryAdjustingFilters": "Überprüfen Sie die Rechtschreibung oder passen Sie die Filter an."
 }

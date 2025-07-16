@@ -732,5 +732,13 @@
     "shareDialog.share.dashboard.list.title": "用戶和群組",
     "shareDialog.share.link.helperText": "Link反映當前嘅過濾器。 只有具有控制面板訪問權限嘅用戶才能訪問。",
     "shareDialog.share.link.title": "連結",
-    "shareDialog.share.link.buttonText": "複製控制面板連結"
+    "shareDialog.share.link.buttonText": "複製控制面板連結",
+    "table.moreActions": "更多",
+    "table.title.searchPlaceholder": "搜尋...",
+    "table.filter.label": "篩選器",
+    "table.filter.searchPlaceholder": "搜尋...",
+    "table.bulkActions.chooseAction": "選擇作...",
+    "table.bulkActions.selectedCount": "{selectedCount} / {totalCount} 已選擇",
+    "table.emptyState.noMatch": "未搵到匹配項",
+    "table.emptyState.tryAdjustingFilters": "檢查拼寫或調整過濾器。"
 }
