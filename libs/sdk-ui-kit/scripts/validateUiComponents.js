@@ -18,6 +18,15 @@ const FORBIDDEN_PROP_NAMES = [
     "cssClasses",
     "itemClass",
     "itemClassName",
+    "childClass",
+    "childClassName",
+    "childClasses",
+    "childrenClass",
+    "childrenClassName",
+    "childrenClasses",
+    "parentClass",
+    "parentClassName",
+    "parentClasses",
     "containerClass",
     "containerClassName",
     "wrapperClass",
@@ -28,6 +37,11 @@ const FORBIDDEN_PROP_NAMES = [
     "componentClassName",
     "elementClass",
     "elementClassName",
+    "style",
+    "styles",
+    "styling",
+    "styleName",
+    "styleNames",
 ];
 
 const FORBIDDEN_PROP_PATTERNS = [/^.*[Cc]lass[Nn]ame.*$/, /^.*[Cc]lass$/];
