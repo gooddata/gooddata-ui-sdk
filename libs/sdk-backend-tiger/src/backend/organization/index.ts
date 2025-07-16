@@ -13,6 +13,7 @@ import {
     IOrganizationNotificationService,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor, idRef, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
+import type { JsonApiIdentityProviderOutWithLinks } from "@gooddata/api-client-tiger";
 
 import { SecuritySettingsService } from "./securitySettings.js";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
@@ -56,7 +57,17 @@ export class TigerOrganization implements IOrganization {
             // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             const bootstrapUserGroup = result.data.data?.relationships?.bootstrapUserGroup?.data!;
 
-            const identityProviderType = result.data.data?.relationships?.identityProvider?.data?.type;
+            // Get the identity provider from included data using the relationship reference
+            const identityProvider = result.data.data?.relationships?.identityProvider?.data;
+            const identityProviderType =
+                identityProvider && result.data.included
+                    ? (
+                          result.data.included.find(
+                              (item) =>
+                                  item.id === identityProvider.id && item.type === identityProvider.type,
+                          ) as JsonApiIdentityProviderOutWithLinks
+                      )?.attributes?.idpType
+                    : undefined;
 
             return {
                 id: this.organizationId,
