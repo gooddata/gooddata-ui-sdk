@@ -3,7 +3,7 @@ import React, { ReactNode } from "react";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterDropdownButton } from "@gooddata/sdk-ui-filters";
 

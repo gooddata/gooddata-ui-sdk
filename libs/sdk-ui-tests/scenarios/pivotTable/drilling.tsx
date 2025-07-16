@@ -1,5 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
-import { action } from "@storybook/addon-actions";
+// (C) 2007-2025 GoodData Corporation
+import { action } from "storybook/actions";
 import { scenariosFor } from "../../src/index.js";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols } from "./base.js";

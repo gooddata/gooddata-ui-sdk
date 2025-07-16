@@ -5,7 +5,7 @@ import React from "react";
 import { BackstopConfig } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { DialogListItemBasic, Icon } from "@gooddata/sdk-ui-kit";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {

@@ -3,7 +3,7 @@ import React from "react";
 
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { uriRef } from "@gooddata/sdk-model";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import {
     GranteeItem,
     IGranteeUser,

@@ -7,7 +7,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import {
     ComponentLabelsProvider,
     getGranteeItemTestId,

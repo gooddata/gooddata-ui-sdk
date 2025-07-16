@@ -5,7 +5,7 @@ import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import {
     AttributeFilterButton,
     AttributeFilterError as FiltersAttributeFilterError,
