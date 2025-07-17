@@ -23,7 +23,7 @@ GoodData.UI provides a React component for embedding a semantic search interface
 
 ```tsx
 import * as React from "react";
-import { SemanticSearch, ISemanticSearchResultItem } from "@gooddata/sdk-ui-semantic-search";
+import { SemanticSearch } from "@gooddata/sdk-ui-semantic-search";
 
 // Import required styles
 import "@gooddata/sdk-ui-semantic-search/styles/css/main.css";
@@ -34,12 +34,12 @@ const App = () => {
             {/* Wrap the search UI in a container of desired size */}
             <SemanticSearch
                 // Handle item selection
-                onSelect={(item: ISemanticSearchResultItem) => {
+                onSelect={(item) => {
                     console.log(`Selected item: ${item.title}`);
                     // Handle the selected item, e.g., navigate to the dashboard
                 }}
                 // Optional: Handle search errors
-                onError={(errorMessage: string) => {
+                onError={(errorMessage) => {
                     console.error(`Search error: ${errorMessage}`);
                 }}
                 // Optional: Filter by object types
