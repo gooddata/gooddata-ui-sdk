@@ -137,33 +137,3 @@ Html placeholders (like `<b></b>`) are not supported directly in the newest vers
 ```
 
 **More info for message placeholder:** https://formatjs.io/docs/react-intl/api#message-formatting-fallbacks
-
-## 5. Using `|insight` and `|report` special keys
-
-Special usage of localisations. For some customer we need to rename **insight** to **report**. For this case, there is an implementation which can use piped locales `|insight` and `|report` for this. So everytime insight keyword is used in message, we need to change messages into this special definition as you can se below. Inside the values we now use the word `visualization` instead of `insight`.
-
-```json
-{
-    "message.with.insight|insight": {
-        "value": "VISUALIZATION CONTEXT",
-        "comment": "...",
-        "limit": 0
-    },
-    "message.with.insight|report": {
-        "value": "REPORT CONTEXT",
-        "comment": "...",
-        "limit": 0,
-        "translate": false
-    }
-}
-```
-
-In code, we normally use message id without `|insight` or `|report`.
-
-```typescript jsx
-<FormattedMessage id="message.with.insight" />
-```
-
-> **Caveats for `|report` message id**
->
-> Messages with `|report` needs to have `translate: false` because we never want to translate it. This feature is intended only for specific customers and is provided only in **english language**.
