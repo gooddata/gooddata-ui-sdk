@@ -34,6 +34,9 @@ jobs:
       - name: Rush build
         run: |
           node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests
+      - name: Generate dynamic stories
+        run: |
+          cd libs/sdk-ui-tests && node ../../common/scripts/install-run-rushx.js story-generator
       - name: Build storybook
         run: |
             cd libs/sdk-ui-tests && node ../../common/scripts/install-run-rushx.js build-storybook
