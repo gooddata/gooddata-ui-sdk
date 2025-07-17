@@ -77,7 +77,7 @@
                             }
                         }
                     ],
-                    "localIdentifier": "attributes"
+                    "localIdentifier": "attribute"
                 },
                 {
                     "items": [
@@ -137,7 +137,7 @@
             ],
             "workspace": "reference-workspace"
         },
-        "scenario": "single measure pivot sorted by first row and second attr",
+        "scenario": "single measure pivot sorted by first and second row attr",
         "vis": "PivotTableNext"
     }
 ]

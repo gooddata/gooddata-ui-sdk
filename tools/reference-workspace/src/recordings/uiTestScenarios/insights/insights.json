@@ -3904,19 +3904,159 @@
         "scenarioName": "two measures with single row attr sorted by second measure",
         "visName": "PivotTableNext"
     },
+    "PivotTableNext.0588879e1871016b4e890ab2c234ad87": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure pivot with both attributes and metrics in rows.",
+        "scenarioName": "single measure pivot with both attributes and metrics in rows",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.07a787d6fea0ba0a8e35a9e0a73d847f": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures with two row and one column attributes.",
+        "scenarioName": "two measures with two row and one column attributes",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.0bc6493c038a6836c313b27ddaebce49": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure with column attribute.",
+        "scenarioName": "single measure with column attribute",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.12802d644402ccc91d6af598d9205627": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures in rows and column attrs on top, with invalid drilling on attributes.",
+        "scenarioName": "two measures in rows and column attrs on top, with invalid drilling on attributes",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.15aecb6ecdf61eebe7c1acc21c97329f": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures in rows and only column attrs on left, with drilling.",
+        "scenarioName": "two measures in rows and only column attrs on left, with drilling",
+        "visName": "PivotTableNext"
+    },
     "PivotTableNext.1fc9a36652046d654165c3ca9681e728": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - single measure pivot sorted by second row attr.",
         "scenarioName": "single measure pivot sorted by second row attr",
         "visName": "PivotTableNext"
     },
-    "PivotTableNext.44314abb3279a4ec38e0c622e0496112": {
-        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure pivot sorted by first row and second attr.",
-        "scenarioName": "single measure pivot sorted by first row and second attr",
+    "PivotTableNext.27fe9e555b6b9c111bd318e15a041396": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures with three rows and two column attributes.",
+        "scenarioName": "two measures with three rows and two column attributes",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.2aa73995b0f2a53f9c87f9ae23e1d8b1": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single column.",
+        "scenarioName": "single column",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.39197685eb87547bf35fb875c4006f52": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - one measure and repeating row attributes on different positions.",
+        "scenarioName": "one measure and repeating row attributes on different positions",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.3bc777287174cdc37f0a0e7f6fa7572b": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure with two row and two column attributes.",
+        "scenarioName": "single measure with two row and two column attributes",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.3e6b95b783e541bfe9985592c9a105a2": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures in rows and only column attrs on left.",
+        "scenarioName": "two measures in rows and only column attrs on left",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.3f86a8fbae57cef344148b7aea1d1b08": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - with two same dates.",
+        "scenarioName": "with two same dates",
         "visName": "PivotTableNext"
     },
     "PivotTableNext.460f35ddd6bfbc6d32f6aa28bf70c343": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - single measure pivot sorted by first row attr.",
         "scenarioName": "single measure pivot sorted by first row attr",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.4bb4d26177c41122762db47541e1cd5f": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure with row and column attributes.",
+        "scenarioName": "single measure with row and column attributes",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.5b191fbf08d55c8284e2164525d6ea51": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure with two row and one column attributes.",
+        "scenarioName": "single measure with two row and one column attributes",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.6d0949ea76943e7b727bb506ee49c4a4": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures with row and column attributes.",
+        "scenarioName": "two measures with row and column attributes",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.83c2cadca4ae3cd0444ea2e4d3a55a16": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - with date filter.",
+        "scenarioName": "with date filter",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.88491bde1be3096cbe296086ada2c053": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures with two row and two column attributes.",
+        "scenarioName": "two measures with two row and two column attributes",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.8d4f990d7e3765eb6ee64a1886939d93": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - with attributes without measures.",
+        "scenarioName": "with attributes without measures",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.98d19fbc15b9096896b18480d2c91a25": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - empty values.",
+        "scenarioName": "empty values",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.a8c1009c4d04d865e652a83f79e8d457": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - multiple measures and row attributes with metrics in rows, with drilling.",
+        "scenarioName": "multiple measures and row attributes with metrics in rows, with drilling",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.ac898cdc21068a38ed4b3fa5b401f9c9": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures in rows and column attrs on top, with drilling on metrics.",
+        "scenarioName": "two measures in rows and column attrs on top, with drilling on metrics",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.b5d9b5bda82e74ae0ad720270f1f8448": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures with row attribute.",
+        "scenarioName": "two measures with row attribute",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.b78bdff86c2381637537be100db2de00": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures.",
+        "scenarioName": "two measures",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.bd8de61c4c2180f924e6861d46271ce5": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures with single row attr with metrics in rows.",
+        "scenarioName": "two measures with single row attr with metrics in rows",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.bf593826c1e38745a8df19a181720ebf": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - two measures with column attribute.",
+        "scenarioName": "two measures with column attribute",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.c96c0c862b7a3f84da7b1b656b8f203b": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single attribute.",
+        "scenarioName": "single attribute",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.e68ec082d5a2e42b6a08b6d986d08056": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure with row attribute.",
+        "scenarioName": "single measure with row attribute",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.eb9b41ddc1f75996ee16ffda0753475c": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - arithmetic measures.",
+        "scenarioName": "arithmetic measures",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.eecaed208a29cbbcf2646114c82ee809": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure pivot sorted by first and second row attr.",
+        "scenarioName": "single measure pivot sorted by first and second row attr",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.fb9971bae4cb4ebc3dd61621163cad38": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - single measure.",
+        "scenarioName": "single measure",
         "visName": "PivotTableNext"
     },
     "PyramidChart.05aea2e4135f05f4f3e5ce52711e1686": {

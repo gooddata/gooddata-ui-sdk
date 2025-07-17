@@ -18,7 +18,7 @@ function visNameToUri(name: string): string {
     if (name === "PivotTable") {
         return "local:table";
     } else if (name === "PivotTableNext") {
-        return "local:table";
+        return "local:tablenext";
     } else if (name === "ComboChart") {
         return "local:combo2";
     } else if (name === "GeoPushpinChart") {
@@ -42,6 +42,7 @@ function createVisProperties(visClass: string, config: any) {
     if (visClass === "local:pushpin") {
         return geoChartConfigToVisProperties(config);
     } else if (visClass === "local:table") {
+        // || visClass === "local:tablenext") {
         return pivotConfigToVisProperties(config);
     } else {
         return chartConfigToVisProperties(config);

@@ -1,0 +1,52 @@
+{
+    "count": [8, 2],
+    "data": [
+        [21978695.46, 8384271.02],
+        [58427629.5, 18120589.06],
+        [80406324.96000001, null],
+        [40203162.480000004, 13252430.04],
+        [6038400.96, 2158488.63],
+        [30180730.62, 9647404.74],
+        [36219131.58, null],
+        [18109565.79, 5902946.6850000005]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "totalHeaderItem": { "name": "sum", "type": "SUM" } },
+                { "totalHeaderItem": { "name": "med", "type": "MED" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "totalHeaderItem": { "name": "sum", "type": "SUM" } },
+                { "totalHeaderItem": { "name": "med", "type": "MED" } }
+            ]
+        ],
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [8, 2],
+    "totals": [
+        [
+            [116625456.54, null],
+            [null, 2158488.63]
+        ],
+        []
+    ]
+}

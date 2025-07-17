@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-07-11T08:24:28.153Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-07-17T12:38:38.638Z; */
 const fp_004031cbc9081950b7284311b004fe11 = {
     definition: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json"),
     executionResult: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json"),
@@ -32,11 +32,6 @@ const fp_0284e286d159ff513193edf047e0512e = {
     executionResult: require("./uiTestScenarios/executions/0284e286d159ff513193edf047e0512e/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/0284e286d159ff513193edf047e0512e/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/0284e286d159ff513193edf047e0512e/scenarios.json"),
-};
-const fp_03e4327ad0ea2c9071b04f2d248df68a = {
-    definition: require("./uiTestScenarios/executions/03e4327ad0ea2c9071b04f2d248df68a/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/03e4327ad0ea2c9071b04f2d248df68a/executionResult.json"),
-    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/03e4327ad0ea2c9071b04f2d248df68a/dataView_o0_0s100_1000.json"),
 };
 const fp_078871bd4f547dce1aea2d580c99928c = {
     definition: require("./uiTestScenarios/executions/078871bd4f547dce1aea2d580c99928c/definition.json"),
@@ -122,6 +117,11 @@ const fp_1c40b3a9f317efb729e0c385cf9aebfd = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/1c40b3a9f317efb729e0c385cf9aebfd/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/1c40b3a9f317efb729e0c385cf9aebfd/dataView_o0_0s22_1000.json"),
 };
+const fp_1ce9370c442fb3742763de21bd6f0b71 = {
+    definition: require("./uiTestScenarios/executions/1ce9370c442fb3742763de21bd6f0b71/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/1ce9370c442fb3742763de21bd6f0b71/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/1ce9370c442fb3742763de21bd6f0b71/dataView_o0_0s100_1000.json"),
+};
 const fp_1dee8e67d6f87c8f37dce28126fc893e = {
     definition: require("./uiTestScenarios/executions/1dee8e67d6f87c8f37dce28126fc893e/definition.json"),
     executionResult: require("./uiTestScenarios/executions/1dee8e67d6f87c8f37dce28126fc893e/executionResult.json"),
@@ -133,6 +133,11 @@ const fp_1e8cbb124adecad24fd8b2411feb0ba4 = {
     executionResult: require("./uiTestScenarios/executions/1e8cbb124adecad24fd8b2411feb0ba4/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/1e8cbb124adecad24fd8b2411feb0ba4/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/1e8cbb124adecad24fd8b2411feb0ba4/scenarios.json"),
+};
+const fp_1f878a5f665dd06d98f7bea50af7f85b = {
+    definition: require("./uiTestScenarios/executions/1f878a5f665dd06d98f7bea50af7f85b/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/1f878a5f665dd06d98f7bea50af7f85b/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/1f878a5f665dd06d98f7bea50af7f85b/dataView_o0_0s100_1000.json"),
 };
 const fp_1fdd3a453f92eacd3b0be1db02187ed8 = {
     definition: require("./uiTestScenarios/executions/1fdd3a453f92eacd3b0be1db02187ed8/definition.json"),
@@ -351,6 +356,11 @@ const fp_4d098565443e4272e26c2794d7898a91 = {
     executionResult: require("./uiTestScenarios/executions/4d098565443e4272e26c2794d7898a91/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/4d098565443e4272e26c2794d7898a91/dataView_all.json"),
 };
+const fp_4d2266859a3a397413f7cd42ba5860bb = {
+    definition: require("./uiTestScenarios/executions/4d2266859a3a397413f7cd42ba5860bb/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/4d2266859a3a397413f7cd42ba5860bb/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/4d2266859a3a397413f7cd42ba5860bb/dataView_o0_0s100_1000.json"),
+};
 const fp_4f7bde3e192a811ff8af8feab5441a01 = {
     definition: require("./uiTestScenarios/executions/4f7bde3e192a811ff8af8feab5441a01/definition.json"),
     executionResult: require("./uiTestScenarios/executions/4f7bde3e192a811ff8af8feab5441a01/executionResult.json"),
@@ -382,11 +392,6 @@ const fp_50424b3da1d5b1f84c4eb894f5220d6e = {
     definition: require("./uiTestScenarios/executions/50424b3da1d5b1f84c4eb894f5220d6e/definition.json"),
     executionResult: require("./uiTestScenarios/executions/50424b3da1d5b1f84c4eb894f5220d6e/executionResult.json"),
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/50424b3da1d5b1f84c4eb894f5220d6e/dataView_o0_0s100_1000.json"),
-};
-const fp_50d7e3bc9906005659caf350abad67c6 = {
-    definition: require("./uiTestScenarios/executions/50d7e3bc9906005659caf350abad67c6/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/50d7e3bc9906005659caf350abad67c6/executionResult.json"),
-    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/50d7e3bc9906005659caf350abad67c6/dataView_o0_0s100_1000.json"),
 };
 const fp_518edba431344e9614594a6e12b54b23 = {
     definition: require("./uiTestScenarios/executions/518edba431344e9614594a6e12b54b23/definition.json"),
@@ -456,6 +461,11 @@ const fp_591343a6f9e7f305b6aec7a05b2abf5f = {
     executionResult: require("./uiTestScenarios/executions/591343a6f9e7f305b6aec7a05b2abf5f/executionResult.json"),
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/591343a6f9e7f305b6aec7a05b2abf5f/dataView_o0_0s100_1000.json"),
 };
+const fp_5d7849bfa77cc95b68db3ce5381562cb = {
+    definition: require("./uiTestScenarios/executions/5d7849bfa77cc95b68db3ce5381562cb/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/5d7849bfa77cc95b68db3ce5381562cb/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/5d7849bfa77cc95b68db3ce5381562cb/dataView_o0_0s100_1000.json"),
+};
 const fp_5df2529b1b1a9a8449866a5ab124f6a6 = {
     definition: require("./uiTestScenarios/executions/5df2529b1b1a9a8449866a5ab124f6a6/definition.json"),
     executionResult: require("./uiTestScenarios/executions/5df2529b1b1a9a8449866a5ab124f6a6/executionResult.json"),
@@ -524,6 +534,11 @@ const fp_6c86ec42040772c7aa7271dc87079d89 = {
     definition: require("./uiTestScenarios/executions/6c86ec42040772c7aa7271dc87079d89/definition.json"),
     executionResult: require("./uiTestScenarios/executions/6c86ec42040772c7aa7271dc87079d89/executionResult.json"),
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/6c86ec42040772c7aa7271dc87079d89/dataView_o0_0s100_1000.json"),
+};
+const fp_6d6087cec3bc1a3597d568e220a97862 = {
+    definition: require("./uiTestScenarios/executions/6d6087cec3bc1a3597d568e220a97862/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/6d6087cec3bc1a3597d568e220a97862/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/6d6087cec3bc1a3597d568e220a97862/dataView_o0_0s100_1000.json"),
 };
 const fp_6d744aacff949cf033683d86262b4e77 = {
     definition: require("./uiTestScenarios/executions/6d744aacff949cf033683d86262b4e77/definition.json"),
@@ -615,11 +630,6 @@ const fp_7f584ba03889cfa727423cd7a1c6563b = {
     executionResult: require("./uiTestScenarios/executions/7f584ba03889cfa727423cd7a1c6563b/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/7f584ba03889cfa727423cd7a1c6563b/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/7f584ba03889cfa727423cd7a1c6563b/scenarios.json"),
-};
-const fp_80e726c4e33f4f6f11b18a204aa9dd52 = {
-    definition: require("./uiTestScenarios/executions/80e726c4e33f4f6f11b18a204aa9dd52/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/80e726c4e33f4f6f11b18a204aa9dd52/executionResult.json"),
-    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/80e726c4e33f4f6f11b18a204aa9dd52/dataView_o0_0s100_1000.json"),
 };
 const fp_80ff871a0a98c92e4451f8ef3283f3be = {
     definition: require("./uiTestScenarios/executions/80ff871a0a98c92e4451f8ef3283f3be/definition.json"),
@@ -1125,6 +1135,12 @@ const fp_e6587a76491e11317f5bc7379eb29cab = {
     executionResult: require("./uiTestScenarios/executions/e6587a76491e11317f5bc7379eb29cab/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/e6587a76491e11317f5bc7379eb29cab/dataView_all.json"),
 };
+const fp_ea3ba97511ee18ece1e428c4b694abc2 = {
+    definition: require("./uiTestScenarios/executions/ea3ba97511ee18ece1e428c4b694abc2/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/ea3ba97511ee18ece1e428c4b694abc2/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/ea3ba97511ee18ece1e428c4b694abc2/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/ea3ba97511ee18ece1e428c4b694abc2/scenarios.json"),
+};
 const fp_ea7171a44b29651da69295e0556ed18a = {
     definition: require("./uiTestScenarios/executions/ea7171a44b29651da69295e0556ed18a/definition.json"),
     executionResult: require("./uiTestScenarios/executions/ea7171a44b29651da69295e0556ed18a/executionResult.json"),
@@ -1165,11 +1181,6 @@ const fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 = {
     executionResult: require("./uiTestScenarios/executions/f1fcc87ce7a6cb76e0e0d1bfa7f17e50/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/f1fcc87ce7a6cb76e0e0d1bfa7f17e50/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/f1fcc87ce7a6cb76e0e0d1bfa7f17e50/scenarios.json"),
-};
-const fp_f28634e4ba511d755bf0a69f97dd3ced = {
-    definition: require("./uiTestScenarios/executions/f28634e4ba511d755bf0a69f97dd3ced/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/f28634e4ba511d755bf0a69f97dd3ced/executionResult.json"),
-    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/f28634e4ba511d755bf0a69f97dd3ced/dataView_o0_0s100_1000.json"),
 };
 const fp_f2fc6b776365c3a2bd875b5bfe26a793 = {
     definition: require("./uiTestScenarios/executions/f2fc6b776365c3a2bd875b5bfe26a793/definition.json"),
@@ -1217,11 +1228,6 @@ const fp_f6f13bc1f8e696369884284b219d49db = {
     definition: require("./uiTestScenarios/executions/f6f13bc1f8e696369884284b219d49db/definition.json"),
     executionResult: require("./uiTestScenarios/executions/f6f13bc1f8e696369884284b219d49db/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/f6f13bc1f8e696369884284b219d49db/dataView_all.json"),
-};
-const fp_f838fdea5b60bfd94b82089d993e3d0b = {
-    definition: require("./uiTestScenarios/executions/f838fdea5b60bfd94b82089d993e3d0b/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/f838fdea5b60bfd94b82089d993e3d0b/executionResult.json"),
-    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/f838fdea5b60bfd94b82089d993e3d0b/dataView_o0_0s100_1000.json"),
 };
 const fp_f8fad3ab89031d8cc2b6a63270a62481 = {
     definition: require("./uiTestScenarios/executions/f8fad3ab89031d8cc2b6a63270a62481/definition.json"),
@@ -1672,10 +1678,112 @@ export const Scenarios = {
             scenarioIndex: 3,
             execution: fp_e480af73cb3da22e143deba5b7f4b3e3,
         },
+        MultiplePrimaryAndSecondaryMeasuresWithViewBy: {
+            scenarioIndex: 0,
+            execution: fp_ea3ba97511ee18ece1e428c4b694abc2,
+        },
         OnePrimaryAndSecondaryMeasureNoViewBy: {
             scenarioIndex: 1,
             execution: fp_f39ed708ee551a9ff3e9acc3ec249a8c,
         },
+    },
+    PivotTableNext: {
+        TwoMeasuresWithThreeRowsAndTwoColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_12d1eb593ce811011cea335d45b4e7d9,
+        },
+        WithTwoSameDates: { scenarioIndex: 1, execution: fp_1dee8e67d6f87c8f37dce28126fc893e },
+        SingleAttribute: { scenarioIndex: 1, execution: fp_245cabd1fb1f98e24cd680cc9c52254b },
+        SingleMeasurePivotSortedByFirstAndSecondRowAttr: {
+            scenarioIndex: 0,
+            execution: fp_300c0b908199156a328388972230be9a,
+        },
+        MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling: {
+            scenarioIndex: 1,
+            execution: fp_38b3cbb3e3c8b075d1b11de44c78a01e,
+        },
+        WithDateFilter: { scenarioIndex: 1, execution: fp_4765fcec9e0cf6a0f6474dfcc89346f9 },
+        SingleMeasure: { scenarioIndex: 10, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+        TwoMeasuresWithSingleRowAttrWithMetricsInRows: {
+            scenarioIndex: 1,
+            execution: fp_628456d9adb09d97807468db6d357f34,
+        },
+        TwoMeasures: { scenarioIndex: 6, execution: fp_681fd174545bf5e693b9b0df873870cb },
+        SingleMeasurePivotSortedBySecondRowAttr: {
+            scenarioIndex: 1,
+            execution: fp_6ad17cce441c93f0c1f6c5cfffb7d7af,
+        },
+        TwoMeasuresWithColumnAttribute: { scenarioIndex: 1, execution: fp_6b38289e3de520261ba662868a3bc5ba },
+        ArithmeticMeasures: { scenarioIndex: 1, execution: fp_70330fa367d33c4c428d5d3e54df8eb9 },
+        SingleMeasureWithRowAndColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_8c58de518b0e42711e9379cce480a63b,
+        },
+        TwoMeasuresWithRowAndColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_8eaf6e86ea212a22493eb7c06370a1b1,
+        },
+        WithAttributesWithoutMeasures: { scenarioIndex: 1, execution: fp_956c1be097a9bb7880556e5ba651ad33 },
+        SingleMeasurePivotSortedByFirstRowAttr: {
+            scenarioIndex: 1,
+            execution: fp_9bbaf756a6a44325dc1a9315de17d0fb,
+        },
+        SingleMeasureWithColumnAttribute: {
+            scenarioIndex: 1,
+            execution: fp_9bcc3db7967bd54930a357186a0d39f9,
+        },
+        SingleMeasureWithTwoRowAndTwoColumnAttributes: {
+            scenarioIndex: 4,
+            execution: fp_aea45a374b1f55e749275b328e30d94d,
+        },
+        EmptyValues: { scenarioIndex: 5, execution: fp_aea45a374b1f55e749275b328e30d94d },
+        TwoMeasuresWithTwoRowAndOneColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_b034871dc7b2c8d7d9fc10a81b1b5fae,
+        },
+        SingleMeasureWithRowAttribute: { scenarioIndex: 4, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
+        SingleMeasureWithTwoRowAndOneColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_bd4b4956516e1f429c2344f9b263c8df,
+        },
+        OneMeasureAndRepeatingRowAttributesOnDifferentPositions: {
+            scenarioIndex: 1,
+            execution: fp_c1444f217c8e0aecfb14f64996bd7b7e,
+        },
+        TwoMeasuresWithTwoRowAndTwoColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_c2ed90caa1677729885f2f90df6bdd73,
+        },
+        SingleColumn: { scenarioIndex: 1, execution: fp_c4c31413a7b65502296aba901f6b50f8 },
+        TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: {
+            scenarioIndex: 1,
+            execution: fp_f304c0180efbca32eeccaa096410dc8f,
+        },
+        SingleMeasurePivotWithBothAttributesAndMetricsInRows: {
+            scenarioIndex: 1,
+            execution: fp_f46be32e6d2334de1d485921c52cc8e4,
+        },
+        TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: {
+            scenarioIndex: 1,
+            execution: fp_f5008c073c235b861044fc2ec3f4b0bc,
+        },
+        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft: {
+            scenarioIndex: 4,
+            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+        },
+        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling: {
+            scenarioIndex: 5,
+            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+        },
+        TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes: {
+            scenarioIndex: 6,
+            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+        },
+        TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics: {
+            scenarioIndex: 7,
+            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+        },
+        TwoMeasuresWithRowAttribute: { scenarioIndex: 1, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
     },
     AreaChart: {
         SingleMeasure: { scenarioIndex: 0, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
@@ -1863,28 +1971,6 @@ export const Scenarios = {
         SingleMeasureViewByAndSegment: { scenarioIndex: 0, execution: fp_f950ae585fdee44ac65839426d307654 },
         Themed: { scenarioIndex: 1, execution: fp_f950ae585fdee44ac65839426d307654 },
         Font: { scenarioIndex: 2, execution: fp_f950ae585fdee44ac65839426d307654 },
-    },
-    PivotTableNext: {
-        SingleMeasurePivotSortedByFirstRowAndSecondAttr: {
-            scenarioIndex: 0,
-            execution: fp_300c0b908199156a328388972230be9a,
-        },
-        SingleMeasurePivotSortedBySecondRowAttr: {
-            scenarioIndex: 1,
-            execution: fp_6ad17cce441c93f0c1f6c5cfffb7d7af,
-        },
-        SingleMeasurePivotSortedByFirstRowAttr: {
-            scenarioIndex: 1,
-            execution: fp_9bbaf756a6a44325dc1a9315de17d0fb,
-        },
-        TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: {
-            scenarioIndex: 1,
-            execution: fp_f304c0180efbca32eeccaa096410dc8f,
-        },
-        TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: {
-            scenarioIndex: 1,
-            execution: fp_f5008c073c235b861044fc2ec3f4b0bc,
-        },
     },
     DonutChart: {
         SingleMeasureWithViewBy: { scenarioIndex: 5, execution: fp_334febec1d24c565faab8bb5138542f7 },
@@ -5431,14 +5517,98 @@ const i_PivotTableNext_024009c936ed73ce9f78c31f9610922c = {
 const i_PivotTableNext_03402d49a1a4ee909a0f839253891d15 = {
     obj: require("./uiTestScenarios/insights/PivotTableNext.03402d49a1a4ee909a0f839253891d15/obj.json"),
 };
+const i_PivotTableNext_0588879e1871016b4e890ab2c234ad87 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.0588879e1871016b4e890ab2c234ad87/obj.json"),
+};
+const i_PivotTableNext_07a787d6fea0ba0a8e35a9e0a73d847f = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.07a787d6fea0ba0a8e35a9e0a73d847f/obj.json"),
+};
+const i_PivotTableNext_0bc6493c038a6836c313b27ddaebce49 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.0bc6493c038a6836c313b27ddaebce49/obj.json"),
+};
+const i_PivotTableNext_12802d644402ccc91d6af598d9205627 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.12802d644402ccc91d6af598d9205627/obj.json"),
+};
+const i_PivotTableNext_15aecb6ecdf61eebe7c1acc21c97329f = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.15aecb6ecdf61eebe7c1acc21c97329f/obj.json"),
+};
 const i_PivotTableNext_1fc9a36652046d654165c3ca9681e728 = {
     obj: require("./uiTestScenarios/insights/PivotTableNext.1fc9a36652046d654165c3ca9681e728/obj.json"),
 };
-const i_PivotTableNext_44314abb3279a4ec38e0c622e0496112 = {
-    obj: require("./uiTestScenarios/insights/PivotTableNext.44314abb3279a4ec38e0c622e0496112/obj.json"),
+const i_PivotTableNext_27fe9e555b6b9c111bd318e15a041396 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.27fe9e555b6b9c111bd318e15a041396/obj.json"),
+};
+const i_PivotTableNext_2aa73995b0f2a53f9c87f9ae23e1d8b1 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.2aa73995b0f2a53f9c87f9ae23e1d8b1/obj.json"),
+};
+const i_PivotTableNext_39197685eb87547bf35fb875c4006f52 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.39197685eb87547bf35fb875c4006f52/obj.json"),
+};
+const i_PivotTableNext_3bc777287174cdc37f0a0e7f6fa7572b = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.3bc777287174cdc37f0a0e7f6fa7572b/obj.json"),
+};
+const i_PivotTableNext_3e6b95b783e541bfe9985592c9a105a2 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.3e6b95b783e541bfe9985592c9a105a2/obj.json"),
+};
+const i_PivotTableNext_3f86a8fbae57cef344148b7aea1d1b08 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.3f86a8fbae57cef344148b7aea1d1b08/obj.json"),
 };
 const i_PivotTableNext_460f35ddd6bfbc6d32f6aa28bf70c343 = {
     obj: require("./uiTestScenarios/insights/PivotTableNext.460f35ddd6bfbc6d32f6aa28bf70c343/obj.json"),
+};
+const i_PivotTableNext_4bb4d26177c41122762db47541e1cd5f = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.4bb4d26177c41122762db47541e1cd5f/obj.json"),
+};
+const i_PivotTableNext_5b191fbf08d55c8284e2164525d6ea51 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.5b191fbf08d55c8284e2164525d6ea51/obj.json"),
+};
+const i_PivotTableNext_6d0949ea76943e7b727bb506ee49c4a4 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.6d0949ea76943e7b727bb506ee49c4a4/obj.json"),
+};
+const i_PivotTableNext_83c2cadca4ae3cd0444ea2e4d3a55a16 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.83c2cadca4ae3cd0444ea2e4d3a55a16/obj.json"),
+};
+const i_PivotTableNext_88491bde1be3096cbe296086ada2c053 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.88491bde1be3096cbe296086ada2c053/obj.json"),
+};
+const i_PivotTableNext_8d4f990d7e3765eb6ee64a1886939d93 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.8d4f990d7e3765eb6ee64a1886939d93/obj.json"),
+};
+const i_PivotTableNext_98d19fbc15b9096896b18480d2c91a25 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.98d19fbc15b9096896b18480d2c91a25/obj.json"),
+};
+const i_PivotTableNext_a8c1009c4d04d865e652a83f79e8d457 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.a8c1009c4d04d865e652a83f79e8d457/obj.json"),
+};
+const i_PivotTableNext_ac898cdc21068a38ed4b3fa5b401f9c9 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.ac898cdc21068a38ed4b3fa5b401f9c9/obj.json"),
+};
+const i_PivotTableNext_b5d9b5bda82e74ae0ad720270f1f8448 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.b5d9b5bda82e74ae0ad720270f1f8448/obj.json"),
+};
+const i_PivotTableNext_b78bdff86c2381637537be100db2de00 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.b78bdff86c2381637537be100db2de00/obj.json"),
+};
+const i_PivotTableNext_bd8de61c4c2180f924e6861d46271ce5 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.bd8de61c4c2180f924e6861d46271ce5/obj.json"),
+};
+const i_PivotTableNext_bf593826c1e38745a8df19a181720ebf = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.bf593826c1e38745a8df19a181720ebf/obj.json"),
+};
+const i_PivotTableNext_c96c0c862b7a3f84da7b1b656b8f203b = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.c96c0c862b7a3f84da7b1b656b8f203b/obj.json"),
+};
+const i_PivotTableNext_e68ec082d5a2e42b6a08b6d986d08056 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.e68ec082d5a2e42b6a08b6d986d08056/obj.json"),
+};
+const i_PivotTableNext_eb9b41ddc1f75996ee16ffda0753475c = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.eb9b41ddc1f75996ee16ffda0753475c/obj.json"),
+};
+const i_PivotTableNext_eecaed208a29cbbcf2646114c82ee809 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.eecaed208a29cbbcf2646114c82ee809/obj.json"),
+};
+const i_PivotTableNext_fb9971bae4cb4ebc3dd61621163cad38 = {
+    obj: require("./uiTestScenarios/insights/PivotTableNext.fb9971bae4cb4ebc3dd61621163cad38/obj.json"),
 };
 const i_PyramidChart_05aea2e4135f05f4f3e5ce52711e1686 = {
     obj: require("./uiTestScenarios/insights/PyramidChart.05aea2e4135f05f4f3e5ce52711e1686/obj.json"),
@@ -6692,9 +6862,43 @@ export const Insights = {
     PivotTableNext: {
         TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: i_PivotTableNext_024009c936ed73ce9f78c31f9610922c,
         TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: i_PivotTableNext_03402d49a1a4ee909a0f839253891d15,
+        SingleMeasurePivotWithBothAttributesAndMetricsInRows:
+            i_PivotTableNext_0588879e1871016b4e890ab2c234ad87,
+        TwoMeasuresWithTwoRowAndOneColumnAttributes: i_PivotTableNext_07a787d6fea0ba0a8e35a9e0a73d847f,
+        SingleMeasureWithColumnAttribute: i_PivotTableNext_0bc6493c038a6836c313b27ddaebce49,
+        TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes:
+            i_PivotTableNext_12802d644402ccc91d6af598d9205627,
+        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling:
+            i_PivotTableNext_15aecb6ecdf61eebe7c1acc21c97329f,
         SingleMeasurePivotSortedBySecondRowAttr: i_PivotTableNext_1fc9a36652046d654165c3ca9681e728,
-        SingleMeasurePivotSortedByFirstRowAndSecondAttr: i_PivotTableNext_44314abb3279a4ec38e0c622e0496112,
+        TwoMeasuresWithThreeRowsAndTwoColumnAttributes: i_PivotTableNext_27fe9e555b6b9c111bd318e15a041396,
+        SingleColumn: i_PivotTableNext_2aa73995b0f2a53f9c87f9ae23e1d8b1,
+        OneMeasureAndRepeatingRowAttributesOnDifferentPositions:
+            i_PivotTableNext_39197685eb87547bf35fb875c4006f52,
+        SingleMeasureWithTwoRowAndTwoColumnAttributes: i_PivotTableNext_3bc777287174cdc37f0a0e7f6fa7572b,
+        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft: i_PivotTableNext_3e6b95b783e541bfe9985592c9a105a2,
+        WithTwoSameDates: i_PivotTableNext_3f86a8fbae57cef344148b7aea1d1b08,
         SingleMeasurePivotSortedByFirstRowAttr: i_PivotTableNext_460f35ddd6bfbc6d32f6aa28bf70c343,
+        SingleMeasureWithRowAndColumnAttributes: i_PivotTableNext_4bb4d26177c41122762db47541e1cd5f,
+        SingleMeasureWithTwoRowAndOneColumnAttributes: i_PivotTableNext_5b191fbf08d55c8284e2164525d6ea51,
+        TwoMeasuresWithRowAndColumnAttributes: i_PivotTableNext_6d0949ea76943e7b727bb506ee49c4a4,
+        WithDateFilter: i_PivotTableNext_83c2cadca4ae3cd0444ea2e4d3a55a16,
+        TwoMeasuresWithTwoRowAndTwoColumnAttributes: i_PivotTableNext_88491bde1be3096cbe296086ada2c053,
+        WithAttributesWithoutMeasures: i_PivotTableNext_8d4f990d7e3765eb6ee64a1886939d93,
+        EmptyValues: i_PivotTableNext_98d19fbc15b9096896b18480d2c91a25,
+        MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling:
+            i_PivotTableNext_a8c1009c4d04d865e652a83f79e8d457,
+        TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics:
+            i_PivotTableNext_ac898cdc21068a38ed4b3fa5b401f9c9,
+        TwoMeasuresWithRowAttribute: i_PivotTableNext_b5d9b5bda82e74ae0ad720270f1f8448,
+        TwoMeasures: i_PivotTableNext_b78bdff86c2381637537be100db2de00,
+        TwoMeasuresWithSingleRowAttrWithMetricsInRows: i_PivotTableNext_bd8de61c4c2180f924e6861d46271ce5,
+        TwoMeasuresWithColumnAttribute: i_PivotTableNext_bf593826c1e38745a8df19a181720ebf,
+        SingleAttribute: i_PivotTableNext_c96c0c862b7a3f84da7b1b656b8f203b,
+        SingleMeasureWithRowAttribute: i_PivotTableNext_e68ec082d5a2e42b6a08b6d986d08056,
+        ArithmeticMeasures: i_PivotTableNext_eb9b41ddc1f75996ee16ffda0753475c,
+        SingleMeasurePivotSortedByFirstAndSecondRowAttr: i_PivotTableNext_eecaed208a29cbbcf2646114c82ee809,
+        SingleMeasure: i_PivotTableNext_fb9971bae4cb4ebc3dd61621163cad38,
     },
     PyramidChart: {
         Font: i_PyramidChart_1009bf223b82efe816a16ccb1d1f7744,
@@ -6786,7 +6990,6 @@ export const Recordings = {
         fp_016b56ca4717dd774265c039a39234cd,
         fp_0207504a4a78e1e63578b8a0f6d2f5b0,
         fp_0284e286d159ff513193edf047e0512e,
-        fp_03e4327ad0ea2c9071b04f2d248df68a,
         fp_078871bd4f547dce1aea2d580c99928c,
         fp_085c06c94feed604fcdec08d2ae8c171,
         fp_08a6c636ea0d007de91e886fc9fbd1bb,
@@ -6801,8 +7004,10 @@ export const Recordings = {
         fp_17e1400e22cf959015e4be5bdb618c37,
         fp_1842042291839608144c1eab03e22525,
         fp_1c40b3a9f317efb729e0c385cf9aebfd,
+        fp_1ce9370c442fb3742763de21bd6f0b71,
         fp_1dee8e67d6f87c8f37dce28126fc893e,
         fp_1e8cbb124adecad24fd8b2411feb0ba4,
+        fp_1f878a5f665dd06d98f7bea50af7f85b,
         fp_1fdd3a453f92eacd3b0be1db02187ed8,
         fp_2321809c257b650a2f37a73eba54f00b,
         fp_245cabd1fb1f98e24cd680cc9c52254b,
@@ -6840,13 +7045,13 @@ export const Recordings = {
         fp_4a27950118c41b55cee99e7f16252be2,
         fp_4cb0e0490ebf39c75d48a129089058be,
         fp_4d098565443e4272e26c2794d7898a91,
+        fp_4d2266859a3a397413f7cd42ba5860bb,
         fp_4f7bde3e192a811ff8af8feab5441a01,
         fp_4f7cc0433f3fedf0a3888521c1b68037,
         fp_4f8c6666d1a48123e1a2fa4bc4f525e0,
         fp_4fd9053d59d6ff66976fbc38f4581c04,
         fp_4ff767e70293368c333c7f905aa7ce96,
         fp_50424b3da1d5b1f84c4eb894f5220d6e,
-        fp_50d7e3bc9906005659caf350abad67c6,
         fp_518edba431344e9614594a6e12b54b23,
         fp_53fa58c04c2dd35bd15aa5ef8154bf67,
         fp_5400b597a46e90b326bce154f8d39b8d,
@@ -6859,6 +7064,7 @@ export const Recordings = {
         fp_58aeef8c8b7229b10848cbcba8dde13a,
         fp_58e266e9ba1de6e8bc9e94d211dd5219,
         fp_591343a6f9e7f305b6aec7a05b2abf5f,
+        fp_5d7849bfa77cc95b68db3ce5381562cb,
         fp_5df2529b1b1a9a8449866a5ab124f6a6,
         fp_628456d9adb09d97807468db6d357f34,
         fp_62fe61cc85604cf63bbb67ca744dc04f,
@@ -6871,6 +7077,7 @@ export const Recordings = {
         fp_6b38289e3de520261ba662868a3bc5ba,
         fp_6ba712c32ecf424769a2563d805d6106,
         fp_6c86ec42040772c7aa7271dc87079d89,
+        fp_6d6087cec3bc1a3597d568e220a97862,
         fp_6d744aacff949cf033683d86262b4e77,
         fp_6d9544a54f9461b6f120679029ad902d,
         fp_6f71a7a6d3124ff4e43caff22276fad9,
@@ -6887,7 +7094,6 @@ export const Recordings = {
         fp_7ba2ca7c1410a9a2a0348866fbecfa8e,
         fp_7d93280ac2b85b3a9a2d9beeb6958723,
         fp_7f584ba03889cfa727423cd7a1c6563b,
-        fp_80e726c4e33f4f6f11b18a204aa9dd52,
         fp_80ff871a0a98c92e4451f8ef3283f3be,
         fp_848a2ca02edb3c73e3a1298bd639a5d3,
         fp_862a9ba209c70cd36892eedeb8fe9c83,
@@ -6972,6 +7178,7 @@ export const Recordings = {
         fp_e360914bfbf78ceb2e1c8d0f74408a38,
         fp_e480af73cb3da22e143deba5b7f4b3e3,
         fp_e6587a76491e11317f5bc7379eb29cab,
+        fp_ea3ba97511ee18ece1e428c4b694abc2,
         fp_ea7171a44b29651da69295e0556ed18a,
         fp_eae1c9a65cf05e9e0a8fde6173ef7141,
         fp_ebdb85c15f6c241e047d0784d2327b33,
@@ -6979,7 +7186,6 @@ export const Recordings = {
         fp_ecdefce046f835b15fe49baab5078463,
         fp_f1739290f72c804221e22ae2ecd66e55,
         fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50,
-        fp_f28634e4ba511d755bf0a69f97dd3ced,
         fp_f2fc6b776365c3a2bd875b5bfe26a793,
         fp_f304c0180efbca32eeccaa096410dc8f,
         fp_f39ed708ee551a9ff3e9acc3ec249a8c,
@@ -6988,7 +7194,6 @@ export const Recordings = {
         fp_f57b0aa05b172c7db09c6fc0e29d3198,
         fp_f6db2dc71e518b432dd21209ebdd0521,
         fp_f6f13bc1f8e696369884284b219d49db,
-        fp_f838fdea5b60bfd94b82089d993e3d0b,
         fp_f8fad3ab89031d8cc2b6a63270a62481,
         fp_f950ae585fdee44ac65839426d307654,
         fp_f997d8a8ee1a67def6bb63d28708cbc3,
@@ -8160,9 +8365,37 @@ export const Recordings = {
             i_PivotTable_fff21a04fbd4b7be1c351eda8937cd60,
             i_PivotTableNext_024009c936ed73ce9f78c31f9610922c,
             i_PivotTableNext_03402d49a1a4ee909a0f839253891d15,
+            i_PivotTableNext_0588879e1871016b4e890ab2c234ad87,
+            i_PivotTableNext_07a787d6fea0ba0a8e35a9e0a73d847f,
+            i_PivotTableNext_0bc6493c038a6836c313b27ddaebce49,
+            i_PivotTableNext_12802d644402ccc91d6af598d9205627,
+            i_PivotTableNext_15aecb6ecdf61eebe7c1acc21c97329f,
             i_PivotTableNext_1fc9a36652046d654165c3ca9681e728,
-            i_PivotTableNext_44314abb3279a4ec38e0c622e0496112,
+            i_PivotTableNext_27fe9e555b6b9c111bd318e15a041396,
+            i_PivotTableNext_2aa73995b0f2a53f9c87f9ae23e1d8b1,
+            i_PivotTableNext_39197685eb87547bf35fb875c4006f52,
+            i_PivotTableNext_3bc777287174cdc37f0a0e7f6fa7572b,
+            i_PivotTableNext_3e6b95b783e541bfe9985592c9a105a2,
+            i_PivotTableNext_3f86a8fbae57cef344148b7aea1d1b08,
             i_PivotTableNext_460f35ddd6bfbc6d32f6aa28bf70c343,
+            i_PivotTableNext_4bb4d26177c41122762db47541e1cd5f,
+            i_PivotTableNext_5b191fbf08d55c8284e2164525d6ea51,
+            i_PivotTableNext_6d0949ea76943e7b727bb506ee49c4a4,
+            i_PivotTableNext_83c2cadca4ae3cd0444ea2e4d3a55a16,
+            i_PivotTableNext_88491bde1be3096cbe296086ada2c053,
+            i_PivotTableNext_8d4f990d7e3765eb6ee64a1886939d93,
+            i_PivotTableNext_98d19fbc15b9096896b18480d2c91a25,
+            i_PivotTableNext_a8c1009c4d04d865e652a83f79e8d457,
+            i_PivotTableNext_ac898cdc21068a38ed4b3fa5b401f9c9,
+            i_PivotTableNext_b5d9b5bda82e74ae0ad720270f1f8448,
+            i_PivotTableNext_b78bdff86c2381637537be100db2de00,
+            i_PivotTableNext_bd8de61c4c2180f924e6861d46271ce5,
+            i_PivotTableNext_bf593826c1e38745a8df19a181720ebf,
+            i_PivotTableNext_c96c0c862b7a3f84da7b1b656b8f203b,
+            i_PivotTableNext_e68ec082d5a2e42b6a08b6d986d08056,
+            i_PivotTableNext_eb9b41ddc1f75996ee16ffda0753475c,
+            i_PivotTableNext_eecaed208a29cbbcf2646114c82ee809,
+            i_PivotTableNext_fb9971bae4cb4ebc3dd61621163cad38,
             i_PyramidChart_05aea2e4135f05f4f3e5ce52711e1686,
             i_PyramidChart_1009bf223b82efe816a16ccb1d1f7744,
             i_PyramidChart_11a6118f2fcc03ee66a9e651e00dd644,

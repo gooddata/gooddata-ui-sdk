@@ -23,8 +23,7 @@ import {
 
 export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("transposition")
-    .withDefaultTags("no-plug-viz-tests")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 }, skip: true })
+    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
     .withDefaultBackendSettings({
         enablePivotTableTransposition: true,
         enableColumnHeadersPosition: true,

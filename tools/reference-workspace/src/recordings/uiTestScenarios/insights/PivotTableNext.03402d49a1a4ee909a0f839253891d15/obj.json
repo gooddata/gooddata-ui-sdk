@@ -44,7 +44,7 @@
                         }
                     }
                 ],
-                "localIdentifier": "attributes"
+                "localIdentifier": "attribute"
             },
             { "items": [], "localIdentifier": "columns" }
         ],
@@ -67,6 +67,6 @@
         ],
         "title": "PivotTableNext - two measures with single row attr sorted by second measure",
         "uri": "PivotTableNext.03402d49a1a4ee909a0f839253891d15",
-        "visualizationUrl": "local:table"
+        "visualizationUrl": "local:tablenext"
     }
 }

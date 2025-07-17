@@ -1,0 +1,30 @@
+{
+    "count": [1, 4],
+    "data": [[28017096.42, 10542759.65, 88608360.12, 27767993.8]],
+    "headerItems": [
+        [],
+        [
+            [
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "totalHeaderItem": { "name": "sum", "type": "SUM" } },
+                { "totalHeaderItem": { "name": "med", "type": "MED" } },
+                { "totalHeaderItem": { "name": "med", "type": "MED" } }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "SUM" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "med", "type": "MED" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "med", "type": "MED" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [1, 4],
+    "totals": [[], [[116625456.54, 58312728.27, 19155376.725]]]
+}

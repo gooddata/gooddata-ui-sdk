@@ -1,0 +1,62 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.department_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.department_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "columns"
+            }
+        ],
+        "filters": [],
+        "identifier": "PivotTableNext.5b191fbf08d55c8284e2164525d6ea51",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "PivotTableNext - single measure with two row and one column attributes",
+        "uri": "PivotTableNext.5b191fbf08d55c8284e2164525d6ea51",
+        "visualizationUrl": "local:tablenext"
+    }
+}

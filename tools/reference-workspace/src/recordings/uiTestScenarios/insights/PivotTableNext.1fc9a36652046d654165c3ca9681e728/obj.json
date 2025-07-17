@@ -37,7 +37,7 @@
                         }
                     }
                 ],
-                "localIdentifier": "attributes"
+                "localIdentifier": "attribute"
             },
             {
                 "items": [
@@ -65,6 +65,6 @@
         ],
         "title": "PivotTableNext - single measure pivot sorted by second row attr",
         "uri": "PivotTableNext.1fc9a36652046d654165c3ca9681e728",
-        "visualizationUrl": "local:table"
+        "visualizationUrl": "local:tablenext"
     }
 }

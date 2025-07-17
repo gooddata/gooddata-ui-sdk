@@ -151,9 +151,11 @@ const ReportReadyResolver = andResolver(
 );
 
 function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
+    const isPivotTableNext = insightVisualizationUrl(insight).includes("tablenext");
     const settings = {
         ...DefaultSettings,
         ...testScenario.backendSettings,
+        enablePivotTableNext: isPivotTableNext,
     };
 
     const backend = StorybookBackend({ globalSettings: settings });
