@@ -963,7 +963,7 @@ export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements I
     // (undocumented)
     measure: (valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>) => this;
     // (undocumented)
-    protected setKpiWidgetProp: <K extends "comparisonType" | "metric" | "comparisonDirection">(prop: K, valueOrUpdateCallback: ValueOrUpdateCallback<IKpi[K]>) => this;
+    protected setKpiWidgetProp: <K extends keyof IKpi>(prop: K, valueOrUpdateCallback: ValueOrUpdateCallback<IKpiWidget["kpi"][K]>) => this;
     // (undocumented)
     protected validator?: ((item: Partial<IKpiWidget>) => void) | undefined;
 }
@@ -1127,7 +1127,7 @@ export type SecuritySettingsDecoratorFactory = (securitySettings: ISecuritySetti
 
 // @internal
 export class ServerPaging<T> implements IPagedResource<T> {
-    constructor(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>, limit: number, offset: number, totalCount: number, items: T[], cacheId?: string | undefined);
+    constructor(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>, limit: number | undefined, offset: number | undefined, totalCount: number, items: T[], cacheId?: string | undefined);
     // (undocumented)
     all: () => Promise<T[]>;
     // (undocumented)

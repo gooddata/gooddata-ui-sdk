@@ -48,11 +48,11 @@
         "@types/cross-spawn": "^6.0.2",
         "@types/json5": "^0.0.30",
         "@types/lodash": "^4.14.202",
-        "@types/node": "^18.17.6",
+        "@types/node": "^22.13.0",
+        "@types/watchpack": "^2.4.4",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
         "blessed": "^0.1.81",
-        "chokidar": "^3.4.2",
         "commander": "^8.1.0",
         "cross-spawn": "^7.0.3",
         "dependency-cruiser": "^13.0.3",
@@ -71,7 +71,8 @@
         "lodash": "^4.17.21",
         "prettier": "~2.5.0",
         "tslib": "^2.5.0",
-        "typescript": "5.3.3",
-        "vitest": "3.0.8"
+        "typescript": "5.8.3",
+        "vitest": "3.0.8",
+        "watchpack": "^2.4.4"
     }
 }

@@ -47,7 +47,7 @@
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
         "@microsoft/api-documenter": "^7.17.0",
-        "@microsoft/api-extractor": "^7.36.0",
+        "@microsoft/api-extractor": "^7.52.8",
         "@types/lodash": "^4.14.202",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
@@ -64,7 +64,7 @@
         "eslint-plugin-sonarjs": "^0.16.0",
         "eslint-plugin-tsdoc": "^0.2.14",
         "prettier": "~2.5.0",
-        "typescript": "5.3.3",
+        "typescript": "5.8.3",
         "vitest": "3.0.8"
     }
 }

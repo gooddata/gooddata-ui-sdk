@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-model';
@@ -493,9 +491,9 @@ export function getVisualizationType(type: ChartType): ChartType;
 
 // @public
 export abstract class GoodDataSdkError extends Error {
-    protected constructor(seType: SdkErrorType, message?: string, cause?: any);
+    protected constructor(seType: SdkErrorType, message?: string, cause?: any | undefined);
     // (undocumented)
-    readonly cause?: any;
+    readonly cause?: any | undefined;
     getCause(): any | undefined;
     getErrorCode(): string;
     getMessage(): string;
@@ -1772,7 +1770,7 @@ export const useClientWorkspaceInitialized: () => boolean;
 export const useClientWorkspaceStatus: () => UseCancelablePromiseStatus;
 
 // @internal (undocumented)
-export const useCombineRefs: <T>(...refs: (false | React_2.MutableRefObject<T> | ((instance: T) => void) | null | undefined)[]) => (instance: T) => void;
+export const useCombineRefs: <T>(...refs: Array<React_2.MutableRefObject<T> | ((instance: T) => void) | undefined | null | false>) => (instance: T) => void;
 
 // @public
 export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
@@ -1938,7 +1936,7 @@ export function withWorkspace<T extends {
 export const WorkspaceProvider: React_2.FC<IWorkspaceProviderProps>;
 
 // @internal
-export const wrapDisplayName: (hocName: string, BaseComponent?: React.ComponentType<any>) => <T>(Component: ComponentType<T>) => ComponentType<T>;
+export const wrapDisplayName: (hocName: string, BaseComponent?: React.ComponentType<any>) => (<T>(Component: React.ComponentType<T>) => React.ComponentType<T>);
 
 // @public (undocumented)
 export type XirrType = "xirr";
