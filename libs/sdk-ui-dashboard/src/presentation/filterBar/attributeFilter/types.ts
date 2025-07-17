@@ -36,12 +36,14 @@ export interface IDashboardAttributeFilterProps {
      * @param isResultOfMigration - internal value, specifies that filter change was caused by displayAsLabel
      *  ad-hoc migration, the param will be removed once the usage of displayAsLabel is migrated on database
      *  metadata level.
+     * @param isSelectionInvalid - specifies if filter selection is invalid
      */
     onFilterChanged: (
         filter: IDashboardAttributeFilter,
         displayAsLabel?: ObjRef,
         isWorkingSelectionChange?: boolean,
         isResultOfMigration?: boolean,
+        isSelectionInvalid?: boolean,
     ) => void;
 
     /**

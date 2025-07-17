@@ -87,7 +87,7 @@ export type AttributeFilterController = AttributeFilterControllerData & Attribut
 
 // @public
 export type AttributeFilterControllerCallbacks = {
-    onApply: () => void;
+    onApply: (applyRegardlessWithoutApplySetting?: boolean, applyToWorkingOnly?: boolean) => void;
     onLoadNextElementsPage: () => void;
     onSearch: (search: string) => void;
     onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
@@ -1204,7 +1204,10 @@ export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace
 export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter, options: IMultiSelectAttributeFilterHandlerOptions): IMultiSelectAttributeFilterHandler;
 
 // @public (undocumented)
-export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef, isResultOfMigration?: boolean) => void;
+export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef, isResultOfMigration?: boolean, additionalProps?: {
+    isSelectionInvalid?: boolean;
+    applyToWorkingOnly?: boolean;
+}) => void;
 
 // @public
 export type OnInitCancelCallbackPayload = CallbackPayloadWithCorrelation;
@@ -1307,7 +1310,9 @@ export type OnLoadNextElementsPageStartCallbackPayload = CallbackPayloadWithCorr
 export type OnLoadNextElementsPageSuccessCallbackPayload = CallbackPayloadWithCorrelation<ILoadElementsResult>;
 
 // @public (undocumented)
-export type OnSelectCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef) => void;
+export type OnSelectCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef, additionalProps?: {
+    isSelectionInvalid?: boolean;
+}) => void;
 
 // @public
 export type OnSelectionChangedCallbackPayload<T> = {

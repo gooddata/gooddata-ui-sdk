@@ -383,15 +383,35 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
         capabilities,
     ]);
 
-    const CustomStatusBarComponent = useMemo(() => {
-        return function StatusBar(props: IAttributeFilterStatusBarProps) {
-            const enableShowingFilteredElements = !!capabilities.supportsShowingFilteredElements;
+    const createStatusBarComponent = (params: {
+        filterSelectionMode: string | undefined;
+        isApplyAllAtOnceEnabledAndSet: boolean;
+        supportsShowingFilteredElements: boolean | undefined;
+        userInteraction: ReturnType<typeof useDashboardUserInteraction>;
+    }) => {
+        const {
+            filterSelectionMode,
+            isApplyAllAtOnceEnabledAndSet,
+            supportsShowingFilteredElements,
+            userInteraction,
+        } = params;
+
+        return function CustomStatusBar(props: IAttributeFilterStatusBarProps) {
+            const context = useAttributeFilterContext();
+
+            const afterClearIrrelevantSelection = useCallback(() => {
+                if (isApplyAllAtOnceEnabledAndSet) {
+                    context?.onApply?.(true, true);
+                }
+            }, [context]);
+
+            const enableShowingFilteredElements = !!supportsShowingFilteredElements;
             const handleShowFilteredElements = () => {
                 props.onShowFilteredElements?.();
                 userInteraction.attributeFilterInteraction("attributeFilterShowAllValuesClicked");
             };
 
-            if (filter.attributeFilter.selectionMode === "single") {
+            if (filterSelectionMode === "single" && !props.isInverted) {
                 return (
                     <SingleSelectionAttributeFilterStatusBar
                         {...props}
@@ -407,6 +427,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     onShowFilteredElements={handleShowFilteredElements}
                     onClearIrrelevantSelection={() => {
                         props.onClearIrrelevantSelection?.();
+                        afterClearIrrelevantSelection();
                         userInteraction.attributeFilterInteraction(
                             "attributeFilterClearIrrelevantValuesClicked",
                         );
@@ -415,11 +436,20 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 />
             );
         };
+    };
+
+    const CustomStatusBarComponent = useMemo(() => {
+        return createStatusBarComponent({
+            filterSelectionMode: filter.attributeFilter.selectionMode,
+            isApplyAllAtOnceEnabledAndSet,
+            supportsShowingFilteredElements: capabilities.supportsShowingFilteredElements ?? false,
+            userInteraction,
+        });
     }, [
         filter.attributeFilter.selectionMode,
-        filter.attributeFilter.validateElementsBy,
         capabilities.supportsShowingFilteredElements,
         userInteraction,
+        isApplyAllAtOnceEnabledAndSet,
     ]);
 
     const AttributeFilterComponent = props.AttributeFilterComponent ?? AttributeFilterButton;
@@ -443,22 +473,40 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     selectionTitles,
                     displayAsLabel,
                     isResultOfMigration,
+                    additionalProps,
                 ) => {
-                    onFilterChanged(
-                        attributeFilterToDashboardAttributeFilter(
-                            newFilter,
-                            filter.attributeFilter.localIdentifier,
-                            filter.attributeFilter.title,
-                            selectionTitles,
-                            isInverted,
-                            selectionMode,
-                        ),
-                        displayAsLabel,
-                        false,
-                        isResultOfMigration,
+                    const isSelectionInvalid = additionalProps?.isSelectionInvalid ?? false;
+                    const applyToWorkingOnly = additionalProps?.applyToWorkingOnly ?? false;
+
+                    const convertedFilter = attributeFilterToDashboardAttributeFilter(
+                        newFilter,
+                        filter.attributeFilter.localIdentifier,
+                        filter.attributeFilter.title,
+                        selectionTitles,
+                        isInverted,
+                        selectionMode,
                     );
+                    if (isApplyAllAtOnceEnabledAndSet) {
+                        onFilterChanged(convertedFilter, displayAsLabel, true, false, isSelectionInvalid);
+                    }
+                    if (!applyToWorkingOnly) {
+                        onFilterChanged(
+                            convertedFilter,
+                            displayAsLabel,
+                            false,
+                            isResultOfMigration,
+                            isSelectionInvalid,
+                        );
+                    }
                 }}
-                onSelect={(newFilter, isInverted, selectionMode, selectionTitles, displayAsLabel) => {
+                onSelect={(
+                    newFilter,
+                    isInverted,
+                    selectionMode,
+                    selectionTitles,
+                    displayAsLabel,
+                    additionalProps,
+                ) => {
                     if (isApplyAllAtOnceEnabledAndSet) {
                         onFilterChanged(
                             attributeFilterToDashboardAttributeFilter(
@@ -471,6 +519,8 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                             ),
                             displayAsLabel,
                             true,
+                            false,
+                            additionalProps?.isSelectionInvalid,
                         );
                     }
                 }}
