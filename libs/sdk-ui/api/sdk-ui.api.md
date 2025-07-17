@@ -1572,9 +1572,6 @@ export const OverTimeComparisonTypes: {
     NOTHING: "nothing";
 };
 
-// @beta (undocumented)
-export const pickCorrectInsightWording: (translations: Record<string, string>, settings?: IWorkspaceSettings) => Record<string, string>;
-
 // @beta
 export const pickCorrectMetricWording: (translations: Record<string, string>, settings?: IWorkspaceSettings) => Record<string, string>;
 
@@ -1613,9 +1610,6 @@ export type PushDataCallback = (data: IPushData) => void;
 
 // @public
 export const RawExecute: React_2.ComponentClass<IRawExecuteProps, any>;
-
-// @beta (undocumented)
-export const removeAllInsightToReportTranslations: (translations: Record<string, string>) => Record<string, string>;
 
 // @beta
 export const removeAllWordingTranslationsWithSpecialSuffix: (translations: Record<string, string>) => Record<string, string>;

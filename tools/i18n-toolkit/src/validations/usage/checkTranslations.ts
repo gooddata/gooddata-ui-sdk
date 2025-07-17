@@ -10,8 +10,6 @@ import {
     ToolkitTranslationRule,
     UsageResult,
     Uncontrolled,
-    CheckInsightPipe,
-    CheckReportPipe,
     CheckMeasureSuffix,
     CheckMetricSuffix,
 } from "../../data.js";
@@ -27,10 +25,9 @@ export function checkTranslations(
     localizations: Array<[string, LocalesStructure]>,
     rules: ToolkitConfigFile["rules"],
     extracted: Record<string, any>,
-    { insightToReport }: { insightToReport?: boolean },
 ): { results: UsageResult[]; groups: Record<string, string[]>; uncontrolled: Array<string> } {
     const { groups, ignoredRules, validateRules } = getGroupedRules(rules, extracted);
-    const keysInFiles = getTranslationKeysFromFiles(localizations, insightToReport);
+    const keysInFiles = getTranslationKeysFromFiles(localizations);
 
     const ignoredResults = getIgnoresResults(keysInFiles, ignoredRules, groups);
     const validResults = getValidResults(keysInFiles, validateRules, groups, ignoredResults);
@@ -121,17 +118,10 @@ function patternsAsFunction(pattern: RegExp | RegExp[] | undefined) {
 
 function getTranslationKeysFromFiles(
     localizations: Array<[string, LocalesStructure]>,
-    insightToReport = false,
 ): Array<[string, string[]]> {
     return localizations.map(([fileName, content]) => {
         let keys = Object.keys(content);
 
-        //is insight to report is enabled, remove piped locales keys
-        if (insightToReport) {
-            keys = keys.map((key) => {
-                return key.replace(CheckInsightPipe, "").replace(CheckReportPipe, "");
-            });
-        }
         //remove metric and measure suffix
         keys = keys.map((key) => {
             return key.replace(CheckMeasureSuffix, "").replace(CheckMetricSuffix, "");

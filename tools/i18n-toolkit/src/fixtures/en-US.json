@@ -7,26 +7,16 @@
         "value": "Test text",
         "comment": "test"
     },
-    "text.with.insight|insight": {
+    "text.with.insight": {
         "value": "Test text with insight",
         "comment": "test"
-    },
-    "text.with.insight|report": {
-        "value": "Test text with report",
-        "comment": "test",
-        "translate": false
     },
     "text.with.1": {
         "value": "Test text 1 2 3",
         "comment": "test"
     },
-    "text.big.insight|insight": {
+    "text.big.insight": {
         "value": "Test text with Insight",
         "comment": "test"
-    },
-    "text.big.insight|report": {
-        "value": "Test text with report",
-        "comment": "test",
-        "translate": false
     }
 }

@@ -3519,7 +3519,6 @@ export interface ISettings {
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableInPlatformNotifications?: boolean;
     enableInsightExportScheduling?: boolean;
-    enableInsightToReport?: boolean;
     enableInvalidValuesInAttributeFilter?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;

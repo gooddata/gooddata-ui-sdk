@@ -1,33 +1,30 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import {
-    pickCorrectInsightWording,
-    removeAllInsightToReportTranslations,
-    removeAllWordingTranslationsWithSpecialSuffix,
-} from "../utils.js";
+import { pickCorrectMetricWording, removeAllWordingTranslationsWithSpecialSuffix } from "../utils.js";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { ITranslations } from "../../messagesMap.js";
 import { describe, expect, it } from "vitest";
 
-const mockTranslation: ITranslations = {
-    "mock.translation|insight": "Insight",
-    "mock.translation|report": "Report",
+const mockMetricTranslation: ITranslations = {
+    "mock.translation._measure": "Measure",
+    "mock.translation._metric": "Metric",
 };
 
-describe("pickCorrectInsightWording", () => {
+describe("pickCorrectMetricWording", () => {
     const settings: IWorkspaceSettings = {
         workspace: "workspace",
     };
 
     it.each([
-        ["insight", false],
-        ["report", true],
+        ["measure", false],
+        ["metric", true],
+        ["metric", undefined], // default should be true
     ])(
-        "should return translations with %s when enableInsightToReport is set to %s",
-        (_value: string, enableInsightToReport: boolean) => {
-            const result = pickCorrectInsightWording(mockTranslation, {
+        "should return translations with %s when enableRenamingMeasureToMetric is set to %s",
+        (_value: string, enableRenamingMeasureToMetric: boolean | undefined) => {
+            const result = pickCorrectMetricWording(mockMetricTranslation, {
                 ...settings,
-                enableInsightToReport,
+                enableRenamingMeasureToMetric,
             });
 
             expect(result).toMatchSnapshot();
@@ -35,29 +32,16 @@ describe("pickCorrectInsightWording", () => {
     );
 });
 
-describe("removeAllInsightToReportTranslations", () => {
-    const mockTranslationWithoutExtraWords: ITranslations = {
-        "mock.translation": "Insight",
-    };
-    it("should remove all insight to report words", () => {
-        const result = removeAllInsightToReportTranslations({
-            ...mockTranslationWithoutExtraWords,
-            ...mockTranslation,
-        });
-        expect(result).toMatchObject(mockTranslationWithoutExtraWords);
-    });
-});
-
 describe("removeAllWordingTranslationsWithSpecialSuffix", () => {
     const mockTranslationWithoutExtraWords: ITranslations = {
-        "mock.translation": "Insight",
-        "mock.translation.metric": "Measure",
+        "mock.translation": "Translation",
+        "mock.translation.metric": "Standard",
     };
 
-    it("should remove all insight to report words", () => {
+    it("should remove all measure and metric suffix words", () => {
         const result = removeAllWordingTranslationsWithSpecialSuffix({
             ...mockTranslationWithoutExtraWords,
-            ...mockTranslation,
+            ...mockMetricTranslation,
             "mock.translation.metric._measure": "Measure",
             "mock.translation.metric._metric": "Metric",
         });

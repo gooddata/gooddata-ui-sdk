@@ -47,36 +47,21 @@
         "value": "<b>Some interactions were removed</b>",
         "comment": "Warning notification title when dashboard interactions were removed due to changes in data"
     },
-    "messages.dashboard.invalidDrills.body.modern._measure|insight": {
+    "messages.dashboard.invalidDrills.body.modern._measure": {
         "value": "One or more dashboard/visualization/measure/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
         "comment": "Warning message details for invalid drill interactions with list of affected widgets"
     },
-    "messages.dashboard.invalidDrills.body.modern._metric|insight": {
+    "messages.dashboard.invalidDrills.body.modern._metric": {
         "value": "One or more dashboard/visualization/metric/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
         "comment": "Warning message details for invalid drill interactions using metrics with list of affected widgets"
-    },
-    "messages.dashboard.invalidDrills.body.modern._measure|report": {
-        "value": "One or more dashboard/report/measure/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
-        "comment": "Warning message details for invalid drill interactions with measures in reports",
-        "translate": false
-    },
-    "messages.dashboard.invalidDrills.body.modern._metric|report": {
-        "value": "One or more dashboard/report/metric/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
-        "comment": "Warning message details for invalid drill interactions with metrics in reports",
-        "translate": false
     },
     "messages.dashboard.invalidCustomUrlDrills.title": {
         "value": "<b>Some of the drill-into-URL interactions are not working</b>",
         "comment": "Title of the warning message shown while editing KPI dashboard with some invalid drills."
     },
-    "messages.dashboard.invalidCustomUrlDrills.body.modern|insight": {
+    "messages.dashboard.invalidCustomUrlDrills.body.modern": {
         "value": "Invalid URL parameters in your custom URLs are causing drill-into-URL interactions to fail on these widgets: <b>{listOfWidgetTitles}</b>",
         "comment": "Warning message explaining URL drill failures with list of affected widgets"
-    },
-    "messages.dashboard.invalidCustomUrlDrills.body.modern|report": {
-        "value": "Invalid URL parameters in your custom URLs are causing drill-into-URL interactions to fail on these widgets: <b>{listOfWidgetTitles}</b>",
-        "comment": "Warning message explaining URL drill failures in report widgets",
-        "translate": false
     },
     "messages.dashboard.expandable.showMore": {
         "value": "Show more",
@@ -218,14 +203,9 @@
         "value": "CELLS",
         "comment": "Cells of the table that is going to be exported to file"
     },
-    "dialogs.export.filters|insight": {
+    "dialogs.export.filters": {
         "value": "VISUALIZATION CONTEXT",
         "comment": "The filters that are applied to the report"
-    },
-    "dialogs.export.filters|report": {
-        "value": "REPORT CONTEXT",
-        "comment": "The filters that are applied to the report",
-        "translate": false
     },
     "dialogs.export.includeFilters": {
         "value": "Include applied filters",
@@ -979,14 +959,9 @@
         "value": "Failed to export the data. Try again later.",
         "comment": "Error dialog. Exporting visualization to the file fails."
     },
-    "messages.exportResultRestrictedError|insight": {
+    "messages.exportResultRestrictedError": {
         "value": "You cannot export this visualization because it contains restricted data.",
         "comment": "Error dialog. Exporting visualization to the file fails because contains restricted data."
-    },
-    "messages.exportResultRestrictedError|report": {
-        "value": "You cannot export this report because it contains restricted data.",
-        "comment": "Error dialog. Exporting report to the file fails because contains restricted data.",
-        "translate": false
     },
     "messages.exportResultStart": {
         "value": "Export in progress",
@@ -1036,14 +1011,9 @@
         "value": "No data for your filter selection",
         "comment": "Message shown when a visualization has no data to display due to the current filter settings"
     },
-    "visualization.error.headline|insight": {
+    "visualization.error.headline": {
         "value": "Sorry, we can't display this visualization",
         "comment": "Error message header when a visualization fails to load or render"
-    },
-    "visualization.error.headline|report": {
-        "value": "Sorry, we can't display this report",
-        "comment": "Error message header when a report fails to load or render",
-        "translate": false
     },
     "visualization.error.text": {
         "value": "Contact your administrator.",
@@ -1053,32 +1023,17 @@
         "value": "Not enough space for visualization",
         "comment": "Warning shown when there is insufficient space to properly display a visualization during export"
     },
-    "options.menu.unsupported.error._measure|insight": {
+    "options.menu.unsupported.error._measure": {
         "value": "The visualization cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
         "comment": "Error popup. Visualization cannot be exported to the file because of wrong setting of filters, measures or attributes."
     },
-    "options.menu.unsupported.error._metric|insight": {
+    "options.menu.unsupported.error._metric": {
         "value": "The visualization cannot be exported at the moment. Try applying different filters, or using different metrics or attributes.",
         "comment": "Error popup. Visualization cannot be exported to the file because of wrong setting of filters, metrics or attributes."
     },
-    "options.menu.unsupported.error._measure|report": {
-        "value": "The report cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
-        "comment": "Error popup. Report cannot be exported to the file because of wrong setting of filters, measures or attributes.",
-        "translate": false
-    },
-    "options.menu.unsupported.error._metric|report": {
-        "value": "The report cannot be exported at the moment. Try applying different filters, or using different metrics or attributes.",
-        "comment": "Error popup. Report cannot be exported to the file because of wrong setting of filters, metrics or attributes.",
-        "translate": false
-    },
-    "options.menu.unsupported.loading|insight": {
+    "options.menu.unsupported.loading": {
         "value": "The visualization cannot be exported at the moment.",
         "comment": "Error popup. Visualization cannot be exported to the file."
-    },
-    "options.menu.unsupported.loading|report": {
-        "value": "The report cannot be exported at the moment.",
-        "comment": "Error popup. Report cannot be exported to the file.",
-        "translate": false
     },
     "options.menu.unsupported.incompatibleWidget": {
         "value": "Unable to schedule the export on custom widget.",
@@ -1104,14 +1059,9 @@
         "value": "Unable to create an alert. Please resave the dashboard or contact your administrator.",
         "comment": "Error message shown when unable to create an alert due to widget compatibility issues, suggesting to resave the dashboard"
     },
-    "export.defaultTitle|insight": {
+    "export.defaultTitle": {
         "value": "Untitled visualization",
         "comment": "Default title for exported file"
-    },
-    "export.defaultTitle|report": {
-        "value": "Untitled report",
-        "comment": "Default title for exported file",
-        "translate": false
     },
     "export_unsupported.disabled": {
         "value": "Export is not supported",
@@ -1189,14 +1139,9 @@
         "value": "This dashboard is empty",
         "comment": "Heading shown when a dashboard contains no widgets or visualizations"
     },
-    "dashboard.error.empty.text|insight": {
+    "dashboard.error.empty.text": {
         "value": "All visualizations were removed.",
         "comment": "Message shown when all visualizations have been removed from the dashboard"
-    },
-    "dashboard.error.empty.text|report": {
-        "value": "All reports were removed.",
-        "comment": "Message shown when all reports have been removed from the dashboard",
-        "translate": false
     },
     "dashboard.shareDialog.underLenientControl.label": {
         "value": "Other users can access this dashboard if they drill to it",
@@ -1378,50 +1323,25 @@
         "value": "created by me",
         "comment": "Tab label for filtering visualizations to show only those created by current user"
     },
-    "visualizationsList.noInsights|insight": {
+    "visualizationsList.noInsights": {
         "value": "This workspace contains no visualizations.",
         "comment": "Message shown when no visualizations exist in the workspace"
     },
-    "visualizationsList.noInsights|report": {
-        "value": "This workspace contains no reports.",
-        "comment": "Message shown when no reports exist in the workspace",
-        "translate": false
-    },
-    "visualizationsList.create|insight": {
+    "visualizationsList.create": {
         "value": "Create visualization",
         "comment": "Button text for creating a new visualization"
     },
-    "visualizationsList.create|report": {
-        "value": "Create report",
-        "comment": "Button text for creating a new report",
-        "translate": false
-    },
-    "visualizationsList.noUserInsights|insight": {
+    "visualizationsList.noUserInsights": {
         "value": "No visualizations created.",
         "comment": "Message shown when user has not created any visualizations"
     },
-    "visualizationsList.noUserInsights|report": {
-        "value": "No reports created.",
-        "comment": "Message shown when user has not created any reports",
-        "translate": false
-    },
-    "visualizationsList.noVisualizationsFound|insight": {
+    "visualizationsList.noVisualizationsFound": {
         "value": "No visualization matched.",
         "comment": "Message shown when search returns no visualizations"
     },
-    "visualizationsList.noVisualizationsFound|report": {
-        "value": "No report matched.",
-        "comment": "Message shown when search returns no reports",
-        "translate": false
-    },
-    "search_insights|insight": {
+    "search_insights": {
         "value": "Search all visualizations…",
         "comment": "Placeholder text in visualization search input field"
-    },
-    "search_insights|report": {
-        "value": "Search all reports…",
-        "comment": "Placeholder text in report search input field",
-        "translate": false
     },
     "save.as.new": {
         "value": "Save as new",
@@ -1487,14 +1407,9 @@
         "value": "Drag to add",
         "comment": "Instruction to drag visualization to dashboard"
     },
-    "visualizationsList.savedVisualizations|insight": {
+    "visualizationsList.savedVisualizations": {
         "value": "Saved visualizations",
         "comment": "Header for the list of saved visualizations"
-    },
-    "visualizationsList.savedVisualizations|report": {
-        "value": "Saved reports",
-        "comment": "Header for the list of saved reports",
-        "translate": false
     },
     "configurationPanel.drillConfig.selectDashboard": {
         "value": "Choose dashboard…",
@@ -1548,40 +1463,25 @@
         "value": "as",
         "comment": "Conjunction word used in date granularity selection"
     },
-    "configurationPanel.vizCantBeFilteredByAttribute|insight": {
+    "configurationPanel.vizCantBeFilteredByAttribute": {
         "value": "The visualization cannot be filtered by {attributeName}. Unselect the check box.",
         "comment": "Warning message when attempting to apply incompatible attribute filter to visualization"
-    },
-    "configurationPanel.vizCantBeFilteredByAttribute|report": {
-        "value": "The report cannot be filtered by {attributeName}. Unselect the check box.",
-        "comment": "Warning message when attempting to apply incompatible attribute filter to report",
-        "translate": false
     },
     "configurationPanel.kpiCantBeFilteredByAttribute": {
         "value": "The kpi cannot be filtered by {attributeName}. Unselect the check box.",
         "comment": "Warning message when attempting to apply incompatible attribute filter to KPI"
     },
-    "configurationPanel.vizCantBeFilteredByDate|insight": {
+    "configurationPanel.vizCantBeFilteredByDate": {
         "value": "The visualization cannot be filtered by Date. Unselect the check box.",
         "comment": "Warning message when attempting to apply date filter to incompatible visualization"
-    },
-    "configurationPanel.vizCantBeFilteredByDate|report": {
-        "value": "The report cannot be filtered by Date. Unselect the check box.",
-        "comment": "Warning message when attempting to apply date filter to incompatible report",
-        "translate": false
     },
     "configurationPanel.kpiCantBeFilteredByDate": {
         "value": "The kpi cannot be filtered by Date. Unselect the check box.",
         "comment": "Warning message when attempting to apply date filter to incompatible KPI"
     },
-    "configurationPanel.unrelatedVizDateInfo|insight": {
+    "configurationPanel.unrelatedVizDateInfo": {
         "value": "\"{dateDataSet}\" can no longer be applied to the visualization. Select a different dimension or edit the visualization.",
         "comment": "Error message when selected date dimension is no longer compatible with the visualization"
-    },
-    "configurationPanel.unrelatedVizDateInfo|report": {
-        "value": "\"{dateDataSet}\" can no longer be applied to the report. Select a different dimension or edit the report.",
-        "comment": "Error message when selected date dimension is no longer compatible with the report",
-        "translate": false
     },
     "configurationPanel.unrelatedKpiDateInfo": {
         "value": "\"{dateDataSet}\" can no longer be applied to the kpi. Select a different dimension or edit the kpi.",
@@ -1627,14 +1527,9 @@
         "value": "Drill into dashboard",
         "comment": "Option for drilling into another dashboard in data interaction"
     },
-    "configurationPanel.drillConfig.drillIntoInsight|insight": {
+    "configurationPanel.drillConfig.drillIntoInsight": {
         "value": "Drill into visualization",
         "comment": "Option for drilling into detailed visualization in data interaction"
-    },
-    "configurationPanel.drillConfig.drillIntoInsight|report": {
-        "value": "Drill into report",
-        "comment": "Option for drilling into detailed report in data interaction",
-        "translate": false
     },
     "configurationPanel.drillConfig.drillDown": {
         "value": "Drill down",
@@ -1656,14 +1551,9 @@
         "value": "Choose action…",
         "comment": "Placeholder text in drill action dropdown menu"
     },
-    "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning|insight": {
+    "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning": {
         "value": "The date attribute value from the visualization will not be transferred to filter the target dashboard.",
         "comment": "Warning about limitations when drilling with date attributes"
-    },
-    "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning|report": {
-        "value": "The date attribute value from the report will not be transferred to filter the target dashboard.",
-        "comment": "Warning about limitations when drilling with date attributes from reports",
-        "translate": false
     },
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.label": {
         "value": "Pass as filter:",
@@ -1701,27 +1591,17 @@
         "value": "Inherit",
         "comment": "Option to use the original description from the source item"
     },
-    "configurationPanel.visualprops.inheritDescriptionHelp|insight": {
+    "configurationPanel.visualprops.inheritDescriptionHelp": {
         "value": "Inherit the description from the visualization.",
         "comment": "Help text explaining the inherit description option for visualizations"
-    },
-    "configurationPanel.visualprops.inheritDescriptionHelp|report": {
-        "value": "Inherit the description from the report.",
-        "comment": "Help text explaining the inherit description option for reports",
-        "translate": false
     },
     "configurationPanel.visualprops.customDescription": {
         "value": "Custom",
         "comment": "Option to create a custom description rather than using default"
     },
-    "configurationPanel.visualprops.customDescriptionHelp|insight": {
+    "configurationPanel.visualprops.customDescriptionHelp": {
         "value": "Add a custom description for this instance of the visualization.",
         "comment": "Help text explaining the custom description option for visualizations"
-    },
-    "configurationPanel.visualprops.customDescriptionHelp|report": {
-        "value": "Add a custom description for this instance of the report.",
-        "comment": "Help text explaining the custom description option for reports",
-        "translate": false
     },
     "configurationPanel.visualprops.noneDescription": {
         "value": "None",
@@ -1735,23 +1615,13 @@
         "value": "Include metric descriptions",
         "comment": "Checkbox label for option to show metric descriptions"
     },
-    "configurationPanel.visualprops.includeMetricsHelp._measure|insight": {
+    "configurationPanel.visualprops.includeMetricsHelp._measure": {
         "value": "Display section with list of visualization’s measures and their description.",
         "comment": "Help text explaining the option to show measure descriptions in visualization"
     },
-    "configurationPanel.visualprops.includeMetricsHelp._metric|insight": {
+    "configurationPanel.visualprops.includeMetricsHelp._metric": {
         "value": "Display section with list of visualization’s metrics and their description.",
         "comment": "Help text explaining the option to show metric descriptions in visualization"
-    },
-    "configurationPanel.visualprops.includeMetricsHelp._measure|report": {
-        "value": "Display section with list of report’s measures and their description.",
-        "comment": "Help text explaining the option to show measure descriptions in report",
-        "translate": false
-    },
-    "configurationPanel.visualprops.includeMetricsHelp._metric|report": {
-        "value": "Display section with list of report’s metrics and their description.",
-        "comment": "Help text explaining the option to show metric descriptions in report",
-        "translate": false
     },
     "configurationPanel.visualprops.descriptionPlaceholder": {
         "value": "Add description…",
@@ -1809,14 +1679,9 @@
         "value": "...and {count} more",
         "comment": "Info about number of additional values not shown in parameter detail in 'Custom URL' editor. The placeholder {count} will be replaced with a number. Example: '...and 5 more' when there are 5 additional values not displayed."
     },
-    "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel|insight": {
+    "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel": {
         "value": "Visualization ID",
         "comment": "Label of the visualization parameter in Drill to URL 'Custom URL' editor."
-    },
-    "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel|report": {
-        "value": "Report ID",
-        "comment": "Label of the report parameter in Drill to URL 'Custom URL' editor.",
-        "translate": false
     },
     "configurationPanel.drillIntoUrl.editor.clientIdParameterLabel": {
         "value": "Client ID",
@@ -1846,14 +1711,9 @@
         "value": "Identifier",
         "comment": "Type label of identifier in parameter detail"
     },
-    "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel|insight": {
+    "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel": {
         "value": "Visualization",
         "comment": "Section header for insight parameters"
-    },
-    "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel|report": {
-        "value": "Report",
-        "comment": "Section header for report parameters",
-        "translate": false
     },
     "configurationPanel.drillIntoUrl.editor.identifierParametersSectionLabel": {
         "value": "Identifiers",
@@ -1907,36 +1767,21 @@
         "value": "Attribute image value",
         "comment": "Type label of URL display form in parameter detail in 'Custom URL' editor."
     },
-    "configurationPanel.zoomInsight|insight": {
+    "configurationPanel.zoomInsight": {
         "value": "Zoomable visualization",
         "comment": "Label for zoomable visualization option in configuration panel"
     },
-    "configurationPanel.zoomInsight|report": {
-        "value": "Zoomable report",
-        "comment": "Label for zoomable report option in configuration panel",
-        "translate": false
-    },
-    "configurationPanel.zoomInsight.help|insight": {
+    "configurationPanel.zoomInsight.help": {
         "value": "Enable to zoom the visualization to display a detailed view. Hold the shift key to pan the zoomed area.",
         "comment": "Tooltip for zoomable visualization option in configuration panel"
-    },
-    "configurationPanel.zoomInsight.help|report": {
-        "value": "Enable to zoom the report to display a detailed view. Hold the shift key to pan the zoomed area.",
-        "comment": "Tooltip for zoomable report option in configuration panel",
-        "translate": false
     },
     "configurationPanel.zoomInsight.notice": {
         "value": "Zoom will not be applied to exported dashboards",
         "comment": "Notice about zoom limitations in exported dashboard content"
     },
-    "configurationPanel.drillConfig.selectInsight|insight": {
+    "configurationPanel.drillConfig.selectInsight": {
         "value": "Choose visualization…",
         "comment": "Placeholder text in dropdown for selecting drill target visualization"
-    },
-    "configurationPanel.drillConfig.selectInsight|report": {
-        "value": "Choose report…",
-        "comment": "Hint guiding users that drill target report in select box has to be selected.",
-        "translate": false
     },
     "gs.date.date-dataset.recommended": {
         "value": "Recommended",
@@ -2026,23 +1871,13 @@
         "value": "Delete",
         "comment": "Button label to confirm KPI deletion"
     },
-    "newDashboard.title|insight": {
+    "newDashboard.title": {
         "value": "Drag visualization here",
         "comment": "Instruction shown on empty dashboard prompting to add visualizations"
     },
-    "newDashboard.title|report": {
-        "value": "Drag report here",
-        "comment": "Instruction shown on empty dashboard prompting to add reports",
-        "translate": false
-    },
-    "newDashboard.dropInsight|insight": {
+    "newDashboard.dropInsight": {
         "value": "Drop visualization",
         "comment": "A placeholder showed when user drags new visualization into a dashboard canvas by cursor (drag and drop)."
-    },
-    "newDashboard.dropInsight|report": {
-        "value": "Drop report",
-        "comment": "A placeholder showed when user drags new report into a dashboard canvas by cursor (drag and drop).",
-        "translate": false
     },
     "attributesDropdown.filterConfiguredMessage": {
         "value": "<strong>{parentTitle}</strong> is already filtered by <strong>{childTitle}</strong> filter directly or through other filters.",
