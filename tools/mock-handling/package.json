@@ -52,7 +52,7 @@
         "p-map": "^3.0.0",
         "prettier": "~2.5.0",
         "rimraf": "^3.0.0",
-        "ts-morph": "^13.0.2",
+        "ts-morph": "^26.0.0",
         "tslib": "^2.5.0"
     },
     "devDependencies": {
@@ -60,7 +60,7 @@
         "@types/inquirer": "^8.2.6",
         "@types/json-stable-stringify": "^1.0.32",
         "@types/lodash": "^4.14.202",
-        "@types/node": "^18.17.6",
+        "@types/node": "^22.13.0",
         "@types/prettier": "~1.18.2",
         "@types/rimraf": "^2.0.2",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
@@ -76,7 +76,7 @@
         "eslint-plugin-regexp": "^1.9.0",
         "eslint-plugin-sonarjs": "^0.16.0",
         "eslint-plugin-tsdoc": "^0.2.14",
-        "typescript": "5.3.3",
+        "typescript": "5.8.3",
         "vitest": "3.0.8"
     }
 }

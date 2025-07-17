@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import { PackageDescriptor, SourceDescriptor, TargetDescriptor } from "../../base/types.js";
-import chokidar from "chokidar";
+import Watchpack from "watchpack";
 import path from "path";
 import {
     AutobuildToggled,
@@ -39,7 +39,7 @@ export class ChangeDetector implements IEventListener {
     /*
      * set after targetInitialized
      */
-    private watcher: chokidar.FSWatcher | undefined;
+    private watcher: Watchpack | undefined;
 
     private timeoutId: any | undefined;
     private accumulatedFileChanges: string[] = [];
@@ -65,7 +65,7 @@ export class ChangeDetector implements IEventListener {
 
                 // close previous instance which may be monitoring completely different set of dirs
                 this.close();
-                // then start new instance of chokidar for just the selected target packages
+                // then start new instance of watchpack for just the selected target packages
                 this.startWatchingForChanges();
 
                 break;
@@ -110,7 +110,7 @@ export class ChangeDetector implements IEventListener {
         }
     };
 
-    private onSourceChanged = (target: string, _type: "add" | "change" | "unlink"): void => {
+    private onSourceChanged = (target: string): void => {
         this.accumulatedFileChanges.push(target);
 
         if (this.timeoutId) {
@@ -127,17 +127,36 @@ export class ChangeDetector implements IEventListener {
         const targetDependsOn = this.targetDescriptor!.dependencies.map((dep) => dep.pkg);
         const scope = intersection(packages, targetDependsOn);
 
-        const watcher = chokidar.watch(createWatchDirs(scope), {
-            atomic: true,
-            persistent: true,
-            ignoreInitial: true,
-            cwd: this.sourceDescriptor!.root,
+        const watchDirs = createWatchDirs(scope);
+        const absoluteWatchDirs = watchDirs.map((dir) => path.resolve(this.sourceDescriptor!.root, dir));
+
+        this.watcher = new Watchpack({
+            aggregateTimeout: 100,
+            poll: false,
+            followSymlinks: false,
+            ignored: /node_modules/,
         });
 
-        watcher
-            .on("add", (path) => this.onSourceChanged(path, "add"))
-            .on("change", (path) => this.onSourceChanged(path, "change"))
-            .on("unlink", (path) => this.onSourceChanged(path, "unlink"));
+        this.watcher.on("change", (filePath: string) => {
+            // Convert absolute path back to relative path
+            const relativePath = path.relative(this.sourceDescriptor!.root, filePath);
+            this.onSourceChanged(relativePath);
+        });
+
+        this.watcher.on("aggregated", (changes: Set<string>) => {
+            // Handle aggregated changes if needed
+            for (const filePath of changes) {
+                const relativePath = path.relative(this.sourceDescriptor!.root, filePath);
+                this.onSourceChanged(relativePath);
+            }
+        });
+
+        this.watcher.watch({
+            files: [],
+            directories: absoluteWatchDirs,
+            missing: [],
+            startTime: Date.now(),
+        });
 
         appLogImportant("Package change detector started.");
     };

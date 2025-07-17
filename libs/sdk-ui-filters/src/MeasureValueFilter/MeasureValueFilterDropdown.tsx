@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import {
     IMeasureValueFilter,
@@ -104,14 +104,14 @@ export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValu
         value: IMeasureValueFilterValue,
         treatNullValuesAsZero: boolean,
     ) => {
-        const { filter, measureIdentifier, onApply } = this.props;
+        const { measureIdentifier, onApply } = this.props;
         if (operator === null || operator === "ALL") {
             onApply(null);
         } else {
             if (isRangeConditionOperator(operator)) {
                 onApply(
                     newMeasureValueFilter(
-                        { localIdentifier: measureIdentifier } || filter.measureValueFilter.measure,
+                        { localIdentifier: measureIdentifier },
                         operator,
                         value.from ?? 0,
                         value.to ?? 0,
@@ -121,7 +121,7 @@ export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValu
             } else {
                 onApply(
                     newMeasureValueFilter(
-                        { localIdentifier: measureIdentifier } || filter.measureValueFilter.measure,
+                        { localIdentifier: measureIdentifier },
                         operator,
                         value.value ?? 0,
                         treatNullValuesAsZero ? 0 : undefined,

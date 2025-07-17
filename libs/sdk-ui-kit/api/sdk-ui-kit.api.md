@@ -4,9 +4,6 @@
 
 ```ts
 
-/// <reference types="lodash" />
-/// <reference types="react" />
-
 import { AccessGranularPermission } from '@gooddata/sdk-model';
 import { ColorFormats } from 'tinycolor2';
 import { CompletionSource } from '@codemirror/autocomplete';
@@ -525,10 +522,10 @@ export const FilterLabel: React_2.FC<WithIntlProps<IFilterLabelProps & WrappedCo
 };
 
 // @internal
-export const findInteractiveItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], predicate: (item: IUiMenuInteractiveItem<T>) => boolean) => IUiMenuInteractiveItem<T>;
+export const findInteractiveItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], predicate: (item: IUiMenuInteractiveItem<T>) => boolean) => IUiMenuInteractiveItem<T> | undefined;
 
 // @internal
-export const findItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], predicate: (item: IUiMenuItem<T>) => boolean) => IUiMenuItem<T>;
+export const findItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], predicate: (item: IUiMenuItem<T>) => boolean) => IUiMenuItem<T> | undefined;
 
 // @internal (undocumented)
 export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensionsState> {
@@ -610,7 +607,7 @@ export const getClosestFocusableSibling: <T extends IUiMenuItemData = object>(ar
     isItemFocusable: (item: IUiMenuItem<T>) => boolean;
     itemId?: string;
     direction: "forward" | "backward";
-}) => IUiMenuItem<T>;
+}) => IUiMenuItem<T> | undefined;
 
 // @internal
 export const getColorsPreviewFromColorPalette: (colorPalette: IColorPalette) => string[];
@@ -638,16 +635,16 @@ export const getGranteeItemTestId: (grantee: GranteeItem, prefix?: "option") => 
 export const getHeightWithUnitsForEmbedCode: (codeOption: EmbedOptionsType) => string | number;
 
 // @internal
-export const getInteractiveItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuInteractiveItem<T>;
+export const getInteractiveItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuInteractiveItem<T> | undefined;
 
 // @internal
-export const getItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuItem<T>;
+export const getItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuItem<T> | undefined;
 
 // @internal
-export const getItemInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuInteractiveItem<T>;
+export const getItemInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuInteractiveItem<T> | undefined;
 
 // @internal
-export const getItemsByInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], parentId?: string) => IUiMenuItem<T>[];
+export const getItemsByInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], parentId?: string) => IUiMenuItem<T>[] | undefined;
 
 // @internal (undocumented)
 export const getNextFocusableElement: (initialElement: HTMLElement | undefined, focusableElements: HTMLElement[], direction: NavigationDirection) => HTMLElement;
@@ -691,7 +688,7 @@ export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T
 export const getSelectedMenuId: <T extends IUiMenuItemData = object, M = object>(context: IUiMenuContext<T, M>) => string | undefined;
 
 // @internal
-export const getSiblingItems: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuItem<T>[];
+export const getSiblingItems: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuItem<T>[] | undefined;
 
 // @internal (undocumented)
 export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
@@ -5322,7 +5319,7 @@ export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectList
         onRangeChange: (...args: any[]) => void;
         onScrollStart: (...args: any[]) => void;
         onSelect: (...args: any[]) => void;
-        rowItem: React_2.ReactElement<any, string | React_2.JSXElementConstructor<any>>;
+        rowItem: React_2.ReactElement;
         scrollToSelected: boolean;
         selection: {};
     };
@@ -5370,7 +5367,7 @@ export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
 export const LocaleSetting: React_2.VFC<ILocaleSettingProps>;
 
 // @internal (undocumented)
-export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent | React_2.KeyboardEvent<Element> = React_2.KeyboardEvent<Element>>(handlers: {
+export const makeHorizontalKeyboardNavigation: <T extends React_2.KeyboardEvent | KeyboardEvent = React_2.KeyboardEvent<Element>>(handlers: {
     onFocusPrevious?: (event: T) => void;
     onFocusNext?: (event: T) => void;
     onFocusFirst?: (event: T) => void;
@@ -5380,14 +5377,14 @@ export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent | React_
 
 // @internal (undocumented)
 export const makeKeyboardNavigation: <ActionKeysMap extends {
-    [action: string]: {
+    [action: string]: Array<{
         code: string | string[];
         modifiers?: IModifier[];
-    }[];
-}>(actionKeysMap: ActionKeysMap) => <T extends KeyboardEvent | React_2.KeyboardEvent<Element> = React_2.KeyboardEvent<Element>>(handlers: { [action in keyof ActionKeysMap | "onUnhandledKeyDown"]?: (event: T) => void; }, options?: IHandleActionOptions) => (event: T) => void;
+    }>;
+}>(actionKeysMap: ActionKeysMap) => <T extends React_2.KeyboardEvent | KeyboardEvent = React_2.KeyboardEvent>(handlers: { [action in keyof ActionKeysMap | "onUnhandledKeyDown"]?: (event: T) => void; }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeLinearKeyboardNavigation: <T extends KeyboardEvent | React_2.KeyboardEvent<Element> = React_2.KeyboardEvent<Element>>(handlers: {
+export const makeLinearKeyboardNavigation: <T extends React_2.KeyboardEvent | KeyboardEvent = React_2.KeyboardEvent<Element>>(handlers: {
     onSelect?: (event: T) => void;
     onClose?: (event: T) => void;
     onFocusPrevious?: (event: T) => void;
@@ -5398,7 +5395,7 @@ export const makeLinearKeyboardNavigation: <T extends KeyboardEvent | React_2.Ke
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeMenuKeyboardNavigation: <T extends KeyboardEvent | React_2.KeyboardEvent<Element> = React_2.KeyboardEvent<Element>>(handlers: {
+export const makeMenuKeyboardNavigation: <T extends React_2.KeyboardEvent | KeyboardEvent = React_2.KeyboardEvent<Element>>(handlers: {
     onSelect?: (event: T) => void;
     onClose?: (event: T) => void;
     onFocusPrevious?: (event: T) => void;
@@ -5411,7 +5408,7 @@ export const makeMenuKeyboardNavigation: <T extends KeyboardEvent | React_2.Keyb
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeTabsKeyboardNavigation: <T extends KeyboardEvent | React_2.KeyboardEvent<Element> = React_2.KeyboardEvent<Element>>(handlers: {
+export const makeTabsKeyboardNavigation: <T extends React_2.KeyboardEvent | KeyboardEvent = React_2.KeyboardEvent<Element>>(handlers: {
     onSelect?: (event: T) => void;
     onFocusPrevious?: (event: T) => void;
     onFocusNext?: (event: T) => void;

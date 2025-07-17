@@ -81,12 +81,12 @@
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.17.0",
-        "@microsoft/api-extractor": "^7.36.0",
+        "@microsoft/api-extractor": "^7.52.8",
         "@testing-library/dom": "10.4.0",
         "@testing-library/react": "16.0.1",
         "@types/lodash": "^4.14.202",
         "@types/mapbox-gl": "^2.6.0",
-        "@types/node": "^18.17.6",
+        "@types/node": "^22.13.0",
         "@types/react-dom": "18.3.7",
         "@types/react-measure": "^2.0.8",
         "@types/react": "18.3.23",
@@ -115,7 +115,7 @@
         "stylelint": "^13.8.0",
         "stylelint-checkstyle-formatter": "^0.1.2",
         "stylelint-config-prettier": "^8.0.2",
-        "typescript": "5.3.3",
+        "typescript": "5.8.3",
         "vitest": "3.0.8",
         "vitest-dom": "0.1.1"
     }

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { TableDescriptor } from "../structure/tableDescriptor.js";
 import { DataValue } from "@gooddata/sdk-model";
 import { getMappingHeaderName, getMappingHeaderUri, hasMappingHeaderFormattedName } from "@gooddata/sdk-ui";
@@ -105,5 +105,5 @@ function getDrillItemId(drillItemUri: string | null) {
     // with this in place, we don't have to worry about how other backends represent the PK of the element.
     return drillItemUri?.startsWith("/gdc")
         ? extractIdsFromAttributeElementUri(drillItemUri)[1]
-        : null ?? drillItemUri;
+        : drillItemUri;
 }

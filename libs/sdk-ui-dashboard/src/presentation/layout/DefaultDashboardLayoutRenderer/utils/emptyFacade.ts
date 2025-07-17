@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/legacyFluidLayout/index.js";
 
@@ -30,4 +30,4 @@ export const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<unknown> = 
     isWidgetItemWithKpiRef: () => false,
     isWidgetItemWithRef: () => false,
     isEmpty: () => false,
-};
+} as unknown as IDashboardLayoutItemFacade<unknown>;

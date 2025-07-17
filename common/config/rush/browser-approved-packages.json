@@ -511,6 +511,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "@types/watchpack",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/webpack-env",
       "allowedCategories": [ "examples" ]
     },
@@ -1253,6 +1257,10 @@
     {
       "name": "wait-on",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "watchpack",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "webpack",

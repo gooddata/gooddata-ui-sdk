@@ -507,7 +507,7 @@ export function exportDefinitionTitle(exportDefinition: IExportDefinitionMetadat
 export function exportDefinitionUpdated(exportDefinition: IExportDefinitionMetadataObject): string | undefined;
 
 // @public
-export const factoryNotationFor: (data: any, additionalConversion?: ((data: any) => string | undefined) | undefined) => string;
+export const factoryNotationFor: (data: any, additionalConversion?: (data: any) => string | undefined) => string;
 
 // @public
 export function filterAttributeElements(filter: IPositiveAttributeFilter | INegativeAttributeFilter): IAttributeElements;
@@ -3718,7 +3718,7 @@ export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string): bo
 export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDescriptor;
 
 // @public
-export const isMeasureGroupIdentifier: (itemOrTotal: DimensionItem) => boolean;
+export const isMeasureGroupIdentifier: (itemOrTotal: DimensionItem) => itemOrTotal is "measureGroup";
 
 // @public
 export function isMeasureLocator(obj: unknown): obj is IMeasureLocatorItem;

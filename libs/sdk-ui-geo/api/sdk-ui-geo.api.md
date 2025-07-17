@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
 import { ContentRect } from 'react-measure';

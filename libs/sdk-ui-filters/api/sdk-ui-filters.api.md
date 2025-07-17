@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { ComponentType } from 'react';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
@@ -241,11 +239,11 @@ export const DateFilterHelpers: {
         "GDC.time.hour": GranularityIntlKey_2;
         "GDC.time.minute": GranularityIntlKey_2;
     };
-    applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption_2, excludeCurrentPeriod: boolean) => DateFilterOption_2;
+    applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption_2 | undefined, excludeCurrentPeriod: boolean) => DateFilterOption_2;
     defaultDateFilterOptions: IDateFilterOptionsByType_2;
     canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption_2) => boolean;
     mapOptionToAfm: (value: DateFilterOption_2, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter;
-    formatAbsoluteDateRange: (from: string | Date, to: string | Date, dateFormat: string) => string;
+    formatAbsoluteDateRange: (from: Date | string, to: Date | string, dateFormat: string) => string;
     formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator_2) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };

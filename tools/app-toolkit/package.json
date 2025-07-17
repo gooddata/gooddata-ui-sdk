@@ -76,7 +76,7 @@
         "@types/fs-extra": "^9.0.13",
         "@types/inquirer": "^8.2.6",
         "@types/lodash": "^4.14.202",
-        "@types/node": "^18.17.6",
+        "@types/node": "^22.13.0",
         "@types/tar": "^6.1.0",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
@@ -93,7 +93,7 @@
         "eslint-plugin-sonarjs": "^0.16.0",
         "eslint-plugin-tsdoc": "^0.2.14",
         "prettier": "~2.5.0",
-        "typescript": "5.3.3",
+        "typescript": "5.8.3",
         "vitest": "3.0.8"
     }
 }
