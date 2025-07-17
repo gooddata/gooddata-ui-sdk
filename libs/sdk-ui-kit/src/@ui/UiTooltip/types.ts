@@ -56,6 +56,15 @@ export interface UiTooltipProps {
 
     /** ARIA attributes configuration for accessibility */
     accessibilityConfig?: IAccessibilityConfigBase;
+
+    /**
+     * Tooltip styling variant
+     * @defaultValue "default"
+     */
+    variant?: "default" | "error";
+
+    /** If the tooltip is disabled, only the anchor element will be shown */
+    disabled?: boolean;
 }
 
 export type Dimensions = { width: number; height: number };

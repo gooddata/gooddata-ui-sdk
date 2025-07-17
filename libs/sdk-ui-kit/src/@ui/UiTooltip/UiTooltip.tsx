@@ -16,7 +16,7 @@ import {
     Middleware,
     safePolygon,
 } from "@floating-ui/react";
-import React, { useRef, useMemo, useState } from "react";
+import React, { useRef, useState } from "react";
 import { bem } from "../@utils/bem.js";
 import { UiTooltipProps } from "./types.js";
 import {
@@ -48,8 +48,12 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
     offset: offsetProp,
     optimalPlacement = false,
     accessibilityConfig,
+    variant = "default",
+    disabled,
 }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpenInternal, setIsOpen] = useState(false);
+    const isOpen = (isOpenInternal || triggerBy.length === 0) && !disabled;
+
     const arrowRef = useRef<SVGSVGElement>(null);
     const themeFromContext = useTheme();
     const isScopeThemed = useIsScopeThemed();
@@ -96,9 +100,6 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
     const triggerDimensions = getDimensionsFromRef(refs.reference);
     const floatingDimensions = getDimensionsFromRef(refs.floating);
 
-    const hasNoTriggers = triggerBy.length === 0;
-    const isTooltipVisible = useMemo(() => isOpen || hasNoTriggers, [hasNoTriggers, isOpen]);
-
     // trigger events
     const hover = useHover(context, {
         enabled: triggerBy.includes("hover"),
@@ -131,11 +132,11 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
                 {anchor}
             </div>
 
-            {isTooltipVisible ? (
+            {isOpen ? (
                 <FloatingPortal>
                     <ConditionalScopedThemeProvider>
                         <div
-                            className={b({ width: width === "auto" ? "auto" : false })}
+                            className={b({ width: width === "auto" ? "auto" : false, variant })}
                             ref={refs.setFloating}
                             style={{
                                 zIndex,

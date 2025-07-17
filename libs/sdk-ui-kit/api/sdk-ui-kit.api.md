@@ -6356,12 +6356,14 @@ export interface UiTooltipProps {
     content: React_2.ReactNode | ((args: {
         onClose: () => void;
     }) => React_2.ReactNode);
+    disabled?: boolean;
     hoverCloseDelay?: number;
     hoverOpenDelay?: number;
     offset?: number;
     optimalPlacement?: boolean;
     showArrow?: boolean;
     triggerBy?: Array<"hover" | "focus" | "click">;
+    variant?: "default" | "error";
     width?: number | "auto";
 }
 
