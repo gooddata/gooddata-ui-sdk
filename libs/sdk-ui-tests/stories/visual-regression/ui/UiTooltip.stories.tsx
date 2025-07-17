@@ -29,10 +29,12 @@ const allPositions = propCombination("arrowPlacement", [
     "right",
     "right-end",
 ]);
+const allVariants = propCombination("variant", ["default", "error"]);
 
-const UiTooltipPosition: React.FC<UiTooltipProps> = ({ arrowPlacement }) => (
+const UiTooltipPosition: React.FC<UiTooltipProps> = ({ arrowPlacement, variant }) => (
     <UiTooltip
         arrowPlacement={arrowPlacement}
+        variant={variant}
         anchor={<div style={{ margin: "75px 0", width: "50px", height: "25px", backgroundColor: "gray" }} />}
         content={
             <div
@@ -54,6 +56,7 @@ const UiTooltipTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
     <div className="screenshot-target">
         <ComponentTable
             rowsBy={[allPositions]}
+            columnsBy={allVariants}
             Component={UiTooltipPosition}
             codeSnippet={showCode ? "UiTooltip" : undefined}
             align="center"
