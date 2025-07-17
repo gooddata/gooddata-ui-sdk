@@ -252,6 +252,7 @@ export interface IUpdateAttributeFilterSelectionPayload {
     readonly isWorkingSelectionChange?: boolean;
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     readonly isResultOfMigration?: boolean;
+    readonly isSelectionInvalid?: boolean;
 }
 
 const updateAttributeFilterSelection: FilterContextReducer<
@@ -264,6 +265,7 @@ const updateAttributeFilterSelection: FilterContextReducer<
         isWorkingSelectionChange,
         enableImmediateAttributeFilterDisplayAsLabelMigration,
         isResultOfMigration,
+        isSelectionInvalid,
     } = action.payload;
     const filterContextDefinition = isWorkingSelectionChange
         ? state.workingFilterContextDefinition
@@ -316,6 +318,19 @@ const updateAttributeFilterSelection: FilterContextReducer<
                 negativeSelection,
             };
         }
+    }
+
+    // Handle isSelectionInvalid flag to update filtersWithInvalidSelection array
+    if (isSelectionInvalid) {
+        // Add filterLocalId to the array if not already present
+        if (!state.filtersWithInvalidSelection.includes(filterLocalId)) {
+            state.filtersWithInvalidSelection.push(filterLocalId);
+        }
+    } else {
+        // Remove filterLocalId from the array if present
+        state.filtersWithInvalidSelection = state.filtersWithInvalidSelection.filter(
+            (id) => id !== filterLocalId,
+        );
     }
 };
 

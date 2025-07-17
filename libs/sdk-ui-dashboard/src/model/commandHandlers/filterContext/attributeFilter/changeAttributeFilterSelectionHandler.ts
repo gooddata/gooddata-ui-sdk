@@ -27,8 +27,14 @@ export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,
     cmd: ChangeAttributeFilterSelection,
 ): SagaIterator<void> {
-    const { elements, filterLocalId, selectionType, isWorkingSelectionChange, isResultOfMigration } =
-        cmd.payload;
+    const {
+        elements,
+        filterLocalId,
+        selectionType,
+        isWorkingSelectionChange,
+        isResultOfMigration,
+        isSelectionInvalid,
+    } = cmd.payload;
 
     // validate filterLocalId
     const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
@@ -52,6 +58,7 @@ export function* changeAttributeFilterSelectionHandler(
             isWorkingSelectionChange: isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
             enableImmediateAttributeFilterDisplayAsLabelMigration,
             isResultOfMigration,
+            isSelectionInvalid,
         }),
     );
 

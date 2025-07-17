@@ -110,6 +110,10 @@
         "value": "<link>Apply filters</link> to see updated data.",
         "comment": "Message banner shown when filters are changed but not yet applied. The <link> tags create a clickable action to apply the filters."
     },
+    "filterBar.invalidFilterSelection": {
+        "value": "To apply changes, select valid values for these filters: {names}",
+        "comment": "Message shown on disabled Apply button."
+    },
     "filterBar.executionTimestampNotificationMessage": {
         "value": "<bold>Note.</bold> You're viewing up-to-date data, but for any relative date filters the dashboard treats {date} as “today.”",
         "comment": "Message banner describing dashboard with specific data timestamp. Placeholder {date} is replaced with the current date."

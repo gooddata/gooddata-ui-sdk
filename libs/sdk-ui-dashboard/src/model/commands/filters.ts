@@ -522,6 +522,13 @@ export interface ChangeAttributeFilterSelectionPayload {
      * metadata level.
      */
     readonly isResultOfMigration?: boolean;
+
+    /**
+     * Indicates if the current filter selection is invalid.
+     * When true, the filter's localId should be added to filtersWithInvalidSelection array in state.
+     * When false, the filter's localId should be removed from filtersWithInvalidSelection array.
+     */
+    readonly isSelectionInvalid?: boolean;
 }
 
 /**
@@ -577,6 +584,7 @@ export function changeAttributeFilterSelection(
     elements: IAttributeElements,
     selectionType: AttributeFilterSelectionType,
     correlationId?: string,
+    isSelectionInvalid?: boolean,
 ): ChangeAttributeFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
@@ -585,6 +593,7 @@ export function changeAttributeFilterSelection(
             filterLocalId,
             elements,
             selectionType,
+            isSelectionInvalid,
         },
     };
 }
@@ -677,6 +686,7 @@ export function changeWorkingAttributeFilterSelection(
     elements: IAttributeElements,
     selectionType: AttributeFilterSelectionType,
     correlationId?: string,
+    isSelectionInvalid?: boolean,
 ): ChangeAttributeFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
@@ -686,6 +696,7 @@ export function changeWorkingAttributeFilterSelection(
             elements,
             selectionType,
             isWorkingSelectionChange: true,
+            isSelectionInvalid,
         },
     };
 }

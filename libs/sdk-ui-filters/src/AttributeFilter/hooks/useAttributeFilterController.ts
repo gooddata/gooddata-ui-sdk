@@ -504,7 +504,14 @@ function useInitOrReload(
             };
         }
         return undefined;
-    }, [handler, displayAsLabel, enableDuplicatedLabelValuesInAttributeFilter, onApply, selectionMode, isSelectionInvalid]);
+    }, [
+        handler,
+        displayAsLabel,
+        enableDuplicatedLabelValuesInAttributeFilter,
+        onApply,
+        selectionMode,
+        isSelectionInvalid,
+    ]);
 }
 
 type UpdateFilterProps = {
@@ -827,7 +834,7 @@ function useCallbacks(
                 );
             }
         },
-        [handler, enableDuplicatedLabelValuesInAttributeFilter, handlerState, selectionMode, isSelectionInvalid],
+        [handler, enableDuplicatedLabelValuesInAttributeFilter, handlerState, selectionMode],
     );
 
     const onSelect = useCallback(

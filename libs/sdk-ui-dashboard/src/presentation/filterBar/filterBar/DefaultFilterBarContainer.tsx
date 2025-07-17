@@ -4,7 +4,13 @@ import DefaultMeasure, { ContentRect } from "react-measure";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import { Message, UiButton, makeHorizontalKeyboardNavigation } from "@gooddata/sdk-ui-kit";
+import {
+    Message,
+    UiButton,
+    makeHorizontalKeyboardNavigation,
+    Bubble,
+    BubbleHoverTrigger,
+} from "@gooddata/sdk-ui-kit";
 import { isFocusVisible } from "@react-aria/interactions";
 
 import { IntlWrapper } from "../../localization/index.js";
@@ -18,6 +24,7 @@ import {
     selectIsWorkingFilterContextChanged,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsInEditMode,
+    selectNamesOfFiltersWithInvalidSelection,
 } from "../../../model/index.js";
 
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
@@ -49,6 +56,8 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
+    const filtersWithInvalidSelection = useDashboardSelector(selectNamesOfFiltersWithInvalidSelection);
+    const hasInvalidFilterSelections = filtersWithInvalidSelection.length > 0;
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
 
     const { showExecutionTimestampMessage, formattedDate, onShowCurrentTimestampDashboard } =
@@ -87,6 +96,13 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
         }
     }, [setFilterBarExpanded, expandedAutomatically]);
 
+    const bubbleText = hasInvalidFilterSelections
+        ? intl.formatMessage(
+              { id: "filterBar.invalidFilterSelection" },
+              { names: filtersWithInvalidSelection.join(", ") },
+          )
+        : null;
+
     return (
         <>
             <div
@@ -109,11 +125,15 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                     <FiltersRows rows={rows} />
                     <div className="filter-bar-configuration" style={configurationStyle}>
                         {isApplyAllAtOnceEnabledAndSet && isWorkingFilterContextChanged ? (
-                            <UiButton
-                                label={intl.formatMessage({ id: "apply" })}
-                                variant="primary"
-                                onClick={applyAllDashboardFilters}
-                            />
+                            <BubbleHoverTrigger showDelay={100} hideDelay={0}>
+                                <UiButton
+                                    label={intl.formatMessage({ id: "apply" })}
+                                    variant="primary"
+                                    onClick={applyAllDashboardFilters}
+                                    isDisabled={hasInvalidFilterSelections}
+                                />
+                                {bubbleText ? <Bubble>{bubbleText}</Bubble> : null}
+                            </BubbleHoverTrigger>
                         ) : null}
                         {isFilterViewsFeatureFlagEnabled ? <FilterViews /> : null}
                     </div>
@@ -133,11 +153,17 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                             values={{
                                 link: (chunks) => (
                                     <strong>
-                                        <UiButton
-                                            variant="link"
-                                            onClick={applyAllDashboardFilters}
-                                            label={chunks as unknown as string}
-                                        />
+                                        <BubbleHoverTrigger showDelay={100} hideDelay={0}>
+                                            <UiButton
+                                                variant="link"
+                                                onClick={applyAllDashboardFilters}
+                                                label={chunks as unknown as string}
+                                                isDisabled={hasInvalidFilterSelections}
+                                            />
+                                            {hasInvalidFilterSelections ? (
+                                                <Bubble>{bubbleText}</Bubble>
+                                            ) : null}
+                                        </BubbleHoverTrigger>
                                     </strong>
                                 ),
                             }}
