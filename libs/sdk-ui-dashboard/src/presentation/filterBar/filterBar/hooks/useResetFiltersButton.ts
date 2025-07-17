@@ -11,6 +11,8 @@ import {
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     newAllTimeDashboardDateFilter,
+    FilterContextItem,
+    isAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
 import {
@@ -35,6 +37,16 @@ import {
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../../model/index.js";
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
+
+const normalizeFiltersForComparison = (filters: FilterContextItem[]): FilterContextItem[] => {
+    // Remove any "all time" common date filters to normalize the comparison
+    return filters.filter((filter) => {
+        if (isDashboardCommonDateFilter(filter)) {
+            return !isDashboardDateFilter(filter) || !isAllTimeDashboardDateFilter(filter);
+        }
+        return true;
+    });
+};
 
 /**
  * @returns tuple with two items:
@@ -101,10 +113,19 @@ export const useResetFiltersButton = (): {
             : currentFilters;
     }, [enableDateFilterIdentifiers, originalFilters, currentFilters]);
 
+    // Normalize filters for comparison to handle "all time" common date filters consistently
+    const normalizedCurrentFilters = React.useMemo(() => {
+        return normalizeFiltersForComparison(sanitizedCurrentFilters);
+    }, [sanitizedCurrentFilters]);
+
+    const normalizedOriginalFilters = React.useMemo(() => {
+        return normalizeFiltersForComparison(originalFilters);
+    }, [originalFilters]);
+
     const canReset = React.useMemo((): boolean => {
         return (
             !isEditMode &&
-            ((!isEqual(sanitizedCurrentFilters, originalFilters) &&
+            ((!isEqual(normalizedCurrentFilters, normalizedOriginalFilters) &&
                 // If the cross filter add some filters, we should allow the reset
                 ((!disableUserFilterReset && !disableUserFilterResetByConfig) ||
                     newlyAddedFiltersLocalIds.length > 0)) ||
@@ -112,8 +133,8 @@ export const useResetFiltersButton = (): {
         );
     }, [
         isEditMode,
-        sanitizedCurrentFilters,
-        originalFilters,
+        normalizedCurrentFilters,
+        normalizedOriginalFilters,
         disableUserFilterReset,
         disableUserFilterResetByConfig,
         newlyAddedFiltersLocalIds.length,
