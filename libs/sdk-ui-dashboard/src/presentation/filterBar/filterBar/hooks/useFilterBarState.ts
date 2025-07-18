@@ -1,6 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { CalculatedRows, CalculatedRowsDefault } from "./useRowsCalculator.js";
 import {
     useDashboardDispatch,
@@ -23,8 +23,10 @@ export function useFilterBarState() {
 
     const scrollable = useScrollable(isFilterBarExpanded);
 
-    const setFilterBarExpanded = (isExpanded: boolean) =>
-        dispatch(uiActions.setFilterBarExpanded(isExpanded));
+    const setFilterBarExpanded = useCallback(
+        (isExpanded: boolean) => dispatch(uiActions.setFilterBarExpanded(isExpanded)),
+        [dispatch],
+    );
 
     const innerHeight = isFilterBarExpanded ? expandedHeight : collapsedHeight;
 
