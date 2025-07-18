@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { useState } from "react";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import { attributeDisplayFormRef, IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
 
@@ -9,8 +9,8 @@ const attributeFilter = newNegativeAttributeFilter(attributeDisplayFormRef(Md.Op
     uris: [],
 });
 
-export const AttributeFilterButtonScenario: React.FC = () => {
+export function AttributeFilterButtonScenario() {
     const [filter, setFilter] = useState<IAttributeFilter>(attributeFilter);
 
     return <AttributeFilterButton filter={filter} onApply={setFilter} />;
-};
+}

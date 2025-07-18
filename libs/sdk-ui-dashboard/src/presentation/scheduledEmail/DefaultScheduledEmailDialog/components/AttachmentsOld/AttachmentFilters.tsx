@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -58,20 +58,31 @@ const buttonTitle = {
     default: defineMessage({ id: "dialogs.schedule.management.attachments.filters.default" }).id,
 };
 
-export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
-    const { filterType, onChange, hidden = false, disabled = false, filters, overlayPositionType } = props;
+export function AttachmentFilters({
+    filterType,
+    onChange,
+    hidden = false,
+    disabled = false,
+    filters,
+    overlayPositionType,
+}: IAttachmentFiltersProps) {
     const [selectedType, setSelectedType] = useState<AttachmentFilterType>(filterType);
     const intl = useIntl();
 
     const handleTypeChange = (type: AttachmentFilterType) => {
-        !disabled && setSelectedType(type);
+        if (!disabled) setSelectedType(type);
     };
     const isDefaultDisabled = selectedType !== "default" && disabled;
-    const defaultFiltersTooltipMessage = isDefaultDisabled
-        ? defineMessage({
-              id: "dialogs.schedule.management.attachments.filters.item.tooltip.disabled",
-          })
-        : defineMessage({ id: "dialogs.schedule.management.attachments.filters.item.tooltip" });
+    let defaultFiltersTooltipMessage;
+    if (isDefaultDisabled) {
+        defaultFiltersTooltipMessage = defineMessage({
+            id: "dialogs.schedule.management.attachments.filters.item.tooltip.disabled",
+        });
+    } else {
+        defaultFiltersTooltipMessage = defineMessage({
+            id: "dialogs.schedule.management.attachments.filters.item.tooltip",
+        });
+    }
 
     if (hidden) {
         return null;
@@ -159,4 +170,4 @@ export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
             )}
         />
     );
-};
+}

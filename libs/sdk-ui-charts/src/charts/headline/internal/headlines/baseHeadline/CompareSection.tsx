@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { createRef, useMemo } from "react";
+import { createRef, useMemo } from "react";
 
 import { HeadlinePagination, shouldRenderPagination } from "@gooddata/sdk-ui-vis-commons";
 
@@ -14,7 +14,7 @@ interface ICompareSectionProps {
     tertiaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
 }
 
-const CompareSection: React.FC<ICompareSectionProps> = ({ secondaryItem, tertiaryItem }) => {
+export default function CompareSection({ secondaryItem, tertiaryItem }: ICompareSectionProps) {
     const { config, clientHeight, clientWidth } = useBaseHeadline();
     const { enableCompactSize } = config;
 
@@ -55,6 +55,4 @@ const CompareSection: React.FC<ICompareSectionProps> = ({ secondaryItem, tertiar
             <CompareSectionItem dataItem={secondaryItem} titleRef={secondaryItemTitleWrapperRef} />
         </div>
     );
-};
-
-export default CompareSection;
+}

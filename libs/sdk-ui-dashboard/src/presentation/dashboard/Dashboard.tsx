@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import {
     LoadingComponent as DefaultLoading,
     useClientWorkspaceStatus,
@@ -15,7 +15,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 /**
  * @public
  */
-export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+export function Dashboard(props: IDashboardProps) {
     const workspaceStatus = useClientWorkspaceStatus();
     const clientWsIdentifiers = useClientWorkspaceIdentifiers();
     const isClientWorkspaceInitialized = useClientWorkspaceInitialized();
@@ -36,7 +36,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     }
 
     return <DashboardRenderer workspace={clientWsIdentifiers.workspace} {...props} backend={backend} />;
-};
+}
 
 function useBackendWithDashboardCorrelation(
     backend?: IAnalyticalBackend,

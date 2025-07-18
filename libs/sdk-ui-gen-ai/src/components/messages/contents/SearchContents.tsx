@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { useMemo } from "react";
 import { SearchContents } from "../../../model.js";
 import cx from "classnames";
 import { replaceLinks } from "./replaceLinks.js";
@@ -12,10 +12,10 @@ export type SearchContentsProps = {
     useMarkdown?: boolean;
 };
 
-export const SearchContentsComponent: React.FC<SearchContentsProps> = ({ content, useMarkdown }) => {
+export function SearchContentsComponent({ content, useMarkdown }: SearchContentsProps) {
     const className = cx("gd-gen-ai-chat__messages__content", "gd-gen-ai-chat__messages__content--search");
     const workspace = useWorkspaceStrict();
-    const text = React.useMemo(() => {
+    const text = useMemo(() => {
         return replaceLinks(content.text, content.searchResults, workspace);
     }, [content.text, content.searchResults, workspace]);
 
@@ -24,4 +24,4 @@ export const SearchContentsComponent: React.FC<SearchContentsProps> = ({ content
             <MarkdownComponent allowMarkdown={useMarkdown}>{text}</MarkdownComponent>
         </div>
     );
-};
+}

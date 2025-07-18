@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { MutableRefObject, RefObject } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
@@ -10,7 +10,7 @@ export interface IAddAttributeFilterButtonProps {
     className: string;
     isOpen: boolean;
     title?: string;
-    buttonRef?: React.MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement>;
     onClick?: () => void;
 }
 
@@ -32,7 +32,7 @@ export function AddAttributeFilterButton({
     });
 
     return (
-        <div ref={buttonRef as React.RefObject<HTMLDivElement>} className={rootClassNames} onClick={onClick}>
+        <div ref={buttonRef as RefObject<HTMLDivElement>} className={rootClassNames} onClick={onClick}>
             <div className="button-content">
                 <div className="button-title">{title}</div>
             </div>

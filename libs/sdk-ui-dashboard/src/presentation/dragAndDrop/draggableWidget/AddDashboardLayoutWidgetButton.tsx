@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import {
@@ -21,7 +20,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z
 
 const tooltipBem = bemFactory("gd-container-tooltip");
 
-export const AddDashboardLayoutWidgetButton: React.FC = () => {
+export function AddDashboardLayoutWidgetButton() {
     const isMobileDevice = useMediaQuery("mobileDevice");
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const theme = useTheme();
@@ -70,4 +69,4 @@ export const AddDashboardLayoutWidgetButton: React.FC = () => {
             </div>
         </div>
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ISortItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
@@ -86,10 +86,10 @@ export function ChartSortingWithIntl({
 /**
  * @internal
  */
-export function ChartSortingDialog(props: ChartSortingProps) {
+export function ChartSortingDialog({ locale, ...rest }: ChartSortingProps) {
     return (
-        <IntlWrapper locale={props.locale}>
-            <ChartSortingWithIntl {...props} />
+        <IntlWrapper locale={locale}>
+            <ChartSortingWithIntl {...rest} />
         </IntlWrapper>
     );
 }

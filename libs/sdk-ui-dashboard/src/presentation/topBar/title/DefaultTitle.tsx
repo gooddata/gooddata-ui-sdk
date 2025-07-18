@@ -1,14 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 
 import { TitleWrapper } from "./TitleWrapper.js";
-import { CustomTitleComponent } from "./types.js";
+import { ITitleProps } from "./types.js";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 /**
  * @alpha
  */
-export const DefaultTitle: CustomTitleComponent = (props) => {
+export function DefaultTitle(props: ITitleProps) {
     const { title } = props;
 
     return (
@@ -18,4 +17,4 @@ export const DefaultTitle: CustomTitleComponent = (props) => {
             </Typography>
         </TitleWrapper>
     );
-};
+}

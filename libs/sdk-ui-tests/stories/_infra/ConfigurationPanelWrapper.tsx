@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useRef } from "react";
+import { ReactNode, useRef } from "react";
 import { ConfigPanelClassName } from "@gooddata/sdk-ui-ext/internal";
 
 export interface IConfigurationPanelWrapperProps {
     className?: string;
     expandAllClassName?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 const DefaultExpandAllClassName = "config-panel-expand-all";

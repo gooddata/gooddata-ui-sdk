@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType, Dispatch, KeyboardEvent, RefObject, SetStateAction } from "react";
 import { IDropdownBodyRenderProps } from "../../Dropdown/index.js";
 import { SizeMedium, SizeSmall } from "../@types/size.js";
 
@@ -52,7 +52,7 @@ export type IUiMenuContentItem<T extends IUiMenuItemData = object> = {
     isDisabled?: boolean;
     showComponentOnly?: boolean;
     data: T["content"];
-    Component: React.ComponentType<{
+    Component: ComponentType<{
         onBack: () => void;
         onClose: () => void;
     }>;
@@ -147,14 +147,14 @@ export type IUiMenuControlType = "keyboard" | "mouse" | "unknown";
  * @internal
  */
 export interface IUiMenuPluggableComponents<T extends IUiMenuItemData = object> {
-    InteractiveItem: React.ComponentType<IUiMenuInteractiveItemProps<T>>;
-    InteractiveItemWrapper: React.ComponentType<IUiMenuInteractiveItemWrapperProps<T>>;
-    GroupItem: React.ComponentType<IUiMenuGroupItemProps<T>>;
-    StaticItem: React.ComponentType<IUiMenuStaticItemProps<T>>;
-    ContentItemWrapper: React.ComponentType<IUiMenuContentItemWrapperProps<T>>;
-    ContentItem: React.ComponentType<IUiMenuContentItemProps<T>>;
-    Content: React.ComponentType<IUiMenuContentProps<T>>;
-    MenuHeader: React.ComponentType;
+    InteractiveItem: ComponentType<IUiMenuInteractiveItemProps<T>>;
+    InteractiveItemWrapper: ComponentType<IUiMenuInteractiveItemWrapperProps<T>>;
+    GroupItem: ComponentType<IUiMenuGroupItemProps<T>>;
+    StaticItem: ComponentType<IUiMenuStaticItemProps<T>>;
+    ContentItemWrapper: ComponentType<IUiMenuContentItemWrapperProps<T>>;
+    ContentItem: ComponentType<IUiMenuContentItemProps<T>>;
+    Content: ComponentType<IUiMenuContentProps<T>>;
+    MenuHeader: ComponentType;
 }
 
 /**
@@ -165,13 +165,13 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
     items: IUiMenuItem<T>[];
     focusedItem: IUiMenuFocusableItem<T> | undefined;
     shownCustomContentItemId?: string;
-    setShownCustomContentItemId: React.Dispatch<React.SetStateAction<string | undefined>>;
+    setShownCustomContentItemId: Dispatch<SetStateAction<string | undefined>>;
     onSelect: (item: IUiMenuFocusableItem<T> | undefined) => void;
     onClose?: () => void;
-    setFocusedId: React.Dispatch<React.SetStateAction<string | undefined>>;
+    setFocusedId: Dispatch<SetStateAction<string | undefined>>;
     isItemFocusable: (item: IUiMenuItem<T>) => boolean;
     controlType: IUiMenuControlType;
-    setControlType: React.Dispatch<React.SetStateAction<IUiMenuControlType>>;
+    setControlType: Dispatch<SetStateAction<IUiMenuControlType>>;
     scrollToView: (element: HTMLElement | null) => void;
     makeItemId: (item: IUiMenuItem<T>) => string | undefined;
     /**
@@ -179,9 +179,9 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
      */
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
-    ItemComponent: React.ComponentType<IUiMenuItemProps<T>>;
-    menuComponentRef: React.RefObject<HTMLElement>;
-    itemsContainerRef: React.RefObject<HTMLElement>;
+    ItemComponent: ComponentType<IUiMenuItemProps<T>>;
+    menuComponentRef: RefObject<HTMLElement>;
+    itemsContainerRef: RefObject<HTMLElement>;
     menuCtxData?: M;
 }
 
@@ -204,7 +204,7 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object>
     onSelect?: (item: IUiMenuInteractiveItem<T>) => void;
     onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;
     onClose?: () => void;
-    onUnhandledKeyDown?: (event: React.KeyboardEvent, context: IUiMenuContext<T>) => void;
+    onUnhandledKeyDown?: (event: KeyboardEvent, context: IUiMenuContext<T>) => void;
 
     shouldKeyboardActionPreventDefault?: boolean;
     shouldKeyboardActionStopPropagation?: boolean;

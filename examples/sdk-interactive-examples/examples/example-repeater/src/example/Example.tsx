@@ -1,5 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { Repeater } from "@gooddata/sdk-ui-charts";
 import { measureLocalId, modifyAttribute } from "@gooddata/sdk-model";
 import * as Catalog from "../catalog.js";

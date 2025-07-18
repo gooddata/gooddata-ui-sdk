@@ -1,5 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { AddRichTextWidgetButton, DraggableRichTextCreatePanelItem } from "../../dragAndDrop/index.js";
 import { ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
@@ -7,9 +6,7 @@ import { ICreatePanelItemComponentProps } from "../../componentDefinition/index.
 /**
  * @internal
  */
-export const CreatableRichText: React.FC<ICreatePanelItemComponentProps> = (props) => {
-    const { WrapCreatePanelItemWithDragComponent } = props;
-
+export function CreatableRichText({ WrapCreatePanelItemWithDragComponent }: ICreatePanelItemComponentProps) {
     return (
         <BubbleHoverTrigger eventsOnBubble={true} className="s-add-kpi-bubble-trigger">
             <DraggableRichTextCreatePanelItem
@@ -18,4 +15,4 @@ export const CreatableRichText: React.FC<ICreatePanelItemComponentProps> = (prop
             />
         </BubbleHoverTrigger>
     );
-};
+}

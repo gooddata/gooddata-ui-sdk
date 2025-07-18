@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactElement } from "react";
 
 import { IDashboardInsightProps } from "../types.js";
 import { DashboardInsightWithDrillDialog } from "./DashboardInsightWithDrillDialog.js";
@@ -7,6 +7,6 @@ import { DashboardInsightWithDrillDialog } from "./DashboardInsightWithDrillDial
 /**
  * @internal
  */
-export const ViewModeDashboardInsight = (props: IDashboardInsightProps): JSX.Element => {
+export function ViewModeDashboardInsight(props: IDashboardInsightProps): ReactElement {
     return <DashboardInsightWithDrillDialog {...props} />;
-};
+}

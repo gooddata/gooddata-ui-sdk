@@ -1,5 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { fireEvent, render, screen } from "@testing-library/react";
 import { InputWithNumberFormat, MAX_NUMBER } from "../InputWithNumberFormat.js";
 import { Separators } from "../typings.js";

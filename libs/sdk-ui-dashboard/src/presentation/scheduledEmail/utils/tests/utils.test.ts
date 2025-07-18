@@ -2,7 +2,7 @@
 
 import { describe, it, beforeEach, expect } from "vitest";
 import { normalizeTime } from "@gooddata/sdk-ui-kit";
-import parseISO from "date-fns/parseISO/index.js";
+import { parseISO } from "date-fns";
 
 import {
     toModifiedISOString,

@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
-import React from "react";
 import { Row } from "react-grid-system";
 import { RenderMode } from "../../../types.js";
 import {
@@ -34,7 +33,7 @@ export interface DashboardLayoutGridRowProps<TWidget> {
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
 
-export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowProps<TWidget>): JSX.Element {
+export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowProps<TWidget>) {
     const {
         section,
         itemKeyGetter = defaultItemKeyGetter,

@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";

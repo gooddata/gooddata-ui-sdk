@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { MouseEvent, useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import { BubbleHoverTrigger, Bubble } from "../../../Bubble/index.js";
@@ -9,9 +9,7 @@ import { ADD_GRANTEE_ID } from "./utils.js";
 /**
  * @internal
  */
-export const AddUserOrGroupButton: React.FC<IAddUserOrGroupButton> = (props) => {
-    const { isDisabled, onClick } = props;
-
+export function AddUserOrGroupButton({ isDisabled, onClick }: IAddUserOrGroupButton) {
     const intl = useIntl();
 
     const buttonClassNames = cx(
@@ -25,7 +23,7 @@ export const AddUserOrGroupButton: React.FC<IAddUserOrGroupButton> = (props) => 
     );
 
     const handleClick = useCallback(
-        (e: React.MouseEvent) => {
+        (e: MouseEvent) => {
             e.preventDefault();
             if (isDisabled) {
                 return;
@@ -52,4 +50,4 @@ export const AddUserOrGroupButton: React.FC<IAddUserOrGroupButton> = (props) => 
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

@@ -1,13 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
-
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Keyword: React.FC<IIconProps> = ({ color, className, width = 18, height = 16 }) => {
+export function Keyword({ color, className, width = 18, height = 16 }: IIconProps) {
     return (
         <svg
             className={className}
@@ -31,4 +29,4 @@ export const Keyword: React.FC<IIconProps> = ({ color, className, width = 18, he
             </g>
         </svg>
     );
-};
+}

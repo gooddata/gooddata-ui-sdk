@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useCallback, useMemo } from "react";
 import cx from "classnames";
 
 import { ObjRef } from "@gooddata/sdk-model";
@@ -16,18 +16,14 @@ interface IConfigurationParentItemProps {
     isValid: boolean;
 }
 
-export const ParentFiltersListItemWithoutConnectingAttributes: React.FC<IConfigurationParentItemProps> = (
-    props,
-) => {
-    const {
-        item: { isSelected, localIdentifier },
-        onClick,
-        currentFilterLocalId,
-        title,
-        disabled,
-        isValid,
-    } = props;
-
+export function ParentFiltersListItemWithoutConnectingAttributes({
+    item: { isSelected, localIdentifier },
+    onClick,
+    currentFilterLocalId,
+    title,
+    disabled,
+    isValid,
+}: IConfigurationParentItemProps) {
     const activeItemClasses = useMemo(() => {
         return cx(
             "gd-list-item attribute-filter-item s-attribute-filter-dropdown-configuration-item",
@@ -66,4 +62,4 @@ export const ParentFiltersListItemWithoutConnectingAttributes: React.FC<IConfigu
             </label>
         </div>
     );
-};
+}

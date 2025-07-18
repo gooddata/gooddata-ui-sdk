@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { renderModeAware } from "../../componentDefinition/index.js";
 import { useBackendWithInsightWidgetCorrelation } from "./useBackendWithInsightWidgetCorrelation.js";
 import { ViewModeDashboardInsight } from "./ViewModeDashboardInsight/index.js";
@@ -21,8 +20,8 @@ const DefaultDashboardInsightInner = renderModeAware({
  *
  * @public
  */
-export const DefaultDashboardInsight = (props: IDashboardInsightProps) => {
+export function DefaultDashboardInsight(props: IDashboardInsightProps) {
     const backend = useBackendWithInsightWidgetCorrelation(props);
 
     return <DefaultDashboardInsightInner {...props} backend={backend} />;
-};
+}

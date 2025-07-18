@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import { DynamicSelect } from "../../DateFilter/DynamicSelect/DynamicSelect.js";
 import { useIntl } from "react-intl";
 import { sanitizeCustomInput, sanitizeInput } from "./utils.js";

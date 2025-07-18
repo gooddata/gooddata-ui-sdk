@@ -13,7 +13,7 @@ import {
     IVisualizationSizeInfo,
     WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
-import React, { useRef } from "react";
+import { RefObject, useRef } from "react";
 import cx from "classnames";
 import {
     ExtendedDashboardWidget,
@@ -38,7 +38,7 @@ import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index
 import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
 import { getLayoutCoordinates } from "../../_staging/layout/coordinates.js";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
-import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
+import { useDashboardComponentsContext, WidgetIndexProvider } from "../dashboardContexts/index.js";
 import {
     BaseDraggableLayoutItemSize,
     DraggableLayoutItem,
@@ -51,7 +51,7 @@ import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./con
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
     IDashboardLayoutItemFacade,
-    IDashboardLayoutWidgetRenderer,
+    IDashboardLayoutWidgetRenderProps,
 } from "./DefaultDashboardLayoutRenderer/index.js";
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
 import { getRefsForSection, getRefsForItem } from "./refs.js";
@@ -91,13 +91,16 @@ function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget
 /**
  * @internal
  */
-export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
-    ExtendedDashboardWidget,
-    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
-> = (props) => {
-    const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions } =
-        props;
-
+export function DashboardLayoutWidget({
+    item,
+    screen,
+    DefaultWidgetRenderer,
+    onDrill,
+    onFiltersChange,
+    onError,
+    getLayoutDimensions,
+}: IDashboardLayoutWidgetRenderProps<ExtendedDashboardWidget> &
+    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">) {
     const dispatch = useDashboardDispatch();
     const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
@@ -191,7 +194,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             getLayoutDimensions={getLayoutDimensions}
         >
             <div
-                ref={dragRef}
+                ref={dragRef as unknown as RefObject<HTMLDivElement>}
                 className={cx([
                     "dashboard-widget-draggable-wrapper",
                     {
@@ -200,18 +203,18 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                     },
                 ])}
             >
-                <DashboardWidget
-                    // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-                    index={index}
-                    screen={screen}
-                    onDrill={onDrill}
-                    onError={onError}
-                    onFiltersChange={onFiltersChange}
-                    widget={widget as ExtendedDashboardWidget}
-                    ErrorComponent={ErrorComponent}
-                    LoadingComponent={LoadingComponent}
-                    exportData={exportData}
-                />
+                <WidgetIndexProvider index={index}>
+                    <DashboardWidget
+                        screen={screen}
+                        onDrill={onDrill}
+                        onError={onError}
+                        onFiltersChange={onFiltersChange}
+                        widget={widget as ExtendedDashboardWidget}
+                        ErrorComponent={ErrorComponent}
+                        LoadingComponent={LoadingComponent}
+                        exportData={exportData}
+                    />
+                </WidgetIndexProvider>
             </div>
 
             {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (
@@ -265,7 +268,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             />
         </DefaultWidgetRenderer>
     );
-};
+}
 
 function getFilledSize(
     itemSize: IDashboardLayoutSizeByScreenSize,

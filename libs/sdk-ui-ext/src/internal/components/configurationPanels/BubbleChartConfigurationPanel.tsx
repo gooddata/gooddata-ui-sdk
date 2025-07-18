@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -24,7 +24,7 @@ import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { messages } from "../../../locales.js";
 
 export default class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const { featureFlags, propertiesMeta, properties, pushData, type, insight } = this.props;
         const controls: IChartConfig = properties?.controls;
 

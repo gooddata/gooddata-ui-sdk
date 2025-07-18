@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";

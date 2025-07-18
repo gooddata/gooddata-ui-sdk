@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import compact from "lodash/compact.js";
 
 /**
@@ -19,12 +19,12 @@ function getEffectiveTitle(pageTitle: string, brandTitle: string): string {
 /**
  * @internal
  */
-const DocumentHeader: React.FC<IDocumentHeaderProps> = ({
+export default function DocumentHeader({
     pageTitle = "",
     brandTitle = "",
     appleTouchIconUrl = "",
     faviconUrl = "",
-}) => {
+}: IDocumentHeaderProps) {
     useEffect(() => {
         if (!document) return;
 
@@ -50,6 +50,4 @@ const DocumentHeader: React.FC<IDocumentHeaderProps> = ({
     }, [pageTitle, brandTitle, appleTouchIconUrl, faviconUrl]);
 
     return null;
-};
-
-export default DocumentHeader;
+}

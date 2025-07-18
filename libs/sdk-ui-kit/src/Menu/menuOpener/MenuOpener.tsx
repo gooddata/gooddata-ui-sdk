@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 
 import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "../MenuSharedTypes.js";
 
@@ -12,9 +12,9 @@ export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
     onOpenedChange: OnOpenedChange;
     openAction?: OpenAction;
     portalTarget?: Element | null;
-    toggler: React.ReactNode;
+    toggler: ReactNode;
     togglerWrapperClassName?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 const defaultProps: Pick<

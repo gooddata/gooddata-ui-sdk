@@ -1,12 +1,11 @@
-// (C) 2021 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const BurgerMenu: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function BurgerMenu({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={className}
@@ -21,4 +20,4 @@ export const BurgerMenu: React.FC<IIconProps> = ({ color, className, width, heig
             </g>
         </svg>
     );
-};
+}

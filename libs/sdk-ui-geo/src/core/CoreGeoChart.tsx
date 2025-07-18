@@ -1,5 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { withEntireDataView } from "@gooddata/sdk-ui";
 import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { WrappedComponentProps } from "react-intl";
@@ -19,8 +18,10 @@ const WrappedCoreGeoChart = compose(
 /**
  * @internal
  */
-export const CoreGeoChart: React.FC<ICoreGeoChartProps & WrappedComponentProps> = (props) => (
-    <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-        <WrappedCoreGeoChart {...props} />
-    </ThemeContextProvider>
-);
+export function CoreGeoChart(props: ICoreGeoChartProps & WrappedComponentProps) {
+    return (
+        <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+            <WrappedCoreGeoChart {...props} />
+        </ThemeContextProvider>
+    );
+}

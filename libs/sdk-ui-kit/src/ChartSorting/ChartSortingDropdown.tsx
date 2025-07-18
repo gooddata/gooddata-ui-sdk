@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useCallback } from "react";
 import { IntlShape } from "react-intl";
 import { ISortItem } from "@gooddata/sdk-model";
 
@@ -18,14 +18,14 @@ interface ChartSortingProps {
 const getAttributeName = (bucketItemNames: IBucketItemDescriptors, available: IAvailableSortsGroup) =>
     bucketItemNames[available.itemId.localIdentifier].name;
 
-export const ChartSortingDropdown: React.FC<ChartSortingProps> = ({
+export function ChartSortingDropdown({
     currentSort,
     availableSorts,
     bucketItems,
     intl,
     onSelect,
     enableRenamingMeasureToMetric,
-}) => {
+}: ChartSortingProps) {
     const onSortChanged = useCallback(
         (newSort: ISortItem, index: number) => {
             const newSortItems = [...currentSort];
@@ -71,4 +71,4 @@ export const ChartSortingDropdown: React.FC<ChartSortingProps> = ({
             })}
         </div>
     );
-};
+}

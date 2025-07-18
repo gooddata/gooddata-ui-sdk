@@ -1,6 +1,5 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
-import React from "react";
 import * as Catalog from "../catalog.js";
 import Hint from "../Hint.js";
 

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { KeyboardEvent, useCallback, useMemo } from "react";
 import { Input } from "../../../Form/index.js";
 import { Typography } from "../../../Typography/index.js";
 import { compressForUrl } from "@gooddata/sdk-ui";
@@ -11,13 +11,13 @@ import { SHARE_LINK_HEADLINE_ID, SHARE_LINK_HELPER_TEXT_ID } from "./utils.js";
 /**
  * @internal
  */
-export const ShareLink: React.FC<IShareLinkProps> = ({
+export function ShareLink({
     dashboardFilters,
     headline,
     helperText,
     buttonLabel,
     onShareLinkCopy,
-}) => {
+}: IShareLinkProps) {
     const shareLink = useMemo(() => {
         const filters = { filters: compressForUrl(dashboardFilters ?? []) };
         const url = window.location.origin;
@@ -33,7 +33,7 @@ export const ShareLink: React.FC<IShareLinkProps> = ({
     }, [shareLink, onShareLinkCopy]);
 
     const onKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (isCopyKey(e)) {
                 onShareLinkCopy?.(shareLink);
             }
@@ -66,4 +66,4 @@ export const ShareLink: React.FC<IShareLinkProps> = ({
             </div>
         </>
     );
-};
+}

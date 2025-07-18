@@ -1,7 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ISemanticSearchResultItem, ITheme } from "@gooddata/sdk-model";
-import React from "react";
+import { Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, EllipsisText, Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { ListItem } from "../types.js";
@@ -25,10 +25,10 @@ const ARROW_STYLE = { display: "none" };
 const renderTags = (item: ISemanticSearchResultItem) => {
     if (item.tags?.some((tag) => tag !== item.title)) {
         return (
-            <React.Fragment>
+            <Fragment>
                 <FormattedMessage tagName="h4" id="semantic-search.tags" />
                 <Typography tagName="p">{item.tags.join(", ")}</Typography>
-            </React.Fragment>
+            </Fragment>
         );
     }
 

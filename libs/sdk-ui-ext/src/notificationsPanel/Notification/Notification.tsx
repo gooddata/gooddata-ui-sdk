@@ -19,7 +19,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import compact from "lodash/compact.js";
-import React, { useCallback } from "react";
+import { Fragment, KeyboardEvent, useCallback } from "react";
 import { defineMessages, FormattedDate, FormattedMessage, FormattedTime, useIntl } from "react-intl";
 import { bem } from "../bem.js";
 import { Popup } from "../components/Popup.js";
@@ -113,7 +113,7 @@ export function Notification({
         exports,
     ]);
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         if (isActionKey(event)) {
             event.preventDefault();
             handleNotificationClick();
@@ -121,7 +121,7 @@ export function Notification({
     };
 
     return (
-        <BubbleHoverTrigger enabled={hasExports && !isExpired && !isError}>
+        <BubbleHoverTrigger enabled={hasExports && !isExpired ? !isError : null}>
             <div
                 className={b({ isRead: notification.isRead })}
                 onClick={handleNotificationClick}
@@ -186,10 +186,10 @@ export function Notification({
                     ) : actions.length ? (
                         <div className={e("links")}>
                             {actions.map((action, index) => (
-                                <React.Fragment key={index}>
+                                <Fragment key={index}>
                                     {!!index && "・"}
                                     {action}
-                                </React.Fragment>
+                                </Fragment>
                             ))}
                         </div>
                     ) : null}
@@ -286,7 +286,7 @@ function getNotificationErrorInfo(
     return { isError: false, errorTitle: undefined, errorMessage: undefined, traceId: undefined };
 }
 
-const NotificationTime = ({ config }: { config: IDateConfig }) => {
+function NotificationTime({ config }: { config: IDateConfig }) {
     if (config.isToday) {
         return <FormattedTime value={config.date} format="hhmm" hour12={false} />;
     } else if (config.isYesterday) {
@@ -298,9 +298,9 @@ const NotificationTime = ({ config }: { config: IDateConfig }) => {
     }
 
     return <FormattedDate value={config.date} format="shortWithYear" />;
-};
+}
 
-const FileLink = ({ notification }: { notification: IAlertNotification | IScheduleNotification }) => {
+function FileLink({ notification }: { notification: IAlertNotification | IScheduleNotification }) {
     return (
         <BubbleHoverTrigger eventsOnBubble={true}>
             <a
@@ -320,9 +320,9 @@ const FileLink = ({ notification }: { notification: IAlertNotification | ISchedu
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
-const FileExpiration = ({ fileExpiresAt, isExpired }: { fileExpiresAt: string; isExpired: boolean }) => {
+function FileExpiration({ fileExpiresAt, isExpired }: { fileExpiresAt: string; isExpired: boolean }) {
     if (isExpired) {
         return (
             <span>
@@ -351,7 +351,7 @@ const FileExpiration = ({ fileExpiresAt, isExpired }: { fileExpiresAt: string; i
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
 const messages = defineMessages({
     markAsRead: {

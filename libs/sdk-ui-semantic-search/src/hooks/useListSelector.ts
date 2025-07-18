@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import { useCallback, useEffect, useState } from "react";
 
 /**
  * This hook provides keyboard navigation for a list of items. It listens to ArrowUp, ArrowDown and Enter keys and
@@ -11,14 +11,14 @@ export const useListSelector = <T>(
     items: Array<T>,
     onSelect: (item: T, e: MouseEvent | KeyboardEvent) => void,
 ) => {
-    const [selected, setSelected] = React.useState<number>(0);
-    const [direction, setDirection] = React.useState<-1 | 1 | 0>(0);
+    const [selected, setSelected] = useState<number>(0);
+    const [direction, setDirection] = useState<-1 | 1 | 0>(0);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setSelected(0);
         setDirection(0);
     }, [items]);
-    const setSelectedItem = React.useCallback(
+    const setSelectedItem = useCallback(
         (item: T) => {
             setDirection(0);
             setSelected(Math.max(Math.min(items.indexOf(item), items.length - 1), 0));
@@ -26,7 +26,7 @@ export const useListSelector = <T>(
         [items],
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         const listener = (event: KeyboardEvent) => {
             if (["ArrowDown", "ArrowUp", "Enter"].indexOf(event.key) === -1) return;
 

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { createContext, ReactNode, useState, useEffect, useContext } from "react";
 import isEqual from "react-fast-compare";
 
 type Subscriber<T> = (state: T, prevState: T) => void;
@@ -41,7 +41,7 @@ function createStore<T>(initialState: T): Store<T> {
 /**
  * @internal
  */
-export type IContextStoreProvider<T> = React.FC<{ value: T; children: React.ReactNode }>;
+export type IContextStoreProvider<T> = (props: { value: T; children: ReactNode }) => ReactNode;
 /**
  * @internal
  */
@@ -74,29 +74,29 @@ export type IContextStore<T> = IContextStoreProvider<T> & {
  * @internal
  */
 export const createContextStore = <T,>(name: string): IContextStore<T> => {
-    const Context = React.createContext<Store<T> | null>(null);
+    const Context = createContext<Store<T> | null>(null);
 
-    const Provider = ({ value, children }: { value: T; children: React.ReactNode }) => {
-        const [store] = React.useState(() => createStore<T>(value));
+    function Provider({ value, children }: { value: T; children: ReactNode }) {
+        const [store] = useState(() => createStore<T>(value));
 
-        React.useEffect(() => {
+        useEffect(() => {
             store.setState(() => value);
         }, [store, value]);
 
         return <Context.Provider value={store}>{children}</Context.Provider>;
-    };
+    }
 
     const useContextStoreOptional = <SelectorResult,>(
         selector: (state: T) => SelectorResult = (state) => state as unknown as SelectorResult,
         equalityFn: (a: SelectorResult, b: SelectorResult) => boolean = isEqual,
     ) => {
-        const store = React.useContext(Context);
+        const store = useContext(Context);
 
-        const [selectedState, setSelectedState] = React.useState<SelectorResult | undefined>(() =>
+        const [selectedState, setSelectedState] = useState<SelectorResult | undefined>(() =>
             store ? selector(store.getState()) : undefined,
         );
 
-        React.useEffect(() => {
+        useEffect(() => {
             if (!store) {
                 return undefined;
             }
@@ -118,7 +118,7 @@ export const createContextStore = <T,>(name: string): IContextStore<T> => {
         selector: (state: T) => SelectorResult = (state) => state as unknown as SelectorResult,
         equalityFn: (a: SelectorResult, b: SelectorResult) => boolean = isEqual,
     ) => {
-        const store = React.useContext(Context);
+        const store = useContext(Context);
         if (store === null) {
             throw new Error(`Context store '${name}' must be used within a Provider`);
         }

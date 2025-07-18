@@ -1,12 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
-const TypographyExamples: React.FC = () => {
+function TypographyExamples() {
     return (
         <div className="screenshot-target">
             <Typography tagName="h1">Heading level 1</Typography>
@@ -33,7 +32,7 @@ const TypographyExamples: React.FC = () => {
             <hr />
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/Typography",

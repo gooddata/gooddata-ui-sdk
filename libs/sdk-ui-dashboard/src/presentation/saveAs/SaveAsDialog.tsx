@@ -1,13 +1,13 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactElement } from "react";
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import { ISaveAsDialogProps } from "./types.js";
 
 /**
  * @internal
  */
-export const SaveAsDialog = (props: ISaveAsDialogProps): JSX.Element => {
+export function SaveAsDialog(props: ISaveAsDialogProps): ReactElement {
     const { SaveAsDialogComponent } = useDashboardComponentsContext();
 
     return <SaveAsDialogComponent {...props} />;
-};
+}

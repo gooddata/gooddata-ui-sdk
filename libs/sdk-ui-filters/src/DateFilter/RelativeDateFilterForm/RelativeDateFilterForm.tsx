@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { forwardRef } from "react";
+import { forwardRef, KeyboardEvent } from "react";
 import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces/index.js";
 import { GranularityTabs } from "./GranularityTabs.js";
 import { RelativeRangePicker } from "../RelativeRangePicker/RelativeRangePicker.js";
@@ -16,7 +16,7 @@ export interface IRelativeDateFilterFormProps {
     selectedFilterOption: IUiRelativeDateFilterForm;
     onSelectedFilterOptionChange: (dateFilterOption: DateFilterOption) => void;
     isMobile: boolean;
-    onKeyDown?: (event: React.KeyboardEvent) => void;
+    onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 /**

@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -24,7 +24,7 @@ interface IColorResetButtonProps {
     pushData: PushDataCallback;
 }
 
-const ColorResetButton: React.FC<IColorResetButtonProps> = ({ disabled, properties, pushData }) => {
+export default function ColorResetButton({ disabled, properties, pushData }: IColorResetButtonProps) {
     const { formatMessage } = useIntl();
 
     const label = formatMessage(messages.resetColors);
@@ -49,6 +49,4 @@ const ColorResetButton: React.FC<IColorResetButtonProps> = ({ disabled, properti
             <Button value={label} className="gd-button-link" onClick={resetColors} disabled={disabled} />
         </div>
     );
-};
-
-export default ColorResetButton;
+}

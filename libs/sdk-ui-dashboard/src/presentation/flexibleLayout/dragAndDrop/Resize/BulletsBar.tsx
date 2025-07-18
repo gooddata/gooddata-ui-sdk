@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/config.js";
 import { useResizeWidthStatus } from "../../../dragAndDrop/index.js";
@@ -9,7 +8,7 @@ import cx from "classnames";
 
 const { b, e } = bemFactory("gd-grid-layout-ruler");
 
-export const BulletsBar: React.FC = () => {
+export function BulletsBar() {
     const widthResizingStatus = useResizeWidthStatus();
 
     const isActive = widthResizingStatus.isResizingWidth && !widthResizingStatus.isItemNested;
@@ -48,16 +47,20 @@ export const BulletsBar: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
-export const Bullet: React.FC<{ index: number; isActive: boolean; isInitial: boolean }> = ({
+export function Bullet({
     index,
     isActive,
     isInitial,
-}) => {
+}: {
+    index: number;
+    isActive: boolean;
+    isInitial: boolean;
+}) {
     return (
         <div
             className={cx(`s-resize-bullet-${index}`, e("bullet", { active: isActive, initial: isInitial }))}
         />
     );
-};
+}

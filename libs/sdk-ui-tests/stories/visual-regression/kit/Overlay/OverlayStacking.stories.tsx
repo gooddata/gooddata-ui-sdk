@@ -2,7 +2,7 @@
 import { Overlay, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, IntlProvider } from "react-intl";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import "../styles/goodstrap.scss";
 
@@ -54,7 +54,7 @@ function OverlayStackingExample() {
     );
 }
 
-const OverlayStackingExamples: React.FC = () => {
+function OverlayStackingExamples() {
     return (
         <IntlProvider
             locale="en"
@@ -68,7 +68,7 @@ const OverlayStackingExamples: React.FC = () => {
             </div>
         </IntlProvider>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/Overlay Stacking",

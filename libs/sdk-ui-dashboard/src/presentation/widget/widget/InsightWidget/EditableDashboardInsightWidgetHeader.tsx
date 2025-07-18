@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { useCallback } from "react";
 import { IInsight, IInsightWidget, insightTitle } from "@gooddata/sdk-model";
 
 import { DashboardItemHeadlineContainer } from "../../../presentationComponents/index.js";
@@ -14,11 +14,11 @@ interface IEditableDashboardInsightWidgetHeaderProps {
     insight?: IInsight;
 }
 
-export const EditableDashboardInsightWidgetHeader: React.FC<IEditableDashboardInsightWidgetHeaderProps> = ({
+export function EditableDashboardInsightWidgetHeader({
     widget,
     insight,
     clientHeight,
-}) => {
+}: IEditableDashboardInsightWidgetHeaderProps) {
     const dispatch = useDashboardDispatch();
 
     const onWidgetTitleChanged = useCallback(
@@ -44,4 +44,4 @@ export const EditableDashboardInsightWidgetHeader: React.FC<IEditableDashboardIn
             />
         </DashboardItemHeadlineContainer>
     );
-};
+}

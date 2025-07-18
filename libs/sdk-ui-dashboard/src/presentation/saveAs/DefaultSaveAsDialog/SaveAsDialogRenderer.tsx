@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, memo } from "react";
+import { useState, memo } from "react";
 import { useIntl } from "react-intl";
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact.js";
@@ -122,8 +122,10 @@ export const SaveAsDialogRendererIntl = memo(function SaveAsDialogRendererIntl({
     );
 });
 
-export const SaveAsDialogRenderer: React.FC<ISaveAsDialogRendererOwnProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <SaveAsDialogRendererIntl {...props} />
-    </IntlWrapper>
-);
+export function SaveAsDialogRenderer({ locale, ...rest }: ISaveAsDialogRendererOwnProps) {
+    return (
+        <IntlWrapper locale={locale}>
+            <SaveAsDialogRendererIntl {...rest} />
+        </IntlWrapper>
+    );
+}

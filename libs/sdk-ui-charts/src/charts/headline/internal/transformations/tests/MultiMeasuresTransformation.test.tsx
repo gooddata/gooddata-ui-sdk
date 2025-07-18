@@ -1,9 +1,8 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { afterEach, describe, vi, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 
-import { ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
+import { ExplicitDrill } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import MultiMeasuresTransformation from "../MultiMeasuresTransformation.js";
@@ -16,8 +15,7 @@ import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../../tests/TestData.fixtures
 
 describe("MultiMeasuresTransformation", () => {
     const renderTransformation = (props: IHeadlineTransformationProps) => {
-        const WrappedHeadlineTransformation = withIntl(MultiMeasuresTransformation);
-        return render(<WrappedHeadlineTransformation {...props} />);
+        return render(<MultiMeasuresTransformation {...props} />);
     };
 
     afterEach(() => {

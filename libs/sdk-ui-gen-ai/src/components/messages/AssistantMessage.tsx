@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";

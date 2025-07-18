@@ -1,6 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 import { Tabs } from "@gooddata/sdk-ui-kit";
-import React from "react";
 import { IntlProvider } from "react-intl";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -9,7 +8,7 @@ import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
 const tabs = [{ id: "01" }, { id: "02" }, { id: "03" }];
 
-const TabsTest: React.FC = () => {
+function TabsTest() {
     return (
         <IntlProvider
             locale="en-US"
@@ -24,7 +23,7 @@ const TabsTest: React.FC = () => {
             </div>
         </IntlProvider>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/Tabs",

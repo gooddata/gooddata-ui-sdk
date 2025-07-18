@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState, useEffect } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -23,7 +23,7 @@ export interface IConfigSectionOwnProps {
     showDisabledMessage?: boolean;
     className?: string;
     pushData?(data: any): void;
-    children?: React.ReactNode;
+    children?: ReactNode;
     toggleMessageId?: string;
 }
 

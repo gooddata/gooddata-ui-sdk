@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { act, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";

@@ -1,11 +1,9 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import { memo } from "react";
 import { typedUiMenuContextStore } from "../context.js";
 import { IUiMenuItemProps, IUiMenuItemData } from "../types.js";
 
-export const Item = React.memo(function Item<T extends IUiMenuItemData = object>({
-    item,
-}: IUiMenuItemProps<T>) {
+export const Item = memo(function Item<T extends IUiMenuItemData = object>({ item }: IUiMenuItemProps<T>) {
     const { InteractiveItemWrapper, StaticItem, GroupItem, ContentItemWrapper } =
         typedUiMenuContextStore<T>().useContextStore((ctx) => ({
             InteractiveItemWrapper: ctx.InteractiveItemWrapper,

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { ReactNode, MouseEvent } from "react";
 import cx from "classnames";
 
 /**
@@ -12,9 +12,9 @@ export type TypographyTagName = "h1" | "h2" | "h3" | "p";
  */
 export interface ITypographyProps {
     tagName: TypographyTagName;
-    children: React.ReactNode;
+    children: ReactNode;
     className?: string;
-    onClick?: (e: React.MouseEvent) => void;
+    onClick?: (e: MouseEvent) => void;
     title?: string;
     id?: string;
 }
@@ -22,9 +22,7 @@ export interface ITypographyProps {
 /**
  * @internal
  */
-export const Typography: React.FC<ITypographyProps> = (props) => {
-    const { tagName: Tag, children, className, title, id, onClick } = props;
-
+export function Typography({ tagName: Tag, children, className, title, id, onClick }: ITypographyProps) {
     return (
         <Tag
             className={cx("gd-typography", `gd-typography--${Tag}`, className)}
@@ -35,4 +33,4 @@ export const Typography: React.FC<ITypographyProps> = (props) => {
             {children}
         </Tag>
     );
-};
+}

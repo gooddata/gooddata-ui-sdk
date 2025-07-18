@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useRef, useState, useCallback } from "react";
+import { FocusEvent, useRef, useState, useCallback } from "react";
 import { Textarea } from "../Textarea.js";
 import { useIntl } from "react-intl";
 import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
@@ -16,7 +16,7 @@ interface IMessageFormProps {
     onChange: (value: string, isValid: boolean) => void;
 }
 
-export const MessageForm: React.FC<IMessageFormProps> = ({ value, onChange }) => {
+export function MessageForm({ value, onChange }: IMessageFormProps) {
     const intl = useIntl();
     const textareaRef = useRef<Textarea | null>(null);
     const [messageError, setMessageError] = useState<string | null>(null);
@@ -29,7 +29,7 @@ export const MessageForm: React.FC<IMessageFormProps> = ({ value, onChange }) =>
         { value: MAX_MESSAGE_LENGTH },
     );
 
-    const handleFocus = useCallback((event: React.FocusEvent<HTMLTextAreaElement>) => {
+    const handleFocus = useCallback((event: FocusEvent<HTMLTextAreaElement>) => {
         event.target.select(); // Selects all text on focus
     }, []);
 
@@ -97,4 +97,4 @@ export const MessageForm: React.FC<IMessageFormProps> = ({ value, onChange }) =>
             />
         </ErrorWrapper>
     );
-};
+}

@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
@@ -38,7 +37,7 @@ interface ICreateAlertProps {
     isExecutionTimestampMode?: boolean;
 }
 
-export const CreateAlert: React.FC<ICreateAlertProps> = ({
+export function CreateAlert({
     canManageAttributes,
     canManageComparison,
     execResult,
@@ -58,7 +57,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
     catalogDateDatasets,
     separators,
     isExecutionTimestampMode,
-}) => {
+}: ICreateAlertProps) {
     return (
         <EditAlert
             canManageAttributes={canManageAttributes}
@@ -83,4 +82,4 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
             isExecutionTimestampMode={isExecutionTimestampMode}
         />
     );
-};
+}

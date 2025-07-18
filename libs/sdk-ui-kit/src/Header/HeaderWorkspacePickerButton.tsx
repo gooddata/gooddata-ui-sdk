@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { MouseEvent, MutableRefObject } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { Button } from "../Button/index.js";
@@ -7,18 +7,18 @@ import { Button } from "../Button/index.js";
 interface IHeaderWorkspacePickerButtonProps {
     title: string;
     dropdownId: string;
-    onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick: (e: MouseEvent<HTMLDivElement>) => void;
     isOpen?: boolean;
-    buttonRef?: React.MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement>;
 }
 
-export const HeaderWorkspacePickerButton: React.FC<IHeaderWorkspacePickerButtonProps> = ({
+export function HeaderWorkspacePickerButton({
     title,
     onClick,
     isOpen,
     dropdownId,
     buttonRef,
-}) => {
+}: IHeaderWorkspacePickerButtonProps) {
     const classNames = cx({
         "gd-header-project": true,
         [`s-${stringUtils.simplifyText(title)}`]: true,
@@ -40,4 +40,4 @@ export const HeaderWorkspacePickerButton: React.FC<IHeaderWorkspacePickerButtonP
             <div className={classNames}>{title}</div>
         </Button>
     );
-};
+}

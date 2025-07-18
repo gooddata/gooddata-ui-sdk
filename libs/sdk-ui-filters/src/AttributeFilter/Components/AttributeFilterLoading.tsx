@@ -1,5 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { AttributeFilterDropdownButton } from "./DropdownButton/AttributeFilterDropdownButton.js";
 
 /**
@@ -30,6 +29,6 @@ export interface IAttributeFilterLoadingProps {
  *
  * @beta
  */
-export const AttributeFilterLoading: React.FC<IAttributeFilterLoadingProps> = ({ onClick }) => (
-    <AttributeFilterDropdownButton isLoading onClick={onClick} />
-);
+export function AttributeFilterLoading({ onClick }: IAttributeFilterLoadingProps) {
+    return <AttributeFilterDropdownButton isLoading onClick={onClick} />;
+}

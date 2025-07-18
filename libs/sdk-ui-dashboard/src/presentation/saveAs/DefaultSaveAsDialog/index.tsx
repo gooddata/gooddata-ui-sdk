@@ -1,5 +1,5 @@
-// (C) 2019-2023 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ReactElement, useCallback } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ISaveAsDialogProps } from "../types.js";
 import { useSaveAs } from "./useSaveAs.js";
@@ -48,7 +48,7 @@ export function useSaveAsDialogProps(): ISaveAsDialogProps {
 /**
  * @alpha
  */
-export const DefaultSaveAsDialog = (props: ISaveAsDialogProps): JSX.Element | null => {
+export function DefaultSaveAsDialog(props: ISaveAsDialogProps): ReactElement | null {
     const { onSubmit, onCancel, onError, isVisible, onSuccess } = props;
 
     const {
@@ -79,4 +79,4 @@ export const DefaultSaveAsDialog = (props: ISaveAsDialogProps): JSX.Element | nu
             onCancel={onCancel}
         />
     );
-};
+}

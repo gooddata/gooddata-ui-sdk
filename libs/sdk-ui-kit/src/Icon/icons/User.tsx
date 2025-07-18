@@ -1,5 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
@@ -10,13 +9,13 @@ export interface IUserIconProps extends IIconProps {
 /**
  * @internal
  */
-export const User: React.FC<IUserIconProps> = ({
+export function User({
     color = "#94A1AD",
     backgroundColor = "#EBEFF4",
     className,
     width,
     height,
-}) => {
+}: IUserIconProps) {
     return (
         <svg
             className={className}
@@ -33,4 +32,4 @@ export const User: React.FC<IUserIconProps> = ({
             />
         </svg>
     );
-};
+}

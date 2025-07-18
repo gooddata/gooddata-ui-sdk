@@ -1,5 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { IAttribute, IAttributeOrMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
@@ -99,7 +98,7 @@ const WrappedSankeyChart = withChart(sankeyChartDefinition)(CoreSankeyChart);
  *
  * @public
  */
-export const SankeyChart = (props: ISankeyChartProps) => {
+export function SankeyChart(props: ISankeyChartProps) {
     const [measure, attributeFrom, attributeTo, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measure, props.attributeFrom, props.attributeTo, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -117,4 +116,4 @@ export const SankeyChart = (props: ISankeyChartProps) => {
             }}
         />
     );
-};
+}

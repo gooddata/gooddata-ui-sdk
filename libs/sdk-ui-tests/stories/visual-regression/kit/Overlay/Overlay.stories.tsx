@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { FormattedMessage, IntlProvider, useIntl } from "react-intl";
 import { MediaQuery } from "react-responsive";
 

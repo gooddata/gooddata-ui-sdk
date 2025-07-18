@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
@@ -19,7 +19,7 @@ interface AttributeFilterDropdownButtonExamplesProps {
 
 const AttributeIcon = <Icon.Attribute />;
 
-const TooltipContentComponent: React.FC = () => {
+function TooltipContentComponent() {
     return (
         <div className="gd-attribute-filter-tooltip-content s-attribute-filter-tooltip-content">
             <h3 className="s-attribute-filter-tooltip-header">{attributeTitle}</h3>
@@ -29,7 +29,7 @@ const TooltipContentComponent: React.FC = () => {
             <p className="s-attribute-filter-tooltip-item-dataset">{attributeTitle}</p>
         </div>
     );
-};
+}
 
 const titleExtension = (
     <div>
@@ -51,9 +51,7 @@ const titleExtension = (
     </div>
 );
 
-const AttributeFilterDropdownButtonExamples: React.FC<AttributeFilterDropdownButtonExamplesProps> = (
-    props,
-): JSX.Element => {
+function AttributeFilterDropdownButtonExamples(props: AttributeFilterDropdownButtonExamplesProps) {
     const { isDraggable, icon } = props;
 
     return (
@@ -188,7 +186,7 @@ const AttributeFilterDropdownButtonExamples: React.FC<AttributeFilterDropdownBut
             </div>
         </IntlWrapper>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterDropdownButton",

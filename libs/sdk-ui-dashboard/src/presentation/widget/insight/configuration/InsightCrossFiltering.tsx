@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { IInsightWidget } from "@gooddata/sdk-model";
@@ -23,7 +22,7 @@ interface IInsightCrossFiltering {
     widget: IInsightWidget;
 }
 
-export const InsightCrossFiltering: React.FC<IInsightCrossFiltering> = ({ widget }) => {
+export function InsightCrossFiltering({ widget }: IInsightCrossFiltering) {
     const dispatch = useDashboardDispatch();
     const theme = useTheme();
     const isIgnoreCrossFilteringEnabled = useDashboardSelector(selectEnableIgnoreCrossFiltering);
@@ -64,4 +63,4 @@ export const InsightCrossFiltering: React.FC<IInsightCrossFiltering> = ({ widget
             </label>
         </div>
     );
-};
+}

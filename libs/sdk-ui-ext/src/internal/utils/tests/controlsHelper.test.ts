@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { maxInputValidateAndPushData, minInputValidateAndPushData } from "../controlsHelper.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
@@ -22,11 +22,15 @@ describe("controlsHelper", () => {
             let setState: any;
             let pushData: any;
             let props: any;
+            let intl: any;
             let state: any;
 
             beforeEach(() => {
                 pushData = vi.fn();
                 setState = vi.fn();
+                intl = {
+                    formatMessage: vi.fn(),
+                };
                 props = {
                     properties: { controls: { yAxis: {} } },
                     pushData,
@@ -38,7 +42,7 @@ describe("controlsHelper", () => {
 
             it("should report error if value is minus", () => {
                 const data = prepareData("-", "max");
-                maxInputValidateAndPushData(data, state, props, setState, defaultState);
+                maxInputValidateAndPushData(data, state, props, intl, setState, defaultState);
 
                 expect(setState).toHaveBeenCalledWith({
                     maxScale: {
@@ -60,7 +64,7 @@ describe("controlsHelper", () => {
                 };
 
                 const data = prepareData("20", "max");
-                maxInputValidateAndPushData(data, state, props, setState, defaultState);
+                maxInputValidateAndPushData(data, state, props, intl, setState, defaultState);
 
                 expect(setState).toHaveBeenCalledWith({
                     maxScale: {
@@ -77,7 +81,7 @@ describe("controlsHelper", () => {
 
             it("should pushData with properties when value is valid", () => {
                 const data = prepareData("5", "max");
-                maxInputValidateAndPushData(data, state, props, setState, defaultState);
+                maxInputValidateAndPushData(data, state, props, intl, setState, defaultState);
 
                 expect(pushData).toHaveBeenCalledWith({
                     properties: { controls: { yAxis: { max: "5" } } },
@@ -92,7 +96,7 @@ describe("controlsHelper", () => {
                 };
 
                 const data = prepareData("50", "max");
-                maxInputValidateAndPushData(data, state, props, setState, defaultState);
+                maxInputValidateAndPushData(data, state, props, intl, setState, defaultState);
 
                 expect(pushData).toHaveBeenCalledWith({
                     properties: { controls: { yAxis: { min: "40", max: "50" } } },
@@ -104,11 +108,15 @@ describe("controlsHelper", () => {
             let setState: any;
             let pushData: any;
             let props: any;
+            let intl: any;
             let state: any;
 
             beforeEach(() => {
                 pushData = vi.fn();
                 setState = vi.fn();
+                intl = {
+                    formatMessage: vi.fn(),
+                };
                 props = {
                     properties: { controls: { yAxis: {} } },
                     pushData,
@@ -120,7 +128,7 @@ describe("controlsHelper", () => {
 
             it("should report error if value is minus", () => {
                 const data = prepareData("-", "min");
-                minInputValidateAndPushData(data, state, props, setState, defaultState);
+                minInputValidateAndPushData(data, state, props, intl, setState, defaultState);
 
                 expect(setState).toHaveBeenCalledWith({
                     minScale: {
@@ -142,7 +150,7 @@ describe("controlsHelper", () => {
                 };
 
                 const data = prepareData("40", "min");
-                minInputValidateAndPushData(data, state, props, setState, defaultState);
+                minInputValidateAndPushData(data, state, props, intl, setState, defaultState);
 
                 expect(setState).toHaveBeenCalledWith({
                     minScale: {
@@ -159,7 +167,7 @@ describe("controlsHelper", () => {
 
             it("should pushData with properties when value is valid", () => {
                 const data = prepareData("5", "min");
-                minInputValidateAndPushData(data, state, props, setState, defaultState);
+                minInputValidateAndPushData(data, state, props, intl, setState, defaultState);
 
                 expect(pushData).toHaveBeenCalledWith({
                     properties: { controls: { yAxis: { min: "5" } } },
@@ -174,7 +182,7 @@ describe("controlsHelper", () => {
                 };
 
                 const data = prepareData("40", "min");
-                minInputValidateAndPushData(data, state, props, setState, defaultState);
+                minInputValidateAndPushData(data, state, props, intl, setState, defaultState);
 
                 expect(pushData).toHaveBeenCalledWith({
                     properties: { controls: { yAxis: { min: "40", max: "50" } } },

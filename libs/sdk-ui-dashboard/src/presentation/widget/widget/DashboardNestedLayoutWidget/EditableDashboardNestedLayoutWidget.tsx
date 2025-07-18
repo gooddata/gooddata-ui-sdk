@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { Icon } from "@gooddata/sdk-ui-kit";
@@ -25,13 +24,13 @@ import { Toolbar } from "./Toolbar.js";
 /**
  * @internal
  */
-export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps> = ({
+export function EditableDashboardNestedLayoutWidget({
     widget,
     layout,
-    parentLayoutItemSize,
     parentLayoutPath,
+    parentLayoutItemSize,
     dashboardItemClasses,
-}) => {
+}: IDashboardLayoutProps) {
     const screen = useScreenSize();
     const dispatch = useDashboardDispatch();
 
@@ -120,4 +119,4 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
             </DashboardItem>
         </>
     );
-};
+}

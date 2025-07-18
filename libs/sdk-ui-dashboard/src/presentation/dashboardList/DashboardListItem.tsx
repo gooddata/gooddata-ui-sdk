@@ -1,6 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import React from "react";
 import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { IntlShape, useIntl } from "react-intl";
 import cx from "classnames";
@@ -30,9 +29,12 @@ export const getTooltip = (intl: IntlShape, accessibilityLimitation?: DashboardA
     }
 };
 
-const DropdownItem: React.FC<DashboardsListItemProps> = (props) => {
-    const { onClick, accessibilityLimitation, title, isSelected = false } = props;
-
+function DropdownItem({
+    onClick,
+    accessibilityLimitation,
+    title,
+    isSelected = false,
+}: DashboardsListItemProps) {
     const icon = accessibilityLimitation === undefined ? undefined : "gd-icon-circle-exclamation";
     const generatedTestClass = `s-dashboard-item s-${stringUtils.simplifyText(title)}`;
     const classNames = cx("gd-list-item gd-drill-dashboard-item", generatedTestClass, {
@@ -45,9 +47,9 @@ const DropdownItem: React.FC<DashboardsListItemProps> = (props) => {
             <span>{title}</span>
         </div>
     );
-};
+}
 
-export const DashboardListItem: React.FC<DashboardsListItemProps> = (props) => {
+export function DashboardListItem(props: DashboardsListItemProps) {
     const { accessibilityLimitation } = props;
     const intl = useIntl();
 
@@ -65,4 +67,4 @@ export const DashboardListItem: React.FC<DashboardsListItemProps> = (props) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

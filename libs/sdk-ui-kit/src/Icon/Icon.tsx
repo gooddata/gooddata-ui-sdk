@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType } from "react";
 
 import { IIconProps } from "./typings.js";
 import { Book } from "./icons/Book.js";
@@ -115,7 +115,7 @@ import { Edit } from "./icons/Edit.js";
 /**
  * @internal
  */
-export const Icon: Record<string, React.FC<IIconProps>> = {
+export const Icon: Record<string, ComponentType<IIconProps>> = {
     Book,
     Refresh,
     Reset,

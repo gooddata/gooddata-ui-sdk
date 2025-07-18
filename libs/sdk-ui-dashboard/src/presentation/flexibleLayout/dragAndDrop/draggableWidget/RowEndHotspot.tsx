@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { IDashboardWidget } from "@gooddata/sdk-model";
 import cx from "classnames";
-import React, { useMemo } from "react";
+import { CSSProperties, useMemo } from "react";
 
 import {
     isCustomWidget,
@@ -70,7 +70,7 @@ export type RowEndHotspotProps<TWidget = IDashboardWidget> = {
     rowIndex: number;
 };
 
-export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<ExtendedDashboardWidget | unknown>) => {
+export function RowEndHotspot({ item, rowIndex }: RowEndHotspotProps<ExtendedDashboardWidget | unknown>) {
     const isDraggingWidget = useIsDraggingWidget();
     const { enableRowEndHotspot, gridWidth, gridHeight, hideDropzoneText } = useShouldShowRowEndHotspot(
         item,
@@ -97,7 +97,7 @@ export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<ExtendedDas
         ); // increment item index manually as end hotspot is rendered as prev type
     }, [item]);
 
-    const style: React.CSSProperties = useMemo(() => {
+    const style: CSSProperties = useMemo(() => {
         const computedHeight = getDashboardLayoutItemHeight(layoutItemSize.xl);
         return computedHeight === undefined ? {} : { height: computedHeight };
     }, [layoutItemSize]);
@@ -142,4 +142,4 @@ export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<ExtendedDas
             </GridLayoutElement>
         </>
     );
-};
+}

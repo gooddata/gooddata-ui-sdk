@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+
 import { MessageDescriptor, useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
@@ -26,7 +26,7 @@ interface IColorItemProps {
     pushData: PushDataCallback;
 }
 
-const ColorItem: React.FC<IColorItemProps> = ({
+export default function ColorItem({
     disabled,
     showDisabledMessage,
     color,
@@ -36,7 +36,7 @@ const ColorItem: React.FC<IColorItemProps> = ({
     valuePath,
     properties,
     pushData,
-}) => {
+}: IColorItemProps) {
     const { formatMessage } = useIntl();
 
     const label = formatMessage(labelDescriptor);
@@ -62,6 +62,4 @@ const ColorItem: React.FC<IColorItemProps> = ({
             </ColorDropdown>
         </DisabledBubbleMessage>
     );
-};
-
-export default ColorItem;
+}

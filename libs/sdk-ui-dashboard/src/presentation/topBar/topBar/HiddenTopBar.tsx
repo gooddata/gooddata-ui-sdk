@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ITopBarProps } from "./types.js";
 
 /**
@@ -6,6 +6,6 @@ import { ITopBarProps } from "./types.js";
  *
  * @alpha
  */
-export const HiddenTopBar = (_props: ITopBarProps): JSX.Element | null => {
+export function HiddenTopBar(_props: ITopBarProps) {
     return null;
-};
+}

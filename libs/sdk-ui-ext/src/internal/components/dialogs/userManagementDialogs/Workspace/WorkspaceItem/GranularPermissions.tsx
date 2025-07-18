@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { ReactNode, useCallback, useMemo } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DialogListHeader, Message } from "@gooddata/sdk-ui-kit";
 
@@ -40,12 +40,12 @@ interface IGranularPermissionsProps {
     showRedundancyWarningMessage: boolean;
 }
 
-export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
+export function GranularPermissions({
     workspace,
     areFilterViewsEnabled,
     onChange,
     showRedundancyWarningMessage,
-}) => {
+}: IGranularPermissionsProps) {
     const intl = useIntl();
     const { permissions: selectedPermissions = [], isHierarchical = false } = workspace ?? {};
     const selectedWorkspacePermission = getWorkspacePermission(selectedPermissions);
@@ -185,4 +185,4 @@ export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
             ) : null}
         </div>
     );
-};
+}

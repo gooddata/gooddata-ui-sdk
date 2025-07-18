@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { ComponentTable, propCombinationsFor, UiCheckbox, UiCheckboxProps } from "@gooddata/sdk-ui-kit";
-import React from "react";
+
 import { wrapWithTheme } from "../themeWrapper.js";
 
 export default {

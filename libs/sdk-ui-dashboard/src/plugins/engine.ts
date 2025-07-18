@@ -1,8 +1,8 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IDashboardPluginContract_V1 } from "./plugin.js";
 import { Dashboard, IDashboardExtensionProps, IDashboardProps } from "../presentation/index.js";
-import React, { ComponentType } from "react";
+import { ComponentType } from "react";
 import { DashboardCustomizationBuilder } from "./customizationApis/customizationBuilder.js";
 import { DefaultDashboardEventHandling } from "./customizationApis/dashboardEventHandling.js";
 import { pluginDebugStr } from "./customizationApis/pluginUtils.js";
@@ -93,7 +93,7 @@ export function newDashboardEngine(): IDashboardEngine {
                 ...eventingProps,
             };
         },
-        getDashboardComponent(): React.ComponentType<IDashboardProps> {
+        getDashboardComponent(): ComponentType<IDashboardProps> {
             return Dashboard;
         },
     };

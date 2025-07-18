@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 
@@ -55,11 +55,15 @@ export function DialogListItemBasic({ item, className, onClick, onDelete }: IDia
     );
 
     const handleItemClick = useCallback(() => {
-        !isDisabled && isClickable && onClick?.(item);
+        if (!isDisabled && isClickable) {
+            onClick?.(item);
+        }
     }, [isDisabled, isClickable, item, onClick]);
 
     const handleItemDelete = useCallback(() => {
-        !isDisabled && isDeletable && onDelete?.(item);
+        if (!isDisabled && isDeletable) {
+            onDelete?.(item);
+        }
     }, [isDisabled, isDeletable, item, onDelete]);
 
     return (

@@ -1,5 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import {
     IAttributeOrMeasure,
     applyRatioRule,
@@ -130,7 +129,7 @@ const WrappedColumnChart = withChart(columnChartDefinition)(CoreColumnChart);
  *
  * @public
  */
-export const ColumnChart = (props: IColumnChartProps) => {
+export function ColumnChart(props: IColumnChartProps) {
     const [measures, viewBy, stackBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.stackBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -148,4 +147,4 @@ export const ColumnChart = (props: IColumnChartProps) => {
             }}
         />
     );
-};
+}

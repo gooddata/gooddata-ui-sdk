@@ -1,7 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ArrowOffsets, Bubble } from "@gooddata/sdk-ui-kit";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
@@ -58,14 +58,14 @@ interface ToolbarProps {
     onClose: () => void;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = ({
+export function Toolbar({
     widget,
     onVisualizationsChanged,
     onVisualizationAdded,
     onWidgetDelete,
     onSelectedVisualizationChanged,
     onClose,
-}) => {
+}: ToolbarProps) {
     const userInteraction = useDashboardUserInteraction();
 
     const visualizations = widget.visualizations;
@@ -220,4 +220,4 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             />
         </Bubble>
     );
-};
+}

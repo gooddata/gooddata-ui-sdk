@@ -1,5 +1,5 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { RefObject } from "react";
 import { ICatalogDateDataset, isInsightWidget, IWidget } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
 import DefaultMeasure from "react-measure";
@@ -28,26 +28,24 @@ export interface IDateDatasetPickerProps {
     unrelatedDateDatasets: readonly ICatalogDateDataset[] | undefined;
 }
 
-export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
-    const {
-        relatedDateDatasets,
-        selectedDateDataset,
-        selectedDateDatasetHidden,
-        widget,
-        dateFromVisualization,
-        autoOpen,
-        isLoading,
-        enableUnrelatedItemsVisibility,
-        unrelatedDateDatasets,
+export function DateDatasetPicker({
+    relatedDateDatasets,
+    selectedDateDataset,
+    selectedDateDatasetHidden,
+    widget,
+    dateFromVisualization,
+    autoOpen,
+    isLoading,
+    enableUnrelatedItemsVisibility,
+    unrelatedDateDatasets,
 
-        onDateDatasetChange,
-    } = props;
-
+    onDateDatasetChange,
+}: IDateDatasetPickerProps) {
     const unrelatedDateDataset =
         relatedDateDatasets &&
         getUnrelatedDateDataset(relatedDateDatasets, selectedDateDataset, selectedDateDatasetHidden);
 
-    const getDateFilter = (measureRef: React.Ref<HTMLDivElement> | undefined, width: number) => (
+    const getDateFilter = (measureRef: RefObject<HTMLDivElement> | undefined, width: number) => (
         <div className="subcategory-dropdown" ref={measureRef}>
             <DateDatasetDropdown
                 autoOpen={autoOpen}
@@ -76,7 +74,12 @@ export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
                     <FormattedMessage id="configurationPanel.dateAs" />
                 </label>
                 <Measure>
-                    {({ measureRef, contentRect }) => getDateFilter(measureRef, contentRect.entry.width || 0)}
+                    {({ measureRef, contentRect }) =>
+                        getDateFilter(
+                            measureRef as unknown as RefObject<HTMLDivElement>,
+                            contentRect.entry.width || 0,
+                        )
+                    }
                 </Measure>
             </div>
             {!!(unrelatedDateDataset && !isLoading) && (
@@ -96,4 +99,4 @@ export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
             )}
         </div>
     );
-};
+}

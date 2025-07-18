@@ -1,13 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
-import { CustomDashboardRichTextMenuTitleComponent } from "../types.js";
+import { IDashboardRichTextMenuTitleProps } from "../types.js";
 
 /**
  * @internal
  */
-export const DefaultDashboardRichTextMenuTitle: CustomDashboardRichTextMenuTitleComponent = () => {
+export function DefaultDashboardRichTextMenuTitle(_props: IDashboardRichTextMenuTitleProps) {
     const intl = useIntl();
     const title = intl.formatMessage({ id: "addPanel.richText" });
 
@@ -20,4 +19,4 @@ export const DefaultDashboardRichTextMenuTitle: CustomDashboardRichTextMenuTitle
             </Typography>
         </>
     );
-};
+}

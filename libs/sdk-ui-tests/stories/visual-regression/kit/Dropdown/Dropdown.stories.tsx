@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { CSSProperties } from "react";
+import { CSSProperties } from "react";
 import { withIntl } from "@gooddata/sdk-ui";
 import {
     Typography,
@@ -116,7 +116,7 @@ const testCases: [
     ["With button icon", undefined, undefined, undefined, { iconLeft: "gd-icon-magic" }],
 ];
 
-const DropdownExamples: React.FC = () => {
+function DropdownExamples() {
     return (
         <div className="library-component screenshot-target">
             <div>
@@ -137,7 +137,7 @@ const DropdownExamples: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 // TODO remove this adhoc translations when NoData component will have own dictionary and dont rely on provided Intl from top
 const customMessages = {

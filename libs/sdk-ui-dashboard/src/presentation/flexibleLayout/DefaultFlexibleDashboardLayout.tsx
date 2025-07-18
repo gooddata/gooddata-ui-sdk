@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import { ReactElement, useCallback, useMemo } from "react";
 import {
     ObjRef,
     IInsight,
@@ -100,7 +100,7 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
 /**
  * @alpha
  */
-export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
+export function DefaultFlexibleDashboardLayout(props: IDashboardLayoutProps): ReactElement {
     const { layout: providedLayout, onFiltersChange, onDrill, onError, dashboardItemClasses } = props;
 
     const selectedLayout = useDashboardSelector(selectLayout);
@@ -206,4 +206,4 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
             />
         </>
     );
-};
+}

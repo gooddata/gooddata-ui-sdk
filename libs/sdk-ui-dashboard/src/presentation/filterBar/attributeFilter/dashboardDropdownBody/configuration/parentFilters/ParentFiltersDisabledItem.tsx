@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import cx from "classnames";
 
 import { stringUtils } from "@gooddata/util";
@@ -26,7 +26,7 @@ const ARROW_OFFSET = {
     "tc bl": [-100, -10],
 };
 
-export const ParentFiltersDisabledItem: React.FC<IParentFiltersDisabledItemProps> = (props) => {
+export function ParentFiltersDisabledItem(props: IParentFiltersDisabledItemProps) {
     const { itemLocalId, itemTitle, hasConnectingAttributes } = props;
 
     const itemDisplayForm = useDashboardSelector(
@@ -93,4 +93,4 @@ export const ParentFiltersDisabledItem: React.FC<IParentFiltersDisabledItemProps
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

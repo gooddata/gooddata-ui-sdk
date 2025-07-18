@@ -1,5 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
@@ -32,7 +32,7 @@ export interface IWaterfallChartConfigurationPanel extends IConfigurationPanelCo
 }
 
 export default class WaterfallChartConfigurationPanel extends BaseChartConfigurationPanel<IWaterfallChartConfigurationPanel> {
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
         const { properties, propertiesMeta, pushData, dataLabelDefaultValue = false } = this.props;
@@ -100,7 +100,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
         );
     }
 
-    protected renderLegendSection(): React.ReactNode {
+    protected renderLegendSection(): ReactNode {
         const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 

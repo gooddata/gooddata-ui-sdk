@@ -5,7 +5,6 @@ import {
     ComponentTable,
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
-import React from "react";
 import noop from "lodash/noop.js";
 
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -28,7 +27,7 @@ const allItems = propCombination("items", [
     ],
 ]);
 
-const WrapperComponent: React.FC<IUiNavigationBypassProps> = (props) => {
+function WrapperComponent(props: IUiNavigationBypassProps) {
     return (
         <>
             <h3>Focus &quot;Start&quot; by mouse and use Tab to navigate</h3>
@@ -52,18 +51,20 @@ const WrapperComponent: React.FC<IUiNavigationBypassProps> = (props) => {
             </div>
         </>
     );
-};
+}
 
-const UiNavigationBypassTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
-    <div className="screenshot-target">
-        <ComponentTable
-            rowsBy={[allItems]}
-            Component={WrapperComponent}
-            codeSnippet={showCode ? "UiNavigationBypass" : undefined}
-            align="center"
-        />
-    </div>
-);
+function UiNavigationBypassTest({ showCode }: { showCode?: boolean }) {
+    return (
+        <div className="screenshot-target">
+            <ComponentTable
+                rowsBy={[allItems]}
+                Component={WrapperComponent}
+                codeSnippet={showCode ? "UiNavigationBypass" : undefined}
+                align="center"
+            />
+        </div>
+    );
+}
 
 export default {
     title: "15 Ui/UiNavigationBypass",

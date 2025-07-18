@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 import { IListedDashboard, IUser, IWorkspaceUser } from "@gooddata/sdk-model";
 import { useBackend, useCancelablePromise, useWorkspace, GoodDataSdkError } from "@gooddata/sdk-ui";
 import { FilterOptionsContextValue } from "../types.js";
@@ -11,7 +11,7 @@ interface FilterOptionsProviderProps {
     children: ReactNode;
 }
 
-export const FilterOptionsProvider: React.FC<FilterOptionsProviderProps> = ({ children }) => {
+export function FilterOptionsProvider({ children }: FilterOptionsProviderProps) {
     const [currentUser, setCurrentUser] = useState<IUser | null>(null);
     const [currentUserError, setCurrentUserError] = useState<GoodDataSdkError | null>(null);
 
@@ -89,7 +89,7 @@ export const FilterOptionsProvider: React.FC<FilterOptionsProviderProps> = ({ ch
     };
 
     return <FilterOptionsContext.Provider value={contextValue}>{children}</FilterOptionsContext.Provider>;
-};
+}
 
 export const useFilterOptions = (): FilterOptionsContextValue => {
     const context = useContext(FilterOptionsContext);

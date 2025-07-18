@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { ReactNode, useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ICatalogDateDataset, IDashboardDateFilter, serializeObjRef } from "@gooddata/sdk-model";
@@ -40,12 +40,12 @@ interface IAttributeListItemProps {
     onClose: () => void;
 }
 
-const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({
+export default function DateAttributeListItem({
     item: { item, isDisabled, title },
     dependentDateFilters,
     onSelect,
     onClose,
-}) => {
+}: IAttributeListItemProps) {
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = useMemo(() => {
         return cx(
@@ -87,18 +87,16 @@ const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({
             </div>
         </WithDisabledParentFilterTooltip>
     );
-};
+}
 
-export default DateAttributeListItem;
-
-export const DateFiltersPage: React.FC<IDateFiltersPageProps> = ({
+export function DateFiltersPage({
     availableDatasets,
     dependentCommonDateFilter,
     dependentDateFilters,
     onSelect,
     onGoBack,
     onClose,
-}) => {
+}: IDateFiltersPageProps) {
     const intl = useIntl();
 
     const commonDateItems = useCommonDateItems(
@@ -132,4 +130,4 @@ export const DateFiltersPage: React.FC<IDateFiltersPageProps> = ({
             </div>
         </>
     );
-};
+}

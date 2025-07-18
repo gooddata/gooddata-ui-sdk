@@ -1,7 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import includes from "lodash/includes.js";
-import { withIntl } from "@gooddata/sdk-ui";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
@@ -9,6 +7,7 @@ import { describe, it, expect, vi } from "vitest";
 import { customMessages } from "./customDictionary.js";
 
 import LegacyMultiSelectList, { ILegacyMultiSelectListProps } from "../LegacyMultiSelectList.js";
+import { Intl } from "@gooddata/sdk-ui";
 
 describe("LegacyMultiSelectList", () => {
     const firstItem: any = {
@@ -37,12 +36,11 @@ describe("LegacyMultiSelectList", () => {
             ...customProps,
         };
 
-        const Wrapped = withIntl<ILegacyMultiSelectListProps<any>>(
-            LegacyMultiSelectList,
-            undefined,
-            customMessages,
+        return render(
+            <Intl forTest customMessages={customMessages}>
+                <LegacyMultiSelectList {...props} />
+            </Intl>,
         );
-        return render(<Wrapped {...props} />);
     }
 
     it("should select items based on result of isSelected", () => {

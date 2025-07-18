@@ -1,13 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
-
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Minimize: React.FC<IIconProps> = ({ color, className, width = 18, height = 18 }) => {
+export function Minimize({ color, className, width = 18, height = 18 }: IIconProps) {
     return (
         <svg
             className={className}
@@ -23,4 +21,4 @@ export const Minimize: React.FC<IIconProps> = ({ color, className, width = 18, h
             />
         </svg>
     );
-};
+}

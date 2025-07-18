@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import React, { createContext, useCallback, useState } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { createContext, ReactNode, useCallback, useState } from "react";
 import { IMessage, IMessageDefinition } from "./typings.js";
 
 /**
@@ -35,7 +35,7 @@ const DEFAULT_DURATION = 2500;
 /**
  * @internal
  */
-export const ToastMessageContextProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function ToastMessageContextProvider({ children }: { children?: ReactNode }) {
     const [messages, setMessages] = useState<IMessage[]>([]);
 
     const removeMessage = useCallback((id: string) => {
@@ -72,4 +72,4 @@ export const ToastMessageContextProvider: React.FC<{ children?: React.ReactNode 
             {children}
         </ToastMessageContext.Provider>
     );
-};
+}

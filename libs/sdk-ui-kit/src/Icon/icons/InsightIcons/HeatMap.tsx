@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
 import { IIconProps } from "../../typings.js";
 
 /**
  * @internal
  */
-export const HeatMap: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function HeatMap({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -34,4 +34,4 @@ export const HeatMap: React.FC<IIconProps> = ({ className, width, height, color,
             </g>
         </svg>
     );
-};
+}

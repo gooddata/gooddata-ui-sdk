@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useMemo, useCallback } from "react";
+import { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import { IInsight, widgetTitle, insightVisualizationType } from "@gooddata/sdk-model";
@@ -31,18 +31,14 @@ import { useId } from "@gooddata/sdk-ui-kit";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
 import { supportsShowAsTable } from "../../insight/insightToTable.js";
 
-export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
-    props,
-) => {
+export function DefaultDashboardInsightWidget(props: Omit<IDefaultDashboardInsightWidgetProps, "insight">) {
     return <DashboardWidgetInsightGuard {...props} Component={DefaultDashboardInsightWidgetCore} />;
-};
+}
 
 /**
  * @internal
  */
-const DefaultDashboardInsightWidgetCore: React.FC<
-    IDefaultDashboardInsightWidgetProps & { insight?: IInsight }
-> = ({
+function DefaultDashboardInsightWidgetCore({
     widget,
     insight,
     screen,
@@ -51,7 +47,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     onLoadingChanged,
     dashboardItemClasses,
     exportData,
-}) => {
+}: IDefaultDashboardInsightWidgetProps & { insight?: IInsight }) {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
 
@@ -273,4 +269,4 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             </DashboardItemVisualization>
         </DashboardItem>
     );
-};
+}

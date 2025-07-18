@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType, ReactNode, createContext, useContext } from "react";
 import { invariant } from "ts-invariant";
 
 /**
@@ -52,20 +52,20 @@ export type TelemetryEvent =
  */
 export type TrackEventCallback = (event: TelemetryEvent) => void;
 
-const TelemetryContext = React.createContext<TrackEventCallback | undefined>(undefined);
+const TelemetryContext = createContext<TrackEventCallback | undefined>(undefined);
 TelemetryContext.displayName = "TelemetryContext";
 
 export interface ITelemetryProviderProps {
     trackEvent?: TrackEventCallback;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
-export const TelemetryProvider: React.FC<ITelemetryProviderProps> = ({ trackEvent, children }) => {
+export function TelemetryProvider({ trackEvent, children }: ITelemetryProviderProps) {
     return <TelemetryContext.Provider value={trackEvent}>{children}</TelemetryContext.Provider>;
-};
+}
 
 export const useTelemetry = () => {
-    const trackEvent = React.useContext(TelemetryContext);
+    const trackEvent = useContext(TelemetryContext);
     invariant(trackEvent, "useTelemetry must be called in TelemetryContext with initialized value!");
     return trackEvent;
 };
@@ -77,14 +77,14 @@ export interface IWithTelemetryProps {
     onEvent: TrackEventCallback;
 }
 
-export function withTelemetry<T extends IWithTelemetryProps>(WrappedComponent: React.ComponentType<T>) {
-    const ResultComponent: React.FC<T> = (props) => {
+export function withTelemetry<T extends IWithTelemetryProps>(WrappedComponent: ComponentType<T>) {
+    function ResultComponent(props: T) {
         return (
             <TelemetryProvider trackEvent={props.onEvent}>
                 <WrappedComponent {...props} />
             </TelemetryProvider>
         );
-    };
+    }
     ResultComponent.displayName = WrappedComponent.displayName;
     return ResultComponent;
 }

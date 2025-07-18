@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { Fragment, useCallback, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
@@ -24,17 +24,15 @@ export interface IConfigurationParentItemProps {
     disabled: boolean;
 }
 
-export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (props) => {
-    const {
-        item: { isSelected, localIdentifier, selectedConnectingAttribute },
-        onClick,
-        currentFilterLocalId,
-        connectingAttributes,
-        onConnectingAttributeSelect,
-        title,
-        disabled,
-    } = props;
-
+export function ParentFiltersListItem({
+    item: { isSelected, localIdentifier, selectedConnectingAttribute },
+    onClick,
+    currentFilterLocalId,
+    connectingAttributes,
+    onConnectingAttributeSelect,
+    title,
+    disabled,
+}: IConfigurationParentItemProps) {
     const isCircularDependency = useDashboardSelector(
         selectIsCircularDependency(currentFilterLocalId, localIdentifier),
     );
@@ -68,7 +66,7 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
     }
 
     return (
-        <React.Fragment>
+        <Fragment>
             <div className={activeItemClasses} onClick={() => !disabled && onSelect()} title={title}>
                 <label className="input-checkbox-label configuration-item-title">
                     <input
@@ -97,6 +95,6 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
                     onSelect={onConnectingAttributeSelect}
                 />
             ) : null}
-        </React.Fragment>
+        </Fragment>
     );
-};
+}

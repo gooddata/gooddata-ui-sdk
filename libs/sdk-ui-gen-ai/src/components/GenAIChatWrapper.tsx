@@ -1,17 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { MouseEvent, useCallback } from "react";
 import { Button, Typography, UiNavigationBypass, useKeyboardNavigationTarget } from "@gooddata/sdk-ui-kit";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
-import {
-    loadThreadAction,
-    cancelAsyncAction,
-    clearThreadAction,
-    asyncProcessSelector,
-} from "../store/index.js";
+import { clearThreadAction, asyncProcessSelector } from "../store/index.js";
 
 import { Input } from "./Input.js";
 import { Messages } from "./Messages.js";
@@ -45,11 +40,7 @@ export function GenAIChatWrapper({ autofocus, initializing }: GenAIChatOwnProps)
 
     const isClearing = useSelector(asyncProcessSelector) === "clearing";
 
-    useThreadLoading({
-        initializing: initializing || checking,
-        loadThread: dispatch(loadThreadAction),
-        cancelLoading: dispatch(cancelAsyncAction),
-    });
+    useThreadLoading({ initializing: initializing || checking });
 
     const { targetRef } = useKeyboardNavigationTarget({
         navigationId: GEN_AI_INPUT_ANCHOR_ID,
@@ -57,7 +48,7 @@ export function GenAIChatWrapper({ autofocus, initializing }: GenAIChatOwnProps)
     });
 
     const onSettingClick = useCallback(
-        (e: React.MouseEvent) => {
+        (e: MouseEvent) => {
             if (allowNativeLinks) {
                 window.location.href = getAbsoluteSettingHref(GEN_AI_SECTION, CREATE_LLM_PROVIDER_ACTION);
             } else {

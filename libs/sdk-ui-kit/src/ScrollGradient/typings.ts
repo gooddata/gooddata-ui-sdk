@@ -1,15 +1,15 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode, MouseEvent } from "react";
 
 /**
  * @internal
  */
 export interface IScrollGradientProps {
     size?: number;
-    onScroll?: (event: React.MouseEvent<HTMLDivElement>) => void;
+    onScroll?: (event: MouseEvent<HTMLDivElement>) => void;
     className?: string;
     contentClassName?: string;
     backgroundColor?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }

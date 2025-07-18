@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ReactElement, useCallback } from "react";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import compact from "lodash/compact.js";
@@ -80,7 +80,7 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
 /**
  * @internal
  */
-export const DefaultDeleteDialog = (props: IDeleteDialogProps): JSX.Element | null => {
+export function DefaultDeleteDialog(props: IDeleteDialogProps): ReactElement | null {
     const {
         isVisible,
         isSchedulingEnabled,
@@ -131,4 +131,4 @@ export const DefaultDeleteDialog = (props: IDeleteDialogProps): JSX.Element | nu
             )}
         </ConfirmDialog>
     );
-};
+}

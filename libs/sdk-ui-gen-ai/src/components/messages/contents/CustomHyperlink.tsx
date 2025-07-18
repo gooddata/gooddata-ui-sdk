@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import * as React from "react";
+import { MouseEvent, useMemo } from "react";
 import { LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
 
 export type CustomHyperlinkProps = {
@@ -12,12 +12,12 @@ export type CustomHyperlinkProps = {
  * Similar to SDK Hyperlink, but can handle customer schemas
  * used for links management
  */
-export const CustomHyperlink: React.FC<CustomHyperlinkProps> = ({ href, text }) => {
+export function CustomHyperlink({ href, text }: CustomHyperlinkProps) {
     const { linkHandler, allowNativeLinks, canManage, canAnalyze } = useConfig();
     const canManageMetrics = canManage || canAnalyze;
     const canManageVisualisations = canManage || canAnalyze;
 
-    const parsedRef = React.useMemo(() => {
+    const parsedRef = useMemo(() => {
         if (!href) {
             return null;
         }
@@ -54,7 +54,7 @@ export const CustomHyperlink: React.FC<CustomHyperlinkProps> = ({ href, text }) 
         return text;
     }
 
-    const handleLinkClick = (e: React.MouseEvent) => {
+    const handleLinkClick = (e: MouseEvent) => {
         if (!linkHandler) {
             return;
         }
@@ -93,9 +93,9 @@ export const CustomHyperlink: React.FC<CustomHyperlinkProps> = ({ href, text }) 
             <span className="gd-hyperlink-text">{text}</span>
         </span>
     );
-};
+}
 
-const getItemUrl = (workspaceId: string, id: string, objectType: string) => {
+function getItemUrl(workspaceId: string, id: string, objectType: string) {
     switch (objectType) {
         case "visualization":
             return `/analyze/#/${workspaceId}/${id}/edit`;
@@ -106,4 +106,4 @@ const getItemUrl = (workspaceId: string, id: string, objectType: string) => {
         default:
             return null;
     }
-};
+}

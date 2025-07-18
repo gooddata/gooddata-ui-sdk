@@ -1,5 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import cx from "classnames";
 import { InvertableSelectLimitWarning } from "./InvertableSelectLimitWarning.js";
 import { InvertableSelectStatus } from "./InvertableSelectSelectionStatus.js";

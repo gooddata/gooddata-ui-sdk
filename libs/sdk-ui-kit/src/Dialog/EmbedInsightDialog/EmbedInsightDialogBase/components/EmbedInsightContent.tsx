@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useMemo } from "react";
 
 import { IReactOptions, IWebComponentsOptions, EmbedOptionsType } from "../types.js";
 import { EmbedInsightCodeArea } from "./CodeArea.js";
@@ -19,10 +19,14 @@ interface IEmbedInsightContentProps {
 /**
  * @internal
  */
-export const EmbedInsightContent: React.FC<IEmbedInsightContentProps> = (props) => {
-    const { integrationDocLink, embedTypeOptions, code, openSaveInsightDialog, onCopyCode, onOptionsChange } =
-        props;
-
+export function EmbedInsightContent({
+    integrationDocLink,
+    embedTypeOptions,
+    code,
+    openSaveInsightDialog,
+    onCopyCode,
+    onOptionsChange,
+}: IEmbedInsightContentProps) {
     const renderEmbedOptions = useMemo(() => {
         return embedTypeOptions.type === "react" ? (
             <ReactOptions option={embedTypeOptions as IReactOptions} onChange={onOptionsChange} />
@@ -51,4 +55,4 @@ export const EmbedInsightContent: React.FC<IEmbedInsightContentProps> = (props) 
             </div>
         </div>
     );
-};
+}

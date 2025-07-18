@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState, useCallback, memo } from "react";
+import { useState, useCallback, memo } from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";

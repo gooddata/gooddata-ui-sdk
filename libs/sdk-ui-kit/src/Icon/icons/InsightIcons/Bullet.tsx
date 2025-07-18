@@ -1,11 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { IIconProps } from "../../typings.js";
 
 /**
  * @internal
  */
-export const Bullet: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function Bullet({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -24,4 +23,4 @@ export const Bullet: React.FC<IIconProps> = ({ className, width, height, color, 
             </g>
         </svg>
     );
-};
+}

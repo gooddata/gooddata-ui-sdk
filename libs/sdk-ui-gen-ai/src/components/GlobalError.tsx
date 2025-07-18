@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode, useState } from "react";
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 import { ErrorComponent } from "@gooddata/sdk-ui";
@@ -11,7 +11,7 @@ type GlobalErrorProps = {
     errorDetails?: string;
     clearing?: boolean;
     clearError?: () => void;
-    buttonsBefore?: React.ReactNode;
+    buttonsBefore?: ReactNode;
 };
 
 export function GlobalError({
@@ -24,7 +24,7 @@ export function GlobalError({
 }: GlobalErrorProps) {
     const intl = useIntl();
 
-    const [showMore, setShowMore] = React.useState(false);
+    const [showMore, setShowMore] = useState(false);
     const hasShowMoreButton = Boolean(errorDetails && !showMore);
 
     return (

@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { RefObject } from "react";
+import { RefObject } from "react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";

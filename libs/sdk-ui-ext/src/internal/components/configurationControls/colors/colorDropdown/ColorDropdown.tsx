@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useState, useCallback } from "react";
+import { memo, useState, useCallback, ReactNode, cloneElement, Fragment } from "react";
 import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
 import { ColorPicker } from "@gooddata/sdk-ui-kit";
@@ -25,7 +25,7 @@ export interface IColorDropdownOwnProps {
     showCustomPicker: boolean;
     onColorSelected: (color: IColor) => void;
     disabled?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 const COLOR_FOR_UNKNOWN_ITEM: IRgbColorValue = {
@@ -138,7 +138,7 @@ const ColorDropdown = memo(function ColorDropdown({
             position: getIconPosition(),
             disabled,
         };
-        return React.cloneElement(children as React.ReactElement<ISelectableChild>, childProps);
+        return cloneElement(children as React.ReactElement<ISelectableChild>, childProps);
     }, [isDropdownOpen, getIconPosition, disabled, children]);
 
     const renderColorPaletteContent = useCallback(() => {
@@ -171,7 +171,7 @@ const ColorDropdown = memo(function ColorDropdown({
     }, [getSelectedColorFromPalette, onColorPickerSubmit, onColorPickerCancel]);
 
     return (
-        <React.Fragment>
+        <Fragment>
             <div className={getClassName()} onClick={onDropdownButtonClick}>
                 {setupDropdownChild()}
             </div>
@@ -187,7 +187,7 @@ const ColorDropdown = memo(function ColorDropdown({
                     </div>
                 </ColorOverlay>
             ) : null}
-        </React.Fragment>
+        </Fragment>
     );
 });
 

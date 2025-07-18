@@ -1,12 +1,11 @@
-// (C) 2024 GoodData Corporation
-import React from "react";
+// (C) 2024-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const RichText: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function RichText({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={className}
@@ -26,4 +25,4 @@ export const RichText: React.FC<IIconProps> = ({ color, className, width, height
             />
         </svg>
     );
-};
+}

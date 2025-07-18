@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 import compact from "lodash/compact.js";
 import omit from "lodash/omit.js";
 import { CoreGeoChart } from "./core/CoreGeoChart.js";
@@ -92,7 +92,7 @@ const getNonCoreProps = (
     return [...base, "longitude", "latitude"];
 };
 
-function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): JSX.Element {
+function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): ReactElement {
     const { backend, workspace, sortBy, filters, exportTitle, execConfig = {} } = props;
 
     const buckets = getBuckets(props);
@@ -128,15 +128,15 @@ function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): JSX.Element {
 
 const WrappedGeoPushpinChart = withTheme(withContexts(GeoPushpinChartInner));
 
-const GeoPushpinChartLocation = (props: IGeoPushpinChartProps) => {
+function GeoPushpinChartLocation(props: IGeoPushpinChartProps) {
     const [location, size, color, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.location, props.size, props.color, props.segmentBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
     );
     return <WrappedGeoPushpinChart {...props} {...{ location, size, color, segmentBy, filters, sortBy }} />;
-};
+}
 
-const GeoPushpinChartLatitudeLongitude = (props: IGeoPushpinChartLatitudeLongitudeProps) => {
+function GeoPushpinChartLatitudeLongitude(props: IGeoPushpinChartLatitudeLongitudeProps) {
     const [longitude, latitude, size, color, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [
             props.longitude,
@@ -155,14 +155,14 @@ const GeoPushpinChartLatitudeLongitude = (props: IGeoPushpinChartLatitudeLongitu
             {...{ longitude, latitude, size, color, segmentBy, filters, sortBy }}
         />
     );
-};
+}
 
 /**
  * @public
  */
-export const GeoPushpinChart = (props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps) => {
+export function GeoPushpinChart(props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps) {
     if (isGeoPushpinChartProps(props)) {
         return <GeoPushpinChartLocation {...props} />;
     }
     return <GeoPushpinChartLatitudeLongitude {...props} />;
-};
+}

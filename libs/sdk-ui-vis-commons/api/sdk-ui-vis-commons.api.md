@@ -4,6 +4,7 @@
 
 ```ts
 
+import { ComponentType } from 'react';
 import { ContentRect } from 'react-measure';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { IColor } from '@gooddata/sdk-model';
@@ -15,7 +16,9 @@ import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IMappingHeader } from '@gooddata/sdk-ui';
 import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
-import { default as React_2 } from 'react';
+import { JSX } from 'react/jsx-runtime';
+import { NamedExoticComponent } from 'react';
+import { ReactElement } from 'react';
 import { Rect } from 'react-measure';
 
 // @internal (undocumented)
@@ -34,7 +37,7 @@ export function calculateHeadlineHeightFontSize(secondaryItem?: boolean, clientH
 };
 
 // @internal (undocumented)
-export const ColorLegend: React_2.ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading" | "themeStatus">>;
+export const ColorLegend: ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading" | "themeStatus">>;
 
 // @internal (undocumented)
 export abstract class ColorStrategy implements IColorStrategy {
@@ -80,7 +83,7 @@ export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: stri
 export const FLUID_LEGEND_THRESHOLD = 768;
 
 // @internal (undocumented)
-export const FluidLegend: React_2.NamedExoticComponent<IFluidLegendProps>;
+export const FluidLegend: NamedExoticComponent<IFluidLegendProps>;
 
 // @internal (undocumented)
 export function formatLegendLabel(value: number, format: string | undefined, diff: number, numericSymbols: string[]): string;
@@ -122,10 +125,10 @@ export function getRgbStringFromRGB(color: IRgbColorValue): string;
 export function getValidColorPalette(colors?: string[], colorPalette?: IColorPalette): IColorPalette;
 
 // @internal (undocumented)
-export const HeadlinePagination: React_2.FC<IHeadlinePaginationProps>;
+export function HeadlinePagination({ renderSecondaryItem, renderTertiaryItem, accessibilityConfig, }: IHeadlinePaginationProps): JSX.Element;
 
 // @internal (undocumented)
-export const HeatmapLegend: React_2.NamedExoticComponent<IHeatmapLegendProps>;
+export const HeatmapLegend: NamedExoticComponent<IHeatmapLegendProps>;
 
 // @internal (undocumented)
 export interface IBaseLegendItem {
@@ -220,9 +223,9 @@ export interface IHeadlinePaginationProps {
         previousAriaLabel?: string;
     };
     // (undocumented)
-    renderSecondaryItem: () => JSX.Element;
+    renderSecondaryItem: () => ReactElement;
     // (undocumented)
-    renderTertiaryItem: () => JSX.Element;
+    renderTertiaryItem: () => ReactElement;
 }
 
 // @internal (undocumented)
@@ -357,7 +360,7 @@ export interface IPopUpLegendProps {
     // (undocumented)
     containerId: string;
     // (undocumented)
-    customComponent?: JSX.Element | null;
+    customComponent?: ReactElement | null;
     // (undocumented)
     customComponentName?: string;
     // (undocumented)
@@ -414,7 +417,7 @@ export interface IStaticLegendProps {
     // (undocumented)
     containerHeight: number;
     // (undocumented)
-    customComponent?: JSX.Element | null;
+    customComponent?: ReactElement | null;
     // (undocumented)
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     // (undocumented)
@@ -442,7 +445,7 @@ export function isValidMappedColor(colorItem: IColor, colorPalette: IColorPalett
 export type ItemBorderRadiusPredicate = (item: any) => boolean;
 
 // @internal (undocumented)
-export const Legend: React_2.NamedExoticComponent<ILegendProps>;
+export const Legend: NamedExoticComponent<ILegendProps>;
 
 // @internal (undocumented)
 export type LegendOptionsItemType = IBaseLegendItem | IHeatmapLegendItem;
@@ -456,7 +459,7 @@ export const LegendPosition: {
 export function normalizeColorToRGB(color: string): string;
 
 // @internal (undocumented)
-export const Paging: (props: IPagingProps) => React_2.ReactElement;
+export function Paging(props: IPagingProps): JSX.Element;
 
 // @internal (undocumented)
 export function parseRGBColorCode(color: string): {
@@ -469,7 +472,7 @@ export function parseRGBColorCode(color: string): {
 export function parseRGBString(color: string): IRgbColorValue | null;
 
 // @internal (undocumented)
-export const PopUpLegend: React_2.FC<IPopUpLegendProps>;
+export function PopUpLegend(props: IPopUpLegendProps): JSX.Element;
 
 // @internal
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
@@ -481,7 +484,7 @@ export const shouldRenderPagination: (enableCompactSize: boolean, width: number,
 export function shouldShowFluid(documentObj: Document): boolean;
 
 // @internal (undocumented)
-export const StaticLegend: React_2.NamedExoticComponent<IStaticLegendProps>;
+export const StaticLegend: NamedExoticComponent<IStaticLegendProps>;
 
 // @internal (undocumented)
 export const SupportedLegendPositions: PositionType[];

@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+
 import { FormattedMessage } from "react-intl";
 import startCase from "lodash/startCase.js";
 
@@ -57,13 +57,13 @@ const getSectionContentKey = (section: SectionType, calculationType: Calculation
     return SECTION_CONTENT_KEYS[property];
 };
 
-const CalculationListItemInfoSection: React.FC<ICalculationItemInfoSectionProps> = ({
+export default function CalculationListItemInfoSection({
     calculationType,
     section,
     contentClassNames,
     shouldHideTitle,
     isSectionCombineCalculationType,
-}) => {
+}: ICalculationItemInfoSectionProps) {
     const titleKey = getSectionTitleKey(section, calculationType, isSectionCombineCalculationType);
     const contentKey = getSectionContentKey(section, calculationType);
 
@@ -75,6 +75,4 @@ const CalculationListItemInfoSection: React.FC<ICalculationItemInfoSectionProps>
             </p>
         </>
     );
-};
-
-export default CalculationListItemInfoSection;
+}

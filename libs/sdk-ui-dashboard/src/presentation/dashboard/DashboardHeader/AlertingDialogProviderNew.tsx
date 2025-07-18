@@ -1,11 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
-
 import { AlertingDialog, AlertingManagementDialog, IAlertingDialogProps } from "../../alerting/index.js";
 import { useDashboardAlerts, useWorkspaceUsers } from "../../../model/index.js";
 
-export const AlertingDialogProviderNew = () => {
+export function AlertingDialogProviderNew() {
     const {
         // Shared Local State
         alertToEdit,
@@ -74,7 +72,7 @@ export const AlertingDialogProviderNew = () => {
             ) : null}
         </>
     );
-};
+}
 
 /**
  * Load users only if dialog is open

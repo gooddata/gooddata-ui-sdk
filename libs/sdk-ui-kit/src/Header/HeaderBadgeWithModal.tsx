@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { ReactNode, useState } from "react";
 
 import { HeaderBadge, IHeaderBadgeProps } from "./HeaderBadge.js";
 
@@ -7,19 +7,19 @@ import { HeaderBadge, IHeaderBadgeProps } from "./HeaderBadge.js";
  * @internal
  */
 export interface IHeaderBadgeWithModalProps extends IHeaderBadgeProps {
-    renderModalContent: (parameters: { closeModal: () => void }) => React.ReactNode;
-    children?: React.ReactNode;
+    renderModalContent: (parameters: { closeModal: () => void }) => ReactNode;
+    children?: ReactNode;
 }
 
 /**
  * @internal
  */
-export const HeaderBadgeWithModal: React.FC<IHeaderBadgeWithModalProps> = ({
+export function HeaderBadgeWithModal({
     renderModalContent,
     children,
     color,
     ...badgeProps
-}) => {
+}: IHeaderBadgeWithModalProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
         <HeaderBadge {...badgeProps}>
@@ -34,4 +34,4 @@ export const HeaderBadgeWithModal: React.FC<IHeaderBadgeWithModalProps> = ({
             {isModalOpen ? renderModalContent({ closeModal: () => setIsModalOpen(false) }) : null}
         </HeaderBadge>
     );
-};
+}

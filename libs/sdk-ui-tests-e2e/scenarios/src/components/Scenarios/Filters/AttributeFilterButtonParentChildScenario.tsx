@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useState } from "react";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import {
     attributeDisplayFormRef,
@@ -20,7 +20,7 @@ const childAttrFilter = newNegativeAttributeFilter(attributeDisplayFormRef(Md.De
 
 const parentFilterOverAttribute = idRef("attr.opportunitysnapshot.id");
 
-export const AttributeFilterButtonParentChildScenario: React.FC = () => {
+export function AttributeFilterButtonParentChildScenario() {
     const [parentFilter, setParentFilter] = useState<IAttributeFilter>(parentAttrFilter);
     const [childFilter, setChildFilter] = useState<IAttributeFilter>(childAttrFilter);
 
@@ -40,4 +40,4 @@ export const AttributeFilterButtonParentChildScenario: React.FC = () => {
             />
         </div>
     );
-};
+}

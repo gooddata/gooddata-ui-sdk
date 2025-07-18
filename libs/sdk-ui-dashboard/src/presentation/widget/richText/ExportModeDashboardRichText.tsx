@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { GoodDataSdkError, ILoadingState } from "@gooddata/sdk-ui";
 
 import { useRichTextExportData, useVisualizationExportData } from "../../export/index.js";
@@ -7,13 +7,13 @@ import { useRichTextExportData, useVisualizationExportData } from "../../export/
 import { IDashboardRichTextProps } from "./types.js";
 import { ViewModeDashboardRichText } from "./ViewModeDashboardRichText.js";
 
-export const ExportModeDashboardRichText: React.FC<IDashboardRichTextProps> = (props) => {
-    const { onLoadingChanged, onError } = props;
+export function ExportModeDashboardRichText(props: IDashboardRichTextProps) {
+    const { onLoadingChanged, onError, exportData } = props;
 
     const [isVisualizationInitializing, setIsVisualizationInitializing] = useState(true);
     const [error, setError] = useState<GoodDataSdkError | undefined>(undefined);
 
-    const exportDataText = useVisualizationExportData(props.exportData, isVisualizationInitializing, !!error);
+    const exportDataText = useVisualizationExportData(exportData, isVisualizationInitializing, !!error);
     const exportRichText = useRichTextExportData();
 
     const onLoadingChangedHandler = useCallback(
@@ -42,4 +42,4 @@ export const ExportModeDashboardRichText: React.FC<IDashboardRichTextProps> = (p
             />
         </div>
     );
-};
+}

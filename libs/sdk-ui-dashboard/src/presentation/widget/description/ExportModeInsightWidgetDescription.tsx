@@ -1,6 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
 import { DescriptionPanelContent } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -20,9 +19,7 @@ import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
  *
  * It is hidden, but holds the export data and content for exporter.
  */
-export const ExportModeInsightWidgetDescription: React.FC<IInsightWidgetDescriptionTriggerProps> = (
-    props,
-) => {
+export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescriptionTriggerProps) {
     const { exportData, widget } = props;
     const { isVisible, description, useRichText } = useInsightWidgetDescription(props);
     const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
@@ -50,4 +47,4 @@ export const ExportModeInsightWidgetDescription: React.FC<IInsightWidgetDescript
             />
         </div>
     );
-};
+}

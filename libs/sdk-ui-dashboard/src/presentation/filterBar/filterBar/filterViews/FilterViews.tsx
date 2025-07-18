@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
@@ -36,7 +36,7 @@ import { AddFilterView } from "./AddFilterView.js";
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "br tr", offset: { x: -27, y: -10 } }];
 
-const DropdownButtonLabel: React.FC<{ filterViews: IDashboardFilterView[] }> = ({ filterViews }) => {
+function DropdownButtonLabel({ filterViews }: { filterViews: IDashboardFilterView[] }) {
     return filterViews.length === 0 ? (
         <FormattedMessage id="filters.filterViews.dropdown.buttonEmpty" />
     ) : (
@@ -45,7 +45,7 @@ const DropdownButtonLabel: React.FC<{ filterViews: IDashboardFilterView[] }> = (
             values={{ count: filterViews?.length ?? 0 }}
         />
     );
-};
+}
 
 const useCallbacks = (isDialogOpen: boolean, countOfSavedViews: number) => {
     const dispatch = useDashboardDispatch();
@@ -101,7 +101,7 @@ const useCallbacks = (isDialogOpen: boolean, countOfSavedViews: number) => {
     };
 };
 
-export const FilterViews: React.FC = () => {
+export function FilterViews() {
     const isDialogOpen = useDashboardSelector(selectIsFilterViewsDialogOpen);
     const dialogMode = useDashboardSelector(selectFilterViewsDialogMode);
     const isDashboardEditMode = useDashboardSelector(selectIsInEditMode);
@@ -186,4 +186,4 @@ export const FilterViews: React.FC = () => {
             ) : null}
         </div>
     );
-};
+}

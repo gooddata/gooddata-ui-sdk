@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { useContext, useMemo, useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useContext, useMemo, useCallback, createContext, ReactNode } from "react";
 import { invariant } from "ts-invariant";
 import {
     filterObjRef,
@@ -49,9 +49,7 @@ export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfig
     } & ReturnType<typeof useLimitingItemsConfiguration> &
     ReturnType<typeof useDependentDateFiltersConfiguration>;
 
-export const AttributeFilterParentFiltering = React.createContext<IAttributeFilterParentFiltering>(
-    null as any,
-); // TODO: Fix typing
+export const AttributeFilterParentFiltering = createContext<IAttributeFilterParentFiltering>(null as any); // TODO: Fix typing
 
 AttributeFilterParentFiltering.displayName = "AttributeFilterParentFiltering";
 
@@ -68,17 +66,18 @@ export type IAttributeFilterParentFilteringProviderProps = {
     filter: IDashboardAttributeFilter;
     displayAsLabel?: ObjRef;
     attributes?: IAttributeMetadataObject[];
-    children?: React.ReactNode;
+    children?: ReactNode;
 };
 
 /**
  * @internal
  */
-export const AttributeFilterParentFilteringProvider: React.FC<
-    IAttributeFilterParentFilteringProviderProps
-> = (props) => {
-    const { children, filter: currentFilter, attributes, displayAsLabel } = props;
-
+export function AttributeFilterParentFilteringProvider({
+    children,
+    filter: currentFilter,
+    attributes,
+    displayAsLabel,
+}: IAttributeFilterParentFilteringProviderProps) {
     const availableDatasetsForFilter: IAttributeOrMeasure[] = useMemo(
         () => [
             {
@@ -287,4 +286,4 @@ export const AttributeFilterParentFilteringProvider: React.FC<
             {children}
         </AttributeFilterParentFiltering.Provider>
     );
-};
+}

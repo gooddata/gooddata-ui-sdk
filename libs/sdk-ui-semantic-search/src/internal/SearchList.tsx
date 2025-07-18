@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import { ComponentType } from "react";
 import { List } from "@gooddata/sdk-ui-kit";
 import { useListScroll, useListSelector } from "../hooks/index.js";
 import { ListItem, ListItemProps } from "../types.js";
@@ -28,14 +28,14 @@ export type SearchListProps<T> = {
     /**
      * Component to render the item.
      */
-    ItemComponent: React.ComponentType<ListItemProps<T>>;
+    ItemComponent: ComponentType<ListItemProps<T>>;
 };
 
 /**
  * A dropdown list with the search results.
  * @internal
  */
-export const SearchList = <T,>({ items, width, onSelect, ItemComponent }: SearchListProps<T>) => {
+export function SearchList<T>({ items, width, onSelect, ItemComponent }: SearchListProps<T>) {
     const [selected, setSelected, direction] = useListSelector(items, onSelect);
     const [scrollToItem, scrollDirection] = useListScroll(selected, direction);
 
@@ -59,4 +59,4 @@ export const SearchList = <T,>({ items, width, onSelect, ItemComponent }: Search
             items={items}
         />
     );
-};
+}

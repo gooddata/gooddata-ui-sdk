@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 import { DraggableAttributeFilterCreatePanelItem } from "../../dragAndDrop/index.js";

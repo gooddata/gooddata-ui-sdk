@@ -1,6 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-
-import React from "react";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend.js";
 

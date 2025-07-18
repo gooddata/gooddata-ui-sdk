@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
@@ -12,7 +11,7 @@ type UserMessageProps = {
     isLast?: boolean;
 };
 
-export const UserMessageComponent: React.FC<UserMessageProps> = ({ message, isLast }) => {
+export function UserMessageComponent({ message, isLast }: UserMessageProps) {
     const intl = useIntl();
     const classNames = cx(
         "gd-gen-ai-chat__messages__message",
@@ -33,4 +32,4 @@ export const UserMessageComponent: React.FC<UserMessageProps> = ({ message, isLa
             />
         </div>
     );
-};
+}

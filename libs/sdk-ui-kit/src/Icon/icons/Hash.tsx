@@ -1,6 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
-
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
@@ -10,13 +8,7 @@ export interface IHashIconProps extends IIconProps {
 /**
  * @internal
  */
-export const Hash: React.FC<IHashIconProps> = ({
-    color,
-    backgroundColor,
-    className,
-    width = 17,
-    height = 15,
-}) => {
+export function Hash({ color, backgroundColor, className, width = 17, height = 15 }: IHashIconProps) {
     return (
         <svg
             className={className}
@@ -47,4 +39,4 @@ export const Hash: React.FC<IHashIconProps> = ({
             </defs>
         </svg>
     );
-};
+}

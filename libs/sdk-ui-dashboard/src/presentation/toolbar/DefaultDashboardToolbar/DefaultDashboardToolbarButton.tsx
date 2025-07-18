@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ReactElement } from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, Button, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
@@ -7,11 +7,13 @@ const ALIGN_POINTS: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -5 } }
 
 interface IDashboardToolbarButtonBubbleWrapperProps {
     tooltip: string | undefined;
-    children: React.ReactElement;
+    children: ReactElement;
 }
 
-const DashboardToolbarButtonBubbleWrapper: React.FC<IDashboardToolbarButtonBubbleWrapperProps> = (props) => {
-    const { tooltip, children } = props;
+function DashboardToolbarButtonBubbleWrapper({
+    tooltip,
+    children,
+}: IDashboardToolbarButtonBubbleWrapperProps) {
     if (!tooltip) {
         return <div className="gd-toolbar-button-wrapper">{children}</div>;
     }
@@ -22,7 +24,7 @@ const DashboardToolbarButtonBubbleWrapper: React.FC<IDashboardToolbarButtonBubbl
             <Bubble alignPoints={ALIGN_POINTS}>{tooltip}</Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
 /**
  * @internal
@@ -38,8 +40,13 @@ export interface IDefaultDashboardToolbarButtonProps {
 /**
  * @internal
  */
-export const DefaultDashboardToolbarButton: React.FC<IDefaultDashboardToolbarButtonProps> = (props) => {
-    const { tooltip, disabled, icon, onClick, isActive } = props;
+export function DefaultDashboardToolbarButton({
+    tooltip,
+    disabled,
+    icon,
+    onClick,
+    isActive,
+}: IDefaultDashboardToolbarButtonProps) {
     return (
         <DashboardToolbarButtonBubbleWrapper tooltip={tooltip}>
             <Button
@@ -49,4 +56,4 @@ export const DefaultDashboardToolbarButton: React.FC<IDefaultDashboardToolbarBut
             />
         </DashboardToolbarButtonBubbleWrapper>
     );
-};
+}

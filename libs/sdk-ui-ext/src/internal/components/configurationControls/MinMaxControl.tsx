@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { useIntl } from "react-intl";
 

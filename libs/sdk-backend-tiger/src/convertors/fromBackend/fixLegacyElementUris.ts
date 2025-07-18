@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IInsightDefinition,
     ILocatorItem,
@@ -143,11 +143,7 @@ function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnLocator 
  * @internal
  */
 function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWidthItem {
-    return (
-        !isEmpty(obj) &&
-        (obj as IMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
-        (obj as IMeasureColumnWidthItem).measureColumnWidthItem.locators !== undefined
-    );
+    return !isEmpty(obj) && (obj as IMeasureColumnWidthItem).measureColumnWidthItem?.locators !== undefined;
 }
 
 function fixColumnLocator(locator: unknown): unknown {

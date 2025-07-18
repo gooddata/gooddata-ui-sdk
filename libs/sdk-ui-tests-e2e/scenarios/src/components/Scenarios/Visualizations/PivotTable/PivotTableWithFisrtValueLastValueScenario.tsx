@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 import {
@@ -99,9 +98,9 @@ export interface PivotTableFirstValueLastValueCoreProps {
     config: IPivotTableConfig;
 }
 
-const PivotTableFirstValueLastValue: React.FC<PivotTableFirstValueLastValueCoreProps> = (props) => {
-    const { measures, rows, filters } = props;
+// TODO: MARTIN ASK IVAN
 
+function PivotTableFirstValueLastValue({ measures, rows, filters }: PivotTableFirstValueLastValueCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -116,22 +115,22 @@ const PivotTableFirstValueLastValue: React.FC<PivotTableFirstValueLastValueCoreP
             />
         </div>
     );
-};
+}
 
-export const PivotTableOfFirstLastValueWithinAttribute = () => {
+export function PivotTableOfFirstLastValueWithinAttribute() {
     return (
         <PivotTableFirstValueLastValue
             measures={measuresOfFirstValueLastValueWithBy}
             rows={[ReferenceMd.DateDatasets.Created.CreatedYear.Default]}
         />
     );
-};
+}
 
-export const PivotTableOfFirstLastValueWithOrder = () => {
+export function PivotTableOfFirstLastValueWithOrder() {
     return <PivotTableFirstValueLastValue measures={measuresOfFirstValueLastValueWithOrder} />;
-};
+}
 
-export const PivotTableOfFirstLastValueWithPop = () => {
+export function PivotTableOfFirstLastValueWithPop() {
     return (
         <PivotTableFirstValueLastValue
             measures={measuresOfFirstValueLastValueWithAmount}
@@ -139,9 +138,9 @@ export const PivotTableOfFirstLastValueWithPop = () => {
             filters={filtersOfSaleRep1Value}
         />
     );
-};
+}
 
-export const PivotTableOfFirstLastValueWithPrevious = () => {
+export function PivotTableOfFirstLastValueWithPrevious() {
     return (
         <PivotTableFirstValueLastValue
             measures={measuresOfFirstValueLastValueWithPrevious}
@@ -149,9 +148,9 @@ export const PivotTableOfFirstLastValueWithPrevious = () => {
             filters={filtersOfSaleRep3Values}
         />
     );
-};
+}
 
-export const PivotTableOfFirstLastValueWithQuarter = () => {
+export function PivotTableOfFirstLastValueWithQuarter() {
     return (
         <PivotTableFirstValueLastValue
             measures={measuresOfFirstValueLastValueWithQuarter}
@@ -159,9 +158,9 @@ export const PivotTableOfFirstLastValueWithQuarter = () => {
             filters={filtersOfClosedAndSaleRep}
         />
     );
-};
+}
 
-export const PivotTableOfFirstLastValueWithRank = () => {
+export function PivotTableOfFirstLastValueWithRank() {
     return (
         <PivotTableFirstValueLastValue
             measures={measuresOfFirstValueLastValueWithRank}
@@ -169,9 +168,9 @@ export const PivotTableOfFirstLastValueWithRank = () => {
             filters={filtersOfClosedYear}
         />
     );
-};
+}
 
-export const PivotTableOfFirstLastValueWithRunSum = () => {
+export function PivotTableOfFirstLastValueWithRunSum() {
     return (
         <PivotTableFirstValueLastValue
             measures={measuresOfFirstValueLastValueWithRunSum}
@@ -179,9 +178,9 @@ export const PivotTableOfFirstLastValueWithRunSum = () => {
             filters={filtersOfCreatedYearAndSaleRep3Values}
         />
     );
-};
+}
 
-export const PivotTableOfFirstLastValueWithRunVar = () => {
+export function PivotTableOfFirstLastValueWithRunVar() {
     return (
         <PivotTableFirstValueLastValue
             measures={measuresOfFirstValueLastValueWithRunVar}
@@ -189,4 +188,4 @@ export const PivotTableOfFirstLastValueWithRunVar = () => {
             filters={filtersOfCreatedYearAndSaleRep2Values}
         />
     );
-};
+}

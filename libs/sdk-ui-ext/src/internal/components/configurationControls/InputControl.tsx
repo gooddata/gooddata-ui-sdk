@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ComponentProps, useState, useEffect, useRef } from "react";
+import { ComponentProps, useState, useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import noop from "lodash/noop.js";
 import set from "lodash/set.js";

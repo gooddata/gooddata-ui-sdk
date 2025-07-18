@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -24,9 +24,7 @@ interface IDateFilterConfigurationItemProps {
     dataSetRef: ObjRef;
 }
 
-export const DateFilterConfigurationItem: React.FC<IDateFilterConfigurationItemProps> = (props) => {
-    const { widget, dataSetRef } = props;
-
+export function DateFilterConfigurationItem({ widget, dataSetRef }: IDateFilterConfigurationItemProps) {
     const [isApplied, setIsApplied] = useState(
         () =>
             !widget.ignoreDashboardFilters.some((reference) => {
@@ -102,4 +100,4 @@ export const DateFilterConfigurationItem: React.FC<IDateFilterConfigurationItemP
             )}
         </div>
     );
-};
+}

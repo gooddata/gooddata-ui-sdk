@@ -1,7 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { ReactElement } from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-export const IntlDecorator = (components: JSX.Element, locale: string = "en-US"): JSX.Element => (
+export const IntlDecorator = (components: ReactElement, locale: string = "en-US"): ReactElement => (
     <IntlWrapper locale={locale}>{components}</IntlWrapper>
 );

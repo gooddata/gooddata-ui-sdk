@@ -1,12 +1,12 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
-import React from "react";
+import { ReactNode } from "react";
 import { bem } from "../bem.js";
 import { defineMessages, useIntl } from "react-intl";
 interface IDetailsDialogProps {
     onClose: () => void;
     title: string;
-    content: React.ReactNode;
+    content: ReactNode;
 }
 
 const { b, e } = bem("gd-ui-ext-notification-details-dialog");

@@ -1,5 +1,4 @@
-// (C) 2019 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { ISeparators } from "@gooddata/sdk-model";
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 
@@ -16,12 +15,7 @@ export interface IFormattedNumberProps {
 /**
  * @internal
  */
-export const FormattedNumber: React.FC<IFormattedNumberProps> = ({
-    className,
-    value,
-    format,
-    separators,
-}) => {
+export function FormattedNumber({ className, value, format, separators }: IFormattedNumberProps) {
     const valueToFormat = ClientFormatterFacade.convertValue(value);
 
     const { formattedValue: label, colors } = ClientFormatterFacade.formatValue(
@@ -37,4 +31,4 @@ export const FormattedNumber: React.FC<IFormattedNumberProps> = ({
             {label}
         </span>
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
@@ -31,10 +31,7 @@ export function useShareButtonProps(): IShareButtonProps {
 /**
  * @alpha
  */
-export const DefaultShareButton: React.FC<IShareButtonProps> = ({
-    isVisible,
-    onShareButtonClick,
-}): JSX.Element | null => {
+export function DefaultShareButton({ isVisible, onShareButtonClick }: IShareButtonProps) {
     const intl = useIntl();
     const tooltipText = intl.formatMessage({ id: "share.button.tooltip" });
 
@@ -57,4 +54,4 @@ export const DefaultShareButton: React.FC<IShareButtonProps> = ({
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

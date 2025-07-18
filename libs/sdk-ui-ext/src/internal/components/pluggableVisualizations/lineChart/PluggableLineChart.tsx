@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
-import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import isEqual from "lodash/isEqual.js";

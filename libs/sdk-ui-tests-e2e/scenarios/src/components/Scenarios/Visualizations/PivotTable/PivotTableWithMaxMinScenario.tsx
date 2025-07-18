@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 import {
@@ -57,9 +56,7 @@ export interface PivotTableMaxMinCoreProps {
     config: IPivotTableConfig;
 }
 
-const PivotTableMaxMin: React.FC<PivotTableMaxMinCoreProps> = (props) => {
-    const { measures, rows, filters } = props;
-
+function PivotTableMaxMin({ measures, rows, filters }: PivotTableMaxMinCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -74,9 +71,9 @@ const PivotTableMaxMin: React.FC<PivotTableMaxMinCoreProps> = (props) => {
             />
         </div>
     );
-};
+}
 
-export const PivotTableOfMaxWithCaseWhen = () => {
+export function PivotTableOfMaxWithCaseWhen() {
     return (
         <PivotTableMaxMin
             measures={measuresOfMaxCase}
@@ -84,9 +81,9 @@ export const PivotTableOfMaxWithCaseWhen = () => {
             filters={filtersOfCountyAndClosedDate}
         />
     );
-};
+}
 
-export const PivotTableOfMaxWithMacroYear = () => {
+export function PivotTableOfMaxWithMacroYear() {
     return (
         <PivotTableMaxMin
             measures={measuresOfMaxWithMacroYear}
@@ -94,9 +91,9 @@ export const PivotTableOfMaxWithMacroYear = () => {
             filters={filtersOfCreated2011}
         />
     );
-};
+}
 
-export const PivotTableOfMinWithByAllOther = () => {
+export function PivotTableOfMinWithByAllOther() {
     return (
         <PivotTableMaxMin
             measures={measuresOfMinWithByAllOther}
@@ -104,9 +101,9 @@ export const PivotTableOfMinWithByAllOther = () => {
             filters={filtersOfCreatedAndClosedYear}
         />
     );
-};
+}
 
-export const PivotTableOfMinWithIfThen = () => {
+export function PivotTableOfMinWithIfThen() {
     return (
         <PivotTableMaxMin
             measures={measuresOfMinWithIfThen}
@@ -114,4 +111,4 @@ export const PivotTableOfMinWithIfThen = () => {
             filters={filtersOfCountyAndCreatedDate}
         />
     );
-};
+}

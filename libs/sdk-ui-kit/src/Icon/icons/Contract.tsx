@@ -1,13 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Contract: React.FC<IIconProps> = ({ color, className, width = 16, height = 16, ariaHidden }) => {
+export function Contract({ color, className, width = 16, height = 16, ariaHidden }: IIconProps) {
     return (
         <svg
             className={className}
@@ -26,4 +24,4 @@ export const Contract: React.FC<IIconProps> = ({ color, className, width = 16, h
             />
         </svg>
     );
-};
+}

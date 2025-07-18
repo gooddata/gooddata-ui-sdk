@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
 import { defineMessages } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -258,14 +258,16 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const onDeleteItem = useCallback(
         (item: IDrillConfigItem) => {
             if (item.complete) {
-                isDrillDownToAttributeHierarchyConfig(item)
-                    ? dispatch(
-                          removeDrillDownForInsightWidget(
-                              widgetRef,
-                              buildBlacklistHierarchies(item, attributeHierarchies),
-                          ),
-                      )
-                    : dispatch(removeDrillsForInsightWidget(widgetRef, [localIdRef(item.localIdentifier!)]));
+                if (isDrillDownToAttributeHierarchyConfig(item)) {
+                    dispatch(
+                        removeDrillDownForInsightWidget(
+                            widgetRef,
+                            buildBlacklistHierarchies(item, attributeHierarchies),
+                        ),
+                    );
+                } else {
+                    dispatch(removeDrillsForInsightWidget(widgetRef, [localIdRef(item.localIdentifier!)]));
+                }
             }
             deleteIncompleteItem(item);
         },

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType } from "react";
 import { invariant } from "ts-invariant";
 import {
     IScenario,
@@ -38,7 +38,7 @@ export interface IScenarioGroup<T extends VisProps> {
     /**
      * React component that realizes the visualization.
      */
-    readonly component: React.ComponentType<T>;
+    readonly component: ComponentType<T>;
 
     /**
      * List of available test scenarios
@@ -68,7 +68,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
 
     constructor(
         public readonly vis: string,
-        public readonly component: React.ComponentType<T>,
+        public readonly component: ComponentType<T>,
     ) {}
 
     /**
@@ -292,11 +292,11 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
  * Start defining scenarios for a component that is realized using the provided React component..
  *
  * @param chart - chart name
- * @param component - chart renderer, a function that transforms chart props to a JSX.Element
+ * @param component - chart renderer, a function that transforms chart props to a ReactElement
  */
 export function scenariosFor<T extends VisProps>(
     chart: string,
-    component: React.ComponentType<T>,
+    component: ComponentType<T>,
 ): ScenarioGroup<T> {
     return new ScenarioGroup(chart, component);
 }

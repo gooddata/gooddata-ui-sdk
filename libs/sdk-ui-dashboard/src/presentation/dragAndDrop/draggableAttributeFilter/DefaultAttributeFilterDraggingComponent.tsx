@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import {
@@ -12,7 +11,7 @@ import {
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
 import { selectCatalogAttributes, useDashboardSelector } from "../../../model/index.js";
-import { AttributeFilterDraggingComponent } from "../../componentDefinition/index.js";
+import { IAttributeFilterDraggingComponentProps } from "../../componentDefinition/index.js";
 
 function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, identifierOrUriRef: ObjRef) {
     return (
@@ -30,7 +29,7 @@ const selectFilterAttribute = (filter: IDashboardAttributeFilter) =>
         ),
     );
 
-export const DefaultAttributeFilterDraggingComponent: AttributeFilterDraggingComponent = ({ item }) => {
+export function DefaultAttributeFilterDraggingComponent({ item }: IAttributeFilterDraggingComponentProps) {
     const theme = useTheme();
     const filterAttribute = useDashboardSelector(selectFilterAttribute(item.filter));
     if (!filterAttribute) {
@@ -52,4 +51,4 @@ export const DefaultAttributeFilterDraggingComponent: AttributeFilterDraggingCom
             </div>
         </div>
     );
-};
+}

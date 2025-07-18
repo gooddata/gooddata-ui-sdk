@@ -1,11 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { render, waitFor, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { withIntl } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 
 import { Tabs, ITabsProps } from "../Tabs.js";
+import { Intl } from "@gooddata/sdk-ui";
 
 const tabDefinitions = [{ id: "tab1" }, { id: "tab2" }];
 
@@ -19,9 +18,11 @@ const renderTabs = (options?: ITabsProps) => {
         tabs: tabDefinitions,
     };
 
-    const Wrapper = withIntl(Tabs, "en-US", messages);
-
-    return render(<Wrapper {...options} {...defaultProps} />);
+    return render(
+        <Intl customLocale="en-US" customMessages={messages}>
+            <Tabs {...options} {...defaultProps} />
+        </Intl>,
+    );
 };
 
 describe("Tabs", () => {

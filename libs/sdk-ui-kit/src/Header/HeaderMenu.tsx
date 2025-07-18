@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 import identity from "lodash/identity.js";
@@ -26,19 +26,19 @@ export const HeaderMenu = memo(function HeaderMenu({
 
             const classNames = cx("gd-header-menu-item gd-list-help-menu-item", {
                 active: item.isActive,
-                [item.className]: !!item.className,
+                [item.className ?? ""]: !!item.className,
             });
 
             return (
                 <a
                     key={item.key}
-                    onClick={clickHandler} // eslint-disable-line react/jsx-no-bind
+                    onClick={clickHandler}
                     href={item.href}
                     className={classNames}
                     target={item.target}
                     rel={item.target === "_blank" ? "noreferrer noopener" : undefined}
                 >
-                    {item.icon ? item.icon : null}
+                    {item.icon ?? null}
                     {item.iconName ? <i className={cx(item.iconName, "gd-icon")} /> : null}
                     <span className={item.className}>
                         <FormattedMessage id={item.key} />

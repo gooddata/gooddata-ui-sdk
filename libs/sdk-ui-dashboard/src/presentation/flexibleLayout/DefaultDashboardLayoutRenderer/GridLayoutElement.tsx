@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { CSSProperties, MouseEventHandler, forwardRef, useMemo } from "react";
+import { CSSProperties, MouseEventHandler, ReactNode, forwardRef, useMemo } from "react";
 import cx from "classnames";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
@@ -33,7 +33,7 @@ export interface IGridLayoutElementProps {
     /**
      * Element children renderer inside of the element.
      */
-    children: React.ReactNode;
+    children: ReactNode;
     /**
      * Optional class name set on the element.
      */

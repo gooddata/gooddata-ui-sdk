@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { createContext, ReactNode, useContext } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict } from "../BackendContext.js";
 import {
@@ -23,7 +23,7 @@ export type IClientWorkspaceContext = UseCancelablePromiseState<
 > &
     IClientWorkspaceStatus;
 
-const ClientWorkspaceContext = React.createContext<IClientWorkspaceContext>({
+const ClientWorkspaceContext = createContext<IClientWorkspaceContext>({
     status: "pending",
     error: undefined,
     result: undefined,
@@ -48,7 +48,7 @@ export interface IClientWorkspaceProviderCoreProps {
     /**
      * Wrapped React components that will have access to the LCMWorkspace context.
      */
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 /**
@@ -110,7 +110,7 @@ export type IClientWorkspaceProviderProps =
  *
  * @alpha
  */
-export const ClientWorkspaceProvider: React.FC<IClientWorkspaceProviderProps> = (props) => {
+export function ClientWorkspaceProvider(props: IClientWorkspaceProviderProps) {
     const { children, backend: customBackend } = props;
     const { client, dataProduct, workspace: customWorkspace } = getInputLCMIdentifiersFromProps(props);
     const backend = useBackendStrict(customBackend, "ClientWorkspaceProvider");
@@ -130,7 +130,7 @@ export const ClientWorkspaceProvider: React.FC<IClientWorkspaceProviderProps> = 
             <WorkspaceProvider workspace={ws!}>{children}</WorkspaceProvider>
         </ClientWorkspaceContext.Provider>
     );
-};
+}
 
 /**
  * ResolvedClientWorkspaceProvider can be used as a replacement of the {@link WorkspaceProvider}, if you are accessing
@@ -145,7 +145,7 @@ export const ClientWorkspaceProvider: React.FC<IClientWorkspaceProviderProps> = 
  *
  * @alpha
  */
-export const ResolvedClientWorkspaceProvider: React.FC<IClientWorkspaceIdentifiers> = (props) => {
+export function ResolvedClientWorkspaceProvider(props: IClientWorkspaceIdentifiers) {
     invariant(props.dataProduct);
     invariant(props.client);
     invariant(props.workspace);
@@ -162,14 +162,14 @@ export const ResolvedClientWorkspaceProvider: React.FC<IClientWorkspaceIdentifie
             <WorkspaceProvider workspace={props.workspace}>{props.children}</WorkspaceProvider>
         </ClientWorkspaceContext.Provider>
     );
-};
+}
 
 /**
  * Hook to obtain loading status of the {@link ClientWorkspaceProvider} - "success", "error", "loading" or "pending".
  * @alpha
  */
 export const useClientWorkspaceStatus = (): UseCancelablePromiseStatus => {
-    const context = React.useContext(ClientWorkspaceContext);
+    const context = useContext(ClientWorkspaceContext);
     return context.status;
 };
 
@@ -178,7 +178,7 @@ export const useClientWorkspaceStatus = (): UseCancelablePromiseStatus => {
  * @alpha
  */
 export const useClientWorkspaceError = (): GoodDataSdkError | undefined => {
-    const context = React.useContext(ClientWorkspaceContext);
+    const context = useContext(ClientWorkspaceContext);
     return context.error;
 };
 
@@ -187,7 +187,7 @@ export const useClientWorkspaceError = (): GoodDataSdkError | undefined => {
  * @alpha
  */
 export const useClientWorkspaceIdentifiers = (): IClientWorkspaceIdentifiers => {
-    const context = React.useContext(ClientWorkspaceContext);
+    const context = useContext(ClientWorkspaceContext);
     return context.result ?? {};
 };
 
@@ -197,7 +197,7 @@ export const useClientWorkspaceIdentifiers = (): IClientWorkspaceIdentifiers => 
  * @alpha
  */
 export const useClientWorkspaceInitialized = (): boolean => {
-    const context = React.useContext(ClientWorkspaceContext);
+    const context = useContext(ClientWorkspaceContext);
     return context.isInitialized;
 };
 

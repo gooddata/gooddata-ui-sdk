@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
@@ -8,10 +7,7 @@ import { useComparisonDataItem } from "./useComparisonDataItem.js";
 import { withTitle } from "../withTitle.js";
 import ComparisonValue from "./ComparisonValue.js";
 
-const ComparisonDataItem: React.FC<IBaseHeadlineDataItemProps<IComparisonDataItem>> = ({
-    dataItem,
-    evaluationType,
-}) => {
+function ComparisonDataItem({ dataItem, evaluationType }: IBaseHeadlineDataItemProps<IComparisonDataItem>) {
     const { style, indicator: ComparisonIndicator } = useComparisonDataItem(evaluationType);
 
     return (
@@ -24,6 +20,6 @@ const ComparisonDataItem: React.FC<IBaseHeadlineDataItemProps<IComparisonDataIte
             </ResponsiveText>
         </div>
     );
-};
+}
 
 export default withTitle(ComparisonDataItem);

@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { createBackend } from "./backend";
@@ -24,7 +24,7 @@ const defaultContext: IAuthContext = {
 
 export const AuthContext = createContext<IAuthContext>(defaultContext);
 
-export const AuthProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function AuthProvider({ children }: { children?: ReactNode }) {
     const {
         onLoginStart,
         onLoginSuccess,
@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<{ children?: React.ReactNode }> = ({ childre
             try {
                 await backend.authenticate();
                 onLoginSuccess();
-            } catch (err) {
+            } catch {
                 // we do not care about the error in this context
                 onLoginError();
             }
@@ -90,11 +90,13 @@ export const AuthProvider: React.FC<{ children?: React.ReactNode }> = ({ childre
             {children}
         </AuthContext.Provider>
     );
-};
+}
 
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+    return useContext(AuthContext);
+}
 
-export const useBackend = () => {
+export function useBackend() {
     const { backend: backendFromAuth } = useAuth();
     return backendFromAuth;
-};
+}

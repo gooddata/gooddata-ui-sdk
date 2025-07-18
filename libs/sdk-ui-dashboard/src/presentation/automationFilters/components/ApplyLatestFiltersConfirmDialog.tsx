@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { ConfirmDialog, Message } from "@gooddata/sdk-ui-kit";
 
@@ -17,8 +17,11 @@ const messages = defineMessages({
     scheduleText: { id: "dialogs.automation.applyCurrentFilters.schedule.confirm" },
 });
 
-export const ApplyCurrentFiltersConfirmDialog: React.FC<IApplyCurrentFiltersConfirmDialogProps> = (props) => {
-    const { automationType, onCancel, onEdit } = props;
+export function ApplyCurrentFiltersConfirmDialog({
+    automationType,
+    onCancel,
+    onEdit,
+}: IApplyCurrentFiltersConfirmDialogProps) {
     const intl = useIntl();
 
     return (
@@ -43,4 +46,4 @@ export const ApplyCurrentFiltersConfirmDialog: React.FC<IApplyCurrentFiltersConf
             </Message>
         </ConfirmDialog>
     );
-};
+}

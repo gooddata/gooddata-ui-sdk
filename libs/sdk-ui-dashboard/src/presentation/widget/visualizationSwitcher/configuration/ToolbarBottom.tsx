@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { VisualizationConfig } from "./VisualizationConfig.js";
 import { VisualizationsPage } from "./VisualizationsPage.js";
@@ -14,15 +13,15 @@ interface IToolbarBottomProps {
     onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
     showVisualizationsList: boolean;
 }
-export const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
-    showVisualizationsList,
+export function ToolbarBottom({
     visualizations,
+    activeVisualizationId,
     onVisualizationAdd,
     onVisualizationDelete,
     onVisualizationSelect,
     onVisualizationPositionChange,
-    activeVisualizationId,
-}) => {
+    showVisualizationsList,
+}: IToolbarBottomProps) {
     const activeVisualization = visualizations.find(
         (visualization) => visualization.identifier === activeVisualizationId,
     );
@@ -46,4 +45,4 @@ export const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
             )}
         </div>
     );
-};
+}

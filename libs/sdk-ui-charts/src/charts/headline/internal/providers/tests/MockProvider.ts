@@ -1,15 +1,13 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ComponentType } from "react";
 import AbstractProvider from "../AbstractProvider.js";
 import { IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
 
 /**
  * Mock provider for AbstractProvider test purpose
  */
-class MockProvider extends AbstractProvider {
-    public getHeadlineTransformationComponent(): React.ComponentType<IHeadlineTransformationProps> {
+export default class MockProvider extends AbstractProvider {
+    public getHeadlineTransformationComponent(): ComponentType<IHeadlineTransformationProps> {
         return null;
     }
 }
-
-export default MockProvider;

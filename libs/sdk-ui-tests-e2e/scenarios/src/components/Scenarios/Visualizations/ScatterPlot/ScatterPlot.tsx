@@ -1,5 +1,4 @@
-// (C) 2024 GoodData Corporation
-import React from "react";
+// (C) 2024-2025 GoodData Corporation
 import { ScatterPlot, getColorMappingPredicate } from "@gooddata/sdk-ui-charts";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import { idRef } from "@gooddata/sdk-model";
@@ -15,7 +14,7 @@ import {
 
 const style = { height: 500 };
 
-export const ScatterPlotSegmentation: React.FC = () => {
+export function ScatterPlotSegmentation() {
     return (
         <div style={style} className="s-scatter-plot">
             <ScatterPlot
@@ -48,20 +47,20 @@ export const ScatterPlotSegmentation: React.FC = () => {
             />
         </div>
     );
-};
+}
 
-export const ScatterPlotSegmentationInsightView: React.FC = () => {
+export function ScatterPlotSegmentationInsightView() {
     return (
         <div style={style} className="s-scatter-plot">
             <InsightView insight={idRef(Insights.ScatterPlotSegmentByAttribute)} />
         </div>
     );
-};
+}
 
-export const ScatterPlotSegmentationDashboard: React.FC = () => {
+export function ScatterPlotSegmentationDashboard() {
     return (
         <div style={style}>
             <Dashboard dashboard={idRef(Dashboards.DashboardScatterPlotSegmentation)} />;
         </div>
     );
-};
+}

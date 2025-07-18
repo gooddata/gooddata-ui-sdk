@@ -1,5 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import {
     applyRatioRule,
     ComputeRatioRule,
@@ -154,7 +153,7 @@ const WrappedComboChart = withChart(comboChartDefinition)(CoreComboChart);
  *
  * @public
  */
-export const ComboChart = (props: IComboChartProps) => {
+export function ComboChart(props: IComboChartProps) {
     const [primaryMeasures, secondaryMeasures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.primaryMeasures, props.secondaryMeasures, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -172,4 +171,4 @@ export const ComboChart = (props: IComboChartProps) => {
             }}
         />
     );
-};
+}

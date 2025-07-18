@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 import cx from "classnames";
 
 import { ConfigurationBubble } from "../../../common/index.js";
@@ -8,12 +8,14 @@ import { ConfigurationBubble } from "../../../common/index.js";
 interface IDashboardInsightMenuBubbleProps {
     onClose: () => void;
     isSubmenu?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
-export const DashboardInsightEditMenuBubble: React.FC<IDashboardInsightMenuBubbleProps> = (props) => {
-    const { children, onClose, isSubmenu } = props;
-
+export function DashboardInsightEditMenuBubble({
+    children,
+    onClose,
+    isSubmenu,
+}: IDashboardInsightMenuBubbleProps) {
     return (
         <ConfigurationBubble
             alignTo=".s-dash-item.is-selected"
@@ -28,4 +30,4 @@ export const DashboardInsightEditMenuBubble: React.FC<IDashboardInsightMenuBubbl
             {children}
         </ConfigurationBubble>
     );
-};
+}

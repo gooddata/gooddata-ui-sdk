@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 @use "sass:color";
-@use "react-day-picker/dist/style.css";
+@use "react-day-picker/src/style.css";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $gd-date-range-picker-hover-bgcolor: kit-variables.$is-focused-background;
@@ -271,7 +271,7 @@ $gd-day-picker-input-width: 126px;
             font-weight: 400;
         }
 
-        .rdp-day_outside {
+        .rdp-outside {
             color: kit-variables.$gd-color-disabled;
             cursor: default;
             font-weight: 400;

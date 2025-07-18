@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { ListItemProps } from "../types.js";
 import { SearchListItem } from "../SearchListItem.js";

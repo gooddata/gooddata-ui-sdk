@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 import { Dialog } from "./Dialog.js";
 import { Message } from "../Messages/index.js";
 import { Button } from "../Button/index.js";
@@ -20,14 +19,14 @@ export interface ICommunityEditionDialogProps {
 /**
  * @internal
  */
-export const CommunityEditionDialog: React.FC<ICommunityEditionDialogProps> = ({
+export function CommunityEditionDialog({
     headerText,
     infoText,
     copyrightText,
     links,
     onClose,
     closeButtonText,
-}) => {
+}: ICommunityEditionDialogProps) {
     const titleId = useId();
 
     return (
@@ -65,4 +64,4 @@ export const CommunityEditionDialog: React.FC<ICommunityEditionDialogProps> = ({
             </div>
         </Dialog>
     );
-};
+}

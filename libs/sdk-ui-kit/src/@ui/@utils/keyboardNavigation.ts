@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { KeyboardEvent, ModifierKey } from "react";
 
 /**
  * @internal
@@ -10,7 +10,7 @@ export interface IHandleActionOptions {
     shouldStopPropagation?: boolean;
 }
 
-const handleAction = <T extends React.KeyboardEvent | KeyboardEvent = React.KeyboardEvent>(
+const handleAction = <T extends KeyboardEvent | KeyboardEvent = KeyboardEvent>(
     event: T,
     action?: (e: T) => void,
     { shouldPreventDefault = true, shouldStopPropagation = true }: IHandleActionOptions = {},
@@ -36,7 +36,7 @@ export const modifierNegator = "!" as const;
 /**
  * @internal
  */
-export type IModifier = React.ModifierKey | `${typeof modifierNegator}${React.ModifierKey}`;
+export type IModifier = ModifierKey | `${typeof modifierNegator}${ModifierKey}`;
 
 /**
  * @internal
@@ -45,7 +45,7 @@ export const makeKeyboardNavigation =
     <ActionKeysMap extends { [action: string]: Array<{ code: string | string[]; modifiers?: IModifier[] }> }>(
         actionKeysMap: ActionKeysMap,
     ) =>
-    <T extends React.KeyboardEvent | KeyboardEvent = React.KeyboardEvent>(
+    <T extends KeyboardEvent | KeyboardEvent = KeyboardEvent>(
         handlers: { [action in keyof ActionKeysMap | "onUnhandledKeyDown"]?: (event: T) => void },
         options: IHandleActionOptions = {},
     ) => {
@@ -70,7 +70,7 @@ export const makeKeyboardNavigation =
                                 ? fullModifier
                                 : fullModifier.substring(modifierNegator.length);
 
-                            return event.getModifierState(modifier as React.ModifierKey) === shouldBePressed;
+                            return event.getModifierState(modifier as ModifierKey) === shouldBePressed;
                         });
                     }),
             )?.[0];

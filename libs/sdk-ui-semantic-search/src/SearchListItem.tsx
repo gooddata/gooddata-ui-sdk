@@ -1,15 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import { MouseEvent, PropsWithChildren, ReactElement } from "react";
 import { ITheme } from "@gooddata/sdk-model";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { ListItem, ListItemProps } from "./types.js";
 import classnames from "classnames";
 
 export type SearchListItemProps<T> = ListItemProps<T> &
-    React.PropsWithChildren<{
-        renderIcon: (item: ListItem<T>, theme?: ITheme) => React.ReactElement;
-        renderDetails?: (item: ListItem<T>, theme?: ITheme) => React.ReactElement;
+    PropsWithChildren<{
+        renderIcon: (item: ListItem<T>, theme?: ITheme) => ReactElement;
+        renderDetails?: (item: ListItem<T>, theme?: ITheme) => ReactElement;
         getAreaLabel?: (item: ListItem<T>) => string;
         className?: string;
     }>;
@@ -18,7 +18,7 @@ export type SearchListItemProps<T> = ListItemProps<T> &
  * A single result item in the search results.
  * @internal
  */
-export const SearchListItem = <T,>({
+export function SearchListItem<T>({
     listItem,
     isActive,
     setActive,
@@ -28,10 +28,10 @@ export const SearchListItem = <T,>({
     getAreaLabel,
     className,
     children,
-}: SearchListItemProps<T>) => {
+}: SearchListItemProps<T>) {
     const theme = useTheme();
     const onPointerOver = () => setActive(listItem);
-    const onClick = (e: React.MouseEvent) => {
+    const onClick = (e: MouseEvent) => {
         if (e.button < 2) {
             // Only report left and middle clicks
             onSelect(listItem, e.nativeEvent);
@@ -61,4 +61,4 @@ export const SearchListItem = <T,>({
             </Tag>
         </span>
     );
-};
+}

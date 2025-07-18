@@ -1,6 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
-import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
+// (C) 2007-2025 GoodData Corporation
+import { IDashboardLayoutSectionRenderProps } from "./interfaces.js";
 import cx from "classnames";
 import { useDashboardSelector, selectActiveSection } from "../../../model/index.js";
 import {
@@ -23,9 +22,13 @@ function useBorderStatus(sectionIndex: number): DashboardLayoutSectionBorderStat
     return !isActive ? "invisible" : "muted";
 }
 
-export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => {
-    const { children, className, debug, isHidden, section } = props;
-
+export function EditableDashboardLayoutSectionRenderer({
+    children,
+    className,
+    debug,
+    isHidden,
+    section,
+}: IDashboardLayoutSectionRenderProps<unknown>) {
     const style = isHidden ? isHiddenStyle : defaultStyle;
     const status = useBorderStatus(section.index());
 
@@ -39,4 +42,4 @@ export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRend
             <DashboardLayoutSectionBorder status={status}>{children}</DashboardLayoutSectionBorder>
         </div>
     );
-};
+}

@@ -3,7 +3,7 @@
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { UiAsyncTableColumn, Item, ItemsWrapper, Separator } from "@gooddata/sdk-ui-kit";
 import { useWorkspace } from "@gooddata/sdk-ui";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { AutomationColumnDefinition, AutomationsColumnName, AutomationsType } from "../types.js";
 import { useIntl } from "react-intl";
 import { AutomationIcon } from "./AutomationIcon.js";

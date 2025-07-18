@@ -9,7 +9,7 @@ export async function retryOperation(operation, maxRetries, delayMs) {
     for (let i = 0; i < maxRetries; i++) {
         try {
             return await operation();
-        } catch (err) {
+        } catch {
             log(`Attempt ${i} failed, retrying after ${delayMs}ms.`);
             await delay(delayMs);
         }

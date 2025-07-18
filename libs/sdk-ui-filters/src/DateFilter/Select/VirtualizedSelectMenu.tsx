@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { Component, createRef } from "react";
 import { VariableSizeList as List, ListChildComponentProps } from "react-window";
 import cx from "classnames";
 import range from "lodash/range.js";
@@ -27,7 +27,7 @@ export interface ISelectMenuProps<V> extends IOptionGetterProps<V> {
 
 export const defaultVisibleItemsRange = 3;
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 const optionGetter = <V extends {}>({
     items,
     selectedItem,
@@ -35,7 +35,7 @@ const optionGetter = <V extends {}>({
     getItemProps,
     optionClassName,
 }: IOptionGetterProps<V>) => {
-    return function WrappedSelectOption({ index, style }: ListChildComponentProps) {
+    function WrappedSelectOption({ index, style }: ListChildComponentProps) {
         const selectableOptions = getSelectableItems(items);
         const item = items[index];
         if (item.type === "option") {
@@ -69,7 +69,9 @@ const optionGetter = <V extends {}>({
             return <SelectSeparator key={`${item.type}-${index}`} style={style} />;
         }
         return null;
-    };
+    }
+
+    return WrappedSelectOption;
 };
 
 const itemHeightByTypeMap: { [key in SelectItemTypes]: number } = {
@@ -88,14 +90,14 @@ const getItemHeight =
 
 export const getMedianIndex = (array: any[]): number => Math.floor(array.length / 2);
 
-export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V>> {
+export class VirtualizedSelectMenu<V> extends Component<ISelectMenuProps<V>> {
     // static cannot have <V>
     public static defaultProps: Partial<ISelectMenuProps<any>> = {
         selectedItem: null,
         visibleItemsRange: defaultVisibleItemsRange,
     };
 
-    private listRef = React.createRef<List>();
+    private listRef = createRef<List>();
 
     public render() {
         const {

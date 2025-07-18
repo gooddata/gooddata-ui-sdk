@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 import {
     newErrorMapping,
     IErrorDescriptors,
@@ -14,7 +14,7 @@ import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;
 
-function XirrStateless(props: Props): JSX.Element {
+function XirrStateless(props: Props): ReactElement {
     const { dataView, error, isLoading, intl, afterRender, drillableItems, locale, onDrill, config } =
         withDefaultCoreChartProps(props);
 

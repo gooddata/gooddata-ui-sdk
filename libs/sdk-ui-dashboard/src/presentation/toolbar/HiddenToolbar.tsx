@@ -1,11 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
-import { CustomToolbarComponent } from "./types.js";
+// (C) 2021-2025 GoodData Corporation
+import { IToolbarProps } from "./types.js";
 
 /**
  * This implementation of toolbar keeps it out of sight.
  *
  * @internal
  */
-export const HiddenToolbar: CustomToolbarComponent = () => {
+export function HiddenToolbar(_props: IToolbarProps) {
     return null;
-};
+}

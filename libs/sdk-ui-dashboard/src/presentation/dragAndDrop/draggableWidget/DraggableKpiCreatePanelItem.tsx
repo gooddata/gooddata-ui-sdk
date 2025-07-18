@@ -1,5 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 
 import { KPI_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import { CustomCreatePanelItemComponent } from "../../componentDefinition/index.js";
@@ -26,11 +25,11 @@ const dragItem: DraggableItem = {
 /**
  * @internal
  */
-export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemProps> = ({
+export function DraggableKpiCreatePanelItem({
     CreatePanelItemComponent,
     WrapCreatePanelItemWithDragComponent,
     disabled,
-}) => {
+}: IDraggableKpiCreatePanelItemProps) {
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}
@@ -40,4 +39,4 @@ export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemP
             hideDefaultPreview={false}
         />
     );
-};
+}

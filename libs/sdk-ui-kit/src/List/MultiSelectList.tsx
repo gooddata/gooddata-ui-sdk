@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { ReactElement, useCallback } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
@@ -39,7 +39,7 @@ export interface IMultiSelectListProps<T> {
     onSelectAll?: () => void;
     onSelectNone?: () => void;
 
-    renderItem: (props: IMultiSelectRenderItemProps<T>) => JSX.Element;
+    renderItem: (props: IMultiSelectRenderItemProps<T>) => ReactElement;
 
     tagName?: string;
     listClassNames?: string;

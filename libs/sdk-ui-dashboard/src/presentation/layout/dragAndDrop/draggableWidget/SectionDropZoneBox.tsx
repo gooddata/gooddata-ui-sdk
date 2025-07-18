@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -9,8 +9,7 @@ export interface ISectionDropZoneBoxProps {
     isOver: boolean;
 }
 
-export const SectionDropZoneBox: React.FC<ISectionDropZoneBoxProps> = (props) => {
-    const { isOver } = props;
+export function SectionDropZoneBox({ isOver }: ISectionDropZoneBoxProps) {
     return (
         <div className="new-row-dropzone">
             <DashboardLayoutSectionBorder status={isOver ? "active" : "muted"}>
@@ -41,4 +40,4 @@ export const SectionDropZoneBox: React.FC<ISectionDropZoneBoxProps> = (props) =>
             </DashboardLayoutSectionBorder>
         </div>
     );
-};
+}

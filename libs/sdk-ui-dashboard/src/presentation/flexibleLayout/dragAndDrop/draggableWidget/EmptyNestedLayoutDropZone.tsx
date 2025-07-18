@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode, useEffect } from "react";
+import { ReactNode, RefObject, useEffect } from "react";
 import { FormattedMessage, defineMessages } from "react-intl";
 import cx from "classnames";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -27,7 +27,7 @@ const messages = defineMessages({
     },
 });
 
-export const DropZoneMessage: React.FC<{ canDrop?: boolean }> = ({ canDrop = false }) => {
+export function DropZoneMessage({ canDrop = false }: { canDrop?: boolean }) {
     return (
         <Typography tagName="p" className="drop-target-message">
             <FormattedMessage
@@ -39,17 +39,17 @@ export const DropZoneMessage: React.FC<{ canDrop?: boolean }> = ({ canDrop = fal
             />
         </Typography>
     );
-};
+}
 
-export const DefaultEmptyNestedLayoutDropZoneBody: React.FC = () => {
+export function DefaultEmptyNestedLayoutDropZoneBody() {
     return (
         <div className="drag-info-placeholder-box drag-info-empty-nested-layout s-drag-info-placeholder-box">
             <DropZoneMessage />
         </div>
     );
-};
+}
 
-export const EmptyNestedLayoutDropZone: React.FC = () => {
+export function EmptyNestedLayoutDropZone() {
     const { layoutItemPath } = useDashboardItemPathAndSize();
     const sectionPath = {
         parent: layoutItemPath,
@@ -78,7 +78,7 @@ export const EmptyNestedLayoutDropZone: React.FC = () => {
         >
             <div
                 className={cx("drag-info-placeholder-inner", { "can-drop": canDrop, "is-over": isOver })}
-                ref={dropRef}
+                ref={dropRef as unknown as RefObject<HTMLDivElement>}
             >
                 {/* TODO INE: add this drop zone customization in M2 */}
                 <DefaultEmptyNestedLayoutDropZoneBody />
@@ -90,4 +90,4 @@ export const EmptyNestedLayoutDropZone: React.FC = () => {
             </div>
         </div>
     );
-};
+}

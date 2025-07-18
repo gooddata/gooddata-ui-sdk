@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import { PushDataCallback } from "@gooddata/sdk-ui";
 
@@ -16,12 +15,12 @@ interface IArrowControlProps {
     pushData: PushDataCallback;
 }
 
-const ArrowControl: React.FC<IArrowControlProps> = ({
+export default function ArrowControl({
     disabled,
     showDisabledMessage,
     properties,
     pushData,
-}) => {
+}: IArrowControlProps) {
     const isArrowEnabled = properties?.controls?.comparison?.isArrowEnabled;
 
     return (
@@ -37,6 +36,4 @@ const ArrowControl: React.FC<IArrowControlProps> = ({
             />
         </div>
     );
-};
-
-export default ArrowControl;
+}

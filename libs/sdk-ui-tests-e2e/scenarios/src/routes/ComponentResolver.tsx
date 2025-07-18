@@ -1,5 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
+import { ComponentType } from "react";
 import { AttributeFilterButtonPreselectedScenario } from "../components/Scenarios/Filters/AttributeFilterButtonPreselectedScenario";
 import { AttributeFilterButtonScenario } from "../components/Scenarios/Filters/AttributeFilterButtonScenario";
 
@@ -290,7 +290,7 @@ export const SCENARIO_KEYS = {
     VIS_SCATTER_PLOT_SEGMENTATION_INSIGHT_VIEW: "visualizations/scatterplot/segmentation-insight-view",
 };
 
-const scenarios = new Map<string, React.ComponentType>([
+const scenarios = new Map<string, ComponentType>([
     [SCENARIO_KEYS.NEW_DASHBOARD, NewDashboardScenario],
     [SCENARIO_KEYS.DASHBOARD, DashboardScenario],
     [SCENARIO_KEYS.DASHBOARD_TIGER, DashboardScenarioTiger],
@@ -436,7 +436,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.VIS_SCATTER_PLOT_SEGMENTATION_INSIGHT_VIEW, ScatterPlotSegmentationInsightView],
 ]);
 
-const ComponentResolver: React.FC = () => {
+export default function ComponentResolver() {
     const searchParams = window.location.search;
     const scenario = searchParams
         .substring(1)
@@ -447,6 +447,4 @@ const ComponentResolver: React.FC = () => {
     const ScenarioComponent =
         scenario && scenarios.has(scenario) ? scenarios.get(scenario)! : DashboardScenario;
     return <ScenarioComponent />;
-};
-
-export default ComponentResolver;
+}

@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 import { HighchartsReact } from "highcharts-react-official";
 import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 import { IResultAttributeHeaderItem } from "@gooddata/sdk-model";
@@ -8,10 +7,10 @@ import { getTooltipHtml } from "./highcharts.js";
 import Highcharts from "highcharts/esm/highcharts.js";
 import { HighchartsOptions } from "../../../highcharts/lib/index.js";
 
-export const InlineColumnChart: React.FC<IInlineColumnChartOptions> = (props) => {
+export function InlineColumnChart(props: IInlineColumnChartOptions) {
     const options = createOptions(props);
     return <HighchartsReact options={options} highcharts={Highcharts} />;
-};
+}
 
 interface IInlineColumnChartOptions {
     height: number;

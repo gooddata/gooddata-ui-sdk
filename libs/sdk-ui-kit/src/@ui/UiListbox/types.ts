@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-import { IDropdownBodyRenderProps } from "../../Dropdown/index.js";
+import { ComponentType, Dispatch, KeyboardEvent, MutableRefObject, ReactNode, SetStateAction } from "react";
 import { IconType } from "../@types/icon.js";
+import { UiListboxAriaAttributes } from "../@types/dropdown.js";
 
 /**
  * @internal
@@ -29,7 +29,7 @@ export interface IUiListboxInteractiveItem<T> {
 /**
  * @internal
  */
-export type IUiListboxItem<InteractiveItemData, StaticItemData = React.ReactNode> =
+export type IUiListboxItem<InteractiveItemData, StaticItemData = ReactNode> =
     | IUiListboxStaticItem<StaticItemData>
     | IUiListboxInteractiveItem<InteractiveItemData>;
 
@@ -56,26 +56,21 @@ export interface UiListboxStaticItemProps<T> {
 /**
  * @internal
  */
-export interface IUiListboxContext<InteractiveItemData, StaticItemData = React.ReactNode> {
+export interface IUiListboxContext<InteractiveItemData, StaticItemData = ReactNode> {
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
-    itemRefs: React.MutableRefObject<(HTMLLIElement | null)[]>;
+    itemRefs: MutableRefObject<(HTMLLIElement | null)[]>;
     onSelect: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
     onClose?: () => void;
     selectedItemId: string | undefined;
     focusedIndex: number | undefined;
-    setFocusedIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
+    setFocusedIndex: Dispatch<SetStateAction<number | undefined>>;
     isItemFocusable: (item: IUiListboxItem<InteractiveItemData, StaticItemData>) => boolean;
 }
 
 /**
  * @internal
  */
-export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
-
-/**
- * @internal
- */
-export interface UiListboxProps<InteractiveItemData, StaticItemData = React.ReactNode> {
+export interface UiListboxProps<InteractiveItemData, StaticItemData = ReactNode> {
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
 
     dataTestId?: string;
@@ -94,14 +89,14 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React.Reac
     ) => void;
     onClose?: () => void;
     onUnhandledKeyDown?: (
-        event: React.KeyboardEvent,
+        event: KeyboardEvent,
         context: IUiListboxContext<InteractiveItemData, StaticItemData>,
     ) => void;
 
     selectedItemId?: string;
 
-    InteractiveItemComponent?: React.ComponentType<UiListboxInteractiveItemProps<InteractiveItemData>>;
-    StaticItemComponent?: React.ComponentType<UiListboxStaticItemProps<StaticItemData>>;
+    InteractiveItemComponent?: ComponentType<UiListboxInteractiveItemProps<InteractiveItemData>>;
+    StaticItemComponent?: ComponentType<UiListboxStaticItemProps<StaticItemData>>;
 
     shouldKeyboardActionPreventDefault?: boolean;
     shouldKeyboardActionStopPropagation?: boolean;

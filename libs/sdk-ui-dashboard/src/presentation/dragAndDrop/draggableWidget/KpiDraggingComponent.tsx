@@ -1,5 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 
 import { IKpiDraggingComponentProps } from "../../componentDefinition/types.js";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";

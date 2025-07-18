@@ -39,7 +39,7 @@ export function* loadColorPalette() {
                 colorPalette: results,
             }),
         );
-    } catch (e) {
+    } catch {
         //TODO: handle error somehow? Default color palette will be used in this case
         options.setColorPalette(undefined);
         yield put(

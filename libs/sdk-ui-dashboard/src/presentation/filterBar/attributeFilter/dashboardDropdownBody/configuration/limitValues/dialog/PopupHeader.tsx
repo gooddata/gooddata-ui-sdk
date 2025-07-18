@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { Typography, Button } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
@@ -10,7 +9,7 @@ export interface IPopupHeaderProps {
     onClose: () => void;
 }
 
-export const PopupHeader: React.FC<IPopupHeaderProps> = ({ title, onGoBack, onClose }) => {
+export function PopupHeader({ title, onGoBack, onClose }: IPopupHeaderProps) {
     const headerClassNames = cx("configuration-panel-header-title", {
         clickable: !!onGoBack,
     });
@@ -29,4 +28,4 @@ export const PopupHeader: React.FC<IPopupHeaderProps> = ({ title, onGoBack, onCl
             />
         </div>
     );
-};
+}

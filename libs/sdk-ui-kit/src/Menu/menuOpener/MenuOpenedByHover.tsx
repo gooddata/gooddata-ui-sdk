@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 
 import { MenuPosition } from "../positioning/MenuPosition.js";
 

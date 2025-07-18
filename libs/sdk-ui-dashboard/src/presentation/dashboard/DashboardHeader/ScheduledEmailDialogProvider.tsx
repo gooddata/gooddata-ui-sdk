@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
-
 import {
     IScheduledEmailDialogProps,
     ScheduledEmailDialog,
@@ -14,7 +12,7 @@ import {
     useWorkspaceUsers,
 } from "../../../model/index.js";
 
-export const ScheduledEmailDialogProvider = () => {
+export function ScheduledEmailDialogProvider() {
     const {
         // Shared Local State
         scheduledExportToEdit,
@@ -92,7 +90,7 @@ export const ScheduledEmailDialogProvider = () => {
             ) : null}
         </>
     );
-};
+}
 
 /**
  * Load users only if dialog is open

@@ -1,26 +1,26 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { SVGAttributes, useMemo } from "react";
 import cx from "classnames";
 
 let INSTANCE_COUNTER = 0;
 
-type AgentStateIconProps = React.SVGAttributes<SVGSVGElement> & {
+type AgentStateIconProps = SVGAttributes<SVGSVGElement> & {
     loading?: boolean;
     error?: boolean;
     cancelled?: boolean;
 };
 
-export const AgentIcon: React.FC<AgentStateIconProps> = ({
+export function AgentIcon({
     loading = false,
     error = false,
     cancelled = false,
     className = "",
     ...rest
-}) => {
+}: AgentStateIconProps) {
     // A precaution in case there are multiple instances of the component on the same page
     // In-line SVGs must obey the unique ID rule as any other HTML element
-    const instanceId = React.useMemo(() => INSTANCE_COUNTER++, []);
+    const instanceId = useMemo(() => INSTANCE_COUNTER++, []);
     const isLoading = loading && !cancelled && !error;
 
     // We are adding only one modifier class at a time
@@ -93,4 +93,4 @@ export const AgentIcon: React.FC<AgentStateIconProps> = ({
             </defs>
         </svg>
     );
-};
+}

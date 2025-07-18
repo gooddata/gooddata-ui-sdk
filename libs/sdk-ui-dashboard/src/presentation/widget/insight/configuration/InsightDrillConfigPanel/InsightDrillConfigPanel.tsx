@@ -1,5 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { FormattedMessage } from "react-intl";
 import { ObjRef } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -18,7 +17,7 @@ export interface IDrillConfigPanelProps {
 /**
  * @internal
  */
-export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelProps> = ({ widgetRef }) => {
+export function InsightDrillConfigPanel({ widgetRef }: IDrillConfigPanelProps) {
     const {
         widget,
         insight,
@@ -61,4 +60,4 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
             </div>
         </>
     );
-};
+}

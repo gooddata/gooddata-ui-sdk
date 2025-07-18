@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 import { useBackendStrict } from "@gooddata/sdk-ui";
@@ -20,11 +20,11 @@ export interface ICreateUserGroupDialogProps extends IWithTelemetryProps {
     onCancel: () => void;
 }
 
-const CreateUserGroupDialogComponent: React.FC<ICreateUserGroupDialogProps> = ({
+function CreateUserGroupDialogComponent({
     organizationId,
     onSuccess,
     onCancel,
-}) => {
+}: ICreateUserGroupDialogProps) {
     const intl = useIntl();
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
@@ -84,7 +84,7 @@ const CreateUserGroupDialogComponent: React.FC<ICreateUserGroupDialogProps> = ({
             </ConfirmDialogBase>
         </Overlay>
     );
-};
+}
 
 /**
  * @internal

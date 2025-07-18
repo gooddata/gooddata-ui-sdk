@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { CSSProperties } from "react";
+import { CSSProperties } from "react";
 import { DescriptionPanel, DescriptionPanelContent, IDescriptionPanelProps } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -17,7 +17,7 @@ const PROPS_2: IDescriptionPanelProps = {
     description: LOREM,
 };
 
-const DescriptionPanelTest: React.FC = () => {
+function DescriptionPanelTest() {
     const style: CSSProperties = {
         display: "flex",
         flexDirection: "column",
@@ -42,7 +42,7 @@ const DescriptionPanelTest: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/DescriptionPanel",

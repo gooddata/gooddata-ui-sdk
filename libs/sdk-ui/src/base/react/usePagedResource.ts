@@ -1,5 +1,5 @@
-// (C) 2007-2021 GoodData Corporation
-import { useState, useEffect } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { useState, useEffect, DependencyList } from "react";
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
 import { usePromiseCache } from "./usePromiseCache.js";
 
@@ -25,8 +25,8 @@ export interface IUsePagedResourceResult<TItem> extends IUsePagedResourceState<T
 export function usePagedResource<TParams, TItem>(
     resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>,
     fetchParams: TParams[],
-    fetchDeps: React.DependencyList,
-    resetDeps: React.DependencyList,
+    fetchDeps: DependencyList,
+    resetDeps: DependencyList,
     getCacheKey?: (params: TParams) => string,
     initialState: IUsePagedResourceState<TItem> = {
         totalItemsCount: undefined,

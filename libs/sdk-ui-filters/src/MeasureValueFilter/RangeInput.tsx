@@ -1,7 +1,6 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 import { ISeparators } from "@gooddata/sdk-ui";
-import React from "react";
 
 interface IRangeInputProps {
     from: number;
@@ -14,7 +13,7 @@ interface IRangeInputProps {
     separators?: ISeparators;
 }
 
-const RangeInput = ({
+export default function RangeInput({
     from,
     to,
     usePercentage,
@@ -23,7 +22,7 @@ const RangeInput = ({
     onToChange,
     onEnterKeyPress,
     separators,
-}: IRangeInputProps): JSX.Element => {
+}: IRangeInputProps) {
     return (
         <div className={"gd-mvf-range-input"}>
             <InputWithNumberFormat
@@ -47,6 +46,4 @@ const RangeInput = ({
             />
         </div>
     );
-};
-
-export default RangeInput;
+}

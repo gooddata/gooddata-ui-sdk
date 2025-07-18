@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { useState, useRef, useEffect, useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useState, useRef, useEffect, useCallback } from "react";
 import { IntlShape } from "react-intl";
 import {
     ISortItem,
@@ -160,7 +160,7 @@ const buildSortItem = (
     }
 };
 
-export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
+export function AttributeDropdown({
     currentSortItem,
     availableSorts,
     bucketItems,
@@ -168,7 +168,7 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
     index,
     onSelect,
     enableRenamingMeasureToMetric,
-}) => {
+}: AttributeDropdownProps) {
     const [width, setWidth] = useState<number>(0);
     const buttonRef = useRef<HTMLInputElement>(null);
 
@@ -262,4 +262,4 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
             ) : null}
         </>
     );
-};
+}

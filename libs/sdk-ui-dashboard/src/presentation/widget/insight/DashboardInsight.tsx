@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactElement, useMemo } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import { IDashboardInsightProps } from "./types.js";
@@ -9,9 +9,9 @@ import { useIntl } from "react-intl";
 /**
  * @internal
  */
-export const DashboardInsight = (
+export function DashboardInsight(
     props: Omit<IDashboardInsightProps, "insight"> & { insight?: IInsight },
-): JSX.Element => {
+): ReactElement {
     const { insight, widget } = props;
     const intl = useIntl();
 
@@ -32,4 +32,4 @@ export const DashboardInsight = (
     }
 
     return <InsightComponent {...props} insight={insight} />;
-};
+}

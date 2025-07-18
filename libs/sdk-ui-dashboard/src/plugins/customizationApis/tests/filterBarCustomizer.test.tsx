@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { HiddenFilterBar, IFilterBarProps } from "../../../presentation/index.js";
 import { DefaultFilterBarCustomizer } from "../filterBarCustomizer.js";
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";

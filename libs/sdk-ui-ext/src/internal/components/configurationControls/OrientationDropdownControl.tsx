@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { memo, useCallback } from "react";
+import { memo, useCallback } from "react";
 import { useIntl } from "react-intl";
 import { ChartOrientationType } from "@gooddata/sdk-ui-charts";
 import { IPushData } from "@gooddata/sdk-ui";

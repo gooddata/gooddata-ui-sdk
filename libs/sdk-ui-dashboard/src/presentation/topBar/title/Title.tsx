@@ -1,13 +1,13 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactElement } from "react";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import { ITitleProps } from "./types.js";
 
 /**
  * @internal
  */
-export const Title = (props: ITitleProps): JSX.Element => {
+export function Title(props: ITitleProps): ReactElement {
     const { TitleComponent } = useDashboardComponentsContext();
 
     return <TitleComponent {...props} />;
-};
+}

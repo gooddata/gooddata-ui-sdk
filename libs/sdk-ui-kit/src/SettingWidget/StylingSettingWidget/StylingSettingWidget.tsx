@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
 import noop from "lodash/noop.js";
 import { useIntl } from "react-intl";
@@ -27,7 +27,7 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     defaultItem: IStylingPickerItem<T>;
     customItems: IStylingPickerItem<T>[];
     itemToColorPreview: (itemContent: T) => string[];
-    emptyMessage: () => JSX.Element;
+    emptyMessage: () => ReactElement;
     selectedItemRef?: ObjRef;
     isLoading?: boolean;
     titleTooltip?: string;
@@ -50,9 +50,9 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     isSavingActionInProgress?: boolean;
 }
 
-const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
+function StylingSettingWidgetCore<T extends StylingPickerItemContent>(
     props: IStylingSettingWidgetProps<T>,
-): JSX.Element => {
+): ReactElement {
     const {
         title,
         defaultItem,
@@ -174,17 +174,17 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
             </Footer>
         </SettingWidget>
     );
-};
+}
 
 /**
  * @internal
  */
-export const StylingSettingWidget = <T extends StylingPickerItemContent>(
+export function StylingSettingWidget<T extends StylingPickerItemContent>(
     props: IStylingSettingWidgetProps<T>,
-): JSX.Element => {
+): ReactElement {
     return (
         <IntlWrapper locale={props.locale}>
             <StylingSettingWidgetCore {...props} />
         </IntlWrapper>
     );
-};
+}

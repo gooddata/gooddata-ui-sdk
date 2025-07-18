@@ -1,10 +1,9 @@
-// (C) 2021 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { FormattedMessage } from "react-intl";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 
-export const ThemedLoadingEqualizer: React.FC = () => {
+export function ThemedLoadingEqualizer() {
     const theme = useTheme();
 
     return (
@@ -18,4 +17,4 @@ export const ThemedLoadingEqualizer: React.FC = () => {
             </div>
         </div>
     );
-};
+}

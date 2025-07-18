@@ -38,7 +38,7 @@ export function maxInputValidateAndPushData(
     state: IMinMaxControlState,
     props: IMinMaxControlProps,
     intl: IntlShape,
-    setState: (data: Partial<IMinMaxControlState>) => void,
+    setState: (props: IMinMaxControlState) => void,
     defaultState: IMinMaxControlState,
 ): void {
     const { basePath } = props;
@@ -82,6 +82,7 @@ export function maxInputValidateAndPushData(
     // if incorrect value was set previously but now validation passed, set incorrect value as correct value
     if (isNaN(parseFloat(incorrectMinValue))) {
         setState({
+            minScale: defaultState.minScale,
             maxScale: defaultState.maxScale,
         });
     } else {
@@ -97,7 +98,7 @@ export function minInputValidateAndPushData(
     state: IMinMaxControlState,
     props: IMinMaxControlProps,
     intl: IntlShape,
-    setState: (data: Partial<IMinMaxControlState>) => void,
+    setState: (props: IMinMaxControlState) => void,
     defaultState: IMinMaxControlState,
 ): void {
     const { basePath } = props;
@@ -143,6 +144,7 @@ export function minInputValidateAndPushData(
     if (isNaN(parseFloat(incorrectMaxValue))) {
         setState({
             minScale: defaultState.minScale,
+            maxScale: defaultState.maxScale,
         });
     } else {
         set(properties, `controls.${basePath}.max`, incorrectMaxValue);

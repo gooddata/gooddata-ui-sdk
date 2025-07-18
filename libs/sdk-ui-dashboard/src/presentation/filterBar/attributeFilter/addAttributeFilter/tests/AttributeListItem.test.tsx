@@ -1,7 +1,7 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { ReactElement } from "react";
 import { render } from "@testing-library/react";
 import AttributeListItem from "../AttributeListItem.js";
 import * as Tooltip from "../attributeListItemTooltip/AttributeListItemTooltip.js";
@@ -19,7 +19,9 @@ describe("AttributeListItem", () => {
 
     describe("Item icon", () => {
         beforeEach(() => {
-            vi.spyOn(Tooltip, "AttributeListItemTooltip").mockImplementation(() => null);
+            vi.spyOn(Tooltip, "AttributeListItemTooltip").mockImplementation(
+                () => null as unknown as ReactElement,
+            );
         });
 
         afterEach(() => {

@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ComponentType } from "react";
 import compose from "lodash/flowRight.js";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition.js";
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
@@ -14,8 +14,10 @@ function withChartDefinition<TBucketProps extends object, TProps extends TBucket
     chartDefinition: IChartDefinition<TBucketProps, TProps>,
 ) {
     const getChartProps = getCoreChartProps(chartDefinition);
-    return (Chart: React.ComponentType<ICoreChartProps>): React.ComponentType<TProps> => {
-        const WithChartDefinition = (props: TProps) => <Chart {...getChartProps(props)} />;
+    return (Chart: ComponentType<ICoreChartProps>): ComponentType<TProps> => {
+        function WithChartDefinition(props: TProps) {
+            return <Chart {...getChartProps(props)} />;
+        }
         return wrapDisplayName("withChartDefinition", Chart)(WithChartDefinition);
     };
 }
@@ -28,7 +30,7 @@ export const withChart =
     <TBucketProps extends object, TProps extends TBucketProps & IBucketChartProps>(
         chartDefinition: IChartDefinition<TBucketProps, TProps>,
     ) =>
-    (Chart: React.ComponentType<ICoreChartProps>): React.ComponentType<TProps> =>
+    (Chart: ComponentType<ICoreChartProps>): ComponentType<TProps> =>
         compose(
             wrapDisplayName("withChart"),
             withTheme,

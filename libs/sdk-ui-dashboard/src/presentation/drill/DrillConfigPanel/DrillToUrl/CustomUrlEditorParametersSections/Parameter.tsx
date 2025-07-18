@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactElement, useState } from "react";
 import { IntlShape } from "react-intl";
 import classNames from "classnames";
 import { Button, Bubble } from "@gooddata/sdk-ui-kit";
@@ -9,14 +9,13 @@ import { isDarkTheme, useTheme } from "@gooddata/sdk-ui-theme-provider";
 interface IParameterProps {
     name: string;
     description?: string;
-    detailContent: JSX.Element;
+    detailContent: ReactElement;
     iconClassName: string;
     onAdd: () => void;
     intl: IntlShape;
 }
 
-export const Parameter: React.FC<IParameterProps> = (props) => {
-    const { name, description, detailContent, iconClassName, onAdd, intl } = props;
+export function Parameter({ name, description, detailContent, iconClassName, onAdd, intl }: IParameterProps) {
     const [displayHelp, setDisplayHelp] = useState(false);
     const theme = useTheme();
     const isDark = theme && isDarkTheme(theme);
@@ -51,4 +50,4 @@ export const Parameter: React.FC<IParameterProps> = (props) => {
             </div>
         </div>
     );
-};
+}

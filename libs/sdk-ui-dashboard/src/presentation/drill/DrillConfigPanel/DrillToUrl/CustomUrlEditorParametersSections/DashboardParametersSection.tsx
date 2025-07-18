@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
 import {
@@ -21,11 +21,11 @@ export interface IDashboardParametersSectionProps extends IParametersPanelSectio
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
 }
 
-export const DashboardParametersSection: React.FC<IDashboardParametersSectionProps> = ({
+export function DashboardParametersSection({
     dashboardFilters,
     attributeFilterConfigs,
     onAdd,
-}) => {
+}: IDashboardParametersSectionProps) {
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
     const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
         selectEnableDuplicatedLabelValuesInAttributeFilter,
@@ -53,7 +53,7 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
                 const areDfsDifferent = filterIdentifier !== filterSecondaryIdentifier;
 
                 return (
-                    <React.Fragment key={index}>
+                    <Fragment key={index}>
                         {df ? (
                             <DisplayFormParam
                                 item={df}
@@ -74,9 +74,9 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
                                 isFilter
                             />
                         ) : null}
-                    </React.Fragment>
+                    </Fragment>
                 );
             })}
         </>
     ) : null;
-};
+}

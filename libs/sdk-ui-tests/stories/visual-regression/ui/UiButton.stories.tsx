@@ -1,6 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 import { UiButton, UiButtonProps, ComponentTable, propCombinationsFor } from "@gooddata/sdk-ui-kit";
-import React from "react";
 
 import { wrapWithTheme } from "../themeWrapper.js";
 
@@ -19,18 +18,20 @@ const allIconLeft = propCombination("iconBefore", ["check", "plus", "sync"]);
 const allIconRight = propCombination("iconAfter", ["check", "plus", "sync"]);
 const disabled = propCombination("isDisabled", [true]);
 
-const UiButtonTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
-    <div className="screenshot-target">
-        <ComponentTable
-            columnsBy={allVariants}
-            rowsBy={[allSizes, allIconLeft, allIconRight, disabled]}
-            Component={UiButton}
-            codeSnippet={showCode ? "UiButton" : undefined}
-            align="center"
-            cellWidth={200}
-        />
-    </div>
-);
+function UiButtonTest({ showCode }: { showCode?: boolean }) {
+    return (
+        <div className="screenshot-target">
+            <ComponentTable
+                columnsBy={allVariants}
+                rowsBy={[allSizes, allIconLeft, allIconRight, disabled]}
+                Component={UiButton}
+                codeSnippet={showCode ? "UiButton" : undefined}
+                align="center"
+                cellWidth={200}
+            />
+        </div>
+    );
+}
 
 export default {
     title: "15 Ui/UiButton",

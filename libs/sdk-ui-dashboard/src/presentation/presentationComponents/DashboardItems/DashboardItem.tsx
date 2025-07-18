@@ -1,15 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { forwardRef, HTMLAttributes, RefObject } from "react";
 import cx from "classnames";
 import { ScreenSize } from "@gooddata/sdk-model";
 import { CommonExportDataAttributes } from "../../export/index.js";
 import { useId } from "@gooddata/sdk-ui-kit";
 import { selectEnableFlexibleLayout, useDashboardSelector } from "../../../model/index.js";
-interface IDashboardItemProps extends React.HTMLAttributes<HTMLDivElement> {
+interface IDashboardItemProps extends HTMLAttributes<HTMLDivElement> {
     screen: ScreenSize;
     description?: string;
     titleId?: string;
-    ref?: React.Ref<HTMLDivElement>;
+    ref?: RefObject<HTMLDivElement>;
     exportData?: CommonExportDataAttributes;
 }
 
@@ -22,7 +22,7 @@ const screenClasses: { [S in ScreenSize]: string } = {
     xl: "layout-xl",
 };
 
-export const DashboardItem = React.forwardRef<HTMLDivElement, IDashboardItemProps>(
+export const DashboardItem = forwardRef<HTMLDivElement, IDashboardItemProps>(
     ({ className, screen, description, exportData, titleId, ...props }, ref) => {
         const enableFlexibleLayout = useDashboardSelector(selectEnableFlexibleLayout);
         const id = useId();

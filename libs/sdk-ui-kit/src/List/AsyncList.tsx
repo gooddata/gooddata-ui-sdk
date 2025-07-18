@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { ReactElement, useCallback } from "react";
 import cx from "classnames";
 import ReactContentLoader from "react-content-loader";
 import { defaultImport } from "default-import";
@@ -23,8 +23,8 @@ export interface IAsyncListProps<T> {
 
     items: T[];
     itemHeight?: number;
-    renderItem: (props: IRenderListItemProps<T>) => JSX.Element;
-    renderLoadingItem?: (props: IRenderListItemProps<T>) => JSX.Element;
+    renderItem: (props: IRenderListItemProps<T>) => ReactElement;
+    renderLoadingItem?: (props: IRenderListItemProps<T>) => ReactElement;
 
     /**
      * Set to true to render the loading indicator instead of the list.
@@ -74,7 +74,7 @@ export function AsyncList<T>(props: IAsyncListProps<T>) {
     } = props;
 
     const itemRenderer = useCallback(
-        (renderItemProps: IRenderListItemProps<T>): JSX.Element => {
+        (renderItemProps: IRenderListItemProps<T>): ReactElement => {
             if (renderItemProps.rowIndex + 1 > items.length) {
                 return renderLoadingItem?.(renderItemProps) ?? <LoadingPlaceholder />;
             }

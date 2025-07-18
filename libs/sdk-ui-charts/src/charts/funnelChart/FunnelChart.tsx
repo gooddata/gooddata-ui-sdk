@@ -1,5 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
@@ -106,7 +105,7 @@ const WrappedFunnelChart = withChart(funnelChartDefinition)(CoreFunnelChart);
  *
  * @public
  */
-export const FunnelChart = (props: IFunnelChartProps) => {
+export function FunnelChart(props: IFunnelChartProps) {
     const [measures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -123,4 +122,4 @@ export const FunnelChart = (props: IFunnelChartProps) => {
             }}
         />
     );
-};
+}

@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React, { useMemo, useState } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
 import sortBy from "lodash/sortBy.js";
@@ -22,7 +22,7 @@ const ITEM_HEIGHT = 25;
 const DROPDOWN_BODY_WIDTH = 240;
 const DROPDOWN_BODY_HEIGHT = 319;
 
-export const DashboardList: React.FC<IDashboardListProps> = ({ selected, dashboards, onSelect }) => {
+export function DashboardList({ selected, dashboards, onSelect }: IDashboardListProps) {
     const selectedDashboard = useMemo(() => {
         return selected && dashboards.find((d) => dashboardMatch(d.identifier, d.ref, selected));
     }, [selected, dashboards]);
@@ -100,4 +100,4 @@ export const DashboardList: React.FC<IDashboardListProps> = ({ selected, dashboa
             )}
         />
     );
-};
+}

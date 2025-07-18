@@ -1,14 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
 export interface IRenderChildrenInPortalProps {
     targetElement: Element;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export function RenderChildrenInPortal(props: IRenderChildrenInPortalProps) {
-    const portalContentWrapperElRef = useRef<HTMLElement>();
+    const portalContentWrapperElRef = useRef<HTMLElement | null>(null);
 
     if (!portalContentWrapperElRef.current) {
         portalContentWrapperElRef.current = document.createElement("div");

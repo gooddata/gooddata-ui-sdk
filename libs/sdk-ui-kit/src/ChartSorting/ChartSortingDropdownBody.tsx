@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 import cx from "classnames";
 
 import { Overlay } from "../Overlay/index.js";
@@ -11,17 +11,13 @@ const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "br tr"
 interface ChartSortingDropdownBodyProps {
     buttonNode?: HTMLElement | string;
     onClose?: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
  * @internal
  */
-export const ChartSortingDropdownBody: React.FC<ChartSortingDropdownBodyProps> = ({
-    children,
-    buttonNode,
-    onClose,
-}) => {
+export function ChartSortingDropdownBody({ children, buttonNode, onClose }: ChartSortingDropdownBodyProps) {
     const getDialogClasses = () => {
         return cx([
             "overlay",
@@ -48,4 +44,4 @@ export const ChartSortingDropdownBody: React.FC<ChartSortingDropdownBodyProps> =
             <div className={getDialogClasses()}>{children}</div>
         </Overlay>
     );
-};
+}

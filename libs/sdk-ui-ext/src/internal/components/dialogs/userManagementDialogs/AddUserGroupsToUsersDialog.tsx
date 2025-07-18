@@ -1,6 +1,5 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { AddUserGroup } from "./UserGroups/AddUserGroup.js";
@@ -21,12 +20,12 @@ export interface IAddUserGroupsToUsersDialogProps extends IWithTelemetryProps {
     onClose: () => void;
 }
 
-const AddUserGroupsToUsersDialogComponent: React.FC<IAddUserGroupsToUsersDialogProps> = ({
-    userIds,
-    organizationId,
-    onSuccess,
+function AddUserGroupsToUsersDialogComponent({
     onClose,
-}) => {
+    onSuccess,
+    organizationId,
+    userIds,
+}: IAddUserGroupsToUsersDialogProps) {
     return (
         <OrganizationIdProvider organizationId={organizationId}>
             <Overlay alignPoints={alignPoints} isModal={true} positionType="fixed">
@@ -41,7 +40,7 @@ const AddUserGroupsToUsersDialogComponent: React.FC<IAddUserGroupsToUsersDialogP
             </Overlay>
         </OrganizationIdProvider>
     );
-};
+}
 
 /**
  * @internal

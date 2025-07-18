@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { Fragment, useCallback } from "react";
 import { e } from "../asyncTableBem.js";
 import { Input } from "../../../Form/Input.js";
 import { SeparatorLine } from "../../../SeparatorLine/SeparatorLine.js";
@@ -11,7 +11,7 @@ import { UiAsyncTableTitleAction, UiAsyncTableTitleProps } from "../types.js";
 /**
  * @internal
  */
-export const UiAsyncTableTitle = ({ title, onSearch, renderIcon, actions }: UiAsyncTableTitleProps) => {
+export function UiAsyncTableTitle({ title, onSearch, renderIcon, actions }: UiAsyncTableTitleProps) {
     const { renderIconWithWrapper, renderSearchWithWrapper, renderActionsWithWrapper } = useAsyncTableTitle(
         renderIcon,
         onSearch,
@@ -29,7 +29,7 @@ export const UiAsyncTableTitle = ({ title, onSearch, renderIcon, actions }: UiAs
             {renderActionsWithWrapper()}
         </div>
     );
-};
+}
 
 const useAsyncTableTitle = (
     renderIcon?: () => React.ReactNode,
@@ -66,7 +66,7 @@ const useAsyncTableTitle = (
         return actions ? (
             <div key="actions" className={e("title-actions")}>
                 {actions.map((action, index) => (
-                    <React.Fragment key={index}>{action.renderAction()}</React.Fragment>
+                    <Fragment key={index}>{action.renderAction()}</Fragment>
                 ))}
             </div>
         ) : null;

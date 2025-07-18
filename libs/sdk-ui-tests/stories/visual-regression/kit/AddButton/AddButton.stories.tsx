@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
-
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { AddButton } from "@gooddata/sdk-ui-kit";
 import { action } from "storybook/actions";

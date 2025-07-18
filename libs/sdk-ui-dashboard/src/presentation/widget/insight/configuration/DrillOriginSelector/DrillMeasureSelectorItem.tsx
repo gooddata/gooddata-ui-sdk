@@ -1,6 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
-import React from "react";
 
 export interface IDrillMeasureSelectorItemProps {
     item: IAvailableDrillTargetMeasure;
@@ -8,7 +7,7 @@ export interface IDrillMeasureSelectorItemProps {
     onCloseDropdown: () => void;
 }
 
-const DrillMeasureSelectorItem: React.FunctionComponent<IDrillMeasureSelectorItemProps> = (props) => {
+export default function DrillMeasureSelectorItem(props: IDrillMeasureSelectorItemProps) {
     const onClick = () => {
         props.onClick(props.item);
         props.onCloseDropdown();
@@ -24,6 +23,4 @@ const DrillMeasureSelectorItem: React.FunctionComponent<IDrillMeasureSelectorIte
             {name}
         </a>
     );
-};
-
-export default DrillMeasureSelectorItem;
+}

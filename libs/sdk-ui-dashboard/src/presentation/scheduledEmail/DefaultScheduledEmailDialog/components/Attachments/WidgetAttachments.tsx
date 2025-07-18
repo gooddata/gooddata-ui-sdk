@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { IExportDefinitionVisualizationObjectSettings, WidgetAttachmentType } from "@gooddata/sdk-model";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
 import { AttachmentsSelect } from "./AttachmentsSelect.js";
@@ -14,12 +14,12 @@ export interface IWidgetAttachmentsProps {
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
 }
 
-export const WidgetAttachments = ({
+export function WidgetAttachments({
     selectedAttachments,
     onWidgetAttachmentsChange,
     xlsxSettings,
     onXlsxSettingsChange,
-}: IWidgetAttachmentsProps) => {
+}: IWidgetAttachmentsProps) {
     const attachmentListRef = useRef<HTMLDivElement>(null);
 
     const handleWidgetAttachmentSelectionSave = (formats: WidgetAttachmentType[]) => {
@@ -68,4 +68,4 @@ export const WidgetAttachments = ({
             </div>
         </AttachmentsWrapper>
     );
-};
+}

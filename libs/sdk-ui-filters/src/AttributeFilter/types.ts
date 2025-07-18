@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
+import { ComponentType } from "react";
 import {
     DashboardAttributeFilterSelectionMode,
     IAttributeElement,
@@ -356,7 +357,7 @@ export interface IAttributeFilterCustomComponentProps {
      * -  If not provided, the default implementation {@link AttributeFilterError} will be used.
      * @beta
      */
-    ErrorComponent?: React.ComponentType<IAttributeFilterErrorProps>;
+    ErrorComponent?: ComponentType<IAttributeFilterErrorProps>;
 
     /**
      * Customize attribute filter with a component to be rendered if attribute filter is loading.
@@ -366,7 +367,7 @@ export interface IAttributeFilterCustomComponentProps {
      * -  If not provided, the default implementation {@link AttributeFilterLoading} will be used.
      * @beta
      */
-    LoadingComponent?: React.ComponentType<IAttributeFilterLoadingProps>;
+    LoadingComponent?: ComponentType<IAttributeFilterLoadingProps>;
 
     /**
      * Customize attribute filter dropdown button component.
@@ -376,7 +377,7 @@ export interface IAttributeFilterCustomComponentProps {
      *
      * @beta
      */
-    DropdownButtonComponent?: React.ComponentType<IAttributeFilterDropdownButtonProps>;
+    DropdownButtonComponent?: ComponentType<IAttributeFilterDropdownButtonProps>;
 
     /**
      * Customize attribute filter dropdown body component.
@@ -386,7 +387,7 @@ export interface IAttributeFilterCustomComponentProps {
      *
      * @beta
      */
-    DropdownBodyComponent?: React.ComponentType<IAttributeFilterDropdownBodyProps>;
+    DropdownBodyComponent?: ComponentType<IAttributeFilterDropdownBodyProps>;
 
     /**
      * Customize attribute filter dropdown actions component.
@@ -396,7 +397,7 @@ export interface IAttributeFilterCustomComponentProps {
 
      * @beta
      */
-    DropdownActionsComponent?: React.ComponentType<IAttributeFilterDropdownActionsProps>;
+    DropdownActionsComponent?: ComponentType<IAttributeFilterDropdownActionsProps>;
 
     /**
      * Customize attribute filter search bar component.
@@ -406,7 +407,7 @@ export interface IAttributeFilterCustomComponentProps {
      *
      * @beta
      */
-    ElementsSearchBarComponent?: React.ComponentType<IAttributeFilterElementsSearchBarProps>;
+    ElementsSearchBarComponent?: ComponentType<IAttributeFilterElementsSearchBarProps>;
 
     /**
      * Customize attribute filter elements select component.
@@ -416,7 +417,7 @@ export interface IAttributeFilterCustomComponentProps {
      *
      * @beta
      */
-    ElementsSelectComponent?: React.ComponentType<IAttributeFilterElementsSelectProps>;
+    ElementsSelectComponent?: ComponentType<IAttributeFilterElementsSelectProps>;
 
     /**
      * Customize attribute filter elements select loading component.
@@ -426,7 +427,7 @@ export interface IAttributeFilterCustomComponentProps {
      *
      * @beta
      */
-    ElementsSelectLoadingComponent?: React.ComponentType<IAttributeFilterElementsSelectLoadingProps>;
+    ElementsSelectLoadingComponent?: ComponentType<IAttributeFilterElementsSelectLoadingProps>;
 
     /**
      * Customize attribute filter elements select item component.
@@ -436,7 +437,7 @@ export interface IAttributeFilterCustomComponentProps {
      *
      * @beta
      */
-    ElementsSelectItemComponent?: React.ComponentType<IAttributeFilterElementsSelectItemProps>;
+    ElementsSelectItemComponent?: ComponentType<IAttributeFilterElementsSelectItemProps>;
 
     /**
      * Customize attribute filter elements select action component (Select all checkbox)
@@ -445,7 +446,7 @@ export interface IAttributeFilterCustomComponentProps {
      *
      * @beta
      */
-    ElementsSelectActionsComponent?: React.ComponentType<IAttributeFilterElementsActionsProps>;
+    ElementsSelectActionsComponent?: ComponentType<IAttributeFilterElementsActionsProps>;
 
     /**
      * Customize attribute filter elements select error component.
@@ -453,7 +454,7 @@ export interface IAttributeFilterCustomComponentProps {
      * -  If not provided, the default implementation {@link AttributeFilterElementsSelectError} will be used.
      * @beta
      */
-    ElementsSelectErrorComponent?: React.ComponentType<IAttributeFilterElementsSelectErrorProps>;
+    ElementsSelectErrorComponent?: ComponentType<IAttributeFilterElementsSelectErrorProps>;
 
     /**
      * Customize attribute filter empty result component.
@@ -462,7 +463,7 @@ export interface IAttributeFilterCustomComponentProps {
      *
      * @beta
      */
-    EmptyResultComponent?: React.ComponentType<IAttributeFilterEmptyResultProps>;
+    EmptyResultComponent?: ComponentType<IAttributeFilterEmptyResultProps>;
 
     /**
      * Customize attribute filter status bar component.
@@ -470,5 +471,5 @@ export interface IAttributeFilterCustomComponentProps {
      * -  If not provided, the default implementation {@link AttributeFilterStatusBar} will be used.
      * @beta
      */
-    StatusBarComponent?: React.ComponentType<IAttributeFilterStatusBarProps>;
+    StatusBarComponent?: ComponentType<IAttributeFilterStatusBarProps>;
 }

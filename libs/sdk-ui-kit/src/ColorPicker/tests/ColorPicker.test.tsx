@@ -1,7 +1,6 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { render, screen, fireEvent } from "@testing-library/react";
-import { withIntl } from "@gooddata/sdk-ui";
+import { Intl } from "@gooddata/sdk-ui";
 
 import { ColorPicker } from "../ColorPicker.js";
 import { ColorFormats } from "tinycolor2";
@@ -27,16 +26,21 @@ function renderComponent(options?: Partial<IColorPickerProps>) {
         ...options,
     };
 
-    const Wrapper = withIntl(ColorPicker, "en-US", {
-        "gs.color-picker.inputPlaceholder": "placeholder",
-        "gs.color-picker.hex": "hex",
-        "gs.color-picker.currentColor": "current color",
-        "gs.color-picker.newColor": "new color",
-        "gs.color-picker.cancelButton": "cancel",
-        "gs.color-picker.okButton": "ok",
-    });
-
-    return render(<Wrapper {...args} />);
+    return render(
+        <Intl
+            customLocale="en-US"
+            customMessages={{
+                "gs.color-picker.inputPlaceholder": "placeholder",
+                "gs.color-picker.hex": "hex",
+                "gs.color-picker.currentColor": "current color",
+                "gs.color-picker.newColor": "new color",
+                "gs.color-picker.cancelButton": "cancel",
+                "gs.color-picker.okButton": "ok",
+            }}
+        >
+            <ColorPicker {...args} />
+        </Intl>,
+    );
 }
 
 describe("ColorPicker", () => {

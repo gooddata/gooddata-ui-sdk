@@ -10,8 +10,10 @@ import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
+import { ComponentType } from 'react';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FiltersOrPlaceholders } from '@gooddata/sdk-ui';
+import { ForwardRefExoticComponent } from 'react';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -38,35 +40,38 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
+import { JSX } from 'react/jsx-runtime';
 import { LodashIsEqual1x1 } from 'lodash/fp.js';
 import { MeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { MeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
-import { default as React_2 } from 'react';
+import { PropsWithoutRef } from 'react';
+import { ReactElement } from 'react';
+import { RefAttributes } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
 
 // @public
-export const AreaChart: (props: IAreaChartProps) => React_2.JSX.Element;
+export const AreaChart: (props: IAreaChartProps) => JSX.Element;
 
 // @public
 export type AxisNamePosition = "high" | "low" | "middle";
 
 // @public
-export const BarChart: (props: IBarChartProps) => React_2.JSX.Element;
+export const BarChart: (props: IBarChartProps) => JSX.Element;
 
 // @internal
-export const BaseChart: React_2.ComponentType<IBaseChartProps>;
+export const BaseChart: ComponentType<IBaseChartProps>;
 
 // @internal (undocumented)
 export const BOTTOM = "bottom";
 
 // @public
-export const BubbleChart: (props: IBubbleChartProps) => React_2.JSX.Element;
+export const BubbleChart: (props: IBubbleChartProps) => JSX.Element;
 
 // @public
-export const BulletChart: (props: IBulletChartProps) => React_2.JSX.Element;
+export const BulletChart: (props: IBulletChartProps) => JSX.Element;
 
 // @internal (undocumented)
 export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType>;
@@ -103,10 +108,10 @@ export type ChartRowHeight = "small" | "medium" | "large";
 export { ColorUtils }
 
 // @public
-export const ColumnChart: (props: IColumnChartProps) => React_2.JSX.Element;
+export const ColumnChart: (props: IColumnChartProps) => JSX.Element;
 
 // @public
-export const ComboChart: (props: IComboChartProps) => React_2.JSX.Element;
+export const ComboChart: (props: IComboChartProps) => JSX.Element;
 
 // @internal (undocumented)
 export enum ComparisonColorType {
@@ -134,13 +139,13 @@ export function constructRepeaterBuckets(rowAttribute: IAttribute, columns: IAtt
 export function constructRepeaterDimensions(buckets: IBucket[]): IDimension[];
 
 // @internal (undocumented)
-export const CoreHeadline: React_2.ComponentType<ICoreChartProps & ICoreHeadlineExtendedProps>;
+export const CoreHeadline: ComponentType<ICoreChartProps & ICoreHeadlineExtendedProps>;
 
 // @internal (undocumented)
-export const CoreRepeater: React_2.FC<ICoreRepeaterChartProps>;
+export function CoreRepeater({ theme, locale, ...props }: ICoreRepeaterChartProps): JSX.Element;
 
 // @internal
-export const CoreXirr: React_2.ComponentType<ICoreChartProps>;
+export const CoreXirr: ComponentType<ICoreChartProps>;
 
 // @internal
 export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig, enableNewHeadline: boolean) => IHeadlineProvider;
@@ -149,13 +154,13 @@ export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig, 
 export const DEFAULT_COMPARISON_PALETTE: IColorPalette;
 
 // @public
-export const DependencyWheelChart: (props: IDependencyWheelChartProps) => React_2.JSX.Element;
+export const DependencyWheelChart: (props: IDependencyWheelChartProps) => JSX.Element;
 
 // @public
-export const DonutChart: (props: IDonutChartProps) => React_2.JSX.Element;
+export const DonutChart: (props: IDonutChartProps) => JSX.Element;
 
 // @public
-export const FunnelChart: (props: IFunnelChartProps) => React_2.JSX.Element;
+export const FunnelChart: (props: IFunnelChartProps) => JSX.Element;
 
 // @internal
 export const getCalculationValuesDefault: (calculationType?: CalculationType) => ICalculationDefaultValue;
@@ -169,10 +174,10 @@ export const getComparisonFormat: (providedFormat: string, defaultFormat: string
 export const getComparisonRgbColor: (color: IColor, colorType: ComparisonColorType, colorPalette?: IColorPalette) => IRgbColorValue;
 
 // @public
-export const Headline: (props: IHeadlineProps) => React_2.JSX.Element;
+export const Headline: (props: IHeadlineProps) => JSX.Element;
 
 // @public
-export const Heatmap: (props: IHeatmapProps) => React_2.JSX.Element;
+export const Heatmap: (props: IHeatmapProps) => JSX.Element;
 
 // @public (undocumented)
 export interface IAreaChartBucketProps {
@@ -461,7 +466,7 @@ export interface ICoreChartProps extends ICommonChartProps {
 // @internal (undocumented)
 export interface ICoreHeadlineExtendedProps {
     // (undocumented)
-    headlineTransformation: React_2.ComponentType<IHeadlineTransformationProps>;
+    headlineTransformation: ComponentType<IHeadlineTransformationProps>;
 }
 
 // @internal (undocumented)
@@ -596,7 +601,7 @@ export interface IHeadlineProps extends IBucketChartProps, IHeadlineBucketProps 
 // @internal
 export interface IHeadlineProvider {
     createExecution(executionFactory: IExecutionFactory, params: ICreateExecutionParams): IPreparedExecution;
-    getHeadlineTransformationComponent: () => React.ComponentType<IHeadlineTransformationProps>;
+    getHeadlineTransformationComponent: () => ComponentType<IHeadlineTransformationProps>;
 }
 
 // @internal (undocumented)
@@ -939,7 +944,7 @@ export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {
 }
 
 // @public
-export const LineChart: (props: ILineChartProps) => React_2.JSX.Element;
+export const LineChart: (props: ILineChartProps) => JSX.Element;
 
 // @internal (undocumented)
 export const MIDDLE = "middle";
@@ -948,16 +953,16 @@ export const MIDDLE = "middle";
 export type OnLegendReady = (data: ILegendData) => void;
 
 // @public
-export const PieChart: (props: IPieChartProps) => React_2.JSX.Element;
+export const PieChart: (props: IPieChartProps) => JSX.Element;
 
 // @public
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 // @public
-export const PyramidChart: (props: IPyramidChartProps) => React_2.JSX.Element;
+export const PyramidChart: (props: IPyramidChartProps) => JSX.Element;
 
 // @beta (undocumented)
-export const Repeater: (props: IRepeaterProps) => JSX.Element;
+export const Repeater: (props: IRepeaterProps) => ReactElement;
 
 // @public (undocumented)
 export type RepeaterColumnLocator = IRepeaterAttributeColumnLocator | IRepeaterMeasureColumnLocator;
@@ -975,16 +980,16 @@ export type RepeaterColumnWidthItem = IRepeaterAttributeColumnWidthItem | IRepea
 export type RepeaterDefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
 
 // @public
-export const SankeyChart: (props: ISankeyChartProps) => React_2.JSX.Element;
+export const SankeyChart: (props: ISankeyChartProps) => JSX.Element;
 
 // @public
-export const ScatterPlot: (props: IScatterPlotProps) => React_2.JSX.Element;
+export const ScatterPlot: (props: IScatterPlotProps) => JSX.Element;
 
 // @internal (undocumented)
 export const TOP = "top";
 
 // @public
-export const Treemap: (props: ITreemapProps) => React_2.JSX.Element;
+export const Treemap: (props: ITreemapProps) => JSX.Element;
 
 // @internal (undocumented)
 export function updateConfigWithSettings(config: IChartConfig, settings: ISettings): IChartConfig;
@@ -998,12 +1003,14 @@ export function updateForecastWithSettings(config: IChartConfig, settings: ISett
 export const ViewByAttributesLimit = 2;
 
 // @public
-export const WaterfallChart: (props: IWaterfallChartProps) => React_2.JSX.Element;
+export const WaterfallChart: (props: IWaterfallChartProps) => JSX.Element;
 
 // @internal (undocumented)
-export const withJsxExport: <T extends object>(Component: React_2.ComponentType<T>) => React_2.ComponentType<T>;
+export function withJsxExport<T extends object>(Component: ComponentType<T>): ForwardRefExoticComponent<PropsWithoutRef<T> & RefAttributes<{
+    toJsx: () => string;
+}>>;
 
 // @beta
-export const Xirr: (props: IXirrProps) => JSX.Element;
+export const Xirr: (props: IXirrProps) => ReactElement;
 
 ```

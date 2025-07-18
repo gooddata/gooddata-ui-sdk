@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useMemo, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 
 import {
@@ -48,7 +48,7 @@ provideGlobalGridOptions({ theme: "legacy" });
 
 const DEFAULT_COL_DEF: ColDef = { resizable: true, sortable: false };
 
-export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
+export function RepeaterChart(props: IRepeaterChartProps) {
     const { dataView, onError, config, afterRender } = props;
     const dataSource = useMemo(
         () => new AgGridDatasource(dataView, { onError }, config),
@@ -203,7 +203,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
             />
         </div>
     );
-};
+}
 
 interface IRepeaterImageProps {
     src?: string;
@@ -333,7 +333,7 @@ function AttributeCellRenderer({
         return <LoadingComponent color={color} width={36} imageHeight={8} height={rowHeight} speed={2} />;
     }
 
-    let renderValue: React.ReactNode = value || emptyHeaderTitleFromIntl(intl);
+    let renderValue: ReactNode = value || emptyHeaderTitleFromIntl(intl);
     if (renderingType === "text") {
         renderValue = <span>{renderValue}</span>;
     } else if (renderingType === "hyperlink") {

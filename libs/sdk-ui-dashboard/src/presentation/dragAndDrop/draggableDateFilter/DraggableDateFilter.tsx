@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 import classNames from "classnames";
 import {
@@ -11,6 +10,7 @@ import {
 import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { CustomDashboardDateFilterComponent, IDashboardDateFilterConfig } from "../../filterBar/types.js";
 import { useDashboardDrag } from "../useDashboardDrag.js";
+import { RefObject } from "react";
 
 type DraggableDateFilterProps = {
     filter: IDashboardDateFilter;
@@ -75,7 +75,7 @@ export function DraggableDateFilter({
                     "dash-filter-is-edit-mode": isInEditMode,
                     "is-dragging": isDragging,
                 })}
-                ref={dragRef}
+                ref={dragRef as unknown as RefObject<HTMLDivElement>}
             >
                 <FilterComponent
                     filter={filter}

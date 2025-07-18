@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useRef, ReactNode, useCallback } from "react";
+import { useState, useRef, ReactNode, useCallback, MouseEvent, KeyboardEvent } from "react";
 import cx from "classnames";
 import { useIntl, FormattedMessage } from "react-intl";
 
@@ -11,12 +11,12 @@ import { useIdPrefixed } from "../utils/useId.js";
 import { isActionKey } from "../utils/events.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 
-export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
+export function HeaderAccount({
     className = "",
     items = [],
     userName = "",
     onMenuItemClick,
-}) => {
+}: IHeaderAccountProps) {
     const [isOpen, setIsOpen] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const intl = useIntl();
@@ -102,20 +102,21 @@ export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
             {renderAccountMenu()}
         </Button>
     );
-};
+}
 
-const MenuItem: React.FC<{
+function MenuItem({
+    item,
+    toggleMenu,
+    onMenuItemClick,
+}: {
     item: IHeaderMenuItem;
     toggleMenu: (isOpen: boolean) => void;
-    onMenuItemClick: (
-        item: IHeaderMenuItem,
-        e: React.MouseEvent<HTMLAnchorElement> | React.KeyboardEvent,
-    ) => void;
-}> = ({ item, toggleMenu, onMenuItemClick }) => {
+    onMenuItemClick: (item: IHeaderMenuItem, e: MouseEvent<HTMLAnchorElement> | KeyboardEvent) => void;
+}) {
     const tabIndexProp = item.href ? {} : { tabIndex: 0 };
 
     const handleClick = useCallback(
-        (e: React.MouseEvent<HTMLAnchorElement>): void => {
+        (e: MouseEvent<HTMLAnchorElement>): void => {
             toggleMenu(false);
             onMenuItemClick(item, e);
         },
@@ -123,7 +124,7 @@ const MenuItem: React.FC<{
     );
 
     const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent): void => {
+        (e: KeyboardEvent): void => {
             if (isActionKey(e)) {
                 e.preventDefault();
                 toggleMenu(false);
@@ -144,4 +145,4 @@ const MenuItem: React.FC<{
             <FormattedMessage id={item.key} />
         </a>
     );
-};
+}

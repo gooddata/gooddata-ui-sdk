@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+import { MouseEvent, ReactNode } from "react";
 import { IAlignPoint } from "../typings/positioning.js";
 import { Alignment, OverlayPositionType } from "../typings/overlay.js";
 
@@ -9,7 +10,7 @@ export interface IOverlayProps<T> {
     id?: string;
     alignPoints?: IAlignPoint[];
     alignTo?: string | HTMLElement | null;
-    children?: React.ReactNode;
+    children?: ReactNode;
     className?: string;
     containerClassName?: string;
     closeOnMouseDrag?: boolean;
@@ -48,9 +49,9 @@ export interface IOverlayProps<T> {
     positionType?: OverlayPositionType;
 
     shouldCloseOnClick?: (e: Event) => boolean;
-    onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onClick?: (e: MouseEvent<HTMLDivElement>) => void;
+    onMouseOver?: (e: MouseEvent<HTMLDivElement>) => void;
+    onMouseUp?: (e: MouseEvent<HTMLDivElement>) => void;
     zIndex?: number | undefined;
     ensureVisibility?: boolean;
 }

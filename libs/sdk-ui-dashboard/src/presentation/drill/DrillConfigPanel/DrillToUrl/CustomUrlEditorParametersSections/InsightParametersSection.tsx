@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+
 import { FormattedMessage } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
 import { IAttributeWithDisplayForm, IParametersPanelSectionsCommonProps } from "../types.js";
@@ -13,12 +13,12 @@ export interface IInsightParametersSectionProps extends IParametersPanelSections
     insightFilters?: IAttributeFilter[];
 }
 
-export const InsightParametersSection: React.FC<IInsightParametersSectionProps> = ({
+export function InsightParametersSection({
     attributeDisplayForms,
     loadingAttributeDisplayForms,
     insightFilters,
     onAdd,
-}) => {
+}: IInsightParametersSectionProps) {
     const catalogDisplayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
     return (
         <>
@@ -62,4 +62,4 @@ export const InsightParametersSection: React.FC<IInsightParametersSectionProps> 
             ) : null}
         </>
     );
-};
+}

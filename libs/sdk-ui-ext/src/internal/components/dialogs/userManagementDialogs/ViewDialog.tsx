@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { DialogBase, Typography, Button, useId } from "@gooddata/sdk-ui-kit";
@@ -9,7 +9,7 @@ import { messages } from "./locales.js";
 import { DeleteLink } from "./DeleteLink.js";
 
 export interface IViewDialogProps {
-    children: React.ReactNode;
+    children: ReactNode;
     dialogTitle: string;
     isAdmin: boolean;
     isDeleteLinkEnabled: boolean;
@@ -22,7 +22,7 @@ export interface IViewDialogProps {
     onEdit: () => void;
 }
 
-export const ViewDialog: React.FC<IViewDialogProps> = ({
+export function ViewDialog({
     dialogTitle,
     isAdmin,
     onEdit,
@@ -34,7 +34,7 @@ export const ViewDialog: React.FC<IViewDialogProps> = ({
     deleteLinkDisabledTooltipTextId,
     onOpenDeleteDialog,
     onClose,
-}) => {
+}: IViewDialogProps) {
     const intl = useIntl();
     const titleElementId = useId();
 
@@ -87,4 +87,4 @@ export const ViewDialog: React.FC<IViewDialogProps> = ({
             </div>
         </DialogBase>
     );
-};
+}

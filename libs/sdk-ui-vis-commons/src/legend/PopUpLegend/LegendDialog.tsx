@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { ReactElement, ReactNode, useRef, useCallback, MouseEventHandler, FocusEventHandler } from "react";
 import cx from "classnames";
 import {
     ZoomAwareOverlay,
@@ -12,24 +12,24 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints.js";
 
-const LegendDialogWrapper: React.FC<{ children: (isMobile: boolean) => JSX.Element }> = ({ children }) => {
+function LegendDialogWrapper({ children }: { children: (isMobile: boolean) => ReactElement }) {
     const isMobile = useMediaQuery("<sm");
     return children(isMobile);
-};
+}
 
 interface ILegendDialogContent {
     title: string;
     onCloseDialog: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
     id: string;
 }
 
-const LegendDialogContent: React.FC<ILegendDialogContent> = ({ title, onCloseDialog, children, id }) => {
+function LegendDialogContent({ title, onCloseDialog, children, id }: ILegendDialogContent) {
     const isZoomed = useIsZoomed(ZOOM_THRESHOLD);
 
-    const dialogRef = React.useRef<HTMLDivElement>(null);
+    const dialogRef = useRef<HTMLDivElement>(null);
 
-    const handleClose = React.useCallback<React.MouseEventHandler>(
+    const handleClose = useCallback<MouseEventHandler>(
         (e) => {
             e.preventDefault();
             onCloseDialog();
@@ -37,7 +37,7 @@ const LegendDialogContent: React.FC<ILegendDialogContent> = ({ title, onCloseDia
         [onCloseDialog],
     );
 
-    const handleBlur = React.useCallback<React.FocusEventHandler>(
+    const handleBlur = useCallback<FocusEventHandler>(
         (e) => {
             // e.relatedTarget is the element receiving focus after the blur
             if (!dialogRef.current || dialogRef.current.contains(e.relatedTarget)) {
@@ -79,25 +79,18 @@ const LegendDialogContent: React.FC<ILegendDialogContent> = ({ title, onCloseDia
             </UiAutofocus>
         </div>
     );
-};
+}
 
 export interface ILegendDialogProps {
     name: string;
     isOpen: boolean;
     alignTo: string;
     onCloseDialog: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
     id: string;
 }
 
-export const LegendDialog: React.FC<ILegendDialogProps> = ({
-    name,
-    children,
-    isOpen,
-    alignTo,
-    onCloseDialog,
-    id,
-}) => {
+export function LegendDialog({ name, children, isOpen, alignTo, onCloseDialog, id }: ILegendDialogProps) {
     if (!isOpen) {
         return null;
     }
@@ -123,4 +116,4 @@ export const LegendDialog: React.FC<ILegendDialogProps> = ({
             }}
         </LegendDialogWrapper>
     );
-};
+}

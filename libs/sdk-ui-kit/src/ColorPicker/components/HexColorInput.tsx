@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, Fragment, ReactNode } from "react";
+import { Fragment, ReactNode, memo } from "react";
 import { ColorFormats } from "tinycolor2";
 
 import { getHslFromHexColor, getHexFromHslColor, isHexColorValid } from "../utils.js";

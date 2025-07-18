@@ -1,5 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import {
     useDashboardSelector,
     useDashboardDispatch,
@@ -15,10 +14,9 @@ interface IDashboardLayoutSectionOverlayControllerProps {
     section: IDashboardLayoutSectionFacade<unknown>;
 }
 
-export const DashboardLayoutSectionOverlayController: React.FC<
-    IDashboardLayoutSectionOverlayControllerProps
-> = (props) => {
-    const { section } = props;
+export function DashboardLayoutSectionOverlayController({
+    section,
+}: IDashboardLayoutSectionOverlayControllerProps) {
     const dispatch = useDashboardDispatch();
 
     const refs = getRefsForSection(section);
@@ -39,4 +37,4 @@ export const DashboardLayoutSectionOverlayController: React.FC<
             modifications={sectionModifications}
         />
     );
-};
+}

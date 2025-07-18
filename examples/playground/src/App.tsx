@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ReactElement, useMemo } from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { createBackend } from "./createBackend.js";
 import { Playground } from "./playground/Playground.js";
@@ -9,7 +9,7 @@ function hasCredentialsSetup(): boolean {
     return !!import.meta.env.VITE_TIGER_API_TOKEN;
 }
 
-const AppWithBackend: React.FC = () => {
+function AppWithBackend(): ReactElement {
     // only create the backend instance once
     const backend = useMemo(() => {
         return createBackend();
@@ -22,9 +22,9 @@ const AppWithBackend: React.FC = () => {
             </WorkspaceProvider>
         </BackendProvider>
     );
-};
+}
 
-export const App: React.FC = () => {
+export function App(): ReactElement {
     if (!hasCredentialsSetup()) {
         return (
             <p>
@@ -35,4 +35,4 @@ export const App: React.FC = () => {
     }
 
     return <AppWithBackend />;
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
@@ -136,7 +136,7 @@ export function AttributeFilterDropdown() {
 }
 
 function useLastValidValue<T>(value: T, isValid: boolean): T {
-    const lastValidValue = useRef<T | undefined>();
+    const lastValidValue = useRef<T | null>(null);
     if (isValid) {
         lastValidValue.current = value;
     }

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo } from "react";
+import { memo, ReactNode } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
@@ -11,7 +11,7 @@ export interface IBubbleMessageOwnProps {
     alignPoints?: IAlignPoint[];
     messageId?: string;
     className?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export const DisabledBubbleMessage = memo(function DisabledBubbleMessage({

@@ -1,13 +1,13 @@
-// (C) 2023 GoodData Corporation
-import React, { ComponentType } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ComponentType } from "react";
 import { wrapDisplayName } from "@gooddata/sdk-ui";
 
 import { IBaseHeadlineTitle, IWithTitleProps } from "../../../interfaces/BaseHeadlines.js";
 
 export const withTitle = <T, H extends IBaseHeadlineTitle>(
     BaseHeadlineDataItem: ComponentType<T>,
-): React.ComponentType<T & IWithTitleProps<H>> => {
-    const WithTitle: React.FC<T & IWithTitleProps<H>> = (props) => {
+): ComponentType<T & IWithTitleProps<H>> => {
+    function WithTitle(props: T & IWithTitleProps<H>) {
         const { shouldHideTitle, titleRef, dataItem } = props;
         return (
             <>
@@ -23,7 +23,7 @@ export const withTitle = <T, H extends IBaseHeadlineTitle>(
                 ) : null}
             </>
         );
-    };
+    }
 
     return wrapDisplayName("withTitle", BaseHeadlineDataItem)(WithTitle);
 };

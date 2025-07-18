@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { memo, useEffect } from "react";
+import { memo, useEffect } from "react";
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import { useIntl } from "react-intl";

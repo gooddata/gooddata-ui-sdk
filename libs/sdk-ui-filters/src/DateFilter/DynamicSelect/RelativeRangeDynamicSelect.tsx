@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useMemo, useCallback, useState } from "react";
+import { useMemo, useCallback, useState, ChangeEvent, CSSProperties } from "react";
 import DefaultDownshift, { ControllerStateAndHelpers } from "downshift";
 import cx from "classnames";
 import { getSelectableItems, itemToString } from "../Select/utils.js";
@@ -29,7 +29,7 @@ export interface IRelativeRangeDynamicSelectProps {
     onInputValueChange: (value: string) => void;
     onBlur?: () => void;
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     optionClassName?: string;
     visibleItemsRange?: number;
 
@@ -40,23 +40,21 @@ export interface IRelativeRangeDynamicSelectProps {
     };
 }
 
-export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectProps> = (props) => {
-    const {
-        initialIsOpen = false,
-        placeholder,
-        getItems,
-        value = null,
-        className,
-        style,
-        optionClassName,
-        visibleItemsRange = defaultVisibleItemsRange,
-        accessibilityConfig,
-        inputValue,
-        onChange = noop,
-        onInputValueChange,
-        onBlur,
-    } = props;
-
+export function RelativeRangeDynamicSelect({
+    initialIsOpen = false,
+    placeholder,
+    getItems,
+    value = null,
+    className,
+    style,
+    optionClassName,
+    visibleItemsRange = defaultVisibleItemsRange,
+    accessibilityConfig,
+    inputValue,
+    onChange = noop,
+    onInputValueChange,
+    onBlur,
+}: IRelativeRangeDynamicSelectProps) {
     const [searchValue, setSearchValue] = useState("");
 
     const handleChange = useCallback(
@@ -90,7 +88,7 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
     );
 
     const handleChangeInput = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>): void => {
+        (event: ChangeEvent<HTMLInputElement>): void => {
             const currentValue = event.target.value;
             handleInputValueChange(currentValue);
         },
@@ -240,4 +238,4 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
             }}
         </Downshift>
     );
-};
+}

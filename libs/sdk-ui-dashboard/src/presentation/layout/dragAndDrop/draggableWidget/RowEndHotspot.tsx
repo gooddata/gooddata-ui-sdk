@@ -1,7 +1,6 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
-import React from "react";
 
 import { Hotspot } from "./Hotspot.js";
 import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
@@ -15,7 +14,7 @@ export type RowEndHotspotProps<TWidget = IDashboardWidget> = {
     screen: ScreenSize;
 };
 
-export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
+export function RowEndHotspot(props: RowEndHotspotProps<unknown>) {
     const { item, screen } = props;
 
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
@@ -54,4 +53,4 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
             </div>
         </>
     );
-};
+}

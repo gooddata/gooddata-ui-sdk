@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useEffect, useMemo, useState } from "react";
+import { RefObject, useEffect, useMemo, useState } from "react";
 import { ISettings, IWidget, ScreenSize, IInsight } from "@gooddata/sdk-model";
 import { fluidLayoutDescriptor, INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import isEqual from "lodash/fp/isEqual.js";
@@ -126,7 +126,7 @@ export function HeightResizerHotspot({
         <div className="dash-height-resizer-container s-dash-height-resizer-container">
             {customWidgetsRestrictions.allowHeightResize ? (
                 <div
-                    ref={dragRef}
+                    ref={dragRef as unknown as RefObject<HTMLDivElement>}
                     className="s-dash-height-resizer-hotspot dash-height-resizer-hotspot"
                     onMouseEnter={onMouseEnter}
                     onMouseLeave={onMouseLeave}

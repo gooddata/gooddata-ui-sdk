@@ -1,16 +1,18 @@
-// (C) 2007-2019 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { CSSProperties, ReactNode } from "react";
 import cx from "classnames";
 
 interface ISelectHeading {
-    children: React.ReactNode;
+    children: ReactNode;
     className?: string;
     key?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
 }
 
-export const SelectHeading: React.FC<ISelectHeading> = ({ children, className, ...otherProps }) => (
-    <div className={cx("gd-select-heading gd-list-item gd-list-item-header", className)} {...otherProps}>
-        {children}
-    </div>
-);
+export function SelectHeading({ children, className, ...otherProps }: ISelectHeading) {
+    return (
+        <div className={cx("gd-select-heading gd-list-item gd-list-item-header", className)} {...otherProps}>
+            {children}
+        </div>
+    );
+}

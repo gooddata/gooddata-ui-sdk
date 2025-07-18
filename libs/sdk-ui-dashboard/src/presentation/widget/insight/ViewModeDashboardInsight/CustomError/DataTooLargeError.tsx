@@ -1,5 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
@@ -10,7 +9,7 @@ interface IDataTooLargeErrorProps {
     fullContent: boolean;
 }
 
-export const DataTooLargeError: React.FC<IDataTooLargeErrorProps> = ({ fullContent }) => {
+export function DataTooLargeError({ fullContent }: IDataTooLargeErrorProps) {
     return (
         <ErrorContainer>
             {fullContent ? (
@@ -31,4 +30,4 @@ export const DataTooLargeError: React.FC<IDataTooLargeErrorProps> = ({ fullConte
             )}
         </ErrorContainer>
     );
-};
+}

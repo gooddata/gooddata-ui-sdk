@@ -1,6 +1,6 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { ChangeEvent } from "react";
 import cx from "classnames";
 
 export interface ISharedObjectCheckboxControlProps {
@@ -12,19 +12,19 @@ export interface ISharedObjectCheckboxControlProps {
     className?: string;
 }
 
-export const SharedObjectCheckboxControl: React.FC<ISharedObjectCheckboxControlProps> = ({
+export function SharedObjectCheckboxControl({
     isChecked,
     isSupported,
     onChange,
     name,
     label,
     className,
-}) => {
+}: ISharedObjectCheckboxControlProps) {
     if (!isSupported) {
         return null;
     }
 
-    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
     const classNames = cx("input-checkbox-label", className);
 
     return (
@@ -40,4 +40,4 @@ export const SharedObjectCheckboxControl: React.FC<ISharedObjectCheckboxControlP
             <span className="input-label-text">{label}</span>
         </label>
     );
-};
+}

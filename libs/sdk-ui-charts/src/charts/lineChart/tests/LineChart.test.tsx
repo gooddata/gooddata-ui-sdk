@@ -1,5 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { render } from "@testing-library/react";
 import { LineChart } from "../LineChart.js";
 import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";

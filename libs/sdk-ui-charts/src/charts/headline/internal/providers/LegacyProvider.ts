@@ -1,13 +1,11 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ComponentType } from "react";
 import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import AbstractProvider from "./AbstractProvider.js";
 import LegacyHeadlineTransformation from "../transformations/LegacyHeadlineTransformation.js";
 
-class LegacyProvider extends AbstractProvider {
-    public getHeadlineTransformationComponent(): React.ComponentType<IHeadlineTransformationProps> {
+export default class LegacyProvider extends AbstractProvider {
+    public getHeadlineTransformationComponent(): ComponentType<IHeadlineTransformationProps> {
         return LegacyHeadlineTransformation;
     }
 }
-
-export default LegacyProvider;

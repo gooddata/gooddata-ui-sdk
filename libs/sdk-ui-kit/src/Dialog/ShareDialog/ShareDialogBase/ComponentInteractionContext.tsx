@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { useCallback, useContext, useMemo } from "react";
+import { useCallback, useContext, useMemo, createContext, ReactNode } from "react";
 import noop from "lodash/noop.js";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -27,7 +27,7 @@ const defaultContext: ComponentInteractionContextType = {
     currentUser: undefined,
 };
 
-const ComponentInteractionContext = React.createContext<ComponentInteractionContextType>(defaultContext);
+const ComponentInteractionContext = createContext<ComponentInteractionContextType>(defaultContext);
 
 /**
  * @internal
@@ -42,23 +42,21 @@ interface IComponentInteractionProps {
     isCurrentUserWorkspaceManager: boolean;
     sharedObjectStatus: ShareStatus;
     isSharedObjectLocked: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
  * @internal
  */
-export const ComponentInteractionProvider: React.FC<IComponentInteractionProps> = (props) => {
-    const {
-        children,
-        onInteraction,
-        currentUser,
-        currentUserPermissions,
-        isCurrentUserWorkspaceManager,
-        isSharedObjectLocked,
-        sharedObjectStatus,
-    } = props;
-
+export function ComponentInteractionProvider({
+    children,
+    onInteraction,
+    currentUser,
+    currentUserPermissions,
+    isCurrentUserWorkspaceManager,
+    isSharedObjectLocked,
+    sharedObjectStatus,
+}: IComponentInteractionProps) {
     const flowId = useMemo(() => uuidv4(), []);
     const currentUserPermission = useMemo(
         () => getGranularPermissionFromUserPermissions(currentUserPermissions),
@@ -95,7 +93,7 @@ export const ComponentInteractionProvider: React.FC<IComponentInteractionProps> 
             {children}
         </ComponentInteractionContext.Provider>
     );
-};
+}
 
 export const useShareDialogInteraction = () => {
     const { onInteraction, currentUser } = useComponentInteractionContext();

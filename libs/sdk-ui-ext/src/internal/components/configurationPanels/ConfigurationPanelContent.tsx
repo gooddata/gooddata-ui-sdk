@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { PureComponent, ReactNode } from "react";
 import noop from "lodash/noop.js";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
 import { IInsightDefinition, ISettings, insightHasMeasures } from "@gooddata/sdk-model";
@@ -45,7 +45,7 @@ export interface IConfigurationPanelContentProps<PanelConfig = any> {
 
 export default abstract class ConfigurationPanelContent<
     T extends IConfigurationPanelContentProps = IConfigurationPanelContentProps,
-> extends React.PureComponent<T> {
+> extends PureComponent<T> {
     public static defaultProps: IConfigurationPanelContentProps = {
         properties: null,
         references: null,
@@ -79,7 +79,7 @@ export default abstract class ConfigurationPanelContent<
         );
     }
 
-    protected abstract renderConfigurationPanel(): React.ReactNode;
+    protected abstract renderConfigurationPanel(): ReactNode;
 
     /**
      * Optionally pass a sectionName to specialize disabling logic for specific sections.
@@ -90,7 +90,7 @@ export default abstract class ConfigurationPanelContent<
         return !insight || !insightHasMeasures(insight) || isError || isLoading;
     }
 
-    protected renderColorSection(): React.ReactNode {
+    protected renderColorSection(): ReactNode {
         const { properties, propertiesMeta, pushData, colors, featureFlags, references, insight, isLoading } =
             this.props;
 
@@ -112,7 +112,7 @@ export default abstract class ConfigurationPanelContent<
         );
     }
 
-    protected renderLegendSection(): React.ReactNode {
+    protected renderLegendSection(): ReactNode {
         const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
@@ -126,7 +126,7 @@ export default abstract class ConfigurationPanelContent<
         );
     }
 
-    protected renderInteractionsSection(): React.ReactNode {
+    protected renderInteractionsSection(): ReactNode {
         const {
             pushData,
             properties,
@@ -159,7 +159,7 @@ export default abstract class ConfigurationPanelContent<
         ) : null;
     }
 
-    protected renderForecastSection(): React.ReactNode {
+    protected renderForecastSection(): ReactNode {
         const { pushData, properties, propertiesMeta, type, featureFlags, referencePoint, insight } =
             this.props;
 
@@ -183,7 +183,7 @@ export default abstract class ConfigurationPanelContent<
         );
     }
 
-    protected renderAdvancedSection(): React.ReactNode {
+    protected renderAdvancedSection(): ReactNode {
         const { pushData, properties, propertiesMeta, featureFlags } = this.props;
         return featureFlags.enableVisualizationFineTuning ? (
             <AdvancedSection

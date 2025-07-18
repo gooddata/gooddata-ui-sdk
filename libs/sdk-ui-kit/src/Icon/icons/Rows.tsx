@@ -1,5 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { Color, IIconProps } from "../typings.js";
 
@@ -16,7 +15,7 @@ export interface IRowsIconProps extends IIconProps {
 /**
  * @internal
  */
-export const Rows: React.FC<IRowsIconProps> = ({ colorPalette, className, width, height }) => {
+export function Rows({ colorPalette, className, width, height }: IRowsIconProps) {
     const normalRow = colorPalette?.normalRow ?? "#CCD8E2";
     const totalRow = colorPalette?.totalRow ?? "#94A1AD";
 
@@ -34,4 +33,4 @@ export const Rows: React.FC<IRowsIconProps> = ({ colorPalette, className, width,
             <rect y="9" width="13" height="2" fill={totalRow} />
         </svg>
     );
-};
+}

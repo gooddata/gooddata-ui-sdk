@@ -1,9 +1,9 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { createContext, ReactNode, useContext, ComponentType } from "react";
 import { wrapDisplayName } from "./wrapDisplayName.js";
 import { invariant } from "ts-invariant";
 
-const WorkspaceContext = React.createContext<string | undefined>(undefined);
+const WorkspaceContext = createContext<string | undefined>(undefined);
 WorkspaceContext.displayName = "WorkspaceContext";
 
 /**
@@ -19,7 +19,7 @@ export interface IWorkspaceProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -27,9 +27,9 @@ export interface IWorkspaceProviderProps {
  *
  * @public
  */
-export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children, workspace }) => {
+export function WorkspaceProvider({ children, workspace }: IWorkspaceProviderProps) {
     return <WorkspaceContext.Provider value={workspace}>{children}</WorkspaceContext.Provider>;
-};
+}
 
 /**
  * Hook to get workspace instance provided to {@link WorkspaceProvider}.
@@ -53,7 +53,7 @@ export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children,
  * @public
  */
 export const useWorkspace = (workspace?: string): string | undefined => {
-    const workspaceFromContext = React.useContext(WorkspaceContext);
+    const workspaceFromContext = useContext(WorkspaceContext);
     return workspace ?? workspaceFromContext;
 };
 
@@ -81,7 +81,7 @@ export const useWorkspace = (workspace?: string): string | undefined => {
  * @public
  */
 export const useWorkspaceStrict = (workspace?: string, context = "useWorkspaceStrict"): string => {
-    const workspaceFromContext = React.useContext(WorkspaceContext);
+    const workspaceFromContext = useContext(WorkspaceContext);
     const effectiveWorkspace = workspace ?? workspaceFromContext;
     invariant(
         effectiveWorkspace,
@@ -97,15 +97,15 @@ export const useWorkspaceStrict = (workspace?: string, context = "useWorkspaceSt
  * @internal
  */
 export function withWorkspace<T extends { workspace?: string }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<T> {
-    const ComponentWithInjectedWorkspace: React.FC<T> = (props) => {
+    Component: ComponentType<T>,
+): ComponentType<T> {
+    function ComponentWithInjectedWorkspace(props: T) {
         return (
             <WorkspaceContext.Consumer>
                 {(workspace) => <Component {...props} workspace={props.workspace ?? workspace} />}
             </WorkspaceContext.Consumer>
         );
-    };
+    }
 
     return wrapDisplayName("withWorkspace", Component)(ComponentWithInjectedWorkspace);
 }

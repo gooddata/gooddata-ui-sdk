@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
@@ -11,13 +10,13 @@ interface IDefaultSubmenuHeaderProps {
     onClose: () => void;
 }
 
-export const DefaultSubmenuHeader: React.FC<IDefaultSubmenuHeaderProps> = ({
+export function DefaultSubmenuHeader({
     title,
     backLabel,
     closeLabel,
     onGoBack,
     onClose,
-}) => {
+}: IDefaultSubmenuHeaderProps) {
     const headerClassNames = cx("configuration-panel-header-title", {
         clickable: !!onGoBack,
     });
@@ -52,4 +51,4 @@ export const DefaultSubmenuHeader: React.FC<IDefaultSubmenuHeaderProps> = ({
             />
         </div>
     );
-};
+}

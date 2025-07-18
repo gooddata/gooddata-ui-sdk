@@ -1,33 +1,33 @@
 // (C) 2021-2025 GoodData Corporation
 import { Icon } from "@gooddata/sdk-ui-kit";
-import React from "react";
+import { ReactNode } from "react";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
 
 interface IIconWrapperProps {
     name: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
-const IconWrapper: React.FC<IIconWrapperProps> = ({ name, children }) => {
+function IconWrapper({ name, children }: IIconWrapperProps) {
     return (
         <div className="gd-icon-wrapper">
             <div className="gd-icon-name">{`${name}: `}</div>
             {children}
         </div>
     );
-};
+}
 
-const RowWrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+function RowWrapper({ children }: { children?: ReactNode }) {
     return <div style={{ display: "flex", flexDirection: "row" }}>{children}</div>;
-};
+}
 
-const ColumnWrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+function ColumnWrapper({ children }: { children?: ReactNode }) {
     return <div style={{ display: "flex", flexDirection: "column", paddingRight: "10px" }}>{children}</div>;
-};
+}
 
-const InsightIconsTest: React.FC<{ children?: React.ReactNode }> = () => {
+function InsightIconsTest() {
     return (
         <div className="library-component screenshot-target">
             <IconWrapper name="ScatterPlot">
@@ -95,9 +95,9 @@ const InsightIconsTest: React.FC<{ children?: React.ReactNode }> = () => {
             </IconWrapper>
         </div>
     );
-};
+}
 
-const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
+function IconsTest() {
     return (
         <div className="library-component screenshot-target">
             <RowWrapper>
@@ -340,7 +340,7 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
             </RowWrapper>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/Icon",

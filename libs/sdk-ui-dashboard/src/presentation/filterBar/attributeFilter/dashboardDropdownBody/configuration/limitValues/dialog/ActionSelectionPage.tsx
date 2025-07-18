@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { Typography, Separator } from "@gooddata/sdk-ui-kit";
@@ -17,11 +17,11 @@ import {
 
 interface IActionProps {
     title: string;
-    description: React.ReactNode;
+    description: ReactNode;
     onClick: () => void;
 }
 
-const Action: React.FC<IActionProps> = ({ title, description, onClick }) => {
+function Action({ title, description, onClick }: IActionProps) {
     const classNames = cx(
         "attribute-filter__limit__popup__action-select__option",
         `s-add-limit-${stringUtils.simplifyText(title)}`,
@@ -37,7 +37,7 @@ const Action: React.FC<IActionProps> = ({ title, description, onClick }) => {
             <div className="gd-icon-chevron-right attribute-filter__limit__popup__action-select__icon" />
         </div>
     );
-};
+}
 
 export interface IActionSelectionPageProps {
     onAddFilters: () => void;
@@ -45,11 +45,11 @@ export interface IActionSelectionPageProps {
     onClose: () => void;
 }
 
-export const ActionSelectionPage: React.FC<IActionSelectionPageProps> = ({
+export function ActionSelectionPage({
     onAddFilters,
     onAddLimitingItems,
     onClose,
-}) => {
+}: IActionSelectionPageProps) {
     const intl = useIntl();
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
@@ -103,4 +103,4 @@ export const ActionSelectionPage: React.FC<IActionSelectionPageProps> = ({
             </div>
         </>
     );
-};
+}

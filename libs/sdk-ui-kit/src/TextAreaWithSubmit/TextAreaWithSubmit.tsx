@@ -1,5 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode, RefObject, useRef, useState, useEffect, useCallback } from "react";
+import {
+    MouseEvent as ReactMouseEvent,
+    ReactNode,
+    RefObject,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import identity from "lodash/identity.js";
 
 import { ITextAreaWithSubmitProps } from "./typings.js";
@@ -23,11 +31,11 @@ export function TextAreaWithSubmit({
 }: ITextAreaWithSubmitProps) {
     const [value, setValue] = useState(defaultValue);
     const [isEditing, setIsEditing] = useState(false);
-    const root: RefObject<any> = useRef();
-    const textarea: RefObject<HTMLTextAreaElement> = useRef();
+    const root: RefObject<any> = useRef(undefined);
+    const textarea: RefObject<HTMLTextAreaElement> = useRef(undefined);
     const focusTimeoutRef = useRef<number>(0);
 
-    const onSelectStart = useCallback((e: React.MouseEvent): void => {
+    const onSelectStart = useCallback((e: ReactMouseEvent): void => {
         e.stopPropagation();
     }, []);
 

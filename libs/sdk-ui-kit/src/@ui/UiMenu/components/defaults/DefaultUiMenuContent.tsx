@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { memo, ReactNode, useCallback } from "react";
 import { e } from "../../menuBem.js";
 import { IUiMenuContentItem, IUiMenuItemData } from "../../types.js";
 import { typedUiMenuContextStore } from "../../context.js";
@@ -10,9 +10,11 @@ import { DefaultUiMenuHeader } from "./DefaultUiMenuHeader.js";
  * Container for rendering custom content in menu.
  * @internal
  */
-export const DefaultUiMenuContent = React.memo(function DefaultUiMenuContent<
-    T extends IUiMenuItemData = object,
->({ item }: { item: IUiMenuContentItem<T> }): React.ReactElement {
+export const DefaultUiMenuContent = memo(function DefaultUiMenuContent<T extends IUiMenuItemData = object>({
+    item,
+}: {
+    item: IUiMenuContentItem<T>;
+}): ReactNode {
     const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
     const selector = createSelector((ctx) => ({
         onClose: ctx.onClose,
@@ -24,7 +26,7 @@ export const DefaultUiMenuContent = React.memo(function DefaultUiMenuContent<
     const { onClose, setShownCustomContentItemId, setFocusedId, shownCustomContentItemId } =
         useContextStore(selector);
 
-    const handleBack = React.useCallback(() => {
+    const handleBack = useCallback(() => {
         setFocusedId(shownCustomContentItemId);
         setShownCustomContentItemId(undefined);
     }, [setShownCustomContentItemId, shownCustomContentItemId, setFocusedId]);

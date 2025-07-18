@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import React, { useContext } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { createContext, useContext } from "react";
 import {
     SCREEN_BREAKPOINT_XS,
     SCREEN_BREAKPOINT_SM,
@@ -21,7 +21,7 @@ const defaultResponsiveContext: IResponsiveConfig = {
     },
 };
 
-const responsiveContext = React.createContext(defaultResponsiveContext);
+const responsiveContext = createContext(defaultResponsiveContext);
 
 responsiveContext.displayName = "ResponsiveContext";
 

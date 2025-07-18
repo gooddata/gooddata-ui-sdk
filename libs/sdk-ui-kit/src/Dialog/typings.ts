@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType, MouseEvent, ReactElement, ReactNode, RefObject } from "react";
 import { ArrowOffsets } from "../Bubble/index.js";
 import { IAlignPoint } from "../typings/positioning.js";
 import { IButtonAccessibilityConfig } from "../Button/typings.js";
@@ -9,7 +9,7 @@ import { IButtonAccessibilityConfig } from "../Button/typings.js";
  * @internal
  */
 export interface IDialogBaseProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
     className?: string;
     displayCloseButton?: boolean;
     accessibilityConfig?: {
@@ -30,17 +30,17 @@ export interface IDialogBaseProps {
      */
     containerClassName?: string;
     shouldCloseOnClick?: (e: Event) => boolean;
-    onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onClick?: (e: MouseEvent<HTMLDivElement>) => void;
+    onMouseOver?: (e: MouseEvent<HTMLDivElement>) => void;
+    onMouseUp?: (e: MouseEvent<HTMLDivElement>) => void;
     /**
      * If true, the dialog will autofocus on the first focusable element when it is opened.
      * Default is true.
      */
     autofocusOnOpen?: boolean;
-    CloseButton?: React.ComponentType<IDialogCloseButtonProps>;
-    initialFocus?: React.RefObject<HTMLElement> | string;
-    returnFocusTo?: React.RefObject<HTMLElement> | string;
+    CloseButton?: ComponentType<IDialogCloseButtonProps>;
+    initialFocus?: RefObject<HTMLElement | null> | string;
+    returnFocusTo?: RefObject<HTMLElement> | string;
     returnFocusAfterClose?: boolean;
 }
 
@@ -53,9 +53,9 @@ export interface IDialogProps extends IDialogBaseProps {
      */
     containerClassName?: string;
     shouldCloseOnClick?: (e: Event) => boolean;
-    onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onClick?: (e: MouseEvent<HTMLDivElement>) => void;
+    onMouseOver?: (e: MouseEvent<HTMLDivElement>) => void;
+    onMouseUp?: (e: MouseEvent<HTMLDivElement>) => void;
     onClose?: () => void;
     isModal?: boolean;
     alignPoints?: IAlignPoint[];
@@ -77,15 +77,15 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     submitButtonTooltipAlignPoints?: IAlignPoint[];
     submitButtonTooltipArrowOffsets?: ArrowOffsets;
     hideSubmitButton?: boolean;
-    warning?: string | React.ReactElement;
+    warning?: string | ReactElement;
     showProgressIndicator?: boolean;
-    headerLeftButtonRenderer?: () => JSX.Element;
-    footerLeftRenderer?: () => JSX.Element;
+    headerLeftButtonRenderer?: () => ReactElement;
+    footerLeftRenderer?: () => ReactElement;
     dialogHeaderClassName?: string;
-    titleRightIconRenderer?: () => JSX.Element;
+    titleRightIconRenderer?: () => ReactElement;
     headline?: string;
-    initialFocus?: React.RefObject<HTMLElement> | string;
-    returnFocusTo?: React.RefObject<HTMLElement> | string;
+    initialFocus?: RefObject<HTMLElement | null> | string;
+    returnFocusTo?: RefObject<HTMLElement> | string;
     accessibilityConfig?: {
         closeButton?: IButtonAccessibilityConfig;
         titleElementId?: string;

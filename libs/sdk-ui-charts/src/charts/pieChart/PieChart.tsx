@@ -1,5 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
@@ -104,7 +103,7 @@ const WrappedPieChart = withChart(pieChartDefinition)(CorePieChart);
  *
  * @public
  */
-export const PieChart = (props: IPieChartProps) => {
+export function PieChart(props: IPieChartProps) {
     const [measures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -121,4 +120,4 @@ export const PieChart = (props: IPieChartProps) => {
             }}
         />
     );
-};
+}

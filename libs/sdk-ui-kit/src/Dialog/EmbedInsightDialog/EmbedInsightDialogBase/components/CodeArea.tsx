@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode, useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { dialogEmptyInsightMessageLabels } from "../../../../locales.js";
@@ -16,9 +16,7 @@ export interface ICodeAreaProps {
 /**
  * @internal
  */
-export const CodeArea: React.FC<ICodeAreaProps> = (props) => {
-    const { code, onCopyCode } = props;
-
+export function CodeArea({ code, onCopyCode }: ICodeAreaProps) {
     const onAreaCopyCode = useCallback(() => {
         onCopyCode(code);
     }, [code, onCopyCode]);
@@ -33,7 +31,7 @@ export const CodeArea: React.FC<ICodeAreaProps> = (props) => {
             />
         </div>
     );
-};
+}
 
 /**
  * @internal

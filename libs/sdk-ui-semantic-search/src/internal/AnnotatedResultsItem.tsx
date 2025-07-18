@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import { memo } from "react";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { ListItemProps } from "../types.js";
 import { renderDetails } from "../utils/renderDetails.js";
@@ -10,7 +10,7 @@ import { renderLock } from "../utils/renderLock.js";
 import { SearchListItem } from "../SearchListItem.js";
 import { getAreaLabel } from "../utils/getAreaLabel.js";
 
-const CoreAnnotatedResultsItem: React.FC<ListItemProps<ISemanticSearchResultItem>> = (props) => {
+function CoreAnnotatedResultsItem(props: ListItemProps<ISemanticSearchResultItem>) {
     const { listItem } = props;
     const lockIcon = renderLock(listItem);
 
@@ -39,10 +39,10 @@ const CoreAnnotatedResultsItem: React.FC<ListItemProps<ISemanticSearchResultItem
             </span>
         </SearchListItem>
     );
-};
+}
 
 /**
  * A single result item in the search results.
  * @internal
  */
-export const AnnotatedResultsItem = React.memo(CoreAnnotatedResultsItem);
+export const AnnotatedResultsItem = memo(CoreAnnotatedResultsItem);

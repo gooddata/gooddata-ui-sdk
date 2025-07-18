@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { ReactNode, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { Ref, ReactNode, useEffect, useMemo, useRef, useState, useReducer } from "react";
 import cx from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -19,7 +19,7 @@ export type InputOwnProps = {
     catalogItems?: CatalogItem[];
     canManage?: boolean;
     canAnalyze?: boolean;
-    targetRef?: React.LegacyRef<HTMLDivElement>;
+    targetRef?: Ref<HTMLDivElement>;
 };
 
 const messages = defineMessages({

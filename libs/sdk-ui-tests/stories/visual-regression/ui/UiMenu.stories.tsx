@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode, useState } from "react";
 
 import { UiMenu, IUiMenuItem, separatorStaticItem } from "@gooddata/sdk-ui-kit";
 
@@ -68,12 +68,16 @@ type CustomMenuData = {
 };
 
 // Example custom content component
-const CustomForm: React.FC<{
+function CustomForm({
+    onBack,
+    onClose,
+    menuCtxData,
+}: {
     onBack: () => void;
     onClose: () => void;
     menuCtxData?: CustomMenuData["content"];
-}> = ({ onBack, onClose, menuCtxData }) => {
-    const [value, setValue] = React.useState("");
+}) {
+    const [value, setValue] = useState("");
 
     return (
         <div style={{ padding: "1rem" }}>
@@ -100,7 +104,7 @@ const CustomForm: React.FC<{
             </div>
         </div>
     );
-};
+}
 
 const itemsWithContent: IUiMenuItem<CustomMenuData>[] = [
     { type: "interactive", id: "item1", stringTitle: "Regular Item", data: "data1" },
@@ -114,7 +118,7 @@ const itemsWithContent: IUiMenuItem<CustomMenuData>[] = [
     { type: "interactive", id: "item3", stringTitle: "Another Item", data: "data3" },
 ];
 
-const Example = ({ title, children }: { title: string; children: React.ReactNode }) => (
+const Example = ({ title, children }: { title: string; children: ReactNode }) => (
     <>
         <h4>{title}</h4>
         <div style={{ width: 300 }}>{children}</div>

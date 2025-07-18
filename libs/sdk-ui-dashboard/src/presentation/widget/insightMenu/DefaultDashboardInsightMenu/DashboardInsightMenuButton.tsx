@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { KeyboardEvent, ReactNode, useCallback } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { useIntl } from "react-intl";
@@ -8,7 +8,7 @@ import { IDashboardInsightMenuButtonProps } from "../types.js";
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { getDashboardInsightMenuButtonId } from "../../../../_staging/accessibility/elementId.js";
 
-export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonProps): JSX.Element | null => {
+export function DashboardInsightMenuButton(props: IDashboardInsightMenuButtonProps): ReactNode {
     const { isOpen, items, widget, onClick } = props;
     const intl = useIntl();
 
@@ -17,7 +17,7 @@ export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonPro
     }, [onClick]);
 
     const onKeyDown = useCallback(
-        (event: React.KeyboardEvent<HTMLDivElement>) => {
+        (event: KeyboardEvent<HTMLDivElement>) => {
             // This enables keyboard interaction events after focus
             if (isActionKey(event)) {
                 event.preventDefault();
@@ -60,4 +60,4 @@ export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonPro
             <div className={optionsIconClasses} />
         </div>
     );
-};
+}

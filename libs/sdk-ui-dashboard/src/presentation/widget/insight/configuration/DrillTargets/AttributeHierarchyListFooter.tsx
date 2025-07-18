@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { Button, Separator } from "@gooddata/sdk-ui-kit";
 import { messages } from "@gooddata/sdk-ui";
@@ -10,7 +9,7 @@ interface IAttributeHierarchyListFooterProps {
     onClick: () => void;
 }
 
-const AttributeHierarchyListFooter: React.FC<IAttributeHierarchyListFooterProps> = ({ onClick }) => {
+export default function AttributeHierarchyListFooter({ onClick }: IAttributeHierarchyListFooterProps) {
     const { formatMessage } = useIntl();
     const canManageAttributeHierarchy = useDashboardSelector(selectCanManageAttributeHierarchy);
 
@@ -26,6 +25,4 @@ const AttributeHierarchyListFooter: React.FC<IAttributeHierarchyListFooterProps>
             />
         </div>
     ) : null;
-};
-
-export default AttributeHierarchyListFooter;
+}

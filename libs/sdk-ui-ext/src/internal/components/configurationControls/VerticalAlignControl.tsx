@@ -1,5 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { IPushData } from "@gooddata/sdk-ui";
 import { ChartCellVerticalAlign } from "@gooddata/sdk-ui-charts";
@@ -16,11 +15,11 @@ export interface IVerticalAlignControlProps {
     defaultValue?: ChartCellVerticalAlign;
 }
 
-export const VerticalAlignControl = ({
+export function VerticalAlignControl({
     pushData,
     properties,
     defaultValue = "top",
-}: IVerticalAlignControlProps) => {
+}: IVerticalAlignControlProps) {
     const intl = useIntl();
     const rowSizing = properties?.controls?.cellVerticalAlign ?? defaultValue;
 
@@ -36,4 +35,4 @@ export const VerticalAlignControl = ({
             />
         </div>
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
 /**
  * @internal
@@ -59,7 +59,7 @@ export interface ZoomProviderProps {
  * @internal
  * Provider component that monitors zoom level and viewport dimensions
  */
-export const ZoomProvider: React.FC<ZoomProviderProps> = ({ children }) => {
+export function ZoomProvider({ children }: ZoomProviderProps) {
     const [zoomState, setZoomState] = useState<IZoomContextState>(defaultZoomState);
 
     useEffect(() => {
@@ -115,7 +115,7 @@ export const ZoomProvider: React.FC<ZoomProviderProps> = ({ children }) => {
     }, []);
 
     return <ZoomContext.Provider value={zoomState}>{children}</ZoomContext.Provider>;
-};
+}
 
 /**
  * @internal

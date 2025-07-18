@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ComponentType } from "react";
+import { ComponentType } from "react";
 import { InvariantError } from "ts-invariant";
 import { ILoadingProps, LoadingComponent } from "@gooddata/sdk-ui";
 import union from "lodash/union.js";

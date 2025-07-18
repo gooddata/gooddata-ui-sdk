@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useRef, useCallback } from "react";
+import { Fragment, ReactElement, ReactNode, useState, useRef, useCallback } from "react";
 import { PositionedMenuContent } from "./PositionedMenuContent.js";
 import { IMenuPositionConfig } from "../MenuSharedTypes.js";
 import { RenderChildrenInPortal } from "../utils/RenderChildrenInPortal.js";
@@ -8,10 +8,10 @@ export interface IMenuPositionProps extends IMenuPositionConfig {
     opened: boolean;
     topLevelMenu: boolean;
     portalTarget: Element;
-    contentWrapper?: (props: { children: React.ReactNode }) => JSX.Element;
-    toggler: React.ReactNode;
+    contentWrapper?: (props: { children: ReactNode }) => ReactElement;
+    toggler: ReactNode;
     togglerWrapperClassName?: string;
-    children: React.ReactNode;
+    children: ReactNode;
     className?: string;
 }
 
@@ -19,30 +19,31 @@ export interface IMenuPositionState {
     togglerElInitialized: boolean;
 }
 
-const Wrapper = ({ children }: { children: React.ReactNode }) => (
-    <div className="gd-menuPosition-wrapper">{children}</div>
-);
+function Wrapper({ children }: { children: ReactNode }) {
+    return <div className="gd-menuPosition-wrapper">{children}</div>;
+}
 
-const PortalIfTopLevelMenu = ({
+function PortalIfTopLevelMenu({
     topLevelMenu,
     children,
     portalTarget,
 }: {
-    children: React.ReactNode;
+    children: ReactNode;
     portalTarget: Element;
     topLevelMenu: boolean;
-}) =>
-    topLevelMenu ? (
+}) {
+    return topLevelMenu ? (
         <RenderChildrenInPortal targetElement={portalTarget}>{children}</RenderChildrenInPortal>
     ) : (
-        <React.Fragment>{children}</React.Fragment>
+        <Fragment>{children}</Fragment>
     );
+}
 
 export function MenuPosition(props: IMenuPositionProps) {
     const {
         portalTarget,
         topLevelMenu,
-        contentWrapper: ContentWrapper = React.Fragment,
+        contentWrapper: ContentWrapper = Fragment,
         toggler,
         opened,
         alignment,
@@ -69,7 +70,7 @@ export function MenuPosition(props: IMenuPositionProps) {
     // any element specified in targetElement prop). Any submenus are rendered
     // inside of previous menu, so they do not need any portals.
 
-    const MaybeWrapper = topLevelMenu ? React.Fragment : Wrapper;
+    const MaybeWrapper = topLevelMenu ? Fragment : Wrapper;
 
     return (
         <MaybeWrapper>

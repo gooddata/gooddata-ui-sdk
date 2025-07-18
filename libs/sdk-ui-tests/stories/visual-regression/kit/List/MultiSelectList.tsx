@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-// import React from "react";
 
 // import { FilterStories } from "../../../../_infra/storyGroups";
 // import { storiesOf } from "../../../../_infra/storyRepository";
@@ -26,7 +25,7 @@
 //     uri: "some uri",
 // };
 
-// const AttributeFilterListItemExamples = (): JSX.Element => {
+// const AttributeFilterListItemExamples = (): ReactElement => {
 //     return (
 //         <InternalIntlWrapper>
 //             <div style={{ width: 300 }}>

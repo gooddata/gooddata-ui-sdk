@@ -1,13 +1,10 @@
-// (C) 2024 GoodData Corporation
-import React from "react";
+// (C) 2024-2025 GoodData Corporation
 
 export interface IHintProps {
     hint?: string;
 }
 
-const Hint: React.FC<IHintProps> = (props) => {
-    const { hint } = props;
-
+export default function Hint({ hint }: IHintProps) {
     return (
         <>
             <div>
@@ -32,6 +29,4 @@ const Hint: React.FC<IHintProps> = (props) => {
             </p>
         </>
     );
-};
-
-export default Hint;
+}

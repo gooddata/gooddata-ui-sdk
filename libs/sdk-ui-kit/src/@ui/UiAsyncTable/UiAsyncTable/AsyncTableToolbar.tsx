@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { e } from "../asyncTableBem.js";
 import { AsyncTableFilter } from "./AsyncTableFilter.js";
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";

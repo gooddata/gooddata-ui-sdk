@@ -53,9 +53,9 @@ Inside module `sdk-ui-dashboard` we need import wrapper from `sdk-ui-dashboard/s
 import React from "react";
 import { IntlWrapper } from "../../localization";
 
-export const Component: React.FC<Props> = () => {
+export function Component(_: Props) {
     return <IntlWrapper locale={locale}>...</IntlWrapper>;
-};
+}
 ```
 
 ### Working inside other `sdk-ui-*` module?
@@ -66,9 +66,9 @@ Inside any module `sdk-ui-*` we need import wrapper from `@gooddata/sdk-ui`
 import React from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-export const Component: React.FC<Props> = () => {
+export function Component(_: Props) {
     return <IntlWrapper locale={locale}>...</IntlWrapper>;
-};
+}
 ```
 
 ## 4. Using `FormatMessage`, `intl.formatMessage` and placeholders

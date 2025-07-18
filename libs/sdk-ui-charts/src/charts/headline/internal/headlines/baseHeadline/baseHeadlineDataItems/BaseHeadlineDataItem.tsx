@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import cx from "classnames";
 
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
@@ -11,7 +10,7 @@ import { useBaseHeadlineDataItem } from "./useBaseHeadlineDataItem.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 
-const BaseHeadlineDataItem: React.FC<IBaseHeadlineDataItemProps<IHeadlineDataItem>> = ({ dataItem }) => {
+function BaseHeadlineDataItem({ dataItem }: IBaseHeadlineDataItemProps<IHeadlineDataItem>) {
     const { config } = useBaseHeadline();
     const { formattedItem } = useBaseHeadlineDataItem(dataItem);
 
@@ -27,6 +26,6 @@ const BaseHeadlineDataItem: React.FC<IBaseHeadlineDataItemProps<IHeadlineDataIte
             </ResponsiveText>
         </div>
     );
-};
+}
 
 export default withDrillable(withTitle(BaseHeadlineDataItem));

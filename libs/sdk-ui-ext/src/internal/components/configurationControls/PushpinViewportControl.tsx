@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 import { useIntl } from "react-intl";
 
 import DropdownControl from "./DropdownControl.js";
@@ -18,7 +18,7 @@ export default function PushpinViewportControl({
     disabled,
     properties,
     pushData,
-}: IPushpinViewportControl): React.ReactElement {
+}: IPushpinViewportControl): ReactElement {
     const area = properties?.controls?.viewport.area ?? "auto";
 
     const intl = useIntl();

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
     IInsight,
     idRef,
@@ -74,7 +74,7 @@ function InsightViewCore(props: IInsightViewProps) {
     });
 
     // ref of the insight last reported by the onInsightLoaded
-    const lastReportedRef = useRef<ObjRef | undefined>();
+    const lastReportedRef = useRef<ObjRef | null>(null);
 
     const {
         error: insightError,
@@ -263,7 +263,7 @@ export const IntlInsightView = withMapboxToken(withContexts(InsightViewCore));
  *
  * @public
  */
-export const InsightView = (props: IInsightViewProps) => {
+export function InsightView(props: IInsightViewProps) {
     const backend = useBackendWithVisualizationCorrelation(props);
 
     return (
@@ -271,7 +271,7 @@ export const InsightView = (props: IInsightViewProps) => {
             <IntlInsightView {...props} backend={backend} />
         </IntlWrapper>
     );
-};
+}
 
 function useBackendWithVisualizationCorrelation(props: IInsightViewProps) {
     const { backend, insight } = props;

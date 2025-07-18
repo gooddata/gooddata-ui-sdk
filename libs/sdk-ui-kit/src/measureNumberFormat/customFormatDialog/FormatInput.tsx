@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo } from "react";
+import { memo } from "react";
 import { useIntl } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 import { StreamLanguage } from "@codemirror/language";

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { Message } from "../../../../Messages/index.js";
 

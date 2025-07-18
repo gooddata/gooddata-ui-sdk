@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-export * from "./typings.js";
+export type * from "./typings.js";
 export { EditableLabel } from "./EditableLabel.js";

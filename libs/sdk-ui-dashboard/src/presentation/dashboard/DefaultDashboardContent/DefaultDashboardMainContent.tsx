@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useEffect } from "react";
+import { RefObject, useEffect } from "react";
 import cx from "classnames";
 
 import {
@@ -22,7 +22,7 @@ import { ExportThemeProvider } from "../../export/index.js";
 /**
  * @internal
  */
-export const DefaultDashboardMainContent = (_: IDashboardProps) => {
+export function DefaultDashboardMainContent(_: IDashboardProps) {
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);
     const { deselectWidgets } = useWidgetSelection();
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
@@ -65,7 +65,11 @@ export const DefaultDashboardMainContent = (_: IDashboardProps) => {
 
     const renderContent = () => {
         return (
-            <div className={classNames} ref={dropRef} onClick={deselectWidgets}>
+            <div
+                className={classNames}
+                ref={dropRef as unknown as RefObject<HTMLDivElement>}
+                onClick={deselectWidgets}
+            >
                 <DateFilterConfigWarnings />
                 <DashboardLayout onFiltersChange={onFiltersChange} />
             </div>
@@ -77,4 +81,4 @@ export const DefaultDashboardMainContent = (_: IDashboardProps) => {
     }
 
     return renderContent();
-};
+}

@@ -1,6 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
 import { action } from "storybook/actions";
 import {
     UiLeveledTreeView,

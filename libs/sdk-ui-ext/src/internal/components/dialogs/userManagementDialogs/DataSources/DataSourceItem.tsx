@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { ReactElement } from "react";
 import cx from "classnames";
 import { Icon } from "@gooddata/sdk-ui-kit";
 
@@ -9,7 +9,7 @@ import { IGrantedDataSource, DataSourcePermissionSubject } from "../types.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 import { PermissionsDropdown } from "./PermissionsDropdown.js";
 
-const DataSourceIcon: React.FC = () => {
+function DataSourceIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon gd-grantee-item-icon-left">
@@ -17,23 +17,23 @@ const DataSourceIcon: React.FC = () => {
             </span>
         </div>
     );
-};
+}
 
 interface IGranularGranteeUserGroupItemProps {
     dataSource: IGrantedDataSource;
     subjectType: DataSourcePermissionSubject;
     onChange: (grantee: IGrantedDataSource) => void;
     onDelete: (grantee: IGrantedDataSource) => void;
-    renderDataSourceIcon: (dataSource: IGrantedDataSource) => JSX.Element;
+    renderDataSourceIcon: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
-export const DataSourceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
+export function DataSourceItem({
     dataSource,
     subjectType,
     onChange,
     onDelete,
     renderDataSourceIcon,
-}) => {
+}: IGranularGranteeUserGroupItemProps) {
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const itemClassName = cx("s-user-management-data-source-item", "gd-share-dialog-grantee-item", {
         "is-active": isDropdownOpen,
@@ -56,4 +56,4 @@ export const DataSourceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
             {renderDataSourceIcon ? renderDataSourceIcon(dataSource) : <DataSourceIcon />}
         </div>
     );
-};
+}

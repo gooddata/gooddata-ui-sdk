@@ -1,10 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import noop from "lodash/noop.js";
 import cx from "classnames";
-import { ISeparators, withIntl } from "@gooddata/sdk-ui";
+import { ISeparators } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 import "vitest-dom/extend-expect";
 import { EditorView } from "@codemirror/view";
@@ -24,10 +23,8 @@ import { IFormatTemplate, IToggleButtonProps } from "../typings.js";
     };
 });
 
-const getButtonComponent =
-    (): React.FC<IToggleButtonProps> =>
-    // eslint-disable-next-line react/display-name
-    ({ isOpened, text, toggleDropdown }) => {
+function getButtonComponent() {
+    function ButtonComponent({ isOpened, text, toggleDropdown }: IToggleButtonProps) {
         return (
             <div
                 className={cx("toggle-button", {
@@ -39,7 +36,10 @@ const getButtonComponent =
                 {text}
             </div>
         );
-    };
+    }
+
+    return ButtonComponent;
+}
 
 const presets = [
     {
@@ -62,8 +62,7 @@ const defaultProps: IMeasureNumberFormatOwnProps = {
 };
 
 const renderComponent = (props?: Partial<IMeasureNumberFormatOwnProps>) => {
-    const Wrapped = withIntl(MeasureNumberFormat);
-    return render(<Wrapped {...defaultProps} {...props} />);
+    return render(<MeasureNumberFormat {...defaultProps} {...props} />);
 };
 
 describe("Measure number format", () => {

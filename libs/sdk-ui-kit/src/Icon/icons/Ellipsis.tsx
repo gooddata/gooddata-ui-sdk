@@ -1,13 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
-
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Ellipsis: React.FC<IIconProps> = ({ color = "#687581", className, width = 20, height = 20 }) => {
+export function Ellipsis({ color = "#687581", className, width = 20, height = 20 }: IIconProps) {
     return (
         <svg
             className={className}
@@ -38,4 +36,4 @@ export const Ellipsis: React.FC<IIconProps> = ({ color = "#687581", className, w
             </g>
         </svg>
     );
-};
+}

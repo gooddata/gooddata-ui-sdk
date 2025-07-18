@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
 import {
     RankingFilter,
     IAttributeDropdownItem,

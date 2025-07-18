@@ -1,6 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     IDrillEvent,
     ExplicitDrill,
@@ -16,9 +16,7 @@ interface IHeadDrillingProps {
     drillableItems: ExplicitDrill[] | undefined;
 }
 
-const HeadlineDrilling: React.FC<IHeadDrillingProps> = (props) => {
-    const { drillableItems } = props;
-
+function HeadlineDrilling({ drillableItems }: IHeadDrillingProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const [lastEvent, setLastEvent] = useState<IDrillEvent | null>(null);
@@ -42,7 +40,7 @@ const HeadlineDrilling: React.FC<IHeadDrillingProps> = (props) => {
             </pre>
         </div>
     );
-};
+}
 
 interface DrillItems {
     id: string;
@@ -63,7 +61,7 @@ const drillExamples: DrillItems[] = [
     },
 ];
 
-export const HeadDrillingScenario: React.FC = () => {
+export function HeadDrillingScenario() {
     const [currentDrillExample, setCurrentDrillExample] = useState<DrillItems>(drillExamples[0]);
 
     return (
@@ -88,4 +86,4 @@ export const HeadDrillingScenario: React.FC = () => {
             </div>
         </div>
     );
-};
+}

@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { IAlignPoint, ItemsWrapper, Overlay, Separator } from "@gooddata/sdk-ui-kit";
@@ -21,7 +21,7 @@ interface IVisualizationListMenu {
     onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
 }
 
-export const VisualizationListMenu: React.FC<IVisualizationListMenu> = ({
+export function VisualizationListMenu({
     alignTo,
     isLast,
     isFirst,
@@ -30,7 +30,7 @@ export const VisualizationListMenu: React.FC<IVisualizationListMenu> = ({
     onMenuButtonClick,
     onVisualizationDeleted,
     onVisualizationPositionChange,
-}) => {
+}: IVisualizationListMenu) {
     const intl = useIntl();
 
     const handleOnVisualizationPositionChange = useCallback(
@@ -87,4 +87,4 @@ export const VisualizationListMenu: React.FC<IVisualizationListMenu> = ({
             </ItemsWrapper>
         </Overlay>
     );
-};
+}

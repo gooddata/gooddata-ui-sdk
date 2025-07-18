@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import * as React from "react";
+import { ReactElement } from "react";
 
 import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
 import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
@@ -17,7 +17,7 @@ const containsOnlyPlaceholders = (section: IDashboardLayoutSectionFacade<any>) =
 
 export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,
-): JSX.Element | null {
+): ReactElement | null {
     const { section, parentLayoutItemSize } = props;
     const screen = useScreenSize();
     const gridWidth = determineWidthForScreen(screen, parentLayoutItemSize);

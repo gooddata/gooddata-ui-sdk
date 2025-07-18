@@ -2,7 +2,7 @@
 
 import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
 import { UiAsyncTable } from "@gooddata/sdk-ui-kit";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useAutomationColumns } from "./columns/useAutomationColumns.js";
 import { useAutomationFilters } from "./filters/useAutomationFilters.js";
@@ -10,7 +10,7 @@ import { getDefaultColumnDefinitions } from "./utils.js";
 import { IAutomationsCoreProps, IAutomationsState } from "./types.js";
 import { AutomationsDefaultState } from "./constants.js";
 
-export const AutomationsCore = (props: IAutomationsCoreProps) => {
+export function AutomationsCore(props: IAutomationsCoreProps) {
     const {
         state,
         dashboardFilter,
@@ -48,7 +48,7 @@ export const AutomationsCore = (props: IAutomationsCoreProps) => {
             />
         </div>
     );
-};
+}
 
 const useAutomationsState = ({ type, selectedColumnDefinitions, pageSize }: IAutomationsCoreProps) => {
     const backend = useBackend();

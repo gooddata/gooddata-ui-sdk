@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
     extendedWidgetDebugStr,
@@ -18,25 +18,21 @@ import {
 import { EmptyDashboardDropZone as FlexibleEmptyDashboardDropZone } from "../../flexibleLayout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
 import { EmptyDashboardDropZone as FluidEmptyDashboardDropZone } from "../../layout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
 
-const BadWidgetType: React.FC = () => {
+function BadWidgetType() {
     return <div>Missing renderer</div>;
-};
+}
 
-const MissingWidget: React.FC = () => {
+function MissingWidget() {
     return <div>Missing widget</div>;
-};
+}
 
 /**
  * @internal
  */
-export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
+export function DashboardWidget(props: IDashboardWidgetProps) {
     const { WidgetComponentProvider, InsightWidgetComponentSet } = useDashboardComponentsContext();
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
-    const {
-        widget,
-        // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-        index,
-    } = props;
+    const { widget } = props;
     const WidgetComponent = useMemo((): CustomDashboardWidgetComponent => {
         // TODO: we need to get rid of this; the widget being optional at this point is the problem; the parent
         //  components (or possibly the model) should deal with layout items that have no valid widgets associated
@@ -56,9 +52,11 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
             return Component;
         }
 
+        function InitialPlaceholder() {
+            return <EmptyDashboardDropZone />;
+        }
+
         if (isInitialPlaceholderWidget(widget)) {
-            const InitialPlaceholder = () => <EmptyDashboardDropZone />;
-            InitialPlaceholder.displayName = "InitialPlaceholder";
             return InitialPlaceholder;
         }
 
@@ -76,13 +74,7 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
 
         console.warn(`Unable to render widget ${extendedWidgetDebugStr(widget)}`);
         return BadWidgetType;
-    }, [widget, isFlexibleLayoutEnabled]);
+    }, [widget, isFlexibleLayoutEnabled, WidgetComponentProvider, InsightWidgetComponentSet.creating]);
 
-    return (
-        <WidgetComponent
-            {...props}
-            // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-            index={index}
-        />
-    );
-};
+    return <WidgetComponent {...props} />;
+}

@@ -1,5 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { ParameterDetail } from "./ParameterDetail.js";
 import { useIntl } from "react-intl";
 import { useClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
@@ -8,7 +7,7 @@ interface IdentifierDetailProps {
     title: string;
 }
 
-export const ClientIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title }) => {
+export function ClientIdParameterDetail({ title }: IdentifierDetailProps) {
     const intl = useIntl();
     const { client } = useClientWorkspaceIdentifiers();
 
@@ -22,4 +21,4 @@ export const ClientIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title
             values={client ? [client] : []}
         />
     );
-};
+}

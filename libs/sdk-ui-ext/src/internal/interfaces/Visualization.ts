@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 import isEmpty from "lodash/isEmpty.js";
 import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -63,7 +63,7 @@ export interface IVisConstruct {
  * @internal
  */
 export interface IConfigurationPanelRenderers {
-    InteractionsDetailRenderer?: () => React.ReactNode;
+    InteractionsDetailRenderer?: () => ReactNode;
 }
 
 /**

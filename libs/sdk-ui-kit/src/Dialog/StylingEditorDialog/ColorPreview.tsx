@@ -1,6 +1,5 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
-import React from "react";
 
 /**
  * @internal
@@ -13,7 +12,7 @@ export interface IColorPreviewProps {
 /**
  * @internal
  */
-export const ColorPreview = (props: IColorPreviewProps) => {
+export function ColorPreview(props: IColorPreviewProps) {
     return (
         <div className={cx("gd-color-preview", props.className)}>
             {props.colors.map((color, index) => (
@@ -25,4 +24,4 @@ export const ColorPreview = (props: IColorPreviewProps) => {
             ))}
         </div>
     );
-};
+}

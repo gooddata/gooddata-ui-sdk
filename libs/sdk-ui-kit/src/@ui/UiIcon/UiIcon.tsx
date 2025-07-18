@@ -1,5 +1,4 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
 import { IconType } from "../@types/icon.js";
 import { ThemeColor } from "../@types/themeColors.js";
 import { b } from "./iconBem.js";
@@ -31,7 +30,7 @@ export interface UiIconProps {
 /**
  * @internal
  */
-export const UiIcon = ({
+export function UiIcon({
     type,
     label,
     color,
@@ -42,7 +41,7 @@ export const UiIcon = ({
     backgroundColor,
     backgroundType,
     backgroundShape,
-}: UiIconProps) => {
+}: UiIconProps) {
     return (
         <UiIconBackground
             size={backgroundSize}
@@ -62,4 +61,4 @@ export const UiIcon = ({
             </svg>
         </UiIconBackground>
     );
-};
+}

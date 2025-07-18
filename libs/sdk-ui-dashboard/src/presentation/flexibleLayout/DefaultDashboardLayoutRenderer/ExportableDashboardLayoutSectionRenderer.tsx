@@ -1,21 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
-import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
+import { IDashboardLayoutSectionRenderProps } from "./interfaces.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";
 import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};
 
-export const ExportableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = ({
+export function ExportableDashboardLayoutSectionRenderer({
     children,
     parentLayoutItemSize,
     parentLayoutPath,
     className,
     isHidden,
     exportData,
-}) => {
+}: IDashboardLayoutSectionRenderProps<unknown>) {
     const style = isHidden ? isHiddenStyle : defaultStyle;
     const type = "section";
     const exportStyles = useSlideSizeStyle("export", type, parentLayoutPath);
@@ -32,4 +31,4 @@ export const ExportableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRe
             {children}
         </GridLayoutElement>
     );
-};
+}

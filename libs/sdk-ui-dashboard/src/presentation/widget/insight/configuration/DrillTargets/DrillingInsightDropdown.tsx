@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { useMemo } from "react";
 import { ObjRef, IInsight, isInsight, insightVisualizationType } from "@gooddata/sdk-model";
 
 import { IDrillConfigItem, isDrillToInsightConfig } from "../../../../drill/types.js";
@@ -11,10 +11,7 @@ export interface IDrillingInsightDropdownProps {
     onSelect: (targetItem: IInsight) => void;
 }
 
-export const DrillingInsightDropdown: React.FC<IDrillingInsightDropdownProps> = ({
-    insightConfig,
-    onSelect,
-}) => {
+export function DrillingInsightDropdown({ insightConfig, onSelect }: IDrillingInsightDropdownProps) {
     const { insight, insightType, insightRef } = useDrillToInsightData(insightConfig);
 
     return (
@@ -25,7 +22,7 @@ export const DrillingInsightDropdown: React.FC<IDrillingInsightDropdownProps> = 
             onSelect={onSelect}
         />
     );
-};
+}
 
 function useDrillToInsightData(insightConfig: IDrillConfigItem): {
     insight?: IInsight;

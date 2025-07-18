@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import { MouseEvent, MutableRefObject, ReactNode } from "react";
 import cx from "classnames";
 import { Button } from "../Button/Button.js";
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
@@ -20,23 +20,23 @@ export interface IDropdownButtonProps {
     isSmall?: boolean;
     iconLeft?: string;
 
-    onClick?: (e: React.MouseEvent) => void;
+    onClick?: (e: MouseEvent) => void;
 
     children?: ReactNode;
     dropdownId?: string;
-    buttonRef?: React.MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement>;
 }
 
 /**
  * @internal
  */
-export const DropdownButton: React.FC<IDropdownButtonProps> = ({
+export function DropdownButton({
     id,
     className,
     accessibilityConfig,
 
     value,
-    title = value,
+    title = value?.toString() ?? "",
     disabled,
 
     isOpen,
@@ -47,7 +47,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
     children,
     dropdownId,
     buttonRef,
-}) => {
+}: IDropdownButtonProps) {
     const { ariaLabel, ariaLabelledBy, ariaDescribedBy } = accessibilityConfig ?? {};
 
     const buttonClasses = cx(
@@ -93,4 +93,4 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
             {children}
         </Button>
     );
-};
+}

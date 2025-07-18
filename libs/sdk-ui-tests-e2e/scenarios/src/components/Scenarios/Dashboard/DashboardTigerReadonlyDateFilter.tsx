@@ -1,9 +1,8 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 import { idRef } from "@gooddata/sdk-model";
 import { Dashboards } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 
-export const DashboardTigerReadonlyDateFilter: React.FC = () => {
+export function DashboardTigerReadonlyDateFilter() {
     return <Dashboard dashboard={idRef(Dashboards.DashboardReadonlyDateFilter)} />;
-};
+}

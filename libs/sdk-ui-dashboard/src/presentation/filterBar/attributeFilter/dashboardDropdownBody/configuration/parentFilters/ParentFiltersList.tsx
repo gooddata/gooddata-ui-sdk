@@ -1,5 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 
 import { IAttributeMetadataObject, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { ParentFiltersListItem } from "./ParentFiltersListItem.js";
@@ -30,19 +29,17 @@ interface IConfigurationParentItemsProps {
     validParents: ObjRef[];
 }
 
-export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (props) => {
-    const {
-        parents,
-        currentFilterLocalId,
-        setParents,
-        onConnectingAttributeChanged,
-        connectingAttributes,
-        attributes,
-        disabled,
-        disabledTooltip,
-        validParents,
-    } = props;
-
+export function ParentFiltersList({
+    parents,
+    currentFilterLocalId,
+    setParents,
+    onConnectingAttributeChanged,
+    connectingAttributes,
+    attributes,
+    disabled,
+    disabledTooltip,
+    validParents,
+}: IConfigurationParentItemsProps) {
     const supportsSettingConnectingAttributes = useDashboardSelector(
         selectSupportsSettingConnectingAttributes,
     );
@@ -97,4 +94,4 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
             )}
         </BubbleHoverTrigger>
     );
-};
+}

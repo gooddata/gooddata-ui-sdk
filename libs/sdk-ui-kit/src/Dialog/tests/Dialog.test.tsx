@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Dialog } from "../Dialog.js";
 import { IDialogBaseProps } from "../typings.js";

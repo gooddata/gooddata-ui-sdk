@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { ListItemProps } from "./types.js";
 import { renderItemIcon } from "./utils/renderItemIcon.js";
@@ -12,7 +11,7 @@ import { getAreaLabel } from "./utils/getAreaLabel.js";
  * A single result item in the search results.
  * @internal
  */
-export const ResultsItem: React.FC<ListItemProps<ISemanticSearchResultItem>> = (props) => {
+export function ResultsItem(props: ListItemProps<ISemanticSearchResultItem>) {
     return (
         <SearchListItem
             {...props}
@@ -27,4 +26,4 @@ export const ResultsItem: React.FC<ListItemProps<ISemanticSearchResultItem>> = (
             </span>
         </SearchListItem>
     );
-};
+}

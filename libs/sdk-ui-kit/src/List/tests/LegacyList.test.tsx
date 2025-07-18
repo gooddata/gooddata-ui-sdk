@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import * as React from "react";
 import cx from "classnames";
 import { render, screen } from "@testing-library/react";
 import Kefir, { constant, merge } from "kefir";
@@ -132,12 +131,7 @@ interface IDummyRowItemProps {
     scrollToSelected?: boolean;
 }
 
-function DummyRowItem({
-    isFirst = false,
-    isLast = false,
-    scrollToSelected = false,
-    item,
-}: IDummyRowItemProps) {
+function DummyRowItem({ isFirst = false, isLast = false, item }: IDummyRowItemProps) {
     const className = cx(item?.title, {
         "is-first": isFirst,
         "is-last": isLast,

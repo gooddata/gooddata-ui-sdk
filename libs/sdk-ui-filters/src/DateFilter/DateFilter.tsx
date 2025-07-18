@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ComponentType, memo, useCallback, useEffect, useRef, useState } from "react";
+import { ComponentType, memo, useCallback, useEffect, useRef, useState } from "react";
 import isEqual from "lodash/isEqual.js";
 import isNil from "lodash/isNil.js";
 import noop from "lodash/noop.js";
@@ -59,7 +59,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      *
      * @alpha
      */
-    FilterConfigurationComponent?: React.ComponentType<IFilterConfigurationProps>;
+    FilterConfigurationComponent?: ComponentType<IFilterConfigurationProps>;
 
     /**
      * This enables filter mode without apply button.

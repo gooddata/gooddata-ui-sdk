@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { SingleSelectListItem } from "../../../../List/index.js";
 import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown/index.js";
 import { NumericInput } from "./NumericInput.js";

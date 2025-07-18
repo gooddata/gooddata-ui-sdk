@@ -1,6 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 import { ComponentTable, iconPaths, propCombinationsFor, UiIcon, UiIconProps } from "@gooddata/sdk-ui-kit";
-import React from "react";
 
 import { wrapWithTheme } from "../themeWrapper.js";
 

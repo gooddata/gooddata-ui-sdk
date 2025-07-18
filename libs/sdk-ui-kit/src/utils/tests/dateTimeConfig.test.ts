@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import toDate from "date-fns-tz/toDate";
+// (C) 2007-2025 GoodData Corporation
+import { toDate } from "date-fns-tz";
 import { describe, it, expect } from "vitest";
 import { getDateTimeConfig, META_DATA_TIMEZONE } from "../dateTimeConfig.js";
 

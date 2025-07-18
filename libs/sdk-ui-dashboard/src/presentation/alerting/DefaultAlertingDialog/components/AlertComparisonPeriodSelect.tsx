@@ -2,7 +2,7 @@
 import { DateGranularity, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Button, Dropdown, SingleSelectListItem, OverlayPositionType, UiListbox } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AlertMetric, AlertMetricComparator, AlertMetricComparatorType } from "../../types.js";
@@ -21,7 +21,7 @@ export interface IAlertComparisonPeriodSelectProps {
     closeOnParentScroll?: boolean;
 }
 
-export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectProps) => {
+export function AlertComparisonPeriodSelect(props: IAlertComparisonPeriodSelectProps) {
     const {
         alert,
         measure,
@@ -161,13 +161,13 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
             }}
         />
     );
-};
+}
 
 interface DropdownButtonLabelProps {
     selectedOperator?: AlertMetricComparator;
 }
 
-const DropdownButtonLabel = (props: DropdownButtonLabelProps) => {
+function DropdownButtonLabel(props: DropdownButtonLabelProps) {
     const intl = useIntl();
     const { selectedOperator } = props;
 
@@ -206,4 +206,4 @@ const DropdownButtonLabel = (props: DropdownButtonLabelProps) => {
     }
 
     return <div className="gd-edit-alert__measure-info"> - </div>;
-};
+}

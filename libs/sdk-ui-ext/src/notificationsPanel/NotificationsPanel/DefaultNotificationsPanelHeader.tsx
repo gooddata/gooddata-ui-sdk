@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { ITab, Tabs, UiButton } from "@gooddata/sdk-ui-kit";
 import { bem } from "../bem.js";
 import { INotificationsPanelView } from "../types.js";

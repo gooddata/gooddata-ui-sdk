@@ -75,7 +75,7 @@ export interface INestedLayoutProps {
  * @alpha
  */
 export interface IDashboardLayoutProps extends INestedLayoutProps {
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
     // TODO: is this necessary? (there are events for it)
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     onDrill?: OnFiredDashboardDrillEvent;

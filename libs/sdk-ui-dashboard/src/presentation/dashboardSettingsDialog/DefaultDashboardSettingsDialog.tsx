@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useState } from "react";
 import { useIntl, FormattedMessage } from "react-intl";
 import {
     Bubble,
@@ -29,7 +29,7 @@ import { useDialogData } from "./useDialogData.js";
 /**
  * @alpha
  */
-export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogProps): JSX.Element | null => {
+export function DefaultDashboardSettingsDialog(props: IDashboardSettingsDialogProps): ReactElement | null {
     const { isVisible, onApply, onCancel /*, onError*/ } = props;
 
     const intl = useIntl();
@@ -115,7 +115,7 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
                             tooltip={intl.formatMessage(
                                 { id: "filters.configurationPanel.filterViews.toggle.tooltip" },
                                 {
-                                    p: (chunks: React.ReactNode) => <p>{chunks}</p>,
+                                    p: (chunks: ReactNode) => <p>{chunks}</p>,
                                 },
                             )}
                             isChecked={!currentData.disableFilterViews}
@@ -178,7 +178,7 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
                                 <FormattedMessage
                                     id="settingsDashboardDialog.section.alert.note"
                                     values={{
-                                        strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
+                                        strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                                     }}
                                 />
                             )}
@@ -188,46 +188,43 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
             </div>
         </ConfirmDialog>
     );
-};
+}
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tl" }];
 
 interface IConfigurationOptionProps {
-    label: React.ReactNode;
-    tooltip: React.ReactNode;
+    label: ReactNode;
+    tooltip: ReactNode;
     isChecked: boolean;
     onChange: (newValue: boolean) => void;
 }
 
-const ConfigurationOption: React.FC<IConfigurationOptionProps> = ({
-    label,
-    tooltip,
-    isChecked,
-    onChange,
-}) => (
-    <div className="configuration-category-item">
-        <label className="input-checkbox-toggle">
-            <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={(e) => {
-                    onChange(!e.currentTarget.checked);
-                }}
-            />
-            <span className="input-label-text">
-                {label}
-                <BubbleHoverTrigger
-                    showDelay={0}
-                    hideDelay={0}
-                    eventsOnBubble={true}
-                    className="configuration-category-item-tooltip-icon"
-                >
-                    <span className="gd-icon-circle-question gd-filter-configuration__help-icon" />
-                    <Bubble alignPoints={BUBBLE_ALIGN_POINTS}>
-                        <div className="gd-filter-configuration__help-tooltip">{tooltip}</div>
-                    </Bubble>
-                </BubbleHoverTrigger>
-            </span>
-        </label>
-    </div>
-);
+function ConfigurationOption({ label, tooltip, isChecked, onChange }: IConfigurationOptionProps) {
+    return (
+        <div className="configuration-category-item">
+            <label className="input-checkbox-toggle">
+                <input
+                    type="checkbox"
+                    checked={isChecked}
+                    onChange={(e) => {
+                        onChange(!e.currentTarget.checked);
+                    }}
+                />
+                <span className="input-label-text">
+                    {label}
+                    <BubbleHoverTrigger
+                        showDelay={0}
+                        hideDelay={0}
+                        eventsOnBubble={true}
+                        className="configuration-category-item-tooltip-icon"
+                    >
+                        <span className="gd-icon-circle-question gd-filter-configuration__help-icon" />
+                        <Bubble alignPoints={BUBBLE_ALIGN_POINTS}>
+                            <div className="gd-filter-configuration__help-tooltip">{tooltip}</div>
+                        </Bubble>
+                    </BubbleHoverTrigger>
+                </span>
+            </label>
+        </div>
+    );
+}

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useEffect, useCallback } from "react";
+import { ReactElement, useState, useEffect, useCallback, cloneElement } from "react";
 import { Table, Column, Cell } from "fixed-data-table-2";
 import cx from "classnames";
 import { ScrollCallback } from "./List.js";
@@ -32,7 +32,12 @@ export interface ILegacyListProps {
     onScrollStart?: ScrollCallback;
     onSelect?: (item: any) => void;
     scrollToSelected?: boolean;
-    rowItem: React.ReactElement;
+    rowItem: ReactElement<{
+        item?: any;
+        width: number;
+        isFirst: boolean;
+        isLast: boolean;
+    }>;
     width?: number;
 }
 
@@ -135,7 +140,7 @@ export function LegacyList({
         (cellProps: any) => {
             const item = dataSource.getObjectAt(cellProps.rowIndex);
 
-            const itemElement = React.cloneElement(rowItem, {
+            const itemElement = cloneElement(rowItem, {
                 ...(item ? { item } : {}),
                 width: width,
                 isFirst: cellProps.rowIndex === 0,

@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
@@ -17,11 +16,11 @@ interface IGranularPermissionsWorkspaceItemProps {
     onClick?: (workspace: IGrantedWorkspace) => void;
 }
 
-export const GranularPermissionsWorkspaceItem: React.FC<IGranularPermissionsWorkspaceItemProps> = ({
-    workspace,
+export function GranularPermissionsWorkspaceItem({
     onDelete,
     onClick,
-}) => {
+    workspace,
+}: IGranularPermissionsWorkspaceItemProps) {
     const { isDropdownOpen } = usePermissionsDropdownState();
     const intl = useIntl();
     const itemClassName = cx("s-user-management-workspace-item", "gd-share-dialog-grantee-item", {
@@ -44,4 +43,4 @@ export const GranularPermissionsWorkspaceItem: React.FC<IGranularPermissionsWork
             <WorkspaceIcon />
         </div>
     );
-};
+}

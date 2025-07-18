@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { ReactNode, useMemo } from "react";
+import { MouseEvent, ReactNode, useMemo, useState } from "react";
 import cx from "classnames";
 import copy from "copy-to-clipboard";
 import { IAttribute, IColorPalette, IFilter, IGenAIVisualization, IMeasure } from "@gooddata/sdk-model";
@@ -75,12 +75,12 @@ export function VisualizationContentsComponent({
     const visualization = content.createdVisualizations?.[0];
     const { metrics, dimensions, filters } = useExecution(visualization);
     const config = useConfig();
-    const [saveDialogOpen, setSaveDialogOpen] = React.useState<"save" | "explore" | null>(null);
-    const [hasVisError, setHasVisError] = React.useState(false);
-    const [visLoading, setVisLoading] = React.useState(true);
+    const [saveDialogOpen, setSaveDialogOpen] = useState<"save" | "explore" | null>(null);
+    const [hasVisError, setHasVisError] = useState(false);
+    const [visLoading, setVisLoading] = useState(true);
     const workspaceId = useWorkspaceStrict();
-    const [isMenuButtonOpen, setMenuButtonOpen] = React.useState(false);
-    const [isHovered, setHovered] = React.useState(false);
+    const [isMenuButtonOpen, setMenuButtonOpen] = useState(false);
+    const [isHovered, setHovered] = useState(false);
 
     const intl = useIntl();
     const tooltipText = intl.formatMessage(
@@ -140,7 +140,7 @@ export function VisualizationContentsComponent({
         [intl, visualization?.savedVisualizationId],
     );
 
-    const handleOpen = (e: React.MouseEvent, vis: IGenAIVisualization) => {
+    const handleOpen = (e: MouseEvent, vis: IGenAIVisualization) => {
         if (!vis?.savedVisualizationId) {
             return;
         }
@@ -155,7 +155,7 @@ export function VisualizationContentsComponent({
         e.stopPropagation();
     };
 
-    const handleButtonClick = (e: React.MouseEvent<HTMLElement>, item: IMenuButtonItem) => {
+    const handleButtonClick = (e: MouseEvent<HTMLElement>, item: IMenuButtonItem) => {
         switch (item.id) {
             case "button-save":
                 setSaveDialogOpen("save");
@@ -210,7 +210,7 @@ export function VisualizationContentsComponent({
         setVisLoading(isLoading);
     };
 
-    const handleKeyDown = React.useMemo(
+    const handleKeyDown = useMemo(
         () =>
             makeMenuKeyboardNavigation({
                 onClose: () => setMenuButtonOpen(false),

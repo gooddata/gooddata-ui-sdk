@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { invariant } from "ts-invariant";
 import { IGeoData, IValidationResult } from "../../GeoChart.js";
 import { getGeoAttributeHeaderItems, isDataOfReasonableSize } from "./helpers/geoChart/common.js";

@@ -1,6 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { SyntheticEvent } from "react";
 import classNames from "classnames";
 import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
@@ -11,17 +11,17 @@ import { Button } from "@gooddata/sdk-ui-kit";
 export interface IAttributeDisplayFormDropdownButtonProps {
     text: string;
     isOpened: boolean;
-    toggleDropdown: (e: React.SyntheticEvent) => void;
+    toggleDropdown: (e: SyntheticEvent) => void;
 }
 
 /**
  * @internal
  */
-export const AttributeDisplayFormDropdownButton: React.FC<IAttributeDisplayFormDropdownButtonProps> = ({
+export function AttributeDisplayFormDropdownButton({
     isOpened,
     text: title,
     toggleDropdown,
-}) => {
+}: IAttributeDisplayFormDropdownButtonProps) {
     const intl = useIntl();
 
     const buttonClassNames = classNames(
@@ -46,4 +46,4 @@ export const AttributeDisplayFormDropdownButton: React.FC<IAttributeDisplayFormD
             iconRight={iconRight}
         />
     );
-};
+}

@@ -1,5 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import {
     disableComputeRatio,
     IAttribute,
@@ -154,7 +153,7 @@ const WrappedBulletChart = withChart(bulletChartDefinition)(CoreBulletChart);
  *
  * @public
  */
-export const BulletChart = (props: IBulletChartProps) => {
+export function BulletChart(props: IBulletChartProps) {
     const [primaryMeasure, targetMeasure, comparativeMeasure, viewBy, filters, sortBy] =
         useResolveValuesWithPlaceholders(
             [
@@ -181,4 +180,4 @@ export const BulletChart = (props: IBulletChartProps) => {
             }}
         />
     );
-};
+}

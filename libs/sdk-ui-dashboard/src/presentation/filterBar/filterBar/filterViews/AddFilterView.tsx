@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Typography, Input, Checkbox, Button, UiFocusManager } from "@gooddata/sdk-ui-kit";
 import { useDashboardDispatch, saveFilterView } from "../../../../model/index.js";
@@ -9,10 +9,10 @@ export interface IAddFilterViewProps {
     onClose: () => void;
 }
 
-export const AddFilterView: React.FC<IAddFilterViewProps> = ({ onClose }) => {
+export function AddFilterView({ onClose }: IAddFilterViewProps) {
     const intl = useIntl();
-    const [name, setName] = React.useState("");
-    const [isDefault, setDefault] = React.useState(false);
+    const [name, setName] = useState("");
+    const [isDefault, setDefault] = useState(false);
     const isSaveEnabled = name.trim().length > 0;
     const dispatch = useDashboardDispatch();
 
@@ -72,4 +72,4 @@ export const AddFilterView: React.FC<IAddFilterViewProps> = ({ onClose }) => {
             </div>
         </UiFocusManager>
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useCallback } from "react";
+import { memo, useCallback } from "react";
 import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 import { DropdownBody } from "./DropdownBody.js";

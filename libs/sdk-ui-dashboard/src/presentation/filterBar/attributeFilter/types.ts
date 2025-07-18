@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { ComponentType } from "react";
+import { ComponentType, ReactNode } from "react";
 import {
     ICatalogAttribute,
     ICatalogDateDataset,
@@ -110,7 +110,7 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     openOnInit?: boolean;
     DropdownButtonComponent?: ComponentType<IAddAttributeFilterButtonProps>;
     DropdownTitleComponent?: ComponentType;
-    renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
+    renderNoData?: (props: IDropdownListNoDataRenderProps) => ReactNode;
     overlayPositionType?: OverlayPositionType;
     renderVirtualisedList?: boolean;
     getCustomItemTitle?: (item: ICatalogAttribute | ICatalogDateDataset) => string | undefined;

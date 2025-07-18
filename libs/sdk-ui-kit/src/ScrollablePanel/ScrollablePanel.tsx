@@ -1,5 +1,13 @@
-// (C) 2019-2022 GoodData Corporation
-import React, { useRef, useImperativeHandle, useMemo, useCallback } from "react";
+// (C) 2019-2025 GoodData Corporation
+import {
+    useRef,
+    useImperativeHandle,
+    ElementType,
+    useMemo,
+    useCallback,
+    HTMLAttributes,
+    forwardRef,
+} from "react";
 
 import { ScrollContext, isElementInvisibleType } from "./ScrollContext.js";
 import { handleOnScrollEvent } from "../utils/scroll.js";
@@ -7,9 +15,9 @@ import { handleOnScrollEvent } from "../utils/scroll.js";
 /**
  * @internal
  */
-export interface IScrollablePanelProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface IScrollablePanelProps extends HTMLAttributes<HTMLDivElement> {
     scrollToVisible?: (element: HTMLElement, container: HTMLElement, bottomMargin: number) => void;
-    tagName?: React.ElementType;
+    tagName?: ElementType;
 }
 
 const DEFAULT_BOTTOM_MARGIN = 5;
@@ -34,7 +42,7 @@ const isElementInvisibleCheckDefault: isElementInvisibleType = (
 /**
  * @internal
  */
-export const ScrollablePanel = React.forwardRef<HTMLDivElement | undefined, IScrollablePanelProps>(
+export const ScrollablePanel = forwardRef<HTMLDivElement | undefined, IScrollablePanelProps>(
     function ScrollablePanel(props, ref) {
         const {
             tagName: TagName = "div",
@@ -42,7 +50,7 @@ export const ScrollablePanel = React.forwardRef<HTMLDivElement | undefined, IScr
             children,
             ...divProps
         } = props;
-        const containerRef = useRef<HTMLDivElement>();
+        const containerRef = useRef<HTMLDivElement | null>(null);
         useImperativeHandle(ref, () => containerRef.current);
 
         const memoizeContext = useMemo(() => {

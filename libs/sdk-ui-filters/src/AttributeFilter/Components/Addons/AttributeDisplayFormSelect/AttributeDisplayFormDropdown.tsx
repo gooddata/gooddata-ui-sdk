@@ -1,6 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { areObjRefsEqual, IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
@@ -32,7 +32,7 @@ export interface IAttributeDisplayFormDropdownProps {
 /**
  * @internal
  */
-export const AttributeDisplayFormDropdown: React.FC<IAttributeDisplayFormDropdownProps> = (props) => {
+export function AttributeDisplayFormDropdown(props: IAttributeDisplayFormDropdownProps) {
     const { displayForms, selectedDisplayForm, onSelect, alignPoints } = props;
 
     const buttonTitle = useMemo(() => {
@@ -79,4 +79,4 @@ export const AttributeDisplayFormDropdown: React.FC<IAttributeDisplayFormDropdow
             )}
         />
     );
-};
+}

@@ -1,8 +1,7 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { newMeasure } from "@gooddata/sdk-model";
 import { render, waitFor } from "@testing-library/react";
-import React from "react";
 import { FormattedNumber } from "../FormattedNumber.js";
 import { Kpi } from "../Kpi.js";
 import { describe, expect, it, vi, beforeEach } from "vitest";
@@ -42,8 +41,13 @@ describe("Kpi", () => {
 
         await waitFor(() => {
             expect(FormattedNumber).toHaveBeenCalledWith(
-                expect.objectContaining({ format: testCustomFormat }),
-                {},
+                expect.objectContaining({
+                    className: "gdc-kpi",
+                    format: testCustomFormat,
+                    separators: undefined,
+                    value: "",
+                }),
+                undefined,
             );
         });
     });

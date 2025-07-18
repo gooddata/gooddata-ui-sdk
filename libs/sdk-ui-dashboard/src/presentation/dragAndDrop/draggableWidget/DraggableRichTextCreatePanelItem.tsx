@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import {
     RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
@@ -34,10 +33,10 @@ const getDragItem = (settings: ISettings): DraggableItem => {
 /**
  * @internal
  */
-export const DraggableRichTextCreatePanelItem: React.FC<IDraggableRichTextCreatePanelItemProps> = ({
+export function DraggableRichTextCreatePanelItem({
     CreatePanelItemComponent,
     WrapCreatePanelItemWithDragComponent,
-}) => {
+}: IDraggableRichTextCreatePanelItemProps) {
     const settings = useDashboardSelector(selectSettings);
     const dragItem = getDragItem(settings);
 
@@ -52,4 +51,4 @@ export const DraggableRichTextCreatePanelItem: React.FC<IDraggableRichTextCreate
             onDragStart={() => deselectWidgets()}
         />
     );
-};
+}

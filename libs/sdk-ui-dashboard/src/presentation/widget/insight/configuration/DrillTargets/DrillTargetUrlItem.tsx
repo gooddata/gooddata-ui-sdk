@@ -1,5 +1,5 @@
-// (C) 2020-2023 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import { Button, Dropdown, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { IAttributeDescriptor, ObjRef } from "@gooddata/sdk-model";
@@ -55,7 +55,7 @@ export interface DrillUrlItemProps {
     onSelect: (selectedTarget: UrlDrillTarget) => void;
 }
 
-export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (props) => {
+export function DrillTargetUrlItem(props: DrillUrlItemProps) {
     const { onSelect, urlDrillTarget, attributes, widgetRef } = props;
 
     const capabilities = useDashboardSelector(selectBackendCapabilities);
@@ -152,4 +152,4 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
             />
         </>
     );
-};
+}

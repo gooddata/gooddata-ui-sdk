@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import * as React from "react";
+import { ReactNode, useCallback, useEffect, useMemo, KeyboardEvent as ReactKeyboardEvent } from "react";
 import classnames from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
@@ -109,7 +109,7 @@ export type SearchOverlayProps = {
         handlers: {
             closeSearch: () => void;
         },
-    ) => React.ReactNode;
+    ) => ReactNode;
 };
 
 /**
@@ -147,7 +147,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
     });
 
     // Results wrapped into ListItems
-    const searchResultsItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
+    const searchResultsItems: ListItem<ISemanticSearchResultItem>[] = useMemo(
         (): ListItem<ISemanticSearchResultItem>[] =>
             searchResults
                 .filter((item) => {
@@ -195,7 +195,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
     );
 
     // Report metrics
-    React.useEffect(() => {
+    useEffect(() => {
         onSearch?.(searchTerm, searchResultsItems);
         // I don't want to report on search string change, only on results
         // But I do need searchTerm, it will update with results anyway
@@ -204,7 +204,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
 
     // Search history
     const [searchHistory, setSearchHistory] = useLocalStorage(SEARCH_HISTORY_KEY, SEARCH_HISTORY_EMPTY);
-    const onResultSelect = React.useCallback(
+    const onResultSelect = useCallback(
         (item: ListItem<ISemanticSearchResultItem>, e: MouseEvent | KeyboardEvent) => {
             setSearchHistory(
                 [...new Set([searchTerm, ...searchHistory])].slice(0, MAX_SEARCH_HISTORY_LENGTH),
@@ -238,12 +238,12 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
         [searchTerm, searchHistory, onSelect, setSearchHistory, toggleOpen, searchResultsItems],
     );
     const onHistorySelect = (item: ListItem<string>) => setImmediate(item.item);
-    const searchHistoryItems: ListItem<string>[] = React.useMemo(
+    const searchHistoryItems: ListItem<string>[] = useMemo(
         () => searchHistory.map((item) => ({ item })),
         [searchHistory],
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (searchStatus === "error") {
             // Report error to the console
             // UI will display a generic error message
@@ -254,8 +254,8 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
     // The List component requires explicit width
     const [ref, width] = useElementWidth();
 
-    const onEscKeyPress = React.useCallback(
-        (e: React.KeyboardEvent) => {
+    const onEscKeyPress = useCallback(
+        (e: ReactKeyboardEvent) => {
             if (value.length > 0) {
                 e.stopPropagation();
             }
@@ -263,13 +263,13 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
         [value],
     );
 
-    const Wrapper = ({
+    function Wrapper({
         children,
         status,
     }: {
-        children: React.ReactNode;
+        children: ReactNode;
         status: "idle" | "loading" | "error" | "success";
-    }) => {
+    }) {
         const comp = renderFooter?.(
             { ...props, status, value },
             {
@@ -285,7 +285,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
             );
         }
         return <>{children}</>;
-    };
+    }
 
     return (
         <div ref={ref} className={classnames("gd-semantic-search__overlay", className)}>
@@ -372,12 +372,12 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
  * The internal version is meant to be used in an overlay inside the Header.
  * @internal
  */
-export const SearchOverlay: React.FC<SearchOverlayProps> = ({ locale, metadataTimezone, ...props }) => {
+export function SearchOverlay({ locale, metadataTimezone, ...rest }: SearchOverlayProps) {
     return (
         <MetadataTimezoneProvider value={metadataTimezone}>
             <IntlWrapper locale={locale}>
-                <SearchOverlayCore {...props} />
+                <SearchOverlayCore {...rest} />
             </IntlWrapper>
         </MetadataTimezoneProvider>
     );
-};
+}

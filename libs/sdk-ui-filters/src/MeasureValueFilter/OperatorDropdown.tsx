@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize.js";

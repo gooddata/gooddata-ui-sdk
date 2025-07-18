@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { insightMeasures, insightHasMeasures, insightHasAttributes } from "@gooddata/sdk-model";
@@ -36,7 +36,7 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
         return super.isControlDisabled(sectionName);
     }
 
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
@@ -99,7 +99,6 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
                 {featureFlags.enablePivotTableTransposition && featureFlags.enableColumnHeadersPosition ? (
                     <ColumnHeadersPositionControl
                         isDisabled={columnHeadersControlsDisabled}
-                        showDisabledMessage={columnHeadersControlsDisabled ? !isLoading : false}
                         properties={properties}
                         pushData={pushData}
                         insight={insight}

@@ -1,6 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
-
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { uriRef } from "@gooddata/sdk-model";
 import { action } from "storybook/actions";
@@ -31,7 +29,7 @@ interface BasicExampleProps {
     isMetadataObjectLockingSupported?: boolean;
 }
 
-const BasicExample: React.FC<BasicExampleProps> = ({
+function BasicExample({
     owner,
     grantees,
     isDirty,
@@ -40,7 +38,7 @@ const BasicExample: React.FC<BasicExampleProps> = ({
     isLockingSupported = true,
     isLeniencyControlSupported = true,
     isMetadataObjectLockingSupported = true,
-}) => {
+}: BasicExampleProps) {
     return (
         <ComponentLabelsProvider labels={LabelsMock}>
             <div id="Share-Grantee-base-basic-example">
@@ -72,7 +70,7 @@ const BasicExample: React.FC<BasicExampleProps> = ({
             </div>
         </ComponentLabelsProvider>
     );
-};
+}
 
 const getGrantees = (): GranteeItem[] => {
     const res: IGranteeUser[] = [];
@@ -92,7 +90,7 @@ const getGrantees = (): GranteeItem[] => {
     return res;
 };
 
-const ShareGranteeBaseExamples: React.FC = () => {
+function ShareGranteeBaseExamples() {
     return (
         <InternalIntlWrapper>
             <div className="library-component screenshot-target">
@@ -125,7 +123,7 @@ const ShareGranteeBaseExamples: React.FC = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/ShareDialog/ShareGranteeBase",

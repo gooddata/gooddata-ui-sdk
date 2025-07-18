@@ -1,5 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 
 import { Dropdown, DropdownButton, DropdownList } from "@gooddata/sdk-ui-kit";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
@@ -25,9 +24,12 @@ const ALIGN_POINTS = [
     },
 ];
 
-export const ConnectingAttributeDropdown: React.FC<IConnectingAttributeDropdownProps> = (props) => {
-    const { itemLocalId, selectedConnectingAttributeRef, connectingAttributes, onSelect } = props;
-
+export function ConnectingAttributeDropdown({
+    itemLocalId,
+    selectedConnectingAttributeRef,
+    connectingAttributes,
+    onSelect,
+}: IConnectingAttributeDropdownProps) {
     const selectedConnectingAttribute = connectingAttributes.find((attr) =>
         areObjRefsEqual(attr.ref, selectedConnectingAttributeRef),
     );
@@ -80,4 +82,4 @@ export const ConnectingAttributeDropdown: React.FC<IConnectingAttributeDropdownP
             )}
         />
     );
-};
+}

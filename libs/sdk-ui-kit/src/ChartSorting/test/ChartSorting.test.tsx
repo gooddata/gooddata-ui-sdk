@@ -1,10 +1,9 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { IntlProvider } from "react-intl";
 import { pickCorrectWording, messagesMap } from "@gooddata/sdk-ui";
 import { render, screen, waitFor, within, fireEvent } from "@testing-library/react";
 import noop from "lodash/noop.js";
-import { ChartSortingOwnProps, ChartSortingWithIntl } from "../ChartSorting.js";
+import { ChartSortingProps, ChartSortingWithIntl } from "../ChartSorting.js";
 import {
     singleNormalAttributeSortConfig,
     singleAreaAttributeSortConfig,
@@ -47,8 +46,8 @@ const messages = pickCorrectWording(messagesMap[DefaultLocale], {
     enableRenamingMeasureToMetric: true,
 });
 
-const renderComponent = (props?: Partial<ChartSortingOwnProps>) => {
-    const defaultProps: ChartSortingOwnProps = {
+const renderComponent = (props?: Partial<ChartSortingProps>) => {
+    const defaultProps: ChartSortingProps = {
         ...singleNormalAttributeSortConfig,
         bucketItems: bucketItems,
         onApply: noop,

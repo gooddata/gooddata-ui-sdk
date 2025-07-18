@@ -68,8 +68,8 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
         config: augmentedConfig,
     });
 
-    const dashboardSelect = useRef<DashboardSelectorEvaluator>();
-    const dashboardDispatch = useRef<DashboardDispatch>();
+    const dashboardSelect = useRef<DashboardSelectorEvaluator | null>(null);
+    const dashboardDispatch = useRef<DashboardDispatch | null>(null);
 
     const onStateChange = useCallback((state: DashboardState, dispatch: DashboardDispatch) => {
         dashboardSelect.current = (select) => select(state);

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
@@ -20,7 +20,7 @@ const longTitleItem: IAttributeElement = {
     uri: "some uri",
 };
 
-const SingleSelectionAttributeFilterElementsSelectItemExamples = (): JSX.Element => {
+const SingleSelectionAttributeFilterElementsSelectItemExamples = (): ReactElement => {
     return (
         <IntlWrapper>
             <div style={{ width: 300 }}>

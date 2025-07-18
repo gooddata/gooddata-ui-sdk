@@ -1,5 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 import { idRef } from "@gooddata/sdk-model";
 
@@ -7,11 +6,11 @@ import * as TigerMDObjects from "../../../../../reference_workspace/workspace_ob
 
 export const MDObject = TigerMDObjects as TigerMDObjects;
 
-export const DragDropWidgetScenario: React.FC = () => {
+export function DragDropWidgetScenario() {
     return (
         <Dashboard
             dashboard={idRef(MDObject.Dashboards.DragDropAndMove)}
             config={{ initialRenderMode: "edit" }}
         />
     );
-};
+}

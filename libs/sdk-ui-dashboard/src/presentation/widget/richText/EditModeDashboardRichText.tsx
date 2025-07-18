@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { widgetRef } from "@gooddata/sdk-model";
@@ -38,11 +38,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTE
 /**
  * @internal
  */
-export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
-    widget,
-    clientWidth,
-    clientHeight,
-}) => {
+export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }: IDashboardRichTextProps) {
     const { isSelected, hasConfigPanelOpen, closeConfigPanel } = useWidgetSelection(widgetRef(widget));
     const previousIsSelected = usePrevious(isSelected);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
@@ -172,4 +168,4 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
             ) : null}
         </>
     );
-};
+}

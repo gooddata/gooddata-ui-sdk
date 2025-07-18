@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { useCallback, useEffect, useMemo } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useCallback, useEffect, useMemo } from "react";
 import { IntlShape } from "react-intl";
 import {
     DashboardAttributeFilterConfigMode,
@@ -51,23 +51,22 @@ interface IAttributeFilterConfigurationProps {
     showConfigModeSection: boolean;
 }
 
-export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfigurationProps> = (props) => {
-    const {
-        filterRef,
-        filterByText,
-        displayValuesAsText,
-        titleText,
-        resetTitleText,
-        selectionTitleText,
-        multiSelectionOptionText,
-        singleSelectionOptionText,
-        singleSelectionDisabledTooltip,
-        parentFiltersDisabledTooltip,
-        closeHandler,
-        intl,
-        modeCategoryTitleText,
-        showConfigModeSection,
-    } = props;
+export function AttributeFilterConfiguration({
+    filterRef,
+    filterByText,
+    displayValuesAsText,
+    titleText,
+    resetTitleText,
+    selectionTitleText,
+    multiSelectionOptionText,
+    singleSelectionOptionText,
+    singleSelectionDisabledTooltip,
+    parentFiltersDisabledTooltip,
+    closeHandler,
+    intl,
+    modeCategoryTitleText,
+    showConfigModeSection,
+}: IAttributeFilterConfigurationProps) {
     const theme = useTheme();
 
     useEffect(() => {
@@ -253,4 +252,4 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
             ) : null}
         </div>
     );
-};
+}

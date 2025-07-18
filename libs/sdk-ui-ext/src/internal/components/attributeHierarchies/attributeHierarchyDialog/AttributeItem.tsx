@@ -1,6 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
-
+// (C) 2023-2025 GoodData Corporation
 import AttributeDropdown from "./AttributeDropdown.js";
 import AttributeItemActions from "./AttributeItemActions.js";
 import { IAttributeData } from "./types.js";
@@ -10,7 +8,7 @@ interface IAttributeItemCellProps {
     attribute: IAttributeData;
 }
 
-const AttributeItem: React.FC<IAttributeItemCellProps> = ({ rowIndex, attribute }) => {
+export default function AttributeItem({ rowIndex, attribute }: IAttributeItemCellProps) {
     const { title, completed, icon } = attribute;
 
     return (
@@ -29,6 +27,4 @@ const AttributeItem: React.FC<IAttributeItemCellProps> = ({ rowIndex, attribute 
             {completed ? <AttributeItemActions rowIndex={rowIndex} /> : null}
         </div>
     );
-};
-
-export default AttributeItem;
+}

@@ -19,7 +19,7 @@ const selectSelf = createSelector(
  * @example - on how to use `selectCurrentUser` selector within a Dashboard Plugin.
  * ```
  * // create the component using current user selector
- * const Greetings: React.FC = () => {
+ * function Greetings() {
  *      // read the currently logged in user information
  *      const user = useDashboardSelector(selectCurrentUser);
  *

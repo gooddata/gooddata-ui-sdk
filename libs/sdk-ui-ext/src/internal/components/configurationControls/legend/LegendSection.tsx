@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo } from "react";
+import { memo } from "react";
 import ConfigSection from "../ConfigSection.js";
 import LegendPositionControl from "./LegendPositionControl.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";

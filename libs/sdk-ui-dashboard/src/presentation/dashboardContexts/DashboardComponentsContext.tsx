@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { createContext, useContext } from "react";
+import { ComponentType, createContext, ReactElement, ReactNode, useContext } from "react";
 import {
     ErrorComponent,
     IErrorProps,
@@ -58,8 +58,8 @@ import { CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDial
  * @internal
  */
 interface IDashboardComponentsContext {
-    ErrorComponent: React.ComponentType<IErrorProps>;
-    LoadingComponent: React.ComponentType<ILoadingProps>;
+    ErrorComponent: ComponentType<IErrorProps>;
+    LoadingComponent: ComponentType<ILoadingProps>;
     LayoutComponent: CustomDashboardLayoutComponent;
     WidgetComponentProvider: WidgetComponentProvider;
     InsightComponentProvider: InsightComponentProvider;
@@ -184,13 +184,13 @@ export const useDashboardComponentsContext = (
  * @internal
  */
 export interface IDashboardComponentsProviderProps extends IDashboardComponentsContext {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 /**
  * @internal
  */
-export function DashboardComponentsProvider(props: IDashboardComponentsProviderProps): JSX.Element {
+export function DashboardComponentsProvider(props: IDashboardComponentsProviderProps): ReactElement {
     const { children, ...components } = props;
     return (
         <DashboardComponentsContext.Provider value={components}>

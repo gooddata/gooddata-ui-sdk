@@ -1,5 +1,4 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useIntl } from "react-intl";
 import { Dialog, Icon } from "@gooddata/sdk-ui-kit";

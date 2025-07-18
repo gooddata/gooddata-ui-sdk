@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import { IWidget, ScreenSize } from "@gooddata/sdk-model";
-import React, { useEffect, useMemo, useState } from "react";
+import { RefObject, useEffect, useMemo, useState } from "react";
 
 import { WidthResizer } from "./WidthResizer.js";
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/legacyFluidLayout/index.js";
@@ -109,7 +109,7 @@ export function WidthResizerHotspot({
                 className="s-dash-width-resizer-hotspot dash-width-resizer-hotspot"
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
-                ref={dragRef}
+                ref={dragRef as unknown as RefObject<HTMLDivElement>}
             >
                 {showResizer ? <WidthResizer status={status} /> : null}
             </div>

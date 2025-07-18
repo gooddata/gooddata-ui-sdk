@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { useCallback, useState, useMemo } from "react";
+import { useCallback, useState, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { withBubble } from "@gooddata/sdk-ui-kit";
@@ -118,7 +118,7 @@ const trackPermissionChange = (
     }
 };
 
-const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
+function Dropdown({
     workspace,
     subjectType,
     isDropdownDisabled,
@@ -128,7 +128,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
     onDelete,
     className,
     areFilterViewsEnabled,
-}) => {
+}: IGranularPermissionsDropdownProps) {
     const intl = useIntl();
     const [selectedPermission, setSelectedPermission] = useState<WorkspacePermission>(
         workspace.permissions[0],
@@ -198,6 +198,6 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
             />
         </div>
     );
-};
+}
 
 export const PermissionsDropdown = withBubble(Dropdown);

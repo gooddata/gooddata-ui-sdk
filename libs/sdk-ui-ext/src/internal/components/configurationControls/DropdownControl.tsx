@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo } from "react";
+import { ComponentType, memo } from "react";
 import { useIntl } from "react-intl";
 import {
     Dropdown,
@@ -27,7 +27,7 @@ export interface IDropdownControlProps {
     width?: number;
     showDisabledMessage?: boolean;
     disabledMessageAlignPoints?: IAlignPoint[];
-    customListItem?: React.ComponentType<ISingleSelectListItemProps>;
+    customListItem?: ComponentType<ISingleSelectListItemProps>;
 
     pushData(data: any): void;
 }

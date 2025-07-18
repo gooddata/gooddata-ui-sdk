@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useCallback } from "react";
+import { useEffect, useCallback, ReactNode } from "react";
 
 import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "./MenuSharedTypes.js";
 import { MenuOpener } from "./menuOpener/MenuOpener.js";
@@ -10,9 +10,9 @@ export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
     closeOnScroll: boolean;
     portalTarget: Element | undefined;
     onOpenedChange: OnOpenedChange;
-    toggler: React.ReactNode;
+    toggler: ReactNode;
     togglerWrapperClassName?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export function ControlledMenu({

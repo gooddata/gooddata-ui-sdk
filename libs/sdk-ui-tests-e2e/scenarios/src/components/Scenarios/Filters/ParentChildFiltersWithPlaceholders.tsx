@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import React, { useEffect } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useEffect } from "react";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import {
     attributeDisplayFormRef,
@@ -30,7 +30,7 @@ const childAttrFilterPlaceholder = newPlaceholder<IAttributeFilter>(
 
 const parentFilterOverAttribute = idRef("attr.opportunitysnapshot.id");
 
-const InnerParentChildFiltersWithPlaceholders: React.FC = () => {
+function InnerParentChildFiltersWithPlaceholders() {
     const [, setChildFilter] = usePlaceholder(childAttrFilterPlaceholder);
 
     const parentFilter = useResolveValueWithPlaceholders(parentAttrFilterPlaceholder);
@@ -54,12 +54,12 @@ const InnerParentChildFiltersWithPlaceholders: React.FC = () => {
             />
         </div>
     );
-};
+}
 
-export const ParentChildFiltersWithPlaceholders: React.FC = () => {
+export function ParentChildFiltersWithPlaceholders() {
     return (
         <PlaceholdersProvider>
             <InnerParentChildFiltersWithPlaceholders />
         </PlaceholdersProvider>
     );
-};
+}

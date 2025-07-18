@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { IUiTreeviewItemProps } from "../types.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { e } from "../treeviewBem.js";

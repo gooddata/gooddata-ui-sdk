@@ -1,5 +1,4 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { WarningMessage, isWarningMessage } from "./typings.js";
 import cx from "classnames";
 
@@ -23,7 +22,7 @@ const getSeverityClassName = (warningMessage: WarningMessage): string => {
     }
 };
 
-export const WarningMessageComponent: React.FC<IWarningMessageProps> = ({ warningMessage, className }) => {
+export function WarningMessageComponent({ warningMessage, className }: IWarningMessageProps) {
     const messageClassName = cx(
         "gd-mvf-warning-message",
         getSeverityClassName(warningMessage),
@@ -36,4 +35,4 @@ export const WarningMessageComponent: React.FC<IWarningMessageProps> = ({ warnin
             {isWarningMessage(warningMessage) ? warningMessage.text : warningMessage}
         </div>
     );
-};
+}

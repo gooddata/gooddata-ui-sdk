@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState } from "react";
+import { ReactElement, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -44,7 +44,7 @@ export interface ITabsState {
 /**
  * @internal
  */
-export function Tabs(props: ITabsProps): JSX.Element {
+export function Tabs(props: ITabsProps): ReactElement {
     const {
         className = "",
         onTabSelect = noop,

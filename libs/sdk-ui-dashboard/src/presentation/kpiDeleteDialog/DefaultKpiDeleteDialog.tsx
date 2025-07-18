@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ReactElement, useCallback } from "react";
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
 import { IKpiDeleteDialogProps } from "./types.js";
@@ -41,7 +41,7 @@ export function useKpiDeleteDialogProps(): IKpiDeleteDialogProps {
 /**
  * @internal
  */
-export const DefaultKpiDeleteDialog = (props: IKpiDeleteDialogProps): JSX.Element | null => {
+export function DefaultKpiDeleteDialog(props: IKpiDeleteDialogProps): ReactElement | null {
     const { isVisible, onDelete, onCancel } = props;
 
     const intl = useIntl();
@@ -65,4 +65,4 @@ export const DefaultKpiDeleteDialog = (props: IKpiDeleteDialogProps): JSX.Elemen
             </Typography>
         </ConfirmDialog>
     );
-};
+}

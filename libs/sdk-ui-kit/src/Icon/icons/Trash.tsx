@@ -1,13 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
-
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Trash: React.FC<IIconProps> = ({ color = "#6D7680", className, width = 15, height = 20 }) => {
+export function Trash({ color = "#6D7680", className, width = 15, height = 20 }: IIconProps) {
     return (
         <svg
             className={className}
@@ -23,4 +21,4 @@ export const Trash: React.FC<IIconProps> = ({ color = "#6D7680", className, widt
             />
         </svg>
     );
-};
+}

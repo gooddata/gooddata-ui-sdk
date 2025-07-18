@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { IColorPalette, IExecutionConfig, IInsight, ITheme } from "@gooddata/sdk-model";
 import {
@@ -212,11 +212,10 @@ const generateCodeByWebComponents = (input: ICodeGenInput<IWebComponentsOptions>
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "cc cc" }];
 
-const ModalOverlay: React.FC<{ children?: React.ReactNode }> = (props) => {
-    const { children } = props;
+function ModalOverlay({ children }: { children?: ReactNode }) {
     return (
         <Overlay alignPoints={BUBBLE_ALIGN_POINTS} isModal positionType="fixed">
             {children}
         </Overlay>
     );
-};
+}

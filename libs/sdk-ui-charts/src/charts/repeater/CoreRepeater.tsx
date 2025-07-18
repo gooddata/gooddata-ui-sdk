@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo, useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import { useIntl } from "react-intl";
 import noop from "lodash/noop.js";
 import {
@@ -21,7 +21,7 @@ import { RepeaterColumnResizedCallback } from "./publicTypes.js";
 import { getValidColorPalette, ColorFactory } from "../../highcharts/index.js";
 import { getWindowSize } from "./internal/repeaterAgGridDataSource.js";
 
-export * from "./publicTypes.js";
+export type * from "./publicTypes.js";
 export * from "./columnWidths.js";
 
 /**
@@ -38,7 +38,7 @@ export interface ICoreRepeaterChartProps extends ICoreChartProps {
     onColumnResized?: RepeaterColumnResizedCallback;
 }
 
-export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = ({
+export function CoreRepeaterImpl({
     execution,
     ErrorComponent = SDKErrorComponent,
     LoadingComponent = SDKLoadingComponent,
@@ -51,7 +51,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = ({
     drillableItems = [],
     onDrill = noop,
     afterRender = noop,
-}) => {
+}: ICoreRepeaterChartProps) {
     const intl = useIntl();
 
     const enableCancelling = config.enableExecutionCancelling ?? false;
@@ -194,17 +194,19 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = ({
             afterRender={afterRender}
         />
     );
-};
+}
 
 const CoreRepeaterWithIntl = withTheme(CoreRepeaterImpl);
 
 /**
  * @internal
  */
-export const CoreRepeater: React.FC<ICoreRepeaterChartProps> = (props) => (
-    <ThemeContextProvider theme={props.theme} themeIsLoading={false}>
-        <IntlWrapper locale={props.locale}>
-            <CoreRepeaterWithIntl {...props} />
-        </IntlWrapper>
-    </ThemeContextProvider>
-);
+export function CoreRepeater({ theme, locale, ...props }: ICoreRepeaterChartProps) {
+    return (
+        <ThemeContextProvider theme={theme} themeIsLoading={false}>
+            <IntlWrapper locale={locale}>
+                <CoreRepeaterWithIntl {...props} />
+            </IntlWrapper>
+        </ThemeContextProvider>
+    );
+}

@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { IAttributeHierarchiesService, NotSupported } from "@gooddata/sdk-backend-spi";
 import { ICatalogAttributeHierarchy, IDateHierarchyTemplate, ObjRef } from "@gooddata/sdk-model";
 
@@ -7,7 +7,7 @@ import { RecordedBackendConfig } from "./types.js";
 /**
  * @internal
  */
-class RecordedAttributeHierarchiesService implements IAttributeHierarchiesService {
+export default class RecordedAttributeHierarchiesService implements IAttributeHierarchiesService {
     private readonly config: RecordedBackendConfig = {};
 
     constructor(config: RecordedBackendConfig) {
@@ -43,5 +43,3 @@ class RecordedAttributeHierarchiesService implements IAttributeHierarchiesServic
         throw new NotSupported("not supported");
     }
 }
-
-export default RecordedAttributeHierarchiesService;

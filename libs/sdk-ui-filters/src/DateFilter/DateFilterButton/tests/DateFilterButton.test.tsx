@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { render } from "@testing-library/react";
 import { DateFilterButton } from "../DateFilterButton.js";
 import { IFilterButtonCustomIcon } from "../../../shared/index.js";

@@ -2,7 +2,7 @@
 import { AnalyticalBackendErrorTypes, isAnalyticalBackendError } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
-import React, { createContext } from "react";
+import { createContext, PropsWithChildren } from "react";
 
 import { useWorkspacePermissions } from "./useWorkspacePermissions.js";
 import { emptyWorkspacePermissions } from "./utils.js";
@@ -17,7 +17,7 @@ export const PermissionsContext = createContext<{
     permissions: emptyWorkspacePermissions(),
 });
 
-export const PermissionsProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+export function PermissionsProvider({ children }: PropsWithChildren) {
     const workspace = useWorkspaceStrict();
     const intl = useIntl();
     const { result, loading, error } = useWorkspacePermissions(workspace);
@@ -40,4 +40,4 @@ export const PermissionsProvider: React.FC<React.PropsWithChildren> = ({ childre
             {children}
         </PermissionsContext.Provider>
     );
-};
+}

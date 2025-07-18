@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { ReactNode, memo } from "react";
+import { ReactNode, memo } from "react";
 import { useIntl } from "react-intl";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { Button } from "../Button/index.js";

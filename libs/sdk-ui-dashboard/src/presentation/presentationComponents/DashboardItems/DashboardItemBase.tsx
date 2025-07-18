@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { MouseEvent } from "react";
+import { MouseEvent, ReactNode, RefObject } from "react";
 
 import { DashboardItemContent } from "./DashboardItemContent.js";
 import { DashboardItemContentWrapper } from "./DashboardItemContentWrapper.js";
@@ -8,27 +8,27 @@ export interface IDashboardItemBaseProps {
     /**
      * Render prop for the content itself.
      */
-    children: (params: { clientWidth?: number; clientHeight?: number }) => React.ReactNode;
+    children: (params: { clientWidth?: number; clientHeight?: number }) => ReactNode;
     /**
      * Render prop for the item headline.
      */
-    renderHeadline?: (clientHeight?: number, clientWidth?: number) => React.ReactNode;
+    renderHeadline?: (clientHeight?: number, clientWidth?: number) => ReactNode;
     /**
      * Render prop for content rendered inside the main content before the visualization container.
      */
-    renderBeforeVisualization?: () => React.ReactNode;
+    renderBeforeVisualization?: () => ReactNode;
     /**
      * Render prop for content rendered inside the main content after the visualization container.
      */
-    renderAfterVisualization?: () => React.ReactNode;
+    renderAfterVisualization?: () => ReactNode;
     /**
      * Render prop for content rendered before the main content.
      */
-    renderBeforeContent?: () => React.ReactNode;
+    renderBeforeContent?: () => ReactNode;
     /**
      * Render prop for content rendered after the main content.
      */
-    renderAfterContent?: () => React.ReactNode;
+    renderAfterContent?: () => ReactNode;
     /**
      * Class name applied to the main content.
      */
@@ -40,7 +40,7 @@ export interface IDashboardItemBaseProps {
     /**
      * Ref forwarded to the main content container.
      */
-    contentRef?: React.Ref<HTMLDivElement>;
+    contentRef?: RefObject<HTMLDivElement>;
     /**
      * Flag indicating the given item can be selected.
      */
@@ -70,7 +70,7 @@ export interface IDashboardItemBaseProps {
 
 const noopRender = () => null;
 
-export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
+export function DashboardItemBase({
     children,
     contentClassName,
     visualizationClassName,
@@ -87,7 +87,7 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
     onEnter,
     onLeave,
     ariaHidden,
-}) => {
+}: IDashboardItemBaseProps) {
     return (
         <DashboardItemContentWrapper>
             {({ clientWidth, clientHeight }) => (
@@ -115,4 +115,4 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
             )}
         </DashboardItemContentWrapper>
     );
-};
+}

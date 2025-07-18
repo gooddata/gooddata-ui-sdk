@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { ReactNode, useCallback, useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 import { IMessage } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact.js";
@@ -15,8 +15,8 @@ import {
 import { isWidget, widgetTitle } from "@gooddata/sdk-model";
 
 const commonReplacements = {
-    b: (chunks: React.ReactNode) => <b>{chunks}</b>,
-    i: (chunks: React.ReactNode) => <i>{chunks}</i>,
+    b: (chunks: ReactNode) => <b>{chunks}</b>,
+    i: (chunks: ReactNode) => <i>{chunks}</i>,
 };
 
 const localizationMessages = defineMessages({

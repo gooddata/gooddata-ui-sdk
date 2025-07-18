@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";

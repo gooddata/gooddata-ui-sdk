@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo } from "react";
+import { memo } from "react";
 import ReactMeasure, { Rect } from "react-measure";
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -203,7 +203,7 @@ export const Legend = memo(function Legend(props: ILegendProps) {
         return renderPopUpLegend();
     }
 
-    const isFluidLegend = responsive === true && showFluidLegend;
+    const isFluidLegend = responsive && showFluidLegend;
     if (isFluidLegend) {
         return renderFluid();
     }

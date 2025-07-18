@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { WeekStart } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
 
@@ -15,9 +14,14 @@ interface IRepeatTypeDescriptionProps {
     showTimezone?: boolean;
 }
 
-export const RepeatTypeDescription: React.FC<IRepeatTypeDescriptionProps> = (props) => {
+export function RepeatTypeDescription({
+    repeatType,
+    startDate,
+    weekStart,
+    timezone,
+    showTimezone,
+}: IRepeatTypeDescriptionProps) {
     const intl = useIntl();
-    const { repeatType, startDate, weekStart, timezone, showTimezone } = props;
 
     return (
         <div className="gd-recurrence-form-repeat-type-description s-recurrence-form-repeat-type-description">
@@ -32,4 +36,4 @@ export const RepeatTypeDescription: React.FC<IRepeatTypeDescriptionProps> = (pro
             </span>
         </div>
     );
-};
+}

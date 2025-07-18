@@ -1,10 +1,9 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import cx from "classnames";
-import React from "react";
 import { ILayoutCoordinates } from "../../../types.js";
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
-import { IDashboardLayoutItemRenderer } from "./interfaces.js";
+import { IDashboardLayoutItemRenderer, IDashboardLayoutItemRenderProps } from "./interfaces.js";
 import { renderModeAware } from "../../componentDefinition/index.js";
 import { isCustomWidgetBase } from "../../../model/index.js";
 import { WidgetDropZoneColumn } from "../dragAndDrop/draggableWidget/WidgetDropZoneColumn.js";
@@ -18,7 +17,7 @@ function getLayoutCoordinates(item: IDashboardLayoutItemFacade<unknown>): ILayou
     };
 }
 
-const DashboardLayoutItemEditRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => {
+function DashboardLayoutItemEditRenderer(props: IDashboardLayoutItemRenderProps<unknown>) {
     const { item, screen, children } = props;
 
     const { sectionIndex, itemIndex } = getLayoutCoordinates(item);
@@ -43,7 +42,7 @@ const DashboardLayoutItemEditRenderer: IDashboardLayoutItemRenderer<unknown> = (
             {isCustomWidget ? null : <RowEndHotspot item={item} screen={screen} />}
         </>
     );
-};
+}
 
 /**
  * @internal

@@ -1,8 +1,8 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IDrillEvent, IDrillEventIntersectionElement, VisType } from "@gooddata/sdk-ui";
 import { IAttribute, IInsight, IInsightDefinition, localIdRef, uriRef } from "@gooddata/sdk-model";
 import { IDrillDownDefinition } from "../../../interfaces/Visualization.js";
-import React from "react";
+import { ReactElement } from "react";
 import { Mock } from "vitest";
 
 export function createDrillDefinition(fromAttribute: IAttribute, targetUri: string): IDrillDownDefinition {
@@ -46,9 +46,6 @@ export function createDrillEvent(type: VisType, intersection: IDrillEventInterse
  * Using second parameter - mounting point - as a differentiator
  * @returns a React element passed to render function
  */
-export function getLastRenderEl<T = any>(
-    func: Mock,
-    element: HTMLElement,
-): React.ReactElement<T> | undefined {
+export function getLastRenderEl<T = any>(func: Mock, element: HTMLElement): ReactElement<T> | undefined {
     return [...func.mock.calls].reverse().find((call) => call[1] === element)?.[0];
 }

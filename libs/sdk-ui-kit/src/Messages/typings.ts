@@ -1,5 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
+import { ComponentType, MouseEvent, ReactNode } from "react";
 import { IntlShape } from "react-intl";
 
 /**
@@ -16,7 +17,7 @@ export type FormatMessageParams = Parameters<IntlShape["formatMessage"]>;
  * @internal
  */
 export interface IMessageDefinition {
-    component?: React.ComponentType;
+    component?: ComponentType;
     showMore?: string;
     showLess?: string;
     errorDetail?: string;
@@ -24,7 +25,7 @@ export interface IMessageDefinition {
     intensive?: boolean;
     values?: FormatMessageParams[1];
     text?: string;
-    node?: React.ReactNode;
+    node?: ReactNode;
     type: MessageType;
     /**
      * After how long to automatically remove the message. If set to 0, message is shown until removed manually.
@@ -45,11 +46,11 @@ export interface IMessage extends IMessageDefinition {
  */
 export interface IMessageProps {
     className?: string;
-    onClose?(e: React.MouseEvent): void;
+    onClose?(e: MouseEvent): void;
     type: MessageType;
     contrast?: boolean;
     intensive?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

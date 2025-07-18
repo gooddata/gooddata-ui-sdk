@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { describe, it, expect } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { IFilterButtonCustomIcon } from "../../../interfaces/index.js";

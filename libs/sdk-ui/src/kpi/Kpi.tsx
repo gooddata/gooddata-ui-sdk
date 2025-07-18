@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IMeasure, INullableFilter, ISeparators } from "@gooddata/sdk-model";
 import { IRawExecuteProps, IWithLoadingEvents, RawExecute } from "../execution/index.js";
@@ -22,9 +22,11 @@ import { invariant } from "ts-invariant";
 // Internals
 //
 
-const KpiLoading = () => <LoadingComponent inline={true} />;
+function KpiLoading() {
+    return <LoadingComponent inline={true} />;
+}
 
-const CoreKpi: React.FC<IKpiProps> = (props) => {
+function CoreKpi(props: IKpiProps) {
     const {
         backend,
         workspace,
@@ -87,7 +89,7 @@ const CoreKpi: React.FC<IKpiProps> = (props) => {
             }}
         </RawExecute>
     );
-};
+}
 
 const getMeasureData = (result: DataViewFacade) => {
     const data = result.rawData().data();
@@ -106,14 +108,13 @@ const getMeasureFormat = (result: DataViewFacade) => {
     return headerItems?.[0]?.measureHeaderItem?.format;
 };
 
-const RenderKpi: React.FC<IKpiProps> = (props) => {
-    const { locale } = props;
+function RenderKpi({ locale, ...props }: IKpiProps) {
     return (
         <IntlWrapper locale={locale}>
             <CoreKpi {...props} />
         </IntlWrapper>
     );
-};
+}
 
 //
 // Public interface
@@ -164,12 +165,12 @@ export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
     /**
      * Specify react component to render while the data is loading.
      */
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
 
     /**
      * Specify react component to render if execution fails.
      */
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
 }
 
 /**

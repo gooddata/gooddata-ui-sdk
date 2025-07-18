@@ -1,5 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { Bullet } from "./Bullet.js";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../../_staging/dashboard/legacyFluidLayout/index.js";
 import { useResizeWidthStatus } from "../../../../dragAndDrop/index.js";

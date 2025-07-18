@@ -1,5 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { IInsightWidget, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
 import { ScrollablePanel, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
@@ -15,7 +14,7 @@ interface IInsightConfigurationProps {
     widget: IInsightWidget;
 }
 
-export const InsightInteractions: React.FC<IInsightConfigurationProps> = ({ widget }) => {
+export function InsightInteractions({ widget }: IInsightConfigurationProps) {
     const widgetRefSuffix = isInsightWidget(widget)
         ? stringUtils.simplifyText(objRefToString(widget.ref))
         : "";
@@ -34,7 +33,7 @@ export const InsightInteractions: React.FC<IInsightConfigurationProps> = ({ widg
             </OverlayControllerProvider>
         </ScrollablePanel>
     );
-};
+}
 
 export function createInsightInteractionsScreen(widget: IInsightWidget) {
     return <InsightInteractions widget={widget} />;

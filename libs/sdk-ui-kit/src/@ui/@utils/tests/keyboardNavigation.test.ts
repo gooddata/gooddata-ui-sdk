@@ -1,17 +1,17 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { KeyboardEvent } from "react";
 import { describe, it, expect, vi } from "vitest";
 import { makeMenuKeyboardNavigation } from "../keyboardNavigation.js";
 
 describe("makeMenuKeyboardNavigation", () => {
     // Helper function to create a keyboard event
-    const createKeyboardEvent = (code: string): React.KeyboardEvent => {
+    const createKeyboardEvent = (code: string): KeyboardEvent => {
         const event = {
             code,
             preventDefault: vi.fn(),
             stopPropagation: vi.fn(),
-        } as unknown as React.KeyboardEvent;
+        } as unknown as KeyboardEvent;
         return event;
     };
 

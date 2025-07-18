@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Dashboard: React.FC<IIconProps> = ({ color, className, width, height, ariaHidden }) => {
+export function Dashboard({ color, className, width, height, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -26,4 +26,4 @@ export const Dashboard: React.FC<IIconProps> = ({ color, className, width, heigh
             <path d="M9 5H3" strokeLinecap="square" />
         </svg>
     );
-};
+}

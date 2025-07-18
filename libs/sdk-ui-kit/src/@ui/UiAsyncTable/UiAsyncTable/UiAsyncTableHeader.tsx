@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { UiAsyncTableHeaderProps, UiAsyncTableColumn } from "../types.js";
 import { e } from "../asyncTableBem.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";

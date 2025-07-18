@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { memo } from "react";
 import { IDialogCloseButtonProps } from "./typings.js";
 import { Button } from "../Button/index.js";
 import { useIntl } from "react-intl";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import cx from "classnames";
 
-const DialogCloseButtonCore = React.memo<IDialogCloseButtonProps>(function DialogCloseButton({
+const DialogCloseButtonCore = memo<IDialogCloseButtonProps>(function DialogCloseButton({
     className,
     accessibilityConfig,
     onClose,
@@ -34,8 +34,10 @@ const DialogCloseButtonCore = React.memo<IDialogCloseButtonProps>(function Dialo
 /**
  * @internal
  */
-export const DialogCloseButton: React.FC<IDialogCloseButtonProps> = (props) => (
-    <IntlWrapper>
-        <DialogCloseButtonCore {...props} />
-    </IntlWrapper>
-);
+export function DialogCloseButton(props: IDialogCloseButtonProps) {
+    return (
+        <IntlWrapper>
+            <DialogCloseButtonCore {...props} />
+        </IntlWrapper>
+    );
+}

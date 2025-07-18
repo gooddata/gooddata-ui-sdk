@@ -1,9 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useRef } from "react";
+import { CSSProperties, ReactNode, memo, useRef } from "react";
 
 interface IScrollNotificationDiv {
-    style?: React.CSSProperties;
-    children?: React.ReactNode;
+    style?: CSSProperties;
+    children?: ReactNode;
 }
 
 export const ScrollNotificationDiv = memo(function ScrollNotificationDiv(props: IScrollNotificationDiv) {

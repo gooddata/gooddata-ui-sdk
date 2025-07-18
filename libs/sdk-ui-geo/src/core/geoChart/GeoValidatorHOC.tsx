@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { Component, ComponentClass } from "react";
 import isEqual from "lodash/isEqual.js";
 import { injectIntl } from "react-intl";
 
@@ -26,8 +26,8 @@ interface IGeoValidatorState {
     isMapboxTokenInvalid: boolean;
 }
 
-export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): React.ComponentClass<T> {
-    class ValidatorHOCWrapped extends React.Component<T & IGeoValidatorProps, IGeoValidatorState> {
+export function geoValidatorHOC<T>(InnerComponent: ComponentClass<T>): ComponentClass<T> {
+    class ValidatorHOCWrapped extends Component<T & IGeoValidatorProps, IGeoValidatorState> {
         private readonly errorMap: IErrorDescriptors;
 
         private isLocationMissing: boolean = false;
@@ -163,7 +163,7 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
 
     const IntlValidatorHOC = injectIntl(ValidatorHOCWrapped);
 
-    return class ValidatorHOC extends React.Component<T & IGeoValidatorProps> {
+    return class ValidatorHOC extends Component<T & IGeoValidatorProps> {
         public render() {
             return (
                 <IntlWrapper locale={this.props.locale}>

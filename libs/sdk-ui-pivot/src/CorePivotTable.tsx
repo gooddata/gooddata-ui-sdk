@@ -10,11 +10,11 @@ import {
     ModuleRegistry,
     provideGlobalGridOptions,
 } from "ag-grid-community";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { AgGridReact } from "ag-grid-react";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import {
@@ -222,13 +222,13 @@ export function CorePivotTableAgImpl({
     });
 
     const errorMapRef = useRef<IErrorDescriptors>(newErrorMapping(intl));
-    const containerRef = useRef<HTMLDivElement | undefined>();
+    const containerRef = useRef<HTMLDivElement | undefined>(undefined);
     const pivotTableIdRef = useRef<string>(uuidv4().replace(/-/g, ""));
     const internalRef = useRef<InternalTableState>(new InternalTableState());
     const abortControllerRef = useRef<AbortController | undefined>(
         config?.enableExecutionCancelling ? new AbortController() : undefined,
     );
-    const reinitializeRef = useRef<((execution: IPreparedExecution) => void) | undefined>();
+    const reinitializeRef = useRef<((execution: IPreparedExecution) => void) | undefined>(undefined);
 
     //
     // Lifecycle
@@ -900,7 +900,7 @@ export function CorePivotTableAgImpl({
      *
      * @param callback - function to wrap with state guard
      */
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     const stateBoundCallback = useCallback(<T extends Function>(callback: T): T => {
         const forInternalState = internalRef.current;
         return ((...args: any) => {
@@ -1193,7 +1193,7 @@ export function CorePivotTableAgImpl({
     }, [props.theme, LoadingComponent]);
 
     // Use previous props pattern for componentDidUpdate equivalent
-    const prevPropsRef = useRef<ICorePivotTableProps>();
+    const prevPropsRef = useRef<ICorePivotTableProps | null>(null);
 
     useEffect(() => {
         // componentDidMount equivalent
@@ -1363,10 +1363,12 @@ const CorePivotTableWithIntl = withTheme(CorePivotTableAgImpl);
 /**
  * @internal
  */
-export const CorePivotTable: React.FC<ICorePivotTableProps> = (props) => (
-    <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-        <IntlWrapper locale={props.locale}>
-            <CorePivotTableWithIntl {...props} />
-        </IntlWrapper>
-    </ThemeContextProvider>
-);
+export function CorePivotTable(props: ICorePivotTableProps) {
+    return (
+        <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+            <IntlWrapper locale={props.locale}>
+                <CorePivotTableWithIntl {...props} />
+            </IntlWrapper>
+        </ThemeContextProvider>
+    );
+}

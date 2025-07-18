@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { ReactNode } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ReactNode } from "react";
 import noop from "lodash/noop.js";
 import cx from "classnames";
 import {
@@ -22,12 +22,12 @@ interface IDrillTargetTypeListItemProps extends ISingleSelectListItemProps {
     onClick: () => void;
 }
 
-const DrillTargetTypeListItem: React.FC<IDrillTargetTypeListItemProps> = ({
+export default function DrillTargetTypeListItem({
     item,
     icon,
     isSelected,
     onClick,
-}) => {
+}: IDrillTargetTypeListItemProps) {
     const { formatMessage } = useIntl();
     const handleClick = item.disabled ? noop : onClick;
     const className = cx(icon, {
@@ -67,6 +67,4 @@ const DrillTargetTypeListItem: React.FC<IDrillTargetTypeListItemProps> = ({
             ) : null}
         </BubbleHoverTrigger>
     );
-};
-
-export default DrillTargetTypeListItem;
+}

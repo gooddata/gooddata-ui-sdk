@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
-import React, { useCallback, useState } from "react";
-import { IntlShape } from "react-intl/src/types.js";
+// (C) 2023-2025 GoodData Corporation
+import { useCallback, useState } from "react";
+import { IntlShape } from "react-intl";
 import { IFilterConfigurationProps } from "@gooddata/sdk-ui-filters";
 import { DashboardDateFilterConfigMode, ObjRef } from "@gooddata/sdk-model";
 
@@ -20,9 +20,13 @@ interface IDateFilterConfigurationProps extends IFilterConfigurationProps {
     defaultDateFilterName: string;
 }
 
-export const DateFilterConfigurationBody: React.FC<IDateFilterConfigurationProps> = (props) => {
-    const { onCancelButtonClick, onSaveButtonClick, intl, dateDataSet, defaultDateFilterName } = props;
-
+export function DateFilterConfigurationBody({
+    onCancelButtonClick,
+    onSaveButtonClick,
+    intl,
+    dateDataSet,
+    defaultDateFilterName,
+}: IDateFilterConfigurationProps) {
     const {
         mode,
         changeConfigMode,
@@ -41,9 +45,12 @@ export const DateFilterConfigurationBody: React.FC<IDateFilterConfigurationProps
 
     const onConfigurationSave = useCallback(() => {
         onSaveButtonClick();
-        capabilities.supportsMultipleDateFilters && onTitleChange();
-        capabilities.supportsHiddenAndLockedFiltersOnUI &&
+        if (capabilities.supportsMultipleDateFilters) {
+            onTitleChange();
+        }
+        if (capabilities.supportsHiddenAndLockedFiltersOnUI) {
             changeConfigMode(selectedMode as DashboardDateFilterConfigMode);
+        }
     }, [
         selectedMode,
         onTitleChange,
@@ -111,4 +118,4 @@ export const DateFilterConfigurationBody: React.FC<IDateFilterConfigurationProps
             </div>
         </div>
     );
-};
+}

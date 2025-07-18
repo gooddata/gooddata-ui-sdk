@@ -21,7 +21,7 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import { KeyboardEvent, useCallback, useMemo, useRef, useState } from "react";
 import { defineMessage, useIntl } from "react-intl";
 import {
     selectDashboardTitle,
@@ -82,13 +82,13 @@ interface ScheduledEmailDialogFooterProps {
     onDeleteClick: () => void;
 }
 
-const ScheduledEmailDialogFooter: React.FC<ScheduledEmailDialogFooterProps> = ({
+function ScheduledEmailDialogFooter({
     isWhiteLabeled,
     helpTextId,
     scheduledExportToEdit,
     isSavingScheduledEmail,
     onDeleteClick,
-}) => {
+}: ScheduledEmailDialogFooterProps) {
     const intl = useIntl();
 
     return (
@@ -110,7 +110,7 @@ const ScheduledEmailDialogFooter: React.FC<ScheduledEmailDialogFooterProps> = ({
             ) : null}
         </div>
     );
-};
+}
 
 export function ScheduledMailDialogRenderer({
     scheduledExportToEdit,
@@ -260,7 +260,7 @@ export function ScheduledMailDialogRenderer({
     const submitDisabled = isSubmitDisabled || isSavingScheduledEmail || isExecutionTimestampMode;
 
     const handleSubmitForm = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (isEnterKey(e) && !submitDisabled) {
                 handleSaveScheduledEmail();
             }
@@ -506,7 +506,7 @@ export function ScheduledMailDialogRenderer({
 /**
  * @alpha
  */
-export const DefaultScheduledEmailDialog: React.FC<IScheduledEmailDialogProps> = (props) => {
+export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps) {
     const { isLoading, onCancel, scheduledExportToEdit } = props;
     const locale = useDashboardSelector(selectLocale);
 
@@ -524,7 +524,7 @@ export const DefaultScheduledEmailDialog: React.FC<IScheduledEmailDialogProps> =
             <ScheduledMailDialogRenderer {...props} />
         </IntlWrapper>
     );
-};
+}
 
 function useDefaultScheduledEmailDialogData({ filters }: { filters: FilterContextItem[] }) {
     const locale = useDashboardSelector(selectLocale);

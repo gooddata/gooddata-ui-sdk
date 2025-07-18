@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
@@ -163,7 +163,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): React.ReactNode {
+    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

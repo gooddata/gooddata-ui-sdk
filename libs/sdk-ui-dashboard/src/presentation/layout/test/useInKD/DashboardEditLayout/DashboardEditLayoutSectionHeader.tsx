@@ -1,5 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
-import * as React from "react";
+// (C) 2019-2025 GoodData Corporation
 
 import { DashboardLayoutSectionHeader } from "../../../DefaultDashboardLayoutRenderer/index.js";
 
@@ -11,11 +10,10 @@ export interface IDashboardEditLayoutSectionHeaderOwnProps {
 
 export type IDashboardEditLayoutSectionHeaderProps = IDashboardEditLayoutSectionHeaderOwnProps;
 
-export const RenderDashboardEditLayoutSectionHeader: React.FC<IDashboardEditLayoutSectionHeaderProps> = (
-    props,
-) => {
-    const { description, title } = props;
-
+export function RenderDashboardEditLayoutSectionHeader({
+    description,
+    title,
+}: IDashboardEditLayoutSectionHeaderProps) {
     const isDashboardEditing = true;
 
     return (
@@ -29,6 +27,6 @@ export const RenderDashboardEditLayoutSectionHeader: React.FC<IDashboardEditLayo
             }
         />
     );
-};
+}
 
 export const DashboardEditLayoutSectionHeader = RenderDashboardEditLayoutSectionHeader;

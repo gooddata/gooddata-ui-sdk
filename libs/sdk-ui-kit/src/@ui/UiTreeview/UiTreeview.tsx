@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import noop from "lodash/noop.js";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
@@ -123,7 +123,9 @@ function UiTreeview<Levels extends unknown[], Level>({
                         newTab: e.ctrlKey || e.metaKey || e.nativeEvent.button === 1,
                     });
                 }
-                shouldCloseOnSelect && onClose?.();
+                if (shouldCloseOnSelect) {
+                    onClose?.();
+                }
             }
 
             switch (selectionMode) {

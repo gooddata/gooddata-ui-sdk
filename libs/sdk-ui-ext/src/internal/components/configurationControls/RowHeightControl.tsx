@@ -1,5 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { ChartRowHeight } from "@gooddata/sdk-ui-charts";
 import DropdownControl from "./DropdownControl.js";
@@ -16,11 +15,7 @@ export interface IRowHeightControlProps {
     defaultValue?: ChartRowHeight;
 }
 
-export const RowHeightControl = ({
-    pushData,
-    properties,
-    defaultValue = "small",
-}: IRowHeightControlProps) => {
+export function RowHeightControl({ pushData, properties, defaultValue = "small" }: IRowHeightControlProps) {
     const intl = useIntl();
     const rowSizing = properties?.controls?.rowHeight ?? defaultValue;
 
@@ -36,4 +31,4 @@ export const RowHeightControl = ({
             />
         </div>
     );
-};
+}

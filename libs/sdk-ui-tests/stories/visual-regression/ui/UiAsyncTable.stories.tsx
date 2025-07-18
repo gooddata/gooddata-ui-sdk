@@ -7,7 +7,7 @@ import {
     UiBadge,
     UiIcon,
 } from "@gooddata/sdk-ui-kit";
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { wrapWithTheme } from "../themeWrapper.js";
 import { SortDirection } from "@gooddata/sdk-model";
 

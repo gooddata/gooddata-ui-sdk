@@ -1,5 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { fireEvent, render, screen } from "@testing-library/react";
 import range from "lodash/range.js";
 import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect.js";

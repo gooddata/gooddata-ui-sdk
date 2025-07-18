@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { IAccessibilityConfigBase } from "./accessibility.js";
-import React from "react";
+import { HTMLAttributes } from "react";
 
 /**
  * @deprecated use `event.key` or `event.code`. See https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
@@ -17,7 +17,7 @@ export enum ENUM_KEY_CODE {
  */
 export function accessibilityConfigToAttributes(
     accessibilityConfig?: IAccessibilityConfigBase,
-): React.HTMLAttributes<HTMLElement> {
+): HTMLAttributes<HTMLElement> {
     if (!accessibilityConfig) {
         return {};
     }

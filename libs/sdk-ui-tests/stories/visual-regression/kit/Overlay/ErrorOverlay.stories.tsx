@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import { ErrorOverlay } from "@gooddata/sdk-ui-kit";
@@ -9,14 +8,14 @@ import { action } from "storybook/actions";
 
 const bodyContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ".repeat(80);
 
-const ErrorOverlayExampleDefault: React.FC = () => {
+function ErrorOverlayExampleDefault() {
     return (
         <div className="library-component screenshot-target">
             <div>{bodyContent}</div>
             <ErrorOverlay onButtonClick={action("onButtonClick")} />
         </div>
     );
-};
+}
 
 function ErrorOverlayExampleCustom() {
     const intl = useIntl();

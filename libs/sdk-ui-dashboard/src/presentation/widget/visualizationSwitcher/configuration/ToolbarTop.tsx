@@ -2,7 +2,7 @@
 
 import { Bubble, BubbleHoverTrigger, GD_COLOR_HIGHLIGHT, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { IInsightWidget } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -17,14 +17,14 @@ interface IToolbarTopProps {
     toggleVisualizationsList: () => void;
     visualizationsListShown: boolean;
 }
-export const ToolbarTop: React.FC<IToolbarTopProps> = ({
+export function ToolbarTop({
     visualizations,
     onNavigate,
     activeVisualizationId: activeWidgetId,
     onDelete,
     toggleVisualizationsList,
     visualizationsListShown,
-}) => {
+}: IToolbarTopProps) {
     const theme = useTheme();
     const userInteraction = useDashboardUserInteraction();
     const activeWidgetIndex = visualizations.findIndex((vis) => vis.identifier === activeWidgetId);
@@ -117,4 +117,4 @@ export const ToolbarTop: React.FC<IToolbarTopProps> = ({
             </div>
         </div>
     );
-};
+}

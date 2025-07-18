@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import cx from "classnames";
 import { createSelector } from "@reduxjs/toolkit";
 
@@ -33,7 +32,7 @@ const isPoweredByGDLogoPresent = createSelector(
         isEmbedded && platformEdition === "free" && enableCompanyLogoInEmbeddedUI,
 );
 
-export const PoweredByGDLogo: React.FC<PoweredByGDLogoProps> = ({ isSmall }: PoweredByGDLogoProps) => {
+export function PoweredByGDLogo({ isSmall }: PoweredByGDLogoProps) {
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
     const isPresent = useDashboardSelector(isPoweredByGDLogoPresent);
     const userInteraction = useDashboardUserInteraction();
@@ -61,4 +60,4 @@ export const PoweredByGDLogo: React.FC<PoweredByGDLogoProps> = ({ isSmall }: Pow
             ) : null}
         </>
     );
-};
+}

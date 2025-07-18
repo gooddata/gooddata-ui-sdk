@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ComponentType } from "react";
 
 import {
     ArithmeticMeasureOperator,
@@ -23,7 +23,7 @@ import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 
 const ARITHMETIC_BUCKET_IDENTIFIER = "comparison_virtual_arithmetic_bucket";
 
-class ComparisonProvider extends AbstractProvider {
+export default class ComparisonProvider extends AbstractProvider {
     private readonly comparison: IComparison;
 
     constructor(comparison: IComparison) {
@@ -32,7 +32,7 @@ class ComparisonProvider extends AbstractProvider {
         this.comparison = comparison || COMPARISON_DEFAULT_OBJECT;
     }
 
-    public getHeadlineTransformationComponent(): React.ComponentType<IHeadlineTransformationProps> {
+    public getHeadlineTransformationComponent(): ComponentType<IHeadlineTransformationProps> {
         return ComparisonTransformation;
     }
 
@@ -96,5 +96,3 @@ class ComparisonProvider extends AbstractProvider {
         }
     }
 }
-
-export default ComparisonProvider;

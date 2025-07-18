@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ChangeEvent, useCallback } from "react";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ICatalogDateDataset, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
@@ -22,20 +22,18 @@ interface IDateFilterCheckboxProps {
     enableUnrelatedItemsVisibility?: boolean;
 }
 
-export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) => {
-    const {
-        isDropdownLoading,
-        isFilterLoading,
-        dateFilterEnabled,
-        selectedDateDataset,
-        selectedDateDatasetHidden,
-        dateFilterCheckboxDisabled,
-        relatedDateDatasets,
-        widget,
-        onDateDatasetFilterEnabled,
-        enableUnrelatedItemsVisibility,
-    } = props;
-
+export function DateFilterCheckbox({
+    isDropdownLoading,
+    isFilterLoading,
+    dateFilterEnabled,
+    selectedDateDataset,
+    selectedDateDatasetHidden,
+    dateFilterCheckboxDisabled,
+    relatedDateDatasets,
+    widget,
+    onDateDatasetFilterEnabled,
+    enableUnrelatedItemsVisibility,
+}: IDateFilterCheckboxProps) {
     const unrelatedDateDataset =
         relatedDateDatasets &&
         getUnrelatedDateDataset(relatedDateDatasets, selectedDateDataset, selectedDateDatasetHidden);
@@ -63,7 +61,7 @@ export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) =>
     });
 
     const handleChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             const { checked } = e.target;
             const dateDataSetRef = selectedDateDataset ? selectedDateDataset.dataSet.ref : undefined;
             // convert to non-immutable
@@ -106,4 +104,4 @@ export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) =>
             ) : null}
         </div>
     );
-};
+}

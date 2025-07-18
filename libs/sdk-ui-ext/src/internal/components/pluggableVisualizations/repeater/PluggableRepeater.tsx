@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import {
     IAttribute,
     IDimension,
@@ -12,7 +11,6 @@ import {
     insightProperties,
     insightSetBuckets,
     IColorMappingItem,
-    ITheme,
 } from "@gooddata/sdk-model";
 import {
     RepeaterColumnWidthItem,
@@ -375,7 +373,6 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                 onError={this.onError}
                 onDataView={this.onDataView}
                 onColumnResized={this.onColumnResized}
-                theme={undefined as unknown as ITheme}
             />,
             this.getElement(),
         );

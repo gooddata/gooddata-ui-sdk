@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { MouseEvent } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -9,7 +9,7 @@ export interface IHeaderWorkspacePickerItemProps {
     isDemo?: boolean;
     isSelected?: boolean;
     isLoading?: boolean;
-    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export function HeaderWorkspacePickerItem({

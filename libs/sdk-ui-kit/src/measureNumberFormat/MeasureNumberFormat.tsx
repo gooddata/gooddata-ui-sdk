@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useState, useRef, useCallback, useMemo } from "react";
+import { ComponentType, memo, useCallback, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 
@@ -14,7 +14,7 @@ export const CUSTOM_FORMAT_PRESET_LOCAL_IDENTIFIER = "customFormat";
  * @internal
  */
 export interface IMeasureNumberFormatOwnProps {
-    toggleButton: React.ComponentType<IToggleButtonProps>;
+    toggleButton: ComponentType<IToggleButtonProps>;
     presets: ReadonlyArray<IFormatPreset>;
     separators: ISeparators;
     selectedFormat: string | null;
@@ -45,7 +45,7 @@ const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat({
 }: IMeasureNumberFormatOwnProps) {
     const intl = useIntl();
 
-    const toggleButtonEl = useRef<HTMLElement>();
+    const toggleButtonEl = useRef<HTMLElement | null>(null);
 
     const getCustomFormatPreset = useCallback(
         (): IFormatPreset => ({

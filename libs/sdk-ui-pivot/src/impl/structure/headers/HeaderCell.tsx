@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { IntlShape } from "react-intl";
 import cx from "classnames";
 import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";

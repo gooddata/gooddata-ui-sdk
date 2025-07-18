@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useRef, useState } from "react";
+import { Fragment, memo, useRef, useState } from "react";
 import { IMeasureValueFilter } from "@gooddata/sdk-model";
 import noop from "lodash/noop.js";
 
@@ -57,7 +57,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     };
 
     return (
-        <React.Fragment>
+        <Fragment>
             <div ref={buttonRef}>
                 <MeasureValueFilterButton
                     onClick={toggleDropdown}
@@ -81,6 +81,6 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     anchorEl={buttonRef.current}
                 />
             ) : null}
-        </React.Fragment>
+        </Fragment>
     );
 });

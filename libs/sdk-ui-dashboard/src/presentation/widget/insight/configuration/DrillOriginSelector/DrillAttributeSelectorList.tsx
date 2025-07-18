@@ -1,6 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IAvailableDrillTargetAttribute } from "@gooddata/sdk-ui";
-import React from "react";
 import { DrillAttributeSelectorItem } from "./DrillAttributeSelectorItem.js";
 
 export interface IDrillAttributeSelectorListProps {
@@ -9,19 +8,21 @@ export interface IDrillAttributeSelectorListProps {
     onCloseDropdown: () => void;
 }
 
-const DrillAttributeSelectorList: React.FunctionComponent<IDrillAttributeSelectorListProps> = (props) => {
+export default function DrillAttributeSelectorList({
+    supportedItems,
+    onSelect,
+    onCloseDropdown,
+}: IDrillAttributeSelectorListProps) {
     return (
         <div className="gd-drill-attribute-selector-list">
-            {props.supportedItems.map((item) => (
+            {supportedItems.map((item) => (
                 <DrillAttributeSelectorItem
                     key={item.attribute.attributeHeader.localIdentifier}
                     item={item}
-                    onClick={props.onSelect}
-                    onCloseDropdown={props.onCloseDropdown}
+                    onClick={onSelect}
+                    onCloseDropdown={onCloseDropdown}
                 />
             ))}
         </div>
     );
-};
-
-export default DrillAttributeSelectorList;
+}

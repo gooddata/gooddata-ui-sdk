@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl, WrappedComponentProps } from "react-intl";
 import { Typography, Button, NoData } from "@gooddata/sdk-ui-kit";
 import {
@@ -53,7 +53,7 @@ interface ILimitValuesConfigurationProps {
     ) => void;
 }
 
-const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
+function LimitValuesConfiguration({
     attributeTitle,
     parentFilters,
     validParentFilters,
@@ -65,7 +65,7 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     onLimitingItemUpdate,
     onParentFilterUpdate,
     onDependentDateFilterUpdate,
-}) => {
+}: ILimitValuesConfigurationProps) {
     const intl = useIntl();
     const isEnabledKDAttributeFilterDatesValidation = useDashboardSelector(
         selectEnableKDAttributeFilterDatesValidation,
@@ -161,13 +161,14 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
             </div>
         </div>
     );
-};
+}
 
 export type LocalizedLimitValuesConfigurationProps = ILimitValuesConfigurationProps & WrappedComponentProps;
 
-export const LocalizedLimitValuesConfiguration: React.FC<LocalizedLimitValuesConfigurationProps> = (
-    props,
-) => {
+export function LocalizedLimitValuesConfiguration({
+    intl,
+    ...props
+}: LocalizedLimitValuesConfigurationProps) {
     const isAttributeFilterValuesValidationEnabled = useDashboardSelector(
         selectEnableAttributeFilterValuesValidation,
     );
@@ -176,8 +177,8 @@ export const LocalizedLimitValuesConfiguration: React.FC<LocalizedLimitValuesCon
         return null;
     }
     return (
-        <IntlWrapper locale={props.intl.locale}>
+        <IntlWrapper locale={intl.locale}>
             <LimitValuesConfiguration {...props} />
         </IntlWrapper>
     );
-};
+}

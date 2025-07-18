@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 
@@ -14,10 +14,13 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc" }];
  *
  * @beta
  */
-export const AttributeFilterButtonErrorTooltip: React.FC<{
-    children: React.ReactNode;
+export function AttributeFilterButtonErrorTooltip({
+    children,
+    errorMessage,
+}: {
+    children: ReactNode;
     errorMessage?: string;
-}> = ({ children, errorMessage }) => {
+}) {
     return errorMessage ? (
         <div className="gd-attribute-filter-button-wrapper">
             <BubbleHoverTrigger>
@@ -35,4 +38,4 @@ export const AttributeFilterButtonErrorTooltip: React.FC<{
     ) : (
         <>{children}</>
     );
-};
+}

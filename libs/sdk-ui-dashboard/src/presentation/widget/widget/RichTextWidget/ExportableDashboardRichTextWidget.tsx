@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import cx from "classnames";
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
@@ -8,12 +7,12 @@ import { DashboardRichText } from "../../richText/DashboardRichText.js";
 /**
  * @internal
  */
-export const ExportableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = ({
+export function ExportableDashboardRichTextWidget({
     widget,
     screen,
     dashboardItemClasses,
     exportData,
-}) => {
+}: IDefaultDashboardRichTextWidgetProps) {
     return (
         <DashboardItem
             className={cx(dashboardItemClasses, "type-rich-text", "gd-dashboard-view-widget")}
@@ -25,4 +24,4 @@ export const ExportableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTe
             </DashboardItemBase>
         </DashboardItem>
     );
-};
+}

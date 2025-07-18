@@ -1,5 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { ChartCellImageSizing } from "@gooddata/sdk-ui-charts";
 import { IPushData } from "@gooddata/sdk-ui";
@@ -16,7 +15,7 @@ export interface IImageControlProps {
     defaultValue?: ChartCellImageSizing;
 }
 
-export const ImageControl = ({ pushData, properties, defaultValue = "fit" }: IImageControlProps) => {
+export function ImageControl({ pushData, properties, defaultValue = "fit" }: IImageControlProps) {
     const intl = useIntl();
     const rowSizing = properties?.controls?.cellImageSizing ?? defaultValue;
 
@@ -32,4 +31,4 @@ export const ImageControl = ({ pushData, properties, defaultValue = "fit" }: IIm
             />
         </div>
     );
-};
+}

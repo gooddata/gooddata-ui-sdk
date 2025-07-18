@@ -1,29 +1,29 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { ReactNode, MouseEventHandler, useCallback, useMemo, forwardRef } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop.js";
 import { IButtonProps } from "./typings.js";
 
-const getGeneratedTestId = (effectiveValue: React.ReactNode, title: string, ariaLabel: string) => {
+const getGeneratedTestId = (effectiveValue: ReactNode, title: string, ariaLabel: string) => {
     if (effectiveValue && typeof effectiveValue === "string") {
         return `${stringUtils.simplifyText(effectiveValue)}`;
     }
     return ariaLabel ? `${stringUtils.simplifyText(ariaLabel)}` : `${stringUtils.simplifyText(title)}`;
 };
 
-const Icon: React.FC<{ icon: string | undefined }> = ({ icon }) => {
+function Icon({ icon }: { icon: string | undefined }) {
     if (!icon) {
         return null;
     }
 
     return <span className={cx("gd-button-icon", icon)} data-testid="gd-button-icon" aria-hidden="true" />;
-};
+}
 
 /**
  * @internal
  */
-export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Button(
+export const Button = forwardRef<HTMLElement, IButtonProps>(function Button(
     {
         className,
         disabled = false,
@@ -61,7 +61,7 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
         ...(isExpanded !== undefined ? { "aria-expanded": isExpanded } : {}),
     };
 
-    const handleClick = React.useCallback<React.MouseEventHandler>(
+    const handleClick = useCallback<MouseEventHandler>(
         (e) => {
             if (disabled) {
                 return;
@@ -71,10 +71,10 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
         [disabled, onClick],
     );
 
-    const effectiveValue = React.useMemo(() => value ?? children, [children, value]);
+    const effectiveValue = useMemo(() => value ?? children, [children, value]);
     const testId = dataTestId ? dataTestId : getGeneratedTestId(effectiveValue, title, ariaLabel);
 
-    const classNames = React.useMemo(() => {
+    const classNames = useMemo(() => {
         const generatedSeleniumClass =
             effectiveValue && typeof effectiveValue === "string"
                 ? `s-${stringUtils.simplifyText(effectiveValue)}`

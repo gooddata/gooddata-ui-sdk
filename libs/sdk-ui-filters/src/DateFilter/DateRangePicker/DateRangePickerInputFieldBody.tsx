@@ -1,37 +1,37 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { forwardRef, InputHTMLAttributes, useCallback, useImperativeHandle, useRef } from "react";
 import cx from "classnames";
 
 // This has to be a class because DayPickerInput refs to it internally.
 // See https://github.com/gpbl/react-day-picker/issues/748 for more information
-export const DateRangePickerInputFieldBody = React.forwardRef<
+export const DateRangePickerInputFieldBody = forwardRef<
     {
         invokeInputMethod: (key: "blur" | "focus") => void;
         blur: () => void;
         focus: () => void;
         value: string;
     },
-    React.InputHTMLAttributes<HTMLInputElement>
+    InputHTMLAttributes<HTMLInputElement>
 >(function DateRangePickerInputFieldBody(props, ref) {
-    const inputRef = React.useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    const invokeInputMethod = React.useCallback((key: "blur" | "focus"): void => {
+    const invokeInputMethod = useCallback((key: "blur" | "focus"): void => {
         if (inputRef.current) {
             inputRef.current[key]();
         }
     }, []);
 
-    const blur = React.useCallback((): void => invokeInputMethod("blur"), [invokeInputMethod]);
-    const focus = React.useCallback((): void => invokeInputMethod("focus"), [invokeInputMethod]);
+    const blur = useCallback((): void => invokeInputMethod("blur"), [invokeInputMethod]);
+    const focus = useCallback((): void => invokeInputMethod("focus"), [invokeInputMethod]);
 
-    const getValue = React.useCallback((): string => {
+    const getValue = useCallback((): string => {
         if (inputRef.current) {
             return inputRef.current.value;
         }
         return "";
     }, []);
 
-    React.useImperativeHandle(
+    useImperativeHandle(
         ref,
         () => ({
             invokeInputMethod,

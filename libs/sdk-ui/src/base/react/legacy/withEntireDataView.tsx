@@ -10,7 +10,7 @@ import {
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { defFingerprint } from "@gooddata/sdk-model";
-import React from "react";
+import { Component, ComponentType } from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import noop from "lodash/noop.js";
 import omit from "lodash/omit.js";
@@ -98,11 +98,9 @@ export interface ILoadingInjectedProps {
  * @internal
  */
 export function withEntireDataView<T extends IDataVisualizationProps>(
-    InnerComponent: React.ComponentType<T & ILoadingInjectedProps>,
-): React.ComponentType<T> {
-    class LoadingHOCWrapped extends React.Component<T & ILoadingInjectedProps, IDataViewLoadState> {
-        public static defaultProps = InnerComponent.defaultProps || {};
-
+    InnerComponent: ComponentType<T & ILoadingInjectedProps>,
+): ComponentType<T> {
+    class LoadingHOCWrapped extends Component<T & ILoadingInjectedProps, IDataViewLoadState> {
         private hasUnmounted: boolean = false;
         private abortController: AbortController;
 
@@ -397,7 +395,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
     const IntlLoadingHOC = injectIntl(LoadingHOCWrapped);
 
-    return class LoadingHOC extends React.Component<T> {
+    return class LoadingHOC extends Component<T> {
         public render() {
             return (
                 <IntlWrapper locale={this.props.locale}>

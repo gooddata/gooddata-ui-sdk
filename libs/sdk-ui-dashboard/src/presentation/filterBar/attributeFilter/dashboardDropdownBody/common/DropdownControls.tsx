@@ -1,6 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
-
+// (C) 2022-2025 GoodData Corporation
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { useIntl } from "react-intl";
@@ -11,8 +9,11 @@ interface IConfigurationPanelControlsProps {
     isSaveButtonEnabled: boolean;
 }
 
-export const DropdownControls: React.FC<IConfigurationPanelControlsProps> = (props) => {
-    const { closeHandler, isSaveButtonEnabled, onSave } = props;
+export function DropdownControls({
+    closeHandler,
+    isSaveButtonEnabled,
+    onSave,
+}: IConfigurationPanelControlsProps) {
     const intl = useIntl();
 
     const onSaveHandler = () => {
@@ -36,4 +37,4 @@ export const DropdownControls: React.FC<IConfigurationPanelControlsProps> = (pro
             />
         </div>
     );
-};
+}

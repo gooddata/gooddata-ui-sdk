@@ -1,5 +1,5 @@
-// (C) 2007-2023 GoodData Corporation
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { ReactNode, useCallback, useLayoutEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce.js";
 import isNumber from "lodash/isNumber.js";
 
@@ -16,22 +16,22 @@ export interface IResponsiveTextProps {
         getComputedStyle: Window["getComputedStyle"];
         removeEventListener: Window["removeEventListener"];
     };
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
  * @internal
  */
-export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
+export function ResponsiveText({
     tagName: Tag = "div",
     tagClassName,
     title,
     children,
     windowResizeRefreshDelay = 50,
     window: windowInstance = window,
-}) => {
+}: IResponsiveTextProps) {
     const [fontSize, setFontSize] = useState<number | null>(null);
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
     const adjustFontSize = useCallback(() => {
         if (!containerRef.current) {
@@ -86,4 +86,4 @@ export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
             {children}
         </Tag>
     );
-};
+}

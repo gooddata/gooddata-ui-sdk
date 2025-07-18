@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { CSSProperties, useLayoutEffect, useRef, useState } from "react";
+import { CSSProperties, KeyboardEvent, MutableRefObject, useLayoutEffect, useRef, useState } from "react";
 import { IDropdownButtonAccessibilityConfig } from "../../Button/typings.js";
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { IconType } from "../@types/icon.js";
@@ -28,10 +28,10 @@ export interface UiChipProps {
     iconBefore?: IconType;
     onClick?: () => void;
     onDelete?: () => void;
-    onDeleteKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+    onDeleteKeyDown?: (event: KeyboardEvent<HTMLButtonElement>) => void;
     accessibilityConfig?: IUiChipAccessibilityConfig;
     dataTestId?: string;
-    buttonRef?: React.MutableRefObject<HTMLButtonElement>;
+    buttonRef?: MutableRefObject<HTMLButtonElement>;
 }
 
 const { b, e } = bem("gd-ui-kit-chip");
@@ -39,7 +39,7 @@ const { b, e } = bem("gd-ui-kit-chip");
 /**
  * @internal
  */
-export const UiChip = ({
+export function UiChip({
     label,
     tag,
     isDeletable = false,
@@ -52,7 +52,7 @@ export const UiChip = ({
     accessibilityConfig,
     dataTestId,
     buttonRef,
-}: UiChipProps) => {
+}: UiChipProps) {
     const [styleObj, setStyleObj] = useState<CSSProperties>();
     const defaultButtonRef = useRef<HTMLButtonElement>(null);
     const effectiveButtonRef = buttonRef || defaultButtonRef;
@@ -125,4 +125,4 @@ export const UiChip = ({
             ) : null}
         </div>
     );
-};
+}

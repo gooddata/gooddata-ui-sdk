@@ -1,5 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 
@@ -12,7 +11,7 @@ const alignPoints = [{ align: "bc tc" }];
 /**
  * @internal
  */
-export const ResetFiltersButton: React.FC = () => {
+export function ResetFiltersButton() {
     const intl = useIntl();
 
     const { canReset, resetFilters, resetType } = useResetFiltersButton();
@@ -38,4 +37,4 @@ export const ResetFiltersButton: React.FC = () => {
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { FC } from "react";
+import { KeyboardEvent, MutableRefObject, ReactNode, useEffect, useMemo, useRef } from "react";
 import cx from "classnames";
 import { b, e } from "./menuBem.js";
 import { IUiMenuItemData, UiMenuProps } from "./types.js";
@@ -8,17 +8,17 @@ import { useCustomContentKeyNavigation, useKeyNavigation, useUiMenuContextValue 
 import { typedUiMenuContextStore } from "./context.js";
 import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 
-const ContentWrapper: FC<{
-    keyboardNavigationHandler: (event: React.KeyboardEvent) => void;
-    children?: React.ReactNode;
-}> = (props) => {
+function ContentWrapper(props: {
+    keyboardNavigationHandler: (event: KeyboardEvent) => void;
+    children?: ReactNode;
+}) {
     return (
         // autofocus always first element in the custom content for now
         <UiAutofocus>
             <div onKeyDown={props.keyboardNavigationHandler}>{props.children}</div>
         </UiAutofocus>
     );
-};
+}
 
 /**
  * An accessible menu component that can be navigated by keyboard.
@@ -29,7 +29,7 @@ const ContentWrapper: FC<{
  */
 export function UiMenu<T extends IUiMenuItemData = object, M extends object = object>(
     props: UiMenuProps<T, M>,
-): React.ReactNode {
+) {
     const {
         dataTestId,
         maxWidth,
@@ -41,8 +41,8 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
         containerBottomPadding = "none",
     } = props;
 
-    const menuComponentRef = React.useRef<HTMLMenuElement>(null);
-    const itemsContainerRef = React.useRef<HTMLDivElement>(null);
+    const menuComponentRef = useRef<HTMLMenuElement>(null);
+    const itemsContainerRef = useRef<HTMLDivElement>(null);
 
     const UiMenuContextStore = typedUiMenuContextStore<T, M>();
     const contextStoreValue = useUiMenuContextValue(props, menuComponentRef, itemsContainerRef);
@@ -74,12 +74,12 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
     } = contextStoreValue;
     const focusedId = focusedItem?.id;
 
-    const currentMenuLevelItems = React.useMemo(
+    const currentMenuLevelItems = useMemo(
         () => (focusedId === undefined ? [] : (getSiblingItems(items, focusedId) ?? [])),
         [items, focusedId],
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         // Only focus when shownCustomContentItemId becomes undefined (was previously set)
         if (shownCustomContentItemId === undefined && menuComponentRef.current) {
             menuComponentRef.current.focus();
@@ -109,7 +109,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
                             className={e("items-container", {
                                 "container-bottom-padding": containerBottomPadding,
                             })}
-                            ref={itemsContainerRef as React.MutableRefObject<HTMLDivElement>}
+                            ref={itemsContainerRef as MutableRefObject<HTMLDivElement>}
                         >
                             <menu
                                 className={e("items")}

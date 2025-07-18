@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
-import React, { useCallback, useEffect, useRef, useMemo } from "react";
+import { useCallback, useEffect, useRef, useMemo, useState, RefObject } from "react";
 import { IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 import { bemFactory } from "@gooddata/sdk-ui-kit";
 
@@ -42,16 +42,15 @@ interface IHotspotProps {
 
 const { e: dropzoneBemElement, b: dropzoneBemBlock } = bemFactory("gd-grid-layout-dropzone");
 
-export const Hotspot: React.FC<IHotspotProps> = (props) => {
-    const {
-        layoutPath,
-        dropZoneType,
-        direction,
-        isEndingHotspot = false,
-        hideDropTarget = false,
-        isInFirstRow = false,
-        isOverNestedLayout = false,
-    } = props;
+export function Hotspot({
+    layoutPath,
+    dropZoneType,
+    direction,
+    isEndingHotspot = false,
+    hideDropTarget = false,
+    isInFirstRow = false,
+    isOverNestedLayout = false,
+}: IHotspotProps) {
     const isOverLastValue = useRef(false);
 
     const currentItemIndex = getItemIndex(layoutPath);
@@ -125,9 +124,9 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
         }
     }, [isOver, desiredDestination, handleDragHoverStart, dropZoneType, isEndingHotspot]);
 
-    const [canBeDisplayed, setCanBeDisplayed] = React.useState(false);
+    const [canBeDisplayed, setCanBeDisplayed] = useState(false);
     const isDragging = !!item;
-    React.useEffect(() => {
+    useEffect(() => {
         // There is a bug in Chrome that calls dragstop immediately after dragstart unless we defer the visibility
         // of the hotspot to setTimeout. Chrome doesn't like a new element suddenly appearing under the mouse cursor
         // immediately when dragging starts and just aborts the whole thing.
@@ -180,7 +179,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 },
             )}
             style={debugStyle}
-            ref={dropRef}
+            ref={dropRef as unknown as RefObject<HTMLDivElement>}
         >
             {hideDropTarget ? null : (
                 <div className={dropzoneBemElement("drop-target", { direction })}>
@@ -191,4 +190,4 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             )}
         </div>
     );
-};
+}

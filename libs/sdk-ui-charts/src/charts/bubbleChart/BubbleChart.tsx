@@ -1,5 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { IAttribute, IMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import { IBucketChartProps } from "../../interfaces/index.js";
 import {
@@ -110,7 +109,7 @@ const WrappedBubbleChart = withChart(bubbleChartDefinition)(CoreBubbleChart);
  *
  * @public
  */
-export const BubbleChart = (props: IBubbleChartProps) => {
+export function BubbleChart(props: IBubbleChartProps) {
     const [xAxisMeasure, yAxisMeasure, size, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.xAxisMeasure, props.yAxisMeasure, props.size, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -129,4 +128,4 @@ export const BubbleChart = (props: IBubbleChartProps) => {
             }}
         />
     );
-};
+}

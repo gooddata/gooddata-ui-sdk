@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -12,9 +11,9 @@ import { ICreatePanelItemComponentProps } from "../../componentDefinition/index.
 /**
  * @internal
  */
-export const CreatableVisualizationSwitcher: React.FC<ICreatePanelItemComponentProps> = (props) => {
-    const { WrapCreatePanelItemWithDragComponent } = props;
-
+export function CreatableVisualizationSwitcher({
+    WrapCreatePanelItemWithDragComponent,
+}: ICreatePanelItemComponentProps) {
     return (
         <BubbleHoverTrigger eventsOnBubble={true} className="s-add-visualization-switcher-bubble-trigger">
             <DraggableVisualizationSwitcherCreatePanelItem
@@ -23,4 +22,4 @@ export const CreatableVisualizationSwitcher: React.FC<ICreatePanelItemComponentP
             />
         </BubbleHoverTrigger>
     );
-};
+}

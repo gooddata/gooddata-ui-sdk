@@ -1,13 +1,13 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { ReactElement } from "react";
 import { IWidgetDeleteDialogProps } from "./types.js";
 import { DefaultWidgetDeleteDialog } from "./DefaultWidgetDeleteDialog.js";
 
 /**
  * @internal
  */
-export const WidgetDeleteDialog = (props: IWidgetDeleteDialogProps): JSX.Element => {
+export function WidgetDeleteDialog(props: IWidgetDeleteDialogProps): ReactElement {
     // No customization from useDashboardComponentsContext for now
     return <DefaultWidgetDeleteDialog {...props} />;
-};
+}

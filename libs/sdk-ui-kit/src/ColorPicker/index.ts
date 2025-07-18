@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-export * from "./typings.js";
+export type * from "./typings.js";
 export { ColorPicker } from "./ColorPicker.js";
 export { ColorPickerPointer } from "./ColorPickerPointer.js";

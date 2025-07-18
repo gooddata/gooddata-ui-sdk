@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
 import { selectInsightsMap, useDashboardSelector } from "../../../../../model/index.js";
@@ -16,13 +15,13 @@ interface IVisulizationsListProps {
     onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
 }
 
-export const VisualizationsList: React.FC<IVisulizationsListProps> = ({
+export function VisualizationsList({
     visualizations,
     activeVisualizationId,
     onVisualizationDeleted,
     onVisualizationSelect,
     onVisualizationPositionChange,
-}) => {
+}: IVisulizationsListProps) {
     const insightsMap = useDashboardSelector(selectInsightsMap);
 
     const shouldRenderActions = visualizations.length > 1;
@@ -48,4 +47,4 @@ export const VisualizationsList: React.FC<IVisulizationsListProps> = ({
             />
         );
     });
-};
+}

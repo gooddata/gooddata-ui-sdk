@@ -1,5 +1,5 @@
-// (C) 2020-2023 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { useMemo } from "react";
 import { IntlShape, useIntl } from "react-intl";
 import { IListedDashboard, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import {
@@ -46,7 +46,7 @@ const buildDashboardItems = (
     return [forbiddenItem, ...dashboards];
 };
 
-export const DrillTargetDashboardItem: React.FunctionComponent<IDrillTargetDashboardItemProps> = (props) => {
+export function DrillTargetDashboardItem(props: IDrillTargetDashboardItemProps) {
     const { onSelect, selected } = props;
     const intl = useIntl();
     const dashboards = useDashboardSelector(selectAccessibleDashboards);
@@ -56,4 +56,4 @@ export const DrillTargetDashboardItem: React.FunctionComponent<IDrillTargetDashb
     }, [dashboards, inaccessibleDashboards, intl, selected]);
 
     return <DashboardList onSelect={onSelect} dashboards={dashboardItems} selected={selected} />;
-};
+}

@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ReactElement } from "react";
 import { IntlShape } from "react-intl";
 import cx from "classnames";
 import {
@@ -21,7 +21,7 @@ interface IAggregationsSubMenuItemsProps {
     measureLocalIdentifiers: string[];
     totals: IColumnTotal[];
     isColumn: boolean;
-    icon: JSX.Element;
+    icon: ReactElement;
     headerText: string;
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
 }
@@ -50,12 +50,12 @@ const getAttributeName = (
     return intl.formatMessage({ id: "visualizations.menu.aggregations.within-attribute" }, { attributeName });
 };
 
-const getSubtotalNameTestClass = (attributeLocalIdentifier: string) => {
+function getSubtotalNameTestClass(attributeLocalIdentifier: string) {
     const attributeClass = attributeLocalIdentifier.replace(/\./g, "-");
     return `s-aggregation-item-${attributeClass}`;
-};
+}
 
-export const AggregationsSubMenuItems: React.FC<IAggregationsSubMenuItemsProps> = ({
+export function AggregationsSubMenuItems({
     attributeDescriptors,
     measureLocalIdentifiers,
     intl,
@@ -65,7 +65,7 @@ export const AggregationsSubMenuItems: React.FC<IAggregationsSubMenuItemsProps> 
     icon,
     headerText,
     onAggregationSelect,
-}) => {
+}: IAggregationsSubMenuItemsProps) {
     const attributeItems = attributeDescriptors.map(
         (_attributeDescriptor: IAttributeDescriptor, headerIndex: number) => {
             const attributeLocalIdentifier = attributeDescriptorLocalId(attributeDescriptors[headerIndex]);
@@ -115,4 +115,4 @@ export const AggregationsSubMenuItems: React.FC<IAggregationsSubMenuItemsProps> 
             {attributeItems}
         </>
     );
-};
+}

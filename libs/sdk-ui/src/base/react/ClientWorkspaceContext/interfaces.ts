@@ -1,4 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { ReactNode } from "react";
 
 /**
  * Resolved LCM identifiers of the workspace.
@@ -29,7 +30,7 @@ export interface IClientWorkspaceIdentifiers {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

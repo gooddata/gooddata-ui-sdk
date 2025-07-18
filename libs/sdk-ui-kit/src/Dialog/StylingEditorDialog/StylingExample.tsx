@@ -1,6 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { ColorPreview } from "./ColorPreview.js";
-import React from "react";
 import { useIntl } from "react-intl";
 
 /**
@@ -15,7 +14,7 @@ export interface IStylingExampleProps {
 /**
  * @internal
  */
-export const StylingExample = (props: IStylingExampleProps) => {
+export function StylingExample(props: IStylingExampleProps) {
     const { name, colors, onClick } = props;
     const intl = useIntl();
 
@@ -34,4 +33,4 @@ export const StylingExample = (props: IStylingExampleProps) => {
             <ColorPreview className="color-preview-small" colors={colors} />
         </div>
     );
-};
+}

@@ -1,12 +1,10 @@
-// (C) 2007-2020 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 
 export interface ILegendLabel {
     label?: string;
 }
 
-export const LegendLabelItem: React.FC<ILegendLabel> = (props) => {
-    const { label } = props;
+export function LegendLabelItem({ label }: ILegendLabel) {
     if (!label) {
         return null;
     }
@@ -15,4 +13,4 @@ export const LegendLabelItem: React.FC<ILegendLabel> = (props) => {
             <div className="series-name">{`${label}:`}</div>
         </div>
     );
-};
+}

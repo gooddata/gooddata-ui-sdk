@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { ReactNode, useCallback } from "react";
 import { CustomFormats, IntlProvider } from "react-intl";
 import {
     DefaultLocale,
@@ -35,13 +35,13 @@ const formats: CustomFormats = {
  */
 export interface IIntlWrapperProps {
     locale?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
  * @internal
  */
-export const IntlWrapper: React.FC<IIntlWrapperProps> = ({ children, locale = DefaultLocale }) => {
+export function IntlWrapper({ children, locale = DefaultLocale }: IIntlWrapperProps) {
     const render = useCallback<ITranslationsCustomizationProviderProps["render"]>(
         (modifiedTranslations) => (
             <IntlProvider locale={locale} messages={modifiedTranslations} formats={formats}>
@@ -56,4 +56,4 @@ export const IntlWrapper: React.FC<IIntlWrapperProps> = ({ children, locale = De
             render={render}
         />
     );
-};
+}

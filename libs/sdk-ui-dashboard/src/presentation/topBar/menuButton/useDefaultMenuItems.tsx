@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useMediaQuery } from "@gooddata/sdk-ui-kit";
 
@@ -292,7 +292,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             ? intl.formatMessage(
                                   { id: "options.menu.schedule.email.tooltip" },
                                   {
-                                      a: (chunk: React.ReactNode) => (
+                                      a: (chunk: ReactNode) => (
                                           <a href="/settings" rel="noopener noreferrer" target="_blank">
                                               {chunk}
                                           </a>

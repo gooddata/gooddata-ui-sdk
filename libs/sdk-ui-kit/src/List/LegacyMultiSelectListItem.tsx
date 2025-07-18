@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo } from "react";
+import { ReactElement, memo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -57,7 +57,7 @@ export const LegacyMultiSelectListItem = memo(function LegacyMultiSelectListItem
         onOnly(source);
     };
 
-    const renderOnly = (): JSX.Element => {
+    const renderOnly = (): ReactElement => {
         return (
             <span className="gd-list-item-only" onClick={handleOnly}>
                 <FormattedMessage id="gs.list.only" />

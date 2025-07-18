@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { CorePivotTableAgImpl } from "./CorePivotTable.js";
 import {
     bucketAttributes,
@@ -173,14 +172,14 @@ const WrappedPivotTable = withContexts(RenderPivotTable);
  *
  * @public
  */
-export const PivotTable = (props: IPivotTableProps) => {
+export function PivotTable(props: IPivotTableProps) {
     const [measures, columns, rows, totals, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.columns, props.rows, props.totals, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
     );
 
     return <WrappedPivotTable {...props} {...{ measures, columns, rows, totals, filters, sortBy }} />;
-};
+}
 
 /**
  * Given analytical backend capabilities and the desired aggregations menu config.

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { createContext, ReactNode, useCallback, useContext, useRef, useState } from "react";
+import { createContext, ReactNode, useCallback, useContext, useRef, useState } from "react";
 import noop from "lodash/noop.js";
 import { XYCoord } from "react-dnd";
 

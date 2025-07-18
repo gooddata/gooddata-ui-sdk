@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { FilterContextItem, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Message, OverlayPositionType } from "@gooddata/sdk-ui-kit";
@@ -24,7 +24,7 @@ export interface IDashboardAttachmentsProps {
     overlayPositionType?: OverlayPositionType;
 }
 
-export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
+export function DashboardAttachments(props: IDashboardAttachmentsProps) {
     const {
         dashboardSelected,
         scheduledExportToEdit,
@@ -107,4 +107,4 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
             </div>
         </AttachmentsWrapper>
     );
-};
+}

@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { ReactNode, useMemo } from "react";
+import { MouseEvent, ReactNode, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -18,13 +18,13 @@ interface IAttributeFilterShowFilteredElementsProps {
     className?: string;
 }
 
-export const AttributeFilterShowFilteredElements: React.FC<IAttributeFilterShowFilteredElementsProps> = ({
+export function AttributeFilterShowFilteredElements({
     attributeTitle,
     onClick,
     parentFilterTitles,
     isFilteredByLimitingValidationItems,
     className,
-}) => {
+}: IAttributeFilterShowFilteredElementsProps) {
     const intl = useIntl();
     const hasParentFilters = parentFilterTitles.length > 0;
     const tooltipLocalizationKey = hasParentFilters
@@ -37,7 +37,7 @@ export const AttributeFilterShowFilteredElements: React.FC<IAttributeFilterShowF
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         onClick();
     };
@@ -70,4 +70,4 @@ export const AttributeFilterShowFilteredElements: React.FC<IAttributeFilterShowF
             </button>
         </div>
     );
-};
+}

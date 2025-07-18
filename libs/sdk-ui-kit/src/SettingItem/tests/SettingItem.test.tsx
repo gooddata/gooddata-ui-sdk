@@ -1,14 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { withIntl } from "@gooddata/sdk-ui";
+import { Intl } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 
 import { SettingItem } from "../SettingItem.js";
 import { ISettingItem } from "../typings.js";
-
-const Wrapped = withIntl(SettingItem);
 
 describe("ReactSettingItem", () => {
     it("should render setting item", () => {
@@ -18,7 +15,11 @@ describe("ReactSettingItem", () => {
             actionType: "LinkButton",
             actionValue: "Change",
         };
-        const { container } = render(<Wrapped {...props} />);
+        const { container } = render(
+            <Intl>
+                <SettingItem {...props} />
+            </Intl>,
+        );
 
         expect(screen.getByText(props.title)).toBeInTheDocument();
         expect(screen.getByText(props.value as string)).toBeInTheDocument();
@@ -34,7 +35,11 @@ describe("ReactSettingItem", () => {
             actionValue: true,
             onAction: vi.fn(),
         };
-        const { container } = render(<Wrapped {...props} />);
+        const { container } = render(
+            <Intl>
+                <SettingItem {...props} />
+            </Intl>,
+        );
 
         expect(container.getElementsByClassName("gd-button-link-dimmed").length).toBe(0);
         expect(container.getElementsByClassName("input-checkbox-toggle").length).toBe(1);
@@ -50,7 +55,11 @@ describe("ReactSettingItem", () => {
             onAction: clickSpy,
         };
 
-        render(<Wrapped {...props} />);
+        render(
+            <Intl>
+                <SettingItem {...props} />
+            </Intl>,
+        );
 
         await userEvent.click(screen.getByText(props.actionValue as string));
 

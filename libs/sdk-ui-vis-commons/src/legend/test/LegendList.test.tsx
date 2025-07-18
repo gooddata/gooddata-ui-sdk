@@ -1,8 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ILegendListProps, LegendList } from "../LegendList.js";
-import { withIntl } from "@gooddata/sdk-ui";
+import { Intl } from "@gooddata/sdk-ui";
 import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "../helpers.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { ISeriesItem } from "../types.js";
@@ -29,11 +28,11 @@ describe("LegendList", () => {
             descriptionId: "test-description-id",
         };
 
-        const Wrapped = withIntl(LegendList);
-
         return render(
             <LegendSeriesContextStore value={mockContextValue}>
-                <Wrapped {...props} />
+                <Intl>
+                    <LegendList {...props} />
+                </Intl>
             </LegendSeriesContextStore>,
         );
     }

@@ -1,5 +1,5 @@
-// (C) 2019-2021 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IFilter, IColorPalette, ObjRef, IInsight, IExecutionConfig } from "@gooddata/sdk-model";
 
@@ -109,17 +109,17 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     /**
      * Component to render if embedding fails.
      */
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
 
     /**
      * Component to render while the insight is loading.
      */
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
 
     /**
      * Component to render insight title.
      */
-    TitleComponent?: React.ComponentType<IInsightTitleProps>;
+    TitleComponent?: ComponentType<IInsightTitleProps>;
 }
 
 /**

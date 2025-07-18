@@ -1,14 +1,16 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
-import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
+// (C) 2007-2025 GoodData Corporation
+import { IDashboardLayoutSectionRenderProps } from "./interfaces.js";
 import cx from "classnames";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};
 
-export const DashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => {
-    const { children, className, debug, isHidden } = props;
-
+export function DashboardLayoutSectionRenderer({
+    children,
+    className,
+    debug,
+    isHidden,
+}: IDashboardLayoutSectionRenderProps<unknown>) {
     const style = isHidden ? isHiddenStyle : defaultStyle;
 
     return (
@@ -21,4 +23,4 @@ export const DashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unk
             {children}
         </div>
     );
-};
+}

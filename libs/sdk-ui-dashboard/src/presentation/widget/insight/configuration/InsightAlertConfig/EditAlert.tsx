@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
@@ -93,7 +92,7 @@ interface IEditAlertProps {
     isExecutionTimestampMode?: boolean;
 }
 
-export const EditAlert: React.FC<IEditAlertProps> = ({
+export function EditAlert({
     alert,
     execResult,
     isNewAlert,
@@ -116,7 +115,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     canManageComparison,
     separators,
     isExecutionTimestampMode,
-}) => {
+}: IEditAlertProps) {
     const {
         defaultUser,
         viewMode,
@@ -429,4 +428,4 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
             />
         </DashboardInsightSubmenuContainer>
     );
-};
+}

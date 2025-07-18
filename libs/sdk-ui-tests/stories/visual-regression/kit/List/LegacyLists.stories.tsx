@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import noop from "lodash/noop.js";
 import times from "lodash/times.js";
 import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-kit";

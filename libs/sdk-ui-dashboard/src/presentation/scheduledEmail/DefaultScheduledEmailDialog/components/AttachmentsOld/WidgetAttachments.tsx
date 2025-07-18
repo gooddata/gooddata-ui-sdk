@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import {
     IAutomationMetadataObject,
@@ -30,7 +30,7 @@ export interface IWidgetAttachmentsProps {
     overlayPositionType?: OverlayPositionType;
 }
 
-export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
+export function WidgetAttachments(props: IWidgetAttachmentsProps) {
     const {
         widgetFilters,
         areDashboardFiltersChanged,
@@ -90,4 +90,4 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
             </div>
         </AttachmentsWrapper>
     );
-};
+}

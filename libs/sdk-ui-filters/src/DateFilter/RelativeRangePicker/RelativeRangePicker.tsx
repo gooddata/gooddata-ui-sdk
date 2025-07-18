@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState, useCallback, useMemo } from "react";
+import { ReactNode, useState, useCallback, useMemo, memo } from "react";
 import cx from "classnames";
 
 import {
@@ -30,11 +30,11 @@ interface ISelectWrapperProps {
     label: string;
     labelId: string;
     errorMessage: string;
-    children: React.ReactNode;
+    children: ReactNode;
     className?: string;
 }
 
-const SelectWrapper = (props: ISelectWrapperProps) => {
+function SelectWrapper(props: ISelectWrapperProps) {
     return (
         <div
             className={cx(
@@ -56,7 +56,7 @@ const SelectWrapper = (props: ISelectWrapperProps) => {
             ) : null}
         </div>
     );
-};
+}
 
 interface IRelativeRangePickerProps {
     selectedFilterOption: IUiRelativeDateFilterForm;
@@ -100,7 +100,9 @@ interface IRelativeRangePickerSelectProps {
     wrapperClassName?: string;
 }
 
-const RelativeRangePickerSelect = React.memo((props: IRelativeRangePickerSelectProps) => {
+const RelativeRangePickerSelect = memo(function RelativeRangePickerSelect(
+    props: IRelativeRangePickerSelectProps,
+) {
     const {
         label,
         value,

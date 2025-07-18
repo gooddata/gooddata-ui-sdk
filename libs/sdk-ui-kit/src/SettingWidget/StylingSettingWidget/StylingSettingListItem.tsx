@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { ReactElement, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -29,7 +29,7 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
     { align: "bc tc", offset: { x: 0, y: 0 } },
 ];
 
-export const StylingSettingListItem = <T extends StylingPickerItemContent>({
+export function StylingSettingListItem<T extends StylingPickerItemContent>({
     item,
     itemToColorPreview,
     isSelected,
@@ -38,7 +38,7 @@ export const StylingSettingListItem = <T extends StylingPickerItemContent>({
     onEdit,
     onDelete,
     onMenuToggle = noop,
-}: IStylingSettingListItemProps<T>): JSX.Element => {
+}: IStylingSettingListItemProps<T>): ReactElement {
     const intl = useIntl();
 
     const { name, ref, content } = item;
@@ -122,4 +122,4 @@ export const StylingSettingListItem = <T extends StylingPickerItemContent>({
             ) : null}
         </div>
     );
-};
+}

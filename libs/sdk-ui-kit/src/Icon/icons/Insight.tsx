@@ -1,13 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
-
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Insight: React.FC<IIconProps> = ({ color, className, width = 16, height = 16 }) => {
+export function Insight({ color, className, width = 16, height = 16 }: IIconProps) {
     return (
         <svg
             className={className}
@@ -27,4 +25,4 @@ export const Insight: React.FC<IIconProps> = ({ color, className, width = 16, he
             </g>
         </svg>
     );
-};
+}

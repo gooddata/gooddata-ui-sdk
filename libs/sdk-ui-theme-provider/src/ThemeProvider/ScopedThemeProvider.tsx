@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, ReactNode } from "react";
 import identity from "lodash/identity.js";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -67,7 +67,7 @@ export interface IScopedThemeProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -79,7 +79,7 @@ export interface IScopedThemeProviderProps {
  *
  * @internal
  */
-export const ScopedThemeProvider: React.FC<IScopedThemeProviderProps> = ({
+export function ScopedThemeProvider({
     children,
     theme: themeParam,
     backend: backendParam,
@@ -87,7 +87,7 @@ export const ScopedThemeProvider: React.FC<IScopedThemeProviderProps> = ({
     modifier = identity,
     enableComplementaryPalette = true,
     removeGlobalStylesOnUnmout = true,
-}) => {
+}: IScopedThemeProviderProps) {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
 
@@ -97,7 +97,7 @@ export const ScopedThemeProvider: React.FC<IScopedThemeProviderProps> = ({
     const [status, setStatus] = useState<ThemeStatus>("pending");
     const [scope, setScope] = useState<HTMLElement | null>();
 
-    const lastWorkspace = useRef<string>();
+    const lastWorkspace = useRef<string | null>(null);
     lastWorkspace.current = workspace;
 
     useEffect(() => {
@@ -158,4 +158,4 @@ export const ScopedThemeProvider: React.FC<IScopedThemeProviderProps> = ({
             </div>
         </ThemeContextProvider>
     );
-};
+}

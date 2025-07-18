@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React, { createContext, useState, useContext, useEffect } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { createContext, useState, useContext, useEffect, ReactNode } from "react";
 import last from "lodash/last";
 import isEmpty from "lodash/isEmpty";
 import { IWorkspaceDescriptor, IAnalyticalWorkspace } from "@gooddata/sdk-backend-spi/esm/workspace";
@@ -33,7 +33,7 @@ const getFirstWorkspace = (workspaces: IWorkspaceDescriptor[]) => {
     return undefined;
 };
 
-export const WorkspaceListProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function WorkspaceListProvider({ children }: { children?: ReactNode }) {
     const { authStatus } = useAuth();
     const backend = useBackend();
     const [workspaceListState, setWorkspaceListState] = useState<IWorkspaceSourceState>({
@@ -84,6 +84,6 @@ export const WorkspaceListProvider: React.FC<{ children?: React.ReactNode }> = (
             {children}
         </WorkspaceListContext.Provider>
     );
-};
+}
 
 export const useWorkspaceList = () => useContext(WorkspaceListContext);

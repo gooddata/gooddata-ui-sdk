@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+import { CSSProperties } from "react";
 import cx from "classnames";
 import { DataValue, ISeparators, isResultTotalHeader } from "@gooddata/sdk-model";
 import { CellStyle, ColDef } from "ag-grid-community";
@@ -11,7 +12,7 @@ import { COLUMN_TOTAL, COLUMN_SUBTOTAL } from "../base/constants.js";
 export interface ITableCellStyle {
     backgroundColor?: string;
     color?: string;
-    fontWeight?: React.CSSProperties["fontWeight"];
+    fontWeight?: CSSProperties["fontWeight"];
 }
 
 function getFormattedNumber(value: DataValue, format?: string, separators?: ISeparators): IFormattedResult {

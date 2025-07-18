@@ -1,0 +1,10 @@
+diff --git a/dist/types/decorators/types.d.ts b/dist/types/decorators/types.d.ts
+index 219a0fde779e2a16657d323b40caa3bd8a76b32c..6300e526a2784874d78d5ae7a13468a9e7b30021 100644
+--- a/dist/types/decorators/types.d.ts
++++ b/dist/types/decorators/types.d.ts
+@@ -1,4 +1,4 @@
+-import { Component, ComponentType, ComponentClass } from 'react';
++import { Component, ComponentType, ComponentClass, JSX } from 'react';
+ import { Identifier } from 'dnd-core';
+ import { DropTargetMonitor, DragSourceMonitor, DragLayerMonitor, ConnectDragPreview, ConnectDropTarget, ConnectDragSource } from '../types';
+ import { NonReactStatics } from 'hoist-non-react-statics';

@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import { IGrantedUserGroup } from "../types.js";
 
@@ -13,12 +12,12 @@ export interface IAddUserGroupContentProps {
     onSelect: (userGroup: IGrantedUserGroup) => void;
 }
 
-export const AddUserGroupContent: React.FC<IAddUserGroupContentProps> = ({
+export function AddUserGroupContent({
     addedUserGroups,
     grantedUserGroups,
-    onDelete,
     onSelect,
-}) => {
+    onDelete,
+}: IAddUserGroupContentProps) {
     return (
         <>
             <AddUserGroupSelect
@@ -36,4 +35,4 @@ export const AddUserGroupContent: React.FC<IAddUserGroupContentProps> = ({
             />
         </>
     );
-};
+}

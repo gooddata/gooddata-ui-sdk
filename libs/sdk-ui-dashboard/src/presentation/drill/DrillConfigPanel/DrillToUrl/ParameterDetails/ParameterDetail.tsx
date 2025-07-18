@@ -1,5 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { FormattedMessage } from "react-intl";
 import { LoadingMask } from "@gooddata/sdk-ui-kit";
 import classNames from "classnames";
@@ -17,9 +16,15 @@ interface IParameterDetailProps {
     additionalValues?: number;
 }
 
-export const ParameterDetail: React.FC<IParameterDetailProps> = (props) => {
-    const { title, typeName, label, isLoading, useEllipsis, values, additionalValues } = props;
-
+export function ParameterDetail({
+    title,
+    typeName,
+    label,
+    isLoading,
+    useEllipsis,
+    values,
+    additionalValues,
+}: IParameterDetailProps) {
     return (
         <div className="gd-drill-to-url-editor-parameter-detail s-parameter-detail">
             <div className="gd-parameter-detail-title">{title}</div>
@@ -35,9 +40,9 @@ export const ParameterDetail: React.FC<IParameterDetailProps> = (props) => {
             )}
         </div>
     );
-};
+}
 
-const ParameterTypeSection: React.FC<{ typeName: string }> = ({ typeName }) => {
+function ParameterTypeSection({ typeName }: { typeName: string }) {
     return (
         <div className="gd-parameter-detail-section">
             <div className="gd-parameter-detail-subtitle">
@@ -46,9 +51,9 @@ const ParameterTypeSection: React.FC<{ typeName: string }> = ({ typeName }) => {
             <div>{typeName}</div>
         </div>
     );
-};
+}
 
-const ParameterLabelSection: React.FC<{ label: string }> = ({ label }) => {
+function ParameterLabelSection({ label }: { label: string }) {
     return (
         <div className="gd-parameter-detail-section">
             <div className="gd-parameter-detail-subtitle">
@@ -57,7 +62,7 @@ const ParameterLabelSection: React.FC<{ label: string }> = ({ label }) => {
             <div>{label}</div>
         </div>
     );
-};
+}
 
 interface IParameterValues {
     isLoading?: boolean;
@@ -66,20 +71,15 @@ interface IParameterValues {
     additionalValues?: number;
 }
 
-const ParameterValuesSection: React.FC<IParameterValues> = ({
-    isLoading,
-    useEllipsis,
-    values,
-    additionalValues,
-}) => {
+function ParameterValuesSection({ isLoading, useEllipsis, values, additionalValues }: IParameterValues) {
     return isLoading ? (
         <LoadingMask className="s-parameter-detail-loading" height={LOADING_MASK_HEIGHT} />
     ) : (
         <Values useEllipsis={useEllipsis} values={values} additionalValues={additionalValues} />
     );
-};
+}
 
-const Values: React.FC<IParameterValues> = ({ useEllipsis, values, additionalValues }) => {
+function Values({ useEllipsis, values, additionalValues }: IParameterValues) {
     const valueClassName = classNames("s-parameter-detail-value", {
         "gd-parameter-detail-ellipsis-row": useEllipsis,
     });
@@ -111,4 +111,4 @@ const Values: React.FC<IParameterValues> = ({ useEllipsis, values, additionalVal
             </div>
         )
     );
-};
+}

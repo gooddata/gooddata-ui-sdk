@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
+import { useState, useCallback, ElementType, ReactElement } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import keyBy from "lodash/keyBy.js";
@@ -22,16 +22,16 @@ function NoItemsFound() {
     );
 }
 
-const LoadingMessage: React.FC = () => {
+function LoadingMessage() {
     return <div>...</div>;
-};
+}
 
 interface ILimitHitWarningProps {
     limit: number;
     bounce: boolean;
 }
 
-const LimitHitWarning: React.FC<ILimitHitWarningProps> = ({ limit, bounce }) => {
+function LimitHitWarning({ limit, bounce }: ILimitHitWarningProps) {
     const classes = cx("gd-list-limitExceeded", {
         "animation-fadeIn": bounce,
     });
@@ -41,7 +41,7 @@ const LimitHitWarning: React.FC<ILimitHitWarningProps> = ({ limit, bounce }) => 
             <FormattedMessage id="gs.list.limitExceeded" values={{ limit }} />
         </Message>
     );
-};
+}
 
 /**
  * @internal
@@ -53,16 +53,16 @@ export interface ILegacyInvertableListProps<T> {
     height: number;
     isInverted?: boolean;
     isLoading?: boolean;
-    isLoadingClass?: React.ElementType;
+    isLoadingClass?: ElementType;
     isMobile?: boolean;
     itemHeight: number;
     items: ReadonlyArray<T>;
     itemsCount: number;
-    limitHitWarningClass?: React.ElementType;
-    listItemClass?: React.ElementType;
+    limitHitWarningClass?: ElementType;
+    listItemClass?: ElementType;
     maxSelectionSize: number;
     noItemsFound?: boolean;
-    noItemsFoundClass?: React.ElementType;
+    noItemsFoundClass?: ElementType;
     onRangeChange?: (searchString: string, start: number, end: number) => void;
     onSearch: (searchString: string) => void;
     onSelect?: (selectedElements: Array<T>, isInverted: boolean) => void;
@@ -75,7 +75,7 @@ export interface ILegacyInvertableListProps<T> {
     width?: number;
     actionsAsCheckboxes?: boolean;
     selectAllCheckbox?: boolean;
-    rowItem?: React.ReactElement;
+    rowItem?: ReactElement;
     isSearchFieldAutoFocused?: boolean;
 }
 

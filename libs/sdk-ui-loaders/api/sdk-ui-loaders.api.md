@@ -4,6 +4,7 @@
 
 ```ts
 
+import { ComponentType } from 'react';
 import { DashboardContext } from '@gooddata/sdk-ui-dashboard';
 import { DashboardItem } from '@gooddata/sdk-ui-dashboard';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -15,8 +16,8 @@ import { IDashboardPluginContract_V1 } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardProps } from '@gooddata/sdk-ui-dashboard';
 import { IErrorProps } from '@gooddata/sdk-ui';
 import { ILoadingProps } from '@gooddata/sdk-ui';
+import { JSX } from 'react/jsx-runtime';
 import { ObjRef } from '@gooddata/sdk-model';
-import { default as React_2 } from 'react';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 
 // @public
@@ -53,7 +54,7 @@ export type DashboardLoadingMode = "adaptive" | "staticOnly";
 export type DashboardLoadResult = {
     ctx: DashboardContext;
     engine: IDashboardEngine;
-    DashboardComponent: React_2.ComponentType<IDashboardProps>;
+    DashboardComponent: ComponentType<IDashboardProps>;
     props: IDashboardProps;
     plugins: IDashboardPluginContract_V1[];
 };
@@ -62,7 +63,7 @@ export type DashboardLoadResult = {
 export type DashboardLoadStatus = UseCancelablePromiseState<DashboardLoadResult, any>;
 
 // @public
-export const DashboardStub: React_2.FC<IDashboardStubProps>;
+export function DashboardStub(props: IDashboardStubProps): JSX.Element;
 
 // @public
 export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
@@ -93,8 +94,8 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
 
 // @public (undocumented)
 export interface IDashboardStubProps extends IDashboardLoadOptions {
-    ErrorComponent?: React_2.ComponentType<IErrorProps>;
-    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
 }
 
 // @public

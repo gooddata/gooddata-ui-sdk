@@ -1,5 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
@@ -103,7 +102,7 @@ const WrappedPyramidChart = withChart(pyramidChartDefinition)(CorePyramidChart);
  *
  * @public
  */
-export const PyramidChart = (props: IPyramidChartProps) => {
+export function PyramidChart(props: IPyramidChartProps) {
     const [measures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -120,4 +119,4 @@ export const PyramidChart = (props: IPyramidChartProps) => {
             }}
         />
     );
-};
+}

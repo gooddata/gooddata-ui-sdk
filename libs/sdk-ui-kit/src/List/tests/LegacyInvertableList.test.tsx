@@ -1,13 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { withIntlForTest } from "@gooddata/sdk-ui";
+import { Intl } from "@gooddata/sdk-ui";
 import first from "lodash/first.js";
 import times from "lodash/times.js";
 import assign from "lodash/assign.js";
 import noop from "lodash/noop.js";
 import { customMessages } from "./customDictionary.js";
-import { LegacyInvertableList, ILegacyInvertableListProps } from "../LegacyInvertableList.js";
+import LegacyInvertableList, { ILegacyInvertableListProps } from "../LegacyInvertableList.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 interface IItem {
@@ -37,12 +36,11 @@ describe("LegacyInvertableList", () => {
             options,
         );
 
-        const Wrapped = withIntlForTest<ILegacyInvertableListProps<IItem>>(
-            LegacyInvertableList,
-            undefined,
-            customMessages,
+        return render(
+            <Intl forTest customMessages={customMessages}>
+                <LegacyInvertableList {...opts} />
+            </Intl>,
         );
-        return render(<Wrapped {...opts} />);
     }
 
     beforeEach(() => {

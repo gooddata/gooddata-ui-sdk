@@ -1,5 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 

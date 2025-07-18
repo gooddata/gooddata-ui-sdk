@@ -1,6 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useRef, useEffect, useCallback } from "react";
+import {
+    ReactElement,
+    useRef,
+    useEffect,
+    useCallback,
+    ComponentType,
+    FocusEvent,
+    ImgHTMLAttributes,
+    AnchorHTMLAttributes,
+} from "react";
 import Markdown from "react-markdown";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -38,7 +47,7 @@ export interface IRichTextProps {
     editPlaceholder?: string;
     execConfig?: IExecutionConfig;
     editRows?: number;
-    emptyElement?: JSX.Element;
+    emptyElement?: ReactElement;
     className?: string;
     referencesEnabled?: boolean;
     /**
@@ -81,10 +90,10 @@ export interface IRichTextProps {
     onError?: OnError;
 
     //Components
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
 }
 
-const RichTextCore: React.FC<IRichTextProps> = ({
+function RichTextCore({
     value,
     execConfig,
     onChange,
@@ -102,7 +111,7 @@ const RichTextCore: React.FC<IRichTextProps> = ({
     onLoadingChanged,
     onError,
     LoadingComponent,
-}) => {
+}: IRichTextProps) {
     return (
         <div
             className={cx([
@@ -139,7 +148,7 @@ const RichTextCore: React.FC<IRichTextProps> = ({
             {rawContent?.show ? <input type="hidden" value={value} {...rawContent.dataAttributes} /> : null}
         </div>
     );
-};
+}
 
 interface IRichTextEditProps {
     value: string;
@@ -149,19 +158,13 @@ interface IRichTextEditProps {
     autoResize?: boolean;
 }
 
-const RichTextEdit: React.FC<IRichTextEditProps> = ({
-    value,
-    onChange,
-    placeholder,
-    rows = 10,
-    autoResize = false,
-}) => {
+function RichTextEdit({ value, onChange, placeholder, rows = 10, autoResize = false }: IRichTextEditProps) {
     const textareaRef = useRef(null);
     const intl = useIntl();
     const placeholderText =
         placeholder ?? `${intl.formatMessage({ id: "richText.placeholder" })}\n${RICH_TEXT_PLACEHOLDER}`;
 
-    const moveCaretToEnd = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+    const moveCaretToEnd = (event: FocusEvent<HTMLTextAreaElement>) => {
         const { value } = event.target;
         const position = value.length;
         event.target.setSelectionRange(position, position);
@@ -204,11 +207,11 @@ const RichTextEdit: React.FC<IRichTextEditProps> = ({
             onFocus={moveCaretToEnd}
         />
     );
-};
+}
 
 interface IRichTextViewProps {
     value: string;
-    emptyElement?: JSX.Element;
+    emptyElement?: ReactElement;
     referencesEnabled?: boolean;
     filters?: IFilter[];
     isFiltersLoading?: boolean;
@@ -217,18 +220,18 @@ interface IRichTextViewProps {
     onLoadingChanged?: OnLoadingChanged;
     onError?: OnError;
     //Components
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
 }
 
-const ImageComponent = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <img style={{ maxWidth: "100%" }} {...props} />
-);
+function ImageComponent(props: ImgHTMLAttributes<HTMLImageElement>) {
+    return <img style={{ maxWidth: "100%" }} {...props} />;
+}
 
-const AnchorComponent = (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <a target="_blank" rel="noopener noreferrer" {...props} />
-);
+function AnchorComponent(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
+    return <a target="_blank" rel="noopener noreferrer" {...props} />;
+}
 
-const RichTextView: React.FC<IRichTextViewProps> = ({
+function RichTextView({
     value,
     referencesEnabled,
     emptyElement,
@@ -239,7 +242,7 @@ const RichTextView: React.FC<IRichTextViewProps> = ({
     onError,
     onLoadingChanged,
     LoadingComponent = DefaultLoadingComponent,
-}) => {
+}: IRichTextViewProps) {
     const intl = useIntl();
     const { loading, metrics, isEmptyValue, error } = useEvaluatedReferences(value, filters, {
         enabled: referencesEnabled,
@@ -276,13 +279,15 @@ const RichTextView: React.FC<IRichTextViewProps> = ({
             {value}
         </Markdown>
     );
-};
+}
 
 /**
  * @internal
  */
-export const RichText: React.FC<IRichTextProps> = (props) => (
-    <IntlWrapper>
-        <RichTextCore {...props} />
-    </IntlWrapper>
-);
+export function RichText(props: IRichTextProps) {
+    return (
+        <IntlWrapper>
+            <RichTextCore {...props} />
+        </IntlWrapper>
+    );
+}

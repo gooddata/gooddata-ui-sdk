@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactNode, ReactElement } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasMeasures } from "@gooddata/sdk-model";
@@ -30,7 +30,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         };
     }
 
-    protected renderLegendSection(): React.ReactNode {
+    protected renderLegendSection(): ReactNode {
         const { insight, properties, propertiesMeta, pushData } = this.props;
 
         const isLegendVisible =
@@ -47,7 +47,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         );
     }
 
-    protected renderViewportSection(): React.ReactElement {
+    protected renderViewportSection(): ReactElement {
         const { properties, propertiesMeta, pushData } = this.props;
         return (
             <ConfigSection
@@ -66,7 +66,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         );
     }
 
-    protected renderPointsSection(): React.ReactElement {
+    protected renderPointsSection(): ReactElement {
         const { groupNearbyPoints } = this.getControlProperties();
 
         const { properties, propertiesMeta, pushData, insight } = this.props;
@@ -111,7 +111,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         });
     }
 
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
@@ -131,7 +131,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         );
     }
 
-    protected renderColorSection(): React.ReactNode {
+    protected renderColorSection(): ReactNode {
         const { properties, propertiesMeta, pushData, colors, featureFlags, references, isLoading } =
             this.props;
 

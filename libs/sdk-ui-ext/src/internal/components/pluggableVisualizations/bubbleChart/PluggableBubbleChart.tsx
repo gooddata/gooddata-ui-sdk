@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import React from "react";
+import { ReactNode } from "react";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { BUBBLE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { DEFAULT_BUBBLE_CHART_CONFIG } from "../../../constants/uiConfig.js";
@@ -157,7 +157,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): React.ReactNode {
+    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

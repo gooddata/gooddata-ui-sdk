@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { ChangeEvent, useCallback } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ChangeEvent, useCallback } from "react";
 import { IntlShape } from "react-intl/src/types.js";
 
 import { ModeSelectItem } from "./ConfigurationModeSelectItem.js";
@@ -15,9 +15,7 @@ const ACTIVE_MODE: string = "active";
 const READONLY_MODE: string = "readonly";
 const HIDDEN_MODE: string = "hidden";
 
-export const ConfigModeSelect: React.FC<IConfigModeSelectProps> = (props) => {
-    const { selectedMode, onChanged, intl } = props;
-
+export function ConfigModeSelect({ selectedMode, onChanged, intl }: IConfigModeSelectProps) {
     const onCheck = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value;
@@ -61,4 +59,4 @@ export const ConfigModeSelect: React.FC<IConfigModeSelectProps> = (props) => {
             />
         </div>
     );
-};
+}

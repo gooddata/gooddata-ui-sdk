@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop.js";
@@ -37,7 +37,7 @@ export function LegacySingleSelectListItem({
     onSelect,
     onMouseOver = noop,
     onMouseOut = noop,
-}: ILegacySingleSelectListItemProps): JSX.Element {
+}: ILegacySingleSelectListItemProps): ReactElement {
     const [isOverflowed, setIsOverflowed] = useState(false);
     const nodeRef = useRef<HTMLSpanElement>(null);
 

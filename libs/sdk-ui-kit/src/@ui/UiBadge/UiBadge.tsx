@@ -1,6 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
 import { bem } from "../@utils/bem.js";
 
 const { b } = bem("gd-ui-kit-badge");
@@ -15,8 +14,8 @@ export interface UiBadgeProps {
 /**
  * @internal
  */
-export const UiBadge: React.FC<UiBadgeProps> = ({ label }) => {
+export function UiBadge({ label }: UiBadgeProps) {
     return <span className={b()}>{label}</span>;
-};
+}
 
 export default UiBadge;

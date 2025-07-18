@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import ConfigSubsection from "../../ConfigSubsection.js";
 import { ISeparators, PushDataCallback } from "@gooddata/sdk-ui";
@@ -22,14 +21,14 @@ interface IValueSubSectionProps {
     pushData: PushDataCallback;
 }
 
-const ValueSubSection: React.FC<IValueSubSectionProps> = ({
+export default function ValueSubSection({
     sectionDisabled,
     showDisabledMessage,
     defaultFormat,
     separators,
     properties,
     pushData,
-}) => {
+}: IValueSubSectionProps) {
     const format = getNumberFormat(properties, defaultFormat);
     const subFormat = getNumberSubFormat(properties);
     const shouldDisplaySubFormatControl =
@@ -67,6 +66,4 @@ const ValueSubSection: React.FC<IValueSubSectionProps> = ({
             />
         </ConfigSubsection>
     );
-};
-
-export default ValueSubSection;
+}

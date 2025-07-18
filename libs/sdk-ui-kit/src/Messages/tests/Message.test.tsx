@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 import { IntlProvider } from "react-intl";
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -14,7 +14,7 @@ const messages = {
     "message.accessibility.dismiss.notification": "Dismiss notification",
 };
 
-function renderMessage(options: Partial<IMessageProps>, children: JSX.Element = null) {
+function renderMessage(options: Partial<IMessageProps>, children: ReactNode = null) {
     return render(
         <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
             <Message type={"success"} {...options}>
@@ -28,14 +28,16 @@ interface IMessageComponentProps {
     onClick?: () => void;
 }
 
-const MessageComponent: React.FC<IMessageComponentProps> = ({ onClick = noop }) => (
-    <div>
-        Test component with
-        <button className="link" onClick={onClick}>
-            fake link
-        </button>
-    </div>
-);
+function MessageComponent({ onClick = noop }: IMessageComponentProps) {
+    return (
+        <div>
+            Test component with
+            <button className="link" onClick={onClick}>
+                fake link
+            </button>
+        </div>
+    );
+}
 
 function renderMessageComponent(options = {}) {
     return <MessageComponent {...options} />;

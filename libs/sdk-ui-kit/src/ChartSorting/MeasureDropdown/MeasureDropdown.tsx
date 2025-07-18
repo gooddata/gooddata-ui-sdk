@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { useState, useRef, useEffect, useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useState, useRef, useEffect, useCallback } from "react";
 import { IntlShape } from "react-intl";
 import cx from "classnames";
 import {
@@ -108,7 +108,7 @@ const getMeasureIconClassNameBySelected = (id: string, enableRenamingMeasureToMe
     }
 };
 
-export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
+export function MeasureDropdown({
     currentItem,
     availableSorts,
     bucketItems,
@@ -117,9 +117,9 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
     index,
     enableRenamingMeasureToMetric,
     disabledExplanationTooltip,
-}) => {
+}: MeasureDropdownProps) {
     const [width, setWidth] = useState<number>(0);
-    const buttonRef = useRef<HTMLInputElement>();
+    const buttonRef = useRef<HTMLInputElement | null>(null);
     const measures: MeasureSortSuggestion[] = availableSorts.metricSorts;
     const areaSortEnabled = availableSorts.attributeSort.areaSortEnabled;
     const items = getItems(intl, measures, bucketItems, areaSortEnabled, availableSorts.itemId);
@@ -243,4 +243,4 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
             </div>
         </div>
     );
-};
+}

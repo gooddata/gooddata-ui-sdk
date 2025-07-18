@@ -2,7 +2,7 @@
 import { IDashboardLayout } from "@gooddata/sdk-model";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/flexibleLayout/facade/layout.js";
 import { useDashboardItemPathAndSize } from "../../dashboard/components/DashboardItemPathAndSizeContext.js";
@@ -46,7 +46,7 @@ const defaultSectionKeyGetter: IDashboardLayoutSectionKeyGetter<unknown> = ({ se
  *
  * @alpha
  */
-export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWidget>): JSX.Element {
+export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWidget>) {
     const {
         layout,
         sectionKeyGetter = defaultSectionKeyGetter,
@@ -64,7 +64,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         focusObject,
     } = props;
 
-    const layoutRef = React.useRef<HTMLDivElement>(null);
+    const layoutRef = useRef<HTMLDivElement>(null);
     const { layoutItemPath, layoutItemSize } = useDashboardItemPathAndSize();
 
     const { layoutFacade, resizedItemPositions } = useMemo(() => {

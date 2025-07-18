@@ -1,5 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import cx from "classnames";
 
 import { DashboardLayoutSectionBorderMarker } from "./DashboardLayoutSectionBorderMarker.js";
@@ -10,18 +9,20 @@ interface IDashboardLayoutSectionBorderLineProps {
     status: DashboardLayoutSectionBorderStatus;
 }
 
-export const DashboardLayoutSectionBorderLine: React.FC<IDashboardLayoutSectionBorderLineProps> = (props) => {
-    const { position, status } = props;
+export function DashboardLayoutSectionBorderLine({
+    position,
+    status,
+}: IDashboardLayoutSectionBorderLineProps) {
     return (
         <div className={cx("gd-fluidlayout-row-separator", "s-fluidlayout-row-separator", position, status)}>
             <DashboardLayoutSectionBorderMarker
                 className="gd-fluidlayout-row-separator-icon gd-fluidlayout-row-separator-icon-left"
-                active={props.status === "active"}
+                active={status === "active"}
             />
             <DashboardLayoutSectionBorderMarker
                 className="gd-fluidlayout-row-separator-icon gd-fluidlayout-row-separator-icon-right"
-                active={props.status === "active"}
+                active={status === "active"}
             />
         </div>
     );
-};
+}

@@ -1,6 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
 import { UiAsyncTableColumn } from "../types.js";
 import { UiSkeleton } from "../../UiSkeleton/UiSkeleton.js";
 import { UiPagedVirtualListSkeletonItemProps } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
@@ -15,7 +14,7 @@ export function skeletonItemFactory<T extends { id: string }>(
     columns: UiAsyncTableColumn<T>[],
     hasCheckbox?: boolean,
 ): React.ComponentType<UiPagedVirtualListSkeletonItemProps> {
-    return function SkeletonItem() {
+    function SkeletonItem() {
         const columnWidths = columns.map((col) => (col.renderMenu ? MENU_COLUMN_WIDTH : col.width));
         const widths = hasCheckbox ? [CHECKBOX_COLUMN_WIDTH, ...columnWidths] : columnWidths;
 
@@ -29,5 +28,7 @@ export function skeletonItemFactory<T extends { id: string }>(
                 itemsGap={0}
             />
         );
-    };
+    }
+
+    return SkeletonItem;
 }

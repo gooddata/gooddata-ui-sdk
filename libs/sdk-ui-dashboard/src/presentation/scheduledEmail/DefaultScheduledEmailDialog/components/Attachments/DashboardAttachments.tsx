@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactNode, useRef } from "react";
+import { ReactNode, useRef } from "react";
 import {
     DashboardAttachmentType,
     FilterContextItem,
@@ -22,14 +22,14 @@ export interface IDashboardAttachmentsProps {
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
 }
 
-export const DashboardAttachments = ({
+export function DashboardAttachments({
     dashboardFilters,
     isCrossFiltering,
     onDashboardAttachmentsChange,
     selectedAttachments,
     xlsxSettings,
     onXlsxSettingsChange,
-}: IDashboardAttachmentsProps) => {
+}: IDashboardAttachmentsProps) {
     const attachmentListRef = useRef<HTMLDivElement>(null);
 
     const handleDashboardAttachmentSelectionSave = (formats: DashboardAttachmentType[]) => {
@@ -87,4 +87,4 @@ export const DashboardAttachments = ({
             </div>
         </AttachmentsWrapper>
     );
-};
+}

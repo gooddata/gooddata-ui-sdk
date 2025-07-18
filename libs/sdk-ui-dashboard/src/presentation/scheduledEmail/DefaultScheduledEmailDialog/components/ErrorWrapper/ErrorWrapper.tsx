@@ -1,19 +1,19 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 interface IErrorWrapperProps {
     errorId: string;
     errorMessage: string | null;
     label: string;
     labelId: string;
-    children: React.ReactNode;
+    children: ReactNode;
     className: string;
     labelWrapperClassName: string;
     errorClassName: string;
 }
 
-export const ErrorWrapper: React.FC<IErrorWrapperProps> = ({
+export function ErrorWrapper({
     errorId,
     errorMessage,
     label,
@@ -22,7 +22,7 @@ export const ErrorWrapper: React.FC<IErrorWrapperProps> = ({
     className,
     labelWrapperClassName,
     errorClassName,
-}) => {
+}: IErrorWrapperProps) {
     return (
         <div className={className}>
             <label htmlFor={labelId} className="gd-label">
@@ -38,4 +38,4 @@ export const ErrorWrapper: React.FC<IErrorWrapperProps> = ({
             </div>
         </div>
     );
-};
+}

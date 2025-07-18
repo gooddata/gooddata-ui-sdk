@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import { Timepicker } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -7,7 +7,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
 
-const TimePickerExamples: React.FC = () => {
+function TimePickerExamples() {
     const [time, setTime] = useState<Date>(new Date(2015, 2, 15, 0, 0, 0, 0));
 
     return (
@@ -24,7 +24,7 @@ const TimePickerExamples: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/TimePicker",

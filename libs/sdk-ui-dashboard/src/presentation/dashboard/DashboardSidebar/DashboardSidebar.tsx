@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 import { ISidebarProps } from "./types.js";
 
-export const DashboardSidebar = (props: ISidebarProps): JSX.Element => {
+export function DashboardSidebar(props: ISidebarProps): ReactElement {
     const {
         WrapCreatePanelItemWithDragComponent,
         WrapInsightListItemWithDragComponent,
@@ -32,4 +32,4 @@ export const DashboardSidebar = (props: ISidebarProps): JSX.Element => {
             DeleteDropZoneComponent={DeleteDropZoneComponent}
         />
     );
-};
+}

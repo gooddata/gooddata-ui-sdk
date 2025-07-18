@@ -700,7 +700,7 @@ export const buildTigerSpecificFunctions = (
                 const result = await sdk.entities.getEntityOrganizations({ id: organizationId });
                 return result.data?.data?.attributes?.allowedOrigins || [];
             });
-        } catch (error: any) {
+        } catch {
             return [];
         }
     },
@@ -954,7 +954,7 @@ export const buildTigerSpecificFunctions = (
                 ).data.data;
                 return isEmpty(childWorkspaces);
             });
-        } catch (e) {
+        } catch {
             return true;
         }
     },
@@ -1392,7 +1392,7 @@ export const buildTigerSpecificFunctions = (
                 const result = await sdk.entities.getAllEntitiesCspDirectives({});
                 return result.data?.data || [];
             });
-        } catch (error) {
+        } catch {
             return [];
         }
     },

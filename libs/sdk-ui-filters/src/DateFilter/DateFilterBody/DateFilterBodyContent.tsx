@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import isEmpty from "lodash/isEmpty.js";
 import { AbsoluteDateFilterFormSection } from "../AbsoluteDateFilterForm/AbsoluteDateFilterFormSection.js";
 import { AllTimeFilterSection } from "../AllTime/AllTimeFilterSection.js";
@@ -37,7 +35,7 @@ interface IDateFilterBodyContentProps {
     onApplyClick: () => void;
 }
 
-export const DateFilterBodyContent: React.FC<IDateFilterBodyContentProps> = ({
+export function DateFilterBodyContent({
     filterOptions,
     selectedFilterOption,
     isMobile,
@@ -52,7 +50,7 @@ export const DateFilterBodyContent: React.FC<IDateFilterBodyContentProps> = ({
     changeRoute,
     onApplyClick,
     onSelectedFilterOptionChange,
-}) => {
+}: IDateFilterBodyContentProps) {
     return (
         <>
             <AllTimeFilterSection
@@ -110,4 +108,4 @@ export const DateFilterBodyContent: React.FC<IDateFilterBodyContentProps> = ({
             ) : null}
         </>
     );
-};
+}

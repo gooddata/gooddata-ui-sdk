@@ -1,5 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import {
     bucketAttribute,
     bucketsFind,
@@ -117,7 +116,7 @@ const WrappedTreemap = withChart(treemapDefinition)(CoreTreemap);
  *
  * @public
  */
-export const Treemap = (props: ITreemapProps) => {
+export function Treemap(props: ITreemapProps) {
     const [measures, viewBy, segmentBy, filters] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.segmentBy, props.filters],
         props.placeholdersResolutionContext,
@@ -134,7 +133,7 @@ export const Treemap = (props: ITreemapProps) => {
             }}
         />
     );
-};
+}
 
 function getDefaultTreemapSort(buckets: IBucket[]): ISortItem[] {
     const viewBucket = bucketsFind(buckets, BucketNames.VIEW);

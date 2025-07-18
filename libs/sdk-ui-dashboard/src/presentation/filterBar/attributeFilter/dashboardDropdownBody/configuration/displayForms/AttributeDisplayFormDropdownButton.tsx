@@ -1,19 +1,19 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
+import { SyntheticEvent } from "react";
 import cx from "classnames";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 interface IAttributeDisplayFormDropdownButtonProps {
     title: string;
     isOpened: boolean;
-    toggleDropdown: (e: React.SyntheticEvent) => void;
+    toggleDropdown: (e: SyntheticEvent) => void;
 }
 
-export const AttributeDisplayFormDropdownButton: React.FC<IAttributeDisplayFormDropdownButtonProps> = ({
+export function AttributeDisplayFormDropdownButton({
     title,
     isOpened,
     toggleDropdown,
-}) => {
+}: IAttributeDisplayFormDropdownButtonProps) {
     const buttonClassNames = cx(
         "gd-button-primary",
         "gd-button-small",
@@ -35,4 +35,4 @@ export const AttributeDisplayFormDropdownButton: React.FC<IAttributeDisplayFormD
             iconRight={iconRight}
         />
     );
-};
+}

@@ -1,6 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
 import {
     propCombinationsFor,
     ComponentTable,
@@ -19,18 +18,20 @@ const sizes = propCombination("size", ["small", "medium", "large"]);
 const disabled = propCombination("isDisabled", [true]);
 const open = propCombination("isDropdownOpen", [true]);
 
-const UiDropdownIconButtonTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
-    <div className="screenshot-target">
-        <ComponentTable
-            columnsBy={variants}
-            rowsBy={[sizes, disabled, open]}
-            Component={UiDropdownIconButton}
-            codeSnippet={showCode ? "UiDropdownIconButton" : undefined}
-            align="center"
-            cellWidth={250}
-        />
-    </div>
-);
+function UiDropdownIconButtonTest({ showCode }: { showCode?: boolean }) {
+    return (
+        <div className="screenshot-target">
+            <ComponentTable
+                columnsBy={variants}
+                rowsBy={[sizes, disabled, open]}
+                Component={UiDropdownIconButton}
+                codeSnippet={showCode ? "UiDropdownIconButton" : undefined}
+                align="center"
+                cellWidth={250}
+            />
+        </div>
+    );
+}
 
 export default {
     title: "15 Ui/UiDropdownIconButton",

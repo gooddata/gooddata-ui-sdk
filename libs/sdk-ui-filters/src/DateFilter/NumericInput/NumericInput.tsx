@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import isNumber from "lodash/isNumber.js";
 import defaultTo from "lodash/defaultTo.js";
 import clamp from "lodash/clamp.js";

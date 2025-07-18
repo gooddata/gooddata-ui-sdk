@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { ComponentType, ReactElement, useMemo } from "react";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces/index.js";
 import { getValidColorPalette, ChartTransformation } from "../../highcharts/index.js";
 import noop from "lodash/noop.js";
@@ -34,7 +34,7 @@ export interface IBaseChartProps extends ICoreChartProps {
 
 type Props = IBaseChartProps & ILoadingInjectedProps;
 
-const StatelessBaseChart: React.FC<Props> = (props) => {
+function StatelessBaseChart(props: Props) {
     const {
         dataView,
         error,
@@ -60,7 +60,7 @@ const StatelessBaseChart: React.FC<Props> = (props) => {
 
     const errorMap: IErrorDescriptors = useMemo(() => newErrorMapping(intl), [intl]);
 
-    const renderChartTransformation = (): JSX.Element => {
+    const renderChartTransformation = (): ReactElement => {
         const colorPalette = getValidColorPalette(config);
         const fullConfig = { ...config, type, colorPalette };
         const sanitizedConfig = getSanitizedStackingConfig(dataView!.definition, fullConfig);
@@ -94,8 +94,8 @@ const StatelessBaseChart: React.FC<Props> = (props) => {
         );
     };
 
-    const TypedErrorComponent = ErrorComponent as React.ComponentType<IErrorProps>;
-    const TypedLoadingComponent = LoadingComponent as React.ComponentType<ILoadingProps>;
+    const TypedErrorComponent = ErrorComponent as ComponentType<IErrorProps>;
+    const TypedLoadingComponent = LoadingComponent as ComponentType<ILoadingProps>;
 
     if (error) {
         const key = Object.prototype.hasOwnProperty.call(errorMap, seType)
@@ -114,7 +114,7 @@ const StatelessBaseChart: React.FC<Props> = (props) => {
     }
 
     return renderChartTransformation();
-};
+}
 
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disappear.

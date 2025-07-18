@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import { ReactNode, useEffect, useRef, useCallback, useState, useMemo } from "react";
 import { b, e } from "./listboxBem.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
@@ -39,8 +39,8 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     isCompact = false,
 
     ariaAttributes,
-}: UiListboxProps<InteractiveItemData, StaticItemData>): React.ReactNode {
-    const isItemFocusable = React.useCallback(
+}: UiListboxProps<InteractiveItemData, StaticItemData>): ReactNode {
+    const isItemFocusable = useCallback(
         (item?: IUiListboxItem<InteractiveItemData, StaticItemData>) => {
             if (!item || item.type !== "interactive") {
                 return false;
@@ -51,7 +51,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
         [isDisabledFocusable],
     );
 
-    const [focusedIndex, setFocusedIndex] = React.useState<number | undefined>(() => {
+    const [focusedIndex, setFocusedIndex] = useState<number | undefined>(() => {
         // First try to find the selected item if it's focusable
         const selectedIndex = items.findIndex((item) => item.id === selectedItemId && isItemFocusable(item));
         if (selectedIndex >= 0) {
@@ -63,10 +63,10 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
         return firstFocusableIndex >= 0 ? firstFocusableIndex : undefined;
     });
 
-    const itemRefs = React.useRef<(HTMLLIElement | null)[]>([]);
+    const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
 
     // Update refs array size when items change. The actual refs are updated during render.
-    React.useEffect(() => {
+    useEffect(() => {
         itemRefs.current = itemRefs.current.slice(0, items.length);
     }, [items]);
 
@@ -74,7 +74,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     const focusedItemNode = focusedIndex == null ? undefined : itemRefs.current[focusedIndex];
 
     // Scroll focused item into view
-    React.useEffect(() => {
+    useEffect(() => {
         if (!focusedItemNode) {
             return;
         }
@@ -82,7 +82,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
         focusedItemNode.scrollIntoView({ block: "nearest" });
     }, [focusedItemNode]);
 
-    const handleSelectItem = React.useCallback(
+    const handleSelectItem = useCallback(
         (
             item?: IUiListboxInteractiveItem<InteractiveItemData>,
             mods?: { newTab?: boolean; type?: "mouse" | "keyboard" },
@@ -91,7 +91,9 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                 return;
             }
             onSelect?.(item, mods ?? {});
-            shouldCloseOnSelect && onClose?.();
+            if (shouldCloseOnSelect) {
+                onClose?.();
+            }
         },
         [onClose, onSelect, shouldCloseOnSelect],
     );
@@ -106,7 +108,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
         selectedItemId,
         isItemFocusable,
     });
-    const handleKeyDown = React.useMemo(
+    const handleKeyDown = useMemo(
         () =>
             makeMenuKeyboardNavigation(
                 {
@@ -190,7 +192,9 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                     item.type === "interactive" ? (
                         <li
                             key={item.id}
-                            ref={(el) => (itemRefs.current[index] = el)}
+                            ref={(el) => {
+                                itemRefs.current[index] = el;
+                            }}
                             id={makeItemId(ariaAttributes.id, item)}
                             role="option"
                             aria-selected={item.id === selectedItemId}
@@ -213,7 +217,9 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                     ) : (
                         <li
                             key={item.id ?? index}
-                            ref={(el) => (itemRefs.current[index] = el)}
+                            ref={(el) => {
+                                itemRefs.current[index] = el;
+                            }}
                             data-testid={itemDataTestId}
                         >
                             <StaticItemComponent item={item} />

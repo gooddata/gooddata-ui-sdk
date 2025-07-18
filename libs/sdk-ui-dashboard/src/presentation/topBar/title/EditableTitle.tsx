@@ -1,10 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 import { defineMessage, useIntl } from "react-intl";
 
 import { TitleWrapper } from "./TitleWrapper.js";
-import { CustomTitleComponent } from "./types.js";
+import { ITitleProps } from "./types.js";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
 import { selectDashboardTitle, useDashboardSelector } from "../../../model/index.js";
 
@@ -13,7 +12,7 @@ const placeholderMessage = defineMessage({ id: "untitled" });
 /**
  * @alpha
  */
-export const EditableTitle: CustomTitleComponent = (props) => {
+export function EditableTitle(props: ITitleProps) {
     const { title, onTitleChanged } = props;
     const intl = useIntl();
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
@@ -33,4 +32,4 @@ export const EditableTitle: CustomTitleComponent = (props) => {
             </EditableLabel>
         </TitleWrapper>
     );
-};
+}

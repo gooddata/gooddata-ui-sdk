@@ -1,10 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { AddGranteeSelect } from "../AddGranteeSelect.js";
 import { IAddGranteeSelectProps } from "../types.js";
 import { noop } from "lodash";
-import { BackendProvider, withIntl, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import {
     defaultRecordedBackendCapabilities,
     recordedBackend,
@@ -47,12 +46,11 @@ const createComponent = (
         ...defaultRecordedBackendCapabilities,
         ...backendCapabilities,
     });
-    const Wrapped = withIntl(AddGranteeSelect);
 
     return render(
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={"foo"}>
-                <Wrapped {...props} />
+                <AddGranteeSelect {...props} />
             </WorkspaceProvider>
         </BackendProvider>,
     );

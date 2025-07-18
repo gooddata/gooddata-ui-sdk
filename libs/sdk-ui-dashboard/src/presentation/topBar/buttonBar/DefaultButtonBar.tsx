@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 
 import { IButtonBarProps } from "./types.js";
 import {
@@ -14,18 +13,16 @@ import {
 /**
  * @alpha
  */
-export const DefaultButtonBar: React.FC<IButtonBarProps> = (props): JSX.Element => {
-    const {
-        children,
-        cancelButtonProps,
-        saveButtonProps,
-        settingButtonProps,
-        editButtonProps,
-        saveAsNewButtonProps,
-        shareButtonProps,
-        childContentPosition = "left",
-    } = props;
-
+export function DefaultButtonBar({
+    children,
+    cancelButtonProps,
+    saveButtonProps,
+    settingButtonProps,
+    editButtonProps,
+    saveAsNewButtonProps,
+    shareButtonProps,
+    childContentPosition = "left",
+}: IButtonBarProps) {
     // TODO INE allow customization of buttons via getter from props
     return (
         <div className="dash-control-buttons">
@@ -39,4 +36,4 @@ export const DefaultButtonBar: React.FC<IButtonBarProps> = (props): JSX.Element 
             {childContentPosition === "right" && children}
         </div>
     );
-};
+}

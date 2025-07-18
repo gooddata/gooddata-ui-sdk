@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { KeyboardEvent } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, isActionKey } from "@gooddata/sdk-ui-kit";
@@ -16,13 +16,13 @@ interface IExcludeCurrentPeriodToggleProps {
 
 const alignPoints = [{ align: "tc bc" }];
 
-export const ExcludeCurrentPeriodToggle: React.FC<IExcludeCurrentPeriodToggleProps> = ({
+export function ExcludeCurrentPeriodToggle({
     value,
     onChange,
     disabled,
     granularity,
-}) => {
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+}: IExcludeCurrentPeriodToggleProps) {
+    const handleKeyDown = (e: KeyboardEvent) => {
         if (disabled) {
             return;
         }
@@ -61,4 +61,4 @@ export const ExcludeCurrentPeriodToggle: React.FC<IExcludeCurrentPeriodTogglePro
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

@@ -1,5 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import kebabCase from "lodash/kebabCase.js";
 import cx from "classnames";
 import { ListItem } from "../ListItem/ListItem.js";
@@ -15,23 +14,25 @@ interface IAbsolutePresetFilterItemsProps {
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 }
 
-export const AbsolutePresetFilterItems: React.FC<IAbsolutePresetFilterItemsProps> = ({
+export function AbsolutePresetFilterItems({
     filterOptions,
     dateFormat,
     selectedFilterOption,
     onSelectedFilterOptionChange,
     className,
-}) => (
-    <>
-        {filterOptions.map((item) => (
-            <ListItem
-                key={item.localIdentifier}
-                isSelected={item.localIdentifier === selectedFilterOption.localIdentifier}
-                onClick={() => onSelectedFilterOptionChange(item)}
-                className={cx(`s-absolute-preset-${kebabCase(item.localIdentifier)}`, className)}
-            >
-                <DateFilterTextLocalized filter={item} dateFormat={dateFormat} />
-            </ListItem>
-        ))}
-    </>
-);
+}: IAbsolutePresetFilterItemsProps) {
+    return (
+        <>
+            {filterOptions.map((item) => (
+                <ListItem
+                    key={item.localIdentifier}
+                    isSelected={item.localIdentifier === selectedFilterOption.localIdentifier}
+                    onClick={() => onSelectedFilterOptionChange(item)}
+                    className={cx(`s-absolute-preset-${kebabCase(item.localIdentifier)}`, className)}
+                >
+                    <DateFilterTextLocalized filter={item} dateFormat={dateFormat} />
+                </ListItem>
+            ))}
+        </>
+    );
+}

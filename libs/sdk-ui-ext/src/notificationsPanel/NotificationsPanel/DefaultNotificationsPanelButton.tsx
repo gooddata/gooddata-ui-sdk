@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import React from "react";
+import { RefObject } from "react";
 import { useIntl } from "react-intl";
 import { bem } from "../bem.js";
 import { NOTIFICATIONS_PANEL_ID } from "./DefaultNotificationsPanel.js";
@@ -16,7 +16,7 @@ export interface INotificationsPanelButtonComponentProps {
     /**
      * Ref to the button element - is required for proper alignment of the notification panel.
      */
-    buttonRef: React.RefObject<HTMLButtonElement>;
+    buttonRef: RefObject<HTMLButtonElement>;
 
     /**
      * Opens the notification panel.

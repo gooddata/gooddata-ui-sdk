@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 
@@ -20,14 +19,14 @@ type MessageContentsProps = {
     useMarkdown?: boolean;
 };
 
-export const MessageContents: React.FC<MessageContentsProps> = ({
+export function MessageContents({
     content,
     messageId,
     isComplete = true,
     isCancelled = false,
     isLastMessage = false,
     useMarkdown = false,
-}) => {
+}: MessageContentsProps) {
     return (
         <div className="gd-gen-ai-chat__messages__contents">
             {content.map((item, index) => {
@@ -73,7 +72,7 @@ export const MessageContents: React.FC<MessageContentsProps> = ({
             ) : null}
         </div>
     );
-};
+}
 
 const assertNever = (value: never): never => {
     throw new Error(`Unknown content type: ${value}`);

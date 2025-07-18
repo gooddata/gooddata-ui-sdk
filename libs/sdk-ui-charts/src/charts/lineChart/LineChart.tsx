@@ -1,5 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import {
     IAttribute,
     IAttributeOrMeasure,
@@ -128,7 +127,7 @@ const WrappedLineChart = withChart(lineChartDefinition)(CoreLineChart);
  *
  * @public
  */
-export const LineChart = (props: ILineChartProps) => {
+export function LineChart(props: ILineChartProps) {
     const [measures, trendBy, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.trendBy, props.segmentBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -146,4 +145,4 @@ export const LineChart = (props: ILineChartProps) => {
             }}
         />
     );
-};
+}

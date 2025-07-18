@@ -1,14 +1,13 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import { IToggleButtonProps, DropdownButton } from "@gooddata/sdk-ui-kit";
 
-const NumberFormatToggleButton: React.FC<IToggleButtonProps> = ({
+export default function NumberFormatToggleButton({
     disabled,
     isOpened,
     selectedPreset,
     toggleDropdown,
-}) => {
+}: IToggleButtonProps) {
     return (
         <div className="adi-bucket-dropdown number-format-toggle-button s-number-format-toggle-button">
             <DropdownButton
@@ -20,6 +19,4 @@ const NumberFormatToggleButton: React.FC<IToggleButtonProps> = ({
             />
         </div>
     );
-};
-
-export default NumberFormatToggleButton;
+}

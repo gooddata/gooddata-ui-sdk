@@ -1,6 +1,5 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 
 import { IScrollGradientProps } from "./typings.js";
@@ -12,14 +11,14 @@ import { useGradientColor } from "./hooks/useGradientColor.js";
 /**
  * @internal
  */
-export const ScrollGradient: React.FC<IScrollGradientProps> = ({
+export function ScrollGradient({
     backgroundColor = "#FFFFFF",
     size = 20,
     className,
     contentClassName,
     onScroll,
     children,
-}) => {
+}: IScrollGradientProps) {
     const { right, content, setContent } = useRightInScrollable();
     const { top, bottom, onScrollHandler } = useScrollEvent(content, size / 2, onScroll);
     const { topBackground, bottomBackground } = useGradientColor(backgroundColor);
@@ -43,4 +42,4 @@ export const ScrollGradient: React.FC<IScrollGradientProps> = ({
             />
         </div>
     );
-};
+}

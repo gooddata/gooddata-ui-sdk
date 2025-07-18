@@ -10,10 +10,10 @@
  */
 export * from "./typings/utilities.js";
 export * from "./typings/positioning.js";
-export * from "./typings/domUtilities.js";
-export * from "./typings/domNative.js";
-export * from "./typings/overlay.js";
-export * from "./typings/accessibility.js";
+export type * from "./typings/domUtilities.js";
+export type * from "./typings/domNative.js";
+export type * from "./typings/overlay.js";
+export type * from "./typings/accessibility.js";
 export * from "./utils/constants.js";
 export * from "./utils/featureFlags.js";
 export * from "./utils/drag.js";
@@ -154,8 +154,8 @@ export type {
     UiListboxStaticItemProps,
     IUiListboxInteractiveItem,
     UiListboxInteractiveItemProps,
-    UiListboxAriaAttributes,
 } from "./@ui/UiListbox/types.js";
+export type { IDropdownAriaAttributes, UiListboxAriaAttributes } from "./@ui/@types/dropdown.js";
 export { UiLeveledTreeview, UiStaticTreeview } from "./@ui/UiTreeview/UiTreeview.js";
 export { DefaultUiTreeViewItemComponent } from "./@ui/UiTreeview/defaults/DefaultUiTreeViewItemComponent.js";
 export type {

@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode, RefObject } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { convertError, GoodDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -13,15 +13,19 @@ import {
 
 interface IDeleteScheduleConfirmDialogProps {
     scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
-    returnFocusTo?: React.RefObject<HTMLElement> | string;
+    returnFocusTo?: RefObject<HTMLElement> | string;
     onCancel: () => void;
     onSuccess?: () => void;
     onError?: (error: GoodDataSdkError) => void;
 }
 
-export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogProps> = (props) => {
-    const { scheduledEmail, returnFocusTo, onCancel, onSuccess, onError } = props;
-
+export function DeleteScheduleConfirmDialog({
+    scheduledEmail,
+    returnFocusTo,
+    onCancel,
+    onSuccess,
+    onError,
+}: IDeleteScheduleConfirmDialogProps) {
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
     const intl = useIntl();
@@ -77,4 +81,4 @@ export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogP
             </span>
         </ConfirmDialog>
     );
-};
+}

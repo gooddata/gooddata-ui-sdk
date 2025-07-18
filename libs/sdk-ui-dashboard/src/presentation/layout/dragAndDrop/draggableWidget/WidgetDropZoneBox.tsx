@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -8,8 +8,7 @@ interface IWidgetDropZoneBoxProps {
     isLast: boolean;
 }
 
-export const WidgetDropZoneBox: React.FC<IWidgetDropZoneBoxProps> = (props) => {
-    const { isLast } = props;
+export function WidgetDropZoneBox({ isLast }: IWidgetDropZoneBoxProps) {
     return (
         <div
             className={cx("drag-info-placeholder", "widget-dropzone-box", "s-last-drop-position", "type-kpi")}
@@ -35,4 +34,4 @@ export const WidgetDropZoneBox: React.FC<IWidgetDropZoneBoxProps> = (props) => {
             </div>
         </div>
     );
-};
+}

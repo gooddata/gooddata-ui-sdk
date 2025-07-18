@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import { PushDataCallback, ISeparators } from "@gooddata/sdk-ui";
 import { CalculationType, getCalculationValuesDefault } from "@gooddata/sdk-ui-charts";
@@ -26,7 +25,7 @@ interface IComparisonSectionProps {
     pushData: PushDataCallback;
 }
 
-const ComparisonSection: React.FC<IComparisonSectionProps> = ({
+export default function ComparisonSection({
     controlDisabled,
     disabledByVisualization,
     defaultCalculationType,
@@ -35,7 +34,7 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
     propertiesMeta,
     colorPalette,
     pushData,
-}) => {
+}: IComparisonSectionProps) {
     const toggledOn = properties.controls?.comparison?.enabled;
 
     const comparisonDisabled = controlDisabled || disabledByVisualization;
@@ -89,6 +88,4 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
             />
         </ConfigSection>
     );
-};
-
-export default ComparisonSection;
+}

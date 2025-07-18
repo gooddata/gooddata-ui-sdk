@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 import { useIntl } from "react-intl";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 
@@ -17,7 +16,6 @@ export interface IColumnHeadersPositionControlProps {
     properties: IVisualizationProperties;
     isDisabled: boolean;
     insight: IInsightDefinition;
-    showDisabledMessage?: boolean;
     defaultValue?: string;
 }
 

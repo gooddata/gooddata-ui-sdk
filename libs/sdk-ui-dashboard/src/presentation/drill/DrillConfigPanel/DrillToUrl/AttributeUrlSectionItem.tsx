@@ -1,5 +1,5 @@
-// (C) 2020-2023 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { useCallback } from "react";
 import cx from "classnames";
 import { IAttributeWithDisplayForm } from "./types.js";
 
@@ -9,11 +9,7 @@ export interface IAttributeUrlSectionItemProps {
     onClickHandler?: (item: IAttributeWithDisplayForm) => void;
 }
 
-export const AttributeUrlSectionItem: React.FC<IAttributeUrlSectionItemProps> = ({
-    item,
-    onClickHandler,
-    isSelected,
-}) => {
+export function AttributeUrlSectionItem({ item, onClickHandler, isSelected }: IAttributeUrlSectionItemProps) {
     const className = cx(
         "gd-list-item gd-menu-item gd-drill-to-attribute-url-option s-drill-to-attribute-url-option gd-icon-hyperlink-warning",
         {
@@ -35,4 +31,4 @@ export const AttributeUrlSectionItem: React.FC<IAttributeUrlSectionItemProps> = 
             <span className="addon">({item.displayForm.title})</span>
         </div>
     );
-};
+}

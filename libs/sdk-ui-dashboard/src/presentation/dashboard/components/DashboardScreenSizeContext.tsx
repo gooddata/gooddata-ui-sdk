@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { useState, useEffect, useContext } from "react";
+import { createContext, ReactNode, useState, useEffect, useContext, Dispatch, SetStateAction } from "react";
 import { ScreenSize } from "@gooddata/sdk-model";
 
 import { DASHBOARD_LAYOUT_BREAK_POINTS } from "../../constants/index.js";
@@ -39,8 +39,8 @@ const getCurrentScreenSize = (): ScreenSize | undefined => {
 
 function setNewSize(
     prevSize: ScreenSize | undefined,
-    setScreenSize: React.Dispatch<React.SetStateAction<ScreenSize | undefined>>,
-    dispatch: React.Dispatch<AnyAction>,
+    setScreenSize: Dispatch<SetStateAction<ScreenSize | undefined>>,
+    dispatch: Dispatch<AnyAction>,
 ) {
     const newSize = getCurrentScreenSize();
 
@@ -52,13 +52,13 @@ function setNewSize(
 }
 
 export interface IDashboardSizeContextProps {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
-const DashboardScreenSizeContext = React.createContext<ScreenSize | undefined>(undefined);
+const DashboardScreenSizeContext = createContext<ScreenSize | undefined>(undefined);
 DashboardScreenSizeContext.displayName = "DashboardScreenSizeContext";
 
-export const DashboardScreenSizeProvider: React.FC<IDashboardSizeContextProps> = ({ children }) => {
+export function DashboardScreenSizeProvider({ children }: IDashboardSizeContextProps) {
     const [screenSize, setScreenSize] = useState<ScreenSize | undefined>();
     const dispatch = useDashboardDispatch();
 
@@ -85,7 +85,7 @@ export const DashboardScreenSizeProvider: React.FC<IDashboardSizeContextProps> =
             </DashboardScreenSizeContext.Provider>
         </div>
     );
-};
+}
 
 /**
  * Return current screen size.

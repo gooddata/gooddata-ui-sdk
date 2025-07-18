@@ -1,11 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
-
 import { DefaultAlertingDialogOld, DefaultAlertingManagementDialogOld } from "../../alerting/index.js";
 import { useDashboardAlertsOld } from "../../../model/index.js";
 
-export const AlertingDialogProviderOld = () => {
+export function AlertingDialogProviderOld() {
     const {
         isInitialized,
         automations,
@@ -54,4 +52,4 @@ export const AlertingDialogProviderOld = () => {
             ) : null}
         </>
     );
-};
+}

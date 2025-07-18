@@ -1,12 +1,12 @@
-// (C) 2021 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
+import { createContext, ComponentType, ReactNode } from "react";
 import { wrapDisplayName } from "../../react/wrapDisplayName.js";
 import compose from "lodash/flowRight.js";
 
-const TranslationsCustomizationContext = React.createContext<Record<string, string> | undefined>(undefined);
+const TranslationsCustomizationContext = createContext<Record<string, string> | undefined>(undefined);
 TranslationsCustomizationContext.displayName = "TranslationsCustomizationContext";
 
-const TranslationsCustomizationIsLoadingContext = React.createContext<boolean | undefined>(undefined);
+const TranslationsCustomizationIsLoadingContext = createContext<boolean | undefined>(undefined);
 TranslationsCustomizationIsLoadingContext.displayName = "TranslationsCustomizationIsLoadingContext";
 
 /**
@@ -26,15 +26,17 @@ export interface ITranslationsCustomizationContextProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
  * @beta
  */
-export const TranslationsCustomizationContextProvider: React.FC<
-    ITranslationsCustomizationContextProviderProps
-> = ({ children, translationsCustomizationIsLoading, translations }) => {
+export function TranslationsCustomizationContextProvider({
+    children,
+    translationsCustomizationIsLoading,
+    translations,
+}: ITranslationsCustomizationContextProviderProps) {
     return (
         <TranslationsCustomizationContext.Provider value={translations}>
             <TranslationsCustomizationIsLoadingContext.Provider value={translationsCustomizationIsLoading}>
@@ -42,18 +44,18 @@ export const TranslationsCustomizationContextProvider: React.FC<
             </TranslationsCustomizationIsLoadingContext.Provider>
         </TranslationsCustomizationContext.Provider>
     );
-};
+}
 
 function withTranslationsCustomizationValue<T extends { translations?: Record<string, string> }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<T> {
-    const ComponentWithInjectedTranslationsCustomizationValue: React.FC<T> = (props) => {
+    Component: ComponentType<T>,
+): ComponentType<T> {
+    function ComponentWithInjectedTranslationsCustomizationValue(props: T) {
         return (
             <TranslationsCustomizationContext.Consumer>
                 {(translations) => <Component translations={translations} {...props} />}
             </TranslationsCustomizationContext.Consumer>
         );
-    };
+    }
 
     return wrapDisplayName(
         "withTranslationsCustomizationValue",
@@ -62,9 +64,9 @@ function withTranslationsCustomizationValue<T extends { translations?: Record<st
 }
 
 function withTranslationsCustomizationIsLoading<T extends { translationsCustomizationIsLoading?: boolean }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<T> {
-    const ComponentWithInjectedTranslationsCustomizationIsLoading: React.FC<T> = (props) => {
+    Component: ComponentType<T>,
+): ComponentType<T> {
+    function ComponentWithInjectedTranslationsCustomizationIsLoading(props: T) {
         return (
             <TranslationsCustomizationIsLoadingContext.Consumer>
                 {(translationsCustomizationIsLoading) => (
@@ -75,7 +77,7 @@ function withTranslationsCustomizationIsLoading<T extends { translationsCustomiz
                 )}
             </TranslationsCustomizationIsLoadingContext.Consumer>
         );
-    };
+    }
 
     return wrapDisplayName(
         "withTranslationsCustomizationIsLoading",
@@ -87,8 +89,8 @@ function withTranslationsCustomizationIsLoading<T extends { translationsCustomiz
  * @beta
  */
 export function withTranslationsCustomization<T>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<Omit<T, "translationsCustomizationIsLoading" | "translations">> {
+    Component: ComponentType<T>,
+): ComponentType<Omit<T, "translationsCustomizationIsLoading" | "translations">> {
     return compose(
         wrapDisplayName("withTranslationsCustomization"),
         withTranslationsCustomizationValue,

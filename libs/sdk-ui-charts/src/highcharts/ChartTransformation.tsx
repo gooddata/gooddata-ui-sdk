@@ -2,7 +2,7 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
-import React, { memo, useEffect } from "react";
+import { memo, ReactElement, useEffect } from "react";
 import { ContentRect } from "react-measure";
 
 import {
@@ -40,7 +40,7 @@ import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
 import Highcharts from "highcharts/esm/highcharts.js";
 
-export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
+export function renderHighCharts(props: IHighChartsRendererProps): ReactElement {
     const childrenRenderer = (contentRect: ContentRect) => (
         <HighChartsRenderer contentRect={contentRect} {...props} />
     );
@@ -70,7 +70,7 @@ export interface IChartTransformationProps {
     numericSymbols?: string[];
     theme?: ITheme;
     pushData?(data: any): void;
-    renderer?(arg: IHighChartsRendererProps): JSX.Element;
+    renderer?(arg: IHighChartsRendererProps): ReactElement;
 }
 
 /**

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { XYCoord } from "react-dnd";
 
 import { DraggableContentItem, DraggableContentItemType } from "../../../dragAndDrop/index.js";
@@ -23,9 +23,12 @@ function getItemStyles(initialOffset: XYCoord | null, clientOffset: XYCoord | nu
     };
 }
 
-export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (props) => {
-    const { itemType, item, initialOffset, clientOffset } = props;
-
+export function ContentDragPreview({
+    itemType,
+    item,
+    initialOffset,
+    clientOffset,
+}: DragPreviewProps<DraggableContentItem>) {
     const {
         AttributeFilterComponentSet,
         InsightWidgetComponentSet,
@@ -70,4 +73,4 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
             {component}
         </div>
     );
-};
+}

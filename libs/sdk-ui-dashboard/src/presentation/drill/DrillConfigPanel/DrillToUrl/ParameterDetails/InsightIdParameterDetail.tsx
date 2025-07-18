@@ -1,5 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { ParameterDetail } from "./ParameterDetail.js";
 import { selectInsightByRef, selectWidgetByRef, useDashboardSelector } from "../../../../../model/index.js";
@@ -11,7 +10,7 @@ interface IdentifierDetailProps {
     widgetRef: ObjRef;
 }
 
-export const InsightIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title, widgetRef }) => {
+export function InsightIdParameterDetail({ title, widgetRef }: IdentifierDetailProps) {
     const intl = useIntl();
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     invariant(isInsightWidget(widget), "must be insight widget selected");
@@ -27,4 +26,4 @@ export const InsightIdParameterDetail: React.FC<IdentifierDetailProps> = ({ titl
             values={insight?.insight.identifier ? [insight.insight.identifier] : []}
         />
     );
-};
+}

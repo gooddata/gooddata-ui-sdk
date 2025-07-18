@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { e } from "./treeviewBem.js";
 import type { UiStaticTreeView, UiTreeviewAriaAttributes } from "./types.js";
 import { makeItemId } from "./utils.js";

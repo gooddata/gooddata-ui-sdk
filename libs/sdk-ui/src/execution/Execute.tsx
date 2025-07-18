@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 import { withExecution } from "./withExecution.js";
 import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading.js";
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
@@ -134,7 +134,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
      *
      * @param executionResult - execution result, indicating state and/or results
      */
-    children: (executionResult: WithLoadingResult) => React.ReactElement | null;
+    children: (executionResult: WithLoadingResult) => ReactElement | null;
 
     /**
      * Provide component for rendering of the loading state.
@@ -157,7 +157,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
 
 type Props = IExecuteProps & WithLoadingResult;
 
-const CoreExecute: React.FC<Props> = (props: Props) => {
+function CoreExecute(props: Props) {
     const { children, error, isLoading, reload, result, LoadingComponent, ErrorComponent } = props;
 
     if (ErrorComponent && error) {
@@ -178,7 +178,7 @@ const CoreExecute: React.FC<Props> = (props: Props) => {
         reload,
         result,
     });
-};
+}
 
 function componentName(props: IExecuteProps): string {
     return props.componentName || "Execute";
@@ -268,11 +268,11 @@ const WrappedExecute = withContexts(
  * See {@link IDataAccessMethods} for additional documentation
  * @public
  */
-export const Execute = (props: IExecuteProps) => {
+export function Execute(props: IExecuteProps) {
     const [seriesBy, slicesBy, totals, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.seriesBy, props.slicesBy, props.totals, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
     );
 
     return <WrappedExecute {...props} {...{ seriesBy, slicesBy, totals, filters, sortBy }} />;
-};
+}

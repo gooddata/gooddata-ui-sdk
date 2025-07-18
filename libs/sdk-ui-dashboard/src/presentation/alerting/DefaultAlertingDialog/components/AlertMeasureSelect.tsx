@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Dropdown, Button, SingleSelectListItem, OverlayPositionType, UiListbox } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -19,14 +19,14 @@ export interface IAlertMetricSelectProps {
 
 const measureIcon = <div className="gd-alert-measure-select__icon gd-icon-metric" />;
 
-export const AlertMeasureSelect = ({
+export function AlertMeasureSelect({
     id,
     selectedMeasure,
     onMeasureChange,
     measures,
     overlayPositionType,
     closeOnParentScroll,
-}: IAlertMetricSelectProps) => {
+}: IAlertMetricSelectProps) {
     const intl = useIntl();
     const ref = useRef<HTMLElement | null>(null);
     const selectedMeasureTitle = selectedMeasure
@@ -110,4 +110,4 @@ export const AlertMeasureSelect = ({
             }}
         />
     );
-};
+}

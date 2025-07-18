@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useRef, useEffect, useCallback } from "react";
+import { MouseEvent, useRef, useEffect, useCallback } from "react";
 import ReactMeasure, { MeasuredComponentProps } from "react-measure";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -105,14 +105,14 @@ function LegacyHeadline({
         [onDrill],
     );
 
-    const handleClickOnPrimaryItem = (event: React.MouseEvent<EventTarget>) => {
+    const handleClickOnPrimaryItem = (event: MouseEvent<EventTarget>) => {
         const { primaryItem } = data;
 
         fireDrillEvent(primaryItem, "primaryValue", event.target);
     };
 
     const handleClickOnSecondaryItem = useCallback(
-        (event: React.MouseEvent<EventTarget>) => {
+        (event: MouseEvent<EventTarget>) => {
             const { secondaryItem } = data;
 
             fireDrillEvent(secondaryItem, "secondaryValue", event.target);

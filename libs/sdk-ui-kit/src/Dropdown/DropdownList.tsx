@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useState, useEffect } from "react";
+import { Fragment, useCallback, useState, useEffect, ReactElement, ReactNode, ComponentType } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import { Input } from "../Form/index.js";
@@ -51,8 +51,10 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     mobileItemHeight?: number;
     isMobile?: boolean;
 
-    renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
-    footer?: React.ReactNode | ((closeDropdown: () => void) => React.ReactNode);
+    renderNoData?:
+        | ComponentType<IDropdownListNoDataRenderProps>
+        | ((props: IDropdownListNoDataRenderProps) => ReactNode);
+    footer?: ReactNode | ((closeDropdown: () => void) => ReactNode);
     closeDropdown?: () => void;
 
     scrollToItem?: T;
@@ -99,7 +101,7 @@ function DefaultNoData({ hasNoMatchingData }: { hasNoMatchingData: boolean }) {
  *
  * 2. `UiPagedVirtualised` — Preferred implementation that uses our `UiPagedVirtualList` component
  */
-export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
+export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement {
     const {
         title,
         className = "",
@@ -133,7 +135,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
         selectedTabId,
         onTabSelect,
 
-        renderNoData = DefaultNoData,
+        renderNoData: RenderNoData = DefaultNoData,
         footer,
         closeDropdown,
 
@@ -185,7 +187,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
     }, [searchString]);
 
     return (
-        <React.Fragment>
+        <Fragment>
             {title ? <div className="gd-list-title">{title}</div> : null}
             {showSearch ? (
                 <Input
@@ -212,7 +214,9 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                 />
             ) : null}
             {hasNoData ? (
-                <div style={{ width: isMobile ? "auto" : width }}>{renderNoData({ hasNoMatchingData })}</div>
+                <div style={{ width: isMobile ? "auto" : width }}>
+                    <RenderNoData hasNoMatchingData={hasNoMatchingData} />
+                </div>
             ) : null}
             {isLoading ? <LoadingMask width={isMobile ? "100%" : width} height={LOADING_HEIGHT} /> : null}
             {!isLoading && itemsCount > 0 ? (
@@ -240,14 +244,18 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                                     {(item) => {
                                         const rowIndex = items.indexOf(item);
                                         const listWidth = isMobile ? autoSize.width : width;
-                                        return listProps.renderItem({
-                                            rowIndex,
-                                            item,
-                                            width: listWidth,
-                                            height: effectiveItemHeight,
-                                            isFirst: rowIndex === 0,
-                                            isLast: rowIndex === itemsCount - 1,
-                                        });
+                                        const RenderItem = listProps.renderItem;
+
+                                        return (
+                                            <RenderItem
+                                                rowIndex={rowIndex}
+                                                item={item}
+                                                width={listWidth}
+                                                height={effectiveItemHeight}
+                                                isFirst={rowIndex === 0}
+                                                isLast={rowIndex === itemsCount - 1}
+                                            />
+                                        );
                                     }}
                                 </UiPagedVirtualList>
                             </div>
@@ -269,6 +277,6 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                 </AutoSize>
             ) : null}
             {renderFooter()}
-        </React.Fragment>
+        </Fragment>
     );
 }

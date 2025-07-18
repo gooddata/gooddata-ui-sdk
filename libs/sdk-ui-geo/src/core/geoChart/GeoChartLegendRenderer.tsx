@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactElement, useState } from "react";
 import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -64,7 +64,7 @@ function getClassnames(props: IGeoChartLegendRendererProps, availableLegends: IA
     });
 }
 
-export default function GeoChartLegendRenderer(props: IGeoChartLegendRendererProps): JSX.Element | null {
+export default function GeoChartLegendRenderer(props: IGeoChartLegendRendererProps): ReactElement | null {
     const { categoryItems = [], geoData = {}, height, numericSymbols = [] } = props;
     const position = props.position ?? "top";
 
@@ -96,7 +96,7 @@ export default function GeoChartLegendRenderer(props: IGeoChartLegendRendererPro
 function renderCategoryAndSizeLegend(
     props: IGeoChartLegendRendererProps,
     availableLegends: IAvailableLegends,
-): JSX.Element | null {
+): ReactElement | null {
     const { contentRect, renderPopUp } = props;
     const { hasSizeLegend } = availableLegends;
     const classNames = cx(getClassnames(props, availableLegends));
@@ -136,8 +136,8 @@ interface IColorAndSizeLegendWithPagingProps extends IGeoChartLegendRendererProp
     numericSymbols: string[];
 }
 
-function ColorAndSizeLegendWithPaging(props: IColorAndSizeLegendWithPagingProps): JSX.Element {
-    const [page, setPage] = React.useState<number>(1);
+function ColorAndSizeLegendWithPaging(props: IColorAndSizeLegendWithPagingProps): ReactElement {
+    const [page, setPage] = useState<number>(1);
 
     const showNextPage = (): void => setPage(2);
     const showPrevPage = (): void => setPage(1);
@@ -158,7 +158,7 @@ function ColorAndSizeLegendWithPaging(props: IColorAndSizeLegendWithPagingProps)
 function renderColorAndSizeLegend(
     props: IGeoChartLegendRendererProps,
     availableLegends: IAvailableLegends,
-): JSX.Element {
+): ReactElement {
     const { hasColorLegend, hasSizeLegend } = availableLegends;
     const classNames = getClassnames(props, availableLegends);
 
@@ -173,7 +173,7 @@ function renderColorAndSizeLegend(
 function renderPushpinColorLegend(
     props: IGeoChartLegendRendererProps,
     hasColorLegend: boolean,
-): JSX.Element | null {
+): ReactElement | null {
     if (!hasColorLegend) {
         return null;
     }
@@ -212,7 +212,7 @@ function renderPushpinCategoryLegend(
     props: IGeoChartLegendRendererProps,
     contentRect: ContentRect,
     hasSizeLegend: boolean,
-): JSX.Element | null {
+): ReactElement | null {
     const { containerId } = props;
 
     if (!containerId) {
@@ -234,7 +234,7 @@ function renderPushpinSizeLegend(
     hasSizeLegend: boolean,
     ignoreMeasureName = false,
     ignoreSmallSize = false,
-): JSX.Element | null {
+): ReactElement | null {
     if (!hasSizeLegend) {
         return null;
     }
@@ -270,7 +270,7 @@ function renderPushpinLegend(
     props: IGeoChartLegendRendererProps,
     contentRect: ContentRect,
     hasSizeLegend: boolean,
-): JSX.Element | null {
+): ReactElement | null {
     const { containerId } = props;
 
     if (!containerId) {

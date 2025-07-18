@@ -1,16 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { BackstopConfig } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { DialogListHeader } from "@gooddata/sdk-ui-kit";
 import { action } from "storybook/actions";
 
-const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
-    const { children } = props;
+function Wrapper({ children }: { children?: ReactNode }) {
     return <div style={{ width: 350, height: 80, margin: "30 0" }}>{children}</div>;
-};
+}
 
 function DialogListHeaderExamples() {
     const onButtonClick = action("onButtonClick");

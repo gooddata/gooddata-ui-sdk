@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import throttle from "lodash/throttle.js";
 import { elementRegion } from "../utils/domUtilities.js";
 
@@ -15,7 +15,7 @@ export interface IAutoSizeChildren {
  * @internal
  */
 export interface IAutoSizeProps {
-    children: ({ width, height }: IAutoSizeChildren) => React.ReactNode;
+    children: ({ width, height }: IAutoSizeChildren) => ReactElement;
 }
 
 /**

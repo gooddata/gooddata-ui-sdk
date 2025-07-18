@@ -1,7 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { IconType } from "../@types/icon.js";
 import { IDropdownBodyRenderProps } from "../../Dropdown/index.js";
-import React from "react";
 
 /**
  * @internal

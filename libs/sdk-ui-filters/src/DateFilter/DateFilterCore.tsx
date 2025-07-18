@@ -1,9 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ComponentType, useCallback, useMemo, useRef, useState } from "react";
+import {
+    ComponentType,
+    KeyboardEvent,
+    MutableRefObject,
+    useCallback,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import flow from "lodash/flow.js";
 import noop from "lodash/noop.js";
 import { MediaQuery } from "react-responsive";
-import format from "date-fns/format/index.js";
+import { format } from "date-fns";
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
 import { Dropdown, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces/index.js";
@@ -58,7 +66,7 @@ export interface IDateFilterCoreProps {
 
     weekStart?: WeekStart;
     customIcon?: IFilterButtonCustomIcon;
-    FilterConfigurationComponent?: React.ComponentType<IFilterConfigurationProps>;
+    FilterConfigurationComponent?: ComponentType<IFilterConfigurationProps>;
 
     withoutApply?: boolean;
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
@@ -86,7 +94,7 @@ export const verifyDateFormat = (dateFormat: string): string => {
 const adjustDateFormatForDisplay = (dateFormat: string, isTimeForAbsoluteRangeEnabled: boolean = false) =>
     isTimeForAbsoluteRangeEnabled ? dateFormat + TIME_FORMAT_WITH_SEPARATOR : dateFormat;
 
-export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
+export function DateFilterCore({
     originalSelectedFilterOption,
     originalExcludeCurrentPeriod,
     selectedFilterOption,
@@ -109,7 +117,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     ButtonComponent,
     overlayPositionType,
     ...dropdownBodyProps
-}) => {
+}: IDateFilterCoreProps) {
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
     const verifiedDateFormat = verifyDateFormat(dateFormat);
 
@@ -152,7 +160,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     );
 
     const handleKeyDown = useCallback(
-        (event: React.KeyboardEvent, closeDropdown = noop) => {
+        (event: KeyboardEvent, closeDropdown = noop) => {
             const keyboardHandler = createDateFilterKeyboardHandler({
                 dateFilterContainerRef,
                 dateFilterBodyRef,
@@ -169,7 +177,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                 {(isMobile) => {
                     const dateFilterButton = (
                         isOpen: boolean = false,
-                        buttonRef: React.MutableRefObject<HTMLElement | null> = null,
+                        buttonRef: MutableRefObject<HTMLElement | null> = null,
                         dropdownId: string = "",
                         toggleDropdown = noop,
                     ) => (
@@ -227,7 +235,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                         onCancelButtonClick={cancelConfiguration}
                                     />
                                 ) : (
-                                    // Dropdown component uses React.Children.map and adds special props to this component
+                                    // Dropdown component uses Children.map and adds special props to this component
                                     // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
                                     <div
                                         role="dialog"
@@ -266,10 +274,10 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
             </MediaQuery>
         </IntlWrapper>
     );
-};
+}
 
-function useLastValidValue<T>(value: T, isValid: boolean): T | undefined {
-    const lastValidValue = useRef<T | undefined>();
+function useLastValidValue<T>(value: T, isValid: boolean): T | null {
+    const lastValidValue = useRef<T | null>(null);
     if (isValid) {
         lastValidValue.current = value;
     }

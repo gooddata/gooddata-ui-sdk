@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
@@ -14,7 +13,6 @@ interface IErrorComponentProps {
  *
  * @alpha
  */
-export const ErrorComponent = (props: IErrorComponentProps) => {
-    const { error } = props;
+export function ErrorComponent({ error }: IErrorComponentProps) {
     return <pre>{JSON.stringify(error, null, 2)}</pre>;
-};
+}

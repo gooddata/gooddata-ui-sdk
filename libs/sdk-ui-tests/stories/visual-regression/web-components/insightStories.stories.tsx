@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 import "../../_infra/webComponents.js";
@@ -33,9 +32,10 @@ type InsightContainerProps = {
     title?: string;
 };
 
-const InsightContainer: React.FC<InsightContainerProps> = (props) => {
-    return <gd-insight style={{ height: 500 }} {...props} />;
-};
+function InsightContainer({ insight, locale, title }: InsightContainerProps) {
+    // @ts-expect-error - gd-insight is a custom element
+    return <gd-insight style={{ height: 500 }} insight={insight} locale={locale} title={title} />;
+}
 
 export default {
     title: "13 Web Components/Insight",

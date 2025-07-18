@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ModuleRegistry, AllEnterpriseModule } from "ag-grid-enterprise";
 import isEqual from "lodash/isEqual.js";
@@ -114,7 +114,7 @@ function RenderAgGrid(props: ICorePivotTableInnerNextProps) {
  *
  * @alpha
  */
-const MemoizedCorePivotTableNext = React.memo(CorePivotTableNext, (prevProps, nextProps) => {
+const MemoizedCorePivotTableNext = memo(CorePivotTableNext, (prevProps, nextProps) => {
     // More specific comparison to avoid unnecessary re-renders
     const executionChanged = prevProps.execution.fingerprint() !== nextProps.execution.fingerprint();
     const configChanged = !isEqual(prevProps.config, nextProps.config);

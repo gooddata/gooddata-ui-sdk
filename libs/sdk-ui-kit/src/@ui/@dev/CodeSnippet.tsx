@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 
 /**
  * Utility component for displaying a code snippet of a component with its props.

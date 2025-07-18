@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
@@ -13,12 +12,10 @@ import {
     TEST_RENDER_VALUE_SPECS,
 } from "../../../../tests/TestData.fixtures.js";
 import { IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
-import { withIntl } from "@gooddata/sdk-ui";
 
 describe("BaseHeadlineDataItem", () => {
     const renderBaseHeadlineDataItem = (props: IBaseHeadlineDataItemProps<IHeadlineDataItem>) => {
-        const WrappedBaseHeadlineDataItem = withIntl(BaseHeadlineDataItem);
-        return render(<WrappedBaseHeadlineDataItem {...props} />);
+        return render(<BaseHeadlineDataItem {...props} />);
     };
 
     beforeEach(() => {

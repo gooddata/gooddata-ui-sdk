@@ -1,5 +1,4 @@
-// (C) 2021 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import cx from "classnames";
 
 /**
@@ -13,7 +12,7 @@ export interface ILoadingSpinner {
 /**
  * @internal
  */
-export const LoadingSpinner: React.FC<ILoadingSpinner> = ({ className, color }) => {
+export function LoadingSpinner({ className, color }: ILoadingSpinner) {
     const strokeColor = color ?? "#363636";
 
     return (
@@ -130,4 +129,4 @@ export const LoadingSpinner: React.FC<ILoadingSpinner> = ({ className, color }) 
             </svg>
         </span>
     );
-};
+}

@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { IAutomationMetadataObject, IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
@@ -37,10 +37,8 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
     { align: "bc tc", offset: { x: 0, y: 0 } },
 ];
 
-export const AlertOld: React.FC<IAlertProps> = (props) => {
+export function AlertOld({ alert, onDelete, onEdit, onPause }: IAlertProps) {
     const theme = useTheme();
-
-    const { alert, onDelete, onEdit, onPause } = props;
 
     const intl = useIntl();
     const { isValid } = useAlertValidation(alert);
@@ -164,4 +162,4 @@ export const AlertOld: React.FC<IAlertProps> = (props) => {
             </div>
         </div>
     );
-};
+}

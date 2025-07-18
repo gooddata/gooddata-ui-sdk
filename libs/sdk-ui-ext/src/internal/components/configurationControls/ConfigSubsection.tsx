@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ChangeEvent, ReactNode } from "react";
 import { useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import noop from "lodash/noop.js";
@@ -19,7 +19,7 @@ export interface IConfigSubsectionOwnProps {
     properties?: any;
     pushData?(data: any): void;
     axisType?: AxisType;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export default function ConfigSubsection({
@@ -36,7 +36,7 @@ export default function ConfigSubsection({
 }: IConfigSubsectionOwnProps) {
     const intl = useIntl();
 
-    const toggleValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const toggleValue = (event: ChangeEvent<HTMLInputElement>) => {
         if (valuePath && properties && pushData) {
             const clonedProperties = cloneDeep(properties);
             set(clonedProperties, `controls.${valuePath}`, event.target.checked);

@@ -52,9 +52,15 @@ export const stripComplementaryPalette = (theme: ITheme): ITheme => {
         ...theme,
     };
 
-    strippedTheme?.palette?.complementary && delete strippedTheme.palette.complementary;
-    strippedTheme?.chart && delete strippedTheme.chart;
-    strippedTheme?.table && delete strippedTheme.table;
+    if (strippedTheme?.palette?.complementary) {
+        delete strippedTheme.palette.complementary;
+    }
+    if (strippedTheme?.chart) {
+        delete strippedTheme.chart;
+    }
+    if (strippedTheme?.table) {
+        delete strippedTheme.table;
+    }
 
     return strippedTheme;
 };

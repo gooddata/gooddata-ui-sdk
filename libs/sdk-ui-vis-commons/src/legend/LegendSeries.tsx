@@ -1,6 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import {
+    ReactNode,
+    CSSProperties,
+    MutableRefObject,
+    forwardRef,
+    useState,
+    useEffect,
+    useMemo,
+    KeyboardEventHandler,
+} from "react";
 import { ISeriesItem } from "./types.js";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -11,22 +20,22 @@ import { LegendSeriesContextStore, useLegendSeriesContextValue } from "./context
 interface ILegendSeriesProps {
     series: ISeriesItem[];
     label?: string;
-    children: React.ReactNode;
-    style?: React.CSSProperties;
+    children: ReactNode;
+    style?: CSSProperties;
     onToggleItem: (item: ISeriesItem) => void;
     className?: string;
 }
 
-export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(function LegendSeries(
+export const LegendSeries = forwardRef<HTMLElement, ILegendSeriesProps>(function LegendSeries(
     { series, label, style, children, onToggleItem, className },
     ref,
 ) {
     const { formatMessage } = useIntl();
 
-    const [focusedIndex, setFocusedIndex] = React.useState(0);
+    const [focusedIndex, setFocusedIndex] = useState(0);
     const id = useIdPrefixed("LegendSeries");
 
-    React.useEffect(() => {
+    useEffect(() => {
         setFocusedIndex(0);
     }, [series.length]);
 
@@ -38,7 +47,7 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
         onToggleItem,
         series,
     });
-    const handleKeyDown = React.useMemo<React.KeyboardEventHandler>(
+    const handleKeyDown = useMemo<KeyboardEventHandler>(
         () =>
             makeLinearKeyboardNavigation({
                 onFocusNext: () => {
@@ -98,7 +107,7 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
                             : formatMessage({ id: "properties.legend.series.unnamed" })
                     }
                     style={style}
-                    ref={ref as React.MutableRefObject<HTMLDivElement>}
+                    ref={ref as MutableRefObject<HTMLDivElement>}
                 >
                     {children}
                 </div>

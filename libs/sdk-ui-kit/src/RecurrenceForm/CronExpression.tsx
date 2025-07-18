@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { useCallback, useState, FocusEvent, ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
@@ -19,7 +19,7 @@ interface ICronExpressionProps {
     accessibilityConfig?: IAccessibilityConfigBase;
 }
 
-export const CronExpression: React.FC<ICronExpressionProps> = ({
+export function CronExpression({
     expression,
     description,
     onChange,
@@ -29,13 +29,13 @@ export const CronExpression: React.FC<ICronExpressionProps> = ({
     disabled,
     validationError,
     accessibilityConfig,
-}) => {
+}: ICronExpressionProps) {
     const intl = useIntl();
     const [originalExpression] = useState(expression);
     const [changed, setChanged] = useState(false);
 
     const handleBlur = useCallback(
-        (e: React.FocusEvent<HTMLInputElement>) => {
+        (e: FocusEvent<HTMLInputElement>) => {
             const value = e.target.value;
             onBlur(value);
         },
@@ -43,7 +43,7 @@ export const CronExpression: React.FC<ICronExpressionProps> = ({
     );
 
     const handleChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value;
             onChange(value);
             setChanged(originalExpression !== value);
@@ -100,4 +100,4 @@ export const CronExpression: React.FC<ICronExpressionProps> = ({
             ) : null}
         </>
     );
-};
+}

@@ -1,16 +1,22 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import isNil from "lodash/isNil.js";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Col } from "react-grid-system";
-import { IDashboardLayoutItemRenderer } from "./interfaces.js";
+import { IDashboardLayoutItemRenderProps } from "./interfaces.js";
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 
-export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => {
-    const { item, screen, children, className, minHeight = 0, isHidden } = props;
+export function DashboardLayoutItemViewRenderer({
+    item,
+    screen,
+    children,
+    className,
+    minHeight = 0,
+    isHidden,
+}: IDashboardLayoutItemRenderProps<unknown>) {
     const { size, ratio, width, height } = getSizeForItem(item, screen);
 
     const style = useMemo(() => {
@@ -50,7 +56,7 @@ export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unkno
             {children}
         </Col>
     );
-};
+}
 
 function getSizeForItem(item: IDashboardLayoutItemFacade<unknown>, screen: ScreenSize) {
     const size = item.size();

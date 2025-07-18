@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { CSSProperties } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { CSSProperties } from "react";
 
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
@@ -8,7 +8,7 @@ interface IPrimarySectionProps {
     customStyle?: CSSProperties;
 }
 
-const PrimarySectionContent: React.FC<IPrimarySectionProps> = ({ primaryItem, customStyle }) => {
+export default function PrimarySectionContent({ primaryItem, customStyle }: IPrimarySectionProps) {
     const BaseHeadlineDataItem = primaryItem.baseHeadlineDataItemComponent;
 
     return (
@@ -21,6 +21,4 @@ const PrimarySectionContent: React.FC<IPrimarySectionProps> = ({ primaryItem, cu
             />
         </div>
     );
-};
-
-export default PrimarySectionContent;
+}

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import {
@@ -24,7 +24,7 @@ export interface DrillDialogProps extends Pick<IDialogBaseProps, "initialFocus" 
     onCloseDialog: () => void;
     onBackButtonClick: () => void;
     isBackButtonVisible?: boolean;
-    children: React.ReactNode;
+    children: ReactNode;
 
     exportAvailable: boolean;
     onExportXLSX: () => void;
@@ -54,7 +54,7 @@ const messages = defineMessages({
     },
 });
 
-export const DrillDialog: React.FC<DrillDialogProps> = ({
+export function DrillDialog({
     insightTitle,
     breadcrumbs,
     onCloseDialog,
@@ -78,7 +78,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     isShowAsTableVisible,
     isWidgetAsTable,
     onShowAsTable,
-}) => {
+}: DrillDialogProps) {
     const settings = useDashboardSelector(selectSettings);
     const canExport = useDashboardSelector(selectCanExportTabular);
     const shouldShowDrilledInsightExport = settings?.enableDrilledInsightExport && canExport;
@@ -168,4 +168,4 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
             <PoweredByGDLogo isSmall />
         </DialogBase>
     );
-};
+}

@@ -7,7 +7,9 @@ declare global {
 }
 
 // borrowed from Ember
-typeof window !== "undefined" && (window._gd_uuid = 0);
+if (typeof window !== "undefined") {
+    window._gd_uuid = 0;
+}
 
 function getGuid() {
     if (typeof window === "undefined") {

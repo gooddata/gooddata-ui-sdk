@@ -2,7 +2,7 @@
 import { ItemsWrapper, SubMenu } from "@gooddata/sdk-ui-kit";
 import { TotalType, IAttributeDescriptor } from "@gooddata/sdk-model";
 import cx from "classnames";
-import React from "react";
+import { ReactElement } from "react";
 import { IntlShape } from "react-intl";
 
 import { IColumnTotal } from "./aggregationsMenuTypes.js";
@@ -17,7 +17,7 @@ const MENU_HEADER_OFFSET = -36;
 export interface IAggregationsSubMenuProps {
     intl: IntlShape;
     totalType: TotalType;
-    toggler: JSX.Element;
+    toggler: ReactElement;
     isMenuOpened?: boolean;
     rowAttributeDescriptors: IAttributeDescriptor[];
     columnAttributeDescriptors: IAttributeDescriptor[];

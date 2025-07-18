@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { useCallback, useState } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import {
     AddButton,
@@ -32,7 +32,7 @@ const getItemAdditionalActions = () => {
     return ["dropdown" as const, "item" as const];
 };
 
-export const AlertsList: React.FC<IAlertsListProps> = ({
+export function AlertsList({
     isLoading,
     alerts,
     onCreateAlert,
@@ -45,26 +45,26 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
     maxAutomationsReached,
     canCreateAutomation,
     isExecutionTimestampMode,
-}) => {
+}: IAlertsListProps) {
     const intl = useIntl();
 
-    const handleEdit = React.useCallback(
+    const handleEdit = useCallback(
         (alert: IAutomationMetadataObject) => () => onEditAlert(alert),
         [onEditAlert],
     );
 
-    const handleTogglePause = React.useCallback(
+    const handleTogglePause = useCallback(
         (alert: IAutomationMetadataObject) => () =>
             (alert.alert?.trigger.state === "PAUSED" ? onResumeAlert : onPauseAlert)(alert),
         [onPauseAlert, onResumeAlert],
     );
-    const handleDelete = React.useCallback(
+    const handleDelete = useCallback(
         (alert: IAutomationMetadataObject) => () => onDeleteAlert(alert),
         [onDeleteAlert],
     );
 
-    const [dropdownOpenAlertId, setDropdownOpenAlertId] = React.useState<string | null>(null);
-    const handleToggleDropdown = React.useCallback(
+    const [dropdownOpenAlertId, setDropdownOpenAlertId] = useState<string | null>(null);
+    const handleToggleDropdown = useCallback(
         (alert: IAutomationMetadataObject) => (desiredState?: boolean) => {
             setDropdownOpenAlertId((prev) => {
                 const nextState = desiredState ?? !prev;
@@ -158,9 +158,9 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
             </div>
         </DashboardInsightSubmenuContainer>
     );
-};
+}
 
-const LoadingSkeletonItem = () => {
+function LoadingSkeletonItem() {
     return (
         <div className="gd-react-loading-skeleton-wrapper">
             <Skeleton className="gd-react-loading-skeleton" circle={true} width={27} height={27} />
@@ -172,13 +172,13 @@ const LoadingSkeletonItem = () => {
             />
         </div>
     );
-};
+}
 
-const LoadingSkeleton = () => {
+function LoadingSkeleton() {
     return (
         <>
             <LoadingSkeletonItem />
             <LoadingSkeletonItem />
         </>
     );
-};
+}

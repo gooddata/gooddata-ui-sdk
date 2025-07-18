@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { MouseEvent, ReactElement, useCallback } from "react";
 import cx from "classnames";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { Button } from "../Button/Button.js";
@@ -13,10 +13,10 @@ const defaultTooltipAlignPoints = [{ align: "cl cr" }, { align: "cr cl" }];
  * @internal
  */
 export interface IAddButtonProps {
-    title: JSX.Element;
+    title: ReactElement;
     isDisabled?: boolean;
     onClick?: () => void;
-    tooltip?: JSX.Element;
+    tooltip?: ReactElement;
     tooltipAlignPoints?: IAlignPoint[];
     className?: string;
 }
@@ -24,16 +24,14 @@ export interface IAddButtonProps {
 /**
  * @internal
  */
-export const AddButton: React.FC<IAddButtonProps> = (props) => {
-    const {
-        title,
-        isDisabled,
-        onClick,
-        tooltip,
-        tooltipAlignPoints = defaultTooltipAlignPoints,
-        className,
-    } = props;
-
+export function AddButton({
+    title,
+    isDisabled,
+    onClick,
+    tooltip,
+    tooltipAlignPoints = defaultTooltipAlignPoints,
+    className,
+}: IAddButtonProps) {
     const buttonClassNames = cx(
         {
             disabled: isDisabled,
@@ -45,7 +43,7 @@ export const AddButton: React.FC<IAddButtonProps> = (props) => {
     );
 
     const handleClick = useCallback(
-        (e: React.MouseEvent) => {
+        (e: MouseEvent) => {
             e.preventDefault();
             if (isDisabled) {
                 return;
@@ -73,4 +71,4 @@ export const AddButton: React.FC<IAddButtonProps> = (props) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

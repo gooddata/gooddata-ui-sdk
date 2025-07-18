@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useState, useRef } from "react";
+import { memo, useState, useRef } from "react";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 
@@ -33,7 +33,7 @@ export const ColoredItemsList = memo(function ColoredItemsList({
     isLoading = false,
 }: IColoredItemsListProps) {
     const [searchString, setSearchString] = useState<string>("");
-    const listRef = useRef<any>();
+    const listRef = useRef<any>(undefined);
 
     const onScroll = () => {
         if (listRef?.current) {

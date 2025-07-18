@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import noop from "lodash/noop.js";
 import { Button } from "../../Button/index.js";
 import { useIntl } from "react-intl";
@@ -27,7 +26,7 @@ export type TStylingEditorDialogFooterProps = {
 /**
  * @internal
  */
-export const StylingEditorDialogFooter = (props: TStylingEditorDialogFooterProps) => {
+export function StylingEditorDialogFooter(props: TStylingEditorDialogFooterProps) {
     const {
         link,
         disableSubmit = false,
@@ -72,4 +71,4 @@ export const StylingEditorDialogFooter = (props: TStylingEditorDialogFooterProps
             </FooterButtons>
         </Footer>
     );
-};
+}

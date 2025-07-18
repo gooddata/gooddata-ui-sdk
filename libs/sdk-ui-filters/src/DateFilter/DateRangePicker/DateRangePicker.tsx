@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { DayPickerRangeProps, DateRange, SelectRangeEventHandler } from "react-day-picker";
+import { KeyboardEvent, useState, useRef, useEffect, useCallback } from "react";
+import { DateRange, SelectRangeEventHandler, DayPickerProps } from "react-day-picker";
 import { useIntl } from "react-intl";
 import { WeekStart } from "@gooddata/sdk-model";
 
@@ -48,7 +48,7 @@ const useCalendarPopup = () => {
     }, []);
 
     const onDateInputKeyDown = useCallback(
-        (e: React.KeyboardEvent<HTMLInputElement>) => {
+        (e: KeyboardEvent<HTMLInputElement>) => {
             if (isOpen && (e.key === "Escape" || e.key === "Tab")) {
                 setIsOpen(false);
                 e.stopPropagation(); // prevent closing of the dropdown when just the calendar should close
@@ -258,7 +258,7 @@ export interface IDateRangePickerProps {
     range: IDateRange;
     onRangeChange: (newRange: IDateRange) => void;
     dateFormat?: string;
-    dayPickerProps?: DayPickerRangeProps;
+    dayPickerProps?: DayPickerProps;
     isMobile: boolean;
     isTimeEnabled: boolean;
     weekStart?: WeekStart;

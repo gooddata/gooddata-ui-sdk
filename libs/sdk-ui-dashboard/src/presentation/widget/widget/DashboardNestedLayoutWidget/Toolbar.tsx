@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useRef, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { useIntl } from "react-intl";
 import {
     Bubble,
@@ -34,10 +34,13 @@ interface ToolbarProps {
     onClose: () => void;
 }
 
-const ToggleDirectionButton: React.FC<{
+function ToggleDirectionButton({
+    direction,
+    onWidgetDirectionChanged,
+}: {
     direction: IDashboardLayoutContainerDirection;
     onWidgetDirectionChanged: (direction: IDashboardLayoutContainerDirection) => void;
-}> = ({ direction, onWidgetDirectionChanged }) => {
+}) {
     const intl = useIntl();
     const userInteraction = useDashboardUserInteraction();
     const directionButtonRef = useRef<HTMLButtonElement>(null);
@@ -64,13 +67,11 @@ const ToggleDirectionButton: React.FC<{
                                 dataTestId="nested-layout__button--direction"
                                 onClick={() => {
                                     toggleDropdown();
-                                    isOpen
-                                        ? userInteraction.nestedLayoutInteraction(
-                                              "nestedLayoutDirectionConfigurationClosed",
-                                          )
-                                        : userInteraction.nestedLayoutInteraction(
-                                              "nestedLayoutDirectionConfigurationOpened",
-                                          );
+                                    userInteraction.nestedLayoutInteraction(
+                                        isOpen
+                                            ? "nestedLayoutDirectionConfigurationClosed"
+                                            : "nestedLayoutDirectionConfigurationOpened",
+                                    );
                                 }}
                                 ariaAttributes={ariaAttributes}
                                 accessibilityConfig={accessibilityConfig}
@@ -97,12 +98,15 @@ const ToggleDirectionButton: React.FC<{
             />
         </div>
     );
-};
+}
 
-const ToggleSectionHeaderButton: React.FC<{
+function ToggleSectionHeaderButton({
+    areSectionHeadersEnabled,
+    onToggleHeaders,
+}: {
     areSectionHeadersEnabled: boolean;
     onToggleHeaders: (areSectionHeadersEnabled: boolean) => void;
-}> = ({ areSectionHeadersEnabled, onToggleHeaders }) => {
+}) {
     const intl = useIntl();
     const tooltipContent = areSectionHeadersEnabled
         ? intl.formatMessage({ id: "nestedLayoutToolbar.hideHeader" })
@@ -135,11 +139,9 @@ const ToggleSectionHeaderButton: React.FC<{
             />
         </div>
     );
-};
+}
 
-const RemoveContainerButton: React.FC<{
-    onWidgetDelete: () => void;
-}> = ({ onWidgetDelete }) => {
+function RemoveContainerButton({ onWidgetDelete }: { onWidgetDelete: () => void }) {
     const userInteraction = useDashboardUserInteraction();
     const onButtonClick = useCallback(() => {
         onWidgetDelete();
@@ -167,15 +169,15 @@ const RemoveContainerButton: React.FC<{
             />
         </div>
     );
-};
+}
 
-export const Toolbar: React.FC<ToolbarProps> = ({
+export function Toolbar({
     layout,
     onWidgetDelete,
     onWidgetDirectionChanged,
     onToggleHeaders,
     onClose,
-}) => {
+}: ToolbarProps) {
     const { sections, direction } = getLayoutConfiguration(layout);
     return (
         <Bubble
@@ -206,4 +208,4 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             <RemoveContainerButton onWidgetDelete={onWidgetDelete} />
         </Bubble>
     );
-};
+}

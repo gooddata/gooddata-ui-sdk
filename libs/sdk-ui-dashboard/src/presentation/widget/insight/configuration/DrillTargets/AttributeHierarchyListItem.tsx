@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { MouseEvent } from "react";
+import { MouseEvent } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
@@ -61,9 +61,13 @@ function buildAttributeHierarchyDetailItems(
     return items;
 }
 
-export const AttributeHierarchyListItem: React.FC<IAttributeHierarchyListItemProps> = (props) => {
+export function AttributeHierarchyListItem({
+    onClick,
+    item,
+    isDisabled,
+    onEdit,
+}: IAttributeHierarchyListItemProps) {
     const intl = useIntl();
-    const { onClick, item, isDisabled } = props;
     const allCatalogAttributes = useDashboardSelector(selectAllCatalogAttributesMap);
     const canManageAttributeHierarchy = useDashboardSelector(selectCanManageAttributeHierarchy);
 
@@ -73,7 +77,7 @@ export const AttributeHierarchyListItem: React.FC<IAttributeHierarchyListItemPro
             event.preventDefault();
         }
 
-        props.onEdit(item);
+        onEdit(item);
     };
 
     const hierarchyTitle = getHierarchyTitle(item);
@@ -122,4 +126,4 @@ export const AttributeHierarchyListItem: React.FC<IAttributeHierarchyListItemPro
             </div>
         </div>
     );
-};
+}

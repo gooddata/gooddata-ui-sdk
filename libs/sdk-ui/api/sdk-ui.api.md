@@ -4,10 +4,12 @@
 
 ```ts
 
+import { Attributes } from 'react';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-model';
 import { DependencyList } from 'react';
+import { Dispatch } from 'react';
 import { ForecastDataValue } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -59,10 +61,15 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-model';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
+import { JSX } from 'react/jsx-runtime';
 import { MessageDescriptor } from 'react-intl';
+import { MutableRefObject } from 'react';
 import { NamedExoticComponent } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
-import { default as React_2 } from 'react';
+import { ReactElement } from 'react';
+import { ReactNode } from 'react';
+import { RefObject } from 'react';
+import { SetStateAction } from 'react';
 import { TotalType } from '@gooddata/sdk-model';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 
@@ -109,10 +116,10 @@ export type AttributesMeasuresOrPlaceholders = Array<ValueOrMultiValuePlaceholde
 export type AttributesOrPlaceholders = ValuesOrPlaceholders<IAttribute>;
 
 // @public
-export const BackendProvider: React_2.FC<IBackendProviderProps>;
+export function BackendProvider({ children, backend }: IBackendProviderProps): JSX.Element;
 
 // @public
-export const BackendProviderWithCorrelation: React_2.FC<IBackendProviderWithCorrelationProps>;
+export function BackendProviderWithCorrelation({ backend: externalBackend, correlationData, children, }: IBackendProviderWithCorrelationProps): JSX.Element;
 
 // @public
 export class BadRequestSdkError extends GoodDataSdkError {
@@ -167,7 +174,7 @@ export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "t
 export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey" | "dependencywheel" | "repeater";
 
 // @alpha
-export const ClientWorkspaceProvider: React_2.FC<IClientWorkspaceProviderProps>;
+export function ClientWorkspaceProvider(props: IClientWorkspaceProviderProps): JSX.Element;
 
 // @public
 export class ClusteringNotReceivedSdkError extends GoodDataSdkError {
@@ -196,7 +203,7 @@ export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[
 export function convertError(error: unknown): GoodDataSdkError;
 
 // @public
-export const CorrelationProvider: React_2.FC<ICorrelationProviderProps>;
+export function CorrelationProvider({ children, correlationData }: ICorrelationProviderProps): JSX.Element;
 
 // @internal
 export const createContextStore: <T>(name: string) => IContextStore<T>;
@@ -392,13 +399,13 @@ export const ErrorCodes: {
 };
 
 // @public
-export function ErrorComponent({ icon, className, width, height, style, message, description, clientHeight, }: IErrorProps): React_2.JSX.Element;
+export function ErrorComponent({ icon, className, width, height, style, message, description, clientHeight, }: IErrorProps): JSX.Element;
 
 // @public
-export const Execute: (props: IExecuteProps) => React_2.JSX.Element;
+export function Execute(props: IExecuteProps): JSX.Element;
 
 // @public
-export const ExecuteInsight: React_2.ComponentType<IExecuteInsightProps>;
+export const ExecuteInsight: ComponentType<IExecuteInsightProps>;
 
 // @public
 export type ExplicitDrill = IDrillableItem | IHeaderPredicate;
@@ -558,13 +565,13 @@ export interface IAvailableDrillTargets {
 // @public
 export interface IBackendProviderProps {
     backend: IAnalyticalBackend;
-    children?: React_2.ReactNode;
+    children?: ReactNode;
 }
 
 // @public
 export interface IBackendProviderWithCorrelationProps {
     backend?: IAnalyticalBackend;
-    children?: React_2.ReactNode;
+    children?: ReactNode;
     correlationData: IRequestCorrelationMetadata;
 }
 
@@ -582,7 +589,7 @@ export interface ICancelablePromise<T> {
 
 // @alpha
 export interface IClientWorkspaceIdentifiers {
-    children?: React.ReactNode;
+    children?: ReactNode;
     client?: string;
     dataProduct?: string;
     segment?: string;
@@ -592,7 +599,7 @@ export interface IClientWorkspaceIdentifiers {
 // @alpha
 export interface IClientWorkspaceProviderCoreProps {
     backend?: IAnalyticalBackend;
-    children: React_2.ReactNode;
+    children: ReactNode;
 }
 
 // @alpha
@@ -651,17 +658,17 @@ export type IContextStore<T> = IContextStoreProvider<T> & {
 };
 
 // @internal (undocumented)
-export type IContextStoreProvider<T> = React_2.FC<{
+export type IContextStoreProvider<T> = (props: {
     value: T;
-    children: React_2.ReactNode;
-}>;
+    children: ReactNode;
+}) => ReactNode;
 
 // @internal (undocumented)
 export type IContextStoreSelector<T, SelectorResult> = (state: T) => SelectorResult;
 
 // @public
 export interface ICorrelationProviderProps {
-    children?: React_2.ReactNode;
+    children?: ReactNode;
     correlationData: Record<string, string>;
 }
 
@@ -921,7 +928,7 @@ export interface IExecuteErrorComponentProps {
 // @public
 export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsightProps> {
     backend?: IAnalyticalBackend;
-    children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
+    children: (executionResult: WithLoadingResult) => ReactElement | null;
     componentName?: string;
     dateFormat?: string | ((def: IExecutionDefinition, props: IExecuteInsightProps) => string);
     dimensions?: IDimension[] | ((def: IExecutionDefinition, props: IExecuteInsightProps) => IDimension[]);
@@ -944,7 +951,7 @@ export type IExecuteLoadingComponent = ComponentType;
 // @public
 export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     backend?: IAnalyticalBackend;
-    children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
+    children: (executionResult: WithLoadingResult) => ReactElement | null;
     componentName?: string;
     enableExecutionCancelling?: boolean;
     ErrorComponent?: IExecuteErrorComponent;
@@ -1033,7 +1040,7 @@ export interface IHighchartsParentTick {
 // @internal (undocumented)
 export interface IIntlWrapperProps {
     // (undocumented)
-    children?: React_2.ReactNode;
+    children?: ReactNode;
     // (undocumented)
     locale?: string;
 }
@@ -1041,9 +1048,9 @@ export interface IIntlWrapperProps {
 // @public
 export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
     backend?: IAnalyticalBackend;
-    ErrorComponent?: React_2.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
     filters?: INullableFilter[];
-    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
     locale?: string;
     measure: IMeasure;
     separators?: ISeparators;
@@ -1106,10 +1113,19 @@ export interface IMeasureTitleProps {
 }
 
 // @internal (undocumented)
+function Intl_2({ children, customLocale, customMessages, forTest, }: {
+    children: ReactNode;
+    customLocale?: ILocale;
+    customMessages?: ITranslations;
+    forTest?: boolean;
+}): JSX.Element;
+export { Intl_2 as Intl }
+
+// @internal (undocumented)
 export const IntlTranslationsProvider: NamedExoticComponent<ITranslationsProviderOwnProps>;
 
 // @internal (undocumented)
-export const IntlWrapper: React_2.FC<IIntlWrapperProps>;
+export function IntlWrapper({ locale, children }: IIntlWrapperProps): JSX.Element;
 
 // @internal (undocumented)
 export interface IOpenAsReportUiConfig {
@@ -1138,7 +1154,7 @@ export interface IPlaceholderOptions<T> {
 // @public
 export interface IPlaceholdersProviderProps {
     // (undocumented)
-    children: React_2.ReactNode;
+    children: ReactNode;
     // (undocumented)
     initialValues?: [IPlaceholder<any>, any][];
 }
@@ -1170,7 +1186,7 @@ export interface IPushData {
 
 // @public
 export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
-    children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
+    children: (executionResult: WithLoadingResult) => ReactElement | null;
     enableExecutionCancelling?: boolean;
     ErrorComponent?: IExecuteErrorComponent;
     execution: IPreparedExecution;
@@ -1696,7 +1712,7 @@ export interface ITranslationsComponentProps {
 
 // @beta (undocumented)
 export interface ITranslationsCustomizationContextProviderProps {
-    children?: React_2.ReactNode;
+    children?: ReactNode;
     translations: Record<string, string>;
     translationsCustomizationIsLoading: boolean;
 }
@@ -1705,7 +1721,7 @@ export interface ITranslationsCustomizationContextProviderProps {
 export interface ITranslationsCustomizationProviderProps {
     backend?: IAnalyticalBackend;
     customize?(translations: Record<string, string>, settings?: IWorkspaceSettings): Record<string, string>;
-    render(translations: Record<string, string>): JSX.Element;
+    render(translations: Record<string, string>): ReactElement;
     translations: Record<string, string>;
     workspace?: string;
 }
@@ -1782,9 +1798,9 @@ export interface IVisualizationCallbacks {
 // @public
 export interface IVisualizationProps {
     drillableItems?: ExplicitDrill[];
-    ErrorComponent?: React_2.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
     exportTitle?: string;
-    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
     locale?: string;
 }
 
@@ -1821,15 +1837,15 @@ export interface IWithLoadingEvents<TProps> {
 
 // @public
 export interface IWorkspaceProviderProps {
-    children?: React_2.ReactNode;
+    children?: ReactNode;
     workspace: string;
 }
 
 // @public
-export const Kpi: React_2.ComponentType<IKpiProps>;
+export const Kpi: ComponentType<IKpiProps>;
 
 // @public
-export function LoadingComponent({ className, color, speed, inline, height, width, imageHeight, imageWidth, }: ILoadingProps): React_2.JSX.Element;
+export function LoadingComponent({ className, color, speed, inline, height, width, imageHeight, imageWidth, }: ILoadingProps): JSX.Element;
 
 // @internal
 export const LOCALES: string[];
@@ -1931,7 +1947,7 @@ export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
 export type PlaceholderResolvedValue<T> = T extends Array<infer A> ? Flatten<PlaceholderResolvedValue<A>>[] : T extends IPlaceholder<infer B> ? B : T extends IComposedPlaceholder<infer C, any, any> ? C : T;
 
 // @public
-export function PlaceholdersProvider(props: IPlaceholdersProviderProps): JSX.Element;
+export function PlaceholdersProvider(props: IPlaceholdersProviderProps): ReactElement;
 
 // @public
 export type PlaceholdersResolvedValues<Tuple extends any[]> = {
@@ -1955,13 +1971,13 @@ export class ProtectedReportSdkError extends GoodDataSdkError {
 export type PushDataCallback = (data: IPushData) => void;
 
 // @public
-export const RawExecute: React_2.ComponentType<IRawExecuteProps>;
+export const RawExecute: ComponentType<IRawExecuteProps>;
 
 // @beta
 export const removeAllWordingTranslationsWithSpecialSuffix: (translations: Record<string, string>) => Record<string, string>;
 
 // @alpha
-export const ResolvedClientWorkspaceProvider: React_2.FC<IClientWorkspaceIdentifiers>;
+export function ResolvedClientWorkspaceProvider(props: IClientWorkspaceIdentifiers): JSX.Element;
 
 // @alpha
 export function resolveLCMWorkspaceIdentifiers(backend: any, { client, dataProduct, workspace }: IClientWorkspaceIdentifiers): Promise<IClientWorkspaceIdentifiers>;
@@ -2004,10 +2020,10 @@ export function totalColumnTitleFromIntl(intl: IntlShape): string;
 export type TotalsOrPlaceholders = ValuesOrPlaceholders<ITotal>;
 
 // @beta (undocumented)
-export const TranslationsCustomizationContextProvider: React_2.FC<ITranslationsCustomizationContextProviderProps>;
+export function TranslationsCustomizationContextProvider({ children, translationsCustomizationIsLoading, translations, }: ITranslationsCustomizationContextProviderProps): JSX.Element;
 
 // @beta
-export const TranslationsCustomizationProvider: React_2.FC<ITranslationsCustomizationProviderProps>;
+export function TranslationsCustomizationProvider({ render, customize, translations: translationsParam, backend: backendParam, workspace: workspaceParam, }: ITranslationsCustomizationProviderProps): JSX.Element;
 
 // @public
 export class UnauthorizedSdkError extends GoodDataSdkError {
@@ -2028,7 +2044,7 @@ export type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) ext
 export function uriMatch(uri: string): IHeaderPredicate;
 
 // @internal
-export const useAutoupdateRef: <T>(value: T) => React_2.MutableRefObject<T>;
+export const useAutoupdateRef: <T>(value: T) => RefObject<T>;
 
 // @public
 export const useBackend: (backend?: IAnalyticalBackend) => IAnalyticalBackend | undefined;
@@ -2104,7 +2120,7 @@ export const useClientWorkspaceInitialized: () => boolean;
 export const useClientWorkspaceStatus: () => UseCancelablePromiseStatus;
 
 // @internal (undocumented)
-export const useCombineRefs: <T>(...refs: Array<React_2.MutableRefObject<T> | ((instance: T) => void) | undefined | null | false>) => (instance: T) => void;
+export const useCombineRefs: <T>(...refs: Array<MutableRefObject<T> | ((instance: T) => void) | undefined | null | false>) => (instance: T) => void;
 
 // @public
 export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
@@ -2142,13 +2158,13 @@ T,
 ];
 
 // @public
-export function useExecutionDataView(config: IUseExecutionDataViewConfig & UseExecutionDataViewCallbacks, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useExecutionDataView(config: IUseExecutionDataViewConfig & UseExecutionDataViewCallbacks, deps?: DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
 export type UseExecutionDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
 // @public
-export function useInsightDataView(config: IUseInsightDataViewConfig & UseInsightDataViewCallbacks, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useInsightDataView(config: IUseInsightDataViewConfig & UseInsightDataViewCallbacks, deps?: DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
 export type UseInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
@@ -2157,7 +2173,7 @@ export type UseInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataView
 export const useLocalStorage: <T>(key: string, initialValue: T) => [T, (value: T) => void];
 
 // @public
-export function usePagedResource<TParams, TItem>(resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>, fetchParams: TParams[], fetchDeps: React.DependencyList, resetDeps: React.DependencyList, getCacheKey?: (params: TParams) => string, initialState?: IUsePagedResourceState<TItem>, preventResetPromises?: boolean): IUsePagedResourceResult<TItem>;
+export function usePagedResource<TParams, TItem>(resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>, fetchParams: TParams[], fetchDeps: DependencyList, resetDeps: DependencyList, getCacheKey?: (params: TParams) => string, initialState?: IUsePagedResourceState<TItem>, preventResetPromises?: boolean): IUsePagedResourceResult<TItem>;
 
 // @public
 export function usePlaceholder<T extends IPlaceholder<any>>(placeholder?: T): [
@@ -2172,7 +2188,7 @@ export function usePlaceholders<T extends IPlaceholder<any>[]>(placeholders: [..
 export const usePrevious: <T>(props: T) => T;
 
 // @internal
-export const usePropState: <T>(prop: T) => readonly [T, React_2.Dispatch<React_2.SetStateAction<T>>];
+export const usePropState: <T>(prop: T) => readonly [T, Dispatch<SetStateAction<T>>];
 
 // @public
 export function useResolveValuesWithPlaceholders<T extends any[], C>(values: [...T], resolutionContext?: C): PlaceholdersResolvedValues<T>;
@@ -2244,28 +2260,28 @@ export const VisualizationTypes: {
 // @internal
 export function withBackend<T extends {
     backend?: IAnalyticalBackend;
-}>(Component: React_2.ComponentType<T>): React_2.ComponentType<T>;
+}>(Component: ComponentType<T>): ComponentType<T>;
 
 // @internal
 export function withContexts<T extends {
     backend?: IAnalyticalBackend;
     workspace?: string;
-}>(Chart: React.ComponentType<T>): React.ComponentType<T>;
+}>(Chart: ComponentType<T>): ComponentType<T>;
 
 // @internal
-export function withEntireDataView<T extends IDataVisualizationProps>(InnerComponent: React_2.ComponentType<T & ILoadingInjectedProps>): React_2.ComponentType<T>;
+export function withEntireDataView<T extends IDataVisualizationProps>(InnerComponent: ComponentType<T & ILoadingInjectedProps>): ComponentType<T>;
 
 // @internal
-export function withExecution<T>(params: IWithExecution<T>): (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => React.ComponentType<T>;
+export function withExecution<T>(params: IWithExecution<T>): (WrappedComponent: ComponentType<T & WithLoadingResult>) => ComponentType<T>;
 
 // @internal
-export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProps>): (WrappedComponent: React_2.ComponentType<TProps & WithLoadingResult>) => React_2.ComponentType<TProps>;
+export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProps>): (WrappedComponent: ComponentType<TProps & WithLoadingResult>) => ComponentType<TProps>;
 
 // @internal (undocumented)
-export function withIntl<P>(WrappedComponent: React_2.FC<P> | React_2.ComponentClass<P>, customLocale?: ILocale, customMessages?: ITranslations): React_2.ComponentType<P>;
+export function withIntl<P extends Attributes>(WrappedComponent: ComponentType<P>, customLocale?: ILocale, customMessages?: ITranslations): ComponentType<P>;
 
 // @internal (undocumented)
-export function withIntlForTest<P>(WrappedComponent: React_2.FC<P> | React_2.ComponentClass<P>, customLocale?: ILocale, customMessages?: ITranslations): React_2.ComponentType<P>;
+export function withIntlForTest<P extends Attributes>(WrappedComponent: ComponentType<P>, customLocale?: ILocale, customMessages?: ITranslations): ComponentType<P>;
 
 // @public (undocumented)
 export type WithLoadingResult = {
@@ -2276,18 +2292,18 @@ export type WithLoadingResult = {
 };
 
 // @beta (undocumented)
-export function withTranslationsCustomization<T>(Component: React_2.ComponentType<T>): React_2.ComponentType<Omit<T, "translationsCustomizationIsLoading" | "translations">>;
+export function withTranslationsCustomization<T>(Component: ComponentType<T>): ComponentType<Omit<T, "translationsCustomizationIsLoading" | "translations">>;
 
 // @internal
 export function withWorkspace<T extends {
     workspace?: string;
-}>(Component: React_2.ComponentType<T>): React_2.ComponentType<T>;
+}>(Component: ComponentType<T>): ComponentType<T>;
 
 // @public
-export const WorkspaceProvider: React_2.FC<IWorkspaceProviderProps>;
+export function WorkspaceProvider({ children, workspace }: IWorkspaceProviderProps): JSX.Element;
 
 // @internal
-export const wrapDisplayName: (hocName: string, BaseComponent?: React.ComponentType<any>) => (<T>(Component: React.ComponentType<T>) => React.ComponentType<T>);
+export const wrapDisplayName: (hocName: string, BaseComponent?: ComponentType<any>) => (<T>(Component: ComponentType<T>) => ComponentType<T>);
 
 // @public (undocumented)
 export type XirrType = "xirr";

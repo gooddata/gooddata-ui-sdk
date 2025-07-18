@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
+import { useState, useCallback, ReactNode } from "react";
 
 import { OnOpenedChange, IOnOpenedChangeParams } from "./MenuSharedTypes.js";
 
@@ -16,7 +16,7 @@ export interface IMenuStateConfig {
  * @internal
  */
 export interface IMenuStateProps extends IMenuStateConfig {
-    children: (props: { opened: boolean; onOpenedChange: OnOpenedChange }) => React.ReactNode;
+    children: (props: { opened: boolean; onOpenedChange: OnOpenedChange }) => ReactNode;
 }
 
 export interface IMenuStateState {

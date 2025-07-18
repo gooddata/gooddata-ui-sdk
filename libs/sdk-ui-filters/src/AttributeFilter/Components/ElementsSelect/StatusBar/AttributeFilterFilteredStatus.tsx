@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import React, { ReactNode, useMemo } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { ReactNode, useMemo } from "react";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 
@@ -18,9 +18,7 @@ export interface IAttributeFilterFilteredStatusProps {
  * It displays list of parent filters
  * @beta
  */
-export const AttributeFilterFilteredStatus: React.FC<IAttributeFilterFilteredStatusProps> = (props) => {
-    const { parentFilterTitles } = props;
-
+export function AttributeFilterFilteredStatus({ parentFilterTitles }: IAttributeFilterFilteredStatusProps) {
     const tooltipText = useMemo(() => {
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
@@ -49,4 +47,4 @@ export const AttributeFilterFilteredStatus: React.FC<IAttributeFilterFilteredSta
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

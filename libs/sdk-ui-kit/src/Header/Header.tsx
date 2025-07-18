@@ -1,10 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, MouseEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
-import differenceInMonths from "date-fns/differenceInMonths/index.js";
-import differenceInCalendarDays from "date-fns/differenceInCalendarDays/index.js";
-import format from "date-fns/format/index.js";
+import { differenceInMonths, differenceInCalendarDays, format } from "date-fns";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { v4 as uuid } from "uuid";
@@ -109,7 +107,7 @@ function AppHeaderCore({
     const measure = useCallback(() => {
         const currentDOMNode = nodeRef.current;
         if (!currentDOMNode) {
-            // ref is null because 'this.measure()' is called after 100ms 'componentWillUnmount' called,
+            // ref is null because 'measure()' is called after 100ms 'componentWillUnmount' called,
             // which cleans the nodeRef
             return;
         }
@@ -228,7 +226,7 @@ function AppHeaderCore({
     const toggleHelpMenu = useCallback(() => setHelpMenu(!state.isHelpMenuOpen), [setHelpMenu, state]);
 
     const handleMenuItemClick = useCallback(
-        (item: IHeaderMenuItem, event: React.MouseEvent) => {
+        (item: IHeaderMenuItem, event: MouseEvent) => {
             if (state.isHelpMenuOpen) {
                 setOverlayMenu(false);
             }
@@ -429,7 +427,7 @@ function AppHeaderCore({
         return logoutMenuItem ? (
             <button
                 className="logout-button gd-button s-logout"
-                onClick={(e: React.MouseEvent) => {
+                onClick={(e: MouseEvent) => {
                     onMenuItemClick(logoutMenuItem, e);
                 }}
             >

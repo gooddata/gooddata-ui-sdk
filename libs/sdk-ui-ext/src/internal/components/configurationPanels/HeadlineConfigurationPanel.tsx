@@ -1,5 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
@@ -22,10 +22,10 @@ import { IHeadlinePanelConfig } from "../../interfaces/ConfigurationPanel.js";
 const BUBBLE_ARROW_OFFSETS = { "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] };
 const BUBBLE_ALIGN_POINTS = [{ align: "tc bc" }];
 
-class HeadlineConfigurationPanel extends ConfigurationPanelContent<
+export default class HeadlineConfigurationPanel extends ConfigurationPanelContent<
     IConfigurationPanelContentProps<IHeadlinePanelConfig>
 > {
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const { insight, propertiesMeta, properties, pushData, panelConfig } = this.props;
 
         const controlDisabled = this.isControlDisabled();
@@ -61,5 +61,3 @@ class HeadlineConfigurationPanel extends ConfigurationPanelContent<
         );
     }
 }
-
-export default HeadlineConfigurationPanel;

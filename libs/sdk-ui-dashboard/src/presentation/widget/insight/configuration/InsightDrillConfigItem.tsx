@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React, { ReactNode, useMemo } from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ReactNode, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -66,13 +66,13 @@ function disableDrillDownIfMeasure(
     return drillTargetTypes;
 }
 
-const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
+export default function DrillConfigItem({
     item,
     enabledDrillTargetTypeItems,
     onIncompleteChange,
     onSetup,
     onDelete,
-}) => {
+}: IDrillConfigItemProps) {
     const intl = useIntl();
     const onDeleteClick = () => {
         onDelete(item);
@@ -208,7 +208,7 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
             </div>
         </div>
     );
-};
+}
 
 function useDateAttributeOptions(item: IDrillConfigItem, widgetRef: UriRef | IdentifierRef) {
     const dateAttributes = useDashboardSelector(selectCatalogDateDatasets);
@@ -257,5 +257,3 @@ function useDateAttributeOptions(item: IDrillConfigItem, widgetRef: UriRef | Ide
         item.originLocalIdentifier,
     ]);
 }
-
-export default DrillConfigItem;

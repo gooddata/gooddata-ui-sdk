@@ -1,14 +1,14 @@
-// (C) 2019-2024 GoodData Corporation
-import React, { useEffect, useRef } from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ReactNode, useEffect, useRef } from "react";
 import { ObjRef } from "@gooddata/sdk-model";
 import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
 
 interface HoverDetectorProps {
     widgetRef: ObjRef;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
-export const HoverDetector: React.FC<HoverDetectorProps> = ({ widgetRef, children }) => {
+export function HoverDetector({ widgetRef, children }: HoverDetectorProps) {
     const { addHoveredWidget, removeHoveredWidget } = useHoveredWidget();
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -39,4 +39,4 @@ export const HoverDetector: React.FC<HoverDetectorProps> = ({ widgetRef, childre
             {children}
         </div>
     );
-};
+}

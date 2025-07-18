@@ -1,12 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { createContext, ReactNode, useContext, useMemo } from "react";
 import { IAnalyticalBackend, IRequestCorrelationMetadata } from "@gooddata/sdk-backend-spi";
 import { useBackend, BackendProvider } from "./BackendContext.js";
 
 /**
  * Context for storing request correlation metadata across components
  */
-const CorrelationContext = React.createContext<IRequestCorrelationMetadata>({});
+const CorrelationContext = createContext<IRequestCorrelationMetadata>({});
 CorrelationContext.displayName = "CorrelationContext";
 
 /**
@@ -22,7 +22,7 @@ export interface ICorrelationProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -31,7 +31,7 @@ export interface ICorrelationProviderProps {
  *
  * @public
  */
-export const CorrelationProvider: React.FC<ICorrelationProviderProps> = ({ children, correlationData }) => {
+export function CorrelationProvider({ children, correlationData }: ICorrelationProviderProps) {
     // Get parent correlation metadata to merge with
     const parentCorrelationData = useCorrelationData();
 
@@ -46,7 +46,7 @@ export const CorrelationProvider: React.FC<ICorrelationProviderProps> = ({ child
     }, [parentCorrelationData, memoizedAdditionalCorrelationData]);
 
     return <CorrelationContext.Provider value={mergedData}>{children}</CorrelationContext.Provider>;
-};
+}
 
 /**
  * Hook to get correlation metadata from the nearest correlation provider.
@@ -54,7 +54,7 @@ export const CorrelationProvider: React.FC<ICorrelationProviderProps> = ({ child
  * @public
  */
 export const useCorrelationData = (): Record<string, string> => {
-    return React.useContext(CorrelationContext);
+    return useContext(CorrelationContext);
 };
 
 /**
@@ -114,7 +114,7 @@ export interface IBackendProviderWithCorrelationProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -124,11 +124,11 @@ export interface IBackendProviderWithCorrelationProps {
  *
  * @public
  */
-export const BackendProviderWithCorrelation: React.FC<IBackendProviderWithCorrelationProps> = ({
+export function BackendProviderWithCorrelation({
     backend: externalBackend,
     correlationData,
     children,
-}) => {
+}: IBackendProviderWithCorrelationProps) {
     // Get existing backend from context if not provided
     const contextBackend = useBackend();
     const baseBackend = externalBackend || contextBackend;
@@ -164,4 +164,4 @@ export const BackendProviderWithCorrelation: React.FC<IBackendProviderWithCorrel
             {enhancedBackend ? <BackendProvider backend={enhancedBackend}>{children}</BackendProvider> : null}
         </CorrelationContext.Provider>
     );
-};
+}

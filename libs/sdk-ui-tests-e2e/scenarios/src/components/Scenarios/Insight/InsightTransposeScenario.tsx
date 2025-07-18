@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import { idRef } from "@gooddata/sdk-model";
 import {
@@ -13,7 +12,7 @@ import {
 import { Insights } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 const style = { height: 300 };
 
-const InsightViewTransposeCore: React.FC<IPivotTableTransposeCoreProps> = (props) => {
+function InsightViewTransposeCore(props: IPivotTableTransposeCoreProps) {
     const { config } = props;
     const insight = idRef(Insights.TableWithMC);
 
@@ -22,24 +21,24 @@ const InsightViewTransposeCore: React.FC<IPivotTableTransposeCoreProps> = (props
             <InsightView insight={insight} config={config} />
         </div>
     );
-};
+}
 
-export const InsightTranspose_MetricRow_ColHeaderLeft = () => {
+export function InsightTranspose_MetricRow_ColHeaderLeft() {
     return <InsightViewTransposeCore config={transposeConfigWithRowLeft} />;
-};
+}
 
-export const InsightTranspose_MetricColumn_ColHeaderLeft = () => {
+export function InsightTranspose_MetricColumn_ColHeaderLeft() {
     return <InsightViewTransposeCore config={transposeConfigWithColumnLeft} />;
-};
+}
 
-export const InsightTranspose_MetricColumn_ColHeaderTop = () => {
+export function InsightTranspose_MetricColumn_ColHeaderTop() {
     return <InsightViewTransposeCore config={transposeConfigWithColumnTop} />;
-};
+}
 
-export const InsightTranspose_MetricRow = () => {
+export function InsightTranspose_MetricRow() {
     return <InsightViewTransposeCore config={transposeConfigWithRow} />;
-};
+}
 
-export const InsightTranspose_ColHeaderLeft = () => {
+export function InsightTranspose_ColHeaderLeft() {
     return <InsightViewTransposeCore config={transposeConfigWithLeft} />;
-};
+}

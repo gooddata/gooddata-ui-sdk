@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     bucketsAttributes,
@@ -77,16 +77,16 @@ const WrappedXirr = withContexts(RenderXirr);
  *
  * @beta
  */
-export const Xirr = (props: IXirrProps): JSX.Element => {
+export function Xirr(props: IXirrProps): ReactElement {
     const [measure, attribute, filters] = useResolveValuesWithPlaceholders(
         [props.measure, props.attribute, props.filters],
         props.placeholdersResolutionContext,
     );
 
     return <WrappedXirr {...props} {...{ measure, attribute, filters }} />;
-};
+}
 
-export function RenderXirr(props: IXirrProps): JSX.Element {
+export function RenderXirr(props: IXirrProps): ReactElement {
     return <CoreXirr {...toCoreXirrProps(props)} />;
 }
 

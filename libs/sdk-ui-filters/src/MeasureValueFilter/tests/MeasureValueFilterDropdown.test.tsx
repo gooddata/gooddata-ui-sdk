@@ -1,9 +1,7 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { render } from "@testing-library/react";
 import noop from "lodash/noop.js";
 import { newMeasureValueFilter, IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
-import { withIntl } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 
 import MVFDropdownFragment from "./fragments/MeasureValueFilterDropdown.js";
@@ -27,8 +25,7 @@ const renderComponent = (props?: Partial<IMeasureValueFilterDropdownProps>) => {
         measureIdentifier: "myMeasure",
         filter: emptyFilter,
     };
-    const Wrapped = withIntl(MeasureValueFilterDropdown);
-    return render(<Wrapped {...defaultProps} {...props} />);
+    return render(<MeasureValueFilterDropdown {...defaultProps} {...props} />);
 };
 
 const component = new MVFDropdownFragment();

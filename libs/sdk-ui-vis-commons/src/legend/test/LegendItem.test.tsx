@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import LegendItem from "../LegendItem.js";
 import { describe, it, expect, vi, beforeEach, MockInstance } from "vitest";

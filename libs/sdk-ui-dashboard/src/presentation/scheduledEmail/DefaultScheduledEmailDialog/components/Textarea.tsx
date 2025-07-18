@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import * as React from "react";
+import { PureComponent, FocusEvent, ChangeEvent } from "react";
 import cx from "classnames";
 import { IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
 
@@ -13,7 +13,7 @@ interface ITextareaOwnProps {
     value: string;
     rows: number;
     onChange: (value: string) => void;
-    onFocus?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
+    onFocus?: (e: FocusEvent<HTMLTextAreaElement>) => void;
     onBlur?: (value: string) => void;
     validationError: string | null;
     autocomplete?: string;
@@ -26,7 +26,7 @@ interface ITextareaState {
 
 export type ITextareaProps = ITextareaOwnProps;
 
-export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState> {
+export class Textarea extends PureComponent<ITextareaProps, ITextareaState> {
     public static defaultProps = {
         hasError: false,
         hasWarning: false,
@@ -75,11 +75,11 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
         });
     };
 
-    private onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    private onChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
         this.props.onChange(e.target.value);
     };
 
-    private onBlur = (e: React.FocusEvent<HTMLTextAreaElement>): void => {
+    private onBlur = (e: FocusEvent<HTMLTextAreaElement>): void => {
         this.props.onBlur?.(e.target.value);
     };
 }

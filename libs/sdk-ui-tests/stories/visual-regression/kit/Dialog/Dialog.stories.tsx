@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { PureComponent } from "react";
+import { PureComponent, ReactElement } from "react";
 import {
     Button,
     Dialog,
@@ -36,7 +36,7 @@ class DialogExamples extends PureComponent {
         this.setState({ exportDialogOpen: false });
     };
 
-    public renderDialogContent(): JSX.Element {
+    public renderDialogContent(): ReactElement {
         return (
             <Dialog
                 onCancel={() => {
@@ -58,7 +58,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderConfirmDialogContent(): JSX.Element {
+    public renderConfirmDialogContent(): ReactElement {
         return (
             <ConfirmDialog
                 onCancel={() => {
@@ -77,7 +77,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderConfirmDialogWithNoSubmitButtonContent(): JSX.Element {
+    public renderConfirmDialogWithNoSubmitButtonContent(): ReactElement {
         return (
             <ConfirmDialog
                 onCancel={() => {
@@ -92,7 +92,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderConfirmDialogWithProgressIndicator(): JSX.Element {
+    public renderConfirmDialogWithProgressIndicator(): ReactElement {
         return (
             <ConfirmDialog
                 onCancel={() => {
@@ -111,7 +111,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderConfirmDialogWithWarningContent(): JSX.Element {
+    public renderConfirmDialogWithWarningContent(): ReactElement {
         return (
             <ConfirmDialog
                 onCancel={() => {
@@ -131,7 +131,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderExportDialogContent(): JSX.Element {
+    public renderExportDialogContent(): ReactElement {
         return (
             <ExportDialog
                 displayCloseButton
@@ -154,7 +154,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderCommunityEditionDialogContent(): JSX.Element {
+    public renderCommunityEditionDialogContent(): ReactElement {
         return (
             <IntlWrapper>
                 <CommunityEditionDialog
@@ -180,7 +180,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderStylingEditorDialogContent(): JSX.Element {
+    public renderStylingEditorDialogContent(): ReactElement {
         const theme = (color: string) => {
             return {
                 palette: {
@@ -233,7 +233,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderDialogExample(): JSX.Element {
+    public renderDialogExample(): ReactElement {
         return (
             <div id="dialog-example">
                 <Button
@@ -248,7 +248,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderConfirmDialogExample(): JSX.Element {
+    public renderConfirmDialogExample(): ReactElement {
         return (
             <div id="confirm-dialog-example">
                 <Button
@@ -263,7 +263,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderConfirmDialogWithNoSubmitButtonExample(): JSX.Element {
+    public renderConfirmDialogWithNoSubmitButtonExample(): ReactElement {
         return (
             <div id="confirm-dialog-with-no-submit-button-example">
                 <Button
@@ -283,7 +283,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderConfirmDialogWithWithProgressExample(): JSX.Element {
+    public renderConfirmDialogWithWithProgressExample(): ReactElement {
         return (
             <div id="confirm-dialog-with-progress-example">
                 <Button
@@ -302,7 +302,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderConfirmDialogWithWarningExample(): JSX.Element {
+    public renderConfirmDialogWithWarningExample(): ReactElement {
         return (
             <div id="confirm-dialog-with-warning-example">
                 <Button
@@ -321,7 +321,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderExportDialogExample(): JSX.Element {
+    public renderExportDialogExample(): ReactElement {
         return (
             <div id="export-dialog-example">
                 <Button
@@ -336,7 +336,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderCommunityEditionDialogExample(): JSX.Element {
+    public renderCommunityEditionDialogExample(): ReactElement {
         return (
             <div id="community-dialog-example">
                 <Button
@@ -351,7 +351,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public renderStylingEditorDialog(): JSX.Element {
+    public renderStylingEditorDialog(): ReactElement {
         return (
             <div id="styling-editor-dialog-example">
                 <Button
@@ -366,7 +366,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         return (
             <div className="library-component screenshot-target">
                 <h4>Dialog</h4>

@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
-import React from "react";
+import { RefObject } from "react";
 import { FormattedMessage } from "react-intl";
 import { removeAttributeFilter, removeDateFilter, useDashboardDispatch } from "../../model/index.js";
 import { getDropZoneDebugStyle } from "./debug.js";
@@ -36,7 +36,7 @@ export function DeleteDropZone() {
     const debugStyle = getDropZoneDebugStyle({ isOver });
 
     return (
-        <div className={className} ref={dropRef} style={debugStyle}>
+        <div className={className} ref={dropRef as unknown as RefObject<HTMLDivElement>} style={debugStyle}>
             <div className="gd-dropzone-message">
                 <FormattedMessage id="addPanel.deleteItem" />
             </div>

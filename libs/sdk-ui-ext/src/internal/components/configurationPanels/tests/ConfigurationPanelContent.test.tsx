@@ -1,5 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { render, screen } from "@testing-library/react";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 import { describe, it, expect } from "vitest";

@@ -1,5 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import {
     areObjRefsEqual,
@@ -26,11 +25,11 @@ interface IDrillTargetDashboardItemProps {
     onDeleteInteraction: () => void;
 }
 
-const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps> = ({
+export default function DrillTargetAttributeHierarchyItem({
     config,
     onSelect,
     onDeleteInteraction,
-}) => {
+}: IDrillTargetDashboardItemProps) {
     const catalogAttributeHierarchies = useDashboardSelector(selectAllCatalogAttributeHierarchies);
     const userInteraction = useDashboardUserInteraction();
 
@@ -95,6 +94,4 @@ const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps
             ) : null}
         </>
     );
-};
-
-export default DrillTargetAttributeHierarchyItem;
+}

@@ -1,7 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { render, screen } from "@testing-library/react";
-import { withIntl } from "@gooddata/sdk-ui";
 import { describe, it, expect } from "vitest";
 
 import { FilterLabel } from "../FilterLabel.js";
@@ -13,8 +11,8 @@ const customMessages = {
 };
 
 function renderFilterLabel(options: IFilterLabelProps) {
-    const Wrapped = withIntl(FilterLabel, "en-US", customMessages);
-    return render(<Wrapped {...options} />);
+    // const Wrapped = withIntl(FilterLabel, "en-US", customMessages); // TODO: MARTIN FIX THE injectIntl Components
+    return render(<FilterLabel {...options} />);
 }
 
 describe("FilterLabel", () => {
@@ -101,9 +99,9 @@ describe("FilterLabel", () => {
             selectionSize: 100,
         });
 
-        const Wrapped = withIntl(FilterLabel, "en-US", customMessages);
+        // const Wrapped = withIntl(FilterLabel, "en-US", customMessages);
 
-        rerender(<Wrapped title={title} selection={newSelection} selectionSize={100} />);
+        rerender(<FilterLabel title={title} selection={newSelection} selectionSize={100} />); // TODO: MARTIN FIX THE injectIntl Components
 
         expect(screen.getByRole("attribute-filter-label")).toHaveTextContent(`${title}: ${newSelection}`);
     });

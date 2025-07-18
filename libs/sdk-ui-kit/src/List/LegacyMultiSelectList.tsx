@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { ElementType, ReactElement, useCallback } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -26,7 +26,7 @@ export interface ILegacyMultiSelectListProps<T> {
     items: ReadonlyArray<T>;
     itemsCount: number;
     filteredItemsCount?: number;
-    listItemClass?: React.ElementType;
+    listItemClass?: ElementType;
     maxSelectionSize?: number;
     onItemMouseOut?: () => void;
     onItemMouseOver?: () => void;
@@ -35,7 +35,7 @@ export interface ILegacyMultiSelectListProps<T> {
     onSelectAll?: () => void;
     onSelectNone?: () => void;
     onSelectOnly?: (item: T) => void;
-    rowItem?: React.ReactElement;
+    rowItem?: ReactElement;
     width?: number;
     selectAllCheckbox?: boolean;
     selection?: T[];
@@ -64,7 +64,7 @@ export default function LegacyMultiSelectList<T>({
     onSelectAll = noop,
     onSelectNone = noop,
     onSelectOnly = noop,
-    rowItem: rowItemProp = null as React.ReactElement,
+    rowItem: rowItemProp = null as ReactElement,
     selectAllCheckbox = false,
     tagName = "",
     items,

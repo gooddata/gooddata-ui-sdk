@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import format from "date-fns/format/index.js";
+import { format } from "date-fns";
 import isString from "lodash/isString.js";
 import capitalize from "lodash/capitalize.js";
 import { ILocale, getIntl } from "@gooddata/sdk-ui";

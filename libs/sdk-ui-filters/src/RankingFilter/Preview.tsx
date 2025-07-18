@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React, { ReactNode } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
 
@@ -24,18 +24,20 @@ const getPreviewTemplate = (operator: RankingFilterOperator, attribute?: IAttrib
     }
 };
 
-export const Preview: React.FC<IPreviewProps> = ({ operator, value, measure, attribute }) => (
-    <div className="gd-rf-preview s-rf-preview">
-        <FormattedMessage
-            id={getPreviewTemplate(operator, attribute)}
-            tagName="span"
-            values={{
-                measure: measure.title,
-                attribute: attribute?.title,
-                operator,
-                value,
-                strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
-            }}
-        />
-    </div>
-);
+export function Preview({ operator, value, measure, attribute }: IPreviewProps) {
+    return (
+        <div className="gd-rf-preview s-rf-preview">
+            <FormattedMessage
+                id={getPreviewTemplate(operator, attribute)}
+                tagName="span"
+                values={{
+                    measure: measure.title,
+                    attribute: attribute?.title,
+                    operator,
+                    value,
+                    strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                }}
+            />
+        </div>
+    );
+}

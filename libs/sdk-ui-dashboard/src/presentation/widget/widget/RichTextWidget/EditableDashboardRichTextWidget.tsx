@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import cx from "classnames";
 
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
@@ -15,11 +14,11 @@ import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 /**
  * @internal
  */
-export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = ({
+export function EditableDashboardRichTextWidget({
     widget,
     screen,
     dashboardItemClasses,
-}) => {
+}: IDefaultDashboardRichTextWidgetProps) {
     const { isSelectable, isSelected, onSelected } = useWidgetSelection(widgetRef(widget));
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
@@ -53,4 +52,4 @@ export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichText
             </DashboardItemBase>
         </DashboardItem>
     );
-};
+}

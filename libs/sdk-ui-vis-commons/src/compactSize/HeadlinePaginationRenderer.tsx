@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import cx from "classnames";
 
 interface IHeadlinePaginationProps {
@@ -12,12 +12,12 @@ interface IHeadlinePaginationProps {
     showNextItem: () => void;
 }
 
-export const HeadlinePaginationRenderer: React.FC<IHeadlinePaginationProps> = ({
+export function HeadlinePaginationRenderer({
     item,
     accessibilityConfig,
     showPrevItem,
     showNextItem,
-}) => {
+}: IHeadlinePaginationProps) {
     const { nextAriaLabel, previousAriaLabel } = accessibilityConfig ?? {};
     const commonClassNames = "gd-button-link gd-button-icon-only pagination";
 
@@ -56,4 +56,4 @@ export const HeadlinePaginationRenderer: React.FC<IHeadlinePaginationProps> = ({
             />
         </div>
     );
-};
+}

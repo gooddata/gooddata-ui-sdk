@@ -7,14 +7,14 @@ import {
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { useIntl } from "react-intl";
-import React, { useMemo } from "react";
+import { ComponentType, useMemo } from "react";
 
 /**
  * @internal
  */
 export interface IInsightErrorProps {
     error: GoodDataSdkError;
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
     height?: number | string | null;
     clientHeight?: number;
 }

@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -16,7 +16,7 @@ import {
 import { messages } from "../../../locales.js";
 
 export default class TreeMapConfigurationPanel extends ConfigurationPanelContent {
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const { propertiesMeta, properties, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 

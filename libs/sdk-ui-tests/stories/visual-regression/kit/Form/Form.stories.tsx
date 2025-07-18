@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useState, useEffect } from "react";
+import { memo, useState, useEffect } from "react";
 import { Input, InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";

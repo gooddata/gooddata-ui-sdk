@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 module.exports = {
     extends: ["./.eslintrc.js"],
     settings: {
@@ -13,5 +13,13 @@ module.exports = {
          * within component's properties.
          */
         "react/jsx-no-leaked-render": ["warn", { validStrategies: ["ternary", "coerce"] }],
+        "react/function-component-definition": [
+            "error",
+            {
+                namedComponents: "function-declaration",
+                unnamedComponents: "arrow-function",
+            },
+        ],
+        "react/react-in-jsx-scope": "off", // no longer needed, since it is always (hopefully) in scope
     },
 };

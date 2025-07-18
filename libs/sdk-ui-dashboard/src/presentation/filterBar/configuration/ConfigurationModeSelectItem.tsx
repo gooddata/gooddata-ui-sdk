@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { ChangeEvent } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ChangeEvent } from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
@@ -20,7 +20,7 @@ export interface IModeSelectItemProps {
 /**
  * @internal
  */
-export const ModeSelectItem = (props: IModeSelectItemProps) => {
+export function ModeSelectItem(props: IModeSelectItemProps) {
     const { checked, onChange, itemValue, itemText, itemTooltip, className } = props;
 
     return (
@@ -43,4 +43,4 @@ export const ModeSelectItem = (props: IModeSelectItemProps) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

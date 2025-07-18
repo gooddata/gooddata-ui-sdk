@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
     Button,
     Menu,
@@ -36,7 +36,7 @@ export interface IAlertAttributeSelectOldProps {
     closeOnParentScroll?: boolean;
 }
 
-export const AlertAttributeSelectOld = ({
+export function AlertAttributeSelectOld({
     id,
     selectedAttribute: selectedAttributeProp,
     getAttributeValues,
@@ -48,7 +48,7 @@ export const AlertAttributeSelectOld = ({
     catalogDateDatasets,
     showLabel = true,
     closeOnParentScroll,
-}: IAlertAttributeSelectOldProps) => {
+}: IAlertAttributeSelectOldProps) {
     const intl = useIntl();
     const ref = useRef<HTMLElement | null>(null);
 
@@ -292,4 +292,4 @@ export const AlertAttributeSelectOld = ({
             </div>
         </>
     );
-};
+}

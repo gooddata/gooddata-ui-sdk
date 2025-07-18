@@ -1,5 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { IAttributeFilterBaseProps } from "./types.js";
 import { validateAttributeFilterProps } from "./utils.js";
@@ -9,7 +8,7 @@ import { AttributeFilterDropdown } from "./Components/Dropdown/AttributeFilterDr
 /**
  * @internal
  */
-export const AttributeFilterBase: React.FC<IAttributeFilterBaseProps> = (props) => {
+export function AttributeFilterBase(props: IAttributeFilterBaseProps) {
     const backend = useBackendStrict(props.backend, "AttributeFilter");
 
     validateAttributeFilterProps({ backend, ...props });
@@ -19,4 +18,4 @@ export const AttributeFilterBase: React.FC<IAttributeFilterBaseProps> = (props) 
             <AttributeFilterDropdown />
         </AttributeFilterProviders>
     );
-};
+}

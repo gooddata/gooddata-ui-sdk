@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { IAutomationMetadataObject, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
 import {
     ScrollablePanel,
@@ -40,11 +40,7 @@ import { AlertDeleteDialog } from "../../../alerting/DefaultAlertingDialog/compo
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
-export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
-    widget,
-    onClose,
-    onGoBack,
-}) => {
+export function InsightAlertsNew({ widget, onClose, onGoBack }: IInsightMenuSubmenuComponentProps) {
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget.ref));
     const currentUser = useDashboardSelector(selectCurrentUser);
     const effectiveBackend = useBackendStrict();
@@ -62,7 +58,7 @@ export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
     const alerts = useDashboardSelector(selectDashboardUserAutomationAlertsInContext(widget.localIdentifier));
 
     const [isDeleteInProgress, setIsDeleteInProgress] = useState(false);
-    const [alertToDelete, setAlertToDelete] = React.useState<null | IAutomationMetadataObject>(null);
+    const [alertToDelete, setAlertToDelete] = useState<null | IAutomationMetadataObject>(null);
 
     const widgetRefSuffix = isInsightWidget(widget)
         ? stringUtils.simplifyText(objRefToString(widget.ref))
@@ -119,15 +115,15 @@ export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
         handleResumeAlert(alertToResume);
     };
 
-    const startDeletingAlert = React.useCallback((alert: IAutomationMetadataObject) => {
+    const startDeletingAlert = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
     }, []);
 
-    const cancelDeletingAlert = React.useCallback(() => {
+    const cancelDeletingAlert = useCallback(() => {
         setAlertToDelete(null);
     }, []);
 
-    const deleteExistingAlert = React.useCallback(async () => {
+    const deleteExistingAlert = useCallback(async () => {
         if (!alertToDelete) {
             return;
         }
@@ -151,7 +147,7 @@ export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
             addSuccess(messages.alertDeleteSuccess);
             setIsDeleteInProgress(false);
             refreshAutomations();
-        } catch (err) {
+        } catch {
             addError(messages.alertDeleteError);
             setIsDeleteInProgress(false);
         }
@@ -211,4 +207,4 @@ export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
             </OverlayControllerProvider>
         </ScrollablePanel>
     );
-};
+}

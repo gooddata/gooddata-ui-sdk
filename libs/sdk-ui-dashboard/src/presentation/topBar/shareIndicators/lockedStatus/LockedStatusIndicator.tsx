@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import React, { ReactNode } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { ReactElement, ReactNode } from "react";
 import { BubbleHoverTrigger, Bubble, Icon } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -9,7 +9,7 @@ import { gdColorStateBlank } from "../../../constants/colors.js";
 /**
  * @alpha
  */
-export const LockedStatusIndicator = (props: ILockedStatusProps): JSX.Element | null => {
+export function LockedStatusIndicator(props: ILockedStatusProps): ReactElement | null {
     const theme = useTheme();
     if (!props.isLocked) {
         return null;
@@ -32,4 +32,4 @@ export const LockedStatusIndicator = (props: ILockedStatusProps): JSX.Element | 
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { ReactNode } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import isEmpty from "lodash/isEmpty.js";
 import { Button } from "@gooddata/sdk-ui-kit";
@@ -10,7 +10,7 @@ import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.
 const HOW_TO_WORK_DOCUMENTATION_LINK =
     "https://www.gooddata.com/docs/cloud/create-dashboards/drilling-in-dashboards/set-drill-down/";
 
-const AttributeHierarchyDialogFooter: React.FC = () => {
+export default function AttributeHierarchyDialogFooter() {
     const { formatMessage } = useIntl();
     const {
         isEditing,
@@ -83,6 +83,4 @@ const AttributeHierarchyDialogFooter: React.FC = () => {
             </div>
         </div>
     );
-};
-
-export default AttributeHierarchyDialogFooter;
+}

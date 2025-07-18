@@ -1,5 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { render, screen, fireEvent } from "@testing-library/react";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
@@ -24,7 +23,7 @@ const renderEnhancedComponent = (
     hocConfig?: Omit<IWithExecution<IDummyComponentProps>, "execution" | "exportTitle">,
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
-    const CoreComponent: React.FC<IDummyComponentProps & WithLoadingResult> = (props) => {
+    function CoreComponent(props: IDummyComponentProps & WithLoadingResult) {
         const { result, error, reload, isLoading } = props;
         return (
             <div>
@@ -36,7 +35,7 @@ const renderEnhancedComponent = (
                 {error ? <div className="Error"> {error.message} </div> : null}
             </div>
         );
-    };
+    }
 
     const Component = withExecution({
         ...hocConfig,

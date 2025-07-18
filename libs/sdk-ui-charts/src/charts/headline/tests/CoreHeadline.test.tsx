@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import { ICoreChartProps } from "../../../interfaces/chartProps.js";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";

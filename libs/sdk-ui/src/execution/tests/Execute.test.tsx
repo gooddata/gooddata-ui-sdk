@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { DataViewFacade } from "../../base/results/facade.js";

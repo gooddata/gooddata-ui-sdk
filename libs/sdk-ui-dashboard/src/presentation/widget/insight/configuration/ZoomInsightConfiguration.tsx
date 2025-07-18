@@ -1,7 +1,7 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IInsightWidget } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Checkbox, Message } from "@gooddata/sdk-ui-kit";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import {
     changeInsightWidgetVisProperties,

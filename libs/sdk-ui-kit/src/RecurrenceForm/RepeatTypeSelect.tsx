@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { KeyboardEvent } from "react";
 import { IntlShape, MessageDescriptor, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 import { Dropdown, DropdownButton } from "../Dropdown/index.js";
@@ -122,17 +122,16 @@ export interface IRepeatTypeSelectProps {
     closeOnParentScroll?: boolean;
 }
 
-export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
-    const {
-        id,
-        onChange,
-        repeatType,
-        startDate = null,
-        allowHourlyRecurrence,
-        showInheritValue,
-        onRepeatDropdownOpen,
-        closeOnParentScroll,
-    } = props;
+export function RepeatTypeSelect({
+    id,
+    onChange,
+    repeatType,
+    startDate = null,
+    allowHourlyRecurrence,
+    showInheritValue,
+    onRepeatDropdownOpen,
+    closeOnParentScroll,
+}: IRepeatTypeSelectProps) {
     const intl = useIntl();
     const repeatItems = getRepeatItems(intl, startDate, allowHourlyRecurrence, showInheritValue);
     const repeatTypeItem = repeatItems.find((item) => item.id === repeatType);
@@ -150,7 +149,9 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                     id={id}
                     value={repeatTypeItem.title}
                     onClick={() => {
-                        !isOpen && onRepeatDropdownOpen?.();
+                        if (!isOpen) {
+                            onRepeatDropdownOpen?.();
+                        }
                         toggleDropdown();
                     }}
                     dropdownId={dropdownId}
@@ -166,7 +167,7 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                     data: item,
                 }));
 
-                const handleKeyDown = (e: React.KeyboardEvent) => {
+                const handleKeyDown = (e: KeyboardEvent) => {
                     if (e.key !== "Tab") {
                         return;
                     }
@@ -207,4 +208,4 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
             overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
         />
     );
-};
+}

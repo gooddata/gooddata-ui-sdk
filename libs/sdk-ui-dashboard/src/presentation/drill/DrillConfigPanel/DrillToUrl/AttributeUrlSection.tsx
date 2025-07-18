@@ -1,5 +1,5 @@
-// (C) 2020-2023 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
 
@@ -16,9 +16,12 @@ interface IAttributeUrlSectionOwnProps {
 
 type AttributeUrlSectionProps = IAttributeUrlSectionOwnProps;
 
-export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) => {
-    const { attributeDisplayForms, loading = false, selected, onSelect } = props;
-
+export function AttributeUrlSection({
+    attributeDisplayForms,
+    loading = false,
+    selected,
+    onSelect,
+}: AttributeUrlSectionProps) {
     const onClickHandler = useCallback(
         (target: IAttributeWithDisplayForm) => {
             onSelect(target.attributeDisplayFormRef, target.displayForm.ref);
@@ -53,4 +56,4 @@ export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) =
             )}
         </>
     );
-};
+}

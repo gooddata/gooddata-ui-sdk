@@ -1,5 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 import {
@@ -88,12 +87,12 @@ function buildHierarchyItemList(
     return items;
 }
 
-const AttributeHierarchyDropdown: React.FC<IAttributeHierarchyDropdownProps> = ({
+export default function AttributeHierarchyDropdown({
     config,
     attributeDescriptor,
     onSelect,
     onOpenAttributeHierarchyDialog,
-}) => {
+}: IAttributeHierarchyDropdownProps) {
     const { formatMessage } = useIntl();
 
     const catalogAttributeHierarchies = useDashboardSelector(selectAllCatalogAttributeHierarchies);
@@ -154,6 +153,4 @@ const AttributeHierarchyDropdown: React.FC<IAttributeHierarchyDropdownProps> = (
             }}
         />
     );
-};
-
-export default AttributeHierarchyDropdown;
+}

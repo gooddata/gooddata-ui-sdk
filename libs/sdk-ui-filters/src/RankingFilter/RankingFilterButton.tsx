@@ -1,5 +1,4 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import cx from "classnames";
 
 interface IRankingFilterButtonProps {
@@ -9,12 +8,7 @@ interface IRankingFilterButtonProps {
     className?: string;
 }
 
-export const RankingFilterButton: React.FC<IRankingFilterButtonProps> = ({
-    isActive,
-    onClick,
-    title,
-    className,
-}) => {
+export function RankingFilterButton({ isActive, onClick, title, className }: IRankingFilterButtonProps) {
     const buttonClassName = cx(
         "gd-button",
         "gd-button-secondary",
@@ -31,4 +25,4 @@ export const RankingFilterButton: React.FC<IRankingFilterButtonProps> = ({
             {title}
         </button>
     );
-};
+}

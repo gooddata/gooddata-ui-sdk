@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useEffect } from "react";
+import { ReactElement, useState, useEffect, forwardRef, CSSProperties } from "react";
 import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -55,7 +55,7 @@ export interface IDateFilterBodyProps {
     closeDropdown: () => void;
 
     errors?: IExtendedDateFilterErrors;
-    dateFilterButton: JSX.Element;
+    dateFilterButton: ReactElement;
 
     weekStart?: WeekStart;
     isConfigurationEnabled?: boolean;
@@ -64,7 +64,7 @@ export interface IDateFilterBodyProps {
     withoutApply?: boolean;
 }
 
-export const DateFilterBody = React.forwardRef<HTMLDivElement, IDateFilterBodyProps>((props, ref) => {
+export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((props, ref) => {
     const [route, setRoute] = useState<DateFilterRoute>(null);
 
     const intl = useIntl();
@@ -127,8 +127,8 @@ export const DateFilterBody = React.forwardRef<HTMLDivElement, IDateFilterBodyPr
     const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
     const bodyHeight: number = calculateHeight(showExcludeCurrent);
     const visibleScrollbarClassName = getVisibleScrollbarClassName();
-    let wrapperStyle: React.CSSProperties = {};
-    let scrollerStyle: React.CSSProperties = {};
+    let wrapperStyle: CSSProperties = {};
+    let scrollerStyle: CSSProperties = {};
     if (bodyHeight) {
         // display: flex causes the scroller is cut off when scrolling
         wrapperStyle = { display: "block", height: `${bodyHeight}px` };

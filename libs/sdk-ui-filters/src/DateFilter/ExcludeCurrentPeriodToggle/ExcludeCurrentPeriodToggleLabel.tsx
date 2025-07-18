@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { granularityIntlCodes } from "../constants/i18n.js";
@@ -11,10 +10,10 @@ interface IExcludeCurrentPeriodToggleLabelProps {
     granularity?: DateFilterGranularity;
 }
 
-export const ExcludeCurrentPeriodToggleLabel: React.FC<IExcludeCurrentPeriodToggleLabelProps> = ({
+export function ExcludeCurrentPeriodToggleLabel({
     disabled,
     granularity,
-}) => {
+}: IExcludeCurrentPeriodToggleLabelProps) {
     const granularityIntlCode = granularityIntlCodes[granularity];
     const id =
         !disabled && granularity !== undefined && granularityIntlCode !== undefined
@@ -25,4 +24,4 @@ export const ExcludeCurrentPeriodToggleLabel: React.FC<IExcludeCurrentPeriodTogg
             {(...children) => <span className="input-label-text">{children}</span>}
         </FormattedMessage>
     );
-};
+}

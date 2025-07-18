@@ -2,10 +2,10 @@
 
 import { ThemeColor } from "@gooddata/sdk-model";
 import { b } from "./iconBackgroundBem.js";
-import React from "react";
+
 import { BackgroundShape, BackgroundType } from "../@types/background.js";
 
-export const UiIconBackground = ({
+export function UiIconBackground({
     children,
     size,
     color,
@@ -17,7 +17,7 @@ export const UiIconBackground = ({
     color?: ThemeColor;
     type?: BackgroundType;
     shape?: BackgroundShape;
-}) => {
+}) {
     return size ? (
         <div
             className={b({ color, type, shape })}
@@ -31,4 +31,4 @@ export const UiIconBackground = ({
     ) : (
         children
     );
-};
+}

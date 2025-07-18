@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactNode } from "react";
 import DefaultMeasure from "react-measure";
 import { defaultImport } from "default-import";
 
@@ -9,13 +9,10 @@ import { defaultImport } from "default-import";
 const Measure = defaultImport(DefaultMeasure);
 
 interface IDashboardItemContentWrapperProps {
-    children: (params: {
-        clientWidth: number | undefined;
-        clientHeight: number | undefined;
-    }) => React.ReactNode;
+    children: (params: { clientWidth: number | undefined; clientHeight: number | undefined }) => ReactNode;
 }
 
-export const DashboardItemContentWrapper: React.FC<IDashboardItemContentWrapperProps> = ({ children }) => {
+export function DashboardItemContentWrapper({ children }: IDashboardItemContentWrapperProps) {
     return (
         <Measure client>
             {({ measureRef, contentRect }) => {
@@ -30,4 +27,4 @@ export const DashboardItemContentWrapper: React.FC<IDashboardItemContentWrapperP
             }}
         </Measure>
     );
-};
+}

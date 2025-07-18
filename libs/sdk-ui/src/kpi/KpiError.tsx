@@ -1,11 +1,10 @@
-// (C) 2019 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { IErrorProps } from "../base/index.js";
 
 /**
  * @internal
  */
-export const KpiError: React.FC<IErrorProps> = (props) => {
+export function KpiError(props: IErrorProps) {
     const message: string = props.message;
 
     return (
@@ -24,4 +23,4 @@ export const KpiError: React.FC<IErrorProps> = (props) => {
             {message}
         </span>
     );
-};
+}

@@ -1,13 +1,13 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactElement } from "react";
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import { IScheduledEmailManagementDialogProps } from "./types.js";
 
 /**
  * @internal
  */
-export const ScheduledEmailManagementDialog = (props: IScheduledEmailManagementDialogProps): JSX.Element => {
+export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementDialogProps): ReactElement {
     const { ScheduledEmailManagementDialogComponent } = useDashboardComponentsContext();
 
     return <ScheduledEmailManagementDialogComponent {...props} />;
-};
+}

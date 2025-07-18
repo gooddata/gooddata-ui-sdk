@@ -1,6 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import React from "react";
 import { BUCKETS } from "../../../constants/bucket.js";
 import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { DEFAULT_SCATTERPLOT_UICONFIG } from "../../../constants/uiConfig.js";

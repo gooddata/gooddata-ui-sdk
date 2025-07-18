@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
 import { LoadingDots } from "@gooddata/sdk-ui-kit";
 
 /**
@@ -7,7 +6,7 @@ import { LoadingDots } from "@gooddata/sdk-ui-kit";
  *
  * @alpha
  */
-export const LoadingComponent = () => {
+export function LoadingComponent() {
     return (
         <div
             style={{
@@ -21,4 +20,4 @@ export const LoadingComponent = () => {
             <LoadingDots />
         </div>
     );
-};
+}

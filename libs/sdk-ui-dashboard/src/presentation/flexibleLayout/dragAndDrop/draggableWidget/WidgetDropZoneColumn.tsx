@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { CSSProperties, useMemo } from "react";
 import cx from "classnames";
 import isNil from "lodash/isNil.js";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
@@ -32,12 +32,12 @@ export type WidgetDropZoneColumnProps = {
     gridHeightOverride?: number;
 };
 
-export const WidgetDropZoneColumn = ({
+export function WidgetDropZoneColumn({
     layoutPath,
     isLastInSection = false,
     gridWidthOverride,
     gridHeightOverride,
-}: WidgetDropZoneColumnProps) => {
+}: WidgetDropZoneColumnProps) {
     const dropzoneCoordinates = useDashboardSelector(selectDraggingWidgetTargetLayoutPath);
     const dropzoneTriggerType = useDashboardSelector(selectDraggingWidgetTriggeringDropZoneType);
 
@@ -110,7 +110,7 @@ export const WidgetDropZoneColumn = ({
 
     const gridHeightProp = usedHeight === undefined ? {} : { gridHeight: usedHeight };
     const computedHeight = getDashboardLayoutItemHeight({ gridWidth: usedWidth, ...gridHeightProp });
-    const style: React.CSSProperties = computedHeight === undefined ? {} : { height: computedHeight };
+    const style: CSSProperties = computedHeight === undefined ? {} : { height: computedHeight };
     const classNames = cx(
         "gd-fluidlayout-column",
         "gd-fluidlayout-column-dropzone",
@@ -127,4 +127,4 @@ export const WidgetDropZoneColumn = ({
             <WidgetDropZone isLastInSection={isLastInSection} layoutPath={layoutPath} dropRef={dropRef} />
         </GridLayoutElement>
     );
-};
+}

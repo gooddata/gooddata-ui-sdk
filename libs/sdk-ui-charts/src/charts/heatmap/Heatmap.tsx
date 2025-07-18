@@ -1,5 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import {
     bucketAttribute,
     bucketsFind,
@@ -110,7 +109,7 @@ const WrappedHeatmap = withChart(heatmapDefinition)(CoreHeatmap);
  *
  * @public
  */
-export const Heatmap = (props: IHeatmapProps) => {
+export function Heatmap(props: IHeatmapProps) {
     const [measure, rows, columns, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measure, props.rows, props.columns, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -128,7 +127,7 @@ export const Heatmap = (props: IHeatmapProps) => {
             }}
         />
     );
-};
+}
 
 function getDefaultHeatmapSort(buckets: IBucket[]): ISortItem[] {
     const viewBucket = bucketsFind(buckets, BucketNames.VIEW);

@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { useMemo, CSSProperties } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { useMemo, CSSProperties } from "react";
 import cx from "classnames";
 
 /**
@@ -20,9 +20,7 @@ export interface ILoadingMaskProps {
 /**
  * @internal
  */
-export const LoadingMask: React.FC<ILoadingMaskProps> = (props) => {
-    const { className, height, width, size } = props;
-
+export function LoadingMask({ className, height, width, size }: ILoadingMaskProps) {
     const style = useMemo(
         (): CSSProperties => ({
             width,
@@ -37,4 +35,4 @@ export const LoadingMask: React.FC<ILoadingMaskProps> = (props) => {
             <div className={cx("gd-spinner", spinnerSize)} />
         </div>
     );
-};
+}

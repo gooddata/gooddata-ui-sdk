@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -49,17 +49,15 @@ export interface IStylingEditorDialogProps<T extends StylingPickerItemContent>
 /**
  * @internal
  */
-export const StylingEditorDialog = <T extends StylingPickerItemContent>(
-    props: IStylingEditorDialogProps<T>,
-) => {
+export function StylingEditorDialog<T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) {
     return (
         <IntlWrapper locale={props.locale}>
             <StylingEditorDialogCore<T> {...props} />
         </IntlWrapper>
     );
-};
+}
 
-const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => {
+function StylingEditorDialogCore<T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) {
     const {
         title,
         tooltip,
@@ -90,7 +88,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
             const parsedDefinition = JSON.parse(definitionField);
             const formattedDefinition = JSON.stringify(parsedDefinition, null, 4);
             return nameField !== initialNameField || formattedDefinition !== initialDefinitionField;
-        } catch (e) {
+        } catch {
             // initial state of the fields is presumed to be valid,
             // so if JSON throws error, definition was changed
             return true;
@@ -103,7 +101,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
         try {
             JSON.parse(definitionField);
             return true;
-        } catch (e) {
+        } catch {
             return false;
         }
     }, [definitionField]);
@@ -248,4 +246,4 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
             />
         </Dialog>
     );
-};
+}

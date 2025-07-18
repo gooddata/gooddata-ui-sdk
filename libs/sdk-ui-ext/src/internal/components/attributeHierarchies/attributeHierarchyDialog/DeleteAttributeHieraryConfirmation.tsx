@@ -1,12 +1,11 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { ConfirmDialog, LoadingMask } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
 import { messages } from "@gooddata/sdk-ui";
 
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
-const DeleteAttributeHierarchyConfirmation: React.FC = () => {
+export default function DeleteAttributeHierarchyConfirmation() {
     const { formatMessage } = useIntl();
     const { isLoading, setLoading, setDisplayDeleteConfirmation, onDeleteAttributeHierarchy } =
         useAttributeHierarchyDialog();
@@ -38,6 +37,4 @@ const DeleteAttributeHierarchyConfirmation: React.FC = () => {
             ) : null}
         </ConfirmDialog>
     );
-};
-
-export default DeleteAttributeHierarchyConfirmation;
+}

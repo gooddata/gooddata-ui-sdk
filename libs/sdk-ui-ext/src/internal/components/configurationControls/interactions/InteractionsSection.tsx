@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { memo } from "react";
+import { memo, ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 import ConfigSection from "../ConfigSection.js";
@@ -15,14 +15,14 @@ export interface IInteractionsSectionProps {
     properties: IVisualizationProperties;
     propertiesMeta: any;
     pushData: (data: any) => any;
-    InteractionsDetailRenderer?: () => React.ReactNode;
+    InteractionsDetailRenderer?: () => ReactNode;
     supportsAlertConfiguration?: boolean;
     supportsDrillDownConfiguration?: boolean;
     supportsScheduledExportsConfiguration?: boolean;
 }
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
-export const QuestionMarkTooltip = (props: { tooltipText: string }) => {
+export function QuestionMarkTooltip(props: { tooltipText: string }) {
     return (
         <BubbleHoverTrigger>
             <span className="gd-interactions-section__question-mark gd-icon-circle-question" />
@@ -31,7 +31,7 @@ export const QuestionMarkTooltip = (props: { tooltipText: string }) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
 const InteractionsSection = memo(function InteractionsSection({
     areControlsDisabledGetter,

@@ -3,7 +3,7 @@
  * Copyright (c) 2015 Case Sandberg
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import React, { memo, useRef, useEffect, useCallback, CSSProperties } from "react";
+import { memo, useRef, useEffect, useCallback, CSSProperties } from "react";
 import { ColorFormats } from "tinycolor2";
 
 import { calculateHueChange } from "../utils.js";

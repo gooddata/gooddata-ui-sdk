@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { IAttribute, IAttributeOrMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
@@ -102,7 +101,7 @@ const WrappedDependencyWheelChart = withChart(dependencyWheelChartDefinition)(Co
  *
  * @public
  */
-export const DependencyWheelChart = (props: IDependencyWheelChartProps) => {
+export function DependencyWheelChart(props: IDependencyWheelChartProps) {
     const [measure, attributeFrom, attributeTo, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measure, props.attributeFrom, props.attributeTo, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -120,4 +119,4 @@ export const DependencyWheelChart = (props: IDependencyWheelChartProps) => {
             }}
         />
     );
-};
+}

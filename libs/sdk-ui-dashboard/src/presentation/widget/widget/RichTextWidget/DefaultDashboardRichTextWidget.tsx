@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import cx from "classnames";
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
@@ -9,11 +8,11 @@ import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 /**
  * @internal
  */
-export const DefaultDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = ({
-    widget,
-    screen,
+export function DefaultDashboardRichTextWidget({
     dashboardItemClasses,
-}) => {
+    screen,
+    widget,
+}: IDefaultDashboardRichTextWidgetProps) {
     const { elementRef, highlighted } = useWidgetHighlighting(widget);
 
     return (
@@ -29,4 +28,4 @@ export const DefaultDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextW
             </DashboardItemBase>
         </DashboardItem>
     );
-};
+}

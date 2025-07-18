@@ -1,7 +1,6 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
 import { Button } from "@gooddata/sdk-ui-kit";
-import React from "react";
 
 interface ISelectionModeButtonProps {
     isOpen: boolean;
@@ -9,9 +8,7 @@ interface ISelectionModeButtonProps {
     toggleDropdown: () => void;
 }
 
-export const SelectionModeButton: React.FC<ISelectionModeButtonProps> = (props) => {
-    const { title, isOpen, toggleDropdown } = props;
-
+export function SelectionModeButton({ title, isOpen, toggleDropdown }: ISelectionModeButtonProps) {
     const buttonClassNames = cx(
         "gd-button-primary",
         "gd-button-small",
@@ -35,4 +32,4 @@ export const SelectionModeButton: React.FC<ISelectionModeButtonProps> = (props) 
             iconRight={iconRight}
         />
     );
-};
+}

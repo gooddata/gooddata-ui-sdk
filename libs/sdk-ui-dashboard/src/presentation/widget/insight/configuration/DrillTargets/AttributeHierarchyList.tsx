@@ -1,6 +1,5 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { ICatalogAttributeHierarchy, ICatalogDateAttributeHierarchy } from "@gooddata/sdk-model";
 import { DropdownList, withBubble } from "@gooddata/sdk-ui-kit";
 
@@ -35,12 +34,12 @@ const DROPDOWN_BODY_WIDTH = 187;
 
 const AttributeHierarchyListItemWithBubble = withBubble(AttributeHierarchyListItem);
 
-export const AttributeHierarchyList: React.FC<IAttributeHierarchyListProps> = ({
+export function AttributeHierarchyList({
     hierarchies,
     onSelect,
     closeDropdown,
     onOpenAttributeHierarchyDialog,
-}) => {
+}: IAttributeHierarchyListProps) {
     const userInteraction = useDashboardUserInteraction();
 
     const onClick = (item: IAttributeHierarchyItem) => {
@@ -79,4 +78,4 @@ export const AttributeHierarchyList: React.FC<IAttributeHierarchyListProps> = ({
             }}
         />
     );
-};
+}

@@ -13,7 +13,6 @@ import {
 import { BucketNames, IPushData } from "@gooddata/sdk-ui";
 
 import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
-import React from "react";
 import {
     IExtendedReferencePoint,
     IReferencePoint,

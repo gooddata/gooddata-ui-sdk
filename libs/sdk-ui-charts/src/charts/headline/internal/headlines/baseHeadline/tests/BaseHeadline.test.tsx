@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 import { afterAll, beforeEach, describe, expect, it, MockInstance, vi } from "vitest";
 import { render } from "@testing-library/react";
 import BaseHeadline from "../BaseHeadline.js";
@@ -7,7 +6,7 @@ import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import * as PrimarySection from "../PrimarySection.js";
 import * as CompareSection from "../CompareSection.js";
-import { withIntl } from "@gooddata/sdk-ui";
+import { Intl } from "@gooddata/sdk-ui";
 
 describe("BaseHeadline", () => {
     let MockPrimarySection: MockInstance;
@@ -47,8 +46,11 @@ describe("BaseHeadline", () => {
             onAfterRender: params.onAfterRender || vi.fn(),
         };
 
-        const WrappedBaseHeadline = withIntl(BaseHeadline);
-        return render(<WrappedBaseHeadline {...props} />);
+        return render(
+            <Intl>
+                <BaseHeadline {...props} />
+            </Intl>,
+        );
     };
 
     beforeEach(() => {

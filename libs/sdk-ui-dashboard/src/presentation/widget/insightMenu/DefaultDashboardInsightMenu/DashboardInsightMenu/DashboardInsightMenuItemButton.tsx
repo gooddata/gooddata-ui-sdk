@@ -1,16 +1,21 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Item } from "@gooddata/sdk-ui-kit";
 import { IInsightMenuItemButton } from "../../types.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr" }];
 
-export const DashboardInsightMenuItemButton: React.FC<
-    Omit<IInsightMenuItemButton, "type"> & { submenu?: boolean }
-> = (props) => {
-    const { itemId, itemName, disabled, icon, onClick, tooltip, className, submenu = false } = props;
-
+export function DashboardInsightMenuItemButton({
+    itemId,
+    itemName,
+    disabled,
+    icon,
+    onClick,
+    tooltip,
+    className,
+    submenu = false,
+}: Omit<IInsightMenuItemButton, "type"> & { submenu?: boolean }) {
     // for JSX icons we need an extra gd-icon-wrapper class to align the icon and the text vertically
     return renderButtonWithTooltip(
         <Item
@@ -28,10 +33,10 @@ export const DashboardInsightMenuItemButton: React.FC<
         disabled,
         tooltip,
     );
-};
+}
 
 function renderButtonWithTooltip(
-    button: JSX.Element,
+    button: ReactElement,
     id: string,
     disabled?: boolean,
     tooltip?: string | ReactNode,

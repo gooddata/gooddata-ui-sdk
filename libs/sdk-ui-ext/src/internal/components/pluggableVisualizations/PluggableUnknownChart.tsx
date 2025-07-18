@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition } from "@gooddata/sdk-model";
@@ -20,11 +20,11 @@ export type IIntlLocalizedUnknownVisualizationClass = { onAfterRender?: () => vo
 function IntlLocalizedUnknownVisualizationClass({ onAfterRender }: IIntlLocalizedUnknownVisualizationClass) {
     const intl = useIntl();
 
-    const errorDetails = React.useMemo(() => {
+    const errorDetails = useMemo(() => {
         return newErrorMapping(intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN];
     }, [intl]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         onAfterRender?.();
     }, [onAfterRender]);
 

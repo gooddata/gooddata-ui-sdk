@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { e } from "../asyncTableBem.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { UiButton } from "../../UiButton/UiButton.js";

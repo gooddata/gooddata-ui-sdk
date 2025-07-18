@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
 import { OnChangeValue, SelectInstance } from "react-select";
@@ -29,11 +29,11 @@ export interface IAddUserGroupSelectProps {
     grantedUserGroups: IGrantedUserGroup[];
 }
 
-export const AddUserGroupSelect: React.FC<IAddUserGroupSelectProps> = ({
+export function AddUserGroupSelect({
     addedUserGroups,
     grantedUserGroups,
     onSelect,
-}) => {
+}: IAddUserGroupSelectProps) {
     const intl = useIntl();
     const selectRef = useRef<SelectInstance<any, false>>(null);
     const backend = useBackendStrict();
@@ -120,4 +120,4 @@ export const AddUserGroupSelect: React.FC<IAddUserGroupSelectProps> = ({
             />
         </div>
     );
-};
+}

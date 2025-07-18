@@ -1,6 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
-import React from "react";
 import {
     RenderDashboardEditLayout,
     IDashboardEditLayoutProps,

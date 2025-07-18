@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
 import { LoadingComponent } from "@gooddata/sdk-ui";
@@ -116,24 +116,20 @@ export interface IHubspotConversionTouchPointDialogBaseProps {
 /**
  * @internal
  */
-export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionTouchPointDialogBaseProps> = (
-    props,
-) => {
-    const {
-        targetId,
-        hubspotPortalId,
-        hubspotFormId,
-        selectedValue,
-        cancelButtonText,
-        dialogTitle,
-        showCancelButton,
-        submitButtonClass,
-        accessibilityConfig,
-        values = {},
-        onClose,
-        onFormSubmitted,
-    } = props;
-
+export function HubspotConversionTouchPointDialogBase({
+    targetId,
+    hubspotPortalId,
+    hubspotFormId,
+    selectedValue,
+    cancelButtonText,
+    dialogTitle,
+    showCancelButton,
+    submitButtonClass,
+    accessibilityConfig,
+    values = {},
+    onClose,
+    onFormSubmitted,
+}: IHubspotConversionTouchPointDialogBaseProps) {
     const intl = useIntl();
     const [isFormReady, setIsFormReady] = useState(false);
     const hubspotFormTargetId = targetId || "conversion-touch-point-hubspot";
@@ -216,4 +212,4 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
             ) : null}
         </>
     );
-};
+}

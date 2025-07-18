@@ -55,7 +55,7 @@ export function useCodemirror({
     onFocus,
 }: IUseCodemirrorProps) {
     const editorRef = useRef<HTMLDivElement>(null);
-    const viewRef = useRef<EditorView>();
+    const viewRef = useRef<EditorView | null>(null);
 
     const { handleCompletion, handleChange, handleKeyDown, handleCursor, handleFocus, handleBlur } =
         useEventHandlers({

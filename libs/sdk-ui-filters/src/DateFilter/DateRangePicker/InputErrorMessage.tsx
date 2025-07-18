@@ -1,6 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 
 export interface IInputDescriptionProps {
@@ -8,7 +7,7 @@ export interface IInputDescriptionProps {
     errorText?: string;
 }
 
-export const InputErrorMessage: React.FC<IInputDescriptionProps> = ({ descriptionId, errorText }) => {
+export function InputErrorMessage({ descriptionId, errorText }: IInputDescriptionProps) {
     if (!errorText) {
         return null;
     }
@@ -23,4 +22,4 @@ export const InputErrorMessage: React.FC<IInputDescriptionProps> = ({ descriptio
             {errorText}
         </div>
     );
-};
+}

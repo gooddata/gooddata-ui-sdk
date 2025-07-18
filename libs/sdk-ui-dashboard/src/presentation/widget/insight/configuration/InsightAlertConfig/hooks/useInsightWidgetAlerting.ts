@@ -337,7 +337,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             setIsDeletingAlert(false);
             setViewMode(alerts.length === 1 ? "create" : "list");
             handleRefreshAutomations();
-        } catch (err) {
+        } catch {
             addError(messages.alertDeleteError);
             setIsDeletingAlert(false);
         }

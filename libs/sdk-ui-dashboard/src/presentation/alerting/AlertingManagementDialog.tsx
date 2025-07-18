@@ -1,13 +1,13 @@
-// (C) 2020-2024 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactElement } from "react";
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import { IAlertingManagementDialogProps } from "./types.js";
 
 /**
  * @internal
  */
-export const AlertingManagementDialog = (props: IAlertingManagementDialogProps): JSX.Element => {
+export function AlertingManagementDialog(props: IAlertingManagementDialogProps): ReactElement {
     const { AlertingManagementDialogComponent } = useDashboardComponentsContext();
 
     return <AlertingManagementDialogComponent {...props} />;
-};
+}

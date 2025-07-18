@@ -1,13 +1,11 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ComponentType } from "react";
 import AbstractProvider from "./AbstractProvider.js";
 import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import MultiMeasuresTransformation from "../transformations/MultiMeasuresTransformation.js";
 
-class MultiMeasuresProvider extends AbstractProvider {
-    public getHeadlineTransformationComponent(): React.ComponentType<IHeadlineTransformationProps> {
+export default class MultiMeasuresProvider extends AbstractProvider {
+    public getHeadlineTransformationComponent(): ComponentType<IHeadlineTransformationProps> {
         return MultiMeasuresTransformation;
     }
 }
-
-export default MultiMeasuresProvider;

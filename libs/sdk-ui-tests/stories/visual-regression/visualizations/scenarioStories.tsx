@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { createElementCountResolver, ScreenshotReadyWrapper } from "../../_infra/ScreenshotReadyWrapper.js";
-import React from "react";
+import { ComponentType } from "react";
 
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
@@ -20,12 +20,7 @@ import values from "lodash/values.js";
 
 export const backend = StorybookBackend();
 
-export function buildStory(
-    Component: React.ComponentType,
-    props: any,
-    wrapperStyle: any,
-    tags: string[] = [],
-) {
+export function buildStory(Component: ComponentType, props: any, wrapperStyle: any, tags: string[] = []) {
     return () => {
         return wrapWithTheme(
             <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
@@ -85,7 +80,5 @@ export function getScenariosGroupByIndexes(groupsIndex: number, groupIndex: numb
 
     const group = sortedGroups[groupIndex];
 
-    const visualOnly: ScenarioGroup<any> = group.forTestTypes("visual");
-
-    return visualOnly;
+    return group.forTestTypes("visual");
 }

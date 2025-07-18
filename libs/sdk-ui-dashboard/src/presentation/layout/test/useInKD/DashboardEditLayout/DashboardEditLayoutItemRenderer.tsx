@@ -1,5 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import cx from "classnames";
 
 import {
@@ -19,11 +18,11 @@ export type IDashboardEditLayoutItemRendererOwnProps =
 export type IDashboardEditLayoutItemRendererProps = IDashboardEditLayoutItemRendererOwnProps &
     IDashboardEditLayoutItemRendererStateProps;
 
-export const RenderDashboardEditLayoutItemRenderer: React.FC<IDashboardEditLayoutItemRendererProps> = (
-    props,
-) => {
-    const { children, item, hiddenWidgetRef = idRef("hiddenWidget") } = props;
-
+export function RenderDashboardEditLayoutItemRenderer({
+    children,
+    item,
+    hiddenWidgetRef = idRef("hiddenWidget"),
+}: IDashboardEditLayoutItemRendererProps) {
     const content = item.widget();
 
     const isLastInSection = item.isLast();
@@ -42,7 +41,7 @@ export const RenderDashboardEditLayoutItemRenderer: React.FC<IDashboardEditLayou
             {children}
         </DashboardLayoutItemViewRenderer>
     );
-};
+}
 
 export const DashboardEditLayoutItemRenderer = RenderDashboardEditLayoutItemRenderer;
 

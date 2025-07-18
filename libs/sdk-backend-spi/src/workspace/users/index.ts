@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-/* eslint-disable @typescript-eslint/no-empty-interface, import/namespace */
+// (C) 2019-2025 GoodData Corporation
+/* eslint-disable @typescript-eslint/no-empty-object-type, import/namespace */
 import { IWorkspaceUser } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging.js";
 

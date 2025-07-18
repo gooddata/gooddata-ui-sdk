@@ -1,19 +1,19 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { ElementType, ReactElement } from "react";
 
 /**
  * @internal
  */
 export interface ILegacyListItemProps<T> {
     item?: T;
-    listItemClass: React.ElementType;
+    listItemClass: ElementType;
 }
 
 /**
  * @internal
  * @deprecated This component is deprecated use ListItem instead
  */
-export function LegacyListItem<T>({ item = {} as T, listItemClass }: ILegacyListItemProps<T>): JSX.Element {
+export function LegacyListItem<T>({ item = {} as T, listItemClass }: ILegacyListItemProps<T>): ReactElement {
     const ListItemComponent = listItemClass;
     const itemType = (item as any)?.source?.type ?? null;
 

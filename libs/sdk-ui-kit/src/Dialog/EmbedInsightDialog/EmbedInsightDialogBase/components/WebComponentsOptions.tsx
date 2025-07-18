@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ILocale } from "@gooddata/sdk-ui";
 
@@ -21,7 +21,7 @@ interface IWebComponentsOptionsProps {
 /**
  * @internal
  */
-export const WebComponentsOptions = (props: IWebComponentsOptionsProps) => {
+export function WebComponentsOptions(props: IWebComponentsOptionsProps) {
     const intl = useIntl();
     const { option, onChange } = props;
 
@@ -118,4 +118,4 @@ export const WebComponentsOptions = (props: IWebComponentsOptionsProps) => {
             ) : null}
         </div>
     );
-};
+}

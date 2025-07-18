@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 import cx from "classnames";

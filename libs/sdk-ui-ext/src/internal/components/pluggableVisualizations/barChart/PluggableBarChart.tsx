@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+
 import isEmpty from "lodash/isEmpty.js";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";

@@ -6,7 +6,7 @@ import {
 } from "@gooddata/sdk-model";
 import { Button, Dropdown, OverlayPositionType, SingleSelectListItem, UiListbox } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AlertMetric } from "../../types.js";
@@ -41,7 +41,7 @@ export interface IAlertComparisonOperatorSelectProps {
     closeOnParentScroll?: boolean;
 }
 
-export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSelectProps) => {
+export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSelectProps) {
     const {
         measure,
         selectedComparisonOperator,
@@ -227,4 +227,4 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
             }}
         />
     );
-};
+}

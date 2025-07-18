@@ -1,5 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { ParameterDetail } from "./ParameterDetail.js";
 import { useIntl } from "react-intl";
 import { selectDashboardId, useDashboardSelector } from "../../../../../model/index.js";
@@ -8,7 +7,7 @@ interface IdentifierDetailProps {
     title: string;
 }
 
-export const DashboardIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title }) => {
+export function DashboardIdParameterDetail({ title }: IdentifierDetailProps) {
     const value = useDashboardSelector(selectDashboardId);
     const intl = useIntl();
 
@@ -22,4 +21,4 @@ export const DashboardIdParameterDetail: React.FC<IdentifierDetailProps> = ({ ti
             values={value ? [value] : []}
         />
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import { action } from "storybook/actions";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { EmbedInsightDialogBase, IReactOptions, IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
@@ -48,7 +48,7 @@ function EmbedInsightDialogBaseExamples() {
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onTabChange={action("onTabChange")}
-                    onOptionsChange={(opts) => {
+                    onOptionsChange={(opts: IReactOptions | IWebComponentsOptions) => {
                         setReactOptions(opts as IReactOptions);
                         action("onOptionsChange");
                     }}
@@ -71,7 +71,7 @@ function EmbedInsightDialogBaseExamples() {
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onTabChange={action("onTabChange")}
-                    onOptionsChange={(opts) => {
+                    onOptionsChange={(opts: IReactOptions | IWebComponentsOptions) => {
                         setReactOptions(opts as IReactOptions);
                         action("onOptionsChange");
                     }}
@@ -94,7 +94,7 @@ function EmbedInsightDialogBaseExamples() {
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onTabChange={action("onTabChange")}
-                    onOptionsChange={(opts) => {
+                    onOptionsChange={(opts: IReactOptions | IWebComponentsOptions) => {
                         setReactOptions(opts as IReactOptions);
                         action("onOptionChange");
                     }}
@@ -117,7 +117,7 @@ function EmbedInsightDialogBaseExamples() {
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onTabChange={action("onTabChange")}
-                    onOptionsChange={(opts) => {
+                    onOptionsChange={(opts: IReactOptions | IWebComponentsOptions) => {
                         setWebComponentOptions(opts as IWebComponentsOptions);
                         action("onOptionChange");
                     }}
@@ -140,7 +140,7 @@ function EmbedInsightDialogBaseExamples() {
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onTabChange={action("onTabChange")}
-                    onOptionsChange={(opts) => {
+                    onOptionsChange={(opts: IReactOptions | IWebComponentsOptions) => {
                         setWebComponentOptions(opts as IWebComponentsOptions);
                         action("onOptionChange");
                     }}

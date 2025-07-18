@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { action } from "storybook/actions";
-import React from "react";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { getLargePalette } from "../mocks/testColorHelper.js";
 import { InternalIntlWrapper, ColorDropdown, ColoredItemContent } from "@gooddata/sdk-ui-ext/internal";

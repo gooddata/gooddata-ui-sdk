@@ -1,5 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { DropdownButton } from "@gooddata/sdk-ui-kit";
 
 export interface IButtonWithTypeIcon {
@@ -11,7 +10,7 @@ export interface IButtonWithTypeIcon {
     onClick: () => void;
 }
 
-export const ButtonWithIcon = (props: IButtonWithTypeIcon) => {
+export function ButtonWithIcon(props: IButtonWithTypeIcon) {
     return (
         <DropdownButton
             value={props.value}
@@ -23,4 +22,4 @@ export const ButtonWithIcon = (props: IButtonWithTypeIcon) => {
             onClick={props.onClick}
         />
     );
-};
+}

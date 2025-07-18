@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import React, { createContext, useContext } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { createContext, ReactNode, useContext } from "react";
 import { ThrowMissingComponentError } from "../utils.js";
 import { IAttributeFilterCustomComponentProps } from "../types.js";
 
@@ -61,9 +61,9 @@ export const useAttributeFilterComponentsContext = (): IAttributeFilterCustomCom
 /**
  * @internal
  */
-export const AttributeFilterComponentsProvider: React.FC<
-    IAttributeFilterCustomComponentProps & { children: React.ReactNode }
-> = (props) => {
+export function AttributeFilterComponentsProvider(
+    props: IAttributeFilterCustomComponentProps & { children: ReactNode },
+) {
     const { children, ...components } = props;
 
     return (
@@ -71,4 +71,4 @@ export const AttributeFilterComponentsProvider: React.FC<
             {children}
         </AttributeFilterComponentsContext.Provider>
     );
-};
+}

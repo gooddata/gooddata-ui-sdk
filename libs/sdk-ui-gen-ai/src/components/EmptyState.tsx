@@ -1,5 +1,4 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
 import { useDispatch } from "react-redux";
 import { makeAssistantMessage, makeTextContents, makeUserMessage } from "../model.js";

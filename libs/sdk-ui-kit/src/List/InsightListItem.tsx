@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect, ComponentType } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
@@ -61,13 +61,13 @@ export interface IInsightListItemProps {
     metadataTimeZone?: string;
     richTextExecConfig?: IExecutionConfig;
 
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
 }
 
 /**
  * @internal
  */
-export const InsightListItemTypeIcon: React.FC<{ type: string }> = ({ type }) => {
+export function InsightListItemTypeIcon({ type }: { type: string }) {
     const iconClassName = cx("gd-vis-type", `gd-vis-type-${type}`);
 
     return (
@@ -75,7 +75,7 @@ export const InsightListItemTypeIcon: React.FC<{ type: string }> = ({ type }) =>
             <div className={iconClassName} />
         </div>
     );
-};
+}
 
 /**
  * @internal

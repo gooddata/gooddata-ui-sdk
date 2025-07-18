@@ -1,5 +1,5 @@
-// (C) 2024 GoodData Corporation
-import React, { KeyboardEventHandler, useCallback, useMemo } from "react";
+// (C) 2024-2025 GoodData Corporation
+import { KeyboardEventHandler, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { OnChangeValue } from "react-select";
 import { AsyncPaginate } from "react-select-async-paginate";
@@ -22,12 +22,12 @@ import { loadPaginatedWorkspaceOptionsPromise } from "./backend/loadWorkspaceOpt
 
 const SEARCH_INTERVAL = 400;
 
-export const AddSingleWorkspaceSelect: React.FC<IAddSingleWorkspaceSelectProps> = ({
+export function AddSingleWorkspaceSelect({
     addedWorkspace,
     grantedWorkspaces,
     onSelectWorkspace,
     mode = "EDIT",
-}) => {
+}: IAddSingleWorkspaceSelectProps) {
     const backend: IAnalyticalBackend = useBackendStrict();
     const intl = useIntl();
     const isEditMode = mode === "EDIT";
@@ -119,4 +119,4 @@ export const AddSingleWorkspaceSelect: React.FC<IAddSingleWorkspaceSelectProps> 
             />
         </div>
     );
-};
+}

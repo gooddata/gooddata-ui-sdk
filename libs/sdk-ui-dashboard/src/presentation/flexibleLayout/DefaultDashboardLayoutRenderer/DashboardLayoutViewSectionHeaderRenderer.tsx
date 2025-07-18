@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
 import isEmpty from "lodash/isEmpty.js";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
@@ -23,12 +23,12 @@ export interface IDashboardLayoutSectionHeaderProps {
     onError?: OnError;
 }
 
-export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = ({
+export function DashboardLayoutViewSectionHeader({
     section,
     exportData,
     onLoadingChanged,
     onError,
-}) => {
+}: IDashboardLayoutSectionHeaderProps) {
     const { sections } = getLayoutConfiguration(section.layout().raw());
     const { LoadingComponent } = useDashboardComponentsContext();
     const isExport = useDashboardSelector(selectIsExport);
@@ -80,4 +80,4 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
             </div>
         </div>
     );
-};
+}

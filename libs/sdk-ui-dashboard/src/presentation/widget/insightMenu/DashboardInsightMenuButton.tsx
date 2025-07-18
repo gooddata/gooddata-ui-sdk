@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactElement, useMemo } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import { IDashboardInsightMenuButtonProps } from "./types.js";
@@ -7,7 +7,7 @@ import { IDashboardInsightMenuButtonProps } from "./types.js";
 /**
  * @internal
  */
-export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonProps): JSX.Element => {
+export function DashboardInsightMenuButton(props: IDashboardInsightMenuButtonProps): ReactElement {
     const { insight, widget } = props;
     const { InsightMenuButtonComponentProvider } = useDashboardComponentsContext();
     const InsightMenuButtonComponent = useMemo(
@@ -16,4 +16,4 @@ export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonPro
     );
 
     return <InsightMenuButtonComponent {...props} />;
-};
+}

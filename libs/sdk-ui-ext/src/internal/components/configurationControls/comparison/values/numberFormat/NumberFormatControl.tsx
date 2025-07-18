@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
@@ -24,7 +24,7 @@ interface INumberFormatControlProps {
     pushData: PushDataCallback;
 }
 
-const NumberFormatControl: React.FC<INumberFormatControlProps> = ({
+export default function NumberFormatControl({
     disabled,
     valuePath,
     labelText,
@@ -33,7 +33,7 @@ const NumberFormatControl: React.FC<INumberFormatControlProps> = ({
     separators,
     properties,
     pushData,
-}) => {
+}: INumberFormatControlProps) {
     const intl = useIntl();
 
     const selectFormat = (format: string) => {
@@ -68,6 +68,4 @@ const NumberFormatControl: React.FC<INumberFormatControlProps> = ({
             </div>
         </DisabledBubbleMessage>
     );
-};
-
-export default NumberFormatControl;
+}

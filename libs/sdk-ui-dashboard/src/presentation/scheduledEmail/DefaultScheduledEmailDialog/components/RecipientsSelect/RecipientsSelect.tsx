@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
-import React, { useMemo, useState } from "react";
+import { KeyboardEvent, useMemo, useState } from "react";
 import {
     IAutomationRecipient,
     INotificationChannelIdentifier,
@@ -94,7 +94,7 @@ interface IRecipientsSelectProps {
     /**
      * Handle keyboard submit
      */
-    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+    onKeyDownSubmit?: (e: KeyboardEvent) => void;
 
     /**
      * Override recipients with an external recipient
@@ -102,27 +102,25 @@ interface IRecipientsSelectProps {
     externalRecipientOverride?: string;
 }
 
-export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
-    const {
-        id,
-        users,
-        usersError,
-        value,
-        originalValue,
-        onChange,
-        loggedUser,
-        allowEmptySelection,
-        allowExternalRecipients,
-        allowOnlyLoggedUserRecipients,
-        maxRecipients,
-        className,
-        notificationChannels,
-        notificationChannelId,
-        showLabel = true,
-        onKeyDownSubmit,
-        externalRecipientOverride,
-    } = props;
-
+export function RecipientsSelect({
+    id,
+    users,
+    usersError,
+    value,
+    originalValue,
+    onChange,
+    loggedUser,
+    allowEmptySelection,
+    allowExternalRecipients,
+    allowOnlyLoggedUserRecipients,
+    maxRecipients,
+    className,
+    notificationChannels,
+    notificationChannelId,
+    showLabel = true,
+    onKeyDownSubmit,
+    externalRecipientOverride,
+}: IRecipientsSelectProps) {
     const [search, setSearch] = useState<string>();
 
     const notificationChannel = useMemo(() => {
@@ -181,4 +179,4 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             externalRecipientOverride={externalRecipientOverride}
         />
     );
-};
+}

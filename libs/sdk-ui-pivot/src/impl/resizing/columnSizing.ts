@@ -664,9 +664,11 @@ export function syncSuppressSizeToFitOnColumns(
 
     columns?.forEach((col) => {
         const resizedColumn = resizedColumnsStore.getManuallyResizedColumn(col);
-        resizedColumn
-            ? (col.getColDef().suppressSizeToFit = !resizedColumn.allowGrowToFit)
-            : (col.getColDef().suppressSizeToFit = false);
+        if (resizedColumn) {
+            col.getColDef().suppressSizeToFit = !resizedColumn.allowGrowToFit;
+        } else {
+            col.getColDef().suppressSizeToFit = false;
+        }
     });
 }
 
@@ -1074,7 +1076,7 @@ export async function autoresizeAllColumns(
                         const colId = agColId(columnDef);
                         const autoResizedColumn = autoResizedColumns[colId];
 
-                        if (colId && autoResizedColumn && autoResizedColumn.width) {
+                        if (colId && autoResizedColumn?.width) {
                             acc.push({ key: colId, newWidth: autoResizedColumn.width });
                         }
 

@@ -1,5 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox.js";
 
@@ -10,7 +9,7 @@ export type WidgetDropZoneProps = {
     dropRef: any;
 };
 
-export const WidgetDropZone = (props: WidgetDropZoneProps) => {
+export function WidgetDropZone(props: WidgetDropZoneProps) {
     const { isLastInSection, dropRef } = props;
 
     return (
@@ -18,4 +17,4 @@ export const WidgetDropZone = (props: WidgetDropZoneProps) => {
             <WidgetDropZoneBox isLast={isLastInSection} />
         </div>
     );
-};
+}

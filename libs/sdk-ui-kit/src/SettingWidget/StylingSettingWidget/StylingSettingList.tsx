@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactElement } from "react";
 import { StylingSettingListItem } from "./StylingSettingListItem.js";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { DialogListEmpty } from "../../Dialog/DialogList/DialogListEmpty.js";
@@ -9,7 +9,7 @@ import { IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index
 interface IStylingSettingListProps<T> {
     items: IStylingPickerItem<T>[];
     itemToColorPreview: (itemContent: T) => string[];
-    emptyMessageElement: JSX.Element;
+    emptyMessageElement: ReactElement;
     onItemClick: (ref: ObjRef) => void;
     initiallySelectedItemRef?: ObjRef;
     selectedItemRef?: ObjRef;
@@ -18,7 +18,7 @@ interface IStylingSettingListProps<T> {
     onItemMenuToggle?: (ref: ObjRef) => void;
 }
 
-export const StylingSettingList = <T extends StylingPickerItemContent>({
+export function StylingSettingList<T extends StylingPickerItemContent>({
     items,
     itemToColorPreview,
     emptyMessageElement,
@@ -28,7 +28,7 @@ export const StylingSettingList = <T extends StylingPickerItemContent>({
     initiallySelectedItemRef,
     selectedItemRef,
     onItemMenuToggle,
-}: IStylingSettingListProps<T>): JSX.Element => {
+}: IStylingSettingListProps<T>): ReactElement {
     if (items.length === 0) {
         return <DialogListEmpty message={emptyMessageElement} className="gd-styling-picker-list-empty" />;
     }
@@ -50,4 +50,4 @@ export const StylingSettingList = <T extends StylingPickerItemContent>({
             ))}
         </div>
     );
-};
+}

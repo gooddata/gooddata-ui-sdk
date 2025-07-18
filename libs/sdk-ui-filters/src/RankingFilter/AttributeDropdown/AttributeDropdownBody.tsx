@@ -1,5 +1,4 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { ObjRefInScope, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 import { AttributeItem } from "./DropdownItems/AttributeItem.js";
@@ -16,7 +15,7 @@ interface IAttributeDropdownBodyProps {
     customGranularitySelection?: ICustomGranularitySelection;
 }
 
-export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
+export function AttributeDropdownBody({
     items,
     selectedItemRef,
     onSelect,
@@ -24,7 +23,7 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
-}) => {
+}: IAttributeDropdownBodyProps) {
     return (
         <Overlay
             closeOnOutsideClick={true}
@@ -53,4 +52,4 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
             </div>
         </Overlay>
     );
-};
+}

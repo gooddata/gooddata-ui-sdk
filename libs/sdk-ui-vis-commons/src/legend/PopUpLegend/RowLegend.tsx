@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState, useCallback, MouseEventHandler } from "react";
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { LegendLabelItem } from "../LegendLabelItem.js";
@@ -39,16 +39,16 @@ export interface IRowLegendIcoButton {
     triggerId: string;
 }
 
-export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = ({
+export function RowLegendIcoButton({
     isVisible,
     isActive,
     onIconClick,
     dialogId,
     triggerId,
-}) => {
+}: IRowLegendIcoButton) {
     const { formatMessage } = useIntl();
 
-    const handleClick = React.useCallback<React.MouseEventHandler>(
+    const handleClick = useCallback<MouseEventHandler>(
         (e) => {
             e.stopPropagation();
             e.preventDefault();
@@ -83,7 +83,7 @@ export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = ({
             </Button>
         </div>
     );
-};
+}
 
 export interface IRowLegendProps {
     legendLabel?: string;
@@ -97,7 +97,7 @@ export interface IRowLegendProps {
     triggerId: string;
 }
 
-export const RowLegend: React.FC<IRowLegendProps> = (props) => {
+export function RowLegend(props: IRowLegendProps) {
     const {
         series,
         maxRowsCount = 1,
@@ -143,4 +143,4 @@ export const RowLegend: React.FC<IRowLegendProps> = (props) => {
             />
         </div>
     );
-};
+}

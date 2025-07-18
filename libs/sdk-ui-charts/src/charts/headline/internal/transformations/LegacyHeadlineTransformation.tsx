@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { useIntl } from "react-intl";
 import { convertDrillableItemsToPredicates, fireDrillEvent } from "@gooddata/sdk-ui";
 import LegacyHeadline from "../headlines/LegacyHeadline.js";

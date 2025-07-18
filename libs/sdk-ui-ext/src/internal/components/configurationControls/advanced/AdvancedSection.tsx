@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { memo, useRef } from "react";
+import { memo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
@@ -30,7 +30,7 @@ const AdvancedSection = memo(function AdvancedSection({
 }: IAdvancedSectionProps) {
     const intl = useIntl();
 
-    const [showDialog, setShowDialog] = React.useState(false);
+    const [showDialog, setShowDialog] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLPreElement>(null);
     const isOverflowing = useOverflow(containerRef.current, contentRef.current);

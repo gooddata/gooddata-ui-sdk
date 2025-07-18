@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import { ComponentType, ReactNode, MouseEvent } from "react";
+import { ComponentType, ReactNode, MouseEvent, ReactElement } from "react";
 import { IRichTextWidget } from "@gooddata/sdk-model";
 
 import { RenderMode } from "../../../types.js";
@@ -21,7 +21,7 @@ export interface IRichTextMenuItemButton {
      */
     tooltip?: string | ReactNode;
     disabled?: boolean;
-    icon?: JSX.Element | string;
+    icon?: ReactElement | string;
     /**
      * Additional class names to be applied to the item.
      */
@@ -114,7 +114,7 @@ export interface IRichTextMenuSubmenu {
      */
     tooltip?: string | ReactNode;
     disabled?: boolean;
-    icon?: JSX.Element | string;
+    icon?: ReactElement | string;
     /**
      * Additional class names to be applied to the item.
      */

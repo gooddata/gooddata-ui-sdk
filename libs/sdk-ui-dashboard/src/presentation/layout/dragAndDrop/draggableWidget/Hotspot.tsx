@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
-import React, { useCallback, useEffect, useRef } from "react";
+import { RefObject, useCallback, useEffect, useRef } from "react";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js";
@@ -32,7 +32,7 @@ interface IHotspotProps {
     dropZoneType: DropZoneType;
 }
 
-export const Hotspot: React.FC<IHotspotProps> = (props) => {
+export function Hotspot(props: IHotspotProps) {
     const { itemIndex, sectionIndex, classNames, dropZoneType, isEndingHotspot } = props;
     const isOverLastValue = useRef(false);
 
@@ -137,7 +137,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 full: isEndingHotspot,
             })}
             style={debugStyle}
-            ref={dropRef}
+            ref={dropRef as unknown as RefObject<HTMLDivElement>}
         />
     );
-};
+}

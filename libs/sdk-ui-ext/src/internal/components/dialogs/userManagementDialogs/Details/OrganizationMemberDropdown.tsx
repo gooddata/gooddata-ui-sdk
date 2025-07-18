@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { Overlay, DropdownButton, Dropdown, IAlignPoint, ItemsWrapper } from "@gooddata/sdk-ui-kit";
@@ -16,11 +16,11 @@ export interface IOrganizationMemberDropdownProps {
     onChange: (isAdmin: boolean) => void;
 }
 
-export const OrganizationMemberDropdown: React.FC<IOrganizationMemberDropdownProps> = ({
+export function OrganizationMemberDropdown({
     isAdmin,
     isDisabled,
     onChange,
-}) => {
+}: IOrganizationMemberDropdownProps) {
     const intl = useIntl();
 
     const renderDropdownBody = useCallback(
@@ -93,7 +93,7 @@ export const OrganizationMemberDropdown: React.FC<IOrganizationMemberDropdownPro
     );
 
     const renderDropdownButton = useCallback(
-        ({ openDropdown, isOpen }: { openDropdown: () => void; isOpen: boolean }): React.ReactNode => (
+        ({ openDropdown, isOpen }: { openDropdown: () => void; isOpen: boolean }): ReactNode => (
             <DropdownButton
                 value={selectedValue}
                 isOpen={isOpen}
@@ -107,4 +107,4 @@ export const OrganizationMemberDropdown: React.FC<IOrganizationMemberDropdownPro
     );
 
     return <Dropdown renderBody={renderDropdownBody} renderButton={renderDropdownButton} />;
-};
+}

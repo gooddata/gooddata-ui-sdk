@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
 import cx from "classnames";

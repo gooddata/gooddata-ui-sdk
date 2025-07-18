@@ -1,9 +1,8 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { afterEach, describe, vi, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 
-import { createIntlMock, ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
+import { createIntlMock, ExplicitDrill } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import ComparisonTransformation from "../ComparisonTransformation.js";
@@ -17,8 +16,7 @@ import { getComparisonBaseHeadlineData } from "../../utils/ComparisonTransformat
 
 describe("ComparisonTransformation", () => {
     const renderTransformation = (props: IHeadlineTransformationProps) => {
-        const WrappedHeadlineTransformation = withIntl(ComparisonTransformation);
-        return render(<WrappedHeadlineTransformation {...props} />);
+        return render(<ComparisonTransformation {...props} />);
     };
 
     afterEach(() => {

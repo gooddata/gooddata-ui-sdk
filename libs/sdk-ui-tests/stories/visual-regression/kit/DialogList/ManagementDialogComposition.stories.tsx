@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { action } from "storybook/actions";
@@ -9,10 +9,9 @@ import { itemsMock as items } from "./itemsMock.js";
 
 import "./styles.scss";
 
-const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
-    const { children } = props;
+function Wrapper({ children }: { children?: ReactNode }) {
     return <div style={{ margin: "30 0" }}>{children}</div>;
-};
+}
 
 const onSubmit = action("onSubmit");
 const onClose = action("onClose");
@@ -166,7 +165,7 @@ function ManagementDialogCompositionExamples() {
     );
 }
 
-const ManagementDialogCompositionLoadingExample: React.FC = () => {
+function ManagementDialogCompositionLoadingExample() {
     const isLoading = true;
 
     return (
@@ -195,7 +194,7 @@ const ManagementDialogCompositionLoadingExample: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/DialogList/ManagementDialogComposition",

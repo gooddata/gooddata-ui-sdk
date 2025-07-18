@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import Markdown, { Components } from "react-markdown";
 import remarkEmoji from "remark-emoji";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -32,11 +31,7 @@ type MarkdownComponentProps = {
     onLinkClick?: (url: string) => void;
 };
 
-export const MarkdownComponent: React.FC<MarkdownComponentProps> = ({
-    children,
-    references,
-    allowMarkdown = false,
-}) => {
+export function MarkdownComponent({ allowMarkdown = false, children, references }: MarkdownComponentProps) {
     if (allowMarkdown) {
         return (
             <Markdown
@@ -51,4 +46,4 @@ export const MarkdownComponent: React.FC<MarkdownComponentProps> = ({
     }
 
     return <Typography tagName="p">{children}</Typography>;
-};
+}

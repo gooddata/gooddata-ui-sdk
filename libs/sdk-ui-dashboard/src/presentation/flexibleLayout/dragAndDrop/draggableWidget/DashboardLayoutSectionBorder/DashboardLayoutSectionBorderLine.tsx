@@ -1,5 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import cx from "classnames";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
@@ -13,11 +12,11 @@ interface IDashboardLayoutSectionBorderLineProps {
     itemSize?: IDashboardLayoutSizeByScreenSize; // optional so I don't need to handle this in old layout yet
 }
 
-export const DashboardLayoutSectionBorderLine: React.FC<IDashboardLayoutSectionBorderLineProps> = ({
+export function DashboardLayoutSectionBorderLine({
     position,
     status,
     itemSize,
-}) => {
+}: IDashboardLayoutSectionBorderLineProps) {
     return (
         <GridLayoutElement
             type="item"
@@ -35,4 +34,4 @@ export const DashboardLayoutSectionBorderLine: React.FC<IDashboardLayoutSectionB
             />
         </GridLayoutElement>
     );
-};
+}

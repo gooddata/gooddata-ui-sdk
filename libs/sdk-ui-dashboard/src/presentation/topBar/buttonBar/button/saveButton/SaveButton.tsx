@@ -1,12 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 import { ISaveButtonProps } from "./types.js";
 
 /**
  * @internal
  */
-export const SaveButton = (props: ISaveButtonProps): JSX.Element => {
+export function SaveButton(props: ISaveButtonProps) {
     const { SaveButtonComponent } = useDashboardComponentsContext();
     return <SaveButtonComponent {...props} />;
-};
+}

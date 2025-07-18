@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import { useIntl } from "react-intl";
@@ -54,7 +53,7 @@ export default function ColorsSection({
     };
 
     const isColoredListVisible = () => {
-        return isLoading || (!controlsDisabled && colors && colors.colorPalette && hasMeasures);
+        return isLoading || (!controlsDisabled && colors?.colorPalette && hasMeasures);
     };
 
     const renderResetButton = () => {
@@ -78,7 +77,7 @@ export default function ColorsSection({
 
     const renderColoredList = () => {
         const inputItems = getColoredInputItems(colors);
-        const colorPalette = colors?.colorPalette ? colors.colorPalette : [];
+        const colorPalette = colors?.colorPalette ?? [];
 
         return (
             <div>

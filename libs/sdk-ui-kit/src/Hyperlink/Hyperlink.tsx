@@ -1,5 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
 import noop from "lodash/noop.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -21,8 +20,7 @@ export interface IHyperlinkProps {
  *
  * @internal
  */
-export const Hyperlink: React.FC<IHyperlinkProps> = (props) => {
-    const { text, href, onClick = noop, className, iconClass } = props;
+export function Hyperlink({ text, href, onClick = noop, className, iconClass }: IHyperlinkProps) {
     return (
         <a
             className={cx("gd-hyperlink", className)}
@@ -35,4 +33,4 @@ export const Hyperlink: React.FC<IHyperlinkProps> = (props) => {
             {!isEmpty(text) && <span className="gd-hyperlink-text">{text}</span>}
         </a>
     );
-};
+}

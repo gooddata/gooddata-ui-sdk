@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { objRefToString } from "@gooddata/sdk-model";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 
 import { DashboardLayout } from "../../../DefaultDashboardLayoutRenderer/DashboardLayout.js";
 import { DashboardEditLayoutItemRenderer } from "./DashboardEditLayoutItemRenderer.js";
@@ -30,9 +30,11 @@ export type IDashboardEditLayoutProps = IDashboardEditLayoutStateProps & IDashbo
 
 const screen = "xl"; // Todo: figure out what this was supposed to be?
 
-export const RenderDashboardEditLayout: React.FC<IDashboardEditLayoutProps> = (props) => {
-    const { layout, rowIdsByRowOrder, shouldUseRowRenderer } = props;
-
+export function RenderDashboardEditLayout({
+    layout,
+    rowIdsByRowOrder,
+    shouldUseRowRenderer,
+}: IDashboardEditLayoutProps) {
     return (
         layout && (
             // @ts-ignore
@@ -67,4 +69,4 @@ export const RenderDashboardEditLayout: React.FC<IDashboardEditLayoutProps> = (p
             />
         )
     );
-};
+}

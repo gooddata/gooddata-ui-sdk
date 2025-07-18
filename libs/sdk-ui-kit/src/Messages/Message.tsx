@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import cx from "classnames";
 
 import { IMessageProps } from "./typings.js";
@@ -9,14 +8,7 @@ import { useIntl } from "react-intl";
 /**
  * @internal
  */
-export const Message: React.FC<IMessageProps> = ({
-    onClose,
-    type,
-    children,
-    className,
-    contrast,
-    intensive,
-}) => {
+export function Message({ onClose, type, children, className, contrast, intensive }: IMessageProps) {
     const intl = useIntl();
 
     const classes = cx("gd-message", "s-message", className, {
@@ -49,4 +41,4 @@ export const Message: React.FC<IMessageProps> = ({
             </div>
         </div>
     );
-};
+}

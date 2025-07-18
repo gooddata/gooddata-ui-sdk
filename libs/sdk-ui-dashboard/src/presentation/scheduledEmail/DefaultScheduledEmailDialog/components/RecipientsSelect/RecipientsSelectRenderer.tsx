@@ -6,7 +6,7 @@ import {
     INotificationChannelMetadataObject,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
-import React, { memo, useRef, useState, useEffect, useCallback } from "react";
+import { memo, useRef, useState, useEffect, useCallback, KeyboardEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactSelect, {
     ActionMeta,
@@ -158,7 +158,7 @@ export interface IRecipientsSelectRendererProps {
     /**
      * Handle keyboard submit
      */
-    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+    onKeyDownSubmit?: (e: KeyboardEvent) => void;
 
     /**
      * Override recipients with an external recipient

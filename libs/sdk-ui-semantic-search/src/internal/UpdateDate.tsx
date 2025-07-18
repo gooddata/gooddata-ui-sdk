@@ -1,8 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ListItem } from "../types.js";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
-import * as React from "react";
+import { memo } from "react";
 import { getDateTimeConfig } from "@gooddata/sdk-ui-kit";
 import { defineMessages, FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
 import { useMetadataTimezone } from "./metadataTimezoneContext.js";
@@ -30,7 +30,7 @@ const messages = defineMessages({
  * the date formatting was one of the bottlenecks.
  * @internal
  */
-export const UpdatedDate = React.memo(function UpdatedDate({ listItem: { item } }: UpdateDateProps) {
+export const UpdatedDate = memo(function UpdatedDate({ listItem: { item } }: UpdateDateProps) {
     const timezone = useMetadataTimezone() ?? DEFAULT_MD_TIMEZONE;
     const timestamp = item.modifiedAt ?? item.createdAt;
 

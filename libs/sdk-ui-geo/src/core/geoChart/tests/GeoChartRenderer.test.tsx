@@ -1,5 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { render } from "@testing-library/react";
 
 import GeoChartRenderer, { IGeoChartRendererProps } from "../GeoChartRenderer.js";

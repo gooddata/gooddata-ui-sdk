@@ -1,5 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
-import React, { useEffect, useState } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { useEffect, useState } from "react";
 import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 
 import { HeightResizer } from "../Resize/HeightResizer.js";
@@ -10,7 +10,7 @@ import { DragResizeProps, ReachedResizingLimit } from "../../../dragAndDrop/Drag
 
 export type HeightResizerDragPreviewProps = DragResizeProps<HeightResizerDragItem>;
 
-export const HeightResizerDragPreview = (props: HeightResizerDragPreviewProps) => {
+export function HeightResizerDragPreview(props: HeightResizerDragPreviewProps) {
     const { item, initialOffset, differenceFromInitialOffset, scrollCorrection, getDragLayerPosition } =
         props;
 
@@ -51,7 +51,7 @@ export const HeightResizerDragPreview = (props: HeightResizerDragPreviewProps) =
             <HeightResizer status={"active"} />
         </div>
     );
-};
+}
 
 function getPrimaryHeightGR(heightsGR: number[]): number {
     heightsGR = heightsGR || [10];

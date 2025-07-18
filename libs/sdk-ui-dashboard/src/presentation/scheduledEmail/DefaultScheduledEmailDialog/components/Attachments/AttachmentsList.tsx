@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useState } from "react";
+import { RefObject, useState } from "react";
 import {
     WidgetAttachmentType,
     DashboardAttachmentType,
@@ -69,7 +69,7 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                                 <button
                                     className="gd-attachment-chip-button"
                                     onClick={toggleDropdown}
-                                    ref={buttonRef as React.Ref<HTMLButtonElement>}
+                                    ref={buttonRef as RefObject<HTMLButtonElement>}
                                     aria-label={intl.formatMessage({
                                         id: "dialogs.schedule.management.attachments.xlsx.settings",
                                     })}

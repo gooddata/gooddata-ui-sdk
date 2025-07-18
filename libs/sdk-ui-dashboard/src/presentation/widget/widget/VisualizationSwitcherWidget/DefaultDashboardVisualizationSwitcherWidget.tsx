@@ -1,6 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
@@ -11,9 +10,11 @@ import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 /**
  * @internal
  */
-export const DefaultDashboardVisualizationSwitcherWidget: React.FC<
-    IDefaultDashboardVisualizationSwitcherWidgetProps
-> = ({ widget, screen, dashboardItemClasses }) => {
+export function DefaultDashboardVisualizationSwitcherWidget({
+    dashboardItemClasses,
+    screen,
+    widget,
+}: IDefaultDashboardVisualizationSwitcherWidgetProps) {
     const { elementRef, highlighted } = useWidgetHighlighting(widget);
 
     return (
@@ -29,4 +30,4 @@ export const DefaultDashboardVisualizationSwitcherWidget: React.FC<
             </DashboardItemBase>
         </DashboardItem>
     );
-};
+}

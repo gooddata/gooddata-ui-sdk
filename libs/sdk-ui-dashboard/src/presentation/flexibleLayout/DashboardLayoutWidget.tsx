@@ -13,7 +13,7 @@ import {
     IVisualizationSizeInfo,
     WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
-import React, { useRef } from "react";
+import { RefObject, useRef } from "react";
 import cx from "classnames";
 
 import {
@@ -38,7 +38,7 @@ import {
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
 import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
-import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
+import { useDashboardComponentsContext, WidgetIndexProvider } from "../dashboardContexts/index.js";
 import {
     BaseDraggableLayoutItemSize,
     DraggableLayoutItem,
@@ -57,7 +57,7 @@ import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./con
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
     IDashboardLayoutItemFacade,
-    IDashboardLayoutWidgetRenderer,
+    IDashboardLayoutWidgetRenderProps,
 } from "./DefaultDashboardLayoutRenderer/index.js";
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
 import { getRefsForSection, getRefsForItem } from "./refs.js";
@@ -102,10 +102,16 @@ function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget
 /**
  * @internal
  */
-export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
-    ExtendedDashboardWidget,
-    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange" | "rowIndex">
-> = ({ item, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions, rowIndex }) => {
+export function DashboardLayoutWidget({
+    item,
+    DefaultWidgetRenderer,
+    onDrill,
+    onFiltersChange,
+    onError,
+    getLayoutDimensions,
+    rowIndex,
+}: IDashboardLayoutWidgetRenderProps<ExtendedDashboardWidget> &
+    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange" | "rowIndex">) {
     const screen = useScreenSize();
     const dispatch = useDashboardDispatch();
     const insights = useDashboardSelector(selectInsightsMap);
@@ -215,7 +221,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             rowIndex={rowIndex}
         >
             <div
-                ref={dragRef}
+                ref={dragRef as unknown as RefObject<HTMLDivElement>}
                 className={cx([
                     "dashboard-widget-draggable-wrapper",
                     {
@@ -236,20 +242,21 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 ) : null}
                 <DashboardItemPathAndSizeProvider layoutItem={item}>
                     <HoverDetector widgetRef={widget.ref}>
-                        <DashboardWidget
-                            // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-                            index={index}
-                            onDrill={onDrill}
-                            onError={onError}
-                            onFiltersChange={onFiltersChange}
-                            widget={widget as ExtendedDashboardWidget}
-                            parentLayoutItemSize={item.size()}
-                            parentLayoutPath={item.index()}
-                            ErrorComponent={ErrorComponent}
-                            LoadingComponent={LoadingComponent}
-                            rowIndex={rowIndex}
-                            exportData={exportData}
-                        />
+                        <WidgetIndexProvider index={index}>
+                            <DashboardWidget
+                                screen={screen}
+                                onDrill={onDrill}
+                                onError={onError}
+                                onFiltersChange={onFiltersChange}
+                                widget={widget as ExtendedDashboardWidget}
+                                parentLayoutItemSize={item.size()}
+                                parentLayoutPath={item.index()}
+                                ErrorComponent={ErrorComponent}
+                                LoadingComponent={LoadingComponent}
+                                rowIndex={rowIndex}
+                                exportData={exportData}
+                            />
+                        </WidgetIndexProvider>
                     </HoverDetector>
                 </DashboardItemPathAndSizeProvider>
                 {canShowHotspot && !isAnyPlaceholderWidget(widget) && isActive ? (
@@ -312,7 +319,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             />
         </DefaultWidgetRenderer>
     );
-};
+}
 
 function getFilledSize(
     itemSize: IDashboardLayoutSizeByScreenSize,

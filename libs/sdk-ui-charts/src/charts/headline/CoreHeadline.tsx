@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { ComponentType, ReactElement, useMemo } from "react";
 import {
     newErrorMapping,
     IErrorDescriptors,
@@ -16,12 +16,12 @@ import { IHeadlineTransformationProps } from "./HeadlineProvider.js";
  * @internal
  */
 interface ICoreHeadlineExtendedProps {
-    headlineTransformation: React.ComponentType<IHeadlineTransformationProps>;
+    headlineTransformation: ComponentType<IHeadlineTransformationProps>;
 }
 
 type CoreHeadlineProps = ICoreChartProps & ILoadingInjectedProps & ICoreHeadlineExtendedProps;
 
-function HeadlineStateless(props: CoreHeadlineProps): JSX.Element {
+function HeadlineStateless(props: CoreHeadlineProps): ReactElement {
     const {
         dataView,
         error,
@@ -39,7 +39,7 @@ function HeadlineStateless(props: CoreHeadlineProps): JSX.Element {
 
     const errorMap: IErrorDescriptors = useMemo(() => newErrorMapping(intl), [intl]);
 
-    const renderVisualization = (): JSX.Element => {
+    const renderVisualization = (): ReactElement => {
         return (
             <IntlWrapper locale={locale}>
                 <HeadlineTransformation

@@ -1,5 +1,4 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
 import { bem } from "../bem.js";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { defineMessages, useIntl } from "react-intl";

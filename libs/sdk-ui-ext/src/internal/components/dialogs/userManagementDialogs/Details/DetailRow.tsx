@@ -1,6 +1,5 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { Input } from "@gooddata/sdk-ui-kit";
@@ -17,7 +16,7 @@ export interface IDetailRowProps {
     onChange: (value: string) => void;
 }
 
-export const DetailRow: React.FC<IDetailRowProps> = ({ labelText, value, mode, disabled, onChange }) => {
+export function DetailRow({ labelText, value, mode, disabled, onChange }: IDetailRowProps) {
     const intl = useIntl();
     const viewClassNames = cx("gd-user-management-dialog-detail-value", {
         "gd-user-management-dialog-detail-value-empty": !value,
@@ -46,4 +45,4 @@ export const DetailRow: React.FC<IDetailRowProps> = ({ labelText, value, mode, d
             )}
         </div>
     );
-};
+}

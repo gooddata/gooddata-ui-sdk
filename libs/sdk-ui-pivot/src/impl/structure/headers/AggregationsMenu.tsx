@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import cx from "classnames";
-import React from "react";
 import { IntlShape } from "react-intl";
 import {
     IExecutionDefinition,
@@ -62,14 +61,14 @@ export interface IAggregationsMenuProps {
     theme?: ITheme;
 }
 
-const MenuToggler = () => {
+function MenuToggler() {
     const theme = useTheme();
     return (
         <div className="menu-icon">
             <Icon.BurgerMenu color={theme?.palette?.complementary?.c8} />
         </div>
     );
-};
+}
 
 function AggregationsMenu(props: IAggregationsMenuProps) {
     const { intl, colId, getTableDescriptor, isMenuOpened, onMenuOpenedChange, showColumnsSubMenu } = props;

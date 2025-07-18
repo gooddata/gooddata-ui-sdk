@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ComponentType } from "react";
+import { ComponentType, Context, ReactElement } from "react";
 import { ReactReduxContextValue } from "react-redux";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IDashboard, ITheme, IWorkspacePermissions } from "@gooddata/sdk-model";
@@ -55,6 +55,7 @@ import { InsightComponentSetProvider } from "../componentDefinition/types.js";
 import { CustomToolbarComponent } from "../toolbar/index.js";
 import { CustomAlertingDialogComponent, CustomAlertingManagementDialogComponent } from "../alerting/types.js";
 import { CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/index.js";
+import { UnknownAction } from "@reduxjs/toolkit";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard
@@ -772,14 +773,14 @@ export interface IDashboardExtensionProps
      *
      * Note: there is no need to use this prop unless you are dynamically loading the engine bundle.
      */
-    additionalReduxContext?: React.Context<ReactReduxContextValue>;
+    additionalReduxContext?: Context<ReactReduxContextValue<any, UnknownAction> | null>;
 }
 
 /**
  * @public
  */
 export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensionProps {
-    children?: JSX.Element | ((dashboard: any) => JSX.Element);
+    children?: ReactElement | ((dashboard: any) => ReactElement);
     /**
      * Override the persisted dashboard. This is mainly useful for internal use cases.
      * @internal

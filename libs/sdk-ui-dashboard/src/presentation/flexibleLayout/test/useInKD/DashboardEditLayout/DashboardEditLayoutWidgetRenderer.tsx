@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useRef } from "react";
+import { RefObject, useRef } from "react";
 import cx from "classnames";
 
 import {
@@ -16,10 +16,8 @@ export type IDashboardEditLayoutWidgetRendererProps = IDashboardEditLayoutWidget
 
 const screen = "xl"; // Todo: figure out what this was supposed to be?
 
-export const RenderDashboardEditLayoutWidgetRenderer: React.FC<IDashboardEditLayoutWidgetRendererProps> = (
-    props,
-) => {
-    const contentRef = useRef<HTMLDivElement>() as React.RefObject<HTMLDivElement>;
+export function RenderDashboardEditLayoutWidgetRenderer(props: IDashboardEditLayoutWidgetRendererProps) {
+    const contentRef = useRef<HTMLDivElement>(null) as RefObject<HTMLDivElement>;
 
     const { item, DefaultWidgetRenderer } = props;
 
@@ -57,6 +55,6 @@ export const RenderDashboardEditLayoutWidgetRenderer: React.FC<IDashboardEditLay
             <DashboardEditLayoutWidget contentRef={contentRef} item={item} screen={screen} />
         </DefaultWidgetRenderer>
     );
-};
+}
 
 export const DashboardEditLayoutWidgetRenderer = RenderDashboardEditLayoutWidgetRenderer;

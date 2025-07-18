@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { CSSProperties, useRef, useCallback, useEffect, useMemo, useState } from "react";
+import { ReactElement, CSSProperties, useRef, useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { createSelector } from "@reduxjs/toolkit";
 import stringify from "json-stable-stringify";
@@ -84,7 +84,7 @@ const selectChartConfig = createSelector(
 /**
  * @internal
  */
-export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => {
+export function DashboardInsight(props: IDashboardInsightProps): ReactElement {
     const {
         insight,
         widget,
@@ -367,4 +367,4 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
             </div>
         </div>
     );
-};
+}

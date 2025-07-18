@@ -1,12 +1,11 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { Button } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
 import { messages } from "@gooddata/sdk-ui";
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
-const AddAttributeAction: React.FC = () => {
+export default function AddAttributeAction() {
     const { formatMessage } = useIntl();
     const { onAddEmptyAttribute, attributes } = useAttributeHierarchyDialog();
 
@@ -25,6 +24,4 @@ const AddAttributeAction: React.FC = () => {
             />
         </div>
     );
-};
-
-export default AddAttributeAction;
+}

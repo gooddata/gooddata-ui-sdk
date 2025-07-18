@@ -7,7 +7,6 @@ import {
     ComponentTable,
     UiButton,
 } from "@gooddata/sdk-ui-kit";
-import React from "react";
 import { wrapWithTheme } from "../themeWrapper.js";
 import tooltipImage from "./assets/tooltip-image.png";
 import { ScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider";
@@ -31,49 +30,57 @@ const allPositions = propCombination("arrowPlacement", [
 ]);
 const allVariants = propCombination("variant", ["default", "error"]);
 
-const UiTooltipPosition: React.FC<UiTooltipProps> = ({ arrowPlacement, variant }) => (
-    <UiTooltip
-        arrowPlacement={arrowPlacement}
-        variant={variant}
-        anchor={<div style={{ margin: "75px 0", width: "50px", height: "25px", backgroundColor: "gray" }} />}
-        content={
-            <div
-                style={{
-                    height: "50px",
-                    width: "100px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                {`arrow: ${arrowPlacement}`}
-            </div>
-        }
-    />
-);
-
-const UiTooltipTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
-    <div className="screenshot-target">
-        <ComponentTable
-            rowsBy={[allPositions]}
-            columnsBy={allVariants}
-            Component={UiTooltipPosition}
-            codeSnippet={showCode ? "UiTooltip" : undefined}
-            align="center"
-            cellWidth={200}
+function UiTooltipPosition({ arrowPlacement, variant }: UiTooltipProps) {
+    return (
+        <UiTooltip
+            arrowPlacement={arrowPlacement}
+            variant={variant}
+            anchor={
+                <div style={{ margin: "75px 0", width: "50px", height: "25px", backgroundColor: "gray" }} />
+            }
+            content={
+                <div
+                    style={{
+                        height: "50px",
+                        width: "100px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    {`arrow: ${arrowPlacement}`}
+                </div>
+            }
         />
-    </div>
-);
+    );
+}
 
-const UiTooltipExample: React.FC<Partial<UiTooltipProps> & { label: string }> = ({ label, ...props }) => (
-    <UiTooltip
-        {...props}
-        anchor={<UiButton size="small" variant="tertiary" label={label} />}
-        content="Tooltip content"
-    />
-);
+function UiTooltipTest({ showCode }: { showCode?: boolean }) {
+    return (
+        <div className="screenshot-target">
+            <ComponentTable
+                rowsBy={[allPositions]}
+                columnsBy={allVariants}
+                Component={UiTooltipPosition}
+                codeSnippet={showCode ? "UiTooltip" : undefined}
+                align="center"
+                cellWidth={200}
+            />
+        </div>
+    );
+}
 
-const UiTooltipExamples: React.FC = () => {
+function UiTooltipExample({ label, ...props }: Partial<UiTooltipProps> & { label: string }) {
+    return (
+        <UiTooltip
+            {...props}
+            anchor={<UiButton size="small" variant="tertiary" label={label} />}
+            content="Tooltip content"
+        />
+    );
+}
+
+function UiTooltipExamples() {
     const arrowPlacement = "left";
     return (
         <div className="library-component">
@@ -136,74 +143,83 @@ const UiTooltipExamples: React.FC = () => {
             />
         </div>
     );
-};
+}
 
-const ContentWithButtons: React.FC<{ isDisabled: boolean }> = ({ isDisabled }) => (
-    <div>
-        <img
-            src={tooltipImage}
-            style={{
-                width: "200px",
-                height: "auto",
-                display: "block",
-            }}
-        />
-        <h4>Has your data been changed?</h4>
-        <p>GoodData is caching query results to optimize performance.</p>
-        <p>
-            We recommend you use the API to clear the cache after every data upload to keep your analytics up
-            to date. A manual "Clear cache" option is also available in the web UI
-        </p>
-        <div style={{ display: "flex", gap: "10px", justifyContent: "flex-end" }}>
-            <UiButton size="small" variant="tooltip" label={"Learn more"} isDisabled={isDisabled} />
-            <UiButton size="small" label={"Got it"} />
+function ContentWithButtons({ isDisabled }: { isDisabled: boolean }) {
+    return (
+        <div>
+            <img
+                src={tooltipImage}
+                style={{
+                    width: "200px",
+                    height: "auto",
+                    display: "block",
+                }}
+            />
+            <h4>Has your data been changed?</h4>
+            <p>GoodData is caching query results to optimize performance.</p>
+            <p>
+                We recommend you use the API to clear the cache after every data upload to keep your analytics
+                up to date. A manual "Clear cache" option is also available in the web UI
+            </p>
+            <div style={{ display: "flex", gap: "10px", justifyContent: "flex-end" }}>
+                <UiButton size="small" variant="tooltip" label={"Learn more"} isDisabled={isDisabled} />
+                <UiButton size="small" label={"Got it"} />
+            </div>
         </div>
-    </div>
-);
+    );
+}
 
-const UiTooltipWithButtons: React.FC<{ isDisabled: boolean }> = ({ isDisabled }) => (
-    <div className="screenshot-target">
-        <UiTooltip
-            arrowPlacement="top-end"
-            width={200}
-            anchor={<div style={{ width: "20px", height: "5px", backgroundColor: "gray" }} />}
-            content={<ContentWithButtons isDisabled={isDisabled} />}
-        />
-    </div>
-);
-const UiTooltipWithButtonsTest: React.FC = () => (
-    <div
-        className="library-component"
-        style={{ width: "1000px", display: "flex", justifyContent: "center", gap: "400px" }}
-    >
-        <div>
-            <h4 style={{ marginLeft: "-120px" }}>Enabled</h4>
-            <UiTooltipWithButtons isDisabled={false} />
+function UiTooltipWithButtons({ isDisabled }: { isDisabled: boolean }) {
+    return (
+        <div className="screenshot-target">
+            <UiTooltip
+                arrowPlacement="top-end"
+                width={200}
+                anchor={<div style={{ width: "20px", height: "5px", backgroundColor: "gray" }} />}
+                content={<ContentWithButtons isDisabled={isDisabled} />}
+            />
         </div>
-        <div>
-            <h4 style={{ marginLeft: "-120px" }}>Disabled</h4>
-            <UiTooltipWithButtons isDisabled={true} />
-        </div>
-    </div>
-);
+    );
+}
 
-const UiTooltipScopedThemeTest: React.FC = () => (
-    <div
-        className="library-component"
-        style={{ width: "1000px", display: "flex", justifyContent: "center", gap: "400px" }}
-    >
-        <div>
-            <ScopedThemeProvider theme={indigoDarkTheme.theme}>
+function UiTooltipWithButtonsTest() {
+    return (
+        <div
+            className="library-component"
+            style={{ width: "1000px", display: "flex", justifyContent: "center", gap: "400px" }}
+        >
+            <div>
+                <h4 style={{ marginLeft: "-120px" }}>Enabled</h4>
                 <UiTooltipWithButtons isDisabled={false} />
-            </ScopedThemeProvider>
+            </div>
+            <div>
+                <h4 style={{ marginLeft: "-120px" }}>Disabled</h4>
+                <UiTooltipWithButtons isDisabled={true} />
+            </div>
         </div>
-        <div>
-            <ScopedThemeProvider theme={redLightTheme.theme}>
-                <UiTooltipWithButtons isDisabled={false} />
-            </ScopedThemeProvider>
+    );
+}
+
+function UiTooltipScopedThemeTest() {
+    return (
+        <div
+            className="library-component"
+            style={{ width: "1000px", display: "flex", justifyContent: "center", gap: "400px" }}
+        >
+            <div>
+                <ScopedThemeProvider theme={indigoDarkTheme.theme}>
+                    <UiTooltipWithButtons isDisabled={false} />
+                </ScopedThemeProvider>
+            </div>
+            <div>
+                <ScopedThemeProvider theme={redLightTheme.theme}>
+                    <UiTooltipWithButtons isDisabled={false} />
+                </ScopedThemeProvider>
+            </div>
         </div>
-    </div>
-);
+    );
+}
 
 export default {
     title: "15 Ui/UiTooltip",

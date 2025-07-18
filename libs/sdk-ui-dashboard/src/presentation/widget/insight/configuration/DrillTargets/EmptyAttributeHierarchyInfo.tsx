@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { messages } from "@gooddata/sdk-ui";
@@ -18,9 +17,9 @@ interface IEmptyAttributeHierarchyInfoProps {
 //  the if condition should be removed then after the documentation is ready
 const EMPTY_HIERARCHY_INFO_DOCUMENTATION_LINK = "";
 
-const EmptyAttributeHierarchyInfo: React.FC<IEmptyAttributeHierarchyInfoProps> = ({
+export default function EmptyAttributeHierarchyInfo({
     onOpenAttributeHierarchyDialog,
-}) => {
+}: IEmptyAttributeHierarchyInfoProps) {
     const { formatMessage } = useIntl();
     const canManageAttributeHierarchy = useDashboardSelector(selectCanManageAttributeHierarchy);
     const userInteraction = useDashboardUserInteraction();
@@ -58,6 +57,4 @@ const EmptyAttributeHierarchyInfo: React.FC<IEmptyAttributeHierarchyInfoProps> =
             </div>
         </>
     );
-};
-
-export default EmptyAttributeHierarchyInfo;
+}

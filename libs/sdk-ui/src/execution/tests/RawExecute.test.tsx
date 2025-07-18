@@ -1,5 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { render, screen, fireEvent } from "@testing-library/react";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IRawExecuteProps, RawExecute } from "../RawExecute.js";

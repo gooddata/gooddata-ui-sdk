@@ -1,6 +1,5 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { Input } from "@gooddata/sdk-ui-kit";
 
 import { ConfigurationCategory } from "../../attributeFilter/dashboardDropdownBody/configuration/ConfigurationCategory.js";
@@ -14,9 +13,14 @@ interface IAttributeTitleRenamingProps {
     onChange: (value: string) => void;
 }
 
-export const AttributeTitleRenaming: React.FC<IAttributeTitleRenamingProps> = (props) => {
-    const { categoryTitle, resetTitleText, showResetTitle, attributeTitle, onClick, onChange } = props;
-
+export function AttributeTitleRenaming({
+    categoryTitle,
+    resetTitleText,
+    showResetTitle,
+    attributeTitle,
+    onClick,
+    onChange,
+}: IAttributeTitleRenamingProps) {
     const buttonClassNames =
         "gd-button gd-button-link attribute-filter-renaming-title-reset s-attribute-filter-renaming-title-reset";
 
@@ -43,4 +47,4 @@ export const AttributeTitleRenaming: React.FC<IAttributeTitleRenamingProps> = (p
             />
         </div>
     );
-};
+}

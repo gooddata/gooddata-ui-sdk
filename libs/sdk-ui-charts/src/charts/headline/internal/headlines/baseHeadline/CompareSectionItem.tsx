@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { RefObject } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { RefObject } from "react";
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface ICompareSectionItemProps {
@@ -7,7 +7,7 @@ interface ICompareSectionItemProps {
     titleRef?: RefObject<HTMLDivElement>;
 }
 
-const CompareSectionItem: React.FC<ICompareSectionItemProps> = ({ dataItem, titleRef }) => {
+export default function CompareSectionItem({ dataItem, titleRef }: ICompareSectionItemProps) {
     const BaseHeadlineDataItem = dataItem.baseHeadlineDataItemComponent;
 
     return (
@@ -20,6 +20,4 @@ const CompareSectionItem: React.FC<ICompareSectionItemProps> = ({ dataItem, titl
             />
         </div>
     );
-};
-
-export default CompareSectionItem;
+}

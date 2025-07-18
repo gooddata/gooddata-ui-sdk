@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
 import { OnChangeValue, SelectInstance } from "react-select";
@@ -28,8 +28,12 @@ const SEARCH_INTERVAL = 400;
 /**
  * @internal
  */
-export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
-    const { appliedGrantees, currentUser, sharedObjectRef, onSelectGrantee } = props;
+export function AddGranteeSelect({
+    appliedGrantees,
+    currentUser,
+    sharedObjectRef,
+    onSelectGrantee,
+}: IAddGranteeSelectProps) {
     const [inputValue, setInputValue] = useState<string>("");
     const backend: IAnalyticalBackend = useBackendStrict();
     const workspace: string = useWorkspaceStrict();
@@ -162,4 +166,4 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
             />
         </div>
     );
-};
+}

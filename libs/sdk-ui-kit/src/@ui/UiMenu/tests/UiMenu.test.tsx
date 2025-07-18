@@ -1,6 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import cx from "classnames";
 import { IntlProvider } from "react-intl";

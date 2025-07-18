@@ -1,10 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
 import { IInsight } from "@gooddata/sdk-model";
 import { DraggableInsightListItem } from "../../../dragAndDrop/draggableWidget/DraggableInsightListItem.js";
 import {
-    CustomDashboardInsightListItemComponent,
+    CustomDashboardInsightListItemComponentProps,
     IWrapInsightListItemWithDragComponent,
 } from "../../../dragAndDrop/types.js";
 
@@ -14,33 +13,32 @@ interface IDraggableInsightListItemWrapperProps extends IInsightListItemProps {
     insight: IInsight;
 }
 
-export const DraggableInsightListItemBody: CustomDashboardInsightListItemComponent = (props) => {
+export function DraggableInsightListItemBody(props: CustomDashboardInsightListItemComponentProps) {
     const { className } = props;
     return (
         <div className={className}>
             <InsightListItem {...props} />
         </div>
     );
-};
+}
 
-export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItemWrapperProps> = (props) => {
-    const {
-        WrapInsightListItemWithDragComponent,
-        className,
-        isLocked,
-        title,
-        description,
-        showDescriptionPanel,
-        type,
-        updated,
-        insight,
-        onDescriptionPanelOpen,
-        metadataTimeZone,
-        useRichText,
-        useReferences,
-        LoadingComponent,
-        filters,
-    } = props;
+export function DraggableInsightListItemWrapper({
+    WrapInsightListItemWithDragComponent,
+    className,
+    isLocked,
+    title,
+    description,
+    showDescriptionPanel,
+    type,
+    updated,
+    insight,
+    onDescriptionPanelOpen,
+    metadataTimeZone,
+    useRichText,
+    useReferences,
+    LoadingComponent,
+    filters,
+}: IDraggableInsightListItemWrapperProps) {
     return (
         <DraggableInsightListItem
             WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
@@ -63,4 +61,4 @@ export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItem
             insight={insight}
         />
     );
-};
+}

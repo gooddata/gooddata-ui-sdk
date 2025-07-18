@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import {
@@ -19,7 +18,7 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
-export const AddVisualizationSwitcherWidgetButton: React.FC = () => {
+export function AddVisualizationSwitcherWidgetButton() {
     const isMobileDevice = useMediaQuery("mobileDevice");
     const theme = useTheme();
     return (
@@ -45,4 +44,4 @@ export const AddVisualizationSwitcherWidgetButton: React.FC = () => {
             </OverlayControllerProvider>
         </div>
     );
-};
+}

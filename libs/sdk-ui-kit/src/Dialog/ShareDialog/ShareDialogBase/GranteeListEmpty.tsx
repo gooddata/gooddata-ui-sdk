@@ -1,11 +1,10 @@
-// (C) 2021 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { FormattedMessage } from "react-intl";
 
 /**
  * @internal
  */
-export const GranteeListEmpty: React.FC = () => {
+export function GranteeListEmpty() {
     return (
         <div className="gd-share-dialog-grantee-list-empty-selection s-gd-share-dialog-grantee-list-empty-selection">
             <span>
@@ -13,4 +12,4 @@ export const GranteeListEmpty: React.FC = () => {
             </span>
         </div>
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
+import { useState, useCallback, KeyboardEvent } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
@@ -30,7 +30,7 @@ const DESCRIPTION_PANEL_ALIGN_POINTS = [
     { align: "tr br" },
 ];
 
-export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = (props) => {
+export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
     const { onOpen } = props;
     const [isOpen, setIsOpen] = useState(false);
     const intl = useIntl();
@@ -45,7 +45,7 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
     }, [setIsOpen, onOpen]);
 
     const onKeyDown = useCallback(
-        (event: React.KeyboardEvent<HTMLDivElement>) => {
+        (event: KeyboardEvent<HTMLDivElement>) => {
             // This enables keyboard interaction events after focus
             if (isActionKey(event)) {
                 event.preventDefault();
@@ -93,4 +93,4 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
             ) : null}
         </>
     );
-};
+}

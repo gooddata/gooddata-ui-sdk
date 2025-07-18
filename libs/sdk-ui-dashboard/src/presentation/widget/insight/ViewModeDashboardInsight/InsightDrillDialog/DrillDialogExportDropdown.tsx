@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import {
@@ -46,7 +46,7 @@ const dropdownAlignPoints: IAlignPoint[] = [
 const dropdownDisabledBubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc" }];
 const itemBubbleAlignPoints: IAlignPoint[] = [{ align: "cl br" }];
 
-export const DrillDialogExportDropdown: React.FC<IDrillDialogShareDropdownProps> = ({
+export function DrillDialogExportDropdown({
     exportAvailable,
     exportXLSXEnabled,
     onExportXLSX,
@@ -56,7 +56,7 @@ export const DrillDialogExportDropdown: React.FC<IDrillDialogShareDropdownProps>
     onExportCSVRaw,
     isExporting,
     isExportRawVisible,
-}) => {
+}: IDrillDialogShareDropdownProps) {
     const isExportDisabled = !exportAvailable || (!exportXLSXEnabled && !exportCSVEnabled);
     const isDropdownDisabled = isExportDisabled && !isExportRawVisible;
 
@@ -79,11 +79,11 @@ export const DrillDialogExportDropdown: React.FC<IDrillDialogShareDropdownProps>
         onExportCSVRaw,
     });
 
-    const handleSelectItem = React.useCallback((item: IMenuInteractiveItem) => {
+    const handleSelectItem = useCallback((item: IMenuInteractiveItem) => {
         item.data.action();
     }, []);
 
-    const itemDataTestId = React.useCallback(
+    const itemDataTestId = useCallback(
         (item: IMenuItem) => (item.type === "interactive" ? item.data.dataTestId : undefined),
         [],
     );
@@ -124,9 +124,9 @@ export const DrillDialogExportDropdown: React.FC<IDrillDialogShareDropdownProps>
             />
         </div>
     );
-};
+}
 
-const DrillModalExportMenuItem: React.FC<IUiMenuInteractiveItemProps<IMenuItemData>> = (props) => {
+function DrillModalExportMenuItem(props: IUiMenuInteractiveItemProps<IMenuItemData>) {
     const { item } = props;
 
     const tooltip = item.data.disabledTooltip;
@@ -141,18 +141,20 @@ const DrillModalExportMenuItem: React.FC<IUiMenuInteractiveItemProps<IMenuItemDa
     ) : (
         <DefaultUiMenuInteractiveItem {...props} />
     );
-};
+}
 
-const DropdownTriggerButton: React.FC<IDropdownButtonRenderProps & { isDisabled?: boolean }> = ({
+function DropdownTriggerButton({
     toggleDropdown,
     buttonRef,
     accessibilityConfig,
     isDisabled,
-}) => {
+}: IDropdownButtonRenderProps & { isDisabled?: boolean }) {
     const { formatMessage } = useIntl();
     return (
         <UiButton
-            ref={(ref) => (buttonRef.current = ref)}
+            ref={(ref) => {
+                buttonRef.current = ref;
+            }}
             onClick={toggleDropdown}
             iconBefore="download"
             label={formatMessage({ id: "dialogs.export.submit" })}
@@ -161,4 +163,4 @@ const DropdownTriggerButton: React.FC<IDropdownButtonRenderProps & { isDisabled?
             accessibilityConfig={accessibilityConfig}
         />
     );
-};
+}

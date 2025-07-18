@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Button, BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { IRankingFilter, newRankingFilter, ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import { FormattedMessage, useIntl } from "react-intl";

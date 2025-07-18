@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { SortDirection } from "@gooddata/sdk-model";
+import { ReactNode } from "react";
 
 /**
  * @internal
@@ -41,8 +42,8 @@ export interface UiAsyncTableProps<T extends { id: string }> {
     setSelectedItemIds?: (items: Array<string>) => void;
 
     //headless variant, ignores columns prop
-    renderItem?: (item: T) => React.ReactNode;
-    renderHeader?: () => React.ReactNode;
+    renderItem?: (item: T) => ReactNode;
+    renderHeader?: () => ReactNode;
 
     //locale
     locale?: string;
@@ -55,12 +56,12 @@ export interface UiAsyncTableColumn<T> {
     key?: keyof T;
     label?: string;
     width?: number;
-    renderMenu?: (item: T) => React.ReactNode;
-    renderButton?: (item: T) => React.ReactNode;
-    renderRoleIcon?: (item: T) => React.ReactNode;
-    renderPrefixIcon?: (item: T) => React.ReactNode;
-    renderSuffixIcon?: (item: T) => React.ReactNode;
-    renderBadge?: (item: T) => React.ReactNode;
+    renderMenu?: (item: T) => ReactNode;
+    renderButton?: (item: T) => ReactNode;
+    renderRoleIcon?: (item: T) => ReactNode;
+    renderPrefixIcon?: (item: T) => ReactNode;
+    renderSuffixIcon?: (item: T) => ReactNode;
+    renderBadge?: (item: T) => ReactNode;
     getMultiLineTextContent?: (item: T) => Array<string>;
     getTextContent?: (item: T) => string;
     getTextTitle?: (item: T) => string;
@@ -100,7 +101,7 @@ export interface UiAsyncTableBulkAction {
  */
 export interface UiAsyncTableTitleProps {
     title: string;
-    renderIcon?: () => React.ReactNode;
+    renderIcon?: () => ReactNode;
     onSearch?: (search: string) => void;
     actions: Array<UiAsyncTableTitleAction>;
     scrollToStart: () => void;
@@ -110,7 +111,7 @@ export interface UiAsyncTableTitleProps {
  * @internal
  */
 export interface UiAsyncTableTitleAction {
-    renderAction: () => React.ReactNode;
+    renderAction: () => ReactNode;
 }
 
 //subcomponent props

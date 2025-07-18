@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactElement } from "react";
 import { useIntl } from "react-intl";
 import { ObjRef } from "@gooddata/sdk-model";
 import { DialogListHeader, IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
@@ -13,7 +13,7 @@ interface IStylingSettingBodyProps<T> {
     defaultItem: IStylingPickerItem<T>;
     customItems: IStylingPickerItem<T>[];
     itemToColorPreview: (itemContent: T) => string[];
-    emptyMessage: () => JSX.Element;
+    emptyMessage: () => ReactElement;
     isLoading?: boolean;
     onListActionClick?: () => void;
     initiallySelectedItemRef: ObjRef;
@@ -25,7 +25,7 @@ interface IStylingSettingBodyProps<T> {
     isEditingSupported?: boolean;
 }
 
-export const StylingSettingBody = <T extends StylingPickerItemContent>({
+export function StylingSettingBody<T extends StylingPickerItemContent>({
     isMobile,
     defaultItem,
     customItems,
@@ -40,7 +40,7 @@ export const StylingSettingBody = <T extends StylingPickerItemContent>({
     onItemDelete,
     onItemMenuToggle,
     isEditingSupported,
-}: IStylingSettingBodyProps<T>) => {
+}: IStylingSettingBodyProps<T>) {
     const intl = useIntl();
 
     return (
@@ -88,4 +88,4 @@ export const StylingSettingBody = <T extends StylingPickerItemContent>({
             )}
         </div>
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState, CSSProperties, useEffect } from "react";
+import { ReactElement, useCallback, useMemo, useState, CSSProperties, useEffect } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
 import { IExecutionConfig, insightSetFilters } from "@gooddata/sdk-model";
@@ -56,7 +56,7 @@ const selectChartConfig = createSelector(
 /**
  * @internal
  */
-export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element => {
+export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement {
     const {
         insight,
         widget,
@@ -188,4 +188,4 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
             </div>
         </div>
     );
-};
+}

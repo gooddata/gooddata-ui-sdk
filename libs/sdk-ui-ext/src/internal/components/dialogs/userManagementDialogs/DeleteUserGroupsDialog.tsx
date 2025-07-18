@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 import { useIntl } from "react-intl";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
@@ -19,12 +19,12 @@ export interface IDeleteUserGroupsDialogProps extends IWithTelemetryProps {
     onClose: () => void;
 }
 
-const DeleteUserGroupsDialogComponent: React.FC<IDeleteUserGroupsDialogProps> = ({
+function DeleteUserGroupsDialogComponent({
     userGroupIds,
     organizationId,
     onSuccess,
     onClose,
-}) => {
+}: IDeleteUserGroupsDialogProps) {
     const intl = useIntl();
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
@@ -63,7 +63,7 @@ const DeleteUserGroupsDialogComponent: React.FC<IDeleteUserGroupsDialogProps> = 
             onCancel={onClose}
         />
     );
-};
+}
 
 /**
  * @internal

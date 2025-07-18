@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 import OriginalLinesEllipsis from "react-lines-ellipsis";
 import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC.js";
 import { IInsightTitleProps } from "../internal/index.js";
@@ -26,7 +25,7 @@ const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
 /**
  * @public
  */
-const InsightTitle: React.FC<IInsightTitleProps> = ({ title }) => {
+export default function InsightTitle({ title }: IInsightTitleProps) {
     return (
         <div className="insight-title-outer">
             <div className="insight-title">
@@ -39,6 +38,4 @@ const InsightTitle: React.FC<IInsightTitleProps> = ({ title }) => {
             </div>
         </div>
     );
-};
-
-export default InsightTitle;
+}

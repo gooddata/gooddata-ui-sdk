@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { ILayoutItemPath } from "../../../../types.js";
 
@@ -12,8 +11,10 @@ export type WidgetDropZoneProps = {
     dropRef: any;
 };
 
-export const WidgetDropZone: React.FC<WidgetDropZoneProps> = ({ isLastInSection, dropRef, layoutPath }) => (
-    <div className="widget-dropzone" ref={dropRef}>
-        <WidgetDropZoneBox isLast={isLastInSection} isInContainer={hasParent(layoutPath)} />
-    </div>
-);
+export function WidgetDropZone({ isLastInSection, dropRef, layoutPath }: WidgetDropZoneProps) {
+    return (
+        <div className="widget-dropzone" ref={dropRef}>
+            <WidgetDropZoneBox isLast={isLastInSection} isInContainer={hasParent(layoutPath)} />
+        </div>
+    );
+}

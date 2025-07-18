@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
@@ -32,7 +32,7 @@ export default function CheckboxControl({
 }: ICheckboxControlProps) {
     const intl = useIntl();
 
-    const onValueChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
         const clonedProperties = cloneDeep(properties);
         set(
             clonedProperties,

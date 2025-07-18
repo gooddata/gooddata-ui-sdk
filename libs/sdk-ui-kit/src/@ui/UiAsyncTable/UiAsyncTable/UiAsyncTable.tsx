@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { UiPagedVirtualList } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { UiAsyncTableRow } from "./UiAsyncTableRow.js";
 import { b } from "../asyncTableBem.js";
@@ -212,10 +212,10 @@ const useAsyncTable = <T extends { id: string }>({
 /**
  * @internal
  */
-export const UiAsyncTable = <T extends { id: string }>(props: UiAsyncTableProps<T>) => {
+export function UiAsyncTable<T extends { id: string }>(props: UiAsyncTableProps<T>) {
     return (
         <IntlWrapper locale={props.locale}>
             <AsyncTableCore {...props} />
         </IntlWrapper>
     );
-};
+}

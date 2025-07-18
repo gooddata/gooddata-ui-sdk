@@ -1,5 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
@@ -10,7 +9,7 @@ interface IExecuteProtectedErrorProps {
     fullContent: boolean;
 }
 
-export const ExecuteProtectedError: React.FC<IExecuteProtectedErrorProps> = ({ fullContent }) => {
+export function ExecuteProtectedError({ fullContent }: IExecuteProtectedErrorProps) {
     return (
         <ErrorContainer>
             {fullContent ? (
@@ -34,4 +33,4 @@ export const ExecuteProtectedError: React.FC<IExecuteProtectedErrorProps> = ({ f
             )}
         </ErrorContainer>
     );
-};
+}

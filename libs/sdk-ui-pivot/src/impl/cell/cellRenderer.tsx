@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 import { ITotal, IMeasureDescriptorItem } from "@gooddata/sdk-model";
 import { ICellRendererParams } from "ag-grid-community";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -63,9 +63,9 @@ function shouldShowAggregationsMenu(params: ICellRendererParams) {
  */
 export function createCellRenderer(
     tableDescriptor: TableDescriptor,
-): (params: ICellRendererParams) => JSX.Element {
+): (params: ICellRendererParams) => ReactElement {
     // eslint-disable-next-line react/display-name
-    return (params: ICellRendererParams): JSX.Element => {
+    return (params: ICellRendererParams): ReactElement => {
         const loadingDone = params.node.id !== undefined || params.node.rowPinned === "bottom";
 
         const theme = useTheme();

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, ComponentType } from "react";
 import noop from "lodash/noop.js";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import {
@@ -192,7 +192,7 @@ type WithLoadingState = {
  */
 export function withExecutionLoading<TProps>(
     params: IWithExecutionLoading<TProps>,
-): (WrappedComponent: React.ComponentType<TProps & WithLoadingResult>) => React.ComponentType<TProps> {
+): (WrappedComponent: ComponentType<TProps & WithLoadingResult>) => ComponentType<TProps> {
     const {
         promiseFactory,
         loadOnMount = true,
@@ -203,13 +203,11 @@ export function withExecutionLoading<TProps>(
         enableExecutionCancelling = false,
     } = params;
 
-    return (
-        WrappedComponent: React.ComponentType<TProps & WithLoadingResult>,
-    ): React.ComponentType<TProps> => {
+    return (WrappedComponent: ComponentType<TProps & WithLoadingResult>): ComponentType<TProps> => {
         function WithLoading(props: TProps) {
             const isWithExecutionLoadingUnmountedRef = useRef<boolean>(false);
-            const cancelablePromiseRef = useRef<ICancelablePromise<DataViewFacade> | undefined>();
-            const effectivePropsRef = useRef<TProps | undefined>();
+            const cancelablePromiseRef = useRef<ICancelablePromise<DataViewFacade> | undefined>(undefined);
+            const effectivePropsRef = useRef<TProps | undefined>(undefined);
 
             const [state, setState] = useState<WithLoadingState>({
                 error: undefined,
@@ -343,7 +341,7 @@ export function withExecutionLoading<TProps>(
             }, []); // Empty dependency array for mount only
 
             // ComponentDidUpdate equivalent
-            const prevPropsRef = useRef<TProps>();
+            const prevPropsRef = useRef<TProps | null>(null);
             useEffect(() => {
                 if (prevPropsRef.current && shouldRefetch(prevPropsRef.current, props)) {
                     fetch();

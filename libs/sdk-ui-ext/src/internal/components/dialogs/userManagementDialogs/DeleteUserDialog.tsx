@@ -1,6 +1,5 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./locales.js";
@@ -18,12 +17,7 @@ export interface IDeleteUserDialogProps extends IWithTelemetryProps {
     onClose: () => void;
 }
 
-const DeleteUserDialogComponent: React.FC<IDeleteUserDialogProps> = ({
-    userId,
-    organizationId,
-    onSuccess,
-    onClose,
-}) => {
+function DeleteUserDialogComponent({ userId, organizationId, onSuccess, onClose }: IDeleteUserDialogProps) {
     const intl = useIntl();
     const { deleteUser, isDeleteUserProcessing } = useDeleteUser(userId, organizationId, onSuccess, onClose);
     return (
@@ -35,7 +29,7 @@ const DeleteUserDialogComponent: React.FC<IDeleteUserDialogProps> = ({
             onCancel={onClose}
         />
     );
-};
+}
 
 /**
  * @internal

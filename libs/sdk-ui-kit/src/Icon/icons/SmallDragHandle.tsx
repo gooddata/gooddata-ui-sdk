@@ -1,12 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const SmallDragHandle: React.FC<IIconProps> = ({ className, color, width, height }) => {
+export function SmallDragHandle({ className, color, width, height }: IIconProps) {
     return (
         <svg
             className={className}
@@ -22,4 +21,4 @@ export const SmallDragHandle: React.FC<IIconProps> = ({ className, color, width,
             />
         </svg>
     );
-};
+}

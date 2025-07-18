@@ -1,12 +1,11 @@
-// (C) 2021 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const AttributeFilter: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function AttributeFilter({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={className}
@@ -28,4 +27,4 @@ export const AttributeFilter: React.FC<IIconProps> = ({ color, className, width,
             </g>
         </svg>
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, IMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
 import {
@@ -74,16 +74,16 @@ const WrappedHeadline = withContexts(RenderHeadline);
  *
  * @public
  */
-export const Headline = (props: IHeadlineProps) => {
+export function Headline(props: IHeadlineProps) {
     const [primaryMeasure, secondaryMeasure, filters] = useResolveValuesWithPlaceholders(
         [props.primaryMeasure, props.secondaryMeasure, props.filters],
         props.placeholdersResolutionContext,
     );
 
     return <WrappedHeadline {...props} {...{ primaryMeasure, secondaryMeasure, filters }} />;
-};
+}
 
-export function RenderHeadline(props: IHeadlineProps): JSX.Element {
+export function RenderHeadline(props: IHeadlineProps): ReactElement {
     const { backend, workspace, primaryMeasure } = props;
     invariant(primaryMeasure, "The property primaryMeasure must be specified.");
 

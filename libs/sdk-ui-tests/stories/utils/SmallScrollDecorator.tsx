@@ -1,9 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { CSSProperties, ReactElement } from "react";
 import { ScrollNotificationDiv } from "./ScrollNotificationDiv.js";
 
-export const SmallScrollDecorator = (width: number, height: number, components: JSX.Element): JSX.Element => {
-    const style: React.CSSProperties = {
+export const SmallScrollDecorator = (
+    width: number,
+    height: number,
+    components: ReactElement,
+): ReactElement => {
+    const style: CSSProperties = {
         overflow: "scroll",
         width,
         height,

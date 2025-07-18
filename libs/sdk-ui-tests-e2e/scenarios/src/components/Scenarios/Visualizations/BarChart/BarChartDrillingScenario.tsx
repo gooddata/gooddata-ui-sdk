@@ -1,6 +1,6 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     IDrillEvent,
     ExplicitDrill,
@@ -27,9 +27,7 @@ interface IBarChartDrillingProps {
 }
 const measures = [Won, Amount];
 const viewBy = [Product.Name, Region];
-const BarChartDrilling: React.FC<IBarChartDrillingProps> = (props) => {
-    const { drillableItems } = props;
-
+function BarChartDrilling({ drillableItems }: IBarChartDrillingProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const [lastEvent, setLastEvent] = useState<IDrillEvent | null>(null);
@@ -54,7 +52,7 @@ const BarChartDrilling: React.FC<IBarChartDrillingProps> = (props) => {
             </pre>
         </div>
     );
-};
+}
 
 interface DrillItems {
     id: string;
@@ -85,7 +83,7 @@ const drillExamples: DrillItems[] = [
     },
 ];
 
-export const BarChartDrillingScenario: React.FC = () => {
+export function BarChartDrillingScenario() {
     const [currentDrillExample, setCurrentDrillExample] = useState<DrillItems>(drillExamples[0]);
 
     return (
@@ -110,4 +108,4 @@ export const BarChartDrillingScenario: React.FC = () => {
             </div>
         </div>
     );
-};
+}

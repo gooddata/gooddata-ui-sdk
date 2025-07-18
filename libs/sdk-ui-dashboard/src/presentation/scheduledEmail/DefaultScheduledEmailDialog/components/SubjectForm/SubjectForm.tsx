@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
+import { FocusEvent, useState, useCallback } from "react";
 import { Input, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 import { IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
@@ -20,13 +20,13 @@ interface ISubjectFormProps {
     onKeyDownSubmit: () => void;
 }
 
-export const SubjectForm: React.FC<ISubjectFormProps> = ({
+export function SubjectForm({
     dashboardTitle,
     editedAutomation,
     isSubmitDisabled,
     onChange,
     onKeyDownSubmit,
-}) => {
+}: ISubjectFormProps) {
     const intl = useIntl();
     const [subjectError, setSubjectError] = useState<string | null>(null);
 
@@ -62,7 +62,7 @@ export const SubjectForm: React.FC<ISubjectFormProps> = ({
     );
 
     const handleOnBlur = useCallback(
-        (e: React.FocusEvent<HTMLInputElement>) => {
+        (e: FocusEvent<HTMLInputElement>) => {
             const validationResult = validate(e.target.value);
             if (validationResult) {
                 setSubjectError(errorMessage);
@@ -112,4 +112,4 @@ export const SubjectForm: React.FC<ISubjectFormProps> = ({
             />
         </ErrorWrapper>
     );
-};
+}

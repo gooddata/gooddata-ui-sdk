@@ -586,8 +586,11 @@
     height: 42px;
     padding: 0 10px 0 50px;
     font-size: 12px;
-    border: 1px solid transparentize(variables.$dialog-border, 1);
-    border-color: var(--gd-palette-complementary-5-from-theme, transparentize(variables.$dialog-border, 0.5));
+    border: 1px solid color.adjust(variables.$dialog-border, $alpha: -1);
+    border-color: var(
+        --gd-palette-complementary-5-from-theme,
+        color.adjust(variables.$dialog-border, $alpha: -0.5)
+    );
     border-radius: 2px;
     box-shadow:
         0 1px 3px 0 kit-button-variables.$button-shadow-lighter,
@@ -596,7 +599,7 @@
     color: variables.$gd-color-text;
     background: var(
         --gd-palette-complementary-0-t10,
-        transparentize(kit-variables.$default-gd-color-white, 0.05)
+        color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
     );
 
     &::before {
@@ -622,8 +625,11 @@
 .move-insight-placeholder {
     width: 215px;
     height: 42px;
-    border: 1px solid transparentize(variables.$dialog-border, 1);
-    border-color: var(--gd-palette-complementary-5-from-theme, transparentize(variables.$dialog-border, 0.5));
+    border: 1px solid color.adjust(variables.$dialog-border, $alpha: -1);
+    border-color: var(
+        --gd-palette-complementary-5-from-theme,
+        color.adjust(variables.$dialog-border, $alpha: -0.5)
+    );
     border-radius: 2px;
     box-shadow:
         0 1px 3px 0 kit-button-variables.$button-shadow-lighter,
@@ -631,7 +637,7 @@
     color: variables.$gd-color-text;
     background: var(
         --gd-palette-complementary-0-t10,
-        transparentize(kit-variables.$default-gd-color-white, 0.05)
+        color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
     );
 
     .shortened {

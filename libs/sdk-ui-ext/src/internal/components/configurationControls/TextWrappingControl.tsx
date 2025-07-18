@@ -1,5 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { ChartCellTextWrapping } from "@gooddata/sdk-ui-charts";
 import DropdownControl from "./DropdownControl.js";
@@ -16,11 +15,11 @@ export interface ITextWrappingControlProps {
     defaultValue?: ChartCellTextWrapping;
 }
 
-export const TextWrappingControl = ({
+export function TextWrappingControl({
     pushData,
     properties,
     defaultValue = "clip",
-}: ITextWrappingControlProps) => {
+}: ITextWrappingControlProps) {
     const intl = useIntl();
     const rowSizing = properties?.controls?.cellTextWrapping ?? defaultValue;
 
@@ -36,4 +35,4 @@ export const TextWrappingControl = ({
             />
         </div>
     );
-};
+}

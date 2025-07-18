@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
@@ -44,9 +43,7 @@ export interface IPivotTableTransposeCoreProps {
     config: IPivotTableConfig;
 }
 
-const PivotTableTranspose: React.FC<IPivotTableTransposeCoreProps> = (props) => {
-    const { measure, row, column, config } = props;
-
+function PivotTableTranspose({ measure, row, column, config }: IPivotTableTransposeCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -65,9 +62,9 @@ const PivotTableTranspose: React.FC<IPivotTableTransposeCoreProps> = (props) => 
             />
         </div>
     );
-};
+}
 
-export const PivotTableTransposeHasMR_RowLeft = () => {
+export function PivotTableTransposeHasMR_RowLeft() {
     return (
         <PivotTableTranspose
             measure={measures}
@@ -76,9 +73,9 @@ export const PivotTableTransposeHasMR_RowLeft = () => {
             config={transposeConfigWithRowLeft}
         />
     );
-};
+}
 
-export const PivotTableTransposeHasMR_RowTop = () => {
+export function PivotTableTransposeHasMR_RowTop() {
     return (
         <PivotTableTranspose
             measure={measures}
@@ -87,9 +84,9 @@ export const PivotTableTransposeHasMR_RowTop = () => {
             config={transposeConfigWithRowTop}
         />
     );
-};
+}
 
-export const PivotTableTransposeHasRC_RowLeft = () => {
+export function PivotTableTransposeHasRC_RowLeft() {
     return (
         <PivotTableTranspose
             measure={undefined}
@@ -98,9 +95,9 @@ export const PivotTableTransposeHasRC_RowLeft = () => {
             config={transposeConfigWithRowLeft}
         />
     );
-};
+}
 
-export const PivotTableTransposeHasR_RowLeft = () => {
+export function PivotTableTransposeHasR_RowLeft() {
     return (
         <PivotTableTranspose
             measure={undefined}
@@ -109,9 +106,9 @@ export const PivotTableTransposeHasR_RowLeft = () => {
             config={transposeConfigWithRowLeft}
         />
     );
-};
+}
 
-export const PivotTableTransposeHasM_RowLeft = () => {
+export function PivotTableTransposeHasM_RowLeft() {
     return (
         <PivotTableTranspose
             measure={measures}
@@ -120,9 +117,9 @@ export const PivotTableTransposeHasM_RowLeft = () => {
             config={transposeConfigWithRowLeft}
         />
     );
-};
+}
 
-export const PivotTableTransposeHasC_Left = () => {
+export function PivotTableTransposeHasC_Left() {
     return (
         <PivotTableTranspose
             measure={undefined}
@@ -131,4 +128,4 @@ export const PivotTableTransposeHasC_Left = () => {
             config={transposeConfigWithLeft}
         />
     );
-};
+}

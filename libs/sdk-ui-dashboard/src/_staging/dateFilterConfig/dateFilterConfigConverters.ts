@@ -3,10 +3,7 @@ import groupBy from "lodash/groupBy.js";
 import isEmpty from "lodash/isEmpty.js";
 import min from "lodash/min.js";
 import max from "lodash/max.js";
-import format from "date-fns/format/index.js";
-import startOfDay from "date-fns/startOfDay/index.js";
-import endOfDay from "date-fns/endOfDay/index.js";
-import subMonths from "date-fns/subMonths/index.js";
+import { format, startOfDay, endOfDay, subMonths } from "date-fns";
 import {
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,

@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import unescape from "lodash/unescape.js";
 import { ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -18,13 +17,7 @@ interface ILegendItemProps {
     theme?: ITheme;
 }
 
-const LegendItem: React.FC<ILegendItemProps> = ({
-    item,
-    width,
-    enableBorderRadius = false,
-    onItemClick,
-    theme,
-}) => {
+function LegendItem({ item, width, enableBorderRadius = false, onItemClick, theme }: ILegendItemProps) {
     const { descriptionId, isFocused, id } = LegendSeriesContextStore.useContextStore((ctx) => ({
         descriptionId: ctx.descriptionId,
         isFocused: ctx.focusedItem === item,
@@ -73,6 +66,6 @@ const LegendItem: React.FC<ILegendItemProps> = ({
             </div>
         </button>
     );
-};
+}
 
 export default withTheme(LegendItem);

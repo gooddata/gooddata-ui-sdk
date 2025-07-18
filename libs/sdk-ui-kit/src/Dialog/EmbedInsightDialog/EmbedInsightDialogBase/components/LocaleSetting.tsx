@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 import { useIntl } from "react-intl";
 import { ILocale, LOCALES } from "@gooddata/sdk-ui";
 
@@ -66,9 +66,7 @@ interface ILocaleDropdownItem {
 
 const localeItems: ILocaleDropdownItem[] = LOCALES.map((u) => ({ id: u as ILocale, title: u }));
 
-const LocaleSelect: React.FC<LocaleSelectProps> = (props) => {
-    const { selectedLocale, onSelectLocale } = props;
-
+function LocaleSelect({ selectedLocale, onSelectLocale }: LocaleSelectProps) {
     const renderDropdownBody = useCallback(
         ({ closeDropdown }: { closeDropdown: () => void }) => {
             return (
@@ -94,7 +92,7 @@ const LocaleSelect: React.FC<LocaleSelectProps> = (props) => {
     );
 
     const renderDropdownButton = useCallback(
-        ({ openDropdown, isOpen }: { openDropdown: () => void; isOpen: boolean }): React.ReactNode => {
+        ({ openDropdown, isOpen }: { openDropdown: () => void; isOpen: boolean }): ReactNode => {
             return <DropdownButton value={selectedLocale} isOpen={isOpen} onClick={openDropdown} />;
         },
         [selectedLocale],
@@ -105,4 +103,4 @@ const LocaleSelect: React.FC<LocaleSelectProps> = (props) => {
             <Dropdown renderBody={renderDropdownBody} renderButton={renderDropdownButton} />
         </div>
     );
-};
+}

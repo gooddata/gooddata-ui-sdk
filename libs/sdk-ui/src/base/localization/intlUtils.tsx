@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import { Attributes, ComponentType, ReactNode } from "react";
 import { IntlProvider, createIntl, IntlShape } from "react-intl";
 import { ITranslations, messagesMap } from "./messagesMap.js";
 import { DefaultLocale, ILocale, isLocale } from "./Locale.js";
@@ -29,33 +29,28 @@ export function createIntlMock(customMessages = {}, locale = "en-US"): IntlShape
 /**
  * @internal
  */
-export function withIntlForTest<P>(
-    WrappedComponent: React.FC<P> | React.ComponentClass<P>,
+export function withIntlForTest<P extends Attributes>(
+    WrappedComponent: ComponentType<P>,
     customLocale?: ILocale,
     customMessages?: ITranslations,
-): React.ComponentType<P> {
-    class WithIntl extends React.Component<P> {
-        public render() {
-            const locale = customLocale ? customLocale : DefaultLocale;
-            const messages = customMessages
-                ? customMessages
-                : resolveLocaleDefaultMessages(locale, messagesMap);
+): ComponentType<P> {
+    function WithIntl(props: P) {
+        const locale = customLocale ?? DefaultLocale;
+        const messages = customMessages ?? resolveLocaleDefaultMessages(locale, messagesMap);
 
-            return (
-                <IntlProvider
-                    locale={locale as string}
-                    messages={messages}
-                    onError={(error) => {
-                        // Suppress MISSING_TRANSLATION errors to improve test performance
-                        if (!error.message?.includes("MISSING_TRANSLATION")) {
-                            console.warn("IntlProviderForTest error:", error);
-                        }
-                    }}
-                >
-                    <WrappedComponent {...this.props} />
-                </IntlProvider>
-            );
-        }
+        return (
+            <IntlProvider
+                locale={locale}
+                messages={messages}
+                onError={(error) => {
+                    if (!error.message?.includes("MISSING_TRANSLATION")) {
+                        console.warn("IntlProviderForTest error:", error);
+                    }
+                }}
+            >
+                <WrappedComponent {...props} />
+            </IntlProvider>
+        );
     }
 
     return wrapDisplayName("withIntl", WrappedComponent)(WithIntl);
@@ -64,24 +59,50 @@ export function withIntlForTest<P>(
 /**
  * @internal
  */
-export function withIntl<P>(
-    WrappedComponent: React.FC<P> | React.ComponentClass<P>,
+export function WithIntlForTest({
+    children,
+    customLocale,
+    customMessages,
+}: {
+    children: ReactNode;
+    customLocale?: ILocale;
+    customMessages?: ITranslations;
+}) {
+    const locale = customLocale ?? DefaultLocale;
+    const messages = customMessages ?? resolveLocaleDefaultMessages(locale, messagesMap);
+
+    return (
+        <IntlProvider
+            locale={locale}
+            messages={messages}
+            onError={(error) => {
+                if (!error.message?.includes("MISSING_TRANSLATION")) {
+                    console.warn("IntlProviderForTest error:", error);
+                }
+            }}
+        >
+            {children}
+        </IntlProvider>
+    );
+}
+
+/**
+ * @internal
+ */
+export function withIntl<P extends Attributes>(
+    WrappedComponent: ComponentType<P>,
     customLocale?: ILocale,
     customMessages?: ITranslations,
-): React.ComponentType<P> {
-    class WithIntl extends React.Component<P> {
-        public render() {
-            const locale = customLocale ? customLocale : DefaultLocale;
-            const messages = customMessages
-                ? customMessages
-                : resolveLocaleDefaultMessages(locale, messagesMap);
+): ComponentType<P> {
+    function WithIntl(props: P) {
+        const locale = customLocale ? customLocale : DefaultLocale;
+        const messages = customMessages ? customMessages : resolveLocaleDefaultMessages(locale, messagesMap);
 
-            return (
-                <IntlProvider locale={locale as string} messages={messages}>
-                    <WrappedComponent {...this.props} />
-                </IntlProvider>
-            );
-        }
+        return (
+            <IntlProvider locale={locale as string} messages={messages}>
+                <WrappedComponent {...props} />
+            </IntlProvider>
+        );
     }
 
     return wrapDisplayName("withIntl", WrappedComponent)(WithIntl);

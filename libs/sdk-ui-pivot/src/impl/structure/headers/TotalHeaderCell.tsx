@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 import cx from "classnames";
 
 import { HEADER_LABEL_CLASS } from "../../base/constants.js";
@@ -13,7 +12,11 @@ export interface IHeaderCellProps {
     textAlign?: AlignPositions;
 }
 
-function TotalHeaderCell({ displayText, className, textAlign = ALIGN_LEFT }: IHeaderCellProps) {
+export default function TotalHeaderCell({
+    displayText,
+    className,
+    textAlign = ALIGN_LEFT,
+}: IHeaderCellProps) {
     const classes = cx(HEADER_LABEL_CLASS, "gd-pivot-table-header-label", {
         "gd-pivot-table-header-label--right": textAlign === "right",
         "gd-pivot-table-header-label--center": textAlign === "center",
@@ -27,5 +30,3 @@ function TotalHeaderCell({ displayText, className, textAlign = ALIGN_LEFT }: IHe
         </div>
     );
 }
-
-export default TotalHeaderCell;

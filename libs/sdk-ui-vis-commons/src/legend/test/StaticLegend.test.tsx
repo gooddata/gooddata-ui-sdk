@@ -1,9 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
 import { getPagingValues, IStaticLegendProps, StaticLegend } from "../StaticLegend.js";
-import { withIntl } from "@gooddata/sdk-ui";
 import { IPushpinCategoryLegendItem } from "../types.js";
 import { describe, it, expect } from "vitest";
 
@@ -17,9 +15,8 @@ describe("StaticLegend", () => {
             containerHeight: 500,
             ...customProps,
         };
-        const Wrapped = withIntl(StaticLegend);
 
-        return render(<Wrapped {...props} />);
+        return render(<StaticLegend {...props} />);
     }
 
     it("should render items", () => {

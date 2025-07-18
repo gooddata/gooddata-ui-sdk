@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useMemo } from "react";
 
 import { sortByName } from "../utils.js";
 import { ListMode, IGrantedUserGroup } from "../types.js";
@@ -15,13 +15,13 @@ export interface IUserGroupsListProps {
     bootstrapUserGroupId: string;
 }
 
-export const UserGroupsList: React.FC<IUserGroupsListProps> = ({
+export function UserGroupsList({
     userGroups,
     mode,
     onDelete,
     isBootstrapUser,
     bootstrapUserGroupId,
-}) => {
+}: IUserGroupsListProps) {
     const sortedUserGroups = useMemo(() => {
         return userGroups ? [...userGroups].sort(sortByName) : [];
     }, [userGroups]);
@@ -46,4 +46,4 @@ export const UserGroupsList: React.FC<IUserGroupsListProps> = ({
             })}
         </div>
     );
-};
+}

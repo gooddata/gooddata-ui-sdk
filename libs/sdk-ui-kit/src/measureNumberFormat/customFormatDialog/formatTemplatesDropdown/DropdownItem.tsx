@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import { ISeparators } from "@gooddata/sdk-ui";

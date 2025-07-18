@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { ChangeEvent } from "react";
 import cx from "classnames";
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -35,7 +35,7 @@ describe("SyntaxHighlightingInput", () => {
                 className,
                 onCursor,
             }: SyntaxHighlightingInput.ISyntaxHighlightingInputProps) => {
-                const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
                     onChange(e.target.value);
 
                     if (value === multiLineValue && onCursor) {

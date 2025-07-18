@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { useRef, useEffect } from "react";
 
 /**
  * Automatically updates ref contents with the argument value
@@ -7,9 +7,9 @@ import React from "react";
  * @internal
  */
 export const useAutoupdateRef = <T>(value: T) => {
-    const ref = React.useRef<T>(value);
+    const ref = useRef<T>(value);
 
-    React.useEffect(() => {
+    useEffect(() => {
         ref.current = value;
     }, [value]);
 

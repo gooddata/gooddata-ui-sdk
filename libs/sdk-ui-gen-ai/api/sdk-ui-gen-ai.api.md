@@ -13,7 +13,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IGenAIVisualization } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
-import { default as React_2 } from 'react';
+import { JSX } from 'react/jsx-runtime';
 import { SdkErrorType } from '@gooddata/sdk-ui';
 
 // @public (undocumented)
@@ -121,7 +121,7 @@ export type ErrorContents = {
 };
 
 // @public
-export const GenAIAssistant: React_2.FC<GenAIAssistantProps>;
+export function GenAIAssistant(props: GenAIAssistantProps): JSX.Element;
 
 // @public
 export interface GenAIAssistantProps {
@@ -140,7 +140,7 @@ export interface GenAIAssistantProps {
 }
 
 // @public @deprecated
-export const GenAIChat: React_2.FC<GenAIAssistantProps>;
+export const GenAIChat: typeof GenAIAssistant;
 
 // @public @deprecated
 export type GenAIChatProps = GenAIAssistantProps;

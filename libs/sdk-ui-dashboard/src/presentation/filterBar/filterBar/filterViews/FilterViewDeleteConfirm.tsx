@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 import { useIntl, FormattedMessage } from "react-intl";
 import { IDashboardFilterView } from "@gooddata/sdk-model";
@@ -11,11 +11,7 @@ export interface IFilterViewDeleteConfirmProps {
     onCancel: () => void;
 }
 
-export const FilterViewDeleteConfirm: React.FC<IFilterViewDeleteConfirmProps> = ({
-    filterView,
-    onConfirm,
-    onCancel,
-}) => {
+export function FilterViewDeleteConfirm({ filterView, onConfirm, onCancel }: IFilterViewDeleteConfirmProps) {
     const intl = useIntl();
     return (
         <ConfirmDialog
@@ -40,4 +36,4 @@ export const FilterViewDeleteConfirm: React.FC<IFilterViewDeleteConfirmProps> = 
             </Typography>
         </ConfirmDialog>
     );
-};
+}

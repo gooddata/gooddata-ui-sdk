@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
@@ -15,13 +15,13 @@ export interface IHierarchicalPermissionDropdownItemProps {
     bubbleTextId: string;
 }
 
-export const HierarchicalPermissionDropdownItem: React.FC<IHierarchicalPermissionDropdownItemProps> = ({
+export function HierarchicalPermissionDropdownItem({
     isHierarchicalPermission,
     selectedPermission,
     toggleDropdown,
     onSelect,
     bubbleTextId,
-}) => {
+}: IHierarchicalPermissionDropdownItemProps) {
     const intl = useIntl();
 
     const handleOnChange = useCallback(() => {
@@ -55,4 +55,4 @@ export const HierarchicalPermissionDropdownItem: React.FC<IHierarchicalPermissio
             </div>
         </div>
     );
-};
+}

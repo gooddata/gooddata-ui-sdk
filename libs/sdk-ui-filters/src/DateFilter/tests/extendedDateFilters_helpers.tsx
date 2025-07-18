@@ -1,10 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { platformDateFormat } from "../constants/Platform.js";
 import moment from "moment";
-import addDate from "date-fns/add/index.js";
-import formatDate from "date-fns/format/index.js";
+import { add, format } from "date-fns";
 import noop from "lodash/noop.js";
 import { IDateFilterProps, DateFilter } from "../DateFilter.js";
 import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
@@ -329,16 +328,16 @@ export const openAbsoluteFormFilter = () => {
 };
 
 export const dateToAbsoluteInputFormat = (dateString: string, dateFormat: string = defaultDateFormat) => {
-    return formatDate(new Date(dateString), dateFormat);
+    return format(new Date(dateString), dateFormat);
 };
 
 export const getTodayDate = (dateFormat: string = defaultDateFormat) => {
-    return formatDate(new Date(), dateFormat);
+    return format(new Date(), dateFormat);
 };
 
 export const getMonthAgo = (dateFormat: string = defaultDateFormat) => {
-    return formatDate(
-        addDate(new Date(), {
+    return format(
+        add(new Date(), {
             months: -1,
         }),
         dateFormat,

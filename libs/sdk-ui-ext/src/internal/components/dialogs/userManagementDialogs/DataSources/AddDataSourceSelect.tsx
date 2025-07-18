@@ -1,5 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
-import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
 import { OnChangeValue, SelectInstance } from "react-select";
@@ -23,11 +23,11 @@ import { loadUserDataSourceOptionsPromise } from "./backend/loadUserDataSourceOp
 
 const SEARCH_INTERVAL = 400;
 
-export const AddDataSourceSelect: React.FC<IAddDataSourceSelectProps> = ({
+export function AddDataSourceSelect({
     addedDataSources,
     grantedDataSources,
     onSelectDataSource,
-}) => {
+}: IAddDataSourceSelectProps) {
     const backend: IAnalyticalBackend = useBackendStrict();
 
     const intl = useIntl();
@@ -113,4 +113,4 @@ export const AddDataSourceSelect: React.FC<IAddDataSourceSelectProps> = ({
             />
         </div>
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IThemeComplementaryPalette } from "@gooddata/sdk-model";
 

@@ -299,6 +299,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@testing-library/jest-dom",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@testing-library/react",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -528,11 +532,15 @@
     },
     {
       "name": "@vitejs/plugin-react",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@vitejs/plugin-react-swc",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "@vitest/react",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@welldone-software/why-did-you-render",

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import cx from "classnames";
 import { ISpinnerProps } from "./typings.js";
 

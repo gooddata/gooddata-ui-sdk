@@ -1,8 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef } from "react";
+import { CSSProperties, createRef, PureComponent, useCallback, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-// eslint-disable-next-line react/no-deprecated
-import { render } from "react-dom";
+import { createRoot, Root } from "react-dom/client";
 import noop from "lodash/noop.js";
 import isEqual from "lodash/isEqual.js";
 import compose from "lodash/flowRight.js";
@@ -19,13 +18,7 @@ import {
     insightVisualizationType,
 } from "@gooddata/sdk-model";
 
-import {
-    IVisualization,
-    IVisProps,
-    FullVisualizationCatalog,
-    IInsightViewProps,
-    unmountComponentsAtNodes,
-} from "../internal/index.js";
+import { IVisualization, IVisProps, FullVisualizationCatalog, IInsightViewProps } from "../internal/index.js";
 import {
     OnError,
     fillMissingTitles,
@@ -45,7 +38,6 @@ import {
     ExecutionFactoryWithFixedFilters,
 } from "@gooddata/sdk-backend-base";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { Root, _createRoot } from "../internal/createRootProvider.js";
 
 /**
  * @internal
@@ -63,7 +55,7 @@ export interface IInsightRendererProps
 
 const getElementId = () => `gd-vis-${uuidv4()}`;
 
-const visualizationUriRootStyle: React.CSSProperties = {
+const visualizationUriRootStyle: CSSProperties = {
     height: "100%",
     display: "flex",
     flex: "1 1 auto",
@@ -73,10 +65,10 @@ const visualizationUriRootStyle: React.CSSProperties = {
 // this needs to be a pure component as it can happen that this might be rendered multiple times
 // with the same props (referentially) - this might make the rendered visualization behave unpredictably
 // and is bad for performance so we need to make sure the re-renders are performed only if necessary
-class InsightRendererCore extends React.PureComponent<IInsightRendererProps & WrappedComponentProps> {
+class InsightRendererCore extends PureComponent<IInsightRendererProps & WrappedComponentProps> {
     private elementId = getElementId();
     private visualization: IVisualization | undefined;
-    private containerRef = React.createRef<HTMLDivElement>();
+    private containerRef = createRef<HTMLDivElement>();
 
     /**
      * The component may render both visualization and config panel. In React18 we therefore need two
@@ -215,26 +207,16 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
     };
 
     private getReactRenderFunction = () => {
-        if (_createRoot) {
-            return (children: any, element: HTMLElement) => {
-                if (!this.reactRootsMap.get(element)) {
-                    this.reactRootsMap.set(element, _createRoot(element));
-                }
-                this.reactRootsMap.get(element).render(children);
-            };
-        } else {
-            // eslint-disable-next-line react/no-deprecated
-            return render;
-        }
+        return (children: any, element: HTMLElement) => {
+            if (!this.reactRootsMap.get(element)) {
+                this.reactRootsMap.set(element, createRoot(element));
+            }
+            this.reactRootsMap.get(element).render(children);
+        };
     };
 
     private getReactUnmountFunction = () => {
-        if (_createRoot) {
-            return () => this.reactRootsMap.forEach((root) => root.render(null));
-        } else {
-            return (elementsOrSelectors: (string | HTMLElement)[]) =>
-                unmountComponentsAtNodes(elementsOrSelectors);
-        }
+        return () => this.reactRootsMap.forEach((root) => root.render(null));
     };
 
     private onExportReadyDecorator = (exportFunction: IExportFunction): void => {
@@ -313,12 +295,10 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
 
     public componentWillUnmount() {
         this.unmountVisualization();
-        if (_createRoot) {
-            // In order to avoid race conditions when mounting and unmounting synchronously,
-            // we use timeout for React18.
-            // https://github.com/facebook/react/issues/25675
-            this.reactRootsMap.forEach((root) => setTimeout(() => root.unmount(), 0));
-        }
+        // In order to avoid race conditions when mounting and unmounting synchronously,
+        // we use timeout for React18.
+        // https://github.com/facebook/react/issues/25675
+        this.reactRootsMap.forEach((root) => setTimeout(() => root.unmount(), 0));
     }
 
     public render() {
@@ -365,17 +345,16 @@ function useUpdatableCallback<T extends (...args: any[]) => any>(callback: T): T
  *
  * @internal
  */
-export const InsightRenderer: React.FC<IInsightRendererProps> = (props) => {
-    const {
-        pushData,
-        onDrill: onDrillCallBack,
-        onError: onErrorCallBack,
-        onExportReady: onExportReadyCallback,
-        onLoadingChanged: onLoadingChangedCallback,
-        onDataView: onDataViewCallback,
-        ...resProps
-    } = props;
-
+export function InsightRenderer({
+    pushData,
+    onDrill: onDrillCallBack,
+    onError: onErrorCallBack,
+    onExportReady: onExportReadyCallback,
+    onLoadingChanged: onLoadingChangedCallback,
+    onDataView: onDataViewCallback,
+    locale,
+    ...resProps
+}: IInsightRendererProps) {
     const onPushData = useUpdatableCallback(pushData);
     const onDrill = useUpdatableCallback(onDrillCallBack);
     const onError = useUpdatableCallback(onErrorCallBack);
@@ -384,7 +363,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = (props) => {
     const onDataView = useUpdatableCallback(onDataViewCallback);
 
     return (
-        <IntlWrapper locale={props.locale}>
+        <IntlWrapper locale={locale}>
             <IntlInsightRenderer
                 pushData={onPushData}
                 onDrill={onDrill}
@@ -396,4 +375,4 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = (props) => {
             />
         </IntlWrapper>
     );
-};
+}

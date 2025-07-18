@@ -1,15 +1,14 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { Typography } from "@gooddata/sdk-ui-kit";
-import React from "react";
 
 interface IConfigurationCategoryProps {
     categoryTitle: string;
 }
 
-export const ConfigurationCategory: React.FC<IConfigurationCategoryProps> = (props) => {
+export function ConfigurationCategory({ categoryTitle }: IConfigurationCategoryProps) {
     return (
         <div className="configuration-category">
-            <Typography tagName="h3">{props.categoryTitle}</Typography>
+            <Typography tagName="h3">{categoryTitle}</Typography>
         </div>
     );
-};
+}

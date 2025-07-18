@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
@@ -89,8 +89,10 @@ function RankingFilterDropdownComponent({
 /**
  * @beta
  */
-export const RankingFilterDropdown: React.FC<IRankingFilterDropdownProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <RankingFilterDropdownComponent {...props} />
-    </IntlWrapper>
-);
+export function RankingFilterDropdown({ locale, ...props }: IRankingFilterDropdownProps) {
+    return (
+        <IntlWrapper locale={locale}>
+            <RankingFilterDropdownComponent {...props} />
+        </IntlWrapper>
+    );
+}

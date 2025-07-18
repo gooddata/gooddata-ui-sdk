@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { CSSProperties, FC, useCallback, useEffect, useMemo, useRef } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { CSSProperties, useCallback, useEffect, useMemo, useRef } from "react";
 import { useDragLayer } from "react-dnd";
 
 import {
@@ -21,7 +21,7 @@ const previewComponentsMap: Record<DraggableInternalItemType, any> = {
     "internal-width-resizer": WidthResizerDragPreview,
 };
 
-export const DragLayerComponent: FC = () => {
+export function DragLayerComponent() {
     const dragLayerRef = useRef<HTMLDivElement>(null);
     const { setScrollCorrection } = useResizeHandlers();
 
@@ -79,4 +79,4 @@ export const DragLayerComponent: FC = () => {
             <Component {...previewProps} />
         </div>
     );
-};
+}

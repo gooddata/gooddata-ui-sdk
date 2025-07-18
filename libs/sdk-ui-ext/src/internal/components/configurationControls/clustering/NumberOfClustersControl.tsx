@@ -1,5 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import InputControl from "../InputControl.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { messages } from "../../../../locales.js";
@@ -14,12 +13,12 @@ export interface INumberOfClustersControlProps {
 
 const validPositiveNumberHigherThanZero = /^[1-9][0-9]*$/;
 
-export const NumberOfClustersControl = ({
+export function NumberOfClustersControl({
     disabled,
     valuePath,
     properties,
     pushData,
-}: INumberOfClustersControlProps) => {
+}: INumberOfClustersControlProps) {
     return (
         <InputControl
             valuePath={valuePath}
@@ -45,4 +44,4 @@ export const NumberOfClustersControl = ({
             }}
         />
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ComponentPropsWithRef, ComponentType } from "react";
+import { ComponentPropsWithRef, ComponentType } from "react";
 import { useDashboardSelector, selectRenderMode, selectEnableSlideshowExports } from "../../model/index.js";
 import { RenderMode } from "../../types.js";
 
@@ -13,7 +13,7 @@ import { RenderMode } from "../../types.js";
 export function renderModeAware<T extends ComponentType<any>>(
     components: { view: T } & Partial<Record<RenderMode, T>>,
 ): ComponentType<ComponentPropsWithRef<T>> {
-    return function RenderModeAware(props: ComponentPropsWithRef<T>) {
+    function RenderModeAware(props: ComponentPropsWithRef<T>) {
         const renderMode = useDashboardSelector(selectRenderMode);
         const isExportModeEnabled = useDashboardSelector(selectEnableSlideshowExports);
         const sanitizedRenderMode = isExportModeEnabled || renderMode !== "export" ? renderMode : "view";
@@ -21,5 +21,7 @@ export function renderModeAware<T extends ComponentType<any>>(
         const Component = components[sanitizedRenderMode] ?? components["view"];
 
         return <Component {...props} />;
-    };
+    }
+
+    return RenderModeAware;
 }

@@ -213,16 +213,22 @@ export const clearCssProperties = (isScoped?: boolean, scopeTo?: HTMLElement, sc
         }
 
         const scopedFontElement = document.getElementById(scopeId);
-        scopedFontElement && document.head.removeChild(scopedFontElement);
+        if (scopedFontElement) {
+            document.head.removeChild(scopedFontElement);
+        }
 
         return;
     }
 
     const themePropertiesElement = document.getElementById("gdc-theme-properties");
-    themePropertiesElement && document.head.removeChild(themePropertiesElement);
+    if (themePropertiesElement) {
+        document.head.removeChild(themePropertiesElement);
+    }
 
     const customFontElement = document.getElementById("gdc-theme-custom-font");
-    customFontElement && document.head.removeChild(customFontElement);
+    if (customFontElement) {
+        document.head.removeChild(customFontElement);
+    }
 };
 
 /**

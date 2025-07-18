@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo } from "react";
+import { memo } from "react";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
 import { AxisType } from "../../../interfaces/AxisType.js";
 import LabelRotationControl from "./LabelRotationControl.js";

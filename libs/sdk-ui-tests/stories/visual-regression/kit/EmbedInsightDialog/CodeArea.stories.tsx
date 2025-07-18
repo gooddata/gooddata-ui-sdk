@@ -1,15 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 import { action } from "storybook/actions";
 import { CodeArea } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import { code } from "./CodeMock.js";
-const AreaWrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
-    const { children } = props;
+
+function AreaWrapper({ children }: { children?: ReactNode }) {
     return <div style={{ width: 600, height: 250, margin: 20 }}>{children}</div>;
-};
+}
 
 function CodeAreaExamples() {
     return (

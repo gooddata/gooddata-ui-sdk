@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { ElementType, PureComponent, ReactNode, Children, cloneElement, Fragment } from "react";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
 import pickBy from "lodash/pickBy.js";
@@ -9,9 +9,9 @@ import pickBy from "lodash/pickBy.js";
  */
 export interface IBubbleTriggerProps {
     className?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
     eventsOnBubble?: boolean;
-    tagName?: React.ElementType;
+    tagName?: ElementType;
     onBubbleOpen?: () => void;
     onBubbleClose?: () => void;
     openOnInit?: boolean;
@@ -28,10 +28,7 @@ export interface IBubbleTriggerState {
 /**
  * @internal
  */
-export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComponent<
-    P,
-    IBubbleTriggerState
-> {
+export class BubbleTrigger<P extends IBubbleTriggerProps> extends PureComponent<P, IBubbleTriggerState> {
     public static defaultProps: IBubbleTriggerProps = {
         className: "",
         children: false,
@@ -77,9 +74,9 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
         let BubbleElement;
         let WrappedTrigger;
 
-        React.Children.map(children, (child: any) => {
+        Children.map(children, (child: any) => {
             if (child) {
-                if (child.type?.identifier === "Bubble") {
+                if (child.type?.identifier === "Bubble" && child.type.identifier === "Bubble") {
                     BubbleElement = child;
                 } else {
                     WrappedTrigger = child;
@@ -94,15 +91,15 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
         };
 
         const BubbleOverlay =
-            this.state.isBubbleVisible && BubbleElement ? React.cloneElement(BubbleElement, bubbleProps) : "";
+            this.state.isBubbleVisible && BubbleElement ? cloneElement(BubbleElement, bubbleProps) : "";
 
         return (
-            <React.Fragment>
+            <Fragment>
                 <TagName {...dataAttributes} {...this.eventListeners()} className={classNames}>
                     {WrappedTrigger}
                 </TagName>
                 {BubbleOverlay}
-            </React.Fragment>
+            </Fragment>
         );
     }
 }

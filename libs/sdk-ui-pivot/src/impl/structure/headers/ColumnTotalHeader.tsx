@@ -1,6 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 import { IHeaderParams } from "ag-grid-community";
-import React from "react";
 import { IMenu } from "../../../publicTypes.js";
 
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell.js";

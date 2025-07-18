@@ -1,19 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const DataSource: React.FC<IIconProps> = ({
-    color,
-    className,
-    width = 14,
-    height = 15,
-    ariaHidden,
-}) => {
+export function DataSource({ color, className, width = 14, height = 15, ariaHidden }: IIconProps) {
     return (
         <svg
             className={className}
@@ -30,4 +22,4 @@ export const DataSource: React.FC<IIconProps> = ({
             />
         </svg>
     );
-};
+}

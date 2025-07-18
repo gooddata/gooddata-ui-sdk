@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { idRef, IVisualizationSwitcherWidget } from "@gooddata/sdk-model";
 import { render } from "@testing-library/react";

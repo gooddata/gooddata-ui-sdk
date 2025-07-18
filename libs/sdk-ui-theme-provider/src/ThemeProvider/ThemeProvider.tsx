@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, ReactNode } from "react";
 import identity from "lodash/identity.js";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -71,7 +71,7 @@ export interface IThemeProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -85,7 +85,7 @@ export interface IThemeProviderProps {
  *
  * @public
  */
-export const ThemeProvider: React.FC<IThemeProviderProps> = ({
+export function ThemeProvider({
     children,
     theme: themeParam,
     backend: backendParam,
@@ -93,7 +93,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     modifier = identity,
     enableComplementaryPalette = true,
     removeGlobalStylesOnUnmout = true,
-}) => {
+}: IThemeProviderProps) {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
 
@@ -101,7 +101,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState<ThemeStatus>("pending");
 
-    const lastWorkspace = useRef<string>();
+    const lastWorkspace = useRef<string | null>(null);
     lastWorkspace.current = workspace;
 
     useEffect(() => {
@@ -152,4 +152,4 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
             {children}
         </ThemeContextProvider>
     );
-};
+}

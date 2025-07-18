@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { createElement, ReactElement } from "react";
 
 const SCREENSHOT_WRAPPER_CLASS = "screenshot-wrapper";
 
@@ -18,8 +18,8 @@ export const LongPostInteractionTimeout = 5000;
  * Wraps a given render function so that its output is wrapped with a SCREENSHOT_WRAPPER_CLASS div.
  * @param render - the original render function
  */
-export function wrapForBackstop(render: () => JSX.Element): () => JSX.Element {
+export function wrapForBackstop(render: () => ReactElement): () => ReactElement {
     return function BackstopWrapped() {
-        return React.createElement("div", { className: SCREENSHOT_WRAPPER_CLASS }, render());
+        return createElement("div", { className: SCREENSHOT_WRAPPER_CLASS }, render());
     };
 }

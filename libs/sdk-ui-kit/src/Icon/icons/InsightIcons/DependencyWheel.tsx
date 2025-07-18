@@ -1,11 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
+
 import { IIconProps } from "../../typings.js";
 
 /**
  * @internal
  */
-export const DependencyWheel: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function DependencyWheel({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -43,4 +43,4 @@ export const DependencyWheel: React.FC<IIconProps> = ({ className, width, height
             </g>
         </svg>
     );
-};
+}

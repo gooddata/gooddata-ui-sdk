@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { waitFor, render, screen, fireEvent } from "@testing-library/react";
 import { Button } from "../Button.js";
 import { IButtonProps } from "../typings.js";

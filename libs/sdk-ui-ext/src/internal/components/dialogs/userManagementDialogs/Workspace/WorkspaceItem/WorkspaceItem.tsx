@@ -1,6 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 
 import { IGrantedWorkspace, WorkspacePermissionSubject } from "../../types.js";
@@ -18,13 +17,13 @@ interface IGranularGranteeUserGroupItemProps {
     areFilterViewsEnabled: boolean;
 }
 
-export const WorkspaceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
-    workspace,
-    subjectType,
+export function WorkspaceItem({
+    areFilterViewsEnabled,
     onChange,
     onDelete,
-    areFilterViewsEnabled,
-}) => {
+    subjectType,
+    workspace,
+}: IGranularGranteeUserGroupItemProps) {
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const { isDropdownOpen: isHierarchicalDropdownOpen, toggleDropdown: toggleHierarchicalDropdown } =
         usePermissionsDropdownState();
@@ -59,4 +58,4 @@ export const WorkspaceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
             <WorkspaceIcon />
         </div>
     );
-};
+}

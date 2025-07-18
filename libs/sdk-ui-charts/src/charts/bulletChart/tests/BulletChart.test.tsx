@@ -1,5 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { render } from "@testing-library/react";
 import { BulletChart } from "../BulletChart.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";

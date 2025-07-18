@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 import { Typography } from "../../../Typography/index.js";
 import { AddUserOrGroupButton } from "./AddGranteeButton.js";
 import { GranteeList } from "./GranteeList.js";
@@ -9,21 +8,19 @@ import { IShareGranteeContentProps } from "./types.js";
 /**
  * @internal
  */
-export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) => {
-    const {
-        isLoading,
-        grantees,
-        areGranularPermissionsSupported,
-        currentUserPermissions,
-        isSharedObjectLocked,
-        isGranteeShareLoading,
-        applyShareGrantOnSelect,
-        headline,
-        onAddGrantee,
-        onChange,
-        onDelete,
-    } = props;
-
+export function ShareGranteeContent({
+    isLoading,
+    grantees,
+    areGranularPermissionsSupported,
+    currentUserPermissions,
+    isSharedObjectLocked,
+    isGranteeShareLoading,
+    applyShareGrantOnSelect,
+    headline,
+    onAddGrantee,
+    onChange,
+    onDelete,
+}: IShareGranteeContentProps) {
     return (
         <>
             <div className="gd-share-dialog-grantee-content-header">
@@ -49,4 +46,4 @@ export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) 
             )}
         </>
     );
-};
+}

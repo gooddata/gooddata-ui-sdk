@@ -1,5 +1,4 @@
-// (C) 2019 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 import { ISeparators } from "@gooddata/sdk-ui";
 
@@ -12,14 +11,14 @@ interface IComparisonInputProps {
     separators?: ISeparators;
 }
 
-const ComparisonInput = ({
+export default function ComparisonInput({
     value,
     usePercentage,
     disableAutofocus,
     onValueChange,
     onEnterKeyPress,
     separators,
-}: IComparisonInputProps): JSX.Element => {
+}: IComparisonInputProps) {
     return (
         <InputWithNumberFormat
             className="s-mvf-comparison-value-input"
@@ -32,6 +31,4 @@ const ComparisonInput = ({
             separators={separators}
         />
     );
-};
-
-export default ComparisonInput;
+}

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -11,7 +11,7 @@ const shortText = "Short text fits the container 75% window width + default(max)
 const longText =
     "Text that must fit the container that is set to be 75% wide of the window width and respect the default(max) font size from parent";
 
-const ResponsiveTextExamples: React.FC = () => {
+function ResponsiveTextExamples() {
     const widths = [300, 400, 500];
 
     return (
@@ -37,9 +37,9 @@ const ResponsiveTextExamples: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
-const ResponsiveTextDynamicExamples: React.FC = () => {
+function ResponsiveTextDynamicExamples() {
     const [className, setClassName] = useState("responsive-text-purple");
 
     const [text, setText] = useState(shortText);
@@ -75,7 +75,7 @@ const ResponsiveTextDynamicExamples: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/ResponsiveText",

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import isEqual from "lodash/isEqual.js";
 import { useIntl } from "react-intl";
 import { ColorFormats } from "tinycolor2";

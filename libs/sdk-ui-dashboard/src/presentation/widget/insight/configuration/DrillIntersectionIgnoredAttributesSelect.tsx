@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ComponentType, ReactNode, useState } from "react";
 import {
     Dropdown,
     Bubble,
@@ -84,12 +84,16 @@ export function DrillIntersectionIgnoredAttributesSelect({
                                 item.type === "date" &&
                                 drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD;
 
-                            let IconComponent: React.ComponentType<IIconProps> = () => null;
+                            let IconComponent: ComponentType<IIconProps>;
                             if (item.type === "date") {
                                 IconComponent = Icon.Date;
                             } else if (item.type === "attribute") {
                                 IconComponent = Icon.Attribute;
+                            } else {
+                                // eslint-disable-next-line react/display-name
+                                IconComponent = () => null;
                             }
+
                             return (
                                 <InvertableSelectItem
                                     title={title}
@@ -139,7 +143,7 @@ export function DrillIntersectionIgnoredAttributesSelect({
                 );
             }}
             renderButton={({ toggleDropdown, isOpen }) => {
-                let title: React.ReactNode = "";
+                let title: ReactNode = "";
                 if (isInverted && selection.length === 0) {
                     title = (
                         <FormattedMessage id="configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all" />

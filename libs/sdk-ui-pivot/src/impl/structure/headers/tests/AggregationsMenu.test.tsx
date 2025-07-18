@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import { act, render } from "@testing-library/react";
-import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu.js";
 import AggregationsSubMenu from "../AggregationsSubMenu.js";

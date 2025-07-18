@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 import { Input } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";

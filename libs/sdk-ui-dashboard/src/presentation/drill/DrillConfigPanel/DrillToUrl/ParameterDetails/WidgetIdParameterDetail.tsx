@@ -1,5 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { ParameterDetail } from "./ParameterDetail.js";
 import { selectWidgetByRef, useDashboardSelector, isTemporaryIdentity } from "../../../../../model/index.js";
@@ -10,7 +9,7 @@ interface IdentifierDetailProps {
     widgetRef: ObjRef;
 }
 
-export const WidgetIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title, widgetRef }) => {
+export function WidgetIdParameterDetail({ title, widgetRef }: IdentifierDetailProps) {
     const intl = useIntl();
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
 
@@ -29,4 +28,4 @@ export const WidgetIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title
             values={values}
         />
     );
-};
+}

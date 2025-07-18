@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, useState, useEffect, useRef, useCallback } from "react";
+import { memo, useState, useEffect, useRef, useCallback } from "react";
 import memoize from "lodash/memoize.js";
 import { InputPure, InputPureProps } from "./InputPure.js";
 

@@ -1,13 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 
 import { IRenderChildrenInPortalProps } from "../RenderChildrenInPortal.js";
 
-function MockedRenderChildrenInPortal(props: IRenderChildrenInPortalProps) {
-    const portalNodeRef = useRef<HTMLElement>();
+function MockedRenderChildrenInPortal(_props: IRenderChildrenInPortalProps) {
+    const portalNodeRef = useRef<HTMLElement | null>(null);
 
     if (!portalNodeRef.current) {
         portalNodeRef.current = document.createElement("div");

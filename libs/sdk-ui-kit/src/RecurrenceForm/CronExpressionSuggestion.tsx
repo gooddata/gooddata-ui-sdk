@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 import { defineMessage, FormattedMessage } from "react-intl";
 
 import { RECURRENCE_TYPES } from "./constants.js";
@@ -19,12 +19,12 @@ interface ICronExpressionSuggestionProps {
     isWhiteLabeled?: boolean;
 }
 
-const CronExpressionMessage: React.FC<ICronExpressionMessageProps> = ({ messageId, isWhiteLabeled }) => {
+function CronExpressionMessage({ messageId, isWhiteLabeled }: ICronExpressionMessageProps) {
     return (
         <FormattedMessage
             id={messageId}
             values={{
-                a: (chunk: React.ReactNode) => {
+                a: (chunk: ReactNode) => {
                     return !isWhiteLabeled ? (
                         <a
                             href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-CronExpressions"
@@ -38,14 +38,14 @@ const CronExpressionMessage: React.FC<ICronExpressionMessageProps> = ({ messageI
             }}
         />
     );
-};
+}
 
-export const CronExpressionSuggestion: React.FC<ICronExpressionSuggestionProps> = ({
+export function CronExpressionSuggestion({
     errorId,
     validationError,
     recurrenceType,
     isWhiteLabeled,
-}) => {
+}: ICronExpressionSuggestionProps) {
     if (recurrenceType !== RECURRENCE_TYPES.CRON) {
         return null;
     }
@@ -66,4 +66,4 @@ export const CronExpressionSuggestion: React.FC<ICronExpressionSuggestionProps> 
             )}
         </div>
     );
-};
+}

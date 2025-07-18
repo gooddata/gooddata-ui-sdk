@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useCallback } from "react";
 
 import { CodeLanguageType, InsightCodeType, IReactOptions } from "../types.js";
 
@@ -11,7 +11,7 @@ interface IReactOptionsProps {
     option: IReactOptions;
     onChange: (option: IReactOptions) => void;
 }
-export const ReactOptions = (props: IReactOptionsProps) => {
+export function ReactOptions(props: IReactOptionsProps) {
     const { option, onChange } = props;
 
     const onComponentTypeChanged = useCallback(
@@ -40,4 +40,4 @@ export const ReactOptions = (props: IReactOptionsProps) => {
             <CodeOptions option={option} onChange={onChange} />
         </>
     );
-};
+}

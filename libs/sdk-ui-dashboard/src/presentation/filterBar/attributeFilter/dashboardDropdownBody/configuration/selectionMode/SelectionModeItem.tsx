@@ -1,7 +1,6 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import React from "react";
 import { DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
 
 const ARROW_OFFSETS = { "cr cl": [20, 0], "cl cr": [-10, 0] };
@@ -16,9 +15,14 @@ interface ISelectionModeItemProps {
     onClick: () => void;
 }
 
-export const SelectionModeItem: React.FC<ISelectionModeItemProps> = (props) => {
-    const { item, itemTitle, selected, disabled, disabledTooltip, onClick } = props;
-
+export function SelectionModeItem({
+    item,
+    itemTitle,
+    selected,
+    disabled,
+    disabledTooltip,
+    onClick,
+}: ISelectionModeItemProps) {
     const className = cx(
         "gd-list-item",
         {
@@ -43,4 +47,4 @@ export const SelectionModeItem: React.FC<ISelectionModeItemProps> = (props) => {
             )}
         </BubbleHoverTrigger>
     );
-};
+}

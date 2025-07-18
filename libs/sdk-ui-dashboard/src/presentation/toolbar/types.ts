@@ -1,12 +1,12 @@
-// (C) 2022 GoodData Corporation
-import { ComponentType } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ComponentType, ReactNode } from "react";
 
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IToolbarProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

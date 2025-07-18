@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { forwardRef, useMemo } from "react";
+import { forwardRef, useMemo } from "react";
 import cx from "classnames";
 
 import { DAY_END_TIME } from "../constants/Platform.js";

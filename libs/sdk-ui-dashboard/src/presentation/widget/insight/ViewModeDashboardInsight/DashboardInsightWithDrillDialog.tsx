@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+import { ReactElement, useCallback, useMemo, useState } from "react";
 import { isIdentifierRef } from "@gooddata/sdk-model";
 import last from "lodash/last.js";
 import {
@@ -22,7 +22,7 @@ import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
 /**
  * @internal
  */
-export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): JSX.Element => {
+export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): ReactElement {
     const [drillSteps, setDrillSteps] = useState<DrillStep[]>([]);
     const activeDrillStep = last(drillSteps);
     const insight = activeDrillStep?.insight;
@@ -90,4 +90,4 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
             ) : null}
         </>
     );
-};
+}

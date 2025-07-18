@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 import { IDataView, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     isWidget,
@@ -32,6 +32,7 @@ import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.j
 import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
 import { RenderModeAwareDashboardNestedLayoutWidget } from "./DashboardNestedLayoutWidget/RenderModeAwareDashboardNestedLayoutWidget.js";
 import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
+import { useWidgetIndex } from "../../dashboardContexts/index.js";
 
 type WidgetComponentAdditionalProps = Pick<
     IDashboardWidgetProps,
@@ -39,21 +40,21 @@ type WidgetComponentAdditionalProps = Pick<
 >;
 
 interface IWidgetComponentOwnProps {
-    index: number;
+    index: number | undefined;
     rowIndex: number;
 }
 
-const WidgetComponent: React.FC<IWidgetComponentOwnProps & WidgetComponentAdditionalProps> = ({
+function WidgetComponent({
     widget,
     index,
     rowIndex,
     parentLayoutPath,
     screen,
     exportData,
-}) => {
+}: IWidgetComponentOwnProps & WidgetComponentAdditionalProps) {
     const dashboardItemClasses = parentLayoutPath
         ? `s-dash-item-${serializeLayoutItemPath(parentLayoutPath)}`
-        : `s-dash-item-${index}`;
+        : `s-dash-item-${index ?? 0}`;
     const dashboardItemClassNames = cx(dashboardItemClasses, {
         "gd-first-container-row-widget": rowIndex === 0,
     });
@@ -87,25 +88,24 @@ const WidgetComponent: React.FC<IWidgetComponentOwnProps & WidgetComponentAdditi
         );
     }
     return null;
-};
+}
 
 /**
  * @internal
  */
-export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget({
+export function DefaultDashboardWidget({
     onError,
     onFiltersChange,
     screen,
     widget,
     backend,
-    // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-    index,
     parentLayoutItemSize,
     parentLayoutPath,
     rowIndex,
     exportData,
-}: IDashboardWidgetProps): JSX.Element {
+}: IDashboardWidgetProps): ReactElement {
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+    const index = useWidgetIndex();
 
     if (!isDashboardWidget(widget)) {
         throw new UnexpectedError(
@@ -168,7 +168,7 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
     } else if (isFlexibleLayoutEnabled && isExtendedDashboardLayoutWidget(widget)) {
         const dashboardItemClasses = parentLayoutPath
             ? `s-dash-item-${serializeLayoutItemPath(parentLayoutPath)}--container`
-            : `s-dash-item-${index}--container`;
+            : `s-dash-item-${index ?? 0}--container`;
         const dashboardItemClassNames = cx(dashboardItemClasses, {
             "gd-first-container-row-widget": rowIndex === 0,
         });
@@ -186,4 +186,4 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
     }
 
     return <div>Unknown widget</div>;
-});
+}

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact.js";
 import sortBy from "lodash/sortBy.js";
@@ -41,7 +41,7 @@ interface ICreationPanelProps {
     DashboardLayoutWidgetComponentSet?: DashboardLayoutWidgetComponentSet;
 }
 
-export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
+export function CreationPanel(props: ICreationPanelProps) {
     const { className, WrapCreatePanelItemWithDragComponent, WrapInsightListItemWithDragComponent } = props;
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
@@ -116,4 +116,4 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
             </div>
         </div>
     );
-};
+}
