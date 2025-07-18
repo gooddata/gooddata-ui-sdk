@@ -7,7 +7,7 @@ import React from "react";
 /**
  * @internal
  */
-export type UiTreeViewNode<Levels extends any[], Depth extends number = 0> = Levels extends [
+export type UiTreeViewNode<Levels extends unknown[], Depth extends number = 0> = Levels extends [
     infer Current,
     ...infer Rest
 ]
@@ -33,12 +33,12 @@ export type UiTreeViewTree<T> = {
 /**
  * @internal
  */
-export type LevelTypesUnion<Levels extends any[]> = Levels[number];
+export type LevelTypesUnion<Levels extends unknown[]> = Levels[number];
 
 /**
  * @internal
  */
-export type UiLeveledTreeView<Levels extends any[]> = UiTreeViewNode<Levels>;
+export type UiLeveledTreeView<Levels extends unknown[]> = UiTreeViewNode<Levels>;
 /**
  * @internal
  */
@@ -59,7 +59,7 @@ export interface IUiTreeViewItem<T> {
 /**
  * @internal
  */
-export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<any[], Level> {
+export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<unknown[], Level> {
     items: UiStaticTreeView<Level>[];
     onSelect?: OnStaticSelectFn<Level>;
     ItemComponent?: React.ComponentType<IUiTreeviewItemProps<Level>>;

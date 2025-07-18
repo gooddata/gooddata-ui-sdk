@@ -5195,7 +5195,7 @@ export interface IUiSettings {
 }
 
 // @internal (undocumented)
-export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<any[], Level> {
+export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<unknown[], Level> {
     // (undocumented)
     ItemComponent?: React_2.ComponentType<IUiTreeviewItemProps<Level>>;
     // (undocumented)
@@ -5469,7 +5469,7 @@ export class LegacySingleSelectListItem extends Component<ILegacySingleSelectLis
 }
 
 // @internal (undocumented)
-export type LevelTypesUnion<Levels extends any[]> = Levels[number];
+export type LevelTypesUnion<Levels extends unknown[]> = Levels[number];
 
 // @internal (undocumented)
 export function List<T>(props: IListProps<T>): JSX.Element;
@@ -6265,10 +6265,10 @@ export interface UiIconProps {
 }
 
 // @internal (undocumented)
-export type UiLeveledTreeView<Levels extends any[]> = UiTreeViewNode<Levels>;
+export type UiLeveledTreeView<Levels extends unknown[]> = UiTreeViewNode<Levels>;
 
 // @internal
-export function UiLeveledTreeview<Levels extends any[]>(props: IUiLeveledTreeViewProps<Levels>): React_2.JSX.Element;
+export function UiLeveledTreeview<Levels extends unknown[]>(props: IUiLeveledTreeViewProps<Levels>): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const UiLink: React_2.FC<IUiLinkProps>;
@@ -6535,7 +6535,7 @@ export type UiTreeViewAddLevel<N extends number> = [...Array<N>, unknown]["lengt
 export type UiTreeviewAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
 
 // @internal (undocumented)
-export type UiTreeViewNode<Levels extends any[], Depth extends number = 0> = Levels extends [
+export type UiTreeViewNode<Levels extends unknown[], Depth extends number = 0> = Levels extends [
 infer Current,
 ...infer Rest
 ] ? {

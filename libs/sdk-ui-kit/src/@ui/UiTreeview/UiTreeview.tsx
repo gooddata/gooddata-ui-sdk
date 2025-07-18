@@ -40,11 +40,11 @@ export function UiStaticTreeview<Level>(props: IUiStaticTreeViewProps<Level>) {
  *
  * @internal
  */
-export function UiLeveledTreeview<Levels extends any[]>(props: IUiLeveledTreeViewProps<Levels>) {
+export function UiLeveledTreeview<Levels extends unknown[]>(props: IUiLeveledTreeViewProps<Levels>) {
     return <UiTreeview<Levels, unknown> {...props} />;
 }
 
-function UiTreeview<Levels extends any[], Level>({
+function UiTreeview<Levels extends unknown[], Level>({
     items,
     selectionMode = "groups-and-leafs",
     expandedMode = "default-expanded",
