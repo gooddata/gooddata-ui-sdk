@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import noop from "lodash/noop.js";
+import { action } from "@storybook/addon-actions";
 import { UiListbox, separatorStaticItem, IUiListboxItem } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -52,28 +52,44 @@ const defaultAriaAttributes = {
 const UiListboxExamples = () => (
     <div className="library-component screenshot-target">
         <Example title="Basic Listbox">
-            <UiListbox items={interactiveItems} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
+            <UiListbox
+                items={interactiveItems}
+                onSelect={action("onSelect")}
+                ariaAttributes={defaultAriaAttributes}
+                onClose={action("onClose")}
+                onUnhandledKeyDown={action("onUnhandledKeyDown")}
+            />
         </Example>
 
         <Example title="Listbox with Selected Item">
             <UiListbox
                 items={interactiveItems}
                 selectedItemId="item2"
-                onSelect={noop}
+                onSelect={action("onSelect")}
                 ariaAttributes={defaultAriaAttributes}
+                onClose={action("onClose")}
+                onUnhandledKeyDown={action("onUnhandledKeyDown")}
             />
         </Example>
 
         <Example title="Listbox with Mixed Items">
-            <UiListbox items={mixedItems} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
+            <UiListbox
+                items={mixedItems}
+                onSelect={action("onSelect")}
+                ariaAttributes={defaultAriaAttributes}
+                onClose={action("onClose")}
+                onUnhandledKeyDown={action("onUnhandledKeyDown")}
+            />
         </Example>
 
         <Example title="Listbox with Disabled Items Focusable">
             <UiListbox
                 items={interactiveItems}
                 isDisabledFocusable={true}
-                onSelect={noop}
+                onSelect={action("onSelect")}
                 ariaAttributes={defaultAriaAttributes}
+                onClose={action("onClose")}
+                onUnhandledKeyDown={action("onUnhandledKeyDown")}
             />
         </Example>
 
@@ -81,25 +97,31 @@ const UiListboxExamples = () => (
             <UiListbox
                 items={interactiveItems}
                 maxWidth={150}
-                onSelect={noop}
+                onSelect={action("onSelect")}
                 ariaAttributes={defaultAriaAttributes}
+                onClose={action("onClose")}
+                onUnhandledKeyDown={action("onUnhandledKeyDown")}
             />
         </Example>
 
         <Example title="Listbox with Icons">
             <UiListbox
                 items={interactiveItemsWithIcons}
-                onSelect={noop}
+                onSelect={action("onSelect")}
                 ariaAttributes={defaultAriaAttributes}
+                onClose={action("onClose")}
+                onUnhandledKeyDown={action("onUnhandledKeyDown")}
             />
         </Example>
 
         <Example title="Compact Listbox">
             <UiListbox
                 items={interactiveItemsWithIcons}
-                onSelect={noop}
+                onSelect={action("onSelect")}
                 isCompact={true}
                 ariaAttributes={defaultAriaAttributes}
+                onClose={action("onClose")}
+                onUnhandledKeyDown={action("onUnhandledKeyDown")}
             />
         </Example>
     </div>

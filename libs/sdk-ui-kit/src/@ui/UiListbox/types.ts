@@ -43,7 +43,7 @@ export interface UiListboxInteractiveItemProps<T> {
     isSelected: boolean;
     isCompact: boolean;
 
-    onSelect: () => void;
+    onSelect: (e: React.MouseEvent) => void;
 }
 
 /**
@@ -81,10 +81,17 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React.Reac
     dataTestId?: string;
     itemDataTestId?: string;
 
+    width?: number;
     maxWidth?: number;
     maxHeight?: number;
 
-    onSelect?: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
+    onSelect?: (
+        item: IUiListboxInteractiveItem<InteractiveItemData>,
+        mods: {
+            type?: "mouse" | "keyboard";
+            newTab?: boolean;
+        },
+    ) => void;
     onClose?: () => void;
     onUnhandledKeyDown?: (
         event: React.KeyboardEvent,

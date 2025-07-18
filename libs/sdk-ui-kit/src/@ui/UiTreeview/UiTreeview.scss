@@ -1,0 +1,116 @@
+// (C) 2025 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+@use "../../../styles/scss/mixins";
+
+.gd-ui-kit-treeview {
+    $min-width: 200px;
+    $item_padding: 8px 10px;
+    $item_padding_base: 10px;
+    $item_padding_level: 20px;
+    $item_arrow_size: 20px;
+    $item_gap: 10px;
+    $root: &;
+
+    overflow-y: auto;
+    overflow-x: auto;
+    width: 100%;
+    min-width: $min-width;
+
+    @media #{variables.$small-only} {
+        max-width: 100vw;
+        max-height: 100vh;
+        width: 100vw;
+    }
+
+    &__root {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        outline: none;
+
+        &:focus-visible #{$root}__item--isFocused {
+            @include mixins.focus-ring;
+        }
+    }
+
+    &__treeitem {
+        display: flex;
+        flex-direction: column;
+
+        &__container {
+            display: flex;
+            flex-direction: row;
+        }
+
+        &__children {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    &__item {
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+        flex-grow: 1;
+        font-size: 14px;
+        line-height: 20px;
+        align-items: center;
+        color: variables.$gd-color-text;
+        transition: background-color 0.2s;
+        gap: $item_gap;
+        padding: $item_padding;
+        padding-left: calc(#{$item_padding_base} + var(--ui-treeview-item-level, 0) * #{$item_padding_level});
+
+        &:hover:not(&--isDisabled):not(&--isSelected) {
+            background-color: variables.$is-focused-background;
+            color: variables.$is-focused-color;
+        }
+
+        &--isFocused {
+            background-color: variables.$is-focused-background;
+            color: variables.$is-focused-color;
+        }
+
+        &--isDisabled {
+            color: variables.$gd-color-disabled;
+            cursor: not-allowed;
+        }
+        &--isDisabled #{$root}__item__item-icon {
+            opacity: 0.5;
+        }
+
+        &--isCompact {
+            font-size: 12px;
+        }
+
+        &--isExpanded #{$root}__item__item-arrow {
+            transform: rotate(90deg);
+        }
+    }
+
+    &__item__item-arrow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: $item_arrow_size;
+        height: $item_arrow_size;
+        margin-left: -$item_arrow_size;
+        margin-right: calc($item_gap / -2);
+        transition: transform 0.2s;
+    }
+    &__item__item-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__item__item-title {
+        width: 100%;
+        white-space: nowrap;
+    }
+    &__item__item-explanation {
+        display: flex;
+        align-items: center;
+    }
+}

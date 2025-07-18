@@ -20,6 +20,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
 
     dataTestId,
     itemDataTestId,
+    width,
     maxWidth,
     maxHeight,
     onSelect,
@@ -82,11 +83,14 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     }, [focusedItemNode]);
 
     const handleSelectItem = React.useCallback(
-        (item?: IUiListboxInteractiveItem<InteractiveItemData>) => {
+        (
+            item?: IUiListboxInteractiveItem<InteractiveItemData>,
+            mods?: { newTab?: boolean; type?: "mouse" | "keyboard" },
+        ) => {
             if (!item || item.isDisabled) {
                 return;
             }
-            onSelect?.(item);
+            onSelect?.(item, mods ?? {});
             shouldCloseOnSelect && onClose?.();
         },
         [onClose, onSelect, shouldCloseOnSelect],
@@ -141,8 +145,13 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                         }
                         setFocusedIndex(undefined);
                     },
-                    onSelect: () => {
-                        focusedItem && focusedItem.type === "interactive" && handleSelectItem(focusedItem);
+                    onSelect: (e) => {
+                        if (focusedItem && focusedItem.type === "interactive") {
+                            handleSelectItem(focusedItem, {
+                                type: "keyboard",
+                                newTab: e.ctrlKey || e.metaKey,
+                            });
+                        }
                     },
                     onClose,
                     onUnhandledKeyDown: (event) => {
@@ -168,7 +177,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     );
 
     return (
-        <div className={b()} style={{ maxWidth, maxHeight }} data-testid={dataTestId}>
+        <div className={b()} style={{ width, maxWidth, maxHeight }} data-testid={dataTestId}>
             <ul
                 className={e("items")}
                 tabIndex={0}
@@ -182,16 +191,18 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                         <li
                             key={item.id}
                             ref={(el) => (itemRefs.current[index] = el)}
+                            id={makeItemId(ariaAttributes.id, item)}
                             role="option"
                             aria-selected={item.id === selectedItemId}
                             aria-disabled={item.isDisabled}
-                            tabIndex={-1}
-                            id={makeItemId(ariaAttributes.id, item)}
                             data-testid={itemDataTestId}
                         >
                             <InteractiveItemComponent
-                                onSelect={() => {
-                                    handleSelectItem(item);
+                                onSelect={(e) => {
+                                    handleSelectItem(item, {
+                                        type: "mouse",
+                                        newTab: e.ctrlKey || e.metaKey || e.button === 1,
+                                    });
                                 }}
                                 item={item}
                                 isFocused={index === focusedIndex}
