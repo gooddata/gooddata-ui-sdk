@@ -47,7 +47,6 @@ export const AttributeFilterDropdown: React.VFC = () => {
         disabled,
         customIcon,
         withoutApply,
-        isSelectionInvalid,
         overlayPositionType,
     } = useAttributeFilterContext();
 
@@ -55,11 +54,11 @@ export const AttributeFilterDropdown: React.VFC = () => {
 
     const isSelectionInverted = useLastValidValue(
         withoutApply ? isWorkingSelectionInverted : isCommittedSelectionInverted,
-        !isSelectionInvalid || !withoutApply,
+        true,
     );
     const selectionElements = useLastValidValue(
         withoutApply ? workingSelectionElements : committedSelectionElements,
-        !isSelectionInvalid || !withoutApply,
+        true,
     );
     const subtitle = useResolveAttributeFilterSubtitle(isSelectionInverted, selectionElements);
 
@@ -124,7 +123,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
                 >
                     <DropdownBodyComponent
                         onApplyButtonClick={() => {
-                            onApply();
+                            onApply(true, false);
                             closeDropdown();
                         }}
                         onCancelButtonClick={closeDropdown}

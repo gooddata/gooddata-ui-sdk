@@ -43,6 +43,13 @@ export interface IWorkingFilterContextDefinition {
  */
 export interface FilterContextState {
     /**
+     * Array of local IDs for filters that have invalid selections.
+     * This is used to track and indicate filters that have selection problems.
+     * @alpha
+     */
+    filtersWithInvalidSelection: string[];
+
+    /**
      * Filter context definition contains the actual filters to use. They are applied and used to compute insights data.
      * Filter context definition is present.
      * @beta
@@ -111,6 +118,7 @@ export interface FilterContextState {
 }
 
 export const filterContextInitialState: FilterContextState = {
+    filtersWithInvalidSelection: [],
     filterContextDefinition: undefined,
     workingFilterContextDefinition: undefined,
     filterContextIdentity: undefined,

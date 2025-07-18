@@ -613,13 +613,14 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
 }
 
 // @public
-export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
+export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string, isSelectionInvalid?: boolean): ChangeAttributeFilterSelection;
 
 // @public
 export interface ChangeAttributeFilterSelectionPayload {
     readonly elements: IAttributeElements;
     readonly filterLocalId: string;
     readonly isResultOfMigration?: boolean;
+    readonly isSelectionInvalid?: boolean;
     readonly isWorkingSelectionChange?: boolean;
     readonly selectionType: AttributeFilterSelectionType;
 }
@@ -1008,7 +1009,7 @@ export interface ChangeSharingPayload {
 }
 
 // @public
-export function changeWorkingAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
+export function changeWorkingAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string, isSelectionInvalid?: boolean): ChangeAttributeFilterSelection;
 
 // @public
 export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string): ChangeDateFilterSelection;
@@ -4013,6 +4014,8 @@ export interface FilterContextState {
     filterContextDefinition?: IFilterContextDefinition;
     // @beta
     filterContextIdentity?: IDashboardObjectIdentity;
+    // @alpha
+    filtersWithInvalidSelection: string[];
     // @beta
     originalFilterContextDefinition?: IFilterContextDefinition;
     // @alpha
@@ -4478,7 +4481,7 @@ export interface IDashboardAttributeFilterProps {
     filter: IDashboardAttributeFilter;
     isDraggable?: boolean;
     onClose?: () => void;
-    onFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef, isWorkingSelectionChange?: boolean, isResultOfMigration?: boolean) => void;
+    onFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef, isWorkingSelectionChange?: boolean, isResultOfMigration?: boolean, isSelectionInvalid?: boolean) => void;
     overlayPositionType?: OverlayPositionType;
     // @alpha
     readonly?: boolean;
@@ -8891,6 +8894,9 @@ export const selectFilterContextFilters: DashboardSelector<FilterContextItem[]>;
 // @internal
 export const selectFilterContextIdentity: DashboardSelector<IDashboardObjectIdentity | undefined>;
 
+// @public
+export const selectFiltersWithInvalidSelection: DashboardSelector<string[]>;
+
 // @internal (undocumented)
 export const selectFilterValidationIncompatibleDefaultFiltersOverride: DashboardSelector<boolean>;
 
@@ -9220,6 +9226,9 @@ export const selectMapboxToken: DashboardSelector<string | undefined>;
 
 // @alpha (undocumented)
 export const selectMenuButtonItemsVisibility: DashboardSelector<IMenuButtonItemsVisibility>;
+
+// @public
+export const selectNamesOfFiltersWithInvalidSelection: DashboardSelector<string[]>;
 
 // @alpha
 export const selectNotificationChannels: DashboardSelector<INotificationChannelIdentifier[] | INotificationChannelMetadataObject[]>;

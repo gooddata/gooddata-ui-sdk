@@ -40,6 +40,18 @@ const selectSelf = createSelector(
 );
 
 /**
+ * This selector returns array of filter localIds that have invalid selections.
+ *
+ * @returns Array of filter localIds with invalid selections.
+ *
+ * @public
+ */
+export const selectFiltersWithInvalidSelection: DashboardSelector<string[]> = createSelector(
+    selectSelf,
+    (filterContextState) => filterContextState.filtersWithInvalidSelection,
+);
+
+/**
  * This selector returns original (stored) dashboard's filter context definition.
  *
  * @remarks
@@ -666,6 +678,50 @@ export const selectPreloadedAttributesWithReferences: DashboardSelector<
 > = createSelector(selectSelf, (state) => {
     return state.attributesWithReferences;
 });
+
+/**
+ * This selector returns an array of attribute names related to filters with invalid selection.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ *
+ * @returns An array of attribute names that have filters with invalid selections.
+ *
+ * @public
+ */
+export const selectNamesOfFiltersWithInvalidSelection: DashboardSelector<string[]> = createSelector(
+    selectFiltersWithInvalidSelection,
+    selectPreloadedAttributesWithReferences,
+    selectFilterContextAttributeFilters,
+    (invalidFilterIds, attributesWithReferences, attributeFilters): string[] => {
+        // If attributesWithReferences is undefined, return empty array
+        if (!attributesWithReferences) {
+            return [];
+        }
+
+        // Find filters with invalid selection
+        const invalidFilters = attributeFilters.filter(
+            (filter) =>
+                filter.attributeFilter.localIdentifier &&
+                invalidFilterIds.includes(filter.attributeFilter.localIdentifier),
+        );
+
+        // For each invalid filter, find the attribute name from attributesWithReferences
+        const attributeNames = invalidFilters.map((filter) => {
+            const displayFormRef = filter.attributeFilter.displayForm;
+
+            // Find the attribute that contains this display form
+            const attributeWithReferences = attributesWithReferences.find((item) =>
+                item.attribute.displayForms.some((df) => areObjRefsEqual(df.ref, displayFormRef)),
+            );
+
+            return attributeWithReferences?.attribute.title ?? "";
+        });
+
+        // Filter out empty strings and remove duplicates
+        return [...new Set(attributeNames.filter(Boolean))];
+    },
+);
 
 /**
  * Selects default filter overrides for the dashboard.
