@@ -1,8 +1,8 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ItemsWrapper, SubMenu } from "@gooddata/sdk-ui-kit";
 import { TotalType, IAttributeDescriptor } from "@gooddata/sdk-model";
 import cx from "classnames";
-import React from "react";
+import { Component, ReactElement } from "react";
 import { IntlShape } from "react-intl";
 
 import { IColumnTotal } from "./aggregationsMenuTypes.js";
@@ -17,7 +17,7 @@ const MENU_HEADER_OFFSET = -36;
 export interface IAggregationsSubMenuProps {
     intl: IntlShape;
     totalType: TotalType;
-    toggler: JSX.Element;
+    toggler: ReactElement;
     isMenuOpened?: boolean;
     rowAttributeDescriptors: IAttributeDescriptor[];
     columnAttributeDescriptors: IAttributeDescriptor[];
@@ -28,7 +28,7 @@ export interface IAggregationsSubMenuProps {
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
 }
 
-export default class AggregationsSubMenu extends React.Component<IAggregationsSubMenuProps> {
+export default class AggregationsSubMenu extends Component<IAggregationsSubMenuProps> {
     public static defaultProps: Pick<IAggregationsSubMenuProps, "isMenuOpened"> = {
         isMenuOpened: false,
     };

@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { createRef } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { Component, createRef, ReactNode } from "react";
 
 import { IMenuPositionConfig } from "../MenuSharedTypes.js";
 
@@ -13,7 +13,7 @@ import {
 export interface IPositionedMenuContentProps extends IMenuPositionConfig {
     topLevelMenu: boolean;
     togglerEl: HTMLElement | null;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export interface IPositionedMenuContentState {
@@ -21,7 +21,7 @@ export interface IPositionedMenuContentState {
     top: number;
 }
 
-export class PositionedMenuContent extends React.Component<
+export class PositionedMenuContent extends Component<
     IPositionedMenuContentProps,
     IPositionedMenuContentState
 > {

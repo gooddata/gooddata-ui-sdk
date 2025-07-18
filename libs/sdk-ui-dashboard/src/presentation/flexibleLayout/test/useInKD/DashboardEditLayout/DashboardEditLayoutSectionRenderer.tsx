@@ -1,6 +1,6 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import cx from "classnames";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { IDashboardLayoutSectionRenderProps } from "../../../DefaultDashboardLayoutRenderer/index.js";
 import { DashboardEditLayoutSectionBorder } from "./DashboardEditLayoutSectionBorder.js";
@@ -10,9 +10,8 @@ export type IDashboardEditLayoutSectionRendererOwnProps =
     IDashboardLayoutSectionRenderProps<IDashboardEditLayoutContent>;
 
 export type IDashboardEditLayoutSectionRendererProps = IDashboardEditLayoutSectionRendererOwnProps;
-export const RenderDashboardEditLayoutSectionRenderer: React.FC<IDashboardEditLayoutSectionRendererProps> = (
-    props,
-) => {
+
+export function RenderDashboardEditLayoutSectionRenderer(props: IDashboardEditLayoutSectionRendererProps) {
     const { DefaultSectionRenderer, section, children } = props;
 
     const { isDragging, isRowDropzoneVisible, activeHeaderRowId, rowId } = {
@@ -57,6 +56,6 @@ export const RenderDashboardEditLayoutSectionRenderer: React.FC<IDashboardEditLa
             </DashboardEditLayoutSectionBorder>
         </DefaultSectionRenderer>
     );
-};
+}
 
 export const DashboardEditLayoutSectionRenderer = RenderDashboardEditLayoutSectionRenderer;

@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import { ComparisonColorType } from "@gooddata/sdk-ui-charts";
 import { PushDataCallback } from "@gooddata/sdk-ui";
@@ -25,13 +24,13 @@ interface IColorControlProps {
     pushData: PushDataCallback;
 }
 
-const ColorsControl: React.FC<IColorControlProps> = ({
+export default function ColorsControl({
     disabled,
     showDisabledMessage,
     properties,
     colorPalette,
     pushData,
-}) => {
+}: IColorControlProps) {
     const colorConfig = properties?.controls?.comparison?.colorConfig;
     const isColorDisabled = disabled || colorConfig?.disabled;
 
@@ -81,6 +80,4 @@ const ColorsControl: React.FC<IColorControlProps> = ({
             <ColorResetButton disabled={disabled} properties={properties} pushData={pushData} />
         </div>
     );
-};
-
-export default ColorsControl;
+}

@@ -247,7 +247,9 @@ $subtotal-odd-background-color: var(
                 width: 100%;
             }
 
-            overflow: visible;
+            & {
+                overflow: visible;
+            }
 
             &:focus-visible {
                 outline: revert;

@@ -1,9 +1,10 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
+
+import { ReactNode } from "react";
 
 /**
  * @internal
  */
-export const Footer: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
-    <div className="gd-flex-dialog-footer">{children}</div>
-);
+export function Footer({ children }: { children?: ReactNode }) {
+    return <div className="gd-flex-dialog-footer">{children}</div>;
+}

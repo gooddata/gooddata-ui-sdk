@@ -1,4 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { ComponentType } from "react";
 import { ScenarioCustomizer, scenariosFor, UnboundVisProps, VisProps } from "../../../src/index.js";
 
 export interface IResponsiveSize {
@@ -10,7 +11,7 @@ export interface IResponsiveSize {
 export function responsiveScenarios<T extends VisProps>(
     chart: string,
     groupNames: string[],
-    component: React.ComponentType<T>,
+    component: ComponentType<T>,
     baseProps: UnboundVisProps<T>,
     sizes: Array<IResponsiveSize>,
     generateInsight: boolean,

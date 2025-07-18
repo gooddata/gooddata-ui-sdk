@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
-import * as React from "react";
+import { ReactNode, useCallback, useEffect, useMemo, KeyboardEvent as ReactKeyboardEvent } from "react";
 import classnames from "classnames";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { Input, LoadingMask, Message, useDebouncedState, useHeaderSearch } from "@gooddata/sdk-ui-kit";
@@ -109,15 +109,13 @@ export type SearchOverlayProps = {
         handlers: {
             closeSearch: () => void;
         },
-    ) => React.ReactNode;
+    ) => ReactNode;
 };
 
 /**
  * Core implementation of the SemanticSearchOverlay component.
  */
-const SearchOverlayCore: React.FC<
-    WrappedComponentProps & Omit<SearchOverlayProps, "locale" | "metadataTimezone">
-> = (props) => {
+function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataTimezone">) {
     const {
         onSelect,
         onSearch,
@@ -127,10 +125,12 @@ const SearchOverlayCore: React.FC<
         deepSearch,
         limit = LIMIT,
         className,
-        intl,
         threshold = THRESHOLD,
         renderFooter,
     } = props;
+
+    const intl = useIntl();
+
     const { toggleOpen } = useHeaderSearch();
 
     // Input value handling
@@ -148,7 +148,7 @@ const SearchOverlayCore: React.FC<
     });
 
     // Results wrapped into ListItems
-    const searchResultsItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
+    const searchResultsItems: ListItem<ISemanticSearchResultItem>[] = useMemo(
         (): ListItem<ISemanticSearchResultItem>[] =>
             searchResults
                 .filter((item) => {
@@ -196,7 +196,7 @@ const SearchOverlayCore: React.FC<
     );
 
     // Report metrics
-    React.useEffect(() => {
+    useEffect(() => {
         onSearch?.(searchTerm, searchResultsItems);
         // I don't want to report on search string change, only on results
         // But I do need searchTerm, it will update with results anyway
@@ -205,7 +205,7 @@ const SearchOverlayCore: React.FC<
 
     // Search history
     const [searchHistory, setSearchHistory] = useLocalStorage(SEARCH_HISTORY_KEY, SEARCH_HISTORY_EMPTY);
-    const onResultSelect = React.useCallback(
+    const onResultSelect = useCallback(
         (item: ListItem<ISemanticSearchResultItem>, e: MouseEvent | KeyboardEvent) => {
             setSearchHistory(
                 [...new Set([searchTerm, ...searchHistory])].slice(0, MAX_SEARCH_HISTORY_LENGTH),
@@ -239,12 +239,12 @@ const SearchOverlayCore: React.FC<
         [searchTerm, searchHistory, onSelect, setSearchHistory, toggleOpen, searchResultsItems],
     );
     const onHistorySelect = (item: ListItem<string>) => setImmediate(item.item);
-    const searchHistoryItems: ListItem<string>[] = React.useMemo(
+    const searchHistoryItems: ListItem<string>[] = useMemo(
         () => searchHistory.map((item) => ({ item })),
         [searchHistory],
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (searchStatus === "error") {
             // Report error to the console
             // UI will display a generic error message
@@ -255,8 +255,8 @@ const SearchOverlayCore: React.FC<
     // The List component requires explicit width
     const [ref, width] = useElementWidth();
 
-    const onEscKeyPress = React.useCallback(
-        (e: React.KeyboardEvent) => {
+    const onEscKeyPress = useCallback(
+        (e: ReactKeyboardEvent) => {
             if (value.length > 0) {
                 e.stopPropagation();
             }
@@ -268,7 +268,7 @@ const SearchOverlayCore: React.FC<
         children,
         status,
     }: {
-        children: React.ReactNode;
+        children: ReactNode;
         status: "idle" | "loading" | "error" | "success";
     }) => {
         const comp = renderFooter?.(
@@ -366,24 +366,19 @@ const SearchOverlayCore: React.FC<
             })()}
         </div>
     );
-};
-
-/**
- * Inject `intl` prop to the component.
- */
-const SearchOverlayWithIntl = injectIntl(SearchOverlayCore);
+}
 
 /**
  * A component that allows users to search for insights, metrics, attributes, and other objects using semantic search.
  * The internal version is meant to be used in an overlay inside the Header.
  * @internal
  */
-export const SearchOverlay: React.FC<SearchOverlayProps> = ({ locale, metadataTimezone, ...props }) => {
+export function SearchOverlay({ locale, metadataTimezone, ...rest }: SearchOverlayProps) {
     return (
         <MetadataTimezoneProvider value={metadataTimezone}>
             <IntlWrapper locale={locale}>
-                <SearchOverlayWithIntl {...props} />
+                <SearchOverlayCore {...rest} />
             </IntlWrapper>
         </MetadataTimezoneProvider>
     );
-};
+}

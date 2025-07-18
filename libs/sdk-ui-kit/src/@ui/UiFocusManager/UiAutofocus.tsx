@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { RefObject, ReactNode, useState, useEffect, useMemo } from "react";
 import { getFocusableElements, isElementFocusable, isElementTextInput } from "../../utils/domUtilities.js";
 import { resolveRef } from "./utils.js";
 import { IUiFocusHelperConnectors } from "./types.js";
@@ -10,7 +10,7 @@ import { IUiFocusHelperConnectors } from "./types.js";
  */
 export interface IUiAutofocusOptions {
     refocusKey?: unknown;
-    initialFocus?: string | React.RefObject<HTMLElement>;
+    initialFocus?: string | RefObject<HTMLElement>;
 }
 
 /**
@@ -22,11 +22,11 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
     refocusKey,
     initialFocus,
 }: IUiAutofocusOptions = {}): IUiFocusHelperConnectors<T> => {
-    const [element, setElement] = React.useState<HTMLElement | null>(null);
+    const [element, setElement] = useState<HTMLElement | null>(null);
 
     // If the element is outside of the viewport, calling focus() will not work.
     // This can happen for example with floating elements, that are repositioned after they mount
-    React.useEffect(() => {
+    useEffect(() => {
         const elementToFocus = getElementToFocus(element, initialFocus);
 
         if (!elementToFocus) {
@@ -58,12 +58,12 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
         return () => observer.disconnect();
     }, [refocusKey, element, initialFocus]);
 
-    return React.useMemo(() => ({ ref: setElement }), []);
+    return useMemo(() => ({ ref: setElement }), []);
 };
 
 function getElementToFocus(
     element: HTMLElement | null | undefined,
-    initialFocus?: string | React.RefObject<HTMLElement>,
+    initialFocus?: string | RefObject<HTMLElement>,
 ) {
     const initialFocusElement = resolveRef(initialFocus);
     const elementToCheck = initialFocusElement ?? element;
@@ -78,11 +78,12 @@ function getElementToFocus(
  *
  * @internal
  */
-export const UiAutofocus: React.FC<
-    {
-        children: React.ReactNode;
-    } & IUiAutofocusOptions
-> = ({ children, ...options }) => {
+export function UiAutofocus({
+    children,
+    ...options
+}: {
+    children: ReactNode;
+} & IUiAutofocusOptions) {
     const connectors = useUiAutofocusConnectors<HTMLDivElement>(options);
 
     return (
@@ -90,4 +91,4 @@ export const UiAutofocus: React.FC<
             {children}
         </div>
     );
-};
+}

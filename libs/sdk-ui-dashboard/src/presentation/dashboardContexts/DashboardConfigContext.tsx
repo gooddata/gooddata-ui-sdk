@@ -1,11 +1,11 @@
-// (C) 2021 GoodData Corporation
-import React, { createContext, useContext } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { createContext, ReactNode, useContext } from "react";
 
 import { IMenuButtonConfiguration } from "../topBar/types.js";
 
 interface IDashboardConfigContext {
     menuButtonConfig: IMenuButtonConfiguration | undefined;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 const DashboardConfigContext = createContext<IDashboardConfigContext>({
@@ -24,7 +24,7 @@ export const useDashboardConfigContext = (): IDashboardConfigContext => {
 /**
  * @internal
  */
-export const DashboardConfigProvider: React.FC<IDashboardConfigContext> = (props) => {
+export function DashboardConfigProvider(props: IDashboardConfigContext) {
     const { children, ...components } = props;
     return <DashboardConfigContext.Provider value={components}>{children}</DashboardConfigContext.Provider>;
-};
+}

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { HTMLProps } from "react";
 import { bem } from "../@utils/bem.js";
 
 const { b } = bem("gd-ui-kit-link");
@@ -8,7 +8,7 @@ const { b } = bem("gd-ui-kit-link");
 /**
  * @internal
  */
-export interface IUiLinkProps extends Omit<React.HTMLProps<HTMLAnchorElement>, "className"> {
+export interface IUiLinkProps extends Omit<HTMLProps<HTMLAnchorElement>, "className"> {
     variant: "primary" | "secondary" | "inverse";
     flipUnderline?: boolean;
 }
@@ -16,10 +16,6 @@ export interface IUiLinkProps extends Omit<React.HTMLProps<HTMLAnchorElement>, "
 /**
  * @internal
  */
-export const UiLink: React.FC<IUiLinkProps> = ({
-    variant = "secondary",
-    flipUnderline = false,
-    ...anchorProps
-}) => {
+export function UiLink({ variant = "secondary", flipUnderline = false, ...anchorProps }: IUiLinkProps) {
     return <a className={b({ variant, flipUnderline })} {...anchorProps} />;
-};
+}

@@ -1,14 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { render } from "@testing-library/react";
 import HeadlineTransformation from "../LegacyHeadlineTransformation.js";
 import * as headlineComponent from "../../headlines/LegacyHeadline.js";
-import { withIntl } from "@gooddata/sdk-ui";
 import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,
     headlineWithTwoMeasures,
-    headlineWithTwoMeasuresWithIdentifier,
 } from "../../../../../../__mocks__/fixtures.js";
 import {
     DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER,
@@ -45,7 +42,7 @@ describe("HeadlineTransformation", () => {
         });
 
         // Create a drill event handler for testing
-        drillEventHandler = vi.fn((event) => true);
+        drillEventHandler = vi.fn(() => true);
     });
 
     afterEach(() => {
@@ -54,8 +51,7 @@ describe("HeadlineTransformation", () => {
     });
 
     function createComponent(props: IHeadlineTransformationProps) {
-        const WrappedHeadlineTransformation = withIntl(HeadlineTransformation);
-        return render(<WrappedHeadlineTransformation {...props} />);
+        return render(<HeadlineTransformation {...props} />);
     }
 
     it("should pass default props to Headline component", () => {

@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { UIEvent } from "react";
 import { FormattedMessage } from "react-intl";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
@@ -13,10 +13,10 @@ export interface IDrillOriginSelectorBodyProps {
     onCloseDropdown: () => void;
 }
 
-const DrillOriginSelectorBody: React.FunctionComponent<IDrillOriginSelectorBodyProps> = (props) => {
+export default function DrillOriginSelectorBody(props: IDrillOriginSelectorBodyProps) {
     const { onCloseDropdown, onSelect, supportedItems } = props;
 
-    const stopPropagation = (e: React.UIEvent<HTMLDivElement>) => {
+    const stopPropagation = (e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
     };
 
@@ -46,9 +46,9 @@ const DrillOriginSelectorBody: React.FunctionComponent<IDrillOriginSelectorBodyP
             </div>
         </div>
     );
-};
+}
 
-const DrillMeasureSelectorBody: React.FunctionComponent<IDrillOriginSelectorBodyProps> = (props) => {
+function DrillMeasureSelectorBody(props: IDrillOriginSelectorBodyProps) {
     const { supportedItems, onSelect, onCloseDropdown } = props;
     return supportedItems.measures?.length ? (
         <>
@@ -64,9 +64,9 @@ const DrillMeasureSelectorBody: React.FunctionComponent<IDrillOriginSelectorBody
             />
         </>
     ) : null;
-};
+}
 
-const DrillAttributeSelectorBody: React.FunctionComponent<IDrillOriginSelectorBodyProps> = (props) => {
+function DrillAttributeSelectorBody(props: IDrillOriginSelectorBodyProps) {
     const { supportedItems, onSelect, onCloseDropdown } = props;
     return supportedItems.attributes?.length ? (
         <>
@@ -82,6 +82,4 @@ const DrillAttributeSelectorBody: React.FunctionComponent<IDrillOriginSelectorBo
             />
         </>
     ) : null;
-};
-
-export default DrillOriginSelectorBody;
+}

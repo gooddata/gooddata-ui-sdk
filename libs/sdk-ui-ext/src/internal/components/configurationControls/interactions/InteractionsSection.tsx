@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
-import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+import { memo, ReactNode } from "react";
+import { FormattedMessage } from "react-intl";
 
 import ConfigSection from "../ConfigSection.js";
 import { messages } from "../../../../locales.js";
@@ -15,7 +15,7 @@ export interface IInteractionsSectionProps {
     properties: IVisualizationProperties;
     propertiesMeta: any;
     pushData: (data: any) => any;
-    InteractionsDetailRenderer?: () => React.ReactNode;
+    InteractionsDetailRenderer?: () => ReactNode;
     supportsAlertConfiguration?: boolean;
     supportsDrillDownConfiguration?: boolean;
     supportsScheduledExportsConfiguration?: boolean;
@@ -33,7 +33,7 @@ export const QuestionMarkTooltip = (props: { tooltipText: string }) => {
     );
 };
 
-const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponentProps> = (props) => {
+export function InteractionsSection(props: IInteractionsSectionProps) {
     const {
         areControlsDisabledGetter,
         properties,
@@ -102,6 +102,6 @@ const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponent
             {InteractionsDetailRenderer ? InteractionsDetailRenderer() : null}
         </ConfigSection>
     );
-};
+}
 
-export default injectIntl(React.memo(InteractionsSection));
+export default memo(InteractionsSection);

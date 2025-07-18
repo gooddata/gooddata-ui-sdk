@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter, IAttributeFilterElementsActionsProps } from "@gooddata/sdk-ui-filters";
@@ -12,7 +12,7 @@ import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-const CustomElementsSelectActionsComponent: React.VFC<IAttributeFilterElementsActionsProps> = (props) => {
+function CustomElementsSelectActionsComponent(props: IAttributeFilterElementsActionsProps) {
     const { onChange, onToggle, totalItemsCount, isVisible } = props;
 
     if (!isVisible) {
@@ -33,11 +33,11 @@ const CustomElementsSelectActionsComponent: React.VFC<IAttributeFilterElementsAc
             <span style={{ paddingLeft: 10 }}>({totalItemsCount})</span>
         </div>
     );
-};
+}
 
-const EmptyElementsSelectActionsComponent: React.VFC<IAttributeFilterElementsActionsProps> = (_props) => {
+function EmptyElementsSelectActionsComponent(_props: IAttributeFilterElementsActionsProps) {
     return <div />;
-};
+}
 
 export default {
     title: "10 Filters@next/Customization/ElementsSelectActionsComponent",

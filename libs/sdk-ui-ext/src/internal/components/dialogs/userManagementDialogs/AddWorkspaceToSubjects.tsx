@@ -1,6 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { AddWorkspace } from "./Workspace/AddWorkspace.js";
@@ -23,14 +22,14 @@ export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     areFilterViewsEnabled?: boolean;
 }
 
-const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = ({
+function AddWorkspaceToSubjectsComponent({
     ids,
     subjectType,
     organizationId,
-    onSuccess,
     onClose,
+    onSuccess,
     areFilterViewsEnabled = false,
-}) => {
+}: IAddWorkspaceToSubjectsProps) {
     return (
         <OrganizationIdProvider organizationId={organizationId}>
             <Overlay
@@ -53,7 +52,7 @@ const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = 
             </Overlay>
         </OrganizationIdProvider>
     );
-};
+}
 
 /**
  * @internal

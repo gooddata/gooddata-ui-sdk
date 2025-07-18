@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
@@ -17,7 +17,7 @@ import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
 import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
 
-export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescriptionTriggerProps> = (props) => {
+export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescriptionTriggerProps) {
     const { widget } = props;
     const { isVisible, description, useRichText } = useInsightWidgetDescription(props);
     const widgetRefAsString = objRefToString(widgetRef(widget));
@@ -52,4 +52,4 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
         );
     }
     return null;
-};
+}

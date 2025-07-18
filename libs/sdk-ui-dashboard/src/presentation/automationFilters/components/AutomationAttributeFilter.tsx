@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { MutableRefObject, useCallback } from "react";
 import { FilterContextItem, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import {
     AttributeFilterButton,
@@ -20,14 +20,21 @@ const tooltipAlignPoints = [
     { align: "tl bl", offset: { x: 11, y: 0 } },
 ];
 
-export const AutomationAttributeFilter: React.FC<{
+export function AutomationAttributeFilter({
+    filter,
+    onChange,
+    onDelete,
+    isLocked,
+    displayAsLabel,
+    overlayPositionType,
+}: {
     filter: IDashboardAttributeFilter;
     onChange: (filter: FilterContextItem) => void;
     onDelete: (filter: FilterContextItem) => void;
     isLocked?: boolean;
     displayAsLabel?: ObjRef;
     overlayPositionType?: OverlayPositionType;
-}> = ({ filter, onChange, onDelete, isLocked, displayAsLabel, overlayPositionType }) => {
+}) {
     const intl = useIntl();
     const deleteAriaLabel = intl.formatMessage({ id: "delete" });
 
@@ -45,7 +52,7 @@ export const AutomationAttributeFilter: React.FC<{
             />
         </AutomationAttributeFilterProvider>
     );
-};
+}
 
 const AttributeFilterWrapper = ({
     displayAsLabel,
@@ -110,7 +117,7 @@ function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilte
                     isExpanded: props.isOpen,
                     deleteAriaLabel,
                 }}
-                buttonRef={props.buttonRef as React.MutableRefObject<HTMLButtonElement>}
+                buttonRef={props.buttonRef as MutableRefObject<HTMLButtonElement>}
             />
             <Bubble alignPoints={tooltipAlignPoints}>
                 {label}

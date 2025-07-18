@@ -1,6 +1,6 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { objRefToString } from "@gooddata/sdk-model";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 
 import { DashboardLayout } from "../../../DefaultDashboardLayoutRenderer/DashboardLayout.js";
 import { DashboardEditLayoutItemRenderer } from "./DashboardEditLayoutItemRenderer.js";
@@ -28,9 +28,11 @@ export interface IDashboardEditLayoutDispatchProps {
 
 export type IDashboardEditLayoutProps = IDashboardEditLayoutStateProps & IDashboardEditLayoutDispatchProps;
 
-export const RenderDashboardEditLayout: React.FC<IDashboardEditLayoutProps> = (props) => {
-    const { layout, rowIdsByRowOrder, shouldUseRowRenderer } = props;
-
+export function RenderDashboardEditLayout({
+    layout,
+    rowIdsByRowOrder,
+    shouldUseRowRenderer,
+}: IDashboardEditLayoutProps) {
     return (
         layout && (
             <DashboardLayout
@@ -64,4 +66,4 @@ export const RenderDashboardEditLayout: React.FC<IDashboardEditLayoutProps> = (p
             />
         )
     );
-};
+}

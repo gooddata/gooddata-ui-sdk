@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 import { InvariantError } from "ts-invariant";
 
 import { ITopBarCustomizer } from "../customizer.js";

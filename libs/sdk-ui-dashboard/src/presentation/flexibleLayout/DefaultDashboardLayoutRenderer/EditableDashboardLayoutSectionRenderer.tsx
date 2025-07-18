@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { selectActiveSection, useDashboardSelector } from "../../../model/index.js";
 import { areSectionLayoutPathsEqual } from "../../../_staging/layout/coordinates.js";

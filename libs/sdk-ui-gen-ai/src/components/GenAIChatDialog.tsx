@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
+import { useEffect, useMemo } from "react";
 import { Provider as StoreProvider } from "react-redux";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
@@ -36,7 +36,7 @@ export type GenAIChatDialogProps = {
 // - Below chart tooltips
 const DEFAULT_CHAT_Z_INDEX = 3000;
 
-export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
+export function GenAIChatDialog({
     backend,
     workspace,
     locale,
@@ -50,7 +50,7 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     colorPalette,
     onLinkClick,
     onDispatcher,
-}) => {
+}: GenAIChatDialogProps) {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
@@ -58,7 +58,7 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
         colorPalette,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         // Save the open state into the store
         const storeIsOpen = isOpenSelector(genAIStore.getState());
 
@@ -67,13 +67,13 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
         }
     }, [genAIStore, isOpen]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         onDispatcher?.(genAIStore.dispatch);
     }, [genAIStore, onDispatcher]);
 
     // Some apps, like Dashboards, already have an overlay controller, so we need to use that one
     const parentOverlayController = useOverlayController();
-    const chatOverlayController = React.useMemo(
+    const chatOverlayController = useMemo(
         () => parentOverlayController ?? OverlayController.getInstance(DEFAULT_CHAT_Z_INDEX),
         [parentOverlayController],
     );
@@ -102,4 +102,4 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
             </StoreProvider>
         </IntlWrapper>
     );
-};
+}

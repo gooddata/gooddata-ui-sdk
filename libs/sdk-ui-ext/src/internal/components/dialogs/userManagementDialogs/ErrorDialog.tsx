@@ -1,18 +1,18 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 import { DialogBase, Typography, Button, useId } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./locales.js";
 
 export interface IErrorDialogProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
     dialogTitle: string;
     onClose: () => void;
 }
 
-export const ErrorDialog: React.FC<IErrorDialogProps> = ({ dialogTitle, children, onClose }) => {
+export function ErrorDialog({ dialogTitle, children, onClose }: IErrorDialogProps) {
     const intl = useIntl();
     const titleElementId = useId();
 
@@ -45,4 +45,4 @@ export const ErrorDialog: React.FC<IErrorDialogProps> = ({ dialogTitle, children
             </div>
         </DialogBase>
     );
-};
+}

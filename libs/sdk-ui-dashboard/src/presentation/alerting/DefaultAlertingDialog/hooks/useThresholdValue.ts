@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useEffect, useState } from "react";
+import { ChangeEvent, FocusEvent, useCallback, useEffect, useState } from "react";
 import {
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
@@ -62,7 +62,7 @@ export function useThresholdValue(
     ]);
 
     const onChange = useCallback(
-        (e: string | number, event?: React.ChangeEvent<HTMLInputElement>) => {
+        (e: string | number, event?: ChangeEvent<HTMLInputElement>) => {
             const val = e !== "" ? parseFloat(String(e)) : undefined;
             changeValue(val!);
             setValue(val);
@@ -75,7 +75,7 @@ export function useThresholdValue(
     );
 
     const onBlur = useCallback(
-        (event: React.FocusEvent<HTMLInputElement>) => {
+        (event: FocusEvent<HTMLInputElement>) => {
             const val = convertThresholdValue(event.target.value, getMeasureFormat(selectedMeasure?.measure));
             changeValue(val!);
             setValue(val);

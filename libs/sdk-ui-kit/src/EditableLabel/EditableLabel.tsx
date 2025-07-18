@@ -1,5 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { forwardRef, useEffect, useRef, useState, ReactNode, useCallback, useMemo } from "react";
+import {
+    forwardRef,
+    useEffect,
+    useRef,
+    useState,
+    ReactNode,
+    useCallback,
+    useMemo,
+    MouseEvent as ReactMouseEvent,
+    KeyboardEvent,
+    ChangeEvent,
+} from "react";
 import { v4 as uuid } from "uuid";
 import identity from "lodash/identity.js";
 import ReactTextareaAutosize from "react-textarea-autosize";
@@ -102,7 +113,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
     }, [scrollToEndOnEditingStart, isMultiLine, textareaInOverlay, measureRootDimensions]);
 
     const edit = useCallback(
-        (_e?: React.MouseEvent<HTMLDivElement>): void => {
+        (_e?: ReactMouseEvent<HTMLDivElement>): void => {
             if (!isEditing) {
                 setIsEditing(true);
                 document.addEventListener("mousedown", onDocumentClick);
@@ -161,7 +172,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         }
     }, [doFocus, isEditing, selectAndFocus]);
 
-    const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+    const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
         const isSubmit = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ENTER;
         const isCancel = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ESCAPE;
 
@@ -204,7 +215,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         removeListeners();
     };
 
-    const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>): void => {
         const { value } = e.target;
         setValue(value);
         onChange(value);

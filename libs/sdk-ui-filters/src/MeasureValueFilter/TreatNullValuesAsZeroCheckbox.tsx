@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ChangeEvent } from "react";
 import { WrappedComponentProps } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
@@ -8,12 +8,12 @@ interface ITreatNullValuesAsZeroCheckboxProps {
     onChange: (checked: boolean) => void;
 }
 
-const TreatNullValuesAsZeroCheckbox = ({
+export default function TreatNullValuesAsZeroCheckbox({
     checked = false,
     onChange,
     intl,
-}: ITreatNullValuesAsZeroCheckboxProps & WrappedComponentProps): JSX.Element => {
-    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
+}: ITreatNullValuesAsZeroCheckboxProps & WrappedComponentProps) {
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
 
     return (
         <label
@@ -37,6 +37,4 @@ const TreatNullValuesAsZeroCheckbox = ({
             </span>
         </label>
     );
-};
-
-export default TreatNullValuesAsZeroCheckbox;
+}

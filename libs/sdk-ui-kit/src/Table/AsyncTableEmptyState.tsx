@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { useIntl } from "react-intl";
 import { messages } from "./locales.js";

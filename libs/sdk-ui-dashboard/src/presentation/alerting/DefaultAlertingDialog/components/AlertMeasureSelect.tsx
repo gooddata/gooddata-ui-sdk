@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Dropdown, Button, SingleSelectListItem, OverlayPositionType, UiListbox } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { useIntl } from "react-intl";

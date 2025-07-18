@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { useIntl } from "react-intl";
 import { Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -22,11 +21,14 @@ import { useExecutionProgress } from "./useExecutionProgress.js";
 /**
  * @internal
  */
-export const EditModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualizationSwitcherProps> = (
-    props,
-) => {
-    const { widget, activeVisualizationId, onError, onExportReady, onLoadingChanged, screen } = props;
-
+export function EditModeDashboardVisualizationSwitcher({
+    widget,
+    activeVisualizationId,
+    onError,
+    onExportReady,
+    onLoadingChanged,
+    screen,
+}: IDashboardVisualizationSwitcherProps) {
     const activeVisualization =
         widget.visualizations.find((visualization) => visualization.identifier === activeVisualizationId) ??
         widget.visualizations[0];
@@ -90,4 +92,4 @@ export const EditModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualiz
             </DashboardItem>
         );
     }
-};
+}

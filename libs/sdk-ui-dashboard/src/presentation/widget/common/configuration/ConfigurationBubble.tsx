@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 import cx from "classnames";
 import {
     ArrowDirections,
@@ -17,7 +17,7 @@ interface IConfigurationBubbleProps {
     classNames?: string;
     onClose?: () => void;
     closeOnEscape?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
     alignTo: string | HTMLElement | null;
     alignPoints?: IAlignPoint[];
     arrowOffsets?: ArrowOffsets;
@@ -54,20 +54,18 @@ export const defaultArrowDirections: ArrowDirections = {
     "br br": "right",
 };
 
-export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) => {
-    const {
-        id,
-        children,
-        classNames,
-        onClose,
-        closeOnEscape,
-        alignTo,
-        alignPoints = defaultAlignPoints,
-        arrowOffsets,
-        overlayPositionType,
-        arrowDirections = defaultArrowDirections,
-    } = props;
-
+export function ConfigurationBubble({
+    id,
+    children,
+    classNames,
+    onClose,
+    closeOnEscape,
+    alignTo,
+    alignPoints = defaultAlignPoints,
+    arrowOffsets,
+    overlayPositionType,
+    arrowDirections = defaultArrowDirections,
+}: IConfigurationBubbleProps) {
     // do not close on click to the widget
     const ignoredClassSelector = `.${IGNORED_CONFIGURATION_MENU_CLICK_CLASS}`;
     const ignoreClicksOnByClass =
@@ -101,4 +99,4 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
             {children}
         </Bubble>
     );
-};
+}

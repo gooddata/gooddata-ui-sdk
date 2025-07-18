@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 import {
@@ -57,9 +56,7 @@ export interface PivotTableMaxMinCoreProps {
     config: IPivotTableConfig;
 }
 
-const PivotTableMaxMin: React.FC<PivotTableMaxMinCoreProps> = (props) => {
-    const { measures, rows, filters } = props;
-
+function PivotTableMaxMin({ measures, rows, filters }: PivotTableMaxMinCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -74,7 +71,7 @@ const PivotTableMaxMin: React.FC<PivotTableMaxMinCoreProps> = (props) => {
             />
         </div>
     );
-};
+}
 
 export const PivotTableOfMaxWithCaseWhen = () => {
     return (

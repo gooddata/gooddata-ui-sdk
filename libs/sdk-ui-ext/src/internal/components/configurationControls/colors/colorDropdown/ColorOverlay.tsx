@@ -1,5 +1,5 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent, ReactNode } from "react";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 export enum DropdownVersionType {
@@ -11,7 +11,7 @@ export interface IColorOverlayProps {
     alignTo: string;
     dropdownVersion: DropdownVersionType;
     onClose: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 const ALIGN_POINTS_COLOR_PALETTE_PICKER = [
@@ -55,7 +55,7 @@ const ALIGN_POINTS_CUSTOM_COLOR_PICKER = [
     },
 ];
 
-export default class ColorOverlay extends React.PureComponent<IColorOverlayProps> {
+export default class ColorOverlay extends PureComponent<IColorOverlayProps> {
     public componentWillUnmount(): void {
         this.startScrollingPropagation();
     }

@@ -1,20 +1,16 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { SyntheticEvent } from "react";
 import classNames from "classnames";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 export interface IToggleButtonProps {
     text: string;
     isOpened: boolean;
-    toggleDropdown: (e: React.SyntheticEvent) => void;
+    toggleDropdown: (e: SyntheticEvent) => void;
 }
 
-export const DisplayFormButton: React.FC<IToggleButtonProps> = ({
-    isOpened,
-    text: title,
-    toggleDropdown,
-}) => {
+export function DisplayFormButton({ isOpened, text: title, toggleDropdown }: IToggleButtonProps) {
     const buttonClassNames = classNames(
         "gd-button-primary",
         "gd-button-small",
@@ -36,4 +32,4 @@ export const DisplayFormButton: React.FC<IToggleButtonProps> = ({
             iconRight={iconRight}
         />
     );
-};
+}

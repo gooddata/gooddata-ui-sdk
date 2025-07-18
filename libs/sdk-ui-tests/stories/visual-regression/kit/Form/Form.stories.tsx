@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { PureComponent } from "react";
 import { Input, InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -7,7 +7,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
 
-class FormExamples extends React.PureComponent {
+class FormExamples extends PureComponent {
     public state = {
         dots: "",
         inputWithNumberFormat: "",

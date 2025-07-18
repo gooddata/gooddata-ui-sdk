@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import { messages } from "@gooddata/sdk-ui";
@@ -29,12 +28,12 @@ export interface IAttributeHierarchyDetailPanelProps {
  *
  * @internal
  */
-export const AttributeHierarchyDetailPanel: React.FC<IAttributeHierarchyDetailPanelProps> = ({
-    title,
-    description,
+export function AttributeHierarchyDetailPanel({
     attributes,
+    description,
     onEdit,
-}) => {
+    title,
+}: IAttributeHierarchyDetailPanelProps) {
     const { formatMessage } = useIntl();
 
     const hierarchyLevelsText = formatMessage(messages.hierarchyListLevels);
@@ -70,4 +69,4 @@ export const AttributeHierarchyDetailPanel: React.FC<IAttributeHierarchyDetailPa
             ) : null}
         </div>
     );
-};
+}

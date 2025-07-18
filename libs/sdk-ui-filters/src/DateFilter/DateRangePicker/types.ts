@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { AriaAttributes, KeyboardEvent } from "react";
 import { IntlShape } from "react-intl";
 
 export const DATE_INPUT_HINT_ID = "date-range-picker-date-input-hint";
@@ -17,7 +17,7 @@ export interface IDateRangeInputFieldProps {
     onDateChange: (date: Date | undefined, shouldSubmitForm?: boolean) => void;
     onTimeChange: (time: ITime | undefined, shouldSubmitForm?: boolean) => void;
     onInputClick: () => void;
-    onDateInputKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onDateInputKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
     dateFormat: string;
     isMobile: boolean;
     isTimeEnabled: boolean;
@@ -32,7 +32,7 @@ export interface IDateRange {
 }
 
 export interface IInputAccessibilityConfig {
-    ariaLabel?: React.AriaAttributes["aria-label"];
+    ariaLabel?: AriaAttributes["aria-label"];
     inputHintId?: string;
 }
 

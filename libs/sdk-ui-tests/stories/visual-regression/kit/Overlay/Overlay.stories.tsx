@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { Component } from "react";
 import { injectIntl, FormattedMessage, IntlShape, IntlProvider } from "react-intl";
 import { MediaQuery } from "react-responsive";
 
@@ -14,7 +14,7 @@ interface IOverlayExampleProps {
 interface IOverlayExampleState {
     isOpen: boolean;
 }
-class OverlayExample extends React.Component<IOverlayExampleProps, IOverlayExampleState> {
+class OverlayExample extends Component<IOverlayExampleProps, IOverlayExampleState> {
     static defaultProps = {
         index: 0,
     };
@@ -142,7 +142,7 @@ class OverlayExample extends React.Component<IOverlayExampleProps, IOverlayExamp
 
 const InjectedOverlayExample = injectIntl(OverlayExample);
 
-class OverlayExamples extends React.Component {
+class OverlayExamples extends Component {
     render() {
         return (
             <IntlProvider

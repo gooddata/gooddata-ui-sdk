@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent } from "react";
 import ConfigSection from "../ConfigSection.js";
 import ForecastConfidenceControl from "./ForecastConfidenceControl.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -19,7 +19,7 @@ export interface IForecastSection {
     pushData: (data: any) => any;
 }
 
-class ForecastSection extends React.PureComponent<IForecastSection> {
+export default class ForecastSection extends PureComponent<IForecastSection> {
     public static defaultProps: IForecastSection = {
         controlsDisabled: false,
         enabled: false,
@@ -93,5 +93,3 @@ class ForecastSection extends React.PureComponent<IForecastSection> {
         );
     }
 }
-
-export default ForecastSection;

@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import compact from "lodash/compact.js";
 
@@ -17,30 +17,29 @@ import { ShareLink } from "./ShareLink.js";
 /**
  * @internal
  */
-export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
-    const {
-        isLoading,
-        isLockedNow,
-        isUnderLenientControlNow,
-        grantees,
-        sharedObject,
-        isDirty,
-        currentUserPermissions,
-        dashboardFilters,
-        isShareGrantHidden,
-        applyShareGrantOnSelect,
-        showDashboardShareLink,
-        isGranteeShareLoading,
-        onCancel,
-        onSubmit,
-        onGranteeDelete,
-        onGranularGranteeChange,
-        onAddGranteeButtonClick,
-        onLockChange,
-        onUnderLenientControlChange,
-        isCurrentUserWorkspaceManager,
-        onShareLinkCopy,
-    } = props;
+export function ShareGranteeBase({
+    isLoading,
+    isLockedNow,
+    isUnderLenientControlNow,
+    grantees,
+    sharedObject,
+    isDirty,
+    currentUserPermissions,
+    dashboardFilters,
+    isShareGrantHidden,
+    applyShareGrantOnSelect,
+    showDashboardShareLink,
+    isGranteeShareLoading,
+    onCancel,
+    onSubmit,
+    onGranteeDelete,
+    onGranularGranteeChange,
+    onAddGranteeButtonClick,
+    onLockChange,
+    onUnderLenientControlChange,
+    isCurrentUserWorkspaceManager,
+    onShareLinkCopy,
+}: IShareGranteeBaseProps) {
     const {
         owner,
         isLeniencyControlSupported,
@@ -135,4 +134,4 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             ) : null}
         </ConfirmDialogBase>
     );
-};
+}

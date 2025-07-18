@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { convertError, GoodDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -18,9 +18,12 @@ interface IDeleteAlertConfirmDialogProps {
     onError?: (error: GoodDataSdkError) => void;
 }
 
-export const DeleteAlertConfirmDialog: React.FC<IDeleteAlertConfirmDialogProps> = (props) => {
-    const { alert, onCancel, onSuccess, onError } = props;
-
+export function DeleteAlertConfirmDialog({
+    alert,
+    onCancel,
+    onSuccess,
+    onError,
+}: IDeleteAlertConfirmDialogProps) {
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
     const intl = useIntl();
@@ -75,4 +78,4 @@ export const DeleteAlertConfirmDialog: React.FC<IDeleteAlertConfirmDialogProps> 
             </span>
         </ConfirmDialog>
     );
-};
+}

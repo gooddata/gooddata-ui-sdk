@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -26,9 +26,12 @@ interface IAttributeFilterConfigurationItemProps {
     title: string;
 }
 
-export const AttributeFilterConfigurationItem: React.FC<IAttributeFilterConfigurationItemProps> = (props) => {
-    const { widget, displayFormRef, displayAsLabel, title } = props;
-
+export function AttributeFilterConfigurationItem({
+    widget,
+    displayFormRef,
+    displayAsLabel,
+    title,
+}: IAttributeFilterConfigurationItemProps) {
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
 
     const [isApplied, setIsApplied] = useState(
@@ -100,4 +103,4 @@ export const AttributeFilterConfigurationItem: React.FC<IAttributeFilterConfigur
             )}
         </div>
     );
-};
+}

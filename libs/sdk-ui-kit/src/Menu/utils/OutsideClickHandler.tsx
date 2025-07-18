@@ -1,14 +1,14 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { createRef } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { Component, createRef, ReactNode } from "react";
 
 export interface IOutsideClickHandlerProps {
     onOutsideClick: (e: MouseEvent) => void;
     toggler: HTMLDivElement;
     useCapture?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
-export class OutsideClickHandler extends React.Component<IOutsideClickHandlerProps> {
+export class OutsideClickHandler extends Component<IOutsideClickHandlerProps> {
     public static defaultProps = {
         // Set to true by default so that a `stopPropagation` in the
         // children will not prevent all outside click handlers from firing

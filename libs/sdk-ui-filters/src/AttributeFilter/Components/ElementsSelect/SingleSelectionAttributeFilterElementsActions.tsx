@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 /**
  * Compensates white space when "All checkbox" is missing in the attribute filter.

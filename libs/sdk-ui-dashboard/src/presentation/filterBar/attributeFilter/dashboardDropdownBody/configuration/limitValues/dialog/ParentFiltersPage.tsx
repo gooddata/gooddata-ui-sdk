@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import { ICatalogDateDataset, IDashboardDateFilter, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
@@ -37,7 +37,7 @@ export interface IParentFiltersPageProps {
     onCommonDateSelect: () => void;
 }
 
-const NoParentFilterFound: React.FC<{ hasNoMatchingData: boolean }> = ({ hasNoMatchingData }) => {
+function NoParentFilterFound({ hasNoMatchingData }: { hasNoMatchingData: boolean }) {
     const intl = useIntl();
     return (
         <NoData
@@ -47,7 +47,7 @@ const NoParentFilterFound: React.FC<{ hasNoMatchingData: boolean }> = ({ hasNoMa
             noDataLabel={intl.formatMessage(messages.filterAddValuesLimitPopupNoFilters)}
         />
     );
-};
+}
 
 interface IParentFilterProps {
     attributeTitle?: string;
@@ -63,7 +63,7 @@ const getFormattedMessage = (
     attributeTitle?: string,
     parentFilterTitle?: string,
     isDisabledDateFilterTooltip?: boolean,
-): React.ReactNode => {
+): ReactNode => {
     if (isDisabledDateFilterTooltip) {
         return (
             <FormattedMessage
@@ -90,14 +90,14 @@ const getFormattedMessage = (
     }
 };
 
-const ParentFilter: React.FC<IParentFilterProps> = ({
+function ParentFilter({
     item: { title, item, type, isDisabled, isDisabledDateFilterTooltip },
     attributeTitle,
     commonDateFilterTitle,
     onSelect,
     onClose,
     onCommonDateSelect,
-}) => {
+}: IParentFilterProps) {
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = cx(
         "gd-list-item attribute-filter__limit__popup__item",
@@ -138,9 +138,9 @@ const ParentFilter: React.FC<IParentFilterProps> = ({
             </WithDisabledParentFilterTooltip>
         </div>
     );
-};
+}
 
-export const ParentFiltersPage: React.FC<IParentFiltersPageProps> = ({
+export function ParentFiltersPage({
     attributeTitle,
     parentFilters,
     validParentFilters,
@@ -152,7 +152,7 @@ export const ParentFiltersPage: React.FC<IParentFiltersPageProps> = ({
     onGoBack,
     onClose,
     onCommonDateSelect,
-}) => {
+}: IParentFiltersPageProps) {
     const intl = useIntl();
     const isEnabledKDAttributeFilterDatesValidation = useDashboardSelector(
         selectEnableKDAttributeFilterDatesValidation,
@@ -197,4 +197,4 @@ export const ParentFiltersPage: React.FC<IParentFiltersPageProps> = ({
             </div>
         </>
     );
-};
+}

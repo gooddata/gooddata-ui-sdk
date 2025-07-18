@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
 import { IIconProps } from "../../typings.js";
 
 /**
  * @internal
  */
-export const Geo: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function Geo({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -24,4 +24,4 @@ export const Geo: React.FC<IIconProps> = ({ className, width, height, color, ari
             </g>
         </svg>
     );
-};
+}

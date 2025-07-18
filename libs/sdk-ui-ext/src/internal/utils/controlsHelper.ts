@@ -1,6 +1,6 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import set from "lodash/set.js";
-import { WrappedComponentProps } from "react-intl";
+import { IntlShape } from "react-intl";
 import { BucketNames, IPushData } from "@gooddata/sdk-ui";
 import {
     bucketItems,
@@ -14,6 +14,7 @@ import { getTranslation } from "./translations.js";
 import { IMinMaxControlState, IMinMaxControlProps } from "../interfaces/MinMaxControl.js";
 import { messages } from "../../locales.js";
 import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper.js";
+import { Dispatch, SetStateAction } from "react";
 
 function fixEmptyMaxValue(value: string): number {
     return value === "" ? Number.MAX_SAFE_INTEGER : Number(value);
@@ -36,8 +37,9 @@ function isInvalidOrMinMaxError(value: string, minNumberValue: number, maxNumber
 export function maxInputValidateAndPushData(
     data: IPushData,
     state: IMinMaxControlState,
-    props: IMinMaxControlProps & WrappedComponentProps,
-    setState: (data: Partial<IMinMaxControlState>) => void,
+    props: IMinMaxControlProps,
+    intl: IntlShape,
+    setState: Dispatch<SetStateAction<IMinMaxControlState>>,
     defaultState: IMinMaxControlState,
 ): void {
     const { basePath } = props;
@@ -65,7 +67,7 @@ export function maxInputValidateAndPushData(
             maxScale: {
                 hasWarning: true,
                 // no error message for dash
-                warningMessage: maxIsMinus ? "" : getTranslation(messages.axisMaxWarning.id, props.intl),
+                warningMessage: maxIsMinus ? "" : getTranslation(messages.axisMaxWarning.id, intl),
                 incorrectValue: maxValue,
             },
         });
@@ -81,6 +83,7 @@ export function maxInputValidateAndPushData(
     // if incorrect value was set previously but now validation passed, set incorrect value as correct value
     if (isNaN(parseFloat(incorrectMinValue))) {
         setState({
+            minScale: defaultState.minScale,
             maxScale: defaultState.maxScale,
         });
     } else {
@@ -94,8 +97,9 @@ export function maxInputValidateAndPushData(
 export function minInputValidateAndPushData(
     data: IPushData,
     state: IMinMaxControlState,
-    props: IMinMaxControlProps & WrappedComponentProps,
-    setState: (data: Partial<IMinMaxControlState>) => void,
+    props: IMinMaxControlProps,
+    intl: IntlShape,
+    setState: Dispatch<SetStateAction<IMinMaxControlState>>,
     defaultState: IMinMaxControlState,
 ): void {
     const { basePath } = props;
@@ -123,7 +127,7 @@ export function minInputValidateAndPushData(
             minScale: {
                 hasWarning: true,
                 // no error message for dash
-                warningMessage: minIsDash ? "" : getTranslation(messages.axisMinWarning.id, props.intl),
+                warningMessage: minIsDash ? "" : getTranslation(messages.axisMinWarning.id, intl),
                 incorrectValue: minValue,
             },
         });
@@ -141,6 +145,7 @@ export function minInputValidateAndPushData(
     if (isNaN(parseFloat(incorrectMaxValue))) {
         setState({
             minScale: defaultState.minScale,
+            maxScale: defaultState.maxScale,
         });
     } else {
         set(properties, `controls.${basePath}.max`, incorrectMaxValue);

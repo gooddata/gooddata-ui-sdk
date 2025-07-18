@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { PureComponent, ReactNode } from "react";
+import { PureComponent, ReactNode, MouseEvent } from "react";
 import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
 import { v4 as uuid } from "uuid";
 import identity from "lodash/identity.js";
@@ -22,7 +22,7 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
         return items.map((item) => {
             const clickHandler = item.onClick
                 ? item.onClick
-                : (event: React.MouseEvent) => this.props.onMenuItemClick(item, event);
+                : (event: MouseEvent) => this.props.onMenuItemClick(item, event);
 
             const classNames = cx("gd-header-menu-item gd-list-help-menu-item", {
                 active: item.isActive,

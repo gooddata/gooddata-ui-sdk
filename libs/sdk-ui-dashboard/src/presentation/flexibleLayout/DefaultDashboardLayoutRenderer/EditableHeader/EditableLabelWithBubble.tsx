@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React, { useCallback, useState } from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ReactNode, useCallback, useState } from "react";
 import { Bubble, EditableLabel } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
@@ -18,7 +18,7 @@ export interface IEditableLabelWithBubbleProps {
     onSubmit: (value: string) => void;
     onEditingStart?: () => void;
     onCancel?: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export function EditableLabelWithBubble({
@@ -33,7 +33,7 @@ export function EditableLabelWithBubble({
     placeholderMessage,
     children,
     onSubmit,
-}: IEditableLabelWithBubbleProps): JSX.Element {
+}: IEditableLabelWithBubbleProps) {
     const intl = useIntl();
 
     const [currentValue, setCurrentValue] = useState(value);

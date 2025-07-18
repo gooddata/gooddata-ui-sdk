@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 import { InputWithNumberFormat } from "../../../Form/index.js";
@@ -20,7 +20,7 @@ interface ICustomFormatPreviewState {
 
 type ICustomFormatPreviewProps = ICustomFormatPreviewOwnProps & WrappedComponentProps;
 
-export class Preview extends React.PureComponent<ICustomFormatPreviewProps, ICustomFormatPreviewState> {
+export class Preview extends PureComponent<ICustomFormatPreviewProps, ICustomFormatPreviewState> {
     public readonly state: Readonly<ICustomFormatPreviewState> = {
         preview: DEFAULT_PREVIEW_VALUE,
     };

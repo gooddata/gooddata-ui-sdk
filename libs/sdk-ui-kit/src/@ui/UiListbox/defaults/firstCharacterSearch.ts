@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { KeyboardEvent } from "react";
 
 import { IUiListboxContext } from "../types.js";
 
@@ -9,7 +9,7 @@ import { IUiListboxContext } from "../types.js";
  * Having this functionality is recommended by the listbox spec.
  */
 export function firstCharacterSearch<InteractiveItemData, StaticItemData>(
-    event: React.KeyboardEvent,
+    event: KeyboardEvent,
     {
         items,
         focusedIndex,

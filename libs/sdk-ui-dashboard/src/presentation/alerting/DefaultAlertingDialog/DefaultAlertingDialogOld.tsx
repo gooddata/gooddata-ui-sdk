@@ -1,6 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
 import {
     ArrowOffsets,
     IAlignPoint,
@@ -34,9 +33,13 @@ const defaultArrowOffsets: ArrowOffsets = {
 /**
  * @alpha
  */
-export const DefaultAlertingDialogOld: React.FC<IAlertingDialogOldProps> = (props) => {
-    const { editAlert, editWidget, anchorEl, onCancel = () => noop, onUpdate = () => noop } = props;
-
+export function DefaultAlertingDialogOld({
+    editAlert,
+    editWidget,
+    anchorEl,
+    onCancel = () => noop,
+    onUpdate = () => noop,
+}: IAlertingDialogOldProps) {
     const {
         execResult,
         hasAlerts,
@@ -107,4 +110,4 @@ export const DefaultAlertingDialogOld: React.FC<IAlertingDialogOldProps> = (prop
             </ScrollablePanel>
         </ConfigurationBubble>
     );
-};
+}

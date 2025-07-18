@@ -1,12 +1,12 @@
-// (C) 2021-2023 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { useCallback } from "react";
 import { Dashboard, DashboardStoreAccessorRepository, resetDashboard } from "@gooddata/sdk-ui-dashboard";
 import { idRef } from "@gooddata/sdk-model";
 import { Dashboards } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 
 const dashboardRef = idRef(Dashboards.DependentFilterSet);
 
-export const DashboardCommands: React.FC = () => {
+export function DashboardCommands() {
     const runResetDashboard = useCommand(resetDashboard());
 
     return (
@@ -22,7 +22,7 @@ export const DashboardCommands: React.FC = () => {
             />
         </>
     );
-};
+}
 
 function useCommand(action: any) {
     return useCallback(() => {

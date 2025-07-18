@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import { messages } from "../locales.js";
@@ -51,7 +51,7 @@ interface IPagingButtonProps {
     disabled: boolean;
 }
 
-const PagingButton: React.FC<IPagingButtonProps> = ({ type, buttonsOrientation, handler, disabled }) => {
+function PagingButton({ type, buttonsOrientation, handler, disabled }: IPagingButtonProps) {
     const intl = useIntl();
     const classes = cx(
         "gd-button-link",
@@ -71,12 +71,12 @@ const PagingButton: React.FC<IPagingButtonProps> = ({ type, buttonsOrientation, 
             accessibilityConfig={{ ariaLabel: buttonLabel }}
         />
     );
-};
+}
 
 /**
  * @internal
  */
-export const Paging = (props: IPagingProps): React.ReactElement => {
+export const Paging = (props: IPagingProps): ReactElement => {
     const { page, pagesCount, buttonsOrientation = "upDown", showNextPage, showPrevPage } = props;
 
     return (

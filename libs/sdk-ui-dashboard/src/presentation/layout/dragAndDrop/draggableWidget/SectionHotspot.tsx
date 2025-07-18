@@ -1,6 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
-import React, { useEffect } from "react";
+import { RefObject, useEffect } from "react";
 
 import { SectionDropZoneBox } from "./SectionDropZoneBox.js";
 import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
@@ -33,7 +33,7 @@ interface ISectionHotspotProps {
     targetPosition?: RowPosition;
 }
 
-export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
+export function SectionHotspot(props: ISectionHotspotProps) {
     const { index, targetPosition } = props;
 
     const dispatch = useDashboardDispatch();
@@ -130,9 +130,13 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                 hidden: !canDrop,
             })}
         >
-            <div className={cx("row-hotspot", { hidden: !canDrop })} style={{ ...debugStyle }} ref={dropRef}>
+            <div
+                className={cx("row-hotspot", { hidden: !canDrop })}
+                style={{ ...debugStyle }}
+                ref={dropRef as unknown as RefObject<HTMLDivElement>}
+            >
                 {!!isOver && <SectionDropZoneBox isOver={isOver} />}
             </div>
         </div>
     );
-};
+}

@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { AccessGranularPermission } from "@gooddata/sdk-model";
@@ -26,7 +26,7 @@ interface IGranularPermissionsDropdownProps {
     accessibilityConfig?: IAccessibilityConfigBase;
 }
 
-export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownProps> = ({
+export function GranularPermissionsDropdown({
     grantee,
     granteePossibilities,
     isDropdownDisabled,
@@ -36,7 +36,7 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
     className,
     mode,
     accessibilityConfig,
-}) => {
+}: IGranularPermissionsDropdownProps) {
     const intl = useIntl();
     const { ariaDescribedBy } = accessibilityConfig ?? {};
 
@@ -104,6 +104,6 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
             )}
         />
     );
-};
+}
 
 export const GranularPermissionsDropdownWithBubble = withBubble(GranularPermissionsDropdown);

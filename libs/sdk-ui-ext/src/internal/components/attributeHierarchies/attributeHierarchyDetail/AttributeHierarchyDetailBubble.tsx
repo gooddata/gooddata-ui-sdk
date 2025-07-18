@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 import cx from "classnames";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -11,7 +11,7 @@ import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
  */
 export interface IAttributeHierarchyDetailBubbleProps {
     className?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 const BUBBLE_ALIGN_POINTS = [
@@ -25,8 +25,10 @@ const BUBBLE_ALIGN_POINTS = [
  *
  * @internal
  */
-export const AttributeHierarchyDetailBubble: React.FC<IAttributeHierarchyDetailBubbleProps> = (props) => {
-    const { children, className } = props;
+export function AttributeHierarchyDetailBubble({
+    children,
+    className,
+}: IAttributeHierarchyDetailBubbleProps) {
     return (
         <BubbleHoverTrigger showDelay={0} eventsOnBubble={true}>
             <div
@@ -50,4 +52,4 @@ export const AttributeHierarchyDetailBubble: React.FC<IAttributeHierarchyDetailB
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

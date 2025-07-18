@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React, { useEffect } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { useEffect } from "react";
 import { DateDatasetFilter } from "../../common/index.js";
 import { IInsightWidget, widgetRef } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";

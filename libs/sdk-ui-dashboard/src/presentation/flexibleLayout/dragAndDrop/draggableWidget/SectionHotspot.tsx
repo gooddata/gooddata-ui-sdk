@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
-import React, { useEffect } from "react";
+import { RefObject, useEffect } from "react";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { useDashboardDispatch } from "../../../../model/index.js";
@@ -28,7 +28,7 @@ interface ISectionHotspotProps {
     itemSize?: IDashboardLayoutSizeByScreenSize; // optional so I don't need to handle this in old layout yet
 }
 
-export const SectionHotspot: React.FC<ISectionHotspotProps> = ({ index, targetPosition, itemSize }) => {
+export function SectionHotspot({ index, targetPosition, itemSize }: ISectionHotspotProps) {
     const dispatch = useDashboardDispatch();
 
     const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(index);
@@ -109,9 +109,13 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = ({ index, targetPo
                 hidden: !canDrop,
             })}
         >
-            <div className={cx("row-hotspot", { hidden: !canDrop })} style={{ ...debugStyle }} ref={dropRef}>
+            <div
+                className={cx("row-hotspot", { hidden: !canDrop })}
+                style={{ ...debugStyle }}
+                ref={dropRef as unknown as RefObject<HTMLDivElement>}
+            >
                 {!!isOver && <SectionDropZoneBox isOver={isOver} itemSize={itemSize} />}
             </div>
         </div>
     );
-};
+}

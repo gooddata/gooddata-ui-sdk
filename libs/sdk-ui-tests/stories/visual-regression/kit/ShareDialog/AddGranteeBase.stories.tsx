@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 
 import { action } from "storybook/actions";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
@@ -43,7 +43,7 @@ const sharedObject: IAffectedSharedObject = {
     areGranularPermissionsSupported: false,
 };
 
-const EmptySelectionExample = (): JSX.Element => {
+const EmptySelectionExample = (): ReactElement => {
     const workspace = "foo";
     const backend = recordedBackend(ReferenceRecordings.Recordings);
 
@@ -72,7 +72,7 @@ const EmptySelectionExample = (): JSX.Element => {
     );
 };
 
-const EmptyAvailableItemsExample = (): JSX.Element => {
+const EmptyAvailableItemsExample = (): ReactElement => {
     const workspace = "foo";
     const backend = recordedBackend(ReferenceRecordings.Recordings);
 
@@ -101,7 +101,7 @@ const EmptyAvailableItemsExample = (): JSX.Element => {
     );
 };
 
-const GranularItemsExample = (): JSX.Element => {
+const GranularItemsExample = (): ReactElement => {
     const workspace = "foo";
     const backend = recordedBackend(ReferenceRecordings.Recordings);
 
@@ -133,7 +133,7 @@ const GranularItemsExample = (): JSX.Element => {
     );
 };
 
-const SelectedItemsExample = (): JSX.Element => {
+const SelectedItemsExample = (): ReactElement => {
     const workspace = "foo";
     const backend = recordedBackend(ReferenceRecordings.Recordings);
 
@@ -162,7 +162,7 @@ const SelectedItemsExample = (): JSX.Element => {
     );
 };
 
-const AddGranteeExamples = (): JSX.Element => {
+const AddGranteeExamples = (): ReactElement => {
     useResetFocus(200);
 
     return (

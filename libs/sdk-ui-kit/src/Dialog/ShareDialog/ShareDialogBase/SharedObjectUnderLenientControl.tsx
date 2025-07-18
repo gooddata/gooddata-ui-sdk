@@ -1,6 +1,5 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import React from "react";
 import { useComponentLabelsContext } from "./ComponentLabelsContext.js";
 
 import { SharedObjectCheckboxControl } from "./SharedObjectCheckboxControl.js";
@@ -9,11 +8,11 @@ import { ISharedObjectUnderLenientControlProps } from "./types.js";
 /**
  * @internal
  */
-export const SharedObjectUnderLenientControl: React.FC<ISharedObjectUnderLenientControlProps> = ({
+export function SharedObjectUnderLenientControl({
     isUnderLenientControl,
     isLeniencyControlSupported,
     onUnderLenientControlChange,
-}) => {
+}: ISharedObjectUnderLenientControlProps) {
     const labels = useComponentLabelsContext();
 
     return (
@@ -26,4 +25,4 @@ export const SharedObjectUnderLenientControl: React.FC<ISharedObjectUnderLenient
             className="s-shared-object-under-lenient-control"
         />
     );
-};
+}

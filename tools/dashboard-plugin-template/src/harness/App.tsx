@@ -1,11 +1,10 @@
-// (C) 2019-2021 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { PluginLoader } from "./PluginLoader.js";
 
-export const App: React.FC = () => {
+export function App() {
     return (
         <div>
             <PluginLoader />
         </div>
     );
-};
+}

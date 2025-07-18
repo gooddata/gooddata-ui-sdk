@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import { RichText } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -16,12 +15,12 @@ import { IDashboardRichTextProps } from "./types.js";
 /**
  * @internal
  */
-export const ViewModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
+export function ViewModeDashboardRichText({
     widget,
     richTextExportData,
     onLoadingChanged,
     onError,
-}) => {
+}: IDashboardRichTextProps) {
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const { filters } = useRichTextFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
@@ -49,4 +48,4 @@ export const ViewModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
             LoadingComponent={LoadingComponent}
         />
     );
-};
+}

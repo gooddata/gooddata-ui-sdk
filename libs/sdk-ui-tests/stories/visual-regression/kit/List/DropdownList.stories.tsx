@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 
 import { withIntl } from "@gooddata/sdk-ui";
 import { DropdownList, SingleSelectListItem, ISingleSelectListItemProps } from "@gooddata/sdk-ui-kit";
@@ -32,7 +31,7 @@ const items: ISingleSelectListItemProps[] = [
     },
 ];
 
-const DropdownListExamples: React.FC = () => {
+function DropdownListExamples() {
     return (
         <div className="library-component screenshot-target">
             <DropdownList
@@ -48,7 +47,7 @@ const DropdownListExamples: React.FC = () => {
             />
         </div>
     );
-};
+}
 
 const WithIntl = withIntl(DropdownListExamples, undefined, {});
 

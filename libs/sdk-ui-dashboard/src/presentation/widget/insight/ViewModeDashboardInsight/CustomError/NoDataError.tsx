@@ -1,5 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { FormattedMessage } from "react-intl";
 import { Typography, BubbleHoverTrigger, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
@@ -9,7 +8,7 @@ interface INoDataErrorProps {
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc", offset: { x: 0, y: 0 } }];
 
-export const NoDataError: React.FC<INoDataErrorProps> = ({ fullContent }) => {
+export function NoDataError({ fullContent }: INoDataErrorProps) {
     return (
         <div className="gd-visualization-content visualization-empty">
             <div className="info-label info-label-empty">
@@ -31,4 +30,4 @@ export const NoDataError: React.FC<INoDataErrorProps> = ({ fullContent }) => {
             </div>
         </div>
     );
-};
+}

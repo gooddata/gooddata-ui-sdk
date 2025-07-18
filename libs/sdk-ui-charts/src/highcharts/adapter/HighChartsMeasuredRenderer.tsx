@@ -1,5 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { ReactElement } from "react";
 import ReactMeasure, { MeasuredComponentProps, ContentRect } from "react-measure";
 import { defaultImport } from "default-import";
 
@@ -10,10 +10,10 @@ const Measure = defaultImport(ReactMeasure);
 
 const MEASURED_ELEMENT_STYLE = { width: "100%", height: "100%" };
 export interface IHighChartsMeasuredRendererProps {
-    childrenRenderer: (contentRect: ContentRect) => JSX.Element;
+    childrenRenderer: (contentRect: ContentRect) => ReactElement;
 }
 
-export function HighChartsMeasuredRenderer(props: IHighChartsMeasuredRendererProps): JSX.Element {
+export function HighChartsMeasuredRenderer(props: IHighChartsMeasuredRendererProps): ReactElement {
     return (
         <Measure client={true}>
             {({ measureRef, contentRect }: MeasuredComponentProps) => {

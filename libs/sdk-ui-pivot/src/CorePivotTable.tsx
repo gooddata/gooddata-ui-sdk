@@ -10,11 +10,11 @@ import {
     ModuleRegistry,
     provideGlobalGridOptions,
 } from "ag-grid-community";
+import { Component, CSSProperties, MouseEvent as ReactMouseEvent } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { AgGridReact } from "ag-grid-react";
-import React from "react";
 import { injectIntl } from "react-intl";
 import cx from "classnames";
 import {
@@ -178,7 +178,7 @@ const AGGRID_ON_RESIZE_TIMEOUT = 300;
  *
  * @internal
  */
-export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, ICorePivotTableState> {
+export class CorePivotTableAgImpl extends Component<ICorePivotTableProps, ICorePivotTableState> {
     public static defaultProps: Pick<
         ICorePivotTableProps,
         | "locale"
@@ -488,7 +488,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         );
     }
 
-    private stopEventWhenResizeHeader(e: React.MouseEvent): void {
+    private stopEventWhenResizeHeader(e: ReactMouseEvent): void {
         // Do not propagate event when it originates from the table resizer.
         // This means for example that we can resize columns without triggering drag in the application.
         if ((e.target as Element)?.className?.includes?.("ag-header-cell-resize")) {
@@ -536,7 +536,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }
 
-        const style: React.CSSProperties = {
+        const style: CSSProperties = {
             height: desiredHeight || "100%",
             position: "relative",
             overflow: "hidden",
@@ -1237,10 +1237,12 @@ const CorePivotTableWithIntl = injectIntl(withTheme(CorePivotTableAgImpl));
 /**
  * @internal
  */
-export const CorePivotTable: React.FC<ICorePivotTableProps> = (props) => (
-    <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-        <IntlWrapper locale={props.locale}>
-            <CorePivotTableWithIntl {...props} />
-        </IntlWrapper>
-    </ThemeContextProvider>
-);
+export function CorePivotTable(props: ICorePivotTableProps) {
+    return (
+        <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+            <IntlWrapper locale={props.locale}>
+                <CorePivotTableWithIntl {...props} />
+            </IntlWrapper>
+        </ThemeContextProvider>
+    );
+}

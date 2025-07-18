@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { IHeaderParams, HeaderFocusedEvent, ColumnEvent } from "ag-grid-community";
 
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, KeyboardEvent as ReactKeyboardEvent } from "react";
 import cx from "classnames";
 import { IMenu } from "../../../publicTypes.js";
 import { SortDirection } from "@gooddata/sdk-model";
@@ -25,7 +25,7 @@ export interface IColumnHeaderState {
     sorting?: SortDirection;
 }
 
-const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
+export default function ColumnHeader(props: IColumnHeaderProps) {
     const {
         className,
         column,
@@ -111,13 +111,13 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
         const handleKeyDown = (event: KeyboardEvent) => {
             // set last sorted column id to table only when sort was triggered by keyboard
             if (
-                isEnterKey(event as unknown as React.KeyboardEvent) &&
+                isEnterKey(event as unknown as ReactKeyboardEvent) &&
                 isSortingEnabled &&
                 setLastSortedColId
             ) {
                 setLastSortedColId(column.getColId());
             }
-            if (isSpaceKey(event as unknown as React.KeyboardEvent)) {
+            if (isSpaceKey(event as unknown as ReactKeyboardEvent)) {
                 event.preventDefault();
                 if (isSortingEnabled && setLastSortedColId) {
                     setLastSortedColId(column.getColId());
@@ -161,6 +161,4 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
             isFocused={isFocused}
         />
     );
-};
-
-export default ColumnHeader;
+}

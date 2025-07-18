@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, MouseEvent } from "react";
 import { useIntl } from "react-intl";
 import {
     insightTitle,
@@ -67,14 +67,14 @@ const useAuthor = () => {
 /**
  * @internal
  */
-export const InsightList: React.FC<IInsightListProps> = ({
+export function InsightList({
     height,
     width = LIST_WIDTH,
     searchAutofocus,
     renderItem,
     selectedRef,
     onSelect,
-}) => {
+}: IInsightListProps) {
     const intl = useIntl();
 
     const backend = useBackendStrict();
@@ -166,7 +166,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
     };
 
     const eventDispatch = useDashboardEventDispatch();
-    const createInsightRequestedEvent = useCallback((e: React.MouseEvent) => {
+    const createInsightRequestedEvent = useCallback((e: MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -259,4 +259,4 @@ export const InsightList: React.FC<IInsightListProps> = ({
             }}
         />
     );
-};
+}

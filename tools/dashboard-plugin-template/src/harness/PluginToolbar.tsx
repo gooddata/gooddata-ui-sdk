@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     DefaultDashboardToolbar,
     DefaultDashboardToolbarButton,
@@ -6,7 +6,6 @@ import {
     selectIsInEditMode,
     useDashboardSelector,
 } from "@gooddata/sdk-ui-dashboard";
-import React from "react";
 
 interface IPluginToolbarProps {
     reloadPlugins: () => void;
@@ -16,9 +15,13 @@ interface IPluginToolbarProps {
     isHideOverlaysEnabled: boolean;
 }
 
-export const PluginToolbar: React.FC<IPluginToolbarProps> = (props) => {
-    const { isPluginEnabled, isHideOverlaysEnabled, reloadPlugins, togglePlugin, hideOverlays } = props;
-
+export function PluginToolbar({
+    isPluginEnabled,
+    isHideOverlaysEnabled,
+    reloadPlugins,
+    togglePlugin,
+    hideOverlays,
+}: IPluginToolbarProps) {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
 
     return (
@@ -42,4 +45,4 @@ export const PluginToolbar: React.FC<IPluginToolbarProps> = (props) => {
             </DefaultDashboardToolbarGroup>
         </DefaultDashboardToolbar>
     );
-};
+}

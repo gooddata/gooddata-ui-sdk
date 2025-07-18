@@ -1,17 +1,23 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { CSSProperties } from "react";
 import cx from "classnames";
 import { ClientFormatterFacade, IFormattedResult, ISeparators } from "@gooddata/number-formatter";
 
-export const Label: React.FC<{ value?: string; style?: React.CSSProperties; className?: string }> = ({
+export function Label({
     value,
     style,
     className,
-}) => (
-    <div className={cx("gd-measure-format-preview-formatted", className)}>
-        <span style={style}>{value}</span>
-    </div>
-);
+}: {
+    value?: string;
+    style?: CSSProperties;
+    className?: string;
+}) {
+    return (
+        <div className={cx("gd-measure-format-preview-formatted", className)}>
+            <span style={style}>{value}</span>
+        </div>
+    );
+}
 
 export interface IFormattedPreviewProps {
     previewNumber: number | null;
@@ -29,13 +35,13 @@ function getFormattedNumber(
     return ClientFormatterFacade.formatValue(value, format, separators);
 }
 
-export const FormattedPreview: React.FC<IFormattedPreviewProps> = ({
+export function FormattedPreview({
     previewNumber,
     format,
     colors = true,
     separators,
     className: customClassName,
-}) => {
+}: IFormattedPreviewProps) {
     if (format === "") {
         return <Label />;
     }
@@ -50,4 +56,4 @@ export const FormattedPreview: React.FC<IFormattedPreviewProps> = ({
     }
 
     return <Label value={formattedValue} className={customClassName} style={style} />;
-};
+}

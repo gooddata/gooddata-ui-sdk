@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
+import { CSSProperties } from "react";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
@@ -39,7 +40,6 @@ import {
     MeasureGroupDimension,
     pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
-import React from "react";
 import Measure from "react-measure";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
@@ -482,7 +482,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                     {({ measureRef, contentRect }: any) => {
                         const clientHeight = contentRect.client.height;
 
-                        const pivotWrapperStyle: React.CSSProperties = {
+                        const pivotWrapperStyle: CSSProperties = {
                             height: isNil(height) ? "100%" : height,
                             textAlign: "left",
                             display: "flex",

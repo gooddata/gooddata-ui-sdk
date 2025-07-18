@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { ComponentType, useMemo } from "react";
 import { Bubble, BubbleHoverTrigger, Button, IIconProps } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
@@ -8,12 +8,12 @@ const ALIGN_POINTS_TOOLTIP = [{ align: "tc bc" }, { align: "cl cr" }];
 type HeaderIconProps = {
     className?: string;
     tooltip?: string;
-    Icon: React.FC<IIconProps>;
+    Icon: ComponentType<IIconProps>;
     onClick?: () => void;
     disabled?: boolean;
 };
 
-export const HeaderIcon: React.FC<HeaderIconProps> = ({ className, tooltip, Icon, onClick, disabled }) => {
+export function HeaderIcon({ className, tooltip, Icon, onClick, disabled }: HeaderIconProps) {
     const randClassName = useMemo(() => `gd-gen-ai-chat-anchor--${Math.random()}`, []);
     const classes = cx("gd-gen-ai-chat__window__header__icon", className, {
         "gd-gen-ai-chat__window__header__icon--disabled": disabled,
@@ -41,4 +41,4 @@ export const HeaderIcon: React.FC<HeaderIconProps> = ({ className, tooltip, Icon
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

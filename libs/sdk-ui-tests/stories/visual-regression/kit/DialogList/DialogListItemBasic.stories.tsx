@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { BackstopConfig } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -8,12 +8,11 @@ import { DialogListItemBasic, Icon } from "@gooddata/sdk-ui-kit";
 import { action } from "storybook/actions";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
-    const { children } = props;
+function Wrapper({ children }: { children?: ReactNode }) {
     return <div style={{ width: 350, height: 60, margin: "30 0" }}>{children}</div>;
-};
+}
 
-const DialogListItemBasicExamples: React.VFC = () => {
+export function DialogListItemBasicExamples() {
     const onClick = action("onClick");
     const onDelete = action("onDelete");
     const theme = useTheme();
@@ -170,7 +169,7 @@ const DialogListItemBasicExamples: React.VFC = () => {
             </div>
         </>
     );
-};
+}
 
 const testItemSelector = ".s-dialog-list-item-basic";
 

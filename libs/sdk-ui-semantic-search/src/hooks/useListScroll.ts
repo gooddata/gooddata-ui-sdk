@@ -1,6 +1,5 @@
 // (C) 2025 GoodData Corporation
-import * as React from "react";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 
 /*
  * This is the timeout used to wait for the list to change state
@@ -10,8 +9,8 @@ import { useLayoutEffect } from "react";
 const timeout = 30;
 
 export function useListScroll<T>(selected: T, direction?: -1 | 0 | 1) {
-    const [scrollTo, setScrollTo] = React.useState<T | undefined>(undefined);
-    const [scrollDirection, setScrollDirection] = React.useState<-1 | 1>(1);
+    const [scrollTo, setScrollTo] = useState<T | undefined>(undefined);
+    const [scrollDirection, setScrollDirection] = useState<-1 | 1>(1);
 
     useLayoutEffect(() => {
         const tm = setTimeout(() => {

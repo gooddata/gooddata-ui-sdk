@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useContext, useMemo } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import { Messages, ToastMessageContext } from "@gooddata/sdk-ui-kit";
 import { useDrillValidationMessages } from "./useDrillValidationMessages.js";
 import { useFilterContextValidationMessages } from "./useFilterContextValidationMessages.js";
@@ -7,7 +7,7 @@ import { useFilterContextValidationMessages } from "./useFilterContextValidation
 /**
  * @internal
  */
-export const ToastMessages: React.FC = () => {
+export function ToastMessages() {
     const { messages: toastMessages, removeMessage: removeToastMessage } = useContext(ToastMessageContext);
     const { messages: drillValidationMessages, removeMessage: removeDrillValidationMessage } =
         useDrillValidationMessages();
@@ -33,4 +33,4 @@ export const ToastMessages: React.FC = () => {
         return <Messages messages={messages} onMessageClose={removeMessage} />;
     }
     return null;
-};
+}

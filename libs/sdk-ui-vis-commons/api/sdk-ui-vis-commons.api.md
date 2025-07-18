@@ -4,6 +4,7 @@
 
 ```ts
 
+import { ComponentType } from 'react';
 import { ContentRect } from 'react-measure';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { IColor } from '@gooddata/sdk-model';
@@ -15,7 +16,11 @@ import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IMappingHeader } from '@gooddata/sdk-ui';
 import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
-import { default as React_2 } from 'react';
+import { JSX } from 'react/jsx-runtime';
+import { NamedExoticComponent } from 'react';
+import { PureComponent } from 'react';
+import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 import { Rect } from 'react-measure';
 
 // @internal (undocumented)
@@ -34,7 +39,7 @@ export function calculateHeadlineHeightFontSize(secondaryItem?: boolean, clientH
 };
 
 // @internal (undocumented)
-export const ColorLegend: React_2.ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading" | "themeStatus">>;
+export const ColorLegend: ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading" | "themeStatus">>;
 
 // @internal (undocumented)
 export abstract class ColorStrategy implements IColorStrategy {
@@ -80,13 +85,13 @@ export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: stri
 export const FLUID_LEGEND_THRESHOLD = 768;
 
 // @internal (undocumented)
-export class FluidLegend extends React_2.PureComponent<IFluidLegendProps> {
+export class FluidLegend extends PureComponent<IFluidLegendProps> {
     // (undocumented)
-    render(): React_2.JSX.Element;
+    render(): JSX.Element;
     // (undocumented)
-    renderPaging: () => React_2.ReactNode;
+    renderPaging: () => ReactNode;
     // (undocumented)
-    renderSeries: (itemWidth: number, visibleItemsCount: number) => React_2.ReactNode;
+    renderSeries: (itemWidth: number, visibleItemsCount: number) => ReactNode;
     // (undocumented)
     state: {
         showAll: boolean;
@@ -135,12 +140,12 @@ export function getRgbStringFromRGB(color: IRgbColorValue): string;
 export function getValidColorPalette(colors?: string[], colorPalette?: IColorPalette): IColorPalette;
 
 // @internal (undocumented)
-export const HeadlinePagination: React_2.FC<IHeadlinePaginationProps>;
+export function HeadlinePagination({ renderSecondaryItem, renderTertiaryItem, accessibilityConfig, }: IHeadlinePaginationProps): JSX.Element;
 
 // @internal (undocumented)
-export class HeatmapLegend extends React_2.PureComponent<IHeatmapLegendProps> {
+export class HeatmapLegend extends PureComponent<IHeatmapLegendProps> {
     // (undocumented)
-    render(): React_2.JSX.Element;
+    render(): JSX.Element;
 }
 
 // @internal (undocumented)
@@ -236,9 +241,9 @@ export interface IHeadlinePaginationProps {
         previousAriaLabel?: string;
     };
     // (undocumented)
-    renderSecondaryItem: () => JSX.Element;
+    renderSecondaryItem: () => ReactElement;
     // (undocumented)
-    renderTertiaryItem: () => JSX.Element;
+    renderTertiaryItem: () => ReactElement;
 }
 
 // @internal (undocumented)
@@ -373,7 +378,7 @@ export interface IPopUpLegendProps {
     // (undocumented)
     containerId: string;
     // (undocumented)
-    customComponent?: JSX.Element | null;
+    customComponent?: ReactElement | null;
     // (undocumented)
     customComponentName?: string;
     // (undocumented)
@@ -430,7 +435,7 @@ export interface IStaticLegendProps {
     // (undocumented)
     containerHeight: number;
     // (undocumented)
-    customComponent?: JSX.Element | null;
+    customComponent?: ReactElement | null;
     // (undocumented)
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     // (undocumented)
@@ -458,7 +463,7 @@ export function isValidMappedColor(colorItem: IColor, colorPalette: IColorPalett
 export type ItemBorderRadiusPredicate = (item: any) => boolean;
 
 // @internal (undocumented)
-export class Legend extends React_2.PureComponent<ILegendProps> {
+export class Legend extends PureComponent<ILegendProps> {
     // (undocumented)
     static defaultProps: {
         responsive: boolean;
@@ -473,13 +478,13 @@ export class Legend extends React_2.PureComponent<ILegendProps> {
     // (undocumented)
     onItemClick: (item: ISeriesItem) => void;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): ReactNode;
     // (undocumented)
-    renderFluid: () => React_2.ReactNode;
+    renderFluid: () => ReactNode;
     // (undocumented)
-    renderPopUpLegend: () => React_2.ReactNode;
+    renderPopUpLegend: () => ReactNode;
     // (undocumented)
-    renderStatic: () => React_2.ReactNode;
+    renderStatic: () => ReactNode;
 }
 
 // @internal (undocumented)
@@ -494,7 +499,7 @@ export const LegendPosition: {
 export function normalizeColorToRGB(color: string): string;
 
 // @internal (undocumented)
-export const Paging: (props: IPagingProps) => React_2.ReactElement;
+export const Paging: (props: IPagingProps) => ReactElement;
 
 // @internal (undocumented)
 export function parseRGBColorCode(color: string): {
@@ -507,7 +512,7 @@ export function parseRGBColorCode(color: string): {
 export function parseRGBString(color: string): IRgbColorValue | null;
 
 // @internal (undocumented)
-export const PopUpLegend: React_2.FC<IPopUpLegendProps>;
+export function PopUpLegend(props: IPopUpLegendProps): JSX.Element;
 
 // @internal
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
@@ -519,7 +524,7 @@ export const shouldRenderPagination: (enableCompactSize: boolean, width: number,
 export function shouldShowFluid(documentObj: Document): boolean;
 
 // @internal (undocumented)
-export const StaticLegend: React_2.NamedExoticComponent<IStaticLegendProps>;
+export const StaticLegend: NamedExoticComponent<IStaticLegendProps>;
 
 // @internal (undocumented)
 export const SupportedLegendPositions: PositionType[];
