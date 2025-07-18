@@ -1,5 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 
 import { ListMode, WorkspacePermissionSubject } from "../types.js";
@@ -10,7 +9,7 @@ export interface IDataSourceListEmptyProps {
     subjectType: WorkspacePermissionSubject;
 }
 
-export const DataSourceListEmpty: React.FC<IDataSourceListEmptyProps> = ({ mode, subjectType }) => {
+export function DataSourceListEmpty({ mode, subjectType }: IDataSourceListEmptyProps) {
     const intl = useIntl();
     return (
         <div className="gd-share-dialog-grantee-list-empty-selection s-user-management-empty-selection gd-user-management-dialog-list-empty">
@@ -25,4 +24,4 @@ export const DataSourceListEmpty: React.FC<IDataSourceListEmptyProps> = ({ mode,
             </span>
         </div>
     );
-};
+}

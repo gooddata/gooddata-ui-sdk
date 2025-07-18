@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     bucketsItems,
     IInsight,
@@ -8,7 +8,6 @@ import {
     newAttributeSort,
 } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
-import React from "react";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import isEmpty from "lodash/isEmpty.js";

@@ -19,8 +19,8 @@ import { ISeparators } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
+import { JSX } from 'react/jsx-runtime';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
-import { default as React_2 } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { TotalsOrPlaceholders } from '@gooddata/sdk-ui';
 import { TotalType } from '@gooddata/sdk-model';
@@ -42,7 +42,7 @@ export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
 export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | ISliceMeasureColumnWidthItem | IMixedValuesColumnWidthItem | IAllMeasureColumnWidthItem | IWeakMeasureColumnWidthItem;
 
 // @internal (undocumented)
-export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
+export function CorePivotTable(props: ICorePivotTableProps): JSX.Element;
 
 // @public (undocumented)
 export type DefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
@@ -295,7 +295,7 @@ export function newWidthForAttributeColumn(attributeOrId: IAttribute | string, w
 export function newWidthForSelectedColumns(measureOrId: IMeasure | string, locators: (IAttributeColumnLocator | ITotalColumnLocator)[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
 
 // @public
-export const PivotTable: (props: IPivotTableProps) => React_2.JSX.Element;
+export const PivotTable: (props: IPivotTableProps) => JSX.Element;
 
 // @public
 export function pivotTableMenuForCapabilities(capabilities: IBackendCapabilities, desiredMenu?: IMenu): IMenu;

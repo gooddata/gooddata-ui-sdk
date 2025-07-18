@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { useCallback, useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 import cx from "classnames";
 import { IAutomationMetadataObject, isInsightWidget } from "@gooddata/sdk-model";
@@ -57,20 +57,18 @@ const labelMessages = defineMessages({
 
 const { b, e } = bemFactory("gd-alerts-list-item");
 
-export const Alert: React.FC<IAlertProps> = (props) => {
+export function Alert({
+    alert,
+    onDelete,
+    onEdit,
+    onTogglePause,
+    focusedAction,
+    isDropdownOpen,
+    onToggleDropdown,
+    listId,
+    isSubtitleVisible,
+}: IAlertProps) {
     const theme = useTheme();
-
-    const {
-        alert,
-        onDelete,
-        onEdit,
-        onTogglePause,
-        focusedAction,
-        isDropdownOpen,
-        onToggleDropdown,
-        listId,
-        isSubtitleVisible,
-    } = props;
 
     const intl = useIntl();
     const { formatMessage } = intl;
@@ -99,7 +97,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const canEdit =
         canManageWorkspace || (currentUser && alert.createdBy && currentUser.login === alert.createdBy.login);
 
-    const items = React.useMemo<IUiListboxItem<IDropdownAction>[]>(() => {
+    const items = useMemo<IUiListboxItem<IDropdownAction>[]>(() => {
         const deleteItem = {
             type: "interactive" as const,
             id: "delete",
@@ -127,7 +125,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
             : [deleteItem];
     }, [canEdit, formatMessage, isPaused]);
 
-    const handleAction = React.useCallback(
+    const handleAction = useCallback(
         (item: (typeof items)[number]) => {
             if (item.type !== "interactive") {
                 return;
@@ -227,4 +225,4 @@ export const Alert: React.FC<IAlertProps> = (props) => {
             />
         </div>
     );
-};
+}

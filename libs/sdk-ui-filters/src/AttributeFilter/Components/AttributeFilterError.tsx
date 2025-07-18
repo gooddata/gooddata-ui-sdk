@@ -1,5 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
@@ -33,10 +32,7 @@ export interface IAttributeFilterErrorProps {
  * It does not distinguish different errors, instead it renders a generic error message.
  * @beta
  */
-export const AttributeFilterError: React.VFC<IAttributeFilterErrorProps> = (
-    props: IAttributeFilterErrorProps,
-) => {
-    const { isOpen, isDraggable } = props;
+export function AttributeFilterError({ isOpen, isDraggable }: IAttributeFilterErrorProps) {
     return (
         <div
             className={cx(
@@ -52,4 +48,4 @@ export const AttributeFilterError: React.VFC<IAttributeFilterErrorProps> = (
             <FormattedMessage id="gs.filter.error" />
         </div>
     );
-};
+}

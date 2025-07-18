@@ -1,9 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import noop from "lodash/noop.js";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 
 import { ISaveAsDialogRendererOwnProps, SaveAsDialogRenderer } from "../SaveAsDialogRenderer.js";
 

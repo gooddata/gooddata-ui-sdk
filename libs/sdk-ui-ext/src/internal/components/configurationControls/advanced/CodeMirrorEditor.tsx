@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { EditorView, ViewUpdate, keymap } from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
 import { yaml } from "@codemirror/lang-yaml";
@@ -31,9 +31,9 @@ function yamlValidator(view: EditorView): Diagnostic[] {
     return errors;
 }
 
-export const CodeMirrorEditor: React.FC<ICodeMirrorEditorProps> = ({ value, onChange }) => {
+export function CodeMirrorEditor({ value, onChange }: ICodeMirrorEditorProps) {
     const editorRef = useRef<HTMLDivElement>(null);
-    const viewRef = useRef<EditorView>();
+    const viewRef = useRef<EditorView | null>(null);
 
     useEffect(() => {
         if (!editorRef.current) {
@@ -82,4 +82,4 @@ export const CodeMirrorEditor: React.FC<ICodeMirrorEditorProps> = ({ value, onCh
     }, [value]);
 
     return <div className="gd-advanced-customization-dialog__theme" ref={editorRef} />;
-};
+}

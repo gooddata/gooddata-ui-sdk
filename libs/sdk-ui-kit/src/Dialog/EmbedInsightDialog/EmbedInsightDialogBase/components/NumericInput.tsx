@@ -1,6 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
 import { FormattedMessage } from "react-intl";
@@ -28,8 +28,7 @@ export interface INumericInputProps {
 /**
  * @internal
  */
-export const NumericInput: React.FC<INumericInputProps> = (props) => {
-    const { value, onValueChanged } = props;
+export function NumericInput({ value, onValueChanged }: INumericInputProps) {
     const [validPressedButton, setValidPressedButton] = useState(true);
     const [anchorId] = useState<string>(`numeric-input-id-${v4()}`);
 
@@ -40,7 +39,7 @@ export const NumericInput: React.FC<INumericInputProps> = (props) => {
     }, [validPressedButton]);
 
     const handleHeightInputChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             const val = e.target.value.replace(/,/, ".");
             if (val.match(VALID_INPUT)) {
                 onValueChanged(val);
@@ -51,7 +50,7 @@ export const NumericInput: React.FC<INumericInputProps> = (props) => {
         [onValueChanged],
     );
 
-    const correctKeyPressed = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const correctKeyPressed = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/,/, ".");
         setValidPressedButton(
             (value.match(VALID_INPUT) || isEmpty(value)) && value.split(".").length <= 2 ? true : false,
@@ -59,7 +58,7 @@ export const NumericInput: React.FC<INumericInputProps> = (props) => {
     }, []);
 
     const onChanged = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             correctKeyPressed(e);
             handleHeightInputChange(e);
         },
@@ -100,4 +99,4 @@ export const NumericInput: React.FC<INumericInputProps> = (props) => {
             )}
         </label>
     );
-};
+}

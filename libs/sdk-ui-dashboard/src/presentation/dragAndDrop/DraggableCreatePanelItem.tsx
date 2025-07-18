@@ -1,5 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { CustomCreatePanelItemComponent } from "../componentDefinition/index.js";
 import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "./types.js";
 
@@ -18,7 +17,7 @@ export type IDraggableCreatePanelItemProps = {
 /**
  * @internal
  */
-export const DraggableCreatePanelItem: React.FC<IDraggableCreatePanelItemProps> = (props) => {
+export function DraggableCreatePanelItem(props: IDraggableCreatePanelItemProps) {
     const { Component, disabled } = props;
     const WrapCreatePanelItemWithDragComponent = props.WrapCreatePanelItemWithDragComponent!;
 
@@ -27,4 +26,4 @@ export const DraggableCreatePanelItem: React.FC<IDraggableCreatePanelItemProps> 
             <Component disabled={disabled} />
         </WrapCreatePanelItemWithDragComponent>
     );
-};
+}

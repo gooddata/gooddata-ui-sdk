@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { ReactNode } from "react";
 import isFunction from "lodash/isFunction.js";
 
 import { ISubMenuProps } from "./SubMenu.js";
@@ -14,7 +14,7 @@ export interface IMenuProps extends ISubMenuProps {
     closeOnScroll?: boolean;
     portalTarget?: Element;
     togglerWrapperClassName?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 const DEFAULT_ALIGNMENT: MenuAlignment = ["bottom", "right"];
@@ -22,7 +22,7 @@ const DEFAULT_ALIGNMENT: MenuAlignment = ["bottom", "right"];
 /**
  * @internal
  */
-export const Menu: React.FC<IMenuProps> = ({
+export function Menu({
     alignment = DEFAULT_ALIGNMENT,
     children,
     closeOnScroll = false,
@@ -35,31 +35,33 @@ export const Menu: React.FC<IMenuProps> = ({
     spacing,
     toggler,
     togglerWrapperClassName,
-}: IMenuProps) => (
-    <MenuState opened={opened} defaultOpened={defaultOpened} onOpenedChange={onOpenedChange}>
-        {(controlledProps) => (
-            <ControlledMenu
-                opened={controlledProps.opened}
-                onOpenedChange={controlledProps.onOpenedChange}
-                openAction={openAction}
-                alignment={alignment}
-                spacing={spacing}
-                offset={offset}
-                toggler={toggler}
-                togglerWrapperClassName={togglerWrapperClassName}
-                portalTarget={portalTarget}
-                closeOnScroll={closeOnScroll}
-            >
-                {isFunction(children)
-                    ? children({
-                          closeMenu: () =>
-                              controlledProps.onOpenedChange({
-                                  opened: false,
-                                  source: "CLOSE_MENU_RENDER_PROP",
-                              }),
-                      })
-                    : children}
-            </ControlledMenu>
-        )}
-    </MenuState>
-);
+}: IMenuProps) {
+    return (
+        <MenuState opened={opened} defaultOpened={defaultOpened} onOpenedChange={onOpenedChange}>
+            {(controlledProps) => (
+                <ControlledMenu
+                    opened={controlledProps.opened}
+                    onOpenedChange={controlledProps.onOpenedChange}
+                    openAction={openAction}
+                    alignment={alignment}
+                    spacing={spacing}
+                    offset={offset}
+                    toggler={toggler}
+                    togglerWrapperClassName={togglerWrapperClassName}
+                    portalTarget={portalTarget}
+                    closeOnScroll={closeOnScroll}
+                >
+                    {isFunction(children)
+                        ? children({
+                              closeMenu: () =>
+                                  controlledProps.onOpenedChange({
+                                      opened: false,
+                                      source: "CLOSE_MENU_RENDER_PROP",
+                                  }),
+                          })
+                        : children}
+                </ControlledMenu>
+            )}
+        </MenuState>
+    );
+}

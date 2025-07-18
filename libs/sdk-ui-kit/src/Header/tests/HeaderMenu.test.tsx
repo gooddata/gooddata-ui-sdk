@@ -1,8 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { ITranslations, withIntlForTest } from "@gooddata/sdk-ui";
+import { userEvent } from "@testing-library/user-event";
+import { ITranslations } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 
 import { HeaderMenu } from "../HeaderMenu.js";
@@ -22,11 +21,11 @@ const mockTranslation: ITranslations = {
     logout: "Logout",
 };
 
-const Wrapped = withIntlForTest(HeaderMenu, "en-US", mockTranslation);
+// const Wrapped = withIntlForTest(HeaderMenu, "en-US", mockTranslation); // TODO: MARTIN FIX THE injectIntl Components
 
 describe("ReactHeaderMenu", () => {
     it("should render menu items", () => {
-        render(<Wrapped sections={sections} />);
+        render(<HeaderMenu sections={sections} />);
 
         expect(screen.getByText(mockTranslation.account)).toBeInTheDocument();
         expect(screen.getByText(mockTranslation.dic)).toBeInTheDocument();
@@ -40,7 +39,7 @@ describe("ReactHeaderMenu", () => {
 
     it("should call click handler on menu item", async () => {
         const clickSpy = vi.fn();
-        render(<Wrapped sections={sections} onMenuItemClick={clickSpy} />);
+        render(<HeaderMenu sections={sections} onMenuItemClick={clickSpy} />);
 
         await userEvent.click(screen.getByText(mockTranslation.dic));
 

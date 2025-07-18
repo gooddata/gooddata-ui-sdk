@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React, { PureComponent, Fragment, ReactNode } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { PureComponent, Fragment, ReactNode } from "react";
 import { ColorFormats } from "tinycolor2";
 
 import { getHslFromHexColor, getHexFromHslColor, isHexColorValid } from "../utils.js";

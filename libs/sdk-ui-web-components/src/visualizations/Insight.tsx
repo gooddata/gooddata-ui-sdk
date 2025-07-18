@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { ComponentProps } from "react";
 import { invariant } from "ts-invariant";
 
 import {
@@ -31,7 +31,7 @@ export class Insight extends CustomElementAdapter<IInsightView> {
         invariant(insight, '"insight" is a mandatory attribute and it cannot be empty');
 
         // Collect the rest of the props
-        const extraProps: Partial<React.ComponentProps<typeof Component>> = { config: {} };
+        const extraProps: Partial<ComponentProps<typeof Component>> = { config: {} };
 
         if (this.hasAttribute("locale")) {
             extraProps.locale = resolveLocale(this.getAttribute("locale"));

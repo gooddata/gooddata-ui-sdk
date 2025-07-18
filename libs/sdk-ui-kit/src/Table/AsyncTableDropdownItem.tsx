@@ -1,6 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
 import { e } from "./asyncTableBem.js";
 import { IAsyncTableDropdownItemProps } from "./types.js";
 

@@ -1,24 +1,24 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { MouseEvent } from "react";
 import { Item } from "@gooddata/sdk-ui-kit";
 
 interface IVisualizationListMenuItemProps {
     className: string;
     text: string;
     disabled?: boolean;
-    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+    onClick?: (e: MouseEvent<Element>) => void;
 }
 
-export const VisualizationListMenuItem: React.FC<IVisualizationListMenuItemProps> = ({
+export function VisualizationListMenuItem({
     className,
     disabled,
     text,
     onClick,
-}) => {
+}: IVisualizationListMenuItemProps) {
     return (
         <Item onClick={onClick} className={className} disabled={disabled}>
             {text}
         </Item>
     );
-};
+}

@@ -1,18 +1,17 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { action } from "storybook/actions";
 import { DialogList } from "@gooddata/sdk-ui-kit";
 import { itemsMock as items } from "./itemsMock.js";
 
-const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
-    const { children } = props;
+function Wrapper({ children }: { children?: ReactNode }) {
     return <div style={{ width: 350, maxHeight: 250, margin: "30 0", display: "flex" }}>{children}</div>;
-};
+}
 
-const DialogListExamples: React.VFC = () => {
+export function DialogListExamples() {
     const onItemClick = action("onItemClick");
     const onItemDelete = action("onItemDelete");
     const emptyMessageElement = (
@@ -55,9 +54,9 @@ const DialogListExamples: React.VFC = () => {
             </div>
         </>
     );
-};
+}
 
-const DialogListLoadingExample: React.FC = () => {
+function DialogListLoadingExample() {
     return (
         <div className="library-component">
             <div className="screenshot-target">
@@ -68,7 +67,7 @@ const DialogListLoadingExample: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/DialogList/DialogList",

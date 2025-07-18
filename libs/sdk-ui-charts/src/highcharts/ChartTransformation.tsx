@@ -2,7 +2,7 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
-import React, { useEffect } from "react";
+import { memo, ReactElement, useEffect } from "react";
 import { ContentRect } from "react-measure";
 
 import {
@@ -29,7 +29,7 @@ import isEqual from "lodash/isEqual.js";
 import isFunction from "lodash/isFunction.js";
 import omitBy from "lodash/omitBy.js";
 import { IChartOptions } from "./typings/unsafe.js";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 import {
     getDataTooLargeErrorMessage,
@@ -40,7 +40,7 @@ import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
 import Highcharts from "highcharts/esm/highcharts.js";
 
-export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
+export function renderHighCharts(props: IHighChartsRendererProps): ReactElement {
     const childrenRenderer = (contentRect: ContentRect) => (
         <HighChartsRenderer contentRect={contentRect} {...props} />
     );
@@ -51,7 +51,7 @@ export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
 /**
  * @internal
  */
-export interface IChartTransformationProps extends WrappedComponentProps {
+export interface IChartTransformationProps {
     height: number;
     width: number;
     config: IChartConfig;
@@ -70,10 +70,10 @@ export interface IChartTransformationProps extends WrappedComponentProps {
     numericSymbols?: string[];
     theme?: ITheme;
     pushData?(data: any): void;
-    renderer?(arg: IHighChartsRendererProps): JSX.Element;
+    renderer?(arg: IHighChartsRendererProps): ReactElement;
 }
 
-const ChartTransformationImpl = (props: IChartTransformationProps) => {
+function ChartTransformationImpl(props: IChartTransformationProps) {
     const {
         config,
         renderer = renderHighCharts,
@@ -84,7 +84,6 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         onDrill = (): boolean => true,
         onLegendReady = noop,
         locale,
-        intl,
         theme,
         numericSymbols,
         drillableItems = [],
@@ -92,6 +91,9 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         onNegativeValues = null,
         pushData = noop,
     } = props;
+
+    const intl = useIntl();
+
     const visType = config.type;
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
     const chartOptions: IChartOptions = getChartOptions(
@@ -184,12 +186,12 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         theme,
         config,
     });
-};
+}
 
 /**
  * @internal
  */
-const ChartTransformationWithInjectedProps = injectIntl(withTheme(ChartTransformationImpl));
-export const ChartTransformation = React.memo(ChartTransformationWithInjectedProps, (props, nextProps) => {
+const ChartTransformationWithInjectedProps = withTheme(ChartTransformationImpl);
+export const ChartTransformation = memo(ChartTransformationWithInjectedProps, (props, nextProps) => {
     return isEqual(omitBy(props, isFunction), omitBy(nextProps, isFunction));
 });

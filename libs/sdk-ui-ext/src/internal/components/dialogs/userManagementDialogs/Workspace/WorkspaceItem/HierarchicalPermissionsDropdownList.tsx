@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { ItemsWrapper, IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { HierarchicalPermissionDropdownItem } from "./HierarchicalPermissionDropdownItem.js";
@@ -21,13 +21,13 @@ interface IGranularPermissionsDropdownBodyProps {
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
-export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyProps> = ({
+export function PermissionsDropdownList({
     alignTo,
     isShowDropdown,
     selectedPermission,
     toggleDropdown,
     onSelect,
-}) => {
+}: IGranularPermissionsDropdownBodyProps) {
     const handleOnSelect = useCallback(
         (hierarchical: boolean) => {
             onSelect(hierarchical);
@@ -69,4 +69,4 @@ export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyP
             </ItemsWrapper>
         </Overlay>
     );
-};
+}

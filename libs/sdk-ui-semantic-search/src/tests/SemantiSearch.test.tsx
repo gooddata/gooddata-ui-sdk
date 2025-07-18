@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import React from "react";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { render, fireEvent, act } from "@testing-library/react";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -32,7 +32,7 @@ describe("SemanticSearch component", () => {
             <SemanticSearch backend={backend} workspace="test" onSelect={callback} />,
         );
 
-        const input = baseElement.querySelector("input");
+        const input = baseElement.querySelector("input")!;
         expect(input).not.toBe(null);
         fireEvent.focus(input);
         fireEvent.input(input, { target: { value: "test" } });
@@ -63,7 +63,7 @@ describe("SemanticSearch component", () => {
     it("should let user select item by clicking on it", async () => {
         const { baseElement, callback } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
-        const firstItem = baseElement.querySelector(".gd-semantic-search__results-item__content");
+        const firstItem = baseElement.querySelector(".gd-semantic-search__results-item__content")!;
         fireEvent.click(firstItem);
 
         expect(callback).toHaveBeenCalledOnce();
@@ -72,7 +72,7 @@ describe("SemanticSearch component", () => {
     it("should auto-select first result", async () => {
         const { baseElement } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
-        const firstItem = baseElement.querySelector(".gd-semantic-search__results-item");
+        const firstItem = baseElement.querySelector(".gd-semantic-search__results-item")!;
         expect(firstItem.className).to.include("gd-semantic-search__results-item--active");
     });
 

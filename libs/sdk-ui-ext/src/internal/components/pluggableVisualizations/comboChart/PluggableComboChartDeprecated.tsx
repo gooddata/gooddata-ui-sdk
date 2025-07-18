@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import React from "react";
+import { ReactNode } from "react";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig.js";
@@ -101,7 +101,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

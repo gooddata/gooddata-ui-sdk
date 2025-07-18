@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     ItemsWrapper,
     Separator,

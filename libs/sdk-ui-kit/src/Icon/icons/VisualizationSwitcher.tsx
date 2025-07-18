@@ -1,12 +1,11 @@
-// (C) 2024 GoodData Corporation
-import React from "react";
+// (C) 2024-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const VisualizationSwitcher: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function VisualizationSwitcher({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={className}
@@ -24,4 +23,4 @@ export const VisualizationSwitcher: React.FC<IIconProps> = ({ color, className, 
             />
         </svg>
     );
-};
+}

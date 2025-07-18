@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useMemo, useCallback } from "react";
+import { ReactNode, useMemo, useCallback, MutableRefObject } from "react";
 import {
     Button,
     UiMenu,
@@ -78,13 +78,13 @@ export const CustomInteractiveItem = ({
     item,
     isFocused,
     onSelect,
-}: IUiMenuInteractiveItemProps<IAttributeMenuData>): React.ReactNode => {
+}: IUiMenuInteractiveItemProps<IAttributeMenuData>): ReactNode => {
     return (
         <DefaultUiMenuInteractiveItem item={item} isFocused={isFocused} onSelect={onSelect} size="small" />
     );
 };
 
-const CustomStaticItem = ({ item: _item }: IUiMenuStaticItemProps<IAttributeMenuData>): React.ReactNode => {
+const CustomStaticItem = ({ item: _item }: IUiMenuStaticItemProps<IAttributeMenuData>): ReactNode => {
     return <div className="gd-alert-attribute-select__dropdown-separator" />;
 };
 
@@ -259,7 +259,7 @@ export const AlertAttributeSelect = ({
                                 isExpanded: isOpen,
                                 ariaLabel: accessibilityAriaLabel,
                             }}
-                            ref={buttonRef as React.MutableRefObject<HTMLButtonElement>}
+                            ref={buttonRef as MutableRefObject<HTMLButtonElement>}
                         >
                             {selectedAttribute ? (
                                 <span>

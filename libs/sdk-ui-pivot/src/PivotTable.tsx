@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { Component } from "react";
 import { CorePivotTableAgImpl } from "./CorePivotTable.js";
 import {
     bucketAttributes,
@@ -117,7 +117,7 @@ const validateConfig = (props: IPivotTableProps): IPivotTableConfig => {
     return config;
 };
 
-class RenderPivotTable extends React.Component<IPivotTableProps> {
+class RenderPivotTable extends Component<IPivotTableProps> {
     public render() {
         const { exportTitle, backend, workspace, config = {} } = this.props;
 

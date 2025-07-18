@@ -1,5 +1,5 @@
-// (C) 2024 GoodData Corporation
-import React from "react";
+// (C) 2024-2025 GoodData Corporation
+import { CSSProperties } from "react";
 
 /**
  * @internal
@@ -76,7 +76,7 @@ export function SeparatorLine({
     p = 0,
     height = 1,
 }: ISeparatorLineProps) {
-    const wrapperStyle: React.CSSProperties = {
+    const wrapperStyle: CSSProperties = {
         margin: m,
         padding: p,
         marginTop: marginTop,
@@ -89,7 +89,7 @@ export function SeparatorLine({
         paddingLeft: paddingLeft,
     };
 
-    const lineStyle: React.CSSProperties = {
+    const lineStyle: CSSProperties = {
         height,
     };
 

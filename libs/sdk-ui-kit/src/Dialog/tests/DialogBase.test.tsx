@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { DialogBase } from "../DialogBase.js";
 import { Input } from "../../Form/Input.js";

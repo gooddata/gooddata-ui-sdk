@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { Button } from "@gooddata/sdk-ui-kit";
 
 export interface ICustomConfigureDateFilterDropdownActionsProps {
@@ -10,13 +9,13 @@ export interface ICustomConfigureDateFilterDropdownActionsProps {
     saveText: string;
 }
 
-export const DateFilterConfigurationActions: React.FC<ICustomConfigureDateFilterDropdownActionsProps> = ({
-    isSaveDisabled,
+export function DateFilterConfigurationActions({
     onSaveButtonClick,
     onCancelButtonClick,
+    isSaveDisabled,
     cancelText,
     saveText,
-}) => {
+}: ICustomConfigureDateFilterDropdownActionsProps) {
     return (
         <div className="gd-extended-date-filter-actions">
             <div className="gd-extended-date-filter-actions-left-content" />
@@ -37,4 +36,4 @@ export const DateFilterConfigurationActions: React.FC<ICustomConfigureDateFilter
             </div>
         </div>
     );
-};
+}

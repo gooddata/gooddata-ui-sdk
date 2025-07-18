@@ -1,5 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { render, screen } from "@testing-library/react";
 import { DialogList } from "../DialogList.js";
 import { IDialogListProps } from "../typings.js";

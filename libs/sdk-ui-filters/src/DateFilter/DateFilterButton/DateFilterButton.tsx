@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { useCallback, KeyboardEvent, ReactNode, RefObject } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../shared/index.js";
@@ -9,21 +9,21 @@ import { isActionKey } from "@gooddata/sdk-ui-kit";
  * @alpha
  */
 export interface IDateFilterButtonProps {
-    title: React.ReactNode;
+    title: ReactNode;
     isOpen?: boolean;
     isMobile: boolean;
     disabled?: boolean;
     customIcon?: IFilterButtonCustomIcon;
-    children?: React.ReactNode;
+    children?: ReactNode;
     customFilterName?: string;
-    buttonRef?: React.MutableRefObject<HTMLElement | null>;
+    buttonRef?: RefObject<HTMLElement | null>;
     dropdownId?: string;
     onClick?: () => void;
     textTitle?: string;
     textSubtitle?: string;
 }
 
-export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
+export function DateFilterButton({
     isOpen,
     isMobile,
     title,
@@ -33,9 +33,9 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
     customFilterName,
     buttonRef,
     dropdownId,
-}) => {
+}: IDateFilterButtonProps) {
     const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (isActionKey(e) && disabled) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -46,7 +46,7 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
 
     return (
         <div
-            ref={buttonRef as React.MutableRefObject<HTMLDivElement>}
+            ref={buttonRef as RefObject<HTMLDivElement>}
             className={cx(
                 "s-date-filter-button",
                 "gd-date-filter-button",
@@ -70,4 +70,4 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
             <FilterButtonCustomIcon customIcon={customIcon} disabled={disabled} />
         </div>
     );
-};
+}

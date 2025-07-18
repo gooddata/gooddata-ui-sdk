@@ -1,5 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
 import cx from "classnames";
 

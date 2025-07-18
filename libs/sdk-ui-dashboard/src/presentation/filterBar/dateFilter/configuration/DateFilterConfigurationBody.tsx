@@ -1,5 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
-import React, { useCallback, useState } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useCallback, useState } from "react";
 import { IntlShape } from "react-intl/src/types.js";
 import { IFilterConfigurationProps } from "@gooddata/sdk-ui-filters";
 import { DashboardDateFilterConfigMode, ObjRef } from "@gooddata/sdk-model";
@@ -20,9 +20,13 @@ interface IDateFilterConfigurationProps extends IFilterConfigurationProps {
     defaultDateFilterName: string;
 }
 
-export const DateFilterConfigurationBody: React.FC<IDateFilterConfigurationProps> = (props) => {
-    const { onCancelButtonClick, onSaveButtonClick, intl, dateDataSet, defaultDateFilterName } = props;
-
+export function DateFilterConfigurationBody({
+    onCancelButtonClick,
+    onSaveButtonClick,
+    intl,
+    dateDataSet,
+    defaultDateFilterName,
+}: IDateFilterConfigurationProps) {
     const {
         mode,
         changeConfigMode,
@@ -111,4 +115,4 @@ export const DateFilterConfigurationBody: React.FC<IDateFilterConfigurationProps
             </div>
         </div>
     );
-};
+}

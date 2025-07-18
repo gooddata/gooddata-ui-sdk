@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import cx from "classnames";
 import { IntlWrapper } from "../../localization/index.js";
 import {
@@ -31,16 +31,16 @@ import { WrapCreatePanelItemWithDrag } from "../../dragAndDrop/WrapCreatePanelIt
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
-export const DashboardInner: React.FC<IDashboardProps> = (props) => {
+export function DashboardInner(props: IDashboardProps) {
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
 
-    const headerRef = useRef(null);
-    const layoutRef = useRef(null);
-    const bottomRef = useRef(null);
+    const headerRef = useRef<HTMLDivElement | null>(null);
+    const layoutRef = useRef<HTMLDivElement | null>(null);
+    const bottomRef = useRef<HTMLDivElement | null>(null);
 
     useDashboardDragScroll(layoutRef, headerRef, bottomRef);
     const { initializeAutomations } = useDashboardAutomations();
@@ -108,4 +108,4 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
             </div>
         </IntlWrapper>
     );
-};
+}

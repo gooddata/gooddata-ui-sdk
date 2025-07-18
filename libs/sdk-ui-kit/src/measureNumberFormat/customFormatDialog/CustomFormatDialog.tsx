@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 
@@ -30,10 +30,7 @@ interface ICustomFormatDialogState {
 
 type ICustomFormatDialogProps = ICustomFormatDialogOwnProps & WrappedComponentProps;
 
-export class CustomFormatDialog extends React.PureComponent<
-    ICustomFormatDialogProps,
-    ICustomFormatDialogState
-> {
+export class CustomFormatDialog extends PureComponent<ICustomFormatDialogProps, ICustomFormatDialogState> {
     public static defaultProps: Pick<ICustomFormatDialogProps, "positioning"> = {
         positioning: [
             { snapPoints: { parent: SnapPoint.CenterRight, child: SnapPoint.CenterLeft } },

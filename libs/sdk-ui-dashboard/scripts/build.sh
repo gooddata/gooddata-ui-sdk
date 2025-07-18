@@ -48,7 +48,7 @@ build() {
 
     if [[ $1 != "--genFilesOnly" ]]; then
         styles-build
-        tsc -p tsconfig.json
+        tsc -p tsconfig.build.json
         npm run api-extractor
     fi
 }

@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useState } from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import {
@@ -11,7 +11,7 @@ import {
 import * as Catalog from "../catalog.js";
 import Hint from "../Hint.js";
 
-const Example = () => {
+export default function Example() {
     const [filter1, setFilter1] = useState<IAttributeFilter>(
         newNegativeAttributeFilter(Catalog.CustomerCountry, ["United States"]),
     );
@@ -66,6 +66,4 @@ const Example = () => {
             <Hint hint="Check out the Dependent Attribute Filters at the top" />
         </>
     );
-};
-
-export default Example;
+}

@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { useCallback, useState } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useCallback, useState } from "react";
 import { ICatalogDateDataset, IWidget } from "@gooddata/sdk-model";
 
 import { DateFilterCheckbox } from "./DateFilterCheckbox.js";
@@ -29,19 +29,17 @@ interface IDateDatasetFilterProps {
     onDateDatasetChanged?: (id: string) => void;
 }
 
-export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
-    const {
-        relatedDateDatasets,
-        widget,
-        dateFilterCheckboxDisabled,
-        dateFromVisualization,
-        isDatasetsLoading,
-        shouldPickDateDataset,
-        shouldOpenDateDatasetPicker,
-        onDateDatasetChanged,
-        isLoadingAdditionalData,
-    } = props;
-
+export function DateDatasetFilter({
+    relatedDateDatasets,
+    widget,
+    dateFilterCheckboxDisabled,
+    dateFromVisualization,
+    isDatasetsLoading,
+    shouldPickDateDataset,
+    shouldOpenDateDatasetPicker,
+    onDateDatasetChanged,
+    isLoadingAdditionalData,
+}: IDateDatasetFilterProps) {
     const enableUnrelatedItemsVisibility = useDashboardSelector(selectEnableUnavailableItemsVisibility);
     const catalogDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const selectedDateDataset = widget.dateDataSet && catalogDatasetsMap.get(widget.dateDataSet);
@@ -124,4 +122,4 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
             {!isDropdownLoading && !!duplicatedDateDatasetFilter && <DateDatasetDuplicityWarning />}
         </div>
     );
-};
+}

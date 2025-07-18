@@ -1,6 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IAttributeDisplayFormMetadataObject, ObjRef, AttributeDisplayFormType } from "@gooddata/sdk-model";
-import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
@@ -31,11 +30,11 @@ export interface IAttributeDisplayFormDropDownItemProps {
     selected: boolean;
 }
 
-export const AttributeDisplayFormDropDownItem: React.FC<IAttributeDisplayFormDropDownItemProps> = ({
+export function AttributeDisplayFormDropDownItem({
     displayForm,
     onClick,
     selected,
-}) => {
+}: IAttributeDisplayFormDropDownItemProps) {
     const { title } = displayForm;
 
     const className = cx(
@@ -58,4 +57,4 @@ export const AttributeDisplayFormDropDownItem: React.FC<IAttributeDisplayFormDro
             <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
         </div>
     );
-};
+}

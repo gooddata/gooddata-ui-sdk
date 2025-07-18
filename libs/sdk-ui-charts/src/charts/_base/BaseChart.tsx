@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { Component, ComponentType, ReactElement } from "react";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces/index.js";
 import { getValidColorPalette, ChartTransformation } from "../../highcharts/index.js";
 import noop from "lodash/noop.js";
@@ -34,7 +34,7 @@ export interface IBaseChartProps extends ICoreChartProps {
 
 type Props = IBaseChartProps & ILoadingInjectedProps;
 
-class StatelessBaseChart extends React.Component<Props> {
+class StatelessBaseChart extends Component<Props> {
     public static defaultProps: Pick<
         Partial<Props>,
         keyof typeof defaultCoreChartProps | "onDataTooLarge" | "onLegendReady" | "config"
@@ -53,11 +53,11 @@ class StatelessBaseChart extends React.Component<Props> {
         this.errorMap = newErrorMapping(props.intl);
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const { dataView, error, seType, isLoading } = this.props;
 
-        const ErrorComponent = this.props.ErrorComponent as React.ComponentType<IErrorProps>;
-        const LoadingComponent = this.props.LoadingComponent as React.ComponentType<ILoadingProps>;
+        const ErrorComponent = this.props.ErrorComponent as ComponentType<IErrorProps>;
+        const LoadingComponent = this.props.LoadingComponent as ComponentType<ILoadingProps>;
 
         if (error) {
             const key = Object.prototype.hasOwnProperty.call(this.errorMap, seType)
@@ -78,7 +78,7 @@ class StatelessBaseChart extends React.Component<Props> {
         return this.renderChartTransformation();
     }
 
-    private renderChartTransformation(): JSX.Element {
+    private renderChartTransformation(): ReactElement {
         const {
             afterRender,
             height,

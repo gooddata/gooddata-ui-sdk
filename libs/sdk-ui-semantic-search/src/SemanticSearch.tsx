@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import { useMemo, useEffect, useRef } from "react";
 import { useDebouncedState, Input, Dropdown } from "@gooddata/sdk-ui-kit";
 import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { SearchResultsDropdownList } from "./SearchResultsDropdownList.js";
@@ -76,7 +76,7 @@ const DEBOUNCE = 300;
  * Semantic search component core.
  * @beta
  */
-const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props) => {
+function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
     const {
         backend,
         workspace,
@@ -89,9 +89,10 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
         placeholder,
         renderFooter,
     } = props;
+
     // Input value handling
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
-    const inputRef = React.useRef<Input>(null);
+    const inputRef = useRef<Input>(null);
 
     // Search results
     const { searchStatus, searchResults, searchError } = useSemanticSearch({
@@ -104,7 +105,7 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
     });
 
     // Build list items for rendering
-    const listItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
+    const listItems: ListItem<ISemanticSearchResultItem>[] = useMemo(
         () => searchResults.map((item) => ({ item })),
         [searchResults],
     );
@@ -113,7 +114,7 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
     const [ref, width] = useElementWidth();
 
     // Report errors
-    React.useEffect(() => {
+    useEffect(() => {
         if (onError && searchStatus === "error") {
             onError(searchError);
         }
@@ -201,16 +202,16 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
             }}
         />
     );
-};
+}
 
 /**
  * Semantic search filed with dropdown for selecting items.
  * @beta
  */
-export const SemanticSearch: React.FC<SemanticSearchProps> = ({ locale, ...coreProps }) => {
+export function SemanticSearch({ locale, ...coreProps }: SemanticSearchProps) {
     return (
         <IntlWrapper locale={locale}>
             <SemanticSearchCore {...coreProps} />
         </IntlWrapper>
     );
-};
+}

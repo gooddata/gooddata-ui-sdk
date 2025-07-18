@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { action } from "storybook/actions";
-import React from "react";
 import { InternalIntlWrapper, LabelFormatControl } from "@gooddata/sdk-ui-ext/internal";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";

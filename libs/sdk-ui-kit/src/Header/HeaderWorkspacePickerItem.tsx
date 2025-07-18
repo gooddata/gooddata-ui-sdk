@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
-import { injectIntl, IntlShape } from "react-intl";
+import { MouseEvent } from "react";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 
@@ -9,18 +9,18 @@ export interface IHeaderWorkspacePickerItemProps {
     isDemo?: boolean;
     isSelected?: boolean;
     isLoading?: boolean;
-    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    intl: IntlShape;
+    onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const CoreHeaderWorkspacePickerItem: React.FC<IHeaderWorkspacePickerItemProps> = ({
-    intl,
+export function HeaderWorkspacePickerItem({
     title,
     isLoading,
     isSelected,
     isDemo,
     onClick,
-}) => {
+}: IHeaderWorkspacePickerItemProps) {
+    const intl = useIntl();
+
     const t = intl.formatMessage;
 
     if (isLoading) {
@@ -47,6 +47,4 @@ export const CoreHeaderWorkspacePickerItem: React.FC<IHeaderWorkspacePickerItemP
             ) : null}
         </button>
     );
-};
-
-export const HeaderWorkspacePickerItem = injectIntl(CoreHeaderWorkspacePickerItem);
+}

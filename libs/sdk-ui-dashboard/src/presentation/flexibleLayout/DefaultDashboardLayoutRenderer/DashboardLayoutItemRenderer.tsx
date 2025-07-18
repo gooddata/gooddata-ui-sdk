@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 import cx from "classnames";
-import React from "react";
 
 import { renderModeAware } from "../../componentDefinition/index.js";
 import { isCustomWidgetBase } from "../../../model/index.js";

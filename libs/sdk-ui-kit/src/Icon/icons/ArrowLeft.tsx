@@ -1,19 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const ArrowLeft: React.FC<IIconProps> = ({
-    color = "#6D7680",
-    className,
-    width = 11,
-    height = 19,
-    ariaHidden,
-}) => {
+export function ArrowLeft({ color = "#6D7680", className, width = 11, height = 19, ariaHidden }: IIconProps) {
     return (
         <svg
             className={className}
@@ -30,4 +22,4 @@ export const ArrowLeft: React.FC<IIconProps> = ({
             />
         </svg>
     );
-};
+}

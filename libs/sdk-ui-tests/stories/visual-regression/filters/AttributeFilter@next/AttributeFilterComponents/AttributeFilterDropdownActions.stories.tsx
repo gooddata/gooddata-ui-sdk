@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
@@ -9,7 +8,7 @@ import { AttributeFilterDropdownActions } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
-const AttributeFilterButtonsExamples = (): JSX.Element => {
+function AttributeFilterButtonsExamples() {
     return (
         <IntlWrapper>
             <div style={{ width: 400 }}>
@@ -30,7 +29,7 @@ const AttributeFilterButtonsExamples = (): JSX.Element => {
             </div>
         </IntlWrapper>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterDropdownActions",

@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { ItemsWrapper, Item, Separator, Overlay } from "@gooddata/sdk-ui-kit";
 import { messages } from "@gooddata/sdk-ui";
@@ -14,7 +13,7 @@ interface IAddActionMenuProps {
 
 const ALIGN_POINTS = [{ align: "br tr" }];
 
-const AddActionMenu: React.FC<IAddActionMenuProps> = ({ rowIndex, alignTo, onClose }) => {
+export default function AddActionMenu({ rowIndex, alignTo, onClose }: IAddActionMenuProps) {
     const { formatMessage } = useIntl();
     const { onAddEmptyAttribute } = useAttributeHierarchyDialog();
 
@@ -53,6 +52,4 @@ const AddActionMenu: React.FC<IAddActionMenuProps> = ({ rowIndex, alignTo, onClo
             </ItemsWrapper>
         </Overlay>
     );
-};
-
-export default AddActionMenu;
+}

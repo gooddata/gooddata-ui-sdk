@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { FormattedMessage, defineMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -32,7 +32,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
         return !measures || measures.length < 1 || isError || isLoading;
     }
 
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const { xAxisVisible, gridEnabled, yAxisVisible, clusteringEnabled } = this.getControlProperties();
 
         const { featureFlags, propertiesMeta, properties, pushData, insight, type } = this.props;

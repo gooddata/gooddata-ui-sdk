@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { IColorLegendSize, IHeatmapLegendItem, IColorLegendItem } from "./types.js";
 import { ColorLegend } from "./ColorLegend.js";
 
@@ -18,7 +18,7 @@ export interface IHeatmapLegendProps {
 /**
  * @internal
  */
-export class HeatmapLegend extends React.PureComponent<IHeatmapLegendProps> {
+export class HeatmapLegend extends PureComponent<IHeatmapLegendProps> {
     public render() {
         const { title, series, format, numericSymbols, size, position } = this.props;
         const data = series.map((item: IHeatmapLegendItem): IColorLegendItem => {

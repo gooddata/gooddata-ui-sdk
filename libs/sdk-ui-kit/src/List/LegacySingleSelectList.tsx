@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React, { Component } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { Component, ElementType, ReactElement } from "react";
 import pick from "lodash/pick.js";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -19,7 +19,7 @@ export interface ILegacySingleSelectListProps<T> {
     itemHeight: number;
     items?: T[];
     itemsCount?: number;
-    listItemClass?: React.ElementType;
+    listItemClass?: ElementType;
     onItemMouseOut?: () => void;
     onItemMouseOver?: () => void;
     onItemMouseEnter?: (id: string) => void;
@@ -28,7 +28,7 @@ export interface ILegacySingleSelectListProps<T> {
     onScrollStart?: () => void;
     onSelect?: (item: T) => void;
     scrollToSelected?: boolean;
-    rowItem?: React.ReactElement;
+    rowItem?: ReactElement;
     selection?: T;
     width: number;
 }
@@ -51,7 +51,7 @@ export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectList
         onRangeChange: noop,
         onScrollStart: noop,
         onSelect: noop,
-        rowItem: null as React.ReactElement,
+        rowItem: null as ReactElement,
         scrollToSelected: false,
         selection: {},
     };
@@ -90,7 +90,7 @@ export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectList
         };
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const rowItem = this.getRowItem();
         const dataSource = this.getDataSource();
 

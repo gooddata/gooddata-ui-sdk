@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { isInsightWidget, objRefToString } from "@gooddata/sdk-model";
 import { ScrollablePanel, OverlayControllerProvider, OverlayController } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
@@ -15,11 +14,7 @@ import { AlertDeleteDialog } from "../../../alerting/DefaultAlertingDialog/compo
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
-export const InsightAlertsOld: React.FC<IInsightMenuSubmenuComponentProps> = ({
-    widget,
-    onClose,
-    onGoBack,
-}) => {
+export function InsightAlertsOld({ widget, onClose, onGoBack }: IInsightMenuSubmenuComponentProps) {
     const widgetRefSuffix = isInsightWidget(widget)
         ? stringUtils.simplifyText(objRefToString(widget.ref))
         : "";
@@ -155,4 +150,4 @@ export const InsightAlertsOld: React.FC<IInsightMenuSubmenuComponentProps> = ({
             </OverlayControllerProvider>
         </ScrollablePanel>
     );
-};
+}

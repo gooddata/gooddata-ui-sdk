@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode, useCallback } from "react";
 import { e } from "../../menuBem.js";
 import { ShortenedText } from "../../../../ShortenedText/index.js";
 import {
@@ -16,7 +16,7 @@ import cx from "classnames";
  */
 export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>({
     item,
-}: IUiMenuInteractiveItemWrapperProps<T>): React.ReactNode {
+}: IUiMenuInteractiveItemWrapperProps<T>): ReactNode {
     const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
     const selector = createSelector((ctx) => ({
         onSelect: ctx.onSelect,
@@ -50,14 +50,14 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
         scrollToView(element);
     };
 
-    const handleMouseFocus = React.useCallback(() => {
+    const handleMouseFocus = useCallback(() => {
         if (controlType !== "mouse") {
             return;
         }
         setFocusedId(item.id);
     }, [controlType, item.id, setFocusedId]);
 
-    const handleSelect = React.useCallback(() => {
+    const handleSelect = useCallback(() => {
         if (item.isDisabled) {
             return;
         }
@@ -100,7 +100,7 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
     isFocused,
     onSelect,
     size = "medium",
-}: IUiMenuInteractiveItemProps<T>): React.ReactNode {
+}: IUiMenuInteractiveItemProps<T>): ReactNode {
     return (
         <div
             className={e("item", {

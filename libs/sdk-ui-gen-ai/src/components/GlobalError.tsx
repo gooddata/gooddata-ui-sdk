@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode, useState } from "react";
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ErrorComponent } from "@gooddata/sdk-ui";
@@ -11,10 +11,10 @@ type GlobalErrorProps = {
     errorDetails?: string;
     clearing?: boolean;
     clearError?: () => void;
-    buttonsBefore?: React.ReactNode;
+    buttonsBefore?: ReactNode;
 };
 
-const GlobalErrorComponent: React.FC<GlobalErrorProps & WrappedComponentProps> = ({
+function GlobalErrorComponent({
     errorMessage,
     errorDescription,
     errorDetails,
@@ -22,8 +22,8 @@ const GlobalErrorComponent: React.FC<GlobalErrorProps & WrappedComponentProps> =
     clearing,
     clearError,
     intl,
-}) => {
-    const [showMore, setShowMore] = React.useState(false);
+}: GlobalErrorProps & WrappedComponentProps) {
+    const [showMore, setShowMore] = useState(false);
     const hasShowMoreButton = Boolean(errorDetails && !showMore);
 
     return (
@@ -62,6 +62,6 @@ const GlobalErrorComponent: React.FC<GlobalErrorProps & WrappedComponentProps> =
             ) : null}
         </div>
     );
-};
+}
 
 export const GlobalError = injectIntl(GlobalErrorComponent);

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { KeyboardEvent, useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { WeekStart } from "@gooddata/sdk-model";
@@ -46,7 +46,7 @@ export interface IRecurrenceFormProps {
     isWhiteLabeled?: boolean;
     onRecurrenceDropdownOpen?: () => void;
     closeDropdownsOnParentScroll?: boolean;
-    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+    onKeyDownSubmit?: (e: KeyboardEvent) => void;
     customRecurrenceTypeMappingFn?: (
         date?: Date | null,
         cronExpression?: string,
@@ -56,31 +56,30 @@ export interface IRecurrenceFormProps {
     ) => RecurrenceType;
 }
 
-const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
-    const {
-        startDate = null,
-        cronExpression = "",
-        cronDescription = "",
-        placeholder,
-        onChange,
-        locale = DEFAULT_LOCALE,
-        dateFormat = DEFAULT_DATE_FORMAT,
-        timeFormat = DEFAULT_TIME_FORMAT,
-        weekStart = DEFAULT_WEEK_START,
-        timezone,
-        startLabel,
-        repeatLabel,
-        className,
-        allowHourlyRecurrence = true,
-        showRepeatTypeDescription,
-        showTimezoneInOccurrence,
-        showInheritValue,
-        isWhiteLabeled,
-        onRecurrenceDropdownOpen,
-        closeDropdownsOnParentScroll,
-        onKeyDownSubmit,
-        customRecurrenceTypeMappingFn,
-    } = props;
+function RecurrenceFormCore({
+    startDate = null,
+    cronExpression = "",
+    cronDescription = "",
+    placeholder,
+    onChange,
+    locale = DEFAULT_LOCALE,
+    dateFormat = DEFAULT_DATE_FORMAT,
+    timeFormat = DEFAULT_TIME_FORMAT,
+    weekStart = DEFAULT_WEEK_START,
+    timezone,
+    startLabel,
+    repeatLabel,
+    className,
+    allowHourlyRecurrence = true,
+    showRepeatTypeDescription,
+    showTimezoneInOccurrence,
+    showInheritValue,
+    isWhiteLabeled,
+    onRecurrenceDropdownOpen,
+    closeDropdownsOnParentScroll,
+    onKeyDownSubmit,
+    customRecurrenceTypeMappingFn,
+}: IRecurrenceFormProps) {
     const intl = useIntl();
     const mapRecurrenceType = customRecurrenceTypeMappingFn ?? transformCronExpressionToRecurrenceType;
 
@@ -167,13 +166,15 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
             />
         </div>
     );
-};
+}
 
 /**
  * @internal
  */
-export const RecurrenceForm: React.FC<IRecurrenceFormProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <RecurrenceFormCore {...props} />
-    </IntlWrapper>
-);
+export function RecurrenceForm(props: IRecurrenceFormProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <RecurrenceFormCore {...props} />
+        </IntlWrapper>
+    );
+}

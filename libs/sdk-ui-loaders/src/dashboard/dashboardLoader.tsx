@@ -18,7 +18,7 @@ import {
 import { idRef, isDashboard, ObjRef } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
-import React from "react";
+import { ComponentType } from "react";
 import {
     noopDashboardPluginLoader,
     staticDashboardEngineLoader,
@@ -431,9 +431,9 @@ async function initializeLoadedPlugins(
 }
 
 function clientWorkspaceDashboardFactory(
-    Component: React.ComponentType<IDashboardProps>,
+    Component: ComponentType<IDashboardProps>,
     clientWorkspace: IClientWorkspaceIdentifiers,
-): React.FC<IDashboardProps> {
+) {
     function ClientWorkspaceDashboardWrapper(props: IDashboardProps) {
         return (
             <ResolvedClientWorkspaceProvider {...clientWorkspace}>

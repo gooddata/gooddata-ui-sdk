@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { createElement } from "react";
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -14,7 +14,7 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
     return {
         ...actual,
         Overlay: vi.fn((props) => {
-            return React.createElement("div", { "aria-label": "mocked-overlay" }, props.children);
+            return createElement("div", { "aria-label": "mocked-overlay" }, props.children);
         }),
     };
 });

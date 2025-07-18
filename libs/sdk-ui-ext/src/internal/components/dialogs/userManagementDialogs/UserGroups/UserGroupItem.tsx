@@ -1,20 +1,19 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { useIntl } from "react-intl";
-import React from "react";
 import cx from "classnames";
 
 import { IGrantedUserGroup, ListMode } from "../types.js";
 import { messages } from "../locales.js";
 import { RemoveIcon } from "../RemoveIcon.js";
 
-const GranteeGroupIcon: React.FC = () => {
+function GranteeGroupIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon gd-grantee-icon-group gd-grantee-item-icon-left" />
         </div>
     );
-};
+}
 
 interface IUserGroupItemProps {
     userGroup: IGrantedUserGroup;
@@ -23,12 +22,7 @@ interface IUserGroupItemProps {
     isDeleteDisabled?: boolean;
 }
 
-export const UserGroupItem: React.FC<IUserGroupItemProps> = ({
-    mode,
-    onDelete,
-    userGroup,
-    isDeleteDisabled,
-}) => {
+export function UserGroupItem({ userGroup, mode, onDelete, isDeleteDisabled }: IUserGroupItemProps) {
     const itemClassName = cx("s-user-management-item", "gd-share-dialog-grantee-item");
     const intl = useIntl();
     const tooltipMessage =
@@ -53,4 +47,4 @@ export const UserGroupItem: React.FC<IUserGroupItemProps> = ({
             <GranteeGroupIcon />
         </div>
     );
-};
+}

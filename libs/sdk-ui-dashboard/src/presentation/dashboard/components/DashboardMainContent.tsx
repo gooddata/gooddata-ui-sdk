@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { forwardRef, RefObject, useEffect } from "react";
+import { forwardRef, RefObject, useEffect } from "react";
 import cx from "classnames";
 
 import {
@@ -61,7 +61,11 @@ export const DashboardMainContent = forwardRef(function DashboardMainContent(_: 
             className="gd-flex-item-stretch dash-section dash-section-kpis"
             ref={ref as RefObject<HTMLDivElement>}
         >
-            <div className={classNames} ref={dropRef} onClick={deselectWidgets}>
+            <div
+                className={classNames}
+                ref={dropRef as unknown as RefObject<HTMLDivElement>}
+                onClick={deselectWidgets}
+            >
                 <DateFilterConfigWarnings />
                 <DashboardLayout onFiltersChange={onFiltersChange} />
             </div>

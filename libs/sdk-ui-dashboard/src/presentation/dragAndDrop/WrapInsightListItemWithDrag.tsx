@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
+import { RefObject } from "react";
 import classNames from "classnames";
 
 import { useDashboardSelector, selectIsInEditMode, selectSettings } from "../../model/index.js";
@@ -44,7 +44,10 @@ export function WrapInsightListItemWithDrag({
     );
 
     return (
-        <div className={classNames({ "is-dragging": isDragging })} ref={dragRef}>
+        <div
+            className={classNames({ "is-dragging": isDragging })}
+            ref={dragRef as unknown as RefObject<HTMLDivElement>}
+        >
             {children}
         </div>
     );

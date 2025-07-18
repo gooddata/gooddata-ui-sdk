@@ -1,5 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import {
     DrillOrigin,
     getHierarchyRef,
@@ -39,7 +38,7 @@ export interface IDrillTargetsProps {
     onDeleteInteraction: () => void;
 }
 
-export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props) => {
+export function DrillTargets(props: IDrillTargetsProps) {
     const { item, onDeleteInteraction } = props;
     const onDrillDownTargetSelect = (
         targetItem: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
@@ -147,7 +146,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
     }
 
     return null;
-};
+}
 
 function getOrigin(item: IDrillConfigItem): DrillOrigin {
     return item.type === "attribute"

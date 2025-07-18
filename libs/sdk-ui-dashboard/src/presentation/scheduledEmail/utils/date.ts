@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import { normalizeTime } from "@gooddata/sdk-ui-kit";
-import parseISO from "date-fns/parseISO/index.js";
+import { parseISO } from "date-fns";
 
 import { getUserTimezone } from "./timezone.js";
 import { getDefaultCronExpression } from "./cron.js";

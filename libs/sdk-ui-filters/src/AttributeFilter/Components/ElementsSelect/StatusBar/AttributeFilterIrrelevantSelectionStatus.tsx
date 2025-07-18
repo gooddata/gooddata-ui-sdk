@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { ReactNode, useMemo } from "react";
+import { MouseEvent, ReactNode, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
 import { IAttributeElement } from "@gooddata/sdk-model";
@@ -15,9 +15,12 @@ interface IAttributeFilterIrrelevantSelectionStatusProps {
     onClear?: () => void;
 }
 
-export const AttributeFilterIrrelevantSelectionStatus: React.FC<
-    IAttributeFilterIrrelevantSelectionStatusProps
-> = ({ parentFilterTitles, irrelevantSelection, onClear, showClearButton = true }) => {
+export function AttributeFilterIrrelevantSelectionStatus({
+    parentFilterTitles,
+    irrelevantSelection,
+    onClear,
+    showClearButton = true,
+}: IAttributeFilterIrrelevantSelectionStatusProps) {
     const parentFiltersTooltipText = useMemo(() => {
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
@@ -26,7 +29,7 @@ export const AttributeFilterIrrelevantSelectionStatus: React.FC<
         return null;
     }
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.stopPropagation();
         onClear();
@@ -60,4 +63,4 @@ export const AttributeFilterIrrelevantSelectionStatus: React.FC<
             ) : null}
         </Message>
     );
-};
+}

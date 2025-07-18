@@ -1,5 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { withIntl } from "@gooddata/sdk-ui";
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -19,8 +18,7 @@ const renderComponent = (props?: Partial<IRankingFilterProps>) => {
         onCancel: noop,
         buttonTitle: "Ranking Filter",
     };
-    const Wrapped = withIntl(RankingFilter);
-    return render(<Wrapped {...defaultProps} {...props} />);
+    return render(<RankingFilter {...defaultProps} {...props} />);
 };
 
 describe("RankingFilter", () => {

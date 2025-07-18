@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { Component, createRef } from "react";
 import { VariableSizeList as List, ListChildComponentProps } from "react-window";
 import cx from "classnames";
 import range from "lodash/range.js";
@@ -88,14 +88,14 @@ const getItemHeight =
 
 export const getMedianIndex = (array: any[]): number => Math.floor(array.length / 2);
 
-export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V>> {
+export class VirtualizedSelectMenu<V> extends Component<ISelectMenuProps<V>> {
     // static cannot have <V>
     public static defaultProps: Partial<ISelectMenuProps<any>> = {
         selectedItem: null,
         visibleItemsRange: defaultVisibleItemsRange,
     };
 
-    private listRef = React.createRef<List>();
+    private listRef = createRef<List>();
 
     public render() {
         const {

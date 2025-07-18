@@ -13,7 +13,7 @@ import {
     IVisualizationSizeInfo,
     WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
-import React, { useRef } from "react";
+import { RefObject, useRef } from "react";
 import cx from "classnames";
 
 import {
@@ -68,6 +68,7 @@ import { useShouldShowRowEndHotspot } from "./dragAndDrop/draggableWidget/RowEnd
 import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
 import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
 import { DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN } from "../../_staging/dashboard/flexibleLayout/config.js";
+import { WidgetIndexProvider } from "../widget/widget/WidgetIndexContext.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -215,7 +216,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             rowIndex={rowIndex}
         >
             <div
-                ref={dragRef}
+                ref={dragRef as unknown as RefObject<HTMLDivElement>}
                 className={cx([
                     "dashboard-widget-draggable-wrapper",
                     {
@@ -236,20 +237,21 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 ) : null}
                 <DashboardItemPathAndSizeProvider layoutItem={item}>
                     <HoverDetector widgetRef={widget.ref}>
-                        <DashboardWidget
-                            // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-                            index={index}
-                            onDrill={onDrill}
-                            onError={onError}
-                            onFiltersChange={onFiltersChange}
-                            widget={widget as ExtendedDashboardWidget}
-                            parentLayoutItemSize={item.size()}
-                            parentLayoutPath={item.index()}
-                            ErrorComponent={ErrorComponent}
-                            LoadingComponent={LoadingComponent}
-                            rowIndex={rowIndex}
-                            exportData={exportData}
-                        />
+                        <WidgetIndexProvider index={index}>
+                            <DashboardWidget
+                                screen={screen}
+                                onDrill={onDrill}
+                                onError={onError}
+                                onFiltersChange={onFiltersChange}
+                                widget={widget as ExtendedDashboardWidget}
+                                parentLayoutItemSize={item.size()}
+                                parentLayoutPath={item.index()}
+                                ErrorComponent={ErrorComponent}
+                                LoadingComponent={LoadingComponent}
+                                rowIndex={rowIndex}
+                                exportData={exportData}
+                            />
+                        </WidgetIndexProvider>
                     </HoverDetector>
                 </DashboardItemPathAndSizeProvider>
                 {canShowHotspot && !isAnyPlaceholderWidget(widget) && isActive ? (

@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 /* eslint-disable no-console */
 
-import React, { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback } from "react";
 import cx from "classnames";
 import { IInsight, IInsightWidget, widgetRef } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
@@ -30,9 +30,14 @@ import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 /**
  * @internal
  */
-export const EditableDashboardVisualizationSwitcherWidget: React.FC<
-    IDefaultDashboardVisualizationSwitcherWidgetProps
-> = ({ widget, screen, dashboardItemClasses, onError, onExportReady, onLoadingChanged }) => {
+export function EditableDashboardVisualizationSwitcherWidget({
+    widget,
+    screen,
+    dashboardItemClasses,
+    onError,
+    onExportReady,
+    onLoadingChanged,
+}: IDefaultDashboardVisualizationSwitcherWidgetProps) {
     const dispatch = useDashboardDispatch();
 
     const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
@@ -142,4 +147,4 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
             </DashboardItem>
         </>
     );
-};
+}

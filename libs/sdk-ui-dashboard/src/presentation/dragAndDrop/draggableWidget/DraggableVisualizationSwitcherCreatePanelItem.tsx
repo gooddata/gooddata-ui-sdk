@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import {
     VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT,
     VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT,
@@ -35,9 +34,10 @@ const getDragItem = (settings: ISettings): DraggableItem => {
 /**
  * @internal
  */
-export const DraggableVisualizationSwitcherCreatePanelItem: React.FC<
-    IDraggableVisualizationSwitcherCreatePanelItemProps
-> = ({ CreatePanelItemComponent, WrapCreatePanelItemWithDragComponent }) => {
+export function DraggableVisualizationSwitcherCreatePanelItem({
+    CreatePanelItemComponent,
+    WrapCreatePanelItemWithDragComponent,
+}: IDraggableVisualizationSwitcherCreatePanelItemProps) {
     const settings = useDashboardSelector(selectSettings);
     const dragItem = getDragItem(settings);
 
@@ -52,4 +52,4 @@ export const DraggableVisualizationSwitcherCreatePanelItem: React.FC<
             onDragStart={() => deselectWidgets()}
         />
     );
-};
+}

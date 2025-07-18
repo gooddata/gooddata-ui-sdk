@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { ISeriesItem } from "./types.js";
-import React from "react";
+import { useCallback, useMemo } from "react";
 import { createContextStore } from "@gooddata/sdk-ui";
 
 export const useLegendSeriesContextValue = ({
@@ -15,12 +15,12 @@ export const useLegendSeriesContextValue = ({
 }) => {
     const descriptionId = `${id}-description`;
 
-    const makeItemId = React.useCallback(
+    const makeItemId = useCallback(
         (item?: ISeriesItem) => item && `${id}-${series.indexOf(item)}`,
         [id, series],
     );
 
-    return React.useMemo(
+    return useMemo(
         () => ({
             focusedItem: series[focusedIndex],
             makeItemId,

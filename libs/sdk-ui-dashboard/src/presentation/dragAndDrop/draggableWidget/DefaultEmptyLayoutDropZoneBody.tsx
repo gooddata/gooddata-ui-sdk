@@ -1,9 +1,8 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-export const DefaultEmptyLayoutDropZoneBody: React.FC = () => {
+export function DefaultEmptyLayoutDropZoneBody() {
     return (
         <div className="drag-info-placeholder-box s-drag-info-placeholder-box">
             <Typography tagName="h2">
@@ -11,4 +10,4 @@ export const DefaultEmptyLayoutDropZoneBody: React.FC = () => {
             </Typography>
         </div>
     );
-};
+}

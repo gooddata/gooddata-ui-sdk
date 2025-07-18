@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
 import { IPopUpLegendProps, PopUpLegend } from "../PopUpLegend/PopUpLegend.js";
@@ -18,9 +17,8 @@ describe("PopUpLegend", () => {
             containerId: "",
             ...customProps,
         };
-        const Wrapped = withIntl(PopUpLegend);
 
-        return render(<Wrapped {...props} />);
+        return render(<PopUpLegend {...props} />);
     }
 
     it("should render items", () => {

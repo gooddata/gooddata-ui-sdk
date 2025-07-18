@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ComponentType } from "react";
+import { ComponentType, RefObject } from "react";
 import { useIntl } from "react-intl";
 import { DateFilterButton, IDateFilterButtonProps } from "../DateFilterButton/DateFilterButton.js";
 import {
@@ -24,13 +24,13 @@ export interface IDateFilterButtonLocalizedProps {
     customFilterName?: string;
     disabled?: boolean;
     customIcon?: IFilterButtonCustomIcon;
-    buttonRef?: React.MutableRefObject<HTMLElement | null>;
+    buttonRef?: RefObject<HTMLElement | null>;
     dropdownId?: string;
     onClick?: () => void;
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
 }
 
-export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps> = ({
+export function DateFilterButtonLocalized({
     dateFilterOption,
     dateFormat,
     isOpen = false,
@@ -42,7 +42,7 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
     dropdownId,
     onClick,
     ButtonComponent,
-}) => {
+}: IDateFilterButtonLocalizedProps) {
     const intl = useIntl();
     const defaultTitle = intl.formatMessage({ id: "dateFilterDropdown.title" });
     const textTitle = customFilterName ?? defaultTitle;
@@ -74,4 +74,4 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
             </span>
         </Component>
     );
-};
+}

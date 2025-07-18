@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent, ReactNode } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
@@ -11,12 +11,12 @@ export interface IBubbleMessageOwnProps {
     alignPoints?: IAlignPoint[];
     messageId?: string;
     className?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export type IBubbleMessageProps = IBubbleMessageOwnProps & WrappedComponentProps;
 
-export class DisabledBubbleMessage extends React.PureComponent<IBubbleMessageProps> {
+export class DisabledBubbleMessage extends PureComponent<IBubbleMessageProps> {
     public static defaultProps = {
         alignPoints: [{ align: "cr cl" }],
     };

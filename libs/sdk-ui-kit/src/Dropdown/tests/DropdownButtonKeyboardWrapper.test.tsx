@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import { createRef } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import { DropdownButtonKeyboardWrapper } from "../DropdownButtonKeyboardWrapper.js";
@@ -111,7 +111,7 @@ describe("DropdownButtonKeyboardWrapper", () => {
     });
 
     it("should forward ref to the div element", () => {
-        const ref = React.createRef<HTMLElement>();
+        const ref = createRef<HTMLElement>();
         render(
             <DropdownButtonKeyboardWrapper onToggle={vi.fn()} isOpen={false} ref={ref}>
                 <button>Toggle Dropdown</button>

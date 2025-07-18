@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { render, waitFor, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { withIntl } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 
@@ -19,9 +18,9 @@ const renderTabs = (options?: ITabsProps) => {
         tabs: tabDefinitions,
     };
 
-    const Wrapper = withIntl(Tabs, "en-US", messages);
+    // const Wrapper = withIntl(Tabs, "en-US", messages); // TODO: MARTIN FIX THE injectIntl Components
 
-    return render(<Wrapper {...options} {...defaultProps} />);
+    return render(<Tabs {...options} {...defaultProps} />);
 };
 
 describe("Tabs", () => {

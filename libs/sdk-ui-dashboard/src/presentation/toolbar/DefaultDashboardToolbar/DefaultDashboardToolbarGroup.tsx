@@ -1,23 +1,23 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
+
+import { ReactNode } from "react";
 
 /**
  * @internal
  */
 export interface IDefaultDashboardToolbarGroupProps {
     title: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
  * @internal
  */
-export const DefaultDashboardToolbarGroup: React.FC<IDefaultDashboardToolbarGroupProps> = (props) => {
-    const { children, title } = props;
+export function DefaultDashboardToolbarGroup({ children, title }: IDefaultDashboardToolbarGroupProps) {
     return (
         <div className="gd-toolbar-group">
             <span className="gd-toolbar-group-title">{title}</span>
             {children}
         </div>
     );
-};
+}

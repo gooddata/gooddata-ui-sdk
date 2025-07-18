@@ -1,7 +1,7 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { ReactNode } from "react";
+import { useIntl } from "react-intl";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { Button } from "../Button/index.js";
 import { Icon } from "../Icon/index.js";
@@ -24,7 +24,7 @@ export interface IErrorOverlayProps {
     locale?: string;
 }
 
-const ErrorOverlayCore: React.VFC<IErrorOverlayProps & WrappedComponentProps> = (props) => {
+export function ErrorOverlayCore(props: IErrorOverlayProps) {
     const {
         showIcon = true,
         showButton = true,
@@ -34,9 +34,9 @@ const ErrorOverlayCore: React.VFC<IErrorOverlayProps & WrappedComponentProps> = 
         buttonTitle,
         onButtonClick,
         className,
-        intl,
     } = props;
 
+    const intl = useIntl();
     const theme = useTheme();
 
     const IconComponent = icon ?? (
@@ -73,19 +73,15 @@ const ErrorOverlayCore: React.VFC<IErrorOverlayProps & WrappedComponentProps> = 
             </div>
         </Overlay>
     );
-};
-
-const ErrorOverlayWithIntl = injectIntl(ErrorOverlayCore);
+}
 
 /**
  * @internal
  */
-export class ErrorOverlay extends React.PureComponent<IErrorOverlayProps> {
-    public render() {
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <ErrorOverlayWithIntl {...this.props} />
-            </IntlWrapper>
-        );
-    }
+export function ErrorOverlay(props: IErrorOverlayProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <ErrorOverlayCore {...props} />
+        </IntlWrapper>
+    );
 }

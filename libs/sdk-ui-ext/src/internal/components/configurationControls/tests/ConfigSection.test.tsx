@@ -1,10 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 import noop from "lodash/noop.js";
-import { ConfigSection, IConfigSectionOwnProps } from "../ConfigSection.js";
+import ConfigSection, { IConfigSectionProps } from "../ConfigSection.js";
 import { createInternalIntl, InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 import { describe, it, expect, vi } from "vitest";
 
@@ -18,7 +17,7 @@ describe("ConfigSection", () => {
         pushData: noop,
     };
 
-    function createComponent(customProps: Partial<IConfigSectionOwnProps> = {}) {
+    function createComponent(customProps: Partial<IConfigSectionProps> = {}) {
         const props = { ...defaultProps, ...customProps };
         return render(
             <InternalIntlWrapper>

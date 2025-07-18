@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import { KeyboardEvent, MutableRefObject } from "react";
 import { getFocusableElements, makeLinearKeyboardNavigation } from "@gooddata/sdk-ui-kit";
 
 /**
@@ -16,9 +16,9 @@ enum ActiveElementRole {
  */
 interface IDateFilterKeyboardNavigationConfig {
     /** Reference to the date filter container element */
-    dateFilterContainerRef: React.MutableRefObject<HTMLDivElement>;
+    dateFilterContainerRef: MutableRefObject<HTMLDivElement>;
     /** Reference to the date filter body element */
-    dateFilterBodyRef: React.MutableRefObject<HTMLDivElement>;
+    dateFilterBodyRef: MutableRefObject<HTMLDivElement>;
     /** Optional callback to close the dropdown */
     closeDropdown?: () => void;
 }
@@ -29,9 +29,9 @@ interface IDateFilterKeyboardNavigationConfig {
  */
 interface IDateFilterRelativeFormKeyboardNavigationConfig {
     /** Reference to the relative filter body element */
-    relativeDateFilterRef: React.MutableRefObject<HTMLDivElement>;
+    relativeDateFilterRef: MutableRefObject<HTMLDivElement>;
     /** Reference to the relative filter granularity tabs element */
-    tabGranularityRef: React.MutableRefObject<HTMLDivElement>;
+    tabGranularityRef: MutableRefObject<HTMLDivElement>;
     /** Callback to close the dropdown */
     closeDropdown?: () => void;
 }
@@ -45,7 +45,7 @@ interface IDateFilterRelativeFormKeyboardNavigationConfig {
  * @internal
  */
 const shouldHandleKeyboardNavigation = (
-    ref: React.MutableRefObject<HTMLDivElement>,
+    ref: MutableRefObject<HTMLDivElement>,
     activeElement: HTMLElement,
     role: ActiveElementRole,
 ): boolean => ref.current.contains(activeElement) && activeElement.role === role;
@@ -84,8 +84,8 @@ const findNextFocusableElement = (
 
 // Iterates through dropdown list, exclude period input, cancel and apply button.
 const handleTabNavigation = (
-    event: React.KeyboardEvent,
-    dateFilterContainerRef: React.MutableRefObject<HTMLDivElement>,
+    event: KeyboardEvent,
+    dateFilterContainerRef: MutableRefObject<HTMLDivElement>,
 ): void => {
     if (event.key !== "Tab") {
         return;
@@ -124,7 +124,7 @@ const handleTabNavigation = (
  */
 export const createDateFilterKeyboardHandler =
     ({ dateFilterContainerRef, dateFilterBodyRef, closeDropdown }: IDateFilterKeyboardNavigationConfig) =>
-    (event: React.KeyboardEvent): void => {
+    (event: KeyboardEvent): void => {
         if (!dateFilterBodyRef.current || !dateFilterContainerRef.current) {
             return;
         }
@@ -188,7 +188,7 @@ export const createDateFilterRelativeFormKeyboardHandler = ({
     tabGranularityRef,
     closeDropdown,
 }: IDateFilterRelativeFormKeyboardNavigationConfig) => {
-    return (event: React.KeyboardEvent): void => {
+    return (event: KeyboardEvent): void => {
         if (!tabGranularityRef.current) {
             return;
         }
@@ -232,7 +232,7 @@ export const createDateFilterRelativeFormKeyboardHandler = ({
 };
 
 export const submitRelativeDateFilterForm = (
-    event: React.KeyboardEvent,
+    event: KeyboardEvent,
     canSubmit: boolean,
     withoutApply: boolean,
     onSubmit: () => void,

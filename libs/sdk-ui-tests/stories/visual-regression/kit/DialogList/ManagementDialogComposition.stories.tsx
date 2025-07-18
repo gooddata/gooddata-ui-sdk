@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { action } from "storybook/actions";
@@ -9,10 +9,9 @@ import { itemsMock as items } from "./itemsMock.js";
 
 import "./styles.scss";
 
-const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
-    const { children } = props;
+function Wrapper({ children }: { children?: ReactNode }) {
     return <div style={{ margin: "30 0" }}>{children}</div>;
-};
+}
 
 const onSubmit = action("onSubmit");
 const onClose = action("onClose");
@@ -27,10 +26,9 @@ const onHeaderButtonClick = action("onHeaderButtonClick");
  * inside ConfirmDialog (or any Dialog) component. In overlay use-cases use ConfirmDialog instead of ConfirmDialogBase.
  * Some general dialog styles may be necessary to limit the dialog dimensions. See ./styles.scss file.
  * List items may be customized by creating new DialogListItem component.
- *
- * @internal
  */
-const ManagementDialogCompositionExamples: React.VFC = () => {
+
+function ManagementDialogCompositionExamples() {
     const onItemClick = action("onItemClick");
     const onItemDelete = action("onItemDelete");
 
@@ -164,9 +162,9 @@ const ManagementDialogCompositionExamples: React.VFC = () => {
             </div>
         </>
     );
-};
+}
 
-const ManagementDialogCompositionLoadingExample: React.FC = () => {
+function ManagementDialogCompositionLoadingExample() {
     const isLoading = true;
 
     return (
@@ -195,7 +193,7 @@ const ManagementDialogCompositionLoadingExample: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/DialogList/ManagementDialogComposition",

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useMemo, useCallback } from "react";
+import { useMemo, useCallback, KeyboardEvent } from "react";
 import { isEscapeKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
@@ -16,7 +16,7 @@ import { IAttributeElement } from "@gooddata/sdk-model";
  *
  * @beta
  */
-export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyProps> = (props) => {
+export function AttributeFilterDropdownBody(props: IAttributeFilterDropdownBodyProps) {
     const { onApplyButtonClick, onCancelButtonClick, width = DEFAULT_DROPDOWN_BODY_WIDTH } = props;
 
     const { DropdownActionsComponent, ElementsSelectComponent } = useAttributeFilterComponentsContext();
@@ -71,7 +71,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
     );
 
     const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (isEscapeKey(e)) {
                 e.stopPropagation();
                 onCancelButtonClick();
@@ -118,4 +118,4 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
             />
         </div>
     );
-};
+}

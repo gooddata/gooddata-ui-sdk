@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { ReactNode, Component, createRef } from "react";
 import { ConfigPanelClassName } from "@gooddata/sdk-ui-ext/internal";
 
 export interface IConfigurationPanelWrapperProps {
     className?: string;
     expandAllClassName?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -25,7 +25,7 @@ export interface IConfigurationPanelWrapperProps {
  * In the end, this wrapper allows to generate stories in a generic fashion - without having to customize what
  * config sections are available.
  */
-export class ConfigurationPanelWrapper extends React.Component<IConfigurationPanelWrapperProps> {
+export class ConfigurationPanelWrapper extends Component<IConfigurationPanelWrapperProps> {
     public static DefaultExpandAllClassName = "config-panel-expand-all";
 
     public static defaultProps = {
@@ -39,7 +39,7 @@ export class ConfigurationPanelWrapper extends React.Component<IConfigurationPan
         super(props);
 
         this.state = { ready: false };
-        this.componentRef = React.createRef();
+        this.componentRef = createRef();
     }
 
     public render() {

@@ -2,7 +2,7 @@
 
 import { ISemanticSearchResultItem, ITheme } from "@gooddata/sdk-model";
 import { IIconProps, Icon, InsightIcon } from "@gooddata/sdk-ui-kit";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { ListItem } from "../types.js";
 
 /**

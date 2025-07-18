@@ -1,33 +1,29 @@
 // (C) 2025 GoodData Corporation
 
-import React, { forwardRef, useState } from "react";
+import { forwardRef, useState } from "react";
 import { IntlShape } from "react-intl";
 import { WeekStart } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
-import {
-    DayPicker as DayPickerComponent,
-    DayPickerRangeProps,
-    SelectRangeEventHandler,
-    DayPickerProps,
-} from "react-day-picker";
-import enUS from "date-fns/locale/en-US/index.js";
-import de from "date-fns/locale/de/index.js";
-import es from "date-fns/locale/es/index.js";
-import fr from "date-fns/locale/fr/index.js";
-import ja from "date-fns/locale/ja/index.js";
-import nl from "date-fns/locale/nl/index.js";
-import pt from "date-fns/locale/pt/index.js";
-import ptBR from "date-fns/locale/pt-BR/index.js";
-import zhCN from "date-fns/locale/zh-CN/index.js";
-import ru from "date-fns/locale/ru/index.js";
-import it from "date-fns/locale/it/index.js";
-import enGB from "date-fns/locale/en-GB/index.js";
-import frCA from "date-fns/locale/fr-CA/index.js";
-import enAU from "date-fns/locale/en-AU/index.js";
-import fi from "date-fns/locale/fi/index.js";
-import tr from "date-fns/locale/tr/index.js";
-import pl from "date-fns/locale/pl/index.js";
-import ko from "date-fns/locale/ko/index.js";
+import { DayPicker as DayPickerComponent, DayPickerProps, SelectRangeEventHandler } from "react-day-picker";
+import { Locale } from "date-fns";
+import { enUS } from "date-fns/locale/en-US";
+import { de } from "date-fns/locale/de";
+import { es } from "date-fns/locale/es";
+import { fr } from "date-fns/locale/fr";
+import { ja } from "date-fns/locale/ja";
+import { nl } from "date-fns/locale/nl";
+import { pt } from "date-fns/locale/pt";
+import { ptBR } from "date-fns/locale/pt-BR";
+import { zhCN } from "date-fns/locale/zh-CN";
+import { ru } from "date-fns/locale/ru";
+import { it } from "date-fns/locale/it";
+import { enGB } from "date-fns/locale/en-GB";
+import { frCA } from "date-fns/locale/fr-CA";
+import { enAU } from "date-fns/locale/en-AU";
+import { fi } from "date-fns/locale/fi";
+import { tr } from "date-fns/locale/tr";
+import { pl } from "date-fns/locale/pl";
+import { ko } from "date-fns/locale/ko";
 
 import { mergeDayPickerProps } from "./utils.js";
 import { IDateRange } from "./types.js";
@@ -81,7 +77,7 @@ export const DayPicker = forwardRef<
         alignTo: string;
         calendarClassNames: string;
         onDateRangeSelect: SelectRangeEventHandler;
-        dayPickerProps?: DayPickerRangeProps;
+        dayPickerProps?: DayPickerProps;
         weekStart?: WeekStart;
         renderAsOverlay?: boolean;
         intl: IntlShape;
@@ -106,7 +102,7 @@ export const DayPicker = forwardRef<
             mode === "from" ? selectedDateRange.from : selectedDateRange.to,
         );
 
-        const defaultDayPickerProps: DayPickerRangeProps = {
+        const defaultDayPickerProps: DayPickerProps = {
             mode: "range",
             showOutsideDays: true,
             modifiers: { start: originalDateRange.from, end: originalDateRange.to },
@@ -120,6 +116,7 @@ export const DayPicker = forwardRef<
             <div className="gd-date-range-picker-wrapper" ref={ref}>
                 <DayPickerComponent
                     {...dayPickerPropsWithDefaults}
+                    mode="range"
                     month={currentMonthDate}
                     onSelect={onDateRangeSelect}
                     selected={selectedDateRange}

@@ -1,6 +1,6 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { MouseEvent } from "react";
 import classNames from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { ObjRef, IAttributeDisplayFormMetadataObject, AttributeDisplayFormType } from "@gooddata/sdk-model";
@@ -32,11 +32,7 @@ export interface IDisplayFormDropdownItemProps {
     selected: boolean;
 }
 
-export const DisplayDropdownItem: React.FC<IDisplayFormDropdownItemProps> = ({
-    displayForm,
-    selected,
-    onClick,
-}) => {
+export function DisplayDropdownItem({ displayForm, selected, onClick }: IDisplayFormDropdownItemProps) {
     const { title } = displayForm;
 
     const className = classNames(
@@ -50,7 +46,7 @@ export const DisplayDropdownItem: React.FC<IDisplayFormDropdownItemProps> = ({
         },
     );
 
-    const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleOnClick = (e: MouseEvent<HTMLDivElement>) => {
         onClick(displayForm.ref);
         e.preventDefault();
     };
@@ -60,4 +56,4 @@ export const DisplayDropdownItem: React.FC<IDisplayFormDropdownItemProps> = ({
             <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
         </div>
     );
-};
+}

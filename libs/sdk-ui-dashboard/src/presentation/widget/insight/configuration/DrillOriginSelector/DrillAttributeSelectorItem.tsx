@@ -1,5 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import cx from "classnames";
 import { IAvailableDrillTargetAttribute } from "@gooddata/sdk-ui";
 import { useDashboardSelector, selectCatalogDateDatasets } from "../../../../../model/index.js";
@@ -15,9 +14,7 @@ export interface IFilterDrillAttributeSelectorItemProps {
     onCloseDropdown: () => void;
 }
 
-export const DrillAttributeSelectorItem: React.FunctionComponent<IFilterDrillAttributeSelectorItemProps> = (
-    props,
-) => {
+export function DrillAttributeSelectorItem(props: IFilterDrillAttributeSelectorItemProps) {
     const { item } = props;
     const onClick = () => {
         props.onClick(item);
@@ -44,4 +41,4 @@ export const DrillAttributeSelectorItem: React.FunctionComponent<IFilterDrillAtt
             {name}
         </a>
     );
-};
+}

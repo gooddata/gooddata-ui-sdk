@@ -44,6 +44,7 @@
         "@types/react-dom": "19.1.6",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
+        "@vitejs/plugin-react": "^4.6.0",
         "eslint": "^8.25.0",
         "eslint-config-prettier": "^10.1.5",
         "eslint-plugin-header": "^3.0.0",
@@ -62,12 +63,11 @@
         "prettier": "^3.6.2",
         "react": "19.1.0",
         "react-dom": "19.1.0",
-        "sass": "^1.52.3",
+        "sass": "1.66.1",
         "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
         "typescript": "5.8.3",
-        "vite": "^5.4.3",
-        "@vitejs/plugin-react": "^4.3.1"
+        "vite": "^6.3.5"
     },
     "scripts": {
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",

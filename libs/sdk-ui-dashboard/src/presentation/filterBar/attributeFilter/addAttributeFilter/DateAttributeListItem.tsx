@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { ICatalogDateDataset } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -16,7 +16,7 @@ const TOOLTIP_ALIGN_POINT = [
     { align: "cl cr", offset: { x: -10, y: 0 } },
 ];
 
-const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({ item, title, onClick }) => {
+export default function DateAttributeListItem({ item, title, onClick }: IAttributeListItemProps) {
     const classNames = useMemo(() => {
         return cx(`s-${stringUtils.simplifyText(item.dataSet.title)}`, "gd-attribute-list-item", {
             "gd-list-item": true,
@@ -32,6 +32,4 @@ const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({ item, title,
             </ShortenedText>
         </div>
     );
-};
-
-export default DateAttributeListItem;
+}
