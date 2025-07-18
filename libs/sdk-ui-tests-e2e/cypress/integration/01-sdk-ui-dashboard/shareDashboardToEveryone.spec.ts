@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { TopBar } from "../../tools/dashboards";
@@ -10,7 +10,7 @@ import { Messages } from "../../tools/messages";
 import { DashboardAccess, WorkspaceAccess } from "../../tools/permissions";
 import { Dashboards } from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 
-describe("Share Dashboard To Everyone", { tags: ["post-merge_integrated_tiger"] }, () => {
+describe("Share Dashboard To Everyone", { tags: ["checklist_integrated_tiger"] }, () => {
     const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
     const allUsers = "All users";
     const topBar = new TopBar();
