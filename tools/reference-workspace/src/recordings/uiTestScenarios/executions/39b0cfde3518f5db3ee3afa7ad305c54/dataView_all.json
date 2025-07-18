@@ -1,0 +1,130 @@
+{
+    "count": [4, 13],
+    "data": [
+        [40768, 40768, 40768, 40768, 40768, 40768, 40768, 40768, 40768, 40768, 40768, 40768, 40768],
+        [
+            929279.68,
+            null,
+            29559.49,
+            600000.4,
+            11329.92,
+            17133.67,
+            186.49,
+            192000,
+            3656454,
+            556561.6,
+            116800.26,
+            null,
+            1443430.74
+        ],
+        [41055, 41055, 41055, 41055, 41055, 41055, 41055, 41055, 41055, 41055, 41055, 41055, 41055],
+        [36525, 36525, 36525, 36525, 36525, 36525, 36525, 36525, 36525, 36525, 36525, 36525, 36525]
+    ],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "_Snapshot [BOP]", "order": 0 } },
+                { "measureHeaderItem": { "name": "Metric has null value", "order": 1 } },
+                { "measureHeaderItem": { "name": "_Snapshot [EOP]", "order": 2 } },
+                { "measureHeaderItem": { "name": "_Timeline [BOP]", "order": 3 } }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "4/17/2013",
+                        "name": "2013-04-17",
+                        "uri": "2013-04-17"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "4/20/2013",
+                        "name": "2013-04-20",
+                        "uri": "2013-04-20"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "4/24/2013",
+                        "name": "2013-04-24",
+                        "uri": "2013-04-24"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "4/26/2013",
+                        "name": "2013-04-26",
+                        "uri": "2013-04-26"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "4/27/2013",
+                        "name": "2013-04-27",
+                        "uri": "2013-04-27"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "5/2/2013",
+                        "name": "2013-05-02",
+                        "uri": "2013-05-02"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "5/3/2013",
+                        "name": "2013-05-03",
+                        "uri": "2013-05-03"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "5/15/2013",
+                        "name": "2013-05-15",
+                        "uri": "2013-05-15"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "5/17/2013",
+                        "name": "2013-05-17",
+                        "uri": "2013-05-17"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "5/18/2013",
+                        "name": "2013-05-18",
+                        "uri": "2013-05-18"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "5/22/2013",
+                        "name": "2013-05-22",
+                        "uri": "2013-05-22"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "5/24/2013",
+                        "name": "2013-05-24",
+                        "uri": "2013-05-24"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "formattedName": "5/31/2013",
+                        "name": "2013-05-31",
+                        "uri": "2013-05-31"
+                    }
+                }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [4, 13]
+}

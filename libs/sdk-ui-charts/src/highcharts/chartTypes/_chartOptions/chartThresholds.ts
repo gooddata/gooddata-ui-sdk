@@ -4,7 +4,7 @@
 import { VisType, DataViewFacade } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces/index.js";
 import { ISeriesItem, IZone, ISeriesDataItem } from "../../typings/unsafe.js";
-import { isLineChart } from "../_util/common.js";
+import { isComboChart, isLineChart } from "../_util/common.js";
 
 type DataPoint = number | null | undefined;
 
@@ -39,16 +39,16 @@ export const generateZones = (thresholdSeries: ISeriesDataItem[]): IZone[] => {
     return zones;
 };
 
-export const getTrendDividerPlotLines = (thresholdSeries: ISeriesDataItem[]) =>
+export const getTrendDividerPlotLines = (thresholdSeries: ISeriesDataItem[], inBetween: boolean = false) =>
     thresholdSeries.reduce<number[]>((indexes, dataPoint, index, arr) => {
         if (index > 0) {
             const currentIsEmpty = isEmptyDataPoint(dataPoint.y);
             const previousIsEmpty = isEmptyDataPoint(arr[index - 1].y);
             if (currentIsEmpty && !previousIsEmpty) {
-                indexes.push(index - 1); // the plot line will be placed at last non-empty point
+                indexes.push(index - (inBetween ? 0.5 : 1)); // the plot line will be placed at last non-empty point or between points if inBetween is true
             }
             if (!currentIsEmpty && previousIsEmpty) {
-                indexes.push(index); // the plot line will be placed at the current non-empty point
+                indexes.push(index - (inBetween ? 0.5 : 0)); // the plot line will be placed at the current non-empty point or between points if inBetween is true
             }
         }
         return indexes;
@@ -86,7 +86,7 @@ const isThresholdSetupValid = (
     config: IChartConfig,
     thresholdMeasures: string[],
 ) =>
-    isLineChart(type) &&
+    (isLineChart(type) || isComboChart(type)) &&
     config.enableLineChartTrendThreshold &&
     thresholdMeasures.length > 0 &&
     series.length > 0 &&
@@ -97,6 +97,14 @@ const findThresholdMeasureIndex = (dv: DataViewFacade, thresholdMeasures: string
         .meta()
         .measureDescriptors()
         .findIndex((measure) => thresholdMeasures.includes(measure.measureHeaderItem.localIdentifier));
+
+const findThresholdExcludedMeasureIndices = (dv: DataViewFacade, thresholdExcludedMeasures: string[]) =>
+    thresholdExcludedMeasures.map((thresholdExcludedMeasure) =>
+        dv
+            .meta()
+            .measureDescriptors()
+            .findIndex((measure) => measure.measureHeaderItem.localIdentifier === thresholdExcludedMeasure),
+    );
 
 const isStackedChart = (dv: DataViewFacade) => dv.meta().attributeDescriptors().length === 2;
 
@@ -113,19 +121,24 @@ export function setupThresholdZones(
     config: IChartConfig,
 ): ISeriesWithPlotLines {
     const thresholdMeasures = config.thresholdMeasures || [];
+    const thresholdExcludedMeasures = config.thresholdExcludedMeasures || [];
 
     if (!isThresholdSetupValid(type, series, config, thresholdMeasures)) {
         return { series };
     }
 
     const thresholdMeasureIndex = findThresholdMeasureIndex(dv, thresholdMeasures);
+    const thresholdExcludedMeasureIndices = findThresholdExcludedMeasureIndices(
+        dv,
+        thresholdExcludedMeasures,
+    );
 
     if (!isThresholdMeasureIndexValid(thresholdMeasureIndex, series, dv)) {
         return { series };
     }
     return isStackedChart(dv)
         ? computeZonesForStackedChart(series, thresholdMeasureIndex)
-        : computeZonesForNonStackedChart(series, thresholdMeasureIndex);
+        : computeZonesForNonStackedChart(series, thresholdMeasureIndex, thresholdExcludedMeasureIndices);
 }
 
 const areZonesValid = (zones: IZone[]) =>
@@ -137,6 +150,7 @@ const fixLegendIndex = (series: ISeriesItem[]) =>
 function computeZonesForNonStackedChart(
     series: ISeriesItem[],
     thresholdMeasureIndex: number,
+    thresholdExcludedMeasureIndices: number[],
 ): ISeriesWithPlotLines {
     const renderedSeries = series.filter((_value, index) => index !== thresholdMeasureIndex);
     const thresholdSeries = series[thresholdMeasureIndex];
@@ -149,12 +163,20 @@ function computeZonesForNonStackedChart(
     }
 
     return {
-        series: renderedSeries.map((series, index) => ({
-            ...series,
-            legendIndex: index,
-            zoneAxis: "x",
-            zones,
-        })),
+        series: renderedSeries.map((series, index) => {
+            if (thresholdExcludedMeasureIndices.includes(series.seriesIndex)) {
+                return {
+                    ...series,
+                    legendIndex: index,
+                };
+            }
+            return {
+                ...series,
+                legendIndex: index,
+                zoneAxis: "x",
+                zones,
+            };
+        }),
         plotLines: getTrendDividerPlotLines(thresholdSeries.data),
     };
 }
@@ -234,4 +256,107 @@ export const filterThresholdZonesCategories = (
     // threshold chart series are split: odd numbers go to data series, even to threshold series,
     // therefore we must filter out odd categories, as each category is duplicated
     return isStackedChart(dv) ? categories.filter((_, index) => index % 2 === 0) : categories;
+};
+
+export const setupComboThresholdZones = (
+    type: VisType,
+    series: ISeriesItem[],
+    dv: DataViewFacade,
+    config: IChartConfig,
+): ISeriesWithPlotLines => {
+    const thresholdMeasures = config.thresholdMeasures || [];
+    const thresholdExcludedMeasures = config.thresholdExcludedMeasures || [];
+
+    if (!isThresholdSetupValid(type, series, config, thresholdMeasures)) {
+        return { series };
+    }
+
+    const thresholdMeasureIndex = findThresholdMeasureIndex(dv, thresholdMeasures);
+    const thresholdExcludedMeasureIndices = findThresholdExcludedMeasureIndices(
+        dv,
+        thresholdExcludedMeasures,
+    );
+
+    const thresholdSeries = series[thresholdMeasureIndex].data;
+    const { series: lineSeries } = computeZonesForNonStackedChart(
+        series,
+        thresholdMeasureIndex,
+        thresholdExcludedMeasureIndices,
+    );
+
+    const comboSeries = lineSeries.map((series) => {
+        if (series.type !== "column") {
+            return series;
+        }
+
+        if (thresholdExcludedMeasureIndices.includes(series.seriesIndex)) {
+            return series;
+        }
+
+        return {
+            ...series,
+            zones: generateComboZones(thresholdSeries, series.color),
+        };
+    });
+
+    return {
+        series: comboSeries,
+        plotLines: getTrendDividerPlotLines(thresholdSeries, true),
+    };
+};
+
+const getComboZoneFill = (color?: string): IZone["color"] => {
+    return {
+        pattern: {
+            width: 4,
+            height: 4,
+            color,
+            path: {
+                d: "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+                strokeWidth: 1,
+            },
+        },
+    };
+};
+
+export const generateComboZones = (thresholdSeries: ISeriesDataItem[], color?: string): IZone[] => {
+    const zoneFill = getComboZoneFill(color);
+
+    const zones = thresholdSeries.reduce<IZone[]>((zones, { y: value }, i, arr) => {
+        if (i > 0) {
+            const currentIsEmpty = isEmptyDataPoint(value);
+            const previousIsEmpty = isEmptyDataPoint(arr[i - 1].y);
+            if (currentIsEmpty && !previousIsEmpty) {
+                zones.push({ value: i });
+            }
+            if (!currentIsEmpty && previousIsEmpty) {
+                zones.push({
+                    value: i,
+                    color: zoneFill,
+                });
+            }
+        }
+        return zones;
+    }, []);
+
+    if (zones.length > 0) {
+        // add final zone based on the last point value, it has index value to signify it runs to the end
+        const isLastEmpty = isEmptyDataPoint(thresholdSeries[thresholdSeries.length - 1].y);
+        return [
+            ...zones,
+            {
+                color: isLastEmpty ? zoneFill : undefined,
+            },
+        ];
+    } else if (thresholdSeries.length > 0 && thresholdSeries.every((item) => isEmptyDataPoint(item.y))) {
+        // Add dashed zone that runs across all series if no zone was created and all points are empty.
+        // This is necessary, as the previous reduce algo did not create any zone due to all points being
+        // same. The line is solid by default so this must be done only for empty points.
+        return [
+            {
+                color: zoneFill,
+            },
+        ];
+    }
+    return zones;
 };

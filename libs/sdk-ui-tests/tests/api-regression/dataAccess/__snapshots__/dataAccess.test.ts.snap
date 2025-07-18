@@ -2397,6 +2397,78 @@ exports[`DataAccess > should correctly identify series and slices for: ComboChar
 }
 `;
 
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - threshold combo zones 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > _Snapshot [BOP]",
+      " > Metric has null value",
+      " > _Snapshot [EOP]",
+      " > _Timeline [BOP]",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 13,
+    "attributes": 1,
+    "sliceNames": [
+      "2013-04-17",
+      "2013-04-20",
+      "2013-04-24",
+      "2013-04-26",
+      "2013-04-27",
+      "2013-05-02",
+      "2013-05-03",
+      "2013-05-15",
+      "2013-05-17",
+      "2013-05-18",
+      "2013-05-22",
+      "2013-05-24",
+      "2013-05-31",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - threshold combo zones with excluded measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > _Snapshot [BOP]",
+      " > Metric has null value",
+      " > _Snapshot [EOP]",
+      " > _Timeline [BOP]",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 13,
+    "attributes": 1,
+    "sliceNames": [
+      "2013-04-17",
+      "2013-04-20",
+      "2013-04-24",
+      "2013-04-26",
+      "2013-04-27",
+      "2013-05-02",
+      "2013-05-03",
+      "2013-05-15",
+      "2013-05-17",
+      "2013-05-18",
+      "2013-05-22",
+      "2013-05-24",
+      "2013-05-31",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess > should correctly identify series and slices for: ComboChart - two measures with null values 1`] = `
 {
   "seriesDigest": {

@@ -103,6 +103,17 @@ export interface IStackItem {
 export interface IZone {
     value?: number;
     dashStyle?: "solid" | "shortDash";
+    color?: {
+        pattern: {
+            width: number;
+            height: number;
+            color: string;
+            path: {
+                d: string;
+                strokeWidth: number;
+            };
+        };
+    };
 }
 
 export interface ISeriesItem {
