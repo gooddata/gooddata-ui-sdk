@@ -578,8 +578,8 @@ export function groupedCategories(HC) {
             gridAttrs = horiz
                 ? [axis.left, xy.y, axis.left, xy.y + axis.groupSize(true)]
                 : axis.isXAxis
-                ? [xy.x, axis.top, xy.x + axis.groupSize(true), axis.top]
-                : [xy.x, axis.top + axis.len, xy.x + axis.groupSize(true), axis.top + axis.len];
+                  ? [xy.x, axis.top, xy.x + axis.groupSize(true), axis.top]
+                  : [xy.x, axis.top + axis.len, xy.x + axis.groupSize(true), axis.top + axis.len];
 
             addGridPart(grid, gridAttrs, tickWidth);
         }

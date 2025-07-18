@@ -128,7 +128,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     }, [canEdit, formatMessage, isPaused]);
 
     const handleAction = React.useCallback(
-        (item: typeof items[number]) => {
+        (item: (typeof items)[number]) => {
             if (item.type !== "interactive") {
                 return;
             }

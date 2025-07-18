@@ -139,7 +139,10 @@ type CachingContext = {
 //
 
 class WithExecutionCaching extends DecoratedPreparedExecution {
-    constructor(decorated: IPreparedExecution, private readonly ctx: CachingContext) {
+    constructor(
+        decorated: IPreparedExecution,
+        private readonly ctx: CachingContext,
+    ) {
         super(decorated);
     }
 
@@ -392,7 +395,10 @@ function optionsKey(options: IWorkspaceCatalogFactoryOptions): string {
 }
 
 class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
-    constructor(decorated: IWorkspaceCatalogFactory, private readonly ctx: CachingContext) {
+    constructor(
+        decorated: IWorkspaceCatalogFactory,
+        private readonly ctx: CachingContext,
+    ) {
         super(decorated);
     }
 
@@ -498,7 +504,10 @@ function validUrlInContextKey(url: string, context: ValidationContext): string {
 }
 
 class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
-    constructor(decorated: ISecuritySettingsService, private readonly ctx: CachingContext) {
+    constructor(
+        decorated: ISecuritySettingsService,
+        private readonly ctx: CachingContext,
+    ) {
         super(decorated);
     }
 

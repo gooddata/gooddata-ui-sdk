@@ -4,7 +4,7 @@ import React from "react";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { AddButton } from "@gooddata/sdk-ui-kit";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 
 const onClick = () => {
     action("onClick");

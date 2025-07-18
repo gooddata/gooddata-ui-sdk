@@ -6,7 +6,8 @@ $base_path: "@gooddata/sdk-ui-kit/styles";
 @font-face {
     font-family: "Indigo";
     src: url($base_path + "/fonts/Indigo-v2.eot");
-    src: url($base_path + "/fonts/Indigo-v2.eot?#iefix") format("embedded-opentype"),
+    src:
+        url($base_path + "/fonts/Indigo-v2.eot?#iefix") format("embedded-opentype"),
         url($base_path + "/fonts/Indigo-v2.woff") format("woff"),
         url($base_path + "/fonts/Indigo-v2.ttf") format("truetype"),
         url($base_path + "/fonts/Indigo-v2.svg#Indigo-v2") format("svg");

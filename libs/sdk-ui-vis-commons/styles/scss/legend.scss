@@ -91,6 +91,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
     .series-axis-indicator {
         cursor: default;
         margin-right: -10px;
+
         .series-text {
             color: var(--gd-chart-legendLabelColor, kit-variables.$gd-color-text-dimmed);
         }
@@ -232,6 +233,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
                     margin-left: 25px;
                 }
             }
+
             .circle-separator {
                 // stylelint-disable-next-line max-nesting-depth
                 &::after {
@@ -434,6 +436,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 
         .series {
             flex-wrap: wrap;
+
             .series-name {
                 flex: 1 1 auto;
             }
@@ -573,7 +576,8 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
     min-height: 148px;
     border: 1px solid var(--gd-palette-complementary-3-from-theme, color.adjust($dialog-border, $alpha: -0.5));
     border-radius: 5px;
-    box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
+    box-shadow:
+        0 1px 3px 0 button-variables.$button-shadow-lighter,
         0 2px 9px 0 button-variables.$button-shadow-darker;
     background: $dialog-background;
 
@@ -660,6 +664,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
     .legend-popup-dialog-content.zoomed {
         width: 100%;
         height: 100%;
+
         .legend-content {
             width: 100%;
             height: 100%;
@@ -845,6 +850,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 
 .legend-series-wrapper:focus-visible {
     outline: none;
+
     .series-item--isFocused {
         @include mixins.focus-ring;
     }

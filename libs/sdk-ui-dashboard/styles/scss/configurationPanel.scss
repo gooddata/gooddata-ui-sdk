@@ -69,6 +69,7 @@
     $gd-configuration-bubble-arrow-height: 14px;
 
     z-index: zIndexes.$configuration-panel;
+
     &.is-sticky {
         z-index: zIndexes.$configuration-panel-sticky;
     }
@@ -114,6 +115,7 @@
             margin-right: variables.$gd-configuration-bubble-margin;
             margin-bottom: 0;
             padding: 0;
+
             &:last-child {
                 margin-bottom: variables.$gd-configuration-bubble-margin;
             }
@@ -390,7 +392,8 @@
 
         // refactor
         // stylelint-disable-next-line max-line-length
-        box-shadow: 0 0 3px 0 variables.$gd-palette-primary-base-t50,
+        box-shadow:
+            0 0 3px 0 variables.$gd-palette-primary-base-t50,
             0 1px 2px 0 button-variables.$button-shadow-darker;
         color: kit-variables.$gd-palette-primary-base;
     }
@@ -537,6 +540,7 @@
         h6 {
             display: none;
         }
+
         .gd-icon-circle-question {
             cursor: help;
             margin-left: -12px;
@@ -545,8 +549,11 @@
             &:hover::before {
                 color: var(--gd-palette-complementary-5-from-theme, #999);
             }
+
             &::before {
-                font: 14px/1 "Indigo", sans-serif;
+                font:
+                    14px/1 "Indigo",
+                    sans-serif;
                 color: var(--gd-palette-complementary-5-from-theme, #bbb);
             }
         }
@@ -576,26 +583,33 @@
             width: auto;
             padding: 0 10px 0 10px;
         }
+
         .gd-input {
             margin-top: 10px;
         }
+
         .description {
             font-size: 13px;
             resize: none;
+
             &:not(:disabled) {
                 color: kit-variables.$gd-color-text;
             }
         }
+
         .include-metrics-wrapper {
             margin-top: 10px;
+
             .input-checkbox-label {
                 display: inline-block;
             }
+
             .gd-bubble-trigger {
                 display: inline-block;
                 vertical-align: middle;
             }
         }
+
         .gd-icon-circle-question {
             cursor: help;
             color: kit-variables.$gd-color-state-blank;
@@ -619,6 +633,7 @@
 
 .gd-configuration-export-options {
     width: 100%;
+
     .gd-export-options-pdf-presentation,
     .gd-export-options-pptx-presentation,
     .gd-export-options-xlsx,
@@ -627,6 +642,7 @@
     .gd-export-options-png {
         justify-content: flex-start;
     }
+
     .gd-export-icon {
         margin-right: 10px;
         display: flex;

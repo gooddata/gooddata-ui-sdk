@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 /* eslint-disable sonarjs/no-identical-functions */
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import React, { useState } from "react";
 import { InternalIntlWrapper, LegendSection } from "@gooddata/sdk-ui-ext/internal";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";

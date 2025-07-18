@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { AddGranteeBase, ComponentLabelsProvider, IAffectedSharedObject } from "@gooddata/sdk-ui-kit";

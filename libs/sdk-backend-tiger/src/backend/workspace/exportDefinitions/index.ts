@@ -34,7 +34,10 @@ import { exportDefinitionsListComparator } from "./comparator.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefinitionsService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+    ) {}
 
     public getExportDefinitions = async (
         options?: IExportDefinitionsQueryOptions,

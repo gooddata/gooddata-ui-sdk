@@ -19,7 +19,9 @@
         border: 1px solid var(--gd-palette-complementary-5);
         border-radius: 2px;
         position: relative;
-        transition: background-color 0.2s, border-color 0.2s;
+        transition:
+            background-color 0.2s,
+            border-color 0.2s;
         background-color: var(--gd-palette-complementary-0);
 
         &:hover {

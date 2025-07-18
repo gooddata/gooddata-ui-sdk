@@ -704,7 +704,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private renderOptionLabel = (recipient: IAutomationRecipient): React.ReactElement | null => {
         const { allowExternalRecipients, externalRecipientOverride } = this.props;
         const displayName = recipient.name ?? recipient.id;
-        const email = isAutomationUserRecipient(recipient) ? recipient.email ?? "" : "";
+        const email = isAutomationUserRecipient(recipient) ? (recipient.email ?? "") : "";
 
         const value = this.renderRecipientValue(recipient);
 
@@ -743,7 +743,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     };
 
     private renderRecipientValue = (recipient: IAutomationRecipient): React.ReactElement | null => {
-        const email = isAutomationUserRecipient(recipient) ? recipient.email ?? "" : "";
+        const email = isAutomationUserRecipient(recipient) ? (recipient.email ?? "") : "";
 
         if (isEmail(email)) {
             return (

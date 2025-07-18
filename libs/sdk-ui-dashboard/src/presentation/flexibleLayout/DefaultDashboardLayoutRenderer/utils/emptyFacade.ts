@@ -39,4 +39,4 @@ export const buildEmptyItemFacadeWithSetSize = (
         isWidgetItemWithKpiRef: () => false,
         isWidgetItemWithRef: () => false,
         isEmpty: () => false,
-    } as unknown as IDashboardLayoutItemFacade<unknown>);
+    }) as unknown as IDashboardLayoutItemFacade<unknown>;

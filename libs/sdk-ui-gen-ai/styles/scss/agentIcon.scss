@@ -77,9 +77,11 @@ $gd-palette-primary-base-midpoint: color-mix(
         &--from {
             stop-color: kit-variables.$gd-palette-primary-base;
         }
+
         &--mid {
             stop-color: $gd-palette-primary-base-midpoint;
         }
+
         &--to {
             stop-color: kit-variables.$gd-palette-primary-base-t80;
         }
@@ -90,6 +92,7 @@ $gd-palette-primary-base-midpoint: color-mix(
     0% {
         transform: translate(16px, 16px) rotate(0deg);
     }
+
     100% {
         transform: translate(16px, 16px) rotate(360deg);
     }
@@ -99,9 +102,11 @@ $gd-palette-primary-base-midpoint: color-mix(
     0% {
         opacity: 1;
     }
+
     50% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -111,9 +116,11 @@ $gd-palette-primary-base-midpoint: color-mix(
     0% {
         fill: kit-variables.$gd-palette-primary-dimmed;
     }
+
     50% {
         fill: kit-variables.$gd-palette-primary-base;
     }
+
     100% {
         fill: kit-variables.$gd-palette-primary-dimmed;
     }
@@ -123,9 +130,11 @@ $gd-palette-primary-base-midpoint: color-mix(
     0% {
         fill: kit-variables.$gd-color-text-light;
     }
+
     50% {
         fill: kit-variables.$gd-palette-error-dimmed;
     }
+
     100% {
         fill: kit-variables.$gd-color-text-light;
     }

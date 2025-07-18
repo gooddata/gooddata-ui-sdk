@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { transformToTypescript } from "../transform/toTypescript.js";
 import pkg from "prettier";
 const { format } = pkg;
@@ -18,7 +18,7 @@ export async function exportMetadataToTypescript(
     const output = transformToTypescript(projectMetadata, outputFile);
 
     const generatedTypescript = output.sourceFile.getFullText();
-    const formattedTypescript = format(generatedTypescript, { parser: "typescript", printWidth: 120 });
+    const formattedTypescript = await format(generatedTypescript, { parser: "typescript", printWidth: 120 });
 
     fs.writeFileSync(outputFile, formattedTypescript, { encoding: "utf-8" });
 }

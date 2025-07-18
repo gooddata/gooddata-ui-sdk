@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IInsightDefinition } from "@gooddata/sdk-model";
@@ -32,7 +32,7 @@ class ColumnHeadersPositionControl extends React.Component<
         const { pushData, properties, intl, isDisabled, defaultValue, insight } = this.props;
 
         const columnHeadersPosition = isSetColumnHeadersPositionToLeftAllowed(insight)
-            ? properties?.controls?.columnHeadersPosition ?? defaultValue
+            ? (properties?.controls?.columnHeadersPosition ?? defaultValue)
             : defaultValue;
 
         return (

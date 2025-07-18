@@ -67,7 +67,10 @@ import {
 } from "../../../convertors/fromBackend/CatalogConverter.js";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+    ) {}
 
     public getVisualizationClass = async (ref: ObjRef): Promise<IVisualizationClass> => {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);

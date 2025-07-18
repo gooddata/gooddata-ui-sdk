@@ -13,7 +13,10 @@ import {
 
 export type InteractionType = "measure" | "attribute";
 export class WidgetConfiguration {
-    constructor(private widgetIndex: number, private section: number = 0) {}
+    constructor(
+        private widgetIndex: number,
+        private section: number = 0,
+    ) {}
 
     getElement() {
         return cy.get(".s-gd-configuration-bubble");

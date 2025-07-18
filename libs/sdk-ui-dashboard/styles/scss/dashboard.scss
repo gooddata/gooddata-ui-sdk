@@ -120,6 +120,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
                     var(--gd-palette-complementary-9-from-theme, kit-variables.$default-gd-color-link)
                 );
             }
+
             .kpi-value.is-empty-value {
                 color: var(
                     --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor-from-theme,
@@ -167,6 +168,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 
         &.is-selected.dash-item-content {
             border-color: kit-variables.$gd-palette-primary-base;
+
             &:hover {
                 border-color: kit-variables.$gd-palette-primary-base;
             }
@@ -181,6 +183,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         .dash-item-action-lw-options {
             display: block;
             background-color: variables.$darker-grey-background;
+
             &::before {
                 color: var(--gd-palette-complementary-0, #fff);
             }
@@ -191,6 +194,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         .dash-item-action-options {
             display: block;
         }
+
         .dash-item-action-options.dash-item-action-as-table {
             display: flex;
         }
@@ -297,7 +301,8 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
             -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth}
         );
         right: calc(
-            -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth} + #{variables.$item-action-width}
+            -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth} +
+                #{variables.$item-action-width}
         );
     }
 
@@ -429,6 +434,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     display: flex;
     align-items: center;
     justify-content: center;
+
     &:hover {
         path {
             fill: kit-variables.$gd-color-white;
@@ -515,6 +521,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         .dash-item-action-options {
             display: block;
         }
+
         .dash-item-action-options.dash-item-action-as-table {
             display: flex;
         }
@@ -523,8 +530,8 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 
 .dash-item-action-placeholder-headline {
     right: calc(
-        -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth} + #{variables.$item-action-width} +
-            5px
+        -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth} +
+            #{variables.$item-action-width} + 5px
     );
 }
 
@@ -662,6 +669,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     &:hover,
     &.dash-item-action-widget-options-active {
         background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
+
         &::before {
             color: kit-variables.$gd-color-white;
         }
@@ -775,6 +783,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     left: 0;
     bottom: 0;
     right: 0;
+
     &.is-invisible {
         visibility: hidden;
     }
@@ -803,6 +812,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         color: kit-variables.$gd-color-state-blank;
         padding: 0;
     }
+
     .gd-menu-item {
         //stylelint-disable-next-line declaration-no-important
         padding: 5px 10px !important;
@@ -831,14 +841,19 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
                 border-color: kit-variables.$is-focused-background;
             }
         }
+
         &.gd-dashboard-nested-layout-widget {
             .gd-dashboard-nested-layout-widget {
                 padding: 10px 0 0 0; // make space for column drop zone in second level and below
             }
         }
-        &:not(.gd-dashboard-nested-layout-widget):not(.gd-first-container-row-widget):not(.drag-info-placeholder) {
+
+        &:not(.gd-dashboard-nested-layout-widget):not(.gd-first-container-row-widget):not(
+                .drag-info-placeholder
+            ) {
             padding: 10px 0; // no place between widgets, render only containers for resizers
         }
+
         &.gd-first-container-row-widget:not(.gd-dashboard-nested-layout-widget) {
             padding: 0 0 10px 0;
         }

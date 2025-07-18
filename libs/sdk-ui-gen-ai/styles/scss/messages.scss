@@ -91,7 +91,9 @@
 
     & path {
         opacity: 0.8;
-        transition: opacity 0.2s, fill 0.2s;
+        transition:
+            opacity 0.2s,
+            fill 0.2s;
     }
 
     &:hover path {
@@ -193,12 +195,15 @@
         &.metric {
             color: kit-variables.$gd-color-white;
         }
+
         &.fact {
             color: kit-variables.$gd-color-white;
         }
+
         &.attribute {
             color: kit-variables.$gd-color-white;
         }
+
         &.date {
             color: kit-variables.$gd-color-white;
         }
@@ -214,15 +219,19 @@
                 background-color: kit-variables.$gd-color-white;
             }
         }
+
         &.metric .gd-gen-ai-chat__message-icon {
             @include variables.gd-svg-mask("metric");
         }
+
         &.attribute .gd-gen-ai-chat__message-icon {
             @include variables.gd-svg-mask("attribute");
         }
+
         &.fact .gd-gen-ai-chat__message-icon {
             @include variables.gd-svg-mask("measure");
         }
+
         &.date .gd-gen-ai-chat__message-icon {
             @include variables.gd-svg-mask("date");
         }
@@ -276,6 +285,7 @@
             font-size: 0.8em;
         }
     }
+
     &--table {
         background: kit-variables.$gd-table-background;
     }
@@ -383,6 +393,7 @@
         opacity: 0;
         transform: translateY(10px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -393,9 +404,11 @@
     0% {
         opacity: 1;
     }
+
     50% {
         opacity: 0.3;
     }
+
     100% {
         opacity: 1;
     }

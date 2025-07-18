@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { Bubble, BubbleHoverTrigger, GD_COLOR_HIGHLIGHT, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -33,8 +33,8 @@ export const ToolbarTop: React.FC<IToolbarTopProps> = ({
     const nextDisabled = activeWidgetIndex === -1 || activeWidgetIndex >= visualizations.length - 1;
 
     const iconColor = visualizationsListShown
-        ? theme?.palette?.primary?.base ?? GD_COLOR_HIGHLIGHT
-        : theme?.palette?.complementary?.c7 ?? "#6D7680";
+        ? (theme?.palette?.primary?.base ?? GD_COLOR_HIGHLIGHT)
+        : (theme?.palette?.complementary?.c7 ?? "#6D7680");
 
     const enabledColor = theme?.palette?.complementary?.c7 ?? "#6D7680";
     const disabledColor = theme?.palette?.complementary?.c5 ?? "#B0BECA";

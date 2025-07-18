@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import blessed from "blessed";
 import { AppPanel, AppPanelOptions } from "./appPanel.js";
 import { DcEvent, EventBus, GlobalEventBus, IEventListener, Severity } from "../events.js";
@@ -16,7 +16,10 @@ export class AppLog extends AppPanel implements IEventListener {
     private readonly log: blessed.Widgets.Log;
     public expanded: boolean = false;
 
-    constructor(options: AppPanelOptions, private readonly eventBus: EventBus = GlobalEventBus) {
+    constructor(
+        options: AppPanelOptions,
+        private readonly eventBus: EventBus = GlobalEventBus,
+    ) {
         super(options);
 
         this.log = blessed.log({

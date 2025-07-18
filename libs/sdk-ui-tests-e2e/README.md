@@ -24,9 +24,9 @@ export IMAGE_ID=ui-sdk-scenarios
 
 Provide all necessary info in the `.env` file. You can find more information in the file `.env.template`.
 
--   FIXTURE_TYPE=goodsales
--   CYPRESS_TEST_TAGS=checklist_integrated_tiger
--   TIGER_API_TOKEN=
+- FIXTURE_TYPE=goodsales
+- CYPRESS_TEST_TAGS=checklist_integrated_tiger
+- TIGER_API_TOKEN=
 
 Add FILTER env variable with test file name to run and CYPRESS_TEST_TAGS env var to specify a comma-separated list of tags to run.
 
@@ -50,24 +50,24 @@ When have a new change on dashboard, we should run `rushx export-fixture` to upd
 
 To run the tests against a mock backend follow these steps:
 
--   Run `rushx prepare-recording-workspace-id` to update workspace_id in record mapping file to `.env`.
--   Run `rushx build-scenarios` to build the testing application. The application will run on port 9500.
--   Run `rushx run-isolated-local` to start isolated test with mock backend in local instance.
+- Run `rushx prepare-recording-workspace-id` to update workspace_id in record mapping file to `.env`.
+- Run `rushx build-scenarios` to build the testing application. The application will run on port 9500.
+- Run `rushx run-isolated-local` to start isolated test with mock backend in local instance.
 
 ### Adding new test
 
--   In folder `cypres/integration` you can either create new folder for the tests you're writing. You can then add new `*.spec.ts` file into either this new folder or to suitable existing one.
--   In the `scenarios/src/components/Scenarios`, create new Scenario file and within the new file use the component you are about to test.
--   In the `scenarios/src/routes/ComponentResolver`, add the `ScenarioComponent` you just created with a new unique hash. Navigation component takes this hash as its parameter and navigates the application to matching component.
--   In the `.env` file, type the spec file name into `FILTER` variable, file name must be fully specified (e.g. dateFilter.spec.ts). This will keep all the recordings untouched and creates the recording for the new spec only.
--   Run command `rushx run-isolated-record` to create new recordings for tests.
+- In folder `cypres/integration` you can either create new folder for the tests you're writing. You can then add new `*.spec.ts` file into either this new folder or to suitable existing one.
+- In the `scenarios/src/components/Scenarios`, create new Scenario file and within the new file use the component you are about to test.
+- In the `scenarios/src/routes/ComponentResolver`, add the `ScenarioComponent` you just created with a new unique hash. Navigation component takes this hash as its parameter and navigates the application to matching component.
+- In the `.env` file, type the spec file name into `FILTER` variable, file name must be fully specified (e.g. dateFilter.spec.ts). This will keep all the recordings untouched and creates the recording for the new spec only.
+- Run command `rushx run-isolated-record` to create new recordings for tests.
 
 ### Test results
 
--   If tests fail, there are 3 ways how to check what happened:
-    -   screenshots in `cypress/screenshots`
-    -   videos in `cypress/videos`
-    -   if you are running tests in record mode, then you can see all calls logged in `recording/mappings`
+- If tests fail, there are 3 ways how to check what happened:
+    - screenshots in `cypress/screenshots`
+    - videos in `cypress/videos`
+    - if you are running tests in record mode, then you can see all calls logged in `recording/mappings`
 
 ### Running things on Apple Silicon
 
@@ -81,9 +81,9 @@ Do not commit this change!
 Good for debugging the tooling when tests are passing with live backend but fail on CI.
 Runs Cypress, Scenarios, and Wiremock separately in Docker.
 
--   Start recorded backend `npm run local-dev-wiremock` (add `--verbose` param for debugging)
--   Start Scenarios `npm run run-scenarios-local`
--   Run Cypress `npm run local-dev-test-visual-recordings`
+- Start recorded backend `npm run local-dev-wiremock` (add `--verbose` param for debugging)
+- Start Scenarios `npm run run-scenarios-local`
+- Run Cypress `npm run local-dev-test-visual-recordings`
 
 _Note:_ this approach allows running only a single test at a time.
 Mappings are imported to wiremock for this particular test only and only this test is visible in cypress live controls.
@@ -95,11 +95,11 @@ See `run_local_dev_isolated.js` for configuration options.
 The `TIGER_API_TOKEN` is not bundled into the scenarios and it's provided by the cypress when it runs.
 To preview the examples running locally on http://localhost:9500 you need to provide the token using one of the following methods
 
--   Use modheader browser extension and add `Authorization` header with `Bearer <API_TOKEN>` (replace `<API_TOKEN>` with your token)
-    Make sure you filter requests to http://localhost:9500 so that your token is not leaked to every site you visit.
+- Use modheader browser extension and add `Authorization` header with `Bearer <API_TOKEN>` (replace `<API_TOKEN>` with your token)
+  Make sure you filter requests to http://localhost:9500 so that your token is not leaked to every site you visit.
 
--   Comment out `process.env.TIGER_API_TOKEN=""` line in scenarios/webpack_config.cjs and build the
-    scenarios with `rushx build-scenarios`. The token would get bundled there.
+- Comment out `process.env.TIGER_API_TOKEN=""` line in scenarios/webpack_config.cjs and build the
+  scenarios with `rushx build-scenarios`. The token would get bundled there.
 
 ## DEV Guide for integrated tests
 

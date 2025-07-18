@@ -5581,7 +5581,7 @@ export const RECURRENCE_TYPES: {
 export const RecurrenceForm: React_2.FC<IRecurrenceFormProps>;
 
 // @internal
-export type RecurrenceType = typeof RECURRENCE_TYPES[RecurrenceTypeKey];
+export type RecurrenceType = (typeof RECURRENCE_TYPES)[RecurrenceTypeKey];
 
 // @internal
 export type RecurrenceTypeKey = keyof typeof RECURRENCE_TYPES;

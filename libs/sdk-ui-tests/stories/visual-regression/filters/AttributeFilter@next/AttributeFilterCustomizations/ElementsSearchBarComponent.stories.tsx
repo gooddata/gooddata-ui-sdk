@@ -3,7 +3,7 @@ import React from "react";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter, IAttributeFilterElementsSearchBarProps } from "@gooddata/sdk-ui-filters";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend.js";
 import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper.js";

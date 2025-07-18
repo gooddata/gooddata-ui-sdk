@@ -76,7 +76,7 @@ export class NotificationsQuery implements INotificationsQuery {
                 return {
                     items,
                     totalCount:
-                        this.status === "unread" ? response.data.meta.total?.unread ?? 0 : this.totalCount!,
+                        this.status === "unread" ? (response.data.meta.total?.unread ?? 0) : this.totalCount!,
                 };
             },
             this.size,

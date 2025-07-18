@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
 import compact from "lodash/compact.js";
@@ -98,9 +98,8 @@ export function* drillToDashboardHandler(
     const includeOtherDateFilters = supportsMultipleDateFilters && enableMultipleDateFilters;
 
     const allOtherFilters: ReturnType<typeof selectAllOtherFilters> = yield select(selectAllOtherFilters);
-    const allAttributeFilters: ReturnType<typeof selectAllAttributeFilters> = yield select(
-        selectAllAttributeFilters,
-    );
+    const allAttributeFilters: ReturnType<typeof selectAllAttributeFilters> =
+        yield select(selectAllAttributeFilters);
 
     const widgetAwareFilters: SagaReturnType<typeof getWidgetAwareDashboardFilters> = !isDrillingToSelf
         ? yield call(getWidgetAwareDashboardFilters, ctx, widget, includeOtherDateFilters)
@@ -114,9 +113,8 @@ export function* drillToDashboardHandler(
         : // if drilling to other, resolve widget filter ignores
           widgetAwareFilters;
 
-    const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
-        selectCatalogDateAttributes,
-    );
+    const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> =
+        yield select(selectCatalogDateAttributes);
 
     const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
         typeof selectEnableDuplicatedLabelValuesInAttributeFilter

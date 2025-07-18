@@ -3,7 +3,7 @@
 import React from "react";
 import { RecurrenceForm } from "@gooddata/sdk-ui-kit";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 

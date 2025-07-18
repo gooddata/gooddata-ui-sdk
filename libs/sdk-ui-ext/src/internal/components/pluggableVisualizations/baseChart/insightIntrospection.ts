@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { bucketItems, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { isBarChart, isScatterPlot, isBubbleChart, isBulletChart } from "@gooddata/sdk-ui-charts";
@@ -45,8 +45,8 @@ export function countItemsOnAxes(
 
     const secondaryMeasureCountInConfig = (
         isBarFamilyChartType
-            ? controls?.secondary_xaxis?.measures ?? []
-            : controls?.secondary_yaxis?.measures ?? []
+            ? (controls?.secondary_xaxis?.measures ?? [])
+            : (controls?.secondary_yaxis?.measures ?? [])
     ).length;
 
     if (isBarFamilyChartType) {

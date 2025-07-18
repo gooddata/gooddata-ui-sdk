@@ -6,7 +6,7 @@ import { StorybookBackend, ReferenceWorkspaceId } from "../../_infra/backend.js"
 import { wrapWithTheme } from "../themeWrapper.js";
 
 import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 
 const backend = StorybookBackend();
 

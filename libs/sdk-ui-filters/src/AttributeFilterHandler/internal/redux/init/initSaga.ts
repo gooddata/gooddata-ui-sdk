@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, all, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
@@ -33,9 +33,8 @@ function* initSaga(action: ReturnType<typeof actions.init>): SagaIterator<void> 
     try {
         yield put(actions.initStart({ correlation }));
 
-        const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(
-            getAttributeFilterContext,
-        );
+        const context: SagaReturnType<typeof getAttributeFilterContext> =
+            yield call(getAttributeFilterContext);
         const hiddenElements: ReturnType<typeof selectHiddenElements> = yield select(selectHiddenElements);
         const limitingFilters: ReturnType<typeof selectLimitingAttributeFilters> = yield select(
             selectLimitingAttributeFilters,
@@ -43,9 +42,8 @@ function* initSaga(action: ReturnType<typeof actions.init>): SagaIterator<void> 
         const limitingValidationItems: ReturnType<typeof selectLimitingValidationItems> = yield select(
             selectLimitingValidationItems,
         );
-        const limitingDateFilters: ReturnType<typeof selectLimitingDateFilters> = yield select(
-            selectLimitingDateFilters,
-        );
+        const limitingDateFilters: ReturnType<typeof selectLimitingDateFilters> =
+            yield select(selectLimitingDateFilters);
         const isWorkingSelectionEmpty: ReturnType<typeof selectIsWorkingSelectionEmpty> = yield select(
             selectIsWorkingSelectionEmpty,
         );

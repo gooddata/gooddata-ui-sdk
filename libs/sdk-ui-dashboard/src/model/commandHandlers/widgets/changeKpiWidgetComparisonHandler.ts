@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ChangeKpiWidgetComparison } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
@@ -25,7 +25,7 @@ export function* changeKpiWidgetComparisonHandler(
 
     const resolvedComparisonType = comparisonType ?? "none";
     const resolvedComparisonDirection =
-        resolvedComparisonType !== "none" ? comparisonDirection ?? "growIsGood" : undefined;
+        resolvedComparisonType !== "none" ? (comparisonDirection ?? "growIsGood") : undefined;
 
     yield put(
         layoutActions.replaceKpiWidgetComparison({

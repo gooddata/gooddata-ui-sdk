@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 import {
     ObjRef,
@@ -32,7 +32,10 @@ export interface IKpiWidgetBuilder extends IWidgetBaseBuilder<IKpiWidget> {
  * @alpha
  */
 export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements IKpiWidgetBuilder {
-    constructor(protected item: IKpiWidget, protected validator?: (item: Partial<IKpiWidget>) => void) {
+    constructor(
+        protected item: IKpiWidget,
+        protected validator?: (item: Partial<IKpiWidget>) => void,
+    ) {
         super(item, validator);
     }
 

@@ -259,7 +259,7 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@storybook/addon-actions",
+      "name": "@storybook/builder-vite",
       "allowedCategories": [ "production" ]
     },
     {
@@ -280,6 +280,10 @@
     },
     {
       "name": "@storybook/react",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@storybook/react-vite",
       "allowedCategories": [ "production" ]
     },
     {
@@ -627,6 +631,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "copy-vite-plugin",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "copy-webpack-plugin",
       "allowedCategories": [ "production" ]
     },
@@ -704,6 +712,10 @@
     },
     {
       "name": "eslint",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-config-prettier",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -1155,6 +1167,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "storybook",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "stringify-object",
       "allowedCategories": [ "production" ]
     },
@@ -1236,7 +1252,7 @@
     },
     {
       "name": "vite",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "vite-plugin-html",

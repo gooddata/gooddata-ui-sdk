@@ -24,7 +24,10 @@ import {
 } from "../decoratedBackend/execution.js";
 
 class WithExecutionEventing extends DecoratedPreparedExecution {
-    constructor(decorated: IPreparedExecution, private readonly callbacks: AnalyticalBackendCallbacks) {
+    constructor(
+        decorated: IPreparedExecution,
+        private readonly callbacks: AnalyticalBackendCallbacks,
+    ) {
         super(decorated);
     }
 

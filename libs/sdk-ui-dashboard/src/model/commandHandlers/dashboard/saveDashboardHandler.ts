@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { AnyAction } from "@reduxjs/toolkit";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { changeRenderMode, SaveDashboard } from "../../commands/index.js";
@@ -121,18 +121,15 @@ function* createDashboardSaveContext(
     cmd: SaveDashboard,
     isNewDashboard: boolean,
 ): SagaIterator<DashboardSaveContext> {
-    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
-        selectPersistedDashboard,
-    );
-    const dashboardDescriptor: ReturnType<typeof selectDashboardDescriptor> = yield select(
-        selectDashboardDescriptor,
-    );
+    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
+        yield select(selectPersistedDashboard);
+    const dashboardDescriptor: ReturnType<typeof selectDashboardDescriptor> =
+        yield select(selectDashboardDescriptor);
     const filterContextDefinition: ReturnType<typeof selectFilterContextDefinition> = yield select(
         selectFilterContextDefinition,
     );
-    const filterContextIdentity: ReturnType<typeof selectFilterContextIdentity> = yield select(
-        selectFilterContextIdentity,
-    );
+    const filterContextIdentity: ReturnType<typeof selectFilterContextIdentity> =
+        yield select(selectFilterContextIdentity);
     const layout: ReturnType<typeof selectBasicLayout> = yield select(selectBasicLayout);
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfigOverrides> = yield select(
         selectDateFilterConfigOverrides,
@@ -144,9 +141,8 @@ function* createDashboardSaveContext(
         selectDateFilterConfigsOverrides,
     );
     const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
-    const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
-        selectBackendCapabilities,
-    );
+    const capabilities: ReturnType<typeof selectBackendCapabilities> =
+        yield select(selectBackendCapabilities);
 
     /*
      * When updating an existing dashboard, the services expect that the dashboard definition to use for
@@ -252,9 +248,8 @@ export function* saveDashboardHandler(
     try {
         yield put(savingActions.setSavingStart());
 
-        const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
-            selectPersistedDashboard,
-        );
+        const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
+            yield select(selectPersistedDashboard);
 
         const isNewDashboard = persistedDashboard === undefined;
 

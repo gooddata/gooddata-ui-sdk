@@ -4,9 +4,10 @@
 @use "indigoFont";
 
 $base-path: "@gooddata/sdk-ui-kit/styles/images/visualization-types/";
-$visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, funnel, pyramid, headline,
-    heatmap, line, pie, scatter, table, treemap, unknown, xirr, pushpin, region, bullet, dependencywheel,
-    sankey, waterfall, repeater;
+$visualization-types:
+    area, bar, bubble, column, combo, combo2, donut, dual, funnel, pyramid, headline, heatmap, line, pie,
+    scatter, table, treemap, unknown, xirr, pushpin, region, bullet, dependencywheel, sankey, waterfall,
+    repeater;
 
 %visualisation-icon {
     display: inline-block;
@@ -15,10 +16,14 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
     vertical-align: top;
     margin-right: 9px;
     background-repeat: no-repeat;
-    background-position: center, -999px -999px;
+    background-position:
+        center,
+        -999px -999px;
 
     .is-selected & {
-        background-position: -999px -999px, center;
+        background-position:
+            -999px -999px,
+            center;
     }
 }
 
@@ -62,7 +67,8 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
     &:hover {
         position: relative;
         border-color: var(--gd-palette-complementary-5-from-theme, transparent);
-        box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
+        box-shadow:
+            0 1px 3px 0 button-variables.$button-shadow-lighter,
             0 2px 9px 0 button-variables.$button-shadow-darker;
         background-color: var(--gd-palette-complementary-0, #fff);
     }

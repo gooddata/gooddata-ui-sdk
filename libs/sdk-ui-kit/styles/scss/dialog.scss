@@ -343,10 +343,12 @@
         input[type="radio"] {
             position: absolute;
             opacity: 0;
+
             &:checked ~ span::before {
                 border-color: transparent;
                 background-color: #14b2e2;
             }
+
             &:checked ~ span::after {
                 transform: scale(1);
             }
@@ -403,7 +405,12 @@
             border-radius: var(--gd-button-borderRadius, 3px);
             box-shadow: var(--gd-button-dropShadow, 1px 1px 0)
                 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.09));
-            font: 700 14px/20px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+            font:
+                700 14px/20px gdcustomfont,
+                avenir,
+                "Helvetica Neue",
+                arial,
+                sans-serif;
             white-space: nowrap;
             vertical-align: middle;
             text-align: left;
@@ -414,13 +421,15 @@
             transition: all 0.25s ease-in-out;
 
             &:hover {
-                box-shadow: 0 1px 1px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
+                box-shadow:
+                    0 1px 1px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
                     inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
                 background: var(--gd-palette-primary-base-d06, #129cc6);
             }
 
             &:focus {
-                box-shadow: var(--gd-button-dropShadow, 0 0 3px 1px)
+                box-shadow:
+                    var(--gd-button-dropShadow, 0 0 3px 1px)
                         var(--gd-palette-primary-focus, rgba(41, 190, 236, 0.6)),
                     var(--gd-button-dropShadow, 0 1px 1px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
                     inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);

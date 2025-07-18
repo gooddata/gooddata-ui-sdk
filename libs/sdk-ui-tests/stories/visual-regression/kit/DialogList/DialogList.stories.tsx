@@ -3,7 +3,7 @@
 import React from "react";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { DialogList } from "@gooddata/sdk-ui-kit";
 import { itemsMock as items } from "./itemsMock.js";
 

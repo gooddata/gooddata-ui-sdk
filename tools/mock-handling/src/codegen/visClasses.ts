@@ -1,34 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import * as path from "path";
-import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
-import compact from "lodash/compact.js";
 import { VisClassesRecording } from "../recordings/visClasses.js";
-
-function visClassesRecordingInit(rec: VisClassesRecording, targetDir: string): string {
-    const entries = Object.entries(rec.getEntryForRecordingIndex());
-
-    const entryRows = entries
-        .map(([type, file]) => `${type}: require('./${path.relative(targetDir, file)}')`)
-        .join(",");
-
-    return `{ ${entryRows} }`;
-}
-
-function generateRecordingConst(
-    rec: VisClassesRecording,
-    targetDir: string,
-): OptionalKind<VariableStatementStructure> {
-    return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: false,
-        declarations: [
-            {
-                name: rec.getRecordingName(),
-                initializer: visClassesRecordingInit(rec, targetDir),
-            },
-        ],
-    };
-}
 
 /**
  * Generate constants for visClasses recording. This function will return non-exported constant per recording.
@@ -37,9 +9,18 @@ function generateRecordingConst(
  * @param targetDir - absolute path to directory where index will be stored, this is needed so that paths can be
  *   made relative for require()
  */
-export function generateConstantsForVisClasses(
-    recording: VisClassesRecording | null,
-    targetDir: string,
-): Array<OptionalKind<VariableStatementStructure>> {
-    return compact([recording && generateRecordingConst(recording, targetDir)]);
+export function generateConstantsForVisClasses(recording: VisClassesRecording, targetDir: string): string[] {
+    const entries = Object.entries(recording.getEntryForRecordingIndex());
+
+    const recordingName = recording.getRecordingName();
+
+    const entryRows = entries.map(([type, _]) => `${type}: ${recordingName}_${type}`).join(",");
+
+    return [
+        ...entries.map(
+            ([type, file]) =>
+                `import ${recordingName}_${type} from "./${path.relative(targetDir, file)}" with { type: "json" };`,
+        ),
+        `const ${recordingName} = { ${entryRows} };`,
+    ];
 }

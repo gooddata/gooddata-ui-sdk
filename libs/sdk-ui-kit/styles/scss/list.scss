@@ -165,6 +165,7 @@ button.gd-list-item {
             background-color: variables.$is-selected-focused-background;
         }
     }
+
     &:focus-visible {
         outline: revert;
         outline-offset: -2px; // pull outline inside to not have it clipped by item's overflow: hidden

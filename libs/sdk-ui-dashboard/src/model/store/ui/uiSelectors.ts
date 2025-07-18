@@ -473,13 +473,16 @@ export const selectWidgetsModification: (
         createSelector(
             selectWidgetsOverlay,
             (overlay): Required<IDashboardWidgetOverlay>["modification"][] => {
-                return refs.reduce((modification, ref) => {
-                    const item = ref && overlay[objRefToString(ref)];
-                    if (item?.modification) {
-                        return union(modification, [item.modification]);
-                    }
-                    return modification;
-                }, [] as Required<IDashboardWidgetOverlay>["modification"][]);
+                return refs.reduce(
+                    (modification, ref) => {
+                        const item = ref && overlay[objRefToString(ref)];
+                        if (item?.modification) {
+                            return union(modification, [item.modification]);
+                        }
+                        return modification;
+                    },
+                    [] as Required<IDashboardWidgetOverlay>["modification"][],
+                );
             },
         ),
 );

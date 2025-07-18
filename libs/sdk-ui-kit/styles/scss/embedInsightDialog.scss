@@ -118,6 +118,7 @@
 .embed-insight-dialog-prep-env-message {
     width: 100%;
     margin-bottom: 20px;
+
     .gd-message-text {
         display: flex;
         justify-content: space-between;
@@ -175,6 +176,7 @@
     .toggle-switch {
         padding-right: 30px;
     }
+
     .toggle-switch-title {
         margin-left: 10px;
     }
@@ -182,6 +184,7 @@
     .toggle-switch-icon {
         margin: 0 5px;
     }
+
     .toggle-switch-icon::before {
         vertical-align: middle;
         color: variables.$default-gd-color-state-blank;

@@ -6,6 +6,7 @@
 
 .gd-attribute-filter-delete-button {
     float: left;
+
     .delete-button:hover::before {
         color: variables.$gd-color-negative;
     }
@@ -46,7 +47,8 @@
         &:hover,
         &.is-active {
             border-color: button-variables.$button-normal-active-border-color;
-            box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker,
+            box-shadow:
+                0 1px 1px 0 button-variables.$button-shadow-darker,
                 inset 0 -1px 0 0 button-variables.$button-normal-hover-box-shadow;
             background-color: button-variables.$button-normal-bg;
         }

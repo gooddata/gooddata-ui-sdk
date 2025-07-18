@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import blessed, { Widgets } from "blessed";
 import { getTerminalSize } from "./utils.js";
 import { ColorCodes } from "./colors.js";
@@ -24,7 +24,10 @@ const MenuItemLength = 10;
 export class AppMenu {
     private readonly text: blessed.Widgets.TextElement;
 
-    constructor(private readonly screen: blessed.Widgets.Screen, private readonly items: AppMenuItem[]) {
+    constructor(
+        private readonly screen: blessed.Widgets.Screen,
+        private readonly items: AppMenuItem[],
+    ) {
         const [rows, cols] = getTerminalSize(this.screen);
 
         this.text = blessed.text({
