@@ -23511,6 +23511,394 @@ exports[`ComboChart > with stack primary measures with different chart type - co
 }
 `;
 
+exports[`ComboChart > with threshold combo zones > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "dt_closedate_timestamp.day",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_dt_closedate_timestamp.day",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "snapshot_bop",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_snapshot_bop",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "metric_has_null_value",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_metric_has_null_value",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_c5ee7836_126c_41aa_bd69_1873d379a065",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "timeline_bop",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_timeline_bop",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_dt_closedate_timestamp.day",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_dt_closedate_timestamp.day",
+      ],
+    },
+  ],
+  "filters": [
+    {
+      "absoluteDateFilter": {
+        "dataSet": {
+          "identifier": "dt_closedate_timestamp",
+          "type": "dataSet",
+        },
+        "from": "2013-04-17",
+        "to": "2013-05-31",
+      },
+    },
+  ],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "snapshot_bop",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_snapshot_bop",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "metric_has_null_value",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_metric_has_null_value",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_c5ee7836_126c_41aa_bd69_1873d379a065",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "timeline_bop",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_timeline_bop",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart > with threshold combo zones > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+    "thresholdMeasures": [
+      "m_metric_has_null_value",
+    ],
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`ComboChart > with threshold combo zones with excluded measures > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "dt_closedate_timestamp.day",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_dt_closedate_timestamp.day",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "snapshot_bop",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_snapshot_bop",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "metric_has_null_value",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_metric_has_null_value",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_c5ee7836_126c_41aa_bd69_1873d379a065",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "timeline_bop",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_timeline_bop",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_dt_closedate_timestamp.day",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_dt_closedate_timestamp.day",
+      ],
+    },
+  ],
+  "filters": [
+    {
+      "absoluteDateFilter": {
+        "dataSet": {
+          "identifier": "dt_closedate_timestamp",
+          "type": "dataSet",
+        },
+        "from": "2013-04-17",
+        "to": "2013-05-31",
+      },
+    },
+  ],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "snapshot_bop",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_snapshot_bop",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "metric_has_null_value",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_metric_has_null_value",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_c5ee7836_126c_41aa_bd69_1873d379a065",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "timeline_bop",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_timeline_bop",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart > with threshold combo zones with excluded measures > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+    "thresholdExcludedMeasures": [
+      "m_snapshot_bop",
+      "m_timeline_bop",
+    ],
+    "thresholdMeasures": [
+      "m_metric_has_null_value",
+    ],
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
 exports[`ComboChart > with two measures with null values > should create expected execution definition 1`] = `
 {
   "attributes": [

@@ -738,6 +738,24 @@ exports[`createDataAccessDigest > should find slices and series for: ComboChart 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: ComboChart - threshold combo zones 1`] = `
+{
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 13,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: ComboChart - threshold combo zones with excluded measures 1`] = `
+{
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 13,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: ComboChart - two measures with null values 1`] = `
 {
   "seriesCount": 2,

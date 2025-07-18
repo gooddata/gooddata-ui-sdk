@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor, CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
@@ -16,6 +16,8 @@ import {
     legendResponsiveVariants,
     legendResponsiveSizeVariants,
 } from "../_infra/legendResponsiveVariants.js";
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { measureLocalId, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 export function dataPointCustomizerForComboCharts<T extends IComboChartProps>(
     baseName: string,
@@ -79,10 +81,40 @@ const connectNullsScenarios = scenariosFor<IComboChartProps>("ComboChart", Combo
         config: { continuousLine: { enabled: true } },
     });
 
+const thresholdComboZonesScenario = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .addScenario("threshold combo zones", {
+        primaryMeasures: [ReferenceMd.SnapshotBOP, ReferenceMd.MetricHasNullValue],
+        secondaryMeasures: [ReferenceMd.SnapshotEOP, ReferenceMd.TimelineBOP],
+        viewBy: ReferenceMd.DateDatasets.Closed.ClosedDate.Default,
+        filters: [newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2013-04-17", "2013-05-31")],
+        config: {
+            thresholdMeasures: [measureLocalId(ReferenceMd.MetricHasNullValue)],
+        },
+    });
+
+const thresholdComboZonesWithExcludedScenario = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .addScenario("threshold combo zones with excluded measures", {
+        primaryMeasures: [ReferenceMd.SnapshotBOP, ReferenceMd.MetricHasNullValue],
+        secondaryMeasures: [ReferenceMd.SnapshotEOP, ReferenceMd.TimelineBOP],
+        viewBy: ReferenceMd.DateDatasets.Closed.ClosedDate.Default,
+        filters: [newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2013-04-17", "2013-05-31")],
+        config: {
+            thresholdMeasures: [measureLocalId(ReferenceMd.MetricHasNullValue)],
+            thresholdExcludedMeasures: [
+                measureLocalId(ReferenceMd.SnapshotBOP),
+                measureLocalId(ReferenceMd.TimelineBOP),
+            ],
+        },
+    });
+
 export default [
     legendScenarios,
     dataLabelScenarios,
     dataPointScenarios,
     connectNullsScenarios,
     ...legendResponziveScenarios,
+    thresholdComboZonesScenario,
+    thresholdComboZonesWithExcludedScenario,
 ];

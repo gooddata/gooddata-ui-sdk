@@ -358,6 +358,7 @@ export interface IChartConfig {
     stacking?: boolean;
     stackMeasures?: boolean;
     stackMeasuresToPercent?: boolean;
+    thresholdExcludedMeasures?: string[];
     thresholdMeasures?: string[];
     // @internal (undocumented)
     tooltip?: ITooltipConfig;

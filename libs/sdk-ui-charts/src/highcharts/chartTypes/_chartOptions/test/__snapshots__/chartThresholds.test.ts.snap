@@ -1,5 +1,401 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ +0 ] 1`] = `
+{
+  "plotLines": [],
+  "zones": [
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ +0, +0 ] 1`] = `
+{
+  "plotLines": [],
+  "zones": [
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ +0, +0, 1 ] 1`] = `
+{
+  "plotLines": [
+    1.5,
+  ],
+  "zones": [
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+      "value": 2,
+    },
+    {
+      "color": undefined,
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ +0, 1 ] 1`] = `
+{
+  "plotLines": [
+    0.5,
+  ],
+  "zones": [
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+      "value": 1,
+    },
+    {
+      "color": undefined,
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ +0, 1, +0, 1 ] 1`] = `
+{
+  "plotLines": [
+    0.5,
+    1.5,
+    2.5,
+  ],
+  "zones": [
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+      "value": 1,
+    },
+    {
+      "value": 2,
+    },
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+      "value": 3,
+    },
+    {
+      "color": undefined,
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ +0, 1, 1 ] 1`] = `
+{
+  "plotLines": [
+    0.5,
+  ],
+  "zones": [
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+      "value": 1,
+    },
+    {
+      "color": undefined,
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ 1 ] 1`] = `
+{
+  "plotLines": [],
+  "zones": [],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ 1, +0 ] 1`] = `
+{
+  "plotLines": [
+    0.5,
+  ],
+  "zones": [
+    {
+      "value": 1,
+    },
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ 1, +0, +0 ] 1`] = `
+{
+  "plotLines": [
+    0.5,
+  ],
+  "zones": [
+    {
+      "value": 1,
+    },
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ 1, +0, 1, +0 ] 1`] = `
+{
+  "plotLines": [
+    0.5,
+    1.5,
+    2.5,
+  ],
+  "zones": [
+    {
+      "value": 1,
+    },
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+      "value": 2,
+    },
+    {
+      "value": 3,
+    },
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ 1, +0, 1, 1 ] 1`] = `
+{
+  "plotLines": [
+    0.5,
+    1.5,
+  ],
+  "zones": [
+    {
+      "value": 1,
+    },
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+      "value": 2,
+    },
+    {
+      "color": undefined,
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ 1, 1 ] 1`] = `
+{
+  "plotLines": [],
+  "zones": [],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ 1, 1, +0 ] 1`] = `
+{
+  "plotLines": [
+    1.5,
+  ],
+  "zones": [
+    {
+      "value": 2,
+    },
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ 1, 1, +0, 1 ] 1`] = `
+{
+  "plotLines": [
+    1.5,
+    2.5,
+  ],
+  "zones": [
+    {
+      "value": 2,
+    },
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+      "value": 3,
+    },
+    {
+      "color": undefined,
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [ null ] 1`] = `
+{
+  "plotLines": [],
+  "zones": [
+    {
+      "color": {
+        "pattern": {
+          "color": undefined,
+          "height": 4,
+          "path": {
+            "d": "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2",
+            "strokeWidth": 1,
+          },
+          "width": 4,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`generateComboZones > should generate expected zones and plot lines for combo chart fo threshold series [] 1`] = `
+{
+  "plotLines": [],
+  "zones": [],
+}
+`;
+
 exports[`generateZones > should generate expected zones and plot lines for threshold series [ +0 ] 1`] = `
 {
   "plotLines": [],

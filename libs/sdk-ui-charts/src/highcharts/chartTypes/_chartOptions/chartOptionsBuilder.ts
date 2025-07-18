@@ -79,7 +79,11 @@ import {
     getWaterfallChartCategories,
 } from "../waterfallChart/waterfallChartOptions.js";
 import { assignForecastAxes } from "./chartForecast.js";
-import { filterThresholdZonesCategories, setupThresholdZones } from "./chartThresholds.js";
+import {
+    filterThresholdZonesCategories,
+    setupComboThresholdZones,
+    setupThresholdZones,
+} from "./chartThresholds.js";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -500,7 +504,21 @@ export function getChartOptions(
     );
 
     if (isComboChart(type)) {
-        const comboSeries = getComboChartSeries(config, measureGroup, series, dv);
+        const comboInitialSeries = getComboChartSeries(config, measureGroup, initialSeries, dv);
+        const { series: comboSeries, plotLines: comboPlotLines } = setupComboThresholdZones(
+            type,
+            comboInitialSeries,
+            dv,
+            config,
+        );
+        const xAxes = getXAxes(
+            dv,
+            config,
+            measureGroup,
+            viewByAttribute,
+            viewByParentAttribute,
+            comboPlotLines,
+        );
         const canStackInPercent = canComboChartBeStackedInPercent(comboSeries);
         return {
             type,
