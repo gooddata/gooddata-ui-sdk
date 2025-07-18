@@ -14,16 +14,16 @@ import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 export function DefaultUiTreeViewItemComponent<Level>({
     item,
     type,
-    level,
-    classNames,
+    defaultClassName,
+    defaultStyle,
     isExpanded,
     onToggle,
     onSelect,
 }: IUiTreeviewItemProps<Level>): React.ReactNode {
     return (
         <div
-            style={defineVariables(level)}
-            className={classNames.join(" ")}
+            style={defaultStyle}
+            className={defaultClassName}
             onClick={item.isDisabled ? undefined : onSelect}
         >
             {type === "group" ? (
@@ -62,10 +62,4 @@ export function DefaultUiTreeViewItemComponent<Level>({
             ) : null}
         </div>
     );
-}
-
-function defineVariables(level: number) {
-    return {
-        "--ui-treeview-item-level": level,
-    } as React.CSSProperties;
 }

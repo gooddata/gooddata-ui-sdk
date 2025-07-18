@@ -292,8 +292,8 @@ const UiTreeviewExamples = () => (
 function TreeviewItemComponent({
     item,
     type,
-    level,
-    classNames,
+    defaultClassName,
+    defaultStyle,
     isExpanded,
     onToggle,
     onSelect,
@@ -301,8 +301,8 @@ function TreeviewItemComponent({
     if (item.data.level === 1) {
         return (
             <div
-                style={defineVariables(level)}
-                className={classNames.join(" ")}
+                style={defaultStyle}
+                className={defaultClassName}
                 onClick={item.isDisabled ? undefined : onSelect}
             >
                 {type === "group" ? (
@@ -328,8 +328,8 @@ function TreeviewItemComponent({
     }
     return (
         <div
-            style={{ ...defineVariables(level), border: "1px dotted gray", margin: "5px" }}
-            className={classNames.join(" ")}
+            style={{ ...defaultStyle, border: "1px dotted gray", margin: "5px" }}
+            className={defaultClassName}
             onClick={item.isDisabled ? undefined : onSelect}
         >
             {item.icon ? (
@@ -340,12 +340,6 @@ function TreeviewItemComponent({
             <div>{item.stringTitle}</div>
         </div>
     );
-}
-
-function defineVariables(level: number) {
-    return {
-        "--ui-treeview-item-level": level,
-    } as React.CSSProperties;
 }
 
 export default {

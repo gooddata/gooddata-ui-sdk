@@ -87,13 +87,14 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
                     level={level}
                     onSelect={onInnerSelectHandle}
                     onToggle={onToggleHandle}
-                    classNames={e("item", {
+                    defaultStyle={defineVariables(level)}
+                    defaultClassName={e("item", {
                         isFocused,
                         isSelected,
                         isCompact,
                         isExpanded,
                         isDisabled: !!item.isDisabled,
-                    }).split(" ")}
+                    })}
                 />
             </div>
             {children?.length && isExpanded ? (
@@ -116,4 +117,8 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
             ) : null}
         </div>
     );
+}
+
+function defineVariables(level: number) {
+    return { "--ui-treeview-item-level": level } as React.CSSProperties;
 }

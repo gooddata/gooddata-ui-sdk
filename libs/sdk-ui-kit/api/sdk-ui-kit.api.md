@@ -413,7 +413,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
 export const DefaultUiMenuStaticItem: React_2.MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuStaticItemProps<T>) => React_2.ReactElement)>;
 
 // @internal (undocumented)
-export function DefaultUiTreeViewItemComponent<Level>({ item, type, level, classNames, isExpanded, onToggle, onSelect, }: IUiTreeviewItemProps<Level>): React_2.ReactNode;
+export function DefaultUiTreeViewItemComponent<Level>({ item, type, defaultClassName, defaultStyle, isExpanded, onToggle, onSelect, }: IUiTreeviewItemProps<Level>): React_2.ReactNode;
 
 // @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
@@ -5241,7 +5241,9 @@ export interface IUiTreeViewItem<T> {
 // @internal (undocumented)
 export interface IUiTreeviewItemProps<T> {
     // (undocumented)
-    classNames: string[];
+    defaultClassName: string;
+    // (undocumented)
+    defaultStyle: React_2.CSSProperties;
     // (undocumented)
     isCompact: boolean;
     // (undocumented)

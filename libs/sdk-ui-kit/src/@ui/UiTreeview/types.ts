@@ -144,7 +144,8 @@ export interface IUiTreeviewContext<Levels extends any[], Level> {
 export interface IUiTreeviewItemProps<T> {
     type: "leaf" | "group";
     item: IUiTreeViewItem<T>;
-    classNames: string[];
+    defaultClassName: string;
+    defaultStyle: React.CSSProperties;
 
     isFocused: boolean;
     isExpanded: boolean;
