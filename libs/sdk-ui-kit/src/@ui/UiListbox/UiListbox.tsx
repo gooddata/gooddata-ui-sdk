@@ -146,12 +146,12 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                         setFocusedIndex(undefined);
                     },
                     onSelect: (e) => {
-                        focusedItem &&
-                            focusedItem.type === "interactive" &&
+                        if (focusedItem && focusedItem.type === "interactive") {
                             handleSelectItem(focusedItem, {
                                 type: "keyboard",
                                 newTab: e.ctrlKey || e.metaKey,
                             });
+                        }
                     },
                     onClose,
                     onUnhandledKeyDown: (event) => {
