@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import flatMap from "lodash/flatMap.js";
 import unionBy from "lodash/unionBy.js";
@@ -24,11 +24,11 @@ function fail(message: string) {
     expect(0).eq(1, message);
 }
 
-function scenarioSaveDataCaptureRequests(
+async function scenarioSaveDataCaptureRequests(
     scenario: IScenario<any>,
     recordingDir: string,
     interactions: ChartInteractions,
-): void {
+): Promise<void> {
     const requestsFile = path.join(recordingDir, RecordingFiles.Execution.Requests);
     const { dataViewRequests } = interactions;
     const { customDataCapture } = scenario;
@@ -69,14 +69,14 @@ function scenarioSaveDataCaptureRequests(
         );
     }
 
-    writeAsJsonSync(requestsFile, requests);
+    await writeAsJsonSync(requestsFile, requests);
 }
 
-function scenarioSaveDefinition(
+async function scenarioSaveDefinition(
     scenario: IScenario<any>,
     dir: string,
     interactions: ChartInteractions,
-): string {
+): Promise<string> {
     let { triggeredExecution } = interactions;
     const fp = defFingerprint(triggeredExecution!);
     const recordingDir = path.join(dir, fp);
@@ -92,16 +92,16 @@ function scenarioSaveDefinition(
         };
     }
 
-    writeAsJsonSync(path.join(recordingDir, RecordingFiles.Execution.Definition), {
+    await writeAsJsonSync(path.join(recordingDir, RecordingFiles.Execution.Definition), {
         ...triggeredExecution,
     });
 
-    scenarioSaveDataCaptureRequests(scenario, recordingDir, interactions);
+    await scenarioSaveDataCaptureRequests(scenario, recordingDir, interactions);
 
     return recordingDir;
 }
 
-function scenarioSaveDescriptors(
+async function scenarioSaveDescriptors(
     scenario: IScenario<any>,
     recordingDir: string,
     interactions: ChartInteractions,
@@ -158,7 +158,7 @@ function scenarioSaveDescriptors(
         scenarioDescriptors.push({ vis, scenario: scenarioName, buckets: definition!.buckets });
     }
 
-    writeAsJsonSync(scenariosFile, scenarioDescriptors);
+    await writeAsJsonSync(scenariosFile, scenarioDescriptors);
 }
 
 /**
@@ -171,7 +171,7 @@ function scenarioSaveDescriptors(
  * @param interactions - chart interactions with the backend
  * @param plugVizInteractions - plug viz interactions with the backend
  */
-function scenarioSave(
+async function scenarioSave(
     scenario: IScenario<any>,
     interactions: ChartInteractions,
     plugVizInteractions?: ChartInteractions,
@@ -183,7 +183,7 @@ function scenarioSave(
 
     const { triggeredExecution: componentExecution } = interactions;
     const { triggeredExecution: plugVizExecution } = plugVizInteractions ?? {};
-    const recordingDir = scenarioSaveDefinition(scenario, storeDir, interactions);
+    const recordingDir = await scenarioSaveDefinition(scenario, storeDir, interactions);
 
     if (plugVizExecution && defFingerprint(componentExecution!) !== defFingerprint(plugVizExecution!)) {
         /*
@@ -192,15 +192,15 @@ function scenarioSave(
          * execution. if that happens, make sure the exec definition for the plug viz variant of the
          * scenario is also stored.
          */
-        scenarioSaveDefinition(scenario, storeDir, plugVizInteractions!);
+        await scenarioSaveDefinition(scenario, storeDir, plugVizInteractions!);
     }
 
     if (!scenario.tags.includes("mock-no-scenario-meta")) {
-        scenarioSaveDescriptors(scenario, recordingDir, interactions);
+        await scenarioSaveDescriptors(scenario, recordingDir, interactions);
     }
 }
 
-function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefinition) {
+async function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefinition) {
     const storeDir = storeDirectoryFor(scenario, "insights");
 
     if (!storeDir) {
@@ -221,7 +221,7 @@ function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefinition)
         fs.mkdirSync(insightDir);
     }
 
-    writeAsJsonSync(path.join(insightDir, RecordingFiles.Insights.Object), persistentInsight);
+    await writeAsJsonSync(path.join(insightDir, RecordingFiles.Insights.Object), persistentInsight);
 
     const insightIndexFile = path.join(storeDir, RecordingFiles.Insights.Index);
     const insightIndex = fs.existsSync(insightIndexFile) ? readJsonSync(insightIndexFile) : {};
@@ -239,14 +239,14 @@ function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefinition)
         comment: `Auto-generated insight for test scenario ${insightTitle(def)}.`,
     };
 
-    writeAsJsonSync(insightIndexFile, insightIndex);
+    await writeAsJsonSync(insightIndexFile, insightIndex);
 }
 
 /*
- * This is useful when developing new visualization. Typically react component exists first, and then plug viz
+ * This is useful when developing new visualization. Typically, react component exists first, and then plug viz
  * implementation appears.
  *
- * Add the name of the react component here and the smoke-and-capture will skip doing the 'plug-viz-stuff' for
+ * Add the name of the React component here and the smoke-and-capture will skip doing the 'plug-viz-stuff' for
  * that visualization.
  */
 const PlugVisUnsupported: string[] = [];
@@ -283,7 +283,7 @@ describe("all scenarios", () => {
              * Some visualizations may not support plug vis yet. For those, just store scenario
              * definition and halt.
              */
-            scenarioSave(scenario, interactions);
+            await scenarioSave(scenario, interactions);
         } else {
             /*
              * For others, create insight object, try to mount pluggable visualization for
@@ -297,8 +297,8 @@ describe("all scenarios", () => {
              */
             const plugVizInteractions = await mountInsight(scenario, insight, true);
 
-            scenarioSave(scenario, interactions, plugVizInteractions);
-            scenarioStoreInsight(scenario, insight);
+            await scenarioSave(scenario, interactions, plugVizInteractions);
+            await scenarioStoreInsight(scenario, insight);
         }
     });
 });
