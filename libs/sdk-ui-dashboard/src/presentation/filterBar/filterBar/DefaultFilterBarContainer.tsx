@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useRef, useState } from "react";
-import DefaultMeasure from "react-measure";
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import DefaultMeasure, { ContentRect } from "react-measure";
+
 import cx from "classnames";
 import { defaultImport } from "default-import";
 import { Message, UiButton, makeHorizontalKeyboardNavigation } from "@gooddata/sdk-ui-kit";
@@ -58,6 +59,14 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
         dispatch(applyFilterContextWorkingSelection());
     }, [dispatch]);
 
+    const configurationStyle = useMemo(
+        () => ({
+            alignItems: isApplyAllAtOnceEnabledAndSet ? "center" : undefined,
+            paddingRight: isApplyAllAtOnceEnabledAndSet ? "10px" : undefined,
+        }),
+        [isApplyAllAtOnceEnabledAndSet],
+    );
+
     const intl = useIntl();
 
     const [expandedAutomatically, setExpandedAutomatically] = useState(false);
@@ -98,13 +107,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                         {children}
                     </AllFiltersContainer>
                     <FiltersRows rows={rows} />
-                    <div
-                        className="filter-bar-configuration"
-                        style={{
-                            alignItems: isApplyAllAtOnceEnabledAndSet ? "center" : undefined,
-                            paddingRight: isApplyAllAtOnceEnabledAndSet ? "10px" : undefined,
-                        }}
-                    >
+                    <div className="filter-bar-configuration" style={configurationStyle}>
                         {isApplyAllAtOnceEnabledAndSet && isWorkingFilterContextChanged ? (
                             <UiButton
                                 label={intl.formatMessage({ id: "apply" })}
@@ -173,6 +176,41 @@ const AllFiltersContainer: React.FC<{
     const ref = useRef<Element | null>(null);
     const rowCalculator = useRowsCalculator(ref);
 
+    const prevDimensions = useRef<ContentRect | null>(null);
+
+    const handleResize = useCallback(
+        (dimensions: ContentRect) => {
+            const areBoundsEqual = (
+                prevBounds: ContentRect["bounds"],
+                currentBounds: ContentRect["bounds"],
+            ) => {
+                return (
+                    prevBounds?.width === currentBounds?.width && prevBounds?.height === currentBounds?.height
+                );
+            };
+            // Only call setCalculatedRows when dimensions actually change
+            if (
+                !prevDimensions.current ||
+                !areBoundsEqual(prevDimensions.current.bounds, dimensions.bounds)
+            ) {
+                setCalculatedRows(rowCalculator(dimensions));
+                prevDimensions.current = dimensions;
+            }
+        },
+        [rowCalculator, setCalculatedRows],
+    );
+
+    return (
+        <Measure bounds innerRef={(rf) => (ref.current = rf)} onResize={handleResize}>
+            {({ measureRef }) => <MeasuredDiv measureRef={measureRef}>{children}</MeasuredDiv>}
+        </Measure>
+    );
+};
+
+const MeasuredDiv: React.FC<{
+    measureRef: (node: Element | null) => void;
+    children?: React.ReactNode;
+}> = ({ measureRef, children }) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
 
     const [activeFilterIndex, setActiveFilterIndex] = useState<number | null>(null);
@@ -235,30 +273,25 @@ const AllFiltersContainer: React.FC<{
             }
         },
     });
-
+    const setRefs = useCallback(
+        (node: HTMLDivElement | null) => {
+            measureRef(node);
+            containerRef.current = node;
+        },
+        [measureRef],
+    );
     const intl = useIntl();
 
     return (
-        <Measure
-            bounds
-            innerRef={(rf) => (ref.current = rf)}
-            onResize={(dimensions) => setCalculatedRows(rowCalculator(dimensions))}
+        <div
+            className="dash-filters-all"
+            role="region"
+            aria-label={intl.formatMessage({ id: "filterBar.label" })}
+            ref={setRefs}
+            onKeyDown={keyboardNavigation}
         >
-            {({ measureRef }) => (
-                <div
-                    className="dash-filters-all"
-                    role="region"
-                    aria-label={intl.formatMessage({ id: "filterBar.label" })}
-                    ref={(ref) => {
-                        measureRef(ref);
-                        containerRef.current = ref;
-                    }}
-                    onKeyDown={keyboardNavigation}
-                >
-                    {children}
-                </div>
-            )}
-        </Measure>
+            {children}
+        </div>
     );
 };
 
