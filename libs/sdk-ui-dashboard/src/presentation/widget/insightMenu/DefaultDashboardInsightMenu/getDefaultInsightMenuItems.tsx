@@ -251,10 +251,10 @@ export function getDefaultInsightMenuItems(
                 alertingDisabledReason === "oldWidget"
                     ? alertingOldWidgetTooltip
                     : alertingDisabledReason === "noDestinations"
-                    ? noDestinationsTooltip
-                    : alertingDisabledReason === "disabledOnInsight"
-                    ? alertingForInsightNotEnabledTooltip
-                    : undefined,
+                      ? noDestinationsTooltip
+                      : alertingDisabledReason === "disabledOnInsight"
+                        ? alertingForInsightNotEnabledTooltip
+                        : undefined,
             disabled: alertingDisabled,
         },
         isSomeScheduleVisible && {
@@ -271,10 +271,10 @@ export function getDefaultInsightMenuItems(
                 scheduleExportDisabledReason === "incompatibleWidget"
                     ? incompatibleWidgetTooltip
                     : scheduleExportDisabledReason === "oldWidget"
-                    ? oldWidgetTooltip
-                    : scheduleExportDisabledReason === "disabledOnInsight"
-                    ? schedulingForInsightNotEnabledTooltip
-                    : undefined,
+                      ? oldWidgetTooltip
+                      : scheduleExportDisabledReason === "disabledOnInsight"
+                        ? schedulingForInsightNotEnabledTooltip
+                        : undefined,
             icon: "gd-icon-clock",
             className: "s-options-menu-schedule-export",
         },

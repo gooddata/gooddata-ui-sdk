@@ -62,9 +62,8 @@ export function* deleteDashboardHandler(
     cmd: DeleteDashboard,
 ): SagaIterator<DashboardDeleted> {
     const existingDashboardRef = ctx.dashboardRef;
-    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
-        selectPersistedDashboard,
-    );
+    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
+        yield select(selectPersistedDashboard);
 
     if (!persistedDashboard) {
         throw invalidArgumentsProvided(ctx, cmd, "Attempting to delete a dashboard that was never saved.");

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -54,7 +54,8 @@
         --gd-chart-tooltipBorderColor,
         var(--gd-palette-complementary-3-from-theme, color.adjust(#c9d5e0, $alpha: -0.3))
     );
-    box-shadow: 0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
+    box-shadow:
+        0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
         0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
     line-height: 1.3;
     white-space: normal;

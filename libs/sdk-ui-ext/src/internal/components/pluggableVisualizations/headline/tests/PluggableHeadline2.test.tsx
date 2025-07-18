@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { PluggableHeadline } from "../PluggableHeadline.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
@@ -443,9 +443,8 @@ describe("PluggableHeadline2", () => {
                         items: [],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual(referencePoint.buckets);
             });
@@ -461,9 +460,8 @@ describe("PluggableHeadline2", () => {
                         items: [referencePointMocks.masterMeasureItems[1]],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual(referencePoint.buckets);
             });
@@ -482,9 +480,8 @@ describe("PluggableHeadline2", () => {
                         items: [],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
@@ -512,9 +509,8 @@ describe("PluggableHeadline2", () => {
                         ],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
@@ -546,9 +542,8 @@ describe("PluggableHeadline2", () => {
                         ],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
@@ -574,9 +569,8 @@ describe("PluggableHeadline2", () => {
                         items: [referencePointMocks.masterMeasureItems[0]],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
@@ -601,9 +595,8 @@ describe("PluggableHeadline2", () => {
                         items: [referencePointMocks.masterMeasureItems[1]],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
@@ -631,9 +624,8 @@ describe("PluggableHeadline2", () => {
                         items: [referencePointMocks.masterMeasureItems[2]],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
@@ -664,9 +656,8 @@ describe("PluggableHeadline2", () => {
                         ],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
@@ -698,9 +689,8 @@ describe("PluggableHeadline2", () => {
                         ],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
@@ -734,9 +724,8 @@ describe("PluggableHeadline2", () => {
                         items: [referencePointMocks.masterMeasureItems[1]],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
@@ -765,9 +754,8 @@ describe("PluggableHeadline2", () => {
                         items: [referencePointMocks.masterMeasureItems[2]],
                     },
                 ]);
-                const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                    referencePoint,
-                );
+                const extendedReferencePoint =
+                    await createComponent().getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual([
                     {

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -10,7 +10,11 @@ export class InMemoryPaging implements IElementsQueryResult {
     public readonly offset: number;
     public readonly totalCount: number;
 
-    constructor(protected readonly allItems: IAttributeElement[], limit = 50, offset = 0) {
+    constructor(
+        protected readonly allItems: IAttributeElement[],
+        limit = 50,
+        offset = 0,
+    ) {
         invariant(offset >= 0, `paging offset must be non-negative, got: ${offset}`);
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
 

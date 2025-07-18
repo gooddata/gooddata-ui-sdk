@@ -22,8 +22,8 @@ export const selectFilterViews: DashboardSelector<IDashboardFilterView[]> = crea
         invariant(state.filterViews, "attempting to access uninitialized filterViews state");
 
         return dashboardRef
-            ? state.filterViews.find((item) => areObjRefsEqual(item.dashboard, dashboardRef))?.filterViews ??
-                  []
+            ? (state.filterViews.find((item) => areObjRefsEqual(item.dashboard, dashboardRef))?.filterViews ??
+                  [])
             : [];
     },
 );

@@ -43,9 +43,8 @@ export function* exportRawInsightWidgetHandler(
         selectExecutionResultByRef(ref),
     );
 
-    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
-        selectFilterContextFilters,
-    );
+    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> =
+        yield select(selectFilterContextFilters);
 
     const mergedFilters: INullableFilter[] = [
         ...insight.insight.filters,

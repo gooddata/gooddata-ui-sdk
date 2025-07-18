@@ -126,35 +126,38 @@ const selectRawExportMeasureOverridesForInsightByRef: (
                 // explicitly set in the insight definition if possible
                 const filledInsight = fillMissingTitles(insight, locale);
 
-                return insightMeasures(filledInsight).reduce((overrides, measure) => {
-                    const localId = measureLocalId(measure);
+                return insightMeasures(filledInsight).reduce(
+                    (overrides, measure) => {
+                        const localId = measureLocalId(measure);
 
-                    // first, try getting the title from the insight itself,
-                    // giving precedence to the alias over the title.
-                    // this should also cover the case of derived measures without renames,
-                    // because they have been processed by fillMissingTitles
-                    const titleFromInsightMeasure = measureAlias(measure) || measureTitle(measure);
-                    if (titleFromInsightMeasure) {
-                        overrides[localId] = {
-                            title: titleFromInsightMeasure,
-                        };
+                        // first, try getting the title from the insight itself,
+                        // giving precedence to the alias over the title.
+                        // this should also cover the case of derived measures without renames,
+                        // because they have been processed by fillMissingTitles
+                        const titleFromInsightMeasure = measureAlias(measure) || measureTitle(measure);
+                        if (titleFromInsightMeasure) {
+                            overrides[localId] = {
+                                title: titleFromInsightMeasure,
+                            };
+                            return overrides;
+                        }
+
+                        // otherwise, get it from the catalog.
+                        // we only need to look at the measures, any fact-based measures should have the title set in the
+                        // insight itself
+                        const catalogMeasure = catalogMeasures.find((m) =>
+                            areObjRefsEqual(m.measure.ref, measureItem(measure)),
+                        );
+                        if (catalogMeasure) {
+                            overrides[localId] = {
+                                title: catalogMeasure.measure.title,
+                            };
+                        }
+
                         return overrides;
-                    }
-
-                    // otherwise, get it from the catalog.
-                    // we only need to look at the measures, any fact-based measures should have the title set in the
-                    // insight itself
-                    const catalogMeasure = catalogMeasures.find((m) =>
-                        areObjRefsEqual(m.measure.ref, measureItem(measure)),
-                    );
-                    if (catalogMeasure) {
-                        overrides[localId] = {
-                            title: catalogMeasure.measure.title,
-                        };
-                    }
-
-                    return overrides;
-                }, {} as Record<string, IRawExportCustomOverride>);
+                    },
+                    {} as Record<string, IRawExportCustomOverride>,
+                );
             },
         );
     },
@@ -185,44 +188,47 @@ const selectRawExportDisplayFormOverridesForInsightByRef: (
                     return undefined;
                 }
 
-                return insightAttributes(insight).reduce((overrides, attribute) => {
-                    const localId = attributeLocalId(attribute);
+                return insightAttributes(insight).reduce(
+                    (overrides, attribute) => {
+                        const localId = attributeLocalId(attribute);
 
-                    // first, try getting the title from the insight itself
-                    const titleFromInsightAttribute = attributeAlias(attribute);
-                    if (titleFromInsightAttribute) {
-                        overrides[localId] = {
-                            title: titleFromInsightAttribute,
-                        };
-                        return overrides;
-                    }
-
-                    // otherwise, get it from the catalog.
-                    // first try the attributes
-                    const catalogDisplayForm = catalogAttributeDisplayForms.find((a) =>
-                        areObjRefsEqual(a.ref, attributeDisplayFormRef(attribute)),
-                    );
-                    if (catalogDisplayForm) {
-                        overrides[localId] = {
-                            title: catalogDisplayForm.title,
-                        };
-                        return overrides;
-                    }
-
-                    // then try the date datasets
-                    catalogDateDatasets.forEach((dateDataset) => {
-                        const catalogDateAttribute = dateDataset.dateAttributes.find((a) =>
-                            areObjRefsEqual(a.defaultDisplayForm.ref, attributeDisplayFormRef(attribute)),
-                        );
-                        if (catalogDateAttribute) {
+                        // first, try getting the title from the insight itself
+                        const titleFromInsightAttribute = attributeAlias(attribute);
+                        if (titleFromInsightAttribute) {
                             overrides[localId] = {
-                                title: catalogDateAttribute.defaultDisplayForm.title,
+                                title: titleFromInsightAttribute,
                             };
+                            return overrides;
                         }
-                    });
 
-                    return overrides;
-                }, {} as Record<string, IRawExportCustomOverride>);
+                        // otherwise, get it from the catalog.
+                        // first try the attributes
+                        const catalogDisplayForm = catalogAttributeDisplayForms.find((a) =>
+                            areObjRefsEqual(a.ref, attributeDisplayFormRef(attribute)),
+                        );
+                        if (catalogDisplayForm) {
+                            overrides[localId] = {
+                                title: catalogDisplayForm.title,
+                            };
+                            return overrides;
+                        }
+
+                        // then try the date datasets
+                        catalogDateDatasets.forEach((dateDataset) => {
+                            const catalogDateAttribute = dateDataset.dateAttributes.find((a) =>
+                                areObjRefsEqual(a.defaultDisplayForm.ref, attributeDisplayFormRef(attribute)),
+                            );
+                            if (catalogDateAttribute) {
+                                overrides[localId] = {
+                                    title: catalogDateAttribute.defaultDisplayForm.title,
+                                };
+                            }
+                        });
+
+                        return overrides;
+                    },
+                    {} as Record<string, IRawExportCustomOverride>,
+                );
             },
         );
     },

@@ -414,7 +414,10 @@ function dummyDescriptor(workspaceId: string): IWorkspaceDescriptor {
 }
 
 class DummyExecutionFactory extends AbstractExecutionFactory {
-    constructor(private readonly config: DummyBackendConfig, workspace: string) {
+    constructor(
+        private readonly config: DummyBackendConfig,
+        workspace: string,
+    ) {
         super(workspace);
     }
 
@@ -1078,7 +1081,10 @@ class DummyElementsQuery implements IElementsQuery {
     public offset: number = 0;
     public limit: number = 50;
 
-    constructor(public readonly workspace: string, public readonly ref: ObjRef) {}
+    constructor(
+        public readonly workspace: string,
+        public readonly ref: ObjRef,
+    ) {}
 
     withLimit(limit: number): IElementsQuery {
         this.limit = limit;

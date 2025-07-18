@@ -467,7 +467,7 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     // (undocumented)
     execute(): Promise<IExecutionResult>;
     // (undocumented)
-    explain<T extends ExplainType | undefined>(config: ExplainConfig<T>): IExplainProvider<typeof config["explainType"]>;
+    explain<T extends ExplainType | undefined>(config: ExplainConfig<T>): IExplainProvider<(typeof config)["explainType"]>;
     // (undocumented)
     fingerprint(): string;
     // (undocumented)

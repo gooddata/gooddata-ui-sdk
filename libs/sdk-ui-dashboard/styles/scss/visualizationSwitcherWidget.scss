@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
@@ -17,9 +17,11 @@
         padding: 0;
         position: static;
     }
+
     .dash-item {
         flex: 1 1 100%;
     }
+
     .dash-item-content {
         border-width: 0;
     }
@@ -27,6 +29,7 @@
     .gd-editable-label-inner {
         span {
             text-decoration-line: underline;
+
             &::after {
                 content: "\e612";
                 display: inline-block;
@@ -50,6 +53,7 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
+
     .gd-typography--p {
         color: kit-variables.$gd-color-link;
     }

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { ObjRef, FilterContextItem } from "@gooddata/sdk-model";
@@ -37,9 +37,8 @@ export function* exportDashboardToPdfHandler(
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to PDF must have an ObjRef.");
     }
 
-    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
-        selectFilterContextFilters,
-    );
+    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> =
+        yield select(selectFilterContextFilters);
 
     const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
 

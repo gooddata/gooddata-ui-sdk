@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import includes from "lodash/includes.js";
@@ -102,7 +102,7 @@ export default class BaseChartConfigurationPanel<
         const props = this.props;
         const gridEnabled = props.properties?.controls?.grid?.enabled ?? true;
         const axisType = includes(DUAL_AXES_SUPPORTED_CHARTS, props.type)
-            ? props.axis ?? AXIS.PRIMARY
+            ? (props.axis ?? AXIS.PRIMARY)
             : AXIS.PRIMARY;
         const configurations = this.getAxesConfiguration(axisType);
         const axes: IAxisProperties[] = configurations.map((axis: any) => {

@@ -79,10 +79,13 @@ export const selectCatalogAttributeDisplayForms: DashboardSelector<IAttributeDis
 export const selectCatalogAttributeDisplayFormsById: DashboardSelector<
     Record<string, IAttributeDisplayFormMetadataObject>
 > = createSelector(selectCatalogAttributeDisplayForms, (displayForms) => {
-    return displayForms.reduce((acc, displayForm) => {
-        acc[displayForm.id] = displayForm;
-        return acc;
-    }, {} as Record<string, IAttributeDisplayFormMetadataObject>);
+    return displayForms.reduce(
+        (acc, displayForm) => {
+            acc[displayForm.id] = displayForm;
+            return acc;
+        },
+        {} as Record<string, IAttributeDisplayFormMetadataObject>,
+    );
 });
 
 /**

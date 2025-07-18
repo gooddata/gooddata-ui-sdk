@@ -833,8 +833,8 @@ export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined {
     return isRankingFilter(filter)
         ? filter.rankingFilter.measure
         : isMeasureValueFilter(filter)
-        ? filter.measureValueFilter.measure
-        : undefined;
+          ? filter.measureValueFilter.measure
+          : undefined;
 }
 
 /**

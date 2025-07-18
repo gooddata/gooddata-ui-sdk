@@ -51,6 +51,7 @@
                 line-height: normal;
             }
         }
+
         &-medium {
             #{$root}__item {
                 height: var(--gd-tabs-height-M, 27px);
@@ -62,6 +63,7 @@
                 line-height: 18px;
             }
         }
+
         &-small {
             #{$root}__item {
                 height: var(--gd-tabs-height-S, 23px);

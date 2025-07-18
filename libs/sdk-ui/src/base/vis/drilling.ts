@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     isAttributeDescriptor,
     isTotalDescriptor,
@@ -146,7 +146,7 @@ function convertToEmpty(attributeItem: IResultAttributeHeader) {
         attributeHeaderItem: {
             ...attributeHeaderItem,
             // Send empty string for not, need to be updated for NULL in future
-            name: isEmpty ? "" : attributeHeaderItem.name ?? "",
+            name: isEmpty ? "" : (attributeHeaderItem.name ?? ""),
         },
     };
 }

@@ -12,7 +12,8 @@ $bubble-small-max-width: 200px;
 $bubble-skins: primary, secondary, dark, light, warning, negative;
 
 // Bubble
-$bubble-boxShadow: 0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
+$bubble-boxShadow:
+    0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
     0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
 $bubble-help-color: var(--gd-palette-complementary-6-from-theme, #bbb);
 $bubble-help-color-hover: #999;

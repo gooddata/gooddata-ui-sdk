@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { AnyAction } from "@reduxjs/toolkit";
 import { SagaIterator } from "redux-saga";
 import { race, put, call, take, takeEvery, cancelled, SagaReturnType } from "redux-saga/effects";
@@ -27,9 +27,8 @@ export function* loadCustomElementsSaga(
 
     try {
         yield put(actions.loadCustomElementsStart({ correlation }));
-        const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(
-            getAttributeFilterContext,
-        );
+        const context: SagaReturnType<typeof getAttributeFilterContext> =
+            yield call(getAttributeFilterContext);
 
         const {
             result,

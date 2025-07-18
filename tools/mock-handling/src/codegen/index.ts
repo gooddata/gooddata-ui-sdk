@@ -1,9 +1,8 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import * as fs from "fs";
 import * as path from "path";
-import pkg from "prettier";
-const { format } = pkg;
+import { format } from "prettier";
 import {
     OptionalKind,
     Project,
@@ -157,22 +156,22 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
     };
 }
 
-function generateRecordingIndex(recordings: IRecording[], targetDir: string): void {
+async function generateRecordingIndex(recordings: IRecording[], targetDir: string): Promise<void> {
     const input = createGeneratorInput(recordings);
     const output = transformToTypescript(input, targetDir, "index.ts");
     const sourceFile = output.sourceFile;
     const generatedTypescript = sourceFile.getFullText();
-    const formattedTypescript = format(generatedTypescript, { parser: "typescript", printWidth: 120 });
+    const formattedTypescript = await format(generatedTypescript, { parser: "typescript", printWidth: 120 });
 
     fs.writeFileSync(sourceFile.getFilePath(), formattedTypescript, { encoding: "utf-8" });
 }
 
-function generateDataSample(recordings: IRecording[], targetDir: string): void {
+async function generateDataSample(recordings: IRecording[], targetDir: string): Promise<void> {
     const input = createGeneratorInput(recordings);
     const output = transformToTypescript(input, targetDir, "dataSample.ts");
     const sourceFile = output.sourceFile;
     const generatedTypescriptForDataSample = sourceFile.getFullText();
-    const formattedTypescriptForDataSample = format(generatedTypescriptForDataSample, {
+    const formattedTypescriptForDataSample = await format(generatedTypescriptForDataSample, {
         parser: "typescript",
         printWidth: 120,
     });
@@ -191,7 +190,7 @@ function generateDataSample(recordings: IRecording[], targetDir: string): void {
  * @param targetDir - absolute path to directory where the index should be created
  */
 
-export function generateAllFiles(recordings: IRecording[], targetDir: string): void {
-    generateRecordingIndex(recordings, targetDir);
-    generateDataSample(recordings, targetDir);
+export async function generateAllFiles(recordings: IRecording[], targetDir: string): Promise<void> {
+    await generateRecordingIndex(recordings, targetDir);
+    await generateDataSample(recordings, targetDir);
 }

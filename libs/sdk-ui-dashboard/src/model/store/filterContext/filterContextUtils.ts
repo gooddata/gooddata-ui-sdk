@@ -41,7 +41,7 @@ export function applyFilterContext(
 
             const displayForm = enableImmediateAttributeFilterDisplayAsLabelMigration
                 ? appliedFilter.attributeFilter.displayForm
-                : workingFilter.attributeFilter.displayForm ?? appliedFilter.attributeFilter.displayForm;
+                : (workingFilter.attributeFilter.displayForm ?? appliedFilter.attributeFilter.displayForm);
             return {
                 attributeFilter: {
                     ...appliedFilter.attributeFilter,

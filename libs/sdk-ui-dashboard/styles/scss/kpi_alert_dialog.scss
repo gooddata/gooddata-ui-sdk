@@ -36,7 +36,8 @@ $dialog-background: kit-variables.$is-focused-background;
     min-height: 148px;
     border: 1px solid var(--gd-palette-complementary-3-from-theme, color.adjust($dialog-border, $alpha: -0.5));
     border-radius: 5px;
-    box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
+    box-shadow:
+        0 1px 3px 0 button-variables.$button-shadow-lighter,
         0 2px 9px 0 button-variables.$button-shadow-darker;
     background: $dialog-background;
 

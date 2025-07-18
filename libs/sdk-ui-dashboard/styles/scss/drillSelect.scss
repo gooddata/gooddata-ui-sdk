@@ -84,6 +84,7 @@
         &:hover {
             // stylelint-disable-next-line declaration-no-important
             background: var(--gd-palette-complementary-2, #ebeff4) !important;
+
             span {
                 color: var(--gd-palette-complementary-9-from-theme);
             }

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import { IMeasure, IMeasureDefinitionType } from "@gooddata/sdk-model";
@@ -128,9 +128,8 @@ export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any,
  *
  * @public
  */
-export type ComposedPlaceholderResolutionContext<T> = T extends IComposedPlaceholder<any, any, infer TContext>
-    ? TContext
-    : any;
+export type ComposedPlaceholderResolutionContext<T> =
+    T extends IComposedPlaceholder<any, any, infer TContext> ? TContext : any;
 
 /**
  * Convert union type to intersection type.
@@ -180,11 +179,8 @@ export type Flatten<T> = T extends Array<infer A> ? A : T;
  *
  * @public
  */
-export type PlaceholderValue<T> = T extends IPlaceholder<infer A>
-    ? A
-    : T extends IComposedPlaceholder<infer B, any, any>
-    ? B
-    : T;
+export type PlaceholderValue<T> =
+    T extends IPlaceholder<infer A> ? A : T extends IComposedPlaceholder<infer B, any, any> ? B : T;
 
 /**
  * Convert tuple of placeholders to tuple of their respective value types.
@@ -220,13 +216,14 @@ export type PlaceholdersValues<Tuple extends [...any[]]> = {
  *
  * @public
  */
-export type PlaceholderResolvedValue<T> = T extends Array<infer A>
-    ? Flatten<PlaceholderResolvedValue<A>>[]
-    : T extends IPlaceholder<infer B>
-    ? B
-    : T extends IComposedPlaceholder<infer C, any, any>
-    ? C
-    : T;
+export type PlaceholderResolvedValue<T> =
+    T extends Array<infer A>
+        ? Flatten<PlaceholderResolvedValue<A>>[]
+        : T extends IPlaceholder<infer B>
+          ? B
+          : T extends IComposedPlaceholder<infer C, any, any>
+            ? C
+            : T;
 
 /**
  * Convert tuple of values that may contain placeholders to tuple of their respective resolved value types.

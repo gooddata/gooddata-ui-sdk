@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
 import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail.js";
@@ -29,7 +29,7 @@ export const DisplayFormParam: React.FC<XProps> = ({ item, onAdd, iconClassName,
     return (
         <Parameter
             key={item.id}
-            name={isFilter ? dashboardFilter?.attributeFilter?.title ?? defaultTitle : defaultTitle}
+            name={isFilter ? (dashboardFilter?.attributeFilter?.title ?? defaultTitle) : defaultTitle}
             description={item.title}
             detailContent={
                 <AttributeDisplayFormParameterDetail

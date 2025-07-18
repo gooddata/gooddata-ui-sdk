@@ -106,6 +106,7 @@ $description-width-mobile: 320px;
     .gd-show-as-table-button {
         display: flex;
         gap: 5px;
+
         path {
             fill: var(--gd-palette-complementary-5-from-theme, #b1c1d1);
         }
@@ -149,9 +150,11 @@ $description-width-mobile: 320px;
             .headline-primary-item {
                 color: kit-variables.$gd-color-dark;
             }
+
             .headline-secondary-item {
                 border-left-color: color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5);
             }
+
             .headline-compare-section,
             .headline-compare-section-item,
             .headline-value--empty {

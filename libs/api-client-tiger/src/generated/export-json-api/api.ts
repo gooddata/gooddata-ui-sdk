@@ -185,7 +185,7 @@ export const ExportAfmObjectIdentifierAttributeIdentifierTypeEnum = {
 } as const;
 
 export type ExportAfmObjectIdentifierAttributeIdentifierTypeEnum =
-    typeof ExportAfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierAttributeIdentifierTypeEnum];
+    (typeof ExportAfmObjectIdentifierAttributeIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierAttributeIdentifierTypeEnum];
 
 /**
  * Reference to the metric, fact or attribute object to use for the metric.
@@ -228,7 +228,7 @@ export const ExportAfmObjectIdentifierCoreIdentifierTypeEnum = {
 } as const;
 
 export type ExportAfmObjectIdentifierCoreIdentifierTypeEnum =
-    typeof ExportAfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierCoreIdentifierTypeEnum];
+    (typeof ExportAfmObjectIdentifierCoreIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierCoreIdentifierTypeEnum];
 
 /**
  * Reference to the date dataset to which the filter should be applied.
@@ -268,7 +268,7 @@ export const ExportAfmObjectIdentifierDatasetIdentifierTypeEnum = {
 } as const;
 
 export type ExportAfmObjectIdentifierDatasetIdentifierTypeEnum =
-    typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum];
+    (typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum];
 
 /**
  *
@@ -304,7 +304,7 @@ export const ExportAfmObjectIdentifierIdentifierTypeEnum = {
 } as const;
 
 export type ExportAfmObjectIdentifierIdentifierTypeEnum =
-    typeof ExportAfmObjectIdentifierIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierIdentifierTypeEnum];
+    (typeof ExportAfmObjectIdentifierIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierIdentifierTypeEnum];
 
 /**
  *
@@ -344,7 +344,7 @@ export const ExportAfmObjectIdentifierLabelIdentifierTypeEnum = {
 } as const;
 
 export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum =
-    typeof ExportAfmObjectIdentifierLabelIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierLabelIdentifierTypeEnum];
+    (typeof ExportAfmObjectIdentifierLabelIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierLabelIdentifierTypeEnum];
 
 /**
  * Metric representing arithmetics between other metrics.
@@ -388,7 +388,7 @@ export const ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = {
 } as const;
 
 export type ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
-    typeof ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+    (typeof ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum)[keyof typeof ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
 /**
  * @type ExportAttributeElements
@@ -556,7 +556,7 @@ export const ExportBoundedFilterGranularityEnum = {
 } as const;
 
 export type ExportBoundedFilterGranularityEnum =
-    typeof ExportBoundedFilterGranularityEnum[keyof typeof ExportBoundedFilterGranularityEnum];
+    (typeof ExportBoundedFilterGranularityEnum)[keyof typeof ExportBoundedFilterGranularityEnum];
 
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
@@ -631,7 +631,7 @@ export const ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOpera
 } as const;
 
 export type ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum =
-    typeof ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+    (typeof ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum)[keyof typeof ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
 /**
  * Custom label object override.
@@ -765,7 +765,7 @@ export const ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum = {
 } as const;
 
 export type ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum =
-    typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum[keyof typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum];
+    (typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum)[keyof typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum];
 
 /**
  *
@@ -836,7 +836,7 @@ export const ExportDashboardDateFilterDateFilterTypeEnum = {
 } as const;
 
 export type ExportDashboardDateFilterDateFilterTypeEnum =
-    typeof ExportDashboardDateFilterDateFilterTypeEnum[keyof typeof ExportDashboardDateFilterDateFilterTypeEnum];
+    (typeof ExportDashboardDateFilterDateFilterTypeEnum)[keyof typeof ExportDashboardDateFilterDateFilterTypeEnum];
 export const ExportDashboardDateFilterDateFilterGranularityEnum = {
     ALL_TIME_GRANULARITY: "ALL_TIME_GRANULARITY",
     GDC_TIME_YEAR: "GDC.time.year",
@@ -864,7 +864,7 @@ export const ExportDashboardDateFilterDateFilterGranularityEnum = {
 } as const;
 
 export type ExportDashboardDateFilterDateFilterGranularityEnum =
-    typeof ExportDashboardDateFilterDateFilterGranularityEnum[keyof typeof ExportDashboardDateFilterDateFilterGranularityEnum];
+    (typeof ExportDashboardDateFilterDateFilterGranularityEnum)[keyof typeof ExportDashboardDateFilterDateFilterGranularityEnum];
 
 /**
  * Additional settings.
@@ -934,7 +934,7 @@ export const ExportDashboardTabularExportRequestFormatEnum = {
 } as const;
 
 export type ExportDashboardTabularExportRequestFormatEnum =
-    typeof ExportDashboardTabularExportRequestFormatEnum[keyof typeof ExportDashboardTabularExportRequestFormatEnum];
+    (typeof ExportDashboardTabularExportRequestFormatEnum)[keyof typeof ExportDashboardTabularExportRequestFormatEnum];
 
 /**
  * @type ExportDateFilter
@@ -1067,7 +1067,7 @@ export const ExportIdentifierRefIdentifierTypeEnum = {
 } as const;
 
 export type ExportIdentifierRefIdentifierTypeEnum =
-    typeof ExportIdentifierRefIdentifierTypeEnum[keyof typeof ExportIdentifierRefIdentifierTypeEnum];
+    (typeof ExportIdentifierRefIdentifierTypeEnum)[keyof typeof ExportIdentifierRefIdentifierTypeEnum];
 
 /**
  * Export request object describing the export properties and metadata for image exports.
@@ -1112,7 +1112,7 @@ export const ExportImageExportRequestFormatEnum = {
 } as const;
 
 export type ExportImageExportRequestFormatEnum =
-    typeof ExportImageExportRequestFormatEnum[keyof typeof ExportImageExportRequestFormatEnum];
+    (typeof ExportImageExportRequestFormatEnum)[keyof typeof ExportImageExportRequestFormatEnum];
 
 /**
  * Filter in form of direct MAQL query.
@@ -1592,7 +1592,7 @@ export const ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = 
 } as const;
 
 export type ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum =
-    typeof ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
+    (typeof ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum)[keyof typeof ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
 
 /**
  * Filter the result on top/bottom N values according to given metric(s).
@@ -1657,7 +1657,7 @@ export const ExportRankingFilterRankingFilterOperatorEnum = {
 } as const;
 
 export type ExportRankingFilterRankingFilterOperatorEnum =
-    typeof ExportRankingFilterRankingFilterOperatorEnum[keyof typeof ExportRankingFilterRankingFilterOperatorEnum];
+    (typeof ExportRankingFilterRankingFilterOperatorEnum)[keyof typeof ExportRankingFilterRankingFilterOperatorEnum];
 
 /**
  * Custom label object override.
@@ -1749,7 +1749,7 @@ export const ExportRawExportRequestFormatEnum = {
 } as const;
 
 export type ExportRawExportRequestFormatEnum =
-    typeof ExportRawExportRequestFormatEnum[keyof typeof ExportRawExportRequestFormatEnum];
+    (typeof ExportRawExportRequestFormatEnum)[keyof typeof ExportRawExportRequestFormatEnum];
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
@@ -1833,7 +1833,7 @@ export const ExportRelativeDateFilterRelativeDateFilterGranularityEnum = {
 } as const;
 
 export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum =
-    typeof ExportRelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof ExportRelativeDateFilterRelativeDateFilterGranularityEnum];
+    (typeof ExportRelativeDateFilterRelativeDateFilterGranularityEnum)[keyof typeof ExportRelativeDateFilterRelativeDateFilterGranularityEnum];
 
 /**
  * Additional settings.
@@ -1941,7 +1941,7 @@ export const ExportSimpleMeasureDefinitionMeasureAggregationEnum = {
 } as const;
 
 export type ExportSimpleMeasureDefinitionMeasureAggregationEnum =
-    typeof ExportSimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof ExportSimpleMeasureDefinitionMeasureAggregationEnum];
+    (typeof ExportSimpleMeasureDefinitionMeasureAggregationEnum)[keyof typeof ExportSimpleMeasureDefinitionMeasureAggregationEnum];
 
 /**
  * Export request object describing the export properties and metadata for slides exports.
@@ -1999,7 +1999,7 @@ export const ExportSlidesExportRequestFormatEnum = {
 } as const;
 
 export type ExportSlidesExportRequestFormatEnum =
-    typeof ExportSlidesExportRequestFormatEnum[keyof typeof ExportSlidesExportRequestFormatEnum];
+    (typeof ExportSlidesExportRequestFormatEnum)[keyof typeof ExportSlidesExportRequestFormatEnum];
 
 /**
  * Export request object describing the export properties and overrides for tabular exports.
@@ -2071,7 +2071,7 @@ export const ExportTabularExportRequestFormatEnum = {
 } as const;
 
 export type ExportTabularExportRequestFormatEnum =
-    typeof ExportTabularExportRequestFormatEnum[keyof typeof ExportTabularExportRequestFormatEnum];
+    (typeof ExportTabularExportRequestFormatEnum)[keyof typeof ExportTabularExportRequestFormatEnum];
 
 /**
  * Export request object describing the export properties and metadata for dashboard PDF exports.

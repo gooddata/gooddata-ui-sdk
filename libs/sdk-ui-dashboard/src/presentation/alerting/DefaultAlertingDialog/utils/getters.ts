@@ -88,7 +88,7 @@ export function getAttributeRelatedFilterInfo(
  * @internal
  */
 export function getMeasureTitle(measure: IMeasure) {
-    return measure ? measureAlias(measure) ?? measureTitle(measure) : undefined;
+    return measure ? (measureAlias(measure) ?? measureTitle(measure)) : undefined;
 }
 
 /**
@@ -428,7 +428,7 @@ export function getDescription(
 ): string {
     const selectedMeasure = getAlertMeasure(measures, alert?.alert);
 
-    const name = selectedMeasure ? getMeasureTitle(selectedMeasure.measure) ?? "" : "";
+    const name = selectedMeasure ? (getMeasureTitle(selectedMeasure.measure) ?? "") : "";
     const valueSuffix = getValueSuffix(alert?.alert) ?? "";
     const title = getOperatorTitle(intl, alert?.alert).toLowerCase();
     const threshold = getAlertThreshold(alert?.alert);

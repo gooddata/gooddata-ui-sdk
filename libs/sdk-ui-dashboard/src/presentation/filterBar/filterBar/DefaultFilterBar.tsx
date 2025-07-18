@@ -183,7 +183,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                 );
             } else if (isAllTimeDashboardDateFilter(filter)) {
                 const localIdentifier =
-                    filter?.dateFilter.localIdentifier ?? enableDateFilterIdentifiers
+                    (filter?.dateFilter.localIdentifier ?? enableDateFilterIdentifiers)
                         ? generateDateFilterLocalIdentifier(0, filter?.dateFilter.dataSet)
                         : undefined;
                 // all time filter

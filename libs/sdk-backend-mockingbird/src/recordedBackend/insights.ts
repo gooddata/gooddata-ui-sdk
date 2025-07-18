@@ -54,7 +54,10 @@ export class RecordedInsights implements IWorkspaceInsightsService {
     private readonly insights: { [id: string]: InsightRecording };
     private readonly visClasses: IVisualizationClass[];
 
-    constructor(recordings: RecordingIndex, private readonly insightRefType: RecordedRefType) {
+    constructor(
+        recordings: RecordingIndex,
+        private readonly insightRefType: RecordedRefType,
+    ) {
         this.insights = recordings.metadata?.insights ?? {};
         this.visClasses = recordings.metadata?.visClasses?.items ?? [];
     }

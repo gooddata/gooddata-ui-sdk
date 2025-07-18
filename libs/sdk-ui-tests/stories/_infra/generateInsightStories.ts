@@ -191,8 +191,8 @@ ${exportName}.parameters = ${JSON.stringify(
                         postInteractionWait: insightVisualizationUrl(insight).includes("table")
                             ? ShortPostInteractionTimeout
                             : insightVisualizationUrl(insight).includes("repeater")
-                            ? LongPostInteractionTimeout
-                            : 200,
+                              ? LongPostInteractionTimeout
+                              : 200,
                     },
                 },
                 null,

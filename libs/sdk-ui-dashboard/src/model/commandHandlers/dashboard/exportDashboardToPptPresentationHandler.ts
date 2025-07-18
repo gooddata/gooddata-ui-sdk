@@ -41,9 +41,8 @@ export function* exportDashboardToPptPresentationHandler(
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to PPT must have an ObjRef.");
     }
 
-    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
-        selectFilterContextFilters,
-    );
+    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> =
+        yield select(selectFilterContextFilters);
 
     const effectiveFilters = ensureAllTimeFilterForExport(cmd.payload?.filters ?? filterContextFilters);
 

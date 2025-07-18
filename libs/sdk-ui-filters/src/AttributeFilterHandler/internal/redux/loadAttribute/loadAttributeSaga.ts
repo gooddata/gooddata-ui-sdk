@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, call, select, takeLatest, SagaReturnType, cancelled } from "redux-saga/effects";
 import { areObjRefsEqual, IAttributeMetadataObject } from "@gooddata/sdk-model";
@@ -40,9 +40,8 @@ export function* loadAttributeSaga(
         const displayFormRef: ReturnType<typeof selectAttributeFilterDisplayForm> = yield select(
             selectAttributeFilterDisplayForm,
         );
-        const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(
-            getAttributeFilterContext,
-        );
+        const context: SagaReturnType<typeof getAttributeFilterContext> =
+            yield call(getAttributeFilterContext);
 
         yield put(actions.loadAttributeStart({ correlation }));
 

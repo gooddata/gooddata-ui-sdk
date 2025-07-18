@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { v4 as uuid } from "uuid";
 import { IDataFiltersService } from "@gooddata/sdk-backend-spi";
@@ -19,7 +19,10 @@ import {
 import { objRefToIdentifier } from "../../../utils/api.js";
 
 export class TigerDataFiltersService implements IDataFiltersService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+    ) {}
 
     public async getDataFilters(): Promise<IWorkspaceDataFilter[]> {
         return this.authCall(async (client) => {

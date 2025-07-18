@@ -130,14 +130,17 @@
     .gd-drill-measure-selector-list-item::before {
         background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/measure.svg");
     }
+
     .gd-drill-metric-selector-list-item::before {
         background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/metric.svg");
         top: 8px;
         height: 18px;
     }
+
     .gd-drill-attribute-selector-list-item::before {
         background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/attribute.svg");
     }
+
     .gd-drill-attribute-date-selector-list-item::before {
         top: 9px;
         height: 16px;
@@ -264,12 +267,15 @@
     .dm-button-icon-metric {
         background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/metric.svg");
     }
+
     .dm-button-icon-measure {
         background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/measure.svg");
     }
+
     .dm-button-icon-attribute {
         background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/attribute.svg");
     }
+
     .dm-button-icon-date {
         background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/date-dropdown.svg");
     }
@@ -793,6 +799,7 @@ $gd-gd-drill-to-url-body-width: 230px;
     align-items: center;
     margin-top: 5px;
 }
+
 .gd-drill-intersection-ignored-attributes-select-label {
     white-space: nowrap;
     overflow: hidden;

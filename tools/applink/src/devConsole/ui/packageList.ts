@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import blessed from "blessed";
 import { AppPanel, AppPanelOptions } from "./appPanel.js";
 import {
@@ -68,7 +68,10 @@ export class PackageList extends AppPanel implements IEventListener {
 
     private browsingBuildOutput: boolean = false;
 
-    constructor(options: AppPanelOptions, private readonly eventBus: EventBus = GlobalEventBus) {
+    constructor(
+        options: AppPanelOptions,
+        private readonly eventBus: EventBus = GlobalEventBus,
+    ) {
         super(options);
 
         this.eventBus.register(this);

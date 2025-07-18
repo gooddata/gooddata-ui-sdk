@@ -353,7 +353,7 @@ function calculateItemWidth(
     }
 
     return direction === "row"
-        ? determineWidthForScreen(screen, item.size) ?? emptyLayoutMinWidth
+        ? (determineWidthForScreen(screen, item.size) ?? emptyLayoutMinWidth)
         : getDashboardLayoutWidgetMinGridWidth(
               settings,
               getExtendedWidgetType(widget),
@@ -541,7 +541,7 @@ export const determineSizeForScreen = (
     layoutItemSize?: IDashboardLayoutSizeByScreenSize,
 ): IDashboardLayoutSize => {
     return {
-        ...(layoutItemSize ? layoutItemSize[screen] ?? {} : {}),
+        ...(layoutItemSize ? (layoutItemSize[screen] ?? {}) : {}),
         gridWidth: determineWidthForScreen(screen, layoutItemSize),
     };
 };

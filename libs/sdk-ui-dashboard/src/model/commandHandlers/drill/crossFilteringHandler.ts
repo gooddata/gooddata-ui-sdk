@@ -47,9 +47,8 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     const currentFilters: ReturnType<typeof selectFilterContextDraggableFilters> = yield select(
         selectFilterContextDraggableFilters,
     );
-    const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
-        selectCatalogDateAttributes,
-    );
+    const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> =
+        yield select(selectCatalogDateAttributes);
     const dateDataSetsAttributesRefs = dateAttributes.map((dateAttribute) => dateAttribute.attribute.ref);
 
     let currentVirtualFiltersLocalIdentifiers: ReturnType<

@@ -40,7 +40,7 @@ export interface IMenuButtonItemMenu extends IMenuItemCommonProps {
     icon?: string | ReactNode;
     items: [
         IMenuButtonItemButton | IMenuButtonItemSeparator | IMenuButtonItemHeader,
-        ...(IMenuButtonItemButton | IMenuButtonItemSeparator | IMenuButtonItemHeader)[]
+        ...(IMenuButtonItemButton | IMenuButtonItemSeparator | IMenuButtonItemHeader)[],
     ];
 }
 

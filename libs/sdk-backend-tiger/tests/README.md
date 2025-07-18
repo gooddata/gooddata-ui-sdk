@@ -29,8 +29,8 @@ and run `rushx create-ref-workspaces`
 
 The id of the workspace which was created needs to be set:
 
--   tests/integrated/backend.ts (under function getRecordingsWorkspaceId)
--   scripts/refresh-md.sh
+- tests/integrated/backend.ts (under function getRecordingsWorkspaceId)
+- scripts/refresh-md.sh
 
 ### Create recordings
 

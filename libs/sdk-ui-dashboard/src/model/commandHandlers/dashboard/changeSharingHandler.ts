@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import {
@@ -36,9 +36,8 @@ type DashboardSaveSharingContext = {
 function* createDashboardSaveSharingContext(cmd: ChangeSharing): SagaIterator<DashboardSaveSharingContext> {
     const { newSharingProperties } = cmd.payload;
 
-    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
-        selectPersistedDashboard,
-    );
+    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
+        yield select(selectPersistedDashboard);
     invariant(persistedDashboard, "Cant change sharing of unsaved dashboard");
     const { filterContext, ...otherDashboardProps } = persistedDashboard;
     // ignore temp filter context to please TS as it can be present only during export

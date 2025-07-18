@@ -23,6 +23,7 @@ $min-content-height: 110px;
         max-height: 99vh;
     }
 }
+
 .gd-notifications-channels-dialog-overlay.truncated {
     overflow-y: auto;
     overflow-x: hidden;
@@ -69,6 +70,7 @@ $min-content-height: 110px;
             margin-bottom: 7px;
             margin-top: -3px;
         }
+
         .gd-label:first-child {
             margin-top: 0;
         }
@@ -452,6 +454,7 @@ $min-content-height: 110px;
                 display: block;
             }
         }
+
         &.editable:hover,
         &.editable.hover {
             cursor: pointer;
@@ -897,6 +900,7 @@ $min-content-height: 110px;
 
 .gd-notifications-channels-dialog-menu {
     min-width: 100px;
+
     .deleteItem {
         &:hover {
             background-color: kit-variables.$gd-palette-error-dimmed;
@@ -946,6 +950,7 @@ $min-content-height: 110px;
     border: 1px solid var(--gd-palette-complementary-4);
     background-color: var(--gd-palette-complementary-0);
     color: var(--gd-palette-complementary-7);
+
     &:has(.gd-attachment-chip-delete:hover) {
         background-color: var(--gd-palette-error-dimmed);
         color: var(--gd-palette-error-base);
@@ -970,6 +975,7 @@ $min-content-height: 110px;
     place-items: center;
     width: 27px;
     height: 100%;
+
     &:hover {
         color: var(--gd-palette-complementary-8);
     }

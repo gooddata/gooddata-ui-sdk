@@ -22,6 +22,7 @@
             height: auto;
             padding: 3px 30px 3px 5px;
         }
+
         .cm-scroller {
             // stylelint-disable-next-line declaration-no-important
             font-family: kit-variables.$gd-font-primary !important;
@@ -90,7 +91,9 @@
 
         top: -#{variables.$info-height};
         opacity: 1;
-        transition: top 0.2s ease-in-out, opacity 0.2s ease-in-out;
+        transition:
+            top 0.2s ease-in-out,
+            opacity 0.2s ease-in-out;
 
         &.hidden {
             top: 0;
@@ -160,12 +163,15 @@
                     &-metric {
                         @include variables.gd-svg-icon("metric");
                     }
+
                     &-attribute {
                         @include variables.gd-svg-icon("attribute");
                     }
+
                     &-fact {
                         @include variables.gd-svg-icon("measure");
                     }
+
                     &-date {
                         @include variables.gd-svg-icon("date");
                     }
@@ -244,6 +250,7 @@
                     line-height: normal;
                     text-transform: uppercase;
                 }
+
                 &__value {
                     color: kit-variables.$gd-color-text;
                     font-size: 12px;
@@ -262,16 +269,20 @@
         &.metric {
             color: kit-variables.$gd-color-positive;
         }
+
         &.fact {
             color: kit-variables.$gd-color-positive;
         }
+
         &.attribute {
             color: kit-variables.$gd-color-warning;
         }
+
         &.date {
             color: kit-variables.$gd-color-highlight;
         }
     }
+
     .cm-editor .cm-icon-widget {
         display: inline-block;
         width: 18px;
@@ -282,12 +293,15 @@
         &.metric {
             @include variables.gd-svg-icon("metric");
         }
+
         &.attribute {
             @include variables.gd-svg-icon("attribute");
         }
+
         &.fact {
             @include variables.gd-svg-icon("measure");
         }
+
         &.date {
             @include variables.gd-svg-icon("date");
         }
