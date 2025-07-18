@@ -1,41 +1,14 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import * as path from "path";
-import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
 import { createUniqueVariableName, TakenNamesSet } from "../base/variableNaming.js";
 import { InsightRecording } from "../recordings/insights.js";
 import groupBy from "lodash/groupBy.js";
 
 const InsightIndexConstName = "Insights";
 
-function insightRecordingInit(rec: InsightRecording, targetDir: string): string {
-    const entries = Object.entries(rec.getEntryForRecordingIndex());
-
-    const entryPairs = entries
-        .map(([type, file]) => `${type}: require('./${path.relative(targetDir, file)}')`)
-        .join(",");
-
-    return `{ ${entryPairs} }`;
-}
-
-function generateRecordingConst(
-    rec: InsightRecording,
-    targetDir: string,
-): OptionalKind<VariableStatementStructure> {
-    return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: false,
-        declarations: [
-            {
-                name: rec.getRecordingName(),
-                initializer: insightRecordingInit(rec, targetDir),
-            },
-        ],
-    };
-}
-
 //
-// generating initializer for map of maps .. fun times.
+// generating initializer for map of maps ... fun times.
 //
 
 type VisScenarioToInsight = [string, string, InsightRecording];
@@ -55,7 +28,7 @@ function generateScenarioForVis(entries: VisScenarioToInsight[]): string {
     return `{ ${entryRows} }`;
 }
 
-function generateInsightsConst(recordings: InsightRecording[]): OptionalKind<VariableStatementStructure> {
+function generateInsightsConst(recordings: InsightRecording[]): string {
     const recsWithVisAndScenario: VisScenarioToInsight[] = recordings
         .filter((rec) => rec.hasVisAndScenarioInfo())
         .map((rec) => [rec.getVisName(), rec.getScenarioName(), rec]);
@@ -65,16 +38,7 @@ function generateInsightsConst(recordings: InsightRecording[]): OptionalKind<Var
         .map(([vis, visScenarios]) => `${vis}: ${generateScenarioForVis(visScenarios)}`)
         .join(",");
 
-    return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: true,
-        declarations: [
-            {
-                name: InsightIndexConstName,
-                initializer: `{ ${entryRows} }`,
-            },
-        ],
-    };
+    return `export const ${InsightIndexConstName} = { ${entryRows} };`;
 }
 
 /**
@@ -84,12 +48,25 @@ function generateInsightsConst(recordings: InsightRecording[]): OptionalKind<Var
  * @param targetDir - absolute path to directory where index will be stored, this is needed so that paths can be
  *   made relative for require()
  */
-export function generateConstantsForInsights(
-    recordings: InsightRecording[],
-    targetDir: string,
-): Array<OptionalKind<VariableStatementStructure>> {
+export function generateConstantsForInsights(recordings: InsightRecording[], targetDir: string): string[] {
     return [
-        ...recordings.map((r) => generateRecordingConst(r, targetDir)),
+        ...recordings
+            .map((r) => {
+                const entries = Object.entries(r.getEntryForRecordingIndex());
+
+                const recordingName = r.getRecordingName();
+
+                const entryPairs = entries.map(([type, _]) => `${type}: ${recordingName}_${type}`).join(",");
+
+                return [
+                    ...entries.map(
+                        ([type, file]) =>
+                            `import ${recordingName}_${type} from "./${path.relative(targetDir, file)}" with { type: "json" };`,
+                    ),
+                    `const ${recordingName} = { ${entryPairs} };`,
+                ];
+            })
+            .reduce((acc, curr) => acc.concat(curr), []),
         generateInsightsConst(recordings),
     ];
 }

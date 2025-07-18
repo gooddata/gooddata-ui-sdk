@@ -52,7 +52,6 @@
         "p-map": "^3.0.0",
         "prettier": "^3.6.2",
         "rimraf": "^3.0.0",
-        "ts-morph": "^26.0.0",
         "tslib": "^2.5.0"
     },
     "devDependencies": {

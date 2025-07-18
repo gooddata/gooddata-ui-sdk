@@ -1,34 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import * as path from "path";
-import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
 import { DisplayFormRecording } from "../recordings/displayForms.js";
-
-function displayFormRecordingInit(rec: DisplayFormRecording, targetDir: string): string {
-    const entries = Object.entries(rec.getEntryForRecordingIndex());
-
-    const entryRows = entries
-        .map(([type, file]) => `${type}: require('./${path.relative(targetDir, file)}')`)
-        .join(",");
-
-    return `{ ${entryRows} }`;
-}
-
-function generateRecordingConst(
-    rec: DisplayFormRecording,
-    targetDir: string,
-): OptionalKind<VariableStatementStructure> {
-    return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: false,
-        declarations: [
-            {
-                name: rec.getRecordingName(),
-                initializer: displayFormRecordingInit(rec, targetDir),
-            },
-        ],
-    };
-}
 
 /**
  * Generate constants for the valid element recordings. This function will return non-exported constant per recording.
@@ -40,6 +13,22 @@ function generateRecordingConst(
 export function generateConstantsForDisplayForms(
     recordings: DisplayFormRecording[],
     targetDir: string,
-): Array<OptionalKind<VariableStatementStructure>> {
-    return recordings.map((r) => generateRecordingConst(r, targetDir));
+): string[] {
+    return recordings
+        .map((r) => {
+            const entries = Object.entries(r.getEntryForRecordingIndex());
+
+            const recordingName = r.getRecordingName();
+
+            const entryRows = entries.map(([type, _]) => `${type}: ${recordingName}_${type}`).join(",");
+
+            return [
+                ...entries.map(
+                    ([type, file]) =>
+                        `import ${recordingName}_${type} from "./${path.relative(targetDir, file)}" with { type: "json" };`,
+                ),
+                `const ${recordingName} = { ${entryRows} }`,
+            ];
+        })
+        .reduce((acc, curr) => acc.concat(curr), []);
 }

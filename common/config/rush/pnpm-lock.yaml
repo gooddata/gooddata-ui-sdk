@@ -6380,9 +6380,6 @@ importers:
       rimraf:
         specifier: ^3.0.0
         version: 3.0.2
-      ts-morph:
-        specifier: ^26.0.0
-        version: 26.0.0
       tslib:
         specifier: ^2.5.0
         version: 2.6.2

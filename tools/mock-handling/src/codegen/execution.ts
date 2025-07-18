@@ -1,7 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import * as path from "path";
-import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
 import { createUniqueVariableName } from "../base/variableNaming.js";
 import flatMap from "lodash/flatMap.js";
 import groupBy from "lodash/groupBy.js";
@@ -9,34 +8,8 @@ import { ExecutionRecording } from "../recordings/execution.js";
 
 const ScenariosConstName = "Scenarios";
 
-function executionRecordingInit(rec: ExecutionRecording, targetDir: string): string {
-    const entries = Object.entries(rec.getEntryForRecordingIndex());
-
-    const entryRows = entries
-        .map(([type, file]) => `${type}: require('./${path.relative(targetDir, file)}')`)
-        .join(",");
-
-    return `{ ${entryRows} }`;
-}
-
-function generateRecordingConst(
-    rec: ExecutionRecording,
-    targetDir: string,
-): OptionalKind<VariableStatementStructure> {
-    return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: false,
-        declarations: [
-            {
-                name: rec.getRecordingName(),
-                initializer: executionRecordingInit(rec, targetDir),
-            },
-        ],
-    };
-}
-
 //
-// generating initializer for map of maps .. fun times.
+// generating initializer for map of maps ... fun times.
 //
 
 type VisScenarioRecording = [string, string, ExecutionRecording, number];
@@ -67,24 +40,18 @@ function generateScenarioForVis(entries: VisScenarioRecording[]): string {
     return `{ ${entryRows} }`;
 }
 
-function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<VariableStatementStructure> {
+function generateScenariosConst(recordings: ExecutionRecording[]): string {
     const recsWithVisAndScenario = flatMap(recordings, (rec) =>
         rec.scenarios.map<VisScenarioRecording>((s, idx) => [s.vis, s.scenario, rec, idx]),
     );
+
     const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, ([visName]) => visName));
+
     const entryRows = entriesByVis
         .map(([vis, visScenarios]) => `${vis}: ${generateScenarioForVis(visScenarios)}`)
         .join(",");
-    return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: true,
-        declarations: [
-            {
-                name: ScenariosConstName,
-                initializer: `{ ${entryRows} }`,
-            },
-        ],
-    };
+
+    return `export const ${ScenariosConstName} = { ${entryRows} }`;
 }
 
 /**
@@ -99,7 +66,7 @@ function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<
 export function generateConstantsForExecutions(
     recordings: ExecutionRecording[],
     targetDir: string,
-): Array<OptionalKind<VariableStatementStructure>> {
+): string[] {
     const unique = recordings.reduce((acc: ExecutionRecording[], rec: ExecutionRecording) => {
         const existsIndex = acc.findIndex((r) => r.getRecordingName() === rec.getRecordingName());
         if (existsIndex >= 0) {
@@ -110,5 +77,25 @@ export function generateConstantsForExecutions(
 
         return acc;
     }, []);
-    return [...unique.map((r) => generateRecordingConst(r, targetDir)), generateScenariosConst(unique)];
+
+    return [
+        ...unique
+            .map((r) => {
+                const entries = Object.entries(r.getEntryForRecordingIndex());
+
+                const recordingName = r.getRecordingName();
+
+                const entryRows = entries.map(([type, _]) => `${type}: ${recordingName}_${type}`).join(",");
+
+                return [
+                    ...entries.map(
+                        ([type, file]) =>
+                            `import ${recordingName}_${type} from "./${path.relative(targetDir, file)}" with { type: "json" };`,
+                    ),
+                    `const ${recordingName} = { ${entryRows} };`,
+                ];
+            })
+            .reduce((acc, curr) => acc.concat(curr), []),
+        generateScenariosConst(unique),
+    ];
 }
