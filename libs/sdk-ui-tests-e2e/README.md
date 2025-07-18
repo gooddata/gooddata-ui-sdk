@@ -25,7 +25,7 @@ export IMAGE_ID=ui-sdk-scenarios
 Provide all necessary info in the `.env` file. You can find more information in the file `.env.template`.
 
 -   FIXTURE_TYPE=goodsales
--   CYPRESS_TEST_TAGS=post-merge_integrated_tiger
+-   CYPRESS_TEST_TAGS=checklist_integrated_tiger
 -   TIGER_API_TOKEN=
 
 Add FILTER env variable with test file name to run and CYPRESS_TEST_TAGS env var to specify a comma-separated list of tags to run.
