@@ -273,11 +273,6 @@ export interface ISettings {
     enableCompanyLogoInEmbeddedUI?: boolean;
 
     /**
-     * Setting to use Report instead of Insight in AD&KD
-     */
-    enableInsightToReport?: boolean;
-
-    /**
      * Enable implicit drillToAttributeURL
      */
     enableClickableAttributeURL?: boolean;

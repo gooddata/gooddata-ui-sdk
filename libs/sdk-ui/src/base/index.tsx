@@ -220,10 +220,8 @@ export {
     TranslationsCustomizationContextProvider,
     withTranslationsCustomization,
     TranslationsCustomizationProvider,
-    pickCorrectInsightWording,
     pickCorrectMetricWording,
     pickCorrectWording,
-    removeAllInsightToReportTranslations,
     removeAllWordingTranslationsWithSpecialSuffix,
 } from "./localization/TranslationsCustomizationProvider/index.js";
 

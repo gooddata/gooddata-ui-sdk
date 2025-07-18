@@ -2,9 +2,6 @@
 
 export const DefaultLocale = "en-US.json";
 
-export const CheckInsightPipe = "|insight";
-export const CheckReportPipe = "|report";
-
 export const CheckMeasureSuffix = "._measure";
 export const CheckMetricSuffix = "._metric";
 

@@ -44,7 +44,6 @@ program
     .option("-s, --structure", "enable structure check")
     .option("-i, --intl", "enable intl check")
     .option("-h, --html", "enable html check")
-    .option("-r, --insightToReport", "enable insightToReport check")
     .option("-u, --usage", "enable usage of messages check")
     .option("-m, --comments", "enable comment validation check")
     .option("-d, --debug", "enable debug mode")

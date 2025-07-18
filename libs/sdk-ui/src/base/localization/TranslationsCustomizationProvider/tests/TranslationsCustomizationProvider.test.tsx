@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -7,19 +7,35 @@ import { describe, expect, it } from "vitest";
 import { TranslationsCustomizationProvider } from "../TranslationsCustomizationProvider.js";
 
 const workspace = "testWorkspace";
-const getBackend = (enableInsightToReport = true) =>
+const getBackend = (enableRenamingMeasureToMetric = true) =>
     recordedBackend(ReferenceRecordings.Recordings, {
         globalSettings: {
-            enableInsightToReport,
+            enableRenamingMeasureToMetric,
         },
     });
+
 const messages = {
-    "translatedString|insight": "Insight",
-    "translatedString|report": "Report",
+    "translatedString._measure": "Measure",
+    "translatedString._metric": "Metric",
 };
 
 describe("TranslationsCustomizationProvider", () => {
-    it("should prepare the translations so there is always used `Insight` when `enableInsightToReport` feature flag is set to false as is by default", async () => {
+    it("should use 'Metric' when enableRenamingMeasureToMetric is true (default)", async () => {
+        render(
+            <TranslationsCustomizationProvider
+                backend={getBackend(true)}
+                workspace={workspace}
+                render={(translations) => <div>{translations.translatedString}</div>}
+                translations={messages}
+            />,
+        );
+        await waitFor(() => {
+            expect(screen.queryByText("Measure")).not.toBeInTheDocument();
+            expect(screen.queryByText("Metric")).toBeInTheDocument();
+        });
+    });
+
+    it("should use 'Measure' when enableRenamingMeasureToMetric is false", async () => {
         render(
             <TranslationsCustomizationProvider
                 backend={getBackend(false)}
@@ -29,23 +45,8 @@ describe("TranslationsCustomizationProvider", () => {
             />,
         );
         await waitFor(() => {
-            expect(screen.queryByText("Report")).not.toBeInTheDocument();
-            expect(screen.queryByText("Insight")).toBeInTheDocument();
-        });
-    });
-
-    it("should prepare the translations so there is always used `Report` when `enableInsightToReport` feature flag is set to true", async () => {
-        render(
-            <TranslationsCustomizationProvider
-                backend={getBackend()}
-                workspace={workspace}
-                render={(translations) => <div>{translations.translatedString}</div>}
-                translations={messages}
-            />,
-        );
-        await waitFor(() => {
-            expect(screen.queryByText("Insight")).not.toBeInTheDocument();
-            expect(screen.queryByText("Report")).toBeInTheDocument();
+            expect(screen.queryByText("Metric")).not.toBeInTheDocument();
+            expect(screen.queryByText("Measure")).toBeInTheDocument();
         });
     });
 });

@@ -1,17 +1,25 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`pickCorrectInsightWording > should return translations with insight when enableInsightToReport is set to false 1`] = `
+exports[`pickCorrectMetricWording > should return translations with measure when enableRenamingMeasureToMetric is set to false 1`] = `
 {
-  "mock.translation": "Insight",
-  "mock.translation|insight": "Insight",
-  "mock.translation|report": "Report",
+  "mock.translation": "Measure",
+  "mock.translation._measure": "Measure",
+  "mock.translation._metric": "Metric",
 }
 `;
 
-exports[`pickCorrectInsightWording > should return translations with report when enableInsightToReport is set to true 1`] = `
+exports[`pickCorrectMetricWording > should return translations with metric when enableRenamingMeasureToMetric is set to true 1`] = `
 {
-  "mock.translation": "Report",
-  "mock.translation|insight": "Insight",
-  "mock.translation|report": "Report",
+  "mock.translation": "Metric",
+  "mock.translation._measure": "Measure",
+  "mock.translation._metric": "Metric",
+}
+`;
+
+exports[`pickCorrectMetricWording > should return translations with metric when enableRenamingMeasureToMetric is set to undefined 1`] = `
+{
+  "mock.translation": "Metric",
+  "mock.translation._measure": "Measure",
+  "mock.translation._metric": "Metric",
 }
 `;
