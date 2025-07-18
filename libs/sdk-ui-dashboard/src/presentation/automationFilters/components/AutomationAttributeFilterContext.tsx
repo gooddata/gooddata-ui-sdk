@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { createContext, ReactNode, useContext } from "react";
 import { FilterContextItem, IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
-const AutomationAttributeFilterContext = React.createContext<IAutomationAttributeFilterContext | null>(null);
+const AutomationAttributeFilterContext = createContext<IAutomationAttributeFilterContext | null>(null);
 
 /**
  * @internal
@@ -20,7 +20,7 @@ export interface IAutomationAttributeFilterContext {
  * @internal
  */
 export const useAutomationAttributeFilterContext = () => {
-    const context = React.useContext(AutomationAttributeFilterContext);
+    const context = useContext(AutomationAttributeFilterContext);
     if (!context) {
         throw new Error("AutomationAttributeFilterContext not found");
     }
@@ -28,7 +28,7 @@ export const useAutomationAttributeFilterContext = () => {
 };
 
 export interface IAutomationAttributeFilterProviderProps extends IAutomationAttributeFilterContext {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 /**
  * @internal

@@ -1,7 +1,7 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { useIntl } from "react-intl";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { IUserGroup } from "@gooddata/sdk-model";
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
@@ -19,13 +19,13 @@ export interface IEditUserGroupDetailsProps {
     onClose: () => void;
 }
 
-export const EditUserGroupDetails: React.FC<IEditUserGroupDetailsProps> = ({
+export function EditUserGroupDetails({
     userGroup,
     enableBackButton,
     onSubmit,
     onCancel,
     onClose,
-}) => {
+}: IEditUserGroupDetailsProps) {
     const intl = useIntl();
     const { updatedUserGroup, onChange, isProcessing, isDirty, onSave } = useUserGroupDetails(
         userGroup,
@@ -55,4 +55,4 @@ export const EditUserGroupDetails: React.FC<IEditUserGroupDetailsProps> = ({
             <UserGroupDetailsView userGroup={updatedUserGroup} mode="EDIT" onChange={onChange} />
         </ConfirmDialogBase>
     );
-};
+}

@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { CodeLanguageSelect, CodeLanguageType } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-const CodeLanguageSelectorExamples: React.VFC = () => {
+export function CodeLanguageSelectorExamples() {
     const [lang, setLang] = useState<CodeLanguageType>("ts");
 
     const onLanguageChanged = (lang: CodeLanguageType) => {
@@ -19,7 +19,7 @@ const CodeLanguageSelectorExamples: React.VFC = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/EmbedInsightDialog/CodeLanguageSelect",

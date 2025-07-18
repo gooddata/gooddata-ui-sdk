@@ -1,6 +1,6 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React, { useEffect, useRef } from "react";
+import { ElementType, ReactNode, useEffect, useRef } from "react";
 
 import { isElementInvisibleType, useScrollContext } from "./ScrollContext.js";
 
@@ -12,26 +12,25 @@ export interface IScrollableItemProps {
     className?: string;
     bottomMargin?: number;
     isElementInvisibleCheck?: isElementInvisibleType;
-    tagName?: React.ElementType;
+    tagName?: ElementType;
     onItemScrolled?: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
  * @internal
  */
-export const ScrollableItem: React.FC<IScrollableItemProps> = (props) => {
+export function ScrollableItem({
+    scrollIntoView,
+    bottomMargin,
+    isElementInvisibleCheck,
+    className,
+    children,
+    onItemScrolled,
+    tagName: TagName = "div",
+}: IScrollableItemProps) {
     const item = useRef<HTMLDivElement>(null);
     const scroll = useScrollContext();
-    const {
-        scrollIntoView,
-        bottomMargin,
-        isElementInvisibleCheck,
-        className,
-        children,
-        onItemScrolled,
-        tagName: TagName = "div",
-    } = props;
 
     useEffect(() => {
         if (scrollIntoView) {
@@ -48,4 +47,4 @@ export const ScrollableItem: React.FC<IScrollableItemProps> = (props) => {
             {children}
         </TagName>
     );
-};
+}

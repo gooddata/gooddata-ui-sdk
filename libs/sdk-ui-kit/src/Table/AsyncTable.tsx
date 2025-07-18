@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { UiPagedVirtualList } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 import { AsyncTableRow } from "./AsyncTableRow.js";
 import { b } from "./asyncTableBem.js";
@@ -153,10 +153,13 @@ const useAsyncTable = <T extends { id: string }>({
     const width = useMemo(() => {
         return (
             widthProp ??
-            columns.reduce((acc, column) => {
-                const columnWidth = getColumnWidth(!!column.renderMenu, largeRow, column.width);
-                return acc + columnWidth;
-            }, SCROLLBAR_WIDTH + (!!bulkActions && CHECKBOX_COLUMN_WIDTH))
+            columns.reduce(
+                (acc, column) => {
+                    const columnWidth = getColumnWidth(!!column.renderMenu, largeRow, column.width);
+                    return acc + columnWidth;
+                },
+                SCROLLBAR_WIDTH + (!!bulkActions && CHECKBOX_COLUMN_WIDTH),
+            )
         );
     }, [columns, bulkActions, widthProp, largeRow]);
 

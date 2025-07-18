@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import cx from "classnames";
 import {
     insightIsLocked,
@@ -25,8 +24,11 @@ import {
 import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 
-export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => {
-    const { enableDescriptions, WrapInsightListItemWithDragComponent, ...remainingProps } = props;
+export function DraggableInsightListCore({
+    enableDescriptions,
+    WrapInsightListItemWithDragComponent,
+    ...remainingProps
+}: IInsightListProps) {
     const userInteraction = useDashboardUserInteraction();
     const settings = useDashboardSelector(selectSettings);
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
@@ -80,4 +82,4 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
             }}
         />
     );
-};
+}

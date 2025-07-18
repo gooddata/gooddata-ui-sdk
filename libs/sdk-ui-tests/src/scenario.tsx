@@ -1,7 +1,7 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import identity from "lodash/identity.js";
 import isEmpty from "lodash/isEmpty.js";
-import React from "react";
+import { ComponentType } from "react";
 import SparkMD5 from "spark-md5";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IBucketChartProps } from "@gooddata/sdk-ui-charts";
@@ -10,11 +10,6 @@ import { IInsight, ISettings } from "@gooddata/sdk-model";
 import { IExecuteProps } from "@gooddata/sdk-ui";
 import { IGeoPushpinChartProps, IGeoPushpinChartLatitudeLongitudeProps } from "@gooddata/sdk-ui-geo";
 import { DataViewRequests } from "@gooddata/mock-handling";
-import { provideCreateRoot } from "@gooddata/sdk-ui-ext";
-import { createRoot } from "react-dom/client";
-
-// provide React18 root API for visualization rendering
-provideCreateRoot(createRoot);
 
 export type VisProps =
     | IPivotTableProps
@@ -101,7 +96,7 @@ export interface IScenario<T extends VisProps> {
     /**
      * React component realizing the scenario
      */
-    readonly component: React.ComponentType<T>;
+    readonly component: ComponentType<T>;
 
     /**
      * Backend settings to use when testing this scenario.
@@ -163,7 +158,7 @@ export class ScenarioBuilder<T extends VisProps> {
 
     constructor(
         private readonly vis: string,
-        private readonly component: React.ComponentType<T>,
+        private readonly component: ComponentType<T>,
         private readonly name: string,
         private readonly props: UnboundVisProps<T>,
         private readonly groupName: string[],
@@ -297,7 +292,7 @@ export type ScenarioModification<T extends VisProps> = (m: ScenarioBuilder<T>) =
  */
 export type ScenarioTestInput<T extends VisProps> = [
     string,
-    React.ComponentType<T>,
+    ComponentType<T>,
     PropsFactory<T>,
     ScenarioTag[],
     string,

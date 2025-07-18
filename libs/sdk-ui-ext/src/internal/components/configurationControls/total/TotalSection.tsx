@@ -1,8 +1,8 @@
-// (C) 2023 GoodData Corporation
-import React, { useEffect } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { memo, useEffect } from "react";
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import ConfigSection from "../ConfigSection.js";
 import InputControl from "../InputControl.js";
@@ -20,10 +20,9 @@ export interface ITotalSectionProps {
 
 const MAX_BUCKET_ITEM_NAME = 50;
 
-const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
-    props: ITotalSectionProps & WrappedComponentProps,
-) => {
-    const { intl, controlsDisabled, properties, propertiesMeta, pushData } = props;
+function TotalSection(props: ITotalSectionProps) {
+    const intl = useIntl();
+    const { controlsDisabled, properties, propertiesMeta, pushData } = props;
     const hasTotalMeasure = properties.controls?.total?.measures?.length > 0;
     const isToggleDisabled = controlsDisabled || hasTotalMeasure;
     //always toggle to false when the control is disabled, otherwise depend on the properties config
@@ -33,8 +32,8 @@ const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
     const toggleMessageId = hasTotalMeasure
         ? messages.totalMeasuresTooltip.id
         : !controlsDisabled
-        ? messages.totalToggleTooltip.id
-        : undefined;
+          ? messages.totalToggleTooltip.id
+          : undefined;
 
     useEffect(() => {
         if (isTotalEnabled && !totalColumnName) {
@@ -72,6 +71,6 @@ const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
             />
         </ConfigSection>
     );
-};
+}
 
-export default injectIntl(React.memo(TotalSection));
+export default memo(TotalSection);

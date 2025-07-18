@@ -1,5 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import InputControl from "../InputControl.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { messages } from "../../../../locales.js";

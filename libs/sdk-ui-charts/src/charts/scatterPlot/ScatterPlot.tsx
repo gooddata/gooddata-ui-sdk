@@ -1,5 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { IAttribute, IMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,

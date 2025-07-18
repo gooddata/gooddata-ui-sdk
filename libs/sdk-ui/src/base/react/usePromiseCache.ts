@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import { useEffect, useState, useRef } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { useEffect, useState, useRef, DependencyList } from "react";
 import { PromiseCache } from "./PromiseCache.js";
 
 /**
@@ -27,8 +27,8 @@ const initialState: IUsePromiseCacheState<any, any> = {
 export function usePromiseCache<TParams, TResult, TError>(
     promiseFactory: (params: TParams) => Promise<TResult>,
     fetchParams: TParams[],
-    fetchDeps: React.DependencyList,
-    resetDeps: React.DependencyList,
+    fetchDeps: DependencyList,
+    resetDeps: DependencyList,
     getCacheKey?: (params: TParams) => string,
     preventResetPromises?: boolean,
 ): IUsePromiseCacheState<TResult, TError> {

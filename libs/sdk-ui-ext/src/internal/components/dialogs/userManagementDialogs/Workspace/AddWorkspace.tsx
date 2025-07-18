@@ -1,7 +1,7 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { useIntl } from "react-intl";
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { BackButton, ConfirmDialogBase, Hyperlink } from "@gooddata/sdk-ui-kit";
 
 import { IGrantedWorkspace, WorkspacePermissionSubject } from "../types.js";
@@ -27,7 +27,7 @@ export interface IAddWorkspaceProps {
     editWorkspace?: IGrantedWorkspace;
 }
 
-export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
+export function AddWorkspace({
     ids,
     subjectType,
     grantedWorkspaces,
@@ -37,7 +37,7 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
     onClose,
     areFilterViewsEnabled,
     editWorkspace,
-}) => {
+}: IAddWorkspaceProps) {
     const intl = useIntl();
     const { addedWorkspaces, isProcessing, onAdd, onChange, onOverwriteSelect } = useAddWorkspace(
         ids,
@@ -105,4 +105,4 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
             />
         </ConfirmDialogBase>
     );
-};
+}

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { useMemo, useCallback, useEffect, useRef } from "react";
+import { UIEvent, useMemo, useCallback, useEffect, useRef, KeyboardEvent } from "react";
 import stringify from "json-stable-stringify";
 import { useIntl, IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -52,14 +52,14 @@ export interface DrillSelectDropdownProps extends DrillSelectContext {
     onSelect: (item: DashboardDrillDefinition) => void;
 }
 
-export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
+export function DrillSelectDropdown({
     isOpen,
     dropDownAnchorClass,
     onClose,
     onSelect,
     drillDefinitions,
     drillEvent,
-}) => {
+}: DrillSelectDropdownProps) {
     const intl = useIntl();
 
     const dashboardList = useDashboardSelector(selectAccessibleDashboards);
@@ -68,7 +68,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
 
-    const stopPropagation = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    const stopPropagation = useCallback((e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
     }, []);
 
@@ -99,13 +99,13 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
             }
 
             const nextIndex = (currentIndex + 1) % focusableElements.length;
-            return nextIndex === 0 ? null : focusableElements[nextIndex] ?? null;
+            return nextIndex === 0 ? null : (focusableElements[nextIndex] ?? null);
         },
         [],
     );
 
     const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (e.key !== "Tab") {
                 return;
             }
@@ -200,7 +200,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
             </Overlay>
         </div>
     );
-};
+}
 
 const getDashboardTitle = (dashboardRef: ObjRef, dashboardList: IListedDashboard[]) => {
     const dashboard = dashboardList.find((dashboard) =>

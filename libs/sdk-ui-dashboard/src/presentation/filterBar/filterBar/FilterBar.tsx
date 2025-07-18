@@ -1,13 +1,13 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import { IFilterBarProps } from "./types.js";
 
 /**
  * @internal
  */
-export const FilterBar = (props: IFilterBarProps): JSX.Element => {
+export function FilterBar(props: IFilterBarProps) {
     const { FilterBarComponent } = useDashboardComponentsContext();
 
     return <FilterBarComponent {...props} />;
-};
+}

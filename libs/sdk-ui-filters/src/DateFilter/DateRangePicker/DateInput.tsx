@@ -1,6 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useState, ChangeEvent, useEffect } from "react";
+import {
+    forwardRef,
+    useCallback,
+    useState,
+    ChangeEvent,
+    useEffect,
+    KeyboardEvent,
+    InputHTMLAttributes,
+} from "react";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
 import { useId, isEnterKey, isArrowKey } from "@gooddata/sdk-ui-kit";
@@ -22,7 +30,7 @@ export interface IDateInputProps {
     value: Date;
     inputLabel: string;
     onChange: (date: Date, shouldSubmitForm?: boolean) => void;
-    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
     onClick: () => void;
     dateFormat: string;
     isMobile: boolean;
@@ -133,7 +141,7 @@ const useDateInput = ({
     );
 
     const onDateInputKeyDown = useCallback(
-        (e: React.KeyboardEvent<HTMLInputElement>) => {
+        (e: KeyboardEvent<HTMLInputElement>) => {
             if (isEnterKey(e) && !withoutApply) {
                 onSubmitValue(true);
             } else if (isArrowKey(e)) {
@@ -155,7 +163,7 @@ const useDateInput = ({
     };
 };
 
-export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
+export const DateInput = forwardRef<HTMLInputElement, IDateInputProps>(
     (
         {
             value,
@@ -193,7 +201,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
         const inputLabelId = useId();
         const inputErrorId = useId();
 
-        const ariaProps: React.InputHTMLAttributes<HTMLInputElement> = {
+        const ariaProps: InputHTMLAttributes<HTMLInputElement> = {
             "aria-label": accessibilityConfig.ariaLabel,
             "aria-labelledby": inputLabelId,
             "aria-describedby": buildAriaDescribedByValue([

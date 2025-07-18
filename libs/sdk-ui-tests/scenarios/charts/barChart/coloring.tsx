@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
 import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
@@ -83,8 +83,8 @@ const colorAssignment = scenariosFor<IBarChartProps>("BarChart", BarChart)
         (m) =>
             m.withInsightConverter(
                 replaceMappingPredicates(
-                    ReferenceData.Region.EastCoast.uri,
-                    ReferenceData.Region.WestCoast.uri,
+                    ReferenceData.Region.EastCoast.uri!,
+                    ReferenceData.Region.WestCoast.uri!,
                 ),
             ),
     );

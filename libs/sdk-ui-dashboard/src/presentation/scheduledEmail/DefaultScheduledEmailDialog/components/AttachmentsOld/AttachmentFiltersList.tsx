@@ -1,13 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
 
 interface IAttachmentFiltersListProps {
     filters?: IAttachmentFilterInfo[];
 }
 
-export const AttachmentFiltersList: React.FC<IAttachmentFiltersListProps> = ({ filters }) => {
+export function AttachmentFiltersList({ filters }: IAttachmentFiltersListProps) {
     if (!filters) {
         return null;
     }
@@ -19,9 +18,9 @@ export const AttachmentFiltersList: React.FC<IAttachmentFiltersListProps> = ({ f
             ))}
         </div>
     );
-};
+}
 
-const FilterListItem: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }) => {
+function FilterListItem({ title, subtitle }: { title: string; subtitle: string }) {
     return (
         <div className="gd-attachment-filters-list-item">
             <div className="gd-attachment-filters-list-item-title" title={subtitle}>
@@ -32,4 +31,4 @@ const FilterListItem: React.FC<{ title: string; subtitle: string }> = ({ title, 
             </div>
         </div>
     );
-};
+}

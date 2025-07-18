@@ -1,6 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
-
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 0, y: 50 } }];
@@ -14,7 +13,7 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 0, y: 5
  *
  * @beta
  */
-export const AttributeFilterButtonTooltip: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function AttributeFilterButtonTooltip({ children }: { children?: ReactNode }) {
     return (
         <span className="gd-attribute-filter-dropdown-button-icon-tooltip">
             <BubbleHoverTrigger>
@@ -29,4 +28,4 @@ export const AttributeFilterButtonTooltip: React.FC<{ children?: React.ReactNode
             </BubbleHoverTrigger>
         </span>
     );
-};
+}

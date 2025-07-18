@@ -1,5 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { render, screen, fireEvent } from "@testing-library/react";
 import { withIntl } from "@gooddata/sdk-ui";
 
@@ -36,7 +35,7 @@ function renderComponent(options?: Partial<IColorPickerProps>) {
         "gs.color-picker.okButton": "ok",
     });
 
-    return render(<Wrapper {...args} />);
+    return render(<Wrapper {...args} />); // TODO: MARTIN FIX THE injectIntl Components
 }
 
 describe("ColorPicker", () => {

@@ -1,5 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { render, waitFor } from "@testing-library/react";
 import { Headline } from "../Headline.js";
 import { CoreHeadline } from "../CoreHeadline.js";

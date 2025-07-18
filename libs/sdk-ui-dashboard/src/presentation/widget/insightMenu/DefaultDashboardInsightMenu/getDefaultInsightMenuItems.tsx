@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 import { IntlShape } from "react-intl";
 import compact from "lodash/compact.js";
 
@@ -187,7 +187,7 @@ export function getDefaultInsightMenuItems(
     const noDestinationsTooltip = intl.formatMessage(
         { id: "insightAlert.noDestination.tooltip" },
         {
-            a: (chunk: React.ReactNode) => (
+            a: (chunk: ReactNode) => (
                 <a href="/settings" rel="noopener noreferrer" target="_blank">
                     {chunk}
                 </a>
@@ -251,10 +251,10 @@ export function getDefaultInsightMenuItems(
                 alertingDisabledReason === "oldWidget"
                     ? alertingOldWidgetTooltip
                     : alertingDisabledReason === "noDestinations"
-                    ? noDestinationsTooltip
-                    : alertingDisabledReason === "disabledOnInsight"
-                    ? alertingForInsightNotEnabledTooltip
-                    : undefined,
+                      ? noDestinationsTooltip
+                      : alertingDisabledReason === "disabledOnInsight"
+                        ? alertingForInsightNotEnabledTooltip
+                        : undefined,
             disabled: alertingDisabled,
         },
         isSomeScheduleVisible && {
@@ -271,10 +271,10 @@ export function getDefaultInsightMenuItems(
                 scheduleExportDisabledReason === "incompatibleWidget"
                     ? incompatibleWidgetTooltip
                     : scheduleExportDisabledReason === "oldWidget"
-                    ? oldWidgetTooltip
-                    : scheduleExportDisabledReason === "disabledOnInsight"
-                    ? schedulingForInsightNotEnabledTooltip
-                    : undefined,
+                      ? oldWidgetTooltip
+                      : scheduleExportDisabledReason === "disabledOnInsight"
+                        ? schedulingForInsightNotEnabledTooltip
+                        : undefined,
             icon: "gd-icon-clock",
             className: "s-options-menu-schedule-export",
         },

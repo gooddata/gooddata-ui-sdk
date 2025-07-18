@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { all, call, CallEffect, SagaReturnType, select } from "redux-saga/effects";
 import isNil from "lodash/isNil.js";
 import {
@@ -129,9 +129,8 @@ export function* splitDFToLoadingAndMapping(
     // in tiger there are no uris for attribute values, only primary values
     // we can't call collectLabelElements for date attributes because there are no date "elements", but we can use this values directly.
 
-    const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
-        selectCatalogDateAttributes,
-    );
+    const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> =
+        yield select(selectCatalogDateAttributes);
     const dateAttributeRefs = dateAttributes.map((da) => da.attribute.ref);
 
     const { true: displayFormsWithKnownValues = [], false: displayFormForValueLoad = [] } = groupBy(
@@ -265,7 +264,7 @@ function* resolveDashboardAttributeFilterReplacement(
         const elements = usedFilter?.attributeFilter.attributeElements;
         attributeElementsValues = isAttributeElementsByValue(elements)
             ? elements.values
-            : elements?.uris ?? [];
+            : (elements?.uris ?? []);
     } else {
         const usedConfig = attributeFilterConfigs.find((config) => {
             return config.displayAsLabel && areObjRefsEqual(config.displayAsLabel, ref);
@@ -277,8 +276,8 @@ function* resolveDashboardAttributeFilterReplacement(
         const primaryElementsValues = !elements
             ? []
             : isAttributeElementsByValue(elements)
-            ? elements.values
-            : elements.uris;
+              ? elements.values
+              : elements.uris;
         attributeElementsValues = yield call(loadSecondaryElementTitles, ref, primaryElementsValues, ctx);
     }
 
@@ -357,7 +356,7 @@ export function* getInsightAttributeFilterReplacements(
             const elements = usedFilter ? filterAttributeElements(usedFilter) : undefined;
             const attributeElementsValues = isAttributeElementsByValue(elements)
                 ? elements.values
-                : elements?.uris ?? [];
+                : (elements?.uris ?? []);
             const isNegative = isNegativeAttributeFilter(usedFilter);
 
             const parsedFilter = usedFilter

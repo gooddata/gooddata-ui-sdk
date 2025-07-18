@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
 import { OnChangeValue, SelectInstance } from "react-select";
@@ -23,11 +23,11 @@ import { loadWorkspaceOptionsPromise } from "./backend/loadWorkspaceOptionsPromi
 
 const SEARCH_INTERVAL = 400;
 
-export const AddWorkspaceSelect: React.FC<IAddWorkspaceSelectProps> = ({
+export function AddWorkspaceSelect({
     addedWorkspaces,
     grantedWorkspaces,
     onSelectWorkspace,
-}) => {
+}: IAddWorkspaceSelectProps) {
     const backend: IAnalyticalBackend = useBackendStrict();
 
     const intl = useIntl();
@@ -111,4 +111,4 @@ export const AddWorkspaceSelect: React.FC<IAddWorkspaceSelectProps> = ({
             />
         </div>
     );
-};
+}

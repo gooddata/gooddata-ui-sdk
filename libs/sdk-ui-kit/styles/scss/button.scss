@@ -27,7 +27,8 @@
     border-color: button-variables.$button-normal-border-color;
 
     &:hover {
-        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker,
+        box-shadow:
+            0 1px 1px 0 button-variables.$button-shadow-darker,
             inset 0 -1px 0 0 button-variables.$button-normal-hover-box-shadow;
         color: variables.$gd-color-text;
         background: button-variables.$button-normal-hover-bg;
@@ -36,8 +37,8 @@
 
     &:focus,
     &.is-focus {
-        box-shadow: button-variables.$button-box-shadow-focus-x-offset
-                button-variables.$button-normal-focus-shadow,
+        box-shadow:
+            button-variables.$button-box-shadow-focus-x-offset button-variables.$button-normal-focus-shadow,
             button-variables.$button-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
             inset 0 -1px 0 0 button-variables.$button-normal-hover-box-shadow;
         border-color: button-variables.$button-action-color-t25;
@@ -91,13 +92,15 @@
     @extend %btn;
 
     &:hover {
-        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+        box-shadow:
+            0 1px 1px 0 button-variables.$button-shadow-darker,
+            inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
         background: button-variables.$button-positive-hover-bg;
     }
 
     &:focus {
-        box-shadow: button-variables.$button-box-shadow-focus-x-offset
-                button-variables.$button-positive-focus-shadow,
+        box-shadow:
+            button-variables.$button-box-shadow-focus-x-offset button-variables.$button-positive-focus-shadow,
             button-variables.$button-positive-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
             inset 0 -2px 0 0 rgba(0, 0, 0, 0.15);
     }
@@ -120,13 +123,15 @@
     @extend %btn;
 
     &:hover {
-        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+        box-shadow:
+            0 1px 1px 0 button-variables.$button-shadow-darker,
+            inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
         background: button-variables.$button-negative-hover-bg;
     }
 
     &:focus {
-        box-shadow: button-variables.$button-box-shadow-focus-x-offset
-                button-variables.$button-negative-focus-shadow,
+        box-shadow:
+            button-variables.$button-box-shadow-focus-x-offset button-variables.$button-negative-focus-shadow,
             button-variables.$button-negative-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
             inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
     }
@@ -149,13 +154,15 @@
     @extend %btn;
 
     &:hover {
-        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+        box-shadow:
+            0 1px 1px 0 button-variables.$button-shadow-darker,
+            inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
         background: button-variables.$button-action-hover-bg;
     }
 
     &:focus {
-        box-shadow: button-variables.$button-box-shadow-focus-x-offset
-                button-variables.$button-action-focus-shadow,
+        box-shadow:
+            button-variables.$button-box-shadow-focus-x-offset button-variables.$button-action-focus-shadow,
             button-variables.$button-action-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
             inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
     }

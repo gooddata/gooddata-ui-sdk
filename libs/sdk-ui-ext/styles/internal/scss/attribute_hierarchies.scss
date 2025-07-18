@@ -322,7 +322,8 @@
     border-style: solid;
     border-width: 1px;
     border-color: var(--gd-palette-complementary-3-from-theme, #c9d5e0);
-    box-shadow: 0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
+    box-shadow:
+        0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
         0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
     background: var(--gd-palette-complementary-0, #fff);
 }

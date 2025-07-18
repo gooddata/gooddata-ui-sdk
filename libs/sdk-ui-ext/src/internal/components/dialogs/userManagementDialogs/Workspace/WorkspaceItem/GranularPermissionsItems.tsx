@@ -1,5 +1,4 @@
-// (C) 2024 GoodData Corporation
-import React from "react";
+// (C) 2024-2025 GoodData Corporation
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { getGranularPermissionTitle, granularTooltipMessages } from "./locales.js";
@@ -12,9 +11,11 @@ interface IWorkspaceAccessPermissionItemProps {
     onChange: () => void;
 }
 
-export const WorkspaceAccessPermissionItem: React.FC<IWorkspaceAccessPermissionItemProps> = (props) => {
-    const { item, checked, onChange } = props;
-
+export function WorkspaceAccessPermissionItem({
+    item,
+    checked,
+    onChange,
+}: IWorkspaceAccessPermissionItemProps) {
     return (
         <div>
             <label className="input-radio-label">
@@ -31,7 +32,7 @@ export const WorkspaceAccessPermissionItem: React.FC<IWorkspaceAccessPermissionI
             </label>
         </div>
     );
-};
+}
 
 interface IAdditionalAccessPermissionItemProps {
     item: IPermissionsItem;
@@ -41,9 +42,13 @@ interface IAdditionalAccessPermissionItemProps {
     onChange: () => void;
 }
 
-export const AdditionalAccessPermissionItem: React.FC<IAdditionalAccessPermissionItemProps> = (props) => {
-    const { item, checked, indefinite, disabled, onChange } = props;
-
+export function AdditionalAccessPermissionItem({
+    item,
+    checked,
+    indefinite,
+    disabled,
+    onChange,
+}: IAdditionalAccessPermissionItemProps) {
     return (
         <div className="gd-granular-permissions__additional-access-item">
             {item.group ? <div className="gd-granular-permissions__additional-access-item-indent" /> : null}
@@ -65,4 +70,4 @@ export const AdditionalAccessPermissionItem: React.FC<IAdditionalAccessPermissio
             </div>
         </div>
     );
-};
+}

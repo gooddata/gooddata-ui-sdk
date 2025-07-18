@@ -57,7 +57,7 @@ export const ColumnStatisticTypeEnum = {
     PERCENTILE_75: "PERCENTILE_75",
 } as const;
 
-export type ColumnStatisticTypeEnum = typeof ColumnStatisticTypeEnum[keyof typeof ColumnStatisticTypeEnum];
+export type ColumnStatisticTypeEnum = (typeof ColumnStatisticTypeEnum)[keyof typeof ColumnStatisticTypeEnum];
 
 /**
  *
@@ -130,7 +130,7 @@ export const ColumnStatisticsRequestStatisticsEnum = {
 } as const;
 
 export type ColumnStatisticsRequestStatisticsEnum =
-    typeof ColumnStatisticsRequestStatisticsEnum[keyof typeof ColumnStatisticsRequestStatisticsEnum];
+    (typeof ColumnStatisticsRequestStatisticsEnum)[keyof typeof ColumnStatisticsRequestStatisticsEnum];
 
 /**
  *
@@ -263,7 +263,7 @@ export const DeclarativeColumnDataTypeEnum = {
 } as const;
 
 export type DeclarativeColumnDataTypeEnum =
-    typeof DeclarativeColumnDataTypeEnum[keyof typeof DeclarativeColumnDataTypeEnum];
+    (typeof DeclarativeColumnDataTypeEnum)[keyof typeof DeclarativeColumnDataTypeEnum];
 
 /**
  * A database table.
@@ -535,7 +535,7 @@ export const SqlColumnDataTypeEnum = {
     BOOLEAN: "BOOLEAN",
 } as const;
 
-export type SqlColumnDataTypeEnum = typeof SqlColumnDataTypeEnum[keyof typeof SqlColumnDataTypeEnum];
+export type SqlColumnDataTypeEnum = (typeof SqlColumnDataTypeEnum)[keyof typeof SqlColumnDataTypeEnum];
 
 /**
  *
@@ -717,7 +717,7 @@ export const TestDefinitionRequestTypeEnum = {
 } as const;
 
 export type TestDefinitionRequestTypeEnum =
-    typeof TestDefinitionRequestTypeEnum[keyof typeof TestDefinitionRequestTypeEnum];
+    (typeof TestDefinitionRequestTypeEnum)[keyof typeof TestDefinitionRequestTypeEnum];
 
 /**
  * A structure containing duration of the test queries run on a data source. It is omitted if an error happens.

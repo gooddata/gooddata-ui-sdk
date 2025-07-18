@@ -1,5 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import {
+    ComponentType,
+    KeyboardEvent,
+    MutableRefObject,
+    ReactNode,
+    RefObject,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
@@ -115,7 +125,7 @@ export interface IAttributeFilterDropdownButtonProps {
      *
      * @beta
      */
-    TooltipContentComponent?: React.ComponentType;
+    TooltipContentComponent?: ComponentType;
 
     /**
      * Allows adding content to the button after the title.
@@ -145,7 +155,7 @@ export interface IAttributeFilterDropdownButtonProps {
      *
      * @beta
      */
-    buttonRef?: React.MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement>;
 
     /**
      * Id of the Attribute filter dropdown body.
@@ -167,29 +177,27 @@ export interface IAttributeFilterDropdownButtonProps {
  *
  * @beta
  */
-export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownButtonProps> = (props) => {
-    const {
-        isOpen,
-        title,
-        selectedItemsCount,
-        showSelectionCount = true,
-        subtitle,
-        disabled,
-        customIcon,
-        isFiltering,
-        isLoading,
-        isLoaded,
-        isError,
-        isDraggable,
-        icon,
-        TooltipContentComponent,
-        titleExtension,
-        onClick,
-        className,
-        buttonRef,
-        dropdownId,
-    } = props;
-
+export function AttributeFilterDropdownButton({
+    isOpen,
+    title,
+    selectedItemsCount,
+    showSelectionCount = true,
+    subtitle,
+    disabled,
+    customIcon,
+    isFiltering,
+    isLoading,
+    isLoaded,
+    isError,
+    isDraggable,
+    icon,
+    TooltipContentComponent,
+    titleExtension,
+    onClick,
+    className,
+    buttonRef,
+    dropdownId,
+}: IAttributeFilterDropdownButtonProps) {
     const intl = useIntl();
     const subtitleSelectedItemsRef = useRef(null);
     const [displayItemCount, setDisplayItemCount] = useState(false);
@@ -217,7 +225,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
     }
 
     const onKeyDown = useCallback(
-        (event: React.KeyboardEvent) => {
+        (event: KeyboardEvent) => {
             if (isActionKey(event) && disabled) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -249,7 +257,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
             aria-controls={isOpen ? dropdownId : undefined}
             role="button"
             tabIndex={0}
-            ref={buttonRef as React.RefObject<HTMLDivElement>}
+            ref={buttonRef as RefObject<HTMLDivElement>}
         >
             {filterIcon ? (
                 <div className="gd-attribute-filter-dropdown-button-icon__next">{filterIcon}</div>
@@ -286,4 +294,4 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
             </div>
         </div>
     );
-};
+}

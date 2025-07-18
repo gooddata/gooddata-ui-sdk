@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { RefObject, useState } from "react";
+import { RefObject, ReactNode, useState } from "react";
 import {
     Button,
     ContentDivider,
@@ -13,7 +13,7 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 import { DashboardAttachmentType, WidgetAttachmentType } from "@gooddata/sdk-model";
 
-export const widgetAttachmentLabels: Record<WidgetAttachmentType, React.ReactNode> = {
+export const widgetAttachmentLabels: Record<WidgetAttachmentType, ReactNode> = {
     PNG: <FormattedMessage id="scheduledEmail.attachmentFormat.widget.png" />,
     PPTX: <FormattedMessage id="scheduledEmail.attachmentFormat.widget.pptx" />,
     PDF: <FormattedMessage id="scheduledEmail.attachmentFormat.widget.pdf" />,
@@ -23,7 +23,7 @@ export const widgetAttachmentLabels: Record<WidgetAttachmentType, React.ReactNod
     HTML: "",
 };
 
-export const dashboardAttachmentLabels: Record<DashboardAttachmentType, React.ReactNode> = {
+export const dashboardAttachmentLabels: Record<DashboardAttachmentType, ReactNode> = {
     PPTX: <FormattedMessage id="scheduledEmail.attachmentFormat.dashboard.pptx" />,
     PDF: <FormattedMessage id="scheduledEmail.attachmentFormat.dashboard.pdf" />,
     XLSX: <FormattedMessage id="scheduledEmail.attachmentFormat.dashboard.formattedXLSX" />,

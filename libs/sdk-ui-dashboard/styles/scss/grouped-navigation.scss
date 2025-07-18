@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 @use "sass:color";
 @use "variables";
@@ -52,7 +52,9 @@ $gd-dashboards-navigation-item-selectedBackgroundColor: var(
     font-size: 16px;
     color: $gd-dashboards-navigation-item-color;
     background-color: $gd-dashboards-navigation-backgroundColor;
-    transition: left variables.$sidebar-transition-length, width variables.$sidebar-transition-length;
+    transition:
+        left variables.$sidebar-transition-length,
+        width variables.$sidebar-transition-length;
 }
 
 .grouped-navigation-header,

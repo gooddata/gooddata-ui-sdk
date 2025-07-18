@@ -18,7 +18,6 @@ import {
     updateConfigWithSettings,
     updateForecastWithSettings,
 } from "@gooddata/sdk-ui-charts";
-import React from "react";
 import compact from "lodash/compact.js";
 
 import { BUCKETS } from "../../../constants/bucket.js";
@@ -517,7 +516,7 @@ function enhanceBaseChartWithClusteringConfiguration(fullConfig: IChartConfig) {
               threshold:
                   typeof fullConfig?.clustering?.threshold === "string"
                       ? parseFloat(fullConfig.clustering.threshold)
-                      : fullConfig?.clustering?.threshold ?? DEFAULT_CLUSTERING_THRESHOLD,
+                      : (fullConfig?.clustering?.threshold ?? DEFAULT_CLUSTERING_THRESHOLD),
           }
         : {};
 
@@ -528,7 +527,7 @@ function enhanceBaseChartWithClusteringConfiguration(fullConfig: IChartConfig) {
                   numberOfClusters:
                       typeof fullConfig?.clustering?.numberOfClusters === "string"
                           ? parseInt(fullConfig.clustering.numberOfClusters, 10)
-                          : fullConfig?.clustering?.numberOfClusters ?? DEFAULT_NUMBER_OF_CLUSTERS,
+                          : (fullConfig?.clustering?.numberOfClusters ?? DEFAULT_NUMBER_OF_CLUSTERS),
                   ...threshold,
               },
           }

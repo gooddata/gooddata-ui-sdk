@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import {
     HiddenFilterBar,
     CustomFilterBarComponent,
@@ -213,11 +212,11 @@ export class DefaultFilterBarCustomizer implements IFilterBarCustomizer {
             FilterBarComponent: hidden
                 ? HiddenFilterBar
                 : updated
-                ? (props) => {
-                      const Comp = this.state.getRootProvider()(props);
-                      return <Comp {...props} />;
-                  }
-                : undefined,
+                  ? (props) => {
+                        const Comp = this.state.getRootProvider()(props);
+                        return <Comp {...props} />;
+                    }
+                  : undefined,
         };
     };
 

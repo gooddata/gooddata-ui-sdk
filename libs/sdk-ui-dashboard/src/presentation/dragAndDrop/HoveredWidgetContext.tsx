@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 // Define the shape of the context state
 interface HoveredWidgetContextState {
@@ -14,7 +14,7 @@ interface HoveredWidgetContextState {
 const HoveredWidgetContext = createContext<HoveredWidgetContextState | undefined>(undefined);
 
 // Create the provider component
-export const HoveredWidgetProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export function HoveredWidgetProvider({ children }: { children: ReactNode }) {
     const [hoveredWidgets, setHoveredWidget] = useState<ObjRef[]>([]);
 
     const addHoveredWidget = (widgetRef: ObjRef | null) => {
@@ -42,7 +42,7 @@ export const HoveredWidgetProvider: React.FC<{ children: ReactNode }> = ({ child
             {children}
         </HoveredWidgetContext.Provider>
     );
-};
+}
 
 // Custom hook to use the HoveredWidgetContext
 export const useHoveredWidget = (): HoveredWidgetContextState => {

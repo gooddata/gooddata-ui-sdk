@@ -14,7 +14,7 @@ import {
     ScrollablePanel,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import React, { useRef, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 import {
     selectEntitlementMaxAutomationRecipients,
@@ -478,7 +478,7 @@ export function AlertingDialogRenderer({
 /**
  * @alpha
  */
-export const DefaultAlertingDialogNew: React.FC<IAlertingDialogProps> = (props) => {
+export function DefaultAlertingDialogNew(props: IAlertingDialogProps) {
     const { isLoading, onCancel, alertToEdit } = props;
     const locale = useDashboardSelector(selectLocale);
 
@@ -491,7 +491,7 @@ export const DefaultAlertingDialogNew: React.FC<IAlertingDialogProps> = (props) 
             <AlertingDialogRenderer {...props} />
         </IntlWrapper>
     );
-};
+}
 
 function useDefaultAlertingDialogData() {
     const maxAutomationsRecipientsEntitlement = useDashboardSelector(
@@ -556,8 +556,8 @@ function FormField({
     htmlFor,
     fullWidth = false,
 }: {
-    label: React.ReactNode;
-    children: React.ReactNode;
+    label: ReactNode;
+    children: ReactNode;
     htmlFor?: string;
     fullWidth?: boolean;
 }) {
@@ -581,7 +581,7 @@ function FormField({
     );
 }
 
-function FormFieldGroup({ label, children }: { label: React.ReactNode; children: React.ReactNode }) {
+function FormFieldGroup({ label, children }: { label: ReactNode; children: ReactNode }) {
     return (
         <div className="gd-input-component gd-input-component--no-last-child-margin gd-dashboard-alerting-dialog-form-field-group">
             <div className="gd-dashboard-alerting-dialog-form-field-group__label-container">

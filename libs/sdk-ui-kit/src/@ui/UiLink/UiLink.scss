@@ -43,12 +43,14 @@
     text-decoration: underline;
 
     text-decoration-color: currentColor;
+
     &:hover {
         text-decoration-color: transparent;
     }
 
     &--flipUnderline {
         text-decoration-color: transparent;
+
         &:hover {
             text-decoration-color: currentColor;
         }

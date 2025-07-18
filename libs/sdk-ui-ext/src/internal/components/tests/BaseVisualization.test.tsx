@@ -1,5 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import { render, screen, waitFor } from "@testing-library/react";
 import { IDrillableItem } from "@gooddata/sdk-ui";
@@ -29,7 +28,7 @@ import * as testMocks from "../../tests/mocks/testMocks.js";
 import { emptyReferencePoint, justViewByReferencePoint } from "../../tests/mocks/referencePointMocks.js";
 import { describe, it, expect, vi, afterEach, afterAll, beforeAll, beforeEach } from "vitest";
 
-const pluggableVisualizationGetExecutionMock = vi.fn(() => ({} as IPreparedExecution));
+const pluggableVisualizationGetExecutionMock = vi.fn(() => ({}) as IPreparedExecution);
 
 class DummyClass extends AbstractPluggableVisualization {
     constructor(props: IVisConstruct) {

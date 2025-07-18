@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+import { ReactNode, MutableRefObject } from "react";
 import { AccessGranularPermission, FilterContextItem, IUser, ObjRef, ShareStatus } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
@@ -196,7 +197,7 @@ export const isGranteeItem = (obj: unknown): obj is GranteeItem => {
  */
 export type IComponentLabelsProviderProps = {
     labels: IShareDialogLabels;
-    children?: React.ReactNode;
+    children?: ReactNode;
 };
 
 /**
@@ -314,7 +315,7 @@ export interface IAddGranteeBaseProps {
     appliedGrantees: GranteeItem[];
     currentUserPermissions: CurrentUserPermissions;
     sharedObject: IAffectedSharedObject;
-    previouslyFocusedRef?: React.MutableRefObject<HTMLElement>;
+    previouslyFocusedRef?: MutableRefObject<HTMLElement>;
     isGranteeShareLoading?: boolean;
     onBackClick?: () => void;
     onDelete: (grantee: GranteeItem) => void;

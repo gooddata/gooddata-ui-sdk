@@ -1,5 +1,5 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent } from "react";
 import ConfigSection from "../ConfigSection.js";
 import LegendPositionControl from "./LegendPositionControl.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -14,7 +14,7 @@ export interface ILegendSection {
     pushData: (data: any) => any;
 }
 
-class LegendSection extends React.PureComponent<ILegendSection> {
+export default class LegendSection extends PureComponent<ILegendSection> {
     public static defaultProps: ILegendSection = {
         controlsDisabled: false,
         properties: {},
@@ -58,5 +58,3 @@ class LegendSection extends React.PureComponent<ILegendSection> {
         );
     }
 }
-
-export default LegendSection;

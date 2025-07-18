@@ -1,5 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
@@ -28,8 +27,8 @@ const DROPDOWN_ALIGN_POINTS = [
     },
 ];
 
-export const DrillMeasureSelector: React.FunctionComponent<IDrillMeasureSelectorProps> = (props) => {
-    // const refDropdown = React.useRef(null);
+export function DrillMeasureSelector(props: IDrillMeasureSelectorProps) {
+    // const refDropdown = useRef(null);
     //
     const onCloseDropdown = () => {
         // refDropdown.current.closeDropdown();
@@ -70,4 +69,4 @@ export const DrillMeasureSelector: React.FunctionComponent<IDrillMeasureSelector
             )}
         />
     );
-};
+}

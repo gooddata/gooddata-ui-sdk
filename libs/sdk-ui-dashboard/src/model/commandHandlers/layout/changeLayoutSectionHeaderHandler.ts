@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ChangeLayoutSectionHeader } from "../../commands/index.js";
@@ -43,8 +43,8 @@ export function* changeLayoutSectionHeaderHandler(
     }
 
     const existingHeader: IDashboardLayoutSectionHeader = isLegacyCommand
-        ? layout.sections[index]!.header ?? {}
-        : findSection(layout, index).header ?? {};
+        ? (layout.sections[index]!.header ?? {})
+        : (findSection(layout, index).header ?? {});
     const newHeader = mergeHeaders ? merge({}, existingHeader, header) : header;
     const sanitizedHeader = sanitizeHeader(newHeader);
     const sectionPath = isLegacyCommand ? { parent: undefined, sectionIndex: index } : index;

@@ -1,6 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
@@ -14,6 +13,7 @@ import {
 } from "../../../model/index.js";
 import { getDropZoneDebugStyle } from "../debug.js";
 import { messages } from "../../../locales.js";
+import { RefObject } from "react";
 
 export type DraggableFilterDropZoneProps = {
     targetIndex: number;
@@ -58,7 +58,11 @@ export function DraggableFilterDropZone({ targetIndex, onDrop }: DraggableFilter
             : messages.filterDropzoneTooltip;
 
     return (
-        <div className="attr-filter-dropzone-box-outer" style={debugStyle} ref={dropRef}>
+        <div
+            className="attr-filter-dropzone-box-outer"
+            style={debugStyle}
+            ref={dropRef as unknown as RefObject<HTMLDivElement>}
+        >
             {isActive ? (
                 <div className={dropzoneClassNames}>
                     <div className="attr-filter-dropzone-box-inner">

@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { PropsWithChildren } from "react";
+import { Component, ErrorInfo, ReactNode } from "react";
 import { connect } from "react-redux";
 import { GlobalError } from "./GlobalError.js";
 import { extractError } from "../store/sideEffects/utils.js";
@@ -12,7 +12,7 @@ import {
 } from "../store/index.js";
 
 type ErrorBoundaryProps = {
-    children: React.ReactNode;
+    children: ReactNode;
     globalError?: string;
     isClearing: boolean;
     setGlobalError: typeof setGlobalErrorAction;
@@ -23,7 +23,7 @@ type ErrorBoundaryState = {
     ownError?: string;
 };
 
-class ErrorBoundaryComponent extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     constructor(props: ErrorBoundaryProps) {
         super(props);
         this.state = { ownError: "" };
@@ -33,7 +33,7 @@ class ErrorBoundaryComponent extends React.Component<ErrorBoundaryProps, ErrorBo
         return { ownError: extractError(error) };
     }
 
-    componentDidCatch(error: Error, _errorInfo: React.ErrorInfo) {
+    componentDidCatch(error: Error, _errorInfo: ErrorInfo) {
         this.props.setGlobalError({ error: extractError(error) });
     }
 
@@ -70,7 +70,4 @@ const mapDispatchToProps = {
     clearThread: clearThreadAction,
 };
 
-export const ErrorBoundary: React.FC<PropsWithChildren> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(ErrorBoundaryComponent) as any;
+export const ErrorBoundary = connect(mapStateToProps, mapDispatchToProps)(ErrorBoundaryComponent) as any;

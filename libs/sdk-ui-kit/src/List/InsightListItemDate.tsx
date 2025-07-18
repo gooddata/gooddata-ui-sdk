@@ -1,5 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { FormattedMessage, FormattedTime, FormattedDate } from "react-intl";
 import { IDateConfig } from "../utils/dateTimeConfig.js";
 
@@ -20,7 +19,7 @@ export interface IInsightListItemDateProps {
 /**
  * @internal
  */
-export const InsightListItemDate: React.FC<IInsightListItemDateProps> = ({ config }) => {
+export function InsightListItemDate({ config }: IInsightListItemDateProps) {
     const relativeDate = config.isToday ? "gs.date.today" : "gs.date.yesterday";
 
     if (config.isToday || config.isYesterday) {
@@ -38,4 +37,4 @@ export const InsightListItemDate: React.FC<IInsightListItemDateProps> = ({ confi
     }
 
     return <FormattedDate value={config.date} format="shortWithYear" />;
-};
+}

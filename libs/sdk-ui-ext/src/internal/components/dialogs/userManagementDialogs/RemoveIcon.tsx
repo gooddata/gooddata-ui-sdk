@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 
@@ -12,7 +11,7 @@ interface IRemoveIconProps {
     isDisabled?: boolean;
 }
 
-export const RemoveIcon: React.FC<IRemoveIconProps> = ({ tooltipMessage, onClick, isDisabled = false }) => {
+export function RemoveIcon({ tooltipMessage, onClick, isDisabled = false }: IRemoveIconProps) {
     return (
         <BubbleHoverTrigger showDelay={0} hideDelay={0} className="gd-grantee-item-delete">
             <span
@@ -28,4 +27,4 @@ export const RemoveIcon: React.FC<IRemoveIconProps> = ({ tooltipMessage, onClick
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

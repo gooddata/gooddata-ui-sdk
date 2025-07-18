@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 /**

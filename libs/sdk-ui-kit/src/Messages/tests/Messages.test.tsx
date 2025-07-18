@@ -1,8 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { IntlProvider } from "react-intl";
 import { screen, waitFor, render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 
 import { Messages } from "../Messages.js";

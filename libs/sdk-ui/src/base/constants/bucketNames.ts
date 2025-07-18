@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 const MEASURES = "measures";
 const SECONDARY_MEASURES = "secondary_measures";
 const TERTIARY_MEASURES = "tertiary_measures";
@@ -51,4 +51,4 @@ export type BucketNameKeys = keyof typeof BucketNames;
 /**
  * @internal
  */
-export type BucketNameValues = typeof BucketNames[BucketNameKeys];
+export type BucketNameValues = (typeof BucketNames)[BucketNameKeys];

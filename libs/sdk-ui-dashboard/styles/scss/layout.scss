@@ -370,6 +370,7 @@ $gd-dashboards-section-description-color: var(
         align-items: center;
         gap: 8px;
     }
+
     &.small .gd-fluidlayout-item-changed-content {
         display: flex;
         flex-direction: row;
@@ -385,12 +386,14 @@ $gd-dashboards-section-description-color: var(
             max-height: 100%;
         }
     }
+
     &.small .gd-fluidlayout-item-changed-icon {
         svg {
             top: -4px;
             position: relative;
         }
     }
+
     &.big .gd-fluidlayout-item-changed-icon {
         // stylelint-disable-next-line declaration-no-important
         height: auto !important;
@@ -402,6 +405,7 @@ $gd-dashboards-section-description-color: var(
         font-size: 14px;
         line-height: 19px;
     }
+
     .gd-button {
         font-weight: 400;
         font-size: 14px;

@@ -57,9 +57,8 @@ export function* changeRenderModeHandler(
     }
 
     if (renderMode === "edit") {
-        const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(
-            selectAllAnalyticalWidgets,
-        );
+        const widgets: ReturnType<typeof selectAllAnalyticalWidgets> =
+            yield select(selectAllAnalyticalWidgets);
         yield call(loadInaccessibleDashboards, ctx, widgets);
         yield call(validateDrills, ctx, cmd, widgets);
         yield call(validateDrillToCustomUrlParams, widgets.filter(isInsightWidget));

@@ -1,8 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
-import parseDate from "date-fns/parse/index.js";
-import userEvent from "@testing-library/user-event";
+import { parse } from "date-fns";
+import { userEvent } from "@testing-library/user-event";
 import { WrappedDatePicker, DatePickerProps } from "../Datepicker.js";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
@@ -123,7 +122,7 @@ describe("DatePicker", () => {
         describe("props", () => {
             it("should process date property", () => {
                 createComponent({
-                    date: parseDate("01/01/2015", defaultDateFormat, new Date()),
+                    date: parse("01/01/2015", defaultDateFormat, new Date()),
                 });
 
                 expect(screen.getByRole("combobox")).toHaveValue("01/01/2015");
@@ -132,7 +131,7 @@ describe("DatePicker", () => {
             it("should show date in provided format", () => {
                 createComponent({
                     intl: createIntlMock({}, "cs"),
-                    date: parseDate("02/01/2015", defaultDateFormat, new Date()),
+                    date: parse("02/01/2015", defaultDateFormat, new Date()),
                     dateFormat: "yyyy/MM/dd",
                 });
 
@@ -185,7 +184,7 @@ describe("DatePicker", () => {
                     await setDate("01/01/2015");
                     await waitFor(() => {
                         expect(onChange).toHaveBeenCalledWith(
-                            parseDate("01/01/2015", defaultDateFormat, new Date()),
+                            parse("01/01/2015", defaultDateFormat, new Date()),
                         );
                     });
                     expect(onChange).toHaveBeenCalledTimes(2); // clear & paste
@@ -201,7 +200,7 @@ describe("DatePicker", () => {
                     await setDate("1/1/2015");
                     await waitFor(() => {
                         expect(onChange).toHaveBeenCalledWith(
-                            parseDate("1/1/2015", defaultDateFormat, new Date()),
+                            parse("1/1/2015", defaultDateFormat, new Date()),
                         );
                     });
                 });

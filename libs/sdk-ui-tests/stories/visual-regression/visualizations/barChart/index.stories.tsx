@@ -1,6 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-
-import React from "react";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend.js";
 

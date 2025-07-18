@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+import { Context, ReactNode } from "react";
 import { ReactReduxContextValue } from "react-redux";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
@@ -8,6 +8,7 @@ import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 import { DashboardDispatch, DashboardState } from "../store/index.js";
 import { DashboardConfig, DashboardModelCustomizationFns, WidgetsOverlayFn } from "../types/commonTypes.js";
 import { RenderMode } from "../../types.js";
+import { UnknownAction } from "@reduxjs/toolkit";
 
 /**
  * Subset of IDashboardProps required during initialization of the dashboard component's store.
@@ -28,9 +29,9 @@ export interface IDashboardStoreProviderProps {
         registerEventHandler: (handler: DashboardEventHandler) => void,
         unregisterEventHandler: (handler: DashboardEventHandler) => void,
     ) => void;
-    additionalReduxContext?: React.Context<ReactReduxContextValue>;
+    additionalReduxContext?: Context<ReactReduxContextValue<any, UnknownAction> | null>;
     customizationFns?: DashboardModelCustomizationFns;
     widgetsOverlayFn?: WidgetsOverlayFn;
     initialRenderMode?: RenderMode;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }

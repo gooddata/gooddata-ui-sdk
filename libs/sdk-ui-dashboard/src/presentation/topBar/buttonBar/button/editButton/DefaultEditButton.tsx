@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Button, useMediaQuery } from "@gooddata/sdk-ui-kit";
 

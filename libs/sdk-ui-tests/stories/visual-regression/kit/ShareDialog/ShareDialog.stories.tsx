@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { Button, ComponentLabelsProvider, getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { uriRef } from "@gooddata/sdk-model";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -18,7 +18,7 @@ import { LabelsMock } from "./LabelsMock.js";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
 
-const BasicExample: React.FC = () => {
+function BasicExample() {
     const [open, setOpen] = useState(false);
 
     const onCancel = useCallback(() => {
@@ -75,9 +75,9 @@ const BasicExample: React.FC = () => {
             </WorkspaceProvider>
         </BackendProvider>
     );
-};
+}
 
-const ShareDialogExamples: React.FC = () => {
+function ShareDialogExamples() {
     return (
         <InternalIntlWrapper>
             screen 800x600 px
@@ -87,7 +87,7 @@ const ShareDialogExamples: React.FC = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 const granteeAllSelector = `.${getGranteeItemTestId(groupAll, "option")}`;
 

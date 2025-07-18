@@ -13,7 +13,7 @@ import {
     showDataLabel,
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 
-function autohideLabelsOverlappingItsShape(
+export default function autohideLabelsOverlappingItsShape(
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     chart: any,
     hideFunction: (point: any) => void = hideDataLabel,
@@ -41,5 +41,3 @@ function autohideLabelsOverlappingItsShape(
         }
     });
 }
-
-export default autohideLabelsOverlappingItsShape;

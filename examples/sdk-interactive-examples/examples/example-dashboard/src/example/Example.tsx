@@ -1,5 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 import * as Catalog from "../catalog.js";
 import Hint from "../Hint.js";

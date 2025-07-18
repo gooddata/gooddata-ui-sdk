@@ -49,6 +49,7 @@
             &:visited {
                 text-decoration: none;
             }
+
             &:focus-visible {
                 outline: revert;
             }
@@ -56,6 +57,7 @@
 
         &__icon {
             @include icon(26px);
+
             & > span {
                 @include icon(26px);
             }

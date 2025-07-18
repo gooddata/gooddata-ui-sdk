@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import { DropdownList, SingleSelectListItem, ITab } from "@gooddata/sdk-ui-kit";
 import { messages } from "@gooddata/sdk-ui";
@@ -30,12 +30,12 @@ const TABS: ITab[] = [
     },
 ];
 
-const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
+export default function AttributeDropdownBody({
     items,
     isLoading,
     closeDropdown,
     onSelect,
-}) => {
+}: IAttributeDropdownBodyProps) {
     const { formatMessage } = useIntl();
 
     const [selectedTab, setSelectedTab] = useState<string>(CatalogAttributeDataType.ATTRIBUTE);
@@ -83,6 +83,4 @@ const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
             }}
         />
     );
-};
-
-export default AttributeDropdownBody;
+}

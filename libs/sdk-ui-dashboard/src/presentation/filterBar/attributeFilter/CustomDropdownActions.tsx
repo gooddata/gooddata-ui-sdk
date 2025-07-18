@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
 import { Button } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
 import {
@@ -58,7 +58,7 @@ export interface ICustomAttributeFilterDropdownActionsProps {
 /**
  * @internal
  */
-export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilterDropdownActionsProps> = ({
+export function CustomAttributeFilterDropdownActions({
     isApplyDisabled,
     onApplyButtonClick,
     onCancelButtonClick,
@@ -69,7 +69,7 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
     filterDisplayFormRef,
     attributes,
     filterSelectionMode,
-}) => {
+}: ICustomAttributeFilterDropdownActionsProps) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isDeleteButtonEnabled = useDashboardSelector(selectIsDeleteFilterButtonEnabled);
     const withoutApply = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
@@ -114,7 +114,7 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
             ) : null}
         </div>
     );
-};
+}
 
 /**
  * @internal
@@ -130,9 +130,13 @@ export interface ICustomConfigureAttributeFilterDropdownActionsProps {
 /**
  * @internal
  */
-export const CustomConfigureAttributeFilterDropdownActions: React.FC<
-    ICustomConfigureAttributeFilterDropdownActionsProps
-> = ({ isSaveDisabled, onSaveButtonClick, onCancelButtonClick, cancelText, saveText }) => {
+export function CustomConfigureAttributeFilterDropdownActions({
+    isSaveDisabled,
+    onSaveButtonClick,
+    onCancelButtonClick,
+    cancelText,
+    saveText,
+}: ICustomConfigureAttributeFilterDropdownActionsProps) {
     return (
         <div className="gd-attribute-filter-dropdown-actions__next">
             <div className="gd-attribute-filter-dropdown-actions-left-content__next" />
@@ -153,4 +157,4 @@ export const CustomConfigureAttributeFilterDropdownActions: React.FC<
             </div>
         </div>
     );
-};
+}

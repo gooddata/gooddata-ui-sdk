@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { ConfigurationCategory } from "../ConfigurationCategory.js";
 import { DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
@@ -29,17 +28,15 @@ interface ISelectionModeProps {
     disabled: boolean;
 }
 
-export const SelectionMode: React.FC<ISelectionModeProps> = (props) => {
-    const {
-        selectionTitleText,
-        multiSelectionOptionText,
-        singleSelectionOptionText,
-        singleSelectionDisabledTooltip,
-        selectionMode,
-        onSelectionModeChange,
-        disabled,
-    } = props;
-
+export function SelectionMode({
+    selectionTitleText,
+    multiSelectionOptionText,
+    singleSelectionOptionText,
+    singleSelectionDisabledTooltip,
+    selectionMode,
+    onSelectionModeChange,
+    disabled,
+}: ISelectionModeProps) {
     const selectionOptionTitleMap = {
         multi: multiSelectionOptionText,
         single: singleSelectionOptionText,
@@ -84,4 +81,4 @@ export const SelectionMode: React.FC<ISelectionModeProps> = (props) => {
             </div>
         </>
     );
-};
+}

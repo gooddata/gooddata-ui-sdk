@@ -1,10 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 
+import { ComponentType, ReactNode, forwardRef } from "react";
+import { useIntl } from "react-intl";
+
 import { Bubble } from "./Bubble.js";
 import { BubbleHoverTrigger } from "./BubbleHoverTrigger.js";
-import React, { ReactNode, forwardRef } from "react";
 import { IAlignPoint } from "../typings/positioning.js";
-import { useIntl } from "react-intl";
 
 /**
  * @internal
@@ -19,7 +20,7 @@ export interface IWithBubbleProps {
 /**
  * @internal
  */
-export function withBubble<T>(WrappedComponent: React.ComponentType<T>) {
+export function withBubble<T>(WrappedComponent: ComponentType<T>) {
     const ResultComponent = forwardRef<any, T & IWithBubbleProps>((props, ref) => {
         const {
             showBubble = true,

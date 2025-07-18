@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
 import { invariant } from "ts-invariant";
 import includes from "lodash/includes.js";
 import { render } from "@testing-library/react";
@@ -17,7 +16,7 @@ import {
     OptionalInsightComponentProvider,
 } from "../../../presentation/index.js";
 import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //
@@ -37,7 +36,7 @@ const TestInsightWithCustomTitle: IInsight = { insight: { ...TestInsight.insight
 //
 //
 
-function createTestComponent(name: string): React.FC {
+function createTestComponent(name: string) {
     function TestComponent() {
         return <div id={name} />;
     }

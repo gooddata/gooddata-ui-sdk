@@ -1,7 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { useCallback, useEffect, useState } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { Message } from "@gooddata/sdk-ui-kit";
 
@@ -25,131 +25,90 @@ const defaultMinMaxControlState = {
     },
 };
 
-class MinMaxControl extends React.Component<
-    IMinMaxControlProps & WrappedComponentProps,
-    IMinMaxControlState
-> {
-    public static getDerivedStateFromProps(props: IMinMaxControlProps & WrappedComponentProps) {
-        if (props.propertiesMeta?.undoApplied) {
-            return defaultMinMaxControlState;
+export default function MinMaxControl(props: IMinMaxControlProps) {
+    const intl = useIntl();
+
+    const { properties, basePath, isDisabled, propertiesMeta } = props;
+
+    const [state, setState] = useState<IMinMaxControlState>(defaultMinMaxControlState);
+
+    useEffect(() => {
+        if (propertiesMeta?.undoApplied) {
+            setState(defaultMinMaxControlState);
         }
+    }, [propertiesMeta?.undoApplied]);
 
-        return null;
-    }
+    const axisProps = properties?.controls?.[basePath] || {};
+    const axisScaleMin = axisProps?.min ?? "";
+    const axisScaleMax = axisProps?.max ?? "";
+    const axisVisible = axisProps?.visible ?? true;
 
-    constructor(props: IMinMaxControlProps & WrappedComponentProps) {
-        super(props);
-        this.state = defaultMinMaxControlState;
-    }
+    const minScaleHasIncorrectValue = () => state.minScale?.incorrectValue !== "";
+    const maxScaleHasIncorrectValue = () => state.maxScale?.incorrectValue !== "";
+    const minScaleHasWarning = () => state.minScale?.hasWarning ?? false;
+    const maxScaleHasWarning = () => state.maxScale?.hasWarning ?? false;
 
-    public render() {
-        return this.renderMinMaxSection();
-    }
-
-    private renderMinMaxSection() {
-        const { properties, basePath, isDisabled } = this.props;
-
-        const basePathPropertiesControls = properties?.controls?.[basePath];
-        const axisScaleMin = basePathPropertiesControls?.min ?? "";
-        const axisScaleMax = basePathPropertiesControls?.max ?? "";
-        const axisVisible = basePathPropertiesControls?.visible ?? true;
-
+    const renderMinErrorMessage = () => {
+        const msg = state.minScale?.warningMessage ?? "";
+        if (!minScaleHasWarning() || msg === "") return null;
         return (
-            <ConfigSubsection title={messages.axisScale.id}>
-                <InputControl
-                    valuePath={`${basePath}.min`}
-                    labelText={messages.axisMin.id}
-                    placeholder={messages.autoPlaceholder.id}
-                    type="number"
-                    hasWarning={this.minScaleHasWarning()}
-                    value={
-                        this.minScaleHasIncorrectValue() ? this.state.minScale?.incorrectValue : axisScaleMin
-                    }
-                    disabled={isDisabled || !axisVisible}
-                    properties={properties}
-                    pushData={this.minInputValidateAndPushDataCallback}
-                />
-                {this.renderMinErrorMessage()}
-
-                <InputControl
-                    valuePath={`${basePath}.max`}
-                    labelText={messages.axisMax.id}
-                    placeholder={messages.autoPlaceholder.id}
-                    type="number"
-                    hasWarning={this.maxScaleHasWarning()}
-                    value={
-                        this.maxScaleHasIncorrectValue() ? this.state.maxScale?.incorrectValue : axisScaleMax
-                    }
-                    disabled={isDisabled || !axisVisible}
-                    properties={properties}
-                    pushData={this.maxInputValidateAndPushDataCallback}
-                />
-                {this.renderMaxErrorMessage()}
-            </ConfigSubsection>
-        );
-    }
-
-    private minInputValidateAndPushDataCallback = (data: any): void => {
-        minInputValidateAndPushData(
-            data,
-            this.state,
-            this.props,
-            this.setState.bind(this),
-            defaultMinMaxControlState,
+            <Message type="warning" className="adi-input-warning">
+                {msg}
+            </Message>
         );
     };
 
-    private maxInputValidateAndPushDataCallback = (data: any): void => {
-        maxInputValidateAndPushData(
-            data,
-            this.state,
-            this.props,
-            this.setState.bind(this),
-            defaultMinMaxControlState,
+    const renderMaxErrorMessage = () => {
+        const msg = state.maxScale?.warningMessage ?? "";
+        if (!maxScaleHasWarning() || msg === "") return null;
+        return (
+            <Message type="warning" className="adi-input-warning">
+                {msg}
+            </Message>
         );
     };
 
-    private minScaleHasIncorrectValue() {
-        return (this.state.minScale?.incorrectValue ?? "") !== "";
-    }
+    const minInputValidateAndPushDataCallback = useCallback(
+        (data: any) => {
+            minInputValidateAndPushData(data, state, props, intl, setState, defaultMinMaxControlState);
+        },
+        [state, props],
+    );
 
-    private maxScaleHasIncorrectValue() {
-        return (this.state.maxScale?.incorrectValue ?? "") !== "";
-    }
+    const maxInputValidateAndPushDataCallback = useCallback(
+        (data: any) => {
+            maxInputValidateAndPushData(data, state, props, intl, setState, defaultMinMaxControlState);
+        },
+        [state, props],
+    );
 
-    private minScaleHasWarning() {
-        return this.state.minScale?.hasWarning ?? false;
-    }
+    return (
+        <ConfigSubsection title={messages.axisScale.id}>
+            <InputControl
+                valuePath={`${basePath}.min`}
+                labelText={messages.axisMin.id}
+                placeholder={messages.autoPlaceholder.id}
+                type="number"
+                hasWarning={minScaleHasWarning()}
+                value={minScaleHasIncorrectValue() ? state.minScale?.incorrectValue : axisScaleMin}
+                disabled={isDisabled || !axisVisible}
+                properties={properties}
+                pushData={minInputValidateAndPushDataCallback}
+            />
+            {renderMinErrorMessage()}
 
-    private maxScaleHasWarning() {
-        return this.state.maxScale?.hasWarning ?? false;
-    }
-
-    private renderMinErrorMessage() {
-        const minScaleWarningMessage = this.state.minScale?.warningMessage ?? "";
-        if (!this.minScaleHasWarning() || minScaleWarningMessage === "") {
-            return false;
-        }
-
-        return (
-            <Message type="warning" className="adi-input-warning">
-                {minScaleWarningMessage}
-            </Message>
-        );
-    }
-
-    private renderMaxErrorMessage() {
-        const maxScaleWarningMessage = this.state.maxScale?.warningMessage ?? "";
-        if (!this.maxScaleHasWarning() || maxScaleWarningMessage === "") {
-            return false;
-        }
-
-        return (
-            <Message type="warning" className="adi-input-warning">
-                {maxScaleWarningMessage}
-            </Message>
-        );
-    }
+            <InputControl
+                valuePath={`${basePath}.max`}
+                labelText={messages.axisMax.id}
+                placeholder={messages.autoPlaceholder.id}
+                type="number"
+                hasWarning={maxScaleHasWarning()}
+                value={maxScaleHasIncorrectValue() ? state.maxScale?.incorrectValue : axisScaleMax}
+                disabled={isDisabled || !axisVisible}
+                properties={properties}
+                pushData={maxInputValidateAndPushDataCallback}
+            />
+            {renderMaxErrorMessage()}
+        </ConfigSubsection>
+    );
 }
-
-export default injectIntl(MinMaxControl);

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ChangeEvent, Fragment, PureComponent } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -24,7 +24,7 @@ export interface CheckboxProps {
  * @internal
  */
 
-export class Checkbox extends React.PureComponent<CheckboxProps> {
+export class Checkbox extends PureComponent<CheckboxProps> {
     static defaultProps = {
         disabled: false,
         name: "",
@@ -35,7 +35,7 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
         onChange: noop,
     };
 
-    onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    onChange = (e: ChangeEvent<HTMLInputElement>): void => {
         this.props.onChange(e.target.checked);
     };
 
@@ -48,7 +48,7 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
         });
 
         return (
-            <React.Fragment>
+            <Fragment>
                 {title ? <h6>{title}</h6> : null}
                 <label className="input-checkbox-label">
                     <input
@@ -62,7 +62,7 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
                     />
                     <span className={labelClasses}>{text}</span>
                 </label>
-            </React.Fragment>
+            </Fragment>
         );
     }
 }

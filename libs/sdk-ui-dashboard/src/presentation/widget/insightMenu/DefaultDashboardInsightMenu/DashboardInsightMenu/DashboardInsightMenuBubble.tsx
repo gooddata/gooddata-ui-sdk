@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { IWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
@@ -38,11 +38,15 @@ interface IDashboardInsightMenuBubbleProps {
     widget: IWidget;
     onClose: () => void;
     isSubmenu?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
-export const DashboardInsightMenuBubble: React.FC<IDashboardInsightMenuBubbleProps> = (props) => {
-    const { onClose, isSubmenu, widget, children } = props;
+export function DashboardInsightMenuBubble({
+    widget,
+    onClose,
+    isSubmenu,
+    children,
+}: IDashboardInsightMenuBubbleProps) {
     const widgetRefAsString = objRefToString(widgetRef(widget));
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
 
@@ -68,4 +72,4 @@ export const DashboardInsightMenuBubble: React.FC<IDashboardInsightMenuBubblePro
             {children}
         </Bubble>
     );
-};
+}

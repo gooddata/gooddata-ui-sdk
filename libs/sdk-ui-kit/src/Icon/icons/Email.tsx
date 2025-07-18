@@ -1,13 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
-
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Email: React.FC<IIconProps> = ({ color = "#94A1AD", className, width = 15, height = 14 }) => {
+export function Email({ color = "#94A1AD", className, width = 15, height = 14 }: IIconProps) {
     return (
         <svg
             className={className}
@@ -23,4 +21,4 @@ export const Email: React.FC<IIconProps> = ({ color = "#94A1AD", className, widt
             />
         </svg>
     );
-};
+}

@@ -1,7 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
+import { useState } from "react";
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
-import React from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import {
     selectInsightsMap,
@@ -21,15 +21,15 @@ interface IVisualizationsPageProps {
     onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
 }
 
-export const VisualizationsPage: React.FC<IVisualizationsPageProps> = ({
+export function VisualizationsPage({
     visualizations,
     activeVisualizationId,
     onVisualizationDeleted,
     onVisualizationAdd,
     onVisualizationSelect,
     onVisualizationPositionChange,
-}) => {
-    const [isVisualizationPickerVisible, setVisualizationPickerVisible] = React.useState(false);
+}: IVisualizationsPageProps) {
+    const [isVisualizationPickerVisible, setVisualizationPickerVisible] = useState(false);
 
     const intl = useIntl();
     const userInteraction = useDashboardUserInteraction();
@@ -93,4 +93,4 @@ export const VisualizationsPage: React.FC<IVisualizationsPageProps> = ({
             </div>
         </div>
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ComponentType, ComponentClass, Component } from "react";
 import noop from "lodash/noop.js";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import {
@@ -192,7 +192,7 @@ type WithLoadingState = {
  */
 export function withExecutionLoading<TProps>(
     params: IWithExecutionLoading<TProps>,
-): (WrappedComponent: React.ComponentType<TProps & WithLoadingResult>) => React.ComponentClass<TProps> {
+): (WrappedComponent: ComponentType<TProps & WithLoadingResult>) => ComponentClass<TProps> {
     const {
         promiseFactory,
         loadOnMount = true,
@@ -203,10 +203,8 @@ export function withExecutionLoading<TProps>(
         enableExecutionCancelling = false,
     } = params;
 
-    return (
-        WrappedComponent: React.ComponentType<TProps & WithLoadingResult>,
-    ): React.ComponentClass<TProps> => {
-        class WithLoading extends React.Component<TProps, WithLoadingState> {
+    return (WrappedComponent: ComponentType<TProps & WithLoadingResult>): ComponentClass<TProps> => {
+        class WithLoading extends Component<TProps, WithLoadingState> {
             private isWithExecutionLoadingUnmounted: boolean = false;
             private cancelablePromise: ICancelablePromise<DataViewFacade> | undefined;
             private effectiveProps: TProps | undefined;

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { FilterContextItem, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Message, OverlayPositionType } from "@gooddata/sdk-ui-kit";
@@ -57,8 +57,8 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
     const showAttachmentFilters = enableAutomationFilterContext
         ? false
         : isEditing
-        ? attachmentFilterType !== "default"
-        : areDashboardFiltersChanged && dashboardSelected;
+          ? attachmentFilterType !== "default"
+          : areDashboardFiltersChanged && dashboardSelected;
 
     const includeFilters = attachmentFilterType === "edited" && areDashboardFiltersChanged;
 

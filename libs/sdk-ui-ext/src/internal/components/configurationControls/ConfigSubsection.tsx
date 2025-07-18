@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+// (C) 2019-2025 GoodData Corporation
+import { ChangeEvent, ReactNode } from "react";
+import { useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import noop from "lodash/noop.js";
 import set from "lodash/set.js";
@@ -9,7 +9,7 @@ import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
 import { getTranslation } from "../../utils/translations.js";
 import { AxisType } from "../../interfaces/AxisType.js";
 
-export interface IConfigSubsectionOwnProps {
+export interface IConfigSubsectionProps {
     valuePath?: string;
     title: string;
     canBeToggled?: boolean;
@@ -19,87 +19,76 @@ export interface IConfigSubsectionOwnProps {
     properties?: any;
     pushData?(data: any): void;
     axisType?: AxisType;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export interface IConfigSubsectionState {
     disabled: boolean;
 }
 
-export type IConfigSubsectionProps = IConfigSubsectionOwnProps & WrappedComponentProps;
+export default function ConfigSubsection({
+    valuePath,
+    title,
+    canBeToggled = false,
+    toggleDisabled = false,
+    toggledOn = true,
+    showDisabledMessage = false,
+    properties,
+    pushData = noop,
+    axisType,
+    children,
+}: IConfigSubsectionProps) {
+    const intl = useIntl();
 
-class ConfigSubsection extends React.Component<IConfigSubsectionProps, IConfigSubsectionState> {
-    public static defaultProps = {
-        collapsed: true,
-        canBeToggled: false,
-        toggleDisabled: false,
-        toggledOn: true,
-        pushData: noop,
-        showDisabledMessage: false,
-    };
-
-    constructor(props: IConfigSubsectionOwnProps & WrappedComponentProps) {
-        super(props);
-        this.toggleValue = this.toggleValue.bind(this);
-    }
-
-    public render() {
-        const { title, intl } = this.props;
-        const className = `configuration-subsection ${this.getTestClassName()}`;
-
-        return (
-            <div className={className} aria-label="Configuration subsection">
-                <fieldset>
-                    <legend>
-                        <span className="legend-title">{getTranslation(title, intl)}</span>
-                        {this.renderToggleSwitch()}
-                    </legend>
-                    <div>{this.props.children}</div>
-                </fieldset>
-            </div>
-        );
-    }
-
-    private renderToggleSwitch() {
-        if (this.props.canBeToggled) {
-            const { toggledOn, toggleDisabled, showDisabledMessage, title, intl, axisType } = this.props;
-            return (
-                <DisabledBubbleMessage
-                    className="input-checkbox-toggle"
-                    showDisabledMessage={showDisabledMessage}
-                >
-                    <label className="s-checkbox-toggle-label">
-                        <input
-                            aria-label={`${axisType} ${getTranslation(title, intl)}`}
-                            type="checkbox"
-                            checked={toggledOn}
-                            disabled={toggleDisabled}
-                            onChange={this.toggleValue}
-                            className="s-checkbox-toggle"
-                        />
-                        <span className="input-label-text" />
-                    </label>
-                </DisabledBubbleMessage>
-            );
-        }
-
-        return null;
-    }
-
-    private toggleValue(event: React.ChangeEvent<HTMLInputElement>) {
-        const { valuePath, properties, pushData } = this.props;
-
+    const toggleValue = (event: ChangeEvent<HTMLInputElement>) => {
         if (valuePath && properties && pushData) {
             const clonedProperties = cloneDeep(properties);
             set(clonedProperties, `controls.${valuePath}`, event.target.checked);
-
             pushData({ properties: clonedProperties });
         }
-    }
+    };
 
-    private getTestClassName(): string {
-        return `s-configuration-subsection-${this.props.title.replace(/\./g, "-")}`;
-    }
+    const renderToggleSwitch = () => {
+        if (!canBeToggled) {
+            return null;
+        }
+
+        return (
+            <DisabledBubbleMessage
+                className="input-checkbox-toggle"
+                showDisabledMessage={showDisabledMessage}
+            >
+                <label className="s-checkbox-toggle-label">
+                    <input
+                        aria-label={`${axisType} ${getTranslation(title, intl)}`}
+                        type="checkbox"
+                        checked={toggledOn}
+                        disabled={toggleDisabled}
+                        onChange={toggleValue}
+                        className="s-checkbox-toggle"
+                    />
+                    <span className="input-label-text" />
+                </label>
+            </DisabledBubbleMessage>
+        );
+    };
+
+    const getTestClassName = () => {
+        return `s-configuration-subsection-${title.replace(/\./g, "-")}`;
+    };
+
+    return (
+        <div
+            className={`configuration-subsection ${getTestClassName()}`}
+            aria-label="Configuration subsection"
+        >
+            <fieldset>
+                <legend>
+                    <span className="legend-title">{getTranslation(title, intl)}</span>
+                    {renderToggleSwitch()}
+                </legend>
+                <div>{children}</div>
+            </fieldset>
+        </div>
+    );
 }
-
-export default injectIntl<"intl", IConfigSubsectionProps>(ConfigSubsection);

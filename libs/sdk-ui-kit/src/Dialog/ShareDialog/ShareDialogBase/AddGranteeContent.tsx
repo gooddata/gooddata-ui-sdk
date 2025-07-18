@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { areObjRefsEqual, IGranteeGranularity } from "@gooddata/sdk-model";
 import { GranteeList } from "./GranteeList.js";
 import {
@@ -51,21 +51,19 @@ const enrichGranteeWithDefaultPermission = (
 /**
  * @internal
  */
-export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
-    const {
-        appliedGrantees,
-        currentUser,
-        addedGrantees,
-        areGranularPermissionsSupported,
-        currentUserPermissions,
-        isSharedObjectLocked,
-        sharedObjectRef,
-        isGranteeShareLoading,
-        onDelete,
-        onAddUserOrGroups,
-        onGranularGranteeChange,
-    } = props;
-
+export function AddGranteeContent({
+    appliedGrantees,
+    currentUser,
+    addedGrantees,
+    areGranularPermissionsSupported,
+    currentUserPermissions,
+    isSharedObjectLocked,
+    sharedObjectRef,
+    isGranteeShareLoading,
+    onDelete,
+    onAddUserOrGroups,
+    onGranularGranteeChange,
+}: IAddGranteeContentProps) {
     const onSelectGrantee = useCallback(
         (grantee: GranteeItem) => {
             if (!appliedGrantees.some((g) => areObjRefsEqual(g.id, grantee.id))) {
@@ -103,4 +101,4 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
             />
         </>
     );
-};
+}

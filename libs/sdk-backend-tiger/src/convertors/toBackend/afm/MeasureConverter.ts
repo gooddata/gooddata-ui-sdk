@@ -232,6 +232,6 @@ function getPredefinedFormat(definition: IMeasureDefinition): string | null {
     return measureDefinition.computeRatio
         ? "#,##0.00%"
         : measureDefinition.aggregation === "count"
-        ? "#,##0"
-        : null;
+          ? "#,##0"
+          : null;
 }

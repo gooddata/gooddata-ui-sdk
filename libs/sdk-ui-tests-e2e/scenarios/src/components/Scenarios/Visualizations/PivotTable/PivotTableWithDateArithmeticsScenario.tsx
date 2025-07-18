@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { IAttribute, IMeasure, IMeasureDefinition, newAbsoluteDateFilter } from "@gooddata/sdk-model";
@@ -93,9 +92,7 @@ export interface PivotTableDateArithmeticsCoreProps {
     config: IPivotTableConfig;
 }
 
-const PivotTableDateArithmetics: React.FC<PivotTableDateArithmeticsCoreProps> = (props) => {
-    const { measures, rows, filters } = props;
-
+function PivotTableDateArithmetics({ measures, rows, filters }: PivotTableDateArithmeticsCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -110,9 +107,9 @@ const PivotTableDateArithmetics: React.FC<PivotTableDateArithmeticsCoreProps> = 
             />
         </div>
     );
-};
+}
 
-export const PivotTableOfDatetimeAddWithAllGranularities = () => {
+export function PivotTableOfDatetimeAddWithAllGranularities() {
     return (
         <PivotTableDateArithmetics
             measures={measuresOfDatetimeAddWithAllGranularities}
@@ -120,9 +117,9 @@ export const PivotTableOfDatetimeAddWithAllGranularities = () => {
             filters={filtersOfClosed2011}
         />
     );
-};
+}
 
-export const PivotTableOfDatetimeAddWithBetween = () => {
+export function PivotTableOfDatetimeAddWithBetween() {
     return (
         <PivotTableDateArithmetics
             measures={measuresOfDatetimeAddWithBetween}
@@ -130,18 +127,18 @@ export const PivotTableOfDatetimeAddWithBetween = () => {
             filters={filtersOfClosed2011}
         />
     );
-};
+}
 
-export const PivotTableOfDatetimeAddWithCount = () => {
+export function PivotTableOfDatetimeAddWithCount() {
     return (
         <PivotTableDateArithmetics
             measures={measuresOfDatetimeAddWithCount}
             rows={attributesOfSnapshotAndClosedYear}
         />
     );
-};
+}
 
-export const PivotTableOfDatetimeAddWithPop = () => {
+export function PivotTableOfDatetimeAddWithPop() {
     return (
         <PivotTableDateArithmetics
             measures={measuresOfDatetimeAddWithPop}
@@ -149,49 +146,49 @@ export const PivotTableOfDatetimeAddWithPop = () => {
             filters={filtersOfCreated2010}
         />
     );
-};
+}
 
-export const PivotTableOfDatetimeDiffWithCompare = () => {
+export function PivotTableOfDatetimeDiffWithCompare() {
     return (
         <PivotTableDateArithmetics
             measures={measuresOfDatetimeDiffWithCompare}
             rows={attributesOfClosedAndCreateYear}
         />
     );
-};
+}
 
-export const PivotTableOfDatetimeDiffWithMonth = () => {
+export function PivotTableOfDatetimeDiffWithMonth() {
     return (
         <PivotTableDateArithmetics
             measures={measuresOfDatetimeDiffWithMonth}
             rows={attributesOfClosedAndSnapshotMonth}
         />
     );
-};
+}
 
-export const PivotTableOfDatetimeDiffWithWeekCheckOthers = () => {
+export function PivotTableOfDatetimeDiffWithWeekCheckOthers() {
     return (
         <PivotTableDateArithmetics
             measures={measuresOfDatetimeDiffWithWeekCheckOthers}
             rows={attributesOfClosedAndSnapshotYear}
         />
     );
-};
+}
 
-export const PivotTableOfDatetimeDiffWithWeekCheckParams = () => {
+export function PivotTableOfDatetimeDiffWithWeekCheckParams() {
     return (
         <PivotTableDateArithmetics
             measures={measuresOfDatetimeDiffWithWeekCheckParams}
             rows={attributesOfSnapshotWeek}
         />
     );
-};
+}
 
-export const PivotTableOfDatetimeDiffWithYear: React.FC = () => {
+export function PivotTableOfDatetimeDiffWithYear() {
     return (
         <PivotTableDateArithmetics
             measures={measuresOfDatetimeDiffWithYear}
             rows={attributesOfClosedAndSnapshotYear}
         />
     );
-};
+}

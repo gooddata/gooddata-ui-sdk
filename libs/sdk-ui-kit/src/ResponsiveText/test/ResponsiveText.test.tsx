@@ -1,5 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { render, screen, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 
@@ -14,7 +13,7 @@ describe("ResponsiveText", () => {
                 (): any =>
                     ({
                         fontSize: "20px",
-                    } as any),
+                    }) as any,
             ),
         };
     }

@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ReactNode, useMemo } from "react";
 import { IntlProvider, IntlShape, createIntl, IntlConfig } from "react-intl";
 import {
     DefaultLocale,
@@ -40,14 +40,14 @@ export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
 interface IInternalIntlWrapperProps {
     locale?: string;
     workspace?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
-export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
+export function InternalIntlWrapper({
     locale = DefaultLocale,
     children,
     workspace,
-}) => {
+}: IInternalIntlWrapperProps) {
     /**
      * Because of issues described in the ticket FET-855, we decided to use this workaround.
      * After the issues that are described in the ticket are solved or at least reduced,
@@ -79,4 +79,4 @@ export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
             />
         );
     }
-};
+}

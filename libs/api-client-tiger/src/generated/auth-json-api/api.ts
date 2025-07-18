@@ -250,7 +250,7 @@ export const ProfilePermissionsEnum = {
     SELF_CREATE_TOKEN: "SELF_CREATE_TOKEN",
 } as const;
 
-export type ProfilePermissionsEnum = typeof ProfilePermissionsEnum[keyof typeof ProfilePermissionsEnum];
+export type ProfilePermissionsEnum = (typeof ProfilePermissionsEnum)[keyof typeof ProfilePermissionsEnum];
 
 /**
  *

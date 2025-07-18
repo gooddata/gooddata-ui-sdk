@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, createRef } from "react";
+import { ComponentType, MouseEvent, useEffect, useRef } from "react";
 import cx from "classnames";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
 
@@ -61,13 +61,13 @@ export interface IInsightListItemProps {
     metadataTimeZone?: string;
     richTextExecConfig?: IExecutionConfig;
 
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
 }
 
 /**
  * @internal
  */
-export const InsightListItemTypeIcon: React.FC<{ type: string }> = ({ type }) => {
+export function InsightListItemTypeIcon({ type }: { type: string }) {
     const iconClassName = cx("gd-vis-type", `gd-vis-type-${type}`);
 
     return (
@@ -75,110 +75,60 @@ export const InsightListItemTypeIcon: React.FC<{ type: string }> = ({ type }) =>
             <div className={iconClassName} />
         </div>
     );
-};
+}
 
 /**
  * @internal
  */
-export class InsightListItemCore extends Component<IInsightListItemProps & WrappedComponentProps> {
-    private shortenedTextRef = createRef<ShortenedText>();
+export function InsightListItem({
+    title,
+    description,
+    updated,
+    type = VISUALIZATION_TYPE_UNKNOWN,
+    isSelected,
+    isLoading,
+    filters,
+    separators,
+    LoadingComponent,
+    onClick,
+    onDescriptionPanelOpen,
+    showDescriptionPanel = false,
+    useRichText = false,
+    useReferences = false,
+    richTextExecConfig,
+    isLocked,
+    onDelete,
+    width,
+    metadataTimeZone,
+}: IInsightListItemProps) {
+    const intl = useIntl();
 
-    public render(): JSX.Element {
-        const {
-            title,
-            description,
-            updated,
-            type = VISUALIZATION_TYPE_UNKNOWN,
-            isSelected,
-            isLoading,
-            filters,
-            separators,
-            LoadingComponent,
-            onClick,
-            onDescriptionPanelOpen,
-            showDescriptionPanel = false,
-            useRichText = false,
-            useReferences = false,
-            richTextExecConfig,
-        } = this.props;
+    const shortenedTextRef = useRef<ShortenedText>(null);
 
-        const visualizationListItemClassname = cx(
-            "gd-visualizations-list-item",
-            `s-${stringUtils.simplifyText(title)}`,
-            {
-                "is-selected": isSelected,
-            },
-        );
-
-        return (
-            <div className={visualizationListItemClassname} onClick={onClick}>
-                {/* reversed order of items because of hover effect for whole item when hovering over trash bin - css hack with flex-direction: row-reverse; */}
-                {this.renderActions()}
-                {showDescriptionPanel ? (
-                    <div className="gd-visualizations-list-item-description">
-                        <DescriptionPanel
-                            onBubbleOpen={onDescriptionPanelOpen}
-                            title={title}
-                            description={description}
-                            arrowOffsets={this.shouldRenderActions() ? modifiedArrowOffsets : undefined}
-                            useReferences={useReferences}
-                            useRichText={useRichText}
-                            filters={filters}
-                            separators={separators}
-                            LoadingComponent={LoadingComponent}
-                            execConfig={richTextExecConfig}
-                        />
-                    </div>
-                ) : null}
-                <div className="gd-visualizations-list-item-content">
-                    <div className="gd-visualizations-list-item-content-name">
-                        {this.renderLock()}
-                        <ShortenedText
-                            ref={this.shortenedTextRef}
-                            tooltipAlignPoints={tooltipAlignPoints}
-                            displayTooltip={!showDescriptionPanel}
-                        >
-                            {isLoading
-                                ? this.props.intl.formatMessage({ id: "gs.visualizationsList.loading" })
-                                : title}
-                        </ShortenedText>
-                    </div>
-                    <div className="gd-visualizations-list-item-content-date">
-                        {this.renderUpdatedDateTime(updated)}
-                    </div>
-                </div>
-                <InsightListItemTypeIcon type={type} />
-            </div>
-        );
-    }
-
-    public componentDidUpdate(prevProps: IInsightListItemProps & WrappedComponentProps): void {
-        if (prevProps.width !== this.props.width && this.shortenedTextRef.current) {
-            this.shortenedTextRef.current.recomputeShortening();
+    // componentDidUpdate for width change -> recompute shortening
+    useEffect(() => {
+        if (shortenedTextRef.current) {
+            shortenedTextRef.current.recomputeShortening();
         }
-    }
+    }, [width]);
 
-    public handleClickDelete = (e: React.MouseEvent): void => {
+    const handleClickDelete = (e: MouseEvent) => {
         e.stopPropagation();
-        const { onDelete } = this.props;
         if (onDelete) {
-            this.props.onDelete();
+            onDelete();
         }
     };
 
-    private renderLock = () => {
-        if (this.props.isLocked) {
+    const renderLock = () => {
+        if (isLocked) {
             return <i className="gd-icon-lock" />;
         }
-
-        return false;
+        return null;
     };
 
-    private renderUpdatedDateTime = (date: any) => {
-        const { type, metadataTimeZone } = this.props;
-
+    const renderUpdatedDateTime = (date: any) => {
         if (!date) {
-            return false;
+            return null;
         }
 
         if (type === WIDGET_TYPE_KPI) {
@@ -189,24 +139,67 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
         return <InsightListItemDate config={dateTimeConfig} />;
     };
 
-    private shouldRenderActions = () => !!this.props.onDelete;
+    const shouldRenderActions = () => !!onDelete;
 
-    private renderActions = () => {
+    const renderActions = () => {
+        if (!shouldRenderActions()) {
+            return null;
+        }
         return (
-            this.shouldRenderActions() && (
-                <div className="gd-visualizations-list-item-actions">
-                    <Button
-                        className="gd-button-link gd-button-icon-only gd-button-small
+            <div className="gd-visualizations-list-item-actions">
+                <Button
+                    className="gd-button-link gd-button-icon-only gd-button-small
                         gd-icon-trash gd-visualizations-list-item-action-delete s-delete-item"
-                        onClick={this.handleClickDelete}
-                    />
-                </div>
-            )
+                    onClick={handleClickDelete}
+                />
+            </div>
         );
     };
-}
 
-/**
- * @internal
- */
-export const InsightListItem = injectIntl(InsightListItemCore);
+    const visualizationListItemClassname = cx(
+        "gd-visualizations-list-item",
+        `s-${stringUtils.simplifyText(title)}`,
+        {
+            "is-selected": isSelected,
+        },
+    );
+
+    return (
+        <div className={visualizationListItemClassname} onClick={onClick}>
+            {/* reversed order of items because of hover effect for whole item when hovering over trash bin - css hack with flex-direction: row-reverse; */}
+            {renderActions()}
+            {showDescriptionPanel ? (
+                <div className="gd-visualizations-list-item-description">
+                    <DescriptionPanel
+                        onBubbleOpen={onDescriptionPanelOpen}
+                        title={title}
+                        description={description}
+                        arrowOffsets={shouldRenderActions() ? modifiedArrowOffsets : undefined}
+                        useReferences={useReferences}
+                        useRichText={useRichText}
+                        filters={filters}
+                        separators={separators}
+                        LoadingComponent={LoadingComponent}
+                        execConfig={richTextExecConfig}
+                    />
+                </div>
+            ) : null}
+            <div className="gd-visualizations-list-item-content">
+                <div className="gd-visualizations-list-item-content-name">
+                    {renderLock()}
+                    <ShortenedText
+                        ref={shortenedTextRef}
+                        tooltipAlignPoints={tooltipAlignPoints}
+                        displayTooltip={!showDescriptionPanel}
+                    >
+                        {isLoading ? intl.formatMessage({ id: "gs.visualizationsList.loading" }) : title}
+                    </ShortenedText>
+                </div>
+                <div className="gd-visualizations-list-item-content-date">
+                    {renderUpdatedDateTime(updated)}
+                </div>
+            </div>
+            <InsightListItemTypeIcon type={type} />
+        </div>
+    );
+}

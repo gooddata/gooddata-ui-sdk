@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ChangeKpiWidgetMeasure } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
@@ -24,9 +24,8 @@ function* validateMeasure(ctx: DashboardContext, cmd: ChangeKpiWidgetMeasure): S
         payload: { measureRef },
     } = cmd;
 
-    const measures: ReturnType<typeof selectAllCatalogMeasuresMap> = yield select(
-        selectAllCatalogMeasuresMap,
-    );
+    const measures: ReturnType<typeof selectAllCatalogMeasuresMap> =
+        yield select(selectAllCatalogMeasuresMap);
     const measure = measures.get(measureRef);
 
     if (!measure) {

@@ -1,6 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useRef, useState } from "react";
+import { CSSProperties, useCallback, useRef, useState } from "react";
+import { useMemo } from "react";
+import { MouseEvent } from "react";
+import { KeyboardEvent } from "react";
+import { FocusEvent } from "react";
 import { v4 as uuid } from "uuid";
 
 import { bem } from "../@utils/bem.js";
@@ -23,7 +27,7 @@ export interface IUiNavigationItem {
 export interface IUiNavigationBypassProps {
     items: IUiNavigationItem[];
     label: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     onItemClick?: (item: IUiNavigationItem) => void;
 }
 
@@ -39,12 +43,7 @@ interface IUiNavigationBypassItem {
 /**
  * @internal
  */
-export const UiNavigationBypass: React.FC<IUiNavigationBypassProps> = ({
-    label,
-    items,
-    onItemClick,
-    style,
-}) => {
+export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavigationBypassProps) {
     const [isFocused, setIsFocused] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -53,13 +52,13 @@ export const UiNavigationBypass: React.FC<IUiNavigationBypassProps> = ({
     const handleFocus = useCallback(() => {
         setIsFocused(true);
     }, []);
-    const handleBlur = useCallback((event: React.FocusEvent<HTMLDivElement>) => {
+    const handleBlur = useCallback((event: FocusEvent<HTMLDivElement>) => {
         if (containerRef.current && !containerRef.current.contains(event.relatedTarget as Node)) {
             setIsFocused(false);
         }
     }, []);
     const handleKeyDown = useCallback(
-        (event: React.KeyboardEvent<HTMLDivElement>) => {
+        (event: KeyboardEvent<HTMLDivElement>) => {
             if (!isFocused) {
                 return;
             }
@@ -105,7 +104,7 @@ export const UiNavigationBypass: React.FC<IUiNavigationBypassProps> = ({
         focusedRef.current = el;
     }, []);
 
-    const labelId = React.useMemo(() => {
+    const labelId = useMemo(() => {
         const hash = uuid().substring(0, 5);
         return `nb-${hash}`;
     }, []);
@@ -138,20 +137,20 @@ export const UiNavigationBypass: React.FC<IUiNavigationBypassProps> = ({
             </span>
         </>
     );
-};
+}
 
-const UiNavigationItem: React.FC<IUiNavigationBypassItem> = ({ item, onItemClick, onItemFocus }) => {
+function UiNavigationItem({ item, onItemClick, onItemFocus }: IUiNavigationBypassItem) {
     const { id, name, tabIndex } = item;
 
     const handleClick = useCallback(
-        (event: React.MouseEvent<HTMLElement>) => {
+        (event: MouseEvent<HTMLElement>) => {
             event.preventDefault();
             onItemClick(item);
         },
         [onItemClick, item],
     );
     const handleKeyDown = useCallback(
-        (event: React.KeyboardEvent<HTMLElement>) => {
+        (event: KeyboardEvent<HTMLElement>) => {
             if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
                 onItemClick(item);
@@ -160,7 +159,7 @@ const UiNavigationItem: React.FC<IUiNavigationBypassItem> = ({ item, onItemClick
         [onItemClick, item],
     );
     const handleFocus = useCallback(
-        (e: React.FocusEvent<HTMLDivElement>) => {
+        (e: FocusEvent<HTMLDivElement>) => {
             onItemFocus(e.target as HTMLDivElement);
         },
         [onItemFocus],
@@ -179,4 +178,4 @@ const UiNavigationItem: React.FC<IUiNavigationBypassItem> = ({ item, onItemClick
             {name}
         </div>
     );
-};
+}

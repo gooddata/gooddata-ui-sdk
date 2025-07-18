@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import includes from "lodash/includes.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -29,7 +29,7 @@ import { messages } from "../../../locales.js";
 export default class BaseChartConfigurationPanel<
     T extends IConfigurationPanelContentProps = IConfigurationPanelContentProps,
 > extends ConfigurationPanelContent<T> {
-    protected renderCanvasSection(): React.ReactNode {
+    protected renderCanvasSection(): ReactNode {
         const { gridEnabled } = this.getControlProperties();
 
         const { properties, propertiesMeta, pushData, featureFlags, insight } = this.props;
@@ -70,7 +70,7 @@ export default class BaseChartConfigurationPanel<
         );
     }
 
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const { axes } = this.getControlProperties();
 
         return (
@@ -102,7 +102,7 @@ export default class BaseChartConfigurationPanel<
         const props = this.props;
         const gridEnabled = props.properties?.controls?.grid?.enabled ?? true;
         const axisType = includes(DUAL_AXES_SUPPORTED_CHARTS, props.type)
-            ? props.axis ?? AXIS.PRIMARY
+            ? (props.axis ?? AXIS.PRIMARY)
             : AXIS.PRIMARY;
         const configurations = this.getAxesConfiguration(axisType);
         const axes: IAxisProperties[] = configurations.map((axis: any) => {
@@ -130,7 +130,7 @@ export default class BaseChartConfigurationPanel<
         return !bucketsIsEmpty(insightBuckets(insight, BucketNames.VIEW, BucketNames.TREND));
     }
 
-    protected getBaseChartAxisSection(axes: IAxisProperties[]): React.ReactNode {
+    protected getBaseChartAxisSection(axes: IAxisProperties[]): ReactNode {
         const { featureFlags, type, properties, propertiesMeta, pushData, insight } = this.props;
         const controls = properties?.controls;
         const controlsDisabled = this.isControlDisabled();
@@ -186,7 +186,7 @@ export default class BaseChartConfigurationPanel<
         });
     }
 
-    protected renderMinMax(basePath: string): React.ReactNode {
+    protected renderMinMax(basePath: string): ReactNode {
         const { pushData, properties, propertiesMeta } = this.props;
         return (
             <MinMaxControl

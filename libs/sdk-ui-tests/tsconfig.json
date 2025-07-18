@@ -1,12 +1,13 @@
 {
-    "exclude": ["**/tests", "**/test"],
     "include": [
         "src/**/*",
         "src/**/*.json",
         "scenarios/**/*",
         "scenarios/**/*.json",
         "stories/**/*",
-        "stories/**/*.json"
+        "stories/**/*.json",
+        "tests/**/*",
+        "tests/**/*.json"
     ],
     "compilerOptions": {
         "baseUrl": ".",
@@ -16,7 +17,7 @@
         "lib": ["ES2022", "DOM"],
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
-        "jsx": "react",
+        "jsx": "react-jsx",
         "importHelpers": true,
         "incremental": false,
         "resolveJsonModule": true,
@@ -26,6 +27,7 @@
         "noImplicitReturns": true,
         "declaration": true,
         "declarationMap": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "types": ["vitest/globals", "./vitest.d.ts"]
     }
 }

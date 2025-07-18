@@ -381,15 +381,18 @@ const toggleWidgetsOverlay: UiReducer<PayloadAction<ToggleWidgetsOverlay>> = (st
 };
 
 const hideAllWidgetsOverlay: UiReducer = (state) => {
-    state.widgetsOverlay = Object.keys(state.widgetsOverlay).reduce((prev, key) => {
-        return {
-            ...prev,
-            [key]: {
-                ...state.widgetsOverlay[key],
-                showOverlay: false,
-            },
-        };
-    }, {} as Record<string, IDashboardWidgetOverlay>);
+    state.widgetsOverlay = Object.keys(state.widgetsOverlay).reduce(
+        (prev, key) => {
+            return {
+                ...prev,
+                [key]: {
+                    ...state.widgetsOverlay[key],
+                    showOverlay: false,
+                },
+            };
+        },
+        {} as Record<string, IDashboardWidgetOverlay>,
+    );
 };
 
 const changeIgnoreExecutionTimestamp: UiReducer<PayloadAction<boolean>> = (state, action) => {

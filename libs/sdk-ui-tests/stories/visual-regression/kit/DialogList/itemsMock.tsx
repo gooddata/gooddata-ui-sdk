@@ -1,6 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
 import { Icon, IDialogListItem } from "@gooddata/sdk-ui-kit";
 
 const deleteTooltipText = "Delete me";

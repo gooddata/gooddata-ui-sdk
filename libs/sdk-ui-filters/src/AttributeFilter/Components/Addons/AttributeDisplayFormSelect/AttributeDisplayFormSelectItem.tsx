@@ -1,5 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
+import { MouseEvent } from "react";
 import classNames from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { IAttributeDisplayFormMetadataObject, ObjRef, AttributeDisplayFormType } from "@gooddata/sdk-model";
@@ -37,7 +37,7 @@ export interface IAttributeDisplayFormSelectItemProps {
 /**
  * @internal
  */
-export const AttributeDisplayFormSelectItem: React.FC<IAttributeDisplayFormSelectItemProps> = (props) => {
+export function AttributeDisplayFormSelectItem(props: IAttributeDisplayFormSelectItemProps) {
     const { displayForm, selected } = props;
     const { title, type } = displayForm;
 
@@ -52,7 +52,7 @@ export const AttributeDisplayFormSelectItem: React.FC<IAttributeDisplayFormSelec
         },
     );
 
-    const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleOnClick = (e: MouseEvent<HTMLDivElement>) => {
         const { displayForm, onClick } = props;
 
         onClick(displayForm.ref);
@@ -66,4 +66,4 @@ export const AttributeDisplayFormSelectItem: React.FC<IAttributeDisplayFormSelec
             </ShortenedText>
         </div>
     );
-};
+}

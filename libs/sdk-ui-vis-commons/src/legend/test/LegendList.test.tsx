@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ILegendListProps, LegendList } from "../LegendList.js";
 import { withIntl } from "@gooddata/sdk-ui";
@@ -9,7 +8,7 @@ import { ISeriesItem } from "../types.js";
 import { LegendSeriesContextStore } from "../context.js";
 
 describe("LegendList", () => {
-    let onItemClick: jest.Mock;
+    let onItemClick: ReturnType<typeof vi.fn>;
 
     beforeEach(() => {
         onItemClick = vi.fn();

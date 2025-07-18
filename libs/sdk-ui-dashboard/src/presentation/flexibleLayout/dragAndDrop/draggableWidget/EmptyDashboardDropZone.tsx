@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import { ReactNode, RefObject } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -18,7 +18,7 @@ const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     dashboardLayoutListItem: "dashboardLayout",
 };
 
-export const EmptyDashboardDropZone: React.FC = () => {
+export function EmptyDashboardDropZone() {
     const { EmptyLayoutDropZoneBodyComponent } = useDashboardComponentsContext();
 
     const sectionPath = {
@@ -66,7 +66,7 @@ export const EmptyDashboardDropZone: React.FC = () => {
             >
                 <div
                     className={cx("drag-info-placeholder-inner", { "can-drop": canDrop, "is-over": isOver })}
-                    ref={dropRef}
+                    ref={dropRef as unknown as RefObject<HTMLDivElement>}
                 >
                     <EmptyLayoutDropZoneBodyComponent />
                     <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
@@ -83,4 +83,4 @@ export const EmptyDashboardDropZone: React.FC = () => {
             </GridLayoutElement>
         </GridLayoutElement>
     );
-};
+}

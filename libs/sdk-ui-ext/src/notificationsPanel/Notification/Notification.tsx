@@ -19,7 +19,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import compact from "lodash/compact.js";
-import React, { useCallback } from "react";
+import { Fragment, KeyboardEvent, useCallback } from "react";
 import { defineMessages, FormattedDate, FormattedMessage, FormattedTime, useIntl } from "react-intl";
 import { bem } from "../bem.js";
 import { Popup } from "../components/Popup.js";
@@ -113,7 +113,7 @@ export function Notification({
         exports,
     ]);
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         if (isActionKey(event)) {
             event.preventDefault();
             handleNotificationClick();
@@ -186,10 +186,10 @@ export function Notification({
                     ) : actions.length ? (
                         <div className={e("links")}>
                             {actions.map((action, index) => (
-                                <React.Fragment key={index}>
+                                <Fragment key={index}>
                                     {!!index && "・"}
                                     {action}
-                                </React.Fragment>
+                                </Fragment>
                             ))}
                         </div>
                     ) : null}

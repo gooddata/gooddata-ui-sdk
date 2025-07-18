@@ -259,7 +259,7 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@storybook/addon-actions",
+      "name": "@storybook/builder-vite",
       "allowedCategories": [ "production" ]
     },
     {
@@ -283,6 +283,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@storybook/react-vite",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@storybook/react-webpack5",
       "allowedCategories": [ "production" ]
     },
@@ -293,6 +297,10 @@
     {
       "name": "@testing-library/dom",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "@testing-library/jest-dom",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@testing-library/react",
@@ -528,11 +536,15 @@
     },
     {
       "name": "@vitejs/plugin-react",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@vitejs/plugin-react-swc",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "@vitest/react",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@welldone-software/why-did-you-render",
@@ -627,6 +639,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "copy-vite-plugin",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "copy-webpack-plugin",
       "allowedCategories": [ "production" ]
     },
@@ -704,6 +720,10 @@
     },
     {
       "name": "eslint",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-config-prettier",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -1155,6 +1175,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "storybook",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "stringify-object",
       "allowedCategories": [ "production" ]
     },
@@ -1236,7 +1260,7 @@
     },
     {
       "name": "vite",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "vite-plugin-html",

@@ -1,6 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
-import { afterAll, beforeEach, describe, expect, it, SpyInstance, vi } from "vitest";
+import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
 
 import { IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
@@ -15,7 +14,7 @@ import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import { withIntl } from "@gooddata/sdk-ui";
 
 describe("CompareSection", () => {
-    let MockCompareItem: SpyInstance;
+    let MockCompareItem: ReturnType<typeof vi.spyOn>;
     const secondaryItem: IBaseHeadlineItem<IHeadlineDataItem> = TEST_BASE_HEADLINE_ITEM;
     const tertiaryItem: IBaseHeadlineItem<IHeadlineDataItem> = {
         ...TEST_BASE_HEADLINE_ITEM,
@@ -30,8 +29,7 @@ describe("CompareSection", () => {
         secondaryItem: IBaseHeadlineItem<IHeadlineDataItem>;
         tertiaryItem?: IBaseHeadlineItem<IHeadlineDataItem>;
     }) => {
-        const WrappedHeadlineCompareSection = withIntl(CompareSection);
-        return render(<WrappedHeadlineCompareSection {...props} />);
+        return render(<CompareSection {...props} />);
     };
 
     beforeEach(() => {

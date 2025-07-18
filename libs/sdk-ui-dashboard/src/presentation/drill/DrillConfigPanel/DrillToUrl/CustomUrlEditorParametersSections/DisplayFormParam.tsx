@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+
 import { useIntl } from "react-intl";
 import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail.js";
 import { Parameter } from "./Parameter.js";
@@ -18,7 +18,7 @@ interface XProps {
     isFilter?: boolean;
 }
 
-export const DisplayFormParam: React.FC<XProps> = ({ item, onAdd, iconClassName, isFilter }) => {
+export function DisplayFormParam({ item, onAdd, iconClassName, isFilter }: XProps) {
     const x = useDashboardSelector(selectAllCatalogAttributesMap);
     const y = x.get(item.attribute);
     const intl = useIntl();
@@ -29,7 +29,7 @@ export const DisplayFormParam: React.FC<XProps> = ({ item, onAdd, iconClassName,
     return (
         <Parameter
             key={item.id}
-            name={isFilter ? dashboardFilter?.attributeFilter?.title ?? defaultTitle : defaultTitle}
+            name={isFilter ? (dashboardFilter?.attributeFilter?.title ?? defaultTitle) : defaultTitle}
             description={item.title}
             detailContent={
                 <AttributeDisplayFormParameterDetail
@@ -48,7 +48,7 @@ export const DisplayFormParam: React.FC<XProps> = ({ item, onAdd, iconClassName,
             intl={intl}
         />
     );
-};
+}
 
 const getDisplayFormIcon = (type: AttributeDisplayFormType | undefined) => {
     switch (type) {

@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { ReactElement, useCallback } from "react";
 import classNames from "classnames";
 import { invariant } from "ts-invariant";
 import {
@@ -183,7 +183,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                 );
             } else if (isAllTimeDashboardDateFilter(filter)) {
                 const localIdentifier =
-                    filter?.dateFilter.localIdentifier ?? enableDateFilterIdentifiers
+                    (filter?.dateFilter.localIdentifier ?? enableDateFilterIdentifiers)
                         ? generateDateFilterLocalIdentifier(0, filter?.dateFilter.dataSet)
                         : undefined;
                 // all time filter
@@ -228,7 +228,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
 /**
  * @alpha
  */
-export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
+export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
     const { filters, workingFilters, onAttributeFilterChanged, onDateFilterChanged } = props;
 
     const [

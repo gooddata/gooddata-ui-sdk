@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { useEffect } from "react";
 import { MessageDescriptor } from "react-intl";
@@ -58,8 +58,8 @@ export const useEventToastMessage = <TEvents extends DashboardEvents | ICustomDa
                     messageParameters === undefined
                         ? undefined
                         : isMessageParameters(messageParameters)
-                        ? messageParameters
-                        : messageParameters(cmd);
+                          ? messageParameters
+                          : messageParameters(cmd);
                 switch (type) {
                     case "success":
                         addSuccess(message, parameters);

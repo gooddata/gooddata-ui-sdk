@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { PureComponent } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 import { StreamLanguage } from "@codemirror/language";
@@ -132,7 +132,7 @@ interface IFormatInputOwnProps {
 
 type IFormatInputProps = IFormatInputOwnProps & WrappedComponentProps;
 
-class FormatInput extends React.PureComponent<IFormatInputProps> {
+class FormatInput extends PureComponent<IFormatInputProps> {
     public render() {
         const { format, onFormatChange, separators, templates, intl } = this.props;
         return (

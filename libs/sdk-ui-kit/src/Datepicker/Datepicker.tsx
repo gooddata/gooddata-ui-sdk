@@ -1,43 +1,48 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import {
+    KeyboardEvent,
+    PureComponent,
+    createRef,
+    MouseEvent as ReactMouseEvent,
+    FocusEvent,
+    ChangeEvent,
+    ReactNode,
+} from "react";
 import { v4 as uuid } from "uuid";
 import debounce from "lodash/debounce.js";
 import noop from "lodash/noop.js";
-import format from "date-fns/format/index.js";
-import parse from "date-fns/parse/index.js";
-import isValid from "date-fns/isValid/index.js";
-import isSameDay from "date-fns/isSameDay/index.js";
+import { format, parse, isValid, isSameDay, Locale } from "date-fns";
 import classNames from "classnames";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { WeekStart } from "@gooddata/sdk-model";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { ClassNames, DayPicker, DayPickerProps } from "react-day-picker";
+import { ClassNames, DayPicker, DayPickerProps, getDefaultClassNames } from "react-day-picker";
 
 import { IAlignPoint } from "../typings/positioning.js";
 import { getOptimalAlignment } from "../utils/overlay.js";
 import { elementRegion } from "../utils/domUtilities.js";
 import { DEFAULT_DATE_FORMAT } from "../constants/platform.js";
 
-import enUS from "date-fns/locale/en-US/index.js";
-import de from "date-fns/locale/de/index.js";
-import es from "date-fns/locale/es/index.js";
-import fr from "date-fns/locale/fr/index.js";
-import ja from "date-fns/locale/ja/index.js";
-import nl from "date-fns/locale/nl/index.js";
-import pt from "date-fns/locale/pt/index.js";
-import ptBR from "date-fns/locale/pt-BR/index.js";
-import zhCN from "date-fns/locale/zh-CN/index.js";
-import ru from "date-fns/locale/ru/index.js";
-import it from "date-fns/locale/it/index.js";
-import enGB from "date-fns/locale/en-GB/index.js";
-import frCA from "date-fns/locale/fr-CA/index.js";
-import fi from "date-fns/locale/fi/index.js";
-import enAU from "date-fns/locale/en-AU/index.js";
+import { enUS } from "date-fns/locale/en-US";
+import { de } from "date-fns/locale/de";
+import { es } from "date-fns/locale/es";
+import { fr } from "date-fns/locale/fr";
+import { ja } from "date-fns/locale/ja";
+import { nl } from "date-fns/locale/nl";
+import { pt } from "date-fns/locale/pt";
+import { ptBR } from "date-fns/locale/pt-BR";
+import { zhCN } from "date-fns/locale/zh-CN";
+import { ru } from "date-fns/locale/ru";
+import { it } from "date-fns/locale/it";
+import { enGB } from "date-fns/locale/en-GB";
+import { frCA } from "date-fns/locale/fr-CA";
+import { fi } from "date-fns/locale/fi";
+import { enAU } from "date-fns/locale/en-AU";
+import { tr } from "date-fns/locale/tr";
+import { pl } from "date-fns/locale/pl";
+import { ko } from "date-fns/locale/ko";
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 import { isEnterKey } from "../utils/events.js";
-import tr from "date-fns/locale/tr/index.js";
-import pl from "date-fns/locale/pl/index.js";
-import ko from "date-fns/locale/ko/index.js";
 
 const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
 
@@ -60,7 +65,7 @@ export interface IDatePickerOwnProps {
     locale?: string;
     dateFormat?: string;
     weekStart?: WeekStart;
-    onDateInputKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onDateInputKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export type DatePickerProps = IDatePickerOwnProps & WrappedComponentProps;
@@ -141,10 +146,10 @@ function convertWeekStart(weekStart: WeekStart): DayPickerProps["weekStartsOn"] 
     }
 }
 
-export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDatePickerState> {
+export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePickerState> {
     private rootRef: HTMLElement;
-    private datePickerContainerRef = React.createRef<HTMLDivElement>();
-    private inputRef = React.createRef<HTMLInputElement>();
+    private datePickerContainerRef = createRef<HTMLDivElement>();
+    private inputRef = createRef<HTMLInputElement>();
 
     private datePickerId = uuid();
 
@@ -268,11 +273,11 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         return this.normalizeDate(date);
     }
 
-    private handleInputBlur(e: React.FocusEvent<HTMLInputElement>) {
+    private handleInputBlur(e: FocusEvent<HTMLInputElement>) {
         this.props.onBlur(e.target.value);
     }
 
-    private handleInputChanged(e: React.ChangeEvent<HTMLInputElement>) {
+    private handleInputChanged(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
 
         const parsedDate = parseDate(value, this.props.dateFormat);
@@ -375,7 +380,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         );
     }
 
-    private onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    private onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
         if (e.key === "Escape" || e.key === "Tab") {
             this.setState({ isOpen: false });
         }
@@ -384,7 +389,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
             this.props.onDateInputKeyDown?.(e);
         }
     }
-    private handleWrapperClick(e: React.MouseEvent<HTMLDivElement>) {
+    private handleWrapperClick(e: ReactMouseEvent<HTMLDivElement>) {
         const { classList } = e.target as HTMLInputElement;
 
         /**
@@ -396,11 +401,12 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         }
     }
 
-    public render(): React.ReactNode {
+    public render(): ReactNode {
         const { inputValue, selectedDate, monthDate, isOpen } = this.state;
         const { accessibilityConfig, placeholder, intl, tabIndex } = this.props;
 
         const classNamesProps: ClassNames = {
+            ...getDefaultClassNames(),
             root: this.getOverlayWrapperClasses(),
         };
 
@@ -464,7 +470,7 @@ const DatePickerWithIntl = injectIntl(WrappedDatePicker);
 /**
  * @internal
  */
-export class Datepicker extends React.PureComponent<IDatePickerOwnProps> {
+export class Datepicker extends PureComponent<IDatePickerOwnProps> {
     public render() {
         return (
             <IntlWrapper locale={this.props.locale}>

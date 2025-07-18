@@ -1,6 +1,5 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import React from "react";
 import { useComponentLabelsContext } from "./ComponentLabelsContext.js";
 
 import { SharedObjectCheckboxControl } from "./SharedObjectCheckboxControl.js";
@@ -9,11 +8,11 @@ import { ISharedObjectLockControlProps } from "./types.js";
 /**
  * @internal
  */
-export const SharedObjectLockControl: React.FC<ISharedObjectLockControlProps> = ({
+export function SharedObjectLockControl({
     isLocked,
     isLockingSupported,
     onLockChange,
-}) => {
+}: ISharedObjectLockControlProps) {
     const labels = useComponentLabelsContext();
 
     return (
@@ -26,4 +25,4 @@ export const SharedObjectLockControl: React.FC<ISharedObjectLockControlProps> = 
             className="s-shared-object-lock"
         />
     );
-};
+}

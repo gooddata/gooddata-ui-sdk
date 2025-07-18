@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import cx from "classnames";
 import { BubbleHoverTrigger, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
@@ -12,7 +11,7 @@ export interface IFilterButtonCustomIconProps {
     disabled?: boolean;
 }
 
-export const FilterButtonCustomIcon: React.FC<IFilterButtonCustomIconProps> = ({ customIcon, disabled }) => {
+export function FilterButtonCustomIcon({ customIcon, disabled }: IFilterButtonCustomIconProps) {
     if (!customIcon) {
         return null;
     }
@@ -38,4 +37,4 @@ export const FilterButtonCustomIcon: React.FC<IFilterButtonCustomIconProps> = ({
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

@@ -1,6 +1,5 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { IUser } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
 import noop from "lodash/noop.js";
@@ -20,13 +19,7 @@ export interface IDetailsViewProps {
     onChange?: (user: IUser, isAdmin: boolean) => void;
 }
 
-export const UserDetailsView: React.FC<IDetailsViewProps> = ({
-    user,
-    isAdmin,
-    isBootstrapUser,
-    mode,
-    onChange,
-}) => {
+export function UserDetailsView({ user, isAdmin, isBootstrapUser, mode, onChange }: IDetailsViewProps) {
     const intl = useIntl();
     const trackEvent = useTelemetry();
 
@@ -86,4 +79,4 @@ export const UserDetailsView: React.FC<IDetailsViewProps> = ({
             />
         </div>
     );
-};
+}

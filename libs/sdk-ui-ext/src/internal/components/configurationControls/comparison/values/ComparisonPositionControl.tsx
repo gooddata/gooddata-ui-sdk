@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { PushDataCallback } from "@gooddata/sdk-ui";
@@ -20,12 +20,12 @@ interface IPositionControlProps {
     pushData: PushDataCallback;
 }
 
-const ComparisonPositionControl: React.FC<IPositionControlProps> = ({
+export default function ComparisonPositionControl({
     disabled,
     showDisabledMessage,
     properties,
     pushData,
-}) => {
+}: IPositionControlProps) {
     const intl = useIntl();
     const position = properties?.controls?.comparison?.position || ComparisonPositionValues.AUTO;
 
@@ -45,6 +45,4 @@ const ComparisonPositionControl: React.FC<IPositionControlProps> = ({
             />
         </div>
     );
-};
-
-export default ComparisonPositionControl;
+}

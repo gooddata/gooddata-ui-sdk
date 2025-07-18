@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useRef, useState, KeyboardEvent } from "react";
 import cx from "classnames";
 import {
     Bubble,
@@ -27,7 +27,7 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl tr" }];
 /**
  * @alpha
  */
-export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null => {
+export const DefaultMenuButton = (props: IMenuButtonProps): ReactElement | null => {
     const { menuItems } = props;
     const [isOpen, setIsOpen] = useState(false);
     const [autofocusSubmenu, setAutofocusSubmenu] = useState(false);
@@ -127,7 +127,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
             }
         },
         onUnhandledKeyDown(event) {
-            if (isActionKey(event as unknown as React.KeyboardEvent)) {
+            if (isActionKey(event as unknown as KeyboardEvent)) {
                 //onSelect by keyboard is handled by the menu item itself
                 return;
             }

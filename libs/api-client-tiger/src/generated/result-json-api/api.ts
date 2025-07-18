@@ -1,3 +1,5 @@
+// (C) 2025 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -498,7 +500,7 @@ export const GdStorageFileTypeEnum = {
     CSV: "CSV",
 } as const;
 
-export type GdStorageFileTypeEnum = typeof GdStorageFileTypeEnum[keyof typeof GdStorageFileTypeEnum];
+export type GdStorageFileTypeEnum = (typeof GdStorageFileTypeEnum)[keyof typeof GdStorageFileTypeEnum];
 
 /**
  * Request containing the information necessary to import one or more CSV files from the staging area.

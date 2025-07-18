@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import { IAlertDescription, IAlertNotification } from "@gooddata/sdk-model";
 import { alignConfigToAlignPoint, Overlay, UiButton } from "@gooddata/sdk-ui-kit";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { defineMessages, IntlShape, useIntl } from "react-intl";
 import { NotificationTriggersDetailDialog } from "./NotificationTriggersDetailDialog.js";
 

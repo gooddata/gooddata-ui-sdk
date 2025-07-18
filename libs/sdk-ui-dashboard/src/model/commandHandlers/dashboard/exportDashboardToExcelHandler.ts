@@ -47,12 +47,10 @@ export function* exportDashboardToExcelHandler(
     }
 
     const { mergeHeaders, exportInfo, widgetIds, fileName } = cmd.payload;
-    const isFilterContextChanged: SagaReturnType<typeof selectIsFiltersChanged> = yield select(
-        selectIsFiltersChanged,
-    );
-    const filterContext: SagaReturnType<typeof selectFilterContextFilters> = yield select(
-        selectFilterContextFilters,
-    );
+    const isFilterContextChanged: SagaReturnType<typeof selectIsFiltersChanged> =
+        yield select(selectIsFiltersChanged);
+    const filterContext: SagaReturnType<typeof selectFilterContextFilters> =
+        yield select(selectFilterContextFilters);
     const result: PromiseFnReturnType<typeof exportDashboardToTabular> = yield call(
         exportDashboardToTabular,
         ctx,

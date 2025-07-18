@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
@@ -17,13 +17,13 @@ interface IPermissionItemProps {
     bubbleTextId: string;
 }
 
-export const PermissionDropdownItem: React.FC<IPermissionItemProps> = ({
+export function PermissionDropdownItem({
     permission,
     selectedPermission,
     toggleDropdown,
     onSelect,
     bubbleTextId,
-}) => {
+}: IPermissionItemProps) {
     const intl = useIntl();
 
     const handleOnChange = useCallback(() => {
@@ -56,4 +56,4 @@ export const PermissionDropdownItem: React.FC<IPermissionItemProps> = ({
             </div>
         </div>
     );
-};
+}

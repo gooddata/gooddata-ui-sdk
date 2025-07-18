@@ -11,7 +11,10 @@ import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { convertDataSetItem } from "../../../convertors/fromBackend/DataSetConverter.js";
 
 export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+    ) {}
 
     public async getDatasets(): Promise<IDataset[]> {
         return this.authCall(async () => []);

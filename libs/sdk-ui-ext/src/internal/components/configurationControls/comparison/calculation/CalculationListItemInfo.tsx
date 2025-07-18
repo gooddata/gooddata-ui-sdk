@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import CalculationListItemInfoSection from "./CalculationListItemInfoSection.js";
 import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
@@ -9,7 +8,7 @@ interface ICalculationItemInfoProps {
     calculationType: CalculationType;
 }
 
-const CalculationListItemInfo: React.FC<ICalculationItemInfoProps> = ({ title, calculationType }) => {
+export default function CalculationListItemInfo({ title, calculationType }: ICalculationItemInfoProps) {
     return (
         <div className="calculation-item-info">
             <h3 className="calculation-item-info-header">{title}</h3>
@@ -38,6 +37,4 @@ const CalculationListItemInfo: React.FC<ICalculationItemInfoProps> = ({ title, c
             <CalculationListItemInfoSection calculationType={calculationType} section="example" />
         </div>
     );
-};
-
-export default CalculationListItemInfo;
+}

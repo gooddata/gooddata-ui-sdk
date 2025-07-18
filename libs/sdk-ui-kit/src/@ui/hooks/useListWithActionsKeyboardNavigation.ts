@@ -1,6 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import {
+    Dispatch,
+    FocusEventHandler,
+    KeyboardEvent,
+    MutableRefObject,
+    SetStateAction,
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { makeLinearKeyboardNavigation, makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
@@ -17,11 +27,11 @@ interface IKeyboardNavigationDeps<Item, Action extends string> {
     actionHandlers: {
         [key in Action | typeof SELECT_ITEM_ACTION]: (
             item: Item,
-            e?: React.KeyboardEvent,
+            e?: KeyboardEvent,
         ) => (() => void) | undefined;
     };
-    setFocusedIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
-    setFocusedAction: React.Dispatch<React.SetStateAction<Action | typeof SELECT_ITEM_ACTION>>;
+    setFocusedIndex: Dispatch<SetStateAction<number | undefined>>;
+    setFocusedAction: Dispatch<SetStateAction<Action | typeof SELECT_ITEM_ACTION>>;
 }
 
 /**
@@ -38,27 +48,27 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     actionHandlers: {
         [key in Action | typeof SELECT_ITEM_ACTION]: (
             item: Item,
-            e?: React.KeyboardEvent,
+            e?: KeyboardEvent,
         ) => (() => void) | undefined;
     };
     getItemAdditionalActions: (item: Item) => Action[];
     isNestedList?: boolean;
     focusedIndex?: number;
 }) {
-    const [focusedIndex, setFocusedIndex] = React.useState<number | undefined>(focusedIndexProp ?? 0);
+    const [focusedIndex, setFocusedIndex] = useState<number | undefined>(focusedIndexProp ?? 0);
     const focusedItem = focusedIndex === undefined ? undefined : items[focusedIndex];
 
-    const [focusedAction, setFocusedAction] = React.useState<Action | typeof SELECT_ITEM_ACTION>(
+    const [focusedAction, setFocusedAction] = useState<Action | typeof SELECT_ITEM_ACTION>(
         SELECT_ITEM_ACTION,
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (focusedIndexProp !== undefined) {
             setFocusedIndex(focusedIndexProp);
         }
     }, [focusedIndexProp]);
 
-    const focusedItemAdditionalActions = React.useMemo(
+    const focusedItemAdditionalActions = useMemo(
         () => (focusedItem ? getItemAdditionalActions(focusedItem) : []),
         [focusedItem, getItemAdditionalActions],
     );
@@ -86,7 +96,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     // one switches between items and one controls picking actions for a specific item
     const selectionMode = focusedAction === SELECT_ITEM_ACTION ? "item" : "additionalAction";
 
-    const handleKeyboardNavigation = React.useMemo(() => {
+    const handleKeyboardNavigation = useMemo(() => {
         return selectionMode === "item"
             ? // Selecting items
               makeItemSelectionNavigation(keyboardNavigationDepsRef)
@@ -94,7 +104,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
               makeActionSelectionNavigation(keyboardNavigationDepsRef, isNestedList);
     }, [keyboardNavigationDepsRef, selectionMode, isNestedList]);
 
-    const handleBlur = React.useCallback<React.FocusEventHandler>(() => {
+    const handleBlur = useCallback<FocusEventHandler>(() => {
         setFocusedAction(SELECT_ITEM_ACTION);
     }, []);
 
@@ -108,7 +118,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
 }
 
 function makeItemSelectionNavigation<Item, Action extends string>(
-    depsRef: React.MutableRefObject<IKeyboardNavigationDeps<Item, Action>>,
+    depsRef: MutableRefObject<IKeyboardNavigationDeps<Item, Action>>,
 ) {
     return makeMenuKeyboardNavigation({
         onFocusPrevious: () => {
@@ -157,7 +167,7 @@ function makeItemSelectionNavigation<Item, Action extends string>(
 }
 
 function makeActionSelectionNavigation<Item, Action extends string>(
-    depsRef: React.MutableRefObject<IKeyboardNavigationDeps<Item, Action>>,
+    depsRef: MutableRefObject<IKeyboardNavigationDeps<Item, Action>>,
     isNestedList: boolean,
 ) {
     return makeLinearKeyboardNavigation({

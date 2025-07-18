@@ -1,13 +1,11 @@
-// (C) 2024 GoodData Corporation
-
-import React from "react";
+// (C) 2024-2025 GoodData Corporation
 
 import { IIconProps } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
  */
-export const StopIcon: React.FC<IIconProps> = ({ color = "#6D7680", className, width = 12, height = 12 }) => {
+export function StopIcon({ color = "#6D7680", className, width = 12, height = 12 }: IIconProps) {
     return (
         <svg
             className={className}
@@ -20,4 +18,4 @@ export const StopIcon: React.FC<IIconProps> = ({ color = "#6D7680", className, w
             <rect width="12" height="12" rx="1.2" fill={color} />
         </svg>
     );
-};
+}

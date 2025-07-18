@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import format from "date-fns/format/index.js";
+import { format } from "date-fns";
 import isString from "lodash/isString.js";
 import capitalize from "lodash/capitalize.js";
 import { ILocale, getIntl } from "@gooddata/sdk-ui";
@@ -194,8 +194,10 @@ export const formatRelativeDateRange = (
 const getAllTimeFilterRepresentation = (translator: IMessageTranslator): string =>
     translator.formatMessage({ id: "filters.allTime.title" });
 
-const getAbsoluteFormFilterRepresentation = (filter: IUiAbsoluteDateFilterForm, dateFormat: string): string =>
-    filter.from && filter.to ? formatAbsoluteDateRange(filter.from, filter.to, dateFormat) : "";
+const getAbsoluteFormFilterRepresentation = (
+    filter: IUiAbsoluteDateFilterForm,
+    dateFormat: string,
+): string => (filter.from && filter.to ? formatAbsoluteDateRange(filter.from, filter.to, dateFormat) : "");
 
 const getAbsolutePresetFilterRepresentation = (
     filter: IAbsoluteDateFilterPreset,

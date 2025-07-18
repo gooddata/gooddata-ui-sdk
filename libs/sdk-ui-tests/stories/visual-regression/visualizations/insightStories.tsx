@@ -16,8 +16,7 @@ import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
-import { action } from "@storybook/addon-actions";
-import React from "react";
+import { action } from "storybook/actions";
 import "./insightStories.css";
 import { IScenario, MapboxToken, ScenarioGroup } from "../../../src/index.js";
 import {

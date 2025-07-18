@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType, ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { isObjRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { Icon, IIconProps } from "@gooddata/sdk-ui-kit";
@@ -8,22 +8,22 @@ import { Icon, IIconProps } from "@gooddata/sdk-ui-kit";
 import { ValuesLimitingItem } from "../../../../types.js";
 import { messages } from "../../../../../../../locales.js";
 
-export const UnknownItemTitle: React.FC = () => {
+export function UnknownItemTitle() {
     return (
         <em>
             <FormattedMessage id="attributesDropdown.valuesLimiting.unknownItem" />
         </em>
     );
-};
+}
 
 interface ITitleWithIconProps {
     title?: string;
     tooltip?: string;
-    IconComponent?: React.FC<IIconProps>;
+    IconComponent?: ComponentType<IIconProps>;
     iconSize?: number;
 }
 
-const ItemTitleWithIcon: React.FC<ITitleWithIconProps> = ({ title, tooltip, IconComponent, iconSize }) => {
+function ItemTitleWithIcon({ title, tooltip, IconComponent, iconSize }: ITitleWithIconProps) {
     return (
         <span className="attribute-filter__limit__item__title" title={tooltip}>
             {IconComponent ? (
@@ -36,18 +36,15 @@ const ItemTitleWithIcon: React.FC<ITitleWithIconProps> = ({ title, tooltip, Icon
             <span className="attribute-filter__limit__item__name">{title ?? <UnknownItemTitle />}</span>
         </span>
     );
-};
+}
 
-const AggregatedItemTitle: React.FC<{ titleNode: React.ReactNode; tooltip: string }> = ({
-    titleNode,
-    tooltip,
-}) => {
+function AggregatedItemTitle({ titleNode, tooltip }: { titleNode: ReactNode; tooltip: string }) {
     return (
         <span className="attribute-filter__limit__item__title--aggregated" title={tooltip}>
             {titleNode}
         </span>
     );
-};
+}
 
 const isMetric = (item: ValuesLimitingItem) => isIdentifierRef(item) && item.type === "measure";
 const isFact = (item: ValuesLimitingItem) => isIdentifierRef(item) && item.type === "fact";
@@ -59,7 +56,7 @@ export interface ILimitingItemTitleProps {
     item: ValuesLimitingItem;
 }
 
-export const LimitingItemTitle: React.FC<ILimitingItemTitleProps> = ({ item, title }) => {
+export function LimitingItemTitle({ item, title }: ILimitingItemTitleProps) {
     const intl = useIntl();
     const titleTooltip = title ?? intl.formatMessage(messages.filterUnknownItemTitle);
 
@@ -121,7 +118,7 @@ export const LimitingItemTitle: React.FC<ILimitingItemTitleProps> = ({ item, tit
     }
 
     return <ItemTitleWithIcon title={title} tooltip={titleTooltip} />;
-};
+}
 
 export interface ILimitingItemProps {
     title?: string;
@@ -129,7 +126,7 @@ export interface ILimitingItemProps {
     onDelete: () => void;
 }
 
-export const LimitingItem: React.FC<ILimitingItemProps> = (props) => {
+export function LimitingItem(props: ILimitingItemProps) {
     return (
         <div className="attribute-filter__limit__item">
             <LimitingItemTitle {...props} />
@@ -140,4 +137,4 @@ export const LimitingItem: React.FC<ILimitingItemProps> = (props) => {
             />
         </div>
     );
-};
+}

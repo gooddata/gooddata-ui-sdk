@@ -1,12 +1,11 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const BoldHyperlink: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function BoldHyperlink({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={className}
@@ -26,4 +25,4 @@ export const BoldHyperlink: React.FC<IIconProps> = ({ color, className, width, h
             />
         </svg>
     );
-};
+}

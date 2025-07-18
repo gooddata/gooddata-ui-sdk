@@ -1,9 +1,9 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ReactNode } from "react";
 
 /**
  * @internal
  */
-export const Header: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
-    <div className="gd-widget-header">{children}</div>
-);
+export function Header({ children }: { children?: ReactNode }) {
+    return <div className="gd-widget-header">{children}</div>;
+}

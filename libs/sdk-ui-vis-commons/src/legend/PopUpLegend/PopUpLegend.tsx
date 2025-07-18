@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState } from "react";
+import { ReactElement, useState, useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { StaticLegend } from "../StaticLegend.js";
@@ -22,14 +22,14 @@ export interface IPopUpLegendProps {
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     containerId: string;
 
-    customComponent?: JSX.Element | null;
+    customComponent?: ReactElement | null;
     customComponentName?: string;
 }
 
 /**
  * @internal
  */
-export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
+export function PopUpLegend(props: IPopUpLegendProps) {
     const {
         name,
         maxRows,
@@ -51,7 +51,7 @@ export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
     const dialogId = `${id}-dialog`;
     const triggerId = `${id}-trigger`;
 
-    const onCloseDialog = React.useCallback(() => {
+    const onCloseDialog = useCallback(() => {
         setDialogOpen(false);
         setPage(1);
         document.getElementById(triggerId)?.focus();
@@ -97,4 +97,4 @@ export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
             </LegendDialog>
         </div>
     );
-};
+}

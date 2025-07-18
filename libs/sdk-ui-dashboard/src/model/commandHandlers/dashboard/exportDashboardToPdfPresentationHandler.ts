@@ -41,9 +41,8 @@ export function* exportDashboardToPdfPresentationHandler(
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to EXCEL must have an ObjRef.");
     }
 
-    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
-        selectFilterContextFilters,
-    );
+    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> =
+        yield select(selectFilterContextFilters);
 
     const effectiveFilters = ensureAllTimeFilterForExport(cmd.payload?.filters ?? filterContextFilters);
 

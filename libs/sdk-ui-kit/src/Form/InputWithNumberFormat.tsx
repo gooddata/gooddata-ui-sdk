@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { ChangeEvent, FocusEvent, PureComponent } from "react";
 import memoize from "lodash/memoize.js";
 import { InputPure, InputPureProps } from "./InputPure.js";
 
@@ -105,7 +105,7 @@ export type InputWithNumberFormatProps = InputWithNumberFormatOwnProps & InputPu
  * @internal
  */
 
-export class InputWithNumberFormat extends React.PureComponent<
+export class InputWithNumberFormat extends PureComponent<
     InputWithNumberFormatProps,
     InputWithNumberFormatState
 > {
@@ -134,7 +134,7 @@ export class InputWithNumberFormat extends React.PureComponent<
         }
     }
 
-    onChange = (value: number, e: React.ChangeEvent<HTMLInputElement>): void => {
+    onChange = (value: number, e: ChangeEvent<HTMLInputElement>): void => {
         const { separators, onChange } = this.props;
 
         if (this.state.value === value) {
@@ -150,12 +150,12 @@ export class InputWithNumberFormat extends React.PureComponent<
         onChange(parse(value, separators));
     };
 
-    onFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
+    onFocus = (e: FocusEvent<HTMLInputElement>): void => {
         this.setState({ isFocused: true });
         this.props.onFocus(e);
     };
 
-    onBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
+    onBlur = (e: FocusEvent<HTMLInputElement>): void => {
         const { separators, onBlur } = this.props;
         const { value } = this.state;
 
@@ -166,7 +166,7 @@ export class InputWithNumberFormat extends React.PureComponent<
         onBlur(e);
     };
 
-    handleCaretShift(e: React.ChangeEvent<HTMLInputElement>): void {
+    handleCaretShift(e: ChangeEvent<HTMLInputElement>): void {
         const caretPosition = e.target.selectionStart - 1;
 
         this.setState({}, () => {

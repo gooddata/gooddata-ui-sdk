@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import { ComponentType } from "react";
 import { List } from "@gooddata/sdk-ui-kit";
 import { useListScroll, useListSelector } from "../hooks/index.js";
 import { ListItem, ListItemProps } from "../types.js";
@@ -28,7 +28,7 @@ export type SearchListProps<T> = {
     /**
      * Component to render the item.
      */
-    ItemComponent: React.ComponentType<ListItemProps<T>>;
+    ItemComponent: ComponentType<ListItemProps<T>>;
 };
 
 /**

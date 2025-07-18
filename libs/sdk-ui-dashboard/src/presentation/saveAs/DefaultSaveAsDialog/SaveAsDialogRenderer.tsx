@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact.js";
@@ -29,7 +29,7 @@ export interface ISaveAsDialogRendererOwnProps {
 /**
  * @internal
  */
-export class SaveAsNewDashboardDialog extends React.PureComponent<
+export class SaveAsNewDashboardDialog extends PureComponent<
     ISaveAsDialogRendererOwnProps & WrappedComponentProps,
     ISaveAsNewDashboardDialogState
 > {
@@ -143,8 +143,10 @@ export class SaveAsNewDashboardDialog extends React.PureComponent<
 
 export const SaveAsDialogRendererIntl = injectIntl(SaveAsNewDashboardDialog);
 
-export const SaveAsDialogRenderer: React.FC<ISaveAsDialogRendererOwnProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <SaveAsDialogRendererIntl {...props} />
-    </IntlWrapper>
-);
+export function SaveAsDialogRenderer(props: ISaveAsDialogRendererOwnProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <SaveAsDialogRendererIntl {...props} />
+        </IntlWrapper>
+    );
+}

@@ -98,7 +98,7 @@ export function getItems(
                 }),
                 item,
                 apply: (view, completion, from, to) => {
-                    const type = "attribute" as typeof SupportedReferenceTypes[number];
+                    const type = "attribute" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.attribute.id}}`;
                     onCompletionSelected?.(completion as CompletionItem);
                     view.dispatch({
@@ -121,7 +121,7 @@ export function getItems(
                 }),
                 item,
                 apply: (view, completion, from, to) => {
-                    const type = "fact" as typeof SupportedReferenceTypes[number];
+                    const type = "fact" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.fact.id}}`;
                     onCompletionSelected?.(completion as CompletionItem);
                     view.dispatch({
@@ -143,7 +143,7 @@ export function getItems(
                 }),
                 item,
                 apply: (view, completion, from, to) => {
-                    const type = "metric" as typeof SupportedReferenceTypes[number];
+                    const type = "metric" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.measure.id}}`;
                     onCompletionSelected?.(completion as CompletionItem);
                     view.dispatch({
@@ -166,7 +166,7 @@ export function getItems(
                 }),
                 item: attr,
                 apply: (view, completion, from, to) => {
-                    const type = "attribute" as typeof SupportedReferenceTypes[number];
+                    const type = "attribute" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${attr.attribute.id}}`;
                     onCompletionSelected?.(completion as CompletionItem);
                     view.dispatch({
@@ -188,7 +188,7 @@ export function getItems(
                 }),
                 item,
                 apply: (view, completion, from, to) => {
-                    const type = "date" as typeof SupportedReferenceTypes[number];
+                    const type = "date" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.dataSet.id}}`;
                     onCompletionSelected?.(completion as CompletionItem);
                     view.dispatch({
@@ -251,7 +251,7 @@ export function getCatalogItemTitle(item: CatalogItem | ICatalogDateAttribute) {
 // Utility: Get a catalog item type
 export function getCatalogItemType(
     item: CatalogItem | ICatalogDateAttribute,
-): typeof SupportedReferenceTypes[number] | null {
+): (typeof SupportedReferenceTypes)[number] | null {
     if (isCatalogFact(item)) {
         return "fact";
     }

@@ -331,8 +331,8 @@ export function* moveSectionItemHandler(
         targetSectionIndex === undefined
             ? getSectionIndex(targetIndex)
             : shouldRemoveSection && sectionIndex < targetSectionIndex
-            ? sectionIndex - 1
-            : targetSectionIndex;
+              ? sectionIndex - 1
+              : targetSectionIndex;
 
     return layoutSectionItemMoved(
         ctx,

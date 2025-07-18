@@ -1,13 +1,10 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { ReactNode, createRef, RefObject } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { PureComponent, ReactNode, createRef, RefObject } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import { IFilterLabelProps, IFilterLabelState } from "./typings.js";
 
-class WrappedFilterLabel extends React.PureComponent<
-    IFilterLabelProps & WrappedComponentProps,
-    IFilterLabelState
-> {
+class WrappedFilterLabel extends PureComponent<IFilterLabelProps & WrappedComponentProps, IFilterLabelState> {
     static defaultProps: Pick<IFilterLabelProps, "isAllSelected" | "isDate" | "selection" | "noData"> = {
         isAllSelected: false,
         isDate: false,

@@ -1,5 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
 import { IAlignPoint } from "../typings/positioning.js";
 import { ArrowOffset, Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
@@ -18,8 +17,12 @@ export interface ITooltipIconProps {
 /**
  * @internal
  */
-export const TooltipIcon: React.FC<ITooltipIconProps> = (props) => {
-    const { text, iconClass, arrowOffsets = ARROW_OFFSETS, alignPoints = ALIGN_POINTS } = props;
+export function TooltipIcon({
+    text,
+    iconClass,
+    arrowOffsets = ARROW_OFFSETS,
+    alignPoints = ALIGN_POINTS,
+}: ITooltipIconProps) {
     return (
         <span>
             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
@@ -30,4 +33,4 @@ export const TooltipIcon: React.FC<ITooltipIconProps> = (props) => {
             </BubbleHoverTrigger>
         </span>
     );
-};
+}

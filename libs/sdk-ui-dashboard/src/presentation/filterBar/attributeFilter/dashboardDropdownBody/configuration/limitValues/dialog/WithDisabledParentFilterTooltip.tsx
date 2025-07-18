@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 const ALIGN_POINTS = [{ align: "bc tl" }, { align: "tc bl" }];
 
@@ -11,16 +11,16 @@ const ARROW_OFFSET = {
 };
 
 interface IWithDisabledFilterTooltipProps {
-    children: React.ReactNode;
+    children: ReactNode;
     isDisabled: boolean;
     formattedMessage: ReactNode;
 }
 
-export const WithDisabledParentFilterTooltip: React.FC<IWithDisabledFilterTooltipProps> = ({
+export function WithDisabledParentFilterTooltip({
     children,
     isDisabled,
     formattedMessage,
-}) => {
+}: IWithDisabledFilterTooltipProps) {
     if (!isDisabled) {
         return <>{children}</>;
     }
@@ -36,4 +36,4 @@ export const WithDisabledParentFilterTooltip: React.FC<IWithDisabledFilterToolti
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

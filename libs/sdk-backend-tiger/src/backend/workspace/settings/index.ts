@@ -33,7 +33,10 @@ export class TigerWorkspaceSettings
     extends TigerSettingsService<IWorkspaceSettings>
     implements IWorkspaceSettingsService
 {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+    ) {
         super();
     }
 
@@ -276,11 +279,11 @@ export function getSettingsForCurrentUser(
         };
 
         const staticFeaturesEarlyAccess = isStaticFeatures(profile.features)
-            ? profile.features?.static?.context?.earlyAccessValues ?? []
+            ? (profile.features?.static?.context?.earlyAccessValues ?? [])
             : [];
 
         const liveFeaturesEarlyAccess = isLiveFeatures(profile.features)
-            ? profile.features?.live?.context?.earlyAccessValues ?? []
+            ? (profile.features?.live?.context?.earlyAccessValues ?? [])
             : [];
 
         const tier = getOrganizationTier(profile.entitlements);

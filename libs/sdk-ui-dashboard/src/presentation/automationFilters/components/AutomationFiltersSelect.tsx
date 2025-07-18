@@ -28,7 +28,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import noop from "lodash/noop.js";
-import React, { RefObject, useState } from "react";
+import { KeyboardEvent, RefObject, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { gdColorStateBlank } from "../../constants/colors.js";
 import { AttributesDropdown } from "../../filterBar/index.js";
@@ -69,7 +69,7 @@ export interface IAutomationFiltersSelectProps {
     overlayPositionType?: OverlayPositionType;
 }
 
-export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = ({
+export function AutomationFiltersSelect({
     availableFilters = [],
     selectedFilters = [],
     onFiltersChange,
@@ -78,7 +78,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
     onStoreFiltersChange,
     areFiltersMissing,
     overlayPositionType,
-}) => {
+}: IAutomationFiltersSelectProps) {
     const {
         commonDateFilterId,
         lockedFilters,
@@ -103,7 +103,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
     const [isExpanded, setIsExpanded] = useState(false);
     const isExpandable = filters.length > COLLAPSED_FILTERS_COUNT;
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
         if (isActionKey(e)) {
             e.preventDefault();
             handleStoreFiltersChange(!storeFilters);
@@ -276,7 +276,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
             </div>
         </div>
     );
-};
+}
 
 interface IAutomationFilterProps {
     filter: FilterContextItem;
@@ -288,7 +288,7 @@ interface IAutomationFilterProps {
     lockedFilters: FilterContextItem[];
 }
 
-const AutomationFilter: React.FC<IAutomationFilterProps> = ({
+function AutomationFilter({
     filter,
     attributeConfigs,
     onChange,
@@ -296,7 +296,7 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
     isCommonDateFilter,
     overlayPositionType,
     lockedFilters,
-}) => {
+}: IAutomationFilterProps) {
     if (isDashboardAttributeFilter(filter)) {
         const config = attributeConfigs.find(
             (attribute) => attribute.localIdentifier === filter.attributeFilter.localIdentifier,
@@ -334,7 +334,7 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
             />
         );
     }
-};
+}
 
 /**
  * Get custom dashboard filter title for relevant catalog item,

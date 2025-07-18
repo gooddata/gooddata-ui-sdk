@@ -1,7 +1,7 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { useIntl } from "react-intl";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
 import { IGrantedUserGroup } from "../types.js";
@@ -19,14 +19,14 @@ export interface IAddUserGroupProps {
     onClose: () => void;
 }
 
-export const AddUserGroup: React.FC<IAddUserGroupProps> = ({
+export function AddUserGroup({
     userIds,
     grantedUserGroups,
     enableBackButton = true,
     onSubmit,
     onCancel,
     onClose,
-}) => {
+}: IAddUserGroupProps) {
     const intl = useIntl();
     const { addedUserGroups, isProcessing, onAdd, onSelect, onDelete } = useAddUserGroup(
         userIds,
@@ -61,4 +61,4 @@ export const AddUserGroup: React.FC<IAddUserGroupProps> = ({
             />
         </ConfirmDialogBase>
     );
-};
+}

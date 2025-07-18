@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import { idRef } from "@gooddata/sdk-model";
 import {
@@ -13,7 +12,7 @@ import {
 import { Insights } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 const style = { height: 300 };
 
-const InsightViewTransposeCore: React.FC<IPivotTableTransposeCoreProps> = (props) => {
+function InsightViewTransposeCore(props: IPivotTableTransposeCoreProps) {
     const { config } = props;
     const insight = idRef(Insights.TableWithMC);
 
@@ -22,7 +21,7 @@ const InsightViewTransposeCore: React.FC<IPivotTableTransposeCoreProps> = (props
             <InsightView insight={insight} config={config} />
         </div>
     );
-};
+}
 
 export const InsightTranspose_MetricRow_ColHeaderLeft = () => {
     return <InsightViewTransposeCore config={transposeConfigWithRowLeft} />;

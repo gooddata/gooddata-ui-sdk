@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import PrimarySectionContent from "./PrimarySectionContent.js";
 import PrimarySectionCompactContent from "./PrimarySectionCompactContent.js";
@@ -11,7 +10,7 @@ interface IPrimarySectionProps {
     isOnlyPrimaryItem: boolean;
 }
 
-const PrimarySection: React.FC<IPrimarySectionProps> = ({ primaryItem, isOnlyPrimaryItem }) => {
+export default function PrimarySection({ primaryItem, isOnlyPrimaryItem }: IPrimarySectionProps) {
     const { config } = useBaseHeadline();
 
     return (
@@ -26,6 +25,4 @@ const PrimarySection: React.FC<IPrimarySectionProps> = ({ primaryItem, isOnlyPri
             )}
         </div>
     );
-};
-
-export default PrimarySection;
+}

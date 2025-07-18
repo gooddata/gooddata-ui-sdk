@@ -1,15 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterElementsSearchBar } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
-const AttributeFilterElementsSearchBarExamples = (): JSX.Element => {
+function AttributeFilterElementsSearchBarExamples() {
     return (
         <div style={{ width: 300 }}>
             <IntlWrapper>
@@ -25,7 +24,7 @@ const AttributeFilterElementsSearchBarExamples = (): JSX.Element => {
             </IntlWrapper>
         </div>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterElementsSearchBar",

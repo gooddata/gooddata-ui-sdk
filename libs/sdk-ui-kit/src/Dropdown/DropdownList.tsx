@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useState, useEffect } from "react";
+import { Fragment, useCallback, useState, useEffect, ReactElement, ReactNode } from "react";
 import cx from "classnames";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { Input } from "../Form/index.js";
 import { DropdownTabs } from "./DropdownTabs.js";
 import { IListProps, List } from "../List/index.js";
@@ -51,8 +51,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     mobileItemHeight?: number;
     isMobile?: boolean;
 
-    renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
-    footer?: React.ReactNode | ((closeDropdown: () => void) => React.ReactNode);
+    renderNoData?: (props: IDropdownListNoDataRenderProps) => ReactNode;
+    footer?: ReactNode | ((closeDropdown: () => void) => ReactNode);
     closeDropdown?: () => void;
 
     scrollToItem?: T;
@@ -74,15 +74,17 @@ export const DEFAULT_ITEM_HEIGHT = 28;
  */
 export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
 
-const defaultNoData = injectIntl(
-    ({ hasNoMatchingData, intl }: { hasNoMatchingData: boolean } & WrappedComponentProps) => (
+function DefaultNoData({ hasNoMatchingData }: IDropdownListNoDataRenderProps) {
+    const intl = useIntl();
+
+    return (
         <NoData
             hasNoMatchingData={hasNoMatchingData}
             notFoundLabel={intl.formatMessage({ id: "gs.noData.noMatchingData" })}
             noDataLabel={intl.formatMessage({ id: "gs.noData.noDataAvailable" })}
         />
-    ),
-);
+    );
+}
 
 /**
  * @internal
@@ -97,7 +99,7 @@ const defaultNoData = injectIntl(
  *
  * 2. `UiPagedVirtualised` — Preferred implementation that uses our `UiPagedVirtualList` component
  */
-export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
+export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement {
     const {
         title,
         className = "",
@@ -131,7 +133,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
         selectedTabId,
         onTabSelect,
 
-        renderNoData = defaultNoData,
+        renderNoData = DefaultNoData,
         footer,
         closeDropdown,
 
@@ -183,7 +185,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
     }, [searchString]);
 
     return (
-        <React.Fragment>
+        <Fragment>
             {title ? <div className="gd-list-title">{title}</div> : null}
             {showSearch ? (
                 <Input
@@ -267,6 +269,6 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                 </AutoSize>
             ) : null}
             {renderFooter()}
-        </React.Fragment>
+        </Fragment>
     );
 }

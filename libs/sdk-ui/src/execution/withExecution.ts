@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+import { ComponentType, ComponentClass } from "react";
 import { IPreparedExecution, isNoDataError } from "@gooddata/sdk-backend-spi";
 import {
     withExecutionLoading,
@@ -83,11 +84,11 @@ export interface IWithExecution<T> {
  */
 export function withExecution<T>(
     params: IWithExecution<T>,
-): (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => React.ComponentClass<T, any> {
+): (WrappedComponent: ComponentType<T & WithLoadingResult>) => ComponentClass<T, any> {
     const { execution, events, loadOnMount, shouldRefetch, window, exportTitle, enableExecutionCancelling } =
         params;
 
-    return (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => {
+    return (WrappedComponent: ComponentType<T & WithLoadingResult>) => {
         const withLoadingParams = {
             enableExecutionCancelling,
             promiseFactory: async (props: T, window?: DataViewWindow, signal?: AbortSignal) => {
