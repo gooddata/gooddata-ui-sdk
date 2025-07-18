@@ -1,15 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
-import * as fs from "fs";
-import * as path from "path";
-import { format } from "prettier";
-import {
-    OptionalKind,
-    Project,
-    SourceFile,
-    VariableDeclarationKind,
-    VariableStatementStructure,
-} from "ts-morph";
+import { writeFileSync } from "fs";
+import { join } from "path";
 import { IRecording, RecordingType } from "../recordings/common.js";
 import { DisplayFormRecording } from "../recordings/displayForms.js";
 import { ExecutionRecording } from "../recordings/execution.js";
@@ -17,7 +9,7 @@ import { InsightRecording } from "../recordings/insights.js";
 import { CatalogRecording } from "../recordings/catalog.js";
 import { VisClassesRecording } from "../recordings/visClasses.js";
 import { generateConstantsForDisplayForms } from "./displayForm.js";
-import { generateConstantsForDataSamples } from "./dataSample.js";
+import { generateDataSampleConst, generateImportsForDataSamples } from "./dataSample.js";
 import { generateConstantsForExecutions } from "./execution.js";
 import { generateConstantsForInsights } from "./insight.js";
 import { generateConstantsForCatalog } from "./catalog.js";
@@ -26,46 +18,15 @@ import groupBy from "lodash/groupBy.js";
 import { generateConstantsForDashboards } from "./dashboard.js";
 import { DashboardRecording } from "../recordings/dashboards.js";
 
-const FILE_DIRECTIVES = [
-    "/* eslint-disable @typescript-eslint/no-var-requires */",
-    "/* eslint-disable header/header */",
-];
 const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 
 const MainIndexConstName = "Recordings";
-
-//
-//
-//
-
-type TypescriptOutput = {
-    project: Project;
-    sourceFile: SourceFile;
-};
-
-function initialize(targetDir: string, fileName: string): TypescriptOutput {
-    const outputFile = path.join(targetDir, fileName);
-    const project = new Project({});
-
-    const sourceFile = project.createSourceFile(
-        outputFile,
-        {
-            leadingTrivia: [...FILE_DIRECTIVES, FILE_HEADER],
-        },
-        { overwrite: true },
-    );
-
-    return {
-        project,
-        sourceFile,
-    };
-}
 
 function recNameList(recs: IRecording[]): string {
     return recs.map((r) => r.getRecordingName()).join(",");
 }
 
-function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableStatementStructure> {
+function generateIndexConst(input: IndexGeneratorInput): string {
     const executionsInit = `executions: {${input
         .executions()
         .map((e) => e.getRecordingName())
@@ -82,39 +43,113 @@ function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableSt
         }
     `;
 
-    return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: true,
-        declarations: [
-            {
-                name: MainIndexConstName,
-                initializer: `{ ${executionsInit}, ${metadataInit} }`,
-            },
-        ],
-    };
+    return `export const ${MainIndexConstName}: RecordingIndex = { ${executionsInit}, ${metadataInit} } as unknown as RecordingIndex;`;
 }
 
-function transformToTypescript(
-    input: IndexGeneratorInput,
-    targetDir: string,
-    fileName: string,
-): TypescriptOutput {
-    const output = initialize(targetDir, fileName);
-    const sourceFile = output.sourceFile;
+async function transformToTypescript(input: IndexGeneratorInput, targetDir: string, fileName: string) {
+    const fileContents = [`// (C) ${new Date().getFullYear()} GoodData Corporation`, "", FILE_HEADER, ""];
 
     if (fileName === "dataSample.ts") {
-        sourceFile.addVariableStatements(generateConstantsForDataSamples(input.displayForms(), targetDir));
+        const displayForms = input.displayForms();
+        generateImportsForDataSamples(displayForms, targetDir).forEach((l) => fileContents.push(l));
+        fileContents.push("");
+        fileContents.push(generateDataSampleConst(displayForms));
     } else {
-        sourceFile.addVariableStatements(generateConstantsForExecutions(input.executions(), targetDir));
-        sourceFile.addVariableStatements(generateConstantsForDisplayForms(input.displayForms(), targetDir));
-        sourceFile.addVariableStatements(generateConstantsForInsights(input.insights(), targetDir));
-        sourceFile.addVariableStatements(generateConstantsForCatalog(input.catalog(), targetDir));
-        sourceFile.addVariableStatements(generateConstantsForVisClasses(input.visClasses(), targetDir));
-        sourceFile.addVariableStatements(generateConstantsForDashboards(input.dashboards(), targetDir));
-        sourceFile.addVariableStatement(generateIndexConst(input));
+        generateConstantsForExecutions(input.executions(), targetDir).forEach((l) => fileContents.push(l));
+        fileContents.push("");
+        generateConstantsForDisplayForms(input.displayForms(), targetDir).forEach((l) =>
+            fileContents.push(l),
+        );
+        fileContents.push("");
+        generateConstantsForInsights(input.insights(), targetDir).forEach((l) => fileContents.push(l));
+        fileContents.push("");
+
+        const catalog = input.catalog();
+        if (catalog) {
+            generateConstantsForCatalog(catalog, targetDir).forEach((l) => fileContents.push(l));
+            fileContents.push("");
+        }
+
+        const visClasses = input.visClasses();
+        if (visClasses) {
+            generateConstantsForVisClasses(visClasses, targetDir).forEach((l) => fileContents.push(l));
+            fileContents.push("");
+        }
+
+        generateConstantsForDashboards(input.dashboards(), targetDir).forEach((l) => fileContents.push(l));
+        fileContents.push("");
+
+        fileContents.push(`import {
+    IExecutionDefinition,
+    CatalogItem,
+    ICatalogGroup,
+    IVisualizationClass,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeElement,
+    IInsight,
+    IDashboard,
+    IDashboardPlugin,
+    IDataSetMetadataObject,
+} from "@gooddata/sdk-model";
+
+type ExecutionRecording = {
+    scenarios?: any[];
+    definition: IExecutionDefinition;
+    executionResult: any;
+    [dataViews: string]: any;
+};
+
+type CatalogRecording = {
+    items: CatalogItem[];
+    groups: ICatalogGroup[];
+};
+
+type DisplayFormRecording = {
+    obj: IAttributeDisplayFormMetadataObject;
+    elements: IAttributeElement[];
+};
+
+type InsightRecording = {
+    obj: IInsight;
+};
+
+type VisClassesRecording = {
+    items: IVisualizationClass[];
+};
+
+interface IDashboardReferences {
+    insights: IInsight[];
+    plugins: IDashboardPlugin[];
+    dataSets?: IDataSetMetadataObject[];
+}
+
+interface IDashboardWithReferences {
+    dashboard: IDashboard;
+    references: IDashboardReferences;
+}
+
+type DashboardRecording = {
+    obj: IDashboardWithReferences;
+};
+
+type RecordingIndex = {
+    executions?: {
+        [fp: string]: ExecutionRecording;
+    };
+    metadata?: {
+        catalog?: CatalogRecording;
+        displayForms?: Record<string, DisplayFormRecording>;
+        insights?: Record<string, InsightRecording>;
+        visClasses?: VisClassesRecording;
+        dashboards?: Record<string, DashboardRecording>;
+    };
+};`);
+
+        fileContents.push("");
+        fileContents.push(generateIndexConst(input));
     }
 
-    return output;
+    writeFileSync(join(targetDir, fileName), fileContents.join("\n"), { encoding: "utf-8" });
 }
 
 /**
@@ -156,34 +191,11 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
     };
 }
 
-async function generateRecordingIndex(recordings: IRecording[], targetDir: string): Promise<void> {
-    const input = createGeneratorInput(recordings);
-    const output = transformToTypescript(input, targetDir, "index.ts");
-    const sourceFile = output.sourceFile;
-    const generatedTypescript = sourceFile.getFullText();
-    const formattedTypescript = await format(generatedTypescript, { parser: "typescript", printWidth: 120 });
-
-    fs.writeFileSync(sourceFile.getFilePath(), formattedTypescript, { encoding: "utf-8" });
-}
-
-async function generateDataSample(recordings: IRecording[], targetDir: string): Promise<void> {
-    const input = createGeneratorInput(recordings);
-    const output = transformToTypescript(input, targetDir, "dataSample.ts");
-    const sourceFile = output.sourceFile;
-    const generatedTypescriptForDataSample = sourceFile.getFullText();
-    const formattedTypescriptForDataSample = await format(generatedTypescriptForDataSample, {
-        parser: "typescript",
-        printWidth: 120,
-    });
-
-    fs.writeFileSync(sourceFile.getFilePath(), formattedTypescriptForDataSample, { encoding: "utf-8" });
-}
-
 /**
- * Given various types of recordings, this function will generate and write `dataSample.ts and index.ts` file in the root of
+ * Given various types of recordings, this function will generate and write `dataSample.ts` and `index.ts` file in the root of
  * the recordings directory.
  *
- * The index will use require() to reference the JSON files. It is assumed that all paths on input to this function
+ * The index will use import to reference the JSON files. It is assumed that all paths on input to this function
  * are absolute, the code will relativize paths as needed.
  *
  * @param recordings - recordings to include in the index
@@ -191,6 +203,8 @@ async function generateDataSample(recordings: IRecording[], targetDir: string): 
  */
 
 export async function generateAllFiles(recordings: IRecording[], targetDir: string): Promise<void> {
-    await generateRecordingIndex(recordings, targetDir);
-    await generateDataSample(recordings, targetDir);
+    const input = createGeneratorInput(recordings);
+
+    await transformToTypescript(input, targetDir, "index.ts");
+    await transformToTypescript(input, targetDir, "dataSample.ts");
 }

@@ -6380,9 +6380,6 @@ importers:
       rimraf:
         specifier: ^3.0.0
         version: 3.0.2
-      ts-morph:
-        specifier: ^26.0.0
-        version: 26.0.0
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -21377,7 +21374,7 @@ packages:
       dom-accessibility-api: 0.6.3
       lodash-es: 4.17.21
       redent: 4.0.0
-      vitest: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+      vitest: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
     dev: true
 
   /vitest@3.2.4(@types/node@22.16.4)(happy-dom@18.0.1):
