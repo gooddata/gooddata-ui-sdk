@@ -1,23 +1,21 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import noop from "lodash/noop.js";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 import { DefaultUiTreeViewItemComponent } from "./defaults/DefaultUiTreeViewItemComponent.js";
-import { b, e } from "./treeviewBem.js";
+import { b } from "./treeviewBem.js";
 import {
     IUiLeveledTreeViewProps,
     IUiStaticTreeViewProps,
     IUiTreeviewContext,
-    IUiTreeviewItemProps,
     LevelTypesUnion,
     UiRefsTree,
     UiStateTreeItem,
     UiStaticTreeView,
-    UiTreeviewAriaAttributes,
 } from "./types.js";
 import {
     findPath,
@@ -27,8 +25,9 @@ import {
     getNextPathIndex,
     getPrevPathIndex,
     itemsState,
-    makeItemId,
 } from "./utils.js";
+import { UiTreeviewRoot } from "./UiTreeviewRoot.js";
+import { UITreeviewItem } from "./UITreeviewItem.js";
 
 /**
  * An accessible treeview component with static data that can be navigated by keyboard.
@@ -80,12 +79,12 @@ function UiTreeview<Levels extends unknown[], Level>({
 
     ariaAttributes,
 }: IUiStaticTreeViewProps<Level>): React.ReactNode {
-    const itemsRef = React.useRef<UiRefsTree[]>([]);
-    const getState = itemsState(React.useState<Record<string, UiStateTreeItem>>({}), {
+    const itemsRef = useRef<UiRefsTree[]>([]);
+    const getState = itemsState(useState<Record<string, UiStateTreeItem>>({}), {
         expanded: expandedMode === "default-expanded",
     });
 
-    const isItemFocusable = React.useCallback(
+    const isItemFocusable = useCallback(
         (item?: UiStaticTreeView<Level> | UiStaticTreeView<LevelTypesUnion<Levels>>) => {
             if (!item) {
                 return false;
@@ -95,14 +94,14 @@ function UiTreeview<Levels extends unknown[], Level>({
         [isDisabledFocusable],
     );
 
-    const [focusedPath, setFocusedPath] = React.useState<number[]>(() =>
+    const [focusedPath, setFocusedPath] = useState<number[]>(() =>
         findPath(items, selectedItemId, isItemFocusable),
     );
 
     const focusedItem = getItemOnFocusedPath(items, focusedPath);
     // Scroll focused item into view
     const focusedItemNode = getRefOnFocusedPath(itemsRef.current, focusedPath);
-    React.useEffect(() => {
+    useEffect(() => {
         focusedItemNode?.item.scrollIntoView({ block: "nearest" });
     }, [focusedItemNode]);
 
@@ -166,7 +165,7 @@ function UiTreeview<Levels extends unknown[], Level>({
         setFocusedPath,
     });
 
-    const handleKeyDown = React.useMemo(
+    const handleKeyDown = useMemo(
         () =>
             makeMenuKeyboardNavigation(
                 {
@@ -251,13 +250,13 @@ function UiTreeview<Levels extends unknown[], Level>({
 
     return (
         <div className={b()} style={{ width, maxWidth, maxHeight }} data-testid={dataTestId}>
-            <TreeRootComponent
+            <UiTreeviewRoot
                 handleKeyDown={handleKeyDown}
                 ariaAttributes={ariaAttributes}
                 focusedItem={focusedItem}
             >
                 {items.map((item, index) => (
-                    <TreeItemComponent
+                    <UITreeviewItem
                         ItemComponent={ItemComponent}
                         onSelectHandle={onSelectHandle}
                         getState={getState}
@@ -270,138 +269,7 @@ function UiTreeview<Levels extends unknown[], Level>({
                         path={[index]}
                     />
                 ))}
-            </TreeRootComponent>
+            </UiTreeviewRoot>
         </div>
     );
 }
-
-// Root component renders the treeview.
-
-interface TreeRootComponentProps {
-    children?: React.ReactNode;
-    focusedItem?: UiStaticTreeView<unknown>;
-    handleKeyDown: (event: React.KeyboardEvent) => void;
-    ariaAttributes: UiTreeviewAriaAttributes;
-}
-const TreeRootComponent = (props: TreeRootComponentProps) => {
-    const { handleKeyDown, children, ariaAttributes, focusedItem } = props;
-    return (
-        <div
-            className={e("root")}
-            tabIndex={0}
-            onKeyDown={handleKeyDown}
-            role="tree"
-            aria-activedescendant={makeItemId(ariaAttributes.id, focusedItem)}
-            {...ariaAttributes}
-        >
-            {children}
-        </div>
-    );
-};
-
-// TreeItem component renders the treeview item.
-
-interface TreeItemComponentProps<Levels extends [], Level> {
-    path: number[];
-    item: UiStaticTreeView<Level | LevelTypesUnion<Levels>>;
-    getState: ReturnType<typeof itemsState>;
-    focusedItem?: UiStaticTreeView<Level>;
-    selectedItemId?: string;
-    itemDataTestId?: string;
-    isCompact?: boolean;
-    onSelectHandle: (
-        e: React.MouseEvent | React.KeyboardEvent,
-        path: number[],
-        item: UiStaticTreeView<Level | LevelTypesUnion<Levels>>,
-    ) => void;
-    ItemComponent: React.ComponentType<IUiTreeviewItemProps<Level | LevelTypesUnion<Levels>>>;
-}
-const TreeItemComponent = <Levels extends [], Level>(props: TreeItemComponentProps<Levels, Level>) => {
-    const {
-        getState,
-        focusedItem,
-        selectedItemId,
-        itemDataTestId,
-        onSelectHandle,
-        ItemComponent,
-        isCompact,
-    } = props;
-
-    const [state, setState] = getState(props.path);
-    const { item, children } = props.item;
-
-    const level = props.path.length;
-
-    const isFocused = item === focusedItem.item;
-    const isSelected = item.id === selectedItemId;
-    const isExpanded = state.expanded;
-
-    const onToggleHandle = useCallback(
-        (e: React.MouseEvent | React.KeyboardEvent, expanded: boolean) => {
-            setState({
-                ...state,
-                expanded,
-            });
-            e.stopPropagation();
-            e.preventDefault();
-        },
-        [setState, state],
-    );
-    const onInnerSelectHandle = useCallback(
-        (e: React.MouseEvent | React.KeyboardEvent) => {
-            onSelectHandle(e, props.path, props.item);
-        },
-        [props.item, props.path, onSelectHandle],
-    );
-
-    return (
-        <div className={e("treeitem")}>
-            <div
-                className={e("treeitem__container")}
-                data-testid={itemDataTestId}
-                role="treeitem"
-                aria-level={level}
-                aria-expanded={isExpanded ? "true" : "false"}
-                aria-selected={isSelected ? "true" : "false"}
-                aria-disabled={item.isDisabled ? "true" : "false"}
-            >
-                <ItemComponent
-                    item={item}
-                    type={children?.length ? "group" : "leaf"}
-                    isCompact={isCompact}
-                    isFocused={isFocused}
-                    isSelected={isSelected}
-                    isExpanded={isExpanded}
-                    level={level}
-                    onSelect={onInnerSelectHandle}
-                    onToggle={onToggleHandle}
-                    classNames={e("item", {
-                        isFocused,
-                        isSelected,
-                        isCompact,
-                        isExpanded,
-                        isDisabled: !!item.isDisabled,
-                    }).split(" ")}
-                />
-            </div>
-            {children?.length && isExpanded ? (
-                <div role="group" className={e("treeitem__children")}>
-                    {children.map((child, i) => (
-                        <TreeItemComponent
-                            ItemComponent={ItemComponent}
-                            onSelectHandle={onSelectHandle}
-                            getState={getState}
-                            focusedItem={focusedItem}
-                            selectedItemId={selectedItemId}
-                            itemDataTestId={itemDataTestId}
-                            isCompact={isCompact}
-                            item={child}
-                            key={i}
-                            path={[...props.path, i]}
-                        />
-                    ))}
-                </div>
-            ) : null}
-        </div>
-    );
-};
