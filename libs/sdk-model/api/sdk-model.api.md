@@ -581,7 +581,7 @@ export type GenAINegativeAttributeFilter = {
     exclude: Array<string | null>;
 };
 
-// @internal
+// @public
 export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
 
 // @internal
@@ -3397,7 +3397,7 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
-// @internal
+// @public
 export interface ISemanticSearchRelationship {
     sourceObjectId: string;
     sourceObjectTitle: string;
@@ -3409,7 +3409,7 @@ export interface ISemanticSearchRelationship {
     targetWorkspaceId: string;
 }
 
-// @internal
+// @public
 export interface ISemanticSearchResultItem {
     createdAt?: string;
     description?: string;
@@ -3868,6 +3868,12 @@ export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidget
 
 // @public
 export function isScheduleNotification(notification: unknown): notification is IScheduleNotification;
+
+// @public
+export function isSemanticSearchRelationship(item: any): item is ISemanticSearchRelationship;
+
+// @public
+export function isSemanticSearchResultItem(item: any): item is ISemanticSearchResultItem;
 
 // @public
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;

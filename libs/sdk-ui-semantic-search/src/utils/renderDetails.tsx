@@ -1,9 +1,15 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { ISemanticSearchResultItem, ITheme } from "@gooddata/sdk-model";
+import {
+    ISemanticSearchRelationship,
+    ISemanticSearchResultItem,
+    isSemanticSearchResultItem,
+    ITheme,
+} from "@gooddata/sdk-model";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, EllipsisText, Icon, Typography } from "@gooddata/sdk-ui-kit";
+import classnames from "classnames";
 import { ListItem } from "../types.js";
 
 /**
@@ -60,27 +66,65 @@ const renderScore = (item: ISemanticSearchResultItem) => {
 /**
  * Render the details of the item in a bubble.
  */
-export const renderDetails = (listItem: ListItem<ISemanticSearchResultItem>, theme?: ITheme) => {
-    return (
-        <span className="gd-semantic-search__results-item__details">
-            <BubbleHoverTrigger eventsOnBubble className="gd-semantic-search__bubble_trigger">
-                <Icon.QuestionMark color={theme?.palette?.complementary?.c7 ?? "#6D7680"} />
-                <Bubble
-                    className="bubble-light gd-semantic-search__bubble"
-                    alignPoints={BUBBLE_ALIGN_POINTS}
-                    arrowStyle={ARROW_STYLE}
+export const renderDetails = (
+    listItem:
+        | ListItem<ISemanticSearchResultItem, ISemanticSearchRelationship>
+        | ListItem<ISemanticSearchRelationship, undefined>,
+    theme?: ITheme,
+    isActive?: boolean,
+    isOpened?: boolean,
+) => {
+    if (isSemanticSearchResultItem(listItem.item)) {
+        return (
+            <div className="gd-semantic-search__results-item__details">
+                <span
+                    className={classnames("gd-semantic-search__results-item__details__info", {
+                        "gd-semantic-search__results-item__details__info--active": isActive,
+                    })}
                 >
-                    {/* It's OK to have div inline, as this chunk is rendered through portal */}
-                    <div className="gd-semantic-search__results-item__details__contents">
-                        <Typography tagName="h3">{listItem.item.title}</Typography>
-                        {renderDescription(listItem.item)}
-                        <FormattedMessage tagName="h4" id="semantic-search.id" />
-                        <Typography tagName={"p"}>{listItem.item.id}</Typography>
-                        {renderTags(listItem.item)}
-                        {renderScore(listItem.item)}
+                    <BubbleHoverTrigger eventsOnBubble className="gd-semantic-search__bubble_trigger">
+                        <Icon.QuestionMark color={theme?.palette?.complementary?.c7 ?? "#6D7680"} />
+                        <Bubble
+                            className="bubble-light gd-semantic-search__bubble"
+                            alignPoints={BUBBLE_ALIGN_POINTS}
+                            arrowStyle={ARROW_STYLE}
+                        >
+                            {/* It's OK to have div inline, as this chunk is rendered through portal */}
+                            <div className="gd-semantic-search__results-item__details__contents">
+                                <Typography tagName="h3">{listItem.item.title}</Typography>
+                                {renderDescription(listItem.item)}
+                                <FormattedMessage tagName="h4" id="semantic-search.id" />
+                                <Typography tagName={"p"}>{listItem.item.id}</Typography>
+                                {renderTags(listItem.item)}
+                                {renderScore(listItem.item)}
+                            </div>
+                        </Bubble>
+                    </BubbleHoverTrigger>
+                </span>
+                {listItem.parents?.length ? (
+                    <div className="gd-semantic-search__results-item__details__results">
+                        <FormattedMessage
+                            tagName="div"
+                            id="semantic-search.results"
+                            values={{
+                                count: listItem.parents.length,
+                            }}
+                        />
+                        <div
+                            className={classnames(
+                                "gd-semantic-search__results-item__details__results__arrow",
+                                {
+                                    "gd-semantic-search__results-item__details__results__arrow--open":
+                                        isOpened,
+                                },
+                            )}
+                        >
+                            <Icon.ArrowRight width={10} height={10} ariaHidden />
+                        </div>
                     </div>
-                </Bubble>
-            </BubbleHoverTrigger>
-        </span>
-    );
+                ) : null}
+            </div>
+        );
+    }
+    return <></>;
 };

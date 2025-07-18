@@ -4,7 +4,7 @@ import { GenAIObjectType } from "./common.js";
 
 /**
  * A single search result returned by semantic search.
- * @internal
+ * @public
  */
 export interface ISemanticSearchResultItem {
     /**
@@ -63,8 +63,16 @@ export interface ISemanticSearchResultItem {
 }
 
 /**
+ * Tests whether the provided item is a semantic search result item.
+ * @public
+ */
+export function isSemanticSearchResultItem(item: any): item is ISemanticSearchResultItem {
+    return Boolean("type" in item && "id" in item && "workspaceId" in item && "title" in item);
+}
+
+/**
  * Reference between two metadata objects.
- * @internal
+ * @public
  */
 export interface ISemanticSearchRelationship {
     /**
@@ -99,4 +107,21 @@ export interface ISemanticSearchRelationship {
      * Title of the target object
      */
     targetObjectTitle: string;
+}
+
+/**
+ * Tests whether the provided item is a semantic search relationship.
+ * @public
+ */
+export function isSemanticSearchRelationship(item: any): item is ISemanticSearchRelationship {
+    return Boolean(
+        "sourceWorkspaceId" in item &&
+            "sourceObjectId" in item &&
+            "sourceObjectType" in item &&
+            "sourceObjectTitle" in item &&
+            "targetWorkspaceId" in item &&
+            "targetObjectId" in item &&
+            "targetObjectType" in item &&
+            "targetObjectTitle" in item,
+    );
 }

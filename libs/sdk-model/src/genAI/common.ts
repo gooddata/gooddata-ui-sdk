@@ -2,7 +2,7 @@
 
 /**
  * Type of the object.
- * @internal
+ * @public
  */
 export type GenAIObjectType =
     | "dataset"

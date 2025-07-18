@@ -1,37 +1,46 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { ISemanticSearchRelationship } from "@gooddata/sdk-model";
+import React from "react";
+import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
 /**
  * A wrapper type to handle search results rendering.
  * @internal
  */
-export type ListItem<T> = {
+export type ListItem<T, R> = {
     item: T;
     url?: string;
-    parentRef?: ISemanticSearchRelationship;
     isLocked?: boolean;
+    parents?: ListItem<R, undefined>[];
 };
 
 /**
  * Shared props definition for all list items components.
  * @internal
  */
-export type ListItemProps<T> = {
+export type ListItemProps<T, R> = {
     /**
      * The item to render.
      */
-    listItem: ListItem<T>;
+    listItem: IUiListboxInteractiveItem<ListItem<T, R>>;
     /**
      * Whether the item is active.
      */
     isActive: boolean;
     /**
-     * Set itself as an active item.
+     * Whether the item is opened.
      */
-    setActive: (item: ListItem<T>) => void;
+    isOpened?: boolean;
     /**
-     * Set itself as selected item.
+     * Set itself as an opened item.
      */
-    onSelect: (item: ListItem<T>, e: MouseEvent) => void;
+    setOpened?: (item: ListItem<T, R>, state: boolean) => void;
+    /**
+     * On hover handler
+     */
+    onHover: (item: ListItem<T, R>, state: boolean) => void;
+    /**
+     * On select handler
+     */
+    onSelect: (item: ListItem<T, R> | ListItem<R, undefined>, e: React.MouseEvent) => void;
 };
