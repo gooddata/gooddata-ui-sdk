@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { invariant } from "ts-invariant";
 import { IGeoData, IValidationResult } from "../../GeoChart.js";
@@ -39,11 +39,11 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
 
         // if explicitly null, do not default the components to allow them to be disabled
         const ErrorComponent =
-            this.props.ErrorComponent === null ? null : this.props.ErrorComponent ?? DefaultErrorComponent;
+            this.props.ErrorComponent === null ? null : (this.props.ErrorComponent ?? DefaultErrorComponent);
         const LoadingComponent =
             this.props.LoadingComponent === null
                 ? null
-                : this.props.LoadingComponent ?? DefaultLoadingComponent;
+                : (this.props.LoadingComponent ?? DefaultLoadingComponent);
 
         if (error) {
             const errorProps =

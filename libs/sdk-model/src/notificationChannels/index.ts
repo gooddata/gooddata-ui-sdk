@@ -287,10 +287,10 @@ export type ToNotificationChannelMetadataObject<T extends INotificationChannelMe
     T extends IWebhookNotificationChannelMetadataObjectDefinition
         ? IWebhookNotificationChannelMetadataObject
         : T extends ISmtpNotificationChannelMetadataObjectDefinition
-        ? ISmtpNotificationChannelMetadataObject
-        : T extends IInPlatformNotificationChannelMetadataObjectDefinition
-        ? IInPlatformNotificationChannelMetadataObject
-        : never;
+          ? ISmtpNotificationChannelMetadataObject
+          : T extends IInPlatformNotificationChannelMetadataObjectDefinition
+            ? IInPlatformNotificationChannelMetadataObject
+            : never;
 
 /**
  * @beta

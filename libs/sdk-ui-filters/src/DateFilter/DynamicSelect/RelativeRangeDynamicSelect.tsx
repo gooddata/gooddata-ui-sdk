@@ -137,8 +137,8 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
     const defaultHighlightedIndex = isFiltered
         ? 0
         : selectedItem
-        ? selectedItemIndex
-        : getMedianIndex(selectableItems);
+          ? selectedItemIndex
+          : getMedianIndex(selectableItems);
 
     const refreshHighlightedIndex = useCallback(
         (setHighlightedIndex: (index: number) => void, newSearchValue: string) => {

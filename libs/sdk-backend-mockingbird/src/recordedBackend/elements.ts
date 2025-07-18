@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IElementsQuery,
@@ -33,7 +33,10 @@ import { resolveLimitingItems, resolveSelectedElements, resolveStringFilter } fr
  * @internal
  */
 export class RecordedElementQueryFactory implements IElementsQueryFactory {
-    constructor(private recordings: RecordingIndex, private readonly config: RecordedBackendConfig) {}
+    constructor(
+        private recordings: RecordingIndex,
+        private readonly config: RecordedBackendConfig,
+    ) {}
 
     public forDisplayForm(ref: ObjRef): IElementsQuery {
         return new RecordedElements(ref, this.recordings, this.config);
@@ -141,7 +144,10 @@ class RecordedFilterElements implements IFilterElementsQuery {
     private offset = 0;
     private readonly ref: ObjRef;
 
-    constructor(private filter: FilterWithResolvableElements, private recordings: RecordingIndex) {
+    constructor(
+        private filter: FilterWithResolvableElements,
+        private recordings: RecordingIndex,
+    ) {
         this.ref = filterObjRef(filter);
     }
 

@@ -129,9 +129,8 @@ function* lookupDatasetsUsedInAttributesAndFilters(
         displayForms,
     } = insightAttributes;
 
-    const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
-        selectBackendCapabilities,
-    );
+    const capabilities: ReturnType<typeof selectBackendCapabilities> =
+        yield select(selectBackendCapabilities);
     const displayFormsMap = newDisplayFormMap(displayForms, capabilities.hasTypeScopedIdentifiers);
 
     const datasetLookup: (ref: ObjRef) => ICatalogDateDataset | undefined = (ref) => {

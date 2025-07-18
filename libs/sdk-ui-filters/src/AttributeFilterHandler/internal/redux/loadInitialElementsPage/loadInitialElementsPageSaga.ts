@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
 
@@ -44,9 +44,8 @@ export function* loadInitialElementsPageSaga(
     try {
         yield put(actions.loadInitialElementsPageStart({ correlation }));
 
-        const loadOptions: ReturnType<typeof selectLoadElementsOptions> = yield select(
-            selectLoadElementsOptions,
-        );
+        const loadOptions: ReturnType<typeof selectLoadElementsOptions> =
+            yield select(selectLoadElementsOptions);
 
         const cacheId: ReturnType<typeof selectCacheId> = yield select(selectCacheId);
 

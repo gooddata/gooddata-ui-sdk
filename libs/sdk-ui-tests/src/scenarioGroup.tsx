@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import React from "react";
 import { invariant } from "ts-invariant";
@@ -66,7 +66,10 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     private defaultWorkspaceType: WorkspaceType = "reference-workspace";
     private defaultBackendSettings: ISettings = {};
 
-    constructor(public readonly vis: string, public readonly component: React.ComponentType<T>) {}
+    constructor(
+        public readonly vis: string,
+        public readonly component: React.ComponentType<T>,
+    ) {}
 
     /**
      * Sets this scenario group's name. The name may be composite and consist of multiple

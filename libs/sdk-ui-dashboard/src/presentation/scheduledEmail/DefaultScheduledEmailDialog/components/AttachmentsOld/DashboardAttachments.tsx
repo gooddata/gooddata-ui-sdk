@@ -57,8 +57,8 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
     const showAttachmentFilters = enableAutomationFilterContext
         ? false
         : isEditing
-        ? attachmentFilterType !== "default"
-        : areDashboardFiltersChanged && dashboardSelected;
+          ? attachmentFilterType !== "default"
+          : areDashboardFiltersChanged && dashboardSelected;
 
     const includeFilters = attachmentFilterType === "edited" && areDashboardFiltersChanged;
 

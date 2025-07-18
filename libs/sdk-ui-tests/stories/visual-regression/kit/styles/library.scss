@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 $goodstrap-fontFamily: gdcustomfont, "Helvetica Neue", "Helvetica", helvetica, arial, sans-serif;
 
@@ -163,6 +163,7 @@ pre.prettyprint {
         tr th {
             padding: 10px;
         }
+
         tr td {
             padding: 10px;
             border-top: 1px solid var(--gd-palette-complementary-3-from-theme, #ccc);

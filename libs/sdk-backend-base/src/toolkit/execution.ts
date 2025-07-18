@@ -96,7 +96,10 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
  * @internal
  */
 export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory {
-    constructor(decorated: IExecutionFactory, private readonly filters: INullableFilter[] = []) {
+    constructor(
+        decorated: IExecutionFactory,
+        private readonly filters: INullableFilter[] = [],
+    ) {
         super(decorated);
     }
 

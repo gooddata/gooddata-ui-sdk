@@ -91,6 +91,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -107,8 +110,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -131,8 +134,8 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -222,8 +225,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -298,8 +301,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -374,8 +377,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -450,8 +453,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -526,8 +529,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -602,8 +605,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -678,8 +681,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -754,8 +757,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -839,8 +842,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -915,8 +918,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -991,8 +994,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -1067,8 +1070,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -1143,8 +1146,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -1219,8 +1222,8 @@ importers:
         specifier: ~3.5.0
         version: 3.5.0(vite@5.4.3)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -1291,6 +1294,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -1307,8 +1313,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -1325,8 +1331,8 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -1409,6 +1415,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -1425,8 +1434,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -1437,8 +1446,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -1503,6 +1512,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -1519,8 +1531,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -1531,8 +1543,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -1582,6 +1594,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -1598,8 +1613,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -1610,8 +1625,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -1715,6 +1730,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -1731,8 +1749,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -1743,8 +1761,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -1794,6 +1812,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -1810,8 +1831,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -1822,8 +1843,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -1888,6 +1909,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -1904,8 +1928,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -1916,8 +1940,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -2048,6 +2072,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -2064,8 +2091,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -2088,8 +2115,8 @@ importers:
         specifier: 15.10.2
         version: 15.10.2
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -2106,8 +2133,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       tsd:
         specifier: ^0.21.0
         version: 0.21.0
@@ -2175,6 +2202,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -2191,8 +2221,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -2203,8 +2233,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -2356,6 +2386,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -2372,8 +2405,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -2396,8 +2429,8 @@ importers:
         specifier: 26.0.0
         version: 26.0.0
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -2417,8 +2450,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -2615,6 +2648,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -2631,8 +2667,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -2652,8 +2688,8 @@ importers:
         specifier: 26.0.0
         version: 26.0.0
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -2673,8 +2709,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       svgo:
         specifier: ^2.8.0
         version: 2.8.0
@@ -2883,6 +2919,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -2899,8 +2938,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -2923,8 +2962,8 @@ importers:
         specifier: 26.0.0
         version: 26.0.0
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -2944,8 +2983,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       svgo:
         specifier: ^2.8.0
         version: 2.8.0
@@ -3094,6 +3133,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -3110,8 +3152,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -3134,8 +3176,8 @@ importers:
         specifier: 26.0.0
         version: 26.0.0
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -3155,8 +3197,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -3317,6 +3359,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -3333,8 +3378,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -3354,8 +3399,8 @@ importers:
         specifier: 26.0.0
         version: 26.0.0
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -3375,8 +3420,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       svgo:
         specifier: ^2.8.0
         version: 2.8.0
@@ -3498,6 +3543,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -3514,8 +3562,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -3532,8 +3580,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -3553,8 +3601,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -3778,6 +3826,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -3794,8 +3845,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -3818,8 +3869,8 @@ importers:
         specifier: ^3.8.8
         version: 3.8.8
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -3839,8 +3890,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       svgo:
         specifier: ^2.8.0
         version: 2.8.0
@@ -3932,6 +3983,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -3948,8 +4002,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -3966,8 +4020,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -4089,6 +4143,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -4105,8 +4162,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -4129,8 +4186,8 @@ importers:
         specifier: 26.0.0
         version: 26.0.0
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -4150,8 +4207,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -4243,6 +4300,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -4259,8 +4319,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -4277,8 +4337,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -4298,8 +4358,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -4462,6 +4522,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -4478,8 +4541,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -4514,8 +4577,8 @@ importers:
         specifier: ^2.29.4
         version: 2.29.4
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -4550,8 +4613,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       ts-invariant:
         specifier: ^0.7.5
         version: 0.7.5
@@ -4735,6 +4798,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-import-resolver-typescript:
         specifier: ^3.5.5
         version: 3.6.1(eslint-plugin-import@2.29.0)(eslint@8.55.0)
@@ -4751,8 +4817,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -4793,11 +4859,11 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       prettier-loader:
         specifier: ^3.3.0
-        version: 3.3.0(prettier@2.5.1)(webpack@5.89.0)
+        version: 3.3.0(prettier@3.6.2)(webpack@5.89.0)
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -4937,6 +5003,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -4953,8 +5022,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -4974,8 +5043,8 @@ importers:
         specifier: 15.10.2
         version: 15.10.2
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -5085,6 +5154,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -5101,8 +5173,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -5122,8 +5194,8 @@ importers:
         specifier: 15.10.2
         version: 15.10.2
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -5143,8 +5215,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-prettier:
-        specifier: ^8.0.2
-        version: 8.0.2(stylelint@13.13.1)
+        specifier: ^9.0.5
+        version: 9.0.5(stylelint@13.13.1)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -5257,6 +5329,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -5273,8 +5348,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -5297,8 +5372,8 @@ importers:
         specifier: ~0.5.7
         version: 0.5.7
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -5372,6 +5447,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -5388,8 +5466,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -5400,8 +5478,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -5445,6 +5523,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -5458,8 +5539,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -5470,8 +5551,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -5533,6 +5614,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -5546,8 +5630,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -5564,8 +5648,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -5696,6 +5780,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -5712,8 +5799,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -5724,8 +5811,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -5777,6 +5864,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -5793,8 +5883,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -5814,8 +5904,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -5868,8 +5958,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       strip-ansi:
         specifier: ^6.0.0
         version: 6.0.1
@@ -5910,6 +6000,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -5926,8 +6019,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -6064,6 +6157,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -6080,8 +6176,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -6101,8 +6197,8 @@ importers:
         specifier: ^5.3.1
         version: 5.5.4(webpack@5.89.0)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -6203,6 +6299,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -6219,8 +6318,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -6234,8 +6333,8 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -6276,8 +6375,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       rimraf:
         specifier: ^3.0.0
         version: 3.0.2
@@ -6321,6 +6420,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -6337,8 +6439,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -6463,6 +6565,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -6479,8 +6584,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -6491,8 +6596,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -6593,6 +6698,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -6609,8 +6717,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.31.10
         version: 7.33.2(eslint@8.55.0)
@@ -6630,8 +6738,8 @@ importers:
         specifier: ^5.3.1
         version: 5.5.4(webpack@5.89.0)
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -6696,6 +6804,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -6712,8 +6823,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -6724,8 +6835,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -6769,6 +6880,9 @@ importers:
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@8.55.0)
       eslint-plugin-header:
         specifier: ^3.0.0
         version: 3.1.1(eslint@8.55.0)
@@ -6782,8 +6896,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+        specifier: ^5.5.1
+        version: 5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2)
       eslint-plugin-regexp:
         specifier: ^1.9.0
         version: 1.15.0(eslint@8.55.0)
@@ -6794,8 +6908,8 @@ importers:
         specifier: ^0.2.14
         version: 0.2.17
       prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -10939,6 +11053,11 @@ packages:
     engines: {node: '>=14'}
     requiresBuild: true
     optional: true
+
+  /@pkgr/core@0.2.7:
+    resolution: {integrity: sha512-YLT9Zo3oNPJoBjBc4q8G2mjU4tqIbf5CEOORbUUr48dCD9q3umJ3IPlVqOqDakPfd2HuwccBaqlGhN4Gmr5OWg==}
+    engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
+    dev: true
 
   /@pmmmwh/react-refresh-webpack-plugin@0.5.11(react-refresh@0.14.0)(webpack@5.89.0):
     resolution: {integrity: sha512-7j/6vdTym0+qZ6u4XbSAxrWBGYSdCfTzySkj7WAFgDLmSyWlOrWvpyzxlFh5jtw9dn0oL/jtW+06XfFiisN3JQ==}
@@ -17270,6 +17389,15 @@ packages:
       source-map: 0.6.1
     dev: true
 
+  /eslint-config-prettier@10.1.5(eslint@8.55.0):
+    resolution: {integrity: sha512-zc1UmCpNltmVY34vuLRV61r1K27sWuX39E+uyUnY8xS2Bex88VV9cugG+UZbRSRGtGyFboj+D8JODyme1plMpw==}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
+    dependencies:
+      eslint: 8.55.0
+    dev: true
+
   /eslint-formatter-pretty@4.1.0:
     resolution: {integrity: sha512-IsUTtGxF1hrH6lMWiSl1WbGaiP01eT6kzywdY1U+zLc0MP+nwEnUiS9UI8IaOTUhTeQJLlCEWIbXINBH4YJbBQ==}
     engines: {node: '>=10'}
@@ -17394,20 +17522,25 @@ packages:
     engines: {node: '>=4.0.0'}
     dev: true
 
-  /eslint-plugin-prettier@4.2.1(eslint@8.55.0)(prettier@2.5.1):
-    resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
-    engines: {node: '>=12.0.0'}
+  /eslint-plugin-prettier@5.5.1(eslint-config-prettier@10.1.5)(eslint@8.55.0)(prettier@3.6.2):
+    resolution: {integrity: sha512-dobTkHT6XaEVOo8IO90Q4DOSxnm3Y151QxPJlM/vKC0bVy+d6cVWQZLlFiuZPP0wS6vZwSKeJgKkcS+KfMBlRw==}
+    engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
-      eslint: '>=7.28.0'
-      eslint-config-prettier: '*'
-      prettier: '>=2.0.0'
+      '@types/eslint': '>=8.0.0'
+      eslint: '>=8.0.0'
+      eslint-config-prettier: '>= 7.0.0 <10.0.0 || >=10.1.0'
+      prettier: '>=3.0.0'
     peerDependenciesMeta:
+      '@types/eslint':
+        optional: true
       eslint-config-prettier:
         optional: true
     dependencies:
       eslint: 8.55.0
-      prettier: 2.5.1
+      eslint-config-prettier: 10.1.5(eslint@8.55.0)
+      prettier: 3.6.2
       prettier-linter-helpers: 1.0.0
+      synckit: 0.11.8
     dev: true
 
   /eslint-plugin-react-hooks@4.6.0(eslint@8.55.0):
@@ -22734,7 +22867,7 @@ packages:
       fast-diff: 1.3.0
     dev: true
 
-  /prettier-loader@3.3.0(prettier@2.5.1)(webpack@5.89.0):
+  /prettier-loader@3.3.0(prettier@3.6.2)(webpack@5.89.0):
     resolution: {integrity: sha512-OhGQnvcAiiJ3i5StsgFCRnJ3tb4s5PGCAb/lVga9tMkBRTCK51oTZ1aCrYN7n4YrVbQRxs6/cgaQx5mgESafNg==}
     engines: {node: '>=8.3.0'}
     peerDependencies:
@@ -22746,20 +22879,20 @@ packages:
     dependencies:
       ignore: 5.3.0
       loader-utils: 1.4.2
-      prettier: 2.5.1
+      prettier: 3.6.2
       webpack: 5.89.0(webpack-cli@6.0.1)
     dev: true
-
-  /prettier@2.5.1:
-    resolution: {integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
 
   /prettier@2.8.8:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
+
+  /prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   /pretty-bytes@5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
@@ -25121,12 +25254,12 @@ packages:
       lodash: 4.17.21
     dev: true
 
-  /stylelint-config-prettier@8.0.2(stylelint@13.13.1):
-    resolution: {integrity: sha512-TN1l93iVTXpF9NJstlvP7nOu9zY2k+mN0NSFQ/VEGz15ZIP9ohdDZTtCWHs5LjctAhSAzaILULGbgiM0ItId3A==}
-    engines: {node: '>= 10', npm: '>= 5'}
+  /stylelint-config-prettier@9.0.5(stylelint@13.13.1):
+    resolution: {integrity: sha512-U44lELgLZhbAD/xy/vncZ2Pq8sh2TnpiPvo38Ifg9+zeioR+LAkHu0i6YORIOxFafZoVg0xqQwex6e6F25S5XA==}
+    engines: {node: '>= 12'}
     hasBin: true
     peerDependencies:
-      stylelint: '>=11.0.0'
+      stylelint: '>= 11.x < 15'
     dependencies:
       stylelint: 13.13.1
     dev: true
@@ -25329,6 +25462,13 @@ packages:
 
   /synchronous-promise@2.0.17:
     resolution: {integrity: sha512-AsS729u2RHUfEra9xJrE39peJcc2stq2+poBXX8bcM08Y6g9j/i/PUzwNQqkaJde7Ntg1TO7bSREbR5sdosQ+g==}
+    dev: true
+
+  /synckit@0.11.8:
+    resolution: {integrity: sha512-+XZ+r1XGIJGeQk3VvXhT6xx/VpbHsRzsTkGgF6E5RX9TTXD0118l87puaEBZ566FhqblC6U0d4XnubznJDm30A==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    dependencies:
+      '@pkgr/core': 0.2.7
     dev: true
 
   /tabbable@6.2.0:

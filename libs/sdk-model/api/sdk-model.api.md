@@ -74,7 +74,7 @@ export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" 
 export const assertNever: (value: never) => void;
 
 // @alpha
-export type AssignedDataSourcePermission = typeof AssignedDataSourcePermissionValue[keyof typeof AssignedDataSourcePermissionValue];
+export type AssignedDataSourcePermission = (typeof AssignedDataSourcePermissionValue)[keyof typeof AssignedDataSourcePermissionValue];
 
 // @alpha
 export const AssignedDataSourcePermissionValue: {
@@ -83,7 +83,7 @@ export const AssignedDataSourcePermissionValue: {
 };
 
 // @alpha
-export type AssignedWorkspacePermission = typeof AssignedWorkspacePermissionValue[keyof typeof AssignedWorkspacePermissionValue];
+export type AssignedWorkspacePermission = (typeof AssignedWorkspacePermissionValue)[keyof typeof AssignedWorkspacePermissionValue];
 
 // @alpha
 export const AssignedWorkspacePermissionValue: {
@@ -4884,7 +4884,7 @@ export type ObjRefInScope = ObjRef | LocalIdRef;
 export function objRefToString(objRef: ObjRef | ObjRefInScope): string;
 
 // @alpha (undocumented)
-export type OrganizationPermissionAssignment = typeof OrganizationPermissionAssignmentValue[keyof typeof OrganizationPermissionAssignmentValue];
+export type OrganizationPermissionAssignment = (typeof OrganizationPermissionAssignmentValue)[keyof typeof OrganizationPermissionAssignmentValue];
 
 // @alpha (undocumented)
 export const OrganizationPermissionAssignmentValue: {

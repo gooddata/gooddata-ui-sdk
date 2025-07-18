@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { MoveAttributeFilter } from "../../../commands/filters.js";
@@ -29,9 +29,8 @@ export function* moveAttributeFilterHandler(
     }
 
     // validate target index
-    const allFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
-        selectFilterContextFilters,
-    );
+    const allFilters: ReturnType<typeof selectFilterContextFilters> =
+        yield select(selectFilterContextFilters);
 
     const maximalTargetIndex = allFilters.length - 1;
 

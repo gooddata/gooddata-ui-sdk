@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IWorkspaceMeasuresService,
     IMeasureExpressionToken,
@@ -40,7 +40,10 @@ const findDimensionality = (
     dims.find((dimensionality) => dimensionality.attribute.id === attributeId);
 
 export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+    ) {}
 
     public async computeKeyDrivers(
         measure: IMeasure,

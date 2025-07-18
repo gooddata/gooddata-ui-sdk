@@ -306,6 +306,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     &.gd-list-item.gd-menu-item-divider {
         margin-bottom: 18px;
         overflow: visible;
+
         &::after {
             content: "";
             position: absolute;
@@ -316,6 +317,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
         }
     }
 }
+
 a.gd-list-help-menu-item.gd-list-item {
     &:focus-visible {
         // Disable outline and use box-shadow instead.
@@ -692,11 +694,13 @@ a.gd-list-help-menu-item.gd-list-item {
     position: relative;
     box-sizing: border-box;
     max-width: 146px;
+
     &:hover {
         background: rgba(255, 255, 255, 0.3);
     }
 
     padding-right: 34px;
+
     &::after {
         content: "\e612";
         position: absolute;
@@ -919,11 +923,13 @@ a.gd-list-help-menu-item.gd-list-item {
             font-family: variables.$gd-font-primary;
             font-weight: 400;
         }
+
         a.gd-list-item {
             &:focus-visible {
                 outline: revert;
                 text-decoration: none;
             }
+
             &:focus {
                 text-decoration: none;
             }
@@ -1134,6 +1140,7 @@ button.gd-button-primary {
             margin-left: 23px;
         }
     }
+
     &.gd-icon-model.s-model.gd-button {
         > span {
             margin-left: 22px;
@@ -1167,7 +1174,9 @@ button.gd-button-primary.gd-upsell-button {
     &:hover {
         box-sizing: border-box;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 -2px 0 rgba(0, 0, 0, 0.15);
+        box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.15),
+            inset 0 -2px 0 rgba(0, 0, 0, 0.15);
         color: #fff;
         background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #8351a4;
     }
@@ -1175,7 +1184,9 @@ button.gd-button-primary.gd-upsell-button {
     &:focus {
         box-sizing: border-box;
         border: 1px solid rgba(0, 0, 0, 0.2);
-        box-shadow: 0 0 5px 2px rgba(131, 81, 164, 0.6), 0 1px 2px rgba(0, 0, 0, 0.15),
+        box-shadow:
+            0 0 5px 2px rgba(131, 81, 164, 0.6),
+            0 1px 2px rgba(0, 0, 0, 0.15),
             inset 0 -2px 0 rgba(0, 0, 0, 0.15);
         color: #fff;
         background: #8351a4;

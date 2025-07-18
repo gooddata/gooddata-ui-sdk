@@ -1,14 +1,16 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 @use "variables";
 
 .gd-dialog {
     &.save-as-new-dialog {
         max-width: 450px;
     }
+
     .dashboard-note {
         line-height: variables.$item-headline-lineHeight;
         padding-bottom: 25px;
     }
+
     .dashboard-title {
         padding-bottom: 25px;
     }

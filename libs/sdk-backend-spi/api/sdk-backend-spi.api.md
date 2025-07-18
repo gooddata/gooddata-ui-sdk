@@ -1186,7 +1186,7 @@ export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
     equals(other: IPreparedExecution): boolean;
     execute(): Promise<IExecutionResult>;
     // @internal
-    explain<T extends ExplainType | undefined>(config: ExplainConfig<T>): IExplainProvider<typeof config["explainType"]>;
+    explain<T extends ExplainType | undefined>(config: ExplainConfig<T>): IExplainProvider<(typeof config)["explainType"]>;
     fingerprint(): string;
     readonly signal?: AbortSignal;
     // @internal

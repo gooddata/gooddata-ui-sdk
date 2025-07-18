@@ -12,7 +12,10 @@ import { invariant } from "ts-invariant";
 import { convertDatasetWithLinks } from "../../../convertors/fromBackend/MetadataConverter.js";
 
 export class TigerWorkspaceFacts implements IWorkspaceFactsService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+    ) {}
 
     public async getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject> {
         return this.authCall((client) => {

@@ -8,7 +8,10 @@ import { Headline } from "./headline";
 import { RichText } from "./richText";
 
 export class Widget {
-    constructor(private index: number, private section: number = 0) {}
+    constructor(
+        private index: number,
+        private section: number = 0,
+    ) {}
 
     getElementSelector() {
         return `.s-dash-item-${this.section}_${this.index}`;

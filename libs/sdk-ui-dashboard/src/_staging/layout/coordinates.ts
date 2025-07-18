@@ -123,8 +123,8 @@ export const serializeLayoutSectionPath = (path: ILayoutSectionPath | undefined)
     return parentPath
         ? `${parentPath}-${path?.sectionIndex}`
         : path?.sectionIndex === undefined
-        ? "undefined"
-        : String(path.sectionIndex);
+          ? "undefined"
+          : String(path.sectionIndex);
 };
 
 export const areSectionLayoutPathsEqual = (
@@ -240,7 +240,7 @@ export const findSections = (
         "Layout item or section path is undefined.",
     );
 
-    const path = isLayoutSectionPath(index) ? index.parent ?? [] : index;
+    const path = isLayoutSectionPath(index) ? (index.parent ?? []) : index;
     return findSectionsRecursive(!isLayoutSectionPath(index), layout, path);
 };
 

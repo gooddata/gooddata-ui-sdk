@@ -26,7 +26,10 @@ import {
  * @internal
  */
 export class RecordedAttributes implements IWorkspaceAttributesService {
-    constructor(private recordings: RecordingIndex, private config: RecordedBackendConfig) {}
+    constructor(
+        private recordings: RecordingIndex,
+        private config: RecordedBackendConfig,
+    ) {}
 
     public elements(): IElementsQueryFactory {
         return new RecordedElementQueryFactory(this.recordings, this.config);

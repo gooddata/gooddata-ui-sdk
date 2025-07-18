@@ -153,10 +153,13 @@ const useAsyncTable = <T extends { id: string }>({
     const width = useMemo(() => {
         return (
             widthProp ??
-            columns.reduce((acc, column) => {
-                const columnWidth = getColumnWidth(!!column.renderMenu, largeRow, column.width);
-                return acc + columnWidth;
-            }, SCROLLBAR_WIDTH + (!!bulkActions && CHECKBOX_COLUMN_WIDTH))
+            columns.reduce(
+                (acc, column) => {
+                    const columnWidth = getColumnWidth(!!column.renderMenu, largeRow, column.width);
+                    return acc + columnWidth;
+                },
+                SCROLLBAR_WIDTH + (!!bulkActions && CHECKBOX_COLUMN_WIDTH),
+            )
         );
     }, [columns, bulkActions, widthProp, largeRow]);
 

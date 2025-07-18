@@ -276,7 +276,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
     private toggleInteractionEvents = (): void => {
         const isViewportFrozen = this.isViewportFrozen();
         const chart:
-            | { [key in typeof INTERACTION_EVENTS[number]]?: { disable?: () => void; enable?: () => void } }
+            | { [key in (typeof INTERACTION_EVENTS)[number]]?: { disable?: () => void; enable?: () => void } }
             | undefined = this.chart;
         if (chart === undefined) {
             return;

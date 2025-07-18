@@ -59,8 +59,8 @@ const DivElement = forwardRef<HTMLDivElement, ISingleSelectListItemProps & { chi
                     props.type === "separator"
                         ? "item-separator"
                         : props.type === "header"
-                        ? "item-header"
-                        : undefined
+                          ? "item-header"
+                          : undefined
                 }
             >
                 {children}

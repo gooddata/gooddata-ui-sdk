@@ -139,12 +139,14 @@
         align-items: center;
         height: 16px;
         color: var(--gd-palette-complementary-7);
+
         & > :first-child {
             flex-shrink: 1;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
         & > :not(:first-child) {
             flex-shrink: 0;
         }

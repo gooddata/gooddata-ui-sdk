@@ -145,7 +145,7 @@ export const BucketNames: {
 };
 
 // @internal (undocumented)
-export type BucketNameValues = typeof BucketNames[BucketNameKeys];
+export type BucketNameValues = (typeof BucketNames)[BucketNameKeys];
 
 // @internal (undocumented)
 export class CancelError extends Error {

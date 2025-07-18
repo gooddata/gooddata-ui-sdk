@@ -470,7 +470,7 @@ const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (stat
 
 const processSection = (section: IDashboardLayoutSection<ExtendedDashboardWidget>) => {
     return section.items.flatMap((item) => {
-        let result: typeof item.widget[] = [];
+        let result: (typeof item.widget)[] = [];
         const widget = item.widget;
         if (widget === undefined) {
             return [];
@@ -491,7 +491,7 @@ const getWidgetByRef = (
     widgetRef: ObjRef,
 ): Draft<ExtendedDashboardWidget> | undefined => {
     const allWidgets = state?.layout?.sections.flatMap(processSection) ?? [];
-    const widgets = allWidgets.filter(Boolean) as NonNullable<typeof allWidgets[number]>[];
+    const widgets = allWidgets.filter(Boolean) as NonNullable<(typeof allWidgets)[number]>[];
     return newMapForObjectWithIdentity(widgets).get(widgetRef);
 };
 

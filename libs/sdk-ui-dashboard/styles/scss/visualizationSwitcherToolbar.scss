@@ -7,9 +7,11 @@
     .gd-configuration-bubble.gd-visualization-switcher-configuration-bubble {
         width: 270px;
     }
+
     .bubble-content {
         padding: 0;
     }
+
     .content {
         padding: 10px;
     }
@@ -31,10 +33,12 @@
     .gd-bubble-trigger {
         display: inline-block;
     }
+
     .left-section {
         cursor: pointer;
         padding: 4px;
         flex: 0 1 auto;
+
         &:not(.is-active):hover path {
             fill: kit-variables.$gd-color-text;
         }
@@ -46,6 +50,7 @@
         height: 28px;
         background-color: variables.$button-grey-background;
     }
+
     .middle-section {
         flex: 1 0 auto;
         display: flex;
@@ -54,17 +59,21 @@
         color: kit-variables.$gd-color-link;
         font-size: 14px;
     }
+
     .status {
         padding: 2px 0;
         line-height: 21px;
     }
+
     .navigate-button {
         display: flex;
         padding: 4px;
         justify-content: center;
         align-items: center;
+
         &:not(.is-disabled) {
             cursor: pointer;
+
             &:hover path {
                 fill: kit-variables.$gd-color-text;
             }
@@ -99,6 +108,7 @@
     .insight-configuration-content {
         padding: 10px 0 5px 0;
     }
+
     .no-visualizations-text {
         margin-left: 15px;
         padding: 5px 0;
@@ -120,11 +130,13 @@
         width: 100%;
         text-align: center;
         padding: 5px 15px;
+
         .horizontal-divider-line {
             height: 1px;
             background-color: variables.$button-grey-background;
         }
     }
+
     .gd-add-visualization {
         margin-left: 5px;
         font-size: 12px;
@@ -153,7 +165,12 @@
             position: relative;
             padding: 5px 14px;
             border: 1px solid transparent;
-            font: 700 14px/20px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+            font:
+                700 14px/20px gdcustomfont,
+                avenir,
+                "Helvetica Neue",
+                arial,
+                sans-serif;
             height: 40px;
             white-space: nowrap;
             vertical-align: middle;
@@ -166,6 +183,7 @@
             &:hover {
                 color: var(--gd-palette-complementary-9-from-theme, #464e56);
             }
+
             .gd-vis-switcher-show-more-button {
                 // stylelint-disable-next-line max-nesting-depth
                 &:hover {
@@ -174,6 +192,7 @@
                 }
             }
         }
+
         &.is-selected.is-active {
             background-color: kit-variables.$gd-palette-primary-dimmed;
 
@@ -243,10 +262,12 @@
                 }
             }
         }
+
         .visualization-title {
             display: flex;
             align-items: center;
         }
+
         .gd-visualizations-list-item-content-name {
             white-space: nowrap;
             max-width: 150px;

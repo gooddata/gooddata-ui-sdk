@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
@@ -14,7 +14,10 @@ export class TigerWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQ
     private limit: number | undefined;
     private offset: number | undefined;
 
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, private readonly workspace: string) {}
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        private readonly workspace: string,
+    ) {}
 
     public withLimit(limit: number): IDateFilterConfigsQuery {
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);

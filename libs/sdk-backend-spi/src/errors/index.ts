@@ -28,7 +28,11 @@ export const AnalyticalBackendErrorTypes = {
  * @public
  */
 export abstract class AnalyticalBackendError extends Error {
-    protected constructor(message: string, public readonly abeType: string, public readonly cause?: Error) {
+    protected constructor(
+        message: string,
+        public readonly abeType: string,
+        public readonly cause?: Error,
+    ) {
         super(message);
 
         Object.setPrototypeOf(this, new.target.prototype);
