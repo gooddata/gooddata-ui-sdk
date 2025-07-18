@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import React, { ReactNode } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 import { AttributeFilterEmptySearchResult } from "./AttributeFilterEmptySearchResult.js";
@@ -21,11 +21,11 @@ export interface IAttributeFilterAllValuesFilteredResultProps {
  * Component that display message that all elements are filtered out by parent filers.
  * @beta
  */
-export const AttributeFilterAllValuesFilteredResult: React.FC<
-    IAttributeFilterAllValuesFilteredResultProps
-> = (props) => {
-    const { parentFilterTitles, searchString, enableShowingFilteredElements } = props;
-
+export function AttributeFilterAllValuesFilteredResult({
+    parentFilterTitles,
+    searchString,
+    enableShowingFilteredElements,
+}: IAttributeFilterAllValuesFilteredResultProps) {
     if (enableShowingFilteredElements && searchString.length > 0) {
         return <AttributeFilterEmptySearchResult />;
     }
@@ -83,4 +83,4 @@ export const AttributeFilterAllValuesFilteredResult: React.FC<
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

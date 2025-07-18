@@ -1,8 +1,6 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle.js";
-import { withIntl } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 
 describe("ExcludeCurrentPeriodToggle", () => {
@@ -13,8 +11,7 @@ describe("ExcludeCurrentPeriodToggle", () => {
             onChange: vi.fn(),
             value: true,
         };
-        const Wrapped = withIntl(ExcludeCurrentPeriodToggle);
-        return render(<Wrapped {...props} />);
+        return render(<ExcludeCurrentPeriodToggle {...props} />);
     };
 
     it('should be disabled when passed true as the value of the "disabled" prop', () => {

@@ -1,10 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, createRef } from "react";
-import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
+import { useRef, useState, useEffect, useCallback, MouseEvent } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
-import differenceInMonths from "date-fns/differenceInMonths/index.js";
-import differenceInCalendarDays from "date-fns/differenceInCalendarDays/index.js";
-import format from "date-fns/format/index.js";
+import { differenceInMonths, differenceInCalendarDays, format } from "date-fns";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { v4 as uuid } from "uuid";
@@ -22,7 +20,7 @@ import {
     getWorkspacePickerHoverColor,
 } from "./colors.js";
 import { addCssToStylesheet } from "./addCssToStylesheet.js";
-import { IAppHeaderProps, IAppHeaderState, IHeaderMenuItem } from "./typings.js";
+import { IAppHeaderProps, IHeaderMenuItem } from "./typings.js";
 import { HeaderHelp } from "./HeaderHelp.js";
 import { HeaderAccount } from "./HeaderAccount.js";
 import { HeaderMenu } from "./HeaderMenu.js";
@@ -47,174 +45,89 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
         .reduce((sum, childWidth) => sum + childWidth, SAFETY_PADDING);
 }
 
-class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, IAppHeaderState> {
-    public static defaultProps: Pick<
-        IAppHeaderProps,
-        | "logoHref"
-        | "accountMenuItems"
-        | "helpMenuItems"
-        | "menuItemsGroups"
-        | "helpMenuDropdownAlignPoints"
-        | "search"
-        | "notificationsPanel"
-    > = {
-        logoHref: "/",
-        helpMenuDropdownAlignPoints: "br tr",
-        accountMenuItems: [],
-        helpMenuItems: [],
-        menuItemsGroups: [],
-        search: null,
-        notificationsPanel: null,
-    };
+function AppHeaderCore(props: IAppHeaderProps) {
+    const intl = useIntl();
 
-    private nodeRef = createRef<HTMLDivElement>();
-    private resizeHandler = debounce(() => this.measure(), 100);
-    private stylesheet: HTMLStyleElement;
+    const {
+        logoHref = "/",
+        helpMenuDropdownAlignPoints = "br tr",
+        accountMenuItems = [],
+        helpMenuItems = [],
+        menuItemsGroups = [],
+        search = null,
+        notificationsPanel = null,
+        workspacePicker,
+        isAccessibilityCompliant,
+        logoUrl,
+        logoTitle,
+        className,
+        activeColor,
+        headerColor,
+        headerTextColor,
+        documentationUrl,
+        expiredDate,
+        showUpsellButton,
+        onUpsellButtonClick,
+        badges,
+        showStaticHelpMenu,
+        userName,
+        onMenuItemClick,
+        onLogoClick,
+        theme,
+        helpRedirectUrl,
+        disableHelpDropdown,
+        onHelpClick,
+        showChatItem,
+        onChatItemClick,
+        showInviteItem,
+        onInviteItemClick,
+    } = props;
 
-    constructor(props: IAppHeaderProps & WrappedComponentProps) {
-        super(props);
+    const [childrenWidth, setChildrenWidth] = useState(0);
+    const [guid] = useState(`header-${uuid()}`);
+    const [isOverlayMenuOpen, setIsOverlayMenuOpen] = useState(false);
+    const [responsiveMode, setResponsiveMode] = useState(false);
+    const [isHelpMenuOpen, setIsHelpMenuOpen] = useState(false);
+    const [isSearchMenuOpen, setIsSearchMenuOpen] = useState(false);
+    const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
 
-        this.state = {
-            childrenWidth: 0,
-            guid: `header-${uuid()}`,
-            isOverlayMenuOpen: false,
-            responsiveMode: false,
-            isHelpMenuOpen: false,
-            isSearchMenuOpen: false,
-            isNotificationsMenuOpen: false,
-        };
-    }
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const stylesheetRef = useRef<HTMLStyleElement | null>(null);
 
-    public render() {
-        const { workspacePicker, isAccessibilityCompliant, intl } = this.props;
-
-        this.createStyles();
-
-        const logoLinkClassName = cx({
-            "gd-header-logo": true,
-            "gd-header-measure": true,
-            "gd-header-shrink": this.state.responsiveMode,
-        });
-
-        const applicationHeaderAccessibilityLabel = intl.formatMessage({
-            id: "gs.header.accessibility.label",
-        });
-
-        return (
-            <header
-                aria-label={applicationHeaderAccessibilityLabel}
-                className={this.getClassNames()}
-                ref={this.nodeRef}
-            >
-                {isAccessibilityCompliant
-                    ? this.renderAccessibilityLogo(logoLinkClassName)
-                    : this.renderLogo(logoLinkClassName)}
-
-                {workspacePicker}
-                {this.renderNav()}
-            </header>
-        );
-    }
-
-    public componentDidMount() {
-        window.addEventListener("resize", this.resizeHandler);
-    }
-
-    public componentWillUnmount() {
-        window.removeEventListener("resize", this.resizeHandler);
-        removeFromDom(this.stylesheet);
-    }
-
-    private renderLogo(logoLinkClassName: string) {
-        const { logoUrl, logoTitle } = this.props;
-        return (
-            <a href={this.props.logoHref} onClick={this.props.onLogoClick} className={logoLinkClassName}>
-                <img
-                    src={logoUrl}
-                    title={logoTitle}
-                    onLoad={this.measureChildren}
-                    onError={this.measureChildren}
-                    alt=""
-                />
-            </a>
-        );
-    }
-
-    private renderAccessibilityLogo(logoLinkClassName: string) {
-        const { logoUrl, logoTitle, intl } = this.props;
-
-        const logoHrefAccesibilityText = intl.formatMessage({
-            id: "gs.header.href.accessibility",
-        });
-        const imageAltAccessibilityText = intl.formatMessage({
-            id: "gs.header.logo.title.accessibility",
-        });
-
-        return (
-            <a
-                aria-label={logoHrefAccesibilityText}
-                title={logoHrefAccesibilityText}
-                href={this.props.logoHref}
-                onClick={this.props.onLogoClick}
-                className={logoLinkClassName}
-            >
-                <img
-                    src={logoUrl}
-                    title={logoTitle}
-                    onLoad={this.measureChildren}
-                    onError={this.measureChildren}
-                    alt={imageAltAccessibilityText}
-                />
-            </a>
-        );
-    }
-
-    private getClassNames = () => {
-        return cx({
-            "gd-header": true,
-            [this.state.guid]: true,
-            [this.props.className]: !!this.props.className,
-        });
-    };
-
-    private measureChildren = () => {
-        const currentDOMNode = this.nodeRef.current;
-        const childrenWidth = getWidthOfChildren(currentDOMNode, ".gd-header-measure");
-
-        this.setState(
-            {
-                childrenWidth,
-            },
-            this.measure,
-        );
-    };
-
-    private measure = () => {
-        const currentDOMNode = this.nodeRef.current;
+    const measure = useCallback(() => {
+        const currentDOMNode = nodeRef.current;
         if (!currentDOMNode) {
-            // ref is null because 'this.measure()' is called after 100ms 'componentWillUnmount' called,
+            // ref is null because 'measure()' is called after 100ms 'componentWillUnmount' called,
             // which cleans the nodeRef
             return;
         }
 
         const currentWidth = currentDOMNode.clientWidth;
-        const responsiveMode = currentWidth < this.state.childrenWidth;
+        const currentResponsiveMode = currentWidth < childrenWidth;
 
-        if (this.state.responsiveMode !== responsiveMode) {
-            this.setState({
-                responsiveMode,
-                isOverlayMenuOpen: false,
-                isHelpMenuOpen: false,
-                isSearchMenuOpen: false,
-                isNotificationsMenuOpen: false,
-            });
+        if (responsiveMode !== currentResponsiveMode) {
+            setResponsiveMode(currentResponsiveMode);
+            setIsOverlayMenuOpen(false);
+            setIsHelpMenuOpen(false);
+            setIsSearchMenuOpen(false);
+            setIsNotificationsMenuOpen(false);
         }
-    };
+    }, [childrenWidth, responsiveMode]);
 
-    private createStyles = () => {
-        const { guid } = this.state;
-        const { activeColor, headerColor, headerTextColor } = this.props;
+    const resizeHandler = useCallback(
+        debounce(() => measure(), 100),
+        [measure],
+    );
 
+    const measureChildren = useCallback(() => {
+        const currentDOMNode = nodeRef.current;
+        const currentChildrenWidth = getWidthOfChildren(currentDOMNode, ".gd-header-measure");
+
+        setChildrenWidth(currentChildrenWidth);
+        measure();
+    }, [measure]);
+
+    const createStyles = useCallback(() => {
         const textColor = getTextColor(headerTextColor, headerColor);
         const itemActiveColor = getItemActiveColor(activeColor, headerColor);
         const itemHoverColor = getItemHoverColor(headerColor, activeColor);
@@ -236,102 +149,108 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         css.push(`.${guid} .hamburger-icon:not(.is-open):after { border-color: ${textColor}}`);
         css.push(`.${guid} .hamburger-icon:not(.is-open):before { border-color: ${textColor}}`);
 
-        this.stylesheet = addCssToStylesheet(`header-css-${guid}`, css.join("\n"), true);
-    };
+        stylesheetRef.current = addCssToStylesheet(`header-css-${guid}`, css.join("\n"), true);
+    }, [guid, activeColor, headerColor, headerTextColor]);
 
-    private setOverlayMenu = (isOverlayMenuOpen: boolean) => {
-        this.setState({
-            isOverlayMenuOpen,
-            isHelpMenuOpen: false,
-            isSearchMenuOpen: false,
-            isNotificationsMenuOpen: false,
-        });
-    };
+    const handleSetOverlayMenu = useCallback((isOpen: boolean) => {
+        setIsOverlayMenuOpen(isOpen);
+        setIsHelpMenuOpen(false);
+        setIsSearchMenuOpen(false);
+        setIsNotificationsMenuOpen(false);
+    }, []);
 
-    private toggleSearchMenu = () => {
-        this.setState(({ isSearchMenuOpen }) => ({
-            isSearchMenuOpen: !isSearchMenuOpen,
-            isHelpMenuOpen: false,
-            isNotificationsMenuOpen: false,
-        }));
-    };
+    const toggleSearchMenu = useCallback(() => {
+        setIsSearchMenuOpen((prev) => !prev);
+        setIsHelpMenuOpen(false);
+        setIsNotificationsMenuOpen(false);
+    }, []);
 
-    private toggleNotificationsMenu = () => {
-        this.setState(({ isNotificationsMenuOpen }) => ({
-            isNotificationsMenuOpen: !isNotificationsMenuOpen,
-            isHelpMenuOpen: false,
-            isSearchMenuOpen: false,
-        }));
-    };
+    const toggleNotificationsMenu = useCallback(() => {
+        setIsNotificationsMenuOpen((prev) => !prev);
+        setIsHelpMenuOpen(false);
+        setIsSearchMenuOpen(false);
+    }, []);
 
-    private closeNotificationsMenu = () => {
-        this.setState(() => ({
-            isNotificationsMenuOpen: false,
-            isHelpMenuOpen: false,
-            isSearchMenuOpen: false,
-            isOverlayMenuOpen: false,
-        }));
-    };
+    const closeNotificationsMenu = useCallback(() => {
+        setIsNotificationsMenuOpen(false);
+        setIsHelpMenuOpen(false);
+        setIsSearchMenuOpen(false);
+        setIsOverlayMenuOpen(false);
+    }, []);
 
-    private setHelpMenu = (isHelpMenuOpen: boolean) => {
-        this.setState({
-            isHelpMenuOpen,
-            isSearchMenuOpen: false,
-            isNotificationsMenuOpen: false,
-        });
-    };
+    const handleSetHelpMenu = useCallback((isOpen: boolean) => {
+        setIsHelpMenuOpen(isOpen);
+        setIsSearchMenuOpen(false);
+        setIsNotificationsMenuOpen(false);
+    }, []);
 
-    private toggleHelpMenu = () => this.setHelpMenu(!this.state.isHelpMenuOpen);
+    const toggleHelpMenu = useCallback(
+        () => handleSetHelpMenu(!isHelpMenuOpen),
+        [isHelpMenuOpen, handleSetHelpMenu],
+    );
 
-    private handleMenuItemClick = (item: IHeaderMenuItem, event: React.MouseEvent) => {
-        if (this.state.isHelpMenuOpen) {
-            this.setOverlayMenu(false);
-        }
-        this.props.onMenuItemClick(item, event);
-    };
+    const handleMenuItemClick = useCallback(
+        (item: IHeaderMenuItem, event: MouseEvent) => {
+            if (isHelpMenuOpen) {
+                handleSetOverlayMenu(false);
+            }
+            onMenuItemClick(item, event);
+        },
+        [isHelpMenuOpen, handleSetOverlayMenu, onMenuItemClick],
+    );
 
-    private addHelpItemGroup = (itemGroups: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
-        return !this.props.documentationUrl ? itemGroups : [...itemGroups, [this.getHelpMenuLink()]];
-    };
+    const addHelpItemGroup = useCallback(
+        (itemGroups: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
+            return !documentationUrl ? itemGroups : [...itemGroups, [getHelpMenuLink()]];
+        },
+        [documentationUrl],
+    );
 
-    private addAdditionalItems = (itemGroups: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
-        const additionalItems = [];
-        if (this.props.search) {
-            additionalItems.push({
-                key: "gs.header.search",
-                className: "gd-icon-header-search",
-                onClick: this.toggleSearchMenu,
-            });
-        }
+    const addAdditionalItems = useCallback(
+        (itemGroups: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
+            const additionalItems = [];
+            if (search) {
+                additionalItems.push({
+                    key: "gs.header.search",
+                    className: "gd-icon-header-search",
+                    onClick: toggleSearchMenu,
+                });
+            }
 
-        if (this.props.notificationsPanel) {
-            additionalItems.push({
-                key: "gs.header.notifications",
-                className: "gd-icon-header-notifications",
-                icon: <Icon.Alert width={16} height={16} />,
-                onClick: this.toggleNotificationsMenu,
-            });
-        }
+            if (notificationsPanel) {
+                additionalItems.push({
+                    key: "gs.header.notifications",
+                    className: "gd-icon-header-notifications",
+                    icon: <Icon.Alert width={16} height={16} />,
+                    onClick: toggleNotificationsMenu,
+                });
+            }
 
-        if (!additionalItems.length) {
-            return itemGroups;
-        }
+            if (!additionalItems.length) {
+                return itemGroups;
+            }
 
-        return [...itemGroups, additionalItems];
-    };
+            return [...itemGroups, additionalItems];
+        },
+        [search, notificationsPanel, toggleSearchMenu, toggleNotificationsMenu],
+    );
 
-    private getHelpMenu = () => [
-        [this.getHelpMenuLink("gd-icon-header-help-back"), ...this.props.helpMenuItems],
-    ];
+    const getHelpMenu = useCallback(
+        () => [[getHelpMenuLink("gd-icon-header-help-back"), ...helpMenuItems]],
+        [helpMenuItems],
+    );
 
-    private getHelpMenuLink = (icon = "gd-icon-header-help") => ({
-        key: "gs.header.help",
-        className: `s-menu-help ${icon}`,
-        href: this.state.responsiveMode && this.props.helpMenuItems ? undefined : this.props.documentationUrl,
-        onClick: this.state.responsiveMode && this.props.helpMenuItems ? this.toggleHelpMenu : undefined,
-    });
+    const getHelpMenuLink = useCallback(
+        (icon = "gd-icon-header-help") => ({
+            key: "gs.header.help",
+            className: `s-menu-help ${icon}`,
+            href: responsiveMode && helpMenuItems ? undefined : documentationUrl,
+            onClick: responsiveMode && helpMenuItems ? toggleHelpMenu : undefined,
+        }),
+        [responsiveMode, helpMenuItems, documentationUrl, toggleHelpMenu],
+    );
 
-    private getTrialCountdown = (expiredDate: string) => {
+    const getTrialCountdown = useCallback((expiredDate: string) => {
         // expiredDate is the last day that user can use the service
         const trialDaysLeft = differenceInCalendarDays(new Date(expiredDate), new Date()) + 1;
         if (trialDaysLeft === 1) {
@@ -362,18 +281,215 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
             );
         }
         return "";
-    };
+    }, []);
 
-    private renderNav = () => {
-        return this.state.responsiveMode ? this.renderMobileNav() : this.renderStandardNav();
-    };
+    const renderLogo = useCallback(
+        (logoLinkClassName: string) => {
+            return (
+                <a href={logoHref} onClick={onLogoClick} className={logoLinkClassName}>
+                    <img
+                        src={logoUrl}
+                        title={logoTitle}
+                        onLoad={measureChildren}
+                        onError={measureChildren}
+                        alt=""
+                    />
+                </a>
+            );
+        },
+        [logoHref, onLogoClick, logoUrl, logoTitle, measureChildren],
+    );
 
-    private renderMobileNav = () => {
+    const renderAccessibilityLogo = useCallback(
+        (logoLinkClassName: string) => {
+            const logoHrefAccesibilityText = intl.formatMessage({
+                id: "gs.header.href.accessibility",
+            });
+            const imageAltAccessibilityText = intl.formatMessage({
+                id: "gs.header.logo.title.accessibility",
+            });
+
+            return (
+                <a
+                    aria-label={logoHrefAccesibilityText}
+                    title={logoHrefAccesibilityText}
+                    href={logoHref}
+                    onClick={onLogoClick}
+                    className={logoLinkClassName}
+                >
+                    <img
+                        src={logoUrl}
+                        title={logoTitle}
+                        onLoad={measureChildren}
+                        onError={measureChildren}
+                        alt={imageAltAccessibilityText}
+                    />
+                </a>
+            );
+        },
+        [logoHref, onLogoClick, logoUrl, logoTitle, measureChildren, intl],
+    );
+
+    const getClassNames = useCallback(() => {
+        return cx({
+            "gd-header": true,
+            [guid]: true,
+            [className]: !!className,
+        });
+    }, [guid, className]);
+
+    const renderSearchMenu = useCallback(() => {
+        return (
+            <div className="gd-header-menu-search">
+                <Typography tagName="h3" className="gd-header-menu-search-title">
+                    <FormattedMessage id="gs.header.search" />
+                </Typography>
+                <HeaderSearchProvider isOpen={isSearchMenuOpen} toggleOpen={toggleSearchMenu}>
+                    {search}
+                </HeaderSearchProvider>
+            </div>
+        );
+    }, [isSearchMenuOpen, toggleSearchMenu, search]);
+
+    const renderNotificationsOverlay = useCallback(() => {
+        if (!notificationsPanel) {
+            return null;
+        }
+        return (
+            <div className="gd-header-menu-notifications">
+                <Typography tagName="h3" className="gd-header-menu-notifications-title">
+                    <FormattedMessage id="gs.header.notifications" />
+                </Typography>
+                {notificationsPanel({
+                    isMobile: true,
+                    closeNotificationsOverlay: closeNotificationsMenu,
+                })}
+            </div>
+        );
+    }, [notificationsPanel, closeNotificationsMenu]);
+
+    const renderTrialItems = useCallback(() => {
+        if (expiredDate || showUpsellButton) {
+            return (
+                <div className="gd-header-menu-trial gd-header-measure">
+                    {expiredDate ? (
+                        <div className="gd-header-expiration-date">{getTrialCountdown(expiredDate)}</div>
+                    ) : null}
+
+                    {showUpsellButton ? (
+                        <HeaderUpsellButton onUpsellButtonClick={onUpsellButtonClick} />
+                    ) : null}
+                </div>
+            );
+        }
+        return null;
+    }, [expiredDate, showUpsellButton, getTrialCountdown, onUpsellButtonClick]);
+
+    const renderLogoutButton = useCallback(() => {
+        const [logoutMenuItem] = accountMenuItems.filter((item) => item.key === "gs.header.logout");
+
+        return logoutMenuItem ? (
+            <button
+                className="logout-button gd-button s-logout"
+                onClick={(e: MouseEvent) => {
+                    onMenuItemClick(logoutMenuItem, e);
+                }}
+            >
+                <Icon.Logout className="gd-icon-logout" color={theme?.palette?.complementary?.c0} />
+                <span className="gd-button-text">
+                    <FormattedMessage id="gs.header.logout" />
+                </span>
+            </button>
+        ) : (
+            false
+        );
+    }, [accountMenuItems, onMenuItemClick, theme?.palette?.complementary?.c0]);
+
+    const renderVerticalMenu = useCallback(() => {
+        const menuItemsGroups = !isHelpMenuOpen
+            ? showStaticHelpMenu
+                ? [[getHelpMenuLink()]]
+                : addHelpItemGroup(addAdditionalItems(props.menuItemsGroups))
+            : getHelpMenu();
+
+        return (
+            <div key="overlay-menu" className="gd-header-menu-vertical-wrapper">
+                <div className="gd-header-menu-vertical-header">Menu</div>
+                <div className="gd-header-menu-vertical-content">
+                    <HeaderMenu
+                        onMenuItemClick={handleMenuItemClick}
+                        sections={menuItemsGroups}
+                        className="gd-header-menu-vertical"
+                    />
+                    {renderTrialItems()}
+                </div>
+                <div className="gd-header-menu-vertical-footer">
+                    {!!badges && <div className="gd-header-vertical-badges">{badges}</div>}
+                    <div className="gd-header-menu-vertical-bottom-item">
+                        <span className="gd-header-username gd-icon-user">{userName}</span>
+                    </div>
+                    <div>{renderLogoutButton()}</div>
+                </div>
+            </div>
+        );
+    }, [
+        isHelpMenuOpen,
+        showStaticHelpMenu,
+        getHelpMenuLink,
+        addHelpItemGroup,
+        addAdditionalItems,
+        props.menuItemsGroups,
+        getHelpMenu,
+        handleMenuItemClick,
+        renderTrialItems,
+        badges,
+        userName,
+        renderLogoutButton,
+    ]);
+
+    const renderOverlayMenu = useCallback(() => {
+        let content = renderVerticalMenu();
+        if (isSearchMenuOpen) {
+            content = renderSearchMenu();
+        }
+        if (isNotificationsMenuOpen) {
+            content = renderNotificationsOverlay();
+        }
+
+        return (
+            <Overlay
+                key="header-overlay-menu"
+                alignPoints={[
+                    {
+                        align: isSearchMenuOpen || isNotificationsMenuOpen ? "tl tl" : "tr tr",
+                    },
+                ]}
+                closeOnOutsideClick={isOverlayMenuOpen}
+                isModal={isOverlayMenuOpen}
+                positionType="fixed"
+                onClose={() => {
+                    handleSetOverlayMenu(false);
+                }}
+            >
+                {content}
+            </Overlay>
+        );
+    }, [
+        renderVerticalMenu,
+        isSearchMenuOpen,
+        renderSearchMenu,
+        isNotificationsMenuOpen,
+        renderNotificationsOverlay,
+        isOverlayMenuOpen,
+        handleSetOverlayMenu,
+    ]);
+
+    const renderMobileNav = useCallback(() => {
         const iconClasses = cx({
             "hamburger-icon": true,
-            "is-open": this.state.isOverlayMenuOpen,
-            "search-open": this.state.isSearchMenuOpen,
-            "notifications-open": this.state.isNotificationsMenuOpen,
+            "is-open": isOverlayMenuOpen,
+            "search-open": isSearchMenuOpen,
+            "notifications-open": isNotificationsMenuOpen,
         });
 
         return (
@@ -383,225 +499,150 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                         className={iconClasses}
                         key="hamburger-icon"
                         onClick={() => {
-                            this.setOverlayMenu(!this.state.isOverlayMenuOpen);
+                            handleSetOverlayMenu(!isOverlayMenuOpen);
                         }}
                     >
                         <i />
                     </div>
                 </div>
-                {this.state.isOverlayMenuOpen ? this.renderOverlayMenu() : null}
+                {isOverlayMenuOpen ? renderOverlayMenu() : null}
             </>
         );
-    };
+    }, [
+        isOverlayMenuOpen,
+        isSearchMenuOpen,
+        isNotificationsMenuOpen,
+        handleSetOverlayMenu,
+        renderOverlayMenu,
+    ]);
 
-    private renderOverlayMenu = () => {
-        let content = this.renderVerticalMenu();
-        if (this.state.isSearchMenuOpen) {
-            content = this.renderSearchMenu();
-        }
-        if (this.state.isNotificationsMenuOpen) {
-            content = this.renderNotificationsOverlay();
-        }
-
-        return (
-            <Overlay
-                key="header-overlay-menu"
-                alignPoints={[
-                    {
-                        align:
-                            this.state.isSearchMenuOpen || this.state.isNotificationsMenuOpen
-                                ? "tl tl"
-                                : "tr tr",
-                    },
-                ]}
-                closeOnOutsideClick={this.state.isOverlayMenuOpen}
-                isModal={this.state.isOverlayMenuOpen}
-                positionType="fixed"
-                onClose={() => {
-                    this.setOverlayMenu(false);
-                }}
-            >
-                {content}
-            </Overlay>
-        );
-    };
-
-    private renderSearchMenu = () => {
-        return (
-            <div className="gd-header-menu-search">
-                <Typography tagName="h3" className="gd-header-menu-search-title">
-                    <FormattedMessage id="gs.header.search" />
-                </Typography>
-                <HeaderSearchProvider isOpen={this.state.isSearchMenuOpen} toggleOpen={this.toggleSearchMenu}>
-                    {this.props.search}
-                </HeaderSearchProvider>
-            </div>
-        );
-    };
-
-    private renderNotificationsOverlay = () => {
-        if (!this.props.notificationsPanel) {
-            return null;
-        }
-        return (
-            <div className="gd-header-menu-notifications">
-                <Typography tagName="h3" className="gd-header-menu-notifications-title">
-                    <FormattedMessage id="gs.header.notifications" />
-                </Typography>
-                {this.props.notificationsPanel({
-                    isMobile: true,
-                    closeNotificationsOverlay: this.closeNotificationsMenu,
-                })}
-            </div>
-        );
-    };
-
-    private renderTrialItems = () => {
-        if (this.props.expiredDate || this.props.showUpsellButton) {
-            return (
-                <div className="gd-header-menu-trial gd-header-measure">
-                    {this.props.expiredDate ? (
-                        <div className="gd-header-expiration-date">
-                            {this.getTrialCountdown(this.props.expiredDate)}
-                        </div>
-                    ) : null}
-
-                    {this.props.showUpsellButton ? (
-                        <HeaderUpsellButton onUpsellButtonClick={this.props.onUpsellButtonClick} />
-                    ) : null}
-                </div>
-            );
-        }
-        return null;
-    };
-
-    private renderVerticalMenu = () => {
-        const { badges } = this.props;
-
-        const menuItemsGroups = !this.state.isHelpMenuOpen
-            ? this.props.showStaticHelpMenu
-                ? [[this.getHelpMenuLink()]]
-                : this.addHelpItemGroup(this.addAdditionalItems(this.props.menuItemsGroups))
-            : this.getHelpMenu();
-
-        return (
-            <div key="overlay-menu" className="gd-header-menu-vertical-wrapper">
-                <div className="gd-header-menu-vertical-header">Menu</div>
-                <div className="gd-header-menu-vertical-content">
-                    <HeaderMenu
-                        onMenuItemClick={this.handleMenuItemClick}
-                        sections={menuItemsGroups}
-                        className="gd-header-menu-vertical"
-                    />
-                    {this.renderTrialItems()}
-                </div>
-                <div className="gd-header-menu-vertical-footer">
-                    {!!badges && <div className="gd-header-vertical-badges">{badges}</div>}
-                    <div className="gd-header-menu-vertical-bottom-item">
-                        <span className="gd-header-username gd-icon-user">{this.props.userName}</span>
-                    </div>
-                    <div>{this.renderLogoutButton()}</div>
-                </div>
-            </div>
-        );
-    };
-
-    private renderLogoutButton = () => {
-        const [logoutMenuItem] = this.props.accountMenuItems.filter(
-            (item) => item.key === "gs.header.logout",
-        );
-
-        return logoutMenuItem ? (
-            <button
-                className="logout-button gd-button s-logout"
-                onClick={(e: React.MouseEvent) => {
-                    this.props.onMenuItemClick(logoutMenuItem, e);
-                }}
-            >
-                <Icon.Logout
-                    className="gd-icon-logout"
-                    color={this.props.theme?.palette?.complementary?.c0}
-                />
-                <span className="gd-button-text">
-                    <FormattedMessage id="gs.header.logout" />
-                </span>
-            </button>
-        ) : (
-            false
-        );
-    };
-
-    private renderStandardNav = () => {
-        const { badges, helpMenuDropdownAlignPoints, headerTextColor, headerColor } = this.props;
+    const renderStandardNav = useCallback(() => {
         const textColor = getTextColor(headerTextColor, headerColor);
 
         return (
             <div className="gd-header-stretch gd-header-menu-wrapper">
                 <HeaderMenu
-                    onMenuItemClick={this.props.onMenuItemClick}
-                    sections={this.props.menuItemsGroups}
+                    onMenuItemClick={onMenuItemClick}
+                    sections={menuItemsGroups}
                     className="gd-header-menu-horizontal"
                 />
 
-                {this.renderTrialItems()}
+                {renderTrialItems()}
 
-                {this.props.showChatItem ? (
+                {showChatItem ? (
                     <HeaderChatButton
-                        title={this.props.intl.formatMessage({ id: "gs.header.ai" })}
-                        color={this.props.theme?.palette?.primary?.base}
-                        onClick={this.props.onChatItemClick}
+                        title={intl.formatMessage({ id: "gs.header.ai" })}
+                        color={theme?.palette?.primary?.base}
+                        onClick={onChatItemClick}
                     />
                 ) : null}
 
-                {this.props.notificationsPanel
-                    ? this.props.notificationsPanel({
+                {notificationsPanel
+                    ? notificationsPanel({
                           isMobile: false,
-                          closeNotificationsOverlay: this.closeNotificationsMenu,
+                          closeNotificationsOverlay: closeNotificationsMenu,
                       })
                     : null}
 
-                {this.props.search ? (
-                    <HeaderSearchProvider
-                        isOpen={this.state.isSearchMenuOpen}
-                        toggleOpen={this.toggleSearchMenu}
-                    >
-                        <HeaderSearchButton title={this.props.intl.formatMessage({ id: "gs.header.search" })}>
-                            {this.props.search}
+                {search ? (
+                    <HeaderSearchProvider isOpen={isSearchMenuOpen} toggleOpen={toggleSearchMenu}>
+                        <HeaderSearchButton title={intl.formatMessage({ id: "gs.header.search" })}>
+                            {search}
                         </HeaderSearchButton>
                     </HeaderSearchProvider>
                 ) : null}
 
-                {this.props.helpMenuItems.length ? (
+                {helpMenuItems.length ? (
                     <HeaderHelp
-                        onMenuItemClick={this.props.onMenuItemClick}
+                        onMenuItemClick={onMenuItemClick}
                         className="gd-header-measure"
                         helpMenuDropdownAlignPoints={helpMenuDropdownAlignPoints}
-                        items={this.props.helpMenuItems}
-                        disableDropdown={this.props.disableHelpDropdown}
-                        onHelpClicked={this.props.onHelpClick}
-                        helpRedirectUrl={this.props.helpRedirectUrl}
+                        items={helpMenuItems}
+                        disableDropdown={disableHelpDropdown}
+                        onHelpClicked={onHelpClick}
+                        helpRedirectUrl={helpRedirectUrl}
                     />
                 ) : null}
 
-                {this.props.showInviteItem ? (
-                    <HeaderInvite onInviteItemClick={this.props.onInviteItemClick} textColor={textColor} />
+                {showInviteItem ? (
+                    <HeaderInvite onInviteItemClick={onInviteItemClick} textColor={textColor} />
                 ) : null}
 
                 <HeaderAccount
-                    userName={this.props.userName}
-                    onMenuItemClick={this.props.onMenuItemClick}
+                    userName={userName}
+                    onMenuItemClick={onMenuItemClick}
                     className="gd-header-measure"
-                    items={this.props.accountMenuItems}
+                    items={accountMenuItems}
                 />
                 {badges ? <div className="gd-header-badges gd-header-measure">{badges}</div> : null}
             </div>
         );
-    };
+    }, [
+        headerTextColor,
+        headerColor,
+        onMenuItemClick,
+        menuItemsGroups,
+        renderTrialItems,
+        showChatItem,
+        intl,
+        theme?.palette?.primary?.base,
+        onChatItemClick,
+        notificationsPanel,
+        closeNotificationsMenu,
+        search,
+        isSearchMenuOpen,
+        toggleSearchMenu,
+        helpMenuItems,
+        helpMenuDropdownAlignPoints,
+        disableHelpDropdown,
+        onHelpClick,
+        helpRedirectUrl,
+        showInviteItem,
+        onInviteItemClick,
+        userName,
+        accountMenuItems,
+        badges,
+    ]);
+
+    const renderNav = useCallback(() => {
+        return responsiveMode ? renderMobileNav() : renderStandardNav();
+    }, [responsiveMode, renderMobileNav, renderStandardNav]);
+
+    useEffect(() => {
+        window.addEventListener("resize", resizeHandler);
+        return () => {
+            window.removeEventListener("resize", resizeHandler);
+            if (stylesheetRef.current) {
+                removeFromDom(stylesheetRef.current);
+            }
+        };
+    }, [resizeHandler]);
+
+    createStyles();
+
+    const logoLinkClassName = cx({
+        "gd-header-logo": true,
+        "gd-header-measure": true,
+        "gd-header-shrink": responsiveMode,
+    });
+
+    const applicationHeaderAccessibilityLabel = intl.formatMessage({
+        id: "gs.header.accessibility.label",
+    });
+
+    return (
+        <header aria-label={applicationHeaderAccessibilityLabel} className={getClassNames()} ref={nodeRef}>
+            {isAccessibilityCompliant
+                ? renderAccessibilityLogo(logoLinkClassName)
+                : renderLogo(logoLinkClassName)}
+
+            {workspacePicker}
+            {renderNav()}
+        </header>
+    );
 }
 
 /**
  * @internal
  */
-export const AppHeader = withTheme(
-    injectIntl<"intl", IAppHeaderProps & WrappedComponentProps>(AppHeaderCore),
-);
+export const AppHeader = withTheme(AppHeaderCore);

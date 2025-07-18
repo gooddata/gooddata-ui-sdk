@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap.js";
-import React, { useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
@@ -53,7 +53,7 @@ const defaultHeaderRenderer: IDashboardLayoutSectionHeaderRenderer<unknown> = (p
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
 
-export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionProps<TWidget>): JSX.Element {
+export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionProps<TWidget>): ReactElement {
     const {
         section,
         sectionRenderer = defaultSectionRenderer,

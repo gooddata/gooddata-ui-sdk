@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useContext } from "react";
+import { createContext, ReactNode, useContext } from "react";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { ILayoutItemPath } from "../../../types.js";
@@ -10,7 +10,7 @@ import { ExtendedDashboardWidget } from "../../../model/index.js";
 
 export interface IDashboardItemPathAndSizeContextProps {
     layoutItem?: IDashboardLayoutItemFacade<ExtendedDashboardWidget>;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export interface IDashboardItemPathAndSize {
@@ -26,19 +26,21 @@ const DEFAULT_LAYOUT_SIZE: IDashboardLayoutSizeByScreenSize = {
     },
 };
 
-const DashboardItemPathAndSizeContext = React.createContext<
+const DashboardItemPathAndSizeContext = createContext<
     IDashboardLayoutItemFacade<ExtendedDashboardWidget> | undefined
 >(undefined);
 DashboardItemPathAndSizeContext.displayName = "DashboardScreenSizeContext";
 
-export const DashboardItemPathAndSizeProvider: React.FC<IDashboardItemPathAndSizeContextProps> = ({
+export function DashboardItemPathAndSizeProvider({
     children,
     layoutItem,
-}) => (
-    <DashboardItemPathAndSizeContext.Provider value={layoutItem}>
-        {children}
-    </DashboardItemPathAndSizeContext.Provider>
-);
+}: IDashboardItemPathAndSizeContextProps) {
+    return (
+        <DashboardItemPathAndSizeContext.Provider value={layoutItem}>
+            {children}
+        </DashboardItemPathAndSizeContext.Provider>
+    );
+}
 
 /**
  * Return the current item, its path, and size.

@@ -1,13 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const Save: React.FC<IIconProps> = ({ color = "#b1c1d1", className, width = 18, height = 14 }) => {
+export function Save({ color = "#b1c1d1", className, width = 18, height = 14 }: IIconProps) {
     return (
         <svg
             className={className}
@@ -23,4 +21,4 @@ export const Save: React.FC<IIconProps> = ({ color = "#b1c1d1", className, width
             />
         </svg>
     );
-};
+}

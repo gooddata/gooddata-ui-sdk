@@ -1,9 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { IIconProps } from "../typings.js";
 
-export const Magic: React.FC<IIconProps> = ({ color = "#b1c1d1", className, width, height, ariaHidden }) => {
+export function Magic({ color = "#b1c1d1", className, width, height, ariaHidden }: IIconProps) {
     return (
         <svg
             className={className}
@@ -26,4 +25,4 @@ export const Magic: React.FC<IIconProps> = ({ color = "#b1c1d1", className, widt
             </g>
         </svg>
     );
-};
+}

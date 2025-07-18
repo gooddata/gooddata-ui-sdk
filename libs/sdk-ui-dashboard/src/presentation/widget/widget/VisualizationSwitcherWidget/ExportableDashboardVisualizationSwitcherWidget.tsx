@@ -1,6 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
@@ -10,9 +9,12 @@ import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/Dash
 /**
  * @internal
  */
-export const ExportableDashboardVisualizationSwitcherWidget: React.FC<
-    IDefaultDashboardVisualizationSwitcherWidgetProps
-> = ({ widget, screen, dashboardItemClasses, exportData }) => {
+export function ExportableDashboardVisualizationSwitcherWidget({
+    widget,
+    dashboardItemClasses,
+    screen,
+    exportData,
+}: IDefaultDashboardVisualizationSwitcherWidgetProps) {
     return (
         <DashboardItem
             className={cx(dashboardItemClasses, "type-visualization", "gd-dashboard-view-widget")}
@@ -29,4 +31,4 @@ export const ExportableDashboardVisualizationSwitcherWidget: React.FC<
             </DashboardItemBase>
         </DashboardItem>
     );
-};
+}

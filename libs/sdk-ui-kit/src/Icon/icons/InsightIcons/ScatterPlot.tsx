@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
 import { IIconProps } from "../../typings.js";
 
 /**
  * @internal
  */
-export const ScatterPlot: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function ScatterPlot({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -21,4 +21,4 @@ export const ScatterPlot: React.FC<IIconProps> = ({ className, width, height, co
             </g>
         </svg>
     );
-};
+}

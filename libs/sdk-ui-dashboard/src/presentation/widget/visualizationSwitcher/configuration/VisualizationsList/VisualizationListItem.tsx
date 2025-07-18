@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import cx from "classnames";
 import { Button, IAlignPoint, InsightListItemTypeIcon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { IInsight, IInsightWidget, insightVisualizationType } from "@gooddata/sdk-model";
@@ -32,7 +32,7 @@ interface IVisualizationListItemProps {
     onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
 }
 
-export const VisualizationListItem: React.FC<IVisualizationListItemProps> = ({
+export function VisualizationListItem({
     visualization,
     insight,
     isActive,
@@ -42,7 +42,7 @@ export const VisualizationListItem: React.FC<IVisualizationListItemProps> = ({
     onVisualizationDeleted,
     onVisualizationSelect,
     onVisualizationPositionChange,
-}) => {
+}: IVisualizationListItemProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [active, setActive] = useState<string>("");
 
@@ -114,4 +114,4 @@ export const VisualizationListItem: React.FC<IVisualizationListItemProps> = ({
             ) : null}
         </>
     );
-};
+}

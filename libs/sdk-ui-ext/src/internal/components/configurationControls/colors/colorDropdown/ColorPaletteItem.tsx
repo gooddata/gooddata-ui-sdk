@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { createRef, PureComponent } from "react";
 import { IColor, IColorFromPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import cx from "classnames";
 
@@ -11,12 +11,12 @@ export interface IColorPaletteItemProps {
     onColorSelected: (color: IColor) => void;
 }
 
-export default class ColorPaletteItem extends React.PureComponent<IColorPaletteItemProps> {
+export default class ColorPaletteItem extends PureComponent<IColorPaletteItemProps> {
     private itemRef: any;
 
     constructor(props: IColorPaletteItemProps) {
         super(props);
-        this.itemRef = (React as any).createRef();
+        this.itemRef = createRef();
     }
 
     public render() {

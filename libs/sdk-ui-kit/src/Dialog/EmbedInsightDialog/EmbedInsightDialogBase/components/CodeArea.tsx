@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { ReactNode, useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ReactNode, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { dialogEmptyInsightMessageLabels } from "../../../../locales.js";
@@ -16,9 +16,7 @@ export interface ICodeAreaProps {
 /**
  * @internal
  */
-export const CodeArea: React.FC<ICodeAreaProps> = (props) => {
-    const { code, onCopyCode } = props;
-
+export function CodeArea({ code, onCopyCode }: ICodeAreaProps) {
     const onAreaCopyCode = useCallback(() => {
         onCopyCode(code);
     }, [code, onCopyCode]);
@@ -33,7 +31,7 @@ export const CodeArea: React.FC<ICodeAreaProps> = (props) => {
             />
         </div>
     );
-};
+}
 
 /**
  * @internal
@@ -47,10 +45,11 @@ export interface ICodeAreaDisableMessageProps {
 /**
  * @internal
  */
-export const CodeAreaDisableMessage: React.VFC<ICodeAreaDisableMessageProps> = (
-    props: ICodeAreaDisableMessageProps,
-) => {
-    const { componentType, embedType, openSaveInsightDialog } = props;
+export function CodeAreaDisableMessage({
+    componentType,
+    embedType,
+    openSaveInsightDialog,
+}: ICodeAreaDisableMessageProps) {
     const getEmptyMessage = useCallback(() => {
         const isDefinitionMsg = embedType === "react" && componentType === "definition";
         return (
@@ -70,18 +69,17 @@ export const CodeAreaDisableMessage: React.VFC<ICodeAreaDisableMessageProps> = (
             <div className="embed-insight-dialog-code-empty-msg">{getEmptyMessage()}</div>
         </div>
     );
-};
+}
 
 export interface IEmbedInsightCodeAreaProps extends ICodeAreaProps, ICodeAreaDisableMessageProps {}
 
 /**
  * @internal
  */
-export const EmbedInsightCodeArea: React.VFC<IEmbedInsightCodeAreaProps> = (props) => {
-    const { code, onCopyCode, ...restProps } = props;
+export function EmbedInsightCodeArea({ code, onCopyCode, ...restProps }: IEmbedInsightCodeAreaProps) {
     return code ? (
         <CodeArea code={code} onCopyCode={onCopyCode} />
     ) : (
         <CodeAreaDisableMessage {...restProps} />
     );
-};
+}

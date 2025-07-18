@@ -1,24 +1,25 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import { ErrorOverlay } from "@gooddata/sdk-ui-kit";
 import { withIntl } from "@gooddata/sdk-ui";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { action } from "storybook/actions";
 
 const bodyContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ".repeat(80);
 
-const ErrorOverlayExampleDefault: React.FC = () => {
+function ErrorOverlayExampleDefault() {
     return (
         <div className="library-component screenshot-target">
             <div>{bodyContent}</div>
             <ErrorOverlay onButtonClick={action("onButtonClick")} />
         </div>
     );
-};
+}
 
-const ErrorOverlayExampleCustom: React.FC<WrappedComponentProps> = ({ intl }) => {
+function ErrorOverlayExampleCustom() {
+    const intl = useIntl();
+
     const title = intl.formatMessage({ id: "overlayTitle" });
     const text = intl.formatMessage(
         {
@@ -35,7 +36,7 @@ const ErrorOverlayExampleCustom: React.FC<WrappedComponentProps> = ({ intl }) =>
             <ErrorOverlay showIcon={false} showButton={false} text={text} title={title} />
         </div>
     );
-};
+}
 
 const customMessages = {
     overlayTitle: "Things went wrong",
@@ -43,11 +44,7 @@ const customMessages = {
 };
 
 const WrappedErrorOverlayExampleDefault = withIntl(ErrorOverlayExampleDefault);
-const WrappedErrorOverlayExampleCustom = withIntl(
-    injectIntl(ErrorOverlayExampleCustom),
-    undefined,
-    customMessages,
-);
+const WrappedErrorOverlayExampleCustom = withIntl(ErrorOverlayExampleCustom, undefined, customMessages);
 
 export default {
     title: "12 UI Kit/ErrorOverlay",

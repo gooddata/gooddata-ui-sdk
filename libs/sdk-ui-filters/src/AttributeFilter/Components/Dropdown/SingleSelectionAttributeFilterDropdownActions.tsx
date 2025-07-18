@@ -1,11 +1,10 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 
 /**
  * This component displays empty space in actions area
  *
  * @beta
  */
-export const SingleSelectionAttributeFilterDropdownActions: React.VFC = () => {
+export function SingleSelectionAttributeFilterDropdownActions() {
     return <div />;
-};
+}

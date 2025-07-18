@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import isEmpty from "lodash/isEmpty.js";
 import { ICatalogAttribute } from "@gooddata/sdk-model";
 import cx from "classnames";
@@ -19,12 +19,12 @@ const TOOLTIP_ALIGN_POINT = [
     { align: "cl cr", offset: { x: -10, y: 0 } },
 ];
 
-const AttributeListItem: React.FC<IAttributeListItemProps> = ({
+export default function AttributeListItem({
     item,
     title,
     isLocationIconEnabled,
     onClick,
-}) => {
+}: IAttributeListItemProps) {
     const classNames = useMemo(() => {
         const isDisplayLocationIcon = isLocationIconEnabled && !isEmpty(item?.geoPinDisplayForms);
         return cx(`s-${stringUtils.simplifyText(item.attribute.title)}`, "gd-attribute-list-item", {
@@ -43,6 +43,4 @@ const AttributeListItem: React.FC<IAttributeListItemProps> = ({
             <AttributeListItemTooltip item={item} />
         </div>
     );
-};
-
-export default AttributeListItem;
+}

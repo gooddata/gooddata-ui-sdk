@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 
+import { RefObject, useCallback, useEffect, useReducer, useRef, useState } from "react";
 import {
     isExportDefinitionVisualizationObjectRequestPayload,
     isInsightWidget,
@@ -7,6 +8,8 @@ import {
     IWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { createSelector } from "@reduxjs/toolkit";
+
 import {
     selectDashboardUserAutomations,
     selectFocusObject,
@@ -15,8 +18,6 @@ import {
     selectWidgets,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { createSelector } from "@reduxjs/toolkit";
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 
 const selectIsWidgetHighlighted = (widget: IWidget) =>
     createSelector(
@@ -72,7 +73,7 @@ const selectIsWidgetHighlighted = (widget: IWidget) =>
         },
     );
 
-const useOutsideClick = <T extends HTMLElement>(ref: React.RefObject<T>, callbackFn: () => void) => {
+const useOutsideClick = <T extends HTMLElement>(ref: RefObject<T | null>, callbackFn: () => void) => {
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (ref.current && !ref.current.contains(event.target as Node)) {

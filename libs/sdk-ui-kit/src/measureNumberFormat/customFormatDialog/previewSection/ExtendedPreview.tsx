@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { Component } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
@@ -15,7 +15,7 @@ interface IExtendedPreviewProps {
     separators?: ISeparators;
 }
 
-export class ExtendedPreview extends React.Component<IExtendedPreviewProps, IExtendedPreviewState> {
+export class ExtendedPreview extends Component<IExtendedPreviewProps, IExtendedPreviewState> {
     public state: IExtendedPreviewState = {
         expanded: false,
     };

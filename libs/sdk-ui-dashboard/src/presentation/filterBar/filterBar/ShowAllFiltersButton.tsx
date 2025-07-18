@@ -1,5 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
+
 import { FormattedMessage } from "react-intl";
 
 interface IShowAllFiltersButtonProps {
@@ -8,11 +8,11 @@ interface IShowAllFiltersButtonProps {
     onToggle: (isExpanded: boolean) => void;
 }
 
-export const ShowAllFiltersButton: React.FC<IShowAllFiltersButtonProps> = ({
+export function ShowAllFiltersButton({
     isVisible,
     isFilterBarExpanded,
     onToggle,
-}) => {
+}: IShowAllFiltersButtonProps) {
     if (!isVisible) {
         return null;
     }
@@ -38,4 +38,4 @@ export const ShowAllFiltersButton: React.FC<IShowAllFiltersButtonProps> = ({
             </button>
         </div>
     );
-};
+}

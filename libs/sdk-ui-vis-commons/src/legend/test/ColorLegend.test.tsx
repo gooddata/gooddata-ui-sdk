@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { ColorLegend, IColorLegendProps } from "../ColorLegend.js";
 import range from "lodash/range.js";

@@ -1,6 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+// (C) 2020-2025 GoodData Corporation
+import { useIntl } from "react-intl";
 
 import DropdownControl from "./DropdownControl.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -15,13 +14,15 @@ export interface IPushpinViewportControl {
     pushData: (data: any) => any;
 }
 
-function getPushpinProperty(props: IPushpinViewportControl & WrappedComponentProps): IGeoConfigViewport {
+function getPushpinProperty(props: IPushpinViewportControl): IGeoConfigViewport {
     return props.properties?.controls?.viewport ?? { area: "auto" };
 }
 
-function PushpinViewportControl(props: IPushpinViewportControl & WrappedComponentProps): React.ReactElement {
+export default function PushpinViewportControl(props: IPushpinViewportControl) {
+    const intl = useIntl();
+
     const { area } = getPushpinProperty(props);
-    const { disabled, properties, pushData, intl } = props;
+    const { disabled, properties, pushData } = props;
     return (
         <div className="s-pushpin-viewport-control">
             <DropdownControl
@@ -37,5 +38,3 @@ function PushpinViewportControl(props: IPushpinViewportControl & WrappedComponen
         </div>
     );
 }
-
-export default injectIntl(PushpinViewportControl);

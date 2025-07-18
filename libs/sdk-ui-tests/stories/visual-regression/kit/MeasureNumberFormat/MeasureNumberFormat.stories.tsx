@@ -5,9 +5,8 @@ import {
     IToggleButtonProps,
     MeasureNumberFormat,
 } from "@gooddata/sdk-ui-kit";
-import React from "react";
-
 import { action } from "storybook/actions";
+
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -73,29 +72,33 @@ const separators: ISeparators = {
     decimal: ".",
 };
 
-const ToggleButton: React.FC<IToggleButtonProps> = ({ toggleDropdown, text }) => (
-    <button
-        type="button"
-        className="s-measure-number-format-button gd-button gd-button-secondary gd-button-small"
-        onClick={toggleDropdown}
-    >
-        {text}
-    </button>
-);
+function ToggleButton({ toggleDropdown, text }: IToggleButtonProps) {
+    return (
+        <button
+            type="button"
+            className="s-measure-number-format-button gd-button gd-button-secondary gd-button-small"
+            onClick={toggleDropdown}
+        >
+            {text}
+        </button>
+    );
+}
 
-const MeasureNumberFormatTest = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <MeasureNumberFormat
-            toggleButton={ToggleButton}
-            presets={presets}
-            separators={separators}
-            templates={templates}
-            selectedFormat={null}
-            setFormat={action(`selected format`)}
-            documentationLink={documentationLink}
-        />
-    </div>
-);
+function MeasureNumberFormatTest() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <MeasureNumberFormat
+                toggleButton={ToggleButton}
+                presets={presets}
+                separators={separators}
+                templates={templates}
+                selectedFormat={null}
+                setFormat={action(`selected format`)}
+                documentationLink={documentationLink}
+            />
+        </div>
+    );
+}
 
 export default {
     title: "12 UI Kit/MeasureNumberFormat",
@@ -143,4 +146,5 @@ Themed.parameters = { kind: "themed", screenshot: true };
                 postInteractionWait: 2000,
             },
         },
-    );*/
+    );
+*/

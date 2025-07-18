@@ -1,7 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import React from "react";
 import * as ReferenceMd from "../../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
@@ -9,7 +8,7 @@ const measures = [ReferenceMd.Amount, ReferenceMd.Won];
 const attributes = [ReferenceMd.Product.Name, ReferenceMd.Department];
 const columns = [ReferenceMd.ForecastCategory, ReferenceMd.Region];
 
-export const PivotTableSizingScenario: React.FC = () => {
+export function PivotTableSizingScenario() {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -33,4 +32,4 @@ export const PivotTableSizingScenario: React.FC = () => {
             />
         </div>
     );
-};
+}

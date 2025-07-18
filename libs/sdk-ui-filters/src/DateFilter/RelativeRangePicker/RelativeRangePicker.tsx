@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState, useCallback, useMemo } from "react";
+import { ReactNode, useState, useCallback, useMemo, memo } from "react";
 import cx from "classnames";
 
 import {
@@ -11,7 +11,7 @@ import {
     findRelativeDateFilterOptionByValue,
     getRelativeDateFilterItems,
 } from "../DynamicSelect/utils.js";
-import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
 import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu.js";
 import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces/index.js";
@@ -30,7 +30,7 @@ interface ISelectWrapperProps {
     label: string;
     labelId: string;
     errorMessage: string;
-    children: React.ReactNode;
+    children: ReactNode;
     className?: string;
 }
 
@@ -100,7 +100,7 @@ interface IRelativeRangePickerSelectProps {
     wrapperClassName?: string;
 }
 
-const RelativeRangePickerSelect = React.memo((props: IRelativeRangePickerSelectProps) => {
+const RelativeRangePickerSelect = memo((props: IRelativeRangePickerSelectProps) => {
     const {
         label,
         value,
@@ -150,9 +150,10 @@ const RelativeRangePickerSelect = React.memo((props: IRelativeRangePickerSelectP
 
 const mobileVisibleItemsRange = 5;
 
-const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & WrappedComponentProps> = (props) => {
-    const { selectedFilterOption, intl, isMobile, accessibilityConfig, id, onSelectedFilterOptionChange } =
-        props;
+export function RelativeRangePicker(props: IRelativeRangePickerProps) {
+    const intl = useIntl();
+
+    const { selectedFilterOption, isMobile, accessibilityConfig, id, onSelectedFilterOptionChange } = props;
 
     const getItems = useMemo(
         () => getItemsFactory(selectedFilterOption.granularity, isMobile, intl),
@@ -333,6 +334,4 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
             />
         </div>
     );
-};
-
-export const RelativeRangePicker = injectIntl(RelativeRangePickerComponent);
+}

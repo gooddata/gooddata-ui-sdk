@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { CSSProperties, FC, useCallback, useEffect, useMemo, useRef } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { CSSProperties, FC, useCallback, useEffect, useMemo, useRef } from "react";
 import { useDragLayer } from "react-dnd";
 
 import {

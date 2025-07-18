@@ -206,6 +206,7 @@ export {
     createIntlMock,
     withIntl,
     withIntlForTest,
+    WithIntlForTest,
     resolveLocale,
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { MutableRefObject } from "react";
 import { Bubble, BubbleHoverTrigger, OverlayPositionType, UiChip } from "@gooddata/sdk-ui-kit";
 import { areObjRefsEqual, FilterContextItem, IDashboardDateFilter } from "@gooddata/sdk-model";
 import { DefaultDashboardDateFilter, IDashboardDateFilterConfig } from "../../filterBar/index.js";
@@ -17,14 +17,21 @@ const tooltipAlignPoints = [
     { align: "tl bl", offset: { x: 11, y: 0 } },
 ];
 
-export const AutomationDateFilter: React.FC<{
+export function AutomationDateFilter({
+    filter,
+    onChange,
+    onDelete,
+    isLocked,
+    isCommonDateFilter,
+    overlayPositionType,
+}: {
     filter: IDashboardDateFilter;
     onChange: (filter: FilterContextItem | undefined) => void;
     onDelete: (filter: FilterContextItem) => void;
     isLocked?: boolean;
     isCommonDateFilter?: boolean;
     overlayPositionType?: OverlayPositionType;
-}> = ({ filter, onChange, onDelete, isLocked, isCommonDateFilter, overlayPositionType }) => {
+}) {
     const intl = useIntl();
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
@@ -70,7 +77,7 @@ export const AutomationDateFilter: React.FC<{
                                 isExpanded: props.isOpen,
                                 deleteAriaLabel: intl.formatMessage({ id: "delete" }),
                             }}
-                            buttonRef={props.buttonRef as React.MutableRefObject<HTMLButtonElement>}
+                            buttonRef={props.buttonRef as MutableRefObject<HTMLButtonElement>}
                         />
                         <Bubble alignPoints={tooltipAlignPoints}>{label}</Bubble>
                     </BubbleHoverTrigger>
@@ -78,4 +85,4 @@ export const AutomationDateFilter: React.FC<{
             }}
         />
     );
-};
+}

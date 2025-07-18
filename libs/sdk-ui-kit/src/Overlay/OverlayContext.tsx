@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { createContext, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { OverlayController } from "./OverlayController.js";
 import { v4 as uuid } from "uuid";
 
@@ -23,7 +23,7 @@ export interface IOverlayControllerProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -31,12 +31,9 @@ export interface IOverlayControllerProviderProps {
  *
  * @internal
  */
-export const OverlayControllerProvider: React.FC<IOverlayControllerProviderProps> = ({
-    children,
-    overlayController,
-}) => {
+export function OverlayControllerProvider({ children, overlayController }: IOverlayControllerProviderProps) {
     return <OverlayContext.Provider value={overlayController}>{children}</OverlayContext.Provider>;
-};
+}
 
 /**
  * Hook to get current instance of the {@link OverlayController}
@@ -75,7 +72,7 @@ export function useOverlayZIndexWithRegister() {
     const overlayController = useOverlayController();
     const zIndex = useOverlayZIndex(overlayId);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!overlayController) {
             return undefined;
         }

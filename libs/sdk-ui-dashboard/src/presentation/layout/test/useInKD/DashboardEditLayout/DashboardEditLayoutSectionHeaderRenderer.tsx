@@ -1,5 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 
 import {
     DashboardLayoutItemViewRenderer,
@@ -17,10 +16,8 @@ type IDashboardLayoutSectionHeaderRendererProps = IDashboardLayoutSectionHeaderR
 const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<any> = {
     ref: () => undefined,
     index: () => 0,
-    // @ts-expect-error this is mock
     raw: () => null,
     widget: () => null,
-    // @ts-expect-error this is mock
     section: () => undefined,
     size: () => ({ xl: { gridWidth: 12 } }),
     sizeForScreen: () => ({ gridWidth: 12 }),
@@ -44,11 +41,11 @@ const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<any> = {
     isWidgetItemWithInsightRef: () => false,
     isWidgetItemWithKpiRef: () => false,
     isWidgetItemWithRef: () => false,
-};
+} as unknown as IDashboardLayoutItemFacade<any>;
 
-export const RenderDashboardEditLayoutSectionHeaderRenderer: React.FC<
-    IDashboardLayoutSectionHeaderRendererProps
-> = (props) => {
+export function RenderDashboardEditLayoutSectionHeaderRenderer(
+    props: IDashboardLayoutSectionHeaderRendererProps,
+) {
     const { section, screen, DefaultSectionHeaderRenderer } = props;
 
     const rowId = "rowId";
@@ -78,6 +75,6 @@ export const RenderDashboardEditLayoutSectionHeaderRenderer: React.FC<
     }
 
     return <DefaultSectionHeaderRenderer {...props} />;
-};
+}
 
 export const DashboardEditLayoutSectionHeaderRenderer = RenderDashboardEditLayoutSectionHeaderRenderer;

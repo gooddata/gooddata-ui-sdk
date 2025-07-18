@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { useWidgetSelection } from "../../../model/index.js";
 import { CreationPanel } from "./CreationPanel.js";
 import { ISidebarProps } from "./types.js";
@@ -7,9 +6,7 @@ import { ISidebarProps } from "./types.js";
 /**
  * @internal
  */
-export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSidebar">> = (
-    props,
-): JSX.Element => {
+export function SidebarConfigurationPanel(props: Omit<ISidebarProps, "DefaultSidebar">) {
     const {
         configurationPanelClassName,
         WrapCreatePanelItemWithDragComponent,
@@ -40,4 +37,4 @@ export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSid
             <DeleteDropZoneComponent />
         </div>
     );
-};
+}

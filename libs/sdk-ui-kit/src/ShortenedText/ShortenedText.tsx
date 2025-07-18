@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React, { PureComponent } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { PureComponent, ElementType, createRef, ReactNode } from "react";
 import cx from "classnames";
 
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
@@ -51,7 +51,7 @@ export function getShortenedTitle(
 export interface IShortenedTextProps {
     children: string;
     className?: string;
-    tagName?: React.ElementType;
+    tagName?: ElementType;
     tooltipAlignPoints?: IAlignPoint[];
     tooltipVisibleOnMouseOver?: boolean;
     getElement?: (context: any) => Pick<HTMLElement, "scrollWidth" | "getBoundingClientRect">;
@@ -104,7 +104,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
         ellipsisPosition: "middle",
     };
 
-    textRef = React.createRef<HTMLElement>();
+    textRef = createRef<HTMLElement>();
 
     constructor(props: IShortenedTextProps) {
         super(props);
@@ -155,7 +155,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
         });
     }
 
-    renderTextWithBubble(): React.ReactNode {
+    renderTextWithBubble(): ReactNode {
         return (
             <BubbleHoverTrigger
                 showDelay={0}
@@ -170,7 +170,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
         );
     }
 
-    renderText(): React.ReactNode {
+    renderText(): ReactNode {
         const TagName = this.props.tagName;
         return (
             <TagName

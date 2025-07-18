@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { PureComponent } from "react";
 import {
     IMeasureValueFilter,
     newMeasureValueFilter,
@@ -57,7 +57,7 @@ const getTreatNullAsZeroValue = (
 /**
  * @beta
  */
-export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValueFilterDropdownProps> {
+export class MeasureValueFilterDropdown extends PureComponent<IMeasureValueFilterDropdownProps> {
     public static defaultProps: Pick<
         IMeasureValueFilterDropdownProps,
         "displayTreatNullAsZeroOption" | "treatNullAsZeroDefaultValue" | "enableOperatorSelection"

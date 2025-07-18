@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 import { CustomDashboardRichTextMenuTitleComponent } from "../types.js";

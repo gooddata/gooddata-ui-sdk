@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import React, { ComponentType } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ComponentType } from "react";
 import { renderModeAware } from "../../componentDefinition/index.js";
 import { SidebarConfigurationPanel } from "./SidebarConfigurationPanel.js";
 import { ISidebarProps } from "./types.js";

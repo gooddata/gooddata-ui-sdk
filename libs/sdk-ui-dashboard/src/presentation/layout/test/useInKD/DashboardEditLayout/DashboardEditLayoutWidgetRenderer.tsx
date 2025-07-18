@@ -1,6 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import cx from "classnames";
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
@@ -14,10 +14,8 @@ type IDashboardEditLayoutWidgetRendererOwnProps =
 
 export type IDashboardEditLayoutWidgetRendererProps = IDashboardEditLayoutWidgetRendererOwnProps;
 
-export const RenderDashboardEditLayoutWidgetRenderer: React.FC<IDashboardEditLayoutWidgetRendererProps> = (
-    props,
-) => {
-    const contentRef = useRef<HTMLDivElement>() as React.RefObject<HTMLDivElement>;
+export function RenderDashboardEditLayoutWidgetRenderer(props: IDashboardEditLayoutWidgetRendererProps) {
+    const contentRef = useRef<HTMLDivElement | null>(null);
 
     const { screen, item, DefaultWidgetRenderer } = props;
 
@@ -56,6 +54,6 @@ export const RenderDashboardEditLayoutWidgetRenderer: React.FC<IDashboardEditLay
             <DashboardEditLayoutWidget contentRef={contentRef} item={item} screen={screen} />
         </DefaultWidgetRenderer>
     );
-};
+}
 
 export const DashboardEditLayoutWidgetRenderer = RenderDashboardEditLayoutWidgetRenderer;

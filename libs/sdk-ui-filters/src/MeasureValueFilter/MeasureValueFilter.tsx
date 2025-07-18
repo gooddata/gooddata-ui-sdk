@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { Fragment, createRef, PureComponent } from "react";
 import { IMeasureValueFilter } from "@gooddata/sdk-model";
 import noop from "lodash/noop.js";
 
@@ -25,10 +25,7 @@ export interface IMeasureValueFilterState {
 /**
  * @beta
  */
-export class MeasureValueFilter extends React.PureComponent<
-    IMeasureValueFilterProps,
-    IMeasureValueFilterState
-> {
+export class MeasureValueFilter extends PureComponent<IMeasureValueFilterProps, IMeasureValueFilterState> {
     public static defaultProps: Partial<IMeasureValueFilterProps> = {
         onCancel: noop,
     };
@@ -37,7 +34,7 @@ export class MeasureValueFilter extends React.PureComponent<
         displayDropdown: false,
     };
 
-    private buttonRef = React.createRef<HTMLDivElement>();
+    private buttonRef = createRef<HTMLDivElement>();
 
     public render() {
         const { displayDropdown } = this.state;
@@ -55,7 +52,7 @@ export class MeasureValueFilter extends React.PureComponent<
         } = this.props;
 
         return (
-            <React.Fragment>
+            <Fragment>
                 <div ref={this.buttonRef}>
                     <MeasureValueFilterButton
                         onClick={this.toggleDropdown}
@@ -79,7 +76,7 @@ export class MeasureValueFilter extends React.PureComponent<
                         anchorEl={this.buttonRef.current}
                     />
                 ) : null}
-            </React.Fragment>
+            </Fragment>
         );
     }
 

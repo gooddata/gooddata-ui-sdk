@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import { useCallback, useRef } from "react";
 import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { ListItem } from "../types.js";
 
@@ -79,10 +79,10 @@ const defaultOnSearchMetrics: ISearchMetricsRef = {
  */
 export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearchMetricsReturn => {
     // Use ref because we don't want to cause redraw with the new metrics data
-    const searchMetricsRef = React.useRef<ISearchMetricsRef>(defaultOnSearchMetrics);
+    const searchMetricsRef = useRef<ISearchMetricsRef>(defaultOnSearchMetrics);
 
     // Callback will be called when the search is closed
-    const onCloseMetrics = React.useCallback(() => {
+    const onCloseMetrics = useCallback(() => {
         // Do not report the metrics if it was already reported
         // i.e. by onSelect callback
         if (searchMetricsRef.current.reported) return;
@@ -101,7 +101,7 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
     }, [callback]);
 
     // Callback will be called when the user selects an item
-    const onSelectMetrics = React.useCallback(
+    const onSelectMetrics = useCallback(
         (item: ISemanticSearchResultItem, index?: number) => {
             // Report the metrics
             callback?.({
@@ -120,7 +120,7 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
     );
 
     // Callback will be called when the user types in the search input
-    const onSearchMetrics = React.useCallback(
+    const onSearchMetrics = useCallback(
         (searchTerm: string, searchResults?: ListItem<ISemanticSearchResultItem>[]) => {
             const { searchCount, lastSearchTerm } = searchMetricsRef.current.state;
 

@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
@@ -25,17 +25,16 @@ interface IGranularGranteeUserItemProps {
     onDelete: (grantee: GranteeItem) => void;
 }
 
-export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = (props) => {
-    const {
-        grantee,
-        currentUserPermissions,
-        isSharedObjectLocked,
-        onChange,
-        onDelete,
-        mode,
-        id,
-        isGranteeShareLoading,
-    } = props;
+export function GranularGranteeUserItem({
+    grantee,
+    currentUserPermissions,
+    isSharedObjectLocked,
+    onChange,
+    onDelete,
+    mode,
+    id,
+    isGranteeShareLoading,
+}: IGranularGranteeUserItemProps) {
     const { email } = grantee;
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const { permissionsDropdownOpenInteraction } = useShareDialogInteraction();
@@ -105,4 +104,4 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
             <GranteeUserIcon />
         </div>
     );
-};
+}

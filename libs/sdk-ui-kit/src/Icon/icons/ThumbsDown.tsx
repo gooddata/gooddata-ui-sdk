@@ -1,13 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
-
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const ThumbsDown: React.FC<IIconProps> = ({ color, className, width = 18, height = 19 }) => {
+export function ThumbsDown({ color, className, width = 18, height = 19 }: IIconProps) {
     return (
         <svg
             className={className}
@@ -24,4 +22,4 @@ export const ThumbsDown: React.FC<IIconProps> = ({ color, className, width = 18,
             />
         </svg>
     );
-};
+}

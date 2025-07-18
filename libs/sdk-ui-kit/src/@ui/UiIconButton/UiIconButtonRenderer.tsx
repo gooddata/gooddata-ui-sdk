@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { forwardRef } from "react";
+import { KeyboardEvent, MouseEvent, forwardRef } from "react";
 import { stringUtils } from "@gooddata/util";
 
 import { IconType } from "../@types/icon.js";
@@ -37,8 +37,8 @@ export interface UiIconButtonPublicProps {
     isDisabled?: boolean;
     isActive?: boolean;
 
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+    onKeyDown?: (e: KeyboardEvent<HTMLButtonElement>) => void;
     dataId?: string;
     dataTestId?: string;
     ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];

@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React, { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext, useEffect, ReactNode } from "react";
 import { WorkspaceProvider as DefaultWorkspaceProvider } from "@gooddata/sdk-ui";
 import identity from "lodash/identity";
 
@@ -18,7 +18,7 @@ const WorkspaceContext = createContext<IWorkspaceContext>({
     setWorkspace: identity,
 });
 
-export const WorkspaceProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function WorkspaceProvider({ children }: { children?: ReactNode }) {
     const workspaceList = useWorkspaceList();
     const [workspace, setWorkspace] = useState<string>(defaultWorkspace);
 
@@ -32,6 +32,8 @@ export const WorkspaceProvider: React.FC<{ children?: React.ReactNode }> = ({ ch
             <DefaultWorkspaceProvider workspace={workspace}>{children}</DefaultWorkspaceProvider>
         </WorkspaceContext.Provider>
     );
-};
+}
 
-export const useWorkspace = () => useContext(WorkspaceContext);
+export function useWorkspace() {
+    return useContext(WorkspaceContext);
+}

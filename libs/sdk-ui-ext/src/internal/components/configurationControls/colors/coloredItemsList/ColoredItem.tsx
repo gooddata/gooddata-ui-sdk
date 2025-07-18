@@ -1,5 +1,5 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import ColoredItemContent from "./ColoredItemContent.js";
@@ -19,7 +19,7 @@ export interface IColoredItemProps {
     disabled?: boolean;
 }
 
-class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedComponentProps> {
+class ColoredItem extends PureComponent<IColoredItemProps & WrappedComponentProps> {
     public static defaultProps = {
         showCustomPicker: false,
         disabled: false,

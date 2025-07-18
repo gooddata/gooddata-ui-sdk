@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import { ISeparators } from "@gooddata/sdk-ui";
@@ -23,10 +23,7 @@ function templateDropdownItemId(template: IFormatTemplate): string {
     return `gd-format-preset-template-${template.localIdentifier}`;
 }
 
-export default class DropdownItem extends React.Component<
-    ITemplateDropdownItemProps,
-    ITemplateDropdownItemState
-> {
+export default class DropdownItem extends Component<ITemplateDropdownItemProps, ITemplateDropdownItemState> {
     public state = {
         displayHelp: false,
     };

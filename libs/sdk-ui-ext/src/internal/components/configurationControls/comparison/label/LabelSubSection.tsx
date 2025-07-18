@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { IntlShape, useIntl } from "react-intl";
 
 import { PushDataCallback } from "@gooddata/sdk-ui";
@@ -85,14 +84,14 @@ function getDisabledMessageId(
     return undefined;
 }
 
-const LabelSubSection: React.FC<ILabelSubSectionProps> = ({
+export default function LabelSubSection({
     sectionDisabled,
     showDisabledMessage,
     defaultLabelKeys,
     calculationType,
     properties,
     pushData,
-}) => {
+}: ILabelSubSectionProps) {
     const intl = useIntl();
     const isCalculateAsRatio = calculationType === CalculateAs.RATIO;
     const isPositionOnTop = properties?.controls?.comparison?.position === ComparisonPositionValues.TOP;
@@ -194,6 +193,4 @@ const LabelSubSection: React.FC<ILabelSubSectionProps> = ({
             )}
         </ConfigSubsection>
     );
-};
-
-export default LabelSubSection;
+}

@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { getTranslation } from "../../../../utils/translations.js";
@@ -9,7 +9,7 @@ export interface ICustomColorButtonProps {
     onClick: () => void;
 }
 
-class CustomColorButton extends React.PureComponent<ICustomColorButtonProps & WrappedComponentProps> {
+class CustomColorButton extends PureComponent<ICustomColorButtonProps & WrappedComponentProps> {
     public render() {
         return (
             <div className="gd-color-drop-down-custom-section">

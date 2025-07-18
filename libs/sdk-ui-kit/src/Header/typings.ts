@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { KeyboardEvent, MouseEvent, ReactNode } from "react";
 import { ITheme } from "@gooddata/sdk-model";
 import { HelpMenuDropdownAlignPoints } from "../typings/positioning.js";
 
@@ -14,7 +14,7 @@ export interface IHeaderMenuItem {
     className?: string;
     target?: string;
     iconName?: string;
-    icon?: React.ReactNode;
+    icon?: ReactNode;
     onClick?: (obj: any) => void;
 }
 
@@ -24,14 +24,14 @@ export interface IHeaderMenuItem {
 export interface IAppHeaderProps {
     className?: string;
 
-    onLogoClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
-    onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React.MouseEvent) => void;
+    onLogoClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
+    onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: MouseEvent) => void;
 
     menuItemsGroups?: IHeaderMenuItem[][];
     accountMenuItems?: IHeaderMenuItem[];
     helpMenuItems?: IHeaderMenuItem[];
 
-    badges?: React.ReactNode;
+    badges?: ReactNode;
 
     logoUrl?: string;
     logoHref?: string;
@@ -41,7 +41,7 @@ export interface IAppHeaderProps {
 
     documentationUrl?: string;
 
-    workspacePicker: React.ReactNode;
+    workspacePicker: ReactNode;
 
     headerColor?: string;
     headerTextColor?: string;
@@ -59,18 +59,15 @@ export interface IAppHeaderProps {
     theme?: ITheme;
 
     showUpsellButton?: boolean;
-    onUpsellButtonClick?: (e: React.MouseEvent) => void;
+    onUpsellButtonClick?: (e: MouseEvent) => void;
 
     showInviteItem?: boolean;
-    onInviteItemClick?: (e: React.MouseEvent) => void;
+    onInviteItemClick?: (e: MouseEvent) => void;
 
-    search?: React.ReactNode;
-    notificationsPanel?: (props: {
-        isMobile: boolean;
-        closeNotificationsOverlay: () => void;
-    }) => React.ReactNode;
+    search?: ReactNode;
+    notificationsPanel?: (props: { isMobile: boolean; closeNotificationsOverlay: () => void }) => ReactNode;
     showChatItem?: boolean;
-    onChatItemClick?: (e: React.MouseEvent) => void;
+    onChatItemClick?: (e: MouseEvent) => void;
 }
 
 /**
@@ -92,7 +89,7 @@ export interface IAppHeaderState {
 export interface IHeaderAccountProps {
     className?: string;
     items?: IHeaderMenuItem[];
-    onMenuItemClick: (menuItem: IHeaderMenuItem, e?: React.MouseEvent | React.KeyboardEvent) => void;
+    onMenuItemClick: (menuItem: IHeaderMenuItem, e?: MouseEvent | KeyboardEvent) => void;
     userName?: string;
 }
 
@@ -108,7 +105,7 @@ export interface IHeaderAccountState {
  */
 export interface IHeaderMenuProps {
     className?: string;
-    onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React.MouseEvent) => void;
+    onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: MouseEvent) => void;
     sections?: IHeaderMenuItem[][];
 }
 
@@ -116,7 +113,7 @@ export interface IHeaderMenuProps {
  * @internal
  */
 export interface IHeaderUpsellButtonProps {
-    onUpsellButtonClick?: (e: React.MouseEvent) => void;
+    onUpsellButtonClick?: (e: MouseEvent) => void;
 }
 
 /**
@@ -124,7 +121,7 @@ export interface IHeaderUpsellButtonProps {
  */
 export interface IHeaderInviteProps {
     textColor?: string;
-    onInviteItemClick?: (e: React.MouseEvent) => void;
+    onInviteItemClick?: (e: MouseEvent) => void;
 }
 
 /**

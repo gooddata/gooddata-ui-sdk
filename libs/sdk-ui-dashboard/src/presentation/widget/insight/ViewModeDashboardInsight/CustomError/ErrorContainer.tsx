@@ -1,12 +1,12 @@
-// (C) 2007-2021 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { CSSProperties, ReactNode } from "react";
 
-const fullHeightWidthStyle: React.CSSProperties = {
+const fullHeightWidthStyle: CSSProperties = {
     height: "100%",
     width: "100%",
 };
 
-export const ErrorContainer: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function ErrorContainer({ children }: { children?: ReactNode }) {
     return (
         <div className="gd-visualization-content" style={fullHeightWidthStyle}>
             <div className="info-label">
@@ -14,4 +14,4 @@ export const ErrorContainer: React.FC<{ children?: React.ReactNode }> = ({ child
             </div>
         </div>
     );
-};
+}

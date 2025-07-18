@@ -1,10 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
 import { IHeaderGroupParams } from "ag-grid-community";
-import React from "react";
 
 import TotalHeaderCell, { ALIGN_LEFT } from "./TotalHeaderCell.js";
 
-export const ColumnTotalGroupHeader: React.FC<IHeaderGroupParams> = (props) => {
+export function ColumnTotalGroupHeader(props: IHeaderGroupParams) {
     return (
         <TotalHeaderCell
             className="gd-pivot-table-column-total-group-header s-pivot-table-column-total-group-header"
@@ -12,4 +11,4 @@ export const ColumnTotalGroupHeader: React.FC<IHeaderGroupParams> = (props) => {
             displayText={props.displayName}
         />
     );
-};
+}

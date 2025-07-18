@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { IColorPalette, IExecutionConfig, IInsight, ITheme } from "@gooddata/sdk-model";
 import {
@@ -49,7 +49,7 @@ export interface IEmbedInsightDialogProps {
 /**
  * @internal
  */
-export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) => {
+export function EmbedInsightDialog(props: IEmbedInsightDialogProps) {
     const { locale, openSaveInsightDialog, onClose, onCopyCode, showWebComponentsTab } = props;
 
     const {
@@ -81,7 +81,7 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
             </ModalOverlay>
         </IntlWrapper>
     );
-};
+}
 
 const useEmbedInsightDialog = (props: IEmbedInsightDialogProps) => {
     const {
@@ -212,11 +212,10 @@ const generateCodeByWebComponents = (input: ICodeGenInput<IWebComponentsOptions>
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "cc cc" }];
 
-const ModalOverlay: React.FC<{ children?: React.ReactNode }> = (props) => {
-    const { children } = props;
+function ModalOverlay({ children }: { children?: ReactNode }) {
     return (
         <Overlay alignPoints={BUBBLE_ALIGN_POINTS} isModal positionType="fixed">
             {children}
         </Overlay>
     );
-};
+}

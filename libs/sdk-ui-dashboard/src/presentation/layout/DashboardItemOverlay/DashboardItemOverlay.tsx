@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { useState } from "react";
 import classNames from "classnames";
 import { Button } from "@gooddata/sdk-ui-kit";
 import DefaultMeasure from "react-measure";
@@ -20,12 +20,7 @@ type DashboardItemOverlayProps = {
     onHide?: () => void;
 };
 
-export const DashboardItemOverlay: React.FunctionComponent<DashboardItemOverlayProps> = ({
-    render,
-    type,
-    modifications,
-    onHide,
-}) => {
+export function DashboardItemOverlay({ render, type, modifications, onHide }: DashboardItemOverlayProps) {
     const intl = useIntl();
     const added = modifications.includes("insertedByPlugin");
     const modified = modifications.includes("modifiedByPlugin");
@@ -70,12 +65,9 @@ export const DashboardItemOverlay: React.FunctionComponent<DashboardItemOverlayP
             )}
         </Measure>
     ) : null;
-};
+}
 
-const DashboardItemOverlayInfo: React.FunctionComponent<{ added: boolean; modified: boolean }> = ({
-    added,
-    modified,
-}) => {
+function DashboardItemOverlayInfo({ added, modified }: { added: boolean; modified: boolean }) {
     if (added) {
         return <FormattedMessage id="layout.widget.addedByPlugin" />;
     }
@@ -83,9 +75,9 @@ const DashboardItemOverlayInfo: React.FunctionComponent<{ added: boolean; modifi
         return <FormattedMessage id="layout.widget.modifiedByPlugin" />;
     }
     return null;
-};
+}
 
-const PluginIcon: React.FunctionComponent<{ color?: string }> = ({ color }) => {
+function PluginIcon({ color }: { color?: string }) {
     return (
         <svg width="29" height="35" viewBox="0 0 29 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -94,4 +86,4 @@ const PluginIcon: React.FunctionComponent<{ color?: string }> = ({ color }) => {
             />
         </svg>
     );
-};
+}

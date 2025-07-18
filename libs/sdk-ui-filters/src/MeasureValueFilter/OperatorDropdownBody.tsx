@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { Separator, Overlay } from "@gooddata/sdk-ui-kit";
 
 import OperatorDropdownItem from "./OperatorDropdownItem.js";
@@ -16,7 +16,7 @@ interface IOperatorDropdownBodyOwnProps {
 
 type IOperatorDropdownBodyProps = IOperatorDropdownBodyOwnProps & WrappedComponentProps;
 
-class OperatorDropdownBody extends React.PureComponent<IOperatorDropdownBodyProps> {
+class OperatorDropdownBody extends PureComponent<IOperatorDropdownBodyProps> {
     public render() {
         const { onSelect, onClose, selectedOperator, alignTo, intl } = this.props;
 

@@ -18,9 +18,13 @@
 @mixin box-shadow($shadow, $important: blank) {
     @if $important == "important" {
         // stylelint-disable-next-line declaration-no-important
-        box-shadow: #{$shadow} !important;
+        & {
+            box-shadow: #{$shadow} !important;
+        }
     } @else {
-        box-shadow: #{$shadow};
+        & {
+            box-shadow: #{$shadow};
+        }
     }
 }
 

@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { render } from "@testing-library/react";
 import { withIntl } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi, afterEach } from "vitest";

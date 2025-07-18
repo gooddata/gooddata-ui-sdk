@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 
 import DropdownControl from "./DropdownControl.js";
@@ -17,39 +16,34 @@ export interface IColumnHeadersPositionControlProps {
     properties: IVisualizationProperties;
     isDisabled: boolean;
     insight: IInsightDefinition;
-    showDisabledMessage?: boolean;
     defaultValue?: string;
 }
 
-class ColumnHeadersPositionControl extends React.Component<
-    IColumnHeadersPositionControlProps & WrappedComponentProps
-> {
-    public static defaultProps = {
-        defaultValue: "top",
-        showDisabledMessage: false,
-    };
-    public render() {
-        const { pushData, properties, intl, isDisabled, defaultValue, insight } = this.props;
+export default function ColumnHeadersPositionControl({
+    pushData,
+    properties,
+    isDisabled,
+    insight,
+    defaultValue = "top",
+}: IColumnHeadersPositionControlProps) {
+    const intl = useIntl();
 
-        const columnHeadersPosition = isSetColumnHeadersPositionToLeftAllowed(insight)
-            ? (properties?.controls?.columnHeadersPosition ?? defaultValue)
-            : defaultValue;
+    const columnHeadersPosition = isSetColumnHeadersPositionToLeftAllowed(insight)
+        ? (properties?.controls?.columnHeadersPosition ?? defaultValue)
+        : defaultValue;
 
-        return (
-            <ConfigSubsection title={messages.columnHeaderPositionTitle.id}>
-                <DropdownControl
-                    value={columnHeadersPosition}
-                    valuePath="columnHeadersPosition"
-                    labelText={messages.columnHeaderPositionLabel.id}
-                    disabled={isDisabled}
-                    properties={properties}
-                    pushData={pushData}
-                    items={getTranslatedDropdownItems(columnHeadersPositionDropdownItems, intl)}
-                    showDisabledMessage={isDisabled}
-                />
-            </ConfigSubsection>
-        );
-    }
+    return (
+        <ConfigSubsection title={messages.columnHeaderPositionTitle.id}>
+            <DropdownControl
+                value={columnHeadersPosition}
+                valuePath="columnHeadersPosition"
+                labelText={messages.columnHeaderPositionLabel.id}
+                disabled={isDisabled}
+                properties={properties}
+                pushData={pushData}
+                items={getTranslatedDropdownItems(columnHeadersPositionDropdownItems, intl)}
+                showDisabledMessage={isDisabled}
+            />
+        </ConfigSubsection>
+    );
 }
-
-export default injectIntl(ColumnHeadersPositionControl);

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 import { e } from "../../menuBem.js";
 import { ShortenedText } from "../../../../ShortenedText/index.js";
 import { IUiMenuItemData, IUiMenuGroupItemProps } from "../../types.js";
@@ -10,7 +10,7 @@ import { typedUiMenuContextStore } from "../../context.js";
  */
 export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>({
     item,
-}: IUiMenuGroupItemProps<T>): React.ReactNode {
+}: IUiMenuGroupItemProps<T>): ReactNode {
     const { createSelector, useContextStore } = typedUiMenuContextStore<T>();
     const selector = createSelector((ctx) => ({
         makeItemId: ctx.makeItemId,

@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { Fragment } from "react";
 import kebabCase from "lodash/kebabCase.js";
 import cx from "classnames";
 import { DateFilterGranularity, IRelativeDateFilterPreset } from "@gooddata/sdk-model";
@@ -34,13 +34,13 @@ export interface IRelativePresetFilterItemsProps {
 /**
  * @internal
  */
-export const RelativePresetFilterItems: React.FC<IRelativePresetFilterItemsProps> = ({
+export function RelativePresetFilterItems({
     dateFormat,
     filterOption,
     selectedFilterOption,
     onSelectedFilterOptionChange,
     className,
-}) => {
+}: IRelativePresetFilterItemsProps) {
     const relativePresets = granularityOrder
         .filter((granularity) => {
             return Boolean(filterOption?.[granularity]?.length > 0);
@@ -53,7 +53,7 @@ export const RelativePresetFilterItems: React.FC<IRelativePresetFilterItemsProps
     return (
         <>
             {relativePresets.map((preset) => (
-                <React.Fragment key={preset.granularity}>
+                <Fragment key={preset.granularity}>
                     <ListHeading className={className}>
                         <RelativePresetTitleTranslated granularity={preset.granularity} />
                     </ListHeading>
@@ -67,8 +67,8 @@ export const RelativePresetFilterItems: React.FC<IRelativePresetFilterItemsProps
                             <DateFilterTextLocalized filter={item} dateFormat={dateFormat} />
                         </ListItem>
                     ))}
-                </React.Fragment>
+                </Fragment>
             ))}
         </>
     );
-};
+}

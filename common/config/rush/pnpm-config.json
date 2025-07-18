@@ -90,6 +90,10 @@
      * PNPM documentation: https://pnpm.io/package_json#pnpmoverrides
      */
     "globalOverrides": {
+      "@emotion/react": "11.14.0",
+      "hast-util-to-jsx-runtime": "2.3.6",
+      "use-isomorphic-layout-effect": "1.2.1",
+      "use-composed-ref": "1.4.0"
       // "example1": "^1.0.0",
       // "example2": "npm:@company/example2@^1.0.0"
     },
@@ -183,7 +187,7 @@
      *
      * PNPM documentation: https://pnpm.io/package_json#pnpmpatcheddependencies
      */
-    "globalPatchedDependencies": { },
+    "globalPatchedDependencies": {"react-dnd@14.0.5":"patches/react-dnd@14.0.5.patch" },
   
     /**
      * (USE AT YOUR OWN RISK)  This is a free-form property bag that will be copied into

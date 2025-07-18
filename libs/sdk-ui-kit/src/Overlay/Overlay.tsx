@@ -1,5 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { createRef } from "react";
+import {
+    Component,
+    ContextType,
+    CSSProperties,
+    MouseEvent as ReactMouseEvent,
+    ReactElement,
+    createRef,
+    version,
+} from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
 
@@ -61,9 +69,9 @@ function alignExceedsThreshold(firstAlignment: Alignment, secondAlignment: Align
     );
 }
 
-const stopPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+const stopPropagation = (e: ReactMouseEvent<HTMLDivElement>): void => {
     e.stopPropagation();
-    const reactMajorVersion = parseInt(React.version?.split(".")[0], 10);
+    const reactMajorVersion = parseInt(version?.split(".")[0], 10);
     // Propagate events to `document` for react 17
     // (We need to get them for other overlays to close and the events did not get there due to changes
     // introduced in https://reactjs.org/blog/2020/08/10/react-v17-rc.html#changes-to-event-delegation)
@@ -77,7 +85,7 @@ const stopPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void 
 /**
  * @internal
  */
-export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, IOverlayState> {
+export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverlayState> {
     public static defaultProps: Partial<IOverlayProps<any>> = {
         alignPoints: DEFAULT_ALIGN_POINTS,
         alignTo: "body",
@@ -115,7 +123,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     private alignmentTimeoutId: number;
     private isInitialAlign: boolean;
     static contextType = OverlayContext;
-    declare context: React.ContextType<typeof OverlayContext>;
+    declare context: ContextType<typeof OverlayContext>;
     private observer: ResizeObserver | undefined;
 
     constructor(props: IOverlayProps<T>) {
@@ -349,7 +357,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         }, ALIGN_TIMEOUT_MS);
     };
 
-    private onMaskClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    private onMaskClick = (e: ReactMouseEvent<HTMLDivElement>) => {
         if (!this.props.closeOnOutsideClick) {
             e.stopPropagation();
         }
@@ -359,7 +367,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         return this.context ? this.context.getZIndex(this.id) : this.props.zIndex;
     }
 
-    protected getOverlayStyles = (): React.CSSProperties => {
+    protected getOverlayStyles = (): CSSProperties => {
         const { alignTo, positionType } = this.props;
         const { alignment } = this.state;
 
@@ -370,7 +378,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             : positionType;
 
         // Base styles always applied
-        const styles: React.CSSProperties = {
+        const styles: CSSProperties = {
             position,
             left: alignment.left,
             top: alignment.top,
@@ -498,14 +506,14 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         return overlays.slice(thisOverlayIndex + 1).some((overlay) => overlay.contains(element));
     };
 
-    public onDocumentMouseDown(e: React.MouseEvent): void {
+    public onDocumentMouseDown(e: MouseEvent): void {
         this.clickedInside = (this.overlayRef.current as any).contains(e.target);
         if (this.clickedInside) {
             e.stopPropagation();
         }
     }
 
-    public closeOnParentScroll(e: React.MouseEvent): void {
+    public closeOnParentScroll(e: MouseEvent): void {
         if (!this.isComponentMounted) {
             return;
         }
@@ -529,7 +537,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         }
     }
 
-    public closeOnEscape(e: React.KeyboardEvent): void {
+    public closeOnEscape(e: KeyboardEvent): void {
         if (
             this.isComponentMounted &&
             this.props.closeOnEscape &&
@@ -559,7 +567,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         this.updateListeners("remove", props);
     };
 
-    private renderMask = (): false | JSX.Element => {
+    private renderMask = (): false | ReactElement => {
         const styles = {
             zIndex: this.context ? this.context.getZIndex(this.id) : null,
         };

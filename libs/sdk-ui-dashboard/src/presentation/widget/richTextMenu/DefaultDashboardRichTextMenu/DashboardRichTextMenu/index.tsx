@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Separator } from "@gooddata/sdk-ui-kit";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { DashboardInsightMenuItemButton } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightMenuItemButton.js";
@@ -12,14 +12,18 @@ import { RenderMode } from "../../../../../types.js";
 
 import { DashboardRichTextMenuContainer } from "./DashboardRichTextMenuContainer.js";
 
-export const DashboardRichTextMenuBody: React.FC<
-    IDashboardRichTextMenuProps & {
-        submenu: IRichTextMenuSubmenu | null;
-        setSubmenu: React.Dispatch<React.SetStateAction<IRichTextMenuSubmenu | null>>;
-        renderMode: RenderMode;
-    }
-> = (props) => {
-    const { items, widget, submenu, setSubmenu, onClose, renderMode } = props;
+export function DashboardRichTextMenuBody({
+    items,
+    widget,
+    submenu,
+    setSubmenu,
+    onClose,
+    renderMode,
+}: IDashboardRichTextMenuProps & {
+    submenu: IRichTextMenuSubmenu | null;
+    setSubmenu: Dispatch<SetStateAction<IRichTextMenuSubmenu | null>>;
+    renderMode: RenderMode;
+}) {
     const renderSubmenuComponent = submenu ? (
         <submenu.SubmenuComponent widget={widget} onClose={onClose} onGoBack={() => setSubmenu(null)} />
     ) : null;
@@ -41,9 +45,9 @@ export const DashboardRichTextMenuBody: React.FC<
             <DashboardRichTextMenuRoot items={items} setSubmenu={setSubmenu} />
         </DashboardRichTextMenuContainer>
     );
-};
+}
 
-export const DashboardRichTextMenu: React.FC<IDashboardRichTextMenuProps> = (props) => {
+export function DashboardRichTextMenu(props: IDashboardRichTextMenuProps) {
     const { widget, onClose } = props;
     const renderMode = useDashboardSelector(selectRenderMode);
     const [submenu, setSubmenu] = useState<IRichTextMenuSubmenu | null>(null);
@@ -67,13 +71,13 @@ export const DashboardRichTextMenu: React.FC<IDashboardRichTextMenuProps> = (pro
             />
         </DashboardInsightMenuBubble>
     );
-};
+}
 
 type DashboardRichTextMenuRootProps = {
     items: IRichTextMenuItem[];
-    setSubmenu: React.Dispatch<React.SetStateAction<IRichTextMenuSubmenu | null>>;
+    setSubmenu: Dispatch<SetStateAction<IRichTextMenuSubmenu | null>>;
 };
-const DashboardRichTextMenuRoot: React.FC<DashboardRichTextMenuRootProps> = ({ items, setSubmenu }) => {
+function DashboardRichTextMenuRoot({ items, setSubmenu }: DashboardRichTextMenuRootProps) {
     return (
         <>
             {items.map((item) => {
@@ -100,4 +104,4 @@ const DashboardRichTextMenuRoot: React.FC<DashboardRichTextMenuRootProps> = ({ i
             })}
         </>
     );
-};
+}

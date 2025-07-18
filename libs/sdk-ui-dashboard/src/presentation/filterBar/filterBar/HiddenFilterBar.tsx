@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IFilterBarProps } from "./types.js";
 
 /**
@@ -7,6 +7,6 @@ import { IFilterBarProps } from "./types.js";
  *
  * @alpha
  */
-export const HiddenFilterBar = (_props: IFilterBarProps): JSX.Element | null => {
+export function HiddenFilterBar(_props: IFilterBarProps) {
     return null;
-};
+}

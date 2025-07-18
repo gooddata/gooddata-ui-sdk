@@ -1,5 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { fireEvent, render } from "@testing-library/react";
 import noop from "lodash/noop.js";
 import { withIntl } from "@gooddata/sdk-ui";
@@ -23,8 +22,7 @@ const renderComponent = (props?: Partial<IRankingFilterDropdownProps>) => {
         onApply: noop,
         onCancel: noop,
     };
-    const Wrapped = withIntl(RankingFilterDropdown);
-    return render(<Wrapped {...defaultProps} {...props} />);
+    return render(<RankingFilterDropdown {...defaultProps} {...props} />);
 };
 
 const component = new RankingFilterDropdownFragment();

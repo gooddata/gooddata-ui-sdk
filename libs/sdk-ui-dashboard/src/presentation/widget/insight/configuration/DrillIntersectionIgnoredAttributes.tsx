@@ -1,5 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { bucketsAttributes, insightBuckets, areObjRefsEqual } from "@gooddata/sdk-model";
 import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types.js";
 import {

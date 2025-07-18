@@ -1,9 +1,8 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 
-export const EmptyDashboardError: React.FC = () => {
+export function EmptyDashboardError() {
     const intl = useIntl();
     const { ErrorComponent } = useDashboardComponentsContext();
     return (
@@ -13,4 +12,4 @@ export const EmptyDashboardError: React.FC = () => {
             description={intl.formatMessage({ id: "dashboard.error.empty.text" })}
         />
     );
-};
+}

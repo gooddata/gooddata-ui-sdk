@@ -1,18 +1,18 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
+import { ReactNode } from "react";
 
 /**
  * @internal
  */
 export interface ISettingWidgetProps {
     className?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
  * @internal
  */
-export const SettingWidget: React.FC<ISettingWidgetProps> = ({ className, children }) => (
-    <div className={cx("gd-setting-widget", className)}>{children}</div>
-);
+export function SettingWidget({ className, children }: ISettingWidgetProps) {
+    return <div className={cx("gd-setting-widget", className)}>{children}</div>;
+}

@@ -1,13 +1,13 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { Component, ReactNode } from "react";
 import ReactDOM from "react-dom";
 
 export interface IRenderChildrenInPortalProps {
     targetElement: Element;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
-export class RenderChildrenInPortal extends React.Component<IRenderChildrenInPortalProps> {
+export class RenderChildrenInPortal extends Component<IRenderChildrenInPortalProps> {
     private portalContentWrapperEl: HTMLElement;
 
     public constructor(props: IRenderChildrenInPortalProps) {

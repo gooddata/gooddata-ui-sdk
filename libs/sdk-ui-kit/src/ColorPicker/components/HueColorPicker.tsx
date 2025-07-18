@@ -1,9 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 /**
  * Copyright (c) 2015 Case Sandberg
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import React, { PureComponent, RefObject, ReactNode, CSSProperties } from "react";
+import { PureComponent, RefObject, ReactNode, CSSProperties, createRef } from "react";
 import { ColorFormats } from "tinycolor2";
 
 import { calculateHueChange } from "../utils.js";
@@ -18,7 +18,7 @@ export class HueColorPicker extends PureComponent<IHueColorPickerProps> {
 
     constructor(props: IHueColorPickerProps) {
         super(props);
-        this.hueContainer = React.createRef();
+        this.hueContainer = createRef();
     }
 
     componentWillUnmount(): void {

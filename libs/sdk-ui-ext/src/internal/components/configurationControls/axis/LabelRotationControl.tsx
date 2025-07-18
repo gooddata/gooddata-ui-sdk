@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
@@ -17,7 +17,7 @@ export interface ILabelRotationControl {
     pushData: (data: any) => any;
 }
 
-class LabelRotationControl extends React.PureComponent<ILabelRotationControl & WrappedComponentProps> {
+class LabelRotationControl extends PureComponent<ILabelRotationControl & WrappedComponentProps> {
     public render() {
         const { axisVisible, axisLabelsEnabled, axisRotation } = this.getControlProperties();
 

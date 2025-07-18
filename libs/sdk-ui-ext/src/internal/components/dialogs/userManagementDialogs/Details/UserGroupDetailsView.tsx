@@ -1,6 +1,5 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { IUserGroup } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
 import noop from "lodash/noop.js";
@@ -16,7 +15,7 @@ export interface IUserGroupDetailsViewProps {
     onChange?: (user: IUserGroup) => void;
 }
 
-export const UserGroupDetailsView: React.FC<IUserGroupDetailsViewProps> = ({ userGroup, mode, onChange }) => {
+export function UserGroupDetailsView({ userGroup, mode, onChange }: IUserGroupDetailsViewProps) {
     const intl = useIntl();
 
     if (!userGroup) {
@@ -40,4 +39,4 @@ export const UserGroupDetailsView: React.FC<IUserGroupDetailsViewProps> = ({ use
             />
         </div>
     );
-};
+}

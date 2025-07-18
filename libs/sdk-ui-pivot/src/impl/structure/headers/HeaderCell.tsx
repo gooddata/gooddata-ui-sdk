@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { Component } from "react";
 import { IntlShape } from "react-intl";
 import cx from "classnames";
 import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
@@ -46,7 +46,7 @@ export interface IHeaderCellState {
     currentSortDirection: SortDirection | null;
 }
 
-export default class HeaderCell extends React.Component<IHeaderCellProps, IHeaderCellState> {
+export default class HeaderCell extends Component<IHeaderCellProps, IHeaderCellState> {
     public static defaultProps: Pick<
         IHeaderCellProps,
         | "sortDirection"

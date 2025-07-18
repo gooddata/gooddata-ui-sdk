@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useState } from "react";
+import { useState } from "react";
 import { action } from "storybook/actions";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { EmbedInsightDialogBase, IReactOptions, IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
@@ -8,7 +8,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 import { code } from "./CodeMock.js";
 
-const EmbedInsightDialogBaseExamples: React.VFC = () => {
+export function EmbedInsightDialogBaseExamples() {
     const [reactOptions, setReactOptions] = useState<IReactOptions>({
         type: "react",
         codeType: "ts",
@@ -48,7 +48,7 @@ const EmbedInsightDialogBaseExamples: React.VFC = () => {
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onTabChange={action("onTabChange")}
-                    onOptionsChange={(opts) => {
+                    onOptionsChange={(opts: IReactOptions | IWebComponentsOptions) => {
                         setReactOptions(opts as IReactOptions);
                         action("onOptionsChange");
                     }}
@@ -71,7 +71,7 @@ const EmbedInsightDialogBaseExamples: React.VFC = () => {
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onTabChange={action("onTabChange")}
-                    onOptionsChange={(opts) => {
+                    onOptionsChange={(opts: IReactOptions | IWebComponentsOptions) => {
                         setReactOptions(opts as IReactOptions);
                         action("onOptionsChange");
                     }}
@@ -94,7 +94,7 @@ const EmbedInsightDialogBaseExamples: React.VFC = () => {
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onTabChange={action("onTabChange")}
-                    onOptionsChange={(opts) => {
+                    onOptionsChange={(opts: IReactOptions | IWebComponentsOptions) => {
                         setReactOptions(opts as IReactOptions);
                         action("onOptionChange");
                     }}
@@ -117,7 +117,7 @@ const EmbedInsightDialogBaseExamples: React.VFC = () => {
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onTabChange={action("onTabChange")}
-                    onOptionsChange={(opts) => {
+                    onOptionsChange={(opts: IReactOptions | IWebComponentsOptions) => {
                         setWebComponentOptions(opts as IWebComponentsOptions);
                         action("onOptionChange");
                     }}
@@ -140,7 +140,7 @@ const EmbedInsightDialogBaseExamples: React.VFC = () => {
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onTabChange={action("onTabChange")}
-                    onOptionsChange={(opts) => {
+                    onOptionsChange={(opts: IReactOptions | IWebComponentsOptions) => {
                         setWebComponentOptions(opts as IWebComponentsOptions);
                         action("onOptionChange");
                     }}
@@ -149,7 +149,7 @@ const EmbedInsightDialogBaseExamples: React.VFC = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/EmbedInsightDialog/EmbedInsightDialogBase",

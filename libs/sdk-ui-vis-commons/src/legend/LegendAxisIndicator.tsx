@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { PureComponent } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { messages } from "../locales.js";
 
@@ -9,7 +9,7 @@ export interface ILegendAxisIndicatorProps {
     width?: number;
 }
 
-export class LegendAxisIndicatorClass extends React.PureComponent<
+export class LegendAxisIndicatorClass extends PureComponent<
     ILegendAxisIndicatorProps & WrappedComponentProps
 > {
     public render() {

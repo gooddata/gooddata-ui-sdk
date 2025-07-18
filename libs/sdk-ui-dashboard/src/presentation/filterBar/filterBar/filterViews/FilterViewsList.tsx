@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import {
     Bubble,
@@ -46,52 +46,66 @@ const ITEM_TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [
     },
 ];
 
-const SetAsDefaultButton: React.FC<{ isDefault: boolean; isFocused: boolean; onClick: () => void }> = ({
+function SetAsDefaultButton({
     isDefault,
     isFocused,
     onClick,
-}) => (
-    <Button
-        className={cx("gd-button gd-button-link gd-filter-view__item__button", {
-            "gd-filter-view__item__button--isFocused": isFocused,
-        })}
-        size="small"
-        onClick={onClick}
-    >
-        {isDefault ? (
-            <FormattedMessage id="filters.filterViews.dropdown.unsetAsDefault" />
-        ) : (
-            <FormattedMessage id="filters.filterViews.dropdown.setAsDefault" />
-        )}
-    </Button>
-);
+}: {
+    isDefault: boolean;
+    isFocused: boolean;
+    onClick: () => void;
+}) {
+    return (
+        <Button
+            className={cx("gd-button gd-button-link gd-filter-view__item__button", {
+                "gd-filter-view__item__button--isFocused": isFocused,
+            })}
+            size="small"
+            onClick={onClick}
+        >
+            {isDefault ? (
+                <FormattedMessage id="filters.filterViews.dropdown.unsetAsDefault" />
+            ) : (
+                <FormattedMessage id="filters.filterViews.dropdown.setAsDefault" />
+            )}
+        </Button>
+    );
+}
 
-const DeleteButton: React.FC<{ isFocused: boolean; onClick: () => void }> = ({ isFocused, onClick }) => (
-    <span className="gd-bubble-trigger-wrapper gd-filter-view__item__delete-button-wrapper">
-        <BubbleHoverTrigger>
-            <Button
-                className={cx(
-                    "gd-button gd-button-link gd-button-icon-only gd-filter-view__item__button gd-filter-view__item__button--delete",
-                    { "gd-filter-view__item__button--isFocused": isFocused },
-                )}
-                iconLeft="gd-icon-trash"
-                size="small"
-                onClick={onClick}
-            />
-            <Bubble alignPoints={ITEM_TOOLTIP_ALIGN_POINTS}>
-                <FormattedMessage id="filters.filterViews.add.deleteTooltip" />
-            </Bubble>
-        </BubbleHoverTrigger>
-    </span>
-);
+function DeleteButton({ isFocused, onClick }: { isFocused: boolean; onClick: () => void }) {
+    return (
+        <span className="gd-bubble-trigger-wrapper gd-filter-view__item__delete-button-wrapper">
+            <BubbleHoverTrigger>
+                <Button
+                    className={cx(
+                        "gd-button gd-button-link gd-button-icon-only gd-filter-view__item__button gd-filter-view__item__button--delete",
+                        { "gd-filter-view__item__button--isFocused": isFocused },
+                    )}
+                    iconLeft="gd-icon-trash"
+                    size="small"
+                    onClick={onClick}
+                />
+                <Bubble alignPoints={ITEM_TOOLTIP_ALIGN_POINTS}>
+                    <FormattedMessage id="filters.filterViews.add.deleteTooltip" />
+                </Bubble>
+            </BubbleHoverTrigger>
+        </span>
+    );
+}
 
-const FilterListItem: React.FC<{
+function FilterListItem({
+    item,
+    focusedAction,
+    onApply,
+    onDelete,
+    onSetAsDefault,
+}: {
     item: IDashboardFilterView;
     focusedAction?: IAction;
     onApply: () => void;
     onSetAsDefault?: () => void;
     onDelete?: () => void;
-}> = ({ item, focusedAction, onApply, onDelete, onSetAsDefault }) => {
+}) {
     const { name, isDefault = false } = item;
     return (
         <div
@@ -118,7 +132,7 @@ const FilterListItem: React.FC<{
             </div>
         </div>
     );
-};
+}
 
 export interface IFilterViewsDropdownBodyProps {
     filterViews: IDashboardFilterView[] | undefined;
@@ -126,20 +140,14 @@ export interface IFilterViewsDropdownBodyProps {
     onClose: () => void;
 }
 
-export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
-    filterViews = [],
-    onAddNew,
-    onClose,
-}) => {
+export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilterViewsDropdownBodyProps) {
     const theme = useTheme();
     const dispatch = useDashboardDispatch();
-    const [filterViewToDelete, setFilterViewToDelete] = React.useState<IDashboardFilterView | undefined>(
-        undefined,
-    );
+    const [filterViewToDelete, setFilterViewToDelete] = useState<IDashboardFilterView | undefined>(undefined);
     const isLoading = useDashboardSelector(selectFilterViewsAreLoading);
     const canCreateFilterView = useDashboardSelector(selectCanCreateFilterView);
 
-    const getItemAdditionalActions = React.useCallback((): IAction[] => {
+    const getItemAdditionalActions = useCallback((): IAction[] => {
         if (!canCreateFilterView) {
             return [];
         }
@@ -147,7 +155,7 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
         return ["setDefault", "delete"];
     }, [canCreateFilterView]);
 
-    const handleSelect = React.useCallback(
+    const handleSelect = useCallback(
         (filterView: IDashboardFilterView) => () => {
             dispatch(applyFilterView(filterView.ref));
             onClose();
@@ -155,7 +163,7 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
         [dispatch, onClose],
     );
 
-    const handleSetAsDefault = React.useCallback(
+    const handleSetAsDefault = useCallback(
         (filterView: IDashboardFilterView) => {
             if (!canCreateFilterView) {
                 return undefined;
@@ -167,7 +175,7 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
         [canCreateFilterView, dispatch],
     );
 
-    const handleDelete = React.useCallback(
+    const handleDelete = useCallback(
         (filterView: IDashboardFilterView) => {
             if (!canCreateFilterView) {
                 return undefined;
@@ -275,4 +283,4 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
             </div>
         </UiFocusManager>
     );
-};
+}

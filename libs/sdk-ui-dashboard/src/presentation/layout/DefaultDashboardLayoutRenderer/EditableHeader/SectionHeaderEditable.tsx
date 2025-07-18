@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useCallback, useEffect, useState } from "react";
+import { ReactElement, useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
@@ -41,7 +41,7 @@ export interface ISectionHeaderEditableProps {
     index: number;
 }
 
-export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.Element {
+export function SectionHeaderEditable(props: ISectionHeaderEditableProps): ReactElement {
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
 

@@ -1,5 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { selectEnableRenamingMeasureToMetric, useDashboardSelector } from "../../../../model/index.js";
@@ -23,12 +22,7 @@ const getIconType = (type: string, isDateAttribute: boolean, shouldRenameMeasure
     return type;
 };
 
-export const DrillOriginItem: React.FunctionComponent<IDrillOriginItemProps> = ({
-    onDelete,
-    title,
-    type,
-    isDateAttribute,
-}) => {
+export function DrillOriginItem({ onDelete, title, type, isDateAttribute }: IDrillOriginItemProps) {
     const shouldRenameMeasureToMetric = useDashboardSelector(selectEnableRenamingMeasureToMetric);
 
     const iconType = getIconType(type, isDateAttribute, shouldRenameMeasureToMetric);
@@ -48,4 +42,4 @@ export const DrillOriginItem: React.FunctionComponent<IDrillOriginItemProps> = (
             </div>
         </div>
     );
-};
+}

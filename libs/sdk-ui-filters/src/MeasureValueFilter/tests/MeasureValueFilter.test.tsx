@@ -1,5 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
 import { withIntl } from "@gooddata/sdk-ui";
@@ -23,8 +22,7 @@ const renderComponent = (props?: Partial<IMeasureValueFilterProps>) => {
         measureIdentifier: "myMeasure",
         buttonTitle: "My measure",
     };
-    const Wrapped = withIntl(MeasureValueFilter);
-    return render(<Wrapped {...defaultProps} {...props} />);
+    return render(<MeasureValueFilter {...defaultProps} {...props} />);
 };
 
 const DROPDOWN_BODY = ".s-mvf-dropdown-body";

@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useIntl, defineMessages } from "react-intl";
 import cx from "classnames";
 import { ItemsWrapper, Separator, Overlay, IAlignPoint } from "@gooddata/sdk-ui-kit";
@@ -47,7 +47,7 @@ interface IGranularPermissionsDropdownBodyProps {
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
-const RemoveItem: React.FC<{ disabled?: boolean; onClick: () => void }> = ({ disabled, onClick }) => {
+function RemoveItem({ disabled, onClick }: { disabled?: boolean; onClick: () => void }) {
     const intl = useIntl();
     const className = cx(
         "gd-list-item gd-menu-item gd-menu-item-remove",
@@ -62,9 +62,9 @@ const RemoveItem: React.FC<{ disabled?: boolean; onClick: () => void }> = ({ dis
             {intl.formatMessage(workspacePermissionMessages.remove)}
         </div>
     );
-};
+}
 
-export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyProps> = ({
+export function PermissionsDropdownList({
     items,
     subjectType,
     alignTo,
@@ -73,7 +73,7 @@ export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyP
     toggleDropdown,
     onSelect,
     onDelete,
-}) => {
+}: IGranularPermissionsDropdownBodyProps) {
     const tooltipSource = subjectType === "user" ? userTooltipMessages : userGroupTooltipMessages;
 
     const handleOnSelect = useCallback(
@@ -122,4 +122,4 @@ export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyP
             </ItemsWrapper>
         </Overlay>
     );
-};
+}

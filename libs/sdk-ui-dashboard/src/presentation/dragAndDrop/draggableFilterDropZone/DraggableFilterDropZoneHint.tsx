@@ -1,6 +1,5 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
-import React from "react";
 import { moveAttributeFilter, moveDateFilter, useDashboardDispatch } from "../../../model/index.js";
 import { getDropZoneDebugStyle } from "../debug.js";
 import {
@@ -9,6 +8,7 @@ import {
     isDateFilterDraggableItem,
 } from "../types.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
+import { RefObject } from "react";
 
 export type DraggableFilterDropZonePlacement = "inside" | "outside";
 export type DraggableFilterDropZoneHintPosition = "next" | "prev";
@@ -99,7 +99,7 @@ export function DraggableFilterDropZoneHint({
     const debugStyle = getDropZoneDebugStyle({ isOver });
 
     return (
-        <div className={className} style={debugStyle} ref={dropRef}>
+        <div className={className} style={debugStyle} ref={dropRef as unknown as RefObject<HTMLDivElement>}>
             {isActive ? <div className="drop-hint" /> : null}
         </div>
     );

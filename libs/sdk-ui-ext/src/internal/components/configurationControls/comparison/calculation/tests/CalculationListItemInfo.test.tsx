@@ -1,5 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";

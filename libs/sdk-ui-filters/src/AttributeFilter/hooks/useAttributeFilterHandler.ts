@@ -52,7 +52,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         setInvalidate((s) => s + 1);
     };
 
-    const handlerRef = useRef<IMultiSelectAttributeFilterHandler>();
+    const handlerRef = useRef<IMultiSelectAttributeFilterHandler>(undefined);
 
     const createNewHandler = useCallback(() => {
         handlerRef.current = newAttributeFilterHandler(

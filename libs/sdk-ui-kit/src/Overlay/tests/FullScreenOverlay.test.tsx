@@ -1,32 +1,46 @@
-// (C) 2007-2020 GoodData Corporation
-import React from "react";
-import { renderIntoDocumentWithUnmount } from "../../test/utils.js";
+// (C) 2007-2025 GoodData Corporation
+import { render } from "@testing-library/react";
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 
 import { FullScreenOverlay } from "../FullScreenOverlay.js";
 
-function renderOverlay(options: any) {
-    return renderIntoDocumentWithUnmount(<FullScreenOverlay {...options} />);
-}
-
 describe("FullScreen Overlay", () => {
-    let fullScreenOverlay: any;
+    let unmount: () => void;
+    let originalBodyOverflow: string;
+    let originalBodyScrollTop: number;
 
     beforeEach(() => {
-        fullScreenOverlay = renderOverlay({});
+        // Store original body styles
+        originalBodyOverflow = document.body.style.overflow;
+        originalBodyScrollTop = document.body.scrollTop;
+
+        const result = render(
+            <FullScreenOverlay>
+                <div data-testid="overlay-content">Test Content</div>
+            </FullScreenOverlay>,
+        );
+        unmount = result.unmount;
     });
 
     afterEach(() => {
-        fullScreenOverlay.unmount();
+        unmount();
+        // Restore original body styles
+        document.body.style.overflow = originalBodyOverflow;
+        document.body.scrollTop = originalBodyScrollTop;
     });
 
     describe("render", () => {
         it("should set fixed position to overlay", () => {
-            expect(fullScreenOverlay.getOverlayStyles().position).toEqual("fixed");
+            // Find the overlay wrapper element
+            const overlayWrapper = document.querySelector(".overlay-wrapper");
+            expect(overlayWrapper).toBeTruthy();
+
+            const styles = window.getComputedStyle(overlayWrapper as Element);
+            expect(styles.position).toEqual("fixed");
         });
 
         it("should set proper styles to body", () => {
-            expect(getComputedStyle(document.body).overflow).toEqual("hidden");
+            expect(document.body.style.overflow).toEqual("hidden");
         });
 
         it("should scroll body to top", () => {

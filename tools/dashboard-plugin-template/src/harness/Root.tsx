@@ -1,11 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { backend, hasCredentialsSetup, needsAuthentication } from "./backend.js";
 import { App } from "./App.js";
 
-export const Root: React.FC = () => {
+export function Root() {
     if (!hasCredentialsSetup() && needsAuthentication()) {
         return (
             <div>
@@ -33,4 +32,4 @@ export const Root: React.FC = () => {
             </WorkspaceProvider>
         </BackendProvider>
     );
-};
+}

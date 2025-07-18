@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { MouseEvent, PureComponent } from "react";
 import cx from "classnames";
 import { ISeparators } from "@gooddata/sdk-ui";
 import { stringUtils } from "@gooddata/util";
@@ -14,7 +14,7 @@ interface IMeasureNumberFormatDropdownItemProps {
     isSelected?: boolean;
 }
 
-export class PresetsDropdownItem extends React.PureComponent<IMeasureNumberFormatDropdownItemProps> {
+export class PresetsDropdownItem extends PureComponent<IMeasureNumberFormatDropdownItemProps> {
     public static defaultProps: Pick<IMeasureNumberFormatDropdownItemProps, "isSelected"> = {
         isSelected: false,
     };
@@ -51,7 +51,7 @@ export class PresetsDropdownItem extends React.PureComponent<IMeasureNumberForma
         );
     }
 
-    private handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    private handleOnClick = (e: MouseEvent<HTMLDivElement>) => {
         const { preset, onClick } = this.props;
         onClick(preset);
         e.preventDefault();

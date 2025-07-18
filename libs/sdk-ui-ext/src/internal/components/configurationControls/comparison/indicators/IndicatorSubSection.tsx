@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import { PushDataCallback } from "@gooddata/sdk-ui";
 import { IColorPalette } from "@gooddata/sdk-model";
@@ -19,13 +18,13 @@ interface IIndicatorSubSectionProps {
     pushData: PushDataCallback;
 }
 
-const IndicatorSubSection: React.FC<IIndicatorSubSectionProps> = ({
+export default function IndicatorSubSection({
     sectionDisabled,
     showDisabledMessage,
     properties,
     colorPalette,
     pushData,
-}) => {
+}: IIndicatorSubSectionProps) {
     return (
         <ConfigSubsection title={comparisonMessages.indicatorSubSectionTitle.id} canBeToggled={false}>
             <div className="comparison-indicator-sub-section s-comparison-indicator-sub-section">
@@ -45,6 +44,4 @@ const IndicatorSubSection: React.FC<IIndicatorSubSectionProps> = ({
             </div>
         </ConfigSubsection>
     );
-};
-
-export default IndicatorSubSection;
+}

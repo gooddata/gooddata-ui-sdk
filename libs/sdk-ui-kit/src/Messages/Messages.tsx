@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
+import { useState, useCallback, MouseEvent } from "react";
 import { v4 as uuid } from "uuid";
 import noop from "lodash/noop.js";
 import cx from "classnames";
@@ -11,7 +11,7 @@ import { Overlay } from "../Overlay/index.js";
 /**
  * @internal
  */
-export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClose = noop }) => {
+export function Messages({ messages = [], onMessageClose = noop }: IMessagesProps) {
     const [expandedMessageIds, setExpandedMessageIds] = useState<string[]>([]);
 
     const handleMessageClose = useCallback(
@@ -64,19 +64,15 @@ export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClo
             </div>
         </Overlay>
     );
-};
+}
 
 type MessageWithShowMoreProps = {
     message: IMessage;
     shouldShowMore: boolean;
-    handleShowMore: (e: React.MouseEvent<HTMLElement>) => void;
+    handleShowMore: (e: MouseEvent<HTMLElement>) => void;
 };
 
-const MessageWithShowMore: React.FC<MessageWithShowMoreProps> = ({
-    message,
-    shouldShowMore,
-    handleShowMore,
-}) => {
+function MessageWithShowMore({ message, shouldShowMore, handleShowMore }: MessageWithShowMoreProps) {
     const { showMore, showLess, errorDetail, type } = message;
 
     if (!showMore) {
@@ -106,13 +102,13 @@ const MessageWithShowMore: React.FC<MessageWithShowMoreProps> = ({
             </div>
         </div>
     );
-};
+}
 
 type MessageSimpleProps = {
     message: IMessage;
 };
 
-const MessageSimple: React.FC<MessageSimpleProps> = ({ message }) => {
+function MessageSimple({ message }: MessageSimpleProps) {
     const { showMore } = message;
 
     if (showMore) {
@@ -120,14 +116,14 @@ const MessageSimple: React.FC<MessageSimpleProps> = ({ message }) => {
     }
 
     return <MessageElement message={message} type="div" />;
-};
+}
 
 type MessageElementProps = {
     message: IMessage;
     type: "div" | "span";
 };
 
-const MessageElement: React.FC<MessageElementProps> = ({ message, type }) => {
+function MessageElement({ message, type }: MessageElementProps) {
     const { text, node } = message;
     const Component = type;
 
@@ -138,4 +134,4 @@ const MessageElement: React.FC<MessageElementProps> = ({ message, type }) => {
     return (
         <Component className="s-message-text-header-value" dangerouslySetInnerHTML={{ __html: text || "" }} />
     );
-};
+}

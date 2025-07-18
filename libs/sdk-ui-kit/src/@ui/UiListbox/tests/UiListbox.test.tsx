@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import cx from "classnames";
 import { UiListbox } from "../UiListbox.js";
@@ -25,7 +25,7 @@ describe("UiListbox", () => {
         };
 
         return render(
-            <UiListbox<string, React.ReactNode>
+            <UiListbox<string, ReactNode>
                 items={mockItems}
                 onSelect={vi.fn()}
                 onClose={vi.fn()}

@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import { ContentRect } from "react-measure";
 import { render, screen } from "@testing-library/react";
 import PushpinCategoryLegend, { IPushpinCategoryLegendProps } from "../PushpinCategoryLegend.js";
@@ -37,8 +36,7 @@ function createComponent(customProps: Partial<IPushpinCategoryLegendProps> = {})
         containerId: "id",
         ...customProps,
     };
-    const Wrapped = withIntl(PushpinCategoryLegend);
-    return render(<Wrapped {...legendProps} />);
+    return render(<PushpinCategoryLegend {...legendProps} />);
 }
 
 describe("PushpinCategoryLegend", () => {

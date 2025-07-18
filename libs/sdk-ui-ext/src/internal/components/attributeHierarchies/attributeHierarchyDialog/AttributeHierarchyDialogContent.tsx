@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { List, LoadingMask } from "@gooddata/sdk-ui-kit";
 import { messages } from "@gooddata/sdk-ui";
@@ -12,7 +11,7 @@ const DEFAULT_WIDTH = 845;
 const DEFAULT_HEIGHT = 388;
 const DEFAULT_ROW_HEIGHT = 43;
 
-const AttributeHierarchyDialogContent: React.FC = () => {
+export default function AttributeHierarchyDialogContent() {
     const { formatMessage } = useIntl();
     const { isLoading, attributes } = useAttributeHierarchyDialog();
 
@@ -41,6 +40,4 @@ const AttributeHierarchyDialogContent: React.FC = () => {
             ) : null}
         </div>
     );
-};
-
-export default AttributeHierarchyDialogContent;
+}

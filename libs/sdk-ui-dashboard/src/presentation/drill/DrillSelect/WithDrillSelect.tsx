@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, ReactElement } from "react";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
 import { DrillSelectDropdown } from "./DrillSelectDropdown.js";
@@ -54,7 +54,7 @@ export interface WithDrillSelectProps {
     onDrillToAttributeUrlSuccess?: OnDrillToAttributeUrlSuccess;
     onDrillToCustomUrlSuccess?: OnDrillToCustomUrlSuccess;
     onError?: (error: any) => void;
-    children: (props: { onDrill: OnWidgetDrill }) => JSX.Element;
+    children: (props: { onDrill: OnWidgetDrill }) => ReactElement;
 }
 
 /**
@@ -71,7 +71,7 @@ export function WithDrillSelect({
     onDrillToAttributeUrlSuccess,
     onDrillToCustomUrlSuccess,
     onError,
-}: WithDrillSelectProps): JSX.Element {
+}: WithDrillSelectProps): ReactElement {
     const { current: drillPickerId } = useRef(uuid());
     const [dropdownProps, setDropdownProps] = useState<DrillSelectContext | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(true);

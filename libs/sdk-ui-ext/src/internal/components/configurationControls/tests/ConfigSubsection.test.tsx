@@ -1,8 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import ConfigSubsection, { IConfigSubsectionOwnProps } from "../ConfigSubsection.js";
+import { userEvent } from "@testing-library/user-event";
+import ConfigSubsection, { IConfigSubsectionProps } from "../ConfigSubsection.js";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 import { describe, it, expect, vi } from "vitest";
 
@@ -14,7 +13,7 @@ describe("ConfigSubsection", () => {
         title: "properties.legend.title",
     };
 
-    function createComponent(customProps: Partial<IConfigSubsectionOwnProps> = {}) {
+    function createComponent(customProps: Partial<IConfigSubsectionProps> = {}) {
         const props = { ...defaultProps, ...customProps };
         return render(
             <InternalIntlWrapper>

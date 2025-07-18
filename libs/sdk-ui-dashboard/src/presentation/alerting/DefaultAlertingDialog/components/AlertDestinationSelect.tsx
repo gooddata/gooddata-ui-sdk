@@ -2,7 +2,6 @@
 import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
 import { Button, Dropdown, UiListbox, OverlayPositionType, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import React from "react";
 import { useIntl } from "react-intl";
 
 export interface IAlertDestinationSelectProps {
@@ -14,14 +13,14 @@ export interface IAlertDestinationSelectProps {
     closeOnParentScroll?: boolean;
 }
 
-export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
+export function AlertDestinationSelect({
     id,
     selectedDestination,
     onDestinationChange,
     destinations,
     overlayPositionType,
     closeOnParentScroll,
-}: IAlertDestinationSelectProps) => {
+}: IAlertDestinationSelectProps) {
     const intl = useIntl();
     const selectedOption = destinations.find((o) => o.id === selectedDestination);
 
@@ -99,4 +98,4 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
             }}
         />
     );
-};
+}

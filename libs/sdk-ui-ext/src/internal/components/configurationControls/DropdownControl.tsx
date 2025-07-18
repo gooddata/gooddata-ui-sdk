@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { ComponentType, PureComponent } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import {
     Dropdown,
@@ -27,7 +27,7 @@ export interface IDropdownControlProps {
     width?: number;
     showDisabledMessage?: boolean;
     disabledMessageAlignPoints?: IAlignPoint[];
-    customListItem?: React.ComponentType<ISingleSelectListItemProps>;
+    customListItem?: ComponentType<ISingleSelectListItemProps>;
 
     pushData(data: any): void;
 }
@@ -36,7 +36,7 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
-class DropdownControl extends React.PureComponent<IDropdownControlProps & WrappedComponentProps> {
+class DropdownControl extends PureComponent<IDropdownControlProps & WrappedComponentProps> {
     public static defaultProps = {
         value: "",
         items: [] as IDropdownItem[],

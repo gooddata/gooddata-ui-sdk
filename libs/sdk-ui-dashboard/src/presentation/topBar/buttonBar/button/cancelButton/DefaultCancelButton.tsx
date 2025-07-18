@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 

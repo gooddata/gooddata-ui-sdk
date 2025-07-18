@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo, useEffect } from "react";
-import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
+import { useMemo, useEffect } from "react";
+import { useIntl } from "react-intl";
 import noop from "lodash/noop.js";
 import {
     LoadingComponent as SDKLoadingComponent,
@@ -27,7 +27,7 @@ export * from "./columnWidths.js";
 /**
  * @internal
  */
-export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedComponentProps {
+export interface ICoreRepeaterChartProps extends ICoreChartProps {
     theme?: ITheme;
 
     /**
@@ -38,7 +38,7 @@ export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedCompone
     onColumnResized?: RepeaterColumnResizedCallback;
 }
 
-export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
+export function CoreRepeaterImpl(props: ICoreRepeaterChartProps) {
     const {
         execution,
         ErrorComponent = SDKErrorComponent,
@@ -196,17 +196,19 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
             afterRender={afterRender}
         />
     );
-};
+}
 
-const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));
+const CoreRepeaterWithIntl = withTheme(CoreRepeaterImpl);
 
 /**
  * @internal
  */
-export const CoreRepeater: React.FC<ICoreRepeaterChartProps> = (props) => (
-    <ThemeContextProvider theme={props.theme} themeIsLoading={false}>
-        <IntlWrapper locale={props.locale}>
-            <CoreRepeaterWithIntl {...props} />
-        </IntlWrapper>
-    </ThemeContextProvider>
-);
+export function CoreRepeater({ theme, locale, ...props }: ICoreRepeaterChartProps) {
+    return (
+        <ThemeContextProvider theme={theme} themeIsLoading={false}>
+            <IntlWrapper locale={locale}>
+                <CoreRepeaterWithIntl {...props} />
+            </IntlWrapper>
+        </ThemeContextProvider>
+    );
+}
