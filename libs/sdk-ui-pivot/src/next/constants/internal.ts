@@ -56,6 +56,13 @@ export const EMPTY_SORT_BY: ISortItem[] = [];
 export const COLUMNS_PER_PAGE = 1000;
 
 /**
+ * Default page size for data fetching.
+ *
+ * @internal
+ */
+export const PAGE_SIZE = 100;
+
+/**
  * Unique identifier of the column, used for rendering metric name.
  * This is used only in case of transposition, when metrics are rendered in rows.
  *
