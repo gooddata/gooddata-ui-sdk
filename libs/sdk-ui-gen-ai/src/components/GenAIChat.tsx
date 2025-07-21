@@ -132,9 +132,9 @@ const GenAIContent: React.FC<GenAIChatProps> = (props) => {
             linkHandler={onLinkClick}
             catalogItems={catalogItems}
             allowNativeLinks={props.allowNativeLinks ?? false}
-            canFullControl={props.disableFullControl ? false : permissions.canManageProject ?? false}
-            canManage={props.disableManage ? false : permissions.canManageProject ?? false}
-            canAnalyze={props.disableAnalyze ? false : permissions.canCreateVisualization ?? false}
+            canFullControl={props.disableFullControl ? false : (permissions.canManageProject ?? false)}
+            canManage={props.disableManage ? false : (permissions.canManageProject ?? false)}
+            canAnalyze={props.disableAnalyze ? false : (permissions.canCreateVisualization ?? false)}
         >
             <GenAIChatWrapper initializing={loading} />
         </ConfigProvider>

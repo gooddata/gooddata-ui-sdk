@@ -292,7 +292,7 @@ export const AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum = {
 } as const;
 
 export type AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum =
-    typeof AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum];
+    (typeof AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum];
 
 /**
  * Reference to the metric, fact or attribute object to use for the metric.
@@ -335,7 +335,7 @@ export const AutomationAfmObjectIdentifierCoreIdentifierTypeEnum = {
 } as const;
 
 export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum =
-    typeof AutomationAfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierCoreIdentifierTypeEnum];
+    (typeof AutomationAfmObjectIdentifierCoreIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierCoreIdentifierTypeEnum];
 
 /**
  * Reference to the date dataset to which the filter should be applied.
@@ -375,7 +375,7 @@ export const AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum = {
 } as const;
 
 export type AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum =
-    typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum];
+    (typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum];
 
 /**
  *
@@ -411,7 +411,7 @@ export const AutomationAfmObjectIdentifierIdentifierTypeEnum = {
 } as const;
 
 export type AutomationAfmObjectIdentifierIdentifierTypeEnum =
-    typeof AutomationAfmObjectIdentifierIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierIdentifierTypeEnum];
+    (typeof AutomationAfmObjectIdentifierIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierIdentifierTypeEnum];
 
 /**
  *
@@ -451,7 +451,7 @@ export const AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = {
 } as const;
 
 export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum =
-    typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum];
+    (typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum];
 
 /**
  *
@@ -607,7 +607,7 @@ export const AutomationAlertDescriptionStatusEnum = {
 } as const;
 
 export type AutomationAlertDescriptionStatusEnum =
-    typeof AutomationAlertDescriptionStatusEnum[keyof typeof AutomationAlertDescriptionStatusEnum];
+    (typeof AutomationAlertDescriptionStatusEnum)[keyof typeof AutomationAlertDescriptionStatusEnum];
 
 /**
  *
@@ -672,7 +672,7 @@ export const AutomationArithmeticMeasureOperatorEnum = {
 } as const;
 
 export type AutomationArithmeticMeasureOperatorEnum =
-    typeof AutomationArithmeticMeasureOperatorEnum[keyof typeof AutomationArithmeticMeasureOperatorEnum];
+    (typeof AutomationArithmeticMeasureOperatorEnum)[keyof typeof AutomationArithmeticMeasureOperatorEnum];
 
 /**
  * Metric representing arithmetics between other metrics.
@@ -716,7 +716,7 @@ export const AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum 
 } as const;
 
 export type AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
-    typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+    (typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum)[keyof typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
 /**
  * @type AutomationAttributeElements
@@ -867,7 +867,7 @@ export const AutomationAutomationAlertTriggerEnum = {
 } as const;
 
 export type AutomationAutomationAlertTriggerEnum =
-    typeof AutomationAutomationAlertTriggerEnum[keyof typeof AutomationAutomationAlertTriggerEnum];
+    (typeof AutomationAutomationAlertTriggerEnum)[keyof typeof AutomationAutomationAlertTriggerEnum];
 
 /**
  *
@@ -1056,7 +1056,7 @@ export const AutomationBoundedFilterGranularityEnum = {
 } as const;
 
 export type AutomationBoundedFilterGranularityEnum =
-    typeof AutomationBoundedFilterGranularityEnum[keyof typeof AutomationBoundedFilterGranularityEnum];
+    (typeof AutomationBoundedFilterGranularityEnum)[keyof typeof AutomationBoundedFilterGranularityEnum];
 
 /**
  *
@@ -1094,7 +1094,7 @@ export const AutomationComparisonOperatorEnum = {
 } as const;
 
 export type AutomationComparisonOperatorEnum =
-    typeof AutomationComparisonOperatorEnum[keyof typeof AutomationComparisonOperatorEnum];
+    (typeof AutomationComparisonOperatorEnum)[keyof typeof AutomationComparisonOperatorEnum];
 
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
@@ -1169,7 +1169,7 @@ export const AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterO
 } as const;
 
 export type AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum =
-    typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+    (typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum)[keyof typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
 /**
  *
@@ -1316,7 +1316,7 @@ export const AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum 
 } as const;
 
 export type AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum =
-    typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum[keyof typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum];
+    (typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum)[keyof typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum];
 
 /**
  *
@@ -1387,7 +1387,7 @@ export const AutomationDashboardDateFilterDateFilterTypeEnum = {
 } as const;
 
 export type AutomationDashboardDateFilterDateFilterTypeEnum =
-    typeof AutomationDashboardDateFilterDateFilterTypeEnum[keyof typeof AutomationDashboardDateFilterDateFilterTypeEnum];
+    (typeof AutomationDashboardDateFilterDateFilterTypeEnum)[keyof typeof AutomationDashboardDateFilterDateFilterTypeEnum];
 export const AutomationDashboardDateFilterDateFilterGranularityEnum = {
     ALL_TIME_GRANULARITY: "ALL_TIME_GRANULARITY",
     GDC_TIME_YEAR: "GDC.time.year",
@@ -1415,7 +1415,7 @@ export const AutomationDashboardDateFilterDateFilterGranularityEnum = {
 } as const;
 
 export type AutomationDashboardDateFilterDateFilterGranularityEnum =
-    typeof AutomationDashboardDateFilterDateFilterGranularityEnum[keyof typeof AutomationDashboardDateFilterDateFilterGranularityEnum];
+    (typeof AutomationDashboardDateFilterDateFilterGranularityEnum)[keyof typeof AutomationDashboardDateFilterDateFilterGranularityEnum];
 
 /**
  * Additional settings.
@@ -1491,7 +1491,7 @@ export const AutomationDashboardTabularExportRequestV2FormatEnum = {
 } as const;
 
 export type AutomationDashboardTabularExportRequestV2FormatEnum =
-    typeof AutomationDashboardTabularExportRequestV2FormatEnum[keyof typeof AutomationDashboardTabularExportRequestV2FormatEnum];
+    (typeof AutomationDashboardTabularExportRequestV2FormatEnum)[keyof typeof AutomationDashboardTabularExportRequestV2FormatEnum];
 
 /**
  * @type AutomationDateFilter
@@ -1538,7 +1538,7 @@ export const AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum = {
 } as const;
 
 export type AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum =
-    typeof AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum[keyof typeof AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum];
+    (typeof AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum)[keyof typeof AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum];
 
 /**
  * A notification channel identifier.
@@ -1565,7 +1565,7 @@ export const AutomationDeclarativeNotificationChannelIdentifierTypeEnum = {
 } as const;
 
 export type AutomationDeclarativeNotificationChannelIdentifierTypeEnum =
-    typeof AutomationDeclarativeNotificationChannelIdentifierTypeEnum[keyof typeof AutomationDeclarativeNotificationChannelIdentifierTypeEnum];
+    (typeof AutomationDeclarativeNotificationChannelIdentifierTypeEnum)[keyof typeof AutomationDeclarativeNotificationChannelIdentifierTypeEnum];
 
 /**
  * A user identifier.
@@ -1592,7 +1592,7 @@ export const AutomationDeclarativeUserIdentifierTypeEnum = {
 } as const;
 
 export type AutomationDeclarativeUserIdentifierTypeEnum =
-    typeof AutomationDeclarativeUserIdentifierTypeEnum[keyof typeof AutomationDeclarativeUserIdentifierTypeEnum];
+    (typeof AutomationDeclarativeUserIdentifierTypeEnum)[keyof typeof AutomationDeclarativeUserIdentifierTypeEnum];
 
 /**
  * Default SMTP destination for notifications.
@@ -1625,7 +1625,7 @@ export const AutomationDefaultSmtpTypeEnum = {
 } as const;
 
 export type AutomationDefaultSmtpTypeEnum =
-    typeof AutomationDefaultSmtpTypeEnum[keyof typeof AutomationDefaultSmtpTypeEnum];
+    (typeof AutomationDefaultSmtpTypeEnum)[keyof typeof AutomationDefaultSmtpTypeEnum];
 
 /**
  * Various settings affecting the process of AFM execution or its result
@@ -1716,7 +1716,7 @@ export const AutomationExportResultStatusEnum = {
 } as const;
 
 export type AutomationExportResultStatusEnum =
-    typeof AutomationExportResultStatusEnum[keyof typeof AutomationExportResultStatusEnum];
+    (typeof AutomationExportResultStatusEnum)[keyof typeof AutomationExportResultStatusEnum];
 
 /**
  * @type AutomationFilterDefinition
@@ -1797,7 +1797,7 @@ export const AutomationIdentifierRefIdentifierTypeEnum = {
 } as const;
 
 export type AutomationIdentifierRefIdentifierTypeEnum =
-    typeof AutomationIdentifierRefIdentifierTypeEnum[keyof typeof AutomationIdentifierRefIdentifierTypeEnum];
+    (typeof AutomationIdentifierRefIdentifierTypeEnum)[keyof typeof AutomationIdentifierRefIdentifierTypeEnum];
 
 /**
  * Export request object describing the export properties and metadata for image exports.
@@ -1842,7 +1842,7 @@ export const AutomationImageExportRequestFormatEnum = {
 } as const;
 
 export type AutomationImageExportRequestFormatEnum =
-    typeof AutomationImageExportRequestFormatEnum[keyof typeof AutomationImageExportRequestFormatEnum];
+    (typeof AutomationImageExportRequestFormatEnum)[keyof typeof AutomationImageExportRequestFormatEnum];
 
 /**
  * In-platform destination for notifications.
@@ -1863,7 +1863,7 @@ export const AutomationInPlatformTypeEnum = {
 } as const;
 
 export type AutomationInPlatformTypeEnum =
-    typeof AutomationInPlatformTypeEnum[keyof typeof AutomationInPlatformTypeEnum];
+    (typeof AutomationInPlatformTypeEnum)[keyof typeof AutomationInPlatformTypeEnum];
 
 /**
  * Filter in form of direct MAQL query.
@@ -2441,7 +2441,7 @@ export const AutomationRangeOperatorEnum = {
 } as const;
 
 export type AutomationRangeOperatorEnum =
-    typeof AutomationRangeOperatorEnum[keyof typeof AutomationRangeOperatorEnum];
+    (typeof AutomationRangeOperatorEnum)[keyof typeof AutomationRangeOperatorEnum];
 
 /**
  * Filter the result by comparing specified metric to given range of values.
@@ -2518,7 +2518,7 @@ export const AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnu
 } as const;
 
 export type AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum =
-    typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
+    (typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum)[keyof typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
 
 /**
  *
@@ -2596,7 +2596,7 @@ export const AutomationRankingFilterRankingFilterOperatorEnum = {
 } as const;
 
 export type AutomationRankingFilterRankingFilterOperatorEnum =
-    typeof AutomationRankingFilterRankingFilterOperatorEnum[keyof typeof AutomationRankingFilterRankingFilterOperatorEnum];
+    (typeof AutomationRankingFilterRankingFilterOperatorEnum)[keyof typeof AutomationRankingFilterRankingFilterOperatorEnum];
 
 /**
  * Custom label object override.
@@ -2694,7 +2694,7 @@ export const AutomationRawExportAutomationRequestFormatEnum = {
 } as const;
 
 export type AutomationRawExportAutomationRequestFormatEnum =
-    typeof AutomationRawExportAutomationRequestFormatEnum[keyof typeof AutomationRawExportAutomationRequestFormatEnum];
+    (typeof AutomationRawExportAutomationRequestFormatEnum)[keyof typeof AutomationRawExportAutomationRequestFormatEnum];
 
 /**
  *
@@ -2729,7 +2729,7 @@ export const AutomationRelativeOperatorEnum = {
 } as const;
 
 export type AutomationRelativeOperatorEnum =
-    typeof AutomationRelativeOperatorEnum[keyof typeof AutomationRelativeOperatorEnum];
+    (typeof AutomationRelativeOperatorEnum)[keyof typeof AutomationRelativeOperatorEnum];
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
@@ -2813,7 +2813,7 @@ export const AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = {
 } as const;
 
 export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum =
-    typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum];
+    (typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum)[keyof typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum];
 
 /**
  *
@@ -2934,7 +2934,7 @@ export const AutomationSimpleMeasureDefinitionMeasureAggregationEnum = {
 } as const;
 
 export type AutomationSimpleMeasureDefinitionMeasureAggregationEnum =
-    typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum];
+    (typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum)[keyof typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum];
 
 /**
  * Export request object describing the export properties and metadata for slides exports.
@@ -2992,7 +2992,7 @@ export const AutomationSlidesExportRequestFormatEnum = {
 } as const;
 
 export type AutomationSlidesExportRequestFormatEnum =
-    typeof AutomationSlidesExportRequestFormatEnum[keyof typeof AutomationSlidesExportRequestFormatEnum];
+    (typeof AutomationSlidesExportRequestFormatEnum)[keyof typeof AutomationSlidesExportRequestFormatEnum];
 
 /**
  * Custom SMTP destination for notifications. The properties host, port, username, and password are required on create and update
@@ -3051,12 +3051,12 @@ export const AutomationSmtpPortEnum = {
     NUMBER_2525: 2525,
 } as const;
 
-export type AutomationSmtpPortEnum = typeof AutomationSmtpPortEnum[keyof typeof AutomationSmtpPortEnum];
+export type AutomationSmtpPortEnum = (typeof AutomationSmtpPortEnum)[keyof typeof AutomationSmtpPortEnum];
 export const AutomationSmtpTypeEnum = {
     SMTP: "SMTP",
 } as const;
 
-export type AutomationSmtpTypeEnum = typeof AutomationSmtpTypeEnum[keyof typeof AutomationSmtpTypeEnum];
+export type AutomationSmtpTypeEnum = (typeof AutomationSmtpTypeEnum)[keyof typeof AutomationSmtpTypeEnum];
 
 /**
  * Export request object describing the export properties and overrides for tabular exports.
@@ -3128,7 +3128,7 @@ export const AutomationTabularExportRequestFormatEnum = {
 } as const;
 
 export type AutomationTabularExportRequestFormatEnum =
-    typeof AutomationTabularExportRequestFormatEnum[keyof typeof AutomationTabularExportRequestFormatEnum];
+    (typeof AutomationTabularExportRequestFormatEnum)[keyof typeof AutomationTabularExportRequestFormatEnum];
 
 /**
  * Request body with notification channel destination to test.
@@ -3307,7 +3307,7 @@ export const AutomationWebhookTypeEnum = {
 } as const;
 
 export type AutomationWebhookTypeEnum =
-    typeof AutomationWebhookTypeEnum[keyof typeof AutomationWebhookTypeEnum];
+    (typeof AutomationWebhookTypeEnum)[keyof typeof AutomationWebhookTypeEnum];
 
 /**
  *
@@ -3378,7 +3378,7 @@ export const AutomationWebhookMessageTypeEnum = {
 } as const;
 
 export type AutomationWebhookMessageTypeEnum =
-    typeof AutomationWebhookMessageTypeEnum[keyof typeof AutomationWebhookMessageTypeEnum];
+    (typeof AutomationWebhookMessageTypeEnum)[keyof typeof AutomationWebhookMessageTypeEnum];
 
 /**
  *

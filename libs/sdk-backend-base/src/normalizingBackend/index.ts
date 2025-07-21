@@ -37,7 +37,10 @@ import { Denormalizer, NormalizationState, Normalizer } from "./normalizer.js";
 import cloneDeep from "lodash/cloneDeep.js";
 
 class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
-    constructor(decorated: IExecutionFactory, private readonly config: NormalizationConfig) {
+    constructor(
+        decorated: IExecutionFactory,
+        private readonly config: NormalizationConfig,
+    ) {
         super(decorated);
     }
 

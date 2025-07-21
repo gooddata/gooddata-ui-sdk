@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { actionChannel, call, take } from "redux-saga/effects";
 import noop from "lodash/noop.js";
@@ -162,9 +162,8 @@ export function* rootCommandHandler(): SagaIterator<void> {
     );
 
     while (true) {
-        const command: DashboardCommands | CommandEnvelope<DashboardCommands, any> = yield take(
-            commandChannel,
-        );
+        const command: DashboardCommands | CommandEnvelope<DashboardCommands, any> =
+            yield take(commandChannel);
         const envelope = ensureCommandWrappedInEnvelope(command);
         const ctx: DashboardContext = yield call(getDashboardContext);
 

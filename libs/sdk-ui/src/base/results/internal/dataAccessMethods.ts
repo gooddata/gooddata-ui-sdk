@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IDataAccessMethods,
@@ -22,7 +22,10 @@ import {
 class FilteredIterator<T> implements Iterator<T> {
     private idx = 0;
 
-    constructor(private readonly indexes: number[], private readonly itemProvider: (idx: number) => T) {}
+    constructor(
+        private readonly indexes: number[],
+        private readonly itemProvider: (idx: number) => T,
+    ) {}
 
     public next = (): IteratorYieldResult<T> | IteratorReturnResult<any> => {
         if (this.idx >= this.indexes.length) {

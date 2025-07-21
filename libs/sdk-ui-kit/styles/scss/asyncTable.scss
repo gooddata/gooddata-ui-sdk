@@ -16,6 +16,7 @@
         &--large {
             height: var(--gd-table-row-height-large);
         }
+
         &:hover {
             #{$root}__cell {
                 background-color: var(--gd-palette-complementary-2);
@@ -113,6 +114,7 @@
             flex-direction: column;
             font-size: var(--gd-table-multi-line-font-size);
             line-height: var(--gd-table-multi-line-line-height);
+
             > span:first-child {
                 font-size: var(--gd-table-multi-line-font-size-large);
                 line-height: var(--gd-table-multi-line-line-height-large);

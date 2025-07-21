@@ -50,6 +50,7 @@
                 opacity: 0.6;
             }
         }
+
         .headline-value--empty {
             color: var(
                 --gd-kpi-secondaryInfoColor-from-theme,
@@ -68,6 +69,7 @@
             }
         }
     }
+
     .headline-secondary-item,
     .headline-compare-item {
         flex-shrink: 1;
@@ -92,6 +94,7 @@
             &.headline-link-style-underline::after {
                 border-bottom: 1px solid;
             }
+
             &.headline-value--empty::after {
                 border-bottom: none;
             }
@@ -137,6 +140,7 @@
                 left: 0;
                 display: block;
             }
+
             &:not(.headline-value--empty).headline-link-style-underline::after {
                 border-bottom: 2px solid;
             }

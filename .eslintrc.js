@@ -1,7 +1,8 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 module.exports = {
     root: true,
     ignorePatterns: ["**/dist/**/*.*", "**/tests", "**/test"],
+    extends: ["plugin:prettier/recommended"],
     rules: {
         "no-duplicate-imports": "error",
         "@typescript-eslint/array-type": "off",

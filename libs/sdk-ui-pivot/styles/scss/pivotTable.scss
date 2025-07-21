@@ -97,8 +97,7 @@ $subtotal-odd-background-color: var(
             modal-overlay-background-color: $custom-background-color,
             odd-row-background-color: transparent,
             secondary-foreground-color: $custom-secondary-foreground-color,
-            row-hover-color:
-                var(
+            row-hover-color: var(
                     --gd-table-hoverBackgroundColor,
                     var(
                         --gd-palette-complementary-1-from-theme,
@@ -357,9 +356,11 @@ $subtotal-odd-background-color: var(
         .gd-table-row-subtotal {
             font-weight: bold;
             border-top: 1px solid $cell-border-color;
+
             &-even {
                 background-color: $subtotal-even-background-color;
             }
+
             &-odd {
                 background-color: $subtotal-odd-background-color;
             }
@@ -556,7 +557,9 @@ $subtotal-odd-background-color: var(
         background-color: $header-hover-background-color;
         opacity: 0;
         cursor: pointer;
-        transition: width 200ms, opacity 100ms;
+        transition:
+            width 200ms,
+            opacity 100ms;
 
         &:hover {
             background-color: $table-menu-hover;
@@ -658,6 +661,7 @@ $subtotal-odd-background-color: var(
             margin: 5px 10px 5px 10px;
             border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
         }
+
         .gd-list-item-header {
             position: relative;
 

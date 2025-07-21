@@ -109,7 +109,10 @@ const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+    ) {}
 
     // Public methods
     public getDashboards = async (options?: IGetDashboardOptions): Promise<IListedDashboard[]> => {

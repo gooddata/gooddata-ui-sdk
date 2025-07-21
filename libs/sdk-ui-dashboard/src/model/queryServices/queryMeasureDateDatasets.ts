@@ -62,9 +62,8 @@ function* queryService(
         payload: { measureRef },
     } = query;
 
-    const measures: ReturnType<typeof selectAllCatalogMeasuresMap> = yield select(
-        selectAllCatalogMeasuresMap,
-    );
+    const measures: ReturnType<typeof selectAllCatalogMeasuresMap> =
+        yield select(selectAllCatalogMeasuresMap);
     const measure = measures.get(measureRef);
 
     if (!measure) {

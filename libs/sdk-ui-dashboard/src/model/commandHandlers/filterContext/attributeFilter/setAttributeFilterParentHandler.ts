@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { invariant } from "ts-invariant";
@@ -53,8 +53,8 @@ export function* setAttributeFilterParentsHandler(
                 ? "Some of the parents provided cannot be used because filters for those are not in the filters collection. " +
                   "Only existing filters can be used as parent filters."
                 : validationResult === "INVALID_METADATA"
-                ? "Some of the parents provided cannot be used because the 'metadata' for parent filter are missing."
-                : "Some of the parents provided cannot be used because the 'over' parameter is invalid for the target filter.";
+                  ? "Some of the parents provided cannot be used because the 'metadata' for parent filter are missing."
+                  : "Some of the parents provided cannot be used because the 'over' parameter is invalid for the target filter.";
 
         throw invalidArgumentsProvided(ctx, cmd, message);
     }

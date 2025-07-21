@@ -278,8 +278,8 @@ export class DashboardLoader implements IDashboardLoader {
             typeof dashboard === "string"
                 ? idRef(dashboard)
                 : isDashboard(dashboard)
-                ? dashboard.ref
-                : dashboard;
+                  ? dashboard.ref
+                  : dashboard;
 
         invariant(backend, "DashboardLoader is not configured with an instance of Analytical Backend.");
 

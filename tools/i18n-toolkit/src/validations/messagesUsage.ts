@@ -79,30 +79,33 @@ function errorBasedOnResults(results: UsageResult[], uncontrolled: Array<string>
         return new Error(`There are some uncontrolled and not ignored keys in localisation files.`);
     }
 
-    return results.reduce((error, { ignore, stats, data }) => {
-        const unusedMessages = data.unusedMessages;
-        const missingMessages = data.missingMessages;
+    return results.reduce(
+        (error, { ignore, stats, data }) => {
+            const unusedMessages = data.unusedMessages;
+            const missingMessages = data.missingMessages;
 
-        if (ignore) {
+            if (ignore) {
+                return error;
+            }
+
+            if (stats.missing > 0 || stats.unused > 0) {
+                const details = [];
+                if (unusedMessages.length > 0) {
+                    details.push(`Unused messages: ${unusedMessages.join(", ")}`);
+                }
+                if (missingMessages.length > 0) {
+                    details.push(`Missing messages: ${missingMessages.join(", ")}`);
+                }
+
+                return new Error(
+                    `There are some missing and unused keys in localisation files. Found ${
+                        stats.missing
+                    } missing and ${stats.unused} unused keys.\n${details.join("\n")}`,
+                );
+            }
+
             return error;
-        }
-
-        if (stats.missing > 0 || stats.unused > 0) {
-            const details = [];
-            if (unusedMessages.length > 0) {
-                details.push(`Unused messages: ${unusedMessages.join(", ")}`);
-            }
-            if (missingMessages.length > 0) {
-                details.push(`Missing messages: ${missingMessages.join(", ")}`);
-            }
-
-            return new Error(
-                `There are some missing and unused keys in localisation files. Found ${
-                    stats.missing
-                } missing and ${stats.unused} unused keys.\n${details.join("\n")}`,
-            );
-        }
-
-        return error;
-    }, null as Error | null);
+        },
+        null as Error | null,
+    );
 }

@@ -289,7 +289,10 @@ function recordedWorkspace(
 }
 
 class RecordedExecutionFactory extends AbstractExecutionFactory {
-    constructor(private readonly recordings: LegacyWorkspaceRecordings, workspace: string) {
+    constructor(
+        private readonly recordings: LegacyWorkspaceRecordings,
+        workspace: string,
+    ) {
         super(workspace);
     }
 

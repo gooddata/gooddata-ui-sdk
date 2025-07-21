@@ -261,7 +261,7 @@ export const AfmObjectIdentifierAttributeIdentifierTypeEnum = {
 } as const;
 
 export type AfmObjectIdentifierAttributeIdentifierTypeEnum =
-    typeof AfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof AfmObjectIdentifierAttributeIdentifierTypeEnum];
+    (typeof AfmObjectIdentifierAttributeIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierAttributeIdentifierTypeEnum];
 
 /**
  * Reference to the metric, fact or attribute object to use for the metric.
@@ -304,7 +304,7 @@ export const AfmObjectIdentifierCoreIdentifierTypeEnum = {
 } as const;
 
 export type AfmObjectIdentifierCoreIdentifierTypeEnum =
-    typeof AfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof AfmObjectIdentifierCoreIdentifierTypeEnum];
+    (typeof AfmObjectIdentifierCoreIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierCoreIdentifierTypeEnum];
 
 /**
  * Reference to the date dataset to which the filter should be applied.
@@ -344,7 +344,7 @@ export const AfmObjectIdentifierDatasetIdentifierTypeEnum = {
 } as const;
 
 export type AfmObjectIdentifierDatasetIdentifierTypeEnum =
-    typeof AfmObjectIdentifierDatasetIdentifierTypeEnum[keyof typeof AfmObjectIdentifierDatasetIdentifierTypeEnum];
+    (typeof AfmObjectIdentifierDatasetIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierDatasetIdentifierTypeEnum];
 
 /**
  *
@@ -380,7 +380,7 @@ export const AfmObjectIdentifierIdentifierTypeEnum = {
 } as const;
 
 export type AfmObjectIdentifierIdentifierTypeEnum =
-    typeof AfmObjectIdentifierIdentifierTypeEnum[keyof typeof AfmObjectIdentifierIdentifierTypeEnum];
+    (typeof AfmObjectIdentifierIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierIdentifierTypeEnum];
 
 /**
  *
@@ -420,7 +420,7 @@ export const AfmObjectIdentifierLabelIdentifierTypeEnum = {
 } as const;
 
 export type AfmObjectIdentifierLabelIdentifierTypeEnum =
-    typeof AfmObjectIdentifierLabelIdentifierTypeEnum[keyof typeof AfmObjectIdentifierLabelIdentifierTypeEnum];
+    (typeof AfmObjectIdentifierLabelIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierLabelIdentifierTypeEnum];
 
 /**
  * Entity describing the valid descendants request.
@@ -475,7 +475,7 @@ export const AfmValidObjectsQueryTypesEnum = {
 } as const;
 
 export type AfmValidObjectsQueryTypesEnum =
-    typeof AfmValidObjectsQueryTypesEnum[keyof typeof AfmValidObjectsQueryTypesEnum];
+    (typeof AfmValidObjectsQueryTypesEnum)[keyof typeof AfmValidObjectsQueryTypesEnum];
 
 /**
  * All objects of specified types valid with respect to given AFM.
@@ -570,7 +570,7 @@ export const ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = {
 } as const;
 
 export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
-    typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+    (typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum)[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
 /**
  *
@@ -718,7 +718,7 @@ export const AttributeHeaderAttributeHeaderGranularityEnum = {
 } as const;
 
 export type AttributeHeaderAttributeHeaderGranularityEnum =
-    typeof AttributeHeaderAttributeHeaderGranularityEnum[keyof typeof AttributeHeaderAttributeHeaderGranularityEnum];
+    (typeof AttributeHeaderAttributeHeaderGranularityEnum)[keyof typeof AttributeHeaderAttributeHeaderGranularityEnum];
 export const AttributeHeaderAttributeHeaderValueTypeEnum = {
     TEXT: "TEXT",
     HYPERLINK: "HYPERLINK",
@@ -729,7 +729,7 @@ export const AttributeHeaderAttributeHeaderValueTypeEnum = {
 } as const;
 
 export type AttributeHeaderAttributeHeaderValueTypeEnum =
-    typeof AttributeHeaderAttributeHeaderValueTypeEnum[keyof typeof AttributeHeaderAttributeHeaderValueTypeEnum];
+    (typeof AttributeHeaderAttributeHeaderValueTypeEnum)[keyof typeof AttributeHeaderAttributeHeaderValueTypeEnum];
 
 /**
  *
@@ -902,7 +902,7 @@ export const BoundedFilterGranularityEnum = {
 } as const;
 
 export type BoundedFilterGranularityEnum =
-    typeof BoundedFilterGranularityEnum[keyof typeof BoundedFilterGranularityEnum];
+    (typeof BoundedFilterGranularityEnum)[keyof typeof BoundedFilterGranularityEnum];
 
 /**
  * List of chat history interactions.
@@ -979,7 +979,7 @@ export const ChatHistoryInteractionUserFeedbackEnum = {
 } as const;
 
 export type ChatHistoryInteractionUserFeedbackEnum =
-    typeof ChatHistoryInteractionUserFeedbackEnum[keyof typeof ChatHistoryInteractionUserFeedbackEnum];
+    (typeof ChatHistoryInteractionUserFeedbackEnum)[keyof typeof ChatHistoryInteractionUserFeedbackEnum];
 
 /**
  *
@@ -1026,7 +1026,7 @@ export const ChatHistoryRequestUserFeedbackEnum = {
 } as const;
 
 export type ChatHistoryRequestUserFeedbackEnum =
-    typeof ChatHistoryRequestUserFeedbackEnum[keyof typeof ChatHistoryRequestUserFeedbackEnum];
+    (typeof ChatHistoryRequestUserFeedbackEnum)[keyof typeof ChatHistoryRequestUserFeedbackEnum];
 
 /**
  *
@@ -1317,7 +1317,7 @@ export const ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnu
 } as const;
 
 export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum =
-    typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+    (typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum)[keyof typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
 /**
  * List of created visualization objects
@@ -1387,7 +1387,7 @@ export const CreatedVisualizationVisualizationTypeEnum = {
 } as const;
 
 export type CreatedVisualizationVisualizationTypeEnum =
-    typeof CreatedVisualizationVisualizationTypeEnum[keyof typeof CreatedVisualizationVisualizationTypeEnum];
+    (typeof CreatedVisualizationVisualizationTypeEnum)[keyof typeof CreatedVisualizationVisualizationTypeEnum];
 
 /**
  * Visualization definitions created by AI.
@@ -1548,7 +1548,7 @@ export const DateRelativeFilterGranularityEnum = {
 } as const;
 
 export type DateRelativeFilterGranularityEnum =
-    typeof DateRelativeFilterGranularityEnum[keyof typeof DateRelativeFilterGranularityEnum];
+    (typeof DateRelativeFilterGranularityEnum)[keyof typeof DateRelativeFilterGranularityEnum];
 
 /**
  *
@@ -1601,7 +1601,7 @@ export const DateRelativeFilterAllOfGranularityEnum = {
 } as const;
 
 export type DateRelativeFilterAllOfGranularityEnum =
-    typeof DateRelativeFilterAllOfGranularityEnum[keyof typeof DateRelativeFilterAllOfGranularityEnum];
+    (typeof DateRelativeFilterAllOfGranularityEnum)[keyof typeof DateRelativeFilterAllOfGranularityEnum];
 
 /**
  * Filter definition type specified by label and values.
@@ -1709,7 +1709,7 @@ export const DimAttributeTypeEnum = {
     ATTRIBUTE: "attribute",
 } as const;
 
-export type DimAttributeTypeEnum = typeof DimAttributeTypeEnum[keyof typeof DimAttributeTypeEnum];
+export type DimAttributeTypeEnum = (typeof DimAttributeTypeEnum)[keyof typeof DimAttributeTypeEnum];
 
 /**
  * Single dimension description.
@@ -1849,7 +1849,7 @@ export const ElementsRequestSortOrderEnum = {
 } as const;
 
 export type ElementsRequestSortOrderEnum =
-    typeof ElementsRequestSortOrderEnum[keyof typeof ElementsRequestSortOrderEnum];
+    (typeof ElementsRequestSortOrderEnum)[keyof typeof ElementsRequestSortOrderEnum];
 
 /**
  * Entity holding list of sorted & filtered label elements, related primary label of attribute owning requested label and paging.
@@ -1914,7 +1914,7 @@ export const ElementsResponseGranularityEnum = {
 } as const;
 
 export type ElementsResponseGranularityEnum =
-    typeof ElementsResponseGranularityEnum[keyof typeof ElementsResponseGranularityEnum];
+    (typeof ElementsResponseGranularityEnum)[keyof typeof ElementsResponseGranularityEnum];
 
 /**
  * Links to the execution result.
@@ -2127,7 +2127,7 @@ export const FilterByLabelTypeEnum = {
     REQUESTED: "REQUESTED",
 } as const;
 
-export type FilterByLabelTypeEnum = typeof FilterByLabelTypeEnum[keyof typeof FilterByLabelTypeEnum];
+export type FilterByLabelTypeEnum = (typeof FilterByLabelTypeEnum)[keyof typeof FilterByLabelTypeEnum];
 
 /**
  * @type FilterDefinition
@@ -2378,7 +2378,7 @@ export const KeyDriversDimensionGranularityEnum = {
 } as const;
 
 export type KeyDriversDimensionGranularityEnum =
-    typeof KeyDriversDimensionGranularityEnum[keyof typeof KeyDriversDimensionGranularityEnum];
+    (typeof KeyDriversDimensionGranularityEnum)[keyof typeof KeyDriversDimensionGranularityEnum];
 export const KeyDriversDimensionValueTypeEnum = {
     TEXT: "TEXT",
     HYPERLINK: "HYPERLINK",
@@ -2389,7 +2389,7 @@ export const KeyDriversDimensionValueTypeEnum = {
 } as const;
 
 export type KeyDriversDimensionValueTypeEnum =
-    typeof KeyDriversDimensionValueTypeEnum[keyof typeof KeyDriversDimensionValueTypeEnum];
+    (typeof KeyDriversDimensionValueTypeEnum)[keyof typeof KeyDriversDimensionValueTypeEnum];
 
 /**
  *
@@ -2423,7 +2423,7 @@ export const KeyDriversRequestSortDirectionEnum = {
 } as const;
 
 export type KeyDriversRequestSortDirectionEnum =
-    typeof KeyDriversRequestSortDirectionEnum[keyof typeof KeyDriversRequestSortDirectionEnum];
+    (typeof KeyDriversRequestSortDirectionEnum)[keyof typeof KeyDriversRequestSortDirectionEnum];
 
 /**
  *
@@ -2596,7 +2596,7 @@ export const MetricTypeEnum = {
     ATTRIBUTE: "attribute",
 } as const;
 
-export type MetricTypeEnum = typeof MetricTypeEnum[keyof typeof MetricTypeEnum];
+export type MetricTypeEnum = (typeof MetricTypeEnum)[keyof typeof MetricTypeEnum];
 export const MetricAggFunctionEnum = {
     COUNT: "COUNT",
     SUM: "SUM",
@@ -2606,7 +2606,7 @@ export const MetricAggFunctionEnum = {
     MEDIAN: "MEDIAN",
 } as const;
 
-export type MetricAggFunctionEnum = typeof MetricAggFunctionEnum[keyof typeof MetricAggFunctionEnum];
+export type MetricAggFunctionEnum = (typeof MetricAggFunctionEnum)[keyof typeof MetricAggFunctionEnum];
 
 /**
  * Filter able to limit element values by label and related selected negated elements.
@@ -2910,7 +2910,7 @@ export const RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = {
 } as const;
 
 export type RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum =
-    typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
+    (typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum)[keyof typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
 
 /**
  * Filter the result on top/bottom N values according to given metric(s).
@@ -2975,7 +2975,7 @@ export const RankingFilterRankingFilterOperatorEnum = {
 } as const;
 
 export type RankingFilterRankingFilterOperatorEnum =
-    typeof RankingFilterRankingFilterOperatorEnum[keyof typeof RankingFilterRankingFilterOperatorEnum];
+    (typeof RankingFilterRankingFilterOperatorEnum)[keyof typeof RankingFilterRankingFilterOperatorEnum];
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
@@ -3059,7 +3059,7 @@ export const RelativeDateFilterRelativeDateFilterGranularityEnum = {
 } as const;
 
 export type RelativeDateFilterRelativeDateFilterGranularityEnum =
-    typeof RelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof RelativeDateFilterRelativeDateFilterGranularityEnum];
+    (typeof RelativeDateFilterRelativeDateFilterGranularityEnum)[keyof typeof RelativeDateFilterRelativeDateFilterGranularityEnum];
 
 /**
  *
@@ -3217,7 +3217,7 @@ export const RouteResultUseCaseEnum = {
     HOWTO: "HOWTO",
 } as const;
 
-export type RouteResultUseCaseEnum = typeof RouteResultUseCaseEnum[keyof typeof RouteResultUseCaseEnum];
+export type RouteResultUseCaseEnum = (typeof RouteResultUseCaseEnum)[keyof typeof RouteResultUseCaseEnum];
 
 /**
  * Created and saved visualization IDs.
@@ -3349,7 +3349,7 @@ export const SearchRequestObjectTypesEnum = {
 } as const;
 
 export type SearchRequestObjectTypesEnum =
-    typeof SearchRequestObjectTypesEnum[keyof typeof SearchRequestObjectTypesEnum];
+    (typeof SearchRequestObjectTypesEnum)[keyof typeof SearchRequestObjectTypesEnum];
 
 /**
  *
@@ -3518,7 +3518,7 @@ export const SimpleMeasureDefinitionMeasureAggregationEnum = {
 } as const;
 
 export type SimpleMeasureDefinitionMeasureAggregationEnum =
-    typeof SimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof SimpleMeasureDefinitionMeasureAggregationEnum];
+    (typeof SimpleMeasureDefinitionMeasureAggregationEnum)[keyof typeof SimpleMeasureDefinitionMeasureAggregationEnum];
 
 /**
  *
@@ -3586,14 +3586,14 @@ export const SortKeyAttributeAttributeSortTypeEnum = {
 } as const;
 
 export type SortKeyAttributeAttributeSortTypeEnum =
-    typeof SortKeyAttributeAttributeSortTypeEnum[keyof typeof SortKeyAttributeAttributeSortTypeEnum];
+    (typeof SortKeyAttributeAttributeSortTypeEnum)[keyof typeof SortKeyAttributeAttributeSortTypeEnum];
 export const SortKeyAttributeAttributeDirectionEnum = {
     ASC: "ASC",
     DESC: "DESC",
 } as const;
 
 export type SortKeyAttributeAttributeDirectionEnum =
-    typeof SortKeyAttributeAttributeDirectionEnum[keyof typeof SortKeyAttributeAttributeDirectionEnum];
+    (typeof SortKeyAttributeAttributeDirectionEnum)[keyof typeof SortKeyAttributeAttributeDirectionEnum];
 
 /**
  * Sorting rule for sorting by total value. DataColumnLocators are only required if there is ambiguity. Locator for measureGroup is taken from the metric of the total.
@@ -3640,7 +3640,7 @@ export const SortKeyTotalTotalDirectionEnum = {
 } as const;
 
 export type SortKeyTotalTotalDirectionEnum =
-    typeof SortKeyTotalTotalDirectionEnum[keyof typeof SortKeyTotalTotalDirectionEnum];
+    (typeof SortKeyTotalTotalDirectionEnum)[keyof typeof SortKeyTotalTotalDirectionEnum];
 
 /**
  * Sorting rule for sorting by measure value. DataColumnLocators for each dimension opposite to the sorted one must be specified.
@@ -3681,7 +3681,7 @@ export const SortKeyValueValueDirectionEnum = {
 } as const;
 
 export type SortKeyValueValueDirectionEnum =
-    typeof SortKeyValueValueDirectionEnum[keyof typeof SortKeyValueValueDirectionEnum];
+    (typeof SortKeyValueValueDirectionEnum)[keyof typeof SortKeyValueValueDirectionEnum];
 
 /**
  * List of suggestions for next steps. Filled when no visualization was created, suggests alternatives.
@@ -3743,7 +3743,7 @@ export const TotalFunctionEnum = {
     NAT: "NAT",
 } as const;
 
-export type TotalFunctionEnum = typeof TotalFunctionEnum[keyof typeof TotalFunctionEnum];
+export type TotalFunctionEnum = (typeof TotalFunctionEnum)[keyof typeof TotalFunctionEnum];
 
 /**
  * A list of dimensions across which the total will be computed. Total headers for only these dimensions will be returned in the result.

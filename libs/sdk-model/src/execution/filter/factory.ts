@@ -61,8 +61,8 @@ export function newPositiveAttributeFilter(
     const objRef = isObjRef(attributeOrRef)
         ? attributeOrRef
         : typeof attributeOrRef === "string"
-        ? idRef(attributeOrRef)
-        : attributeDisplayFormRef(attributeOrRef);
+          ? idRef(attributeOrRef)
+          : attributeDisplayFormRef(attributeOrRef);
 
     const inObject: IAttributeElements = Array.isArray(inValues) ? { values: inValues } : inValues;
 
@@ -98,8 +98,8 @@ export function newNegativeAttributeFilter(
     const objRef = isObjRef(attributeOrRef)
         ? attributeOrRef
         : typeof attributeOrRef === "string"
-        ? idRef(attributeOrRef)
-        : attributeDisplayFormRef(attributeOrRef);
+          ? idRef(attributeOrRef)
+          : attributeDisplayFormRef(attributeOrRef);
 
     const notInObject: IAttributeElements = Array.isArray(notInValues)
         ? { values: notInValues }
@@ -201,8 +201,8 @@ function convertMeasureOrRefToObjRefInScope(measureOrRef: IMeasure | ObjRefInSco
     return isMeasure(measureOrRef)
         ? localIdRef(measureLocalId(measureOrRef))
         : typeof measureOrRef === "string"
-        ? localIdRef(measureOrRef)
-        : measureOrRef;
+          ? localIdRef(measureOrRef)
+          : measureOrRef;
 }
 
 function convertAttributeOrRefToObjRefInScope(
@@ -211,8 +211,8 @@ function convertAttributeOrRefToObjRefInScope(
     return isAttribute(attributeOrRef)
         ? localIdRef(attributeLocalId(attributeOrRef))
         : typeof attributeOrRef === "string"
-        ? localIdRef(attributeOrRef)
-        : attributeOrRef;
+          ? localIdRef(attributeOrRef)
+          : attributeOrRef;
 }
 
 /**

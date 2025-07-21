@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { SourceDescriptor, TargetDescriptor } from "../../../base/types.js";
 import source from "./source.json";
 import target from "./target.json";
@@ -72,7 +72,10 @@ export class EventCollector implements IEventListener {
     private resolveWait: ((event: DcEvent) => void) | undefined;
     private rejectWait: ((e: Error) => void) | undefined;
 
-    constructor(private readonly eventBus: EventBus, private readonly eventTypes?: DcEventType[]) {
+    constructor(
+        private readonly eventBus: EventBus,
+        private readonly eventTypes?: DcEventType[],
+    ) {
         this.eventBus.register(this);
     }
 

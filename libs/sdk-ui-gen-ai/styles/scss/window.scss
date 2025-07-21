@@ -114,6 +114,7 @@
             pointer-events: none;
             transition: opacity 0.2s;
         }
+
         &[data-gd-tooltip]::after {
             content: attr(data-gd-tooltip);
             position: absolute;

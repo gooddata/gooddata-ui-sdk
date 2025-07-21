@@ -20,7 +20,7 @@
         "@microsoft/api-documenter": "^7.17.0",
         "@gooddata/frontend-npm-scripts": "1.2.0",
 
-        "prettier": "~2.5.0",
+        "prettier": "^3.6.2",
         "tslib": "^2.5.0",
         "typescript": "5.8.3",
 

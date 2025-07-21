@@ -62,9 +62,8 @@ export function* resetDashboardRuntime(ctx: DashboardContext, cmd: ResetDashboar
 }
 
 function* resetDashboardFromPersisted(ctx: DashboardContext) {
-    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
-        selectPersistedDashboard,
-    );
+    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
+        yield select(selectPersistedDashboard);
 
     let batch: Array<PayloadAction<any>> = [];
     if (persistedDashboard) {
@@ -170,9 +169,8 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         /*
          * For dashboard that is not persisted, the dashboard component is reset to an 'empty' state.
          */
-        const dateFilterConfig: ReturnType<typeof selectDateFilterConfig> = yield select(
-            selectDateFilterConfig,
-        );
+        const dateFilterConfig: ReturnType<typeof selectDateFilterConfig> =
+            yield select(selectDateFilterConfig);
 
         const displayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
             selectAllCatalogDisplayFormsMap,

@@ -17,7 +17,10 @@ type TigerPermissionType =
     | "CREATE_AUTOMATION";
 
 export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsService {
-    constructor(public readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        public readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+    ) {}
 
     public async getPermissionsForCurrentUser(): Promise<IWorkspacePermissions> {
         const response = await this.authCall((client) =>

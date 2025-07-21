@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /**
  * We are using Builder pattern to create sdk-model objects https://en.wikipedia.org/wiki/Builder_pattern
  * Each sdk-model should have its own builder, and you should use it.
@@ -10,7 +10,10 @@
  * @beta
  */
 export class Builder<T> implements IBuilder<T> {
-    constructor(protected item: Partial<T>, protected validator?: (item: Partial<T>) => void) {}
+    constructor(
+        protected item: Partial<T>,
+        protected validator?: (item: Partial<T>) => void,
+    ) {}
 
     public build(): T {
         return this.item as T;

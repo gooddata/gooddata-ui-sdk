@@ -48,9 +48,8 @@ export function* loadIrrelevantElementsSaga(
         yield put(actions.loadIrrelevantElementsStart({ correlation }));
 
         const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
-        const loadOptions: ReturnType<typeof selectLoadElementsOptions> = yield select(
-            selectLoadElementsOptions,
-        );
+        const loadOptions: ReturnType<typeof selectLoadElementsOptions> =
+            yield select(selectLoadElementsOptions);
 
         const withoutApply = yield select(selectWithoutApply);
 

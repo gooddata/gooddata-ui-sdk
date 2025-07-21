@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import { program } from "commander";
 import ora from "ora";
@@ -49,7 +49,7 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
 
         logInSpinner.start("Logging in...");
 
-        await getOrInitBackend(tigerToken, hostname || DEFAULT_HOSTNAME);
+        getOrInitBackend(tigerToken, hostname || DEFAULT_HOSTNAME);
         logInSpinner.succeed();
         clearLine();
     } catch (err) {
@@ -195,7 +195,7 @@ async function run() {
 
     logInfo(`Building recording index for all executions with captured data in ${absoluteRecordingDir}`);
 
-    generateAllFiles(recordingsToIndex, absoluteRecordingDir);
+    await generateAllFiles(recordingsToIndex, absoluteRecordingDir);
 
     logSuccess("Done");
 

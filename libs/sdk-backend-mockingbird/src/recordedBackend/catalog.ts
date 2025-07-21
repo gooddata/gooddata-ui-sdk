@@ -124,7 +124,10 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
 }
 
 class RecordedCatalogBase {
-    constructor(protected readonly catalogGroups: ICatalogGroup[], protected readonly items: CatalogItem[]) {}
+    constructor(
+        protected readonly catalogGroups: ICatalogGroup[],
+        protected readonly items: CatalogItem[],
+    ) {}
 
     public allItems(): CatalogItem[] {
         return this.items;

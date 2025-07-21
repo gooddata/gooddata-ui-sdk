@@ -125,10 +125,12 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
             variables.$gd-configuration-bubble-margin;
         margin-bottom: 8px;
     }
+
     .insight-configuration .gd-menu-wrapper-small-spacing.gd-menu-wrapper {
         box-shadow: inherit;
         padding: 0;
     }
+
     .insight-configuration .gd-menu-wrapper.gd-menu-wrapper-small-spacing .gd-list-item {
         &.gd-menu-item {
             font-size: 14px;
@@ -154,6 +156,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
                 color: $insight-config-item-icon-color;
                 font-size: 16px;
             }
+
             i::before {
                 position: relative;
                 top: 2px;
@@ -168,12 +171,14 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
                 margin-right: 10px;
             }
         }
+
         &.gd-list-item-separator {
             &::before {
                 right: 0;
                 left: 0;
             }
         }
+
         &.s-delete-insight-item:hover {
             background-color: $delete-hover-status-bg;
             color: kit-variables.$gd-palette-error-base;
@@ -183,6 +188,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
             }
         }
     }
+
     .insight-configuration .gd-menu-wrapper {
         border-radius: 0 0 3px 3px;
     }

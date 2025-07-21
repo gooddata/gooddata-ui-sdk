@@ -65,12 +65,10 @@ export function* initializeAutomationsHandler(
 ): SagaIterator {
     const dashboardId: ReturnType<typeof selectDashboardId> = yield select(selectDashboardId);
     const user: ReturnType<typeof selectCurrentUser> = yield select(selectCurrentUser);
-    const canManageAutomations: ReturnType<typeof selectCanManageWorkspace> = yield select(
-        selectCanManageWorkspace,
-    );
-    const enableAutomations: ReturnType<typeof selectEnableScheduling> = yield select(
-        selectEnableAutomations,
-    );
+    const canManageAutomations: ReturnType<typeof selectCanManageWorkspace> =
+        yield select(selectCanManageWorkspace);
+    const enableAutomations: ReturnType<typeof selectEnableScheduling> =
+        yield select(selectEnableAutomations);
     const enableInPlatformNotifications: ReturnType<typeof selectEnableInPlatformNotifications> =
         yield select(selectEnableInPlatformNotifications);
     const enableNotificationChannelIdentifiers: ReturnType<
@@ -79,14 +77,12 @@ export function* initializeAutomationsHandler(
     const automationsInitialized: ReturnType<typeof selectAutomationsIsInitialized> = yield select(
         selectAutomationsIsInitialized,
     );
-    const automationsIsLoading: ReturnType<typeof selectAutomationsIsLoading> = yield select(
-        selectAutomationsIsLoading,
-    );
+    const automationsIsLoading: ReturnType<typeof selectAutomationsIsLoading> =
+        yield select(selectAutomationsIsLoading);
     const isReadOnly: ReturnType<typeof selectIsReadOnly> = yield select(selectIsReadOnly);
     const { automationId }: ReturnType<typeof selectFocusObject> = yield select(selectFocusObject);
-    const externalRecipient: ReturnType<typeof selectExternalRecipient> = yield select(
-        selectExternalRecipient,
-    );
+    const externalRecipient: ReturnType<typeof selectExternalRecipient> =
+        yield select(selectExternalRecipient);
 
     if (
         !dashboardId ||

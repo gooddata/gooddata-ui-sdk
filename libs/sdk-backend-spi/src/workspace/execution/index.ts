@@ -375,7 +375,7 @@ export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
      */
     explain<T extends ExplainType | undefined>(
         config: ExplainConfig<T>,
-    ): IExplainProvider<typeof config["explainType"]>;
+    ): IExplainProvider<(typeof config)["explainType"]>;
 
     /**
      * Tests whether this execution and the other execution are the same.

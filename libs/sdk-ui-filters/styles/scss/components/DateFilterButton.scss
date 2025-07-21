@@ -97,7 +97,8 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
                 &::after {
                     // refactor
                     // stylelint-disable-next-line max-line-length
-                    box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
+                    box-shadow:
+                        0 1px 3px 0 button-variables.$button-shadow-lighter,
                         0 2px 9px 0 button-variables.$button-shadow-darker;
                     border-color: button-variables.$button-normal-active-border-color;
                 }

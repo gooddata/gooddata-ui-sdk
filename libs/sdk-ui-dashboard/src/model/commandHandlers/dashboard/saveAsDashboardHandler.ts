@@ -91,17 +91,14 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     const { title, useOriginalFilterContext } = cmd.payload;
     const titleProp = title ? { title } : {};
 
-    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
-        selectPersistedDashboard,
-    );
+    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
+        yield select(selectPersistedDashboard);
 
-    const dashboardDescriptor: ReturnType<typeof selectDashboardDescriptor> = yield select(
-        selectDashboardDescriptor,
-    );
+    const dashboardDescriptor: ReturnType<typeof selectDashboardDescriptor> =
+        yield select(selectDashboardDescriptor);
 
-    const originalPersistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
-        selectPersistedDashboard,
-    );
+    const originalPersistedDashboard: ReturnType<typeof selectPersistedDashboard> =
+        yield select(selectPersistedDashboard);
 
     const isImmediateAttributeFilterMigrationEnabled: ReturnType<
         typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
@@ -143,9 +140,8 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     );
 
     const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
-    const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
-        selectBackendCapabilities,
-    );
+    const capabilities: ReturnType<typeof selectBackendCapabilities> =
+        yield select(selectBackendCapabilities);
 
     const { isUnderStrictControl: _unusedProp, ...dashboardDescriptorRest } = dashboardDescriptor;
 

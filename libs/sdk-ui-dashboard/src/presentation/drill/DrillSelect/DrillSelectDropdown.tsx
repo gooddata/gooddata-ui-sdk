@@ -99,7 +99,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
             }
 
             const nextIndex = (currentIndex + 1) % focusableElements.length;
-            return nextIndex === 0 ? null : focusableElements[nextIndex] ?? null;
+            return nextIndex === 0 ? null : (focusableElements[nextIndex] ?? null);
         },
         [],
     );

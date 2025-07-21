@@ -75,7 +75,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
     const focusedId = focusedItem?.id;
 
     const currentMenuLevelItems = React.useMemo(
-        () => (focusedId === undefined ? [] : getSiblingItems(items, focusedId) ?? []),
+        () => (focusedId === undefined ? [] : (getSiblingItems(items, focusedId) ?? [])),
         [items, focusedId],
     );
 

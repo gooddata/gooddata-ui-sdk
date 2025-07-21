@@ -44,7 +44,10 @@ import {
  * @alpha
  */
 export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceDashboardsService {
-    protected constructor(protected decorated: IWorkspaceDashboardsService, public workspace: string) {}
+    protected constructor(
+        protected decorated: IWorkspaceDashboardsService,
+        public workspace: string,
+    ) {}
 
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]> {
         return this.decorated.getDashboards(options);

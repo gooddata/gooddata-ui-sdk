@@ -978,8 +978,8 @@ export const transformMeasureBuckets = (
             localIdentifier === BucketNames.MEASURES
                 ? [BucketNames.MEASURES, BucketNames.SIZE]
                 : localIdentifier === BucketNames.SECONDARY_MEASURES
-                ? [BucketNames.SECONDARY_MEASURES, BucketNames.COLOR]
-                : [localIdentifier];
+                  ? [BucketNames.SECONDARY_MEASURES, BucketNames.COLOR]
+                  : [localIdentifier];
 
         const preferredBucketItems = getPreferredBucketItems(buckets, preferredBucketLocalIdentifiers, [
             METRIC,

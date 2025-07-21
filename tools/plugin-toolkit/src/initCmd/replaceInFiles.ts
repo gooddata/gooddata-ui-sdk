@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import fse from "fs-extra";
 import path from "path";
 import flatMap from "lodash/flatMap.js";
@@ -30,7 +30,7 @@ function createFileProcessor(readFile: ReadFileFn, writeFile: WriteFileFn): File
     return async ({ file, replacements }) => {
         const contents = await readFile(file, { encoding: "utf8", flag: "r" });
         const replaced = replacements.reduce(
-            (acc, { regex, value, apply }) => (apply ?? true ? acc.replace(regex, value) : acc),
+            (acc, { regex, value, apply }) => ((apply ?? true) ? acc.replace(regex, value) : acc),
             contents,
         );
 

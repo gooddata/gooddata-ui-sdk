@@ -213,11 +213,11 @@ export class DefaultFilterBarCustomizer implements IFilterBarCustomizer {
             FilterBarComponent: hidden
                 ? HiddenFilterBar
                 : updated
-                ? (props) => {
-                      const Comp = this.state.getRootProvider()(props);
-                      return <Comp {...props} />;
-                  }
-                : undefined,
+                  ? (props) => {
+                        const Comp = this.state.getRootProvider()(props);
+                        return <Comp {...props} />;
+                    }
+                  : undefined,
         };
     };
 

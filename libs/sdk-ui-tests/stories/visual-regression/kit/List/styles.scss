@@ -1,6 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 @import "../styles/goodstrap.scss";
+
 .list-item-list-example {
     float: left;
     width: 240px;
@@ -15,5 +16,7 @@
 
 // Just for example purposes
 .gd-vis-type:hover {
-    background-position: -999px -999px, center;
+    background-position:
+        -999px -999px,
+        center;
 }

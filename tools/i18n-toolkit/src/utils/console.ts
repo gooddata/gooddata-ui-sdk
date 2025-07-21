@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 /* eslint-disable no-console */
 
 import chalk from "chalk";
@@ -137,12 +137,15 @@ function resultToDetail(cwd: string, { identifier, files, data }: UsageResult) {
 }
 
 function table(data: string[][]) {
-    const max = data.reduce((prev, columns) => {
-        columns.forEach((colum, i) => {
-            prev[i] = Math.max(prev[i], realLength(colum));
-        });
-        return prev;
-    }, data[0].map(() => 0) as number[]);
+    const max = data.reduce(
+        (prev, columns) => {
+            columns.forEach((colum, i) => {
+                prev[i] = Math.max(prev[i], realLength(colum));
+            });
+            return prev;
+        },
+        data[0].map(() => 0) as number[],
+    );
 
     const padded = data.map((row) => {
         return row.map((item, i) => {

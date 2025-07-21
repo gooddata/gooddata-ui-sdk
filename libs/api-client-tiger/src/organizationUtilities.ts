@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import { AxiosPromise, AxiosRequestConfig } from "axios";
 import flatMap from "lodash/flatMap.js";
@@ -149,7 +149,7 @@ export class OrganizationUtilities {
             data: flatMap(pages, (page) => page.data) as any,
             included: uniqBy(
                 flatMap(pages, (page) =>
-                    OrganizationUtilities.supportsIncluded(page) ? page.included ?? [] : [],
+                    OrganizationUtilities.supportsIncluded(page) ? (page.included ?? []) : [],
                 ),
                 (item: any) => `${item.id}_${item.type}`,
             ) as any,

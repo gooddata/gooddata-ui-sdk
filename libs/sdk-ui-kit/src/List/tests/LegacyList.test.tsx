@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import * as React from "react";
 import cx from "classnames";
 import { render, screen } from "@testing-library/react";
@@ -108,11 +108,14 @@ class DummyDataSource<T extends { title: string }> {
             return this.rows[index];
         }
 
-        setTimeout(() => {
-            this.rows[index] = this.allRows[index];
-            this.rowsCount = this.allRows.length;
-            this.emitRowsUpdate();
-        }, Math.floor(Math.random() * this.maxResponseTime));
+        setTimeout(
+            () => {
+                this.rows[index] = this.allRows[index];
+                this.rowsCount = this.allRows.length;
+                this.emitRowsUpdate();
+            },
+            Math.floor(Math.random() * this.maxResponseTime),
+        );
 
         return null;
     }

@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useEffect } from "react";
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -33,8 +33,8 @@ const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
     const toggleMessageId = hasTotalMeasure
         ? messages.totalMeasuresTooltip.id
         : !controlsDisabled
-        ? messages.totalToggleTooltip.id
-        : undefined;
+          ? messages.totalToggleTooltip.id
+          : undefined;
 
     useEffect(() => {
         if (isTotalEnabled && !totalColumnName) {

@@ -8,6 +8,7 @@ $input-height: 28px;
 .gd-recipients-container.gd-input-component--invalid {
     .gd-recipients__control {
         border-color: kit-variables.$gd-palette-error-base;
+
         &:hover {
             border-color: kit-variables.$gd-palette-error-base;
         }

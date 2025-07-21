@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import { ApiEntitlementNameEnum } from "@gooddata/api-client-tiger";
 import {
@@ -21,7 +21,10 @@ import { objRefToIdentifier } from "../../../utils/api.js";
 export class TigerWorkspaceStyling implements IWorkspaceStylingService {
     private settingsService: TigerWorkspaceSettings;
 
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+    ) {
         this.settingsService = new TigerWorkspaceSettings(authCall, workspace);
     }
 

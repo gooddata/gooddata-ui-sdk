@@ -83,9 +83,8 @@ function* queryService(
     } = query;
     const preloadedAttributesWithReferences: ReturnType<typeof selectPreloadedAttributesWithReferences> =
         yield select(selectPreloadedAttributesWithReferences);
-    const catalogAttributes: ReturnType<typeof selectCatalogAttributes> = yield select(
-        selectCatalogAttributes,
-    );
+    const catalogAttributes: ReturnType<typeof selectCatalogAttributes> =
+        yield select(selectCatalogAttributes);
 
     const attributes: SagaReturnType<typeof loadAttributes> = yield call(
         loadAttributes,

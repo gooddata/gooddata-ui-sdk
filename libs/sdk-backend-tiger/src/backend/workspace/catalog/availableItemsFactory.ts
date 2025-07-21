@@ -70,12 +70,12 @@ const catalogItemRefs = (item: CatalogItem): ObjRef[] => {
     return isCatalogAttribute(item)
         ? [item.attribute.ref]
         : isCatalogFact(item)
-        ? [item.fact.ref]
-        : isCatalogMeasure(item)
-        ? [item.measure.ref]
-        : isCatalogAttributeHierarchy(item)
-        ? [item.attributeHierarchy.ref]
-        : item.dateAttributes.map((attr) => attr.attribute.ref);
+          ? [item.fact.ref]
+          : isCatalogMeasure(item)
+            ? [item.measure.ref]
+            : isCatalogAttributeHierarchy(item)
+              ? [item.attributeHierarchy.ref]
+              : item.dateAttributes.map((attr) => attr.attribute.ref);
 };
 
 export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCatalogAvailableItemsFactory {

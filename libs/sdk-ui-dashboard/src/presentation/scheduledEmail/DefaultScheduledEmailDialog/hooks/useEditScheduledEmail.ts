@@ -721,15 +721,15 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
         getAutomationVisualizationFilters(scheduledExportToEdit);
 
     // in case of editing widget schedule, we never overwrite already stored filters
-    const allWidgetFilters = scheduledExportToEdit ? existingScheduleFilters : widgetFilters ?? [];
+    const allWidgetFilters = scheduledExportToEdit ? existingScheduleFilters : (widgetFilters ?? []);
 
     const isTabularExport = format === "XLSX" || format === "CSV";
     const filtersObj =
         isTabularExport && (allWidgetFilters ?? []).length > 0
             ? { filters: allWidgetFilters }
             : !isTabularExport && (dashboardFilters ?? []).length > 0
-            ? { filters: dashboardFilters }
-            : {};
+              ? { filters: dashboardFilters }
+              : {};
     const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true, exportInfo: true } } : {};
 
     return {

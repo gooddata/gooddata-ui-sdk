@@ -135,7 +135,7 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
 
     public explain<T extends ExplainType | undefined>(
         config: ExplainConfig<T>,
-    ): IExplainProvider<typeof config["explainType"]> {
+    ): IExplainProvider<(typeof config)["explainType"]> {
         return this.decorated.explain(config);
     }
 
@@ -267,7 +267,10 @@ export abstract class DecoratedDataView implements IDataView {
     public forecastConfig?: IForecastConfig;
     public forecastResult?: IForecastResult;
 
-    protected constructor(private readonly decorated: IDataView, result?: IExecutionResult) {
+    protected constructor(
+        private readonly decorated: IDataView,
+        result?: IExecutionResult,
+    ) {
         this.result = result ?? decorated.result;
         this.forecastConfig = decorated.forecastConfig;
         this.forecastResult = decorated.forecastResult;

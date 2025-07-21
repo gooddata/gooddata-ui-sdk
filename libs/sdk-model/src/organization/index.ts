@@ -69,7 +69,7 @@ export const AssignedWorkspacePermissionValue = {
  * @alpha
  */
 export type AssignedWorkspacePermission =
-    typeof AssignedWorkspacePermissionValue[keyof typeof AssignedWorkspacePermissionValue];
+    (typeof AssignedWorkspacePermissionValue)[keyof typeof AssignedWorkspacePermissionValue];
 
 /**
  * Type guard to check if a value is an AssignedWorkspacePermission.
@@ -129,7 +129,7 @@ export const AssignedDataSourcePermissionValue = {
  * @alpha
  */
 export type AssignedDataSourcePermission =
-    typeof AssignedDataSourcePermissionValue[keyof typeof AssignedDataSourcePermissionValue];
+    (typeof AssignedDataSourcePermissionValue)[keyof typeof AssignedDataSourcePermissionValue];
 
 /**
  * Descriptor contains details about data source permission of organization user or user group.
@@ -154,7 +154,7 @@ export const OrganizationPermissionAssignmentValue = {
  * @alpha
  */
 export type OrganizationPermissionAssignment =
-    typeof OrganizationPermissionAssignmentValue[keyof typeof OrganizationPermissionAssignmentValue];
+    (typeof OrganizationPermissionAssignmentValue)[keyof typeof OrganizationPermissionAssignmentValue];
 
 /**
  * @alpha

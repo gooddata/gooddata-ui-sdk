@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 
 /**
@@ -9,7 +9,10 @@ import isEmpty from "lodash/isEmpty.js";
  * message included in the error and exits process with exit code equal to the included `rc` field.
  */
 export class DataRecorderError extends Error {
-    constructor(message: string, public readonly rc: number) {
+    constructor(
+        message: string,
+        public readonly rc: number,
+    ) {
         super(message);
     }
 }

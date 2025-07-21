@@ -203,10 +203,10 @@ function* actionsToInitializeOrFillNewDashboard(
 
     const privateCtx: PrivateDashboardContext = yield call(getPrivateContext);
     const customizedDashboard = sanitizedDashboard
-        ? privateCtx?.existingDashboardTransformFn?.(sanitizedDashboard) ?? sanitizedDashboard
+        ? (privateCtx?.existingDashboardTransformFn?.(sanitizedDashboard) ?? sanitizedDashboard)
         : sanitizedDashboard;
     const modifiedWidgets = customizedDashboard
-        ? privateCtx?.widgetsOverlayFn?.(customizedDashboard) ?? {}
+        ? (privateCtx?.widgetsOverlayFn?.(customizedDashboard) ?? {})
         : {};
 
     const filterContextDefinition = dashboardFilterContextDefinition(

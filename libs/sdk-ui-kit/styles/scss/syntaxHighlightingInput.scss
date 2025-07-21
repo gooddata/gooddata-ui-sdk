@@ -19,7 +19,9 @@
         font-family: monospace;
         font-weight: 200;
 
-        transition: all 0.25s ease-in-out, padding 0s;
+        transition:
+            all 0.25s ease-in-out,
+            padding 0s;
         // end of gd-input-base mixin body
 
         @include mixins.border-radius(3px);

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { OptionValues } from "commander";
 
@@ -33,7 +33,11 @@ export type SupportedPackageManager = "npm" | "yarn";
 export class InputValidationError extends Error {
     public readonly type = "IVE";
 
-    public constructor(public readonly inputName: string, public readonly value: string, message: string) {
+    public constructor(
+        public readonly inputName: string,
+        public readonly value: string,
+        message: string,
+    ) {
         super(message);
 
         // restore prototype chain

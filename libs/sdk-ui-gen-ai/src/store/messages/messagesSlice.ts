@@ -76,10 +76,13 @@ const initialState: MessagesSliceState = {
 };
 
 const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) => {
-    state.messages = messages.reduce((acc, message) => {
-        acc[message.localId] = message;
-        return acc;
-    }, {} as MessagesSliceState["messages"]);
+    state.messages = messages.reduce(
+        (acc, message) => {
+            acc[message.localId] = message;
+            return acc;
+        },
+        {} as MessagesSliceState["messages"],
+    );
     state.messageOrder = messages.map((message) => message.localId);
     state.loaded = true;
 };

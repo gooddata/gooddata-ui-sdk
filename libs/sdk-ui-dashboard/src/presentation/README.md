@@ -8,14 +8,13 @@ and the rationale behind it as well as some conventions to make things consisten
 
 To keep things organized and help us keep the code base as easy to navigate as possible, there are some rules regarding the file structure in this directory.
 
--   The presentation part of library is organized in modules. These are represented as top-level folders in the `presentation` folder.
+- The presentation part of library is organized in modules. These are represented as top-level folders in the `presentation` folder.
 
--   The API of each module is defined by two files:
+- The API of each module is defined by two files:
+    - `index.ts` - this file exports everything other modules can interact with (both code and types)
+    - `types.ts` - to avoid certain cyclic dependencies caused by type-only imports, this file exports all the types from the module. This file exists for specific cases, prefer importing from the `index.ts` if possible
 
-    -   `index.ts` - this file exports everything other modules can interact with (both code and types)
-    -   `types.ts` - to avoid certain cyclic dependencies caused by type-only imports, this file exports all the types from the module. This file exists for specific cases, prefer importing from the `index.ts` if possible
-
--   To help enforcing the above rules, every module must have its allowed dependencies specified in the dependency-cruiser file.These should be as minimal as possible.
+- To help enforcing the above rules, every module must have its allowed dependencies specified in the dependency-cruiser file.These should be as minimal as possible.
 
 ## Customization API
 
@@ -26,8 +25,8 @@ The API has two main types of contexts: dashboard-global and component-type-spec
 
 There are two contexts shared across the whole Dashboard component:
 
--   DashboardComponentsContext – this context stores information about which components should be used to render particular parts of the Dashboard. They can be overridden by the user defined components that use the component-type-specific contexts to obtain their props (see [Component-type-specific contexts](#component-type-specific-contexts) for more info).
--   DashboardConfigContext – this context stores custom configuration overrides aimed at making certain configuration possible without providing custom components (see [Hook parameters](#hook-parameters) for more info).
+- DashboardComponentsContext – this context stores information about which components should be used to render particular parts of the Dashboard. They can be overridden by the user defined components that use the component-type-specific contexts to obtain their props (see [Component-type-specific contexts](#component-type-specific-contexts) for more info).
+- DashboardConfigContext – this context stores custom configuration overrides aimed at making certain configuration possible without providing custom components (see [Hook parameters](#hook-parameters) for more info).
 
 ### Component-type-specific contexts
 
@@ -51,27 +50,27 @@ menuButton
  ┗ types.ts
 ```
 
--   MenuButtonPropsContext – this file contains a special context for specifying props of the Menu button implementations. It also provides a provider component `MenuButtonPropsProvider` a hook for consuming the context `useMenuButtonProps`. Only he hook is part of the public API.
--   DefaultMenuButton – this file (or folder for more complicated modules with implementation that needs to be split into several files) contains two components
-    -   `DefaultMenuButtonInner` - this component is the default implementation of the Menu button. It does not take any props, instead, it uses the `useMenuButtonProps` hook to obtain the props.
-    -   `DefaultMenuButton` - this component is a wrapper around `DefaultMenuButtonInner` that takes the same props as the props context and returns `DefaultMenuButtonInner` wrapped with the `MenuButtonPropsProvider` with the props set there. This component is part of the public API. The reason for this wrapping is end user DX: they just call a "normal" component and do not have to mess around with some context (which we do not want to expose anyway).
--   HiddenMenuButton – this file contains a simple stub of a component that returns null, effectively disabling the Menu button entirely. The reason behind this is again end user DX: they can just use a well named component to show their intent of hiding the menu button (it will also show explicitly in the dev tools which is helpful for debugging). This component is part of the public API.
--   MenuButton – this component does only one thing: it takes the appropriate value from the `DashboardComponentsContext` for the Menu button and renders it. This is for our convenience (so that the components rendering Menu button do not have to mess around with the `DashboardComponentsContext` unnecessarily).
--   types – this file contains all the necessary types for the Menu button: props and component types.
--   index – a barrel file exporting everything that should be exported.
+- MenuButtonPropsContext – this file contains a special context for specifying props of the Menu button implementations. It also provides a provider component `MenuButtonPropsProvider` a hook for consuming the context `useMenuButtonProps`. Only he hook is part of the public API.
+- DefaultMenuButton – this file (or folder for more complicated modules with implementation that needs to be split into several files) contains two components
+    - `DefaultMenuButtonInner` - this component is the default implementation of the Menu button. It does not take any props, instead, it uses the `useMenuButtonProps` hook to obtain the props.
+    - `DefaultMenuButton` - this component is a wrapper around `DefaultMenuButtonInner` that takes the same props as the props context and returns `DefaultMenuButtonInner` wrapped with the `MenuButtonPropsProvider` with the props set there. This component is part of the public API. The reason for this wrapping is end user DX: they just call a "normal" component and do not have to mess around with some context (which we do not want to expose anyway).
+- HiddenMenuButton – this file contains a simple stub of a component that returns null, effectively disabling the Menu button entirely. The reason behind this is again end user DX: they can just use a well named component to show their intent of hiding the menu button (it will also show explicitly in the dev tools which is helpful for debugging). This component is part of the public API.
+- MenuButton – this component does only one thing: it takes the appropriate value from the `DashboardComponentsContext` for the Menu button and renders it. This is for our convenience (so that the components rendering Menu button do not have to mess around with the `DashboardComponentsContext` unnecessarily).
+- types – this file contains all the necessary types for the Menu button: props and component types.
+- index – a barrel file exporting everything that should be exported.
 
 So to summarize, the public API of the module consists of these:
 
--   DefaultMenuButton
--   useMenuButtonProps
--   CustomMenuButtonComponent - named alias for React.ComponentType, this is to keep intents clearer
--   any types needed by the above
+- DefaultMenuButton
+- useMenuButtonProps
+- CustomMenuButtonComponent - named alias for React.ComponentType, this is to keep intents clearer
+- any types needed by the above
 
 For internal use, the module also needs to export:
 
--   DefaultMenuButtonInner
--   MenuButtonPropsProvider
--   any types needed by the above
+- DefaultMenuButtonInner
+- MenuButtonPropsProvider
+- any types needed by the above
 
 ### Hook parameters
 

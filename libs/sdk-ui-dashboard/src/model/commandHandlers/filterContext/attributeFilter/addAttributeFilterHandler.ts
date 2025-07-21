@@ -56,9 +56,8 @@ export function* addAttributeFilterHandler(
         title,
     } = cmd.payload;
 
-    const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreFilters> = yield select(
-        selectCanAddMoreFilters,
-    );
+    const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreFilters> =
+        yield select(selectCanAddMoreFilters);
 
     const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
         typeof selectEnableDuplicatedLabelValuesInAttributeFilter
@@ -156,9 +155,8 @@ export function* addAttributeFilterHandler(
 
     invariant(addedFilter, "Inconsistent state in attributeFilterAddCommandHandler");
 
-    const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
-        selectBackendCapabilities,
-    );
+    const capabilities: ReturnType<typeof selectBackendCapabilities> =
+        yield select(selectBackendCapabilities);
     const attributeFilterConfigActions = [];
     if (capabilities.supportsHiddenAndLockedFiltersOnUI && mode) {
         attributeFilterConfigActions.push(

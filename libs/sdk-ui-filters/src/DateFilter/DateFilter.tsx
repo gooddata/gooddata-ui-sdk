@@ -203,7 +203,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             ...DateFilter.getStateFromProps(props),
             selectedFilterOption: selectedFilterOption,
             excludeCurrentPeriod: canExcludeCurrent
-                ? props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod
+                ? (props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod)
                 : false,
             initWorkingExcludeCurrentPeriod: props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod,
             initWorkingSelectedFilterOption: selectedFilterOption,

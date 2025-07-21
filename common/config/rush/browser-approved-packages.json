@@ -707,6 +707,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "eslint-config-prettier",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "eslint-import-resolver-typescript",
       "allowedCategories": [ "examples", "production" ]
     },

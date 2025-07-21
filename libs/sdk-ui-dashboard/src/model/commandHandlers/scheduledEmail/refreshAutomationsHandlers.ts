@@ -24,14 +24,12 @@ export function* refreshAutomationsHandlers(ctx: DashboardContext, cmd: RefreshA
     const user: ReturnType<typeof selectCurrentUser> = yield select(selectCurrentUser);
     const enableScheduling: ReturnType<typeof selectEnableScheduling> = yield select(selectEnableScheduling);
     const enableAlerting: ReturnType<typeof selectEnableAlerting> = yield select(selectEnableAlerting);
-    const canManageAutomations: ReturnType<typeof selectCanManageWorkspace> = yield select(
-        selectCanManageWorkspace,
-    );
+    const canManageAutomations: ReturnType<typeof selectCanManageWorkspace> =
+        yield select(selectCanManageWorkspace);
     const isReadOnly: ReturnType<typeof selectIsReadOnly> = yield select(selectIsReadOnly);
     const enableAutomations = enableScheduling || enableAlerting;
-    const externalRecipient: ReturnType<typeof selectExternalRecipient> = yield select(
-        selectExternalRecipient,
-    );
+    const externalRecipient: ReturnType<typeof selectExternalRecipient> =
+        yield select(selectExternalRecipient);
 
     if (!dashboardId || !user || !enableAutomations || isReadOnly) {
         return;

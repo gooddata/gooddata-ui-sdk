@@ -1095,7 +1095,7 @@ export const AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum: {
 };
 
 // @public (undocumented)
-export type AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = typeof AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+export type AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = (typeof AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum)[keyof typeof AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
 // @public
 export type AfmAttributeFilter = AfmNegativeAttributeFilter | AfmPositiveAttributeFilter;
@@ -1140,7 +1140,7 @@ export const AfmBoundedFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type AfmBoundedFilterGranularityEnum = typeof AfmBoundedFilterGranularityEnum[keyof typeof AfmBoundedFilterGranularityEnum];
+export type AfmBoundedFilterGranularityEnum = (typeof AfmBoundedFilterGranularityEnum)[keyof typeof AfmBoundedFilterGranularityEnum];
 
 // @public
 export interface AfmCancelTokens {
@@ -1176,7 +1176,7 @@ export const AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperator
 };
 
 // @public (undocumented)
-export type AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = typeof AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+export type AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = (typeof AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum)[keyof typeof AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
 // @public
 export type AfmDateFilter = AfmAbsoluteDateFilter | AfmRelativeDateFilter;
@@ -1282,7 +1282,7 @@ export const AfmModelObjectIdentifierAttributeIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierAttributeIdentifierTypeEnum = typeof AfmModelObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof AfmModelObjectIdentifierAttributeIdentifierTypeEnum];
+export type AfmModelObjectIdentifierAttributeIdentifierTypeEnum = (typeof AfmModelObjectIdentifierAttributeIdentifierTypeEnum)[keyof typeof AfmModelObjectIdentifierAttributeIdentifierTypeEnum];
 
 // @public
 export interface AfmModelObjectIdentifierCore {
@@ -1304,7 +1304,7 @@ export const AfmModelObjectIdentifierCoreIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierCoreIdentifierTypeEnum = typeof AfmModelObjectIdentifierCoreIdentifierTypeEnum[keyof typeof AfmModelObjectIdentifierCoreIdentifierTypeEnum];
+export type AfmModelObjectIdentifierCoreIdentifierTypeEnum = (typeof AfmModelObjectIdentifierCoreIdentifierTypeEnum)[keyof typeof AfmModelObjectIdentifierCoreIdentifierTypeEnum];
 
 // @public
 export interface AfmModelObjectIdentifierDataset {
@@ -1323,7 +1323,7 @@ export const AfmModelObjectIdentifierDatasetIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierDatasetIdentifierTypeEnum = typeof AfmModelObjectIdentifierDatasetIdentifierTypeEnum[keyof typeof AfmModelObjectIdentifierDatasetIdentifierTypeEnum];
+export type AfmModelObjectIdentifierDatasetIdentifierTypeEnum = (typeof AfmModelObjectIdentifierDatasetIdentifierTypeEnum)[keyof typeof AfmModelObjectIdentifierDatasetIdentifierTypeEnum];
 
 // @public
 export interface AfmModelObjectIdentifierIdentifier {
@@ -1346,7 +1346,7 @@ export const AfmModelObjectIdentifierIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierIdentifierTypeEnum = typeof AfmModelObjectIdentifierIdentifierTypeEnum[keyof typeof AfmModelObjectIdentifierIdentifierTypeEnum];
+export type AfmModelObjectIdentifierIdentifierTypeEnum = (typeof AfmModelObjectIdentifierIdentifierTypeEnum)[keyof typeof AfmModelObjectIdentifierIdentifierTypeEnum];
 
 // @public
 export interface AfmModelObjectIdentifierLabel {
@@ -1365,7 +1365,7 @@ export const AfmModelObjectIdentifierLabelIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierLabelIdentifierTypeEnum = typeof AfmModelObjectIdentifierLabelIdentifierTypeEnum[keyof typeof AfmModelObjectIdentifierLabelIdentifierTypeEnum];
+export type AfmModelObjectIdentifierLabelIdentifierTypeEnum = (typeof AfmModelObjectIdentifierLabelIdentifierTypeEnum)[keyof typeof AfmModelObjectIdentifierLabelIdentifierTypeEnum];
 
 // @public
 export interface AfmNegativeAttributeFilter {
@@ -1402,7 +1402,7 @@ export const AfmObjectIdentifierAttributeIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AfmObjectIdentifierAttributeIdentifierTypeEnum = typeof AfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof AfmObjectIdentifierAttributeIdentifierTypeEnum];
+export type AfmObjectIdentifierAttributeIdentifierTypeEnum = (typeof AfmObjectIdentifierAttributeIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierAttributeIdentifierTypeEnum];
 
 // @public
 export interface AfmObjectIdentifierCore {
@@ -1424,7 +1424,7 @@ export const AfmObjectIdentifierCoreIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AfmObjectIdentifierCoreIdentifierTypeEnum = typeof AfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof AfmObjectIdentifierCoreIdentifierTypeEnum];
+export type AfmObjectIdentifierCoreIdentifierTypeEnum = (typeof AfmObjectIdentifierCoreIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierCoreIdentifierTypeEnum];
 
 // @public
 export interface AfmObjectIdentifierDataset {
@@ -1443,7 +1443,7 @@ export const AfmObjectIdentifierDatasetIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AfmObjectIdentifierDatasetIdentifierTypeEnum = typeof AfmObjectIdentifierDatasetIdentifierTypeEnum[keyof typeof AfmObjectIdentifierDatasetIdentifierTypeEnum];
+export type AfmObjectIdentifierDatasetIdentifierTypeEnum = (typeof AfmObjectIdentifierDatasetIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierDatasetIdentifierTypeEnum];
 
 // @public
 export interface AfmObjectIdentifierIdentifier {
@@ -1466,7 +1466,7 @@ export const AfmObjectIdentifierIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AfmObjectIdentifierIdentifierTypeEnum = typeof AfmObjectIdentifierIdentifierTypeEnum[keyof typeof AfmObjectIdentifierIdentifierTypeEnum];
+export type AfmObjectIdentifierIdentifierTypeEnum = (typeof AfmObjectIdentifierIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierIdentifierTypeEnum];
 
 // @public
 export interface AfmObjectIdentifierLabel {
@@ -1485,7 +1485,7 @@ export const AfmObjectIdentifierLabelIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AfmObjectIdentifierLabelIdentifierTypeEnum = typeof AfmObjectIdentifierLabelIdentifierTypeEnum[keyof typeof AfmObjectIdentifierLabelIdentifierTypeEnum];
+export type AfmObjectIdentifierLabelIdentifierTypeEnum = (typeof AfmObjectIdentifierLabelIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierLabelIdentifierTypeEnum];
 
 // @public
 export interface AfmPopDataset {
@@ -1561,7 +1561,7 @@ export const AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum: {
 };
 
 // @public (undocumented)
-export type AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = typeof AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
+export type AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = (typeof AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum)[keyof typeof AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
 
 // @public
 export interface AfmRankingFilter {
@@ -1585,7 +1585,7 @@ export const AfmRankingFilterRankingFilterOperatorEnum: {
 };
 
 // @public (undocumented)
-export type AfmRankingFilterRankingFilterOperatorEnum = typeof AfmRankingFilterRankingFilterOperatorEnum[keyof typeof AfmRankingFilterRankingFilterOperatorEnum];
+export type AfmRankingFilterRankingFilterOperatorEnum = (typeof AfmRankingFilterRankingFilterOperatorEnum)[keyof typeof AfmRankingFilterRankingFilterOperatorEnum];
 
 // @public
 export interface AfmRelativeDateFilter {
@@ -1623,7 +1623,7 @@ export const AfmRelativeDateFilterRelativeDateFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type AfmRelativeDateFilterRelativeDateFilterGranularityEnum = typeof AfmRelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof AfmRelativeDateFilterRelativeDateFilterGranularityEnum];
+export type AfmRelativeDateFilterRelativeDateFilterGranularityEnum = (typeof AfmRelativeDateFilterRelativeDateFilterGranularityEnum)[keyof typeof AfmRelativeDateFilterRelativeDateFilterGranularityEnum];
 
 // @public
 export interface AfmSimpleMeasureDefinition {
@@ -1651,7 +1651,7 @@ export const AfmSimpleMeasureDefinitionMeasureAggregationEnum: {
 };
 
 // @public (undocumented)
-export type AfmSimpleMeasureDefinitionMeasureAggregationEnum = typeof AfmSimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof AfmSimpleMeasureDefinitionMeasureAggregationEnum];
+export type AfmSimpleMeasureDefinitionMeasureAggregationEnum = (typeof AfmSimpleMeasureDefinitionMeasureAggregationEnum)[keyof typeof AfmSimpleMeasureDefinitionMeasureAggregationEnum];
 
 // @public
 export interface AfmValidDescendantsQuery {
@@ -1679,7 +1679,7 @@ export const AfmValidObjectsQueryTypesEnum: {
 };
 
 // @public (undocumented)
-export type AfmValidObjectsQueryTypesEnum = typeof AfmValidObjectsQueryTypesEnum[keyof typeof AfmValidObjectsQueryTypesEnum];
+export type AfmValidObjectsQueryTypesEnum = (typeof AfmValidObjectsQueryTypesEnum)[keyof typeof AfmValidObjectsQueryTypesEnum];
 
 // @public
 export interface AfmValidObjectsResponse {
@@ -1894,7 +1894,7 @@ export const ApiEntitlementNameEnum: {
 };
 
 // @public (undocumented)
-export type ApiEntitlementNameEnum = typeof ApiEntitlementNameEnum[keyof typeof ApiEntitlementNameEnum];
+export type ApiEntitlementNameEnum = (typeof ApiEntitlementNameEnum)[keyof typeof ApiEntitlementNameEnum];
 
 // @public
 export class APITokensApi extends MetadataBaseApi implements APITokensApiInterface {
@@ -2154,7 +2154,7 @@ export const ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum: {
 };
 
 // @public (undocumented)
-export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = (typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum)[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
 // @public (undocumented)
 export const ArithmeticMeasureOperatorEnum: {
@@ -2163,7 +2163,7 @@ export const ArithmeticMeasureOperatorEnum: {
 };
 
 // @public (undocumented)
-export type ArithmeticMeasureOperatorEnum = typeof ArithmeticMeasureOperatorEnum[keyof typeof ArithmeticMeasureOperatorEnum];
+export type ArithmeticMeasureOperatorEnum = (typeof ArithmeticMeasureOperatorEnum)[keyof typeof ArithmeticMeasureOperatorEnum];
 
 // @public
 export interface AssigneeIdentifier {
@@ -2178,7 +2178,7 @@ export const AssigneeIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AssigneeIdentifierTypeEnum = typeof AssigneeIdentifierTypeEnum[keyof typeof AssigneeIdentifierTypeEnum];
+export type AssigneeIdentifierTypeEnum = (typeof AssigneeIdentifierTypeEnum)[keyof typeof AssigneeIdentifierTypeEnum];
 
 // @public
 export interface AssigneeRule {
@@ -2191,7 +2191,7 @@ export const AssigneeRuleTypeEnum: {
 };
 
 // @public (undocumented)
-export type AssigneeRuleTypeEnum = typeof AssigneeRuleTypeEnum[keyof typeof AssigneeRuleTypeEnum];
+export type AssigneeRuleTypeEnum = (typeof AssigneeRuleTypeEnum)[keyof typeof AssigneeRuleTypeEnum];
 
 // @public
 export type AttributeElements = AttributeElementsByRef | AttributeElementsByValue;
@@ -2275,7 +2275,7 @@ export const AttributeHeaderAttributeHeaderGranularityEnum: {
 };
 
 // @public (undocumented)
-export type AttributeHeaderAttributeHeaderGranularityEnum = typeof AttributeHeaderAttributeHeaderGranularityEnum[keyof typeof AttributeHeaderAttributeHeaderGranularityEnum];
+export type AttributeHeaderAttributeHeaderGranularityEnum = (typeof AttributeHeaderAttributeHeaderGranularityEnum)[keyof typeof AttributeHeaderAttributeHeaderGranularityEnum];
 
 // @public (undocumented)
 export const AttributeHeaderAttributeHeaderValueTypeEnum: {
@@ -2288,7 +2288,7 @@ export const AttributeHeaderAttributeHeaderValueTypeEnum: {
 };
 
 // @public (undocumented)
-export type AttributeHeaderAttributeHeaderValueTypeEnum = typeof AttributeHeaderAttributeHeaderValueTypeEnum[keyof typeof AttributeHeaderAttributeHeaderValueTypeEnum];
+export type AttributeHeaderAttributeHeaderValueTypeEnum = (typeof AttributeHeaderAttributeHeaderValueTypeEnum)[keyof typeof AttributeHeaderAttributeHeaderValueTypeEnum];
 
 // @public
 export class AttributeHierarchiesApi extends MetadataBaseApi implements AttributeHierarchiesApiInterface {
@@ -2561,7 +2561,7 @@ export const AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum = typeof AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum];
+export type AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum = (typeof AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum];
 
 // @public
 export interface AutomationAfmObjectIdentifierCore {
@@ -2583,7 +2583,7 @@ export const AutomationAfmObjectIdentifierCoreIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum = typeof AutomationAfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierCoreIdentifierTypeEnum];
+export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum = (typeof AutomationAfmObjectIdentifierCoreIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierCoreIdentifierTypeEnum];
 
 // @public
 export interface AutomationAfmObjectIdentifierDataset {
@@ -2602,7 +2602,7 @@ export const AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum = typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum];
+export type AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum = (typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum];
 
 // @public
 export interface AutomationAfmObjectIdentifierIdentifier {
@@ -2625,7 +2625,7 @@ export const AutomationAfmObjectIdentifierIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierIdentifierTypeEnum = typeof AutomationAfmObjectIdentifierIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierIdentifierTypeEnum];
+export type AutomationAfmObjectIdentifierIdentifierTypeEnum = (typeof AutomationAfmObjectIdentifierIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierIdentifierTypeEnum];
 
 // @public
 export interface AutomationAfmObjectIdentifierLabel {
@@ -2644,7 +2644,7 @@ export const AutomationAfmObjectIdentifierLabelIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum];
+export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = (typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum];
 
 // @public
 export interface AutomationAlert {
@@ -2695,7 +2695,7 @@ export const AutomationAlertDescriptionStatusEnum: {
 };
 
 // @public (undocumented)
-export type AutomationAlertDescriptionStatusEnum = typeof AutomationAlertDescriptionStatusEnum[keyof typeof AutomationAlertDescriptionStatusEnum];
+export type AutomationAlertDescriptionStatusEnum = (typeof AutomationAlertDescriptionStatusEnum)[keyof typeof AutomationAlertDescriptionStatusEnum];
 
 // @public
 export interface AutomationAlertEvaluationRow {
@@ -2712,7 +2712,7 @@ export const AutomationAlertTriggerEnum: {
 };
 
 // @public (undocumented)
-export type AutomationAlertTriggerEnum = typeof AutomationAlertTriggerEnum[keyof typeof AutomationAlertTriggerEnum];
+export type AutomationAlertTriggerEnum = (typeof AutomationAlertTriggerEnum)[keyof typeof AutomationAlertTriggerEnum];
 
 // @public
 export interface AutomationArithmeticMeasure {
@@ -2742,7 +2742,7 @@ export const AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum:
 };
 
 // @public (undocumented)
-export type AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+export type AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = (typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum)[keyof typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
 // @public (undocumented)
 export const AutomationArithmeticMeasureOperatorEnum: {
@@ -2751,7 +2751,7 @@ export const AutomationArithmeticMeasureOperatorEnum: {
 };
 
 // @public (undocumented)
-export type AutomationArithmeticMeasureOperatorEnum = typeof AutomationArithmeticMeasureOperatorEnum[keyof typeof AutomationArithmeticMeasureOperatorEnum];
+export type AutomationArithmeticMeasureOperatorEnum = (typeof AutomationArithmeticMeasureOperatorEnum)[keyof typeof AutomationArithmeticMeasureOperatorEnum];
 
 // @public
 export type AutomationAttributeElements = AutomationAttributeElementsByRef | AutomationAttributeElementsByValue;
@@ -2807,7 +2807,7 @@ export const AutomationAutomationAlertTriggerEnum: {
 };
 
 // @public (undocumented)
-export type AutomationAutomationAlertTriggerEnum = typeof AutomationAutomationAlertTriggerEnum[keyof typeof AutomationAutomationAlertTriggerEnum];
+export type AutomationAutomationAlertTriggerEnum = (typeof AutomationAutomationAlertTriggerEnum)[keyof typeof AutomationAutomationAlertTriggerEnum];
 
 // @public
 export interface AutomationAutomationDashboardTabularExport {
@@ -2899,7 +2899,7 @@ export const AutomationBoundedFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type AutomationBoundedFilterGranularityEnum = typeof AutomationBoundedFilterGranularityEnum[keyof typeof AutomationBoundedFilterGranularityEnum];
+export type AutomationBoundedFilterGranularityEnum = (typeof AutomationBoundedFilterGranularityEnum)[keyof typeof AutomationBoundedFilterGranularityEnum];
 
 // @public
 export interface AutomationComparison {
@@ -2935,7 +2935,7 @@ export const AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterO
 };
 
 // @public (undocumented)
-export type AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+export type AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = (typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum)[keyof typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
 // @public (undocumented)
 export const AutomationComparisonOperatorEnum: {
@@ -2948,7 +2948,7 @@ export const AutomationComparisonOperatorEnum: {
 };
 
 // @public (undocumented)
-export type AutomationComparisonOperatorEnum = typeof AutomationComparisonOperatorEnum[keyof typeof AutomationComparisonOperatorEnum];
+export type AutomationComparisonOperatorEnum = (typeof AutomationComparisonOperatorEnum)[keyof typeof AutomationComparisonOperatorEnum];
 
 // @public
 export interface AutomationComparisonWrapper {
@@ -3032,7 +3032,7 @@ export const AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum:
 };
 
 // @public (undocumented)
-export type AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum = typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum[keyof typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum];
+export type AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum = (typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum)[keyof typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum];
 
 // @public
 export interface AutomationDashboardDateFilter {
@@ -3078,7 +3078,7 @@ export const AutomationDashboardDateFilterDateFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type AutomationDashboardDateFilterDateFilterGranularityEnum = typeof AutomationDashboardDateFilterDateFilterGranularityEnum[keyof typeof AutomationDashboardDateFilterDateFilterGranularityEnum];
+export type AutomationDashboardDateFilterDateFilterGranularityEnum = (typeof AutomationDashboardDateFilterDateFilterGranularityEnum)[keyof typeof AutomationDashboardDateFilterDateFilterGranularityEnum];
 
 // @public (undocumented)
 export const AutomationDashboardDateFilterDateFilterTypeEnum: {
@@ -3087,7 +3087,7 @@ export const AutomationDashboardDateFilterDateFilterTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationDashboardDateFilterDateFilterTypeEnum = typeof AutomationDashboardDateFilterDateFilterTypeEnum[keyof typeof AutomationDashboardDateFilterDateFilterTypeEnum];
+export type AutomationDashboardDateFilterDateFilterTypeEnum = (typeof AutomationDashboardDateFilterDateFilterTypeEnum)[keyof typeof AutomationDashboardDateFilterDateFilterTypeEnum];
 
 // @public
 export interface AutomationDashboardExportSettings {
@@ -3119,7 +3119,7 @@ export const AutomationDashboardTabularExportRequestV2FormatEnum: {
 };
 
 // @public (undocumented)
-export type AutomationDashboardTabularExportRequestV2FormatEnum = typeof AutomationDashboardTabularExportRequestV2FormatEnum[keyof typeof AutomationDashboardTabularExportRequestV2FormatEnum];
+export type AutomationDashboardTabularExportRequestV2FormatEnum = (typeof AutomationDashboardTabularExportRequestV2FormatEnum)[keyof typeof AutomationDashboardTabularExportRequestV2FormatEnum];
 
 // @public
 export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationRelativeDateFilter;
@@ -3141,7 +3141,7 @@ export const AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum = typeof AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum[keyof typeof AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum];
+export type AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum = (typeof AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum)[keyof typeof AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum];
 
 // @public
 export interface AutomationDeclarativeNotificationChannelIdentifier {
@@ -3155,7 +3155,7 @@ export const AutomationDeclarativeNotificationChannelIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationDeclarativeNotificationChannelIdentifierTypeEnum = typeof AutomationDeclarativeNotificationChannelIdentifierTypeEnum[keyof typeof AutomationDeclarativeNotificationChannelIdentifierTypeEnum];
+export type AutomationDeclarativeNotificationChannelIdentifierTypeEnum = (typeof AutomationDeclarativeNotificationChannelIdentifierTypeEnum)[keyof typeof AutomationDeclarativeNotificationChannelIdentifierTypeEnum];
 
 // @public
 export interface AutomationDeclarativeUserIdentifier {
@@ -3169,7 +3169,7 @@ export const AutomationDeclarativeUserIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationDeclarativeUserIdentifierTypeEnum = typeof AutomationDeclarativeUserIdentifierTypeEnum[keyof typeof AutomationDeclarativeUserIdentifierTypeEnum];
+export type AutomationDeclarativeUserIdentifierTypeEnum = (typeof AutomationDeclarativeUserIdentifierTypeEnum)[keyof typeof AutomationDeclarativeUserIdentifierTypeEnum];
 
 // @public
 export interface AutomationDefaultSmtp {
@@ -3184,7 +3184,7 @@ export const AutomationDefaultSmtpTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationDefaultSmtpTypeEnum = typeof AutomationDefaultSmtpTypeEnum[keyof typeof AutomationDefaultSmtpTypeEnum];
+export type AutomationDefaultSmtpTypeEnum = (typeof AutomationDefaultSmtpTypeEnum)[keyof typeof AutomationDefaultSmtpTypeEnum];
 
 // @public
 export interface AutomationExecutionSettings {
@@ -3214,7 +3214,7 @@ export const AutomationExportResultStatusEnum: {
 };
 
 // @public (undocumented)
-export type AutomationExportResultStatusEnum = typeof AutomationExportResultStatusEnum[keyof typeof AutomationExportResultStatusEnum];
+export type AutomationExportResultStatusEnum = (typeof AutomationExportResultStatusEnum)[keyof typeof AutomationExportResultStatusEnum];
 
 // @public
 export interface AutomationExternalRecipient {
@@ -3263,7 +3263,7 @@ export const AutomationIdentifierRefIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationIdentifierRefIdentifierTypeEnum = typeof AutomationIdentifierRefIdentifierTypeEnum[keyof typeof AutomationIdentifierRefIdentifierTypeEnum];
+export type AutomationIdentifierRefIdentifierTypeEnum = (typeof AutomationIdentifierRefIdentifierTypeEnum)[keyof typeof AutomationIdentifierRefIdentifierTypeEnum];
 
 // @public
 export interface AutomationImageExport {
@@ -3285,7 +3285,7 @@ export const AutomationImageExportRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type AutomationImageExportRequestFormatEnum = typeof AutomationImageExportRequestFormatEnum[keyof typeof AutomationImageExportRequestFormatEnum];
+export type AutomationImageExportRequestFormatEnum = (typeof AutomationImageExportRequestFormatEnum)[keyof typeof AutomationImageExportRequestFormatEnum];
 
 // @public
 export interface AutomationInlineFilterDefinition {
@@ -3320,7 +3320,7 @@ export const AutomationInPlatformTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationInPlatformTypeEnum = typeof AutomationInPlatformTypeEnum[keyof typeof AutomationInPlatformTypeEnum];
+export type AutomationInPlatformTypeEnum = (typeof AutomationInPlatformTypeEnum)[keyof typeof AutomationInPlatformTypeEnum];
 
 // @public
 export interface AutomationLocalIdentifier {
@@ -3506,7 +3506,7 @@ export const AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnu
 };
 
 // @public (undocumented)
-export type AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
+export type AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = (typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum)[keyof typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
 
 // @public (undocumented)
 export const AutomationRangeOperatorEnum: {
@@ -3515,7 +3515,7 @@ export const AutomationRangeOperatorEnum: {
 };
 
 // @public (undocumented)
-export type AutomationRangeOperatorEnum = typeof AutomationRangeOperatorEnum[keyof typeof AutomationRangeOperatorEnum];
+export type AutomationRangeOperatorEnum = (typeof AutomationRangeOperatorEnum)[keyof typeof AutomationRangeOperatorEnum];
 
 // @public
 export interface AutomationRangeWrapper {
@@ -3544,7 +3544,7 @@ export const AutomationRankingFilterRankingFilterOperatorEnum: {
 };
 
 // @public (undocumented)
-export type AutomationRankingFilterRankingFilterOperatorEnum = typeof AutomationRankingFilterRankingFilterOperatorEnum[keyof typeof AutomationRankingFilterRankingFilterOperatorEnum];
+export type AutomationRankingFilterRankingFilterOperatorEnum = (typeof AutomationRankingFilterRankingFilterOperatorEnum)[keyof typeof AutomationRankingFilterRankingFilterOperatorEnum];
 
 // @public
 export interface AutomationRawCustomLabel {
@@ -3589,7 +3589,7 @@ export const AutomationRawExportAutomationRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type AutomationRawExportAutomationRequestFormatEnum = typeof AutomationRawExportAutomationRequestFormatEnum[keyof typeof AutomationRawExportAutomationRequestFormatEnum];
+export type AutomationRawExportAutomationRequestFormatEnum = (typeof AutomationRawExportAutomationRequestFormatEnum)[keyof typeof AutomationRawExportAutomationRequestFormatEnum];
 
 // @public
 export interface AutomationRelative {
@@ -3634,7 +3634,7 @@ export const AutomationRelativeDateFilterRelativeDateFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum];
+export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = (typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum)[keyof typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum];
 
 // @public (undocumented)
 export const AutomationRelativeOperatorEnum: {
@@ -3644,7 +3644,7 @@ export const AutomationRelativeOperatorEnum: {
 };
 
 // @public (undocumented)
-export type AutomationRelativeOperatorEnum = typeof AutomationRelativeOperatorEnum[keyof typeof AutomationRelativeOperatorEnum];
+export type AutomationRelativeOperatorEnum = (typeof AutomationRelativeOperatorEnum)[keyof typeof AutomationRelativeOperatorEnum];
 
 // @public
 export interface AutomationRelativeWrapper {
@@ -3900,7 +3900,7 @@ export const AutomationSimpleMeasureDefinitionMeasureAggregationEnum: {
 };
 
 // @public (undocumented)
-export type AutomationSimpleMeasureDefinitionMeasureAggregationEnum = typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum];
+export type AutomationSimpleMeasureDefinitionMeasureAggregationEnum = (typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum)[keyof typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum];
 
 // @public
 export interface AutomationSlidesExport {
@@ -3925,7 +3925,7 @@ export const AutomationSlidesExportRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type AutomationSlidesExportRequestFormatEnum = typeof AutomationSlidesExportRequestFormatEnum[keyof typeof AutomationSlidesExportRequestFormatEnum];
+export type AutomationSlidesExportRequestFormatEnum = (typeof AutomationSlidesExportRequestFormatEnum)[keyof typeof AutomationSlidesExportRequestFormatEnum];
 
 // @public
 export interface AutomationSmtp {
@@ -3947,7 +3947,7 @@ export const AutomationSmtpPortEnum: {
 };
 
 // @public (undocumented)
-export type AutomationSmtpPortEnum = typeof AutomationSmtpPortEnum[keyof typeof AutomationSmtpPortEnum];
+export type AutomationSmtpPortEnum = (typeof AutomationSmtpPortEnum)[keyof typeof AutomationSmtpPortEnum];
 
 // @public (undocumented)
 export const AutomationSmtpTypeEnum: {
@@ -3955,7 +3955,7 @@ export const AutomationSmtpTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationSmtpTypeEnum = typeof AutomationSmtpTypeEnum[keyof typeof AutomationSmtpTypeEnum];
+export type AutomationSmtpTypeEnum = (typeof AutomationSmtpTypeEnum)[keyof typeof AutomationSmtpTypeEnum];
 
 // @public
 export interface AutomationTabularExport {
@@ -3984,7 +3984,7 @@ export const AutomationTabularExportRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type AutomationTabularExportRequestFormatEnum = typeof AutomationTabularExportRequestFormatEnum[keyof typeof AutomationTabularExportRequestFormatEnum];
+export type AutomationTabularExportRequestFormatEnum = (typeof AutomationTabularExportRequestFormatEnum)[keyof typeof AutomationTabularExportRequestFormatEnum];
 
 // @public
 export interface AutomationTestDestinationRequest {
@@ -4087,7 +4087,7 @@ export const AutomationWebhookMessageTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationWebhookMessageTypeEnum = typeof AutomationWebhookMessageTypeEnum[keyof typeof AutomationWebhookMessageTypeEnum];
+export type AutomationWebhookMessageTypeEnum = (typeof AutomationWebhookMessageTypeEnum)[keyof typeof AutomationWebhookMessageTypeEnum];
 
 // @public
 export interface AutomationWebhookRecipient {
@@ -4101,7 +4101,7 @@ export const AutomationWebhookTypeEnum: {
 };
 
 // @public (undocumented)
-export type AutomationWebhookTypeEnum = typeof AutomationWebhookTypeEnum[keyof typeof AutomationWebhookTypeEnum];
+export type AutomationWebhookTypeEnum = (typeof AutomationWebhookTypeEnum)[keyof typeof AutomationWebhookTypeEnum];
 
 // @public
 export interface AvailableAssignees {
@@ -4170,7 +4170,7 @@ export const BoundedFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type BoundedFilterGranularityEnum = typeof BoundedFilterGranularityEnum[keyof typeof BoundedFilterGranularityEnum];
+export type BoundedFilterGranularityEnum = (typeof BoundedFilterGranularityEnum)[keyof typeof BoundedFilterGranularityEnum];
 
 // @public
 export interface CacheRemovalInterval {
@@ -4209,7 +4209,7 @@ export const ChatHistoryInteractionUserFeedbackEnum: {
 };
 
 // @public (undocumented)
-export type ChatHistoryInteractionUserFeedbackEnum = typeof ChatHistoryInteractionUserFeedbackEnum[keyof typeof ChatHistoryInteractionUserFeedbackEnum];
+export type ChatHistoryInteractionUserFeedbackEnum = (typeof ChatHistoryInteractionUserFeedbackEnum)[keyof typeof ChatHistoryInteractionUserFeedbackEnum];
 
 // @public
 export interface ChatHistoryRequest {
@@ -4228,7 +4228,7 @@ export const ChatHistoryRequestUserFeedbackEnum: {
 };
 
 // @public (undocumented)
-export type ChatHistoryRequestUserFeedbackEnum = typeof ChatHistoryRequestUserFeedbackEnum[keyof typeof ChatHistoryRequestUserFeedbackEnum];
+export type ChatHistoryRequestUserFeedbackEnum = (typeof ChatHistoryRequestUserFeedbackEnum)[keyof typeof ChatHistoryRequestUserFeedbackEnum];
 
 // @public
 export interface ChatHistoryResult {
@@ -4308,7 +4308,7 @@ export const ColumnOverrideLabelTypeEnum: {
 };
 
 // @public (undocumented)
-export type ColumnOverrideLabelTypeEnum = typeof ColumnOverrideLabelTypeEnum[keyof typeof ColumnOverrideLabelTypeEnum];
+export type ColumnOverrideLabelTypeEnum = (typeof ColumnOverrideLabelTypeEnum)[keyof typeof ColumnOverrideLabelTypeEnum];
 
 // @public (undocumented)
 export const ColumnOverrideLdmTypeOverrideEnum: {
@@ -4317,7 +4317,7 @@ export const ColumnOverrideLdmTypeOverrideEnum: {
 };
 
 // @public (undocumented)
-export type ColumnOverrideLdmTypeOverrideEnum = typeof ColumnOverrideLdmTypeOverrideEnum[keyof typeof ColumnOverrideLdmTypeOverrideEnum];
+export type ColumnOverrideLdmTypeOverrideEnum = (typeof ColumnOverrideLdmTypeOverrideEnum)[keyof typeof ColumnOverrideLdmTypeOverrideEnum];
 
 // @public
 export interface ColumnStatistic {
@@ -4349,7 +4349,7 @@ export const ColumnStatisticsRequestStatisticsEnum: {
 };
 
 // @public (undocumented)
-export type ColumnStatisticsRequestStatisticsEnum = typeof ColumnStatisticsRequestStatisticsEnum[keyof typeof ColumnStatisticsRequestStatisticsEnum];
+export type ColumnStatisticsRequestStatisticsEnum = (typeof ColumnStatisticsRequestStatisticsEnum)[keyof typeof ColumnStatisticsRequestStatisticsEnum];
 
 // @public
 export interface ColumnStatisticsResponse {
@@ -4374,7 +4374,7 @@ export const ColumnStatisticTypeEnum: {
 };
 
 // @public (undocumented)
-export type ColumnStatisticTypeEnum = typeof ColumnStatisticTypeEnum[keyof typeof ColumnStatisticTypeEnum];
+export type ColumnStatisticTypeEnum = (typeof ColumnStatisticTypeEnum)[keyof typeof ColumnStatisticTypeEnum];
 
 // @public
 export interface ColumnStatisticWarning {
@@ -4422,7 +4422,7 @@ export const ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnu
 };
 
 // @public (undocumented)
-export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = (typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum)[keyof typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
 // @public (undocumented)
 export const ComparisonOperatorEnum: {
@@ -4435,7 +4435,7 @@ export const ComparisonOperatorEnum: {
 };
 
 // @public (undocumented)
-export type ComparisonOperatorEnum = typeof ComparisonOperatorEnum[keyof typeof ComparisonOperatorEnum];
+export type ComparisonOperatorEnum = (typeof ComparisonOperatorEnum)[keyof typeof ComparisonOperatorEnum];
 
 // @public
 export interface ComparisonWrapper {
@@ -4679,7 +4679,7 @@ export const CreatedVisualizationVisualizationTypeEnum: {
 };
 
 // @public (undocumented)
-export type CreatedVisualizationVisualizationTypeEnum = typeof CreatedVisualizationVisualizationTypeEnum[keyof typeof CreatedVisualizationVisualizationTypeEnum];
+export type CreatedVisualizationVisualizationTypeEnum = (typeof CreatedVisualizationVisualizationTypeEnum)[keyof typeof CreatedVisualizationVisualizationTypeEnum];
 
 // @public
 export class CSPDirectivesApi extends MetadataBaseApi implements CSPDirectivesApiInterface {
@@ -4873,7 +4873,7 @@ export const DashboardAttributeFilterAttributeFilterSelectionModeEnum: {
 };
 
 // @public (undocumented)
-export type DashboardAttributeFilterAttributeFilterSelectionModeEnum = typeof DashboardAttributeFilterAttributeFilterSelectionModeEnum[keyof typeof DashboardAttributeFilterAttributeFilterSelectionModeEnum];
+export type DashboardAttributeFilterAttributeFilterSelectionModeEnum = (typeof DashboardAttributeFilterAttributeFilterSelectionModeEnum)[keyof typeof DashboardAttributeFilterAttributeFilterSelectionModeEnum];
 
 // @public
 export interface DashboardDateFilter {
@@ -4919,7 +4919,7 @@ export const DashboardDateFilterDateFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type DashboardDateFilterDateFilterGranularityEnum = typeof DashboardDateFilterDateFilterGranularityEnum[keyof typeof DashboardDateFilterDateFilterGranularityEnum];
+export type DashboardDateFilterDateFilterGranularityEnum = (typeof DashboardDateFilterDateFilterGranularityEnum)[keyof typeof DashboardDateFilterDateFilterGranularityEnum];
 
 // @public (undocumented)
 export const DashboardDateFilterDateFilterTypeEnum: {
@@ -4928,7 +4928,7 @@ export const DashboardDateFilterDateFilterTypeEnum: {
 };
 
 // @public (undocumented)
-export type DashboardDateFilterDateFilterTypeEnum = typeof DashboardDateFilterDateFilterTypeEnum[keyof typeof DashboardDateFilterDateFilterTypeEnum];
+export type DashboardDateFilterDateFilterTypeEnum = (typeof DashboardDateFilterDateFilterTypeEnum)[keyof typeof DashboardDateFilterDateFilterTypeEnum];
 
 // @public
 export interface DashboardExportSettings {
@@ -4959,7 +4959,7 @@ export const DashboardPermissionsAssignmentPermissionsEnum: {
 };
 
 // @public (undocumented)
-export type DashboardPermissionsAssignmentPermissionsEnum = typeof DashboardPermissionsAssignmentPermissionsEnum[keyof typeof DashboardPermissionsAssignmentPermissionsEnum];
+export type DashboardPermissionsAssignmentPermissionsEnum = (typeof DashboardPermissionsAssignmentPermissionsEnum)[keyof typeof DashboardPermissionsAssignmentPermissionsEnum];
 
 // @public
 export class DashboardsApi extends MetadataBaseApi implements DashboardsApiInterface {
@@ -5083,7 +5083,7 @@ export const DashboardSlidesTemplateAppliedOnEnum: {
 };
 
 // @public (undocumented)
-export type DashboardSlidesTemplateAppliedOnEnum = typeof DashboardSlidesTemplateAppliedOnEnum[keyof typeof DashboardSlidesTemplateAppliedOnEnum];
+export type DashboardSlidesTemplateAppliedOnEnum = (typeof DashboardSlidesTemplateAppliedOnEnum)[keyof typeof DashboardSlidesTemplateAppliedOnEnum];
 
 // @public
 export interface DashboardTabularExportRequestV2 {
@@ -5101,7 +5101,7 @@ export const DashboardTabularExportRequestV2FormatEnum: {
 };
 
 // @public (undocumented)
-export type DashboardTabularExportRequestV2FormatEnum = typeof DashboardTabularExportRequestV2FormatEnum[keyof typeof DashboardTabularExportRequestV2FormatEnum];
+export type DashboardTabularExportRequestV2FormatEnum = (typeof DashboardTabularExportRequestV2FormatEnum)[keyof typeof DashboardTabularExportRequestV2FormatEnum];
 
 // @public
 export interface DataColumnLocator {
@@ -5423,7 +5423,7 @@ export const DatasetGrainTypeEnum: {
 };
 
 // @public (undocumented)
-export type DatasetGrainTypeEnum = typeof DatasetGrainTypeEnum[keyof typeof DatasetGrainTypeEnum];
+export type DatasetGrainTypeEnum = (typeof DatasetGrainTypeEnum)[keyof typeof DatasetGrainTypeEnum];
 
 // @public
 export interface DatasetReferenceIdentifier {
@@ -5437,7 +5437,7 @@ export const DatasetReferenceIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type DatasetReferenceIdentifierTypeEnum = typeof DatasetReferenceIdentifierTypeEnum[keyof typeof DatasetReferenceIdentifierTypeEnum];
+export type DatasetReferenceIdentifierTypeEnum = (typeof DatasetReferenceIdentifierTypeEnum)[keyof typeof DatasetReferenceIdentifierTypeEnum];
 
 // @public
 export class DatasetsApi extends MetadataBaseApi implements DatasetsApiInterface {
@@ -5504,7 +5504,7 @@ export const DatasetWorkspaceDataFilterIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type DatasetWorkspaceDataFilterIdentifierTypeEnum = typeof DatasetWorkspaceDataFilterIdentifierTypeEnum[keyof typeof DatasetWorkspaceDataFilterIdentifierTypeEnum];
+export type DatasetWorkspaceDataFilterIdentifierTypeEnum = (typeof DatasetWorkspaceDataFilterIdentifierTypeEnum)[keyof typeof DatasetWorkspaceDataFilterIdentifierTypeEnum];
 
 // @public
 export class DataSourceDeclarativeAPIsApi extends MetadataBaseApi implements DataSourceDeclarativeAPIsApiInterface {
@@ -5678,7 +5678,7 @@ export const DataSourcePermissionAssignmentPermissionsEnum: {
 };
 
 // @public (undocumented)
-export type DataSourcePermissionAssignmentPermissionsEnum = typeof DataSourcePermissionAssignmentPermissionsEnum[keyof typeof DataSourcePermissionAssignmentPermissionsEnum];
+export type DataSourcePermissionAssignmentPermissionsEnum = (typeof DataSourcePermissionAssignmentPermissionsEnum)[keyof typeof DataSourcePermissionAssignmentPermissionsEnum];
 
 // @public
 export interface DataSourceSchemata {
@@ -5699,7 +5699,7 @@ export const DataSourceTableIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type DataSourceTableIdentifierTypeEnum = typeof DataSourceTableIdentifierTypeEnum[keyof typeof DataSourceTableIdentifierTypeEnum];
+export type DataSourceTableIdentifierTypeEnum = (typeof DataSourceTableIdentifierTypeEnum)[keyof typeof DataSourceTableIdentifierTypeEnum];
 
 // @public
 export interface DateAbsoluteFilter {
@@ -5739,7 +5739,7 @@ export const DateRelativeFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type DateRelativeFilterGranularityEnum = typeof DateRelativeFilterGranularityEnum[keyof typeof DateRelativeFilterGranularityEnum];
+export type DateRelativeFilterGranularityEnum = (typeof DateRelativeFilterGranularityEnum)[keyof typeof DateRelativeFilterGranularityEnum];
 
 // @public
 export interface DateValue {
@@ -5768,7 +5768,7 @@ export const DeclarativeAggregatedFactSourceColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeAggregatedFactSourceColumnDataTypeEnum = typeof DeclarativeAggregatedFactSourceColumnDataTypeEnum[keyof typeof DeclarativeAggregatedFactSourceColumnDataTypeEnum];
+export type DeclarativeAggregatedFactSourceColumnDataTypeEnum = (typeof DeclarativeAggregatedFactSourceColumnDataTypeEnum)[keyof typeof DeclarativeAggregatedFactSourceColumnDataTypeEnum];
 
 // @public
 export interface DeclarativeAnalyticalDashboard {
@@ -5802,7 +5802,7 @@ export const DeclarativeAnalyticalDashboardIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeAnalyticalDashboardIdentifierTypeEnum = typeof DeclarativeAnalyticalDashboardIdentifierTypeEnum[keyof typeof DeclarativeAnalyticalDashboardIdentifierTypeEnum];
+export type DeclarativeAnalyticalDashboardIdentifierTypeEnum = (typeof DeclarativeAnalyticalDashboardIdentifierTypeEnum)[keyof typeof DeclarativeAnalyticalDashboardIdentifierTypeEnum];
 
 // @public
 export interface DeclarativeAnalyticalDashboardPermissionAssignment {
@@ -5817,7 +5817,7 @@ export const DeclarativeAnalyticalDashboardPermissionAssignmentNameEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeAnalyticalDashboardPermissionAssignmentNameEnum = typeof DeclarativeAnalyticalDashboardPermissionAssignmentNameEnum[keyof typeof DeclarativeAnalyticalDashboardPermissionAssignmentNameEnum];
+export type DeclarativeAnalyticalDashboardPermissionAssignmentNameEnum = (typeof DeclarativeAnalyticalDashboardPermissionAssignmentNameEnum)[keyof typeof DeclarativeAnalyticalDashboardPermissionAssignmentNameEnum];
 
 // @public
 export interface DeclarativeAnalyticalDashboardPermissionForAssignee {
@@ -5838,7 +5838,7 @@ export const DeclarativeAnalyticalDashboardPermissionForAssigneeNameEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeAnalyticalDashboardPermissionForAssigneeNameEnum = typeof DeclarativeAnalyticalDashboardPermissionForAssigneeNameEnum[keyof typeof DeclarativeAnalyticalDashboardPermissionForAssigneeNameEnum];
+export type DeclarativeAnalyticalDashboardPermissionForAssigneeNameEnum = (typeof DeclarativeAnalyticalDashboardPermissionForAssigneeNameEnum)[keyof typeof DeclarativeAnalyticalDashboardPermissionForAssigneeNameEnum];
 
 // @public
 export interface DeclarativeAnalyticalDashboardPermissionForAssigneeRule {
@@ -5859,7 +5859,7 @@ export const DeclarativeAnalyticalDashboardPermissionForAssigneeRuleNameEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeAnalyticalDashboardPermissionForAssigneeRuleNameEnum = typeof DeclarativeAnalyticalDashboardPermissionForAssigneeRuleNameEnum[keyof typeof DeclarativeAnalyticalDashboardPermissionForAssigneeRuleNameEnum];
+export type DeclarativeAnalyticalDashboardPermissionForAssigneeRuleNameEnum = (typeof DeclarativeAnalyticalDashboardPermissionForAssigneeRuleNameEnum)[keyof typeof DeclarativeAnalyticalDashboardPermissionForAssigneeRuleNameEnum];
 
 // @public
 export interface DeclarativeAnalytics {
@@ -5912,7 +5912,7 @@ export const DeclarativeAttributeSortDirectionEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeAttributeSortDirectionEnum = typeof DeclarativeAttributeSortDirectionEnum[keyof typeof DeclarativeAttributeSortDirectionEnum];
+export type DeclarativeAttributeSortDirectionEnum = (typeof DeclarativeAttributeSortDirectionEnum)[keyof typeof DeclarativeAttributeSortDirectionEnum];
 
 // @public (undocumented)
 export const DeclarativeAttributeSourceColumnDataTypeEnum: {
@@ -5926,7 +5926,7 @@ export const DeclarativeAttributeSourceColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeAttributeSourceColumnDataTypeEnum = typeof DeclarativeAttributeSourceColumnDataTypeEnum[keyof typeof DeclarativeAttributeSourceColumnDataTypeEnum];
+export type DeclarativeAttributeSourceColumnDataTypeEnum = (typeof DeclarativeAttributeSourceColumnDataTypeEnum)[keyof typeof DeclarativeAttributeSourceColumnDataTypeEnum];
 
 // @public
 export interface DeclarativeAutomation {
@@ -5965,7 +5965,7 @@ export const DeclarativeAutomationStateEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeAutomationStateEnum = typeof DeclarativeAutomationStateEnum[keyof typeof DeclarativeAutomationStateEnum];
+export type DeclarativeAutomationStateEnum = (typeof DeclarativeAutomationStateEnum)[keyof typeof DeclarativeAutomationStateEnum];
 
 // @public
 export interface DeclarativeColorPalette {
@@ -5995,7 +5995,7 @@ export const DeclarativeColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeColumnDataTypeEnum = typeof DeclarativeColumnDataTypeEnum[keyof typeof DeclarativeColumnDataTypeEnum];
+export type DeclarativeColumnDataTypeEnum = (typeof DeclarativeColumnDataTypeEnum)[keyof typeof DeclarativeColumnDataTypeEnum];
 
 // @public
 export interface DeclarativeCspDirective {
@@ -6084,7 +6084,7 @@ export const DeclarativeDataSourceAuthenticationTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeDataSourceAuthenticationTypeEnum = typeof DeclarativeDataSourceAuthenticationTypeEnum[keyof typeof DeclarativeDataSourceAuthenticationTypeEnum];
+export type DeclarativeDataSourceAuthenticationTypeEnum = (typeof DeclarativeDataSourceAuthenticationTypeEnum)[keyof typeof DeclarativeDataSourceAuthenticationTypeEnum];
 
 // @public (undocumented)
 export const DeclarativeDataSourceCacheStrategyEnum: {
@@ -6093,7 +6093,7 @@ export const DeclarativeDataSourceCacheStrategyEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeDataSourceCacheStrategyEnum = typeof DeclarativeDataSourceCacheStrategyEnum[keyof typeof DeclarativeDataSourceCacheStrategyEnum];
+export type DeclarativeDataSourceCacheStrategyEnum = (typeof DeclarativeDataSourceCacheStrategyEnum)[keyof typeof DeclarativeDataSourceCacheStrategyEnum];
 
 // @public
 export interface DeclarativeDataSourcePermission {
@@ -6108,7 +6108,7 @@ export const DeclarativeDataSourcePermissionNameEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeDataSourcePermissionNameEnum = typeof DeclarativeDataSourcePermissionNameEnum[keyof typeof DeclarativeDataSourcePermissionNameEnum];
+export type DeclarativeDataSourcePermissionNameEnum = (typeof DeclarativeDataSourcePermissionNameEnum)[keyof typeof DeclarativeDataSourcePermissionNameEnum];
 
 // @public
 export interface DeclarativeDataSourcePermissions {
@@ -6150,7 +6150,7 @@ export const DeclarativeDataSourceTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeDataSourceTypeEnum = typeof DeclarativeDataSourceTypeEnum[keyof typeof DeclarativeDataSourceTypeEnum];
+export type DeclarativeDataSourceTypeEnum = (typeof DeclarativeDataSourceTypeEnum)[keyof typeof DeclarativeDataSourceTypeEnum];
 
 // @public
 export interface DeclarativeDateDataset {
@@ -6182,7 +6182,7 @@ export const DeclarativeDateDatasetGranularitiesEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeDateDatasetGranularitiesEnum = typeof DeclarativeDateDatasetGranularitiesEnum[keyof typeof DeclarativeDateDatasetGranularitiesEnum];
+export type DeclarativeDateDatasetGranularitiesEnum = (typeof DeclarativeDateDatasetGranularitiesEnum)[keyof typeof DeclarativeDateDatasetGranularitiesEnum];
 
 // @public
 export interface DeclarativeExportDefinition {
@@ -6209,7 +6209,7 @@ export const DeclarativeExportDefinitionIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeExportDefinitionIdentifierTypeEnum = typeof DeclarativeExportDefinitionIdentifierTypeEnum[keyof typeof DeclarativeExportDefinitionIdentifierTypeEnum];
+export type DeclarativeExportDefinitionIdentifierTypeEnum = (typeof DeclarativeExportDefinitionIdentifierTypeEnum)[keyof typeof DeclarativeExportDefinitionIdentifierTypeEnum];
 
 // @public
 export interface DeclarativeExportTemplate {
@@ -6246,7 +6246,7 @@ export const DeclarativeFactSourceColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeFactSourceColumnDataTypeEnum = typeof DeclarativeFactSourceColumnDataTypeEnum[keyof typeof DeclarativeFactSourceColumnDataTypeEnum];
+export type DeclarativeFactSourceColumnDataTypeEnum = (typeof DeclarativeFactSourceColumnDataTypeEnum)[keyof typeof DeclarativeFactSourceColumnDataTypeEnum];
 
 // @public
 export interface DeclarativeFilterContext {
@@ -6301,7 +6301,7 @@ export const DeclarativeIdentityProviderIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeIdentityProviderIdentifierTypeEnum = typeof DeclarativeIdentityProviderIdentifierTypeEnum[keyof typeof DeclarativeIdentityProviderIdentifierTypeEnum];
+export type DeclarativeIdentityProviderIdentifierTypeEnum = (typeof DeclarativeIdentityProviderIdentifierTypeEnum)[keyof typeof DeclarativeIdentityProviderIdentifierTypeEnum];
 
 // @public (undocumented)
 export const DeclarativeIdentityProviderIdpTypeEnum: {
@@ -6311,7 +6311,7 @@ export const DeclarativeIdentityProviderIdpTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeIdentityProviderIdpTypeEnum = typeof DeclarativeIdentityProviderIdpTypeEnum[keyof typeof DeclarativeIdentityProviderIdpTypeEnum];
+export type DeclarativeIdentityProviderIdpTypeEnum = (typeof DeclarativeIdentityProviderIdpTypeEnum)[keyof typeof DeclarativeIdentityProviderIdpTypeEnum];
 
 // @public
 export interface DeclarativeJwk {
@@ -6345,7 +6345,7 @@ export const DeclarativeLabelSourceColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeLabelSourceColumnDataTypeEnum = typeof DeclarativeLabelSourceColumnDataTypeEnum[keyof typeof DeclarativeLabelSourceColumnDataTypeEnum];
+export type DeclarativeLabelSourceColumnDataTypeEnum = (typeof DeclarativeLabelSourceColumnDataTypeEnum)[keyof typeof DeclarativeLabelSourceColumnDataTypeEnum];
 
 // @public (undocumented)
 export const DeclarativeLabelValueTypeEnum: {
@@ -6358,7 +6358,7 @@ export const DeclarativeLabelValueTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeLabelValueTypeEnum = typeof DeclarativeLabelValueTypeEnum[keyof typeof DeclarativeLabelValueTypeEnum];
+export type DeclarativeLabelValueTypeEnum = (typeof DeclarativeLabelValueTypeEnum)[keyof typeof DeclarativeLabelValueTypeEnum];
 
 // @public
 export interface DeclarativeLdm {
@@ -6407,7 +6407,7 @@ export const DeclarativeNotificationChannelAllowedRecipientsEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeNotificationChannelAllowedRecipientsEnum = typeof DeclarativeNotificationChannelAllowedRecipientsEnum[keyof typeof DeclarativeNotificationChannelAllowedRecipientsEnum];
+export type DeclarativeNotificationChannelAllowedRecipientsEnum = (typeof DeclarativeNotificationChannelAllowedRecipientsEnum)[keyof typeof DeclarativeNotificationChannelAllowedRecipientsEnum];
 
 // @public (undocumented)
 export const DeclarativeNotificationChannelDashboardLinkVisibilityEnum: {
@@ -6417,7 +6417,7 @@ export const DeclarativeNotificationChannelDashboardLinkVisibilityEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeNotificationChannelDashboardLinkVisibilityEnum = typeof DeclarativeNotificationChannelDashboardLinkVisibilityEnum[keyof typeof DeclarativeNotificationChannelDashboardLinkVisibilityEnum];
+export type DeclarativeNotificationChannelDashboardLinkVisibilityEnum = (typeof DeclarativeNotificationChannelDashboardLinkVisibilityEnum)[keyof typeof DeclarativeNotificationChannelDashboardLinkVisibilityEnum];
 
 // @public (undocumented)
 export const DeclarativeNotificationChannelDestinationTypeEnum: {
@@ -6428,7 +6428,7 @@ export const DeclarativeNotificationChannelDestinationTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeNotificationChannelDestinationTypeEnum = typeof DeclarativeNotificationChannelDestinationTypeEnum[keyof typeof DeclarativeNotificationChannelDestinationTypeEnum];
+export type DeclarativeNotificationChannelDestinationTypeEnum = (typeof DeclarativeNotificationChannelDestinationTypeEnum)[keyof typeof DeclarativeNotificationChannelDestinationTypeEnum];
 
 // @public
 export interface DeclarativeNotificationChannelIdentifier {
@@ -6442,7 +6442,7 @@ export const DeclarativeNotificationChannelIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeNotificationChannelIdentifierTypeEnum = typeof DeclarativeNotificationChannelIdentifierTypeEnum[keyof typeof DeclarativeNotificationChannelIdentifierTypeEnum];
+export type DeclarativeNotificationChannelIdentifierTypeEnum = (typeof DeclarativeNotificationChannelIdentifierTypeEnum)[keyof typeof DeclarativeNotificationChannelIdentifierTypeEnum];
 
 // @public (undocumented)
 export const DeclarativeNotificationChannelInPlatformNotificationEnum: {
@@ -6451,7 +6451,7 @@ export const DeclarativeNotificationChannelInPlatformNotificationEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeNotificationChannelInPlatformNotificationEnum = typeof DeclarativeNotificationChannelInPlatformNotificationEnum[keyof typeof DeclarativeNotificationChannelInPlatformNotificationEnum];
+export type DeclarativeNotificationChannelInPlatformNotificationEnum = (typeof DeclarativeNotificationChannelInPlatformNotificationEnum)[keyof typeof DeclarativeNotificationChannelInPlatformNotificationEnum];
 
 // @public
 export interface DeclarativeNotificationChannels {
@@ -6511,7 +6511,7 @@ export const DeclarativeOrganizationPermissionNameEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeOrganizationPermissionNameEnum = typeof DeclarativeOrganizationPermissionNameEnum[keyof typeof DeclarativeOrganizationPermissionNameEnum];
+export type DeclarativeOrganizationPermissionNameEnum = (typeof DeclarativeOrganizationPermissionNameEnum)[keyof typeof DeclarativeOrganizationPermissionNameEnum];
 
 // @public
 export interface DeclarativeReference {
@@ -6543,7 +6543,7 @@ export const DeclarativeReferenceSourceColumnDataTypesEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeReferenceSourceColumnDataTypesEnum = typeof DeclarativeReferenceSourceColumnDataTypesEnum[keyof typeof DeclarativeReferenceSourceColumnDataTypesEnum];
+export type DeclarativeReferenceSourceColumnDataTypesEnum = (typeof DeclarativeReferenceSourceColumnDataTypesEnum)[keyof typeof DeclarativeReferenceSourceColumnDataTypesEnum];
 
 // @public (undocumented)
 export const DeclarativeReferenceSourceDataTypeEnum: {
@@ -6557,7 +6557,7 @@ export const DeclarativeReferenceSourceDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeReferenceSourceDataTypeEnum = typeof DeclarativeReferenceSourceDataTypeEnum[keyof typeof DeclarativeReferenceSourceDataTypeEnum];
+export type DeclarativeReferenceSourceDataTypeEnum = (typeof DeclarativeReferenceSourceDataTypeEnum)[keyof typeof DeclarativeReferenceSourceDataTypeEnum];
 
 // @public
 export interface DeclarativeRsaSpecification {
@@ -6579,7 +6579,7 @@ export const DeclarativeRsaSpecificationAlgEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeRsaSpecificationAlgEnum = typeof DeclarativeRsaSpecificationAlgEnum[keyof typeof DeclarativeRsaSpecificationAlgEnum];
+export type DeclarativeRsaSpecificationAlgEnum = (typeof DeclarativeRsaSpecificationAlgEnum)[keyof typeof DeclarativeRsaSpecificationAlgEnum];
 
 // @public (undocumented)
 export const DeclarativeRsaSpecificationKtyEnum: {
@@ -6587,7 +6587,7 @@ export const DeclarativeRsaSpecificationKtyEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeRsaSpecificationKtyEnum = typeof DeclarativeRsaSpecificationKtyEnum[keyof typeof DeclarativeRsaSpecificationKtyEnum];
+export type DeclarativeRsaSpecificationKtyEnum = (typeof DeclarativeRsaSpecificationKtyEnum)[keyof typeof DeclarativeRsaSpecificationKtyEnum];
 
 // @public (undocumented)
 export const DeclarativeRsaSpecificationUseEnum: {
@@ -6595,7 +6595,7 @@ export const DeclarativeRsaSpecificationUseEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeRsaSpecificationUseEnum = typeof DeclarativeRsaSpecificationUseEnum[keyof typeof DeclarativeRsaSpecificationUseEnum];
+export type DeclarativeRsaSpecificationUseEnum = (typeof DeclarativeRsaSpecificationUseEnum)[keyof typeof DeclarativeRsaSpecificationUseEnum];
 
 // @public
 export interface DeclarativeSetting {
@@ -6634,7 +6634,7 @@ export const DeclarativeSettingTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeSettingTypeEnum = typeof DeclarativeSettingTypeEnum[keyof typeof DeclarativeSettingTypeEnum];
+export type DeclarativeSettingTypeEnum = (typeof DeclarativeSettingTypeEnum)[keyof typeof DeclarativeSettingTypeEnum];
 
 // @public
 export interface DeclarativeSingleWorkspacePermission {
@@ -6656,7 +6656,7 @@ export const DeclarativeSingleWorkspacePermissionNameEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeSingleWorkspacePermissionNameEnum = typeof DeclarativeSingleWorkspacePermissionNameEnum[keyof typeof DeclarativeSingleWorkspacePermissionNameEnum];
+export type DeclarativeSingleWorkspacePermissionNameEnum = (typeof DeclarativeSingleWorkspacePermissionNameEnum)[keyof typeof DeclarativeSingleWorkspacePermissionNameEnum];
 
 // @public
 export interface DeclarativeSourceFactReference {
@@ -6672,7 +6672,7 @@ export const DeclarativeSourceFactReferenceOperationEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeSourceFactReferenceOperationEnum = typeof DeclarativeSourceFactReferenceOperationEnum[keyof typeof DeclarativeSourceFactReferenceOperationEnum];
+export type DeclarativeSourceFactReferenceOperationEnum = (typeof DeclarativeSourceFactReferenceOperationEnum)[keyof typeof DeclarativeSourceFactReferenceOperationEnum];
 
 // @public
 export interface DeclarativeTable {
@@ -6738,7 +6738,7 @@ export const DeclarativeUserGroupIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeUserGroupIdentifierTypeEnum = typeof DeclarativeUserGroupIdentifierTypeEnum[keyof typeof DeclarativeUserGroupIdentifierTypeEnum];
+export type DeclarativeUserGroupIdentifierTypeEnum = (typeof DeclarativeUserGroupIdentifierTypeEnum)[keyof typeof DeclarativeUserGroupIdentifierTypeEnum];
 
 // @public
 export interface DeclarativeUserGroupPermission {
@@ -6752,7 +6752,7 @@ export const DeclarativeUserGroupPermissionNameEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeUserGroupPermissionNameEnum = typeof DeclarativeUserGroupPermissionNameEnum[keyof typeof DeclarativeUserGroupPermissionNameEnum];
+export type DeclarativeUserGroupPermissionNameEnum = (typeof DeclarativeUserGroupPermissionNameEnum)[keyof typeof DeclarativeUserGroupPermissionNameEnum];
 
 // @public
 export interface DeclarativeUserGroupPermissions {
@@ -6776,7 +6776,7 @@ export const DeclarativeUserIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeUserIdentifierTypeEnum = typeof DeclarativeUserIdentifierTypeEnum[keyof typeof DeclarativeUserIdentifierTypeEnum];
+export type DeclarativeUserIdentifierTypeEnum = (typeof DeclarativeUserIdentifierTypeEnum)[keyof typeof DeclarativeUserIdentifierTypeEnum];
 
 // @public
 export interface DeclarativeUserPermission {
@@ -6790,7 +6790,7 @@ export const DeclarativeUserPermissionNameEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeUserPermissionNameEnum = typeof DeclarativeUserPermissionNameEnum[keyof typeof DeclarativeUserPermissionNameEnum];
+export type DeclarativeUserPermissionNameEnum = (typeof DeclarativeUserPermissionNameEnum)[keyof typeof DeclarativeUserPermissionNameEnum];
 
 // @public
 export interface DeclarativeUserPermissions {
@@ -6871,7 +6871,7 @@ export const DeclarativeWorkspaceDataFilterColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeWorkspaceDataFilterColumnDataTypeEnum = typeof DeclarativeWorkspaceDataFilterColumnDataTypeEnum[keyof typeof DeclarativeWorkspaceDataFilterColumnDataTypeEnum];
+export type DeclarativeWorkspaceDataFilterColumnDataTypeEnum = (typeof DeclarativeWorkspaceDataFilterColumnDataTypeEnum)[keyof typeof DeclarativeWorkspaceDataFilterColumnDataTypeEnum];
 
 // @public
 export interface DeclarativeWorkspaceDataFilterReferences {
@@ -6892,7 +6892,7 @@ export const DeclarativeWorkspaceDataFilterReferencesFilterColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeWorkspaceDataFilterReferencesFilterColumnDataTypeEnum = typeof DeclarativeWorkspaceDataFilterReferencesFilterColumnDataTypeEnum[keyof typeof DeclarativeWorkspaceDataFilterReferencesFilterColumnDataTypeEnum];
+export type DeclarativeWorkspaceDataFilterReferencesFilterColumnDataTypeEnum = (typeof DeclarativeWorkspaceDataFilterReferencesFilterColumnDataTypeEnum)[keyof typeof DeclarativeWorkspaceDataFilterReferencesFilterColumnDataTypeEnum];
 
 // @public
 export interface DeclarativeWorkspaceDataFilters {
@@ -6928,7 +6928,7 @@ export const DeclarativeWorkspaceHierarchyPermissionNameEnum: {
 };
 
 // @public (undocumented)
-export type DeclarativeWorkspaceHierarchyPermissionNameEnum = typeof DeclarativeWorkspaceHierarchyPermissionNameEnum[keyof typeof DeclarativeWorkspaceHierarchyPermissionNameEnum];
+export type DeclarativeWorkspaceHierarchyPermissionNameEnum = (typeof DeclarativeWorkspaceHierarchyPermissionNameEnum)[keyof typeof DeclarativeWorkspaceHierarchyPermissionNameEnum];
 
 // @public
 export interface DeclarativeWorkspaceModel {
@@ -6968,7 +6968,7 @@ export const DefaultSmtpAllOfTypeEnum: {
 };
 
 // @public (undocumented)
-export type DefaultSmtpAllOfTypeEnum = typeof DefaultSmtpAllOfTypeEnum[keyof typeof DefaultSmtpAllOfTypeEnum];
+export type DefaultSmtpAllOfTypeEnum = (typeof DefaultSmtpAllOfTypeEnum)[keyof typeof DefaultSmtpAllOfTypeEnum];
 
 // @public (undocumented)
 export const DefaultSmtpTypeEnum: {
@@ -6976,7 +6976,7 @@ export const DefaultSmtpTypeEnum: {
 };
 
 // @public (undocumented)
-export type DefaultSmtpTypeEnum = typeof DefaultSmtpTypeEnum[keyof typeof DefaultSmtpTypeEnum];
+export type DefaultSmtpTypeEnum = (typeof DefaultSmtpTypeEnum)[keyof typeof DefaultSmtpTypeEnum];
 
 // @public (undocumented)
 const defaultTigerClient: ITigerClient;
@@ -7059,7 +7059,7 @@ export const DependentEntitiesNodeTypeEnum: {
 };
 
 // @public (undocumented)
-export type DependentEntitiesNodeTypeEnum = typeof DependentEntitiesNodeTypeEnum[keyof typeof DependentEntitiesNodeTypeEnum];
+export type DependentEntitiesNodeTypeEnum = (typeof DependentEntitiesNodeTypeEnum)[keyof typeof DependentEntitiesNodeTypeEnum];
 
 // @public
 export interface DependentEntitiesRequest {
@@ -7096,7 +7096,7 @@ export const DimAttributeTypeEnum: {
 };
 
 // @public (undocumented)
-export type DimAttributeTypeEnum = typeof DimAttributeTypeEnum[keyof typeof DimAttributeTypeEnum];
+export type DimAttributeTypeEnum = (typeof DimAttributeTypeEnum)[keyof typeof DimAttributeTypeEnum];
 
 // @public
 export interface Dimension {
@@ -7140,7 +7140,7 @@ export const ElementsRequestSortOrderEnum: {
 };
 
 // @public (undocumented)
-export type ElementsRequestSortOrderEnum = typeof ElementsRequestSortOrderEnum[keyof typeof ElementsRequestSortOrderEnum];
+export type ElementsRequestSortOrderEnum = (typeof ElementsRequestSortOrderEnum)[keyof typeof ElementsRequestSortOrderEnum];
 
 // @public
 export interface ElementsResponse {
@@ -7172,7 +7172,7 @@ export const ElementsResponseGranularityEnum: {
 };
 
 // @public (undocumented)
-export type ElementsResponseGranularityEnum = typeof ElementsResponseGranularityEnum[keyof typeof ElementsResponseGranularityEnum];
+export type ElementsResponseGranularityEnum = (typeof ElementsResponseGranularityEnum)[keyof typeof ElementsResponseGranularityEnum];
 
 // @public
 export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface {
@@ -9903,7 +9903,7 @@ export const EntitlementsRequestEntitlementsNameEnum: {
 };
 
 // @public (undocumented)
-export type EntitlementsRequestEntitlementsNameEnum = typeof EntitlementsRequestEntitlementsNameEnum[keyof typeof EntitlementsRequestEntitlementsNameEnum];
+export type EntitlementsRequestEntitlementsNameEnum = (typeof EntitlementsRequestEntitlementsNameEnum)[keyof typeof EntitlementsRequestEntitlementsNameEnum];
 
 // @public
 export interface EntityIdentifier {
@@ -9929,7 +9929,7 @@ export const EntityIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type EntityIdentifierTypeEnum = typeof EntityIdentifierTypeEnum[keyof typeof EntityIdentifierTypeEnum];
+export type EntityIdentifierTypeEnum = (typeof EntityIdentifierTypeEnum)[keyof typeof EntityIdentifierTypeEnum];
 
 // @public
 export interface ExecutionLinks {
@@ -10042,7 +10042,7 @@ export const ExportAfmObjectIdentifierAttributeIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierAttributeIdentifierTypeEnum = typeof ExportAfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierAttributeIdentifierTypeEnum];
+export type ExportAfmObjectIdentifierAttributeIdentifierTypeEnum = (typeof ExportAfmObjectIdentifierAttributeIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierAttributeIdentifierTypeEnum];
 
 // @public
 export interface ExportAfmObjectIdentifierCore {
@@ -10064,7 +10064,7 @@ export const ExportAfmObjectIdentifierCoreIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierCoreIdentifierTypeEnum = typeof ExportAfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierCoreIdentifierTypeEnum];
+export type ExportAfmObjectIdentifierCoreIdentifierTypeEnum = (typeof ExportAfmObjectIdentifierCoreIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierCoreIdentifierTypeEnum];
 
 // @public
 export interface ExportAfmObjectIdentifierDataset {
@@ -10083,7 +10083,7 @@ export const ExportAfmObjectIdentifierDatasetIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierDatasetIdentifierTypeEnum = typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum];
+export type ExportAfmObjectIdentifierDatasetIdentifierTypeEnum = (typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum];
 
 // @public
 export interface ExportAfmObjectIdentifierIdentifier {
@@ -10106,7 +10106,7 @@ export const ExportAfmObjectIdentifierIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierIdentifierTypeEnum = typeof ExportAfmObjectIdentifierIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierIdentifierTypeEnum];
+export type ExportAfmObjectIdentifierIdentifierTypeEnum = (typeof ExportAfmObjectIdentifierIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierIdentifierTypeEnum];
 
 // @public
 export interface ExportAfmObjectIdentifierLabel {
@@ -10125,7 +10125,7 @@ export const ExportAfmObjectIdentifierLabelIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = typeof ExportAfmObjectIdentifierLabelIdentifierTypeEnum[keyof typeof ExportAfmObjectIdentifierLabelIdentifierTypeEnum];
+export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = (typeof ExportAfmObjectIdentifierLabelIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierLabelIdentifierTypeEnum];
 
 // @public
 export interface ExportArithmeticMeasureDefinition {
@@ -10148,7 +10148,7 @@ export const ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum: {
 };
 
 // @public (undocumented)
-export type ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = typeof ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+export type ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = (typeof ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum)[keyof typeof ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
 // @public
 export type ExportAttributeElements = ExportAttributeElementsByRef | ExportAttributeElementsByValue;
@@ -10229,7 +10229,7 @@ export const ExportBoundedFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type ExportBoundedFilterGranularityEnum = typeof ExportBoundedFilterGranularityEnum[keyof typeof ExportBoundedFilterGranularityEnum];
+export type ExportBoundedFilterGranularityEnum = (typeof ExportBoundedFilterGranularityEnum)[keyof typeof ExportBoundedFilterGranularityEnum];
 
 // @public
 export interface ExportComparisonMeasureValueFilter {
@@ -10258,7 +10258,7 @@ export const ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOpera
 };
 
 // @public (undocumented)
-export type ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = typeof ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+export type ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = (typeof ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum)[keyof typeof ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
 // @public (undocumented)
 export class ExportConfiguration {
@@ -10337,7 +10337,7 @@ export const ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum: {
 };
 
 // @public (undocumented)
-export type ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum = typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum[keyof typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum];
+export type ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum = (typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum)[keyof typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum];
 
 // @public
 export interface ExportDashboardDateFilter {
@@ -10383,7 +10383,7 @@ export const ExportDashboardDateFilterDateFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type ExportDashboardDateFilterDateFilterGranularityEnum = typeof ExportDashboardDateFilterDateFilterGranularityEnum[keyof typeof ExportDashboardDateFilterDateFilterGranularityEnum];
+export type ExportDashboardDateFilterDateFilterGranularityEnum = (typeof ExportDashboardDateFilterDateFilterGranularityEnum)[keyof typeof ExportDashboardDateFilterDateFilterGranularityEnum];
 
 // @public (undocumented)
 export const ExportDashboardDateFilterDateFilterTypeEnum: {
@@ -10392,7 +10392,7 @@ export const ExportDashboardDateFilterDateFilterTypeEnum: {
 };
 
 // @public (undocumented)
-export type ExportDashboardDateFilterDateFilterTypeEnum = typeof ExportDashboardDateFilterDateFilterTypeEnum[keyof typeof ExportDashboardDateFilterDateFilterTypeEnum];
+export type ExportDashboardDateFilterDateFilterTypeEnum = (typeof ExportDashboardDateFilterDateFilterTypeEnum)[keyof typeof ExportDashboardDateFilterDateFilterTypeEnum];
 
 // @public
 export interface ExportDashboardExportSettings {
@@ -10418,7 +10418,7 @@ export const ExportDashboardTabularExportRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type ExportDashboardTabularExportRequestFormatEnum = typeof ExportDashboardTabularExportRequestFormatEnum[keyof typeof ExportDashboardTabularExportRequestFormatEnum];
+export type ExportDashboardTabularExportRequestFormatEnum = (typeof ExportDashboardTabularExportRequestFormatEnum)[keyof typeof ExportDashboardTabularExportRequestFormatEnum];
 
 // @public
 export type ExportDateFilter = ExportAbsoluteDateFilter | ExportRelativeDateFilter;
@@ -10587,7 +10587,7 @@ export const ExportIdentifierRefIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type ExportIdentifierRefIdentifierTypeEnum = typeof ExportIdentifierRefIdentifierTypeEnum[keyof typeof ExportIdentifierRefIdentifierTypeEnum];
+export type ExportIdentifierRefIdentifierTypeEnum = (typeof ExportIdentifierRefIdentifierTypeEnum)[keyof typeof ExportIdentifierRefIdentifierTypeEnum];
 
 // @public
 export interface ExportImageExportRequest {
@@ -10604,7 +10604,7 @@ export const ExportImageExportRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type ExportImageExportRequestFormatEnum = typeof ExportImageExportRequestFormatEnum[keyof typeof ExportImageExportRequestFormatEnum];
+export type ExportImageExportRequestFormatEnum = (typeof ExportImageExportRequestFormatEnum)[keyof typeof ExportImageExportRequestFormatEnum];
 
 // @public
 export interface ExportInlineFilterDefinition {
@@ -10756,7 +10756,7 @@ export const ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum: {
 };
 
 // @public (undocumented)
-export type ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = typeof ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
+export type ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = (typeof ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum)[keyof typeof ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
 
 // @public
 export interface ExportRankingFilter {
@@ -10780,7 +10780,7 @@ export const ExportRankingFilterRankingFilterOperatorEnum: {
 };
 
 // @public (undocumented)
-export type ExportRankingFilterRankingFilterOperatorEnum = typeof ExportRankingFilterRankingFilterOperatorEnum[keyof typeof ExportRankingFilterRankingFilterOperatorEnum];
+export type ExportRankingFilterRankingFilterOperatorEnum = (typeof ExportRankingFilterRankingFilterOperatorEnum)[keyof typeof ExportRankingFilterRankingFilterOperatorEnum];
 
 // @public
 export interface ExportRawCustomLabel {
@@ -10819,7 +10819,7 @@ export const ExportRawExportRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type ExportRawExportRequestFormatEnum = typeof ExportRawExportRequestFormatEnum[keyof typeof ExportRawExportRequestFormatEnum];
+export type ExportRawExportRequestFormatEnum = (typeof ExportRawExportRequestFormatEnum)[keyof typeof ExportRawExportRequestFormatEnum];
 
 // @public
 export interface ExportRelativeDateFilter {
@@ -10857,7 +10857,7 @@ export const ExportRelativeDateFilterRelativeDateFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum = typeof ExportRelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof ExportRelativeDateFilterRelativeDateFilterGranularityEnum];
+export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum = (typeof ExportRelativeDateFilterRelativeDateFilterGranularityEnum)[keyof typeof ExportRelativeDateFilterRelativeDateFilterGranularityEnum];
 
 // @public
 export type ExportRequest = TabularExportRequest | VisualExportRequest;
@@ -10907,7 +10907,7 @@ export const ExportSimpleMeasureDefinitionMeasureAggregationEnum: {
 };
 
 // @public (undocumented)
-export type ExportSimpleMeasureDefinitionMeasureAggregationEnum = typeof ExportSimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof ExportSimpleMeasureDefinitionMeasureAggregationEnum];
+export type ExportSimpleMeasureDefinitionMeasureAggregationEnum = (typeof ExportSimpleMeasureDefinitionMeasureAggregationEnum)[keyof typeof ExportSimpleMeasureDefinitionMeasureAggregationEnum];
 
 // @public
 export interface ExportSlidesExportRequest {
@@ -10927,7 +10927,7 @@ export const ExportSlidesExportRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type ExportSlidesExportRequestFormatEnum = typeof ExportSlidesExportRequestFormatEnum[keyof typeof ExportSlidesExportRequestFormatEnum];
+export type ExportSlidesExportRequestFormatEnum = (typeof ExportSlidesExportRequestFormatEnum)[keyof typeof ExportSlidesExportRequestFormatEnum];
 
 // @public
 export interface ExportTabularExportRequest {
@@ -10951,7 +10951,7 @@ export const ExportTabularExportRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type ExportTabularExportRequestFormatEnum = typeof ExportTabularExportRequestFormatEnum[keyof typeof ExportTabularExportRequestFormatEnum];
+export type ExportTabularExportRequestFormatEnum = (typeof ExportTabularExportRequestFormatEnum)[keyof typeof ExportTabularExportRequestFormatEnum];
 
 // @public
 export class ExportTemplatesApi extends MetadataBaseApi implements ExportTemplatesApiInterface {
@@ -11062,7 +11062,7 @@ export const FactIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type FactIdentifierTypeEnum = typeof FactIdentifierTypeEnum[keyof typeof FactIdentifierTypeEnum];
+export type FactIdentifierTypeEnum = (typeof FactIdentifierTypeEnum)[keyof typeof FactIdentifierTypeEnum];
 
 // @public
 export class FactsApi extends MetadataBaseApi implements FactsApiInterface {
@@ -11138,7 +11138,7 @@ export const FilterByLabelTypeEnum: {
 };
 
 // @public (undocumented)
-export type FilterByLabelTypeEnum = typeof FilterByLabelTypeEnum[keyof typeof FilterByLabelTypeEnum];
+export type FilterByLabelTypeEnum = (typeof FilterByLabelTypeEnum)[keyof typeof FilterByLabelTypeEnum];
 
 // @public
 export type FilterDefinition = AbsoluteDateFilter | ComparisonMeasureValueFilter | InlineFilterDefinition | NegativeAttributeFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
@@ -11324,7 +11324,7 @@ export const GdStorageFileTypeEnum: {
 };
 
 // @public (undocumented)
-export type GdStorageFileTypeEnum = typeof GdStorageFileTypeEnum[keyof typeof GdStorageFileTypeEnum];
+export type GdStorageFileTypeEnum = (typeof GdStorageFileTypeEnum)[keyof typeof GdStorageFileTypeEnum];
 
 // @public
 export interface GenerateLdmRequest {
@@ -11393,7 +11393,7 @@ export const GrainIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type GrainIdentifierTypeEnum = typeof GrainIdentifierTypeEnum[keyof typeof GrainIdentifierTypeEnum];
+export type GrainIdentifierTypeEnum = (typeof GrainIdentifierTypeEnum)[keyof typeof GrainIdentifierTypeEnum];
 
 // @public
 export interface GrantedPermission {
@@ -11496,7 +11496,7 @@ export const HierarchyObjectIdentificationTypeEnum: {
 };
 
 // @public (undocumented)
-export type HierarchyObjectIdentificationTypeEnum = typeof HierarchyObjectIdentificationTypeEnum[keyof typeof HierarchyObjectIdentificationTypeEnum];
+export type HierarchyObjectIdentificationTypeEnum = (typeof HierarchyObjectIdentificationTypeEnum)[keyof typeof HierarchyObjectIdentificationTypeEnum];
 
 // @public
 export interface Histogram {
@@ -11616,7 +11616,7 @@ export const IdentifierDuplicationsTypeEnum: {
 };
 
 // @public (undocumented)
-export type IdentifierDuplicationsTypeEnum = typeof IdentifierDuplicationsTypeEnum[keyof typeof IdentifierDuplicationsTypeEnum];
+export type IdentifierDuplicationsTypeEnum = (typeof IdentifierDuplicationsTypeEnum)[keyof typeof IdentifierDuplicationsTypeEnum];
 
 // @public
 export interface IdentifierRef {
@@ -11654,7 +11654,7 @@ export const IdentifierRefIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type IdentifierRefIdentifierTypeEnum = typeof IdentifierRefIdentifierTypeEnum[keyof typeof IdentifierRefIdentifierTypeEnum];
+export type IdentifierRefIdentifierTypeEnum = (typeof IdentifierRefIdentifierTypeEnum)[keyof typeof IdentifierRefIdentifierTypeEnum];
 
 // @public
 export class IdentityProvidersApi extends MetadataBaseApi implements IdentityProvidersApiInterface {
@@ -11869,7 +11869,7 @@ export const ImageExportRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type ImageExportRequestFormatEnum = typeof ImageExportRequestFormatEnum[keyof typeof ImageExportRequestFormatEnum];
+export type ImageExportRequestFormatEnum = (typeof ImageExportRequestFormatEnum)[keyof typeof ImageExportRequestFormatEnum];
 
 // @public @deprecated
 interface IMeasure {
@@ -11954,7 +11954,7 @@ export const InPlatformAllOfTypeEnum: {
 };
 
 // @public (undocumented)
-export type InPlatformAllOfTypeEnum = typeof InPlatformAllOfTypeEnum[keyof typeof InPlatformAllOfTypeEnum];
+export type InPlatformAllOfTypeEnum = (typeof InPlatformAllOfTypeEnum)[keyof typeof InPlatformAllOfTypeEnum];
 
 // @public (undocumented)
 export const InPlatformTypeEnum: {
@@ -11962,7 +11962,7 @@ export const InPlatformTypeEnum: {
 };
 
 // @public (undocumented)
-export type InPlatformTypeEnum = typeof InPlatformTypeEnum[keyof typeof InPlatformTypeEnum];
+export type InPlatformTypeEnum = (typeof InPlatformTypeEnum)[keyof typeof InPlatformTypeEnum];
 
 // @public
 export interface IntroSlideTemplate {
@@ -12222,7 +12222,7 @@ export const JsonApiAggregatedFactLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAggregatedFactLinkageTypeEnum = typeof JsonApiAggregatedFactLinkageTypeEnum[keyof typeof JsonApiAggregatedFactLinkageTypeEnum];
+export type JsonApiAggregatedFactLinkageTypeEnum = (typeof JsonApiAggregatedFactLinkageTypeEnum)[keyof typeof JsonApiAggregatedFactLinkageTypeEnum];
 
 // @public
 export interface JsonApiAggregatedFactOut {
@@ -12251,7 +12251,7 @@ export const JsonApiAggregatedFactOutAttributesOperationEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAggregatedFactOutAttributesOperationEnum = typeof JsonApiAggregatedFactOutAttributesOperationEnum[keyof typeof JsonApiAggregatedFactOutAttributesOperationEnum];
+export type JsonApiAggregatedFactOutAttributesOperationEnum = (typeof JsonApiAggregatedFactOutAttributesOperationEnum)[keyof typeof JsonApiAggregatedFactOutAttributesOperationEnum];
 
 // @public (undocumented)
 export const JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum: {
@@ -12265,7 +12265,7 @@ export const JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum = typeof JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum[keyof typeof JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum];
+export type JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum = (typeof JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum)[keyof typeof JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum];
 
 // @public
 export interface JsonApiAggregatedFactOutDocument {
@@ -12302,7 +12302,7 @@ export const JsonApiAggregatedFactOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAggregatedFactOutTypeEnum = typeof JsonApiAggregatedFactOutTypeEnum[keyof typeof JsonApiAggregatedFactOutTypeEnum];
+export type JsonApiAggregatedFactOutTypeEnum = (typeof JsonApiAggregatedFactOutTypeEnum)[keyof typeof JsonApiAggregatedFactOutTypeEnum];
 
 // @public
 export interface JsonApiAggregatedFactOutWithLinks {
@@ -12320,7 +12320,7 @@ export const JsonApiAggregatedFactOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAggregatedFactOutWithLinksTypeEnum = typeof JsonApiAggregatedFactOutWithLinksTypeEnum[keyof typeof JsonApiAggregatedFactOutWithLinksTypeEnum];
+export type JsonApiAggregatedFactOutWithLinksTypeEnum = (typeof JsonApiAggregatedFactOutWithLinksTypeEnum)[keyof typeof JsonApiAggregatedFactOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiAnalyticalDashboardIn {
@@ -12349,7 +12349,7 @@ export const JsonApiAnalyticalDashboardInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAnalyticalDashboardInTypeEnum = typeof JsonApiAnalyticalDashboardInTypeEnum[keyof typeof JsonApiAnalyticalDashboardInTypeEnum];
+export type JsonApiAnalyticalDashboardInTypeEnum = (typeof JsonApiAnalyticalDashboardInTypeEnum)[keyof typeof JsonApiAnalyticalDashboardInTypeEnum];
 
 // @public
 export interface JsonApiAnalyticalDashboardLinkage {
@@ -12363,7 +12363,7 @@ export const JsonApiAnalyticalDashboardLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAnalyticalDashboardLinkageTypeEnum = typeof JsonApiAnalyticalDashboardLinkageTypeEnum[keyof typeof JsonApiAnalyticalDashboardLinkageTypeEnum];
+export type JsonApiAnalyticalDashboardLinkageTypeEnum = (typeof JsonApiAnalyticalDashboardLinkageTypeEnum)[keyof typeof JsonApiAnalyticalDashboardLinkageTypeEnum];
 
 // @public
 export interface JsonApiAnalyticalDashboardOut {
@@ -12412,7 +12412,7 @@ export const JsonApiAnalyticalDashboardOutMetaPermissionsEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAnalyticalDashboardOutMetaPermissionsEnum = typeof JsonApiAnalyticalDashboardOutMetaPermissionsEnum[keyof typeof JsonApiAnalyticalDashboardOutMetaPermissionsEnum];
+export type JsonApiAnalyticalDashboardOutMetaPermissionsEnum = (typeof JsonApiAnalyticalDashboardOutMetaPermissionsEnum)[keyof typeof JsonApiAnalyticalDashboardOutMetaPermissionsEnum];
 
 // @public
 export interface JsonApiAnalyticalDashboardOutRelationships {
@@ -12453,7 +12453,7 @@ export const JsonApiAnalyticalDashboardOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAnalyticalDashboardOutTypeEnum = typeof JsonApiAnalyticalDashboardOutTypeEnum[keyof typeof JsonApiAnalyticalDashboardOutTypeEnum];
+export type JsonApiAnalyticalDashboardOutTypeEnum = (typeof JsonApiAnalyticalDashboardOutTypeEnum)[keyof typeof JsonApiAnalyticalDashboardOutTypeEnum];
 
 // @public
 export interface JsonApiAnalyticalDashboardOutWithLinks {
@@ -12471,7 +12471,7 @@ export const JsonApiAnalyticalDashboardOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAnalyticalDashboardOutWithLinksTypeEnum = typeof JsonApiAnalyticalDashboardOutWithLinksTypeEnum[keyof typeof JsonApiAnalyticalDashboardOutWithLinksTypeEnum];
+export type JsonApiAnalyticalDashboardOutWithLinksTypeEnum = (typeof JsonApiAnalyticalDashboardOutWithLinksTypeEnum)[keyof typeof JsonApiAnalyticalDashboardOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiAnalyticalDashboardPatch {
@@ -12500,7 +12500,7 @@ export const JsonApiAnalyticalDashboardPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAnalyticalDashboardPatchTypeEnum = typeof JsonApiAnalyticalDashboardPatchTypeEnum[keyof typeof JsonApiAnalyticalDashboardPatchTypeEnum];
+export type JsonApiAnalyticalDashboardPatchTypeEnum = (typeof JsonApiAnalyticalDashboardPatchTypeEnum)[keyof typeof JsonApiAnalyticalDashboardPatchTypeEnum];
 
 // @public
 export interface JsonApiAnalyticalDashboardPostOptionalId {
@@ -12520,7 +12520,7 @@ export const JsonApiAnalyticalDashboardPostOptionalIdTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAnalyticalDashboardPostOptionalIdTypeEnum = typeof JsonApiAnalyticalDashboardPostOptionalIdTypeEnum[keyof typeof JsonApiAnalyticalDashboardPostOptionalIdTypeEnum];
+export type JsonApiAnalyticalDashboardPostOptionalIdTypeEnum = (typeof JsonApiAnalyticalDashboardPostOptionalIdTypeEnum)[keyof typeof JsonApiAnalyticalDashboardPostOptionalIdTypeEnum];
 
 // @public
 export type JsonApiAnalyticalDashboardToOneLinkage = JsonApiAnalyticalDashboardLinkage;
@@ -12542,7 +12542,7 @@ export const JsonApiApiTokenInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiApiTokenInTypeEnum = typeof JsonApiApiTokenInTypeEnum[keyof typeof JsonApiApiTokenInTypeEnum];
+export type JsonApiApiTokenInTypeEnum = (typeof JsonApiApiTokenInTypeEnum)[keyof typeof JsonApiApiTokenInTypeEnum];
 
 // @public
 export interface JsonApiApiTokenOut {
@@ -12575,7 +12575,7 @@ export const JsonApiApiTokenOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiApiTokenOutTypeEnum = typeof JsonApiApiTokenOutTypeEnum[keyof typeof JsonApiApiTokenOutTypeEnum];
+export type JsonApiApiTokenOutTypeEnum = (typeof JsonApiApiTokenOutTypeEnum)[keyof typeof JsonApiApiTokenOutTypeEnum];
 
 // @public
 export interface JsonApiApiTokenOutWithLinks {
@@ -12591,7 +12591,7 @@ export const JsonApiApiTokenOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiApiTokenOutWithLinksTypeEnum = typeof JsonApiApiTokenOutWithLinksTypeEnum[keyof typeof JsonApiApiTokenOutWithLinksTypeEnum];
+export type JsonApiApiTokenOutWithLinksTypeEnum = (typeof JsonApiApiTokenOutWithLinksTypeEnum)[keyof typeof JsonApiApiTokenOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiAttributeHierarchyIn {
@@ -12620,7 +12620,7 @@ export const JsonApiAttributeHierarchyInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAttributeHierarchyInTypeEnum = typeof JsonApiAttributeHierarchyInTypeEnum[keyof typeof JsonApiAttributeHierarchyInTypeEnum];
+export type JsonApiAttributeHierarchyInTypeEnum = (typeof JsonApiAttributeHierarchyInTypeEnum)[keyof typeof JsonApiAttributeHierarchyInTypeEnum];
 
 // @public
 export interface JsonApiAttributeHierarchyLinkage {
@@ -12634,7 +12634,7 @@ export const JsonApiAttributeHierarchyLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAttributeHierarchyLinkageTypeEnum = typeof JsonApiAttributeHierarchyLinkageTypeEnum[keyof typeof JsonApiAttributeHierarchyLinkageTypeEnum];
+export type JsonApiAttributeHierarchyLinkageTypeEnum = (typeof JsonApiAttributeHierarchyLinkageTypeEnum)[keyof typeof JsonApiAttributeHierarchyLinkageTypeEnum];
 
 // @public
 export interface JsonApiAttributeHierarchyOut {
@@ -12687,7 +12687,7 @@ export const JsonApiAttributeHierarchyOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAttributeHierarchyOutTypeEnum = typeof JsonApiAttributeHierarchyOutTypeEnum[keyof typeof JsonApiAttributeHierarchyOutTypeEnum];
+export type JsonApiAttributeHierarchyOutTypeEnum = (typeof JsonApiAttributeHierarchyOutTypeEnum)[keyof typeof JsonApiAttributeHierarchyOutTypeEnum];
 
 // @public
 export interface JsonApiAttributeHierarchyOutWithLinks {
@@ -12705,7 +12705,7 @@ export const JsonApiAttributeHierarchyOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAttributeHierarchyOutWithLinksTypeEnum = typeof JsonApiAttributeHierarchyOutWithLinksTypeEnum[keyof typeof JsonApiAttributeHierarchyOutWithLinksTypeEnum];
+export type JsonApiAttributeHierarchyOutWithLinksTypeEnum = (typeof JsonApiAttributeHierarchyOutWithLinksTypeEnum)[keyof typeof JsonApiAttributeHierarchyOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiAttributeHierarchyPatch {
@@ -12725,7 +12725,7 @@ export const JsonApiAttributeHierarchyPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAttributeHierarchyPatchTypeEnum = typeof JsonApiAttributeHierarchyPatchTypeEnum[keyof typeof JsonApiAttributeHierarchyPatchTypeEnum];
+export type JsonApiAttributeHierarchyPatchTypeEnum = (typeof JsonApiAttributeHierarchyPatchTypeEnum)[keyof typeof JsonApiAttributeHierarchyPatchTypeEnum];
 
 // @public
 export interface JsonApiAttributeLinkage {
@@ -12739,7 +12739,7 @@ export const JsonApiAttributeLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAttributeLinkageTypeEnum = typeof JsonApiAttributeLinkageTypeEnum[keyof typeof JsonApiAttributeLinkageTypeEnum];
+export type JsonApiAttributeLinkageTypeEnum = (typeof JsonApiAttributeLinkageTypeEnum)[keyof typeof JsonApiAttributeLinkageTypeEnum];
 
 // @public
 export interface JsonApiAttributeOut {
@@ -12783,7 +12783,7 @@ export const JsonApiAttributeOutAttributesGranularityEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAttributeOutAttributesGranularityEnum = typeof JsonApiAttributeOutAttributesGranularityEnum[keyof typeof JsonApiAttributeOutAttributesGranularityEnum];
+export type JsonApiAttributeOutAttributesGranularityEnum = (typeof JsonApiAttributeOutAttributesGranularityEnum)[keyof typeof JsonApiAttributeOutAttributesGranularityEnum];
 
 // @public (undocumented)
 export const JsonApiAttributeOutAttributesSortDirectionEnum: {
@@ -12792,7 +12792,7 @@ export const JsonApiAttributeOutAttributesSortDirectionEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAttributeOutAttributesSortDirectionEnum = typeof JsonApiAttributeOutAttributesSortDirectionEnum[keyof typeof JsonApiAttributeOutAttributesSortDirectionEnum];
+export type JsonApiAttributeOutAttributesSortDirectionEnum = (typeof JsonApiAttributeOutAttributesSortDirectionEnum)[keyof typeof JsonApiAttributeOutAttributesSortDirectionEnum];
 
 // @public (undocumented)
 export const JsonApiAttributeOutAttributesSourceColumnDataTypeEnum: {
@@ -12806,7 +12806,7 @@ export const JsonApiAttributeOutAttributesSourceColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAttributeOutAttributesSourceColumnDataTypeEnum = typeof JsonApiAttributeOutAttributesSourceColumnDataTypeEnum[keyof typeof JsonApiAttributeOutAttributesSourceColumnDataTypeEnum];
+export type JsonApiAttributeOutAttributesSourceColumnDataTypeEnum = (typeof JsonApiAttributeOutAttributesSourceColumnDataTypeEnum)[keyof typeof JsonApiAttributeOutAttributesSourceColumnDataTypeEnum];
 
 // @public
 export interface JsonApiAttributeOutDocument {
@@ -12855,7 +12855,7 @@ export const JsonApiAttributeOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAttributeOutTypeEnum = typeof JsonApiAttributeOutTypeEnum[keyof typeof JsonApiAttributeOutTypeEnum];
+export type JsonApiAttributeOutTypeEnum = (typeof JsonApiAttributeOutTypeEnum)[keyof typeof JsonApiAttributeOutTypeEnum];
 
 // @public
 export interface JsonApiAttributeOutWithLinks {
@@ -12873,7 +12873,7 @@ export const JsonApiAttributeOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAttributeOutWithLinksTypeEnum = typeof JsonApiAttributeOutWithLinksTypeEnum[keyof typeof JsonApiAttributeOutWithLinksTypeEnum];
+export type JsonApiAttributeOutWithLinksTypeEnum = (typeof JsonApiAttributeOutWithLinksTypeEnum)[keyof typeof JsonApiAttributeOutWithLinksTypeEnum];
 
 // @public
 export type JsonApiAttributeToOneLinkage = JsonApiAttributeLinkage;
@@ -12920,7 +12920,7 @@ export const JsonApiAutomationInAttributesAlertTriggerEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAutomationInAttributesAlertTriggerEnum = typeof JsonApiAutomationInAttributesAlertTriggerEnum[keyof typeof JsonApiAutomationInAttributesAlertTriggerEnum];
+export type JsonApiAutomationInAttributesAlertTriggerEnum = (typeof JsonApiAutomationInAttributesAlertTriggerEnum)[keyof typeof JsonApiAutomationInAttributesAlertTriggerEnum];
 
 // @public
 export interface JsonApiAutomationInAttributesDashboardTabularExports {
@@ -12968,7 +12968,7 @@ export const JsonApiAutomationInAttributesStateEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAutomationInAttributesStateEnum = typeof JsonApiAutomationInAttributesStateEnum[keyof typeof JsonApiAutomationInAttributesStateEnum];
+export type JsonApiAutomationInAttributesStateEnum = (typeof JsonApiAutomationInAttributesStateEnum)[keyof typeof JsonApiAutomationInAttributesStateEnum];
 
 // @public
 export interface JsonApiAutomationInAttributesTabularExports {
@@ -13019,7 +13019,7 @@ export const JsonApiAutomationInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAutomationInTypeEnum = typeof JsonApiAutomationInTypeEnum[keyof typeof JsonApiAutomationInTypeEnum];
+export type JsonApiAutomationInTypeEnum = (typeof JsonApiAutomationInTypeEnum)[keyof typeof JsonApiAutomationInTypeEnum];
 
 // @public
 export interface JsonApiAutomationLinkage {
@@ -13033,7 +13033,7 @@ export const JsonApiAutomationLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAutomationLinkageTypeEnum = typeof JsonApiAutomationLinkageTypeEnum[keyof typeof JsonApiAutomationLinkageTypeEnum];
+export type JsonApiAutomationLinkageTypeEnum = (typeof JsonApiAutomationLinkageTypeEnum)[keyof typeof JsonApiAutomationLinkageTypeEnum];
 
 // @public
 export interface JsonApiAutomationOut {
@@ -13073,7 +13073,7 @@ export const JsonApiAutomationOutAttributesStateEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAutomationOutAttributesStateEnum = typeof JsonApiAutomationOutAttributesStateEnum[keyof typeof JsonApiAutomationOutAttributesStateEnum];
+export type JsonApiAutomationOutAttributesStateEnum = (typeof JsonApiAutomationOutAttributesStateEnum)[keyof typeof JsonApiAutomationOutAttributesStateEnum];
 
 // @public
 export interface JsonApiAutomationOutDocument {
@@ -13109,7 +13109,7 @@ export const JsonApiAutomationOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAutomationOutTypeEnum = typeof JsonApiAutomationOutTypeEnum[keyof typeof JsonApiAutomationOutTypeEnum];
+export type JsonApiAutomationOutTypeEnum = (typeof JsonApiAutomationOutTypeEnum)[keyof typeof JsonApiAutomationOutTypeEnum];
 
 // @public
 export interface JsonApiAutomationOutWithLinks {
@@ -13127,7 +13127,7 @@ export const JsonApiAutomationOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAutomationOutWithLinksTypeEnum = typeof JsonApiAutomationOutWithLinksTypeEnum[keyof typeof JsonApiAutomationOutWithLinksTypeEnum];
+export type JsonApiAutomationOutWithLinksTypeEnum = (typeof JsonApiAutomationOutWithLinksTypeEnum)[keyof typeof JsonApiAutomationOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiAutomationPatch {
@@ -13148,7 +13148,7 @@ export const JsonApiAutomationPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiAutomationPatchTypeEnum = typeof JsonApiAutomationPatchTypeEnum[keyof typeof JsonApiAutomationPatchTypeEnum];
+export type JsonApiAutomationPatchTypeEnum = (typeof JsonApiAutomationPatchTypeEnum)[keyof typeof JsonApiAutomationPatchTypeEnum];
 
 // @public
 export type JsonApiAutomationToOneLinkage = JsonApiAutomationLinkage;
@@ -13171,7 +13171,7 @@ export const JsonApiColorPaletteInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiColorPaletteInTypeEnum = typeof JsonApiColorPaletteInTypeEnum[keyof typeof JsonApiColorPaletteInTypeEnum];
+export type JsonApiColorPaletteInTypeEnum = (typeof JsonApiColorPaletteInTypeEnum)[keyof typeof JsonApiColorPaletteInTypeEnum];
 
 // @public
 export interface JsonApiColorPaletteOut {
@@ -13210,7 +13210,7 @@ export const JsonApiColorPaletteOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiColorPaletteOutTypeEnum = typeof JsonApiColorPaletteOutTypeEnum[keyof typeof JsonApiColorPaletteOutTypeEnum];
+export type JsonApiColorPaletteOutTypeEnum = (typeof JsonApiColorPaletteOutTypeEnum)[keyof typeof JsonApiColorPaletteOutTypeEnum];
 
 // @public
 export interface JsonApiColorPaletteOutWithLinks {
@@ -13226,7 +13226,7 @@ export const JsonApiColorPaletteOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiColorPaletteOutWithLinksTypeEnum = typeof JsonApiColorPaletteOutWithLinksTypeEnum[keyof typeof JsonApiColorPaletteOutWithLinksTypeEnum];
+export type JsonApiColorPaletteOutWithLinksTypeEnum = (typeof JsonApiColorPaletteOutWithLinksTypeEnum)[keyof typeof JsonApiColorPaletteOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiColorPalettePatch {
@@ -13252,7 +13252,7 @@ export const JsonApiColorPalettePatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiColorPalettePatchTypeEnum = typeof JsonApiColorPalettePatchTypeEnum[keyof typeof JsonApiColorPalettePatchTypeEnum];
+export type JsonApiColorPalettePatchTypeEnum = (typeof JsonApiColorPalettePatchTypeEnum)[keyof typeof JsonApiColorPalettePatchTypeEnum];
 
 // @public
 export interface JsonApiCookieSecurityConfigurationIn {
@@ -13272,7 +13272,7 @@ export const JsonApiCookieSecurityConfigurationInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCookieSecurityConfigurationInTypeEnum = typeof JsonApiCookieSecurityConfigurationInTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationInTypeEnum];
+export type JsonApiCookieSecurityConfigurationInTypeEnum = (typeof JsonApiCookieSecurityConfigurationInTypeEnum)[keyof typeof JsonApiCookieSecurityConfigurationInTypeEnum];
 
 // @public
 export interface JsonApiCookieSecurityConfigurationOut {
@@ -13293,7 +13293,7 @@ export const JsonApiCookieSecurityConfigurationOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCookieSecurityConfigurationOutTypeEnum = typeof JsonApiCookieSecurityConfigurationOutTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationOutTypeEnum];
+export type JsonApiCookieSecurityConfigurationOutTypeEnum = (typeof JsonApiCookieSecurityConfigurationOutTypeEnum)[keyof typeof JsonApiCookieSecurityConfigurationOutTypeEnum];
 
 // @public
 export interface JsonApiCookieSecurityConfigurationPatch {
@@ -13319,7 +13319,7 @@ export const JsonApiCookieSecurityConfigurationPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCookieSecurityConfigurationPatchTypeEnum = typeof JsonApiCookieSecurityConfigurationPatchTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationPatchTypeEnum];
+export type JsonApiCookieSecurityConfigurationPatchTypeEnum = (typeof JsonApiCookieSecurityConfigurationPatchTypeEnum)[keyof typeof JsonApiCookieSecurityConfigurationPatchTypeEnum];
 
 // @public
 export interface JsonApiCspDirectiveIn {
@@ -13339,7 +13339,7 @@ export const JsonApiCspDirectiveInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCspDirectiveInTypeEnum = typeof JsonApiCspDirectiveInTypeEnum[keyof typeof JsonApiCspDirectiveInTypeEnum];
+export type JsonApiCspDirectiveInTypeEnum = (typeof JsonApiCspDirectiveInTypeEnum)[keyof typeof JsonApiCspDirectiveInTypeEnum];
 
 // @public
 export interface JsonApiCspDirectiveOut {
@@ -13372,7 +13372,7 @@ export const JsonApiCspDirectiveOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCspDirectiveOutTypeEnum = typeof JsonApiCspDirectiveOutTypeEnum[keyof typeof JsonApiCspDirectiveOutTypeEnum];
+export type JsonApiCspDirectiveOutTypeEnum = (typeof JsonApiCspDirectiveOutTypeEnum)[keyof typeof JsonApiCspDirectiveOutTypeEnum];
 
 // @public
 export interface JsonApiCspDirectiveOutWithLinks {
@@ -13388,7 +13388,7 @@ export const JsonApiCspDirectiveOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCspDirectiveOutWithLinksTypeEnum = typeof JsonApiCspDirectiveOutWithLinksTypeEnum[keyof typeof JsonApiCspDirectiveOutWithLinksTypeEnum];
+export type JsonApiCspDirectiveOutWithLinksTypeEnum = (typeof JsonApiCspDirectiveOutWithLinksTypeEnum)[keyof typeof JsonApiCspDirectiveOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiCspDirectivePatch {
@@ -13413,7 +13413,7 @@ export const JsonApiCspDirectivePatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCspDirectivePatchTypeEnum = typeof JsonApiCspDirectivePatchTypeEnum[keyof typeof JsonApiCspDirectivePatchTypeEnum];
+export type JsonApiCspDirectivePatchTypeEnum = (typeof JsonApiCspDirectivePatchTypeEnum)[keyof typeof JsonApiCspDirectivePatchTypeEnum];
 
 // @public
 export interface JsonApiCustomApplicationSettingIn {
@@ -13439,7 +13439,7 @@ export const JsonApiCustomApplicationSettingInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCustomApplicationSettingInTypeEnum = typeof JsonApiCustomApplicationSettingInTypeEnum[keyof typeof JsonApiCustomApplicationSettingInTypeEnum];
+export type JsonApiCustomApplicationSettingInTypeEnum = (typeof JsonApiCustomApplicationSettingInTypeEnum)[keyof typeof JsonApiCustomApplicationSettingInTypeEnum];
 
 // @public
 export interface JsonApiCustomApplicationSettingOut {
@@ -13468,7 +13468,7 @@ export const JsonApiCustomApplicationSettingOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCustomApplicationSettingOutTypeEnum = typeof JsonApiCustomApplicationSettingOutTypeEnum[keyof typeof JsonApiCustomApplicationSettingOutTypeEnum];
+export type JsonApiCustomApplicationSettingOutTypeEnum = (typeof JsonApiCustomApplicationSettingOutTypeEnum)[keyof typeof JsonApiCustomApplicationSettingOutTypeEnum];
 
 // @public
 export interface JsonApiCustomApplicationSettingOutWithLinks {
@@ -13485,7 +13485,7 @@ export const JsonApiCustomApplicationSettingOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCustomApplicationSettingOutWithLinksTypeEnum = typeof JsonApiCustomApplicationSettingOutWithLinksTypeEnum[keyof typeof JsonApiCustomApplicationSettingOutWithLinksTypeEnum];
+export type JsonApiCustomApplicationSettingOutWithLinksTypeEnum = (typeof JsonApiCustomApplicationSettingOutWithLinksTypeEnum)[keyof typeof JsonApiCustomApplicationSettingOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiCustomApplicationSettingPatch {
@@ -13511,7 +13511,7 @@ export const JsonApiCustomApplicationSettingPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCustomApplicationSettingPatchTypeEnum = typeof JsonApiCustomApplicationSettingPatchTypeEnum[keyof typeof JsonApiCustomApplicationSettingPatchTypeEnum];
+export type JsonApiCustomApplicationSettingPatchTypeEnum = (typeof JsonApiCustomApplicationSettingPatchTypeEnum)[keyof typeof JsonApiCustomApplicationSettingPatchTypeEnum];
 
 // @public
 export interface JsonApiCustomApplicationSettingPostOptionalId {
@@ -13531,7 +13531,7 @@ export const JsonApiCustomApplicationSettingPostOptionalIdTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiCustomApplicationSettingPostOptionalIdTypeEnum = typeof JsonApiCustomApplicationSettingPostOptionalIdTypeEnum[keyof typeof JsonApiCustomApplicationSettingPostOptionalIdTypeEnum];
+export type JsonApiCustomApplicationSettingPostOptionalIdTypeEnum = (typeof JsonApiCustomApplicationSettingPostOptionalIdTypeEnum)[keyof typeof JsonApiCustomApplicationSettingPostOptionalIdTypeEnum];
 
 // @public
 export interface JsonApiDashboardPluginIn {
@@ -13560,7 +13560,7 @@ export const JsonApiDashboardPluginInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDashboardPluginInTypeEnum = typeof JsonApiDashboardPluginInTypeEnum[keyof typeof JsonApiDashboardPluginInTypeEnum];
+export type JsonApiDashboardPluginInTypeEnum = (typeof JsonApiDashboardPluginInTypeEnum)[keyof typeof JsonApiDashboardPluginInTypeEnum];
 
 // @public
 export interface JsonApiDashboardPluginLinkage {
@@ -13574,7 +13574,7 @@ export const JsonApiDashboardPluginLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDashboardPluginLinkageTypeEnum = typeof JsonApiDashboardPluginLinkageTypeEnum[keyof typeof JsonApiDashboardPluginLinkageTypeEnum];
+export type JsonApiDashboardPluginLinkageTypeEnum = (typeof JsonApiDashboardPluginLinkageTypeEnum)[keyof typeof JsonApiDashboardPluginLinkageTypeEnum];
 
 // @public
 export interface JsonApiDashboardPluginOut {
@@ -13623,7 +13623,7 @@ export const JsonApiDashboardPluginOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDashboardPluginOutTypeEnum = typeof JsonApiDashboardPluginOutTypeEnum[keyof typeof JsonApiDashboardPluginOutTypeEnum];
+export type JsonApiDashboardPluginOutTypeEnum = (typeof JsonApiDashboardPluginOutTypeEnum)[keyof typeof JsonApiDashboardPluginOutTypeEnum];
 
 // @public
 export interface JsonApiDashboardPluginOutWithLinks {
@@ -13641,7 +13641,7 @@ export const JsonApiDashboardPluginOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDashboardPluginOutWithLinksTypeEnum = typeof JsonApiDashboardPluginOutWithLinksTypeEnum[keyof typeof JsonApiDashboardPluginOutWithLinksTypeEnum];
+export type JsonApiDashboardPluginOutWithLinksTypeEnum = (typeof JsonApiDashboardPluginOutWithLinksTypeEnum)[keyof typeof JsonApiDashboardPluginOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiDashboardPluginPatch {
@@ -13661,7 +13661,7 @@ export const JsonApiDashboardPluginPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDashboardPluginPatchTypeEnum = typeof JsonApiDashboardPluginPatchTypeEnum[keyof typeof JsonApiDashboardPluginPatchTypeEnum];
+export type JsonApiDashboardPluginPatchTypeEnum = (typeof JsonApiDashboardPluginPatchTypeEnum)[keyof typeof JsonApiDashboardPluginPatchTypeEnum];
 
 // @public
 export interface JsonApiDashboardPluginPostOptionalId {
@@ -13681,7 +13681,7 @@ export const JsonApiDashboardPluginPostOptionalIdTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDashboardPluginPostOptionalIdTypeEnum = typeof JsonApiDashboardPluginPostOptionalIdTypeEnum[keyof typeof JsonApiDashboardPluginPostOptionalIdTypeEnum];
+export type JsonApiDashboardPluginPostOptionalIdTypeEnum = (typeof JsonApiDashboardPluginPostOptionalIdTypeEnum)[keyof typeof JsonApiDashboardPluginPostOptionalIdTypeEnum];
 
 // @public
 export interface JsonApiDatasetLinkage {
@@ -13695,7 +13695,7 @@ export const JsonApiDatasetLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDatasetLinkageTypeEnum = typeof JsonApiDatasetLinkageTypeEnum[keyof typeof JsonApiDatasetLinkageTypeEnum];
+export type JsonApiDatasetLinkageTypeEnum = (typeof JsonApiDatasetLinkageTypeEnum)[keyof typeof JsonApiDatasetLinkageTypeEnum];
 
 // @public
 export interface JsonApiDatasetOut {
@@ -13736,7 +13736,7 @@ export const JsonApiDatasetOutAttributesGrainTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDatasetOutAttributesGrainTypeEnum = typeof JsonApiDatasetOutAttributesGrainTypeEnum[keyof typeof JsonApiDatasetOutAttributesGrainTypeEnum];
+export type JsonApiDatasetOutAttributesGrainTypeEnum = (typeof JsonApiDatasetOutAttributesGrainTypeEnum)[keyof typeof JsonApiDatasetOutAttributesGrainTypeEnum];
 
 // @public
 export interface JsonApiDatasetOutAttributesReferenceProperties {
@@ -13759,7 +13759,7 @@ export const JsonApiDatasetOutAttributesReferencePropertiesSourceColumnDataTypes
 };
 
 // @public (undocumented)
-export type JsonApiDatasetOutAttributesReferencePropertiesSourceColumnDataTypesEnum = typeof JsonApiDatasetOutAttributesReferencePropertiesSourceColumnDataTypesEnum[keyof typeof JsonApiDatasetOutAttributesReferencePropertiesSourceColumnDataTypesEnum];
+export type JsonApiDatasetOutAttributesReferencePropertiesSourceColumnDataTypesEnum = (typeof JsonApiDatasetOutAttributesReferencePropertiesSourceColumnDataTypesEnum)[keyof typeof JsonApiDatasetOutAttributesReferencePropertiesSourceColumnDataTypesEnum];
 
 // @public
 export interface JsonApiDatasetOutAttributesSql {
@@ -13774,7 +13774,7 @@ export const JsonApiDatasetOutAttributesTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDatasetOutAttributesTypeEnum = typeof JsonApiDatasetOutAttributesTypeEnum[keyof typeof JsonApiDatasetOutAttributesTypeEnum];
+export type JsonApiDatasetOutAttributesTypeEnum = (typeof JsonApiDatasetOutAttributesTypeEnum)[keyof typeof JsonApiDatasetOutAttributesTypeEnum];
 
 // @public
 export interface JsonApiDatasetOutAttributesWorkspaceDataFilterColumns {
@@ -13794,7 +13794,7 @@ export const JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum: 
 };
 
 // @public (undocumented)
-export type JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum = typeof JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum[keyof typeof JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum];
+export type JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum = (typeof JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum)[keyof typeof JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum];
 
 // @public
 export interface JsonApiDatasetOutAttributesWorkspaceDataFilterReferences {
@@ -13815,7 +13815,7 @@ export const JsonApiDatasetOutAttributesWorkspaceDataFilterReferencesFilterColum
 };
 
 // @public (undocumented)
-export type JsonApiDatasetOutAttributesWorkspaceDataFilterReferencesFilterColumnDataTypeEnum = typeof JsonApiDatasetOutAttributesWorkspaceDataFilterReferencesFilterColumnDataTypeEnum[keyof typeof JsonApiDatasetOutAttributesWorkspaceDataFilterReferencesFilterColumnDataTypeEnum];
+export type JsonApiDatasetOutAttributesWorkspaceDataFilterReferencesFilterColumnDataTypeEnum = (typeof JsonApiDatasetOutAttributesWorkspaceDataFilterReferencesFilterColumnDataTypeEnum)[keyof typeof JsonApiDatasetOutAttributesWorkspaceDataFilterReferencesFilterColumnDataTypeEnum];
 
 // @public
 export interface JsonApiDatasetOutDocument {
@@ -13860,7 +13860,7 @@ export const JsonApiDatasetOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDatasetOutTypeEnum = typeof JsonApiDatasetOutTypeEnum[keyof typeof JsonApiDatasetOutTypeEnum];
+export type JsonApiDatasetOutTypeEnum = (typeof JsonApiDatasetOutTypeEnum)[keyof typeof JsonApiDatasetOutTypeEnum];
 
 // @public
 export interface JsonApiDatasetOutWithLinks {
@@ -13878,7 +13878,7 @@ export const JsonApiDatasetOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDatasetOutWithLinksTypeEnum = typeof JsonApiDatasetOutWithLinksTypeEnum[keyof typeof JsonApiDatasetOutWithLinksTypeEnum];
+export type JsonApiDatasetOutWithLinksTypeEnum = (typeof JsonApiDatasetOutWithLinksTypeEnum)[keyof typeof JsonApiDatasetOutWithLinksTypeEnum];
 
 // @public
 export type JsonApiDatasetToOneLinkage = JsonApiDatasetLinkage;
@@ -13928,7 +13928,7 @@ export const JsonApiDataSourceIdentifierOutAttributesTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = typeof JsonApiDataSourceIdentifierOutAttributesTypeEnum[keyof typeof JsonApiDataSourceIdentifierOutAttributesTypeEnum];
+export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = (typeof JsonApiDataSourceIdentifierOutAttributesTypeEnum)[keyof typeof JsonApiDataSourceIdentifierOutAttributesTypeEnum];
 
 // @public
 export interface JsonApiDataSourceIdentifierOutDocument {
@@ -13955,7 +13955,7 @@ export const JsonApiDataSourceIdentifierOutMetaPermissionsEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum = typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum];
+export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum = (typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum)[keyof typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum];
 
 // @public (undocumented)
 export const JsonApiDataSourceIdentifierOutTypeEnum: {
@@ -13963,7 +13963,7 @@ export const JsonApiDataSourceIdentifierOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceIdentifierOutTypeEnum = typeof JsonApiDataSourceIdentifierOutTypeEnum[keyof typeof JsonApiDataSourceIdentifierOutTypeEnum];
+export type JsonApiDataSourceIdentifierOutTypeEnum = (typeof JsonApiDataSourceIdentifierOutTypeEnum)[keyof typeof JsonApiDataSourceIdentifierOutTypeEnum];
 
 // @public
 export interface JsonApiDataSourceIdentifierOutWithLinks {
@@ -13980,7 +13980,7 @@ export const JsonApiDataSourceIdentifierOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceIdentifierOutWithLinksTypeEnum = typeof JsonApiDataSourceIdentifierOutWithLinksTypeEnum[keyof typeof JsonApiDataSourceIdentifierOutWithLinksTypeEnum];
+export type JsonApiDataSourceIdentifierOutWithLinksTypeEnum = (typeof JsonApiDataSourceIdentifierOutWithLinksTypeEnum)[keyof typeof JsonApiDataSourceIdentifierOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiDataSourceIn {
@@ -14013,7 +14013,7 @@ export const JsonApiDataSourceInAttributesCacheStrategyEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceInAttributesCacheStrategyEnum = typeof JsonApiDataSourceInAttributesCacheStrategyEnum[keyof typeof JsonApiDataSourceInAttributesCacheStrategyEnum];
+export type JsonApiDataSourceInAttributesCacheStrategyEnum = (typeof JsonApiDataSourceInAttributesCacheStrategyEnum)[keyof typeof JsonApiDataSourceInAttributesCacheStrategyEnum];
 
 // @public (undocumented)
 export const JsonApiDataSourceInAttributesTypeEnum: {
@@ -14045,7 +14045,7 @@ export const JsonApiDataSourceInAttributesTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceInAttributesTypeEnum = typeof JsonApiDataSourceInAttributesTypeEnum[keyof typeof JsonApiDataSourceInAttributesTypeEnum];
+export type JsonApiDataSourceInAttributesTypeEnum = (typeof JsonApiDataSourceInAttributesTypeEnum)[keyof typeof JsonApiDataSourceInAttributesTypeEnum];
 
 // @public
 export interface JsonApiDataSourceInDocument {
@@ -14058,7 +14058,7 @@ export const JsonApiDataSourceInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceInTypeEnum = typeof JsonApiDataSourceInTypeEnum[keyof typeof JsonApiDataSourceInTypeEnum];
+export type JsonApiDataSourceInTypeEnum = (typeof JsonApiDataSourceInTypeEnum)[keyof typeof JsonApiDataSourceInTypeEnum];
 
 // @public
 export interface JsonApiDataSourceOut {
@@ -14092,7 +14092,7 @@ export const JsonApiDataSourceOutAttributesAuthenticationTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = typeof JsonApiDataSourceOutAttributesAuthenticationTypeEnum[keyof typeof JsonApiDataSourceOutAttributesAuthenticationTypeEnum];
+export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = (typeof JsonApiDataSourceOutAttributesAuthenticationTypeEnum)[keyof typeof JsonApiDataSourceOutAttributesAuthenticationTypeEnum];
 
 // @public (undocumented)
 export const JsonApiDataSourceOutAttributesCacheStrategyEnum: {
@@ -14101,7 +14101,7 @@ export const JsonApiDataSourceOutAttributesCacheStrategyEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceOutAttributesCacheStrategyEnum = typeof JsonApiDataSourceOutAttributesCacheStrategyEnum[keyof typeof JsonApiDataSourceOutAttributesCacheStrategyEnum];
+export type JsonApiDataSourceOutAttributesCacheStrategyEnum = (typeof JsonApiDataSourceOutAttributesCacheStrategyEnum)[keyof typeof JsonApiDataSourceOutAttributesCacheStrategyEnum];
 
 // @public
 export interface JsonApiDataSourceOutAttributesParameters {
@@ -14139,7 +14139,7 @@ export const JsonApiDataSourceOutAttributesTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceOutAttributesTypeEnum = typeof JsonApiDataSourceOutAttributesTypeEnum[keyof typeof JsonApiDataSourceOutAttributesTypeEnum];
+export type JsonApiDataSourceOutAttributesTypeEnum = (typeof JsonApiDataSourceOutAttributesTypeEnum)[keyof typeof JsonApiDataSourceOutAttributesTypeEnum];
 
 // @public
 export interface JsonApiDataSourceOutDocument {
@@ -14160,7 +14160,7 @@ export const JsonApiDataSourceOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceOutTypeEnum = typeof JsonApiDataSourceOutTypeEnum[keyof typeof JsonApiDataSourceOutTypeEnum];
+export type JsonApiDataSourceOutTypeEnum = (typeof JsonApiDataSourceOutTypeEnum)[keyof typeof JsonApiDataSourceOutTypeEnum];
 
 // @public
 export interface JsonApiDataSourceOutWithLinks {
@@ -14177,7 +14177,7 @@ export const JsonApiDataSourceOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourceOutWithLinksTypeEnum = typeof JsonApiDataSourceOutWithLinksTypeEnum[keyof typeof JsonApiDataSourceOutWithLinksTypeEnum];
+export type JsonApiDataSourceOutWithLinksTypeEnum = (typeof JsonApiDataSourceOutWithLinksTypeEnum)[keyof typeof JsonApiDataSourceOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiDataSourcePatch {
@@ -14210,7 +14210,7 @@ export const JsonApiDataSourcePatchAttributesCacheStrategyEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourcePatchAttributesCacheStrategyEnum = typeof JsonApiDataSourcePatchAttributesCacheStrategyEnum[keyof typeof JsonApiDataSourcePatchAttributesCacheStrategyEnum];
+export type JsonApiDataSourcePatchAttributesCacheStrategyEnum = (typeof JsonApiDataSourcePatchAttributesCacheStrategyEnum)[keyof typeof JsonApiDataSourcePatchAttributesCacheStrategyEnum];
 
 // @public (undocumented)
 export const JsonApiDataSourcePatchAttributesTypeEnum: {
@@ -14242,7 +14242,7 @@ export const JsonApiDataSourcePatchAttributesTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourcePatchAttributesTypeEnum = typeof JsonApiDataSourcePatchAttributesTypeEnum[keyof typeof JsonApiDataSourcePatchAttributesTypeEnum];
+export type JsonApiDataSourcePatchAttributesTypeEnum = (typeof JsonApiDataSourcePatchAttributesTypeEnum)[keyof typeof JsonApiDataSourcePatchAttributesTypeEnum];
 
 // @public
 export interface JsonApiDataSourcePatchDocument {
@@ -14255,7 +14255,7 @@ export const JsonApiDataSourcePatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiDataSourcePatchTypeEnum = typeof JsonApiDataSourcePatchTypeEnum[keyof typeof JsonApiDataSourcePatchTypeEnum];
+export type JsonApiDataSourcePatchTypeEnum = (typeof JsonApiDataSourcePatchTypeEnum)[keyof typeof JsonApiDataSourcePatchTypeEnum];
 
 // @public
 export interface JsonApiEntitlementOut {
@@ -14289,7 +14289,7 @@ export const JsonApiEntitlementOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiEntitlementOutTypeEnum = typeof JsonApiEntitlementOutTypeEnum[keyof typeof JsonApiEntitlementOutTypeEnum];
+export type JsonApiEntitlementOutTypeEnum = (typeof JsonApiEntitlementOutTypeEnum)[keyof typeof JsonApiEntitlementOutTypeEnum];
 
 // @public
 export interface JsonApiEntitlementOutWithLinks {
@@ -14305,7 +14305,7 @@ export const JsonApiEntitlementOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiEntitlementOutWithLinksTypeEnum = typeof JsonApiEntitlementOutWithLinksTypeEnum[keyof typeof JsonApiEntitlementOutWithLinksTypeEnum];
+export type JsonApiEntitlementOutWithLinksTypeEnum = (typeof JsonApiEntitlementOutWithLinksTypeEnum)[keyof typeof JsonApiEntitlementOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiExportDefinitionIn {
@@ -14341,7 +14341,7 @@ export const JsonApiExportDefinitionInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiExportDefinitionInTypeEnum = typeof JsonApiExportDefinitionInTypeEnum[keyof typeof JsonApiExportDefinitionInTypeEnum];
+export type JsonApiExportDefinitionInTypeEnum = (typeof JsonApiExportDefinitionInTypeEnum)[keyof typeof JsonApiExportDefinitionInTypeEnum];
 
 // @public
 export interface JsonApiExportDefinitionLinkage {
@@ -14355,7 +14355,7 @@ export const JsonApiExportDefinitionLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiExportDefinitionLinkageTypeEnum = typeof JsonApiExportDefinitionLinkageTypeEnum[keyof typeof JsonApiExportDefinitionLinkageTypeEnum];
+export type JsonApiExportDefinitionLinkageTypeEnum = (typeof JsonApiExportDefinitionLinkageTypeEnum)[keyof typeof JsonApiExportDefinitionLinkageTypeEnum];
 
 // @public
 export interface JsonApiExportDefinitionOut {
@@ -14420,7 +14420,7 @@ export const JsonApiExportDefinitionOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiExportDefinitionOutTypeEnum = typeof JsonApiExportDefinitionOutTypeEnum[keyof typeof JsonApiExportDefinitionOutTypeEnum];
+export type JsonApiExportDefinitionOutTypeEnum = (typeof JsonApiExportDefinitionOutTypeEnum)[keyof typeof JsonApiExportDefinitionOutTypeEnum];
 
 // @public
 export interface JsonApiExportDefinitionOutWithLinks {
@@ -14438,7 +14438,7 @@ export const JsonApiExportDefinitionOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiExportDefinitionOutWithLinksTypeEnum = typeof JsonApiExportDefinitionOutWithLinksTypeEnum[keyof typeof JsonApiExportDefinitionOutWithLinksTypeEnum];
+export type JsonApiExportDefinitionOutWithLinksTypeEnum = (typeof JsonApiExportDefinitionOutWithLinksTypeEnum)[keyof typeof JsonApiExportDefinitionOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiExportDefinitionPatch {
@@ -14459,7 +14459,7 @@ export const JsonApiExportDefinitionPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiExportDefinitionPatchTypeEnum = typeof JsonApiExportDefinitionPatchTypeEnum[keyof typeof JsonApiExportDefinitionPatchTypeEnum];
+export type JsonApiExportDefinitionPatchTypeEnum = (typeof JsonApiExportDefinitionPatchTypeEnum)[keyof typeof JsonApiExportDefinitionPatchTypeEnum];
 
 // @public
 export interface JsonApiExportDefinitionPostOptionalId {
@@ -14480,7 +14480,7 @@ export const JsonApiExportDefinitionPostOptionalIdTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiExportDefinitionPostOptionalIdTypeEnum = typeof JsonApiExportDefinitionPostOptionalIdTypeEnum[keyof typeof JsonApiExportDefinitionPostOptionalIdTypeEnum];
+export type JsonApiExportDefinitionPostOptionalIdTypeEnum = (typeof JsonApiExportDefinitionPostOptionalIdTypeEnum)[keyof typeof JsonApiExportDefinitionPostOptionalIdTypeEnum];
 
 // @public
 export interface JsonApiExportTemplateIn {
@@ -14500,7 +14500,7 @@ export const JsonApiExportTemplateInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiExportTemplateInTypeEnum = typeof JsonApiExportTemplateInTypeEnum[keyof typeof JsonApiExportTemplateInTypeEnum];
+export type JsonApiExportTemplateInTypeEnum = (typeof JsonApiExportTemplateInTypeEnum)[keyof typeof JsonApiExportTemplateInTypeEnum];
 
 // @public
 export interface JsonApiExportTemplateOut {
@@ -14532,7 +14532,7 @@ export const JsonApiExportTemplateOutAttributesDashboardSlidesTemplateAppliedOnE
 };
 
 // @public (undocumented)
-export type JsonApiExportTemplateOutAttributesDashboardSlidesTemplateAppliedOnEnum = typeof JsonApiExportTemplateOutAttributesDashboardSlidesTemplateAppliedOnEnum[keyof typeof JsonApiExportTemplateOutAttributesDashboardSlidesTemplateAppliedOnEnum];
+export type JsonApiExportTemplateOutAttributesDashboardSlidesTemplateAppliedOnEnum = (typeof JsonApiExportTemplateOutAttributesDashboardSlidesTemplateAppliedOnEnum)[keyof typeof JsonApiExportTemplateOutAttributesDashboardSlidesTemplateAppliedOnEnum];
 
 // @public
 export interface JsonApiExportTemplateOutAttributesWidgetSlidesTemplate {
@@ -14547,7 +14547,7 @@ export const JsonApiExportTemplateOutAttributesWidgetSlidesTemplateAppliedOnEnum
 };
 
 // @public (undocumented)
-export type JsonApiExportTemplateOutAttributesWidgetSlidesTemplateAppliedOnEnum = typeof JsonApiExportTemplateOutAttributesWidgetSlidesTemplateAppliedOnEnum[keyof typeof JsonApiExportTemplateOutAttributesWidgetSlidesTemplateAppliedOnEnum];
+export type JsonApiExportTemplateOutAttributesWidgetSlidesTemplateAppliedOnEnum = (typeof JsonApiExportTemplateOutAttributesWidgetSlidesTemplateAppliedOnEnum)[keyof typeof JsonApiExportTemplateOutAttributesWidgetSlidesTemplateAppliedOnEnum];
 
 // @public
 export interface JsonApiExportTemplateOutDocument {
@@ -14568,7 +14568,7 @@ export const JsonApiExportTemplateOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiExportTemplateOutTypeEnum = typeof JsonApiExportTemplateOutTypeEnum[keyof typeof JsonApiExportTemplateOutTypeEnum];
+export type JsonApiExportTemplateOutTypeEnum = (typeof JsonApiExportTemplateOutTypeEnum)[keyof typeof JsonApiExportTemplateOutTypeEnum];
 
 // @public
 export interface JsonApiExportTemplateOutWithLinks {
@@ -14584,7 +14584,7 @@ export const JsonApiExportTemplateOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiExportTemplateOutWithLinksTypeEnum = typeof JsonApiExportTemplateOutWithLinksTypeEnum[keyof typeof JsonApiExportTemplateOutWithLinksTypeEnum];
+export type JsonApiExportTemplateOutWithLinksTypeEnum = (typeof JsonApiExportTemplateOutWithLinksTypeEnum)[keyof typeof JsonApiExportTemplateOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiExportTemplatePatch {
@@ -14611,7 +14611,7 @@ export const JsonApiExportTemplatePatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiExportTemplatePatchTypeEnum = typeof JsonApiExportTemplatePatchTypeEnum[keyof typeof JsonApiExportTemplatePatchTypeEnum];
+export type JsonApiExportTemplatePatchTypeEnum = (typeof JsonApiExportTemplatePatchTypeEnum)[keyof typeof JsonApiExportTemplatePatchTypeEnum];
 
 // @public
 export interface JsonApiExportTemplatePostOptionalId {
@@ -14631,7 +14631,7 @@ export const JsonApiExportTemplatePostOptionalIdTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiExportTemplatePostOptionalIdTypeEnum = typeof JsonApiExportTemplatePostOptionalIdTypeEnum[keyof typeof JsonApiExportTemplatePostOptionalIdTypeEnum];
+export type JsonApiExportTemplatePostOptionalIdTypeEnum = (typeof JsonApiExportTemplatePostOptionalIdTypeEnum)[keyof typeof JsonApiExportTemplatePostOptionalIdTypeEnum];
 
 // @public
 export interface JsonApiFactLinkage {
@@ -14645,7 +14645,7 @@ export const JsonApiFactLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFactLinkageTypeEnum = typeof JsonApiFactLinkageTypeEnum[keyof typeof JsonApiFactLinkageTypeEnum];
+export type JsonApiFactLinkageTypeEnum = (typeof JsonApiFactLinkageTypeEnum)[keyof typeof JsonApiFactLinkageTypeEnum];
 
 // @public
 export interface JsonApiFactOut {
@@ -14678,7 +14678,7 @@ export const JsonApiFactOutAttributesSourceColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFactOutAttributesSourceColumnDataTypeEnum = typeof JsonApiFactOutAttributesSourceColumnDataTypeEnum[keyof typeof JsonApiFactOutAttributesSourceColumnDataTypeEnum];
+export type JsonApiFactOutAttributesSourceColumnDataTypeEnum = (typeof JsonApiFactOutAttributesSourceColumnDataTypeEnum)[keyof typeof JsonApiFactOutAttributesSourceColumnDataTypeEnum];
 
 // @public
 export interface JsonApiFactOutDocument {
@@ -14706,7 +14706,7 @@ export const JsonApiFactOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFactOutTypeEnum = typeof JsonApiFactOutTypeEnum[keyof typeof JsonApiFactOutTypeEnum];
+export type JsonApiFactOutTypeEnum = (typeof JsonApiFactOutTypeEnum)[keyof typeof JsonApiFactOutTypeEnum];
 
 // @public
 export interface JsonApiFactOutWithLinks {
@@ -14724,7 +14724,7 @@ export const JsonApiFactOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFactOutWithLinksTypeEnum = typeof JsonApiFactOutWithLinksTypeEnum[keyof typeof JsonApiFactOutWithLinksTypeEnum];
+export type JsonApiFactOutWithLinksTypeEnum = (typeof JsonApiFactOutWithLinksTypeEnum)[keyof typeof JsonApiFactOutWithLinksTypeEnum];
 
 // @public
 export type JsonApiFactToOneLinkage = JsonApiFactLinkage;
@@ -14747,7 +14747,7 @@ export const JsonApiFilterContextInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFilterContextInTypeEnum = typeof JsonApiFilterContextInTypeEnum[keyof typeof JsonApiFilterContextInTypeEnum];
+export type JsonApiFilterContextInTypeEnum = (typeof JsonApiFilterContextInTypeEnum)[keyof typeof JsonApiFilterContextInTypeEnum];
 
 // @public
 export interface JsonApiFilterContextLinkage {
@@ -14761,7 +14761,7 @@ export const JsonApiFilterContextLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFilterContextLinkageTypeEnum = typeof JsonApiFilterContextLinkageTypeEnum[keyof typeof JsonApiFilterContextLinkageTypeEnum];
+export type JsonApiFilterContextLinkageTypeEnum = (typeof JsonApiFilterContextLinkageTypeEnum)[keyof typeof JsonApiFilterContextLinkageTypeEnum];
 
 // @public
 export interface JsonApiFilterContextOut {
@@ -14803,7 +14803,7 @@ export const JsonApiFilterContextOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFilterContextOutTypeEnum = typeof JsonApiFilterContextOutTypeEnum[keyof typeof JsonApiFilterContextOutTypeEnum];
+export type JsonApiFilterContextOutTypeEnum = (typeof JsonApiFilterContextOutTypeEnum)[keyof typeof JsonApiFilterContextOutTypeEnum];
 
 // @public
 export interface JsonApiFilterContextOutWithLinks {
@@ -14821,7 +14821,7 @@ export const JsonApiFilterContextOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFilterContextOutWithLinksTypeEnum = typeof JsonApiFilterContextOutWithLinksTypeEnum[keyof typeof JsonApiFilterContextOutWithLinksTypeEnum];
+export type JsonApiFilterContextOutWithLinksTypeEnum = (typeof JsonApiFilterContextOutWithLinksTypeEnum)[keyof typeof JsonApiFilterContextOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiFilterContextPatch {
@@ -14841,7 +14841,7 @@ export const JsonApiFilterContextPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFilterContextPatchTypeEnum = typeof JsonApiFilterContextPatchTypeEnum[keyof typeof JsonApiFilterContextPatchTypeEnum];
+export type JsonApiFilterContextPatchTypeEnum = (typeof JsonApiFilterContextPatchTypeEnum)[keyof typeof JsonApiFilterContextPatchTypeEnum];
 
 // @public
 export interface JsonApiFilterContextPostOptionalId {
@@ -14861,7 +14861,7 @@ export const JsonApiFilterContextPostOptionalIdTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFilterContextPostOptionalIdTypeEnum = typeof JsonApiFilterContextPostOptionalIdTypeEnum[keyof typeof JsonApiFilterContextPostOptionalIdTypeEnum];
+export type JsonApiFilterContextPostOptionalIdTypeEnum = (typeof JsonApiFilterContextPostOptionalIdTypeEnum)[keyof typeof JsonApiFilterContextPostOptionalIdTypeEnum];
 
 // @public
 export interface JsonApiFilterViewIn {
@@ -14903,7 +14903,7 @@ export const JsonApiFilterViewInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFilterViewInTypeEnum = typeof JsonApiFilterViewInTypeEnum[keyof typeof JsonApiFilterViewInTypeEnum];
+export type JsonApiFilterViewInTypeEnum = (typeof JsonApiFilterViewInTypeEnum)[keyof typeof JsonApiFilterViewInTypeEnum];
 
 // @public
 export interface JsonApiFilterViewOut {
@@ -14937,7 +14937,7 @@ export const JsonApiFilterViewOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFilterViewOutTypeEnum = typeof JsonApiFilterViewOutTypeEnum[keyof typeof JsonApiFilterViewOutTypeEnum];
+export type JsonApiFilterViewOutTypeEnum = (typeof JsonApiFilterViewOutTypeEnum)[keyof typeof JsonApiFilterViewOutTypeEnum];
 
 // @public
 export interface JsonApiFilterViewOutWithLinks {
@@ -14954,7 +14954,7 @@ export const JsonApiFilterViewOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFilterViewOutWithLinksTypeEnum = typeof JsonApiFilterViewOutWithLinksTypeEnum[keyof typeof JsonApiFilterViewOutWithLinksTypeEnum];
+export type JsonApiFilterViewOutWithLinksTypeEnum = (typeof JsonApiFilterViewOutWithLinksTypeEnum)[keyof typeof JsonApiFilterViewOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiFilterViewPatch {
@@ -14985,7 +14985,7 @@ export const JsonApiFilterViewPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiFilterViewPatchTypeEnum = typeof JsonApiFilterViewPatchTypeEnum[keyof typeof JsonApiFilterViewPatchTypeEnum];
+export type JsonApiFilterViewPatchTypeEnum = (typeof JsonApiFilterViewPatchTypeEnum)[keyof typeof JsonApiFilterViewPatchTypeEnum];
 
 // @public (undocumented)
 export const jsonApiHeaders: {
@@ -15027,7 +15027,7 @@ export const JsonApiIdentityProviderInAttributesIdpTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiIdentityProviderInAttributesIdpTypeEnum = typeof JsonApiIdentityProviderInAttributesIdpTypeEnum[keyof typeof JsonApiIdentityProviderInAttributesIdpTypeEnum];
+export type JsonApiIdentityProviderInAttributesIdpTypeEnum = (typeof JsonApiIdentityProviderInAttributesIdpTypeEnum)[keyof typeof JsonApiIdentityProviderInAttributesIdpTypeEnum];
 
 // @public
 export interface JsonApiIdentityProviderInDocument {
@@ -15040,7 +15040,7 @@ export const JsonApiIdentityProviderInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiIdentityProviderInTypeEnum = typeof JsonApiIdentityProviderInTypeEnum[keyof typeof JsonApiIdentityProviderInTypeEnum];
+export type JsonApiIdentityProviderInTypeEnum = (typeof JsonApiIdentityProviderInTypeEnum)[keyof typeof JsonApiIdentityProviderInTypeEnum];
 
 // @public
 export interface JsonApiIdentityProviderLinkage {
@@ -15054,7 +15054,7 @@ export const JsonApiIdentityProviderLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiIdentityProviderLinkageTypeEnum = typeof JsonApiIdentityProviderLinkageTypeEnum[keyof typeof JsonApiIdentityProviderLinkageTypeEnum];
+export type JsonApiIdentityProviderLinkageTypeEnum = (typeof JsonApiIdentityProviderLinkageTypeEnum)[keyof typeof JsonApiIdentityProviderLinkageTypeEnum];
 
 // @public
 export interface JsonApiIdentityProviderOut {
@@ -15088,7 +15088,7 @@ export const JsonApiIdentityProviderOutAttributesIdpTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiIdentityProviderOutAttributesIdpTypeEnum = typeof JsonApiIdentityProviderOutAttributesIdpTypeEnum[keyof typeof JsonApiIdentityProviderOutAttributesIdpTypeEnum];
+export type JsonApiIdentityProviderOutAttributesIdpTypeEnum = (typeof JsonApiIdentityProviderOutAttributesIdpTypeEnum)[keyof typeof JsonApiIdentityProviderOutAttributesIdpTypeEnum];
 
 // @public
 export interface JsonApiIdentityProviderOutDocument {
@@ -15109,7 +15109,7 @@ export const JsonApiIdentityProviderOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiIdentityProviderOutTypeEnum = typeof JsonApiIdentityProviderOutTypeEnum[keyof typeof JsonApiIdentityProviderOutTypeEnum];
+export type JsonApiIdentityProviderOutTypeEnum = (typeof JsonApiIdentityProviderOutTypeEnum)[keyof typeof JsonApiIdentityProviderOutTypeEnum];
 
 // @public
 export interface JsonApiIdentityProviderOutWithLinks {
@@ -15125,7 +15125,7 @@ export const JsonApiIdentityProviderOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiIdentityProviderOutWithLinksTypeEnum = typeof JsonApiIdentityProviderOutWithLinksTypeEnum[keyof typeof JsonApiIdentityProviderOutWithLinksTypeEnum];
+export type JsonApiIdentityProviderOutWithLinksTypeEnum = (typeof JsonApiIdentityProviderOutWithLinksTypeEnum)[keyof typeof JsonApiIdentityProviderOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiIdentityProviderPatch {
@@ -15145,7 +15145,7 @@ export const JsonApiIdentityProviderPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiIdentityProviderPatchTypeEnum = typeof JsonApiIdentityProviderPatchTypeEnum[keyof typeof JsonApiIdentityProviderPatchTypeEnum];
+export type JsonApiIdentityProviderPatchTypeEnum = (typeof JsonApiIdentityProviderPatchTypeEnum)[keyof typeof JsonApiIdentityProviderPatchTypeEnum];
 
 // @public
 export type JsonApiIdentityProviderToOneLinkage = JsonApiIdentityProviderLinkage;
@@ -15168,7 +15168,7 @@ export const JsonApiJwkInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiJwkInTypeEnum = typeof JsonApiJwkInTypeEnum[keyof typeof JsonApiJwkInTypeEnum];
+export type JsonApiJwkInTypeEnum = (typeof JsonApiJwkInTypeEnum)[keyof typeof JsonApiJwkInTypeEnum];
 
 // @public
 export interface JsonApiJwkOut {
@@ -15201,7 +15201,7 @@ export const JsonApiJwkOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiJwkOutTypeEnum = typeof JsonApiJwkOutTypeEnum[keyof typeof JsonApiJwkOutTypeEnum];
+export type JsonApiJwkOutTypeEnum = (typeof JsonApiJwkOutTypeEnum)[keyof typeof JsonApiJwkOutTypeEnum];
 
 // @public
 export interface JsonApiJwkOutWithLinks {
@@ -15217,7 +15217,7 @@ export const JsonApiJwkOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiJwkOutWithLinksTypeEnum = typeof JsonApiJwkOutWithLinksTypeEnum[keyof typeof JsonApiJwkOutWithLinksTypeEnum];
+export type JsonApiJwkOutWithLinksTypeEnum = (typeof JsonApiJwkOutWithLinksTypeEnum)[keyof typeof JsonApiJwkOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiJwkPatch {
@@ -15237,7 +15237,7 @@ export const JsonApiJwkPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiJwkPatchTypeEnum = typeof JsonApiJwkPatchTypeEnum[keyof typeof JsonApiJwkPatchTypeEnum];
+export type JsonApiJwkPatchTypeEnum = (typeof JsonApiJwkPatchTypeEnum)[keyof typeof JsonApiJwkPatchTypeEnum];
 
 // @public
 export interface JsonApiLabelLinkage {
@@ -15251,7 +15251,7 @@ export const JsonApiLabelLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLabelLinkageTypeEnum = typeof JsonApiLabelLinkageTypeEnum[keyof typeof JsonApiLabelLinkageTypeEnum];
+export type JsonApiLabelLinkageTypeEnum = (typeof JsonApiLabelLinkageTypeEnum)[keyof typeof JsonApiLabelLinkageTypeEnum];
 
 // @public
 export interface JsonApiLabelOut {
@@ -15286,7 +15286,7 @@ export const JsonApiLabelOutAttributesSourceColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLabelOutAttributesSourceColumnDataTypeEnum = typeof JsonApiLabelOutAttributesSourceColumnDataTypeEnum[keyof typeof JsonApiLabelOutAttributesSourceColumnDataTypeEnum];
+export type JsonApiLabelOutAttributesSourceColumnDataTypeEnum = (typeof JsonApiLabelOutAttributesSourceColumnDataTypeEnum)[keyof typeof JsonApiLabelOutAttributesSourceColumnDataTypeEnum];
 
 // @public (undocumented)
 export const JsonApiLabelOutAttributesValueTypeEnum: {
@@ -15299,7 +15299,7 @@ export const JsonApiLabelOutAttributesValueTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLabelOutAttributesValueTypeEnum = typeof JsonApiLabelOutAttributesValueTypeEnum[keyof typeof JsonApiLabelOutAttributesValueTypeEnum];
+export type JsonApiLabelOutAttributesValueTypeEnum = (typeof JsonApiLabelOutAttributesValueTypeEnum)[keyof typeof JsonApiLabelOutAttributesValueTypeEnum];
 
 // @public
 export interface JsonApiLabelOutDocument {
@@ -15332,7 +15332,7 @@ export const JsonApiLabelOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLabelOutTypeEnum = typeof JsonApiLabelOutTypeEnum[keyof typeof JsonApiLabelOutTypeEnum];
+export type JsonApiLabelOutTypeEnum = (typeof JsonApiLabelOutTypeEnum)[keyof typeof JsonApiLabelOutTypeEnum];
 
 // @public
 export interface JsonApiLabelOutWithLinks {
@@ -15350,7 +15350,7 @@ export const JsonApiLabelOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLabelOutWithLinksTypeEnum = typeof JsonApiLabelOutWithLinksTypeEnum[keyof typeof JsonApiLabelOutWithLinksTypeEnum];
+export type JsonApiLabelOutWithLinksTypeEnum = (typeof JsonApiLabelOutWithLinksTypeEnum)[keyof typeof JsonApiLabelOutWithLinksTypeEnum];
 
 // @public
 export type JsonApiLabelToOneLinkage = JsonApiLabelLinkage;
@@ -15379,7 +15379,7 @@ export const JsonApiLlmEndpointInAttributesProviderEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLlmEndpointInAttributesProviderEnum = typeof JsonApiLlmEndpointInAttributesProviderEnum[keyof typeof JsonApiLlmEndpointInAttributesProviderEnum];
+export type JsonApiLlmEndpointInAttributesProviderEnum = (typeof JsonApiLlmEndpointInAttributesProviderEnum)[keyof typeof JsonApiLlmEndpointInAttributesProviderEnum];
 
 // @public
 export interface JsonApiLlmEndpointInDocument {
@@ -15392,7 +15392,7 @@ export const JsonApiLlmEndpointInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLlmEndpointInTypeEnum = typeof JsonApiLlmEndpointInTypeEnum[keyof typeof JsonApiLlmEndpointInTypeEnum];
+export type JsonApiLlmEndpointInTypeEnum = (typeof JsonApiLlmEndpointInTypeEnum)[keyof typeof JsonApiLlmEndpointInTypeEnum];
 
 // @public
 export interface JsonApiLlmEndpointOut {
@@ -15417,7 +15417,7 @@ export const JsonApiLlmEndpointOutAttributesProviderEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLlmEndpointOutAttributesProviderEnum = typeof JsonApiLlmEndpointOutAttributesProviderEnum[keyof typeof JsonApiLlmEndpointOutAttributesProviderEnum];
+export type JsonApiLlmEndpointOutAttributesProviderEnum = (typeof JsonApiLlmEndpointOutAttributesProviderEnum)[keyof typeof JsonApiLlmEndpointOutAttributesProviderEnum];
 
 // @public
 export interface JsonApiLlmEndpointOutDocument {
@@ -15438,7 +15438,7 @@ export const JsonApiLlmEndpointOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLlmEndpointOutTypeEnum = typeof JsonApiLlmEndpointOutTypeEnum[keyof typeof JsonApiLlmEndpointOutTypeEnum];
+export type JsonApiLlmEndpointOutTypeEnum = (typeof JsonApiLlmEndpointOutTypeEnum)[keyof typeof JsonApiLlmEndpointOutTypeEnum];
 
 // @public
 export interface JsonApiLlmEndpointOutWithLinks {
@@ -15454,7 +15454,7 @@ export const JsonApiLlmEndpointOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLlmEndpointOutWithLinksTypeEnum = typeof JsonApiLlmEndpointOutWithLinksTypeEnum[keyof typeof JsonApiLlmEndpointOutWithLinksTypeEnum];
+export type JsonApiLlmEndpointOutWithLinksTypeEnum = (typeof JsonApiLlmEndpointOutWithLinksTypeEnum)[keyof typeof JsonApiLlmEndpointOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiLlmEndpointPatch {
@@ -15480,7 +15480,7 @@ export const JsonApiLlmEndpointPatchAttributesProviderEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLlmEndpointPatchAttributesProviderEnum = typeof JsonApiLlmEndpointPatchAttributesProviderEnum[keyof typeof JsonApiLlmEndpointPatchAttributesProviderEnum];
+export type JsonApiLlmEndpointPatchAttributesProviderEnum = (typeof JsonApiLlmEndpointPatchAttributesProviderEnum)[keyof typeof JsonApiLlmEndpointPatchAttributesProviderEnum];
 
 // @public
 export interface JsonApiLlmEndpointPatchDocument {
@@ -15493,7 +15493,7 @@ export const JsonApiLlmEndpointPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiLlmEndpointPatchTypeEnum = typeof JsonApiLlmEndpointPatchTypeEnum[keyof typeof JsonApiLlmEndpointPatchTypeEnum];
+export type JsonApiLlmEndpointPatchTypeEnum = (typeof JsonApiLlmEndpointPatchTypeEnum)[keyof typeof JsonApiLlmEndpointPatchTypeEnum];
 
 // @public
 export interface JsonApiMetricIn {
@@ -15522,7 +15522,7 @@ export const JsonApiMetricInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiMetricInTypeEnum = typeof JsonApiMetricInTypeEnum[keyof typeof JsonApiMetricInTypeEnum];
+export type JsonApiMetricInTypeEnum = (typeof JsonApiMetricInTypeEnum)[keyof typeof JsonApiMetricInTypeEnum];
 
 // @public
 export interface JsonApiMetricLinkage {
@@ -15536,7 +15536,7 @@ export const JsonApiMetricLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiMetricLinkageTypeEnum = typeof JsonApiMetricLinkageTypeEnum[keyof typeof JsonApiMetricLinkageTypeEnum];
+export type JsonApiMetricLinkageTypeEnum = (typeof JsonApiMetricLinkageTypeEnum)[keyof typeof JsonApiMetricLinkageTypeEnum];
 
 // @public
 export interface JsonApiMetricOut {
@@ -15588,7 +15588,7 @@ export const JsonApiMetricOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiMetricOutTypeEnum = typeof JsonApiMetricOutTypeEnum[keyof typeof JsonApiMetricOutTypeEnum];
+export type JsonApiMetricOutTypeEnum = (typeof JsonApiMetricOutTypeEnum)[keyof typeof JsonApiMetricOutTypeEnum];
 
 // @public
 export interface JsonApiMetricOutWithLinks {
@@ -15606,7 +15606,7 @@ export const JsonApiMetricOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiMetricOutWithLinksTypeEnum = typeof JsonApiMetricOutWithLinksTypeEnum[keyof typeof JsonApiMetricOutWithLinksTypeEnum];
+export type JsonApiMetricOutWithLinksTypeEnum = (typeof JsonApiMetricOutWithLinksTypeEnum)[keyof typeof JsonApiMetricOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiMetricPatch {
@@ -15635,7 +15635,7 @@ export const JsonApiMetricPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiMetricPatchTypeEnum = typeof JsonApiMetricPatchTypeEnum[keyof typeof JsonApiMetricPatchTypeEnum];
+export type JsonApiMetricPatchTypeEnum = (typeof JsonApiMetricPatchTypeEnum)[keyof typeof JsonApiMetricPatchTypeEnum];
 
 // @public
 export interface JsonApiMetricPostOptionalId {
@@ -15655,7 +15655,7 @@ export const JsonApiMetricPostOptionalIdTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiMetricPostOptionalIdTypeEnum = typeof JsonApiMetricPostOptionalIdTypeEnum[keyof typeof JsonApiMetricPostOptionalIdTypeEnum];
+export type JsonApiMetricPostOptionalIdTypeEnum = (typeof JsonApiMetricPostOptionalIdTypeEnum)[keyof typeof JsonApiMetricPostOptionalIdTypeEnum];
 
 // @public
 export interface JsonApiNotificationChannelIdentifierOut {
@@ -15680,7 +15680,7 @@ export const JsonApiNotificationChannelIdentifierOutAttributesAllowedRecipientsE
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelIdentifierOutAttributesAllowedRecipientsEnum = typeof JsonApiNotificationChannelIdentifierOutAttributesAllowedRecipientsEnum[keyof typeof JsonApiNotificationChannelIdentifierOutAttributesAllowedRecipientsEnum];
+export type JsonApiNotificationChannelIdentifierOutAttributesAllowedRecipientsEnum = (typeof JsonApiNotificationChannelIdentifierOutAttributesAllowedRecipientsEnum)[keyof typeof JsonApiNotificationChannelIdentifierOutAttributesAllowedRecipientsEnum];
 
 // @public (undocumented)
 export const JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnum: {
@@ -15691,7 +15691,7 @@ export const JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnu
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnum = typeof JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnum[keyof typeof JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnum];
+export type JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnum = (typeof JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnum)[keyof typeof JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnum];
 
 // @public
 export interface JsonApiNotificationChannelIdentifierOutDocument {
@@ -15712,7 +15712,7 @@ export const JsonApiNotificationChannelIdentifierOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelIdentifierOutTypeEnum = typeof JsonApiNotificationChannelIdentifierOutTypeEnum[keyof typeof JsonApiNotificationChannelIdentifierOutTypeEnum];
+export type JsonApiNotificationChannelIdentifierOutTypeEnum = (typeof JsonApiNotificationChannelIdentifierOutTypeEnum)[keyof typeof JsonApiNotificationChannelIdentifierOutTypeEnum];
 
 // @public
 export interface JsonApiNotificationChannelIdentifierOutWithLinks {
@@ -15728,7 +15728,7 @@ export const JsonApiNotificationChannelIdentifierOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelIdentifierOutWithLinksTypeEnum = typeof JsonApiNotificationChannelIdentifierOutWithLinksTypeEnum[keyof typeof JsonApiNotificationChannelIdentifierOutWithLinksTypeEnum];
+export type JsonApiNotificationChannelIdentifierOutWithLinksTypeEnum = (typeof JsonApiNotificationChannelIdentifierOutWithLinksTypeEnum)[keyof typeof JsonApiNotificationChannelIdentifierOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiNotificationChannelIn {
@@ -15748,7 +15748,7 @@ export const JsonApiNotificationChannelInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelInTypeEnum = typeof JsonApiNotificationChannelInTypeEnum[keyof typeof JsonApiNotificationChannelInTypeEnum];
+export type JsonApiNotificationChannelInTypeEnum = (typeof JsonApiNotificationChannelInTypeEnum)[keyof typeof JsonApiNotificationChannelInTypeEnum];
 
 // @public
 export interface JsonApiNotificationChannelLinkage {
@@ -15762,7 +15762,7 @@ export const JsonApiNotificationChannelLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelLinkageTypeEnum = typeof JsonApiNotificationChannelLinkageTypeEnum[keyof typeof JsonApiNotificationChannelLinkageTypeEnum];
+export type JsonApiNotificationChannelLinkageTypeEnum = (typeof JsonApiNotificationChannelLinkageTypeEnum)[keyof typeof JsonApiNotificationChannelLinkageTypeEnum];
 
 // @public
 export interface JsonApiNotificationChannelOut {
@@ -15792,7 +15792,7 @@ export const JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum = typeof JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum[keyof typeof JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum];
+export type JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum = (typeof JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum)[keyof typeof JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum];
 
 // @public (undocumented)
 export const JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum: {
@@ -15802,7 +15802,7 @@ export const JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum:
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum = typeof JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum[keyof typeof JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum];
+export type JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum = (typeof JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum)[keyof typeof JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum];
 
 // @public (undocumented)
 export const JsonApiNotificationChannelOutAttributesDestinationTypeEnum: {
@@ -15813,7 +15813,7 @@ export const JsonApiNotificationChannelOutAttributesDestinationTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelOutAttributesDestinationTypeEnum = typeof JsonApiNotificationChannelOutAttributesDestinationTypeEnum[keyof typeof JsonApiNotificationChannelOutAttributesDestinationTypeEnum];
+export type JsonApiNotificationChannelOutAttributesDestinationTypeEnum = (typeof JsonApiNotificationChannelOutAttributesDestinationTypeEnum)[keyof typeof JsonApiNotificationChannelOutAttributesDestinationTypeEnum];
 
 // @public (undocumented)
 export const JsonApiNotificationChannelOutAttributesInPlatformNotificationEnum: {
@@ -15822,7 +15822,7 @@ export const JsonApiNotificationChannelOutAttributesInPlatformNotificationEnum: 
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelOutAttributesInPlatformNotificationEnum = typeof JsonApiNotificationChannelOutAttributesInPlatformNotificationEnum[keyof typeof JsonApiNotificationChannelOutAttributesInPlatformNotificationEnum];
+export type JsonApiNotificationChannelOutAttributesInPlatformNotificationEnum = (typeof JsonApiNotificationChannelOutAttributesInPlatformNotificationEnum)[keyof typeof JsonApiNotificationChannelOutAttributesInPlatformNotificationEnum];
 
 // @public
 export interface JsonApiNotificationChannelOutDocument {
@@ -15843,7 +15843,7 @@ export const JsonApiNotificationChannelOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelOutTypeEnum = typeof JsonApiNotificationChannelOutTypeEnum[keyof typeof JsonApiNotificationChannelOutTypeEnum];
+export type JsonApiNotificationChannelOutTypeEnum = (typeof JsonApiNotificationChannelOutTypeEnum)[keyof typeof JsonApiNotificationChannelOutTypeEnum];
 
 // @public
 export interface JsonApiNotificationChannelOutWithLinks {
@@ -15859,7 +15859,7 @@ export const JsonApiNotificationChannelOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelOutWithLinksTypeEnum = typeof JsonApiNotificationChannelOutWithLinksTypeEnum[keyof typeof JsonApiNotificationChannelOutWithLinksTypeEnum];
+export type JsonApiNotificationChannelOutWithLinksTypeEnum = (typeof JsonApiNotificationChannelOutWithLinksTypeEnum)[keyof typeof JsonApiNotificationChannelOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiNotificationChannelPatch {
@@ -15879,7 +15879,7 @@ export const JsonApiNotificationChannelPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelPatchTypeEnum = typeof JsonApiNotificationChannelPatchTypeEnum[keyof typeof JsonApiNotificationChannelPatchTypeEnum];
+export type JsonApiNotificationChannelPatchTypeEnum = (typeof JsonApiNotificationChannelPatchTypeEnum)[keyof typeof JsonApiNotificationChannelPatchTypeEnum];
 
 // @public
 export interface JsonApiNotificationChannelPostOptionalId {
@@ -15908,7 +15908,7 @@ export const JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipients
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsEnum = typeof JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsEnum[keyof typeof JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsEnum];
+export type JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsEnum = (typeof JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsEnum)[keyof typeof JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsEnum];
 
 // @public (undocumented)
 export const JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum: {
@@ -15918,7 +15918,7 @@ export const JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisi
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum = typeof JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum[keyof typeof JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum];
+export type JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum = (typeof JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum)[keyof typeof JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum];
 
 // @public (undocumented)
 export const JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum: {
@@ -15927,7 +15927,7 @@ export const JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotific
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum = typeof JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum[keyof typeof JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum];
+export type JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum = (typeof JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum)[keyof typeof JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum];
 
 // @public
 export interface JsonApiNotificationChannelPostOptionalIdDocument {
@@ -15940,7 +15940,7 @@ export const JsonApiNotificationChannelPostOptionalIdTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiNotificationChannelPostOptionalIdTypeEnum = typeof JsonApiNotificationChannelPostOptionalIdTypeEnum[keyof typeof JsonApiNotificationChannelPostOptionalIdTypeEnum];
+export type JsonApiNotificationChannelPostOptionalIdTypeEnum = (typeof JsonApiNotificationChannelPostOptionalIdTypeEnum)[keyof typeof JsonApiNotificationChannelPostOptionalIdTypeEnum];
 
 // @public
 export type JsonApiNotificationChannelToOneLinkage = JsonApiNotificationChannelLinkage;
@@ -15964,7 +15964,7 @@ export const JsonApiOrganizationInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiOrganizationInTypeEnum = typeof JsonApiOrganizationInTypeEnum[keyof typeof JsonApiOrganizationInTypeEnum];
+export type JsonApiOrganizationInTypeEnum = (typeof JsonApiOrganizationInTypeEnum)[keyof typeof JsonApiOrganizationInTypeEnum];
 
 // @public
 export interface JsonApiOrganizationOut {
@@ -16007,7 +16007,7 @@ export const JsonApiOrganizationOutAttributesCacheSettingsCacheStrategyEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiOrganizationOutAttributesCacheSettingsCacheStrategyEnum = typeof JsonApiOrganizationOutAttributesCacheSettingsCacheStrategyEnum[keyof typeof JsonApiOrganizationOutAttributesCacheSettingsCacheStrategyEnum];
+export type JsonApiOrganizationOutAttributesCacheSettingsCacheStrategyEnum = (typeof JsonApiOrganizationOutAttributesCacheSettingsCacheStrategyEnum)[keyof typeof JsonApiOrganizationOutAttributesCacheSettingsCacheStrategyEnum];
 
 // @public
 export interface JsonApiOrganizationOutDocument {
@@ -16031,7 +16031,7 @@ export const JsonApiOrganizationOutMetaPermissionsEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiOrganizationOutMetaPermissionsEnum = typeof JsonApiOrganizationOutMetaPermissionsEnum[keyof typeof JsonApiOrganizationOutMetaPermissionsEnum];
+export type JsonApiOrganizationOutMetaPermissionsEnum = (typeof JsonApiOrganizationOutMetaPermissionsEnum)[keyof typeof JsonApiOrganizationOutMetaPermissionsEnum];
 
 // @public
 export interface JsonApiOrganizationOutRelationships {
@@ -16046,7 +16046,7 @@ export const JsonApiOrganizationOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiOrganizationOutTypeEnum = typeof JsonApiOrganizationOutTypeEnum[keyof typeof JsonApiOrganizationOutTypeEnum];
+export type JsonApiOrganizationOutTypeEnum = (typeof JsonApiOrganizationOutTypeEnum)[keyof typeof JsonApiOrganizationOutTypeEnum];
 
 // @public
 export interface JsonApiOrganizationPatch {
@@ -16096,7 +16096,7 @@ export const JsonApiOrganizationPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiOrganizationPatchTypeEnum = typeof JsonApiOrganizationPatchTypeEnum[keyof typeof JsonApiOrganizationPatchTypeEnum];
+export type JsonApiOrganizationPatchTypeEnum = (typeof JsonApiOrganizationPatchTypeEnum)[keyof typeof JsonApiOrganizationPatchTypeEnum];
 
 // @public
 export interface JsonApiOrganizationSettingIn {
@@ -16116,7 +16116,7 @@ export const JsonApiOrganizationSettingInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingInTypeEnum = typeof JsonApiOrganizationSettingInTypeEnum[keyof typeof JsonApiOrganizationSettingInTypeEnum];
+export type JsonApiOrganizationSettingInTypeEnum = (typeof JsonApiOrganizationSettingInTypeEnum)[keyof typeof JsonApiOrganizationSettingInTypeEnum];
 
 // @public
 export interface JsonApiOrganizationSettingOut {
@@ -16144,7 +16144,7 @@ export const JsonApiOrganizationSettingOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingOutTypeEnum = typeof JsonApiOrganizationSettingOutTypeEnum[keyof typeof JsonApiOrganizationSettingOutTypeEnum];
+export type JsonApiOrganizationSettingOutTypeEnum = (typeof JsonApiOrganizationSettingOutTypeEnum)[keyof typeof JsonApiOrganizationSettingOutTypeEnum];
 
 // @public
 export interface JsonApiOrganizationSettingOutWithLinks {
@@ -16160,7 +16160,7 @@ export const JsonApiOrganizationSettingOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingOutWithLinksTypeEnum = typeof JsonApiOrganizationSettingOutWithLinksTypeEnum[keyof typeof JsonApiOrganizationSettingOutWithLinksTypeEnum];
+export type JsonApiOrganizationSettingOutWithLinksTypeEnum = (typeof JsonApiOrganizationSettingOutWithLinksTypeEnum)[keyof typeof JsonApiOrganizationSettingOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiOrganizationSettingPatch {
@@ -16180,7 +16180,7 @@ export const JsonApiOrganizationSettingPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingPatchTypeEnum = typeof JsonApiOrganizationSettingPatchTypeEnum[keyof typeof JsonApiOrganizationSettingPatchTypeEnum];
+export type JsonApiOrganizationSettingPatchTypeEnum = (typeof JsonApiOrganizationSettingPatchTypeEnum)[keyof typeof JsonApiOrganizationSettingPatchTypeEnum];
 
 // @public
 export interface JsonApiThemeIn {
@@ -16200,7 +16200,7 @@ export const JsonApiThemeInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiThemeInTypeEnum = typeof JsonApiThemeInTypeEnum[keyof typeof JsonApiThemeInTypeEnum];
+export type JsonApiThemeInTypeEnum = (typeof JsonApiThemeInTypeEnum)[keyof typeof JsonApiThemeInTypeEnum];
 
 // @public
 export interface JsonApiThemeOut {
@@ -16228,7 +16228,7 @@ export const JsonApiThemeOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiThemeOutTypeEnum = typeof JsonApiThemeOutTypeEnum[keyof typeof JsonApiThemeOutTypeEnum];
+export type JsonApiThemeOutTypeEnum = (typeof JsonApiThemeOutTypeEnum)[keyof typeof JsonApiThemeOutTypeEnum];
 
 // @public
 export interface JsonApiThemeOutWithLinks {
@@ -16244,7 +16244,7 @@ export const JsonApiThemeOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiThemeOutWithLinksTypeEnum = typeof JsonApiThemeOutWithLinksTypeEnum[keyof typeof JsonApiThemeOutWithLinksTypeEnum];
+export type JsonApiThemeOutWithLinksTypeEnum = (typeof JsonApiThemeOutWithLinksTypeEnum)[keyof typeof JsonApiThemeOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiThemePatch {
@@ -16264,7 +16264,7 @@ export const JsonApiThemePatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiThemePatchTypeEnum = typeof JsonApiThemePatchTypeEnum[keyof typeof JsonApiThemePatchTypeEnum];
+export type JsonApiThemePatchTypeEnum = (typeof JsonApiThemePatchTypeEnum)[keyof typeof JsonApiThemePatchTypeEnum];
 
 // @public
 export interface JsonApiUserDataFilterIn {
@@ -16305,7 +16305,7 @@ export const JsonApiUserDataFilterInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserDataFilterInTypeEnum = typeof JsonApiUserDataFilterInTypeEnum[keyof typeof JsonApiUserDataFilterInTypeEnum];
+export type JsonApiUserDataFilterInTypeEnum = (typeof JsonApiUserDataFilterInTypeEnum)[keyof typeof JsonApiUserDataFilterInTypeEnum];
 
 // @public
 export interface JsonApiUserDataFilterOut {
@@ -16351,7 +16351,7 @@ export const JsonApiUserDataFilterOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserDataFilterOutTypeEnum = typeof JsonApiUserDataFilterOutTypeEnum[keyof typeof JsonApiUserDataFilterOutTypeEnum];
+export type JsonApiUserDataFilterOutTypeEnum = (typeof JsonApiUserDataFilterOutTypeEnum)[keyof typeof JsonApiUserDataFilterOutTypeEnum];
 
 // @public
 export interface JsonApiUserDataFilterOutWithLinks {
@@ -16369,7 +16369,7 @@ export const JsonApiUserDataFilterOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserDataFilterOutWithLinksTypeEnum = typeof JsonApiUserDataFilterOutWithLinksTypeEnum[keyof typeof JsonApiUserDataFilterOutWithLinksTypeEnum];
+export type JsonApiUserDataFilterOutWithLinksTypeEnum = (typeof JsonApiUserDataFilterOutWithLinksTypeEnum)[keyof typeof JsonApiUserDataFilterOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiUserDataFilterPatch {
@@ -16399,7 +16399,7 @@ export const JsonApiUserDataFilterPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserDataFilterPatchTypeEnum = typeof JsonApiUserDataFilterPatchTypeEnum[keyof typeof JsonApiUserDataFilterPatchTypeEnum];
+export type JsonApiUserDataFilterPatchTypeEnum = (typeof JsonApiUserDataFilterPatchTypeEnum)[keyof typeof JsonApiUserDataFilterPatchTypeEnum];
 
 // @public
 export interface JsonApiUserDataFilterPostOptionalId {
@@ -16420,7 +16420,7 @@ export const JsonApiUserDataFilterPostOptionalIdTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserDataFilterPostOptionalIdTypeEnum = typeof JsonApiUserDataFilterPostOptionalIdTypeEnum[keyof typeof JsonApiUserDataFilterPostOptionalIdTypeEnum];
+export type JsonApiUserDataFilterPostOptionalIdTypeEnum = (typeof JsonApiUserDataFilterPostOptionalIdTypeEnum)[keyof typeof JsonApiUserDataFilterPostOptionalIdTypeEnum];
 
 // @public
 export interface JsonApiUserGroupIn {
@@ -16441,7 +16441,7 @@ export const JsonApiUserGroupInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserGroupInTypeEnum = typeof JsonApiUserGroupInTypeEnum[keyof typeof JsonApiUserGroupInTypeEnum];
+export type JsonApiUserGroupInTypeEnum = (typeof JsonApiUserGroupInTypeEnum)[keyof typeof JsonApiUserGroupInTypeEnum];
 
 // @public
 export interface JsonApiUserGroupLinkage {
@@ -16455,7 +16455,7 @@ export const JsonApiUserGroupLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserGroupLinkageTypeEnum = typeof JsonApiUserGroupLinkageTypeEnum[keyof typeof JsonApiUserGroupLinkageTypeEnum];
+export type JsonApiUserGroupLinkageTypeEnum = (typeof JsonApiUserGroupLinkageTypeEnum)[keyof typeof JsonApiUserGroupLinkageTypeEnum];
 
 // @public
 export interface JsonApiUserGroupOut {
@@ -16496,7 +16496,7 @@ export const JsonApiUserGroupOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserGroupOutTypeEnum = typeof JsonApiUserGroupOutTypeEnum[keyof typeof JsonApiUserGroupOutTypeEnum];
+export type JsonApiUserGroupOutTypeEnum = (typeof JsonApiUserGroupOutTypeEnum)[keyof typeof JsonApiUserGroupOutTypeEnum];
 
 // @public
 export interface JsonApiUserGroupOutWithLinks {
@@ -16513,7 +16513,7 @@ export const JsonApiUserGroupOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserGroupOutWithLinksTypeEnum = typeof JsonApiUserGroupOutWithLinksTypeEnum[keyof typeof JsonApiUserGroupOutWithLinksTypeEnum];
+export type JsonApiUserGroupOutWithLinksTypeEnum = (typeof JsonApiUserGroupOutWithLinksTypeEnum)[keyof typeof JsonApiUserGroupOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiUserGroupPatch {
@@ -16534,7 +16534,7 @@ export const JsonApiUserGroupPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserGroupPatchTypeEnum = typeof JsonApiUserGroupPatchTypeEnum[keyof typeof JsonApiUserGroupPatchTypeEnum];
+export type JsonApiUserGroupPatchTypeEnum = (typeof JsonApiUserGroupPatchTypeEnum)[keyof typeof JsonApiUserGroupPatchTypeEnum];
 
 // @public
 export type JsonApiUserGroupToOneLinkage = JsonApiUserGroupLinkage;
@@ -16551,7 +16551,7 @@ export const JsonApiUserIdentifierLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserIdentifierLinkageTypeEnum = typeof JsonApiUserIdentifierLinkageTypeEnum[keyof typeof JsonApiUserIdentifierLinkageTypeEnum];
+export type JsonApiUserIdentifierLinkageTypeEnum = (typeof JsonApiUserIdentifierLinkageTypeEnum)[keyof typeof JsonApiUserIdentifierLinkageTypeEnum];
 
 // @public
 export interface JsonApiUserIdentifierOut {
@@ -16586,7 +16586,7 @@ export const JsonApiUserIdentifierOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserIdentifierOutTypeEnum = typeof JsonApiUserIdentifierOutTypeEnum[keyof typeof JsonApiUserIdentifierOutTypeEnum];
+export type JsonApiUserIdentifierOutTypeEnum = (typeof JsonApiUserIdentifierOutTypeEnum)[keyof typeof JsonApiUserIdentifierOutTypeEnum];
 
 // @public
 export interface JsonApiUserIdentifierOutWithLinks {
@@ -16602,7 +16602,7 @@ export const JsonApiUserIdentifierOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserIdentifierOutWithLinksTypeEnum = typeof JsonApiUserIdentifierOutWithLinksTypeEnum[keyof typeof JsonApiUserIdentifierOutWithLinksTypeEnum];
+export type JsonApiUserIdentifierOutWithLinksTypeEnum = (typeof JsonApiUserIdentifierOutWithLinksTypeEnum)[keyof typeof JsonApiUserIdentifierOutWithLinksTypeEnum];
 
 // @public
 export type JsonApiUserIdentifierToOneLinkage = JsonApiUserIdentifierLinkage;
@@ -16626,7 +16626,7 @@ export const JsonApiUserInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserInTypeEnum = typeof JsonApiUserInTypeEnum[keyof typeof JsonApiUserInTypeEnum];
+export type JsonApiUserInTypeEnum = (typeof JsonApiUserInTypeEnum)[keyof typeof JsonApiUserInTypeEnum];
 
 // @public
 export interface JsonApiUserLinkage {
@@ -16640,7 +16640,7 @@ export const JsonApiUserLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserLinkageTypeEnum = typeof JsonApiUserLinkageTypeEnum[keyof typeof JsonApiUserLinkageTypeEnum];
+export type JsonApiUserLinkageTypeEnum = (typeof JsonApiUserLinkageTypeEnum)[keyof typeof JsonApiUserLinkageTypeEnum];
 
 // @public
 export interface JsonApiUserOut {
@@ -16689,7 +16689,7 @@ export const JsonApiUserOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserOutTypeEnum = typeof JsonApiUserOutTypeEnum[keyof typeof JsonApiUserOutTypeEnum];
+export type JsonApiUserOutTypeEnum = (typeof JsonApiUserOutTypeEnum)[keyof typeof JsonApiUserOutTypeEnum];
 
 // @public
 export interface JsonApiUserOutWithLinks {
@@ -16706,7 +16706,7 @@ export const JsonApiUserOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserOutWithLinksTypeEnum = typeof JsonApiUserOutWithLinksTypeEnum[keyof typeof JsonApiUserOutWithLinksTypeEnum];
+export type JsonApiUserOutWithLinksTypeEnum = (typeof JsonApiUserOutWithLinksTypeEnum)[keyof typeof JsonApiUserOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiUserPatch {
@@ -16727,7 +16727,7 @@ export const JsonApiUserPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typeof JsonApiUserPatchTypeEnum];
+export type JsonApiUserPatchTypeEnum = (typeof JsonApiUserPatchTypeEnum)[keyof typeof JsonApiUserPatchTypeEnum];
 
 // @public
 export interface JsonApiUserSettingIn {
@@ -16747,7 +16747,7 @@ export const JsonApiUserSettingInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserSettingInTypeEnum = typeof JsonApiUserSettingInTypeEnum[keyof typeof JsonApiUserSettingInTypeEnum];
+export type JsonApiUserSettingInTypeEnum = (typeof JsonApiUserSettingInTypeEnum)[keyof typeof JsonApiUserSettingInTypeEnum];
 
 // @public
 export interface JsonApiUserSettingOut {
@@ -16775,7 +16775,7 @@ export const JsonApiUserSettingOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserSettingOutTypeEnum = typeof JsonApiUserSettingOutTypeEnum[keyof typeof JsonApiUserSettingOutTypeEnum];
+export type JsonApiUserSettingOutTypeEnum = (typeof JsonApiUserSettingOutTypeEnum)[keyof typeof JsonApiUserSettingOutTypeEnum];
 
 // @public
 export interface JsonApiUserSettingOutWithLinks {
@@ -16791,7 +16791,7 @@ export const JsonApiUserSettingOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiUserSettingOutWithLinksTypeEnum = typeof JsonApiUserSettingOutWithLinksTypeEnum[keyof typeof JsonApiUserSettingOutWithLinksTypeEnum];
+export type JsonApiUserSettingOutWithLinksTypeEnum = (typeof JsonApiUserSettingOutWithLinksTypeEnum)[keyof typeof JsonApiUserSettingOutWithLinksTypeEnum];
 
 // @public
 export type JsonApiUserToOneLinkage = JsonApiUserLinkage;
@@ -16814,7 +16814,7 @@ export const JsonApiVisualizationObjectInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiVisualizationObjectInTypeEnum = typeof JsonApiVisualizationObjectInTypeEnum[keyof typeof JsonApiVisualizationObjectInTypeEnum];
+export type JsonApiVisualizationObjectInTypeEnum = (typeof JsonApiVisualizationObjectInTypeEnum)[keyof typeof JsonApiVisualizationObjectInTypeEnum];
 
 // @public
 export interface JsonApiVisualizationObjectLinkage {
@@ -16828,7 +16828,7 @@ export const JsonApiVisualizationObjectLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiVisualizationObjectLinkageTypeEnum = typeof JsonApiVisualizationObjectLinkageTypeEnum[keyof typeof JsonApiVisualizationObjectLinkageTypeEnum];
+export type JsonApiVisualizationObjectLinkageTypeEnum = (typeof JsonApiVisualizationObjectLinkageTypeEnum)[keyof typeof JsonApiVisualizationObjectLinkageTypeEnum];
 
 // @public
 export interface JsonApiVisualizationObjectOut {
@@ -16883,7 +16883,7 @@ export const JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum = typeof JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum[keyof typeof JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum];
+export type JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum = (typeof JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum)[keyof typeof JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum];
 
 // @public
 export interface JsonApiVisualizationObjectOutRelationships {
@@ -16932,7 +16932,7 @@ export const JsonApiVisualizationObjectOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiVisualizationObjectOutTypeEnum = typeof JsonApiVisualizationObjectOutTypeEnum[keyof typeof JsonApiVisualizationObjectOutTypeEnum];
+export type JsonApiVisualizationObjectOutTypeEnum = (typeof JsonApiVisualizationObjectOutTypeEnum)[keyof typeof JsonApiVisualizationObjectOutTypeEnum];
 
 // @public
 export interface JsonApiVisualizationObjectOutWithLinks {
@@ -16950,7 +16950,7 @@ export const JsonApiVisualizationObjectOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiVisualizationObjectOutWithLinksTypeEnum = typeof JsonApiVisualizationObjectOutWithLinksTypeEnum[keyof typeof JsonApiVisualizationObjectOutWithLinksTypeEnum];
+export type JsonApiVisualizationObjectOutWithLinksTypeEnum = (typeof JsonApiVisualizationObjectOutWithLinksTypeEnum)[keyof typeof JsonApiVisualizationObjectOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiVisualizationObjectPatch {
@@ -16970,7 +16970,7 @@ export const JsonApiVisualizationObjectPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiVisualizationObjectPatchTypeEnum = typeof JsonApiVisualizationObjectPatchTypeEnum[keyof typeof JsonApiVisualizationObjectPatchTypeEnum];
+export type JsonApiVisualizationObjectPatchTypeEnum = (typeof JsonApiVisualizationObjectPatchTypeEnum)[keyof typeof JsonApiVisualizationObjectPatchTypeEnum];
 
 // @public
 export interface JsonApiVisualizationObjectPostOptionalId {
@@ -16990,7 +16990,7 @@ export const JsonApiVisualizationObjectPostOptionalIdTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiVisualizationObjectPostOptionalIdTypeEnum = typeof JsonApiVisualizationObjectPostOptionalIdTypeEnum[keyof typeof JsonApiVisualizationObjectPostOptionalIdTypeEnum];
+export type JsonApiVisualizationObjectPostOptionalIdTypeEnum = (typeof JsonApiVisualizationObjectPostOptionalIdTypeEnum)[keyof typeof JsonApiVisualizationObjectPostOptionalIdTypeEnum];
 
 // @public
 export type JsonApiVisualizationObjectToOneLinkage = JsonApiVisualizationObjectLinkage;
@@ -17014,7 +17014,7 @@ export const JsonApiWorkspaceDataFilterInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceDataFilterInTypeEnum = typeof JsonApiWorkspaceDataFilterInTypeEnum[keyof typeof JsonApiWorkspaceDataFilterInTypeEnum];
+export type JsonApiWorkspaceDataFilterInTypeEnum = (typeof JsonApiWorkspaceDataFilterInTypeEnum)[keyof typeof JsonApiWorkspaceDataFilterInTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceDataFilterLinkage {
@@ -17028,7 +17028,7 @@ export const JsonApiWorkspaceDataFilterLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceDataFilterLinkageTypeEnum = typeof JsonApiWorkspaceDataFilterLinkageTypeEnum[keyof typeof JsonApiWorkspaceDataFilterLinkageTypeEnum];
+export type JsonApiWorkspaceDataFilterLinkageTypeEnum = (typeof JsonApiWorkspaceDataFilterLinkageTypeEnum)[keyof typeof JsonApiWorkspaceDataFilterLinkageTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceDataFilterOut {
@@ -17077,7 +17077,7 @@ export const JsonApiWorkspaceDataFilterOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceDataFilterOutTypeEnum = typeof JsonApiWorkspaceDataFilterOutTypeEnum[keyof typeof JsonApiWorkspaceDataFilterOutTypeEnum];
+export type JsonApiWorkspaceDataFilterOutTypeEnum = (typeof JsonApiWorkspaceDataFilterOutTypeEnum)[keyof typeof JsonApiWorkspaceDataFilterOutTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceDataFilterOutWithLinks {
@@ -17095,7 +17095,7 @@ export const JsonApiWorkspaceDataFilterOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceDataFilterOutWithLinksTypeEnum = typeof JsonApiWorkspaceDataFilterOutWithLinksTypeEnum[keyof typeof JsonApiWorkspaceDataFilterOutWithLinksTypeEnum];
+export type JsonApiWorkspaceDataFilterOutWithLinksTypeEnum = (typeof JsonApiWorkspaceDataFilterOutWithLinksTypeEnum)[keyof typeof JsonApiWorkspaceDataFilterOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceDataFilterPatch {
@@ -17116,7 +17116,7 @@ export const JsonApiWorkspaceDataFilterPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceDataFilterPatchTypeEnum = typeof JsonApiWorkspaceDataFilterPatchTypeEnum[keyof typeof JsonApiWorkspaceDataFilterPatchTypeEnum];
+export type JsonApiWorkspaceDataFilterPatchTypeEnum = (typeof JsonApiWorkspaceDataFilterPatchTypeEnum)[keyof typeof JsonApiWorkspaceDataFilterPatchTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingIn {
@@ -17154,7 +17154,7 @@ export const JsonApiWorkspaceDataFilterSettingInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceDataFilterSettingInTypeEnum = typeof JsonApiWorkspaceDataFilterSettingInTypeEnum[keyof typeof JsonApiWorkspaceDataFilterSettingInTypeEnum];
+export type JsonApiWorkspaceDataFilterSettingInTypeEnum = (typeof JsonApiWorkspaceDataFilterSettingInTypeEnum)[keyof typeof JsonApiWorkspaceDataFilterSettingInTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingLinkage {
@@ -17168,7 +17168,7 @@ export const JsonApiWorkspaceDataFilterSettingLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceDataFilterSettingLinkageTypeEnum = typeof JsonApiWorkspaceDataFilterSettingLinkageTypeEnum[keyof typeof JsonApiWorkspaceDataFilterSettingLinkageTypeEnum];
+export type JsonApiWorkspaceDataFilterSettingLinkageTypeEnum = (typeof JsonApiWorkspaceDataFilterSettingLinkageTypeEnum)[keyof typeof JsonApiWorkspaceDataFilterSettingLinkageTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingOut {
@@ -17200,7 +17200,7 @@ export const JsonApiWorkspaceDataFilterSettingOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceDataFilterSettingOutTypeEnum = typeof JsonApiWorkspaceDataFilterSettingOutTypeEnum[keyof typeof JsonApiWorkspaceDataFilterSettingOutTypeEnum];
+export type JsonApiWorkspaceDataFilterSettingOutTypeEnum = (typeof JsonApiWorkspaceDataFilterSettingOutTypeEnum)[keyof typeof JsonApiWorkspaceDataFilterSettingOutTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingOutWithLinks {
@@ -17218,7 +17218,7 @@ export const JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum = typeof JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum[keyof typeof JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum];
+export type JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum = (typeof JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum)[keyof typeof JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingPatch {
@@ -17239,7 +17239,7 @@ export const JsonApiWorkspaceDataFilterSettingPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceDataFilterSettingPatchTypeEnum = typeof JsonApiWorkspaceDataFilterSettingPatchTypeEnum[keyof typeof JsonApiWorkspaceDataFilterSettingPatchTypeEnum];
+export type JsonApiWorkspaceDataFilterSettingPatchTypeEnum = (typeof JsonApiWorkspaceDataFilterSettingPatchTypeEnum)[keyof typeof JsonApiWorkspaceDataFilterSettingPatchTypeEnum];
 
 // @public
 export type JsonApiWorkspaceDataFilterToOneLinkage = JsonApiWorkspaceDataFilterLinkage;
@@ -17263,7 +17263,7 @@ export const JsonApiWorkspaceInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceInTypeEnum = typeof JsonApiWorkspaceInTypeEnum[keyof typeof JsonApiWorkspaceInTypeEnum];
+export type JsonApiWorkspaceInTypeEnum = (typeof JsonApiWorkspaceInTypeEnum)[keyof typeof JsonApiWorkspaceInTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceLinkage {
@@ -17277,7 +17277,7 @@ export const JsonApiWorkspaceLinkageTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceLinkageTypeEnum = typeof JsonApiWorkspaceLinkageTypeEnum[keyof typeof JsonApiWorkspaceLinkageTypeEnum];
+export type JsonApiWorkspaceLinkageTypeEnum = (typeof JsonApiWorkspaceLinkageTypeEnum)[keyof typeof JsonApiWorkspaceLinkageTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceOut {
@@ -17360,7 +17360,7 @@ export const JsonApiWorkspaceOutMetaPermissionsEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceOutMetaPermissionsEnum = typeof JsonApiWorkspaceOutMetaPermissionsEnum[keyof typeof JsonApiWorkspaceOutMetaPermissionsEnum];
+export type JsonApiWorkspaceOutMetaPermissionsEnum = (typeof JsonApiWorkspaceOutMetaPermissionsEnum)[keyof typeof JsonApiWorkspaceOutMetaPermissionsEnum];
 
 // @public
 export interface JsonApiWorkspaceOutRelationships {
@@ -17378,7 +17378,7 @@ export const JsonApiWorkspaceOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceOutTypeEnum = typeof JsonApiWorkspaceOutTypeEnum[keyof typeof JsonApiWorkspaceOutTypeEnum];
+export type JsonApiWorkspaceOutTypeEnum = (typeof JsonApiWorkspaceOutTypeEnum)[keyof typeof JsonApiWorkspaceOutTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceOutWithLinks {
@@ -17396,7 +17396,7 @@ export const JsonApiWorkspaceOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceOutWithLinksTypeEnum = typeof JsonApiWorkspaceOutWithLinksTypeEnum[keyof typeof JsonApiWorkspaceOutWithLinksTypeEnum];
+export type JsonApiWorkspaceOutWithLinksTypeEnum = (typeof JsonApiWorkspaceOutWithLinksTypeEnum)[keyof typeof JsonApiWorkspaceOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiWorkspacePatch {
@@ -17417,7 +17417,7 @@ export const JsonApiWorkspacePatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspacePatchTypeEnum = typeof JsonApiWorkspacePatchTypeEnum[keyof typeof JsonApiWorkspacePatchTypeEnum];
+export type JsonApiWorkspacePatchTypeEnum = (typeof JsonApiWorkspacePatchTypeEnum)[keyof typeof JsonApiWorkspacePatchTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceSettingIn {
@@ -17462,7 +17462,7 @@ export const JsonApiWorkspaceSettingInAttributesTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingInAttributesTypeEnum = typeof JsonApiWorkspaceSettingInAttributesTypeEnum[keyof typeof JsonApiWorkspaceSettingInAttributesTypeEnum];
+export type JsonApiWorkspaceSettingInAttributesTypeEnum = (typeof JsonApiWorkspaceSettingInAttributesTypeEnum)[keyof typeof JsonApiWorkspaceSettingInAttributesTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceSettingInDocument {
@@ -17475,7 +17475,7 @@ export const JsonApiWorkspaceSettingInTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingInTypeEnum = typeof JsonApiWorkspaceSettingInTypeEnum[keyof typeof JsonApiWorkspaceSettingInTypeEnum];
+export type JsonApiWorkspaceSettingInTypeEnum = (typeof JsonApiWorkspaceSettingInTypeEnum)[keyof typeof JsonApiWorkspaceSettingInTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceSettingOut {
@@ -17504,7 +17504,7 @@ export const JsonApiWorkspaceSettingOutTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingOutTypeEnum = typeof JsonApiWorkspaceSettingOutTypeEnum[keyof typeof JsonApiWorkspaceSettingOutTypeEnum];
+export type JsonApiWorkspaceSettingOutTypeEnum = (typeof JsonApiWorkspaceSettingOutTypeEnum)[keyof typeof JsonApiWorkspaceSettingOutTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceSettingOutWithLinks {
@@ -17521,7 +17521,7 @@ export const JsonApiWorkspaceSettingOutWithLinksTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = typeof JsonApiWorkspaceSettingOutWithLinksTypeEnum[keyof typeof JsonApiWorkspaceSettingOutWithLinksTypeEnum];
+export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = (typeof JsonApiWorkspaceSettingOutWithLinksTypeEnum)[keyof typeof JsonApiWorkspaceSettingOutWithLinksTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceSettingPatch {
@@ -17541,7 +17541,7 @@ export const JsonApiWorkspaceSettingPatchTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingPatchTypeEnum = typeof JsonApiWorkspaceSettingPatchTypeEnum[keyof typeof JsonApiWorkspaceSettingPatchTypeEnum];
+export type JsonApiWorkspaceSettingPatchTypeEnum = (typeof JsonApiWorkspaceSettingPatchTypeEnum)[keyof typeof JsonApiWorkspaceSettingPatchTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceSettingPostOptionalId {
@@ -17561,7 +17561,7 @@ export const JsonApiWorkspaceSettingPostOptionalIdTypeEnum: {
 };
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingPostOptionalIdTypeEnum = typeof JsonApiWorkspaceSettingPostOptionalIdTypeEnum[keyof typeof JsonApiWorkspaceSettingPostOptionalIdTypeEnum];
+export type JsonApiWorkspaceSettingPostOptionalIdTypeEnum = (typeof JsonApiWorkspaceSettingPostOptionalIdTypeEnum)[keyof typeof JsonApiWorkspaceSettingPostOptionalIdTypeEnum];
 
 // @public
 export type JsonApiWorkspaceToOneLinkage = JsonApiWorkspaceLinkage;
@@ -17687,7 +17687,7 @@ export const KeyDriversDimensionGranularityEnum: {
 };
 
 // @public (undocumented)
-export type KeyDriversDimensionGranularityEnum = typeof KeyDriversDimensionGranularityEnum[keyof typeof KeyDriversDimensionGranularityEnum];
+export type KeyDriversDimensionGranularityEnum = (typeof KeyDriversDimensionGranularityEnum)[keyof typeof KeyDriversDimensionGranularityEnum];
 
 // @public (undocumented)
 export const KeyDriversDimensionValueTypeEnum: {
@@ -17700,7 +17700,7 @@ export const KeyDriversDimensionValueTypeEnum: {
 };
 
 // @public (undocumented)
-export type KeyDriversDimensionValueTypeEnum = typeof KeyDriversDimensionValueTypeEnum[keyof typeof KeyDriversDimensionValueTypeEnum];
+export type KeyDriversDimensionValueTypeEnum = (typeof KeyDriversDimensionValueTypeEnum)[keyof typeof KeyDriversDimensionValueTypeEnum];
 
 // @public
 export interface KeyDriversRequest {
@@ -17716,7 +17716,7 @@ export const KeyDriversRequestSortDirectionEnum: {
 };
 
 // @public (undocumented)
-export type KeyDriversRequestSortDirectionEnum = typeof KeyDriversRequestSortDirectionEnum[keyof typeof KeyDriversRequestSortDirectionEnum];
+export type KeyDriversRequestSortDirectionEnum = (typeof KeyDriversRequestSortDirectionEnum)[keyof typeof KeyDriversRequestSortDirectionEnum];
 
 // @public
 export interface KeyDriversResponse {
@@ -17791,7 +17791,7 @@ export const LabelIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type LabelIdentifierTypeEnum = typeof LabelIdentifierTypeEnum[keyof typeof LabelIdentifierTypeEnum];
+export type LabelIdentifierTypeEnum = (typeof LabelIdentifierTypeEnum)[keyof typeof LabelIdentifierTypeEnum];
 
 // @public
 export class LabelsApi extends MetadataBaseApi implements LabelsApiInterface {
@@ -18655,7 +18655,7 @@ export const MetricAggFunctionEnum: {
 };
 
 // @public (undocumented)
-export type MetricAggFunctionEnum = typeof MetricAggFunctionEnum[keyof typeof MetricAggFunctionEnum];
+export type MetricAggFunctionEnum = (typeof MetricAggFunctionEnum)[keyof typeof MetricAggFunctionEnum];
 
 // @public
 export class MetricsApi extends MetadataBaseApi implements MetricsApiInterface {
@@ -18771,7 +18771,7 @@ export const MetricTypeEnum: {
 };
 
 // @public (undocumented)
-export type MetricTypeEnum = typeof MetricTypeEnum[keyof typeof MetricTypeEnum];
+export type MetricTypeEnum = (typeof MetricTypeEnum)[keyof typeof MetricTypeEnum];
 
 // @public
 export interface ModelFile {
@@ -18798,7 +18798,7 @@ export const ModelFileCanResegmentEnum: {
 };
 
 // @public (undocumented)
-export type ModelFileCanResegmentEnum = typeof ModelFileCanResegmentEnum[keyof typeof ModelFileCanResegmentEnum];
+export type ModelFileCanResegmentEnum = (typeof ModelFileCanResegmentEnum)[keyof typeof ModelFileCanResegmentEnum];
 
 // @public (undocumented)
 export const ModelFileSrcDirEnum: {
@@ -18808,7 +18808,7 @@ export const ModelFileSrcDirEnum: {
 };
 
 // @public (undocumented)
-export type ModelFileSrcDirEnum = typeof ModelFileSrcDirEnum[keyof typeof ModelFileSrcDirEnum];
+export type ModelFileSrcDirEnum = (typeof ModelFileSrcDirEnum)[keyof typeof ModelFileSrcDirEnum];
 
 // @public (undocumented)
 export const ModelFileTranslateEnum: {
@@ -18817,7 +18817,7 @@ export const ModelFileTranslateEnum: {
 };
 
 // @public (undocumented)
-export type ModelFileTranslateEnum = typeof ModelFileTranslateEnum[keyof typeof ModelFileTranslateEnum];
+export type ModelFileTranslateEnum = (typeof ModelFileTranslateEnum)[keyof typeof ModelFileTranslateEnum];
 
 // @public (undocumented)
 export const ModelFileTrgDirEnum: {
@@ -18827,7 +18827,7 @@ export const ModelFileTrgDirEnum: {
 };
 
 // @public (undocumented)
-export type ModelFileTrgDirEnum = typeof ModelFileTrgDirEnum[keyof typeof ModelFileTrgDirEnum];
+export type ModelFileTrgDirEnum = (typeof ModelFileTrgDirEnum)[keyof typeof ModelFileTrgDirEnum];
 
 // @public
 export interface NegativeAttributeFilter {
@@ -18866,7 +18866,7 @@ export const NoteAppliesToEnum: {
 };
 
 // @public (undocumented)
-export type NoteAppliesToEnum = typeof NoteAppliesToEnum[keyof typeof NoteAppliesToEnum];
+export type NoteAppliesToEnum = (typeof NoteAppliesToEnum)[keyof typeof NoteAppliesToEnum];
 
 // @public
 export interface Notes {
@@ -20538,7 +20538,7 @@ export const OrganizationPermissionAssignmentPermissionsEnum: {
 };
 
 // @public (undocumented)
-export type OrganizationPermissionAssignmentPermissionsEnum = typeof OrganizationPermissionAssignmentPermissionsEnum[keyof typeof OrganizationPermissionAssignmentPermissionsEnum];
+export type OrganizationPermissionAssignmentPermissionsEnum = (typeof OrganizationPermissionAssignmentPermissionsEnum)[keyof typeof OrganizationPermissionAssignmentPermissionsEnum];
 
 // @internal
 export class OrganizationUtilities {
@@ -20789,7 +20789,7 @@ export const PermissionsForAssigneePermissionsEnum: {
 };
 
 // @public (undocumented)
-export type PermissionsForAssigneePermissionsEnum = typeof PermissionsForAssigneePermissionsEnum[keyof typeof PermissionsForAssigneePermissionsEnum];
+export type PermissionsForAssigneePermissionsEnum = (typeof PermissionsForAssigneePermissionsEnum)[keyof typeof PermissionsForAssigneePermissionsEnum];
 
 // @public
 export interface PermissionsForAssigneeRule {
@@ -20805,7 +20805,7 @@ export const PermissionsForAssigneeRulePermissionsEnum: {
 };
 
 // @public (undocumented)
-export type PermissionsForAssigneeRulePermissionsEnum = typeof PermissionsForAssigneeRulePermissionsEnum[keyof typeof PermissionsForAssigneeRulePermissionsEnum];
+export type PermissionsForAssigneeRulePermissionsEnum = (typeof PermissionsForAssigneeRulePermissionsEnum)[keyof typeof PermissionsForAssigneeRulePermissionsEnum];
 
 // @public
 export interface PlatformUsage {
@@ -20820,7 +20820,7 @@ export const PlatformUsageNameEnum: {
 };
 
 // @public (undocumented)
-export type PlatformUsageNameEnum = typeof PlatformUsageNameEnum[keyof typeof PlatformUsageNameEnum];
+export type PlatformUsageNameEnum = (typeof PlatformUsageNameEnum)[keyof typeof PlatformUsageNameEnum];
 
 // @public
 export interface PlatformUsageRequest {
@@ -20834,7 +20834,7 @@ export const PlatformUsageRequestUsageItemNamesEnum: {
 };
 
 // @public (undocumented)
-export type PlatformUsageRequestUsageItemNamesEnum = typeof PlatformUsageRequestUsageItemNamesEnum[keyof typeof PlatformUsageRequestUsageItemNamesEnum];
+export type PlatformUsageRequestUsageItemNamesEnum = (typeof PlatformUsageRequestUsageItemNamesEnum)[keyof typeof PlatformUsageRequestUsageItemNamesEnum];
 
 // @public
 export class PluginsApi extends MetadataBaseApi implements PluginsApiInterface {
@@ -21033,7 +21033,7 @@ export const RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum: {
 };
 
 // @public (undocumented)
-export type RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
+export type RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = (typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum)[keyof typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
 
 // @public (undocumented)
 export const RangeOperatorEnum: {
@@ -21042,7 +21042,7 @@ export const RangeOperatorEnum: {
 };
 
 // @public (undocumented)
-export type RangeOperatorEnum = typeof RangeOperatorEnum[keyof typeof RangeOperatorEnum];
+export type RangeOperatorEnum = (typeof RangeOperatorEnum)[keyof typeof RangeOperatorEnum];
 
 // @public
 export interface RangeWrapper {
@@ -21071,7 +21071,7 @@ export const RankingFilterRankingFilterOperatorEnum: {
 };
 
 // @public (undocumented)
-export type RankingFilterRankingFilterOperatorEnum = typeof RankingFilterRankingFilterOperatorEnum[keyof typeof RankingFilterRankingFilterOperatorEnum];
+export type RankingFilterRankingFilterOperatorEnum = (typeof RankingFilterRankingFilterOperatorEnum)[keyof typeof RankingFilterRankingFilterOperatorEnum];
 
 // @public
 export interface RawCustomLabel {
@@ -21111,7 +21111,7 @@ export const RawExportAutomationRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type RawExportAutomationRequestFormatEnum = typeof RawExportAutomationRequestFormatEnum[keyof typeof RawExportAutomationRequestFormatEnum];
+export type RawExportAutomationRequestFormatEnum = (typeof RawExportAutomationRequestFormatEnum)[keyof typeof RawExportAutomationRequestFormatEnum];
 
 // @public
 export class RawExportExport extends ExportBaseAPI implements RawExportExportInterface {
@@ -21185,7 +21185,7 @@ export const ReferenceIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type ReferenceIdentifierTypeEnum = typeof ReferenceIdentifierTypeEnum[keyof typeof ReferenceIdentifierTypeEnum];
+export type ReferenceIdentifierTypeEnum = (typeof ReferenceIdentifierTypeEnum)[keyof typeof ReferenceIdentifierTypeEnum];
 
 // @public
 export interface ReferenceSourceColumn {
@@ -21206,7 +21206,7 @@ export const ReferenceSourceColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type ReferenceSourceColumnDataTypeEnum = typeof ReferenceSourceColumnDataTypeEnum[keyof typeof ReferenceSourceColumnDataTypeEnum];
+export type ReferenceSourceColumnDataTypeEnum = (typeof ReferenceSourceColumnDataTypeEnum)[keyof typeof ReferenceSourceColumnDataTypeEnum];
 
 // @public
 export interface Relative {
@@ -21251,7 +21251,7 @@ export const RelativeDateFilterRelativeDateFilterGranularityEnum: {
 };
 
 // @public (undocumented)
-export type RelativeDateFilterRelativeDateFilterGranularityEnum = typeof RelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof RelativeDateFilterRelativeDateFilterGranularityEnum];
+export type RelativeDateFilterRelativeDateFilterGranularityEnum = (typeof RelativeDateFilterRelativeDateFilterGranularityEnum)[keyof typeof RelativeDateFilterRelativeDateFilterGranularityEnum];
 
 // @public (undocumented)
 export const RelativeOperatorEnum: {
@@ -21261,7 +21261,7 @@ export const RelativeOperatorEnum: {
 };
 
 // @public (undocumented)
-export type RelativeOperatorEnum = typeof RelativeOperatorEnum[keyof typeof RelativeOperatorEnum];
+export type RelativeOperatorEnum = (typeof RelativeOperatorEnum)[keyof typeof RelativeOperatorEnum];
 
 // @public
 export interface RelativeWrapper {
@@ -21352,7 +21352,7 @@ export const ResolvedSettingTypeEnum: {
 };
 
 // @public (undocumented)
-export type ResolvedSettingTypeEnum = typeof ResolvedSettingTypeEnum[keyof typeof ResolvedSettingTypeEnum];
+export type ResolvedSettingTypeEnum = (typeof ResolvedSettingTypeEnum)[keyof typeof ResolvedSettingTypeEnum];
 
 // @public
 export interface ResolveSettingsRequest {
@@ -21416,7 +21416,7 @@ export const RouteResultUseCaseEnum: {
 };
 
 // @public (undocumented)
-export type RouteResultUseCaseEnum = typeof RouteResultUseCaseEnum[keyof typeof RouteResultUseCaseEnum];
+export type RouteResultUseCaseEnum = (typeof RouteResultUseCaseEnum)[keyof typeof RouteResultUseCaseEnum];
 
 // @public
 export interface RsaSpecification {
@@ -21438,7 +21438,7 @@ export const RsaSpecificationAlgEnum: {
 };
 
 // @public (undocumented)
-export type RsaSpecificationAlgEnum = typeof RsaSpecificationAlgEnum[keyof typeof RsaSpecificationAlgEnum];
+export type RsaSpecificationAlgEnum = (typeof RsaSpecificationAlgEnum)[keyof typeof RsaSpecificationAlgEnum];
 
 // @public (undocumented)
 export const RsaSpecificationKtyEnum: {
@@ -21446,7 +21446,7 @@ export const RsaSpecificationKtyEnum: {
 };
 
 // @public (undocumented)
-export type RsaSpecificationKtyEnum = typeof RsaSpecificationKtyEnum[keyof typeof RsaSpecificationKtyEnum];
+export type RsaSpecificationKtyEnum = (typeof RsaSpecificationKtyEnum)[keyof typeof RsaSpecificationKtyEnum];
 
 // @public (undocumented)
 export const RsaSpecificationUseEnum: {
@@ -21454,7 +21454,7 @@ export const RsaSpecificationUseEnum: {
 };
 
 // @public (undocumented)
-export type RsaSpecificationUseEnum = typeof RsaSpecificationUseEnum[keyof typeof RsaSpecificationUseEnum];
+export type RsaSpecificationUseEnum = (typeof RsaSpecificationUseEnum)[keyof typeof RsaSpecificationUseEnum];
 
 // @public
 export interface RulePermission {
@@ -21492,7 +21492,7 @@ export const ScanApiSqlColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type ScanApiSqlColumnDataTypeEnum = typeof ScanApiSqlColumnDataTypeEnum[keyof typeof ScanApiSqlColumnDataTypeEnum];
+export type ScanApiSqlColumnDataTypeEnum = (typeof ScanApiSqlColumnDataTypeEnum)[keyof typeof ScanApiSqlColumnDataTypeEnum];
 
 // @public
 export interface ScanModelActionsApiInterface {
@@ -21567,7 +21567,7 @@ export const ScanModelDeclarativeColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type ScanModelDeclarativeColumnDataTypeEnum = typeof ScanModelDeclarativeColumnDataTypeEnum[keyof typeof ScanModelDeclarativeColumnDataTypeEnum];
+export type ScanModelDeclarativeColumnDataTypeEnum = (typeof ScanModelDeclarativeColumnDataTypeEnum)[keyof typeof ScanModelDeclarativeColumnDataTypeEnum];
 
 // @public
 export interface ScanModelDeclarativeTable {
@@ -21653,7 +21653,7 @@ export const SearchRequestObjectTypesEnum: {
 };
 
 // @public (undocumented)
-export type SearchRequestObjectTypesEnum = typeof SearchRequestObjectTypesEnum[keyof typeof SearchRequestObjectTypesEnum];
+export type SearchRequestObjectTypesEnum = (typeof SearchRequestObjectTypesEnum)[keyof typeof SearchRequestObjectTypesEnum];
 
 // @public
 export interface SearchResult {
@@ -21729,7 +21729,7 @@ export const SimpleMeasureDefinitionMeasureAggregationEnum: {
 };
 
 // @public (undocumented)
-export type SimpleMeasureDefinitionMeasureAggregationEnum = typeof SimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof SimpleMeasureDefinitionMeasureAggregationEnum];
+export type SimpleMeasureDefinitionMeasureAggregationEnum = (typeof SimpleMeasureDefinitionMeasureAggregationEnum)[keyof typeof SimpleMeasureDefinitionMeasureAggregationEnum];
 
 // @public
 export interface Skeleton {
@@ -21808,7 +21808,7 @@ export const SlidesExportRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type SlidesExportRequestFormatEnum = typeof SlidesExportRequestFormatEnum[keyof typeof SlidesExportRequestFormatEnum];
+export type SlidesExportRequestFormatEnum = (typeof SlidesExportRequestFormatEnum)[keyof typeof SlidesExportRequestFormatEnum];
 
 // @public
 export interface SmartFunctionResponse {
@@ -21846,7 +21846,7 @@ export const SmtpAllOfPortEnum: {
 };
 
 // @public (undocumented)
-export type SmtpAllOfPortEnum = typeof SmtpAllOfPortEnum[keyof typeof SmtpAllOfPortEnum];
+export type SmtpAllOfPortEnum = (typeof SmtpAllOfPortEnum)[keyof typeof SmtpAllOfPortEnum];
 
 // @public (undocumented)
 export const SmtpAllOfTypeEnum: {
@@ -21854,7 +21854,7 @@ export const SmtpAllOfTypeEnum: {
 };
 
 // @public (undocumented)
-export type SmtpAllOfTypeEnum = typeof SmtpAllOfTypeEnum[keyof typeof SmtpAllOfTypeEnum];
+export type SmtpAllOfTypeEnum = (typeof SmtpAllOfTypeEnum)[keyof typeof SmtpAllOfTypeEnum];
 
 // @public (undocumented)
 export const SmtpPortEnum: {
@@ -21865,7 +21865,7 @@ export const SmtpPortEnum: {
 };
 
 // @public (undocumented)
-export type SmtpPortEnum = typeof SmtpPortEnum[keyof typeof SmtpPortEnum];
+export type SmtpPortEnum = (typeof SmtpPortEnum)[keyof typeof SmtpPortEnum];
 
 // @public (undocumented)
 export const SmtpTypeEnum: {
@@ -21873,7 +21873,7 @@ export const SmtpTypeEnum: {
 };
 
 // @public (undocumented)
-export type SmtpTypeEnum = typeof SmtpTypeEnum[keyof typeof SmtpTypeEnum];
+export type SmtpTypeEnum = (typeof SmtpTypeEnum)[keyof typeof SmtpTypeEnum];
 
 // @public
 export type SortKey = SortKeyAttribute | SortKeyTotal | SortKeyValue;
@@ -21900,7 +21900,7 @@ export const SortKeyAttributeAttributeDirectionEnum: {
 };
 
 // @public (undocumented)
-export type SortKeyAttributeAttributeDirectionEnum = typeof SortKeyAttributeAttributeDirectionEnum[keyof typeof SortKeyAttributeAttributeDirectionEnum];
+export type SortKeyAttributeAttributeDirectionEnum = (typeof SortKeyAttributeAttributeDirectionEnum)[keyof typeof SortKeyAttributeAttributeDirectionEnum];
 
 // @public (undocumented)
 export const SortKeyAttributeAttributeSortTypeEnum: {
@@ -21911,7 +21911,7 @@ export const SortKeyAttributeAttributeSortTypeEnum: {
 };
 
 // @public (undocumented)
-export type SortKeyAttributeAttributeSortTypeEnum = typeof SortKeyAttributeAttributeSortTypeEnum[keyof typeof SortKeyAttributeAttributeSortTypeEnum];
+export type SortKeyAttributeAttributeSortTypeEnum = (typeof SortKeyAttributeAttributeSortTypeEnum)[keyof typeof SortKeyAttributeAttributeSortTypeEnum];
 
 // @public
 export interface SortKeyTotal {
@@ -21932,7 +21932,7 @@ export const SortKeyTotalTotalDirectionEnum: {
 };
 
 // @public (undocumented)
-export type SortKeyTotalTotalDirectionEnum = typeof SortKeyTotalTotalDirectionEnum[keyof typeof SortKeyTotalTotalDirectionEnum];
+export type SortKeyTotalTotalDirectionEnum = (typeof SortKeyTotalTotalDirectionEnum)[keyof typeof SortKeyTotalTotalDirectionEnum];
 
 // @public
 export interface SortKeyValue {
@@ -21952,7 +21952,7 @@ export const SortKeyValueValueDirectionEnum: {
 };
 
 // @public (undocumented)
-export type SortKeyValueValueDirectionEnum = typeof SortKeyValueValueDirectionEnum[keyof typeof SortKeyValueValueDirectionEnum];
+export type SortKeyValueValueDirectionEnum = (typeof SortKeyValueValueDirectionEnum)[keyof typeof SortKeyValueValueDirectionEnum];
 
 // @public
 export interface SqlColumn {
@@ -21972,7 +21972,7 @@ export const SqlColumnDataTypeEnum: {
 };
 
 // @public (undocumented)
-export type SqlColumnDataTypeEnum = typeof SqlColumnDataTypeEnum[keyof typeof SqlColumnDataTypeEnum];
+export type SqlColumnDataTypeEnum = (typeof SqlColumnDataTypeEnum)[keyof typeof SqlColumnDataTypeEnum];
 
 // @public
 export interface SqlQuery {
@@ -22078,7 +22078,7 @@ export const TabularExportRequestFormatEnum: {
 };
 
 // @public (undocumented)
-export type TabularExportRequestFormatEnum = typeof TabularExportRequestFormatEnum[keyof typeof TabularExportRequestFormatEnum];
+export type TabularExportRequestFormatEnum = (typeof TabularExportRequestFormatEnum)[keyof typeof TabularExportRequestFormatEnum];
 
 // @public
 export interface TestDefinitionRequest {
@@ -22125,7 +22125,7 @@ export const TestDefinitionRequestTypeEnum: {
 };
 
 // @public (undocumented)
-export type TestDefinitionRequestTypeEnum = typeof TestDefinitionRequestTypeEnum[keyof typeof TestDefinitionRequestTypeEnum];
+export type TestDefinitionRequestTypeEnum = (typeof TestDefinitionRequestTypeEnum)[keyof typeof TestDefinitionRequestTypeEnum];
 
 // @public
 export interface TestQueryDuration {
@@ -22241,7 +22241,7 @@ export const TotalFunctionEnum: {
 };
 
 // @public (undocumented)
-export type TotalFunctionEnum = typeof TotalFunctionEnum[keyof typeof TotalFunctionEnum];
+export type TotalFunctionEnum = (typeof TotalFunctionEnum)[keyof typeof TotalFunctionEnum];
 
 // @public
 export interface TotalResultHeader {
@@ -22807,7 +22807,7 @@ export const UserManagementDataSourcePermissionAssignmentPermissionsEnum: {
 };
 
 // @public (undocumented)
-export type UserManagementDataSourcePermissionAssignmentPermissionsEnum = typeof UserManagementDataSourcePermissionAssignmentPermissionsEnum[keyof typeof UserManagementDataSourcePermissionAssignmentPermissionsEnum];
+export type UserManagementDataSourcePermissionAssignmentPermissionsEnum = (typeof UserManagementDataSourcePermissionAssignmentPermissionsEnum)[keyof typeof UserManagementDataSourcePermissionAssignmentPermissionsEnum];
 
 // @public
 export interface UserManagementPermissionAssignments {
@@ -22881,7 +22881,7 @@ export const UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum
 };
 
 // @public (undocumented)
-export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = typeof UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum[keyof typeof UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum];
+export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = (typeof UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum)[keyof typeof UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum];
 
 // @public (undocumented)
 export const UserManagementWorkspacePermissionAssignmentPermissionsEnum: {
@@ -22897,7 +22897,7 @@ export const UserManagementWorkspacePermissionAssignmentPermissionsEnum: {
 };
 
 // @public (undocumented)
-export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = typeof UserManagementWorkspacePermissionAssignmentPermissionsEnum[keyof typeof UserManagementWorkspacePermissionAssignmentPermissionsEnum];
+export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = (typeof UserManagementWorkspacePermissionAssignmentPermissionsEnum)[keyof typeof UserManagementWorkspacePermissionAssignmentPermissionsEnum];
 
 // @public
 export class UserModelControllerApi extends MetadataBaseApi implements UserModelControllerApiInterface {
@@ -23502,7 +23502,7 @@ export const WebhookAllOfTypeEnum: {
 };
 
 // @public (undocumented)
-export type WebhookAllOfTypeEnum = typeof WebhookAllOfTypeEnum[keyof typeof WebhookAllOfTypeEnum];
+export type WebhookAllOfTypeEnum = (typeof WebhookAllOfTypeEnum)[keyof typeof WebhookAllOfTypeEnum];
 
 // @public (undocumented)
 export const WebhookTypeEnum: {
@@ -23510,7 +23510,7 @@ export const WebhookTypeEnum: {
 };
 
 // @public (undocumented)
-export type WebhookTypeEnum = typeof WebhookTypeEnum[keyof typeof WebhookTypeEnum];
+export type WebhookTypeEnum = (typeof WebhookTypeEnum)[keyof typeof WebhookTypeEnum];
 
 // @public
 export interface WidgetSlidesTemplate {
@@ -23525,7 +23525,7 @@ export const WidgetSlidesTemplateAppliedOnEnum: {
 };
 
 // @public (undocumented)
-export type WidgetSlidesTemplateAppliedOnEnum = typeof WidgetSlidesTemplateAppliedOnEnum[keyof typeof WidgetSlidesTemplateAppliedOnEnum];
+export type WidgetSlidesTemplateAppliedOnEnum = (typeof WidgetSlidesTemplateAppliedOnEnum)[keyof typeof WidgetSlidesTemplateAppliedOnEnum];
 
 // @public
 export interface WorkspaceCacheSettings {
@@ -23565,7 +23565,7 @@ export const WorkspaceIdentifierTypeEnum: {
 };
 
 // @public (undocumented)
-export type WorkspaceIdentifierTypeEnum = typeof WorkspaceIdentifierTypeEnum[keyof typeof WorkspaceIdentifierTypeEnum];
+export type WorkspaceIdentifierTypeEnum = (typeof WorkspaceIdentifierTypeEnum)[keyof typeof WorkspaceIdentifierTypeEnum];
 
 // @public
 export class WorkspaceObjectControllerApi extends MetadataBaseApi implements WorkspaceObjectControllerApiInterface {
@@ -24969,7 +24969,7 @@ export const WorkspacePermissionAssignmentHierarchyPermissionsEnum: {
 };
 
 // @public (undocumented)
-export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = typeof WorkspacePermissionAssignmentHierarchyPermissionsEnum[keyof typeof WorkspacePermissionAssignmentHierarchyPermissionsEnum];
+export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = (typeof WorkspacePermissionAssignmentHierarchyPermissionsEnum)[keyof typeof WorkspacePermissionAssignmentHierarchyPermissionsEnum];
 
 // @public (undocumented)
 export const WorkspacePermissionAssignmentPermissionsEnum: {
@@ -24985,7 +24985,7 @@ export const WorkspacePermissionAssignmentPermissionsEnum: {
 };
 
 // @public (undocumented)
-export type WorkspacePermissionAssignmentPermissionsEnum = typeof WorkspacePermissionAssignmentPermissionsEnum[keyof typeof WorkspacePermissionAssignmentPermissionsEnum];
+export type WorkspacePermissionAssignmentPermissionsEnum = (typeof WorkspacePermissionAssignmentPermissionsEnum)[keyof typeof WorkspacePermissionAssignmentPermissionsEnum];
 
 // @public
 export class WorkspacesDeclarativeAPIsApi extends MetadataBaseApi implements WorkspacesDeclarativeAPIsApiInterface {
