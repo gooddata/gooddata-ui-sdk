@@ -330,6 +330,9 @@ function* getDateFilterUpdateActions(
                   to: dateFilter.dateFilter.to,
                   dataSet: dateFilter.dateFilter.dataSet,
                   ...localIdentifierObj,
+                  ...(dateFilter.dateFilter.boundedFilter
+                      ? { boundedFilter: dateFilter.dateFilter.boundedFilter }
+                      : {}),
               };
 
         return [filterContextActions.upsertDateFilter(upsertPayload)];
@@ -370,6 +373,9 @@ function* getDateFiltersUpdateActions(
                       to: dateFilter.dateFilter.to,
                       dataSet: dateFilter.dateFilter.dataSet,
                       ...localIdentifierObj,
+                      ...(dateFilter.dateFilter.boundedFilter
+                          ? { boundedFilter: dateFilter.dateFilter.boundedFilter }
+                          : {}),
                   };
 
             updateActions.push(filterContextActions.upsertDateFilter(upsertPayload));

@@ -241,6 +241,8 @@ export {
     isRelativeBoundedDateFilter,
     isRelativeUpperBoundedDateFilter,
     isRelativeLowerBoundedDateFilter,
+    isLowerBound,
+    isUpperBound,
 } from "./execution/filter/index.js";
 
 export {

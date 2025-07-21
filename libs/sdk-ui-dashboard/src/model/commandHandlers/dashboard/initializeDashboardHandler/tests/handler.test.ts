@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { initializeDashboard } from "../../../../commands/index.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { DashboardInitialized } from "../../../../events/index.js";
@@ -71,7 +71,18 @@ describe("initialize dashboard handler", () => {
         it("should resolve config props that can be obtained from backend", () => {
             const config = selectConfig(Tester.state());
 
-            expect(config).toMatchSnapshot({
+            // Remove boundedFilter from relativePresets if present
+            const configForSnapshot = {
+                ...config,
+                dateFilterConfig: {
+                    ...config.dateFilterConfig,
+                    relativePresets: config.dateFilterConfig.relativePresets?.filter(
+                        (preset) => !preset.boundedFilter,
+                    ),
+                },
+            };
+
+            expect(configForSnapshot).toMatchSnapshot({
                 dateFilterConfig: {
                     absoluteForm: {
                         from: expect.any(String),

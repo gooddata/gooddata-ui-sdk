@@ -752,6 +752,11 @@ export interface ISettings {
      */
     enablePreAggregationDatasets?: boolean;
 
+    /**
+     * Enable "to date" filters also known as "bounded" filters (e.g. YTD, QTD, MTD, WTD)
+     */
+    enableToDateFilters?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

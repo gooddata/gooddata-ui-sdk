@@ -622,6 +622,10 @@
         "value": "This week",
         "comment": "Filter option for the current week"
     },
+    "filters.thisWeekToDate.title": {
+        "value": "This week to date (WTD)",
+        "comment": "Filter option for the current week to date"
+    },
     "filters.lastWeek.title": {
         "value": "Last week",
         "comment": "Filter option for the previous week"
@@ -633,6 +637,10 @@
     "filters.thisMonth.title": {
         "value": "This month",
         "comment": "Filter option for the current month"
+    },
+    "filters.thisMonthToDate.title": {
+        "value": "This month to date (MTD)",
+        "comment": "Filter option for the current month to date"
     },
     "filters.lastMonth.title": {
         "value": "Last month",
@@ -646,6 +654,10 @@
         "value": "This quarter",
         "comment": "Filter option for the current quarter"
     },
+    "filters.thisQuarterToDate.title": {
+        "value": "This quarter to date (QTD)",
+        "comment": "Filter option for the current quarter to date"
+    },
     "filters.lastQuarter.title": {
         "value": "Last quarter",
         "comment": "Filter option for the previous quarter"
@@ -657,6 +669,10 @@
     "filters.thisYear.title": {
         "value": "This year",
         "comment": "Filter option for the current year"
+    },
+    "filters.thisYearToDate.title": {
+        "value": "This year to date (YTD)",
+        "comment": "Filter option for the current year to date"
     },
     "filters.lastYear.title": {
         "value": "Last year",

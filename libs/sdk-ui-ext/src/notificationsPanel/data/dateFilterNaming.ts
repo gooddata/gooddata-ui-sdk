@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
 import {
     IAbsoluteDateFilterValues,
@@ -31,6 +31,7 @@ export function translateDateFilter(intl: IntlShape, filter: IDateFilter, dateFo
               metadata.to,
               metadata.granularity as DateFilterGranularity,
               intl,
+              metadata.boundedFilter,
           );
 }
 

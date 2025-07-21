@@ -31,6 +31,7 @@ import { IDateFilterOptionsByType as IDateFilterOptionsByType_2 } from './interf
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IExtendedDateFilterErrors as IExtendedDateFilterErrors_2 } from './interfaces/index.js';
 import { ILocale } from '@gooddata/sdk-ui';
+import { ILowerBoundedFilter } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
@@ -41,6 +42,7 @@ import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
+import { IUpperBoundedFilter } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
@@ -244,7 +246,7 @@ export const DateFilterHelpers: {
     canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption_2) => boolean;
     mapOptionToAfm: (value: DateFilterOption_2, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter;
     formatAbsoluteDateRange: (from: Date | string, to: Date | string, dateFormat: string) => string;
-    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator_2) => string;
+    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator_2, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
 
@@ -1099,6 +1101,9 @@ export interface ISingleSelectionHandler<T> {
 export const isRelativeDateFilterOption: (obj: unknown) => obj is RelativeDateFilterOption;
 
 // @public
+export const isRelativeDateFilterWithBoundOption: (obj: unknown) => obj is RelativeDateFilterOption;
+
+// @public
 export interface IStagedInvertableSelectionHandler<T extends InvertableSelection<any>> extends Omit<IInvertableSelectionHandler<T>, "getSelection"> {
     commitSelection(): void;
     getCommittedSelection(): T;
@@ -1134,6 +1139,7 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
 
 // @public
 export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm, "availableGranularities"> {
+    boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     from?: RelativeDateFilterGranularityOffset;
     granularity?: DateFilterGranularity;
     to?: RelativeDateFilterGranularityOffset;

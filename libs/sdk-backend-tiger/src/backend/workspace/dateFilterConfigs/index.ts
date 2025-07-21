@@ -9,6 +9,7 @@ import {
     convertDateFilterConfig,
     IWrappedDateFilterConfig,
 } from "../../../convertors/fromBackend/DateFilterConfigurationConverter.js";
+import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class TigerWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQuery {
     private limit: number | undefined;
@@ -46,8 +47,12 @@ export class TigerWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQ
 
         const customDateFilterConfig = data[0].content as any;
 
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const enableToDateFilters = userSettings.enableToDateFilters ?? false;
+
         const dateFilterConfig = convertDateFilterConfig(
             customDateFilterConfig.config as IWrappedDateFilterConfig,
+            enableToDateFilters,
         );
 
         return new InMemoryPaging([dateFilterConfig], this.limit, this.offset);

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     IAbsoluteDateFilter,
     IRelativeDateFilter,
@@ -29,14 +29,19 @@ export const mapAbsoluteFilterToAfm = (
 export const mapRelativeFilterToAfm = (
     value: RelativeDateFilterOption,
     dataSet: ObjRef,
-): IRelativeDateFilter => ({
-    relativeDateFilter: {
-        dataSet,
-        from: value.from,
-        to: value.to,
-        granularity: value.granularity,
-    },
-});
+): IRelativeDateFilter => {
+    const { from, to, granularity, boundedFilter } = value;
+
+    return {
+        relativeDateFilter: {
+            dataSet,
+            from,
+            to,
+            granularity,
+            boundedFilter,
+        },
+    };
+};
 
 export const mapOptionToAfm = (
     value: DateFilterOption,

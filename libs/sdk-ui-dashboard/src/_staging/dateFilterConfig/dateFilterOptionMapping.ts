@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
@@ -6,6 +6,8 @@ import {
     IDashboardDateFilter,
     DateFilterOptionType,
     isAllTimeDashboardDateFilter,
+    isLowerBound,
+    isUpperBound,
 } from "@gooddata/sdk-model";
 import {
     DateFilterOption,
@@ -216,14 +218,42 @@ const filterMatchesData = (dateFilter: IDashboardDateFilter) => (filter: DateFil
     if (isAbsoluteDateFilterOption(filter)) {
         return data.type === "absolute" && filter.from === data.from && filter.to === data.to;
     }
+
     if (isRelativeDateFilterOption(filter)) {
+        // Check if boundedFilter properties match exactly
+        const boundedFiltersMatch = (() => {
+            // If both don't have boundedFilter, they match
+            if (!filter.boundedFilter && !data.boundedFilter) {
+                return true;
+            }
+
+            // If only one has boundedFilter, they don't match
+            if (!filter.boundedFilter || !data.boundedFilter) {
+                return false;
+            }
+
+            // Both have boundedFilter - check granularity first
+            if (filter.boundedFilter.granularity !== data.boundedFilter.granularity) {
+                return false;
+            }
+
+            // Both must be the same type (both lower or both upper)
+            if (isLowerBound(filter.boundedFilter) && isLowerBound(data.boundedFilter)) {
+                return filter.boundedFilter.from === data.boundedFilter.from;
+            } else if (isUpperBound(filter.boundedFilter) && isUpperBound(data.boundedFilter)) {
+                return filter.boundedFilter.to === data.boundedFilter.to;
+            }
+
+            // Different bound types don't match
+            return false;
+        })();
+
         return (
             data.type === "relative" &&
-            filter.from !== undefined &&
-            filter.from.toString() === data.from?.toString() &&
-            filter.to !== undefined &&
-            filter.to.toString() === data.to?.toString() &&
-            filter.granularity === data.granularity
+            filter.from?.toString() === data.from?.toString() &&
+            filter.to?.toString() === data.to?.toString() &&
+            filter.granularity === data.granularity &&
+            boundedFiltersMatch
         );
     }
     return false;
@@ -262,6 +292,9 @@ function createVirtualPresetForStoredFilter(
             to: Number.parseInt(to!.toString(), 10),
             granularity,
             type: "relativePreset",
+            ...(dateFilter.dateFilter.boundedFilter
+                ? { boundedFilter: dateFilter.dateFilter.boundedFilter }
+                : {}),
         };
         return { dateFilterOption, excludeCurrentPeriod: false };
     }
