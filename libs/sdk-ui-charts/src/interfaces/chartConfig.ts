@@ -389,11 +389,16 @@ export interface IChartConfig {
     enableLineChartTrendThreshold?: boolean;
 
     /**
-     * Local identifier of measures that are used to render thresholds in the line chart.
+     * Local identifier of measures that are used to render thresholds in the line and combo chart.
      * Currently only the one threshold measure is supported.
      * Requires enableLineChartTrendThreshold to be true to be applied.
      */
     thresholdMeasures?: string[];
+
+    /**
+     * Local identifier of measures that should not be affected by thresholdMeasures config.
+     */
+    thresholdExcludedMeasures?: string[];
 
     /**
      * Legend positioning is not respected in some contexts. This flag enforces the specific

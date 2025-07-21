@@ -101,6 +101,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         "dataPoints.visible",
         "continuousLine.enabled",
         "thresholdMeasures",
+        "thresholdExcludedMeasures",
     ],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
@@ -110,6 +111,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         "dataPoints.visible",
         "continuousLine.enabled",
         "thresholdMeasures",
+        "thresholdExcludedMeasures",
     ],
     [AXIS.DUAL]: [
         ...BASE_CHART_SUPPORTED_PROPERTIES,
@@ -117,6 +119,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         "dataPoints.visible",
         "continuousLine.enabled",
         "thresholdMeasures",
+        "thresholdExcludedMeasures",
     ],
 };
 
@@ -149,6 +152,8 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         ...OPTIONAL_STACKING_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
+        "thresholdMeasures",
+        "thresholdExcludedMeasures",
     ],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
@@ -158,6 +163,8 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         ...OPTIONAL_STACKING_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
+        "thresholdMeasures",
+        "thresholdExcludedMeasures",
     ],
     [AXIS.DUAL]: [
         ...BASE_CHART_SUPPORTED_PROPERTIES,
@@ -166,6 +173,8 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         ...OPTIONAL_STACKING_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
+        "thresholdMeasures",
+        "thresholdExcludedMeasures",
     ],
 };
 

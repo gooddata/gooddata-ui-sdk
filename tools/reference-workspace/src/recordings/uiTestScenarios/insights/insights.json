@@ -1638,11 +1638,21 @@
     "ComboChart.400ca4eb084f66a58978f0c38f622630": {
         "comment": "Auto-generated insight for test scenario ComboChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend."
     },
+    "ComboChart.40ba90bb91b573d47e411c41016c7d3b": {
+        "comment": "Auto-generated insight for test scenario ComboChart - threshold combo zones.",
+        "scenarioName": "threshold combo zones",
+        "visName": "ComboChart"
+    },
     "ComboChart.40e2f35d5a4acce8c96baa198557deac": {
         "comment": "Auto-generated insight for test scenario ComboChart - data points - dense chart - default."
     },
     "ComboChart.4117e0ea31a489ad8f503da9f61d8a0d": {
         "comment": "Auto-generated insight for test scenario ComboChart - data points - dense chart - forced visible."
+    },
+    "ComboChart.4484a5256290fb780fa7a4be90bd5042": {
+        "comment": "Auto-generated insight for test scenario ComboChart - threshold combo zones with excluded measures.",
+        "scenarioName": "threshold combo zones with excluded measures",
+        "visName": "ComboChart"
     },
     "ComboChart.473b39d9d81e5e2813449ae3976844c5": {
         "comment": "Auto-generated insight for test scenario ComboChart - stack primary measures to 100% with different chart type - column."
