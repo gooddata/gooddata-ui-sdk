@@ -10,6 +10,7 @@ import {
     IResultMeasureHeader,
     IResultTotalHeader,
 } from "@gooddata/sdk-model";
+import { ITableData } from "./tableData/interfaces/index.js";
 
 /**
  * @public
@@ -442,4 +443,10 @@ export interface IDataAccessMethods {
      * @returns collection of data slices that are available in the data view
      */
     slices(): IDataSliceCollection;
+
+    /**
+     * @returns data as a table data.
+     * @alpha
+     */
+    asTable(): ITableData;
 }

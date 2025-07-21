@@ -43,5 +43,50 @@
         },
         "scenario": "single attribute",
         "vis": "PivotTable"
+    },
+    {
+        "n2oMap": { "a_label.f_product.product.name": "a_label.f_product.product.name" },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.f_product.product.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.f_product.product.name"
+                    }
+                }
+            ],
+            "buckets": [
+                { "items": [], "localIdentifier": "measures" },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.f_product.product.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.f_product.product.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "attribute"
+                },
+                { "items": [], "localIdentifier": "columns" }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["a_label.f_product.product.name"] },
+                { "itemIdentifiers": [] }
+            ],
+            "filters": [],
+            "measures": [],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single attribute",
+        "vis": "PivotTableNext"
     }
 ]
