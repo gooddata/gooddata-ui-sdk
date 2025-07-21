@@ -757,6 +757,11 @@ export interface ISettings {
      */
     enableToDateFilters?: boolean;
 
+    /**
+     * Enable new pivot table
+     */
+    enableNewPivotTable?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 
