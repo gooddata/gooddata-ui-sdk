@@ -120,11 +120,7 @@ jobs:
           export FIXTURE_TYPE=goodsales
           export SDK_LANG=${{ inputs.SDK_LANG }}
           export FILTER=${{ inputs.FILTER }}
-          if [[ -z ${{ inputs.SDK_VERSION }} || ${{ inputs.SDK_VERSION }} == "latest" ]]; then
-            export SDK_VERSION=$(jq < libs/sdk-backend-spi/package.json -r '.["version"]')
-          else
-            export SDK_VERSION=${{ inputs.SDK_VERSION }}
-          fi
+          export SDK_VERSION=${{ inputs.SDK_VERSION }}
           echo "The boiler app will be run with sdk version $SDK_VERSION"
           ./common/scripts/ci/run_boiler_app_integration_tests_with_live_backend.sh
       - name: Archive the cypress test artifacts
