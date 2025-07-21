@@ -1,5 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
-import { Component, ContextType, CSSProperties, MouseEvent, ReactElement, createRef, version } from "react";
+import {
+    Component,
+    ContextType,
+    CSSProperties,
+    MouseEvent as ReactMouseEvent,
+    ReactElement,
+    createRef,
+    version,
+} from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
 
@@ -61,7 +69,7 @@ function alignExceedsThreshold(firstAlignment: Alignment, secondAlignment: Align
     );
 }
 
-const stopPropagation = (e: MouseEvent<HTMLDivElement>): void => {
+const stopPropagation = (e: ReactMouseEvent<HTMLDivElement>): void => {
     e.stopPropagation();
     const reactMajorVersion = parseInt(version?.split(".")[0], 10);
     // Propagate events to `document` for react 17
@@ -349,7 +357,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         }, ALIGN_TIMEOUT_MS);
     };
 
-    private onMaskClick = (e: MouseEvent<HTMLDivElement>) => {
+    private onMaskClick = (e: ReactMouseEvent<HTMLDivElement>) => {
         if (!this.props.closeOnOutsideClick) {
             e.stopPropagation();
         }

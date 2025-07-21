@@ -44,7 +44,7 @@ import { ko } from "date-fns/locale/ko";
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 import { isEnterKey } from "../utils/events.js";
 
-const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
+const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-outside";
 
 /**
  * @internal

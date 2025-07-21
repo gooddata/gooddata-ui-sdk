@@ -70,7 +70,7 @@
         "react-intl": "7.1.11",
         "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
-        "uuid": "^8.3.2"
+        "uuid": "^11.1.0"
     },
     "peerDependencies": {
         "react": "^18.0.0 || ^19.0.0",
@@ -91,7 +91,6 @@
         "@types/raf": "^3.4.0",
         "@types/react-dom": "19.1.6",
         "@types/react": "19.1.8",
-        "@types/uuid": "^8.3.4",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
         "@vitejs/plugin-react": "^4.6.0",

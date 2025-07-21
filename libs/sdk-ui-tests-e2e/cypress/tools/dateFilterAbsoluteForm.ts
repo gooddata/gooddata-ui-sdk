@@ -40,7 +40,7 @@ export class DateFilterAbsoluteForm {
     }
 
     selectDateInNextMonth(): this {
-        cy.get(".rdp-row:last-child .rdp-day_outside").eq(4).click();
+        cy.get(".rdp-row:last-child .rdp-outside").eq(4).click();
         return this;
     }
 

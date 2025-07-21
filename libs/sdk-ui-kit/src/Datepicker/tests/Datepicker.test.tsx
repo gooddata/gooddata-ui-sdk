@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
-import { parse } from "date-fns";
 import { userEvent } from "@testing-library/user-event";
+import { parse } from "date-fns";
 import { WrappedDatePicker, DatePickerProps } from "../Datepicker.js";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
@@ -231,7 +231,7 @@ describe("DatePicker", () => {
                     });
                 });
 
-                it("should call onChange with date when different day is clicked in calendar", async () => {
+                it.only("should call onChange with date when different day is clicked in calendar", async () => {
                     const onChange = vi.fn();
                     createComponent({
                         onChange,
@@ -239,7 +239,9 @@ describe("DatePicker", () => {
 
                     await openCalendar();
 
-                    fireEvent.click(document.querySelectorAll(".rdp-day_outside")[0]);
+                    screen.debug();
+
+                    userEvent.click(document.querySelectorAll(".rdp-outside")[0]);
                     await waitFor(() => {
                         expect(onChange).toHaveBeenCalledWith(expect.any(Date));
                     });

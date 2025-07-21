@@ -1,9 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import { render, screen } from "@testing-library/react";
+import { IntlProvider } from "react-intl";
 import { DropdownList, IDropdownListNoDataRenderProps, IDropdownListProps } from "../DropdownList.js";
 import { IRenderListItemProps } from "../../List/index.js";
+import { customMessages } from "./customDictionary.js";
 import { componentMock } from "./testUtils.js";
 import { describe, it, expect } from "vitest";
+import { DefaultLocale } from "@gooddata/sdk-ui";
 
 type IDropdownListMockProps = IDropdownListProps<string>;
 
@@ -20,9 +23,12 @@ const testIfItemListIsRendered = (mockItems: string[]) => {
 const renderDropdownList = (props: Partial<IDropdownListMockProps> = {}) => {
     const defaultProps = {
         renderItem: itemRenderer,
-    };
-    // const Wrapper = withIntl<IDropdownListMockProps>(DropdownList, undefined, customMessages); // TODO: MARTIN FIX THE injectIntl Components
-    return render(<DropdownList {...defaultProps} {...props} />);
+    } satisfies Partial<IDropdownListMockProps>;
+    return render(
+        <IntlProvider locale={DefaultLocale} messages={customMessages}>
+            <DropdownList {...defaultProps} {...props} />
+        </IntlProvider>,
+    );
 };
 
 describe("DropdownList", () => {

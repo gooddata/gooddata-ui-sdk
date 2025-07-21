@@ -41,8 +41,13 @@ describe("Kpi", () => {
 
         await waitFor(() => {
             expect(FormattedNumber).toHaveBeenCalledWith(
-                expect.objectContaining({ format: testCustomFormat }),
-                {},
+                expect.objectContaining({
+                    className: "gdc-kpi",
+                    format: testCustomFormat,
+                    separators: undefined,
+                    value: "",
+                }),
+                undefined,
             );
         });
     });

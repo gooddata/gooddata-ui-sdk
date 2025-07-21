@@ -201,13 +201,13 @@
         font-weight: 400;
     }
 
-    .rdp-day_outside {
+    .rdp-outside {
         color: variables.$gd-color-disabled;
         cursor: default;
         font-weight: 400;
     }
 
-    .rdp-day_selected:not(.rdp-day_disabled):not(.rdp-day_outside) {
+    .rdp-day_selected:not(.rdp-day_disabled):not(.rdp-outside) {
         color: variables.$gd-color-text-light;
         background: variables.$gd-palette-primary-base;
     }

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { Fragment, useCallback, useState, useEffect, ReactElement, ReactNode } from "react";
+import { Fragment, useCallback, useState, useEffect, ReactElement, ReactNode, ComponentType } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import { Input } from "../Form/index.js";
@@ -51,7 +51,9 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     mobileItemHeight?: number;
     isMobile?: boolean;
 
-    renderNoData?: (props: IDropdownListNoDataRenderProps) => ReactNode;
+    renderNoData?:
+        | ((props: IDropdownListNoDataRenderProps) => ReactNode)
+        | ComponentType<IDropdownListNoDataRenderProps>;
     footer?: ReactNode | ((closeDropdown: () => void) => ReactNode);
     closeDropdown?: () => void;
 

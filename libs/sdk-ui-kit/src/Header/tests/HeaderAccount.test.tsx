@@ -5,7 +5,9 @@ import noop from "lodash/noop.js";
 import { describe, it, expect, vi } from "vitest";
 
 import { HeaderAccount } from "../HeaderAccount.js";
-import { IHeaderMenuItem } from "../typings.js";
+import { IHeaderAccountProps, IHeaderMenuItem } from "../typings.js";
+import { IntlProvider } from "react-intl";
+import { ITranslations } from "@gooddata/sdk-ui";
 
 const menuItems: IHeaderMenuItem[] = [
     { isActive: true, key: "gs.header.account", href: "https://example.com" },
@@ -13,24 +15,31 @@ const menuItems: IHeaderMenuItem[] = [
     { isActive: false, key: "gs.header.logout", href: "" },
 ];
 
-// const mockTranslation: ITranslations = {
-//     "gs.header.account": "Account",
-//     "gs.header.dic": "Dictionary",
-//     "gs.header.logout": "Logout",
-// };
+const mockTranslation: ITranslations = {
+    "gs.header.account": "Account",
+    "gs.header.account.title": "Account",
+    "gs.header.dic": "Dictionary",
+    "gs.header.logout": "Logout",
+};
 
-// const Wrapper = withIntlForTest(HeaderAccount, "en-US", mockTranslation); // TODO: MARTIN FIX THE injectIntl Components
+function Wrapper(props: IHeaderAccountProps) {
+    return (
+        <IntlProvider locale="en-US" messages={mockTranslation}>
+            <HeaderAccount {...props} />
+        </IntlProvider>
+    );
+}
 
 describe("HeaderAccount", () => {
     it("should render username", () => {
         const userName = "John Doe";
-        render(<HeaderAccount items={menuItems} onMenuItemClick={noop} userName={userName} />);
+        render(<Wrapper items={menuItems} onMenuItemClick={noop} userName={userName} />);
         expect(screen.getByText(`${userName}`)).toBeInTheDocument();
     });
 
     it("should open menu on click", async () => {
         const clickSpy = vi.fn();
-        render(<HeaderAccount items={menuItems} onMenuItemClick={clickSpy} />);
+        render(<Wrapper items={menuItems} onMenuItemClick={clickSpy} />);
         await userEvent.click(document.querySelector(".gd-header-account"));
         await userEvent.click(screen.getByText("Account"));
 

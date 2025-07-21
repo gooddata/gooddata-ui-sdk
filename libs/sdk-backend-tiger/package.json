@@ -62,7 +62,7 @@
         "spark-md5": "^3.0.0",
         "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
-        "uuid": "^8.3.2",
+        "uuid": "^11.1.0",
         "lru-cache": "^10.0.1",
         "eventsource-parser": "~3.0.0",
         "emailjs-mime-codec": "^2.0.9"
@@ -76,7 +76,6 @@
         "@microsoft/api-extractor": "^7.52.8",
         "@types/lodash": "^4.14.202",
         "@types/spark-md5": "^3.0.1",
-        "@types/uuid": "^8.3.4",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
         "concurrently": "^6.0.2",

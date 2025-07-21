@@ -1382,8 +1382,8 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -1406,9 +1406,6 @@ importers:
       '@types/spark-md5':
         specifier: ^3.0.1
         version: 3.0.4
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -1485,8 +1482,8 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -1503,9 +1500,6 @@ importers:
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -1688,8 +1682,8 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/catalog-export':
         specifier: workspace:*
@@ -1718,9 +1712,6 @@ importers:
       '@types/spark-md5':
         specifier: ^3.0.1
         version: 3.0.4
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -2006,8 +1997,8 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -2066,9 +2057,6 @@ importers:
       '@types/react-dom':
         specifier: 19.1.6
         version: 19.1.6(@types/react@19.1.8)
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -2332,8 +2320,8 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -2389,9 +2377,6 @@ importers:
       '@types/react-measure':
         specifier: ^2.0.12
         version: 2.0.12
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -2600,8 +2585,8 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -2657,9 +2642,6 @@ importers:
       '@types/react-measure':
         specifier: ^2.0.12
         version: 2.0.12
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -2871,8 +2853,8 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -2937,9 +2919,6 @@ importers:
       '@types/react-measure':
         specifier: ^2.0.12
         version: 2.0.12
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -3106,8 +3085,8 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -3160,9 +3139,6 @@ importers:
       '@types/react-window':
         specifier: ^1.8.1
         version: 1.8.8
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -3347,8 +3323,8 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -3389,9 +3365,6 @@ importers:
       '@types/react-dom':
         specifier: 19.1.6
         version: 19.1.6(@types/react@19.1.8)
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -3531,8 +3504,8 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -3576,9 +3549,6 @@ importers:
       '@types/react-measure':
         specifier: ^2.0.12
         version: 2.0.12
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -3805,8 +3775,8 @@ importers:
         specifier: ^11.0.5
         version: 11.0.5
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -3868,9 +3838,6 @@ importers:
       '@types/tinycolor2':
         specifier: ^1.4.2
         version: 1.4.6
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -4149,8 +4116,8 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -4194,9 +4161,6 @@ importers:
       '@types/react-dom':
         specifier: 19.1.6
         version: 19.1.6(@types/react@19.1.8)
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -4573,9 +4537,6 @@ importers:
       '@types/spark-md5':
         specifier: ^3.0.1
         version: 3.0.4
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.8.3)
@@ -4712,8 +4673,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
       vite:
         specifier: ^6.3.5
         version: 6.3.5(@types/node@22.16.4)(sass@1.66.1)
@@ -11730,10 +11691,6 @@ packages:
   /@types/use-sync-external-store@0.0.6:
     resolution: {integrity: sha512-zFDAD+tlpf2r4asuHEj0XH6pY6i0g5NeAHPn+15wk3BV6JA69eERFXC1gyGThDkVa1zCyKr5jox1+2LbV/AMLg==}
     dev: false
-
-  /@types/uuid@8.3.4:
-    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
-    dev: true
 
   /@types/watchpack@2.4.4:
     resolution: {integrity: sha512-SbuSavsPxfOPZwVHBgQUVuzYBe6+8KL7dwiJLXaj5rmv3DxktOMwX5WP1J6UontwUbewjVoc7pCgZvqy6rPn+A==}
@@ -21727,7 +21684,6 @@ packages:
   /uuid@11.1.0:
     resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
     hasBin: true
-    dev: true
 
   /uuid@3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}

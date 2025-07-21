@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import { ReactElement } from "react";
-import { act } from "react-dom/test-utils";
+import { act } from "@testing-library/react";
 import { render, RenderResult } from "@testing-library/react";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -135,7 +135,7 @@ describe("ThemeProvider", () => {
 
         expect(TestComponent).toHaveBeenLastCalledWith(
             { themeIsLoading: false, theme, themeStatus: "success" },
-            {},
+            undefined,
         );
     });
 
@@ -150,7 +150,7 @@ describe("ThemeProvider", () => {
 
         expect(TestComponent).toHaveBeenCalledWith(
             { themeIsLoading: false, theme: {}, themeStatus: "pending" },
-            {},
+            undefined,
         );
     });
 
@@ -165,7 +165,7 @@ describe("ThemeProvider", () => {
 
         expect(TestComponent).toHaveBeenCalledWith(
             { themeIsLoading: false, theme: {}, themeStatus: "pending" },
-            {},
+            undefined,
         );
     });
 
@@ -242,7 +242,7 @@ describe("ThemeProvider", () => {
                 theme: expectedTheme,
                 themeStatus: "success",
             },
-            {},
+            undefined,
         );
     });
 
