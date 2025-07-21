@@ -2,21 +2,27 @@
 import { afterEach, describe, vi, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 
-import { createIntlMock, ExplicitDrill } from "@gooddata/sdk-ui";
+import { createIntlMock, ExplicitDrill, WithIntlForTest } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import ComparisonTransformation from "../ComparisonTransformation.js";
 import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
 import * as useFireDrillEvent from "../useFiredDrillEvent.js";
 import { IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
-import { recordedDataFacade } from "../../../../../../__mocks__/recordings.js";
 import { TEST_COMPARISON_TRANSFORMATIONS, TEST_DEFAULT_COMPARISON } from "../../tests/TestData.fixtures.js";
 import { IChartConfig, IComparison } from "../../../../../interfaces/index.js";
 import { getComparisonBaseHeadlineData } from "../../utils/ComparisonTransformationUtils.js";
 
+// @ts-ignore
+import { recordedDataFacade } from "../../../../../../__mocks__/recordings.js";
+
 describe("ComparisonTransformation", () => {
     const renderTransformation = (props: IHeadlineTransformationProps) => {
-        return render(<ComparisonTransformation {...props} />);
+        return render(
+            <WithIntlForTest>
+                <ComparisonTransformation {...props} />
+            </WithIntlForTest>,
+        );
     };
 
     afterEach(() => {
@@ -67,7 +73,7 @@ describe("ComparisonTransformation", () => {
                     onDrill: mockHandleFiredDrillEvent,
                     onAfterRender: mockOnAfterRender,
                 }),
-                expect.anything(),
+                undefined,
             );
         },
     );

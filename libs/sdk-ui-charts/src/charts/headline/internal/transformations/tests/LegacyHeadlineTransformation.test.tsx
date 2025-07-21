@@ -15,6 +15,7 @@ import {
 import noop from "lodash/noop.js";
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
 import { IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
+import { WithIntlForTest } from "@gooddata/sdk-ui";
 
 // Use a simple mock for LegacyHeadline
 vi.mock("../../headlines/LegacyHeadline.js", () => {
@@ -51,7 +52,11 @@ describe("HeadlineTransformation", () => {
     });
 
     function createComponent(props: IHeadlineTransformationProps) {
-        return render(<HeadlineTransformation {...props} />);
+        return render(
+            <WithIntlForTest>
+                <HeadlineTransformation {...props} />
+            </WithIntlForTest>,
+        );
     }
 
     it("should pass default props to Headline component", () => {
@@ -59,7 +64,7 @@ describe("HeadlineTransformation", () => {
             dataView: headlineWithOneMeasure.dataView,
         });
 
-        expect(Headline).toHaveBeenCalledWith(expect.objectContaining({ onAfterRender: noop }), {});
+        expect(Headline).toHaveBeenCalledWith(expect.objectContaining({ onAfterRender: noop }), undefined);
     });
 
     it("should pass disableDrillUnderline prop from config.disableDrillUnderline", () => {
@@ -70,7 +75,10 @@ describe("HeadlineTransformation", () => {
             },
         });
 
-        expect(Headline).toHaveBeenCalledWith(expect.objectContaining({ disableDrillUnderline: true }), {});
+        expect(Headline).toHaveBeenCalledWith(
+            expect.objectContaining({ disableDrillUnderline: true }),
+            undefined,
+        );
     });
 
     it("should pass all required props to Headline component and enable drilling identified by uri", () => {
@@ -100,7 +108,7 @@ describe("HeadlineTransformation", () => {
                 onAfterRender,
                 onDrill: expect.anything(),
             }),
-            {},
+            undefined,
         );
     });
 
@@ -131,7 +139,7 @@ describe("HeadlineTransformation", () => {
                 onAfterRender,
                 onDrill: expect.anything(),
             }),
-            {},
+            undefined,
         );
     });
 
@@ -166,7 +174,7 @@ describe("HeadlineTransformation", () => {
                     },
                 },
             }),
-            {},
+            undefined,
         );
     });
 
@@ -211,7 +219,7 @@ describe("HeadlineTransformation", () => {
                 },
                 onDrill: expect.anything(),
             }),
-            {},
+            undefined,
         );
     });
 

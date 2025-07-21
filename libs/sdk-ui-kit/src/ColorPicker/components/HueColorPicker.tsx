@@ -3,7 +3,15 @@
  * Copyright (c) 2015 Case Sandberg
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import { PureComponent, RefObject, ReactNode, CSSProperties, createRef } from "react";
+import {
+    PureComponent,
+    RefObject,
+    ReactNode,
+    CSSProperties,
+    createRef,
+    TouchEvent as ReactTouchEvent,
+    MouseEvent as ReactMouseEvent,
+} from "react";
 import { ColorFormats } from "tinycolor2";
 
 import { calculateHueChange } from "../utils.js";
@@ -39,11 +47,11 @@ export class HueColorPicker extends PureComponent<IHueColorPickerProps> {
         }
     };
 
-    handleTouchChange = (e: React.TouchEvent): void => {
+    handleTouchChange = (e: ReactTouchEvent): void => {
         this.handleChange(e.nativeEvent);
     };
 
-    handleMouseDown = (e: React.MouseEvent): void => {
+    handleMouseDown = (e: ReactMouseEvent): void => {
         this.bindEventListeners();
         this.handleChange(e.nativeEvent);
     };

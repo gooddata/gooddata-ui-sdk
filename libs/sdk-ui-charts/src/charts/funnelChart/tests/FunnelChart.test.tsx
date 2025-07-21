@@ -45,7 +45,7 @@ describe("FunnelChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

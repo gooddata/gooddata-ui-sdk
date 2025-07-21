@@ -47,7 +47,7 @@ describe("BubbleChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

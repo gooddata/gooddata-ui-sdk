@@ -45,7 +45,7 @@ describe("PieChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

@@ -34,7 +34,7 @@ describe("PrimarySectionContent", () => {
                 elementType: primaryItem.elementType,
                 shouldHideTitle: true,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

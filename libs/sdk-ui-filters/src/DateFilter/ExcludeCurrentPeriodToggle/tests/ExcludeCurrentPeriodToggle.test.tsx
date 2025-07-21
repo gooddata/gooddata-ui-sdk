@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle.js";
 import { describe, it, expect, vi } from "vitest";
@@ -13,10 +14,10 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
     const actual = await vi.importActual("@gooddata/sdk-ui-kit");
     return {
         ...actual,
-        BubbleHoverTrigger: ({ children }: { children: React.ReactNode }) => (
+        BubbleHoverTrigger: ({ children }: { children: ReactNode }) => (
             <div className="gd-bubble-trigger">{children}</div>
         ),
-        Bubble: ({ children, className }: { children?: React.ReactNode; className?: string }) => {
+        Bubble: ({ children, className }: { children?: ReactNode; className?: string }) => {
             // Render children when present (for tooltip tests), otherwise hide the bubble
             return children ? (
                 <div className={`gd-bubble ${className || ""}`}>{children}</div>

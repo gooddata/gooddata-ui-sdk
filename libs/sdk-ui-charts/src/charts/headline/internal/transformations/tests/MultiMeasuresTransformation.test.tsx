@@ -2,7 +2,7 @@
 import { afterEach, describe, vi, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 
-import { ExplicitDrill } from "@gooddata/sdk-ui";
+import { ExplicitDrill, WithIntlForTest } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import MultiMeasuresTransformation from "../MultiMeasuresTransformation.js";
@@ -15,7 +15,11 @@ import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../../tests/TestData.fixtures
 
 describe("MultiMeasuresTransformation", () => {
     const renderTransformation = (props: IHeadlineTransformationProps) => {
-        return render(<MultiMeasuresTransformation {...props} />);
+        return render(
+            <WithIntlForTest>
+                <MultiMeasuresTransformation {...props} />
+            </WithIntlForTest>,
+        );
     };
 
     afterEach(() => {
@@ -51,7 +55,7 @@ describe("MultiMeasuresTransformation", () => {
                     onDrill: mockHandleFiredDrillEvent,
                     onAfterRender: mockOnAfterRender,
                 }),
-                expect.anything(),
+                undefined,
             );
         },
     );

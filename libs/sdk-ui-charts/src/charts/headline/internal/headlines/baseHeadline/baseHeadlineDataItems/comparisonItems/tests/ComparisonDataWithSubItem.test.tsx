@@ -56,7 +56,7 @@ describe("ComparisonDataWithSubItem", () => {
                 dataItem: TEST_DATA_WITH_SUB_ITEM.item,
                 comparisonStyle: { color: "rgb(5,5,5)" },
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockComparisonValue).toHaveBeenNthCalledWith(
             2,
@@ -65,7 +65,7 @@ describe("ComparisonDataWithSubItem", () => {
                 comparisonStyle: { color: "rgb(5,5,5)" },
                 isSubItem: true,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 

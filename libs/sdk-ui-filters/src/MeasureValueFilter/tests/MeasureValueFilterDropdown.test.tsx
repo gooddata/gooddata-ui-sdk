@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { render } from "@testing-library/react";
 import noop from "lodash/noop.js";
 import { newMeasureValueFilter, IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
@@ -13,10 +14,10 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
     const actual = await vi.importActual("@gooddata/sdk-ui-kit");
     return {
         ...actual,
-        BubbleHoverTrigger: ({ children }: { children: React.ReactNode }) => (
+        BubbleHoverTrigger: ({ children }: { children: ReactNode }) => (
             <div className="gd-bubble-trigger">{children}</div>
         ),
-        Bubble: ({ className }: { children?: React.ReactNode; className?: string }) => (
+        Bubble: ({ className }: { children?: ReactNode; className?: string }) => (
             <div className={`gd-bubble ${className || ""}`} style={{ display: "none" }} />
         ),
     };

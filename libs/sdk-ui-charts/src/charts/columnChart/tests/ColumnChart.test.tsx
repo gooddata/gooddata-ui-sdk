@@ -61,7 +61,7 @@ describe("ColumnChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -77,7 +77,7 @@ describe("ColumnChart", () => {
                         stackMeasuresToPercent: true,
                     },
                 }),
-                expect.anything(),
+                undefined,
             );
         });
 
@@ -90,7 +90,7 @@ describe("ColumnChart", () => {
                         stackMeasuresToPercent: false,
                     },
                 }),
-                expect.anything(),
+                undefined,
             );
         });
     });

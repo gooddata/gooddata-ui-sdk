@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { useMemo, useEffect, useRef } from "react";
+import { useMemo, useEffect, useRef, ReactNode } from "react";
 import { useDebouncedState, Input, Dropdown } from "@gooddata/sdk-ui-kit";
 import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { SearchResultsDropdownList } from "./SearchResultsDropdownList.js";
@@ -63,7 +63,7 @@ export type SemanticSearchProps = {
         handlers: {
             closeSearch: () => void;
         },
-    ) => React.ReactNode;
+    ) => ReactNode;
 };
 
 /**
@@ -125,7 +125,7 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
         status,
         closeSearch,
     }: {
-        children: React.ReactNode;
+        children: ReactNode;
         status: "idle" | "loading" | "error" | "success";
         closeSearch: () => void;
     }) => {

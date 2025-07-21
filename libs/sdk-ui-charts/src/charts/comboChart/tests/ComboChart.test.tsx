@@ -70,7 +70,7 @@ describe("ComboChart", () => {
                         stackMeasuresToPercent: true,
                     },
                 }),
-                expect.anything(),
+                undefined,
             );
         });
 
@@ -84,7 +84,7 @@ describe("ComboChart", () => {
                         stackMeasuresToPercent: false,
                     },
                 }),
-                expect.anything(),
+                undefined,
             );
         });
 
@@ -108,7 +108,7 @@ describe("ComboChart", () => {
                             }),
                         }),
                     }),
-                    expect.anything(),
+                    undefined,
                 );
             },
         );
@@ -141,7 +141,7 @@ describe("ComboChart", () => {
                         }),
                     }),
                 }),
-                expect.anything(),
+                undefined,
             );
         });
 
@@ -160,7 +160,7 @@ describe("ComboChart", () => {
                         }),
                     }),
                 }),
-                expect.anything(),
+                undefined,
             );
         });
     });

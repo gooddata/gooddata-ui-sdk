@@ -11,7 +11,7 @@ import {
     TEST_BASE_HEADLINE_ITEM,
 } from "../../../tests/TestData.fixtures.js";
 import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
-import { withIntl } from "@gooddata/sdk-ui";
+import { WithIntlForTest } from "@gooddata/sdk-ui";
 
 describe("CompareSection", () => {
     let MockCompareItem: ReturnType<typeof vi.spyOn>;
@@ -29,7 +29,11 @@ describe("CompareSection", () => {
         secondaryItem: IBaseHeadlineItem<IHeadlineDataItem>;
         tertiaryItem?: IBaseHeadlineItem<IHeadlineDataItem>;
     }) => {
-        return render(<CompareSection {...props} />);
+        return render(
+            <WithIntlForTest>
+                <CompareSection {...props} />
+            </WithIntlForTest>,
+        );
     };
 
     beforeEach(() => {
@@ -50,7 +54,7 @@ describe("CompareSection", () => {
                 dataItem: secondaryItem,
                 titleRef: expect.anything(),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -63,7 +67,7 @@ describe("CompareSection", () => {
             expect.objectContaining({
                 dataItem: tertiaryItem,
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockCompareItem).toHaveBeenNthCalledWith(
             2,
@@ -71,7 +75,7 @@ describe("CompareSection", () => {
                 dataItem: secondaryItem,
                 titleRef: expect.anything(),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -109,7 +113,7 @@ describe("CompareSection", () => {
                 dataItem: secondaryItem,
                 titleRef: expect.anything(),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

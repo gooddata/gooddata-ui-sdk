@@ -33,7 +33,7 @@ describe("PrimarySectionCompactContent", () => {
             expect.objectContaining({
                 primaryItem: TEST_BASE_HEADLINE_ITEM,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 

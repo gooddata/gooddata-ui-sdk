@@ -45,7 +45,7 @@ describe("PyramidChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

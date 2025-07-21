@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { describe, it, expect, vi } from "vitest";
 import { fireEvent, screen, render, waitFor } from "@testing-library/react";
 
@@ -20,10 +21,10 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
     const actual = await vi.importActual("@gooddata/sdk-ui-kit");
     return {
         ...actual,
-        BubbleHoverTrigger: ({ children }: { children: React.ReactNode }) => (
+        BubbleHoverTrigger: ({ children }: { children: ReactNode }) => (
             <div className="gd-bubble-trigger">{children}</div>
         ),
-        Bubble: ({ children, className }: { children: React.ReactNode; className?: string }) => (
+        Bubble: ({ children, className }: { children: ReactNode; className?: string }) => (
             <div className={`gd-bubble ${className || ""}`}>{children}</div>
         ),
     };

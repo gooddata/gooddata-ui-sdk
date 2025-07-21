@@ -43,7 +43,7 @@ describe("PrimarySection", () => {
                 primaryItem: TEST_BASE_HEADLINE_ITEM,
                 isOnlyPrimaryItem: false,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -60,7 +60,7 @@ describe("PrimarySection", () => {
             expect.objectContaining({
                 primaryItem: TEST_BASE_HEADLINE_ITEM,
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockCompactContent).not.toHaveBeenCalled();
     });

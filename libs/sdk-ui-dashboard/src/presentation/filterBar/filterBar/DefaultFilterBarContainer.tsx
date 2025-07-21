@@ -215,10 +215,13 @@ function AllFiltersContainer({
     );
 }
 
-const MeasuredDiv: React.FC<{
+function MeasuredDiv({
+    measureRef,
+    children,
+}: {
     measureRef: (node: Element | null) => void;
-    children?: React.ReactNode;
-}> = ({ measureRef, children }) => {
+    children?: ReactNode;
+}) {
     const containerRef = useRef<HTMLDivElement | null>(null);
 
     const [activeFilterIndex, setActiveFilterIndex] = useState<number | null>(null);
@@ -301,7 +304,7 @@ const MeasuredDiv: React.FC<{
             {children}
         </div>
     );
-};
+}
 
 function FiltersRows({ rows }: { rows: number[] }) {
     return (

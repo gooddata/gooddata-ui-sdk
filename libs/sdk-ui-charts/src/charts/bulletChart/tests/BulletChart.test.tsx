@@ -41,7 +41,7 @@ describe("BulletChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -64,7 +64,7 @@ describe("BulletChart", () => {
                         stackMeasuresToPercent: true,
                     },
                 }),
-                expect.anything(),
+                undefined,
             );
         });
 
@@ -84,7 +84,7 @@ describe("BulletChart", () => {
                         stackMeasuresToPercent: true,
                     },
                 }),
-                expect.anything(),
+                undefined,
             );
         });
     });

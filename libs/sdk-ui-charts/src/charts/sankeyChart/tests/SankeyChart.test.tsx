@@ -57,7 +57,7 @@ describe("SankeyChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

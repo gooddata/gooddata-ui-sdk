@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback, useEffect } from "react";
+import { Fragment, useCallback, useEffect } from "react";
 import { e } from "./asyncTableBem.js";
 import { Input } from "../Form/Input.js";
 import { SeparatorLine } from "../SeparatorLine/SeparatorLine.js";
@@ -43,7 +43,7 @@ export const AsyncTableTitle = ({ title, onSearch, renderIcon, actions }: IAsync
         return actions ? (
             <div key="actions" className={e("title-actions")}>
                 {actions.map((action, index) => (
-                    <React.Fragment key={index}>{action.renderAction()}</React.Fragment>
+                    <Fragment key={index}>{action.renderAction()}</Fragment>
                 ))}
             </div>
         ) : null;

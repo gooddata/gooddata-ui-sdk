@@ -51,7 +51,7 @@ describe("LineChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

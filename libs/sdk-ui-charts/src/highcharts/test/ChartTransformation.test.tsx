@@ -7,23 +7,32 @@ import { HighChartsRenderer } from "../adapter/HighChartsRenderer.js";
 import { IChartConfig } from "../../interfaces/index.js";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
-import { VisualizationTypes, IntlWrapper } from "@gooddata/sdk-ui";
+import { VisualizationTypes, IntlWrapper, WithIntlForTest } from "@gooddata/sdk-ui";
 import { TOP, BOTTOM, MIDDLE } from "../constants/alignments.js";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import * as fixtures from "../../../__mocks__/fixtures.js";
 import { recordedDataFacade } from "../../../__mocks__/recordings.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-const BarChartNoAttributes = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.SingleMeasure);
-const BarChartView = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy);
+const BarChartNoAttributes = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BarChart.SingleMeasure as unknown as ScenarioRecording,
+);
+const BarChartView = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy as unknown as ScenarioRecording,
+);
 const BarChartMultipleMeasures = recordedDataFacade(
-    ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures,
+    ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures as unknown as ScenarioRecording,
 );
-const BarChartTwoMeasures = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy);
+const BarChartTwoMeasures = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy as unknown as ScenarioRecording,
+);
 const BarChartViewAndStack = recordedDataFacade(
-    ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+    ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy as unknown as ScenarioRecording,
 );
-const PieChartSingleMeasure = recordedDataFacade(ReferenceRecordings.Scenarios.PieChart.SingleMeasure);
+const PieChartSingleMeasure = recordedDataFacade(
+    ReferenceRecordings.Scenarios.PieChart.SingleMeasure as unknown as ScenarioRecording,
+);
 
 /**
  * This mock enables us to test props as parameters of the called chart function
@@ -54,7 +63,11 @@ describe("ChartTransformation", () => {
 
     function createComponent(customProps: any = {}) {
         const props = { ...defaultProps, ...customProps };
-        return <ChartTransformation {...props} />;
+        return (
+            <WithIntlForTest>
+                <ChartTransformation {...props} />
+            </WithIntlForTest>
+        );
     }
 
     it("should use custom renderer", () => {
@@ -288,7 +301,7 @@ describe("ChartTransformation", () => {
             renderComponent({ chart: { verticalAlign } });
             expect(HighChartsRenderer).toHaveBeenCalledWith(
                 expect.objectContaining({ chartOptions: expect.objectContaining({ verticalAlign }) }),
-                {},
+                undefined,
             );
         });
 
@@ -298,7 +311,7 @@ describe("ChartTransformation", () => {
                 expect.objectContaining({
                     chartOptions: expect.objectContaining({ verticalAlign: undefined }),
                 }),
-                {},
+                undefined,
             );
         });
     });
@@ -340,7 +353,7 @@ describe("ChartTransformation", () => {
                         ]),
                     }),
                 }),
-                {},
+                undefined,
             );
         });
 
@@ -369,7 +382,7 @@ describe("ChartTransformation", () => {
                         ]),
                     }),
                 }),
-                {},
+                undefined,
             );
         });
 
@@ -394,7 +407,7 @@ describe("ChartTransformation", () => {
                         ]),
                     }),
                 }),
-                {},
+                undefined,
             );
         });
     });

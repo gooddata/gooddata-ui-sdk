@@ -61,7 +61,7 @@ describe("BarChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -77,7 +77,7 @@ describe("BarChart", () => {
                         stackMeasuresToPercent: true,
                     },
                 }),
-                expect.anything(),
+                undefined,
             );
         });
 
@@ -90,7 +90,7 @@ describe("BarChart", () => {
                         stackMeasuresToPercent: false,
                     },
                 }),
-                expect.anything(),
+                undefined,
             );
         });
     });

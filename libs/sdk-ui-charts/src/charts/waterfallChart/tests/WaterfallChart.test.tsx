@@ -39,7 +39,7 @@ describe("WaterfallChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -62,7 +62,7 @@ describe("WaterfallChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

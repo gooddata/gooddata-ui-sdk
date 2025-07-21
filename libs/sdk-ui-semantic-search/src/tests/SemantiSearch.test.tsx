@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { render, fireEvent, act } from "@testing-library/react";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";

@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { BackstopConfig } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
@@ -17,7 +16,7 @@ const dropdownButtonWithTooltip: BackstopConfig = {
     hover: { hoverSelector: ".s-attribute-filter-tooltip-icon", postInteractionWait: 1000 },
 };
 
-const TooltipContentComponent: React.FC = () => {
+function TooltipContentComponent() {
     return (
         <div className="gd-attribute-filter-tooltip-content s-attribute-filter-tooltip-content">
             <h3 className="s-attribute-filter-tooltip-header">{attributeTitle}</h3>
@@ -27,7 +26,7 @@ const TooltipContentComponent: React.FC = () => {
             <p className="s-attribute-filter-tooltip-item-dataset">{attributeTitle}</p>
         </div>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterDropdownButton/with tooltip",

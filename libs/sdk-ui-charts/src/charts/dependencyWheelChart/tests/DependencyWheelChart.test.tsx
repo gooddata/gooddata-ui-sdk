@@ -57,7 +57,7 @@ describe("DependencyWheelChart", () => {
                     }),
                 }),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

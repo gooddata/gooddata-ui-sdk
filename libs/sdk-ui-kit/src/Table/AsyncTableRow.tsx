@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 import { e } from "./asyncTableBem.js";
 import { AsyncTableCheckbox } from "./AsyncTableCheckbox.js";
 import { UiIconButton } from "../@ui/UiIconButton/UiIconButton.js";
@@ -40,30 +40,24 @@ export function AsyncTableRow<T extends { id: string }>({
 const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: boolean }) => {
     const intl = useIntl();
 
-    const renderRoleIconWithWrapper = useCallback((renderRoleIcon: (item: T) => React.ReactNode, item: T) => {
+    const renderRoleIconWithWrapper = useCallback((renderRoleIcon: (item: T) => ReactNode, item: T) => {
         return renderRoleIcon ? <div className={e("role-icon")}>{renderRoleIcon(item)}</div> : null;
     }, []);
 
-    const renderBadgeWithWrapper = useCallback((renderBadge: (item: T) => React.ReactNode, item: T) => {
+    const renderBadgeWithWrapper = useCallback((renderBadge: (item: T) => ReactNode, item: T) => {
         return renderBadge ? <div className={e("badge")}>{renderBadge(item)}</div> : null;
     }, []);
 
-    const renderPrefixIconWithWrapper = useCallback(
-        (renderPrefixIcon: (item: T) => React.ReactNode, item: T) => {
-            return renderPrefixIcon ? <div className={e("prefix-icon")}>{renderPrefixIcon(item)}</div> : null;
-        },
-        [],
-    );
+    const renderPrefixIconWithWrapper = useCallback((renderPrefixIcon: (item: T) => ReactNode, item: T) => {
+        return renderPrefixIcon ? <div className={e("prefix-icon")}>{renderPrefixIcon(item)}</div> : null;
+    }, []);
 
-    const renderSuffixIconWithWrapper = useCallback(
-        (renderSuffixIcon: (item: T) => React.ReactNode, item: T) => {
-            return renderSuffixIcon ? <div className={e("suffix-icon")}>{renderSuffixIcon(item)}</div> : null;
-        },
-        [],
-    );
+    const renderSuffixIconWithWrapper = useCallback((renderSuffixIcon: (item: T) => ReactNode, item: T) => {
+        return renderSuffixIcon ? <div className={e("suffix-icon")}>{renderSuffixIcon(item)}</div> : null;
+    }, []);
 
     const renderMenuIcon = useCallback(
-        (renderMenu: (item: T) => React.ReactNode, item: T) => {
+        (renderMenu: (item: T) => ReactNode, item: T) => {
             const label = intl.formatMessage(messages.moreActions);
             return (
                 <Dropdown

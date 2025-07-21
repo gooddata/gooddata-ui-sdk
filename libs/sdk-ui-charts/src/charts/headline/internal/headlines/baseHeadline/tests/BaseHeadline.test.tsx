@@ -6,7 +6,7 @@ import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import * as PrimarySection from "../PrimarySection.js";
 import * as CompareSection from "../CompareSection.js";
-import { withIntl } from "@gooddata/sdk-ui";
+import { WithIntlForTest } from "@gooddata/sdk-ui";
 import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 
 describe("BaseHeadline", () => {
@@ -47,7 +47,11 @@ describe("BaseHeadline", () => {
             onAfterRender: params.onAfterRender || vi.fn(),
         };
 
-        return render(<BaseHeadline {...props} />);
+        return render(
+            <WithIntlForTest>
+                <BaseHeadline {...props} />
+            </WithIntlForTest>,
+        );
     };
 
     beforeEach(() => {
@@ -77,7 +81,7 @@ describe("BaseHeadline", () => {
                 primaryItem,
                 isOnlyPrimaryItem: true,
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockCompareSection).not.toHaveBeenCalled();
     });
@@ -90,14 +94,14 @@ describe("BaseHeadline", () => {
                 primaryItem,
                 isOnlyPrimaryItem: false,
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockCompareSection).toHaveBeenCalledWith(
             expect.objectContaining({
                 secondaryItem,
                 tertiaryItem,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

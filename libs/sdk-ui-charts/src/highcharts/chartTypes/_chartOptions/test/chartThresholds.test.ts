@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { describe, it, expect } from "vitest";
-import { generateComboZones, generateZones, getTrendDividerPlotLines } from "../chartThresholds";
+import { generateComboZones, generateZones, getTrendDividerPlotLines } from "../chartThresholds.js";
 
 const generateZonesFromData = (data: (number | null)[]) => {
     const thresholdSeries = data.map((value) => ({ y: value }));

@@ -12,10 +12,15 @@ import {
     TEST_RENDER_VALUE_SPECS,
 } from "../../../../tests/TestData.fixtures.js";
 import { IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
+import { WithIntlForTest } from "@gooddata/sdk-ui";
 
 describe("BaseHeadlineDataItem", () => {
     const renderBaseHeadlineDataItem = (props: IBaseHeadlineDataItemProps<IHeadlineDataItem>) => {
-        return render(<BaseHeadlineDataItem {...props} />);
+        return render(
+            <WithIntlForTest>
+                <BaseHeadlineDataItem {...props} />
+            </WithIntlForTest>,
+        );
     };
 
     beforeEach(() => {

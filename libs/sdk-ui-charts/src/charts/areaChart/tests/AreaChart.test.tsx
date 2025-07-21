@@ -48,7 +48,7 @@ describe("AreaChart", () => {
                         stackMeasuresToPercent: true,
                     },
                 }),
-                expect.anything(),
+                undefined,
             );
         });
 
@@ -62,7 +62,7 @@ describe("AreaChart", () => {
                         stackMeasuresToPercent: false,
                     },
                 }),
-                expect.anything(),
+                undefined,
             );
         });
     });

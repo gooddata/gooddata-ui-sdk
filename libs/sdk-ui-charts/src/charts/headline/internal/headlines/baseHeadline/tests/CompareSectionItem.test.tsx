@@ -39,7 +39,7 @@ describe("CompareSectionItem", () => {
                 elementType: dataItem.elementType,
                 titleRef,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

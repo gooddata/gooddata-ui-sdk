@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType } from "react";
 import { IColumn } from "./types.js";
 import { UiSkeleton } from "../@ui/UiSkeleton/UiSkeleton.js";
 import { UiPagedVirtualListSkeletonItemProps } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
@@ -14,7 +14,7 @@ import {
 export function skeletonItemFactory<T extends { id: string }>(
     columns: IColumn<T>[],
     hasCheckbox?: boolean,
-): React.ComponentType<UiPagedVirtualListSkeletonItemProps> {
+): ComponentType<UiPagedVirtualListSkeletonItemProps> {
     return function SkeletonItem() {
         const columnWidths = columns.map((col) => (col.renderMenu ? MENU_COLUMN_WIDTH : col.width));
         const widths = hasCheckbox ? [CHECKBOX_COLUMN_WIDTH, ...columnWidths] : columnWidths;
