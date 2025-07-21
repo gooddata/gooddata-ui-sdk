@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-
 import { IconType } from "../@types/icon.js";
 import { IDropdownBodyRenderProps } from "../../Dropdown/index.js";
 import React from "react";
@@ -9,7 +8,7 @@ import React from "react";
  */
 export type UiTreeViewNode<Levels extends unknown[], Depth extends number = 0> = Levels extends [
     infer Current,
-    ...infer Rest
+    ...infer Rest,
 ]
     ? {
           item: IUiTreeViewItem<Current>;
