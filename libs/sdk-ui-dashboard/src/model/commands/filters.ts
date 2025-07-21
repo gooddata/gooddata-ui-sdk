@@ -19,6 +19,9 @@ import {
     DashboardAttributeFilterConfigMode,
     IDashboardAttributeFilterByDate,
     IDashboardAttributeFilterConfig,
+    IUpperBoundedFilter,
+    ILowerBoundedFilter,
+    isRelativeBoundedDateFilter,
 } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 import { IDashboardFilter } from "../../types.js";
@@ -94,6 +97,12 @@ export interface DateFilterSelection {
      * Specify the local identifier of date filter
      */
     readonly localIdentifier?: string;
+
+    /**
+     * Additional bound for the relative date filter
+     * @alpha
+     */
+    readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
 }
 
 /**
@@ -139,6 +148,7 @@ export function changeDateFilterSelection(
     dataSet?: ObjRef,
     isWorkingSelectionChange?: boolean,
     localIdentifier?: string,
+    boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter,
 ): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
@@ -152,6 +162,7 @@ export function changeDateFilterSelection(
             dateFilterOptionLocalId,
             isWorkingSelectionChange,
             localIdentifier,
+            boundedFilter,
         },
     };
 }
@@ -181,6 +192,9 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
 
     if (isRelativeDateFilter(filter)) {
         const values = relativeDateFilterValues(filter, true);
+        const boundedFilter = isRelativeBoundedDateFilter(filter)
+            ? filter.relativeDateFilter.boundedFilter
+            : undefined;
         return changeDateFilterSelection(
             "relative",
             values.granularity as DateFilterGranularity,
@@ -191,6 +205,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             values.dataSet,
             undefined,
             filter.relativeDateFilter.localIdentifier,
+            boundedFilter,
         );
     } else {
         const values = absoluteDateFilterValues(filter, true);

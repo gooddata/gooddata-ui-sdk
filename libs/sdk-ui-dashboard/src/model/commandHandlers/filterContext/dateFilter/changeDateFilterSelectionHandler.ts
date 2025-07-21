@@ -67,6 +67,7 @@ export function* changeDateFilterSelectionHandler(
                       dataSet: cmd.payload.dataSet,
                       isWorkingSelectionChange,
                       ...localIdentifierObj,
+                      ...(cmd.payload.boundedFilter ? { boundedFilter: cmd.payload.boundedFilter } : {}),
                   },
         ),
     );
@@ -111,6 +112,7 @@ function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelectio
             toNumber(dateFilterSelection.to),
             undefined,
             dateFilterSelection.localIdentifier,
+            dateFilterSelection.boundedFilter,
         );
     }
 }

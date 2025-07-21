@@ -13,6 +13,8 @@ import {
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
     RelativeDateFilterGranularityOffset,
+    ILowerBoundedFilter,
+    IUpperBoundedFilter,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
@@ -56,6 +58,10 @@ export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm,
      * Selected global relative date filter granularity end offset
      */
     to?: RelativeDateFilterGranularityOffset;
+    /**
+     * Additional bound for the relative date filter
+     */
+    boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
 }
 
 /**
@@ -83,6 +89,13 @@ export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDate
  */
 export const isRelativeDateFilterOption = (obj: unknown): obj is RelativeDateFilterOption =>
     isRelativeDateFilterForm(obj) || isRelativeDateFilterPreset(obj);
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link RelativeDateFilterOption} with boundedFilter.
+ * @public
+ */
+export const isRelativeDateFilterWithBoundOption = (obj: unknown): obj is RelativeDateFilterOption =>
+    isRelativeDateFilterOption(obj) && !isEmpty(obj.boundedFilter);
 
 /**
  * Represents any option in the date filter dropdown

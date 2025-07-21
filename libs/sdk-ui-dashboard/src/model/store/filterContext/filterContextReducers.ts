@@ -26,6 +26,8 @@ import {
     isDashboardCommonDateFilter,
     newAllTimeDashboardDateFilter,
     IDashboardAttributeFilterByDate,
+    IUpperBoundedFilter,
+    ILowerBoundedFilter,
 } from "@gooddata/sdk-model";
 import { AddDateFilterPayload } from "../../commands/index.js";
 import { generateFilterLocalIdentifier } from "../_infra/generators.js";
@@ -157,6 +159,7 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly to?: DateString | number;
     readonly isWorkingSelectionChange?: boolean;
     readonly localIdentifier?: string;
+    readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
 }
 
 export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsertDateFilterNonAllTimePayload;
@@ -213,7 +216,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
             }
         }
     } else if (existingFilterIndex >= 0) {
-        const { type, granularity, from, to, localIdentifier } = action.payload;
+        const { type, granularity, from, to, localIdentifier, boundedFilter } = action.payload;
         const dateFilter = filterContextDefinition.filters[existingFilterIndex];
 
         if (isDashboardDateFilter(dateFilter)) {
@@ -225,9 +228,15 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
             if (localIdentifier) {
                 dateFilter.dateFilter.localIdentifier = localIdentifier;
             }
+
+            if (boundedFilter) {
+                dateFilter.dateFilter.boundedFilter = boundedFilter;
+            } else {
+                delete dateFilter.dateFilter.boundedFilter;
+            }
         }
     } else {
-        const { type, granularity, from, to, dataSet, localIdentifier } = action.payload;
+        const { type, granularity, from, to, dataSet, localIdentifier, boundedFilter } = action.payload;
         filterContextDefinition.filters.unshift({
             dateFilter: {
                 granularity,
@@ -236,6 +245,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                 to,
                 ...(dataSet ? { dataSet } : {}),
                 ...(localIdentifier ? { localIdentifier } : {}),
+                ...(boundedFilter ? { boundedFilter } : {}),
             },
         });
     }

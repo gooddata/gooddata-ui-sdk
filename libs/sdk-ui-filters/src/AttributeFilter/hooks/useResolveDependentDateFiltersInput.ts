@@ -23,7 +23,8 @@ export const useResolveDependentDateFiltersInput = (
 
         return dependentDateFilters
             .map((dependentDateFilter) => {
-                const { dataSet, granularity, from, to, localIdentifier } = dependentDateFilter.dateFilter;
+                const { dataSet, granularity, from, to, localIdentifier, boundedFilter } =
+                    dependentDateFilter.dateFilter;
 
                 if (isRelativeDashboardDateFilter(dependentDateFilter)) {
                     // Ignore only date filters set as "All time"
@@ -34,7 +35,14 @@ export const useResolveDependentDateFiltersInput = (
                     const parsedFrom = Number.parseInt(from.toString(), 10) ?? 0;
                     const parsedTo = Number.parseInt(to.toString(), 10) ?? 0;
 
-                    return newRelativeDateFilter(dataSet, granularity, parsedFrom, parsedTo, localIdentifier);
+                    return newRelativeDateFilter(
+                        dataSet,
+                        granularity,
+                        parsedFrom,
+                        parsedTo,
+                        localIdentifier,
+                        boundedFilter,
+                    );
                 } else {
                     return newAbsoluteDateFilter(dataSet, from.toString(), to.toString(), localIdentifier);
                 }

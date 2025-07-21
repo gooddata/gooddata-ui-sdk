@@ -1367,6 +1367,7 @@ export interface IDashboardDateFilter {
         dataSet?: ObjRef;
         attribute?: ObjRef;
         localIdentifier?: string;
+        boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     };
 }
 
@@ -3020,6 +3021,7 @@ export interface IRelativeDateFilterForm extends IDateFilterOption {
 
 // @alpha
 export interface IRelativeDateFilterPreset extends IDateFilterOption {
+    boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     from: RelativeDateFilterGranularityOffset;
     granularity: DateFilterGranularity;
     to: RelativeDateFilterGranularityOffset;
@@ -3033,6 +3035,8 @@ export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGr
 
 // @public
 export interface IRelativeDateFilterValues {
+    // (undocumented)
+    boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     // (undocumented)
     dataSet?: ObjRef;
     // (undocumented)
@@ -3585,6 +3589,7 @@ export interface ISettings {
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
+    enableToDateFilters?: boolean;
     enableUnavailableItemsVisible?: boolean;
     enableUserManagement?: boolean;
     enableVisualizationFineTuning?: boolean;
@@ -3695,6 +3700,9 @@ export function isKpiWithoutComparison(obj: unknown): obj is IKpiWithoutComparis
 
 // @public
 export function isLocalIdRef(obj: unknown): obj is LocalIdRef;
+
+// @public
+export function isLowerBound(obj: unknown): obj is ILowerBoundedFilter;
 
 // @beta
 export function isMdObject(obj: unknown): obj is IMdObject;
@@ -3892,6 +3900,9 @@ export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor;
 
 // @public
 export function isTotalLocator(obj: unknown): obj is ITotalLocatorItem;
+
+// @public
+export function isUpperBound(obj: unknown): obj is IUpperBoundedFilter;
 
 // @public
 export function isUriRef(obj: unknown): obj is UriRef;
@@ -4845,7 +4856,7 @@ export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string
 export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string, operator: RankingFilterOperator, value: number): IRankingFilter;
 
 // @alpha
-export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number, dataSet?: ObjRef, localIdentifier?: string): IDashboardDateFilter;
+export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number, dataSet?: ObjRef, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter): IDashboardDateFilter;
 
 // @public
 export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter): IRelativeDateFilter;

@@ -107,7 +107,7 @@ export function dateFilterOptionToDashboardDateFilter(
     }
 
     if (isRelativeDateFilter(afmFilter)) {
-        const { from, to, granularity } = relativeDateFilterValues(afmFilter);
+        const { from, to, granularity, boundedFilter } = relativeDateFilterValues(afmFilter);
         return {
             dateFilter: {
                 type: "relative",
@@ -116,6 +116,7 @@ export function dateFilterOptionToDashboardDateFilter(
                 to,
                 dataSet,
                 localIdentifier,
+                boundedFilter,
             },
         };
     } else {

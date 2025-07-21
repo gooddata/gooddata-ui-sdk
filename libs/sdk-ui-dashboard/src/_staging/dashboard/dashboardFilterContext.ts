@@ -19,6 +19,7 @@ import {
     isRelativeDateFilter,
     newRelativeDashboardDateFilter,
     DateFilterGranularity,
+    isRelativeBoundedDateFilter,
 } from "@gooddata/sdk-model";
 import { createDefaultFilterContext } from "./defaultFilterContext.js";
 import { IDashboardFilter } from "../../types.js";
@@ -174,6 +175,7 @@ export function dashboardFilterToFilterContextItem(
             filter.relativeDateFilter.to,
             keepDatasets ? filter.relativeDateFilter.dataSet : undefined,
             filter.relativeDateFilter.localIdentifier,
+            isRelativeBoundedDateFilter(filter) ? filter.relativeDateFilter.boundedFilter : undefined,
         );
     }
 

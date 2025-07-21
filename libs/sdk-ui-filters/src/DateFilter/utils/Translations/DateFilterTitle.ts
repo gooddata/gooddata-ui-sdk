@@ -15,6 +15,9 @@ import {
     isAbsoluteDateFilterPreset,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
+    IUpperBoundedFilter,
+    ILowerBoundedFilter,
+    isUpperBound,
 } from "@gooddata/sdk-model";
 import {
     IUiAbsoluteDateFilterForm,
@@ -96,30 +99,35 @@ const relativeDateRangeFormatters: Array<{
         to: number,
         intlGranularity: string,
         translator: IDateAndMessageTranslator,
+        boundedFilter: IUpperBoundedFilter | ILowerBoundedFilter,
     ) => string;
 }> = [
     {
-        // Today, This month
+        // Today, This month, This month to date
         predicate: (from, to) => from === 0 && to === 0,
-        formatter: (_from, _to, intlGranularity, translator) =>
-            translator.formatMessage(messages[`this${capitalize(intlGranularity)}`]),
+        formatter: (_from, _to, intlGranularity, translator, boundedFilter) => {
+            if (isUpperBound(boundedFilter) && boundedFilter.to === 0) {
+                return translator.formatMessage(messages[`this${capitalize(intlGranularity)}ToDate`]);
+            }
+            return translator.formatMessage(messages[`this${capitalize(intlGranularity)}`]);
+        },
     },
     {
         // Tomorrow, Next month
         predicate: (from, to) => from === 1 && to === 1,
-        formatter: (_from, _to, intlGranularity, translator) =>
+        formatter: (_from, _to, intlGranularity, translator, _bound) =>
             translator.formatMessage(messages[`next${capitalize(intlGranularity)}`]),
     },
     {
         // Yesterday, Last month
         predicate: (from, to) => from === -1 && to === -1,
-        formatter: (_from, _to, intlGranularity, translator) =>
+        formatter: (_from, _to, intlGranularity, translator, _bound) =>
             translator.formatMessage(messages[`last${capitalize(intlGranularity)}`]),
     },
     {
         // Next N days (months)
         predicate: (from) => from === 0,
-        formatter: (_from, to, intlGranularity, translator) =>
+        formatter: (_from, to, intlGranularity, translator, _bound) =>
             translator.formatMessage(messages[`nextN${capitalize(intlGranularity)}s`], {
                 n: Math.abs(to) + 1,
             }),
@@ -127,7 +135,7 @@ const relativeDateRangeFormatters: Array<{
     {
         // Last N days (months)
         predicate: (_from, to) => to === 0,
-        formatter: (from, _to, intlGranularity, translator) =>
+        formatter: (from, _to, intlGranularity, translator, _bound) =>
             translator.formatMessage(messages[`lastN${capitalize(intlGranularity)}s`], {
                 n: Math.abs(from) + 1,
             }),
@@ -135,7 +143,7 @@ const relativeDateRangeFormatters: Array<{
     {
         // From N days ago to N days ago
         predicate: (from, to) => from < 0 && from === to,
-        formatter: (from, _to, intlGranularity, translator) =>
+        formatter: (from, _to, intlGranularity, translator, _bound) =>
             translator.formatMessage(messages[`${intlGranularity}s.past.sameValue`], {
                 value: Math.abs(from),
             }),
@@ -143,7 +151,7 @@ const relativeDateRangeFormatters: Array<{
     {
         // From N days ago to N days ahead
         predicate: (from, to) => from > 0 && from === to,
-        formatter: (from, _to, intlGranularity, translator) =>
+        formatter: (from, _to, intlGranularity, translator, _bound) =>
             translator.formatMessage(messages[`${intlGranularity}s.future.sameValue`], {
                 value: Math.abs(from),
             }),
@@ -151,7 +159,7 @@ const relativeDateRangeFormatters: Array<{
     {
         // From N days ago to M days ago
         predicate: (from, to) => from < 0 && to < 0,
-        formatter: (from, to, intlGranularity, translator) =>
+        formatter: (from, to, intlGranularity, translator, _bound) =>
             translator.formatMessage(messages[`${intlGranularity}s.past`], {
                 from: Math.abs(from),
                 to: Math.abs(to),
@@ -160,7 +168,7 @@ const relativeDateRangeFormatters: Array<{
     {
         // From N days ahead to M days ahead
         predicate: (from, to) => from > 0 && to > 0,
-        formatter: (from, to, intlGranularity, translator) =>
+        formatter: (from, to, intlGranularity, translator, _bound) =>
             translator.formatMessage(messages[`${intlGranularity}s.future`], {
                 from: Math.abs(from),
                 to: Math.abs(to),
@@ -169,7 +177,7 @@ const relativeDateRangeFormatters: Array<{
     {
         // From N days ago to M days ahead
         predicate: () => true,
-        formatter: (from, to, intlGranularity, translator) =>
+        formatter: (from, to, intlGranularity, translator, _bound) =>
             translator.formatMessage(messages[`${intlGranularity}s.mixed`], {
                 from: Math.abs(from),
                 to: Math.abs(to),
@@ -182,13 +190,14 @@ export const formatRelativeDateRange = (
     to: number,
     granularity: DateFilterGranularity,
     translator: IDateAndMessageTranslator,
+    boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter,
 ): string => {
     const intlGranularity = granularityIntlCodes[granularity];
     if (intlGranularity === undefined) {
         return granularity; // in the case when invalid granularity was found in metadata
     }
     const { formatter } = relativeDateRangeFormatters.find((f) => f.predicate(from, to));
-    return formatter(from, to, intlGranularity, translator);
+    return formatter(from, to, intlGranularity, translator, boundedFilter);
 };
 
 const getAllTimeFilterRepresentation = (translator: IMessageTranslator): string =>
@@ -209,13 +218,20 @@ const getRelativeFormFilterRepresentation = (
     translator: IDateAndMessageTranslator,
 ): string =>
     typeof filter.from === "number" && typeof filter.to === "number"
-        ? formatRelativeDateRange(filter.from, filter.to, filter.granularity, translator)
+        ? formatRelativeDateRange(
+              filter.from,
+              filter.to,
+              filter.granularity,
+              translator,
+              filter.boundedFilter,
+          )
         : "";
 
 const getRelativePresetFilterRepresentation = (
     filter: IRelativeDateFilterPreset,
     translator: IDateAndMessageTranslator,
-): string => formatRelativeDateRange(filter.from, filter.to, filter.granularity, translator);
+): string =>
+    formatRelativeDateRange(filter.from, filter.to, filter.granularity, translator, filter.boundedFilter);
 
 const getDateFilterRepresentationByFilterType = (
     filter: DateFilterOption,

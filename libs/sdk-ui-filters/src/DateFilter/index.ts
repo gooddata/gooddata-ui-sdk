@@ -70,6 +70,7 @@ export type {
 export {
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,
+    isRelativeDateFilterWithBoundOption,
     isUiRelativeDateFilterForm,
 } from "./interfaces/index.js";
 

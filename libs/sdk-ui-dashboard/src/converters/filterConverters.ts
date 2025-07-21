@@ -100,6 +100,7 @@ export function dashboardDateFilterToDateFilterByWidget(
             numberOrStringToNumber(filter.dateFilter.from!),
             numberOrStringToNumber(filter.dateFilter.to!),
             filter.dateFilter.localIdentifier,
+            filter.dateFilter.boundedFilter,
         );
     } else {
         return newAbsoluteDateFilter(
@@ -129,6 +130,7 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
             numberOrStringToNumber(filter.dateFilter.from!),
             numberOrStringToNumber(filter.dateFilter.to!),
             filter.dateFilter.localIdentifier,
+            filter.dateFilter.boundedFilter,
         );
     } else {
         return newAbsoluteDateFilter(

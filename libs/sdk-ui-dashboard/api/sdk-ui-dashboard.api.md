@@ -143,6 +143,7 @@ import { ILayoutSectionPath as ILayoutSectionPath_2 } from '../../../types.js';
 import { IListedDashboard } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
+import { ILowerBoundedFilter } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMenuButtonItemsVisibility as IMenuButtonItemsVisibility_2 } from '../../../types.js';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
@@ -170,6 +171,7 @@ import { ITheme } from '@gooddata/sdk-model';
 import { ITitleProps as ITitleProps_2 } from './types.js';
 import { ITopBarProps as ITopBarProps_2 } from './types.js';
 import { ITranslations } from '@gooddata/sdk-ui';
+import { IUpperBoundedFilter } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
@@ -633,7 +635,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 }
 
 // @public
-export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string): ChangeDateFilterSelection;
+export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter): ChangeDateFilterSelection;
 
 // @alpha (undocumented)
 export interface ChangeDrillableItems extends IDashboardCommand {
@@ -3247,6 +3249,8 @@ export type DateFilterInteractionType = "dateFilterTitleResetClicked" | "dateFil
 
 // @public
 export interface DateFilterSelection {
+    // @alpha
+    readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     readonly dataSet?: ObjRef;
     readonly dateFilterOptionLocalId?: string;
     readonly from?: DateString | number;

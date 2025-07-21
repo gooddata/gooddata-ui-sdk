@@ -2,7 +2,12 @@
 import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
 import { DateFilterGranularity, DateString } from "../dateFilterConfig/index.js";
-import { IAttributeElements, isAttributeElementsByRef } from "../execution/filter/index.js";
+import {
+    IAttributeElements,
+    ILowerBoundedFilter,
+    isAttributeElementsByRef,
+    IUpperBoundedFilter,
+} from "../execution/filter/index.js";
 import { isObjRef, ObjRef } from "../objRef/index.js";
 import { IDashboardObjectIdentity } from "./common.js";
 
@@ -199,6 +204,12 @@ export interface IDashboardDateFilter {
          * Identifier of the filter which is valid in the scope of the filter context
          */
         localIdentifier?: string;
+
+        /**
+         * Additional bounded filter
+         * @alpha
+         */
+        boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     };
 }
 
@@ -243,6 +254,14 @@ export function isRelativeDashboardDateFilter(dateFilter: IDashboardDateFilter):
 }
 
 /**
+ * Returns true when given date filter has type set to relative and bounded filter is set.
+ * @alpha
+ */
+export function isRelativeBoundedDashboardDateFilter(dateFilter: IDashboardDateFilter): boolean {
+    return isRelativeDashboardDateFilter(dateFilter) && !isEmpty(dateFilter.dateFilter.boundedFilter);
+}
+
+/**
  * Returns true when given date filter has type set to absolute.
  * @alpha
  */
@@ -264,6 +283,7 @@ export function newRelativeDashboardDateFilter(
     to: number,
     dataSet?: ObjRef,
     localIdentifier?: string,
+    boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter,
 ): IDashboardDateFilter {
     return {
         dateFilter: {
@@ -272,6 +292,7 @@ export function newRelativeDashboardDateFilter(
             from,
             to,
             dataSet,
+            ...(boundedFilter ? { boundedFilter } : {}),
             ...(localIdentifier ? { localIdentifier } : {}),
         },
     };

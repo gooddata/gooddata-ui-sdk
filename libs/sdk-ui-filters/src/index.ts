@@ -38,6 +38,7 @@ export {
     defaultDateFilterOptions,
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,
+    isRelativeDateFilterWithBoundOption,
     filterVisibleDateFilterOptions,
     isUiRelativeDateFilterForm,
     getLocalizedIcuDateFormatPattern,

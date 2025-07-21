@@ -1,6 +1,7 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { Identifier, ObjRef } from "../objRef/index.js";
+import { ILowerBoundedFilter, IUpperBoundedFilter } from "../execution/filter/index.js";
 
 /**
  * Date string - ISO-8601 calendar date string, eg.: '2018-12-30'
@@ -149,6 +150,10 @@ export interface IRelativeDateFilterPreset extends IDateFilterOption {
      * Relative date filter granularity end offset
      */
     to: RelativeDateFilterGranularityOffset;
+    /**
+     * Additional bound for the relative date filter
+     */
+    boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
 }
 
 /**

@@ -452,6 +452,24 @@ export function isRelativeUpperBoundedDateFilterBody(
 }
 
 /**
+ * Type guard checking whether the provided object is an upper bounded filter.
+ *
+ * @public
+ */
+export function isUpperBound(obj: unknown): obj is IUpperBoundedFilter {
+    return obj !== null && typeof obj === "object" && (obj as IUpperBoundedFilter).to != null;
+}
+
+/**
+ * Type guard checking whether the provided object is a lower bounded filter.
+ *
+ * @public
+ */
+export function isLowerBound(obj: unknown): obj is ILowerBoundedFilter {
+    return obj !== null && typeof obj === "object" && (obj as ILowerBoundedFilter).from != null;
+}
+
+/**
  * Type guard checking whether the provided filter body has a bounded filter with lower bounded.
  *
  * @public
@@ -879,6 +897,7 @@ export interface IRelativeDateFilterValues {
     to: number;
     granularity: string;
     dataSet?: ObjRef;
+    boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
 }
 
 /**
@@ -899,6 +918,9 @@ export function relativeDateFilterValues(
         from: filter.relativeDateFilter.from,
         to: filter.relativeDateFilter.to,
         granularity: filter.relativeDateFilter.granularity,
+        ...(isRelativeBoundedDateFilter(filter)
+            ? { boundedFilter: filter.relativeDateFilter.boundedFilter }
+            : {}),
         ...(includeDataSet ? { dataSet: filter.relativeDateFilter.dataSet } : {}),
     };
 }
