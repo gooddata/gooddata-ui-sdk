@@ -1,9 +1,26 @@
 // (C) 2020-2025 GoodData Corporation
-import { withIntl } from "@gooddata/sdk-ui";
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
 import { IRankingFilterProps, RankingFilter } from "../RankingFilter.js";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
+
+/**
+ * Mock BubbleHoverTrigger and Bubble to prevent test hangs after React 19 upgrade.
+ * RankingFilter uses these components for tooltips throughout the component hierarchy,
+ * but the complex DOM event handling and positioning logic causes hangs in JSDOM test environment.
+ */
+vi.mock("@gooddata/sdk-ui-kit", async () => {
+    const actual = await vi.importActual("@gooddata/sdk-ui-kit");
+    return {
+        ...actual,
+        BubbleHoverTrigger: ({ children }: { children: React.ReactNode }) => (
+            <div className="gd-bubble-trigger">{children}</div>
+        ),
+        Bubble: ({ className }: { children?: React.ReactNode; className?: string }) => (
+            <div className={`gd-bubble ${className || ""}`} style={{ display: "none" }} />
+        ),
+    };
+});
 
 import * as Mock from "./mocks.js";
 

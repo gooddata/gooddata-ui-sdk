@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     createDateFilter,
     clickDateFilterButton,
@@ -41,6 +41,24 @@ import { AbsoluteForm } from "./AbsoluteForm.js";
 import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
 import { verifyDateFormat } from "../DateFilterCore.js";
 import { describe, it, expect, vi } from "vitest";
+
+/**
+ * Mock BubbleHoverTrigger and Bubble to prevent test hangs after React 19 upgrade.
+ * DateFilter uses these components for tooltips throughout the component hierarchy,
+ * but the complex DOM event handling and positioning logic causes hangs in JSDOM test environment.
+ */
+vi.mock("@gooddata/sdk-ui-kit", async () => {
+    const actual = await vi.importActual("@gooddata/sdk-ui-kit");
+    return {
+        ...actual,
+        BubbleHoverTrigger: ({ children }: { children: React.ReactNode }) => (
+            <div className="gd-bubble-trigger">{children}</div>
+        ),
+        Bubble: ({ className }: { children?: React.ReactNode; className?: string }) => (
+            <div className={`gd-bubble ${className || ""}`} style={{ display: "none" }} />
+        ),
+    };
+});
 
 describe("DateFilter", () => {
     it("should render without crash", () => {

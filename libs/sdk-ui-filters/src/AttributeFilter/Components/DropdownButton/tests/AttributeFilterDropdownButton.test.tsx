@@ -7,7 +7,28 @@ import {
     AttributeFilterDropdownButton,
     IAttributeFilterDropdownButtonProps,
 } from "../AttributeFilterDropdownButton.js";
-import * as shared from "../../../../shared/index.js";
+
+/**
+ * Mock FilterButtonCustomIcon to avoid test hangs after React 19 upgrade.
+ *
+ * The FilterButtonCustomIcon component uses BubbleHoverTrigger + Bubble components for tooltip functionality.
+ * After React 19 upgrade, the complex DOM event handling and positioning logic in BubbleHoverTrigger
+ * became incompatible with the JSDOM test environment, causing tests to hang during component initialization.
+ *
+ * React 19 changed component initialization and effect scheduling, making the async hover logic,
+ * DOM positioning calculations, and event handling problematic in tests. This mock provides the same
+ * DOM structure for testing without the complex interactions that cause hangs.
+ */
+vi.mock("../../../../shared/index.js", () => ({
+    FilterButtonCustomIcon: ({ customIcon }: { customIcon?: any }) =>
+        customIcon ? (
+            <div className="gd-filter-button-custom-icon-wrapper s-gd-filter-button-custom-icon-wrapper">
+                <i
+                    className={`gd-filter-button-custom-icon s-gd-filter-button-custom-icon ${customIcon.icon}`}
+                />
+            </div>
+        ) : null,
+}));
 
 const ATTRIBUTE_FILTER_BUTTON_SELECTOR = ".s-attribute-filter";
 
@@ -46,14 +67,15 @@ describe("Test AttributeFilterDropdownButton", () => {
     });
 
     it("should render custom icon", () => {
-        const MockCustomIconComponent = vi.spyOn(shared, "FilterButtonCustomIcon");
         const customIcon = {
-            icon: "icon",
+            icon: "gd-icon-custom",
             tooltip: "tooltip",
         };
 
         renderComponent({ customIcon });
-        expect(MockCustomIconComponent).toHaveBeenCalledWith({ customIcon }, {});
+
+        expect(document.querySelector(".gd-filter-button-custom-icon-wrapper")).toBeInTheDocument();
+        expect(document.querySelector(".gd-icon-custom")).toBeInTheDocument();
     });
 
     it("should render the button as disabled", () => {

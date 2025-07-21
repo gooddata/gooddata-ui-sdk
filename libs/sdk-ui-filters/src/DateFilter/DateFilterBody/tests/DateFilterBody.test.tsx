@@ -10,6 +10,24 @@ import { IAllTimeDateFilterOption } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 
+/**
+ * Mock BubbleHoverTrigger and Bubble to prevent test hangs after React 19 upgrade.
+ * DateFilter components use these for tooltips, but the complex DOM event handling
+ * and positioning logic causes hangs in JSDOM test environment.
+ */
+vi.mock("@gooddata/sdk-ui-kit", async () => {
+    const actual = await vi.importActual("@gooddata/sdk-ui-kit");
+    return {
+        ...actual,
+        BubbleHoverTrigger: ({ children }: { children: React.ReactNode }) => (
+            <div className="gd-bubble-trigger">{children}</div>
+        ),
+        Bubble: ({ className }: { children?: React.ReactNode; className?: string }) => (
+            <div className={`gd-bubble ${className || ""}`} style={{ display: "none" }} />
+        ),
+    };
+});
+
 describe("ExtendedDateFilterBody", () => {
     const allTime: IAllTimeDateFilterOption = {
         type: "allTime",
@@ -46,6 +64,7 @@ describe("ExtendedDateFilterBody", () => {
 
             onApplyClick: vi.fn(),
             onCancelClick: vi.fn(),
+            onConfigurationClick: vi.fn(),
             closeDropdown: vi.fn(),
         };
         const Wrapped = withIntl(DateFilterBody);

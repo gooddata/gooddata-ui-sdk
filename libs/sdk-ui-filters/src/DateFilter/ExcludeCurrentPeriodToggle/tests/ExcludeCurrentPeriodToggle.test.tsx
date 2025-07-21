@@ -4,6 +4,29 @@ import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle.js";
 import { describe, it, expect, vi } from "vitest";
 import { WithIntlForTest } from "@gooddata/sdk-ui";
 
+/**
+ * Mock BubbleHoverTrigger and Bubble to prevent test hangs after React 19 upgrade.
+ * ExcludeCurrentPeriodToggle uses these for tooltip functionality, but the complex DOM event handling
+ * and positioning logic causes hangs in JSDOM test environment.
+ */
+vi.mock("@gooddata/sdk-ui-kit", async () => {
+    const actual = await vi.importActual("@gooddata/sdk-ui-kit");
+    return {
+        ...actual,
+        BubbleHoverTrigger: ({ children }: { children: React.ReactNode }) => (
+            <div className="gd-bubble-trigger">{children}</div>
+        ),
+        Bubble: ({ children, className }: { children?: React.ReactNode; className?: string }) => {
+            // Render children when present (for tooltip tests), otherwise hide the bubble
+            return children ? (
+                <div className={`gd-bubble ${className || ""}`}>{children}</div>
+            ) : (
+                <div className={`gd-bubble ${className || ""}`} style={{ display: "none" }} />
+            );
+        },
+    };
+});
+
 describe("ExcludeCurrentPeriodToggle", () => {
     const renderWithDisabledValue = (disabled: boolean | undefined) => {
         const disabledProp = disabled === undefined ? null : { disabled };
