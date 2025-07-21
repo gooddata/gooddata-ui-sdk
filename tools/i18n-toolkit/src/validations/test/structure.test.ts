@@ -2,11 +2,20 @@
 
 import { LocalesStructure } from "../../schema/localization.js";
 import { getStructureCheck } from "../structure.js";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeAll, afterAll, MockInstance } from "vitest";
 
 type Scenario = [string, LocalesStructure, string | null];
 
 describe("validate structure tests", () => {
+    let consoleErrorMock: MockInstance;
+    beforeAll(() => {
+        consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+    });
+
+    afterAll(() => {
+        consoleErrorMock.mockRestore();
+    });
+
     const scenarios: Scenario[] = [
         [
             "basic format with required only",

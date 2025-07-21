@@ -67,13 +67,13 @@ describe("RelativeDateFilterForm", () => {
                 availableGranularities,
                 selectedGranularity: relativeFormOption.granularity,
             }),
-            {},
+            undefined,
         );
         expect(rangePickerMock).toHaveBeenCalledWith(
             expect.objectContaining({
                 selectedFilterOption: relativeFormOption,
             }),
-            {},
+            undefined,
         );
     });
 

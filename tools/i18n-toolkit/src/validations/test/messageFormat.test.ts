@@ -1,11 +1,20 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { getIntlMessageFormatCheck } from "../messageFormat.js";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi, beforeAll, afterAll, MockInstance } from "vitest";
 
 type Scenario = [string, string, string | null];
 
 describe("validate ICU message tests", () => {
+    let consoleErrorMock: MockInstance;
+    beforeAll(() => {
+        consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+    });
+
+    afterAll(() => {
+        consoleErrorMock.mockRestore();
+    });
+
     const scenarios: Scenario[] = [
         ["simple text", "This is message", null],
         ["simple text with marks", "This is <strong>message</strong>", null],

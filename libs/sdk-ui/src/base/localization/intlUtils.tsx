@@ -94,11 +94,11 @@ export function withIntl<P extends Attributes>(
     customMessages?: ITranslations,
 ): ComponentType<P> {
     function WithIntl(props: P) {
-        const locale = customLocale ? customLocale : DefaultLocale;
-        const messages = customMessages ? customMessages : resolveLocaleDefaultMessages(locale, messagesMap);
+        const locale = customLocale ?? DefaultLocale;
+        const messages = customMessages ?? resolveLocaleDefaultMessages(locale, messagesMap);
 
         return (
-            <IntlProvider locale={locale as string} messages={messages}>
+            <IntlProvider locale={locale} messages={messages}>
                 <WrappedComponent {...props} />
             </IntlProvider>
         );

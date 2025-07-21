@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import { render } from "@testing-library/react";
-import { withIntl } from "@gooddata/sdk-ui";
+import { WithIntlForTest } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi, afterEach } from "vitest";
 
 import {
@@ -21,8 +21,11 @@ describe("Test AttributeFilterDropdownButton", () => {
             isLoading: false,
             isError: false,
         };
-        const Wrapped = withIntl(AttributeFilterDropdownButton);
-        return render(<Wrapped {...defaultProps} {...props} />);
+        return render(
+            <WithIntlForTest>
+                <AttributeFilterDropdownButton {...defaultProps} {...props} />
+            </WithIntlForTest>,
+        );
     };
 
     afterEach(() => {

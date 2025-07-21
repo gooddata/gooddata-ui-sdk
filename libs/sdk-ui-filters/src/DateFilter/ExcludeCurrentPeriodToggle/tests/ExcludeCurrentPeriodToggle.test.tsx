@@ -2,6 +2,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle.js";
 import { describe, it, expect, vi } from "vitest";
+import { WithIntlForTest } from "@gooddata/sdk-ui";
 
 describe("ExcludeCurrentPeriodToggle", () => {
     const renderWithDisabledValue = (disabled: boolean | undefined) => {
@@ -11,7 +12,11 @@ describe("ExcludeCurrentPeriodToggle", () => {
             onChange: vi.fn(),
             value: true,
         };
-        return render(<ExcludeCurrentPeriodToggle {...props} />);
+        return render(
+            <WithIntlForTest>
+                <ExcludeCurrentPeriodToggle {...props} />
+            </WithIntlForTest>,
+        );
     };
 
     it('should be disabled when passed true as the value of the "disabled" prop', () => {

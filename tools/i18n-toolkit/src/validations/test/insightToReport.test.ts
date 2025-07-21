@@ -2,7 +2,7 @@
 
 import { getInsightToReportCheck } from "../insightToReport.js";
 import { LocalesStructure } from "../../schema/localization.js";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeAll, afterAll, MockInstance } from "vitest";
 
 type Scenario = [string, LocalesStructure, string | null];
 
@@ -12,6 +12,15 @@ vi.mock("../../utils", () => ({
 }));
 
 describe("validate insight to report", () => {
+    let consoleErrorMock: MockInstance;
+    beforeAll(() => {
+        consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+    });
+
+    afterAll(() => {
+        consoleErrorMock.mockRestore();
+    });
+
     const scenarios: Scenario[] = [
         [
             "valid simple localisation",

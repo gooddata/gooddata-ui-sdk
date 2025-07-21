@@ -4,6 +4,7 @@ import noop from "lodash/noop.js";
 import { getPagingValues, IStaticLegendProps, StaticLegend } from "../StaticLegend.js";
 import { IPushpinCategoryLegendItem } from "../types.js";
 import { describe, it, expect } from "vitest";
+import { WithIntlForTest } from "@gooddata/sdk-ui";
 
 describe("StaticLegend", () => {
     function renderComponent(customProps: Partial<IStaticLegendProps> = {}) {
@@ -16,7 +17,11 @@ describe("StaticLegend", () => {
             ...customProps,
         };
 
-        return render(<StaticLegend {...props} />);
+        return render(
+            <WithIntlForTest>
+                <StaticLegend {...props} />
+            </WithIntlForTest>,
+        );
     }
 
     it("should render items", () => {

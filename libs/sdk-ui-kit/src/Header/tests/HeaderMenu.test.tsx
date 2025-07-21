@@ -1,12 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { ITranslations } from "@gooddata/sdk-ui";
+import { ITranslations, WithIntlForTest } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 
 import { HeaderMenu } from "../HeaderMenu.js";
 import { IHeaderMenuItem, IHeaderMenuProps } from "../typings.js";
-import { IntlProvider } from "react-intl";
 
 const sections: IHeaderMenuItem[][] = [
     [
@@ -20,19 +19,20 @@ const mockTranslation: ITranslations = {
     account: "Account",
     dic: "Dictionary",
     logout: "Logout",
+    "gs.header.menu.accessibility.label": "Accessibility",
 };
 
-function Wrapper(props: IHeaderMenuProps) {
-    return (
-        <IntlProvider locale="en-US" messages={mockTranslation}>
+function renderWrapper(props: IHeaderMenuProps) {
+    render(
+        <WithIntlForTest customMessages={mockTranslation}>
             <HeaderMenu {...props} />
-        </IntlProvider>
+        </WithIntlForTest>,
     );
 }
 
 describe("ReactHeaderMenu", () => {
     it("should render menu items", () => {
-        render(<Wrapper sections={sections} />);
+        renderWrapper({ sections });
 
         expect(screen.getByText(mockTranslation.account)).toBeInTheDocument();
         expect(screen.getByText(mockTranslation.dic)).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe("ReactHeaderMenu", () => {
 
     it("should call click handler on menu item", async () => {
         const clickSpy = vi.fn();
-        render(<Wrapper sections={sections} onMenuItemClick={clickSpy} />);
+        renderWrapper({ sections, onMenuItemClick: clickSpy });
 
         await userEvent.click(screen.getByText(mockTranslation.dic));
 

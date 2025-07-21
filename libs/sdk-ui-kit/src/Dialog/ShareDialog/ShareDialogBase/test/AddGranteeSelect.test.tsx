@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { AddGranteeSelect } from "../AddGranteeSelect.js";
 import { IAddGranteeSelectProps } from "../types.js";
 import { noop } from "lodash";
-import { BackendProvider, withIntl, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { BackendProvider, WithIntlForTest, WorkspaceProvider } from "@gooddata/sdk-ui";
 import {
     defaultRecordedBackendCapabilities,
     recordedBackend,
@@ -48,11 +48,13 @@ const createComponent = (
     });
 
     return render(
-        <BackendProvider backend={backend}>
-            <WorkspaceProvider workspace={"foo"}>
-                <AddGranteeSelect {...props} />
-            </WorkspaceProvider>
-        </BackendProvider>,
+        <WithIntlForTest>
+            <BackendProvider backend={backend}>
+                <WorkspaceProvider workspace={"foo"}>
+                    <AddGranteeSelect {...props} />
+                </WorkspaceProvider>
+            </BackendProvider>
+        </WithIntlForTest>,
     );
 };
 

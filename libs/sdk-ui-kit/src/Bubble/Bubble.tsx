@@ -51,6 +51,12 @@ const ARROW_OFFSETS: ArrowOffsets = {
     ".. br": [Y_SHIFT, -X_SHIFT],
 };
 
+// Stable default objects to prevent infinite re-renders
+const EMPTY_ARROW_OFFSETS = {};
+const EMPTY_ARROW_DIRECTIONS = {};
+const EMPTY_ARROW_STYLE = {};
+const DEFAULT_ALIGN_POINTS = [{ align: "bl tl" }];
+
 /**
  * @internal
  */
@@ -96,11 +102,11 @@ export interface IBubbleState {
 export const Bubble = memo(
     function BubbleComponent({
         id,
-        alignPoints = [{ align: "bl tl" }],
+        alignPoints = DEFAULT_ALIGN_POINTS,
         alignTo = "body",
-        arrowOffsets = {},
-        arrowDirections = {},
-        arrowStyle = {},
+        arrowOffsets = EMPTY_ARROW_OFFSETS,
+        arrowDirections = EMPTY_ARROW_DIRECTIONS,
+        arrowStyle = EMPTY_ARROW_STYLE,
         className = "bubble-primary",
         closeOnOutsideClick = false,
         closeOnParentScroll = true,
@@ -237,3 +243,6 @@ export const Bubble = memo(
         return isReactEqual(prevProps, nextProps);
     },
 );
+
+// Add identifier for BubbleTrigger detection
+(Bubble as any).identifier = "Bubble";

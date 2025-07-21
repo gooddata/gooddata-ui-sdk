@@ -345,6 +345,10 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
         );
     }
 
+    private handleDaySelect = (selected: Date | undefined, triggerDate: Date) => {
+        this.handleDayChanged(selected || triggerDate);
+    };
+
     private handleMonthChanged(month: Date) {
         this.inputRef.current.focus();
         this.setState({ monthDate: month });
@@ -451,7 +455,7 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
                             locale={convertLocale(intl.locale)}
                             showOutsideDays={true}
                             mode="single"
-                            onSelect={this.handleDayChanged}
+                            onSelect={this.handleDaySelect}
                             selected={selectedDate}
                             month={monthDate}
                             onMonthChange={this.handleMonthChanged}
