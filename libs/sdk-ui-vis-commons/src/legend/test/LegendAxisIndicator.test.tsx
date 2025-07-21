@@ -2,10 +2,15 @@
 import { render, screen } from "@testing-library/react";
 import { ILegendAxisIndicatorProps, LegendAxisIndicator } from "../LegendAxisIndicator.js";
 import { describe, it, expect } from "vitest";
+import { WithIntlForTest } from "@gooddata/sdk-ui";
 
 describe("LegendAxisIndicator", () => {
     function createComponent(props: ILegendAxisIndicatorProps) {
-        return render(<LegendAxisIndicator {...props} />);
+        return render(
+            <WithIntlForTest>
+                <LegendAxisIndicator {...props} />
+            </WithIntlForTest>,
+        );
     }
 
     it.each([

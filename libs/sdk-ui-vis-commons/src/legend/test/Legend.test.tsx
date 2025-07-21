@@ -1,6 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import { render, screen } from "@testing-library/react";
+import { Intl } from "@gooddata/sdk-ui";
 import { ILegendProps, Legend } from "../Legend.js";
 import { describe, it, expect } from "vitest";
 
@@ -35,7 +36,11 @@ describe("Legend", () => {
             ...userProps,
         };
 
-        return render(<Legend {...props} />);
+        return render(
+            <Intl forTest>
+                <Legend {...props} />
+            </Intl>,
+        );
     }
 
     it("should render StaticLegend on desktop", () => {

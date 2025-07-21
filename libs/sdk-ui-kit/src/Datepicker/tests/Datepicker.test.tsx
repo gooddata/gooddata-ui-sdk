@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
-import { parse } from "date-fns";
+import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { parse } from "date-fns";
 import { WrappedDatePicker, DatePickerProps } from "../Datepicker.js";
 import { createIntlMock, Intl } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
@@ -232,7 +232,7 @@ describe("DatePicker", () => {
                     });
                 });
 
-                it.only("should call onChange with date when different day is clicked in calendar", async () => {
+                it("should call onChange with date when different day is clicked in calendar", async () => {
                     const onChange = vi.fn();
                     createComponent({
                         onChange,
@@ -240,7 +240,9 @@ describe("DatePicker", () => {
 
                     await openCalendar();
 
-                    fireEvent.click(document.querySelectorAll(".rdp-day_outside")[0]);
+                    // Click on a button within an outside day cell (previous/next month)
+                    const outsideButton = document.querySelector(".rdp-outside button");
+                    await userEvent.click(outsideButton);
                     await waitFor(() => {
                         expect(onChange).toHaveBeenCalledWith(expect.any(Date));
                     });
@@ -255,7 +257,7 @@ describe("DatePicker", () => {
 
                     await openCalendar();
 
-                    fireEvent.click(document.querySelectorAll(".rdp-day_today")[0]);
+                    userEvent.click(document.querySelectorAll(".rdp-day_today")[0]);
                     await waitFor(() => {
                         expect(onChange).toHaveBeenCalledTimes(0);
                     });
@@ -278,7 +280,7 @@ describe("DatePicker", () => {
             await openCalendar();
             testOpenCalendar();
 
-            fireEvent.click(document.querySelectorAll(".rdp-day")[0]);
+            await userEvent.click(document.querySelector(".rdp-day button"));
             testClosedCalendar();
         });
     });

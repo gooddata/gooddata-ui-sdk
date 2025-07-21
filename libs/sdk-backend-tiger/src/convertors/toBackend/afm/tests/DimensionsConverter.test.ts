@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import {
     defWithDimensions,
@@ -70,7 +70,13 @@ describe("convertDimensions", () => {
         expect(convertDimensions(defWithSorts)).toMatchSnapshot();
     });
 
-    it.each(Scenarios)(
+    // Only test measure sorts with scenarios that have measures and attributes in separate dimensions, to prevent pointless stderrors
+    const MeasureSortScenarios: Array<[string, IExecutionDefinition]> = [
+        ["two dim definition with attributes in first and measure group in second", TwoDimAttrAndMeasures],
+        ["two dim definition with attributes in second and measure group in first", TwoDimMeasuresAndAttr],
+    ];
+
+    it.each(MeasureSortScenarios)(
         "should correctly convert %s with measure sorts without attribute locators",
         (_desc, def) => {
             const defWithSorts = defWithSorting(def, [newMeasureSort("testMeasure")]);
@@ -79,7 +85,7 @@ describe("convertDimensions", () => {
         },
     );
 
-    it.each(Scenarios)(
+    it.each(MeasureSortScenarios)(
         "should correctly convert %s with measure sorts with attribute locators",
         (_desc, def) => {
             const measureSort = newMeasureSort("testMeasure", "desc", [
@@ -91,7 +97,7 @@ describe("convertDimensions", () => {
         },
     );
 
-    it.each(Scenarios)(
+    it.each(MeasureSortScenarios)(
         "should correctly convert %s with measure sorts with attribute locators that contain element URIs",
         (_desc, def) => {
             const measureSort = newMeasureSort("testMeasure", "desc", [

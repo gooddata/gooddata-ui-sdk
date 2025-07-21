@@ -19,6 +19,7 @@ const mockTranslation: ITranslations = {
     account: "Account",
     dic: "Dictionary",
     logout: "Logout",
+    "gs.header.menu.accessibility.label": "Accessibility",
 };
 
 describe("ReactHeaderMenu", () => {

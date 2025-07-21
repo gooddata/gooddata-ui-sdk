@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DocumentHeader > should set the icons 1`] = `
+exports[`DocumentHeader > should set the icons`] = `
 [
   <link
     href="APPLE_URL"
@@ -11,6 +11,21 @@ exports[`DocumentHeader > should set the icons 1`] = `
     href="FAVICON_URL"
     rel="shortcut icon"
     type="image/x-icon"
+  />,
+]
+`;
+
+exports[`DocumentHeader > should set the icons 1`] = `
+[
+  <link
+    href="FAVICON_URL"
+    rel="shortcut icon"
+    type="image/x-icon"
+  />,
+  <link
+    href="APPLE_URL"
+    rel="apple-touch-icon"
+    type="image/png"
   />,
 ]
 `;

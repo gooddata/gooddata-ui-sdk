@@ -3,13 +3,16 @@ import { describe, it, expect } from "vitest";
 import { fireEvent, screen, render, waitFor } from "@testing-library/react";
 
 import { AttributeFilterButtonErrorTooltip } from "../AttributeFilterButtonErrorTooltip.js";
+import { WithIntlForTest } from "@gooddata/sdk-ui";
 
 describe("Test AttributeFilterButtonErrorTooltip", () => {
     function renderComponent(errorMessage = "") {
         return render(
-            <AttributeFilterButtonErrorTooltip errorMessage={errorMessage}>
-                <p>Child component!</p>
-            </AttributeFilterButtonErrorTooltip>,
+            <WithIntlForTest>
+                <AttributeFilterButtonErrorTooltip errorMessage={errorMessage}>
+                    <p>Child component!</p>
+                </AttributeFilterButtonErrorTooltip>
+            </WithIntlForTest>,
         );
     }
 

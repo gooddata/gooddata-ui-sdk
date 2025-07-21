@@ -4,6 +4,7 @@ import { describe, it, expect } from "vitest";
 
 import { FilterLabel } from "../FilterLabel.js";
 import { IFilterLabelProps } from "../typings.js";
+import { WithIntlForTest } from "@gooddata/sdk-ui";
 
 const customMessages = {
     "gs.filterLabel.none": "None",
@@ -11,8 +12,11 @@ const customMessages = {
 };
 
 function renderFilterLabel(options: IFilterLabelProps) {
-    // const Wrapped = withIntl(FilterLabel, "en-US", customMessages); // TODO: MARTIN FIX THE injectIntl Components
-    return render(<FilterLabel {...options} />);
+    return render(
+        <WithIntlForTest customLocale="en-US" customMessages={customMessages}>
+            <FilterLabel {...options} />
+        </WithIntlForTest>,
+    );
 }
 
 describe("FilterLabel", () => {
@@ -99,9 +103,11 @@ describe("FilterLabel", () => {
             selectionSize: 100,
         });
 
-        // const Wrapped = withIntl(FilterLabel, "en-US", customMessages);
-
-        rerender(<FilterLabel title={title} selection={newSelection} selectionSize={100} />); // TODO: MARTIN FIX THE injectIntl Components
+        rerender(
+            <WithIntlForTest customLocale="en-US" customMessages={customMessages}>
+                <FilterLabel title={title} selection={newSelection} selectionSize={100} />
+            </WithIntlForTest>,
+        );
 
         expect(screen.getByRole("attribute-filter-label")).toHaveTextContent(`${title}: ${newSelection}`);
     });

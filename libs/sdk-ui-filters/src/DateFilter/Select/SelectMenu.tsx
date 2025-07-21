@@ -40,19 +40,16 @@ export function SelectMenu<V extends {}>({
                             selectableOptions[highlightedIndex] && item
                                 ? selectableOptions[highlightedIndex].value === item.value
                                 : false;
+
+                        const { key, ...rest } = getItemProps({
+                            key: `${item.type}-${item.value}`,
+                            item,
+                            index: selectableOptions.indexOf(item),
+                            isSelected,
+                            className: optionClassName,
+                        });
                         return (
-                            // The key is handled by the getItemProps from downshift
-                            // eslint-disable-next-line react/jsx-key
-                            <SelectOption
-                                {...getItemProps({
-                                    key: `${item.type}-${item.value}`,
-                                    item,
-                                    index: selectableOptions.indexOf(item),
-                                    isSelected,
-                                    className: optionClassName,
-                                })}
-                                isFocused={isFocused}
-                            >
+                            <SelectOption key={key} {...rest} isFocused={isFocused}>
                                 {item.label}
                             </SelectOption>
                         );

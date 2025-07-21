@@ -2,6 +2,7 @@
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
 import { IPopUpLegendProps, PopUpLegend } from "../PopUpLegend/PopUpLegend.js";
+import { Intl } from "@gooddata/sdk-ui";
 import { IPushpinCategoryLegendItem } from "../types.js";
 import { describe, it, expect } from "vitest";
 
@@ -17,7 +18,11 @@ describe("PopUpLegend", () => {
             ...customProps,
         };
 
-        return render(<PopUpLegend {...props} />);
+        return render(
+            <Intl>
+                <PopUpLegend {...props} />
+            </Intl>,
+        );
     }
 
     it("should render items", () => {

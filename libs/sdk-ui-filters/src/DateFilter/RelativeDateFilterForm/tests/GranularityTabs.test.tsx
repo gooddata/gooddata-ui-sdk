@@ -5,6 +5,7 @@ import { DateFilterGranularity } from "@gooddata/sdk-model";
 import { describe, it, expect, vi } from "vitest";
 
 import { GranularityTabs, IGranularityTabsProps } from "../GranularityTabs.js";
+import { Intl } from "@gooddata/sdk-ui";
 
 const granularityTuple: Array<[DateFilterGranularity, string]> = [
     ["GDC.time.date", "Days"],
@@ -24,7 +25,11 @@ const createTabs = (props?: Partial<IGranularityTabsProps>) => {
         onSelectedGranularityChange: noop,
         selectedGranularity: "GDC.time.date",
     };
-    return render(<GranularityTabs {...defaultProps} {...props} />);
+    return render(
+        <Intl forTest>
+            <GranularityTabs {...defaultProps} {...props} />
+        </Intl>,
+    );
 };
 
 describe("GranularityTabs", () => {

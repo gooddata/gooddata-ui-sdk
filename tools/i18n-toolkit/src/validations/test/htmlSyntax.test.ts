@@ -1,11 +1,20 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { getHtmlSyntaxCheck } from "../htmlSyntax.js";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeAll, afterAll, MockInstance } from "vitest";
 
 type Scenario = [string, string, string | null];
 
 describe("validate html message tests", () => {
+    let consoleErrorMock: MockInstance;
+    beforeAll(() => {
+        consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+    });
+
+    afterAll(() => {
+        consoleErrorMock.mockRestore();
+    });
+
     const scenarios: Scenario[] = [
         ["simple text", "This is message", null],
         ["simple html", "This is <b>message</b>", null],
