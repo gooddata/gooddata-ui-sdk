@@ -12,8 +12,24 @@ CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.i
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
-_RUSH="${DIR}/docker_rush.sh"
-_RUSHX="${DIR}/docker_rushx.sh"
+
+if [ -n "$GDC_UI" ]; then
+  echo "GDC_UI is set"
+  RUSH_REPO_ROOT="../../.."
+  RESOLVED_ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../../ && pwd -P))
+  DOCKER_CURRENT_DIR="/workspace/sdk/libs/sdk-ui-tests-e2e"
+else
+  echo "GDC_UI is not set"
+  RUSH_REPO_ROOT="../.."
+  RESOLVED_ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
+  DOCKER_CURRENT_DIR="/workspace/libs/sdk-ui-tests-e2e"
+
+  #in gooddata-ui-sdk we use original dockerized rush
+  _RUSH="${DIR}/docker_rush.sh"
+  _RUSHX="${DIR}/docker_rushx.sh"
+fi
+
+
 
 if [[ ! "${HOST:?}" =~ https?:// ]]; then
     export HOST="https://${HOST}"
@@ -28,8 +44,14 @@ FILTER=${FILTER:-}
 TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME:-}
 EOF
 
-$_RUSH install
-$_RUSH build -t sdk-ui-tests-e2e
+if [ -n "$GDC_UI" ]; then
+    (cd $ROOT_DIR/libs/sdk-ui-tests-e2e && node $RUSH_REPO_ROOT/common/scripts/install-run-rush.js install)
+    (cd $ROOT_DIR/libs/sdk-ui-tests-e2e && node $RUSH_REPO_ROOT/common/scripts/install-run-rush.js build -t sdk-ui-tests-e2e -t @gooddata/app-toolkit)
+else
+    $_RUSH install
+    $_RUSH build -t sdk-ui-tests-e2e -t @gooddata/app-toolkit
+fi
+
 trap "docker rmi --force $CYPRESS_IMAGE || true" EXIT
 
 docker run --rm --entrypoint '' \
@@ -42,5 +64,5 @@ docker run --rm --entrypoint '' \
 -e HOST \
 -e TIGER_API_TOKEN \
 -e AUTH_TOKEN \
--w /workspace/libs/sdk-ui-tests-e2e -v $ROOT_DIR:/workspace $CYPRESS_IMAGE \
+-w $DOCKER_CURRENT_DIR -v $ROOT_DIR:/workspace $CYPRESS_IMAGE \
 sh -c "./scripts/run_boiler_app.sh" || exit 1
