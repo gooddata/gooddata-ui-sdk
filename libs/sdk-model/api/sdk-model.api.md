@@ -3550,6 +3550,7 @@ export interface ISettings {
     enableNewHeadline?: boolean;
     // (undocumented)
     enableNewNavigationForResponsiveUi?: boolean;
+    enableNewPivotTable?: boolean;
     enableNewScheduledExport?: boolean;
     enableNewUserCreationFlow?: boolean;
     enableNotificationChannelIdentifiers?: boolean;
