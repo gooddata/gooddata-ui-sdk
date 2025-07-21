@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
 import { render } from "@testing-library/react";
 import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
 import { describe, it, expect, beforeEach } from "vitest";
@@ -16,7 +15,7 @@ import {
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 
 import { DefaultDashboardContentCustomizer } from "../dashboardContentCustomizer.js";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //
@@ -26,7 +25,7 @@ const TestDashboardContent: string | ObjRef | IDashboard = "default-dashboard";
 
 const TestSecondDashboardContent: string | ObjRef | IDashboard = "second-dashboard";
 
-function createTestComponent(name: string): React.FC {
+function createTestComponent(name: string) {
     function TestComponent() {
         return <div id={name} />;
     }

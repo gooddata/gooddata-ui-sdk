@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { ReactElement, useCallback, useMemo } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import cx from "classnames";
 import {
@@ -48,7 +48,7 @@ interface IGranteeGroupItemProps {
     onDelete: (grantee: GranteeItem) => void;
 }
 
-const granteeUserTitleRenderer = (grantee: IGranteeUser, intl: IntlShape): JSX.Element => {
+const granteeUserTitleRenderer = (grantee: IGranteeUser, intl: IntlShape): ReactElement => {
     const userName = getGranteeLabel(grantee, intl);
 
     if (grantee.status === "Inactive") {
@@ -67,8 +67,7 @@ const granteeUserTitleRenderer = (grantee: IGranteeUser, intl: IntlShape): JSX.E
     return <> {userName} </>;
 };
 
-const GranteeUserItem: React.FC<IGranteeUserItemProps> = (props) => {
-    const { grantee, mode, onDelete } = props;
+function GranteeUserItem({ grantee, mode, onDelete }: IGranteeUserItemProps) {
     const intl = useIntl();
 
     const onClick = useCallback(() => {
@@ -96,10 +95,9 @@ const GranteeUserItem: React.FC<IGranteeUserItemProps> = (props) => {
             {grantee.status === "Active" ? <GranteeUserIcon /> : <GranteeUserInactiveIcon />}
         </div>
     );
-};
+}
 
-const GranteeUserInactiveItem: React.FC<IGranteeInactiveItemProps> = (props) => {
-    const { grantee } = props;
+function GranteeUserInactiveItem({ grantee }: IGranteeInactiveItemProps) {
     const intl = useIntl();
 
     const granteeLabel = useMemo(() => {
@@ -124,11 +122,9 @@ const GranteeUserInactiveItem: React.FC<IGranteeInactiveItemProps> = (props) => 
             <GranteeUserInactiveIcon />
         </div>
     );
-};
+}
 
-const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
-    const { grantee, onDelete, mode } = props;
-
+function GranteeGroupItem({ grantee, onDelete, mode }: IGranteeGroupItemProps) {
     const intl = useIntl();
 
     const onClick = useCallback(() => {
@@ -168,22 +164,20 @@ const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
             <GranteeGroupIcon />
         </div>
     );
-};
+}
 
 /**
  * @internal
  */
-export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
-    const {
-        grantee,
-        mode,
-        currentUserPermissions,
-        isSharedObjectLocked,
-        isGranteeShareLoading,
-        onDelete,
-        onChange,
-    } = props;
-
+export function GranteeItemComponent({
+    grantee,
+    mode,
+    currentUserPermissions,
+    isSharedObjectLocked,
+    isGranteeShareLoading,
+    onDelete,
+    onChange,
+}: IGranteeItemProps) {
     const granularGranteeItemId = useIdPrefixed("grantee-item");
 
     if (isGranularGranteeUser(grantee)) {
@@ -223,4 +217,4 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
     }
 
     return null;
-};
+}

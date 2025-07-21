@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { PureComponent } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
@@ -9,7 +9,7 @@ import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { messages } from "../../../../locales.js";
 
-class NamePositionControl extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps> {
+class NamePositionControl extends PureComponent<IConfigItemSubsection & WrappedComponentProps> {
     public render() {
         const { axisVisible, axisNameVisible, namePosition } = this.getControlProperties();
         const { axis, properties, pushData, disabled, configPanelDisabled, intl } = this.props;

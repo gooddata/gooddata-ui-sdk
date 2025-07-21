@@ -1,4 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { CSSProperties } from "react";
 import merge from "lodash/merge.js";
 import { Overlay } from "./Overlay.js";
 import { IOverlayProps, IOverlayState } from "./typings.js";
@@ -41,7 +42,7 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
         body.scrollTop = this.state.scrollTop;
     }
 
-    protected getOverlayStyles = (): React.CSSProperties => {
+    protected getOverlayStyles = (): CSSProperties => {
         const zIndex = this.getZIndex();
         const additionalStyles = zIndex ? { zIndex } : {};
 

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { PureComponent, ReactElement, ReactNode, createRef, CSSProperties } from "react";
 import { ContentRect } from "react-measure";
 import { v4 } from "uuid";
 import set from "lodash/set.js";
@@ -81,18 +81,15 @@ export interface ILegendDetails {
     renderPopUp?: boolean;
 }
 
-export function renderChart(props: IChartProps): JSX.Element {
+export function renderChart(props: IChartProps): ReactElement {
     return <Chart {...props} />;
 }
 
-export function renderLegend(props: ILegendProps): JSX.Element {
+export function renderLegend(props: ILegendProps): ReactElement {
     return <Legend {...props} />;
 }
 
-export class HighChartsRenderer extends React.PureComponent<
-    IHighChartsRendererProps,
-    IHighChartsRendererState
-> {
+export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, IHighChartsRendererState> {
     public static defaultProps = {
         afterRender: noop,
         height: null as number,
@@ -107,7 +104,7 @@ export class HighChartsRenderer extends React.PureComponent<
         documentObj: typeof document !== "undefined" ? document : null,
     };
 
-    private highchartsRendererRef = React.createRef<HTMLDivElement>(); // whole component = legend + chart
+    private highchartsRendererRef = createRef<HTMLDivElement>(); // whole component = legend + chart
     private chartRef: IChartHTMLElement;
     private containerId: string = `visualization-${v4()}`;
 
@@ -198,7 +195,7 @@ export class HighChartsRenderer extends React.PureComponent<
         this.chartRef = chartRef;
     };
 
-    public getFlexDirection(position: string): React.CSSProperties["flexDirection"] {
+    public getFlexDirection(position: string): CSSProperties["flexDirection"] {
         if (position === TOP || position === BOTTOM) {
             return "column";
         }
@@ -325,7 +322,7 @@ export class HighChartsRenderer extends React.PureComponent<
         legendDetails: ILegendDetails,
         contentRect: ContentRect,
         containerId: string,
-    ): React.ReactNode {
+    ): ReactNode {
         const { chartOptions, legend, height, legendRenderer, locale } = this.props;
         const { items, format } = legend;
         const { showFluidLegend } = this.state;
@@ -364,7 +361,7 @@ export class HighChartsRenderer extends React.PureComponent<
         return legendRenderer(legendProps);
     }
 
-    public renderHighcharts(): React.ReactNode {
+    public renderHighcharts(): ReactNode {
         // shrink chart to give space to legend items
         const style = { flex: "1 1 auto", position: "relative", overflow: "hidden" };
         const config = this.createChartConfig(this.props.hcOptions, this.state.legendItemsEnabled);
@@ -449,7 +446,7 @@ export class HighChartsRenderer extends React.PureComponent<
         }, []);
         const contentRect = container.getBoundingClientRect();
 
-        const elements: React.ReactNode[] = [];
+        const elements: ReactNode[] = [];
         for (let i = 0; i < loadingSeries.length; i++) {
             const el = container.querySelector(`.highcharts-series.highcharts-series-${loadingSeries[i]}`);
             if (el) {

@@ -1,5 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef } from "react";
+import {
+    AriaAttributes,
+    AriaRole,
+    MutableRefObject,
+    RefObject,
+    ReactNode,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+} from "react";
 import noop from "lodash/noop.js";
 
 import { FullScreenOverlay, Overlay } from "../Overlay/index.js";
@@ -51,7 +61,7 @@ export interface IDropdownButtonRenderProps {
     isMobile: boolean;
     isOpen: boolean;
     dropdownId: string;
-    buttonRef: React.MutableRefObject<HTMLElement | null>;
+    buttonRef: MutableRefObject<HTMLElement | null>;
     openDropdown: () => void;
     closeDropdown: () => void;
     toggleDropdown: (desiredState?: boolean | unknown) => void;
@@ -59,8 +69,8 @@ export interface IDropdownButtonRenderProps {
      * Props supporting accessibility that can be just passed through to the rendered element
      */
     ariaAttributes: {
-        role: React.AriaRole;
-    } & Pick<React.AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
+        role: AriaRole;
+    } & Pick<AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
     /**
      * Props supporting accessibility that can be passed down to a <Button/>
      */
@@ -73,8 +83,8 @@ export interface IDropdownButtonRenderProps {
 export interface IDropdownBodyRenderProps {
     isMobile: boolean;
     closeDropdown: () => void;
-    ariaAttributes: Pick<React.AriaAttributes, "aria-labelledby" | "aria-label"> & {
-        role: React.AriaAttributes["aria-haspopup"] & React.AriaRole;
+    ariaAttributes: Pick<AriaAttributes, "aria-labelledby" | "aria-label"> & {
+        role: AriaAttributes["aria-haspopup"] & AriaRole;
         id: string;
     };
 }
@@ -83,9 +93,9 @@ export interface IDropdownBodyRenderProps {
  * @internal
  */
 export interface IDropdownProps {
-    renderBody: (props: IDropdownBodyRenderProps) => React.ReactNode;
+    renderBody: (props: IDropdownBodyRenderProps) => ReactNode;
 
-    renderButton: (props: IDropdownButtonRenderProps) => React.ReactNode;
+    renderButton: (props: IDropdownButtonRenderProps) => ReactNode;
 
     isOpen?: boolean;
     /**
@@ -122,8 +132,8 @@ export interface IDropdownProps {
     closeOnEscape?: boolean;
 
     autofocusOnOpen?: boolean;
-    initialFocus?: React.RefObject<HTMLElement> | string;
-    returnFocusTo?: React.RefObject<HTMLElement> | string;
+    initialFocus?: RefObject<HTMLElement> | string;
+    returnFocusTo?: RefObject<HTMLElement> | string;
 
     accessibilityConfig?: {
         triggerRole?: "button" | "combobox";
@@ -136,44 +146,43 @@ export interface IDropdownProps {
 /**
  * @internal
  */
-export const Dropdown: React.FC<IDropdownProps> = (props) => {
-    const {
-        isOpen: isOpenProp,
-        onToggle,
+export function Dropdown({
+    isOpen: isOpenProp,
+    onToggle,
 
-        className,
+    className,
 
-        openOnInit,
-        closeOnParentScroll,
-        closeOnMouseDrag,
-        closeOnOutsideClick = true,
+    openOnInit,
+    closeOnParentScroll,
+    closeOnMouseDrag,
+    closeOnOutsideClick = true,
 
-        overlayPositionType,
-        alignPoints = [
-            {
-                align: "bl tl",
-            },
-        ],
+    overlayPositionType,
+    alignPoints = [
+        {
+            align: "bl tl",
+        },
+    ],
 
-        overlayZIndex,
-        ignoreClicksOnByClass = [],
+    overlayZIndex,
+    ignoreClicksOnByClass = [],
 
-        renderBody,
-        renderButton,
+    renderBody,
+    renderButton,
 
-        onOpenStateChanged,
+    onOpenStateChanged,
 
-        fullscreenOnMobile = true,
-        enableEventPropagation = false,
-        closeOnEscape = false,
-        autofocusOnOpen = false,
-        initialFocus,
-        returnFocusTo,
+    fullscreenOnMobile = true,
+    enableEventPropagation = false,
+    closeOnEscape = false,
+    autofocusOnOpen = false,
+    initialFocus,
+    returnFocusTo,
 
-        accessibilityConfig,
+    accessibilityConfig,
 
-        shouldTrapFocus = true,
-    } = props;
+    shouldTrapFocus = true,
+}: IDropdownProps) {
     const [isOpen, setIsOpen] = usePropState(isOpenProp ?? openOnInit ?? false);
 
     const id = useId();
@@ -225,9 +234,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen]);
-    const renderButtonProps = React.useMemo<
-        Omit<IDropdownButtonRenderProps, "isMobile" | "buttonRef">
-    >(() => {
+    const renderButtonProps = useMemo<Omit<IDropdownButtonRenderProps, "isMobile" | "buttonRef">>(() => {
         const role = accessibilityConfig?.triggerRole ?? "button";
 
         return {
@@ -267,7 +274,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         },
     };
 
-    const handleTabOut = React.useCallback(() => {
+    const handleTabOut = useCallback(() => {
         closeDropdown();
         resolveRef(returnFocusTo)?.focus();
     }, [closeDropdown, returnFocusTo]);
@@ -346,4 +353,4 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
             {renderDropdown}
         </div>
     );
-};
+}

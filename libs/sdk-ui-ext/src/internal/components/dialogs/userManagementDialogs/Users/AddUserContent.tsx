@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 
 import { IUserMember } from "../types.js";
 import { AddUserSelect } from "./AddUserSelect.js";
@@ -12,12 +11,7 @@ export interface IAddUserContentProps {
     onDelete: (user: IUserMember) => void;
 }
 
-export const AddUserContent: React.FC<IAddUserContentProps> = ({
-    addedUsers,
-    grantedUsers,
-    onDelete,
-    onSelect,
-}) => {
+export function AddUserContent({ addedUsers, grantedUsers, onSelect, onDelete }: IAddUserContentProps) {
     return (
         <>
             <AddUserSelect addedUsers={addedUsers} grantedUsers={grantedUsers} onSelect={onSelect} />
@@ -31,4 +25,4 @@ export const AddUserContent: React.FC<IAddUserContentProps> = ({
             />
         </>
     );
-};
+}

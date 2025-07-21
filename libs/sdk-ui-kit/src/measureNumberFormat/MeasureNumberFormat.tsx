@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ComponentType, PureComponent, SyntheticEvent } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 
@@ -14,7 +14,7 @@ export const CUSTOM_FORMAT_PRESET_LOCAL_IDENTIFIER = "customFormat";
  * @internal
  */
 export interface IMeasureNumberFormatOwnProps {
-    toggleButton: React.ComponentType<IToggleButtonProps>;
+    toggleButton: ComponentType<IToggleButtonProps>;
     presets: ReadonlyArray<IFormatPreset>;
     separators: ISeparators;
     selectedFormat: string | null;
@@ -37,10 +37,7 @@ interface IMeasureNumberFormatState {
     selectedPreset: IFormatPreset;
 }
 
-class WrappedMeasureNumberFormat extends React.PureComponent<
-    MeasureNumberFormatProps,
-    IMeasureNumberFormatState
-> {
+class WrappedMeasureNumberFormat extends PureComponent<MeasureNumberFormatProps, IMeasureNumberFormatState> {
     private toggleButtonEl?: HTMLElement;
 
     constructor(props: MeasureNumberFormatProps) {
@@ -120,7 +117,7 @@ class WrappedMeasureNumberFormat extends React.PureComponent<
         this.props.presets.find((preset: IFormatPreset) => preset.format === this.props.selectedFormat) ||
         this.getCustomFormatPreset();
 
-    private toggleDropdownOpened = (e: React.SyntheticEvent<HTMLElement>) => {
+    private toggleDropdownOpened = (e: SyntheticEvent<HTMLElement>) => {
         this.toggleButtonEl = e.currentTarget;
 
         this.setState((state) => ({
@@ -185,7 +182,7 @@ const MeasureNumberFormatWithIntl = injectIntl(WrappedMeasureNumberFormat);
 /**
  * @internal
  */
-export class MeasureNumberFormat extends React.PureComponent<IMeasureNumberFormatOwnProps> {
+export class MeasureNumberFormat extends PureComponent<IMeasureNumberFormatOwnProps> {
     public render() {
         return (
             <IntlWrapper locale={this.props.locale}>

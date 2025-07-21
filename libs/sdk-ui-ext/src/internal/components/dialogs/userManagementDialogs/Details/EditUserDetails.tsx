@@ -1,7 +1,7 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { useIntl } from "react-intl";
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { IUser } from "@gooddata/sdk-model";
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
@@ -23,7 +23,7 @@ export interface IEditUserDetailsProps {
     removeAdminGroup: () => void;
 }
 
-export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
+export function EditUserDetails({
     user,
     isBootstrapUser,
     isAdmin,
@@ -33,7 +33,7 @@ export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
     onCancel,
     onClose,
     removeAdminGroup,
-}) => {
+}: IEditUserDetailsProps) {
     const intl = useIntl();
     const { updatedUser, isUpdatedAdmin, isProcessing, onSave, onChange, isDirty } = useUserDetails(
         user,
@@ -79,4 +79,4 @@ export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
             />
         </ConfirmDialogBase>
     );
-};
+}

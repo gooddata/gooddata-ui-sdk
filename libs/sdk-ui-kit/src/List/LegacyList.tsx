@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { Component } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { cloneElement, ReactElement, useState, useEffect } from "react";
 import { Table, Column, Cell } from "fixed-data-table-2";
 import cx from "classnames";
 import { ScrollCallback } from "./List.js";
@@ -32,7 +32,12 @@ export interface ILegacyListProps {
     onScrollStart?: ScrollCallback;
     onSelect?: (item: any) => void;
     scrollToSelected?: boolean;
-    rowItem: React.ReactElement;
+    rowItem: ReactElement<{
+        item?: any;
+        width: number;
+        isFirst: boolean;
+        isLast: boolean;
+    }>;
     width?: number;
 }
 
@@ -47,60 +52,41 @@ export interface ILegacyListState {
  * @deprecated  This component is deprecated use List instead
  * @internal
  */
-export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
-    static defaultProps: Pick<
-        ILegacyListProps,
-        | "className"
-        | "onScroll"
-        | "onScrollStart"
-        | "onSelect"
-        | "width"
-        | "height"
-        | "itemHeight"
-        | "itemHeightGetter"
-        | "compensateBorder"
-        | "scrollToSelected"
-    > = {
-        className: "",
-        onScroll: noop,
-        onScrollStart: noop,
-        onSelect: noop,
-        width: 200,
-        height: 300,
-        itemHeight: 28,
-        itemHeightGetter: null,
-        compensateBorder: true,
-        scrollToSelected: false,
-    };
+export function LegacyList({
+    className = "",
+    onScroll = noop,
+    onScrollStart = noop,
+    onSelect = noop,
+    width = 200,
+    height = 300,
+    itemHeight = 28,
+    itemHeightGetter = null,
+    compensateBorder = true,
+    scrollToSelected = false,
+    dataSource,
+    rowItem,
+}: ILegacyListProps): ReactElement {
+    const [selected, setSelected] = useState<number>(null);
 
-    constructor(props: ILegacyListProps) {
-        super(props);
-
-        this.state = {
-            selected: null,
-        };
-    }
-
-    public componentDidMount(): void {
-        const { scrollToSelected, dataSource } = this.props;
-
+    useEffect(() => {
         if (scrollToSelected) {
             [...Array(dataSource.rowsCount).keys()].forEach((row) => {
-                const item = this.props.dataSource.getObjectAt(row);
+                const item = dataSource.getObjectAt(row);
                 if (item?.selected) {
                     // Because list items start from 0 we need to add the +1 here
-                    this.setState({ selected: row + 1 });
+                    setSelected(row + 1);
                 }
             });
         }
-    }
+    }, [scrollToSelected, dataSource]);
 
-    public componentWillUnmount(): void {
-        this.enablePageScrolling();
-    }
+    useEffect(() => {
+        return () => {
+            enablePageScrolling();
+        };
+    }, []);
 
-    private onSelect = (_event: any, rowIndex: number) => {
-        const { dataSource, onSelect } = this.props;
+    const onSelectHandler = (_event: any, rowIndex: number) => {
         const item = dataSource.getObjectAt(rowIndex);
 
         if (item) {
@@ -108,45 +94,42 @@ export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
         }
     };
 
-    private onScroll(method: ScrollCallback, scrollY: number) {
+    const onScrollHandler = (method: ScrollCallback, scrollY: number) => {
         if (method) {
-            const { height, itemHeight } = this.props;
-
             // vertical scroll position returned by fixed-data-table is converted to index of first visible item
             const rowIndex = Math.floor(scrollY / itemHeight);
             const visibleRange = Math.ceil(height / itemHeight);
 
             method(rowIndex, rowIndex + visibleRange);
         }
-    }
-
-    private onScrollStart = (_scrollX: number, scrollY: number) => {
-        this.onScroll(this.props.onScrollStart, scrollY);
     };
 
-    private onScrollEnd = (_scrollX: number, scrollY: number) => {
-        this.onScroll(this.props.onScroll, scrollY);
+    const onScrollStartHandler = (_scrollX: number, scrollY: number) => {
+        onScrollHandler(onScrollStart, scrollY);
     };
 
-    private getClassNames() {
-        return cx("gd-infinite-list", this.props.className);
-    }
+    const onScrollEndHandler = (_scrollX: number, scrollY: number) => {
+        onScrollHandler(onScroll, scrollY);
+    };
 
-    private disablePageScrolling() {
+    const getClassNames = () => {
+        return cx("gd-infinite-list", className);
+    };
+
+    const disablePageScrolling = () => {
         document.body.addEventListener("wheel", preventDefault, { passive: false });
-    }
+    };
 
-    private enablePageScrolling() {
+    const enablePageScrolling = () => {
         document.body.removeEventListener("wheel", preventDefault);
-    }
+    };
 
-    private renderCell = (props: any) => {
-        const { dataSource, rowItem } = this.props;
+    const renderCell = (props: any) => {
         const item = dataSource.getObjectAt(props.rowIndex);
 
-        const itemElement = React.cloneElement(rowItem, {
+        const itemElement = cloneElement(rowItem, {
             ...(item ? { item } : {}),
-            width: this.props.width,
+            width: width,
             isFirst: props.rowIndex === 0,
             isLast: props.rowIndex === dataSource.rowsCount - 1,
         });
@@ -154,35 +137,26 @@ export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
         return <Cell {...props}>{itemElement}</Cell>;
     };
 
-    public render(): JSX.Element {
-        const { width, height, itemHeight, dataSource, itemHeightGetter } = this.props;
-        const { selected } = this.state;
+    // compensates for https://github.com/facebook/fixed-data-table/blob/5373535d98b08b270edd84d7ce12833a4478c6b6/src/FixedDataTableNew.react.js#L872
+    const compensatedHeight = compensateBorder ? height + BORDER_HEIGHT * 2 : height;
 
-        // compensates for https://github.com/facebook/fixed-data-table/blob/5373535d98b08b270edd84d7ce12833a4478c6b6/src/FixedDataTableNew.react.js#L872
-        const compensatedHeight = this.props.compensateBorder ? height + BORDER_HEIGHT * 2 : height;
-
-        return (
-            <div
-                className={this.getClassNames()}
-                onMouseOver={this.disablePageScrolling}
-                onMouseOut={this.enablePageScrolling}
+    return (
+        <div className={getClassNames()} onMouseOver={disablePageScrolling} onMouseOut={enablePageScrolling}>
+            <Table
+                width={width}
+                height={compensatedHeight}
+                rowHeight={itemHeight}
+                rowHeightGetter={itemHeightGetter}
+                headerHeight={0}
+                rowsCount={Math.min(dataSource.rowsCount, MAX_NUMBER_OF_ROWS)}
+                onRowClick={onSelectHandler}
+                onScrollStart={onScrollStartHandler}
+                onScrollEnd={onScrollEndHandler}
+                touchScrollEnabled={isTouchDevice()}
+                scrollToRow={selected}
             >
-                <Table
-                    width={width}
-                    height={compensatedHeight}
-                    rowHeight={itemHeight}
-                    rowHeightGetter={itemHeightGetter}
-                    headerHeight={0}
-                    rowsCount={Math.min(dataSource.rowsCount, MAX_NUMBER_OF_ROWS)}
-                    onRowClick={this.onSelect}
-                    onScrollStart={this.onScrollStart}
-                    onScrollEnd={this.onScrollEnd}
-                    touchScrollEnabled={isTouchDevice()}
-                    scrollToRow={selected}
-                >
-                    <Column flexGrow={1} width={1} cell={this.renderCell} />
-                </Table>
-            </div>
-        );
-    }
+                <Column flexGrow={1} width={1} cell={renderCell} />
+            </Table>
+        </div>
+    );
 }

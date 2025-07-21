@@ -9,7 +9,7 @@
         "lib": ["ES2022", "DOM"],
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
-        "jsx": "react",
+        "jsx": "react-jsx",
         "importHelpers": true,
         "incremental": false,
         "resolveJsonModule": true,

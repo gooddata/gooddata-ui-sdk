@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterComponentsProvider } from "./Context/AttributeFilterComponentsContext.js";
 import { AttributeFilterContextProvider } from "./Context/AttributeFilterContext.js";
@@ -9,9 +9,7 @@ import { getAttributeFilterDefaultComponents } from "./AttributeFilterDefaultCom
 /**
  * @internal
  */
-export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { children: React.ReactNode }> = (
-    props,
-) => {
+export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { children: ReactNode }) {
     const {
         resetOnParentFilterChange = true,
         children,
@@ -129,4 +127,4 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
             </AttributeFilterComponentsProvider>
         </IntlWrapper>
     );
-};
+}

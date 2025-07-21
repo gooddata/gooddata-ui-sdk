@@ -1,10 +1,10 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import { createContext, useContext, ComponentType, ReactNode } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { wrapDisplayName } from "./wrapDisplayName.js";
 import { invariant } from "ts-invariant";
 
-const BackendContext = React.createContext<IAnalyticalBackend | undefined>(undefined);
+const BackendContext = createContext<IAnalyticalBackend | undefined>(undefined);
 BackendContext.displayName = "BackendContext";
 
 /**
@@ -20,7 +20,7 @@ export interface IBackendProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -28,9 +28,9 @@ export interface IBackendProviderProps {
  *
  * @public
  */
-export const BackendProvider: React.FC<IBackendProviderProps> = ({ children, backend }) => {
+export function BackendProvider({ children, backend }: IBackendProviderProps) {
     return <BackendContext.Provider value={backend}>{children}</BackendContext.Provider>;
-};
+}
 
 /**
  * Hook to get analytical backend instance provided to {@link BackendProvider}.
@@ -54,7 +54,7 @@ export const BackendProvider: React.FC<IBackendProviderProps> = ({ children, bac
  * @public
  */
 export const useBackend = (backend?: IAnalyticalBackend): IAnalyticalBackend | undefined => {
-    const backendFromContext = React.useContext(BackendContext);
+    const backendFromContext = useContext(BackendContext);
     return backend ?? backendFromContext;
 };
 
@@ -85,7 +85,7 @@ export const useBackendStrict = (
     backend?: IAnalyticalBackend,
     context = "useBackendStrict",
 ): IAnalyticalBackend => {
-    const backendFromContext = React.useContext(BackendContext);
+    const backendFromContext = useContext(BackendContext);
     const effectiveBackend = backend ?? backendFromContext;
     invariant(
         effectiveBackend,
@@ -101,15 +101,15 @@ export const useBackendStrict = (
  * @internal
  */
 export function withBackend<T extends { backend?: IAnalyticalBackend }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<T> {
-    const ComponentWithInjectedBackend: React.FC<T> = (props) => {
+    Component: ComponentType<T>,
+): ComponentType<T> {
+    function ComponentWithInjectedBackend(props: T) {
         return (
             <BackendContext.Consumer>
                 {(backend) => <Component {...props} backend={props.backend ?? backend} />}
             </BackendContext.Consumer>
         );
-    };
+    }
 
     return wrapDisplayName("withBackend", Component)(ComponentWithInjectedBackend);
 }

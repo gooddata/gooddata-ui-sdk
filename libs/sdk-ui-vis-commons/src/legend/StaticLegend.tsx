@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { memo, ReactElement, useState, useCallback, ReactNode } from "react";
 import cx from "classnames";
 import noop from "lodash/noop.js";
 import { LegendList } from "./LegendList.js";
@@ -22,7 +22,7 @@ export interface IStaticLegendProps {
     label?: string;
     buttonOrientation?: ButtonsOrientationType;
     paginationHeight?: number;
-    customComponent?: JSX.Element | null;
+    customComponent?: ReactElement | null;
     isLabelVisible?: boolean;
     onItemClick?(item: ISeriesItem): void;
     onPageChanged?: (page: number) => void;
@@ -31,7 +31,7 @@ export interface IStaticLegendProps {
 /**
  * @internal
  */
-export const StaticLegend = React.memo(function StaticLegend({
+export const StaticLegend = memo(function StaticLegend({
     buttonOrientation = "upDown",
     paginationHeight = STATIC_PAGING_HEIGHT,
     containerHeight,
@@ -45,10 +45,10 @@ export const StaticLegend = React.memo(function StaticLegend({
 
     onItemClick,
     onPageChanged,
-}: IStaticLegendProps): React.ReactNode {
-    const [page, setPage] = React.useState(1);
+}: IStaticLegendProps): ReactNode {
+    const [page, setPage] = useState(1);
 
-    const handleNextPage = React.useCallback(() => {
+    const handleNextPage = useCallback(() => {
         setPage((currentPage) => {
             const newPage = currentPage + 1;
             onPageChanged?.(newPage);
@@ -56,7 +56,7 @@ export const StaticLegend = React.memo(function StaticLegend({
         });
     }, [onPageChanged]);
 
-    const handlePreviousPage = React.useCallback(() => {
+    const handlePreviousPage = useCallback(() => {
         setPage((currentPage) => {
             const newPage = currentPage - 1;
             onPageChanged?.(newPage);

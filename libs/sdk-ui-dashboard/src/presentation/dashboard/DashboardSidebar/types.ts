@@ -89,7 +89,7 @@ export interface ISidebarProps {
      *
      * @internal
      */
-    DeleteDropZoneComponent?: React.ComponentType;
+    DeleteDropZoneComponent?: ComponentType;
 }
 
 /**

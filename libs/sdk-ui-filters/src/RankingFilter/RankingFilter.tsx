@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { useState } from "react";
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { RankingFilterButton } from "./RankingFilterButton.js";
 import { RankingFilterDropdown } from "./RankingFilterDropdown.js";
@@ -26,7 +26,7 @@ export interface IRankingFilterProps {
 /**
  * @beta
  */
-export const RankingFilter: React.FC<IRankingFilterProps> = ({
+export function RankingFilter({
     measureItems,
     attributeItems,
     filter,
@@ -38,7 +38,7 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
     customGranularitySelection,
     locale,
     enableRenamingMeasureToMetric,
-}) => {
+}: IRankingFilterProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     const onButtonClick = () => {
@@ -80,4 +80,4 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
             ) : null}
         </>
     );
-};
+}

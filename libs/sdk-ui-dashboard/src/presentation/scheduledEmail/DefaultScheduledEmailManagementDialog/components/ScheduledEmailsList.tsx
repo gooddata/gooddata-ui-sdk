@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { KeyboardEvent, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import {
     IAutomationMetadataObject,
@@ -26,19 +26,24 @@ interface IScheduledEmailsProps {
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 }
 
-export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
-    const { isLoading, scheduledEmails, onDelete, onEdit, noSchedulesMessageId, notificationChannels } =
-        props;
+export function ScheduledEmails({
+    isLoading,
+    scheduledEmails,
+    onDelete,
+    onEdit,
+    noSchedulesMessageId,
+    notificationChannels,
+}: IScheduledEmailsProps) {
     const theme = useTheme();
 
-    const handleEdit = React.useCallback(
+    const handleEdit = useCallback(
         (scheduledEmail: IAutomationMetadataObject) => () => {
             onEdit(scheduledEmail);
         },
         [onEdit],
     );
 
-    const handleDelete = React.useCallback(
+    const handleDelete = useCallback(
         (scheduledEmail: IAutomationMetadataObject) => () => {
             onDelete(scheduledEmail);
         },
@@ -56,7 +61,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
             isNestedList: true,
         });
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === "ArrowRight" || event.key === "ArrowLeft")
             if (focusedAction === "delete") {
                 setFocusedAction(SELECT_ITEM_ACTION);
@@ -109,4 +114,4 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
             </div>
         </UiAutofocus>
     );
-};
+}

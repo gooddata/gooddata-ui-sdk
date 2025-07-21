@@ -1,5 +1,4 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -11,7 +10,7 @@ interface IAllRecordsItemProps {
     onSelect: () => void;
 }
 
-export const AllRecordsItem: React.FC<IAllRecordsItemProps> = ({ isSelected, onSelect }) => {
+export function AllRecordsItem({ isSelected, onSelect }: IAllRecordsItemProps) {
     const className = cx(
         "gd-list-item",
         "gd-list-item-shortened",
@@ -39,4 +38,4 @@ export const AllRecordsItem: React.FC<IAllRecordsItemProps> = ({ isSelected, onS
             </div>
         </button>
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage, defineMessages } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -21,9 +21,7 @@ const messages = defineMessages({
     },
 });
 
-export const WidgetDropZoneBox: React.FC<IWidgetDropZoneBoxProps> = (props) => {
-    const { isLast, isInContainer } = props;
-
+export function WidgetDropZoneBox({ isLast, isInContainer }: IWidgetDropZoneBoxProps) {
     const message = isLast ? (isInContainer ? messages.lastInContainer : messages.last) : messages.default;
     return (
         <div
@@ -43,4 +41,4 @@ export const WidgetDropZoneBox: React.FC<IWidgetDropZoneBoxProps> = (props) => {
             </div>
         </div>
     );
-};
+}

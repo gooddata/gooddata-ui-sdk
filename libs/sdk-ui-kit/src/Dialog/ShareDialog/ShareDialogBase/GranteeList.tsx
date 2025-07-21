@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { serializeObjRef } from "@gooddata/sdk-model";
 import { GranteeItemComponent } from "./GranteeItem.js";
 import { IGranteesListProps } from "./types.js";
@@ -10,18 +10,16 @@ import { sortGranteeList } from "./utils.js";
 /**
  * @internal
  */
-export const GranteeList: React.FC<IGranteesListProps> = (props) => {
-    const {
-        grantees,
-        mode,
-        areGranularPermissionsSupported,
-        currentUserPermissions,
-        isSharedObjectLocked,
-        isGranteeShareLoading,
-        onDelete,
-        onChange,
-    } = props;
-
+export function GranteeList({
+    grantees,
+    mode,
+    areGranularPermissionsSupported,
+    currentUserPermissions,
+    isSharedObjectLocked,
+    isGranteeShareLoading,
+    onDelete,
+    onChange,
+}: IGranteesListProps) {
     const intl = useIntl();
 
     const sortedGrantees = useMemo(() => {
@@ -51,4 +49,4 @@ export const GranteeList: React.FC<IGranteesListProps> = (props) => {
             })}
         </div>
     );
-};
+}

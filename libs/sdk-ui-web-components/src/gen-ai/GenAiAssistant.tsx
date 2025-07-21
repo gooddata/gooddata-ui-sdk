@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import { ComponentProps } from "react";
 import omit from "lodash/omit.js";
 
 import { resolveLocale } from "@gooddata/sdk-ui";
@@ -34,7 +34,7 @@ export class GenAIAssistant extends CustomElementAdapter<IGenAIAssistant> {
 
     [GET_COMPONENT](Component: IGenAIAssistant, { backend, workspaceId }: CustomElementContext) {
         // Collect the rest of the props
-        const extraProps: Partial<React.ComponentProps<IGenAIAssistant>> = {};
+        const extraProps: Partial<ComponentProps<IGenAIAssistant>> = {};
 
         if (this.hasAttribute("locale")) {
             extraProps.locale = resolveLocale(this.getAttribute("locale"));

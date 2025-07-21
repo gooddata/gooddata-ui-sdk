@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import { IHeaderParams } from "ag-grid-community";
-import React from "react";
+import { Component } from "react";
 import { IMenu } from "../../../publicTypes.js";
 
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell.js";
@@ -10,7 +10,7 @@ export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
     menu?: () => IMenu;
 }
 
-class ColumnTotalHeader extends React.Component<IColumnHeaderProps> {
+export default class ColumnTotalHeader extends Component<IColumnHeaderProps> {
     public render() {
         const { displayName, column } = this.props;
         const col = this.getColDescriptor();
@@ -35,5 +35,3 @@ class ColumnTotalHeader extends React.Component<IColumnHeaderProps> {
         return this.props.getTableDescriptor().getCol(this.props.column);
     }
 }
-
-export default ColumnTotalHeader;

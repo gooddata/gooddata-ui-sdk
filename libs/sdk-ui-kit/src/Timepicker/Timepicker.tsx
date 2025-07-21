@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { createRef, KeyboardEvent, PureComponent } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import moment from "moment";
 import { translationUtils } from "@gooddata/util";
@@ -46,8 +46,8 @@ interface ITimePickerState {
     selectedTime: Date;
 }
 
-export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITimePickerState> {
-    public dropdownRef = React.createRef<HTMLDivElement>();
+export class WrappedTimepicker extends PureComponent<TimePickerProps, ITimePickerState> {
+    public dropdownRef = createRef<HTMLDivElement>();
 
     public static defaultProps = {
         className: "",
@@ -182,7 +182,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                             data: item,
                         }));
 
-                        const handleKeyDown = (e: React.KeyboardEvent) => {
+                        const handleKeyDown = (e: KeyboardEvent) => {
                             if (e.key !== "Tab") {
                                 return;
                             }
@@ -231,7 +231,7 @@ const TimePickerWithIntl = injectIntl(WrappedTimepicker);
 /**
  * @internal
  */
-export class Timepicker extends React.PureComponent<ITimepickerOwnProps> {
+export class Timepicker extends PureComponent<ITimepickerOwnProps> {
     public render() {
         return (
             <IntlWrapper locale={this.props.locale}>

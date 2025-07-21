@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 import { InvertableSelectSearchBar } from "@gooddata/sdk-ui-kit";
 
 /**
@@ -35,10 +34,8 @@ export interface IAttributeFilterElementsSearchBarProps {
  *
  * @beta
  */
-export const AttributeFilterElementsSearchBar: React.VFC<IAttributeFilterElementsSearchBarProps> = (
-    props,
-) => {
+export function AttributeFilterElementsSearchBar(props: IAttributeFilterElementsSearchBarProps) {
     const { onSearch, searchString, isSmall } = props;
 
     return <InvertableSelectSearchBar onSearch={onSearch} searchString={searchString} isSmall={isSmall} />;
-};
+}

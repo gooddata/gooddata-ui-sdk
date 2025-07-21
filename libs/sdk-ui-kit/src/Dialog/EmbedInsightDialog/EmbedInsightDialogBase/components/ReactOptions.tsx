@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useCallback } from "react";
 
 import { CodeLanguageType, InsightCodeType, IReactOptions } from "../types.js";
 

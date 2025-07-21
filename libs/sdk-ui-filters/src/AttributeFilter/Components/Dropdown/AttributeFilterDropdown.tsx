@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
@@ -26,7 +26,7 @@ const ALIGN_POINTS = [
 /**
  * @internal
  */
-export const AttributeFilterDropdown: React.VFC = () => {
+export function AttributeFilterDropdown() {
     const { DropdownButtonComponent, DropdownBodyComponent, LoadingComponent, ErrorComponent } =
         useAttributeFilterComponentsContext();
 
@@ -133,10 +133,10 @@ export const AttributeFilterDropdown: React.VFC = () => {
             )}
         />
     );
-};
+}
 
 function useLastValidValue<T>(value: T, isValid: boolean): T {
-    const lastValidValue = useRef<T | undefined>();
+    const lastValidValue = useRef<T | undefined>(undefined);
     if (isValid) {
         lastValidValue.current = value;
     }

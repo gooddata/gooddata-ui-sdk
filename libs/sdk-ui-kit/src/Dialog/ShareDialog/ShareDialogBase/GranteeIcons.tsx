@@ -1,5 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "../../../Bubble/index.js";
 import { useComponentLabelsContext } from "./ComponentLabelsContext.js";
@@ -12,32 +11,31 @@ export interface IGranteeRemoveIconProps {
     onClick: () => void;
 }
 
-export const GranteeUserIcon: React.FC = () => {
+export function GranteeUserIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon gd-grantee-icon-user gd-grantee-item-icon-left" />
         </div>
     );
-};
+}
 
-export const GranteeUserInactiveIcon: React.FC = () => {
+export function GranteeUserInactiveIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon-inactive gd-grantee-icon-user gd-grantee-item-icon-left" />
         </div>
     );
-};
+}
 
-export const GranteeGroupIcon: React.FC = () => {
+export function GranteeGroupIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon gd-grantee-icon-group gd-grantee-item-icon-left" />
         </div>
     );
-};
+}
 
-export const GranteeRemoveIcon: React.FC<IGranteeRemoveIconProps> = (props) => {
-    const { onClick, mode } = props;
+export function GranteeRemoveIcon({ onClick, mode }: IGranteeRemoveIconProps) {
     const labels = useComponentLabelsContext();
     return (
         <BubbleHoverTrigger showDelay={0} hideDelay={0} className="gd-grantee-item-delete">
@@ -55,9 +53,9 @@ export const GranteeRemoveIcon: React.FC<IGranteeRemoveIconProps> = (props) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
-export const GranteeOwnerRemoveIcon: React.FC = () => {
+export function GranteeOwnerRemoveIcon() {
     const labels = useComponentLabelsContext();
 
     return (
@@ -70,4 +68,4 @@ export const GranteeOwnerRemoveIcon: React.FC = () => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

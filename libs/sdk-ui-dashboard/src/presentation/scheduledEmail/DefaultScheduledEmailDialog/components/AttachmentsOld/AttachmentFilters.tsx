@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -58,8 +58,14 @@ const buttonTitle = {
     default: defineMessage({ id: "dialogs.schedule.management.attachments.filters.default" }).id,
 };
 
-export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
-    const { filterType, onChange, hidden = false, disabled = false, filters, overlayPositionType } = props;
+export function AttachmentFilters({
+    filterType,
+    onChange,
+    hidden = false,
+    disabled = false,
+    filters,
+    overlayPositionType,
+}: IAttachmentFiltersProps) {
     const [selectedType, setSelectedType] = useState<AttachmentFilterType>(filterType);
     const intl = useIntl();
 
@@ -159,4 +165,4 @@ export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
             )}
         />
     );
-};
+}

@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { forwardRef, RefObject, useMemo, useCallback } from "react";
 import { IInsightWidget, IVisualizationSwitcherWidget } from "@gooddata/sdk-model";
 
 import { DashboardItemHeadline } from "../../../presentationComponents/index.js";
@@ -35,17 +35,17 @@ const alignPoints = [
     },
 ];
 
-export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitcherNavigationHeaderProps> = ({
+export function VisualizationSwitcherNavigationHeader({
     widget,
     clientWidth,
     clientHeight,
     activeVisualization,
     onActiveVisualizationChange,
     exportData,
-}) => {
+}: IVisualizationSwitcherNavigationHeaderProps) {
     const userInteraction = useDashboardUserInteraction();
 
-    const items = React.useMemo<IUiListboxItem<IInsightWidget>[]>(() => {
+    const items = useMemo<IUiListboxItem<IInsightWidget>[]>(() => {
         return widget.visualizations.map((visualization) => ({
             type: "interactive",
             id: visualization.identifier,
@@ -54,7 +54,7 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
         }));
     }, [widget.visualizations]);
 
-    const handleSelectVisualization = React.useCallback(
+    const handleSelectVisualization = useCallback(
         (item: IUiListboxInteractiveItem<IInsightWidget>) => {
             onActiveVisualizationChange(item.id);
             userInteraction.visualizationSwitcherInteraction("visualizationSwitcherSwitched");
@@ -91,7 +91,7 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
             )}
         />
     );
-};
+}
 
 type VisualizationSwitcherNavigationHeaderButtonProps = {
     title: string;
@@ -102,7 +102,7 @@ type VisualizationSwitcherNavigationHeaderButtonProps = {
     ariaAttributes: IDropdownButtonRenderProps["ariaAttributes"];
 };
 
-const VisualizationSwitcherNavigationHeaderButton = React.forwardRef<
+const VisualizationSwitcherNavigationHeaderButton = forwardRef<
     HTMLElement,
     VisualizationSwitcherNavigationHeaderButtonProps
 >(function VisualizationSwitcherNavigationHeaderButton(
@@ -114,7 +114,7 @@ const VisualizationSwitcherNavigationHeaderButton = React.forwardRef<
     });
     return (
         <div
-            ref={ref as React.RefObject<HTMLDivElement>}
+            ref={ref as RefObject<HTMLDivElement>}
             className={classNames}
             onClick={toggleDropdown}
             tabIndex={0}

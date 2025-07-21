@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { useRef, useLayoutEffect } from "react";
 import { connect } from "react-redux";
 import Skeleton from "react-loading-skeleton";
 import { useIntl } from "react-intl";
@@ -17,7 +17,7 @@ type MessagesComponentProps = {
     initializing?: boolean;
 };
 
-const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading, initializing }) => {
+function MessagesComponent({ messages, loading, initializing }: MessagesComponentProps) {
     const { scrollerRef } = useMessageScroller(messages);
     const intl = useIntl();
     const isLoading = loading === "loading" || loading === "clearing" || initializing;
@@ -63,13 +63,13 @@ const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading
             </div>
         </div>
     );
-};
+}
 
 function useMessageScroller(messages: ReturnType<typeof messagesSelector>) {
-    const scrollerRef = React.useRef<HTMLDivElement | null>(null);
+    const scrollerRef = useRef<HTMLDivElement | null>(null);
 
     const lastMessage = messages[messages.length - 1];
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
         // Last message will also change when it's loading state is updated
         scrollerRef.current?.scrollTo({
             top: scrollerRef.current?.scrollHeight,

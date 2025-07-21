@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useMemo } from "react";
+import { KeyboardEvent, MutableRefObject, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -30,13 +30,13 @@ interface IDestinationSelectProps {
     overlayPositionType?: OverlayPositionType;
 }
 
-export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
+export function DestinationSelect({
     notificationChannels,
     selectedItemId,
     onChange,
     closeOnParentScroll,
     overlayPositionType,
-}) => {
+}: IDestinationSelectProps) {
     const intl = useIntl();
     const items = useMemo(() => {
         return (
@@ -84,7 +84,7 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
                             value={selectedItem?.title}
                             onClick={toggleDropdown}
                             className="gd-notifications-channels-dialog-destination-button"
-                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                            buttonRef={buttonRef as MutableRefObject<HTMLElement>}
                             dropdownId={dropdownId}
                             isOpen={isOpen}
                         />
@@ -98,7 +98,7 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
                                 data: item,
                             }),
                         );
-                        const handleKeyDown = (e: React.KeyboardEvent) => {
+                        const handleKeyDown = (e: KeyboardEvent) => {
                             if (e.key !== "Tab") {
                                 return;
                             }
@@ -138,4 +138,4 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
             )}
         </div>
     );
-};
+}

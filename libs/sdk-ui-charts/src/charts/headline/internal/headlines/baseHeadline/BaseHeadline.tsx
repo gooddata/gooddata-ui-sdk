@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { defaultImport } from "default-import";
 import ReactMeasure, { MeasuredComponentProps } from "react-measure";
 
@@ -23,7 +23,7 @@ interface IHeadlineProps {
     onAfterRender?: () => void;
 }
 
-const BaseHeadline: React.FC<IHeadlineProps> = ({ data, config, onDrill, onAfterRender }) => {
+export default function BaseHeadline({ data, config, onDrill, onAfterRender }: IHeadlineProps) {
     const { primaryItem, secondaryItem, tertiaryItem } = data;
 
     const afterRenderCalled = useRef(false);
@@ -92,6 +92,4 @@ const BaseHeadline: React.FC<IHeadlineProps> = ({ data, config, onDrill, onAfter
             }}
         </Measure>
     );
-};
-
-export default BaseHeadline;
+}

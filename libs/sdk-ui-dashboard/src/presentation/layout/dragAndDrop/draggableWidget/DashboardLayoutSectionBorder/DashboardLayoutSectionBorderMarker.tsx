@@ -1,5 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { GD_COLOR_HIGHLIGHT, GD_COLOR_WHITE, INFO_TEXT_COLOR } from "@gooddata/sdk-ui-kit";
 
 interface IDashboardLayoutSectionBorderMarkerProps {
@@ -7,11 +6,10 @@ interface IDashboardLayoutSectionBorderMarkerProps {
     className?: string;
 }
 
-export const DashboardLayoutSectionBorderMarker: React.FC<IDashboardLayoutSectionBorderMarkerProps> = (
-    props,
-) => {
-    const { active, className } = props;
-
+export function DashboardLayoutSectionBorderMarker({
+    active,
+    className,
+}: IDashboardLayoutSectionBorderMarkerProps) {
     const background = active ? `var(--gd-palette-primary-base, ${GD_COLOR_HIGHLIGHT})` : "#E6E6E6";
     const color = active ? GD_COLOR_WHITE : INFO_TEXT_COLOR;
 
@@ -33,4 +31,4 @@ export const DashboardLayoutSectionBorderMarker: React.FC<IDashboardLayoutSectio
             </g>
         </svg>
     );
-};
+}

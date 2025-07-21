@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ReactElement } from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution.js";
 import { WithLoadingResult, IWithLoadingEvents, DataViewWindow } from "./withExecutionLoading.js";
@@ -67,7 +67,7 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
      *
      * @param executionResult - execution result, indicating state and/or results
      */
-    children: (executionResult: WithLoadingResult) => React.ReactElement | null;
+    children: (executionResult: WithLoadingResult) => ReactElement | null;
 
     /**
      * Provide component for rendering of the loading state.
@@ -90,7 +90,7 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
 
 type Props = IRawExecuteProps & WithLoadingResult;
 
-const CoreExecutor: React.FC<Props> = (props: Props) => {
+function CoreExecutor(props: Props) {
     const { children, error, isLoading, reload, result, LoadingComponent, ErrorComponent } = props;
 
     if (ErrorComponent && error) {
@@ -111,7 +111,7 @@ const CoreExecutor: React.FC<Props> = (props: Props) => {
         reload,
         result,
     });
-};
+}
 
 function exportTitle(props: IRawExecuteProps): string {
     return props.exportTitle || "RawExecute";

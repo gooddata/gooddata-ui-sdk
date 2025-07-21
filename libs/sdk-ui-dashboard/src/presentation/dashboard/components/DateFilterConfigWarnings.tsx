@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { defineMessage, FormattedMessage, MessageDescriptor } from "react-intl";
 import { createSelector } from "@reduxjs/toolkit";
 import { Message } from "@gooddata/sdk-ui-kit";
@@ -44,7 +43,7 @@ const selectRelevantWarnings = createSelector(
     },
 );
 
-export const DateFilterConfigWarnings: React.FC = () => {
+export function DateFilterConfigWarnings() {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const warnings = useDashboardSelector(selectRelevantWarnings);
     const enableRenamingProjectToWorkspace = useDashboardSelector(selectEnableRenamingProjectToWorkspace);
@@ -70,4 +69,4 @@ export const DateFilterConfigWarnings: React.FC = () => {
             </ul>
         </Message>
     ) : null;
-};
+}

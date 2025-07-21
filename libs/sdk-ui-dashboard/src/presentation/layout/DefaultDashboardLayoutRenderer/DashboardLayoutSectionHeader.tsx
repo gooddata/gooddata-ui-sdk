@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
@@ -28,7 +28,7 @@ export interface IDashboardLayoutSectionHeaderProps {
      * because we want to have all the logic and styling of the dashboard layout in one place,
      * to keep the look of Dashboard component in sync with gdc-dashboards.
      */
-    renderBeforeHeader?: React.ReactNode;
+    renderBeforeHeader?: ReactNode;
 
     /**
      * This prop is here to allow rendering editable row header in gdc-dashboards edit mode
@@ -36,12 +36,12 @@ export interface IDashboardLayoutSectionHeaderProps {
      * because we want to have all the logic and styling of the dashboard layout in one place,
      * to keep the look of Dashboard component in sync with gdc-dashboards.
      */
-    renderHeader?: React.ReactNode;
+    renderHeader?: ReactNode;
     onLoadingChanged?: OnLoadingChanged;
     onError?: OnError;
 }
 
-export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = (props) => {
+export function DashboardLayoutSectionHeader(props: IDashboardLayoutSectionHeaderProps) {
     const { title, description, renderBeforeHeader, renderHeader, exportData, onLoadingChanged, onError } =
         props;
     const { LoadingComponent } = useDashboardComponentsContext();
@@ -88,4 +88,4 @@ export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeade
             </div>
         </div>
     );
-};
+}

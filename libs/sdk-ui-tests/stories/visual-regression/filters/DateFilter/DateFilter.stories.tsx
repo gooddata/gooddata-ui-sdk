@@ -5,7 +5,6 @@ import {
     IUiAbsoluteDateFilterForm,
     IDateFilterOptionsByType,
 } from "@gooddata/sdk-ui-filters";
-import React from "react";
 
 import { action } from "storybook/actions";
 import { wrapWithTheme } from "../../themeWrapper.js";

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { MouseEvent, PureComponent } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize.js";
@@ -20,7 +20,7 @@ interface IOperatorDropdownItemOwnProps {
 
 type IOperatorDropdownItemProps = IOperatorDropdownItemOwnProps & WrappedComponentProps;
 
-export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownItemProps> {
+export class OperatorDropdownItem extends PureComponent<IOperatorDropdownItemProps> {
     public static defaultProps: any = {
         onClick: noop,
         bubbleText: null,
@@ -53,7 +53,7 @@ export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownI
         );
     }
 
-    public handleOnClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+    public handleOnClick = (e: MouseEvent<HTMLDivElement>): void => {
         const { operator, onClick } = this.props;
         onClick(operator);
         e.preventDefault();

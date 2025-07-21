@@ -6,7 +6,7 @@ import {
     INotificationChannelMetadataObject,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
-import React from "react";
+import { createRef, KeyboardEvent, PureComponent, ReactElement } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactSelect, {
     ActionMeta,
@@ -158,7 +158,7 @@ export interface IRecipientsSelectRendererProps {
     /**
      * Handle keyboard submit
      */
-    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+    onKeyDownSubmit?: (e: KeyboardEvent) => void;
 
     /**
      * Override recipients with an external recipient
@@ -172,11 +172,11 @@ interface IRecipientsSelectRendererState {
     focusedRecipientIndex: number;
 }
 
-export class RecipientsSelectRenderer extends React.PureComponent<
+export class RecipientsSelectRenderer extends PureComponent<
     IRecipientsSelectRendererProps,
     IRecipientsSelectRendererState
 > {
-    private recipientRef = React.createRef<HTMLDivElement>();
+    private recipientRef = createRef<HTMLDivElement>();
 
     constructor(props: IRecipientsSelectRendererProps) {
         super(props);
@@ -396,7 +396,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         missingEmailRecipientsValues: string;
         maxRecipients: number | undefined;
         usersError: GoodDataSdkError | undefined;
-    }): React.ReactElement | null => {
+    }): ReactElement | null => {
         return (
             <div id="gd-recipients-field-error" className="gd-recipients-field-error">
                 {authorOnlyError ? (
@@ -442,7 +442,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         );
     };
 
-    private renderEmptyContainer = (): React.ReactElement | null => {
+    private renderEmptyContainer = (): ReactElement | null => {
         return null;
     };
 
@@ -462,7 +462,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         return notificationChannel?.destinationType === "smtp";
     }
 
-    private renderNoOptionsContainer = (): React.ReactElement | null => {
+    private renderNoOptionsContainer = (): ReactElement | null => {
         if (this.props.externalRecipientOverride) {
             return null;
         }
@@ -474,9 +474,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         );
     };
 
-    private renderMultiValueRemove = (
-        props: MultiValueRemoveProps<IAutomationRecipient>,
-    ): React.ReactElement | null => {
+    private renderMultiValueRemove = (props: MultiValueRemoveProps<IAutomationRecipient>): ReactElement => {
         const intl = useIntl();
         const modifiedProps = {
             ...props,
@@ -491,7 +489,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         return <MultiValueRemove {...modifiedProps} />;
     };
 
-    private renderMenuOptions = (menuProps: MenuProps<any, boolean>): React.ReactElement | null => {
+    private renderMenuOptions = (menuProps: MenuProps<any, boolean>): ReactElement | null => {
         const { isLoading } = this.props;
         const {
             getValue,
@@ -512,7 +510,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         return this.renderMenuOptionsContainer(menuProps);
     };
 
-    private renderMenuList = (menuListProps: MenuListProps<any, boolean>): React.ReactElement => {
+    private renderMenuList = (menuListProps: MenuListProps<any, boolean>): ReactElement => {
         const modifiedInnerProps = {
             ...menuListProps.innerProps,
             id: MENU_LIST_ID,
@@ -521,7 +519,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         return <MenuList {...menuListProps} innerProps={modifiedInnerProps} />;
     };
 
-    private renderMenuOptionsContainer = (menuProps: MenuProps<any, boolean>): React.ReactElement => {
+    private renderMenuOptionsContainer = (menuProps: MenuProps<any, boolean>): ReactElement => {
         const style = this.getStyle();
         return (
             <OverlayControllerProvider overlayController={overlayController}>
@@ -536,7 +534,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         );
     };
 
-    private renderLoadingIcon = (menuProps: MenuProps<any, boolean>): React.ReactElement => {
+    private renderLoadingIcon = (menuProps: MenuProps<any, boolean>): ReactElement => {
         return (
             <OverlayControllerProvider overlayController={overlayController}>
                 <Menu className="s-gd-recipients-menu-container" {...menuProps}>
@@ -548,7 +546,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
 
     private renderMultiValueItemContainer = (
         label: string,
-        removeIcon: React.ReactElement | null,
+        removeIcon: ReactElement | null,
         recipientIndex: number,
         options: {
             hasEmail?: boolean;
@@ -558,7 +556,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             type?: "externalUser";
             email?: string;
         } = {},
-    ): React.ReactElement => {
+    ): ReactElement => {
         const style = this.getStyle();
         const { focusedRecipientIndex } = this.state;
 
@@ -676,12 +674,12 @@ export class RecipientsSelectRenderer extends React.PureComponent<
 
     private renderMultiValueContainer = (
         multiValueProps: MultiValueGenericProps<IAutomationRecipient>,
-    ): React.ReactElement => {
+    ): ReactElement => {
         const { allowExternalRecipients, allowOnlyLoggedUserRecipients, loggedUser, value } = this.props;
         const { data, children } = multiValueProps;
 
         // MultiValueRemove component from react-select
-        const removeIcon: React.ReactElement | null = (children as any)![1];
+        const removeIcon: ReactElement | null = (children as any)![1];
         const name = data.name ?? data.id;
         const hasEmail = this.getHasEmail(data);
         const noExternal = data.type === "externalUser" && !allowExternalRecipients;
@@ -701,7 +699,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         });
     };
 
-    private renderOptionLabel = (recipient: IAutomationRecipient): React.ReactElement | null => {
+    private renderOptionLabel = (recipient: IAutomationRecipient): ReactElement => {
         const { allowExternalRecipients, externalRecipientOverride } = this.props;
         const displayName = recipient.name ?? recipient.id;
         const email = isAutomationUserRecipient(recipient) ? (recipient.email ?? "") : "";
@@ -742,7 +740,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         );
     };
 
-    private renderRecipientValue = (recipient: IAutomationRecipient): React.ReactElement | null => {
+    private renderRecipientValue = (recipient: IAutomationRecipient): ReactElement | null => {
         const email = isAutomationUserRecipient(recipient) ? (recipient.email ?? "") : "";
 
         if (isEmail(email)) {
@@ -756,9 +754,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         return this.renderEmptyContainer();
     };
 
-    private renderInputContainer = (
-        inputProps: InputProps<IAutomationRecipient>,
-    ): React.ReactElement | null => {
+    private renderInputContainer = (inputProps: InputProps<IAutomationRecipient>): ReactElement | null => {
         const { isMulti } = this.props;
 
         if (!isMulti) {
@@ -778,7 +774,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         );
     };
 
-    private handleKeyDown = (e: React.KeyboardEvent) => {
+    private handleKeyDown = (e: KeyboardEvent) => {
         const { menuOpen } = this.state;
 
         if (isEscapeKey(e)) {
@@ -858,7 +854,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         return value.some((recipient: IAutomationRecipient) => isEqual(recipient.id, searchKey));
     };
 
-    private handleKeyboardNavigation = (e: React.KeyboardEvent) => {
+    private handleKeyboardNavigation = (e: KeyboardEvent) => {
         const { focusedRecipientIndex } = this.state;
         const { value, onKeyDownSubmit, onChange } = this.props;
         const totalRecipients = value.length;

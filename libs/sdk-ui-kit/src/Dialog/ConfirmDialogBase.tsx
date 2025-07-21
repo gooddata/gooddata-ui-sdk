@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { useMemo, memo } from "react";
 import cx from "classnames";
 import { Button } from "../Button/index.js";
 import { LoadingSpinner } from "../LoadingSpinner/index.js";
@@ -13,7 +13,7 @@ import { CONFIRM_DIALOG_BASE_ID } from "./elementId.js";
 /**
  * @internal
  */
-export const ConfirmDialogBase = React.memo<IConfirmDialogBaseProps>(function ConfirmDialogBase({
+export const ConfirmDialogBase = memo<IConfirmDialogBaseProps>(function ConfirmDialogBase({
     displayCloseButton = true,
     isSubmitDisabled = false,
     isCancelDisabled,
@@ -47,7 +47,7 @@ export const ConfirmDialogBase = React.memo<IConfirmDialogBaseProps>(function Co
     const headerClassNames = cx("gd-dialog-header", dialogHeaderClassName);
 
     const titleElementIdWhenNotSet = useId();
-    const accessibilityConfig = React.useMemo(() => {
+    const accessibilityConfig = useMemo(() => {
         let titleElementId = dialogBaseProps.accessibilityConfig?.titleElementId;
         if (headline && !titleElementId) {
             titleElementId = titleElementIdWhenNotSet;

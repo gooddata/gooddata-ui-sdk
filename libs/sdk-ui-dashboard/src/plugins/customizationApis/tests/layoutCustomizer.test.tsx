@@ -1,16 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultLayoutCustomizer } from "../layoutCustomizer.js";
 import { ExtendedDashboardWidget } from "../../../model/index.js";
 import { idRef, IDashboard } from "@gooddata/sdk-model";
 import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger";
-import { IDashboardLayoutProps } from "../../../presentation";
+import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
+import { IDashboardLayoutProps } from "../../../presentation/index.js";
 import { render } from "@testing-library/react";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 const EmptyDashboard: IDashboard<ExtendedDashboardWidget> = {
     type: "IDashboard",

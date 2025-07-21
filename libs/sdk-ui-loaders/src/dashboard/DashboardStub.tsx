@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
+import { ComponentType } from "react";
 import {
     ErrorComponent as DefaultErrorComponent,
     IErrorProps,
@@ -16,12 +16,12 @@ export interface IDashboardStubProps extends IDashboardLoadOptions {
     /**
      * Component to render if embedding fails.
      */
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
 
     /**
      * Component to render while the insight is loading.
      */
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
 }
 
 /**
@@ -33,7 +33,7 @@ export interface IDashboardStubProps extends IDashboardLoadOptions {
  *
  * @public
  */
-export const DashboardStub: React.FC<IDashboardStubProps> = (props) => {
+export function DashboardStub(props: IDashboardStubProps) {
     const { ErrorComponent = DefaultErrorComponent, LoadingComponent = DefaultLoadingComponent } = props;
     const { status, error, result } = useDashboardLoader(props);
 
@@ -46,4 +46,4 @@ export const DashboardStub: React.FC<IDashboardStubProps> = (props) => {
     }
 
     return <result.DashboardComponent {...result.props} />;
-};
+}

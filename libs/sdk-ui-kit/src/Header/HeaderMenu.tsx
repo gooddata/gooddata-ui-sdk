@@ -1,44 +1,42 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { PureComponent, ReactNode } from "react";
-import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
+import { FunctionComponent, ReactNode, MouseEvent } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 import identity from "lodash/identity.js";
 import cx from "classnames";
 
 import { IHeaderMenuProps, IHeaderMenuItem } from "./typings.js";
 
-class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponentProps> {
-    static defaultProps: Pick<IHeaderMenuProps, "className" | "onMenuItemClick" | "sections"> = {
-        className: "",
-        onMenuItemClick: identity,
-        sections: [],
-    };
+export const HeaderMenu: FunctionComponent<IHeaderMenuProps> = ({
+    className = "",
+    onMenuItemClick = identity,
+    sections = [],
+}) => {
+    const intl = useIntl();
 
-    getClassNames(): string {
-        return cx("gd-header-menu", this.props.className);
-    }
+    const getClassNames = (): string => cx("gd-header-menu", className);
 
-    renderSection(items: IHeaderMenuItem[]): ReactNode {
-        return items.map((item) => {
+    const renderSection = (items: IHeaderMenuItem[]): ReactNode =>
+        items.map((item) => {
             const clickHandler = item.onClick
                 ? item.onClick
-                : (event: React.MouseEvent) => this.props.onMenuItemClick(item, event);
+                : (event: MouseEvent) => onMenuItemClick(item, event);
 
             const classNames = cx("gd-header-menu-item gd-list-help-menu-item", {
                 active: item.isActive,
-                [item.className]: !!item.className,
+                [item.className ?? ""]: !!item.className,
             });
 
             return (
                 <a
                     key={item.key}
-                    onClick={clickHandler} // eslint-disable-line react/jsx-no-bind
+                    onClick={clickHandler}
                     href={item.href}
                     className={classNames}
                     target={item.target}
                     rel={item.target === "_blank" ? "noreferrer noopener" : undefined}
                 >
-                    {item.icon ? item.icon : null}
+                    {item.icon ?? null}
                     {item.iconName ? <i className={cx(item.iconName, "gd-icon")} /> : null}
                     <span className={item.className}>
                         <FormattedMessage id={item.key} />
@@ -46,25 +44,17 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
                 </a>
             );
         });
-    }
 
-    renderSections(): ReactNode {
-        return this.props.sections.map((items) => {
-            return (
-                <nav
-                    aria-label={this.props.intl.formatMessage({ id: "gs.header.menu.accessibility.label" })}
-                    key={`section-${uuid()}`}
-                    className="gd-header-menu-section gd-header-measure"
-                >
-                    {this.renderSection(items)}
-                </nav>
-            );
-        });
-    }
+    const renderSections = (): ReactNode =>
+        sections.map((items) => (
+            <nav
+                aria-label={intl.formatMessage({ id: "gs.header.menu.accessibility.label" })}
+                key={`section-${uuid()}`}
+                className="gd-header-menu-section gd-header-measure"
+            >
+                {renderSection(items)}
+            </nav>
+        ));
 
-    render(): ReactNode {
-        return <div className={this.getClassNames()}>{this.renderSections()}</div>;
-    }
-}
-
-export const HeaderMenu = injectIntl(WrappedHeaderMenu);
+    return <div className={getClassNames()}>{renderSections()}</div>;
+};

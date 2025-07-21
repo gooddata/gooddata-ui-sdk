@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
-
-import React from "react";
+// (C) 2024-2025 GoodData Corporation
+import { useState } from "react";
 import { IAlignPoint, Overlay, Button, Hyperlink } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 import merge from "lodash/merge.js";
@@ -25,9 +24,9 @@ export interface IConfigEditorProps {
     onCancel: () => void;
 }
 
-export const ConfigEditor: React.FC<IConfigEditorProps> = ({ value, onSubmit, onCancel }) => {
+export function ConfigEditor({ value, onSubmit, onCancel }: IConfigEditorProps) {
     const intl = useIntl();
-    const [currentYamlValue, setCurrentYamlValue] = React.useState(value);
+    const [currentYamlValue, setCurrentYamlValue] = useState(value);
 
     const onSave = () => onSubmit(currentYamlValue === "" ? undefined : currentYamlValue);
 
@@ -109,4 +108,4 @@ export const ConfigEditor: React.FC<IConfigEditorProps> = ({ value, onSubmit, on
             </div>
         </Overlay>
     );
-};
+}

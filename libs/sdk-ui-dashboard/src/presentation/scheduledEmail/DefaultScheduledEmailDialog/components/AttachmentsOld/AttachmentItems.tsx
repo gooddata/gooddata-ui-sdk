@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { KeyboardEvent, useCallback, useState } from "react";
 import cx from "classnames";
 import {
     Button,
@@ -26,16 +26,22 @@ const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
     },
 ];
 
-const AttachmentItem: React.FC<{
+function AttachmentItem({
+    format,
+    checked,
+    onChange,
+    className,
+    disabled,
+}: {
     id?: string;
     format: OldAttachmentType;
     checked: boolean;
     disabled?: boolean;
     onChange: () => void;
     className?: string;
-}> = ({ format, checked, onChange, className, disabled }) => {
+}) {
     const intl = useIntl();
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
         if (disabled) {
             return;
         }
@@ -65,21 +71,31 @@ const AttachmentItem: React.FC<{
             </div>
         </label>
     );
-};
+}
 
-export const AttachmentDashboard: React.FC<{
+export function AttachmentDashboard({
+    pdfSelected,
+    disabled,
+    onSelectionChange,
+}: {
     pdfSelected: boolean;
     disabled?: boolean;
     onSelectionChange: () => void;
-}> = (props) => {
-    const { pdfSelected, disabled, onSelectionChange } = props;
-
+}) {
     return (
         <AttachmentItem format="PDF" disabled={disabled} checked={pdfSelected} onChange={onSelectionChange} />
     );
-};
+}
 
-export const AttachmentWidgets: React.FC<{
+export function AttachmentWidgets({
+    csvSelected,
+    xlsxSelected,
+    settings,
+    onSelectionChange,
+    onSettingsChange,
+    closeOnParentScroll,
+    overlayPositionType,
+}: {
     csvSelected: boolean;
     xlsxSelected: boolean;
     settings: IExportDefinitionVisualizationObjectSettings;
@@ -87,21 +103,12 @@ export const AttachmentWidgets: React.FC<{
     onSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
     closeOnParentScroll?: boolean;
     overlayPositionType?: OverlayPositionType;
-}> = (props) => {
-    const {
-        csvSelected,
-        xlsxSelected,
-        settings,
-        onSelectionChange,
-        onSettingsChange,
-        closeOnParentScroll,
-        overlayPositionType,
-    } = props;
+}) {
     const intl = useIntl();
     const [mergeHeaders, setMergeHeaders] = useState(settings.mergeHeaders);
 
     const handleInputKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (isSpaceKey(e)) {
                 e.preventDefault();
                 setMergeHeaders(!mergeHeaders);
@@ -195,4 +202,4 @@ export const AttachmentWidgets: React.FC<{
             />
         </>
     );
-};
+}

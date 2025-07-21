@@ -1,11 +1,10 @@
 {
-    "exclude": ["**/tests", "**/test"],
     "include": [
-        "src/**/*",
-        "src/**/*.json",
-        "scripts/validateCss.js",
-        "scripts/generateDefaultThemeScss.js",
-        "scripts/validateUiComponents.js"
+      "src/**/*",
+      "src/**/*.json",
+      "scripts/validateCss.js",
+      "scripts/generateDefaultThemeScss.js",
+      "scripts/validateUiComponents.js"
     ],
     "compilerOptions": {
         "baseUrl": ".",
@@ -15,7 +14,7 @@
         "lib": ["ES2022", "DOM"],
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
-        "jsx": "react",
+        "jsx": "react-jsx",
         "importHelpers": true,
         "incremental": false,
         "resolveJsonModule": true,
@@ -25,6 +24,7 @@
         "composite": false,
         "declaration": true,
         "declarationMap": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "types": ["vitest/globals", "./vitest.d.ts"]
     }
 }

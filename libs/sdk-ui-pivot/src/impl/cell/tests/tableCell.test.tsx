@@ -19,7 +19,7 @@ async function createTestRenderer() {
 const mountWithTheme = (
     theme: ITheme,
     params: ICellRendererParams,
-    CellRenderer: (params: ICellRendererParams) => JSX.Element,
+    CellRenderer: (params: ICellRendererParams) => ReactElement,
 ) =>
     render(
         <ThemeProvider theme={theme}>

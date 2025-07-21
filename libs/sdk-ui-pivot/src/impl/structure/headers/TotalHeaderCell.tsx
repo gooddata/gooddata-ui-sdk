@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { Component } from "react";
 import cx from "classnames";
 
 import { HEADER_LABEL_CLASS } from "../../base/constants.js";
@@ -13,7 +13,7 @@ export interface IHeaderCellProps {
     textAlign?: AlignPositions;
 }
 
-export default class TotalHeaderCell extends React.Component<IHeaderCellProps> {
+export default class TotalHeaderCell extends Component<IHeaderCellProps> {
     public static defaultProps: Pick<IHeaderCellProps, "textAlign"> = {
         textAlign: ALIGN_LEFT,
     };

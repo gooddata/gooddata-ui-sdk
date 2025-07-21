@@ -1,5 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
 import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
@@ -36,7 +35,7 @@ const getIconClassNameBySelection = (selection: DRILL_TARGET_TYPE | undefined) =
     return selection ? icons[selection] : undefined;
 };
 
-export const DrillTargetType: React.FunctionComponent<IDrillTargetProps> = (props) => {
+export function DrillTargetType(props: IDrillTargetProps) {
     const { selection, enabledDrillTargetTypeItems, isButtonDisabled } = props;
     const intl = useIntl();
     const targetBySelection = getTargetBySelection(selection, enabledDrillTargetTypeItems);
@@ -97,4 +96,4 @@ export const DrillTargetType: React.FunctionComponent<IDrillTargetProps> = (prop
             )}
         />
     );
-};
+}

@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import { ReactElement } from "react";
 import { FormattedMessage, defineMessages } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
 import { ProjectIdParameterDetail } from "../ParameterDetails/ProjectIdParameterDetail.js";
@@ -63,7 +63,7 @@ const identifierParametersSection: IIdentifierParameter[] = [
     },
 ];
 
-const getDetailContent = (type: string, title: string, widgetRef: ObjRef): JSX.Element => {
+const getDetailContent = (type: string, title: string, widgetRef: ObjRef): ReactElement => {
     switch (type) {
         case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID:
         case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID:
@@ -83,14 +83,14 @@ const getDetailContent = (type: string, title: string, widgetRef: ObjRef): JSX.E
     }
 };
 
-export const IdentifierParametersSection: React.FC<IIdentifierParametersSectionProps> = ({
+export function IdentifierParametersSection({
     enableClientIdParameter,
     enableDataProductIdParameter,
     enableWidgetIdParameter,
     onAdd,
     intl,
     widgetRef,
-}) => {
+}: IIdentifierParametersSectionProps) {
     const enableRenamingProjectToWorkspace = useDashboardSelector(selectEnableRenamingProjectToWorkspace);
 
     return (
@@ -136,4 +136,4 @@ export const IdentifierParametersSection: React.FC<IIdentifierParametersSectionP
                 })}
         </>
     );
-};
+}

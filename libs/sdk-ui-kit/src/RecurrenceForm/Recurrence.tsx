@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 import { RepeatTypeSelect } from "./RepeatTypeSelect.js";
 import { CronExpression } from "./CronExpression.js";
@@ -42,28 +41,26 @@ export interface IRecurrenceProps {
  * Recurrence component is used to select recurrence type and set cron expression.
  * @param props - IRecurrenceProps
  */
-export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
-    const {
-        label,
-        recurrenceType,
-        inheritRecurrenceType,
-        startDate,
-        cronValue,
-        cronPlaceholder,
-        cronDescription,
-        timezone,
-        onRepeatTypeChange,
-        onCronValueChange,
-        allowHourlyRecurrence,
-        showTimezoneInOccurrence,
-        showRepeatTypeDescription,
-        showInheritValue,
-        isWhiteLabeled,
-        weekStart = "Sunday",
-        onRecurrenceDropdownOpen,
-        closeOnParentScroll,
-    } = props;
-
+export function Recurrence({
+    label,
+    recurrenceType,
+    inheritRecurrenceType,
+    startDate,
+    cronValue,
+    cronPlaceholder,
+    cronDescription,
+    timezone,
+    onRepeatTypeChange,
+    onCronValueChange,
+    allowHourlyRecurrence,
+    showTimezoneInOccurrence,
+    showRepeatTypeDescription,
+    showInheritValue,
+    isWhiteLabeled,
+    weekStart = "Sunday",
+    onRecurrenceDropdownOpen,
+    closeOnParentScroll,
+}: IRecurrenceProps) {
     const { cronError, handleChange, handleOnBlur } = useCronValidation({
         allowHourlyRecurrence,
         onCronValueChange,
@@ -141,4 +138,4 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
             ) : null}
         </>
     );
-};
+}

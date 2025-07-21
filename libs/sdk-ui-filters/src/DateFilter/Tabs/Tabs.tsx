@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { ReactNode } from "react";
 import cx from "classnames";
 import { DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID } from "../accessibility/elementId.js";
 import { IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
@@ -7,10 +7,10 @@ import { useIntl } from "react-intl";
 
 interface ITabsWrapperProps {
     className?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
-export const TabsWrapper: React.FC<ITabsWrapperProps> = ({ className, children, ...restProps }) => {
+export function TabsWrapper({ className, children, ...restProps }: ITabsWrapperProps) {
     const intl = useIntl();
 
     return (
@@ -23,34 +23,36 @@ export const TabsWrapper: React.FC<ITabsWrapperProps> = ({ className, children, 
             {children}
         </div>
     );
-};
+}
 
 interface ITabProps {
     selected?: boolean;
     className?: string;
     accessibilityConfig?: IAccessibilityConfigBase;
-    children: React.ReactNode;
+    children: ReactNode;
     onClick?: () => void;
 }
 
-export const Tab: React.FC<ITabProps> = ({
+export function Tab({
     selected,
     className,
     accessibilityConfig,
     onClick,
     children,
     ...restProps
-}) => (
-    <button
-        id={selected ? DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID : undefined}
-        onClick={onClick}
-        role="tab"
-        aria-selected={selected}
-        aria-controls={selected ? accessibilityConfig?.ariaControls : undefined}
-        tabIndex={selected ? 0 : -1}
-        className={cx(selected && "is-active", "gd-tab", className)}
-        {...restProps}
-    >
-        {children}
-    </button>
-);
+}: ITabProps) {
+    return (
+        <button
+            id={selected ? DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID : undefined}
+            onClick={onClick}
+            role="tab"
+            aria-selected={selected}
+            aria-controls={selected ? accessibilityConfig?.ariaControls : undefined}
+            tabIndex={selected ? 0 : -1}
+            className={cx(selected && "is-active", "gd-tab", className)}
+            {...restProps}
+        >
+            {children}
+        </button>
+    );
+}

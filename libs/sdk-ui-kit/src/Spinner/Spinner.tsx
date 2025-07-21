@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React, { PureComponent, ReactNode } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { PureComponent, ReactNode } from "react";
 import cx from "classnames";
 import { ISpinnerProps } from "./typings.js";
 

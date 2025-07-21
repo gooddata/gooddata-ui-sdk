@@ -1,20 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import { IIconProps } from "../typings.js";
 import { GD_COLOR_HIGHLIGHT } from "../../utils/constants.js";
 
 /**
  * @internal
  */
-export const QuestionMark: React.FC<IIconProps> = ({
+export function QuestionMark({
     color = GD_COLOR_HIGHLIGHT,
     className,
     width = 16,
     height = 16,
     ariaHidden,
-}) => {
+}: IIconProps) {
     return (
         <svg
             className={className}
@@ -35,4 +33,4 @@ export const QuestionMark: React.FC<IIconProps> = ({
             </g>
         </svg>
     );
-};
+}

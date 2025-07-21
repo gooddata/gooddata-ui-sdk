@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 import { UiAutofocus, Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
@@ -21,17 +21,16 @@ import {
 /**
  * @alpha
  */
-export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDialogProps> = (props) => {
-    const {
-        onPauseSuccess,
-        onPauseError,
-        onEdit,
-        onDeleteSuccess,
-        onDeleteError,
-        onClose,
-        isLoadingAlertingData,
-        automations,
-    } = props;
+export function DefaultAlertingManagementDialogNew({
+    onPauseSuccess,
+    onPauseError,
+    onEdit,
+    onDeleteSuccess,
+    onDeleteError,
+    onClose,
+    isLoadingAlertingData,
+    automations,
+}: IAlertingManagementDialogProps) {
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
     const [alertToPause, setAlertToPause] = useState<[IAutomationMetadataObject, boolean] | null>(null);
     const isEditingOpen = useDashboardSelector(selectIsAlertingDialogOpen);
@@ -153,4 +152,4 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
             ) : null}
         </>
     );
-};
+}

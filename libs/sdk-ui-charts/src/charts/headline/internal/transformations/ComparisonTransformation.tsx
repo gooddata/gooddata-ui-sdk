@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
@@ -9,13 +9,13 @@ import { getComparisonBaseHeadlineData } from "../utils/ComparisonTransformation
 import { IChartConfig } from "../../../../interfaces/index.js";
 import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 
-const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = ({
+export default function ComparisonTransformation({
     dataView,
     drillableItems,
     config,
     onAfterRender,
     onDrill,
-}) => {
+}: IHeadlineTransformationProps) {
     const baseHeadlineConfig: IChartConfig = config?.comparison
         ? config
         : {
@@ -41,6 +41,4 @@ const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = ({
             onAfterRender={onAfterRender}
         />
     );
-};
-
-export default ComparisonTransformation;
+}

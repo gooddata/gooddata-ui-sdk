@@ -1,19 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const GenAI: React.FC<IIconProps> = ({
-    color = "#14B2E2",
-    className,
-    ariaHidden,
-    width = 11,
-    height = 13,
-}) => {
+export function GenAI({ color = "#14B2E2", className, ariaHidden, width = 11, height = 13 }: IIconProps) {
     return (
         <svg
             className={className}
@@ -38,4 +30,4 @@ export const GenAI: React.FC<IIconProps> = ({
             />
         </svg>
     );
-};
+}

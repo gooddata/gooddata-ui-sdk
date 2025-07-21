@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { getChartType } from "../../../chartTypes/_chartCreators/helpers.js";
 
 import {
@@ -22,7 +22,7 @@ import autohidePieLabels from "./autohidePieLabels.js";
 import autohideLabelsOverlappingItsShape from "./autohideLabelsOverlappingItsShape.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const autohideLabels = (Highcharts: any): void => {
+export default function autohideLabels(Highcharts: any): void {
     Highcharts.wrap(
         Highcharts.Chart.prototype,
         "hideOverlappingLabels",
@@ -86,6 +86,4 @@ const autohideLabels = (Highcharts: any): void => {
             proceed.call(this, labels);
         },
     );
-};
-
-export default autohideLabels;
+}

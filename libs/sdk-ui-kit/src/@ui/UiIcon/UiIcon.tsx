@@ -1,5 +1,4 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
 import { IconType } from "../@types/icon.js";
 import { ThemeColor } from "../@types/themeColors.js";
 import { b } from "./iconBem.js";

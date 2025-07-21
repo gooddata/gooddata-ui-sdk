@@ -1,12 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 
 import { IIconProps } from "../typings.js";
 
 /**
  * @internal
  */
-export const EmbedCodeIcon: React.FC<IIconProps> = ({ color, className, ariaHidden, width, height }) => {
+export function EmbedCodeIcon({ color, className, ariaHidden, width, height }: IIconProps) {
     return (
         <svg
             className={className}
@@ -23,4 +22,4 @@ export const EmbedCodeIcon: React.FC<IIconProps> = ({ color, className, ariaHidd
             />
         </svg>
     );
-};
+}

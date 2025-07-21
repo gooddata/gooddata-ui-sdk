@@ -1,5 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { LoadingMask } from "@gooddata/sdk-ui-kit";
 
 /**
@@ -19,6 +18,6 @@ export interface IAttributeFilterElementsSelectLoadingProps {
  *
  * @beta
  */
-export const AttributeFilterElementsSelectLoading: React.VFC<IAttributeFilterElementsSelectLoadingProps> = (
-    props,
-) => <LoadingMask height={props.height} />;
+export function AttributeFilterElementsSelectLoading({ height }: IAttributeFilterElementsSelectLoadingProps) {
+    return <LoadingMask height={height} />;
+}

@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IAnalyticalBackend, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import tigerFactory, { TigerTokenAuthProvider } from "@gooddata/sdk-backend-tiger";
 
@@ -19,13 +19,11 @@ export const getOrInitBackend = (tigerToken: string, hostname: string): IAnalyti
     return backend;
 };
 
-const getBackend = (): IAnalyticalBackend => {
+export default function getBackend(): IAnalyticalBackend {
     if (!backend) {
         throw new UnexpectedError(
             "Backend not initialized before use. Make sure you have called initBackend.",
         );
     }
     return backend;
-};
-
-export default getBackend;
+}

@@ -13,7 +13,7 @@ import {
     IVisualizationSizeInfo,
     WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
-import React, { useRef } from "react";
+import { RefObject, useRef } from "react";
 import cx from "classnames";
 import {
     ExtendedDashboardWidget,
@@ -59,6 +59,7 @@ import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
 import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
 import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
 import { useWidgetExportData } from "../export/index.js";
+import { WidgetIndexProvider } from "../widget/widget/WidgetIndexContext.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -191,7 +192,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             getLayoutDimensions={getLayoutDimensions}
         >
             <div
-                ref={dragRef}
+                ref={dragRef as unknown as RefObject<HTMLDivElement>}
                 className={cx([
                     "dashboard-widget-draggable-wrapper",
                     {
@@ -200,18 +201,18 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                     },
                 ])}
             >
-                <DashboardWidget
-                    // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-                    index={index}
-                    screen={screen}
-                    onDrill={onDrill}
-                    onError={onError}
-                    onFiltersChange={onFiltersChange}
-                    widget={widget as ExtendedDashboardWidget}
-                    ErrorComponent={ErrorComponent}
-                    LoadingComponent={LoadingComponent}
-                    exportData={exportData}
-                />
+                <WidgetIndexProvider index={index}>
+                    <DashboardWidget
+                        screen={screen}
+                        onDrill={onDrill}
+                        onError={onError}
+                        onFiltersChange={onFiltersChange}
+                        widget={widget as ExtendedDashboardWidget}
+                        ErrorComponent={ErrorComponent}
+                        LoadingComponent={LoadingComponent}
+                        exportData={exportData}
+                    />
+                </WidgetIndexProvider>
             </div>
 
             {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (

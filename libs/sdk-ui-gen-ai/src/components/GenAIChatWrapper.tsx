@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import { MouseEvent, useCallback } from "react";
 import { Button, Typography, UiNavigationBypass, useKeyboardNavigationTarget } from "@gooddata/sdk-ui-kit";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -45,14 +45,14 @@ const GEN_AI_INPUT_ANCHOR_ID = "gd-gen-ai-input";
  * UI component that renders the Gen AI chat.
  * @internal
  */
-const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
+function GenAIChatWrapperComponent({
     loadThread,
     clearThread,
     cancelLoading,
     autofocus,
     initializing,
     isClearing,
-}) => {
+}: GenAIChatWrapperProps) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
     const { linkHandler, allowNativeLinks, catalogItems, canManage, canAnalyze, canFullControl } =
@@ -71,7 +71,7 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
     });
 
     const onSettingClick = useCallback(
-        (e: React.MouseEvent) => {
+        (e: MouseEvent) => {
             if (allowNativeLinks) {
                 window.location.href = getAbsoluteSettingHref(GEN_AI_SECTION, CREATE_LLM_PROVIDER_ACTION);
             } else {
@@ -131,9 +131,9 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
             </div>
         </ErrorBoundary>
     );
-};
+}
 
-const NavigationBypass: React.FC = () => {
+function NavigationBypass() {
     const intl = useIntl();
     const bypassBlocks = [
         {
@@ -148,7 +148,7 @@ const NavigationBypass: React.FC = () => {
             items={bypassBlocks}
         />
     );
-};
+}
 
 const mapStateToProps = (state: RootState) => ({
     isClearing: asyncProcessSelector(state) === "clearing",
@@ -160,7 +160,4 @@ const mapDispatchToProps = {
     clearThread: clearThreadAction,
 };
 
-export const GenAIChatWrapper: React.FC<GenAIChatOwnProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(GenAIChatWrapperComponent);
+export const GenAIChatWrapper = connect(mapStateToProps, mapDispatchToProps)(GenAIChatWrapperComponent);

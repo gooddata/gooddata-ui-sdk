@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import { Component, ElementType, ReactNode } from "react";
 
 import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "../MenuSharedTypes.js";
 
@@ -12,12 +12,12 @@ export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
     onOpenedChange: OnOpenedChange;
     openAction?: OpenAction;
     portalTarget?: Element | null;
-    toggler: React.ReactNode;
+    toggler: ReactNode;
     togglerWrapperClassName?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
-export class MenuOpener extends React.Component<IMenuOpenerProps> {
+export class MenuOpener extends Component<IMenuOpenerProps> {
     public static defaultProps: Pick<
         IMenuOpenerProps,
         "openAction" | "alignment" | "spacing" | "offset" | "portalTarget"
@@ -32,7 +32,7 @@ export class MenuOpener extends React.Component<IMenuOpenerProps> {
     };
 
     public render() {
-        const Component = this.getComponentByOpenAction() as React.ElementType;
+        const Component = this.getComponentByOpenAction() as ElementType;
 
         return (
             <Component

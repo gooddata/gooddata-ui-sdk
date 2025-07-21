@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 import { Dialog, useId } from "@gooddata/sdk-ui-kit";
 
 import AttributeHierarchyDialogHeader from "./AttributeHierarchyDialogHeader.js";
@@ -8,7 +7,7 @@ import AttributeHierarchyDialogFooter from "./AttributeHierarchyDialogFooter.js"
 import DeleteAttributeHierarchyConfirmation from "./DeleteAttributeHieraryConfirmation.js";
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
-const AttributeHierarchyDialogCore: React.FC = () => {
+export default function AttributeHierarchyDialogCore() {
     const { onClose, shouldDisplayDeleteConfirmation, title } = useAttributeHierarchyDialog();
 
     const titleElementId = useId();
@@ -32,6 +31,4 @@ const AttributeHierarchyDialogCore: React.FC = () => {
             <AttributeHierarchyDialogFooter />
         </Dialog>
     );
-};
-
-export default AttributeHierarchyDialogCore;
+}

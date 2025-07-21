@@ -1,5 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -16,7 +16,7 @@ import ConfigSection from "../configurationControls/ConfigSection.js";
 import LegendSection from "../configurationControls/legend/LegendSection.js";
 
 export default class SankeyChartConfigurationPanel extends ConfigurationPanelContent {
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const bubbleClassNames = cx("bubble-primary", { invisible: !this.isControlDisabled() });
 
         return (
@@ -60,7 +60,7 @@ export default class SankeyChartConfigurationPanel extends ConfigurationPanelCon
         );
     }
 
-    protected renderLegendSection(): React.ReactNode {
+    protected renderLegendSection(): ReactNode {
         const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 

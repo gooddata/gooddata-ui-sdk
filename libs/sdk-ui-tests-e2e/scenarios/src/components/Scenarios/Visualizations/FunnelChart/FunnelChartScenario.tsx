@@ -1,5 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
 import { FunnelChart } from "@gooddata/sdk-ui-charts";
 import {
     Amount,
@@ -7,10 +6,10 @@ import {
 } from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 const style = { height: 300 };
 
-export const FunnelChartScenario: React.FC = () => {
+export function FunnelChartScenario() {
     return (
         <div style={style} className="s-funnel-chart">
             <FunnelChart measures={[Amount]} viewBy={StageName.Default} />
         </div>
     );
-};
+}

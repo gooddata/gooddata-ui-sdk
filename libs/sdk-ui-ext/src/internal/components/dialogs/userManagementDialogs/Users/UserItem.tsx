@@ -1,20 +1,19 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { useIntl } from "react-intl";
-import React from "react";
 import cx from "classnames";
 import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 
 import { ListMode, IUserMember } from "../types.js";
 import { messages } from "../locales.js";
 
-const GranteeUserIcon: React.FC = () => {
+function GranteeUserIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon gd-grantee-icon-user gd-grantee-item-icon-left" />
         </div>
     );
-};
+}
 
 const alignPoints = [{ align: "cr cl" }];
 
@@ -24,7 +23,7 @@ interface IRemoveIconProps {
     onClick: () => void;
 }
 
-const RemoveIcon: React.FC<IRemoveIconProps> = ({ mode, onClick, isDisabled }) => {
+function RemoveIcon({ mode, onClick, isDisabled }: IRemoveIconProps) {
     const intl = useIntl();
     return (
         <BubbleHoverTrigger showDelay={0} hideDelay={0} className="gd-grantee-item-delete">
@@ -47,7 +46,7 @@ const RemoveIcon: React.FC<IRemoveIconProps> = ({ mode, onClick, isDisabled }) =
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
 interface IUserItemProps {
     user: IUserMember;
@@ -56,7 +55,7 @@ interface IUserItemProps {
     isDeleteDisabled?: boolean;
 }
 
-export const UserItem: React.FC<IUserItemProps> = ({ mode, onDelete, user, isDeleteDisabled }) => {
+export function UserItem({ mode, onDelete, user, isDeleteDisabled }: IUserItemProps) {
     const itemClassName = cx("s-user-management-item", "gd-share-dialog-grantee-item");
 
     return (
@@ -69,4 +68,4 @@ export const UserItem: React.FC<IUserItemProps> = ({ mode, onDelete, user, isDel
             <GranteeUserIcon />
         </div>
     );
-};
+}

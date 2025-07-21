@@ -2,7 +2,7 @@
     "compilerOptions": {
         "module": "commonjs",
         "allowJs": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "sourceMap": true,
         "esModuleInterop": true,
         "importHelpers": true,

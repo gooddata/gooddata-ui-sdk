@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useEffect, useState } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 import { messages } from "@gooddata/sdk-ui";
@@ -12,7 +12,7 @@ interface IAttributeDropdownProps {
     rowIndex: number;
 }
 
-const AttributeDropdown: React.FC<IAttributeDropdownProps> = ({ rowIndex }) => {
+export default function AttributeDropdown({ rowIndex }: IAttributeDropdownProps) {
     const { formatMessage } = useIntl();
     const { getValidAttributes, onCompleteAttribute } = useAttributeHierarchyDialog();
 
@@ -60,6 +60,4 @@ const AttributeDropdown: React.FC<IAttributeDropdownProps> = ({ rowIndex }) => {
             }}
         />
     );
-};
-
-export default AttributeDropdown;
+}

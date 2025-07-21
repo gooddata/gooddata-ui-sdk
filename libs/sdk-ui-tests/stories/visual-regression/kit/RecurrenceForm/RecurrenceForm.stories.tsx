@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import { RecurrenceForm } from "@gooddata/sdk-ui-kit";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { action } from "storybook/actions";
@@ -20,7 +19,7 @@ const onChange = (value: string) => {
     action("onChange")(value);
 };
 
-const RecurrenceFormTest: React.FC = () => {
+function RecurrenceFormTest() {
     return (
         <IntlWrapper>
             <div className="library-component screenshot-target">
@@ -82,7 +81,7 @@ const RecurrenceFormTest: React.FC = () => {
             </div>
         </IntlWrapper>
     );
-};
+}
 
 const screenshotProps = {
     default: {},

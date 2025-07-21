@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { Component, ReactNode } from "react";
 
 import { OnOpenedChange, IOnOpenedChangeParams } from "./MenuSharedTypes.js";
 
@@ -16,14 +16,14 @@ export interface IMenuStateConfig {
  * @internal
  */
 export interface IMenuStateProps extends IMenuStateConfig {
-    children: (props: { opened: boolean; onOpenedChange: OnOpenedChange }) => React.ReactNode;
+    children: (props: { opened: boolean; onOpenedChange: OnOpenedChange }) => ReactNode;
 }
 
 export interface IMenuStateState {
     opened?: boolean;
 }
 
-export class MenuState extends React.Component<IMenuStateProps, IMenuStateState> {
+export class MenuState extends Component<IMenuStateProps, IMenuStateState> {
     public static defaultProps = {
         defaultOpened: false,
     };

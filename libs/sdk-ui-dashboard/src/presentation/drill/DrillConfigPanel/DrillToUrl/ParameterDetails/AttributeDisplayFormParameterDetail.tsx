@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React, { useState, useEffect } from "react";
+// (C) 2020-2025 GoodData Corporation
+import { useState, useEffect } from "react";
 import { defineMessages, IntlShape, useIntl } from "react-intl";
 import { LRUCache } from "lru-cache";
 import { AttributeDisplayFormType, IAttributeElement, ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -107,10 +107,14 @@ const useSupportsEnumeration = (displayFormRef: ObjRef) => {
     return !isDateAttribute;
 };
 
-export const AttributeDisplayFormParameterDetail: React.FC<IAttributeDisplayFormParameterDetailProps> = (
-    props,
-) => {
-    const { title, label, type, displayFormRef, projectId, showValues } = props;
+export function AttributeDisplayFormParameterDetail({
+    title,
+    label,
+    type,
+    displayFormRef,
+    projectId,
+    showValues,
+}: IAttributeDisplayFormParameterDetailProps) {
     const intl = useIntl();
     const backend = useBackendStrict();
 
@@ -156,4 +160,4 @@ export const AttributeDisplayFormParameterDetail: React.FC<IAttributeDisplayForm
             additionalValues={additionalValues}
         />
     );
-};
+}

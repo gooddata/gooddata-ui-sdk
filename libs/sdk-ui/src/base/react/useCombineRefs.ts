@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import { useCallback, MutableRefObject } from "react";
 
 /**
  * @internal
  */
 export const useCombineRefs = <T>(
-    ...refs: Array<React.MutableRefObject<T> | ((instance: T) => void) | undefined | null | false>
+    ...refs: Array<MutableRefObject<T> | ((instance: T) => void) | undefined | null | false>
 ) => {
-    return React.useCallback((instance: T) => {
+    return useCallback((instance: T) => {
         refs.forEach((ref) => {
             if (!ref) {
                 return;

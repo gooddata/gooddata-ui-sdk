@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
 import { wrapWithTheme } from "../../themeWrapper.js";

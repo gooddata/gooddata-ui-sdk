@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import { memo } from "react";
 import noop from "lodash/noop.js";
 
 import { Overlay } from "../Overlay/index.js";
@@ -13,7 +13,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 /**
  * @internal
  */
-export const ExportDialog = React.memo<IExportDialogProps>(function ExportDialog({
+export const ExportDialog = memo<IExportDialogProps>(function ExportDialog({
     className,
     displayCloseButton = true,
     isPositive = true,

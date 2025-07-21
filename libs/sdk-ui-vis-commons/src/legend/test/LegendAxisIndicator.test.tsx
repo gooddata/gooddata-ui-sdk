@@ -1,15 +1,11 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { render, screen } from "@testing-library/react";
 import { ILegendAxisIndicatorProps, LegendAxisIndicator } from "../LegendAxisIndicator.js";
-import { withIntl } from "@gooddata/sdk-ui";
 import { describe, it, expect } from "vitest";
 
 describe("LegendAxisIndicator", () => {
     function createComponent(props: ILegendAxisIndicatorProps) {
-        const Wrapped = withIntl(LegendAxisIndicator);
-
-        return render(<Wrapped {...props} />);
+        return render(<LegendAxisIndicator {...props} />);
     }
 
     it.each([

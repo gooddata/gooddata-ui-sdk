@@ -1,14 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render } from "@testing-library/react";
 
 import { ITitleProps } from "../../../presentation/index.js";
-import { DefaultTitleCustomizer } from "../titleCustomizer";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types";
+import { DefaultTitleCustomizer } from "../titleCustomizer.js";
+import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //

@@ -1,5 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { dummyDataView } from "@gooddata/sdk-backend-base";
 import { emptyDef } from "@gooddata/sdk-model";
@@ -17,7 +16,7 @@ const renderEnhancedComponent = <T, E>(
 ) => {
     const promiseFactory = (_props?: T) => createDummyPromise(promiseConfig);
 
-    const CoreComponent: React.FC<WithLoadingResult> = (props) => {
+    function CoreComponent(props: WithLoadingResult) {
         const { result, error, reload, isLoading } = props;
         return (
             <div>
@@ -32,7 +31,7 @@ const renderEnhancedComponent = <T, E>(
                 ) : null}
             </div>
         );
-    };
+    }
 
     const Component: any = withExecutionLoading({
         ...hocConfig,

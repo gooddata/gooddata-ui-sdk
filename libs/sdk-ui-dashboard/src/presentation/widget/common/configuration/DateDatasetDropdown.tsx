@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React, { useCallback, useEffect, useRef, useState } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { FormattedMessage, MessageDescriptor, defineMessage, defineMessages, useIntl } from "react-intl";
 import cx from "classnames";
@@ -35,7 +35,7 @@ interface IDateDatasetsListItemProps {
     isHeader?: boolean;
     isSelected?: boolean;
     isUnrelated?: boolean;
-    onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 // work around the evil DateDatasetsListItem from kit that magically translates SOME of the items' titles
@@ -47,14 +47,14 @@ const dateDatasetHeaderMessages: Record<string, MessageDescriptor> = defineMessa
     "gs.date.date-dataset.unrelated": { id: "gs.date.date-dataset.unrelated" },
 });
 
-const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
+function DateDatasetsListItem({
     id,
     title = "",
     isHeader,
     isSelected,
     isUnrelated,
     onClick,
-}) => {
+}: IDateDatasetsListItemProps) {
     if (isHeader) {
         return <div className="gd-list-item gd-list-item-header">{title}</div>;
     }
@@ -75,7 +75,7 @@ const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
             <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
         </div>
     );
-};
+}
 
 export interface IDateDatasetDropdownProps {
     autoOpen?: boolean;
@@ -97,21 +97,20 @@ interface IDateDatasetsDropdownState {
     height: number;
 }
 
-export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) => {
-    const {
-        className = "s-date-dataset-switch",
-        isLoading = false,
-        autoOpen = false,
-        onDateDatasetChange,
-        activeDateDataset,
-        unrelatedDateDataset,
-        dateFromVisualization,
-        relatedDateDatasets,
-        widgetRef,
-        enableUnrelatedItemsVisibility,
-        unrelatedDateDatasets,
-    } = props;
-
+export function DateDatasetDropdown({
+    className = "s-date-dataset-switch",
+    isLoading = false,
+    autoOpen = false,
+    onDateDatasetChange,
+    activeDateDataset,
+    unrelatedDateDataset,
+    dateFromVisualization,
+    relatedDateDatasets,
+    widgetRef,
+    enableUnrelatedItemsVisibility,
+    unrelatedDateDatasets,
+    width: initialWidth,
+}: IDateDatasetDropdownProps) {
     const intl = useIntl();
     const { onItemScroll, closeOnParentScroll } = useAutoScroll(autoOpen);
     const [showUnavailableItems, setShowUnavailableItems] = useState(false);
@@ -143,9 +142,9 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
     );
     const unrelatedDateDatasetCount = (unrelatedDateDatasets?.length ?? 0) - (unrelatedDateDataset ? 1 : 0);
 
-    const buttonRef = useRef<HTMLDivElement>();
+    const buttonRef = useRef<HTMLDivElement | null>(null);
     const [{ height, width }, setDropdownDimensions] = useState<IDateDatasetsDropdownState>({
-        width: props.width,
+        width: initialWidth,
         height: DROPDOWN_MIN_HEIGHT,
     });
     const dropdownBodyHeight = (sortedItems?.length || 0) * DEFAULT_DROPDOWN_ITEM_HEIGHT;
@@ -277,7 +276,7 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
             renderBody={renderDropdownBody}
         />
     );
-};
+}
 
 /**
  * Purpose of this hook is keep value of closeOnParentScroll derived from autoOpen

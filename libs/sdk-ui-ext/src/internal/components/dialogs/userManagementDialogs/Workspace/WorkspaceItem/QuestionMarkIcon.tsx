@@ -1,6 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { Icon, withBubble } from "@gooddata/sdk-ui-kit";
 
@@ -9,7 +8,7 @@ interface IColoredIconProps {
     height?: number;
 }
 
-const ColoredIcon: React.FC<IColoredIconProps> = ({ width, height }) => {
+function ColoredIcon({ width, height }: IColoredIconProps) {
     const theme = useTheme();
     return (
         <Icon.QuestionMark
@@ -18,6 +17,6 @@ const ColoredIcon: React.FC<IColoredIconProps> = ({ width, height }) => {
             height={height}
         />
     );
-};
+}
 
 export const QuestionMarkIcon = withBubble(ColoredIcon);

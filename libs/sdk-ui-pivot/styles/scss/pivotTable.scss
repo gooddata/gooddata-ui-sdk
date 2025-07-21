@@ -160,7 +160,9 @@ $subtotal-odd-background-color: var(
                 width: 100%;
             }
 
-            overflow: visible;
+            & {
+                overflow: visible;
+            }
 
             // add keyboard focus effect to pivot header cells to override internal ag-grid "outline: 0" style
             &:focus-visible {

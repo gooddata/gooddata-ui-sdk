@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+// (C) 2019-2025 GoodData Corporation
+
+import { useIntl } from "react-intl";
 
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 import ConfigSubsection from "./ConfigSubsection.js";
@@ -15,7 +15,7 @@ export interface IPushpinSizeControl {
     pushData: (data: any) => any;
 }
 
-function getPushpinProperty(props: IPushpinSizeControl & WrappedComponentProps) {
+function getPushpinProperty(props: IPushpinSizeControl) {
     const { minSize = "default", maxSize = "default" } = props.properties?.controls?.points ?? {};
     return {
         minSize,
@@ -23,9 +23,11 @@ function getPushpinProperty(props: IPushpinSizeControl & WrappedComponentProps) 
     };
 }
 
-function PushpinSizeControl(props: IPushpinSizeControl & WrappedComponentProps): React.ReactElement {
+export default function PushpinSizeControl(props: IPushpinSizeControl) {
     const { minSize, maxSize } = getPushpinProperty(props);
-    const { disabled, properties, pushData, intl } = props;
+    const { disabled, properties, pushData } = props;
+    const intl = useIntl();
+
     const items = getTranslatedDropdownItems(pushpinSizeDropdownItems, intl);
     return (
         <ConfigSubsection title={messages.pointsSizeTitle.id}>
@@ -52,5 +54,3 @@ function PushpinSizeControl(props: IPushpinSizeControl & WrappedComponentProps):
         </ConfigSubsection>
     );
 }
-
-export default injectIntl(PushpinSizeControl);

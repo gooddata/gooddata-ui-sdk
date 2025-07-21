@@ -1,20 +1,18 @@
-// (C) 2023-2024 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import { ReactNode } from "react";
 import { BubbleHoverTrigger, Bubble, Icon } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
  */
 export interface IAttributeFilterDependencyTooltipProps {
-    tooltipContent: React.ReactNode;
+    tooltipContent: ReactNode;
 }
 
 /**
  * @internal
  */
-export const AttributeFilterDependencyTooltip: React.FC<IAttributeFilterDependencyTooltipProps> = ({
-    tooltipContent,
-}) => {
+export function AttributeFilterDependencyTooltip({ tooltipContent }: IAttributeFilterDependencyTooltipProps) {
     return (
         <span className="gd-attribute-filter-dropdown-button-icon-tooltip">
             <BubbleHoverTrigger>
@@ -30,4 +28,4 @@ export const AttributeFilterDependencyTooltip: React.FC<IAttributeFilterDependen
             </BubbleHoverTrigger>
         </span>
     );
-};
+}

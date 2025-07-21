@@ -1,9 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { ReactNode, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { Ref, ReactNode, useEffect, useMemo, useRef, useState, useReducer } from "react";
 import cx from "classnames";
 import { connect } from "react-redux";
-import { defineMessages, FormattedMessage, injectIntl } from "react-intl";
-import { WrappedComponentProps } from "react-intl/src/components/injectIntl.js";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { SyntaxHighlightingInput, Button } from "@gooddata/sdk-ui-kit";
 import { CatalogItem } from "@gooddata/sdk-model";
 import { EditorView } from "@codemirror/view";
@@ -20,7 +19,7 @@ export type InputOwnProps = {
     catalogItems?: CatalogItem[];
     canManage?: boolean;
     canAnalyze?: boolean;
-    targetRef?: React.LegacyRef<HTMLDivElement>;
+    targetRef?: Ref<HTMLDivElement>;
 };
 
 type InputStateProps = {
@@ -51,19 +50,18 @@ const isMac =
     typeof navigator !== "undefined" &&
     (navigator.platform.toUpperCase().indexOf("MAC") >= 0 || navigator.userAgent.includes("Macintosh"));
 
-const InputComponent: React.FC<
-    InputOwnProps & InputStateProps & InputDispatchProps & WrappedComponentProps
-> = ({
+function InputComponent({
     isBusy,
     isEvaluating,
     newMessage,
     autofocus = false,
-    intl,
     catalogItems,
     canManage,
     canAnalyze,
     targetRef,
-}) => {
+}: InputOwnProps & InputStateProps & InputDispatchProps) {
+    const intl = useIntl();
+
     const [value, setValue] = useState("");
     const [editorApi, setApi] = useState<EditorView | null>(null);
     const [focused, setFocused] = useState(false);
@@ -193,7 +191,7 @@ const InputComponent: React.FC<
             </Button>
         </div>
     );
-};
+}
 
 const mapStateToProps = (state: RootState): { isBusy: boolean; isEvaluating: boolean } => {
     const asyncState = asyncProcessSelector(state);
@@ -208,7 +206,4 @@ const mapDispatchToProps = {
     newMessage: newMessageAction,
 };
 
-export const Input: React.FC<InputOwnProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(injectIntl(InputComponent));
+export const Input = connect(mapStateToProps, mapDispatchToProps)(InputComponent);

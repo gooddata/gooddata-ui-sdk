@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { memo, ReactNode, useCallback } from "react";
 import cx from "classnames";
 import { e } from "../../menuBem.js";
 import { UiIconButton } from "../../../UiIconButton/UiIconButton.js";
@@ -16,9 +16,9 @@ import { IUiMenuItemData } from "../../types.js";
  * If not in a submenu, returns null.
  * @internal
  */
-export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHeader<
+export const DefaultUiMenuHeader = memo(function DefaultUiMenuHeader<
     T extends IUiMenuItemData = object,
->(): React.ReactElement | null {
+>(): ReactNode {
     const { formatMessage } = useIntl();
 
     const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
@@ -42,7 +42,7 @@ export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHe
 
     const parentItemId = parentItem?.id;
 
-    const handleBack = React.useCallback(() => {
+    const handleBack = useCallback(() => {
         if (parentItemId === undefined) {
             return;
         }

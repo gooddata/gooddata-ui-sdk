@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
 import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
@@ -44,9 +43,7 @@ export interface IPivotTableTransposeCoreProps {
     config: IPivotTableConfig;
 }
 
-const PivotTableTranspose: React.FC<IPivotTableTransposeCoreProps> = (props) => {
-    const { measure, row, column, config } = props;
-
+function PivotTableTranspose({ measure, row, column, config }: IPivotTableTransposeCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -65,7 +62,7 @@ const PivotTableTranspose: React.FC<IPivotTableTransposeCoreProps> = (props) => 
             />
         </div>
     );
-};
+}
 
 export const PivotTableTransposeHasMR_RowLeft = () => {
     return (

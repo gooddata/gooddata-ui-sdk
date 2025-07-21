@@ -1,6 +1,5 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
 import { FormattedMessage } from "react-intl";
 import { IDataSetMetadataObject } from "@gooddata/sdk-model";
 
@@ -16,11 +15,11 @@ export interface IAttributeDatasetInfoProps {
 /**
  * @internal
  */
-export const AttributeDatasetInfo: React.FC<IAttributeDatasetInfoProps> = ({
+export function AttributeDatasetInfo({
     title,
     defaultAttributeFilterTitle,
     attributeDataSet,
-}) => {
+}: IAttributeDatasetInfoProps) {
     return (
         <div className="gd-attribute-filter-tooltip-content s-attribute-filter-tooltip-content">
             <h3 className="s-attribute-filter-tooltip-header">{title ?? defaultAttributeFilterTitle}</h3>
@@ -34,4 +33,4 @@ export const AttributeDatasetInfo: React.FC<IAttributeDatasetInfoProps> = ({
             <p className="s-attribute-filter-tooltip-item-dataset">{attributeDataSet.title}</p>
         </div>
     );
-};
+}

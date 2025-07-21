@@ -1,5 +1,4 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
@@ -15,9 +14,7 @@ const ALIGN_POINTS = [{ align: "bc tc", offset: { x: -1, y: 5 } }];
 /**
  * @internal
  */
-export const DateFilterConfigurationButton: React.FC<IDateFilterConfigurationButtonProps> = (props) => {
-    const { onConfiguration } = props;
-
+export function DateFilterConfigurationButton({ onConfiguration }: IDateFilterConfigurationButtonProps) {
     return (
         <div className="gd-date-filter-configuration-button s-gd-date-filter-configuration-button">
             <BubbleHoverTrigger>
@@ -32,4 +29,4 @@ export const DateFilterConfigurationButton: React.FC<IDateFilterConfigurationBut
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

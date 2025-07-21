@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IDashboardWidgetCustomizer } from "../customizer.js";
 import { IDashboardCustomizationLogger } from "./customizationLogging.js";
@@ -15,14 +15,14 @@ interface IDashboardWidgetDefinition {
     readonly DefaultComponent: CustomDashboardWidgetComponent;
 
     // component to use for rendering the drag handle which the user can grab and toss onto dashboard
-    // readonly DragHandleComponent: React.ComponentType;
+    // readonly DragHandleComponent: ComponentType;
 
     // creates a new empty widget; this will be called when drag handle is dropped onto dashboard. the
     // factory must return a new instance of a custom widget in an empty state
     // readonly widgetFactory: () => ICustomWidget;
 
     // Component to use when the custom widget is being edited
-    // readonly EditableComponent: React.ComponentType;
+    // readonly EditableComponent: ComponentType;
 }
 
 type CustomWidgetMap = Map<string, IDashboardWidgetDefinition>;

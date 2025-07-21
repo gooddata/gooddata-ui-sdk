@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 import cx from "classnames";
 import { EditorView } from "@codemirror/view";
 import { Extension } from "@codemirror/state";
@@ -34,24 +33,22 @@ export interface ISyntaxHighlightingInputProps {
 /**
  * @internal
  */
-export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = (props) => {
-    const {
-        value,
-        label,
-        placeholder,
-        autocompletion,
-        onApi,
-        onChange,
-        onCursor,
-        onKeyDown,
-        onCompletion,
-        onFocus,
-        onBlur,
-        className,
-        extensions = [],
-        disabled,
-    } = props;
-
+export function SyntaxHighlightingInput({
+    value,
+    label,
+    placeholder,
+    autocompletion,
+    onApi,
+    onChange,
+    onCursor,
+    onKeyDown,
+    onCompletion,
+    onFocus,
+    onBlur,
+    className,
+    extensions = [],
+    disabled,
+}: ISyntaxHighlightingInputProps) {
     const { editorRef } = useCodemirror({
         placeholderText: placeholder,
         autocompletion,
@@ -69,4 +66,4 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
     });
 
     return <div className={cx(className, "gd-input-syntax-highlighting-input")} ref={editorRef} />;
-};
+}

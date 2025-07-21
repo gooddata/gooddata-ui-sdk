@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import { MouseEvent, useCallback, useMemo } from "react";
 import cx from "classnames";
 import camelCase from "lodash/camelCase.js";
 import { IAttributeFilterElementsSelectItemProps } from "./types.js";
@@ -13,22 +13,19 @@ import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterEleme
  *
  * @beta
  */
-export const SingleSelectionAttributeFilterElementsSelectItem: React.VFC<
-    IAttributeFilterElementsSelectItemProps
-> = (props) => {
-    const {
-        item,
-        onSelectOnly,
-        isSelected,
-        focusedAction,
-        fullscreenOnMobile = false,
-        primaryLabelTitle,
-    } = props;
+export function SingleSelectionAttributeFilterElementsSelectItem({
+    item,
+    onSelectOnly,
+    isSelected,
+    focusedAction,
+    fullscreenOnMobile = false,
+    primaryLabelTitle,
+}: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
 
     // Modify item click behavior to select only this particular item.
     const onItemClick = useCallback(
-        (event: React.MouseEvent) => {
+        (event: MouseEvent) => {
             event.stopPropagation();
             onSelectOnly();
         },
@@ -73,4 +70,4 @@ export const SingleSelectionAttributeFilterElementsSelectItem: React.VFC<
             />
         </div>
     );
-};
+}

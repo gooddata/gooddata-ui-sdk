@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import { Component, ReactElement } from "react";
 import {
     newErrorMapping,
     IErrorDescriptors,
@@ -13,7 +13,7 @@ import XirrTransformation from "./internal/XirrTransformation.js";
 import { defaultCoreChartProps } from "../_commons/defaultProps.js";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;
-export class XirrStateless extends React.Component<Props> {
+export class XirrStateless extends Component<Props> {
     public static defaultProps = defaultCoreChartProps;
 
     private errorMap: IErrorDescriptors;
@@ -23,7 +23,7 @@ export class XirrStateless extends React.Component<Props> {
         this.errorMap = newErrorMapping(props.intl);
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const { dataView, error, isLoading } = this.props;
 
         const ErrorComponent = this.props.ErrorComponent;
@@ -47,7 +47,7 @@ export class XirrStateless extends React.Component<Props> {
         return this.renderVisualization();
     }
 
-    protected renderVisualization(): JSX.Element {
+    protected renderVisualization(): ReactElement {
         const { afterRender, drillableItems, locale, dataView, onDrill, config } = this.props;
 
         return (

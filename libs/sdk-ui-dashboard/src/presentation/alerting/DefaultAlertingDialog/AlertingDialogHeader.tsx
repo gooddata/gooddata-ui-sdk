@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useState, useCallback, forwardRef } from "react";
+import { useState, useCallback, forwardRef, ChangeEvent, FocusEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, Button, Icon, useId } from "@gooddata/sdk-ui-kit";
@@ -52,7 +52,7 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
     }, []);
 
     const handleOnChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             const { value } = e.target;
             const validationResult = validate(value);
 
@@ -70,7 +70,7 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
     );
 
     const handleBlur = useCallback(
-        (e: React.FocusEvent<HTMLInputElement>) => {
+        (e: FocusEvent<HTMLInputElement>) => {
             const validationResult = validate(e.target.value);
             if (validationResult) {
                 setTitleError(errorMessage);

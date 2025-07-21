@@ -1,28 +1,28 @@
 // (C) 2020-2025 GoodData Corporation
-import format from "date-fns/format/index.js";
+import { format } from "date-fns";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import identity from "lodash/identity.js";
 
-import enUS from "date-fns/locale/en-US/index.js";
-import enGB from "date-fns/locale/en-GB/index.js";
-import enAU from "date-fns/locale/en-AU/index.js";
-import cs from "date-fns/locale/cs/index.js";
-import de from "date-fns/locale/de/index.js";
-import es from "date-fns/locale/es/index.js";
-import fr from "date-fns/locale/fr/index.js";
-import ja from "date-fns/locale/ja/index.js";
-import nl from "date-fns/locale/nl/index.js";
-import pt from "date-fns/locale/pt/index.js";
-import ptBR from "date-fns/locale/pt-BR/index.js";
-import zhCN from "date-fns/locale/zh-CN/index.js";
-import ru from "date-fns/locale/ru/index.js";
-import it from "date-fns/locale/it/index.js";
-import frCA from "date-fns/locale/fr-CA/index.js";
-import fi from "date-fns/locale/fi/index.js";
-import tr from "date-fns/locale/tr/index.js";
-import pl from "date-fns/locale/pl/index.js";
-import ko from "date-fns/locale/ko/index.js";
+import { enUS } from "date-fns/locale/en-US";
+import { enGB } from "date-fns/locale/en-GB";
+import { enAU } from "date-fns/locale/en-AU";
+import { cs } from "date-fns/locale/cs";
+import { de } from "date-fns/locale/de";
+import { es } from "date-fns/locale/es";
+import { fr } from "date-fns/locale/fr";
+import { ja } from "date-fns/locale/ja";
+import { nl } from "date-fns/locale/nl";
+import { pt } from "date-fns/locale/pt";
+import { ptBR } from "date-fns/locale/pt-BR";
+import { zhCN } from "date-fns/locale/zh-CN";
+import { ru } from "date-fns/locale/ru";
+import { it } from "date-fns/locale/it";
+import { frCA } from "date-fns/locale/fr-CA";
+import { fi } from "date-fns/locale/fi";
+import { tr } from "date-fns/locale/tr";
+import { pl } from "date-fns/locale/pl";
+import { ko } from "date-fns/locale/ko";
 
 const defaultLocaleCode = "en-US";
 

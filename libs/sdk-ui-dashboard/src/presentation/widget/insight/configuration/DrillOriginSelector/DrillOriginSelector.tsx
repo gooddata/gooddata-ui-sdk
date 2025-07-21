@@ -1,5 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
 import { useIntl } from "react-intl";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
@@ -32,7 +31,7 @@ const DROPDOWN_ALIGN_POINTS = [
     },
 ];
 
-export const DrillOriginSelector: React.FunctionComponent<IDrillOriginSelectorProps> = (props) => {
+export function DrillOriginSelector(props: IDrillOriginSelectorProps) {
     const { items, widgetRef } = props;
 
     const onSelect = (selected: IAvailableDrillTargetItem) => {
@@ -76,4 +75,4 @@ export const DrillOriginSelector: React.FunctionComponent<IDrillOriginSelectorPr
             )}
         />
     );
-};
+}

@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
 import cx from "classnames";
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -18,12 +17,12 @@ type AssistantMessageProps = {
     isLast?: boolean;
 };
 
-const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedComponentProps> = ({
+function AssistantMessageComponentCore({
     message,
     setUserFeedback,
     isLast,
     intl,
-}) => {
+}: AssistantMessageProps & WrappedComponentProps) {
     const classNames = cx(
         "gd-gen-ai-chat__messages__message",
         "gd-gen-ai-chat__messages__message--assistant",
@@ -100,13 +99,13 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
             </div>
         </div>
     );
-};
+}
 
 const mapDispatchToProps = {
     setUserFeedback,
 };
 
-export const AssistantMessageComponent: any = connect(
+export const AssistantMessageComponent = connect(
     null,
     mapDispatchToProps,
 )(injectIntl(AssistantMessageComponentCore));

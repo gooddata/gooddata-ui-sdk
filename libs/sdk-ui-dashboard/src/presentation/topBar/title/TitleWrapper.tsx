@@ -1,9 +1,9 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
+import { ReactNode } from "react";
 
 /**
  * @internal
  */
-export const TitleWrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function TitleWrapper({ children }: { children?: ReactNode }) {
     return <div className="dash-title-wrapper">{children}</div>;
-};
+}

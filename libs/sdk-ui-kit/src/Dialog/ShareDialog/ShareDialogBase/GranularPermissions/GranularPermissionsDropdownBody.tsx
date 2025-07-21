@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useRef } from "react";
+import { KeyboardEvent, useCallback, useEffect, useRef } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { AccessGranularPermission } from "@gooddata/sdk-model";
@@ -34,11 +34,15 @@ const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
 const REMOVE_GRANULAR_PERMISSION_ID = "granular-permission-remove-id";
 
-const RemoveItem: React.FC<{ disabled: boolean; tooltipId: string; onClick: () => void }> = ({
+function RemoveItem({
     disabled,
     tooltipId,
     onClick,
-}) => {
+}: {
+    disabled: boolean;
+    tooltipId: string;
+    onClick: () => void;
+}) {
     const className = cx("gd-list-item gd-menu-item", "s-granular-permission-remove", {
         "is-disabled": disabled,
     });
@@ -60,9 +64,9 @@ const RemoveItem: React.FC<{ disabled: boolean; tooltipId: string; onClick: () =
             />
         </div>
     );
-};
+}
 
-export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropdownBodyProps> = ({
+export function GranularPermissionsDropdownBody({
     grantee,
     granteePossibilities,
     alignTo,
@@ -73,7 +77,7 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
     handleSetSelectedPermission,
     mode,
     id,
-}) => {
+}: IGranularPermissionsDropdownBodyProps) {
     const { permissionsChangeInteraction, permissionsRemoveInteraction } = useShareDialogInteraction();
     const dropdownRef = useRef<HTMLDivElement>(null);
     const selectedItemRef = useRef<HTMLDivElement>(null);
@@ -122,7 +126,7 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
     );
 
     const handleKeyDown = useCallback(
-        (event: React.KeyboardEvent) => {
+        (event: KeyboardEvent) => {
             if (!dropdownRef.current) return;
 
             const items = Array.from(dropdownRef.current.querySelectorAll('[tabIndex="0"]'));
@@ -233,4 +237,4 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
             </div>
         </Overlay>
     );
-};
+}

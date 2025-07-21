@@ -1,6 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import React from "react";
 import { Bubble, BubbleHoverTrigger, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import { getTooltip } from "./DashboardListItem.js";
@@ -19,8 +18,7 @@ export interface IDashboardDropdownButtonProps {
     accessibilityLimitation?: DashboardAccessibilityLimitation;
 }
 
-const Button: React.FC<IDashboardDropdownButtonProps> = (props) => {
-    const { accessibilityLimitation, toggleDropdown, isOpen, label } = props;
+function Button({ accessibilityLimitation, toggleDropdown, isOpen, label }: IDashboardDropdownButtonProps) {
     const icon = accessibilityLimitation === undefined ? undefined : "gd-icon-circle-exclamation";
     return (
         <DropdownButton
@@ -31,9 +29,9 @@ const Button: React.FC<IDashboardDropdownButtonProps> = (props) => {
             iconLeft={icon}
         />
     );
-};
+}
 
-export const DashboardListButton: React.FC<IDashboardDropdownButtonProps> = (props) => {
+export function DashboardListButton(props: IDashboardDropdownButtonProps) {
     const { accessibilityLimitation } = props;
     const intl = useIntl();
     const tooltip = getTooltip(intl, accessibilityLimitation);
@@ -54,4 +52,4 @@ export const DashboardListButton: React.FC<IDashboardDropdownButtonProps> = (pro
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
