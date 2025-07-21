@@ -7,7 +7,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import React from "react";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";

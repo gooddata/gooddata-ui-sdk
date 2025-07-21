@@ -259,7 +259,7 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@storybook/addon-actions",
+      "name": "@storybook/builder-vite",
       "allowedCategories": [ "production" ]
     },
     {
@@ -280,6 +280,10 @@
     },
     {
       "name": "@storybook/react",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@storybook/react-vite",
       "allowedCategories": [ "production" ]
     },
     {
@@ -1159,6 +1163,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "storybook",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "stringify-object",
       "allowedCategories": [ "production" ]
     },
@@ -1240,7 +1248,7 @@
     },
     {
       "name": "vite",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "vite-plugin-html",
@@ -1249,6 +1257,10 @@
     {
       "name": "vite-plugin-mkcert",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "vite-plugin-static-copy",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "vitest",

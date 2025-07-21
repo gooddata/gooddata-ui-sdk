@@ -3,7 +3,7 @@ import React from "react";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
 import { IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import "@gooddata/sdk-ui-filters/styles/css/measureValueFilter.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };

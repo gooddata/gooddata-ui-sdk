@@ -1,5 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
-import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
+// (C) 2020-2025 GoodData Corporation
 import * as path from "path";
 import { TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
 import { DisplayFormRecording } from "../recordings/displayForms.js";
@@ -60,9 +59,7 @@ function comparatorDataSample(a: [string, DataSampleRecording[]], b: [string, Da
     return 0;
 }
 
-function generateDataSampleConst(
-    recordings: DisplayFormRecording[],
-): OptionalKind<VariableStatementStructure> {
+export function generateDataSampleConst(recordings: DisplayFormRecording[]): string {
     const recsWithDataSample: DataSampleRecording[] = recordings.map((rec) => [
         createUniqueVariableName(rec.getDisplayFormTitle()),
         rec,
@@ -74,16 +71,8 @@ function generateDataSampleConst(
     const dataSampleRows = entriesDataSample
         .map(([title, rec]) => `${title}: ${generateRecordingForDataSample(rec)}`)
         .join(",");
-    return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: true,
-        declarations: [
-            {
-                name: DataSampleConstName,
-                initializer: `{ ${dataSampleRows} }`,
-            },
-        ],
-    };
+
+    return `export const ${DataSampleConstName} = { ${dataSampleRows} }`;
 }
 
 /**
@@ -94,21 +83,15 @@ function generateDataSampleConst(
  * @param targetDir - absolute path to directory where index will be stored, this is needed so that paths can be
  *   made relative for require()
  */
-export function generateConstantsForDataSamples(
+export function generateImportsForDataSamples(
     recordings: DisplayFormRecording[],
     targetDir: string,
-): Array<OptionalKind<VariableStatementStructure>> {
-    const recConsts = recordings.map((rec) => {
-        return {
-            declarationKind: VariableDeclarationKind.Const,
-            isExported: false,
-            declarations: [
-                {
-                    name: rec.getRecordingName(),
-                    initializer: `require('./${path.relative(targetDir, rec.elementFile)}')`,
-                },
-            ],
-        };
-    });
-    return [...recConsts, generateDataSampleConst(recordings)];
+): string[] {
+    return recordings.map(
+        (rec) =>
+            `import ${rec.getRecordingName()} from "./${path.relative(
+                targetDir,
+                rec.elementFile,
+            )}" with { type: "json" };`,
+    );
 }

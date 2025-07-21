@@ -17,7 +17,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
 import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend.js";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import {
     createElementCountResolver,
     ScreenshotReadyWrapper,

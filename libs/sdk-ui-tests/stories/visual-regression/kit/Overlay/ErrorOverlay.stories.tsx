@@ -5,7 +5,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 import { ErrorOverlay } from "@gooddata/sdk-ui-kit";
 import { withIntl } from "@gooddata/sdk-ui";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 
 const bodyContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ".repeat(80);
 

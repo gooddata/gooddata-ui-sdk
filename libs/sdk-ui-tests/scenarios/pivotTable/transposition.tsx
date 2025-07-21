@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import { action } from "@storybook/addon-actions";
+// (C) 2007-2025 GoodData Corporation
+import { action } from "storybook/actions";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";

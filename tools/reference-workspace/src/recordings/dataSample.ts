@@ -1,18 +1,18 @@
 // (C) 2025 GoodData Corporation
 
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-05-07T11:21:04.989Z; */
-const df_label_f_activity_subject = require("./metadata/displayForms/label.f_activity.subject/elements.json");
-const df_label_f_product_product_name = require("./metadata/displayForms/label.f_product.product.name/elements.json");
-const df_f_owner_department_id = require("./metadata/displayForms/f_owner.department_id/elements.json");
-const df_f_owner_region_id = require("./metadata/displayForms/f_owner.region_id/elements.json");
-const df_f_stage_status_id = require("./metadata/displayForms/f_stage.status_id/elements.json");
-const df_f_opportunitysnapshot_forecastcategory_id = require("./metadata/displayForms/f_opportunitysnapshot.forecastcategory_id/elements.json");
-const df_attr_f_stage_stagename = require("./metadata/displayForms/attr.f_stage.stagename/elements.json");
-const df_label_f_account_account_name = require("./metadata/displayForms/label.f_account.account.name/elements.json");
-const df_user_id = require("./metadata/displayForms/user_id/elements.json");
-const df_user_id_username = require("./metadata/displayForms/user_id.username/elements.json");
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-07-21T08:31:27.396Z; */
+
+import df_label_f_activity_subject from "./metadata/displayForms/label.f_activity.subject/elements.json" with { type: "json" };
+import df_label_f_product_product_name from "./metadata/displayForms/label.f_product.product.name/elements.json" with { type: "json" };
+import df_f_owner_department_id from "./metadata/displayForms/f_owner.department_id/elements.json" with { type: "json" };
+import df_f_owner_region_id from "./metadata/displayForms/f_owner.region_id/elements.json" with { type: "json" };
+import df_f_stage_status_id from "./metadata/displayForms/f_stage.status_id/elements.json" with { type: "json" };
+import df_f_opportunitysnapshot_forecastcategory_id from "./metadata/displayForms/f_opportunitysnapshot.forecastcategory_id/elements.json" with { type: "json" };
+import df_attr_f_stage_stagename from "./metadata/displayForms/attr.f_stage.stagename/elements.json" with { type: "json" };
+import df_label_f_account_account_name from "./metadata/displayForms/label.f_account.account.name/elements.json" with { type: "json" };
+import df_user_id from "./metadata/displayForms/user_id/elements.json" with { type: "json" };
+import df_user_id_username from "./metadata/displayForms/user_id.username/elements.json" with { type: "json" };
+
 export const DataSamples = {
     Department: { DirectSales: df_f_owner_department_id[0], InsideSales: df_f_owner_department_id[1] },
     ForecastCategory: {

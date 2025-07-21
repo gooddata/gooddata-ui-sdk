@@ -7,7 +7,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import React from "react";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
