@@ -9,6 +9,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilterWithDimension,
+    ObjRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import {
@@ -39,6 +40,7 @@ export type FilterNaming = {
     title: string;
     subtitle: string;
     common?: true;
+    dataSet?: ObjRef;
 };
 
 export function useFiltersNamings(filtersToDisplay: FilterContextItem[]): (FilterNaming | undefined)[] {
@@ -114,6 +116,7 @@ export function useFiltersNamings(filtersToDisplay: FilterContextItem[]): (Filte
                     id: a.dateFilter.localIdentifier ?? uuidv4(),
                     title: allDateFiltersTitlesObj[key],
                     subtitle,
+                    dataSet: a.dateFilter.dataSet,
                 };
             }
 

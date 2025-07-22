@@ -9,12 +9,14 @@ import {
     getAttributeElementsItems,
     isDashboardAttributeFilter,
     IDashboardAttributeFilterConfig,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
 import { FilterNaming, useFiltersNamings } from "../../../_staging/sharedHooks/useFiltersNamings.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectDateFilterConfigOverrides,
+    selectDateFilterConfigsOverrides,
     selectFilterContextFilters,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -43,7 +45,8 @@ export function useDashboardRelatedFilters(run: boolean): {
     const workspaceId = useWorkspaceStrict();
 
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
-    const dateFiltersConfig = useDashboardSelector(selectDateFilterConfigOverrides);
+    const dateFilterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
+    const dateFiltersConfig = useDashboardSelector(selectDateFilterConfigsOverrides);
     const attributeFiltersConfig = useDashboardSelector(selectAttributeFilterConfigsOverrides);
 
     const { result, status } = useCancelablePromise(
@@ -64,15 +67,21 @@ export function useDashboardRelatedFilters(run: boolean): {
 
     const filters = useFiltersNamings(result ?? []);
     const all = (filters.filter((f) => f && !f.all) as FilterNaming[]).map((f) => {
+        if (f?.common) {
+            return {
+                ...f,
+                mode: dateFilterConfig?.mode,
+            };
+        } else if (f?.type === "dateFilter") {
+            return {
+                ...f,
+                mode: dateFiltersConfig.find((c) => areObjRefsEqual(c.dateDataSet, f?.dataSet))?.config?.mode,
+            };
+        }
+
         return {
             ...f,
-            ...(f?.type === "dateFilter" && f?.common
-                ? {
-                      mode: dateFiltersConfig?.mode,
-                  }
-                : {
-                      mode: attributeFiltersConfig.find((c) => c.localIdentifier === f?.id)?.mode,
-                  }),
+            mode: attributeFiltersConfig.find((c) => c.localIdentifier === f?.id)?.mode,
         };
     }) as DashboardRelatedFilter[];
 
