@@ -94,7 +94,7 @@
         "react-textarea-autosize": "8.4.0",
         "tinycolor2": "^1.4.2",
         "ts-invariant": "^0.7.5",
-        "tslib": "^2.5.0",
+        "tslib": "2.8.1",
         "uuid": "^8.3.2",
         "unified": "^11.0.5",
         "@codemirror/language": "~6.11.0",

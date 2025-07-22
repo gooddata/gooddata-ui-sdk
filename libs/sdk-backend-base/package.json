@@ -43,20 +43,19 @@
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/util": "workspace:*",
-        "json-stable-stringify": "^1.0.1",
+        "json-stable-stringify": "1.3.0",
         "lodash": "^4.17.21",
         "spark-md5": "^3.0.0",
         "ts-invariant": "^0.7.5",
-        "tslib": "^2.5.0",
+        "tslib": "2.8.1",
         "uuid": "^8.3.2",
-        "lru-cache": "^10.0.1"
+        "lru-cache": "11.1.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.52.8",
-        "@types/json-stable-stringify": "^1.0.32",
         "@types/lodash": "^4.14.202",
         "@types/spark-md5": "^3.0.1",
         "@types/uuid": "^8.3.4",

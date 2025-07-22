@@ -44,7 +44,7 @@
         "@gooddata/sdk-model": "workspace:*",
         "lodash": "^4.17.21",
         "ts-invariant": "^0.7.5",
-        "tslib": "^2.5.0",
+        "tslib": "2.8.1",
         "uuid": "^8.3.2"
     },
     "devDependencies": {

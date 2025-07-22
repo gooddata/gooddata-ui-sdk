@@ -363,10 +363,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/json-stable-stringify",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
       "name": "@types/json5",
       "allowedCategories": [ "tools" ]
     },

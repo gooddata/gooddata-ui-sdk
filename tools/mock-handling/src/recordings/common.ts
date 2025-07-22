@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import fs from "fs";
 import pick from "lodash/pick.js";
@@ -76,9 +76,9 @@ export function toJsonString(obj: object, options: WriteJsonOptions = {}): strin
     let result: string;
 
     if (pickKeys) {
-        result = stringify(pick(obj, pickKeys));
+        result = stringify(pick(obj, pickKeys)) || "undefined";
     } else {
-        result = stringify(obj);
+        result = stringify(obj) || "undefined";
     }
 
     if (replaceString) {

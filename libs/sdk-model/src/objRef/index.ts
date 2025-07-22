@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
@@ -198,7 +198,7 @@ export function objRefToString(objRef: ObjRef | ObjRefInScope): string {
 export function serializeObjRef(objRef: ObjRef | ObjRefInScope): string {
     const normalized = normalizeObjRef(objRef);
 
-    return stringify(normalized, { space: 0 });
+    return stringify(normalized, { space: 0 }) || "undefined";
 }
 
 /**

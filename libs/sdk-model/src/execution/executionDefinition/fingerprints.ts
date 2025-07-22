@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import stringify from "json-stable-stringify";
 import { invariant } from "ts-invariant";
 import { IAttribute } from "../attribute/index.js";
@@ -10,14 +10,14 @@ import { ISortItem } from "../base/sort.js";
 export function attributeFingerprint(attribute: IAttribute): string {
     invariant(attribute, "attribute must not be undefined");
 
-    return stringify(attribute);
+    return stringify(attribute) || "undefined";
 }
 
 /**
  * @internal
  */
 export function sortFingerprint(sort: ISortItem): string {
-    return stringify(sort);
+    return stringify(sort) || "undefined";
 }
 
 /**

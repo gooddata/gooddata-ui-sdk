@@ -61,7 +61,7 @@
     "dependencies": {
         "lodash": "^4.17.21",
         "react-intl": "6.8.9",
-        "tslib": "^2.5.0",
+        "tslib": "2.8.1",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",

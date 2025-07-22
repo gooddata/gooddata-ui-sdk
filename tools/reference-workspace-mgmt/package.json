@@ -41,7 +41,7 @@
     "dependencies": {
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/mock-handling": "workspace:*",
-        "tslib": "^2.5.0"
+        "tslib": "2.8.1"
     },
     "devDependencies": {
         "@gooddata/fixtures": "2.0.0",
