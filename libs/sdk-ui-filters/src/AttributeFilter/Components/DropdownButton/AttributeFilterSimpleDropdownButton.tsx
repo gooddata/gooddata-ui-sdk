@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
@@ -15,10 +15,12 @@ import { IAttributeFilterDropdownButtonProps } from "./AttributeFilterDropdownBu
  *
  * @beta
  */
-export const AttributeFilterSimpleDropdownButton: React.VFC<IAttributeFilterDropdownButtonProps> = (
-    props,
-) => {
-    const { isOpen, title, isLoading, isFiltering, onClick } = props;
+export function AttributeFilterSimpleDropdownButton({
+    title,
+    isLoading,
+    isFiltering,
+    ...rest
+}: IAttributeFilterDropdownButtonProps) {
     const intl = useIntl();
 
     let buttonTitle = title;
@@ -32,12 +34,11 @@ export const AttributeFilterSimpleDropdownButton: React.VFC<IAttributeFilterDrop
         <DropdownButton
             className="gd-attribute-filter-dropdown-simple-button__next"
             disabled={isLoading}
-            isOpen={isOpen}
             value={buttonTitle}
-            onClick={onClick}
+            {...rest}
         />
     );
-};
+}
 
 /**
  * Component using the {@link IAttributeFilterDropdownButtonProps} props showing the attribute title and selection.
@@ -50,19 +51,16 @@ export const AttributeFilterSimpleDropdownButton: React.VFC<IAttributeFilterDrop
  *
  * @beta
  */
-export const AttributeFilterSimpleDropdownButtonWithSelection: React.VFC<
-    IAttributeFilterDropdownButtonProps
-> = (props) => {
-    const {
-        isOpen,
-        subtitle,
-        title,
-        selectedItemsCount,
-        onClick,
-        isLoading,
-        isFiltering,
-        showSelectionCount = true,
-    } = props;
+export function AttributeFilterSimpleDropdownButtonWithSelection({
+    isOpen,
+    subtitle,
+    title,
+    selectedItemsCount,
+    onClick,
+    isLoading,
+    isFiltering,
+    showSelectionCount = true,
+}: IAttributeFilterDropdownButtonProps) {
     const intl = useIntl();
 
     let buttonTitle = `${title}: ${subtitle}`;
@@ -108,4 +106,4 @@ export const AttributeFilterSimpleDropdownButtonWithSelection: React.VFC<
             </button>
         </div>
     );
-};
+}

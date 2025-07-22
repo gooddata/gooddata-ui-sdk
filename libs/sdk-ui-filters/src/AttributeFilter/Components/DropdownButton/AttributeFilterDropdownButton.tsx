@@ -167,29 +167,27 @@ export interface IAttributeFilterDropdownButtonProps {
  *
  * @beta
  */
-export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownButtonProps> = (props) => {
-    const {
-        isOpen,
-        title,
-        selectedItemsCount,
-        showSelectionCount = true,
-        subtitle,
-        disabled,
-        customIcon,
-        isFiltering,
-        isLoading,
-        isLoaded,
-        isError,
-        isDraggable,
-        icon,
-        TooltipContentComponent,
-        titleExtension,
-        onClick,
-        className,
-        buttonRef,
-        dropdownId,
-    } = props;
-
+export function AttributeFilterDropdownButton({
+    isOpen,
+    title,
+    selectedItemsCount,
+    showSelectionCount = true,
+    subtitle,
+    disabled,
+    customIcon,
+    isFiltering,
+    isLoading,
+    isLoaded,
+    isError,
+    isDraggable,
+    icon,
+    TooltipContentComponent,
+    titleExtension,
+    onClick,
+    className,
+    buttonRef,
+    dropdownId,
+}: IAttributeFilterDropdownButtonProps) {
     const intl = useIntl();
     const subtitleSelectedItemsRef = useRef(null);
     const [displayItemCount, setDisplayItemCount] = useState(false);
@@ -286,4 +284,4 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
             </div>
         </div>
     );
-};
+}

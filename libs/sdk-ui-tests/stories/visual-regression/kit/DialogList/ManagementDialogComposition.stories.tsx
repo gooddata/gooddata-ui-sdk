@@ -30,7 +30,7 @@ const onHeaderButtonClick = action("onHeaderButtonClick");
  *
  * @internal
  */
-const ManagementDialogCompositionExamples: React.VFC = () => {
+function ManagementDialogCompositionExamples() {
     const onItemClick = action("onItemClick");
     const onItemDelete = action("onItemDelete");
 
@@ -164,7 +164,7 @@ const ManagementDialogCompositionExamples: React.VFC = () => {
             </div>
         </>
     );
-};
+}
 
 const ManagementDialogCompositionLoadingExample: React.FC = () => {
     const isLoading = true;

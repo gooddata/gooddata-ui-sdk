@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
@@ -15,11 +15,9 @@ const ALIGN_POINTS = [{ align: "bc tc", offset: { x: -1, y: 5 } }];
 /**
  * @internal
  */
-export const AttributeFilterConfigurationButton: React.VFC<IAttributeFilterConfigurationButtonProps> = (
-    props,
-) => {
-    const { onConfiguration } = props;
-
+export function AttributeFilterConfigurationButton({
+    onConfiguration,
+}: IAttributeFilterConfigurationButtonProps) {
     return (
         <div className="gd-attribute-filter-configuration-button">
             <BubbleHoverTrigger>
@@ -34,4 +32,4 @@ export const AttributeFilterConfigurationButton: React.VFC<IAttributeFilterConfi
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

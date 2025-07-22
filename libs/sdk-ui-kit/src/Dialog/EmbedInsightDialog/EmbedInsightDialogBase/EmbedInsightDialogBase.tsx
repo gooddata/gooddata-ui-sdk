@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
 import copy from "copy-to-clipboard";
@@ -32,21 +32,19 @@ export type IEmbedInsightDialogBaseProps = {
 /**
  * @internal
  */
-export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (props) => {
-    const {
-        code,
-        propertiesLink,
-        integrationDocLink,
-        embedTab,
-        embedTypeOptions,
-        openSaveInsightDialog,
-        onClose,
-        onCopyCode,
-        onOptionsChange,
-        onTabChange,
-        showWebComponentsTab,
-    } = props;
-
+export function EmbedInsightDialogBase({
+    code,
+    propertiesLink,
+    integrationDocLink,
+    embedTab,
+    embedTypeOptions,
+    openSaveInsightDialog,
+    onClose,
+    onCopyCode,
+    onOptionsChange,
+    onTabChange,
+    showWebComponentsTab,
+}: IEmbedInsightDialogBaseProps) {
     const intl = useIntl();
 
     const onCopyButtonClick = useCallback(() => {
@@ -102,7 +100,7 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             />
         </ConfirmDialogBase>
     );
-};
+}
 
 const getTabIds = (): ITab[] => {
     return [{ id: dialogEmbedTabLabels.react.id }, { id: dialogEmbedTabLabels.webComponents.id }];

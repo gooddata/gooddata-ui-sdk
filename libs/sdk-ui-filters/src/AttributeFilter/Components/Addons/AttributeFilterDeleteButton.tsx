@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
@@ -15,9 +15,7 @@ export interface IAttributeFilterDeleteButtonProps {
 /**
  * @internal
  */
-export const AttributeFilterDeleteButton: React.VFC<IAttributeFilterDeleteButtonProps> = (props) => {
-    const { onDelete } = props;
-
+export function AttributeFilterDeleteButton({ onDelete }: IAttributeFilterDeleteButtonProps) {
     return (
         <div className="gd-attribute-filter-delete-button">
             <BubbleHoverTrigger>
@@ -32,4 +30,4 @@ export const AttributeFilterDeleteButton: React.VFC<IAttributeFilterDeleteButton
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

@@ -67,30 +67,6 @@ export interface IAttributeFilterElementsActionsProps {
  *
  * @beta
  */
-export const AttributeFilterElementsActions: React.VFC<IAttributeFilterElementsActionsProps> = (props) => {
-    const {
-        checked,
-        isVisible,
-        onChange,
-        onToggle,
-        onApplyButtonClick,
-        isApplyDisabled,
-        isFiltered,
-        totalItemsCount,
-        isPartialSelection,
-    } = props;
-
-    return (
-        <InvertableSelectAllCheckbox
-            onApplyButtonClick={onApplyButtonClick}
-            isApplyDisabled={isApplyDisabled}
-            isVisible={isVisible}
-            checked={checked}
-            onChange={onChange}
-            onToggle={onToggle}
-            isFiltered={isFiltered}
-            totalItemsCount={totalItemsCount}
-            isPartialSelection={isPartialSelection}
-        />
-    );
-};
+export function AttributeFilterElementsActions(props: IAttributeFilterElementsActionsProps) {
+    return <InvertableSelectAllCheckbox {...props} />;
+}

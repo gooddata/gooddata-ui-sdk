@@ -12,7 +12,7 @@ const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
     return <div style={{ width: 350, height: 80, margin: "30 0" }}>{children}</div>;
 };
 
-const DialogListHeaderExamples: React.VFC = () => {
+function DialogListHeaderExamples() {
     const onButtonClick = action("onButtonClick");
 
     return (
@@ -86,7 +86,7 @@ const DialogListHeaderExamples: React.VFC = () => {
             </div>
         </>
     );
-};
+}
 
 const scenarios: BackstopConfig = {
     normal: {},

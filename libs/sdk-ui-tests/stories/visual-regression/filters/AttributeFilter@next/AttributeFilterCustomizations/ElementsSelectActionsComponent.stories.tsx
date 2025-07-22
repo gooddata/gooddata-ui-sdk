@@ -12,9 +12,12 @@ import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-const CustomElementsSelectActionsComponent: React.VFC<IAttributeFilterElementsActionsProps> = (props) => {
-    const { onChange, onToggle, totalItemsCount, isVisible } = props;
-
+function CustomElementsSelectActionsComponent({
+    onChange,
+    onToggle,
+    totalItemsCount,
+    isVisible,
+}: IAttributeFilterElementsActionsProps) {
     if (!isVisible) {
         return null;
     }
@@ -33,11 +36,11 @@ const CustomElementsSelectActionsComponent: React.VFC<IAttributeFilterElementsAc
             <span style={{ paddingLeft: 10 }}>({totalItemsCount})</span>
         </div>
     );
-};
+}
 
-const EmptyElementsSelectActionsComponent: React.VFC<IAttributeFilterElementsActionsProps> = (_props) => {
+function EmptyElementsSelectActionsComponent() {
     return <div />;
-};
+}
 
 export default {
     title: "10 Filters@next/Customization/ElementsSelectActionsComponent",

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useMemo, CSSProperties } from "react";
 import { AttributeFilterEmptySearchResult } from "./AttributeFilterEmptySearchResult.js";
 import { AttributeFilterEmptyAttributeResult } from "./AttributeFilterEmptyAttributeResult.js";
@@ -52,7 +52,7 @@ export interface IAttributeFilterEmptyResultProps {
  * It distinguishes messages when current criteria return empty results or all elements are filtered by parents or by search.
  * @beta
  */
-export const AttributeFilterEmptyResult: React.VFC<IAttributeFilterEmptyResultProps> = ({
+export function AttributeFilterEmptyResult({
     height,
     totalItemsCount,
     searchString,
@@ -60,7 +60,7 @@ export const AttributeFilterEmptyResult: React.VFC<IAttributeFilterEmptyResultPr
     isFilteredByDependentDateFilters,
     parentFilterTitles = [],
     enableShowingFilteredElements = false,
-}) => {
+}: IAttributeFilterEmptyResultProps) {
     let renderEmptyResult = null;
 
     const style = useMemo<CSSProperties>(() => {
@@ -88,4 +88,4 @@ export const AttributeFilterEmptyResult: React.VFC<IAttributeFilterEmptyResultPr
             {renderEmptyResult}
         </div>
     );
-};
+}

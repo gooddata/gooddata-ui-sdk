@@ -45,12 +45,12 @@ export interface IAttributeFilterDropdownActionsProps {
  *
  * @beta
  */
-export const AttributeFilterDropdownActions: React.VFC<IAttributeFilterDropdownActionsProps> = ({
+export function AttributeFilterDropdownActions({
     isApplyDisabled,
     onApplyButtonClick,
     onCancelButtonClick,
     withoutApply,
-}) => {
+}: IAttributeFilterDropdownActionsProps) {
     const intl = useIntl();
 
     const cancelText = intl.formatMessage({ id: "gs.list.cancel" });
@@ -83,4 +83,4 @@ export const AttributeFilterDropdownActions: React.VFC<IAttributeFilterDropdownA
             </div>
         </div>
     );
-};
+}

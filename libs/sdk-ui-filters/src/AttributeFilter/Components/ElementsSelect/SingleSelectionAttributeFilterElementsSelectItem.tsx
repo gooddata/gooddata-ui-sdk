@@ -13,17 +13,14 @@ import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterEleme
  *
  * @beta
  */
-export const SingleSelectionAttributeFilterElementsSelectItem: React.VFC<
-    IAttributeFilterElementsSelectItemProps
-> = (props) => {
-    const {
-        item,
-        onSelectOnly,
-        isSelected,
-        focusedAction,
-        fullscreenOnMobile = false,
-        primaryLabelTitle,
-    } = props;
+export function SingleSelectionAttributeFilterElementsSelectItem({
+    item,
+    onSelectOnly,
+    isSelected,
+    focusedAction,
+    fullscreenOnMobile = false,
+    primaryLabelTitle,
+}: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
 
     // Modify item click behavior to select only this particular item.
@@ -73,4 +70,4 @@ export const SingleSelectionAttributeFilterElementsSelectItem: React.VFC<
             />
         </div>
     );
-};
+}

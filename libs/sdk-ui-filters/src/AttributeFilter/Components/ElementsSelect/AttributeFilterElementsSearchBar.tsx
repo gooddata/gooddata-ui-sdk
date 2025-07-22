@@ -35,10 +35,6 @@ export interface IAttributeFilterElementsSearchBarProps {
  *
  * @beta
  */
-export const AttributeFilterElementsSearchBar: React.VFC<IAttributeFilterElementsSearchBarProps> = (
-    props,
-) => {
-    const { onSearch, searchString, isSmall } = props;
-
-    return <InvertableSelectSearchBar onSearch={onSearch} searchString={searchString} isSmall={isSmall} />;
-};
+export function AttributeFilterElementsSearchBar(props: IAttributeFilterElementsSearchBarProps) {
+    return <InvertableSelectSearchBar {...props} />;
+}

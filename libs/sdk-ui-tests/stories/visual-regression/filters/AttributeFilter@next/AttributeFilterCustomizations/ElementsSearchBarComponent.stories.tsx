@@ -34,9 +34,9 @@ const CustomElementsSearchBar = (props: IAttributeFilterElementsSearchBarProps) 
     );
 };
 
-const EmptyElementsSearchBar: React.VFC<IAttributeFilterElementsSearchBarProps> = (_props) => {
+function EmptyElementsSearchBar() {
     return <div style={{ paddingBottom: 10 }} />;
-};
+}
 
 export default {
     title: "10 Filters@next/Customization/ElementsSearchBarComponent",

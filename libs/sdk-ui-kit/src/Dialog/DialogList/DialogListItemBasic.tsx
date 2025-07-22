@@ -22,8 +22,7 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
 /**
  * @internal
  */
-export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (props) => {
-    const { item, className, onClick, onDelete } = props;
+export function DialogListItemBasic({ item, className, onClick, onDelete }: IDialogListItemComponentProps) {
     const {
         id,
         title,
@@ -113,4 +112,4 @@ export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (pr
             </div>
         </div>
     );
-};
+}

@@ -12,7 +12,7 @@ const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
     return <div style={{ width: 350, maxHeight: 250, margin: "30 0", display: "flex" }}>{children}</div>;
 };
 
-const DialogListExamples: React.VFC = () => {
+function DialogListExamples() {
     const onItemClick = action("onItemClick");
     const onItemDelete = action("onItemDelete");
     const emptyMessageElement = (
@@ -55,7 +55,7 @@ const DialogListExamples: React.VFC = () => {
             </div>
         </>
     );
-};
+}
 
 const DialogListLoadingExample: React.FC = () => {
     return (

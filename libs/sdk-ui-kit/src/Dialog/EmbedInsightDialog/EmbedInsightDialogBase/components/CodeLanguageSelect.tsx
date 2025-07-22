@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { ChangeEvent, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { CodeLanguageType } from "../types.js";
@@ -14,9 +14,7 @@ export interface ICodeLanguageSelectProps {
 /**
  * @internal
  */
-export const CodeLanguageSelect: React.VFC<ICodeLanguageSelectProps> = (props) => {
-    const { selectedLanguage, onLanguageChanged } = props;
-
+export function CodeLanguageSelect({ selectedLanguage, onLanguageChanged }: ICodeLanguageSelectProps) {
     const onCheck = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value as CodeLanguageType;
@@ -52,4 +50,4 @@ export const CodeLanguageSelect: React.VFC<ICodeLanguageSelectProps> = (props) =
             </label>
         </div>
     );
-};
+}

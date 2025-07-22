@@ -300,13 +300,13 @@ export interface CheckboxProps {
 export const CodeArea: React_2.FC<ICodeAreaProps>;
 
 // @internal (undocumented)
-export const CodeLanguageSelect: React_2.VFC<ICodeLanguageSelectProps>;
+export function CodeLanguageSelect({ selectedLanguage, onLanguageChanged }: ICodeLanguageSelectProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type CodeLanguageType = "js" | "ts";
 
 // @internal (undocumented)
-export const CodeOptions: React_2.VFC<ICodeOptionsProps>;
+export function CodeOptions({ option, onChange }: ICodeOptionsProps): React_2.JSX.Element;
 
 // @internal
 export type Color = string;
@@ -452,13 +452,13 @@ export const DialogBase: React_2.NamedExoticComponent<IDialogBaseProps>;
 export const DialogCloseButton: React_2.FC<IDialogCloseButtonProps>;
 
 // @internal (undocumented)
-export const DialogList: React_2.VFC<IDialogListProps>;
+export function DialogList({ items, isLoading, className, emptyMessageElement, itemComponent, itemClassName, onItemClick, onItemDelete, }: IDialogListProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const DialogListHeader: React_2.VFC<IDialogListHeaderProps>;
+export function DialogListHeader({ className, gdIconName, title, buttonTitle, buttonDisabled, buttonTooltipText, onButtonClick, }: IDialogListHeaderProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const DialogListItemBasic: React_2.VFC<IDialogListItemComponentProps>;
+export function DialogListItemBasic({ item, className, onClick, onDelete }: IDialogListItemComponentProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type DialogListItemComponent<T extends IDialogListItem = IDialogListItem> = React.FunctionComponent<IDialogListItemComponentProps<T>>;
@@ -491,7 +491,7 @@ export const EditableLabel: React_2.ForwardRefExoticComponent<IEditableLabelProp
 export const EllipsisText: React_2.FC<IEllipsisTextProps>;
 
 // @internal (undocumented)
-export const EmbedInsightDialogBase: React_2.VFC<IEmbedInsightDialogBaseProps>;
+export function EmbedInsightDialogBase({ code, propertiesLink, integrationDocLink, embedTab, embedTypeOptions, openSaveInsightDialog, onClose, onCopyCode, onOptionsChange, onTabChange, showWebComponentsTab, }: IEmbedInsightDialogBaseProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type EmbedOptionsType = IReactOptions | IWebComponentsOptions;
@@ -5486,7 +5486,7 @@ export const LoadingMask: React_2.FC<ILoadingMaskProps>;
 export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
 
 // @internal (undocumented)
-export const LocaleSetting: React_2.VFC<ILocaleSettingProps>;
+export function LocaleSetting({ isChecked, selectedLocal, onChecked, onLocaleSelected, }: ILocaleSettingProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const makeHorizontalKeyboardNavigation: <T extends React_2.KeyboardEvent | KeyboardEvent = React_2.KeyboardEvent<Element>>(handlers: {
