@@ -1,7 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
-import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { GenAIObjectType, ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { ListItem } from "../types.js";
 
 /**
@@ -47,7 +47,10 @@ export type UseSearchMetricsCallback = (metricsData: ISearchMetrics) => void;
 export type UseSearchMetricsReturn = {
     onCloseMetrics: () => void;
     onSelectMetrics: (item: ISemanticSearchResultItem, index?: number) => void;
-    onSearchMetrics: (searchTerm: string, searchResults?: ListItem<ISemanticSearchResultItem>[]) => void;
+    onSearchMetrics: (
+        searchTerm: string,
+        searchResults?: ListItem<ISemanticSearchResultItem, ISemanticSearchRelationship>[],
+    ) => void;
 };
 
 type ISearchMetricsRef = {
@@ -121,7 +124,10 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
 
     // Callback will be called when the user types in the search input
     const onSearchMetrics = React.useCallback(
-        (searchTerm: string, searchResults?: ListItem<ISemanticSearchResultItem>[]) => {
+        (
+            searchTerm: string,
+            searchResults?: ListItem<ISemanticSearchResultItem, ISemanticSearchRelationship>[],
+        ) => {
             const { searchCount, lastSearchTerm } = searchMetricsRef.current.state;
 
             // We do not want to count the case when the user continues to type the same search term

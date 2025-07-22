@@ -20,22 +20,27 @@
 .gd-semantic-search {
     &__results-item {
         $line-height: 50px;
-        cursor: pointer;
 
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
-        height: $line-height;
+        min-height: $line-height;
 
-        &--active {
+        &--active &__main {
             color: kit-variables.$is-focused-color;
             background: kit-variables.$is-focused-background;
         }
 
+        &__main {
+            width: 100%;
+            display: flex;
+            cursor: pointer;
+        }
+
         &__content {
             width: 100%;
-            height: calc($line-height - 2px);
-            margin: 1px 0;
+            height: calc($line-height - 4px);
+            margin: 2px;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -92,12 +97,56 @@
         }
 
         &__details {
-            width: 16px;
-            height: 16px;
-            align-items: center;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            flex-direction: column;
+            justify-content: center;
+            gap: 3px;
 
-            & .gd-ellipsis-text {
-                margin: 10px 0 0;
+            &__info {
+                width: 16px;
+                height: 16px;
+                align-items: center;
+                visibility: hidden;
+
+                & .gd-ellipsis-text {
+                    margin: 10px 0 0;
+                }
+
+                &--active {
+                    visibility: visible;
+                }
+            }
+
+            &__results {
+                display: flex;
+                align-items: center;
+                color: kit-variables.$gd-color-state-blank;
+                text-align: right;
+                text-overflow: ellipsis;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 20px;
+                gap: 5px;
+
+                &__arrow {
+                    width: 16px;
+                    height: 16px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transform: rotate(90deg);
+                }
+
+                &__arrow svg path {
+                    fill: kit-variables.$gd-color-state-blank;
+                }
+
+                &__arrow--open {
+                    transform: rotate(-90deg);
+                }
             }
         }
 
@@ -134,6 +183,76 @@
             &__match h4 {
                 text-transform: none;
                 font-size: 12px;
+            }
+        }
+    }
+
+    &__results-subitem {
+        $line-height: 30px;
+
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: $line-height;
+
+        &--active &__main {
+            color: kit-variables.$is-focused-color;
+            background: kit-variables.$is-focused-background;
+        }
+
+        &__main {
+            width: 100%;
+            display: flex;
+            cursor: pointer;
+        }
+
+        &__content {
+            width: 100%;
+            height: calc($line-height - 4px);
+            margin: 2px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 10px 5px 50px;
+            text-decoration: none;
+
+            &:hover,
+            &:focus,
+            &:active,
+            &:visited {
+                text-decoration: none;
+            }
+
+            &:focus-visible {
+                outline: revert;
+            }
+        }
+
+        &__icon {
+            @include icon(16px);
+
+            & > span {
+                @include icon(16px);
+            }
+        }
+
+        &__text {
+            flex: 1;
+            min-width: 0; // A hack to make ellipsis work in flexbox
+            display: flex;
+            flex-direction: column;
+            font-weight: 400;
+            color: kit-variables.$gd-color-text;
+            font-size: 14px;
+            line-height: 20px;
+
+            &__ellipsis {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                flex-shrink: 1;
             }
         }
     }
@@ -189,5 +308,13 @@
             text-underline-offset: auto;
             text-underline-position: from-font;
         }
+    }
+
+    &__loading {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }

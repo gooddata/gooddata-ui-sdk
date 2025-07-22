@@ -23,6 +23,10 @@
         "value": "ID",
         "comment": "Label of column that contains ID of the search results object."
     },
+    "semantic-search.results": {
+        "value": "{count, plural, one {# result} other {# results}}",
+        "comment": "Information about number of search results. Translate only"
+    },
     "semantic-search.tags": {
         "value": "Tags",
         "comment": "Label of column that contains tags of the search results object."

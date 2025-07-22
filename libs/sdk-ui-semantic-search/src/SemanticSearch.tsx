@@ -1,14 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
-import { useDebouncedState, Input, Dropdown } from "@gooddata/sdk-ui-kit";
-import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { useDebouncedState, Input, Dropdown, IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
+import { GenAIObjectType, ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { SearchResultsDropdownList } from "./SearchResultsDropdownList.js";
 import { useSemanticSearch, useElementWidth } from "./hooks/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import classnames from "classnames";
 import { ListItem } from "./types.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
+import { LoadingComponent } from "@gooddata/sdk-ui";
 
 /**
  * Semantic search component props.
@@ -30,7 +31,7 @@ export type SemanticSearchProps = {
     /**
      * A function called when the user selects an item from the search results.
      */
-    onSelect: (item: ISemanticSearchResultItem) => void;
+    onSelect: (item: ISemanticSearchResultItem | ISemanticSearchRelationship) => void;
     /**
      * A function called when an error occurs during the search.
      */
@@ -104,8 +105,20 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
     });
 
     // Build list items for rendering
-    const listItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
-        () => searchResults.map((item) => ({ item })),
+    const listItems: IUiListboxInteractiveItem<
+        ListItem<ISemanticSearchResultItem, ISemanticSearchRelationship>
+    >[] = React.useMemo(
+        () =>
+            searchResults.map((item) => {
+                return {
+                    data: {
+                        item,
+                    },
+                    id: item.id,
+                    stringTitle: item.title,
+                    type: "interactive",
+                };
+            }),
         [searchResults],
     );
 
@@ -159,6 +172,13 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
                 if (!searchResults.length && searchStatus !== "loading") {
                     return null;
                 }
+                if (searchStatus === "loading") {
+                    return (
+                        <div style={{ width }} className={classnames("gd-semantic-search__loading")}>
+                            <LoadingComponent />
+                        </div>
+                    );
+                }
 
                 return (
                     <Wrapper status={searchStatus} closeSearch={closeDropdown}>
@@ -166,7 +186,6 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
                             width={width}
                             isMobile={isMobile}
                             searchResults={listItems}
-                            searchLoading={searchStatus === "loading"}
                             onSelect={(item) => {
                                 // Blur and clear the state
                                 const input = inputRef.current?.inputNodeRef?.inputNodeRef;

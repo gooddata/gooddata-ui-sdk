@@ -1,7 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ListItem } from "../types.js";
-import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import * as React from "react";
 import { getDateTimeConfig } from "@gooddata/sdk-ui-kit";
 import { defineMessages, FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
@@ -15,7 +15,7 @@ const DEFAULT_MD_TIMEZONE = "UTC";
  * @internal
  */
 export type UpdateDateProps = {
-    listItem: ListItem<ISemanticSearchResultItem>;
+    listItem: ListItem<ISemanticSearchResultItem, ISemanticSearchRelationship>;
 };
 
 const messages = defineMessages({
