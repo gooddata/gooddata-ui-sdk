@@ -155,32 +155,17 @@
         "value": "Rollup (Total)",
         "comment": "Total of type 'Rollup' where 'Total' is hint and synonym. Showed in menu before adding to table."
     },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._measure|insight": {
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._measure": {
         "value": "Rollup (Total) aggregation is not available when filtering the visualization by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because measure value filters are configured for the pivot."
     },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._metric|insight": {
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._metric": {
         "value": "Rollup (Total) aggregation is not available when filtering the visualization by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because metric value filters are configured for the pivot."
     },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._measure|report": {
-        "value": "Rollup (Total) aggregation is not available when filtering the report by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
-        "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because measure value filters are configured for the pivot.",
-        "translate": false
-    },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._metric|report": {
-        "value": "Rollup (Total) aggregation is not available when filtering the report by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
-        "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because metric value filters are configured for the pivot.",
-        "translate": false
-    },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.ranking|insight": {
+    "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": {
         "value": "Rollup (Total) aggregation is not available when filtering the visualization by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because ranking filters are configured for the pivot."
-    },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.ranking|report": {
-        "value": "Rollup (Total) aggregation is not available when filtering the report by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
-        "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because ranking filters are configured for the pivot.",
-        "translate": false
     },
     "visualizations.totals.dropdown.title.med": {
         "value": "Median",
@@ -274,14 +259,9 @@
         "value": "Cluster",
         "comment": "The default title for the cluster group"
     },
-    "visualization.ErrorMessageGeneric|insight": {
+    "visualization.ErrorMessageGeneric": {
         "value": "Sorry, we can't display this visualization",
         "comment": "Generic error message shown when a visualization cannot be displayed due to an unspecified technical issue."
-    },
-    "visualization.ErrorMessageGeneric|report": {
-        "value": "Sorry, we can't display this report",
-        "comment": "Error message shown when a report cannot be displayed due to an unspecified technical issue. This is the report-specific version of the generic visualization error message.",
-        "translate": false
     },
     "visualization.ErrorDescriptionGeneric": {
         "value": "Contact your administrator.",
@@ -311,32 +291,17 @@
         "value": "Unauthorized",
         "comment": "Error message shown when the user does not have permission to view the requested visualization or data."
     },
-    "visualization.ErrorDescriptionUnauthorized|insight": {
+    "visualization.ErrorDescriptionUnauthorized": {
         "value": "Sorry you don't have access to this visualization. Login or ask your administrator to grant you permissions.",
         "comment": "Explanation shown when the user lacks permissions to view a visualization, providing instructions for resolution."
     },
-    "visualization.ErrorDescriptionUnauthorized|report": {
-        "value": "Sorry you don't have access to this report. Login or ask your administrator to grant you permissions.",
-        "comment": "Explanation shown when the user lacks permissions to view a report, providing instructions for resolution. This is the report-specific version of the unauthorized access message.",
-        "translate": false
-    },
-    "visualization.ErrorMessageNotFound|insight": {
+    "visualization.ErrorMessageNotFound": {
         "value": "Sorry, we can't find this visualization",
         "comment": "Error message shown when the requested visualization cannot be found, typically because it has been deleted or the URL is incorrect."
     },
-    "visualization.ErrorMessageNotFound|report": {
-        "value": "Sorry, we can't find this report",
-        "comment": "Error message shown when the requested report cannot be found, typically because it has been deleted or the URL is incorrect. This is the report-specific version of the not found message.",
-        "translate": false
-    },
-    "visualization.ErrorDescriptionNotFound|insight": {
+    "visualization.ErrorDescriptionNotFound": {
         "value": "The visualization with this URL does not exist.",
         "comment": "Explanation shown when a visualization cannot be found, indicating that no visualization exists with the requested identifier."
-    },
-    "visualization.ErrorDescriptionNotFound|report": {
-        "value": "The report with this URL does not exist.",
-        "comment": "Explanation shown when a report cannot be found, indicating that no report exists with the requested identifier. This is the report-specific version of the not found description.",
-        "translate": false
     },
     "visualization.ErrorDescriptionMissingMapboxToken": {
         "value": "The Geochart configuration requires a valid API access token.",
@@ -1310,23 +1275,13 @@
         "value": "All",
         "comment": "Option describing all records."
     },
-    "rankingFilter.allRecords.tooltip|insight": {
+    "rankingFilter.allRecords.tooltip": {
         "value": "Apply the filter to all attributes in the visualization.",
         "comment": "Explanation of 'All' option."
     },
-    "rankingFilter.allRecords.tooltip|report": {
-        "value": "Apply the filter to all attributes in the report.",
-        "comment": "Explanation of 'All' option.",
-        "translate": false
-    },
-    "rankingFilter.attributeDropdown.oneAttributeTooltip|insight": {
+    "rankingFilter.attributeDropdown.oneAttributeTooltip": {
         "value": "The visualization is sliced only by one attribute. The filter will apply to all its values.",
         "comment": "Tooltip when no options are available for attribute dropdown."
-    },
-    "rankingFilter.attributeDropdown.oneAttributeTooltip|report": {
-        "value": "The report is sliced only by one attribute. The filter will apply to all its values.",
-        "comment": "Tooltip when no options are available for attribute dropdown.",
-        "translate": false
     },
     "rankingFilter.outOf": {
         "value": "Out of",
@@ -1364,14 +1319,9 @@
         "value": "Bottom {value} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
         "comment": "Preview text showing the bottom N values of a specific attribute based on a measure, where {value} is the number of items, {attribute} is the attribute name, and {measure} is the measure name."
     },
-    "rankingFilter.valueTooltip|insight": {
+    "rankingFilter.valueTooltip": {
         "value": "If multiple items have the same value, the filter shows all items with this value. The visualization may then display more items than the number set.",
         "comment": "Tooltip with explanation of why ranking filter can return more rows than the number user entered in the filter."
-    },
-    "rankingFilter.valueTooltip|report": {
-        "value": "If multiple items have the same value, the filter shows all items with this value. The report may then display more items than the number set.",
-        "comment": "Tooltip with explanation of why ranking filter can return more rows than the number user entered in the filter.",
-        "translate": false
     },
     "attributesDropdown.itemsFiltered.tooltip": {
         "value": "Values are filtered by: <strong>{filters}</strong>",
@@ -1637,14 +1587,9 @@
         "value": "Back to previous step",
         "comment": "Label of a back button"
     },
-    "sorting.dropdown.header|insight": {
+    "sorting.dropdown.header": {
         "value": "Sort visualization",
         "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1."
-    },
-    "sorting.dropdown.header|report": {
-        "value": "Sort report",
-        "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",
-        "translate": false
     },
     "sorting.type.alphabetical.asc": {
         "value": "A to Z",
@@ -1726,14 +1671,9 @@
         "value": "Choose a specific language localization. If disabled, the visualization defaults to your current display language settings.",
         "comment": "Tooltip for the web components locale"
     },
-    "embedInsightDialog.code.options.include.config.info|insight": {
+    "embedInsightDialog.code.options.include.config.info": {
         "value": "Include the visualization configuration of colors, axes, legend, and canvas if available.",
         "comment": "Tool tip that explain Include configuration"
-    },
-    "embedInsightDialog.code.options.include.config.info|report": {
-        "value": "Include the report configuration of colors, axes, legend, and canvas if available.",
-        "comment": "Tool tip that explain Include configuration",
-        "translate": false
     },
     "embedInsightDialog.code.options.custom.height": {
         "value": "Custom height",
@@ -1743,32 +1683,17 @@
         "value": "Include configuration",
         "comment": "Option to include visualization configuration (colors, axes, legend settings) in the generated embed code."
     },
-    "embedInsightDialog.headLine.embedInsight|insight": {
+    "embedInsightDialog.headLine.embedInsight": {
         "value": "Embed visualization",
         "comment": "Title of the dialog for embedding a visualization, shown when the user wants to embed a specific visualization."
     },
-    "embedInsightDialog.headLine.embedInsight|report": {
-        "value": "Embed report",
-        "comment": "Title of the dialog for embedding a report, shown when the user wants to embed a specific report.",
-        "translate": false
-    },
-    "embedInsightDialog.componentType.byReference.tooltip|insight": {
+    "embedInsightDialog.componentType.byReference.tooltip": {
         "value": "Embed as a reference to a saved visualization in a generic GD.UI react component. Any future changes to the visualization (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
         "comment": "Tooltip that explain what Embed as a live visualization means"
     },
-    "embedInsightDialog.componentType.byReference.tooltip|report": {
-        "value": "Embed as a reference to a saved report in a generic GD.UI react component. Any future changes to the report (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
-        "comment": "Tooltip that explain what Embed as a live visualization means",
-        "translate": false
-    },
-    "embedInsightDialog.componentType.byDefinition.tooltip|insight": {
+    "embedInsightDialog.componentType.byDefinition.tooltip": {
         "value": "Embed as an visualization definition in a specific GD.UI react component based on the currently selected visualization type. No future changes to the visualization (such as visualization type, metrics, attributes) made in this application will be reflected in the embedded version.",
         "comment": "Tooltip that explain what Embed as a a permanent report"
-    },
-    "embedInsightDialog.componentType.byDefinition.tooltip|report": {
-        "value": "Embed as an report definition in a specific GD.UI react component based on the currently selected visualization type. No future changes to the report (such as visualization type, metrics, attributes) made in this application will be reflected in the embedded version.",
-        "comment": "Tooltip that explain what Embed as a a permanent report",
-        "translate": false
     },
     "embedInsightDialog.webComponents.customTitle.tooltip": {
         "value": "Define the text of the title directly in the code snippet.",
@@ -1798,23 +1723,13 @@
         "value": "Complete list of embedding properties",
         "comment": "Link to documentation of used component and all component properties"
     },
-    "embedInsightDialog.emptyInsight.byReference|insight": {
+    "embedInsightDialog.emptyInsight.byReference": {
         "value": "Code snipped will be displayed here once you <a>save the visualization</a>.",
         "comment": "Message explaining code area restrictions. The <b> or <a> tags provide emphasis and clickable actions respectively."
     },
-    "embedInsightDialog.emptyInsight.byReference|report": {
-        "value": "Code snipped will be displayed here once you <a>save the report</a>.",
-        "comment": "Message explaining code area restrictions. The <b> or <a> tags provide emphasis and clickable actions respectively.",
-        "translate": false
-    },
-    "embedInsightDialog.emptyInsight.byDefinition|insight": {
+    "embedInsightDialog.emptyInsight.byDefinition": {
         "value": "This visualization type cannot be embedded as programmatic type component.",
         "comment": "The disabled message for code area"
-    },
-    "embedInsightDialog.emptyInsight.byDefinition|report": {
-        "value": "This report type cannot be embedded as programmatic type component.",
-        "comment": "The disabled message for code area",
-        "translate": false
     },
     "embedDialog.tab.react": {
         "value": "React",
@@ -2072,23 +1987,13 @@
         "value": "Drill down",
         "comment": "Text of drill down option"
     },
-    "workspaceHierarchy.lockedInsight|insight": {
+    "workspaceHierarchy.lockedInsight": {
         "value": "Only Admins can save changes to this visualization.",
         "comment": "Shown when hovering over lock indicator."
     },
-    "workspaceHierarchy.lockedInsight|report": {
-        "value": "Only Admins can save changes to this report.",
-        "comment": "Shown when hovering over lock indicator.",
-        "translate": false
-    },
-    "workspaceHierarchy.inheritedInsight|insight": {
+    "workspaceHierarchy.inheritedInsight": {
         "value": "You cannot edit or delete this visualization.{br}It is centrally managed and certified.",
         "comment": "Shown when hovering over lock indicator. Placeholder {br} is replaced with visual line break"
-    },
-    "workspaceHierarchy.inheritedInsight|report": {
-        "value": "You cannot edit or delete this report.{br}It is centrally managed and certified.",
-        "comment": "Shown when hovering over lock indicator. Placeholder {br} is replaced with visual line break",
-        "translate": false
     },
     "userManagement.workspace.noMatchingItems": {
         "value": "No matching workspaces.",

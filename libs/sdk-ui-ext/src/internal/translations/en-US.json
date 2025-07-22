@@ -399,72 +399,37 @@
         "value": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'view by'</span>'",
         "comment": "Warning message about metric limitations when using view by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'view by' text."
     },
-    "dashboard.bucket.category_view_by_warning._measure|insight": {
+    "dashboard.bucket.category_view_by_warning._measure": {
         "value": "To view by another attribute, an visualization can have only one measure",
         "comment": "Warning message explaining View By configuration limitations based on measure/metric count"
     },
-    "dashboard.bucket.category_view_by_warning._metric|insight": {
+    "dashboard.bucket.category_view_by_warning._metric": {
         "value": "To view by another attribute, an visualization can have only one metric",
         "comment": "Warning message explaining View By configuration limitations based on measure/metric count"
-    },
-    "dashboard.bucket.category_view_by_warning._measure|report": {
-        "value": "To view by another attribute, a report can have only one measure",
-        "comment": "Warning message explaining View By configuration limitations based on measure/metric count",
-        "translate": false
-    },
-    "dashboard.bucket.category_view_by_warning._metric|report": {
-        "value": "To view by another attribute, a report can have only one metric",
-        "comment": "Warning message explaining View By configuration limitations based on measure/metric count",
-        "translate": false
     },
     "dashboard.bucket.view_stack_by_warning": {
         "value": "To add additional attribute, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
         "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count"
     },
-    "dashboard.bucket.category_stack_by_warning._measure|insight": {
+    "dashboard.bucket.category_stack_by_warning._measure": {
         "value": "To stack by, an visualization can have only one measure",
         "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count"
     },
-    "dashboard.bucket.category_stack_by_warning._metric|insight": {
+    "dashboard.bucket.category_stack_by_warning._metric": {
         "value": "To stack by, an visualization can have only one metric",
         "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count"
     },
-    "dashboard.bucket.category_stack_by_warning._measure|report": {
-        "value": "To stack by, a report can have only one measure",
-        "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count",
-        "translate": false
-    },
-    "dashboard.bucket.category_stack_by_warning._metric|report": {
-        "value": "To stack by, a report can have only one metric",
-        "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count",
-        "translate": false
-    },
-    "dashboard.bucket.stack_view_by_warning|insight": {
+    "dashboard.bucket.stack_view_by_warning": {
         "value": "To stack by, an visualization can have only one attribute in view by",
         "comment": "Warning message explaining Stack By limitations when using View By"
     },
-    "dashboard.bucket.stack_view_by_warning|report": {
-        "value": "To stack by, a report can have only one attribute in view by",
-        "comment": "Warning message explaining Stack By limitations when using View By",
-        "translate": false
-    },
-    "dashboard.bucket.measure_stack_by_warning._measure|insight": {
+    "dashboard.bucket.measure_stack_by_warning._measure": {
         "value": "To stack by an attribute, an visualization can have only one measure",
         "comment": "Warning message explaining that stacking requires limiting to one measure in insights"
     },
-    "dashboard.bucket.measure_stack_by_warning._metric|insight": {
+    "dashboard.bucket.measure_stack_by_warning._metric": {
         "value": "To stack by an attribute, an visualization can have only one metric",
         "comment": "Warning message explaining that stacking requires limiting to one metric in insights"
-    },
-    "dashboard.bucket.measure_stack_by_warning._measure|report": {
-        "value": "To stack by an attribute, a report can have only one measure",
-        "comment": "Warning message explaining that stacking requires limiting to one measure in reports",
-        "translate": false
-    },
-    "dashboard.bucket.measure_stack_by_warning._metric|report": {
-        "value": "To stack by an attribute, a report can have only one metric",
-        "comment": "Warning message explaining that stacking requires limiting to one metric in reports",
-        "translate": false
     },
     "dashboard.bucket.category_columns_warning._measure": {
         "value": "Cannot add columns: limit is {oldLimit} measures and {oldRowsLimit} rows. Follow the limits to add more",
@@ -478,41 +443,21 @@
         "value": "To add up to {limit} more, remove all items from columns section",
         "comment": "Warning message when trying to add more items. The placeholder {limit} will be replaced with a number, e.g., 'To add up to 5 more, remove all items from columns section'."
     },
-    "dashboard.bucket.category_category_by_warning._measure|insight": {
+    "dashboard.bucket.category_category_by_warning._measure": {
         "value": "To view by, an visualization can have only one measure",
         "comment": "Warning message explaining that 'View by' requires limiting to one measure in insights"
     },
-    "dashboard.bucket.category_category_by_warning._metric|insight": {
+    "dashboard.bucket.category_category_by_warning._metric": {
         "value": "To view by, an visualization can have only one metric",
         "comment": "Warning message explaining that 'View by' requires limiting to one metric in insights"
     },
-    "dashboard.bucket.category_category_by_warning._measure|report": {
-        "value": "To view by, a report can have only one measure",
-        "comment": "Warning message explaining that 'View by' requires limiting to one measure in reports",
-        "translate": false
-    },
-    "dashboard.bucket.category_category_by_warning._metric|report": {
-        "value": "To view by, a report can have only one metric",
-        "comment": "Warning message explaining that 'View by' requires limiting to one metric in reports",
-        "translate": false
-    },
-    "dashboard.bucket.category_segment_by_warning._measure|insight": {
+    "dashboard.bucket.category_segment_by_warning._measure": {
         "value": "To segment by, an visualization can have only one measure",
         "comment": "Warning message explaining that 'Segment by' requires limiting to one measure in insights"
     },
-    "dashboard.bucket.category_segment_by_warning._metric|insight": {
+    "dashboard.bucket.category_segment_by_warning._metric": {
         "value": "To segment by, an visualization can have only one metric",
         "comment": "Warning message explaining that 'Segment by' requires limiting to one metric in insights"
-    },
-    "dashboard.bucket.category_segment_by_warning._measure|report": {
-        "value": "To segment by, a report can have only one measure",
-        "comment": "Warning message explaining that 'Segment by' requires limiting to one measure in reports",
-        "translate": false
-    },
-    "dashboard.bucket.category_segment_by_warning._metric|report": {
-        "value": "To segment by, a report can have only one metric",
-        "comment": "Warning message explaining that 'Segment by' requires limiting to one metric in reports",
-        "translate": false
     },
     "dashboard.bucket.measures_title.table._measure": {
         "value": "Measures",
@@ -558,41 +503,21 @@
         "value": "Columns",
         "comment": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization"
     },
-    "dashboard.error.missing_primary_bucket_item.heading._measure|insight": {
+    "dashboard.error.missing_primary_bucket_item.heading._measure": {
         "value": "No primary measure in your visualization",
         "comment": "Error message shown when a required data item is missing from a visualization or report"
     },
-    "dashboard.error.missing_primary_bucket_item.heading._metric|insight": {
+    "dashboard.error.missing_primary_bucket_item.heading._metric": {
         "value": "No primary metric in your visualization",
         "comment": "Error message shown when a required data item is missing from a visualization or report"
     },
-    "dashboard.error.missing_primary_bucket_item.heading._measure|report": {
-        "value": "No primary measure in your report",
-        "comment": "Error message shown when a required data item is missing from a visualization or report",
-        "translate": false
-    },
-    "dashboard.error.missing_primary_bucket_item.heading._metric|report": {
-        "value": "No primary metric in your report",
-        "comment": "Error message shown when a required data item is missing from a visualization or report",
-        "translate": false
-    },
-    "dashboard.error.missing_primary_bucket_item.text._measure|insight": {
+    "dashboard.error.missing_primary_bucket_item.text._measure": {
         "value": "Add a primary measure to your visualization, or switch to table.\nOnce done, you'll be able to save it.",
         "comment": "Instructional message explaining how to fix a missing primary measure error in a visualization"
     },
-    "dashboard.error.missing_primary_bucket_item.text._metric|insight": {
+    "dashboard.error.missing_primary_bucket_item.text._metric": {
         "value": "Add a primary metric to your visualization, or switch to table.\nOnce done, you'll be able to save it.",
         "comment": "Instructional message explaining how to fix a missing primary metric error in a visualization"
-    },
-    "dashboard.error.missing_primary_bucket_item.text._measure|report": {
-        "value": "Add a primary measure to your report, or switch to table.\nOnce done, you'll be able to save it.",
-        "comment": "Instructional message explaining how to fix a missing primary measure error in a report",
-        "translate": false
-    },
-    "dashboard.error.missing_primary_bucket_item.text._metric|report": {
-        "value": "Add a primary metric to your report, or switch to table.\nOnce done, you'll be able to save it.",
-        "comment": "Instructional message explaining how to fix a missing primary metric error in a report",
-        "translate": false
     },
     "dashboard.xirr.error.invalid_buckets.heading": {
         "value": "Incomplete configuration",
@@ -610,23 +535,13 @@
         "value": "This visualization doesn’t support configuration",
         "comment": "Message displayed when a visualization type does not support configuration options"
     },
-    "properties.config.not_applicable|insight": {
+    "properties.config.not_applicable": {
         "value": "Configuration Panel is not applicable for this configuration of the visualization",
         "comment": "Message shown when configuration panel is not available for current insight setup"
     },
-    "properties.config.not_applicable|report": {
-        "value": "Configuration Panel is not applicable for this configuration of the report",
-        "comment": "Message shown when configuration panel is not available for current report setup",
-        "translate": false
-    },
-    "properties.not_applicable|insight": {
+    "properties.not_applicable": {
         "value": "Property is not applicable for this configuration of the visualization",
         "comment": "Message shown when a specific property is not applicable for current insight configuration"
-    },
-    "properties.not_applicable|report": {
-        "value": "Property is not applicable for this configuration of the report",
-        "comment": "Message shown when a specific property is not applicable for current report configuration",
-        "translate": false
     },
     "properties.auto_placeholder": {
         "value": "auto",
@@ -916,23 +831,13 @@
         "value": "inherit",
         "comment": "Axis format option to inherit formatting from used measure."
     },
-    "properties.axis.format.info.inherit._measure|insight": {
+    "properties.axis.format.info.inherit._measure": {
         "value": "The format is inherited from the first measure in the visualization.",
         "comment": "Info text for axis format option."
     },
-    "properties.axis.format.info.inherit._metric|insight": {
+    "properties.axis.format.info.inherit._metric": {
         "value": "The format is inherited from the first metric in the visualization.",
         "comment": "Info text for axis format option."
-    },
-    "properties.axis.format.info.inherit._measure|report": {
-        "value": "The format is inherited from the first measure in the report.",
-        "comment": "Info text for axis format option for measures in reports",
-        "translate": false
-    },
-    "properties.axis.format.info.inherit._metric|report": {
-        "value": "The format is inherited from the first metric in the report.",
-        "comment": "Info text for axis format option for metrics in reports",
-        "translate": false
     },
     "properties.axis.name": {
         "value": "name",
@@ -1150,23 +1055,13 @@
         "value": "Colors",
         "comment": "Label for colors configuration section"
     },
-    "properties.colors.unsupported|insight": {
+    "properties.colors.unsupported": {
         "value": "There are no colors for this configuration of the visualization",
         "comment": "Message when color configuration is not supported for insight visualization"
     },
-    "properties.colors.unsupported|report": {
-        "value": "There are no colors for this configuration of the report",
-        "comment": "Message when color configuration is not supported for report",
-        "translate": false
-    },
-    "export_unsupported.colors|insight": {
+    "export_unsupported.colors": {
         "value": "The visualization is not compatible with custom colors. To open the visualization as a report, click Reset Colors in Configuration —> Colors.",
         "comment": "Message when insight visualization doesn't support custom colors"
-    },
-    "export_unsupported.colors|report": {
-        "value": "The report is not compatible with custom colors. Click Reset Colors in Configuration —> Colors.",
-        "comment": "Message when report doesn't support custom colors",
-        "translate": false
     },
     "dashboard.bucket.measures_title.bullet._measure": {
         "value": "Measure",
@@ -1204,32 +1099,17 @@
         "value": "Comparative",
         "comment": "Comparative measures of a bullet chart"
     },
-    "sorting.disabled.explanation.attribute|insight": {
+    "sorting.disabled.explanation.attribute": {
         "value": "Sorting is not possible for this visualization configuration.",
         "comment": "Explains why sort button is disabled. Shown as tooltip"
     },
-    "sorting.disabled.explanation.attribute|report": {
-        "value": "Sorting is not possible for this report configuration.",
-        "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "translate": false
-    },
-    "sorting.disabled.explanation.measure._measure|insight": {
+    "sorting.disabled.explanation.measure._measure": {
         "value": "You must add at least one attribute to sort the visualization. You can also adjust the position of items in the Measures section to change their position in the visualization.",
         "comment": "Explains why sort button is disabled. Shown as tooltip"
     },
-    "sorting.disabled.explanation.measure._measure|report": {
-        "value": "You must add at least one attribute to sort the report. You can also adjust the position of items in the Measures section to change their position in the report.",
-        "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "translate": false
-    },
-    "sorting.disabled.explanation.measure._metric|insight": {
+    "sorting.disabled.explanation.measure._metric": {
         "value": "You must add at least one attribute to sort the visualization. You can also adjust the position of items in the Metrics section to change their position in the visualization.",
         "comment": "Explains why sort button is disabled. Shown as tooltip"
-    },
-    "sorting.disabled.explanation.measure._metric|report": {
-        "value": "You must add at least one attribute to sort the report. You can also adjust the position of items in the Metrics section to change their position in the report.",
-        "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "translate": false
     },
     "properties.metrics.title._measure": {
         "value": "Measures",
