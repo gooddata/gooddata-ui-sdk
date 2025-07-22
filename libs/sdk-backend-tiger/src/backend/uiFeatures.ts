@@ -152,7 +152,6 @@ export enum TigerFeaturesNames {
     EnableNotificationChannelIdentifiers = "enableNotificationChannelIdentifiers",
     EnableDashboardShareDialogLink = "enableDashboardShareDialogLink",
     ProductionFeatures = "productionFeatures",
-    EnableProductionFeaturesRollout = "enableProductionFeaturesRollout",
     EnableNewScheduledExport = "enableNewScheduledExport",
     EnableSeamlessIdpSwitch = "enableSeamlessIdpSwitch",
     EnablePreAggregationDatasets = "enablePreAggregationDatasets",
@@ -272,7 +271,6 @@ export type ITigerFeatureFlags = {
     enableNotificationChannelIdentifiers: (typeof FeatureFlagsValues)["enableNotificationChannelIdentifiers"][number];
     enableDashboardShareDialogLink: (typeof FeatureFlagsValues)["enableDashboardShareDialogLink"][number];
     productionFeatures: (typeof FeatureFlagsValues)["productionFeatures"][number];
-    enableProductionFeaturesRollout: (typeof FeatureFlagsValues)["enableProductionFeaturesRollout"][number];
     enableNewScheduledExport: (typeof FeatureFlagsValues)["enableNewScheduledExport"][number];
     enableSeamlessIdpSwitch: (typeof FeatureFlagsValues)["enableSeamlessIdpSwitch"][number];
     enablePreAggregationDatasets: (typeof FeatureFlagsValues)["enablePreAggregationDatasets"][number];
@@ -392,7 +390,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNotificationChannelIdentifiers: false,
     enableDashboardShareDialogLink: false,
     productionFeatures: undefined,
-    enableProductionFeaturesRollout: false,
     enableNewScheduledExport: false,
     enableSeamlessIdpSwitch: false,
     enablePreAggregationDatasets: false,
@@ -516,7 +513,6 @@ export const FeatureFlagsValues = {
     enableNotificationChannelIdentifiers: [true, false] as const,
     enableDashboardShareDialogLink: [true, false] as const,
     productionFeatures: [undefined, {} as IProductionFeaturesConfig] as const,
-    enableProductionFeaturesRollout: [true, false] as const,
     enableNewScheduledExport: [true, false] as const,
     enableSeamlessIdpSwitch: [true, false] as const,
     enablePreAggregationDatasets: [true, false] as const,
