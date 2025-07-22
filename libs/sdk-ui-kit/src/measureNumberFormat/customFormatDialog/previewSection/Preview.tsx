@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { memo, useState } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 import { InputWithNumberFormat } from "../../../Form/index.js";
@@ -14,53 +14,45 @@ interface ICustomFormatPreviewOwnProps {
     separators?: ISeparators;
 }
 
-interface ICustomFormatPreviewState {
-    preview: number;
-}
-
 type ICustomFormatPreviewProps = ICustomFormatPreviewOwnProps & WrappedComponentProps;
 
-export class Preview extends React.PureComponent<ICustomFormatPreviewProps, ICustomFormatPreviewState> {
-    public readonly state: Readonly<ICustomFormatPreviewState> = {
-        preview: DEFAULT_PREVIEW_VALUE,
+export const Preview = memo(function Preview(props: ICustomFormatPreviewProps) {
+    const [preview, setPreview] = useState<number>(DEFAULT_PREVIEW_VALUE);
+
+    const { format, separators, intl } = props;
+
+    const onPreviewChange = (value: number): void => {
+        setPreview(value);
     };
 
-    public render() {
-        const { format, separators, intl } = this.props;
-
-        return (
-            <div
-                className={
-                    "gd-measure-custom-format-dialog-section gd-measure-custom-format-dialog-section-preview"
-                }
-            >
-                <span className={"gd-measure-custom-format-dialog-section-title"}>
-                    {intl.formatMessage({ id: "measureNumberCustomFormatDialog.preview" })}
-                </span>
-                <div className={"gd-measure-custom-format-dialog-preview"}>
-                    <InputWithNumberFormat
-                        className="s-custom-format-dialog-preview-input gd-measure-custom-format-dialog-preview-input"
-                        value={this.state.preview}
-                        isSmall={true}
-                        autofocus={false}
-                        onChange={this.onPreviewChange}
-                        separators={separators}
-                    />
-                    <FormattedPreview
-                        previewNumber={this.state.preview}
-                        format={format}
-                        separators={separators}
-                        className="s-custom-format-dialog-preview-formatted gd-measure-custom-format-dialog-preview-string"
-                    />
-                </div>
-                <ExtendedPreview format={format} separators={separators} />
+    return (
+        <div
+            className={
+                "gd-measure-custom-format-dialog-section gd-measure-custom-format-dialog-section-preview"
+            }
+        >
+            <span className={"gd-measure-custom-format-dialog-section-title"}>
+                {intl.formatMessage({ id: "measureNumberCustomFormatDialog.preview" })}
+            </span>
+            <div className={"gd-measure-custom-format-dialog-preview"}>
+                <InputWithNumberFormat
+                    className="s-custom-format-dialog-preview-input gd-measure-custom-format-dialog-preview-input"
+                    value={preview}
+                    isSmall={true}
+                    autofocus={false}
+                    onChange={onPreviewChange}
+                    separators={separators}
+                />
+                <FormattedPreview
+                    previewNumber={preview}
+                    format={format}
+                    separators={separators}
+                    className="s-custom-format-dialog-preview-formatted gd-measure-custom-format-dialog-preview-string"
+                />
             </div>
-        );
-    }
-
-    private onPreviewChange = (value: number): void => {
-        this.setState({ preview: value });
-    };
-}
+            <ExtendedPreview format={format} separators={separators} />
+        </div>
+    );
+});
 
 export default injectIntl(Preview);

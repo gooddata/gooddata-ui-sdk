@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { useRef } from "react";
 import { ConfigPanelClassName } from "@gooddata/sdk-ui-ext/internal";
 
 export interface IConfigurationPanelWrapperProps {
@@ -7,6 +7,8 @@ export interface IConfigurationPanelWrapperProps {
     expandAllClassName?: string;
     children?: React.ReactNode;
 }
+
+const DefaultExpandAllClassName = "config-panel-expand-all";
 
 /**
  * Wrapper into which configuration panel should be rendered. The only added value provided here-in is the
@@ -25,48 +27,34 @@ export interface IConfigurationPanelWrapperProps {
  * In the end, this wrapper allows to generate stories in a generic fashion - without having to customize what
  * config sections are available.
  */
-export class ConfigurationPanelWrapper extends React.Component<IConfigurationPanelWrapperProps> {
-    public static DefaultExpandAllClassName = "config-panel-expand-all";
+export function ConfigurationPanelWrapper({
+    className = ConfigPanelClassName,
+    expandAllClassName = DefaultExpandAllClassName,
+    children,
+}: IConfigurationPanelWrapperProps) {
+    const componentRef = useRef<HTMLDivElement>(null);
 
-    public static defaultProps = {
-        className: ConfigPanelClassName,
-        expandAllClassName: ConfigurationPanelWrapper.DefaultExpandAllClassName,
-    };
+    const expandAllSections = () => {
+        const element = componentRef.current;
+        const sections = element?.getElementsByClassName("adi-bucket-item-header collapsed");
 
-    private componentRef: any = null;
-
-    constructor(props: IConfigurationPanelWrapperProps) {
-        super(props);
-
-        this.state = { ready: false };
-        this.componentRef = React.createRef();
-    }
-
-    public render() {
-        const { className, expandAllClassName } = this.props;
-
-        return (
-            <>
-                <div
-                    className={expandAllClassName}
-                    style={{ cursor: "pointer" }}
-                    onClick={this.expandAllSections}
-                >
-                    Expand all
-                </div>
-                <div ref={this.componentRef} className={className}>
-                    {this.props.children}
-                </div>
-            </>
-        );
-    }
-
-    private expandAllSections = () => {
-        const element = this.componentRef.current;
-        const sections = element.getElementsByClassName("adi-bucket-item-header collapsed");
-
-        for (const section of sections) {
-            section.click();
+        if (sections) {
+            for (const section of Array.from(sections)) {
+                (section as HTMLElement).click();
+            }
         }
     };
+
+    return (
+        <>
+            <div className={expandAllClassName} style={{ cursor: "pointer" }} onClick={expandAllSections}>
+                Expand all
+            </div>
+            <div ref={componentRef} className={className}>
+                {children}
+            </div>
+        </>
+    );
 }
+
+ConfigurationPanelWrapper.DefaultExpandAllClassName = DefaultExpandAllClassName;

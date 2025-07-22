@@ -1,42 +1,54 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 
 // This has to be a class because DayPickerInput refs to it internally.
 // See https://github.com/gpbl/react-day-picker/issues/748 for more information
-export class DateRangePickerInputFieldBody extends React.Component<
+export const DateRangePickerInputFieldBody = React.forwardRef<
+    {
+        invokeInputMethod: (key: "blur" | "focus") => void;
+        blur: () => void;
+        focus: () => void;
+        value: string;
+    },
     React.InputHTMLAttributes<HTMLInputElement>
-> {
-    private inputRef = React.createRef<HTMLInputElement>();
+>(function DateRangePickerInputFieldBody(props, ref) {
+    const inputRef = React.useRef<HTMLInputElement>(null);
 
-    public invokeInputMethod = (key: "blur" | "focus"): void => {
-        if (this.inputRef.current) {
-            this.inputRef.current[key]();
+    const invokeInputMethod = React.useCallback((key: "blur" | "focus"): void => {
+        if (inputRef.current) {
+            inputRef.current[key]();
         }
-    };
+    }, []);
 
-    public blur = (): void => this.invokeInputMethod("blur");
-    public focus = (): void => this.invokeInputMethod("focus");
+    const blur = React.useCallback((): void => invokeInputMethod("blur"), [invokeInputMethod]);
+    const focus = React.useCallback((): void => invokeInputMethod("focus"), [invokeInputMethod]);
 
-    public get value(): string {
-        if (this.inputRef.current) {
-            return this.inputRef.current.value;
+    const getValue = React.useCallback((): string => {
+        if (inputRef.current) {
+            return inputRef.current.value;
         }
-
         return "";
-    }
+    }, []);
 
-    public render() {
-        const { className } = this.props;
-        return (
-            <span className={cx(className)}>
-                <span className="gd-icon-calendar" />
-                <input
-                    {...this.props}
-                    ref={this.inputRef}
-                    className="input-text s-date-range-picker-input-field"
-                />
-            </span>
-        );
-    }
-}
+    React.useImperativeHandle(
+        ref,
+        () => ({
+            invokeInputMethod,
+            blur,
+            focus,
+            get value() {
+                return getValue();
+            },
+        }),
+        [invokeInputMethod, blur, focus, getValue],
+    );
+
+    const { className } = props;
+    return (
+        <span className={cx(className)}>
+            <span className="gd-icon-calendar" />
+            <input {...props} ref={inputRef} className="input-text s-date-range-picker-input-field" />
+        </span>
+    );
+});

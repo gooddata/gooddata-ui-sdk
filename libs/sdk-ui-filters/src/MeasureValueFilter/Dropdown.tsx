@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo, useCallback } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
@@ -32,81 +32,67 @@ interface IDropdownOwnProps {
 
 type IDropdownProps = WrappedComponentProps & IDropdownOwnProps;
 
-interface IDropdownState {
-    displayDropdown: boolean;
-}
+const DropdownWrapped = memo(function DropdownWrapped(props: IDropdownProps) {
+    const {
+        operator = "ALL",
+        value = {},
+        usePercentage,
+        warningMessage,
+        locale,
+        onCancel,
+        anchorEl,
+        separators,
+        displayTreatNullAsZeroOption = false,
+        treatNullAsZeroValue = false,
+        enableOperatorSelection,
+        onApply: onApplyProp,
+    } = props;
 
-class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState> {
-    public static defaultProps: Pick<
-        IDropdownProps,
-        "value" | "operator" | "displayTreatNullAsZeroOption" | "treatNullAsZeroValue"
-    > = {
-        value: {},
-        operator: "ALL",
-        displayTreatNullAsZeroOption: false,
-        treatNullAsZeroValue: false,
-    };
+    const onApply = useCallback(
+        (
+            operator: MeasureValueFilterOperator | null,
+            value: IMeasureValueFilterValue,
+            treatNullValuesAsZero: boolean,
+        ) => {
+            onApplyProp(operator, value, treatNullValuesAsZero);
+        },
+        [onApplyProp],
+    );
 
-    public render() {
-        const {
-            operator,
-            value,
-            usePercentage,
-            warningMessage,
-            locale,
-            onCancel,
-            anchorEl,
-            separators,
-            displayTreatNullAsZeroOption,
-            treatNullAsZeroValue,
-            enableOperatorSelection,
-        } = this.props;
+    const selectedOperator: MeasureValueFilterOperator = operator !== null ? operator : "ALL";
 
-        const selectedOperator: MeasureValueFilterOperator = operator !== null ? operator : "ALL";
-
-        return (
-            <Overlay
-                alignTo={anchorEl}
-                alignPoints={DROPDOWN_ALIGNMENTS}
-                closeOnOutsideClick={true}
-                closeOnParentScroll={true}
-                closeOnMouseDrag={true}
-                onClose={onCancel}
-            >
-                <DropdownBody
-                    operator={selectedOperator}
-                    value={value}
-                    usePercentage={usePercentage}
-                    warningMessage={warningMessage}
-                    locale={locale}
-                    onCancel={onCancel}
-                    onApply={this.onApply}
-                    separators={separators}
-                    displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
-                    treatNullAsZeroValue={treatNullAsZeroValue}
-                    enableOperatorSelection={enableOperatorSelection}
-                />
-            </Overlay>
-        );
-    }
-
-    private onApply = (
-        operator: MeasureValueFilterOperator | null,
-        value: IMeasureValueFilterValue,
-        treatNullValuesAsZero: boolean,
-    ) => {
-        this.props.onApply(operator, value, treatNullValuesAsZero);
-    };
-}
+    return (
+        <Overlay
+            alignTo={anchorEl}
+            alignPoints={DROPDOWN_ALIGNMENTS}
+            closeOnOutsideClick={true}
+            closeOnParentScroll={true}
+            closeOnMouseDrag={true}
+            onClose={onCancel}
+        >
+            <DropdownBody
+                operator={selectedOperator}
+                value={value}
+                usePercentage={usePercentage}
+                warningMessage={warningMessage}
+                locale={locale}
+                onCancel={onCancel}
+                onApply={onApply}
+                separators={separators}
+                displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
+                treatNullAsZeroValue={treatNullAsZeroValue}
+                enableOperatorSelection={enableOperatorSelection}
+            />
+        </Overlay>
+    );
+});
 
 export const DropdownWithIntl = injectIntl(DropdownWrapped);
 
-export class Dropdown extends React.PureComponent<IDropdownOwnProps, IDropdownState> {
-    public render() {
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <DropdownWithIntl {...this.props} />
-            </IntlWrapper>
-        );
-    }
+export function Dropdown(props: IDropdownOwnProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <DropdownWithIntl {...props} />
+        </IntlWrapper>
+    );
 }

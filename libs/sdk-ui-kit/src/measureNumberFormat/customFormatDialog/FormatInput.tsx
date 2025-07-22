@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import React, { memo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 import { StreamLanguage } from "@codemirror/language";
@@ -132,35 +132,34 @@ interface IFormatInputOwnProps {
 
 type IFormatInputProps = IFormatInputOwnProps & WrappedComponentProps;
 
-class FormatInput extends React.PureComponent<IFormatInputProps> {
-    public render() {
-        const { format, onFormatChange, separators, templates, intl } = this.props;
-        return (
-            <div className={"gd-measure-custom-format-dialog-section"}>
-                <div className={"gd-measure-custom-format-dialog-section-title"}>
-                    <span>{intl.formatMessage({ id: "measureNumberCustomFormatDialog.definition" })}</span>
-                    {templates ? (
-                        <FormatTemplatesDropdown
-                            onChange={onFormatChange}
-                            separators={separators}
-                            templates={templates}
-                        />
-                    ) : null}
-                </div>
-                <SyntaxHighlightingInput
-                    value={format}
-                    extensions={codeMirrorExtensions}
-                    onChange={this.handleInputChange}
-                    className={"s-custom-format-input"}
-                />
-            </div>
-        );
-    }
+const FormatInput = memo(function FormatInput(props: IFormatInputProps) {
+    const { format, onFormatChange, separators, templates, intl } = props;
 
-    private handleInputChange = (value: string) => {
-        this.props.onFormatChange(value);
+    const handleInputChange = (value: string) => {
+        onFormatChange(value);
     };
-}
+
+    return (
+        <div className={"gd-measure-custom-format-dialog-section"}>
+            <div className={"gd-measure-custom-format-dialog-section-title"}>
+                <span>{intl.formatMessage({ id: "measureNumberCustomFormatDialog.definition" })}</span>
+                {templates ? (
+                    <FormatTemplatesDropdown
+                        onChange={onFormatChange}
+                        separators={separators}
+                        templates={templates}
+                    />
+                ) : null}
+            </div>
+            <SyntaxHighlightingInput
+                value={format}
+                extensions={codeMirrorExtensions}
+                onChange={handleInputChange}
+                className={"s-custom-format-input"}
+            />
+        </div>
+    );
+});
 
 const FormatInputWithIntl = injectIntl(FormatInput);
 

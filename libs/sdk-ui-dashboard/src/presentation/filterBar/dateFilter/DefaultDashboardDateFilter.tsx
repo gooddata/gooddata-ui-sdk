@@ -90,7 +90,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
                 ),
             [workingFilter, config.dateFilterOptions, lastSelectedOptionId],
         );
-    const onApply = useCallback<IDateFilterProps["onApply"]>(
+    const onApply = useCallback<NonNullable<IDateFilterProps["onApply"]>>(
         (option, exclude) => {
             setLastSelectedOptionId(option.localIdentifier);
             onFilterChanged(

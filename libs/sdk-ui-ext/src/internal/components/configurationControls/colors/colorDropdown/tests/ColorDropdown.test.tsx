@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { memo } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop.js";
@@ -23,15 +23,13 @@ const defaultProps: IColorDropdownOwnProps = {
     onColorSelected: noop,
 };
 
-class MockItem extends React.PureComponent<IMockItemProps> {
-    public render() {
-        return (
-            <button data-is-selected={this.props.isSelected} data-icon-position={this.props.position}>
-                test
-            </button>
-        );
-    }
-}
+const MockItem = memo(function MockItem({ isSelected, position }: IMockItemProps) {
+    return (
+        <button data-is-selected={isSelected} data-icon-position={position}>
+            test
+        </button>
+    );
+});
 
 function createComponent(customProps: Partial<IColorDropdownOwnProps> = {}) {
     const props: IColorDropdownOwnProps = { ...cloneDeep(defaultProps), ...customProps };
