@@ -601,7 +601,11 @@ function updateNonResettingFilter(
         // This is experimental and will be removed after the feature is fully tested and released.
         // enableDashboardFiltersApplyWithoutLoading should default to true in the future.
         if (enableDashboardFiltersApplyWithoutLoading && withoutApply) {
-            return undefined;
+            const needsInitialization = isEmpty(handler.getAllElements()) && filterChanged;
+
+            if (!needsInitialization) {
+                return undefined;
+            }
         }
 
         return "init-self";
