@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-execute",
-    "version": "10.35.0-alpha.36",
+    "version": "10.35.0-alpha.37",
     "title": "Execute",
     "description": "This example demonstrates using Execute component and build custom visualization.",
     "author": "GoodData",
