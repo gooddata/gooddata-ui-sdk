@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ISemanticSearchQuery } from "@gooddata/sdk-backend-spi";
 import { GenAIObjectType, ISemanticSearchRelationship } from "@gooddata/sdk-model";
@@ -59,8 +59,21 @@ const cancellableTimeout = async (ms: number, signal?: AbortSignal) => {
     return new Promise((res, rej) => {
         if (signal?.aborted) {
             rej(signal.reason);
+            return;
         }
-        signal?.addEventListener("abort", () => rej(signal.reason));
-        setTimeout(res, ms);
+
+        const abortHandler = () => rej(signal?.reason);
+        signal?.addEventListener("abort", abortHandler);
+
+        const timeoutId = setTimeout(() => {
+            signal?.removeEventListener("abort", abortHandler);
+            res(undefined);
+        }, ms);
+
+        // If already aborted, clear timeout
+        if (signal?.aborted) {
+            clearTimeout(timeoutId);
+            rej(signal.reason);
+        }
     });
 };

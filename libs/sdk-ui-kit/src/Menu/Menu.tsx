@@ -36,32 +36,38 @@ export function Menu({
     toggler,
     togglerWrapperClassName,
 }: IMenuProps) {
+    console.log("UI-KIT Menu: Rendering Menu component");
+    console.log("UI-KIT Menu: opened:", opened, "closeOnScroll:", closeOnScroll);
+
     return (
         <MenuState opened={opened} defaultOpened={defaultOpened} onOpenedChange={onOpenedChange}>
-            {(controlledProps) => (
-                <ControlledMenu
-                    opened={controlledProps.opened}
-                    onOpenedChange={controlledProps.onOpenedChange}
-                    openAction={openAction}
-                    alignment={alignment}
-                    spacing={spacing}
-                    offset={offset}
-                    toggler={toggler}
-                    togglerWrapperClassName={togglerWrapperClassName}
-                    portalTarget={portalTarget}
-                    closeOnScroll={closeOnScroll}
-                >
-                    {isFunction(children)
-                        ? children({
-                              closeMenu: () =>
-                                  controlledProps.onOpenedChange({
-                                      opened: false,
-                                      source: "CLOSE_MENU_RENDER_PROP",
-                                  }),
-                          })
-                        : children}
-                </ControlledMenu>
-            )}
+            {(controlledProps) => {
+                console.log("UI-KIT Menu: MenuState render prop called with:", controlledProps);
+                return (
+                    <ControlledMenu
+                        opened={controlledProps.opened}
+                        onOpenedChange={controlledProps.onOpenedChange}
+                        openAction={openAction}
+                        alignment={alignment}
+                        spacing={spacing}
+                        offset={offset}
+                        toggler={toggler}
+                        togglerWrapperClassName={togglerWrapperClassName}
+                        portalTarget={portalTarget}
+                        closeOnScroll={closeOnScroll}
+                    >
+                        {isFunction(children)
+                            ? children({
+                                  closeMenu: () =>
+                                      controlledProps.onOpenedChange({
+                                          opened: false,
+                                          source: "CLOSE_MENU_RENDER_PROP",
+                                      }),
+                              })
+                            : children}
+                    </ControlledMenu>
+                );
+            }}
         </MenuState>
     );
 }

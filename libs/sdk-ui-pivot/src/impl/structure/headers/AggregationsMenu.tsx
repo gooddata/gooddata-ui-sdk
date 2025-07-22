@@ -63,7 +63,9 @@ export interface IAggregationsMenuProps {
 }
 
 const MenuToggler = () => {
+    console.log("COMPONENT: MenuToggler rendering");
     const theme = useTheme();
+    console.log("COMPONENT: MenuToggler got theme:", theme);
     return (
         <div className="menu-icon">
             <Icon.BurgerMenu color={theme?.palette?.complementary?.c8} />
@@ -73,26 +75,36 @@ const MenuToggler = () => {
 
 export default class AggregationsMenu extends Component<IAggregationsMenuProps> {
     public render() {
+        console.log("COMPONENT: AggregationsMenu render() called");
         const { intl, colId, getTableDescriptor, isMenuOpened, onMenuOpenedChange, showColumnsSubMenu } =
             this.props;
+        console.log("COMPONENT: Props extracted, colId:", colId, "isMenuOpened:", isMenuOpened);
 
         if (!colId) {
+            console.log("COMPONENT: No colId, returning null");
             return null;
         }
 
         // Because of Ag-grid react wrapper does not rerender the component when we pass
         // new gridOptions we need to pull the data manually on each render
+        console.log("COMPONENT: Getting table descriptor");
         const tableDescriptor = getTableDescriptor();
+        console.log("COMPONENT: Got table descriptor:", tableDescriptor);
 
         const canShowMenu = tableDescriptor.canTableHaveColumnTotals() && showColumnsSubMenu;
+        console.log("COMPONENT: canShowMenu:", canShowMenu);
 
         if (!tableDescriptor.canTableHaveRowTotals() && !canShowMenu) {
+            console.log("COMPONENT: Cannot show row totals and cannot show menu, returning null");
             return null;
         }
 
+        console.log("COMPONENT: Getting col for colId:", colId);
         const col = tableDescriptor.getCol(colId);
+        console.log("COMPONENT: Got col:", col);
 
         if (isSliceCol(col) || isRootCol(col)) {
+            console.log("COMPONENT: Col is slice or root, returning null");
             // aggregation menu should not appear on headers of the slicing columns or on the
             // very to header which describes table grouping
             return null;
@@ -101,20 +113,36 @@ export default class AggregationsMenu extends Component<IAggregationsMenuProps> 
         // Note: for measures in rows, where the column is of type isSliceMeasureCol()
         // we have all measures associated with the menu. This is overriden in the individual
         // cell renderers for particular measure with specific onMenuAggregationClick fn.
+        console.log("COMPONENT: Checking if col is series col");
         const measures = isSeriesCol(col)
             ? [col.seriesDescriptor.measureDescriptor]
             : tableDescriptor.getMeasures();
         const measureLocalIdentifiers = measures.map((m) => m.measureHeaderItem.localIdentifier);
+        console.log("COMPONENT: measureLocalIdentifiers:", measureLocalIdentifiers);
+
+        console.log("COMPONENT: Checking useGrouped");
         const useGrouped = isScopeCol(col) || isSliceMeasureCol(col);
+        console.log("COMPONENT: useGrouped:", useGrouped, "isSliceMeasureCol:", isSliceMeasureCol(col));
+
+        console.log("COMPONENT: Getting column totals");
         const columnTotals = this.getColumnTotals(
             measureLocalIdentifiers,
             useGrouped,
             isSliceMeasureCol(col),
         );
+        console.log("COMPONENT: Column totals:", columnTotals);
+
+        console.log("COMPONENT: Getting row totals");
         const rowTotals = this.getRowTotals(measureLocalIdentifiers, useGrouped, isSliceMeasureCol(col));
+        console.log("COMPONENT: Row totals:", rowTotals);
+
+        console.log("COMPONENT: Getting descriptors");
         const rowAttributeDescriptors = tableDescriptor.getSlicingAttributes();
         const columnAttributeDescriptors = tableDescriptor.getScopingAttributes();
+        console.log("COMPONENT: rowAttributeDescriptors:", rowAttributeDescriptors);
+        console.log("COMPONENT: columnAttributeDescriptors:", columnAttributeDescriptors);
 
+        console.log("COMPONENT: About to render Menu component");
         return (
             <Menu
                 toggler={<MenuToggler />}
@@ -122,7 +150,7 @@ export default class AggregationsMenu extends Component<IAggregationsMenuProps> 
                 opened={isMenuOpened}
                 onOpenedChange={onMenuOpenedChange}
                 openAction={"click"}
-                closeOnScroll={true}
+                closeOnScroll={false}
             >
                 <ItemsWrapper>
                     <div className="s-table-header-menu-content">

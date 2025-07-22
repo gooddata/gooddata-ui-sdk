@@ -17,18 +17,21 @@ export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
 
 export class ControlledMenu extends Component<IControlledMenuProps> {
     public componentDidMount(): void {
+        console.log("UI-KIT ControlledMenu: componentDidMount, closeOnScroll:", this.props.closeOnScroll);
         if (this.props.closeOnScroll) {
             this.addScrollListeners();
         }
     }
 
     public componentWillUnmount(): void {
+        console.log("UI-KIT ControlledMenu: componentWillUnmount, closeOnScroll:", this.props.closeOnScroll);
         if (this.props.closeOnScroll) {
             this.removeScrollListeners();
         }
     }
 
     public componentDidUpdate(prevProps: IControlledMenuProps): void {
+        console.log("UI-KIT ControlledMenu: componentDidUpdate");
         if (prevProps.closeOnScroll !== this.props.closeOnScroll) {
             if (this.props.closeOnScroll) {
                 this.addScrollListeners();
@@ -39,6 +42,7 @@ export class ControlledMenu extends Component<IControlledMenuProps> {
     }
 
     public render() {
+        console.log("UI-KIT ControlledMenu: render, opened:", this.props.opened);
         return (
             <MenuOpener
                 opened={this.props.opened}
@@ -58,14 +62,17 @@ export class ControlledMenu extends Component<IControlledMenuProps> {
     }
 
     private closeMenu = () => {
+        console.log("UI-KIT ControlledMenu: closeMenu called from scroll event");
         this.props.onOpenedChange({ opened: false, source: "SCROLL" });
     };
 
     private addScrollListeners = () => {
+        console.log("UI-KIT ControlledMenu: Adding scroll listeners");
         window.addEventListener("scroll", this.closeMenu, true);
     };
 
     private removeScrollListeners = () => {
+        console.log("UI-KIT ControlledMenu: Removing scroll listeners");
         window.removeEventListener("scroll", this.closeMenu, true);
     };
 }

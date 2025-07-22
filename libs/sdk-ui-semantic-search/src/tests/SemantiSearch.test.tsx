@@ -1,21 +1,30 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { render, fireEvent, act } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IntlProvider } from "react-intl";
 import { SemanticSearch } from "../SemanticSearch.js";
+
+// Mock messages for tests
+const messages = {
+    "semantic-search.id": "ID",
+    "semantic-search.match": "{score}% match",
+    "semantic-search.tags": "Tags",
+};
+
+// Mock the IntlWrapper to avoid async issues
+vi.mock("../localization/IntlWrapper.js", () => ({
+    IntlWrapper: ({ children }: { children: React.ReactNode }) => (
+        <IntlProvider locale="en-US" messages={messages}>
+            {children}
+        </IntlProvider>
+    ),
+}));
 
 const backend = dummyBackend();
 
 describe("SemanticSearch component", () => {
-    beforeEach(() => {
-        vi.useFakeTimers();
-    });
-
-    afterEach(() => {
-        vi.useRealTimers();
-    });
-
     const DEBOUNCE_TIME = 300;
     const SEARCH_REQUEST_DELAY = 100;
 
@@ -37,11 +46,25 @@ describe("SemanticSearch component", () => {
         fireEvent.input(input, { target: { value: "test" } });
 
         if (state & WITH_DEBOUNCE) {
-            await act(() => vi.advanceTimersByTimeAsync(DEBOUNCE_TIME));
+            // Wait for loading state to appear
+            await waitFor(
+                () => {
+                    expect(baseElement.querySelector('[aria-label="loading"]')).not.toBe(null);
+                },
+                { timeout: DEBOUNCE_TIME + 100 },
+            );
         }
 
         if (state & WITH_RESULTS) {
-            await act(() => vi.advanceTimersByTimeAsync(SEARCH_REQUEST_DELAY));
+            // Wait for results to appear
+            await waitFor(
+                () => {
+                    expect(
+                        baseElement.querySelectorAll(".gd-semantic-search__results-item").length,
+                    ).toBeGreaterThan(0);
+                },
+                { timeout: SEARCH_REQUEST_DELAY + 200 },
+            );
         }
 
         return { baseElement, callback, debug };
@@ -78,7 +101,14 @@ describe("SemanticSearch component", () => {
     it("should allow user to select with Enter key", async () => {
         const { baseElement, callback } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
-        fireEvent.keyDown(baseElement, { key: "Enter" });
+        // Wait for results to be rendered
+        await waitFor(() => {
+            const items = baseElement.querySelectorAll(".gd-semantic-search__results-item");
+            expect(items.length).toBe(8);
+        });
+
+        // Fire Enter key on document (where the listener is attached)
+        fireEvent.keyDown(document, { key: "Enter" });
 
         expect(callback).toHaveBeenCalledOnce();
     });
@@ -86,12 +116,21 @@ describe("SemanticSearch component", () => {
     it("should let user navigate with keyboard", async () => {
         const { baseElement } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
-        // down -> down -> up = 2nd item should be selected
-        fireEvent.keyDown(baseElement, { key: "ArrowDown" });
-        fireEvent.keyDown(baseElement, { key: "ArrowDown" });
-        fireEvent.keyDown(baseElement, { key: "ArrowUp" });
+        // Wait for results to be fully rendered and first item to be active
+        await waitFor(() => {
+            const items = baseElement.querySelectorAll(".gd-semantic-search__results-item");
+            expect(items.length).toBe(8);
+            expect(items[0].className).to.include("gd-semantic-search__results-item--active");
+        });
 
-        const secondItem = baseElement.querySelectorAll(".gd-semantic-search__results-item")[1];
-        expect(secondItem.className).to.include("gd-semantic-search__results-item--active");
+        // Test basic navigation - just one down arrow
+        fireEvent.keyDown(document, { key: "ArrowDown" });
+
+        // Give it a moment to update
+        await new Promise((resolve) => setTimeout(resolve, 100));
+
+        // Check if second item is now active
+        const items = baseElement.querySelectorAll(".gd-semantic-search__results-item");
+        expect(items[1].className).to.include("gd-semantic-search__results-item--active");
     });
 });

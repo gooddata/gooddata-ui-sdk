@@ -16,11 +16,16 @@ export interface IMenuStateConfig {
  * @internal
  */
 export interface IMenuStateProps extends IMenuStateConfig {
-    children: (props: { opened: boolean; onOpenedChange: OnOpenedChange }) => ReactNode;
+    children: (props: IMenuStateRenderProp) => ReactNode;
 }
 
-export interface IMenuStateState {
-    opened?: boolean;
+interface IMenuStateState {
+    opened: boolean;
+}
+
+export interface IMenuStateRenderProp {
+    opened: boolean;
+    onOpenedChange: OnOpenedChange;
 }
 
 export class MenuState extends Component<IMenuStateProps, IMenuStateState> {
@@ -30,15 +35,22 @@ export class MenuState extends Component<IMenuStateProps, IMenuStateState> {
 
     constructor(props: IMenuStateProps) {
         super(props);
+        console.log("UI-KIT MenuState: Constructor called");
+        console.log("UI-KIT MenuState: props.opened:", props.opened, "defaultOpened:", props.defaultOpened);
 
         this.state = {
             opened: this.isControlled() ? this.props.opened : this.props.defaultOpened!,
         };
+        console.log("UI-KIT MenuState: Initial state.opened:", this.state.opened);
     }
 
     public render() {
+        console.log("UI-KIT MenuState: render called");
+        const opened = (this.isControlled() ? this.props.opened : this.state.opened) ?? false;
+        console.log("UI-KIT MenuState: rendering with opened:", opened);
+
         return this.props.children({
-            opened: (this.isControlled() ? this.props.opened : this.state.opened) ?? false,
+            opened: opened,
             onOpenedChange: this.onOpenedChange,
         });
     }
@@ -48,6 +60,7 @@ export class MenuState extends Component<IMenuStateProps, IMenuStateState> {
     };
 
     private onOpenedChange = (openedChangeParams: IOnOpenedChangeParams) => {
+        console.log("UI-KIT MenuState: onOpenedChange called with:", openedChangeParams);
         this.setState({ opened: openedChangeParams.opened }, () => {
             if (this.props.onOpenedChange) {
                 this.props.onOpenedChange(openedChangeParams);
