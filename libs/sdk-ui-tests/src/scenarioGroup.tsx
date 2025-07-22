@@ -197,6 +197,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      */
     public withVisualTestConfig(config: VisualTestConfiguration): ScenarioGroup<T> {
         this.testConfig.visual = config;
+        this.testConfig.visual.skip = config.skip ?? false;
 
         return this;
     }
@@ -244,6 +245,10 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      * Transform scenarios for this component to an inputs for parameterized vitest tests.
      */
     public asTestInput = (): Array<ScenarioTestInput<T>> => {
+        if (this.testConfig.visual.skip) {
+            return [];
+        }
+
         return this.scenarioList.map((scenario) => scenario.asTestInput());
     };
 
@@ -252,6 +257,10 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      * the second is the entire scenario.
      */
     public asScenarioDescAndScenario = (): Array<ScenarioAndDescription<T>> => {
+        if (this.testConfig.visual.skip) {
+            return [];
+        }
+
         return this.scenarioList.map((scenario) => [scenario.name, scenario]);
     };
 
@@ -266,6 +275,10 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      * @returns list of scenarios in the group; may be empty
      */
     public asScenarioList = (): Array<IScenario<T>> => {
+        if (this.testConfig.visual.skip) {
+            return [];
+        }
+
         return [...this.scenarioList];
     };
 
@@ -311,6 +324,11 @@ export type VisualTestConfiguration = {
      * screenshot.
      */
     groupUnder?: string;
+
+    /**
+     * Specify that visual scenarios in the scenario group should be skipped.
+     */
+    skip?: boolean;
 };
 
 /**

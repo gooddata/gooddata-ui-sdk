@@ -376,6 +376,42 @@ export type {
     DataSliceHeaders,
     DataPointCoordinates,
 } from "./results/dataAccess.js";
+export type { ITableData } from "./results/tableData/interfaces/index.js";
+export type {
+    ITableDataValue,
+    ITableAttributeHeaderValue,
+    ITableGrandTotalHeaderValue,
+    ITableGrandTotalSubtotalMeasureValue,
+    ITableGrandTotalMeasureValue,
+    ITableSubtotalMeasureValue,
+    ITableMeasureValue,
+    ITableMeasureHeaderValue,
+    ITableOverallTotalMeasureValue,
+    ITableTotalHeaderValue,
+} from "./results/tableData/interfaces/cells.js";
+export type {
+    ITableAttributeColumnDefinition,
+    ITableValueColumnDefinition,
+    ITableSubtotalColumnDefinition,
+    ITableGrandTotalColumnDefinition,
+    ITableMeasureGroupValueColumnDefinition,
+    ITableColumnDefinition,
+    ITableMeasureGroupHeaderColumnDefinition,
+} from "./results/tableData/interfaces/columns.js";
+export type {
+    ITableRowDefinition,
+    ITableSubtotalRowDefinition,
+    ITableValueRowDefinition,
+    ITableGrandTotalRowDefinition,
+} from "./results/tableData/interfaces/rows.js";
+export type {
+    ITableDataMeasureGroupScope,
+    ITableDataAttributeScope,
+    ITableDataMeasureTotalScope,
+    ITableDataAttributeTotalScope,
+    ITableDataHeaderScope,
+    ITableDataMeasureScope,
+} from "./results/tableData/interfaces/scope.js";
 export type { DataAccessConfig, ValueFormatter, HeaderTranslator } from "./results/dataAccessConfig.js";
 export { createNumberJsFormatter, DefaultDataAccessConfig } from "./results/dataAccessConfig.js";
 

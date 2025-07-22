@@ -62,6 +62,7 @@ import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { MessageDescriptor } from 'react-intl';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
+import { TotalType } from '@gooddata/sdk-model';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
@@ -672,6 +673,8 @@ export interface ICorrelationProviderProps {
 
 // @public
 export interface IDataAccessMethods {
+    // @alpha (undocumented)
+    asTable(): ITableData;
     // (undocumented)
     series(): IDataSeriesCollection;
     // (undocumented)
@@ -1323,6 +1326,365 @@ export function isUnauthorized(obj: unknown): obj is UnauthorizedSdkError;
 
 // @public
 export function isUnknownSdkError(obj: unknown): obj is UnexpectedSdkError;
+
+// @alpha (undocumented)
+export interface ITableAttributeColumnDefinition {
+    // (undocumented)
+    attributeDescriptor: IAttributeDescriptor;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    rowHeaderIndex: number;
+    // (undocumented)
+    type: "attribute";
+}
+
+// @alpha (undocumented)
+export interface ITableAttributeHeaderValue {
+    // (undocumented)
+    columnDefinition: ITableAttributeColumnDefinition;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    formattedValue: string | null;
+    // (undocumented)
+    rowDefinition: ITableRowDefinition;
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    type: "attributeHeader";
+    // (undocumented)
+    value: IResultAttributeHeader;
+}
+
+// @alpha (undocumented)
+export type ITableColumnDefinition = ITableAttributeColumnDefinition | ITableValueColumnDefinition | ITableMeasureGroupHeaderColumnDefinition | ITableMeasureGroupValueColumnDefinition | ITableSubtotalColumnDefinition | ITableGrandTotalColumnDefinition;
+
+// @alpha (undocumented)
+export type ITableData = {
+    columnDefinitions: ITableColumnDefinition[];
+    rowDefinitions: ITableRowDefinition[];
+    data: ITableDataValue[][];
+    isPivoted: boolean;
+    isTransposed: boolean;
+};
+
+// @alpha (undocumented)
+export interface ITableDataAttributeScope {
+    // (undocumented)
+    descriptor: IAttributeDescriptor;
+    // (undocumented)
+    header: IResultAttributeHeader;
+    // (undocumented)
+    type: "attributeScope";
+}
+
+// @alpha (undocumented)
+export interface ITableDataAttributeTotalScope {
+    // (undocumented)
+    descriptor: IAttributeDescriptor;
+    // (undocumented)
+    header: IResultTotalHeader;
+    // (undocumented)
+    type: "attributeTotalScope";
+}
+
+// @alpha (undocumented)
+export type ITableDataHeaderScope = ITableDataAttributeScope | ITableDataAttributeTotalScope | ITableDataMeasureScope | ITableDataMeasureTotalScope | ITableDataMeasureGroupScope;
+
+// @alpha (undocumented)
+export interface ITableDataMeasureGroupScope {
+    // (undocumented)
+    descriptor: IMeasureGroupDescriptor;
+    // (undocumented)
+    type: "measureGroupScope";
+}
+
+// @alpha (undocumented)
+export interface ITableDataMeasureScope {
+    // (undocumented)
+    descriptor: IMeasureDescriptor;
+    // (undocumented)
+    header: IResultMeasureHeader;
+    // (undocumented)
+    type: "measureScope";
+}
+
+// @alpha (undocumented)
+export interface ITableDataMeasureTotalScope {
+    // (undocumented)
+    descriptor: IMeasureDescriptor;
+    // (undocumented)
+    header: IResultTotalHeader;
+    // (undocumented)
+    type: "measureTotalScope";
+}
+
+// @alpha (undocumented)
+export type ITableDataValue = ITableAttributeHeaderValue | ITableMeasureHeaderValue | ITableTotalHeaderValue | ITableMeasureValue | ITableSubtotalMeasureValue | ITableGrandTotalHeaderValue | ITableGrandTotalMeasureValue | ITableGrandTotalSubtotalMeasureValue | ITableOverallTotalMeasureValue;
+
+// @alpha (undocumented)
+export interface ITableGrandTotalColumnDefinition {
+    // (undocumented)
+    columnHeaderIndex: number;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    columnScope: ITableDataHeaderScope[];
+    // (undocumented)
+    type: "grandTotal";
+}
+
+// @alpha (undocumented)
+export interface ITableGrandTotalHeaderValue {
+    // (undocumented)
+    columnDefinition: ITableColumnDefinition;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    formattedValue: string | null;
+    // (undocumented)
+    grandTotalInfo?: {
+        type: TotalType;
+        measure: IMeasureDescriptor;
+        attribute: IAttributeDescriptor;
+    };
+    // (undocumented)
+    rowDefinition: ITableRowDefinition;
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    type: "grandTotalHeader";
+}
+
+// @alpha (undocumented)
+export interface ITableGrandTotalMeasureValue {
+    // (undocumented)
+    columnDefinition: ITableColumnDefinition;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    formattedValue: string | null;
+    // (undocumented)
+    grandTotalInfo?: {
+        type: TotalType;
+        measure: IMeasureDescriptor;
+        attribute: IAttributeDescriptor;
+    };
+    // (undocumented)
+    rowDefinition: ITableRowDefinition;
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    type: "grandTotalValue";
+    // (undocumented)
+    value: DataValue;
+}
+
+// @alpha (undocumented)
+export interface ITableGrandTotalRowDefinition {
+    // (undocumented)
+    attributeDescriptor: IAttributeDescriptor;
+    // (undocumented)
+    measureDescriptors: IMeasureDescriptor[];
+    // (undocumented)
+    rowGrandTotalIndex: number;
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    totalType: TotalType;
+    // (undocumented)
+    type: "grandTotal";
+}
+
+// @alpha (undocumented)
+export interface ITableGrandTotalSubtotalMeasureValue {
+    // (undocumented)
+    columnDefinition: ITableColumnDefinition;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    formattedValue: string | null;
+    // (undocumented)
+    grandTotalInfo?: {
+        type: TotalType;
+        measure: IMeasureDescriptor;
+        attribute: IAttributeDescriptor;
+    };
+    // (undocumented)
+    rowDefinition: ITableRowDefinition;
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    type: "grandTotalSubtotalValue";
+    // (undocumented)
+    value: DataValue;
+}
+
+// @alpha (undocumented)
+export interface ITableMeasureGroupHeaderColumnDefinition {
+    // (undocumented)
+    attributeDescriptors: IAttributeDescriptor[];
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    measureGroupDescriptor: IMeasureGroupDescriptor;
+    // (undocumented)
+    type: "measureGroupHeader";
+}
+
+// @alpha (undocumented)
+export interface ITableMeasureGroupValueColumnDefinition {
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    measureGroupDescriptor: IMeasureGroupDescriptor;
+    // (undocumented)
+    type: "measureGroupValue";
+}
+
+// @alpha (undocumented)
+export interface ITableMeasureHeaderValue {
+    // (undocumented)
+    columnDefinition: ITableColumnDefinition;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    formattedValue: string | null;
+    // (undocumented)
+    rowDefinition: ITableRowDefinition;
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    type: "measureHeader";
+    // (undocumented)
+    value: IResultMeasureHeader;
+}
+
+// @alpha (undocumented)
+export interface ITableMeasureValue {
+    // (undocumented)
+    columnDefinition: ITableValueColumnDefinition | ITableMeasureGroupValueColumnDefinition;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    formattedValue: string | null;
+    // (undocumented)
+    rowDefinition: ITableValueRowDefinition | ITableSubtotalRowDefinition;
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    type: "value";
+    // (undocumented)
+    value: DataValue;
+}
+
+// @alpha (undocumented)
+export interface ITableOverallTotalMeasureValue {
+    // (undocumented)
+    columnDefinition: ITableGrandTotalColumnDefinition;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    formattedValue: string | null;
+    // (undocumented)
+    grandTotalInfo?: {
+        type: TotalType;
+        measure: IMeasureDescriptor;
+        attribute: IAttributeDescriptor;
+    };
+    // (undocumented)
+    rowDefinition: ITableGrandTotalRowDefinition;
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    type: "overallTotalValue";
+    // (undocumented)
+    value: DataValue;
+}
+
+// @alpha (undocumented)
+export type ITableRowDefinition = ITableValueRowDefinition | ITableSubtotalRowDefinition | ITableGrandTotalRowDefinition;
+
+// @alpha (undocumented)
+export interface ITableSubtotalColumnDefinition {
+    // (undocumented)
+    columnHeaderIndex: number;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    columnScope: ITableDataHeaderScope[];
+    // (undocumented)
+    type: "subtotal";
+}
+
+// @alpha (undocumented)
+export interface ITableSubtotalMeasureValue {
+    // (undocumented)
+    columnDefinition: ITableValueColumnDefinition | ITableSubtotalColumnDefinition;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    formattedValue: string | null;
+    // (undocumented)
+    rowDefinition: ITableValueRowDefinition | ITableSubtotalRowDefinition;
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    type: "subtotalValue";
+    // (undocumented)
+    value: DataValue;
+}
+
+// @alpha (undocumented)
+export interface ITableSubtotalRowDefinition {
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    rowScope: ITableDataHeaderScope[];
+    // (undocumented)
+    type: "subtotal";
+}
+
+// @alpha (undocumented)
+export interface ITableTotalHeaderValue {
+    // (undocumented)
+    columnDefinition: ITableColumnDefinition;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    formattedValue: string | null;
+    // (undocumented)
+    rowDefinition: ITableRowDefinition;
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    type: "totalHeader";
+    // (undocumented)
+    value: IResultTotalHeader;
+}
+
+// @alpha (undocumented)
+export interface ITableValueColumnDefinition {
+    // (undocumented)
+    columnHeaderIndex: number;
+    // (undocumented)
+    columnIndex: number;
+    // (undocumented)
+    columnScope: ITableDataHeaderScope[];
+    // (undocumented)
+    type: "value";
+}
+
+// @alpha (undocumented)
+export interface ITableValueRowDefinition {
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    rowScope: ITableDataHeaderScope[];
+    // (undocumented)
+    type: "value";
+}
 
 // @internal (undocumented)
 export interface ITranslations {

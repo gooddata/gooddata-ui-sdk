@@ -18745,6 +18745,147 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: PivotTableNext - single measure 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          "name": "Amount",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: PivotTableNext - single measure with row attribute 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "attr.f_product.product",
+            "name": "Product",
+            "ref": undefined,
+            "uri": "",
+          },
+          "granularity": null,
+          "identifier": "label.f_product.product.name",
+          "localIdentifier": "a_label.f_product.product.name",
+          "name": "Product Name",
+          "primaryLabel": {
+            "identifier": "attr.f_product.product",
+            "type": "displayForm",
+          },
+          "ref": undefined,
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+      "intersectionAttributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "attr.f_product.product",
+              "name": "Product",
+              "ref": undefined,
+              "uri": "",
+            },
+            "granularity": null,
+            "identifier": "label.f_product.product.name",
+            "localIdentifier": "a_label.f_product.product.name",
+            "name": "Product Name",
+            "primaryLabel": {
+              "identifier": "attr.f_product.product",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": [
+    {
+      "attributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "attr.f_product.product",
+              "name": "Product",
+              "ref": undefined,
+              "uri": "",
+            },
+            "granularity": null,
+            "identifier": "label.f_product.product.name",
+            "localIdentifier": "a_label.f_product.product.name",
+            "name": "Product Name",
+            "primaryLabel": {
+              "identifier": "attr.f_product.product",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+      ],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          "name": "Amount",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: PivotTableNext - two measures 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          "name": "Amount",
+          "ref": undefined,
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+          "name": "Won",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets > should provide correct available drill targets for: PyramidChart - arithmetic measures 1`] = `
 {
   "attributes": [],

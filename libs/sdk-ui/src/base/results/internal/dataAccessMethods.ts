@@ -18,6 +18,8 @@ import {
     IMeasureDescriptor,
     IAttributeDescriptor,
 } from "@gooddata/sdk-model";
+import { dataViewToTableData } from "../tableData/dataViewToTableData.js";
+import { ITableData } from "../tableData/interfaces/index.js";
 
 class FilteredIterator<T> implements Iterator<T> {
     private idx = 0;
@@ -139,8 +141,13 @@ class DataAccessMethods implements IDataAccessMethods {
     private readonly dataAccess: DataAccessImpl;
     private readonly seriesCollection: IDataSeriesCollection;
     private readonly slicesCollection: IDataSliceCollection;
+    private tableData: ITableData | undefined;
+    private readonly config: DataAccessConfig;
+    private readonly dataView: IDataView;
 
     constructor(dataView: IDataView, config: DataAccessConfig) {
+        this.config = config;
+        this.dataView = dataView;
         this.dataAccess = new DataAccessImpl(dataView, config);
         this.seriesCollection = new DataSeriesCollection(this.dataAccess);
         this.slicesCollection = new DataSliceCollection(this.dataAccess);
@@ -152,6 +159,13 @@ class DataAccessMethods implements IDataAccessMethods {
 
     public slices(): IDataSliceCollection {
         return this.slicesCollection;
+    }
+
+    public asTable(): ITableData {
+        if (!this.tableData) {
+            this.tableData = dataViewToTableData(this.dataView, this.config);
+        }
+        return this.tableData;
     }
 }
 
