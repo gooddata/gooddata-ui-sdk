@@ -1,10 +1,8 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import React, { memo } from "react";
 import { ICoreChartProps } from "../../interfaces/index.js";
 import { BaseChart } from "../_base/BaseChart.js";
 
-export class CoreDependencyWheelChart extends React.PureComponent<ICoreChartProps, null> {
-    public render() {
-        return <BaseChart type="dependencywheel" {...this.props} />;
-    }
-}
+export const CoreDependencyWheelChart = memo(function CoreDependencyWheelChart(props: ICoreChartProps) {
+    return <BaseChart type="dependencywheel" {...props} />;
+});

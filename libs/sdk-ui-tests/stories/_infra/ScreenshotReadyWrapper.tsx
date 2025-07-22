@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import sumBy from "lodash/sumBy.js";
 
 /**
@@ -15,75 +15,62 @@ export interface IScreenshotReadyWrapperProps {
     children?: React.ReactNode;
 }
 
-export interface IScreenshotReadyWrapperState {
-    ready: boolean;
-}
+function ScreenshotReadyWrapper({
+    resolver,
+    interval = 200,
+    className = "",
+    children,
+}: IScreenshotReadyWrapperProps) {
+    const [ready, setReady] = useState(false);
+    const componentRef = useRef<HTMLDivElement>(null);
+    const timerRef = useRef<any>(null);
 
-export class ScreenshotReadyWrapper extends React.Component<
-    IScreenshotReadyWrapperProps,
-    IScreenshotReadyWrapperState
-> {
-    public static OnReadyClassName = "screenshot-ready-wrapper-done";
-    public static RenderingClassName = "screenshot-ready-wrapper-processing";
-
-    public static defaultProps = {
-        interval: 200,
-    };
-
-    private timer: any = null;
-    private componentRef: any = null;
-
-    constructor(props: IScreenshotReadyWrapperProps) {
-        super(props);
-
-        this.state = { ready: false };
-        this.componentRef = React.createRef();
-    }
-
-    public componentDidMount() {
-        if (this.componentRef) {
-            this.timer = setInterval(this.onTimeTick, this.props.interval);
-        }
-    }
-
-    public componentWillUnmount() {
-        this.clearTimer();
-    }
-
-    public render() {
-        const statusClassName = this.getStatusClassName();
-        const { className = "" } = this.props;
-
-        return (
-            <div ref={this.componentRef} className={`${statusClassName} ${className}`}>
-                {this.props.children}
-            </div>
-        );
-    }
-
-    public onTimeTick = () => {
-        const element = this.componentRef.current;
-        const result = this.props.resolver(element);
-
-        if (result) {
-            this.clearTimer();
-            this.setState({ ready: true });
+    const clearTimer = () => {
+        if (timerRef.current) {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
         }
     };
 
-    private clearTimer() {
-        if (this.timer) {
-            clearInterval(this.timer);
-            this.timer = null;
-        }
-    }
+    const onTimeTick = () => {
+        const element = componentRef.current;
+        if (element) {
+            const result = resolver(element);
 
-    private getStatusClassName() {
-        return this.state.ready
-            ? ScreenshotReadyWrapper.OnReadyClassName
-            : ScreenshotReadyWrapper.RenderingClassName;
-    }
+            if (result) {
+                clearTimer();
+                setReady(true);
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (componentRef.current) {
+            timerRef.current = setInterval(onTimeTick, interval);
+        }
+
+        return () => {
+            clearTimer();
+        };
+    }, [resolver, interval]);
+
+    const getStatusClassName = () => {
+        return ready ? ScreenshotReadyWrapper.OnReadyClassName : ScreenshotReadyWrapper.RenderingClassName;
+    };
+
+    const statusClassName = getStatusClassName();
+
+    return (
+        <div ref={componentRef} className={`${statusClassName} ${className}`}>
+            {children}
+        </div>
+    );
 }
+
+ScreenshotReadyWrapper.OnReadyClassName = "screenshot-ready-wrapper-done";
+ScreenshotReadyWrapper.RenderingClassName = "screenshot-ready-wrapper-processing";
+
+export { ScreenshotReadyWrapper };
 
 //
 // Different ready selector implementations

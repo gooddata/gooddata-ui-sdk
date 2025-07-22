@@ -1,34 +1,32 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 
 import { IRenderChildrenInPortalProps } from "../RenderChildrenInPortal.js";
 
-class MockedRenderChildrenInPortal extends React.Component {
-    portalNode: HTMLElement;
-    constructor(props: IRenderChildrenInPortalProps) {
-        super(props);
+function MockedRenderChildrenInPortal(props: IRenderChildrenInPortalProps) {
+    const portalNodeRef = useRef<HTMLElement>();
 
-        this.portalNode = document.createElement("div");
+    if (!portalNodeRef.current) {
+        portalNodeRef.current = document.createElement("div");
     }
 
-    componentDidMount() {
-        document.body.appendChild(this.portalNode);
-    }
+    useEffect(() => {
+        const portalNode = portalNodeRef.current!;
+        document.body.appendChild(portalNode);
 
-    componentWillUnmount() {
-        this.portalNode.parentNode.removeChild(this.portalNode);
-    }
+        return () => {
+            portalNode.parentNode?.removeChild(portalNode);
+        };
+    }, []);
 
-    render() {
-        return ReactDOM.createPortal(<div className="child-element">Child Element</div>, this.portalNode);
-    }
+    return ReactDOM.createPortal(<div className="child-element">Child Element</div>, portalNodeRef.current);
 }
 
 const renderMockedPortal = () => {
-    return render(<MockedRenderChildrenInPortal />);
+    return render(<MockedRenderChildrenInPortal targetElement={document.body} children={null} />);
 };
 
 describe("RenderChildrenInPortal", () => {

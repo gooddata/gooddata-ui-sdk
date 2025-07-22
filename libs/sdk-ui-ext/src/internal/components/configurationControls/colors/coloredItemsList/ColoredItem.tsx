@@ -1,5 +1,5 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import ColoredItemContent from "./ColoredItemContent.js";
@@ -19,55 +19,47 @@ export interface IColoredItemProps {
     disabled?: boolean;
 }
 
-class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedComponentProps> {
-    public static defaultProps = {
-        showCustomPicker: false,
-        disabled: false,
+const ColoredItem = memo(function ColoredItem(props: IColoredItemProps & WrappedComponentProps) {
+    const { item, colorPalette, showCustomPicker = false, intl, onSelect } = props;
+
+    const renderLoadingItem = () => {
+        return <div className="gd-list-item gd-list-item-not-loaded" />;
     };
 
-    public render() {
-        const { item, colorPalette, showCustomPicker } = this.props;
-        const coloredItem: IColoredItem = item ? item : null;
-
-        if (!coloredItem) {
-            return this.renderLoadingItem();
-        }
-
-        const headerItem: IMappingHeader = coloredItem.mappingHeader;
-        const headerText = this.getText(headerItem);
-
-        return (
-            <ColorDropdown
-                selectedColorItem={coloredItem.colorItem}
-                colorPalette={colorPalette}
-                onColorSelected={this.onColorSelected}
-                showCustomPicker={showCustomPicker}
-            >
-                <ColoredItemContent text={headerText} color={coloredItem.color} />
-            </ColorDropdown>
-        );
-    }
-
-    private renderLoadingItem() {
-        return <div className="gd-list-item gd-list-item-not-loaded" />;
-    }
-
-    private onColorSelected = (color: IColor) => {
-        const { item, onSelect } = this.props;
+    const onColorSelected = (color: IColor) => {
         if (onSelect) {
             onSelect(item, color);
         }
     };
 
-    private getText(mappingHeader: IMappingHeader) {
-        const { intl } = this.props;
+    const getText = (mappingHeader: IMappingHeader) => {
         const headerText = getMappingHeaderFormattedName(mappingHeader) || "";
 
         if (headerText === null || headerText === "") {
             return `(${getTranslation("empty_value", intl)})`;
         }
         return isWaterfallColorHeaderItemKey(headerText) ? getTranslation(headerText, intl) : headerText;
+    };
+
+    const coloredItem: IColoredItem = item ? item : null;
+
+    if (!coloredItem) {
+        return renderLoadingItem();
     }
-}
+
+    const headerItem: IMappingHeader = coloredItem.mappingHeader;
+    const headerText = getText(headerItem);
+
+    return (
+        <ColorDropdown
+            selectedColorItem={coloredItem.colorItem}
+            colorPalette={colorPalette}
+            onColorSelected={onColorSelected}
+            showCustomPicker={showCustomPicker}
+        >
+            <ColoredItemContent text={headerText} color={coloredItem.color} />
+        </ColorDropdown>
+    );
+});
 
 export default injectIntl(ColoredItem);

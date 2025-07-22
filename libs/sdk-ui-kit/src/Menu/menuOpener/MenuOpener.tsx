@@ -17,46 +17,54 @@ export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
     children: React.ReactNode;
 }
 
-export class MenuOpener extends React.Component<IMenuOpenerProps> {
-    public static defaultProps: Pick<
-        IMenuOpenerProps,
-        "openAction" | "alignment" | "spacing" | "offset" | "portalTarget"
-    > = {
-        openAction: "hover",
+const defaultProps: Pick<
+    IMenuOpenerProps,
+    "openAction" | "alignment" | "spacing" | "offset" | "portalTarget"
+> = {
+    openAction: "hover",
 
-        alignment: ["right", "bottom"],
-        spacing: 0,
-        offset: 0,
+    alignment: ["right", "bottom"],
+    spacing: 0,
+    offset: 0,
 
-        portalTarget: typeof document !== "undefined" ? document.querySelector("body") : null,
-    };
+    portalTarget: typeof document !== "undefined" ? document.querySelector("body") : null,
+};
 
-    public render() {
-        const Component = this.getComponentByOpenAction() as React.ElementType;
+export function MenuOpener(props: IMenuOpenerProps) {
+    // Filter out undefined values from props to avoid overriding defaults
+    const definedProps = Object.entries(props).reduce((acc, [key, value]) => {
+        if (value !== undefined) {
+            (acc as any)[key] = value;
+        }
+        return acc;
+    }, {} as Partial<IMenuOpenerProps>);
 
-        return (
-            <Component
-                opened={this.props.opened}
-                onOpenedChange={this.props.onOpenedChange}
-                topLevelMenu={this.props.topLevelMenu}
-                alignment={this.props.alignment}
-                spacing={this.props.spacing}
-                offset={this.props.offset}
-                toggler={this.props.toggler}
-                togglerWrapperClassName={this.props.togglerWrapperClassName}
-                portalTarget={this.props.portalTarget}
-            >
-                <div className="gd-menuOpener">{this.props.children}</div>
-            </Component>
-        );
-    }
+    const propsWithDefaults = { ...defaultProps, ...definedProps } as IMenuOpenerProps & typeof defaultProps;
 
-    private getComponentByOpenAction = () => {
-        switch (this.props.openAction) {
+    const getComponentByOpenAction = () => {
+        switch (propsWithDefaults.openAction) {
             case "click":
                 return MenuOpenedByClick;
             case "hover":
                 return MenuOpenedByHover;
         }
     };
+
+    const Component = getComponentByOpenAction() as React.ElementType;
+
+    return (
+        <Component
+            opened={propsWithDefaults.opened}
+            onOpenedChange={propsWithDefaults.onOpenedChange}
+            topLevelMenu={propsWithDefaults.topLevelMenu}
+            alignment={propsWithDefaults.alignment}
+            spacing={propsWithDefaults.spacing}
+            offset={propsWithDefaults.offset}
+            toggler={propsWithDefaults.toggler}
+            togglerWrapperClassName={propsWithDefaults.togglerWrapperClassName}
+            portalTarget={propsWithDefaults.portalTarget}
+        >
+            <div className="gd-menuOpener">{propsWithDefaults.children}</div>
+        </Component>
+    );
 }

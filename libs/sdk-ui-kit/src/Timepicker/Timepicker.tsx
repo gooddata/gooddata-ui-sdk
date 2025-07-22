@@ -231,12 +231,10 @@ const TimePickerWithIntl = injectIntl(WrappedTimepicker);
 /**
  * @internal
  */
-export class Timepicker extends React.PureComponent<ITimepickerOwnProps> {
-    public render() {
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <TimePickerWithIntl {...this.props} />
-            </IntlWrapper>
-        );
-    }
-}
+export const Timepicker = React.memo(function Timepicker(props: ITimepickerOwnProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <TimePickerWithIntl {...props} />
+        </IntlWrapper>
+    );
+});

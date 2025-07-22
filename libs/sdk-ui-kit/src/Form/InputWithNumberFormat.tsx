@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { memo, useState, useEffect, useRef, useCallback } from "react";
 import memoize from "lodash/memoize.js";
 import { InputPure, InputPureProps } from "./InputPure.js";
 
@@ -83,7 +83,7 @@ const format = (value: any, { thousand, decimal }: Separators) => {
  * @internal
  */
 export interface InputWithNumberFormatOwnProps {
-    separators: Separators;
+    separators?: Separators;
 }
 
 /**
@@ -105,87 +105,83 @@ export type InputWithNumberFormatProps = InputWithNumberFormatOwnProps & InputPu
  * @internal
  */
 
-export class InputWithNumberFormat extends React.PureComponent<
-    InputWithNumberFormatProps,
-    InputWithNumberFormatState
-> {
-    private input: InputPure;
-
-    static defaultProps = {
+export const InputWithNumberFormat = memo(function InputWithNumberFormat(props: InputWithNumberFormatProps) {
+    const {
+        value: propValue,
+        separators = DEFAULT_SEPARATORS,
+        onChange,
+        onFocus,
+        onBlur,
+        ...restProps
+    } = {
         ...InputPure.defaultProps,
-        separators: DEFAULT_SEPARATORS,
+        ...props,
     };
 
-    constructor(props: InputWithNumberFormatProps) {
-        super(props);
+    const [value, setValue] = useState(() => format(propValue, separators));
+    const [isFocused, setIsFocused] = useState(false);
+    const inputRef = useRef<InputPure>(null);
 
-        this.state = {
-            value: format(props.value, props.separators),
-            isFocused: false,
-        };
-    }
-
-    UNSAFE_componentWillReceiveProps({ value: newValue }: InputWithNumberFormatProps): void {
-        const { value, separators } = this.props;
-        const { isFocused } = this.state;
-
-        if (value !== newValue && !isFocused) {
-            this.setState({ value: format(newValue, separators) });
+    useEffect(() => {
+        if (propValue !== undefined && !isFocused) {
+            setValue(format(propValue, separators));
         }
-    }
+    }, [propValue, separators, isFocused]);
 
-    onChange = (value: number, e: React.ChangeEvent<HTMLInputElement>): void => {
-        const { separators, onChange } = this.props;
-
-        if (this.state.value === value) {
-            return;
-        }
-
-        if (!isValid(value, separators)) {
-            this.handleCaretShift(e);
-            return;
-        }
-
-        this.setState({ value });
-        onChange(parse(value, separators));
-    };
-
-    onFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
-        this.setState({ isFocused: true });
-        this.props.onFocus(e);
-    };
-
-    onBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
-        const { separators, onBlur } = this.props;
-        const { value } = this.state;
-
-        this.setState({
-            value: format(parse(value, separators), separators),
-            isFocused: false,
-        });
-        onBlur(e);
-    };
-
-    handleCaretShift(e: React.ChangeEvent<HTMLInputElement>): void {
+    const handleCaretShift = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const caretPosition = e.target.selectionStart - 1;
 
-        this.setState({}, () => {
-            this.input.inputNodeRef.setSelectionRange(caretPosition, caretPosition);
-        });
-    }
+        // Use setTimeout to ensure the state update has been processed
+        setTimeout(() => {
+            if (inputRef.current?.inputNodeRef) {
+                inputRef.current.inputNodeRef.setSelectionRange(caretPosition, caretPosition);
+            }
+        }, 0);
+    }, []);
 
-    render() {
-        return (
-            <InputPure
-                {...this.props}
-                ref={(ref) => {
-                    this.input = ref;
-                }}
-                onFocus={this.onFocus}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-                value={this.state.value}
-            />
-        );
-    }
-}
+    const handleChange = useCallback(
+        (newValue: number, e: React.ChangeEvent<HTMLInputElement>) => {
+            if (value === newValue) {
+                return;
+            }
+
+            if (!isValid(newValue, separators)) {
+                handleCaretShift(e);
+                return;
+            }
+
+            setValue(newValue);
+            onChange(parse(newValue, separators));
+        },
+        [value, separators, onChange, handleCaretShift],
+    );
+
+    const handleFocus = useCallback(
+        (e: React.FocusEvent<HTMLInputElement>) => {
+            setIsFocused(true);
+            onFocus(e);
+        },
+        [onFocus],
+    );
+
+    const handleBlur = useCallback(
+        (e: React.FocusEvent<HTMLInputElement>) => {
+            const formattedValue = format(parse(value, separators), separators);
+            setValue(formattedValue);
+            setIsFocused(false);
+            onBlur(e);
+        },
+        [value, separators, onBlur],
+    );
+
+    return (
+        <InputPure
+            {...restProps}
+            ref={inputRef}
+            onFocus={handleFocus}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={value}
+        />
+    );
+});

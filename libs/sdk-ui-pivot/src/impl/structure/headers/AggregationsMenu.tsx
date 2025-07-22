@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cx from "classnames";
 import React from "react";
 import { IntlShape } from "react-intl";
@@ -71,82 +71,15 @@ const MenuToggler = () => {
     );
 };
 
-export default class AggregationsMenu extends React.Component<IAggregationsMenuProps> {
-    public render() {
-        const { intl, colId, getTableDescriptor, isMenuOpened, onMenuOpenedChange, showColumnsSubMenu } =
-            this.props;
+function AggregationsMenu(props: IAggregationsMenuProps) {
+    const { intl, colId, getTableDescriptor, isMenuOpened, onMenuOpenedChange, showColumnsSubMenu } = props;
 
-        if (!colId) {
-            return null;
-        }
-
-        // Because of Ag-grid react wrapper does not rerender the component when we pass
-        // new gridOptions we need to pull the data manually on each render
-        const tableDescriptor = getTableDescriptor();
-
-        const canShowMenu = tableDescriptor.canTableHaveColumnTotals() && showColumnsSubMenu;
-
-        if (!tableDescriptor.canTableHaveRowTotals() && !canShowMenu) {
-            return null;
-        }
-
-        const col = tableDescriptor.getCol(colId);
-
-        if (isSliceCol(col) || isRootCol(col)) {
-            // aggregation menu should not appear on headers of the slicing columns or on the
-            // very to header which describes table grouping
-            return null;
-        }
-
-        // Note: for measures in rows, where the column is of type isSliceMeasureCol()
-        // we have all measures associated with the menu. This is overriden in the individual
-        // cell renderers for particular measure with specific onMenuAggregationClick fn.
-        const measures = isSeriesCol(col)
-            ? [col.seriesDescriptor.measureDescriptor]
-            : tableDescriptor.getMeasures();
-        const measureLocalIdentifiers = measures.map((m) => m.measureHeaderItem.localIdentifier);
-        const useGrouped = isScopeCol(col) || isSliceMeasureCol(col);
-        const columnTotals = this.getColumnTotals(
-            measureLocalIdentifiers,
-            useGrouped,
-            isSliceMeasureCol(col),
-        );
-        const rowTotals = this.getRowTotals(measureLocalIdentifiers, useGrouped, isSliceMeasureCol(col));
-        const rowAttributeDescriptors = tableDescriptor.getSlicingAttributes();
-        const columnAttributeDescriptors = tableDescriptor.getScopingAttributes();
-
-        return (
-            <Menu
-                toggler={<MenuToggler />}
-                togglerWrapperClassName={this.getTogglerClassNames()}
-                opened={isMenuOpened}
-                onOpenedChange={onMenuOpenedChange}
-                openAction={"click"}
-                closeOnScroll={true}
-            >
-                <ItemsWrapper>
-                    <div className="s-table-header-menu-content">
-                        <Header>{intl.formatMessage({ id: "visualizations.menu.aggregations" })}</Header>
-                        {this.renderMainMenuItems(
-                            columnTotals,
-                            rowTotals,
-                            measureLocalIdentifiers,
-                            rowAttributeDescriptors,
-                            columnAttributeDescriptors,
-                            showColumnsSubMenu,
-                        )}
-                    </div>
-                </ItemsWrapper>
-            </Menu>
-        );
-    }
-
-    private getColumnTotals(
+    const getColumnTotals = (
         measureLocalIdentifiers: string[],
         isGroupedHeader: boolean,
         ignoreMeasures: boolean,
-    ): IColumnTotal[] {
-        const columnTotals = this.props.getColumnTotals?.() ?? [];
+    ): IColumnTotal[] => {
+        const columnTotals = props.getColumnTotals?.() ?? [];
 
         if (isGroupedHeader) {
             return menuHelper.getTotalsForAttributeHeader(
@@ -157,40 +90,40 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         }
 
         return menuHelper.getTotalsForMeasureHeader(columnTotals, measureLocalIdentifiers[0]);
-    }
+    };
 
-    private getRowTotals(
+    const getRowTotals = (
         measureLocalIdentifiers: string[],
         isGroupedHeader: boolean,
         ignoreMeasures: boolean,
-    ): IColumnTotal[] {
-        const rowTotals = this.props.getRowTotals?.() ?? [];
+    ): IColumnTotal[] => {
+        const rowTotals = props.getRowTotals?.() ?? [];
 
         if (isGroupedHeader) {
             return menuHelper.getTotalsForAttributeHeader(rowTotals, measureLocalIdentifiers, ignoreMeasures);
         }
 
         return menuHelper.getTotalsForMeasureHeader(rowTotals, measureLocalIdentifiers[0]);
-    }
+    };
 
-    private getTogglerClassNames() {
-        const { isMenuButtonVisible, isMenuOpened } = this.props;
+    const getTogglerClassNames = () => {
+        const { isMenuButtonVisible, isMenuOpened } = props;
 
         return cx("s-table-header-menu", "gd-pivot-table-header-menu", {
             "gd-pivot-table-header-menu--show": isMenuButtonVisible,
             "gd-pivot-table-header-menu--hide": !isMenuButtonVisible,
             "gd-pivot-table-header-menu--open": isMenuOpened,
         });
-    }
+    };
 
-    private renderMenuItemContent(
+    const renderMenuItemContent = (
         totalType: TotalType,
         isSelected: boolean,
         hasSubMenu = false,
         disabled: boolean,
         tooltipMessage?: string,
-    ) {
-        const { intl } = this.props;
+    ) => {
+        const { intl } = props;
         const itemElement = (
             <Item checked={isSelected} subMenu={hasSubMenu} disabled={disabled}>
                 <div className="gd-aggregation-menu-item-inner s-menu-aggregation-inner">
@@ -208,37 +141,37 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         ) : (
             itemElement
         );
-    }
+    };
 
-    private getItemClassNames(totalType: TotalType): string {
+    const getItemClassNames = (totalType: TotalType): string => {
         return cx("gd-aggregation-menu-item", "s-menu-aggregation", `s-menu-aggregation-${totalType}`);
-    }
+    };
 
-    private isTableFilteredByMeasureValue(): boolean {
-        const definition = this.props.getExecutionDefinition();
+    const isTableFilteredByMeasureValue = (): boolean => {
+        const definition = props.getExecutionDefinition();
 
         // ignore measure value filters without condition, these are not yet specified by the user and are not sent as part of the execution
         return definition.filters.some(
             (filter) => isMeasureValueFilter(filter) && !!measureValueFilterCondition(filter),
         );
-    }
+    };
 
-    private isTableFilteredByRankingFilter(): boolean {
-        const definition = this.props.getExecutionDefinition();
+    const isTableFilteredByRankingFilter = (): boolean => {
+        const definition = props.getExecutionDefinition();
         return definition.filters.some(isRankingFilter);
-    }
+    };
 
-    private renderMainMenuItems(
+    const renderMainMenuItems = (
         columnTotals: IColumnTotal[],
         rowTotals: IColumnTotal[],
         measureLocalIdentifiers: string[],
         rowAttributeDescriptors: IAttributeDescriptor[],
         columnAttributeDescriptors: IAttributeDescriptor[],
         showColumnsSubMenu: boolean,
-    ) {
-        const { intl, onAggregationSelect, showSubmenu, availableTotalTypes } = this.props;
-        const isFilteredByMeasureValue = this.isTableFilteredByMeasureValue();
-        const isFilteredByRankingFilter = this.isTableFilteredByRankingFilter();
+    ) => {
+        const { intl, onAggregationSelect, showSubmenu, availableTotalTypes } = props;
+        const isFilteredByMeasureValue = isTableFilteredByMeasureValue();
+        const isFilteredByRankingFilter = isTableFilteredByRankingFilter();
         const rowAttributeIdentifiers = getAttributeDescriptorsLocalId(rowAttributeDescriptors);
         const columnAttributeIdentifiers = getAttributeDescriptorsLocalId(columnAttributeDescriptors);
 
@@ -250,14 +183,14 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                 columnTotals,
                 rowTotals,
             );
-            const itemClassNames = this.getItemClassNames(totalType);
+            const itemClassNames = getItemClassNames(totalType);
 
             const disabled = totalType === "nat" && (isFilteredByMeasureValue || isFilteredByRankingFilter);
             const cause = isFilteredByMeasureValue ? messages[`disabled.mvf`] : messages[`disabled.ranking`];
             const tooltipMessage = disabled ? intl.formatMessage(cause) : undefined;
 
             const renderSubmenu = !disabled && showSubmenu;
-            const toggler = this.renderMenuItemContent(
+            const toggler = renderMenuItemContent(
                 totalType,
                 isSelected,
                 renderSubmenu,
@@ -286,5 +219,67 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                 </div>
             );
         });
+    };
+
+    if (!colId) {
+        return null;
     }
+
+    // Because of Ag-grid react wrapper does not rerender the component when we pass
+    // new gridOptions we need to pull the data manually on each render
+    const tableDescriptor = getTableDescriptor();
+
+    const canShowMenu = tableDescriptor.canTableHaveColumnTotals() && showColumnsSubMenu;
+
+    if (!tableDescriptor.canTableHaveRowTotals() && !canShowMenu) {
+        return null;
+    }
+
+    const col = tableDescriptor.getCol(colId);
+
+    if (isSliceCol(col) || isRootCol(col)) {
+        // aggregation menu should not appear on headers of the slicing columns or on the
+        // very to header which describes table grouping
+        return null;
+    }
+
+    // Note: for measures in rows, where the column is of type isSliceMeasureCol()
+    // we have all measures associated with the menu. This is overriden in the individual
+    // cell renderers for particular measure with specific onMenuAggregationClick fn.
+    const measures = isSeriesCol(col)
+        ? [col.seriesDescriptor.measureDescriptor]
+        : tableDescriptor.getMeasures();
+    const measureLocalIdentifiers = measures.map((m) => m.measureHeaderItem.localIdentifier);
+    const useGrouped = isScopeCol(col) || isSliceMeasureCol(col);
+    const columnTotals = getColumnTotals(measureLocalIdentifiers, useGrouped, isSliceMeasureCol(col));
+    const rowTotals = getRowTotals(measureLocalIdentifiers, useGrouped, isSliceMeasureCol(col));
+    const rowAttributeDescriptors = tableDescriptor.getSlicingAttributes();
+    const columnAttributeDescriptors = tableDescriptor.getScopingAttributes();
+
+    return (
+        <Menu
+            toggler={<MenuToggler />}
+            togglerWrapperClassName={getTogglerClassNames()}
+            opened={isMenuOpened}
+            onOpenedChange={onMenuOpenedChange}
+            openAction={"click"}
+            closeOnScroll={true}
+        >
+            <ItemsWrapper>
+                <div className="s-table-header-menu-content">
+                    <Header>{intl.formatMessage({ id: "visualizations.menu.aggregations" })}</Header>
+                    {renderMainMenuItems(
+                        columnTotals,
+                        rowTotals,
+                        measureLocalIdentifiers,
+                        rowAttributeDescriptors,
+                        columnAttributeDescriptors,
+                        showColumnsSubMenu,
+                    )}
+                </div>
+            </ItemsWrapper>
+        </Menu>
+    );
 }
+
+export default AggregationsMenu;

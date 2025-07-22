@@ -10,30 +10,27 @@ export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
     menu?: () => IMenu;
 }
 
-class ColumnTotalHeader extends React.Component<IColumnHeaderProps> {
-    public render() {
-        const { displayName, column } = this.props;
-        const col = this.getColDescriptor();
-        const textAlign = isSliceCol(col) || isEmptyScopeCol(col) ? ALIGN_LEFT : ALIGN_RIGHT;
+export default function ColumnTotalHeader(props: IColumnHeaderProps) {
+    const getColDescriptor = () => {
+        return props.getTableDescriptor().getCol(props.column);
+    };
 
-        return (
-            <HeaderCell
-                className="gd-pivot-table-column-total-header s-pivot-table-column-total-header"
-                textAlign={textAlign}
-                displayText={displayName}
-                enableSorting={false}
-                colId={column.getColDef().field}
-                getTableDescriptor={this.props.getTableDescriptor}
-                getExecutionDefinition={this.props.getExecutionDefinition}
-                getColumnTotals={this.props.getColumnTotals}
-                getRowTotals={this.props.getRowTotals}
-                intl={this.props.intl}
-            />
-        );
-    }
-    private getColDescriptor() {
-        return this.props.getTableDescriptor().getCol(this.props.column);
-    }
+    const { displayName, column } = props;
+    const col = getColDescriptor();
+    const textAlign = isSliceCol(col) || isEmptyScopeCol(col) ? ALIGN_LEFT : ALIGN_RIGHT;
+
+    return (
+        <HeaderCell
+            className="gd-pivot-table-column-total-header s-pivot-table-column-total-header"
+            textAlign={textAlign}
+            displayText={displayName}
+            enableSorting={false}
+            colId={column.getColDef().field}
+            getTableDescriptor={props.getTableDescriptor}
+            getExecutionDefinition={props.getExecutionDefinition}
+            getColumnTotals={props.getColumnTotals}
+            getRowTotals={props.getRowTotals}
+            intl={props.intl}
+        />
+    );
 }
-
-export default ColumnTotalHeader;
