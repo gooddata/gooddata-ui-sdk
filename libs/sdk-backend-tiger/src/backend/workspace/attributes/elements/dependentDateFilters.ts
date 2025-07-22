@@ -1,9 +1,10 @@
-// (C) 2024 GoodData Corporation
-import { DependsOnDateFilter } from "@gooddata/api-client-tiger";
+// (C) 2024-2025 GoodData Corporation
+import { AfmObjectIdentifierDataset, DependsOnDateFilter } from "@gooddata/api-client-tiger";
 import {
     DateAttributeGranularity,
     IAbsoluteDateFilter,
     IRelativeDateFilter,
+    isRelativeBoundedDateFilter,
     isRelativeDateFilter,
     isUriRef,
 } from "@gooddata/sdk-model";
@@ -23,22 +24,33 @@ export function mapDashboardDateFilterToDependentDateFilter(
 
 function newRelativeDependentDateFilter(dateFilter: IRelativeDateFilter): DependsOnDateFilter {
     const localIdentifier = dateFilter.relativeDateFilter.dataSet;
-
     invariant(!isUriRef(localIdentifier));
+
+    const dataset: AfmObjectIdentifierDataset = {
+        identifier: {
+            id: localIdentifier.identifier,
+            type: "dataset",
+        },
+    };
+
+    const boundedFilter = isRelativeBoundedDateFilter(dateFilter)
+        ? {
+              ...dateFilter.relativeDateFilter.boundedFilter,
+              granularity: toTigerGranularity(dateFilter.relativeDateFilter.boundedFilter.granularity),
+              dataset,
+          }
+        : undefined;
+
     return {
         dateFilter: {
             relativeDateFilter: {
-                dataset: {
-                    identifier: {
-                        id: localIdentifier.identifier,
-                        type: "dataset",
-                    },
-                },
+                dataset,
                 granularity: toTigerGranularity(
                     dateFilter.relativeDateFilter.granularity as DateAttributeGranularity,
                 ),
                 from: dateFilter.relativeDateFilter.from,
                 to: dateFilter.relativeDateFilter.to,
+                ...(boundedFilter ? { boundedFilter } : {}),
             },
         },
     };

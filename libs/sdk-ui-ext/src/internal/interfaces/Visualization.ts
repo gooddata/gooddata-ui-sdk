@@ -15,6 +15,8 @@ import {
     LocalIdRef,
     ISortItem,
     ISeparators,
+    IUpperBoundedFilter,
+    ILowerBoundedFilter,
 } from "@gooddata/sdk-model";
 import {
     ChartType,
@@ -170,6 +172,7 @@ export interface IDateFilter {
         interval: [string, string] | [number, number];
         name: string;
         type: "relative" | "absolute";
+        boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     };
 }
 
