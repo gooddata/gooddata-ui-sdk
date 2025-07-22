@@ -728,11 +728,6 @@ export interface ISettings {
     productionFeatures?: IProductionFeaturesConfig;
 
     /**
-     * Enable production features rollout
-     */
-    enableProductionFeaturesRollout?: boolean;
-
-    /**
      * Enable new scheduled export
      */
     enableNewScheduledExport?: boolean;
