@@ -64,5 +64,5 @@ docker run --rm --entrypoint '' \
 -e HOST \
 -e TIGER_API_TOKEN \
 -e AUTH_TOKEN \
--w $DOCKER_CURRENT_DIR -v $ROOT_DIR:/workspace $CYPRESS_IMAGE \
+-w $DOCKER_CURRENT_DIR -v $RESOLVED_ROOT_DIR:/workspace $CYPRESS_IMAGE \
 sh -c "./scripts/run_boiler_app.sh" || exit 1
