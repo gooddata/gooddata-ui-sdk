@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui",
-    "version": "10.35.0-alpha.48",
+    "version": "10.35.0-alpha.49",
     "description": "GoodData.UI SDK - Core",
     "repository": {
         "type": "git",
