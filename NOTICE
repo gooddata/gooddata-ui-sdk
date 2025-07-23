@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-7-22
+Date generated: 2025-7-23
 
-Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
+Revision ID: d5a90c8abf7ea2e0b6fb31d6c9f2861e8f740856
 
 ================================================================================
 ================================================================================
@@ -36,28 +36,34 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - @babel/generator (7.26.10) [MIT]
 - @babel/generator (7.27.1) [MIT]
 - @babel/helper-annotate-as-pure (7.22.5) [MIT]
+- @babel/helper-annotate-as-pure (7.27.1) [MIT]
 - @babel/helper-builder-binary-assignment-operator-visitor (7.22.15) [MIT]
 - @babel/helper-compilation-targets (7.23.6) [MIT]
 - @babel/helper-compilation-targets (7.26.5) [MIT]
 - @babel/helper-create-class-features-plugin (7.23.6) [MIT]
+- @babel/helper-create-class-features-plugin (7.27.1) [MIT]
 - @babel/helper-create-regexp-features-plugin (7.22.15) [MIT]
 - @babel/helper-define-polyfill-provider (0.4.4) [MIT]
 - @babel/helper-environment-visitor (7.22.20) [MIT]
 - @babel/helper-function-name (7.23.0) [MIT]
 - @babel/helper-hoist-variables (7.22.5) [MIT]
 - @babel/helper-member-expression-to-functions (7.23.0) [MIT]
+- @babel/helper-member-expression-to-functions (7.27.1) [MIT]
 - @babel/helper-module-imports (7.22.15) [MIT]
 - @babel/helper-module-imports (7.25.9) [MIT]
 - @babel/helper-module-imports (7.27.1) [MIT]
 - @babel/helper-module-transforms (7.23.3) [MIT]
 - @babel/helper-module-transforms (7.26.0) [MIT]
 - @babel/helper-optimise-call-expression (7.22.5) [MIT]
+- @babel/helper-optimise-call-expression (7.27.1) [MIT]
 - @babel/helper-plugin-utils (7.22.5) [MIT]
 - @babel/helper-plugin-utils (7.27.1) [MIT]
 - @babel/helper-remap-async-to-generator (7.22.20) [MIT]
 - @babel/helper-replace-supers (7.22.20) [MIT]
+- @babel/helper-replace-supers (7.27.1) [MIT]
 - @babel/helper-simple-access (7.22.5) [MIT]
 - @babel/helper-skip-transparent-expression-wrappers (7.22.5) [MIT]
+- @babel/helper-skip-transparent-expression-wrappers (7.27.1) [MIT]
 - @babel/helper-split-export-declaration (7.22.6) [MIT]
 - @babel/helper-string-parser (7.23.4) [MIT]
 - @babel/helper-string-parser (7.24.8) [MIT]
@@ -101,7 +107,7 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - @babel/plugin-transform-async-to-generator (7.23.3) [MIT]
 - @babel/plugin-transform-block-scoped-functions (7.23.3) [MIT]
 - @babel/plugin-transform-block-scoping (7.23.4) [MIT]
-- @babel/plugin-transform-class-properties (7.23.3) [MIT]
+- @babel/plugin-transform-class-properties (7.27.1) [MIT]
 - @babel/plugin-transform-class-static-block (7.23.4) [MIT]
 - @babel/plugin-transform-classes (7.23.5) [MIT]
 - @babel/plugin-transform-computed-properties (7.23.3) [MIT]
@@ -192,20 +198,21 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - @floating-ui/react-dom (2.1.2) [MIT]
 - @floating-ui/react-dom (2.1.3) [MIT]
 - @floating-ui/utils (0.2.9) [MIT]
-- @formatjs/cli-lib (6.3.3) [MIT]
-- @formatjs/ecma402-abstract (1.18.0) [MIT]
+- @formatjs/cli-lib (6.6.6) [MIT]
 - @formatjs/ecma402-abstract (2.2.4) [MIT]
+- @formatjs/ecma402-abstract (2.3.4) [MIT]
 - @formatjs/fast-memoize (2.2.3) [MIT]
-- @formatjs/icu-messageformat-parser (2.7.3) [MIT]
+- @formatjs/fast-memoize (2.2.7) [MIT]
+- @formatjs/icu-messageformat-parser (2.11.2) [MIT]
 - @formatjs/icu-messageformat-parser (2.9.4) [MIT]
-- @formatjs/icu-skeleton-parser (1.7.0) [MIT]
+- @formatjs/icu-skeleton-parser (1.8.14) [MIT]
 - @formatjs/icu-skeleton-parser (1.8.8) [MIT]
 - @formatjs/intl (2.10.15) [MIT]
 - @formatjs/intl-displaynames (6.8.5) [MIT]
 - @formatjs/intl-listformat (7.7.5) [MIT]
-- @formatjs/intl-localematcher (0.5.2) [MIT]
 - @formatjs/intl-localematcher (0.5.8) [MIT]
-- @formatjs/ts-transformer (3.13.9) [MIT]
+- @formatjs/intl-localematcher (0.6.1) [MIT]
+- @formatjs/ts-transformer (3.13.23) [MIT]
 - @gooddata/number-formatter (1.0.6) [GOODDATA LICENSE FOR GOODDATA FORMATTER, Python-2.0, PSF-2.0, MIT, mit-nagy, ISC, CNRI-Python, BSD-2-Clause, BSD-3-Clause, Apache-2.0]
 - @html-validate/stylish (4.2.0) [MIT]
 - @isaacs/cliui (8.0.2) [ISC]
@@ -273,6 +280,7 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - @types/eslint (8.44.9) [MIT]
 - @types/eslint-scope (3.7.7) [MIT]
 - @types/estree (1.0.5) [MIT]
+- @types/estree (1.0.8) [MIT]
 - @types/estree-jsx (1.0.3) [MIT]
 - @types/express (4.17.21) [MIT]
 - @types/express-serve-static-core (4.17.41) [MIT]
@@ -282,12 +290,11 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - @types/http-errors (2.0.4) [MIT]
 - @types/http-proxy (1.17.14) [MIT]
 - @types/json-schema (7.0.15) [MIT]
-- @types/json-stable-stringify (1.0.36) [MIT]
+- @types/json-stable-stringify (1.2.0) [MIT]
 - @types/mdast (4.0.4) [MIT]
 - @types/mime (1.3.5) [MIT]
 - @types/mime (3.0.4) [MIT]
 - @types/ms (0.7.34) [MIT]
-- @types/node (17.0.45) [MIT]
 - @types/node (22.16.4) [MIT]
 - @types/node-forge (1.3.10) [MIT]
 - @types/parse-json (4.0.2) [MIT]
@@ -390,10 +397,9 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - bytes (3.1.2) [MIT]
 - cac (6.7.14) [MIT]
 - cache-parser (1.2.5) [MIT]
-- call-bind (1.0.5) [MIT]
-- call-bind-apply-helpers (1.0.1) [MIT]
+- call-bind (1.0.8) [MIT]
 - call-bind-apply-helpers (1.0.2) [MIT]
-- call-bound (1.0.3) [MIT]
+- call-bound (1.0.4) [MIT]
 - callsites (3.1.0) [MIT]
 - caniuse-lite (1.0.30001684) [CC-BY-4.0]
 - ccount (2.0.1) [MIT]
@@ -447,7 +453,7 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - cosmiconfig (7.1.0) [MIT]
 - crelt (1.0.6) [MIT]
 - cron-parser (5.1.1) [MIT]
-- cross-spawn (7.0.3) [MIT]
+- cross-spawn (7.0.6) [MIT]
 - css-mediaquery (0.1.2) [BSD-3-Clause]
 - csscolorparser (1.0.3) [MIT]
 - cssstyle (4.3.0) [MIT]
@@ -469,7 +475,7 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - default-browser-id (5.0.0) [MIT]
 - default-import (1.1.5) [MIT]
 - defaults (1.0.4) [MIT]
-- define-data-property (1.1.1) [MIT]
+- define-data-property (1.1.4) [MIT]
 - define-lazy-prop (3.0.0) [MIT]
 - delayed-stream (1.0.0) [MIT]
 - depd (1.1.2) [MIT]
@@ -531,7 +537,6 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - external-editor (3.1.0) [MIT]
 - fast-deep-equal (3.1.3) [MIT]
 - fast-defer (1.1.8) [MIT]
-- fast-glob (3.3.2) [MIT]
 - fast-glob (3.3.3) [MIT]
 - fast-json-stable-stringify (2.1.0) [MIT]
 - fastest-levenshtein (1.0.16) [MIT]
@@ -558,8 +563,6 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - function-bind (1.1.2) [MIT]
 - gensync (1.0.0-beta.2) [MIT]
 - geojson-vt (3.2.1) [ISC]
-- get-intrinsic (1.2.2) [MIT]
-- get-intrinsic (1.2.7) [MIT]
 - get-intrinsic (1.3.0) [MIT]
 - get-node-dimensions (1.2.1) [MIT]
 - get-own-enumerable-property-symbols (3.0.2) [ISC]
@@ -579,13 +582,11 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - gzip-size (6.0.0) [MIT]
 - handle-thing (2.0.1) [MIT]
 - has-flag (4.0.0) [MIT]
-- has-property-descriptors (1.0.1) [MIT]
-- has-proto (1.0.1) [MIT]
+- has-property-descriptors (1.0.2) [MIT]
 - has-symbols (1.0.3) [MIT]
 - has-symbols (1.1.0) [MIT]
 - has-tostringtag (1.0.0) [MIT]
 - has-tostringtag (1.0.2) [MIT]
-- hasown (2.0.0) [MIT]
 - hasown (2.0.2) [MIT]
 - hast-util-to-jsx-runtime (2.3.0) [MIT]
 - hast-util-whitespace (3.0.0) [MIT]
@@ -671,7 +672,7 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - json-parse-even-better-errors (2.3.1) [MIT]
 - json-schema-traverse (0.4.1) [MIT]
 - json-schema-traverse (1.0.0) [MIT]
-- json-stable-stringify (1.1.0) [MIT]
+- json-stable-stringify (1.3.0) [MIT]
 - json5 (2.2.3) [MIT]
 - jsonfile (6.1.0) [MIT]
 - jsonify (0.0.1) [public-domain]
@@ -692,9 +693,8 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - loose-envify (1.4.0) [MIT]
 - loud-rejection (2.2.0) [MIT]
 - loupe (3.1.4) [MIT]
-- lru-cache (10.1.0) [ISC]
+- lru-cache (11.1.0) [ISC]
 - lru-cache (10.4.3) [ISC]
-- lru-cache (11.0.2) [ISC]
 - lru-cache (5.1.1) [ISC]
 - lru-cache (6.0.0) [ISC]
 - luxon (3.6.1) [MIT]
@@ -742,7 +742,6 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - micromark-util-subtokenize (2.0.0) [MIT]
 - micromark-util-symbol (2.0.0) [MIT]
 - micromark-util-types (2.0.0) [MIT]
-- micromatch (4.0.5) [MIT]
 - micromatch (4.0.8) [MIT]
 - mime (1.6.0) [MIT]
 - mime-db (1.52.0) [MIT]
@@ -918,7 +917,7 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - serialize-javascript (6.0.1) [BSD-3-Clause]
 - serve-index (1.9.1) [MIT]
 - serve-static (1.16.2) [MIT]
-- set-function-length (1.1.1) [MIT]
+- set-function-length (1.2.2) [MIT]
 - setprototypeof (1.1.0) [ISC]
 - setprototypeof (1.2.0) [ISC]
 - shallow-clone (3.0.1) [MIT]
@@ -1003,7 +1002,6 @@ Revision ID: e5664bbf027f2756d7cd07a47115e1930454126a
 - trough (2.1.0) [MIT]
 - ts-invariant (0.7.5) [MIT]
 - ts-morph (26.0.0) [MIT, 0BSD]
-- tslib (2.6.2) [ISC]
 - tslib (2.8.1) [ISC]
 - type-fest (0.21.3) [Multi-license: MIT OR CC0-1.0]
 - type-is (1.6.18) [MIT]
@@ -1778,6 +1776,49 @@ Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gm
 Package Download URL: https://registry.npmjs.org/@babel/helper-annotate-as-pure/-/helper-annotate-as-pure-7.22.5.tgz
 
 --------------------------------------------------------------------------------
+Package Title: @babel/helper-annotate-as-pure (7.27.1)
+
+Package Locator: npm+@babel/helper-annotate-as-pure$7.27.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2014-present Sebastian McKenzie and other contributors
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@babel/helper-annotate-as-pure/-/helper-annotate-as-pure-7.27.1.tgz
+
+--------------------------------------------------------------------------------
 Package Title: @babel/helper-builder-binary-assignment-operator-visitor (7.22.15)
 
 Package Locator: npm+@babel/helper-builder-binary-assignment-operator-visitor$7.22.15
@@ -1948,6 +1989,49 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gmail.com
 
 Package Download URL: https://registry.npmjs.org/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.23.6.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @babel/helper-create-class-features-plugin (7.27.1)
+
+Package Locator: npm+@babel/helper-create-class-features-plugin$7.27.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2014-present Sebastian McKenzie and other contributors
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.27.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @babel/helper-create-regexp-features-plugin (7.22.15)
@@ -2208,6 +2292,49 @@ Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gm
 Package Download URL: https://registry.npmjs.org/@babel/helper-member-expression-to-functions/-/helper-member-expression-to-functions-7.23.0.tgz
 
 --------------------------------------------------------------------------------
+Package Title: @babel/helper-member-expression-to-functions (7.27.1)
+
+Package Locator: npm+@babel/helper-member-expression-to-functions$7.27.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2014-present Sebastian McKenzie and other contributors
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@babel/helper-member-expression-to-functions/-/helper-member-expression-to-functions-7.27.1.tgz
+
+--------------------------------------------------------------------------------
 Package Title: @babel/helper-module-imports (7.22.15)
 
 Package Locator: npm+@babel/helper-module-imports$7.22.15
@@ -2466,6 +2593,49 @@ Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gm
 Package Download URL: https://registry.npmjs.org/@babel/helper-optimise-call-expression/-/helper-optimise-call-expression-7.22.5.tgz
 
 --------------------------------------------------------------------------------
+Package Title: @babel/helper-optimise-call-expression (7.27.1)
+
+Package Locator: npm+@babel/helper-optimise-call-expression$7.27.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2014-present Sebastian McKenzie and other contributors
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@babel/helper-optimise-call-expression/-/helper-optimise-call-expression-7.27.1.tgz
+
+--------------------------------------------------------------------------------
 Package Title: @babel/helper-plugin-utils (7.22.5)
 
 Package Locator: npm+@babel/helper-plugin-utils$7.22.5
@@ -2638,6 +2808,49 @@ Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gm
 Package Download URL: https://registry.npmjs.org/@babel/helper-replace-supers/-/helper-replace-supers-7.22.20.tgz
 
 --------------------------------------------------------------------------------
+Package Title: @babel/helper-replace-supers (7.27.1)
+
+Package Locator: npm+@babel/helper-replace-supers$7.27.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2014-present Sebastian McKenzie and other contributors
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@babel/helper-replace-supers/-/helper-replace-supers-7.27.1.tgz
+
+--------------------------------------------------------------------------------
 Package Title: @babel/helper-simple-access (7.22.5)
 
 Package Locator: npm+@babel/helper-simple-access$7.22.5
@@ -2722,6 +2935,49 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gmail.com
 
 Package Download URL: https://registry.npmjs.org/@babel/helper-skip-transparent-expression-wrappers/-/helper-skip-transparent-expression-wrappers-7.22.5.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @babel/helper-skip-transparent-expression-wrappers (7.27.1)
+
+Package Locator: npm+@babel/helper-skip-transparent-expression-wrappers$7.27.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2014-present Sebastian McKenzie and other contributors
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@babel/helper-skip-transparent-expression-wrappers/-/helper-skip-transparent-expression-wrappers-7.27.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @babel/helper-split-export-declaration (7.22.6)
@@ -4567,9 +4823,9 @@ Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gm
 Package Download URL: https://registry.npmjs.org/@babel/plugin-transform-block-scoping/-/plugin-transform-block-scoping-7.23.4.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @babel/plugin-transform-class-properties (7.23.3)
+Package Title: @babel/plugin-transform-class-properties (7.27.1)
 
-Package Locator: npm+@babel/plugin-transform-class-properties$7.23.3
+Package Locator: npm+@babel/plugin-transform-class-properties$7.27.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4607,7 +4863,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Authors: hi@henryzoo.com, bng412@gmail.com, nicolo.ribaudo@gmail.com, jlhwung@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@babel/plugin-transform-class-properties/-/plugin-transform-class-properties-7.23.3.tgz
+Package Download URL: https://registry.npmjs.org/@babel/plugin-transform-class-properties/-/plugin-transform-class-properties-7.27.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @babel/plugin-transform-class-static-block (7.23.4)
@@ -8434,9 +8690,9 @@ Authors: federico.zivolo@gmail.com, cc.glows@gmail.com
 Package Download URL: https://registry.npmjs.org/@floating-ui/utils/-/utils-0.2.9.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/cli-lib (6.3.3)
+Package Title: @formatjs/cli-lib (6.6.6)
 
-Package Locator: npm+@formatjs/cli-lib$6.3.3
+Package Locator: npm+@formatjs/cli-lib$6.6.6
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -8461,37 +8717,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@formatjs/cli-lib/-/cli-lib-6.3.3.tgz
-
---------------------------------------------------------------------------------
-Package Title: @formatjs/ecma402-abstract (1.18.0)
-
-Package Locator: npm+@formatjs/ecma402-abstract$1.18.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) 2023 FormatJS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
-
-Package Download URL: https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-1.18.0.tgz
+Package Download URL: https://registry.npmjs.org/@formatjs/cli-lib/-/cli-lib-6.6.6.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @formatjs/ecma402-abstract (2.2.4)
@@ -8524,6 +8750,36 @@ Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 Package Download URL: https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-2.2.4.tgz
 
 --------------------------------------------------------------------------------
+Package Title: @formatjs/ecma402-abstract (2.3.4)
+
+Package Locator: npm+@formatjs/ecma402-abstract$2.3.4
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2023 FormatJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-2.3.4.tgz
+
+--------------------------------------------------------------------------------
 Package Title: @formatjs/fast-memoize (2.2.3)
 
 Package Locator: npm+@formatjs/fast-memoize$2.2.3
@@ -8554,9 +8810,39 @@ Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 Package Download URL: https://registry.npmjs.org/@formatjs/fast-memoize/-/fast-memoize-2.2.3.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/icu-messageformat-parser (2.7.3)
+Package Title: @formatjs/fast-memoize (2.2.7)
 
-Package Locator: npm+@formatjs/icu-messageformat-parser$2.7.3
+Package Locator: npm+@formatjs/fast-memoize$2.2.7
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2023 FormatJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@formatjs/fast-memoize/-/fast-memoize-2.2.7.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @formatjs/icu-messageformat-parser (2.11.2)
+
+Package Locator: npm+@formatjs/icu-messageformat-parser$2.11.2
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -8581,7 +8867,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.7.3.tgz
+Package Download URL: https://registry.npmjs.org/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.11.2.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @formatjs/icu-messageformat-parser (2.9.4)
@@ -8614,9 +8900,9 @@ Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 Package Download URL: https://registry.npmjs.org/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.9.4.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/icu-skeleton-parser (1.7.0)
+Package Title: @formatjs/icu-skeleton-parser (1.8.14)
 
-Package Locator: npm+@formatjs/icu-skeleton-parser$1.7.0
+Package Locator: npm+@formatjs/icu-skeleton-parser$1.8.14
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8641,7 +8927,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@formatjs/icu-skeleton-parser/-/icu-skeleton-parser-1.7.0.tgz
+Package Download URL: https://registry.npmjs.org/@formatjs/icu-skeleton-parser/-/icu-skeleton-parser-1.8.14.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @formatjs/icu-skeleton-parser (1.8.8)
@@ -8764,36 +9050,6 @@ Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 Package Download URL: https://registry.npmjs.org/@formatjs/intl-listformat/-/intl-listformat-7.7.5.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/intl-localematcher (0.5.2)
-
-Package Locator: npm+@formatjs/intl-localematcher$0.5.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) 2023 FormatJS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
-
-Package Download URL: https://registry.npmjs.org/@formatjs/intl-localematcher/-/intl-localematcher-0.5.2.tgz
-
---------------------------------------------------------------------------------
 Package Title: @formatjs/intl-localematcher (0.5.8)
 
 Package Locator: npm+@formatjs/intl-localematcher$0.5.8
@@ -8824,9 +9080,9 @@ Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 Package Download URL: https://registry.npmjs.org/@formatjs/intl-localematcher/-/intl-localematcher-0.5.8.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/ts-transformer (3.13.9)
+Package Title: @formatjs/intl-localematcher (0.6.1)
 
-Package Locator: npm+@formatjs/ts-transformer$3.13.9
+Package Locator: npm+@formatjs/intl-localematcher$0.6.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8851,7 +9107,37 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@formatjs/ts-transformer/-/ts-transformer-3.13.9.tgz
+Package Download URL: https://registry.npmjs.org/@formatjs/intl-localematcher/-/intl-localematcher-0.6.1.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @formatjs/ts-transformer (3.13.23)
+
+Package Locator: npm+@formatjs/ts-transformer$3.13.23
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2023 FormatJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: holevietlong@gmail.com, seth@bertalotto.net, dinglinjie+npm@gmail.com
+
+Package Download URL: https://registry.npmjs.org/@formatjs/ts-transformer/-/ts-transformer-3.13.23.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @gooddata/number-formatter (1.0.6)
@@ -13537,6 +13823,48 @@ Authors: ts-npm-types@microsoft.com
 Package Download URL: https://registry.npmjs.org/@types/estree/-/estree-1.0.5.tgz
 
 --------------------------------------------------------------------------------
+Package Title: @types/estree (1.0.8)
+
+Package Locator: npm+@types/estree$1.0.8
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+    MIT License
+
+    Copyright (c) Microsoft Corporation.
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE
+
+
+
+* Package Info *
+
+Authors: ts-npm-types@microsoft.com
+
+Package Download URL: https://registry.npmjs.org/@types/estree/-/estree-1.0.8.tgz
+
+--------------------------------------------------------------------------------
 Package Title: @types/estree-jsx (1.0.3)
 
 Package Locator: npm+@types/estree-jsx$1.0.3
@@ -13914,9 +14242,9 @@ Authors: ts-npm-types@microsoft.com
 Package Download URL: https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.15.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @types/json-stable-stringify (1.0.36)
+Package Title: @types/json-stable-stringify (1.2.0)
 
-Package Locator: npm+@types/json-stable-stringify$1.0.36
+Package Locator: npm+@types/json-stable-stringify$1.2.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -13953,7 +14281,7 @@ MIT
 
 Authors: ts-npm-types@microsoft.com
 
-Package Download URL: https://registry.npmjs.org/@types/json-stable-stringify/-/json-stable-stringify-1.0.36.tgz
+Package Download URL: https://registry.npmjs.org/@types/json-stable-stringify/-/json-stable-stringify-1.2.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @types/mdast (4.0.4)
@@ -14122,48 +14450,6 @@ MIT
 Authors: ts-npm-types@microsoft.com
 
 Package Download URL: https://registry.npmjs.org/@types/ms/-/ms-0.7.34.tgz
-
---------------------------------------------------------------------------------
-Package Title: @types/node (17.0.45)
-
-Package Locator: npm+@types/node$17.0.45
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-
-* Package Info *
-
-Authors: ts-npm-types@microsoft.com
-
-Package Download URL: https://registry.npmjs.org/@types/node/-/node-17.0.45.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @types/node (22.16.4)
@@ -19008,9 +19294,9 @@ Authors: arthur.fiorette@gmail.com
 Package Download URL: https://registry.npmjs.org/cache-parser/-/cache-parser-1.2.5.tgz
 
 --------------------------------------------------------------------------------
-Package Title: call-bind (1.0.5)
+Package Title: call-bind (1.0.8)
 
-Package Locator: npm+call-bind$1.0.5
+Package Locator: npm+call-bind$1.0.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -19047,49 +19333,7 @@ SOFTWARE.
 
 Authors: ljharb@gmail.com
 
-Package Download URL: https://registry.npmjs.org/call-bind/-/call-bind-1.0.5.tgz
-
---------------------------------------------------------------------------------
-Package Title: call-bind-apply-helpers (1.0.1)
-
-Package Locator: npm+call-bind-apply-helpers$1.0.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) 2024 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: ljharb@gmail.com
-
-Package Download URL: https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.1.tgz
+Package Download URL: https://registry.npmjs.org/call-bind/-/call-bind-1.0.8.tgz
 
 --------------------------------------------------------------------------------
 Package Title: call-bind-apply-helpers (1.0.2)
@@ -19134,9 +19378,9 @@ Authors: ljharb@gmail.com
 Package Download URL: https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz
 
 --------------------------------------------------------------------------------
-Package Title: call-bound (1.0.3)
+Package Title: call-bound (1.0.4)
 
-Package Locator: npm+call-bound$1.0.3
+Package Locator: npm+call-bound$1.0.4
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -19173,7 +19417,7 @@ SOFTWARE.
 
 Authors: ljharb@gmail.com
 
-Package Download URL: https://registry.npmjs.org/call-bound/-/call-bound-1.0.3.tgz
+Package Download URL: https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz
 
 --------------------------------------------------------------------------------
 Package Title: callsites (3.1.0)
@@ -21684,9 +21928,9 @@ Authors: harri@siirak.ee
 Package Download URL: https://registry.npmjs.org/cron-parser/-/cron-parser-5.1.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: cross-spawn (7.0.3)
+Package Title: cross-spawn (7.0.6)
 
-Package Locator: npm+cross-spawn$7.0.3
+Package Locator: npm+cross-spawn$7.0.6
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -21723,7 +21967,7 @@ THE SOFTWARE.
 
 Authors: andremiguelcruz@msn.com
 
-Package Download URL: https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.3.tgz
+Package Download URL: https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz
 
 --------------------------------------------------------------------------------
 Package Title: css-mediaquery (0.1.2)
@@ -22559,9 +22803,9 @@ Authors: sindresorhus@gmail.com
 Package Download URL: https://registry.npmjs.org/defaults/-/defaults-1.0.4.tgz
 
 --------------------------------------------------------------------------------
-Package Title: define-data-property (1.1.1)
+Package Title: define-data-property (1.1.4)
 
-Package Locator: npm+define-data-property$1.1.1
+Package Locator: npm+define-data-property$1.1.4
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -22598,7 +22842,7 @@ SOFTWARE.
 
 Authors: ljharb@gmail.com
 
-Package Download URL: https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.1.tgz
+Package Download URL: https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.4.tgz
 
 --------------------------------------------------------------------------------
 Package Title: define-lazy-prop (3.0.0)
@@ -25402,53 +25646,11 @@ Authors: arthur.fiorette@gmail.com
 Package Download URL: https://registry.npmjs.org/fast-defer/-/fast-defer-1.1.8.tgz
 
 --------------------------------------------------------------------------------
-Package Title: fast-glob (3.3.2)
-
-Package Locator: npm+fast-glob$3.3.2
-
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-The MIT License (MIT)
-
-Copyright (c) Denis Malinochkin
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: dmalinochkin@rambler.ru
-
-Package Download URL: https://registry.npmjs.org/fast-glob/-/fast-glob-3.3.2.tgz
-
---------------------------------------------------------------------------------
 Package Title: fast-glob (3.3.3)
 
 Package Locator: npm+fast-glob$3.3.3
 
-Package Depth: Transitive
+Package Depth: Direct
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
@@ -26575,90 +26777,6 @@ Authors: accounts@mapbox.com, accounts+npm-mapbox-machine-user@mapbox.com, accou
 Package Download URL: https://registry.npmjs.org/geojson-vt/-/geojson-vt-3.2.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: get-intrinsic (1.2.2)
-
-Package Locator: npm+get-intrinsic$1.2.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) 2020 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: ljharb@gmail.com
-
-Package Download URL: https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.2.2.tgz
-
---------------------------------------------------------------------------------
-Package Title: get-intrinsic (1.2.7)
-
-Package Locator: npm+get-intrinsic$1.2.7
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) 2020 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: ljharb@gmail.com
-
-Package Download URL: https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.2.7.tgz
-
---------------------------------------------------------------------------------
 Package Title: get-intrinsic (1.3.0)
 
 Package Locator: npm+get-intrinsic$1.3.0
@@ -27398,51 +27516,9 @@ Authors: sindresorhus@gmail.com
 Package Download URL: https://registry.npmjs.org/has-flag/-/has-flag-4.0.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: has-property-descriptors (1.0.1)
+Package Title: has-property-descriptors (1.0.2)
 
-Package Locator: npm+has-property-descriptors$1.0.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) 2022 Inspect JS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: ljharb@gmail.com
-
-Package Download URL: https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.1.tgz
-
---------------------------------------------------------------------------------
-Package Title: has-proto (1.0.1)
-
-Package Locator: npm+has-proto$1.0.1
+Package Locator: npm+has-property-descriptors$1.0.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -27479,7 +27555,7 @@ SOFTWARE.
 
 Authors: ljharb@gmail.com
 
-Package Download URL: https://registry.npmjs.org/has-proto/-/has-proto-1.0.1.tgz
+Package Download URL: https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz
 
 --------------------------------------------------------------------------------
 Package Title: has-symbols (1.0.3)
@@ -27648,48 +27724,6 @@ SOFTWARE.
 Authors: ljharb@gmail.com
 
 Package Download URL: https://registry.npmjs.org/has-tostringtag/-/has-tostringtag-1.0.2.tgz
-
---------------------------------------------------------------------------------
-Package Title: hasown (2.0.0)
-
-Package Locator: npm+hasown$2.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) Jordan Harband and contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: ljharb@gmail.com, radu@jslog.com
-
-Package Download URL: https://registry.npmjs.org/hasown/-/hasown-2.0.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: hasown (2.0.2)
@@ -31616,9 +31650,9 @@ Authors: e.poberezkin@me.com
 Package Download URL: https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: json-stable-stringify (1.1.0)
+Package Title: json-stable-stringify (1.3.0)
 
-Package Locator: npm+json-stable-stringify$1.1.0
+Package Locator: npm+json-stable-stringify$1.3.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -31655,7 +31689,7 @@ SOFTWARE.
 
 Authors: ljharb@gmail.com
 
-Package Download URL: https://registry.npmjs.org/json-stable-stringify/-/json-stable-stringify-1.1.0.tgz
+Package Download URL: https://registry.npmjs.org/json-stable-stringify/-/json-stable-stringify-1.3.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: json5 (2.2.3)
@@ -32527,9 +32561,9 @@ Authors: chaijs@keithcirkel.co.uk
 Package Download URL: https://registry.npmjs.org/loupe/-/loupe-3.1.4.tgz
 
 --------------------------------------------------------------------------------
-Package Title: lru-cache (10.1.0)
+Package Title: lru-cache (11.1.0)
 
-Package Locator: npm+lru-cache$10.1.0
+Package Locator: npm+lru-cache$11.1.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -32560,7 +32594,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Authors: i@izs.me
 
-Package Download URL: https://registry.npmjs.org/lru-cache/-/lru-cache-10.1.0.tgz
+Package Download URL: https://registry.npmjs.org/lru-cache/-/lru-cache-11.1.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: lru-cache (10.4.3)
@@ -32597,42 +32631,6 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 Authors: i@izs.me
 
 Package Download URL: https://registry.npmjs.org/lru-cache/-/lru-cache-10.4.3.tgz
-
---------------------------------------------------------------------------------
-Package Title: lru-cache (11.0.2)
-
-Package Locator: npm+lru-cache$11.0.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-ISC
-
-
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: i@izs.me
-
-Package Download URL: https://registry.npmjs.org/lru-cache/-/lru-cache-11.0.2.tgz
 
 --------------------------------------------------------------------------------
 Package Title: lru-cache (5.1.1)
@@ -34531,48 +34529,6 @@ SOFTWARE.
 Authors: tituswormer@gmail.com
 
 Package Download URL: https://registry.npmjs.org/micromark-util-types/-/micromark-util-types-2.0.0.tgz
-
---------------------------------------------------------------------------------
-Package Title: micromatch (4.0.5)
-
-Package Locator: npm+micromatch$4.0.5
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-The MIT License (MIT)
-
-Copyright (c) 2014-present, Jon Schlinkert.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: elan.shanker+npm@gmail.com, paul@paulmillr.com, github@sellside.com, brian.woodward@gmail.com, npm@tschinder.de
-
-Package Download URL: https://registry.npmjs.org/micromatch/-/micromatch-4.0.5.tgz
 
 --------------------------------------------------------------------------------
 Package Title: micromatch (4.0.8)
@@ -44696,9 +44652,9 @@ Authors: doug@somethingdoug.com, wes@wesleytodd.com, ulisesgascondev@gmail.com
 Package Download URL: https://registry.npmjs.org/serve-static/-/serve-static-1.16.2.tgz
 
 --------------------------------------------------------------------------------
-Package Title: set-function-length (1.1.1)
+Package Title: set-function-length (1.2.2)
 
-Package Locator: npm+set-function-length$1.1.1
+Package Locator: npm+set-function-length$1.2.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -44735,7 +44691,7 @@ SOFTWARE.
 
 Authors: ljharb@gmail.com
 
-Package Download URL: https://registry.npmjs.org/set-function-length/-/set-function-length-1.1.1.tgz
+Package Download URL: https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.2.tgz
 
 --------------------------------------------------------------------------------
 Package Title: setprototypeof (1.1.0)
@@ -49098,43 +49054,11 @@ Authors: dsherret@gmail.com
 Package Download URL: https://registry.npmjs.org/ts-morph/-/ts-morph-26.0.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: tslib (2.6.2)
-
-Package Locator: npm+tslib$2.6.2
-
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-ISC
-
-
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-
-
-* Package Info *
-
-Authors: andrew@wheream.io, mineyalc@microsoft.com, orta.therox@gmail.com, rbuckton@chronicles.org, ncsander@indiana.edu, shkamat@microsoft.com, typescript@microsoft.com, ortam@microsoft.com, wwigham@gmail.com
-
-Package Download URL: https://registry.npmjs.org/tslib/-/tslib-2.6.2.tgz
-
---------------------------------------------------------------------------------
 Package Title: tslib (2.8.1)
 
 Package Locator: npm+tslib$2.8.1
 
-Package Depth: Transitive
+Package Depth: Direct
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
@@ -85847,4 +85771,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-7-22
+Report Generated by FOSSA on 2025-7-23
