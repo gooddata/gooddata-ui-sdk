@@ -11,11 +11,11 @@ GoodData.UI provides a React component for embedding a semantic search interface
 
 ## Features
 
--   Embed UI for semantic search functionality.
--   Search for analytical objects using natural language.
--   Filter search results by object types.
--   Enable deep search to find dashboards by their contents.
--   Theming is supported out of the box through [Theme Provider].
+- Embed UI for semantic search functionality.
+- Search for analytical objects using natural language.
+- Filter search results by object types.
+- Enable deep search to find dashboards by their contents.
+- Theming is supported out of the box through [Theme Provider].
 
 ## Basic integration example
 
@@ -78,9 +78,9 @@ const App = () => {
 
 > **Note about result limits:** The `limit` parameter specifies a target number of results, but the actual number of returned items may vary:
 >
-> -   Fewer items may be returned if there aren't enough semantically relevant matches for the search term
-> -   More items may be returned when using `deepSearch=true`, as both matching items (like visualizations) and their containers (like dashboards) will be included in the results
-> -   The relationships between items are provided separately in the `relationships` array
+> - Fewer items may be returned if there aren't enough semantically relevant matches for the search term
+> - More items may be returned when using `deepSearch=true`, as both matching items (like visualizations) and their containers (like dashboards) will be included in the results
+> - The relationships between items are provided separately in the `relationships` array
 
 ## Using the semantic search hook
 
@@ -235,20 +235,16 @@ The integration works by:
 
 ### Required Components
 
--   `SemanticSearch` from `@gooddata/sdk-ui-semantic-search`
--   `FooterButtonAiAssistant` from `@gooddata/sdk-ui-semantic-search`
--   `GenAIAssistant` from `@gooddata/sdk-ui-gen-ai`
--   Chat actions from `@gooddata/sdk-ui-gen-ai`
+- `SemanticSearch` from `@gooddata/sdk-ui-semantic-search`
+- `FooterButtonAiAssistant` from `@gooddata/sdk-ui-semantic-search`
+- `GenAIAssistant` from `@gooddata/sdk-ui-gen-ai`
+- Chat actions from `@gooddata/sdk-ui-gen-ai`
 
 ### Implementation Example
 
 ```typescript jsx
-import * as React from "react";
-import {
-    SemanticSearch,
-    ISemanticSearchResultItem,
-    FooterButtonAiAssistant,
-} from "@gooddata/sdk-ui-semantic-search";
+import React, { useCallback, useEffect, useState } from "react";
+import { SemanticSearch, FooterButtonAiAssistant } from "@gooddata/sdk-ui-semantic-search";
 import {
     GenAIAssistant,
     clearThreadAction,
@@ -257,11 +253,13 @@ import {
     makeTextContents,
 } from "@gooddata/sdk-ui-gen-ai";
 
+type ChatDispatcher = (action: unknown) => void;
+
 const MyCustomSearchComponentWithAiAssistant = () => {
-    const [chatDispatcher, setDispatcher] = React.useState(null);
-    const [askedQuestion, setAskedQuestion] = React.useState("");
+    const [chatDispatcher, setDispatcher] = useState<ChatDispatcher | null>(null);
+    const [askedQuestion, setAskedQuestion] = useState("");
     const onDispatcher = useCallback(
-        (dispatcher) => {
+        (dispatcher: ChatDispatcher) => {
             setDispatcher(() => dispatcher);
         },
         [setDispatcher],
@@ -279,7 +277,7 @@ const MyCustomSearchComponentWithAiAssistant = () => {
     return (
         <>
             <SemanticSearch
-                onSelect={(item: ISemanticSearchResultItem) => {
+                onSelect={(item) => {
                     console.log(`Selected item: ${item.title}`);
                 }}
                 objectTypes={["dashboard", "visualization", "metric"]}
