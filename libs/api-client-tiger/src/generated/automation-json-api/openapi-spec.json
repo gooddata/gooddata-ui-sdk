@@ -980,12 +980,9 @@
                 }
             },
             "BoundedFilter": {
-                "required": ["dataset", "granularity"],
+                "required": ["granularity"],
                 "type": "object",
                 "properties": {
-                    "dataset": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
-                    },
                     "granularity": {
                         "type": "string",
                         "description": "Date granularity specifying particular date attribute in given dimension.",
@@ -1002,6 +999,7 @@
                             "HOUR_OF_DAY",
                             "DAY_OF_WEEK",
                             "DAY_OF_MONTH",
+                            "DAY_OF_QUARTER",
                             "DAY_OF_YEAR",
                             "WEEK_OF_YEAR",
                             "MONTH_OF_YEAR",
@@ -2130,6 +2128,7 @@
                                     "HOUR_OF_DAY",
                                     "DAY_OF_WEEK",
                                     "DAY_OF_MONTH",
+                                    "DAY_OF_QUARTER",
                                     "DAY_OF_YEAR",
                                     "WEEK_OF_YEAR",
                                     "MONTH_OF_YEAR",

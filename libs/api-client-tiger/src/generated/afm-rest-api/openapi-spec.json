@@ -357,7 +357,7 @@
                     {
                         "name": "explainType",
                         "in": "query",
-                        "description": "Requested explain type. If not specified all types are bundled in a ZIP archive.\n\n`MAQL` - MAQL Abstract Syntax Tree, execution dimensions and related info\n\n`GRPC_MODEL` - Datasets used in execution\n\n`GRPC_MODEL_SVG` - Generated SVG image of the datasets\n\n`WDF` - Workspace data filters in execution workspace context\n\n`QT` - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL\n\n`QT_SVG` - Generated SVG image of the Query Tree\n\n`OPT_QT` - Optimized Query Tree\n\n`OPT_QT_SVG` - Generated SVG image of the Optimized Query Tree\n\n`SQL` - Final SQL to be executed\n\n`SETTINGS` - Settings used to execute explain request",
+                        "description": "Requested explain type. If not specified all types are bundled in a ZIP archive.\n\n`MAQL` - MAQL Abstract Syntax Tree, execution dimensions and related info\n\n`GRPC_MODEL` - Datasets used in execution\n\n`GRPC_MODEL_SVG` - Generated SVG image of the datasets\n\n`COMPRESSED_GRPC_MODEL_SVG` - Generated SVG image of the model fragment used in the query\n\n`WDF` - Workspace data filters in execution workspace context\n\n`QT` - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL\n\n`QT_SVG` - Generated SVG image of the Query Tree\n\n`OPT_QT` - Optimized Query Tree\n\n`OPT_QT_SVG` - Generated SVG image of the Optimized Query Tree\n\n`SQL` - Final SQL to be executed\n\n`COMPRESSED_SQL` - Final SQL to be executed with rolled SQL datasets\n\n`SETTINGS` - Settings used to execute explain request",
                         "required": false,
                         "schema": {
                             "type": "string",
@@ -1592,12 +1592,9 @@
                 "description": "Filter on specific set of label values."
             },
             "BoundedFilter": {
-                "required": ["dataset", "granularity"],
+                "required": ["granularity"],
                 "type": "object",
                 "properties": {
-                    "dataset": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
-                    },
                     "granularity": {
                         "type": "string",
                         "description": "Date granularity specifying particular date attribute in given dimension.",
@@ -1614,6 +1611,7 @@
                             "HOUR_OF_DAY",
                             "DAY_OF_WEEK",
                             "DAY_OF_MONTH",
+                            "DAY_OF_QUARTER",
                             "DAY_OF_YEAR",
                             "WEEK_OF_YEAR",
                             "MONTH_OF_YEAR",
@@ -1897,6 +1895,7 @@
                                     "HOUR_OF_DAY",
                                     "DAY_OF_WEEK",
                                     "DAY_OF_MONTH",
+                                    "DAY_OF_QUARTER",
                                     "DAY_OF_YEAR",
                                     "WEEK_OF_YEAR",
                                     "MONTH_OF_YEAR",
@@ -2021,6 +2020,7 @@
                             "HOUR_OF_DAY",
                             "DAY_OF_WEEK",
                             "DAY_OF_MONTH",
+                            "DAY_OF_QUARTER",
                             "DAY_OF_YEAR",
                             "WEEK_OF_YEAR",
                             "MONTH_OF_YEAR",
@@ -2116,6 +2116,7 @@
                             "HOUR_OF_DAY",
                             "DAY_OF_WEEK",
                             "DAY_OF_MONTH",
+                            "DAY_OF_QUARTER",
                             "DAY_OF_YEAR",
                             "WEEK_OF_YEAR",
                             "MONTH_OF_YEAR",
@@ -2918,6 +2919,7 @@
                                     "HOUR_OF_DAY",
                                     "DAY_OF_WEEK",
                                     "DAY_OF_MONTH",
+                                    "DAY_OF_QUARTER",
                                     "DAY_OF_YEAR",
                                     "WEEK_OF_YEAR",
                                     "MONTH_OF_YEAR",
@@ -3670,6 +3672,7 @@
                                     "HOUR_OF_DAY",
                                     "DAY_OF_WEEK",
                                     "DAY_OF_MONTH",
+                                    "DAY_OF_QUARTER",
                                     "DAY_OF_YEAR",
                                     "WEEK_OF_YEAR",
                                     "MONTH_OF_YEAR",

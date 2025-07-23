@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { AfmObjectIdentifierDataset, DependsOnDateFilter } from "@gooddata/api-client-tiger";
+import { DependsOnDateFilter } from "@gooddata/api-client-tiger";
 import {
     DateAttributeGranularity,
     IAbsoluteDateFilter,
@@ -26,25 +26,22 @@ function newRelativeDependentDateFilter(dateFilter: IRelativeDateFilter): Depend
     const localIdentifier = dateFilter.relativeDateFilter.dataSet;
     invariant(!isUriRef(localIdentifier));
 
-    const dataset: AfmObjectIdentifierDataset = {
-        identifier: {
-            id: localIdentifier.identifier,
-            type: "dataset",
-        },
-    };
-
     const boundedFilter = isRelativeBoundedDateFilter(dateFilter)
         ? {
               ...dateFilter.relativeDateFilter.boundedFilter,
               granularity: toTigerGranularity(dateFilter.relativeDateFilter.boundedFilter.granularity),
-              dataset,
           }
         : undefined;
 
     return {
         dateFilter: {
             relativeDateFilter: {
-                dataset,
+                dataset: {
+                    identifier: {
+                        id: localIdentifier.identifier,
+                        type: "dataset",
+                    },
+                },
                 granularity: toTigerGranularity(
                     dateFilter.relativeDateFilter.granularity as DateAttributeGranularity,
                 ),

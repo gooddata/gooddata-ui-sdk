@@ -1,3 +1,5 @@
+// (C) 2025 GoodData Corporation
+
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -103,7 +105,7 @@ export class Configuration {
      */
     public isJsonMime(mime: string): boolean {
         const jsonMime: RegExp = new RegExp(
-            "^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$",
+            "^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$",
             "i",
         );
         return mime !== null && (jsonMime.test(mime) || mime.toLowerCase() === "application/json-patch+json");

@@ -1012,12 +1012,6 @@ export interface AutomationAutomationVisualExport {
  */
 export interface AutomationBoundedFilter {
     /**
-     *
-     * @type {AutomationAfmObjectIdentifierDataset}
-     * @memberof AutomationBoundedFilter
-     */
-    dataset: AutomationAfmObjectIdentifierDataset;
-    /**
      * Date granularity specifying particular date attribute in given dimension.
      * @type {string}
      * @memberof AutomationBoundedFilter
@@ -1049,6 +1043,7 @@ export const AutomationBoundedFilterGranularityEnum = {
     HOUR_OF_DAY: "HOUR_OF_DAY",
     DAY_OF_WEEK: "DAY_OF_WEEK",
     DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_QUARTER: "DAY_OF_QUARTER",
     DAY_OF_YEAR: "DAY_OF_YEAR",
     WEEK_OF_YEAR: "WEEK_OF_YEAR",
     MONTH_OF_YEAR: "MONTH_OF_YEAR",
@@ -2806,6 +2801,7 @@ export const AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = {
     HOUR_OF_DAY: "HOUR_OF_DAY",
     DAY_OF_WEEK: "DAY_OF_WEEK",
     DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_QUARTER: "DAY_OF_QUARTER",
     DAY_OF_YEAR: "DAY_OF_YEAR",
     WEEK_OF_YEAR: "WEEK_OF_YEAR",
     MONTH_OF_YEAR: "MONTH_OF_YEAR",

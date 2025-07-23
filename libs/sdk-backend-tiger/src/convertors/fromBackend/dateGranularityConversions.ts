@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     JsonApiAttributeOutAttributesGranularityEnum,
     RelativeDateFilterRelativeDateFilterGranularityEnum,
@@ -46,6 +46,7 @@ const TigerToSdkGranularityMap: TigerToSdk = {
     [JsonApiAttributeOutAttributesGranularityEnum.MONTH_OF_YEAR]: "GDC.time.month_in_year",
     [JsonApiAttributeOutAttributesGranularityEnum.WEEK_OF_YEAR]: "GDC.time.week_in_year",
     [JsonApiAttributeOutAttributesGranularityEnum.DAY_OF_YEAR]: "GDC.time.day_in_year",
+    [JsonApiAttributeOutAttributesGranularityEnum.DAY_OF_QUARTER]: "GDC.time.day_in_quarter",
     [JsonApiAttributeOutAttributesGranularityEnum.DAY_OF_MONTH]: "GDC.time.day_in_month",
     [JsonApiAttributeOutAttributesGranularityEnum.DAY_OF_WEEK]: "GDC.time.day_in_week",
     [JsonApiAttributeOutAttributesGranularityEnum.HOUR_OF_DAY]: "GDC.time.hour_in_day",
