@@ -2,7 +2,7 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import { ContentRect } from "react-measure";
 
 import {
@@ -29,7 +29,7 @@ import isEqual from "lodash/isEqual.js";
 import isFunction from "lodash/isFunction.js";
 import omitBy from "lodash/omitBy.js";
 import { IChartOptions } from "./typings/unsafe.js";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 import {
     getDataTooLargeErrorMessage,
@@ -51,7 +51,7 @@ export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
 /**
  * @internal
  */
-export interface IChartTransformationProps extends WrappedComponentProps {
+export interface IChartTransformationProps {
     height: number;
     width: number;
     config: IChartConfig;
@@ -73,8 +73,11 @@ export interface IChartTransformationProps extends WrappedComponentProps {
     renderer?(arg: IHighChartsRendererProps): JSX.Element;
 }
 
-const ChartTransformationImpl = (props: IChartTransformationProps) => {
-    const {
+/**
+ * @internal
+ */
+export const ChartTransformation = memo(
+    withTheme(function ChartTransformation({
         config,
         renderer = renderHighCharts,
         dataView,
@@ -84,112 +87,109 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         onDrill = (): boolean => true,
         onLegendReady = noop,
         locale,
-        intl,
         theme,
         numericSymbols,
         drillableItems = [],
         onDataTooLarge,
         onNegativeValues = null,
         pushData = noop,
-    } = props;
-    const visType = config.type;
-    const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
-    const chartOptions: IChartOptions = getChartOptions(
-        dataView,
-        config,
-        drillablePredicates,
-        emptyHeaderTitleFromIntl(intl),
-        theme,
-        totalColumnTitleFromIntl(intl),
-        clusterTitleFromIntl(intl),
-    );
-    const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, intl);
-    const validationResult = validateData(config.limits, chartOptions);
-    const drillConfig = { dataView, onDrill };
-    const hcOptions = getHighchartsOptions(
-        chartOptions,
-        drillConfig,
-        config,
-        dataView.definition,
-        intl,
-        theme,
-    );
+    }: IChartTransformationProps) {
+        const intl = useIntl();
 
-    useEffect(() => {
-        let isFilteringRecommended = false;
-        if (validationResult.dataTooLarge) {
-            // always force onDataTooLarge error handling
-            invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
-            onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits, chartOptions));
-        } else if (validationResult.hasNegativeValue) {
-            // ignore hasNegativeValue if validation already fails on dataTooLarge
-            // force onNegativeValues error handling only for pie chart.
-            // hasNegativeValue can be true only for pie chart.
+        const visType = config.type;
+        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+        const chartOptions: IChartOptions = getChartOptions(
+            dataView,
+            config,
+            drillablePredicates,
+            emptyHeaderTitleFromIntl(intl),
+            theme,
+            totalColumnTitleFromIntl(intl),
+            clusterTitleFromIntl(intl),
+        );
+        const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, intl);
+        const validationResult = validateData(config.limits, chartOptions);
+        const drillConfig = { dataView, onDrill };
+        const hcOptions = getHighchartsOptions(
+            chartOptions,
+            drillConfig,
+            config,
+            dataView.definition,
+            intl,
+            theme,
+        );
+
+        useEffect(() => {
+            let isFilteringRecommended = false;
+            if (validationResult.dataTooLarge) {
+                // always force onDataTooLarge error handling
+                invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
+                onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits, chartOptions));
+            } else if (validationResult.hasNegativeValue) {
+                // ignore hasNegativeValue if validation already fails on dataTooLarge
+                // force onNegativeValues error handling only for pie chart.
+                // hasNegativeValue can be true only for pie chart.
+                invariant(
+                    onNegativeValues,
+                    '"onNegativeValues" callback required for pie chart transformation is missing.',
+                );
+                onNegativeValues(chartOptions);
+            } else {
+                isFilteringRecommended = getIsFilteringRecommended(chartOptions);
+            }
+
+            pushData({
+                propertiesMeta: {
+                    legend_enabled: legendOptions.toggleEnabled,
+                    isFilteringRecommended,
+                },
+                colors: {
+                    colorAssignments: chartOptions.colorAssignments,
+                    colorPalette: chartOptions.colorPalette,
+                },
+            });
+        });
+
+        if (!isChartSupported(visType)) {
             invariant(
-                onNegativeValues,
-                '"onNegativeValues" callback required for pie chart transformation is missing.',
+                false,
+                `Unknown visualization type: ${visType}. Supported visualization types: ${stringifyChartTypes()}`,
             );
-            onNegativeValues(chartOptions);
-        } else {
-            isFilteringRecommended = getIsFilteringRecommended(chartOptions);
         }
 
-        pushData({
-            propertiesMeta: {
-                legend_enabled: legendOptions.toggleEnabled,
-                isFilteringRecommended,
-            },
-            colors: {
-                colorAssignments: chartOptions.colorAssignments,
-                colorPalette: chartOptions.colorPalette,
-            },
+        if (numericSymbols?.length) {
+            Highcharts.setOptions({
+                lang: {
+                    numericSymbols,
+                    thousandsSep: " ", // we need to set thousands separator to space to keep it consistent with previous version 9.3.0 this never respect user settings.
+                },
+            });
+        }
+
+        if (validationResult.dataTooLarge || validationResult.hasNegativeValue) {
+            return null;
+        }
+        const resetZoomButtonTooltip = intl
+            ? intl.formatMessage({ id: "visualization.tooltip.resetZoom" })
+            : null;
+
+        return renderer({
+            chartRenderer,
+            legendRenderer,
+            resetZoomButtonTooltip,
+            chartOptions,
+            hcOptions,
+            height,
+            width,
+            afterRender,
+            onLegendReady,
+            locale,
+            legend: legendOptions,
+            theme,
+            config,
         });
-    });
-
-    if (!isChartSupported(visType)) {
-        invariant(
-            false,
-            `Unknown visualization type: ${visType}. Supported visualization types: ${stringifyChartTypes()}`,
-        );
-    }
-
-    if (numericSymbols?.length) {
-        Highcharts.setOptions({
-            lang: {
-                numericSymbols,
-                thousandsSep: " ", // we need to set thousands separator to space to keep it consistent with previous version 9.3.0 this never respect user settings.
-            },
-        });
-    }
-
-    if (validationResult.dataTooLarge || validationResult.hasNegativeValue) {
-        return null;
-    }
-    const resetZoomButtonTooltip = intl
-        ? intl.formatMessage({ id: "visualization.tooltip.resetZoom" })
-        : null;
-
-    return renderer({
-        chartRenderer,
-        legendRenderer,
-        resetZoomButtonTooltip,
-        chartOptions,
-        hcOptions,
-        height,
-        width,
-        afterRender,
-        onLegendReady,
-        locale,
-        legend: legendOptions,
-        theme,
-        config,
-    });
-};
-
-/**
- * @internal
- */
-const ChartTransformationWithInjectedProps = injectIntl(withTheme(ChartTransformationImpl));
-export const ChartTransformation = React.memo(ChartTransformationWithInjectedProps, (props, nextProps) => {
-    return isEqual(omitBy(props, isFunction), omitBy(nextProps, isFunction));
-});
+    }),
+    (props, nextProps) => {
+        return isEqual(omitBy(props, isFunction), omitBy(nextProps, isFunction));
+    },
+);

@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { memo } from "react";
 import cx from "classnames";
 import { ISeparators } from "@gooddata/sdk-ui";
 import { stringUtils } from "@gooddata/util";
@@ -14,46 +14,43 @@ interface IMeasureNumberFormatDropdownItemProps {
     isSelected?: boolean;
 }
 
-export class PresetsDropdownItem extends React.PureComponent<IMeasureNumberFormatDropdownItemProps> {
-    public static defaultProps: Pick<IMeasureNumberFormatDropdownItemProps, "isSelected"> = {
-        isSelected: false,
-    };
+export const PresetsDropdownItem = memo(function PresetsDropdownItem({
+    preset,
+    separators,
+    onClick,
+    isSelected = false,
+}: IMeasureNumberFormatDropdownItemProps) {
+    const { localIdentifier, name, previewNumber, format } = preset;
 
-    public render() {
-        const { preset, separators, isSelected } = this.props;
-        const { localIdentifier, name, previewNumber, format } = preset;
+    const className = cx(
+        "gd-list-item",
+        "gd-format-preset",
+        `s-format-preset-${localIdentifier}`,
+        `s-format-preset-name-${stringUtils.simplifyText(name)}`,
+        {
+            "is-selected": isSelected,
+        },
+    );
 
-        const className = cx(
-            "gd-list-item",
-            "gd-format-preset",
-            `s-format-preset-${localIdentifier}`,
-            `s-format-preset-name-${stringUtils.simplifyText(name)}`,
-            {
-                "is-selected": isSelected,
-            },
-        );
-
-        return (
-            <div className={className} onClick={this.handleOnClick}>
-                <span title={name} className="gd-format-preset-name gd-list-item-shortened">
-                    {name}
-                </span>
-                {previewNumber !== null && format !== null && (
-                    <FormattedPreview
-                        previewNumber={previewNumber}
-                        format={format}
-                        separators={separators}
-                        colors={false}
-                        className={"gd-format-preset-preview"}
-                    />
-                )}
-            </div>
-        );
-    }
-
-    private handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        const { preset, onClick } = this.props;
+    const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
         onClick(preset);
         e.preventDefault();
     };
-}
+
+    return (
+        <div className={className} onClick={handleOnClick}>
+            <span title={name} className="gd-format-preset-name gd-list-item-shortened">
+                {name}
+            </span>
+            {previewNumber !== null && format !== null && (
+                <FormattedPreview
+                    previewNumber={previewNumber}
+                    format={format}
+                    separators={separators}
+                    colors={false}
+                    className={"gd-format-preset-preview"}
+                />
+            )}
+        </div>
+    );
+});

@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo } from "react";
+import { useIntl } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
 import { getTranslatedDropdownItems } from "../../../utils/translations.js";
@@ -17,27 +17,17 @@ export interface ILabelRotationControl {
     pushData: (data: any) => any;
 }
 
-class LabelRotationControl extends React.PureComponent<ILabelRotationControl & WrappedComponentProps> {
-    public render() {
-        const { axisVisible, axisLabelsEnabled, axisRotation } = this.getControlProperties();
+const LabelRotationControl = memo(function LabelRotationControl({
+    properties,
+    axis,
+    disabled,
+    configPanelDisabled,
+    pushData,
+}: ILabelRotationControl) {
+    const intl = useIntl();
 
-        const isDisabled = this.props.disabled || !axisVisible || !axisLabelsEnabled;
-        return (
-            <DropdownControl
-                value={axisRotation}
-                valuePath={`${this.props.axis}.rotation`}
-                labelText={messages.axisRotation.id}
-                disabled={isDisabled}
-                showDisabledMessage={!this.props.configPanelDisabled && isDisabled}
-                properties={this.props.properties}
-                pushData={this.props.pushData}
-                items={getTranslatedDropdownItems(rotationDropdownItems, this.props.intl)}
-            />
-        );
-    }
-
-    private getControlProperties(): IVisualizationProperties {
-        const axisProperties = this.props.properties?.controls?.[this.props.axis];
+    const getControlProperties = (): IVisualizationProperties => {
+        const axisProperties = properties?.controls?.[axis];
 
         const axisVisible = axisProperties?.visible ?? true;
         const axisLabelsEnabled = axisProperties?.labelsEnabled ?? true;
@@ -48,7 +38,22 @@ class LabelRotationControl extends React.PureComponent<ILabelRotationControl & W
             axisLabelsEnabled,
             axisRotation,
         };
-    }
-}
+    };
 
-export default injectIntl(LabelRotationControl);
+    const { axisVisible, axisLabelsEnabled, axisRotation } = getControlProperties();
+
+    const isDisabled = disabled || !axisVisible || !axisLabelsEnabled;
+    return (
+        <DropdownControl
+            value={axisRotation}
+            valuePath={`${axis}.rotation`}
+            labelText={messages.axisRotation.id}
+            disabled={isDisabled}
+            showDisabledMessage={!configPanelDisabled && isDisabled}
+            properties={properties}
+            pushData={pushData}
+            items={getTranslatedDropdownItems(rotationDropdownItems, intl)}
+        />
+    );
+});
+export default LabelRotationControl;

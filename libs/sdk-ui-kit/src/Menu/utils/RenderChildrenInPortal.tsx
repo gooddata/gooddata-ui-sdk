@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
 export interface IRenderChildrenInPortalProps {
@@ -7,28 +7,24 @@ export interface IRenderChildrenInPortalProps {
     children: React.ReactNode;
 }
 
-export class RenderChildrenInPortal extends React.Component<IRenderChildrenInPortalProps> {
-    private portalContentWrapperEl: HTMLElement;
+export function RenderChildrenInPortal(props: IRenderChildrenInPortalProps) {
+    const portalContentWrapperElRef = useRef<HTMLElement>();
 
-    public constructor(props: IRenderChildrenInPortalProps) {
-        super(props);
-
-        this.portalContentWrapperEl = document.createElement("div");
+    if (!portalContentWrapperElRef.current) {
+        portalContentWrapperElRef.current = document.createElement("div");
     }
 
-    public UNSAFE_componentWillMount(): void {
-        if (this.props.targetElement) {
-            this.props.targetElement.appendChild(this.portalContentWrapperEl);
+    useEffect(() => {
+        if (props.targetElement) {
+            props.targetElement.appendChild(portalContentWrapperElRef.current!);
         }
-    }
 
-    public componentWillUnmount(): void {
-        if (this.props.targetElement) {
-            this.props.targetElement.removeChild(this.portalContentWrapperEl);
-        }
-    }
+        return () => {
+            if (props.targetElement) {
+                props.targetElement.removeChild(portalContentWrapperElRef.current!);
+            }
+        };
+    }, [props.targetElement]);
 
-    public render() {
-        return ReactDOM.createPortal(this.props.children, this.portalContentWrapperEl);
-    }
+    return ReactDOM.createPortal(props.children, portalContentWrapperElRef.current);
 }

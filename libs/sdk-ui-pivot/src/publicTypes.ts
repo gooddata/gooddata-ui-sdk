@@ -235,7 +235,7 @@ export interface IPivotTableBucketProps {
 /**
  * @internal
  */
-export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedComponentProps {
+export interface ICorePivotTableProps extends IPivotTableBaseProps {
     execution: IPreparedExecution;
     theme?: ITheme;
 }

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { Component, createRef, ReactNode, RefObject } from "react";
 import cx from "classnames";
 import throttle from "lodash/throttle.js";

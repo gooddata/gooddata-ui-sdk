@@ -1,6 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
-import React, { Component } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+// (C) 2020-2025 GoodData Corporation
+import React, { useCallback } from "react";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import noop from "lodash/noop.js";
 
@@ -45,96 +45,37 @@ export interface ILegacyMultiSelectListProps<T> {
 }
 
 /**
- * @deprecated  This component is deprecated use MultiSelectList
+ * @deprecated  This component is deprecated, use MultiSelectList instead
  * @internal
  */
-export class LegacyMultiSelectList<T> extends Component<
-    ILegacyMultiSelectListProps<T> & WrappedComponentProps
-> {
-    static defaultProps = {
-        isInverted: false,
-        isSearching: false,
-        selection: [] as string[],
-        filtered: false,
-        getItemKey: guidFor,
-        isFiltered: false,
-        isMobile: false,
-        isSelected: (): boolean => false,
-        listItemClass: LegacyMultiSelectListItem, // TODO add tests
-        maxSelectionSize: 500, // based on filters in gdc-client
-        filteredItemsCount: 0,
-        onItemMouseOut: noop,
-        onItemMouseOver: noop,
-        onRangeChange: noop,
-        onSelect: noop,
-        onSelectAll: noop,
-        onSelectNone: noop,
-        onSelectOnly: noop,
-        rowItem: null as React.ReactElement,
-        selectAllCheckbox: false,
-        tagName: "",
-    };
+export default function LegacyMultiSelectList<T>({
+    isInverted = false,
+    isSearching = false,
+    selection = [] as T[],
+    getItemKey = guidFor,
+    isMobile = false,
+    isSelected = (): boolean => false,
+    listItemClass = LegacyMultiSelectListItem, // TODO add tests
+    filteredItemsCount = 0,
+    onItemMouseOut = noop,
+    onItemMouseOver = noop,
+    onRangeChange = noop,
+    onSelect = noop,
+    onSelectAll = noop,
+    onSelectNone = noop,
+    onSelectOnly = noop,
+    rowItem: rowItemProp = null as React.ReactElement,
+    selectAllCheckbox = false,
+    tagName = "",
+    items,
+    itemsCount,
+    height,
+    itemHeight,
+    width,
+}: ILegacyMultiSelectListProps<T>) {
+    const intl = useIntl();
 
-    private onActionCheckboxChange = () => {
-        const { onSelectAll, onSelectNone, isInverted, isSearching } = this.props;
-        if (
-            this.isAllSelected() ||
-            (!isInverted && isSearching && this.isIndefiniteSelection && !this.isEmpty())
-        ) {
-            return onSelectNone();
-        }
-
-        return onSelectAll();
-    };
-
-    private getSelectableItems() {
-        const { props } = this;
-
-        return props.items.map((source) => ({
-            source,
-            onSelect: props.onSelect,
-            onMouseOver: props.onItemMouseOver,
-            onMouseOut: props.onItemMouseOut,
-            onOnly: props.onSelectOnly,
-            selected: props.isSelected(source),
-            id: props.getItemKey(source),
-        }));
-    }
-
-    private getRowItem() {
-        const { rowItem, listItemClass } = this.props;
-
-        return rowItem || <LegacyListItem listItemClass={listItemClass} />;
-    }
-
-    private getSelectionString(selection: any[]): string {
-        const { intl } = this.props;
-
-        if (!selection.length) {
-            return "";
-        }
-        return selection
-            .map((item) => {
-                if (item.available !== undefined && !item.available) {
-                    return intl.formatMessage({ id: "gs.list.notAvailableAbbreviation" });
-                }
-                return item.title || `(${intl.formatMessage({ id: "empty_value" })})`;
-            })
-            .join(", ");
-    }
-
-    private getDataSource() {
-        const selectableItems = this.getSelectableItems();
-
-        return {
-            rowsCount: this.props.itemsCount || selectableItems.length,
-            getObjectAt: (rowIndex: number) => selectableItems[rowIndex],
-        };
-    }
-
-    private isEmpty(): boolean {
-        const { selection, itemsCount, isInverted, isSearching, items, isSelected } = this.props;
-
+    const isEmpty = useCallback((): boolean => {
         if (selection.length === 0) {
             return !isInverted;
         }
@@ -144,16 +85,9 @@ export class LegacyMultiSelectList<T> extends Component<
         }
 
         return (selection.length === 0 && !isInverted) || (selection.length === itemsCount && isInverted);
-    }
+    }, [selection.length, isInverted, isSearching, items, isSelected, itemsCount]);
 
-    public isPositiveSelection(): boolean {
-        const { isInverted, selection } = this.props;
-        return selection.length > 0 && !isInverted;
-    }
-
-    private isIndefiniteSelection(): boolean {
-        const { selection, isSearching, items, isSelected, filteredItemsCount } = this.props;
-
+    const isIndefiniteSelection = useCallback((): boolean => {
         if (selection.length === 0) {
             return false;
         }
@@ -166,10 +100,9 @@ export class LegacyMultiSelectList<T> extends Component<
             return selectedItemsCount !== 0 && selectedItemsCount !== filteredItemsCount;
         }
         return true;
-    }
+    }, [selection.length, isSearching, items, isSelected, filteredItemsCount]);
 
-    private isAllSelected(): boolean {
-        const { itemsCount, isInverted, isSearching, items, isSelected, selection } = this.props;
+    const isAllSelected = useCallback((): boolean => {
         if (isSearching) {
             const selectedItemsCount = items.filter((item) => isSelected(item)).length;
             const totalItemsCount = items.filter((item) => item !== null).length;
@@ -177,10 +110,59 @@ export class LegacyMultiSelectList<T> extends Component<
         }
 
         return isInverted ? selection.length === 0 : selection.length === itemsCount;
-    }
+    }, [itemsCount, isInverted, isSearching, items, isSelected, selection.length]);
 
-    private renderSearchResultsLength() {
-        const { itemsCount, isSearching, intl } = this.props;
+    const onActionCheckboxChange = useCallback(() => {
+        if (isAllSelected() || (!isInverted && isSearching && isIndefiniteSelection() && !isEmpty())) {
+            return onSelectNone();
+        }
+
+        return onSelectAll();
+    }, [onSelectAll, onSelectNone, isInverted, isSearching, isAllSelected, isIndefiniteSelection, isEmpty]);
+
+    const getSelectableItems = useCallback(() => {
+        return items.map((source) => ({
+            source,
+            onSelect: onSelect,
+            onMouseOver: onItemMouseOver,
+            onMouseOut: onItemMouseOut,
+            onOnly: onSelectOnly,
+            selected: isSelected(source),
+            id: getItemKey(source),
+        }));
+    }, [items, onSelect, onItemMouseOver, onItemMouseOut, onSelectOnly, isSelected, getItemKey]);
+
+    const getRowItem = useCallback(() => {
+        return rowItemProp || <LegacyListItem listItemClass={listItemClass} />;
+    }, [rowItemProp, listItemClass]);
+
+    const getSelectionString = useCallback(
+        (selection: any[]): string => {
+            if (!selection.length) {
+                return "";
+            }
+            return selection
+                .map((item) => {
+                    if (item.available !== undefined && !item.available) {
+                        return intl.formatMessage({ id: "gs.list.notAvailableAbbreviation" });
+                    }
+                    return item.title || `(${intl.formatMessage({ id: "empty_value" })})`;
+                })
+                .join(", ");
+        },
+        [intl],
+    );
+
+    const getDataSource = useCallback(() => {
+        const selectableItems = getSelectableItems();
+
+        return {
+            rowsCount: itemsCount || selectableItems.length,
+            getObjectAt: (rowIndex: number) => selectableItems[rowIndex],
+        };
+    }, [getSelectableItems, itemsCount]);
+
+    const renderSearchResultsLength = useCallback(() => {
         if (isSearching && itemsCount > 0) {
             return (
                 <span className="gd-list-actions-selection-size s-list-search-selection-size">
@@ -189,14 +171,12 @@ export class LegacyMultiSelectList<T> extends Component<
             );
         }
         return null;
-    }
+    }, [itemsCount, isSearching, intl]);
 
-    private renderActions() {
-        const { selectAllCheckbox, intl } = this.props;
-
+    const renderActions = useCallback(() => {
         if (selectAllCheckbox) {
             const checkboxClasses = cx("input-checkbox", "gd-checkbox-selection", {
-                "checkbox-indefinite": this.isIndefiniteSelection(),
+                "checkbox-indefinite": isIndefiniteSelection(),
             });
 
             const labelClasses = cx("input-checkbox-label", "s-select-all-checkbox");
@@ -207,8 +187,8 @@ export class LegacyMultiSelectList<T> extends Component<
                         readOnly
                         type="checkbox"
                         className={checkboxClasses}
-                        checked={!this.isEmpty()}
-                        onChange={this.onActionCheckboxChange}
+                        checked={!isEmpty()}
+                        onChange={onActionCheckboxChange}
                     />
                     <span className="input-label-text">{intl.formatMessage({ id: "gs.list.all" })}</span>
                 </label>
@@ -217,7 +197,7 @@ export class LegacyMultiSelectList<T> extends Component<
             return (
                 <div className="gd-list-actions gd-list-actions-invertable">
                     {checkbox}
-                    {this.renderSearchResultsLength()}
+                    {renderSearchResultsLength()}
                 </div>
             );
         }
@@ -227,22 +207,29 @@ export class LegacyMultiSelectList<T> extends Component<
                 <Button
                     className="gd-button-link"
                     tagName="a"
-                    onClick={this.props.onSelectAll}
+                    onClick={onSelectAll}
                     value={intl.formatMessage({ id: "gs.list.selectAll" })}
                 />
                 <Button
                     className="gd-button-link"
                     tagName="a"
-                    onClick={this.props.onSelectNone}
+                    onClick={onSelectNone}
                     value={intl.formatMessage({ id: "gs.list.clear" })}
                 />
             </div>
         );
-    }
+    }, [
+        selectAllCheckbox,
+        isIndefiniteSelection,
+        isEmpty,
+        onActionCheckboxChange,
+        intl,
+        renderSearchResultsLength,
+        onSelectAll,
+        onSelectNone,
+    ]);
 
-    private renderStatusBar() {
-        const { selectAllCheckbox, selection, isInverted, tagName, intl } = this.props;
-
+    const renderStatusBar = useCallback(() => {
         if (!selectAllCheckbox) {
             return null;
         }
@@ -256,7 +243,7 @@ export class LegacyMultiSelectList<T> extends Component<
             </span>
         );
 
-        const selectionItemsStr = this.getSelectionString(selection);
+        const selectionItemsStr = getSelectionString(selection);
 
         const isSelectionEmpty = selection.length === 0;
 
@@ -299,43 +286,31 @@ export class LegacyMultiSelectList<T> extends Component<
                 {selectionLengthInfo}
             </div>
         );
-    }
+    }, [selectAllCheckbox, tagName, getSelectionString, selection, isInverted, intl]);
 
-    public render(): JSX.Element {
-        const { isMobile, width, height, itemHeight } = this.props;
-        const rowItem = this.getRowItem();
-        const dataSource = this.getDataSource();
-        return (
-            <div className="gd-flex-item-stretch-mobile gd-flex-row-container-mobile">
-                {this.renderActions()}
-                <FlexDimensions
-                    measureHeight={isMobile}
-                    measureWidth={isMobile || !width}
-                    className="gd-flex-item-stretch-mobile"
-                >
-                    <LegacyList
-                        className="is-multiselect"
-                        width={width}
-                        height={height}
-                        itemHeight={itemHeight}
-                        dataSource={dataSource}
-                        rowItem={rowItem}
-                        onScroll={this.props.onRangeChange}
-                        compensateBorder={!isMobile}
-                    />
-                </FlexDimensions>
-                {this.renderStatusBar()}
-            </div>
-        );
-    }
+    const rowItem = getRowItem();
+    const dataSource = getDataSource();
+
+    return (
+        <div className="gd-flex-item-stretch-mobile gd-flex-row-container-mobile">
+            {renderActions()}
+            <FlexDimensions
+                measureHeight={isMobile}
+                measureWidth={isMobile || !width}
+                className="gd-flex-item-stretch-mobile"
+            >
+                <LegacyList
+                    className="is-multiselect"
+                    width={width}
+                    height={height}
+                    itemHeight={itemHeight}
+                    dataSource={dataSource}
+                    rowItem={rowItem}
+                    onScroll={onRangeChange}
+                    compensateBorder={!isMobile}
+                />
+            </FlexDimensions>
+            {renderStatusBar()}
+        </div>
+    );
 }
-
-/**
- * @internal
- * @deprecated This component is deprecated use MultiSelectList instead
- */
-const LegacyMultiSelectListWithIntl = injectIntl(LegacyMultiSelectList) as <T>(
-    props: ILegacyMultiSelectListProps<T>,
-) => any;
-
-export default LegacyMultiSelectListWithIntl;

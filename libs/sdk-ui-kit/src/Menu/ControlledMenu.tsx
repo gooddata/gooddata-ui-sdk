@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useEffect, useCallback } from "react";
 
 import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "./MenuSharedTypes.js";
 import { MenuOpener } from "./menuOpener/MenuOpener.js";
@@ -15,57 +15,57 @@ export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
     children: React.ReactNode;
 }
 
-export class ControlledMenu extends React.Component<IControlledMenuProps> {
-    public componentDidMount(): void {
-        if (this.props.closeOnScroll) {
-            this.addScrollListeners();
-        }
-    }
+export function ControlledMenu({
+    opened,
+    openAction,
+    closeOnScroll,
+    portalTarget,
+    onOpenedChange,
+    toggler,
+    togglerWrapperClassName,
+    children,
+    alignment,
+    spacing,
+    offset,
+}: IControlledMenuProps) {
+    const closeMenu = useCallback(() => {
+        onOpenedChange({ opened: false, source: "SCROLL" });
+    }, [onOpenedChange]);
 
-    public componentWillUnmount(): void {
-        if (this.props.closeOnScroll) {
-            this.removeScrollListeners();
-        }
-    }
+    const addScrollListeners = useCallback(() => {
+        window.addEventListener("scroll", closeMenu, true);
+    }, [closeMenu]);
 
-    public componentDidUpdate(prevProps: IControlledMenuProps): void {
-        if (prevProps.closeOnScroll !== this.props.closeOnScroll) {
-            if (this.props.closeOnScroll) {
-                this.addScrollListeners();
-            } else {
-                this.removeScrollListeners();
+    const removeScrollListeners = useCallback(() => {
+        window.removeEventListener("scroll", closeMenu, true);
+    }, [closeMenu]);
+
+    useEffect(() => {
+        if (closeOnScroll) {
+            addScrollListeners();
+        }
+
+        return () => {
+            if (closeOnScroll) {
+                removeScrollListeners();
             }
-        }
-    }
+        };
+    }, [closeOnScroll, addScrollListeners, removeScrollListeners]);
 
-    public render() {
-        return (
-            <MenuOpener
-                opened={this.props.opened}
-                onOpenedChange={this.props.onOpenedChange}
-                openAction={this.props.openAction}
-                alignment={this.props.alignment}
-                spacing={this.props.spacing}
-                offset={this.props.offset}
-                portalTarget={this.props.portalTarget}
-                toggler={this.props.toggler}
-                togglerWrapperClassName={this.props.togglerWrapperClassName}
-                topLevelMenu={true}
-            >
-                {this.props.children}
-            </MenuOpener>
-        );
-    }
-
-    private closeMenu = () => {
-        this.props.onOpenedChange({ opened: false, source: "SCROLL" });
-    };
-
-    private addScrollListeners = () => {
-        window.addEventListener("scroll", this.closeMenu, true);
-    };
-
-    private removeScrollListeners = () => {
-        window.removeEventListener("scroll", this.closeMenu, true);
-    };
+    return (
+        <MenuOpener
+            opened={opened}
+            onOpenedChange={onOpenedChange}
+            openAction={openAction}
+            alignment={alignment}
+            spacing={spacing}
+            offset={offset}
+            portalTarget={portalTarget}
+            toggler={toggler}
+            togglerWrapperClassName={togglerWrapperClassName}
+            topLevelMenu={true}
+        >
+            {children}
+        </MenuOpener>
+    );
 }

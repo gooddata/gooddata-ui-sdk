@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { memo, useCallback } from "react";
 import {
     IMeasureValueFilter,
     newMeasureValueFilter,
@@ -57,77 +57,72 @@ const getTreatNullAsZeroValue = (
 /**
  * @beta
  */
-export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValueFilterDropdownProps> {
-    public static defaultProps: Pick<
-        IMeasureValueFilterDropdownProps,
-        "displayTreatNullAsZeroOption" | "treatNullAsZeroDefaultValue" | "enableOperatorSelection"
-    > = {
-        displayTreatNullAsZeroOption: false,
-        treatNullAsZeroDefaultValue: false,
-        enableOperatorSelection: true,
-    };
+export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdown(
+    props: IMeasureValueFilterDropdownProps,
+) {
+    const {
+        filter,
+        onCancel,
+        onApply,
+        measureIdentifier,
+        usePercentage,
+        warningMessage,
+        locale,
+        anchorEl,
+        separators,
+        displayTreatNullAsZeroOption = false,
+        treatNullAsZeroDefaultValue = false,
+        enableOperatorSelection = true,
+    } = props;
 
-    public render() {
-        const {
-            filter,
-            onCancel,
-            usePercentage,
-            warningMessage,
-            locale,
-            anchorEl,
-            separators,
-            displayTreatNullAsZeroOption,
-            treatNullAsZeroDefaultValue,
-            enableOperatorSelection,
-        } = this.props;
-
-        return (
-            <Dropdown
-                onApply={this.onApply}
-                onCancel={onCancel}
-                operator={(filter && measureValueFilterOperator(filter)) || null}
-                value={(filter && getFilterValue(filter)) || null}
-                usePercentage={usePercentage}
-                warningMessage={warningMessage}
-                locale={locale}
-                anchorEl={anchorEl}
-                separators={separators}
-                displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
-                treatNullAsZeroValue={getTreatNullAsZeroValue(filter, treatNullAsZeroDefaultValue)}
-                enableOperatorSelection={enableOperatorSelection}
-            />
-        );
-    }
-
-    private onApply = (
-        operator: MeasureValueFilterOperator | null,
-        value: IMeasureValueFilterValue,
-        treatNullValuesAsZero: boolean,
-    ) => {
-        const { measureIdentifier, onApply } = this.props;
-        if (operator === null || operator === "ALL") {
-            onApply(null);
-        } else {
-            if (isRangeConditionOperator(operator)) {
-                onApply(
-                    newMeasureValueFilter(
-                        { localIdentifier: measureIdentifier },
-                        operator,
-                        value.from ?? 0,
-                        value.to ?? 0,
-                        treatNullValuesAsZero ? 0 : undefined,
-                    ),
-                );
+    const handleApply = useCallback(
+        (
+            operator: MeasureValueFilterOperator | null,
+            value: IMeasureValueFilterValue,
+            treatNullValuesAsZero: boolean,
+        ) => {
+            if (operator === null || operator === "ALL") {
+                onApply(null);
             } else {
-                onApply(
-                    newMeasureValueFilter(
-                        { localIdentifier: measureIdentifier },
-                        operator,
-                        value.value ?? 0,
-                        treatNullValuesAsZero ? 0 : undefined,
-                    ),
-                );
+                if (isRangeConditionOperator(operator)) {
+                    onApply(
+                        newMeasureValueFilter(
+                            { localIdentifier: measureIdentifier },
+                            operator,
+                            value.from ?? 0,
+                            value.to ?? 0,
+                            treatNullValuesAsZero ? 0 : undefined,
+                        ),
+                    );
+                } else {
+                    onApply(
+                        newMeasureValueFilter(
+                            { localIdentifier: measureIdentifier },
+                            operator,
+                            value.value ?? 0,
+                            treatNullValuesAsZero ? 0 : undefined,
+                        ),
+                    );
+                }
             }
-        }
-    };
-}
+        },
+        [measureIdentifier, onApply],
+    );
+
+    return (
+        <Dropdown
+            onApply={handleApply}
+            onCancel={onCancel}
+            operator={(filter && measureValueFilterOperator(filter)) || null}
+            value={(filter && getFilterValue(filter)) || null}
+            usePercentage={usePercentage}
+            warningMessage={warningMessage}
+            locale={locale}
+            anchorEl={anchorEl}
+            separators={separators}
+            displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
+            treatNullAsZeroValue={getTreatNullAsZeroValue(filter, treatNullAsZeroDefaultValue)}
+            enableOperatorSelection={enableOperatorSelection}
+        />
+    );
+});

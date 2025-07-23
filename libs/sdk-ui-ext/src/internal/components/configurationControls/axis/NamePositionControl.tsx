@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo } from "react";
+import { useIntl } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
 import { getTranslatedDropdownItems } from "../../../utils/translations.js";
@@ -9,37 +9,21 @@ import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { messages } from "../../../../locales.js";
 
-class NamePositionControl extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps> {
-    public render() {
-        const { axisVisible, axisNameVisible, namePosition } = this.getControlProperties();
-        const { axis, properties, pushData, disabled, configPanelDisabled, intl } = this.props;
+export const NamePositionControl = memo(function NamePositionControl({
+    axis,
+    properties,
+    pushData,
+    disabled,
+    configPanelDisabled,
+}: IConfigItemSubsection) {
+    const intl = useIntl();
 
-        const isDisabled = disabled || !axisVisible || !axisNameVisible;
-        const items = getTranslatedDropdownItems(
-            this.isXAxis() ? xAxisPositionDropdownItems : yAxisPositionDropdownItems,
-            intl,
-        );
-        return (
-            <DropdownControl
-                value={namePosition}
-                valuePath={`${axis}.name.position`}
-                labelText={messages.axisNamePosition.id}
-                disabled={isDisabled}
-                showDisabledMessage={!configPanelDisabled && isDisabled}
-                properties={properties}
-                pushData={pushData}
-                items={items}
-            />
-        );
-    }
-
-    private isXAxis(): boolean {
-        const { axis } = this.props;
+    const isXAxis = (): boolean => {
         return axis === "xaxis" || axis === "secondary_xaxis";
-    }
+    };
 
-    private getControlProperties(): IVisualizationProperties {
-        const axisProperties = this.props.properties?.controls?.[this.props.axis];
+    const getControlProperties = (): IVisualizationProperties => {
+        const axisProperties = properties?.controls?.[axis];
 
         const axisVisible = axisProperties?.visible ?? true;
         const axisNameVisible = axisProperties?.name?.visible ?? true;
@@ -50,7 +34,27 @@ class NamePositionControl extends React.PureComponent<IConfigItemSubsection & Wr
             axisNameVisible,
             namePosition,
         };
-    }
-}
+    };
 
-export default injectIntl(NamePositionControl);
+    const { axisVisible, axisNameVisible, namePosition } = getControlProperties();
+
+    const isDisabled = disabled || !axisVisible || !axisNameVisible;
+    const items = getTranslatedDropdownItems(
+        isXAxis() ? xAxisPositionDropdownItems : yAxisPositionDropdownItems,
+        intl,
+    );
+    return (
+        <DropdownControl
+            value={namePosition}
+            valuePath={`${axis}.name.position`}
+            labelText={messages.axisNamePosition.id}
+            disabled={isDisabled}
+            showDisabledMessage={!configPanelDisabled && isDisabled}
+            properties={properties}
+            pushData={pushData}
+            items={items}
+        />
+    );
+});
+
+export default NamePositionControl;

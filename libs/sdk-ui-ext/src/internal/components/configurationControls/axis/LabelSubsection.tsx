@@ -1,6 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo } from "react";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
 import { AxisType } from "../../../interfaces/AxisType.js";
 import LabelRotationControl from "./LabelRotationControl.js";
@@ -18,44 +17,16 @@ export interface ILabelSubsection {
     showFormat?: boolean;
 }
 
-class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComponentProps> {
-    public render() {
-        const { axisVisible, axisLabelsEnabled } = this.getControlProperties();
-
-        return (
-            <ConfigSubsection
-                axisType={this.props.axis}
-                title={messages.axisLabels.id}
-                valuePath={`${this.props.axis}.labelsEnabled`}
-                properties={this.props.properties}
-                pushData={this.props.pushData}
-                canBeToggled={true}
-                toggledOn={axisLabelsEnabled}
-                toggleDisabled={this.props.disabled || !axisVisible}
-                showDisabledMessage={!this.props.configPanelDisabled && this.props.disabled}
-            >
-                {this.props.showFormat ? (
-                    <LabelFormatControl
-                        disabled={this.props.disabled}
-                        configPanelDisabled={this.props.configPanelDisabled}
-                        axis={this.props.axis}
-                        properties={this.props.properties}
-                        pushData={this.props.pushData}
-                    />
-                ) : null}
-                <LabelRotationControl
-                    disabled={this.props.disabled}
-                    configPanelDisabled={this.props.configPanelDisabled}
-                    axis={this.props.axis}
-                    properties={this.props.properties}
-                    pushData={this.props.pushData}
-                />
-            </ConfigSubsection>
-        );
-    }
-
-    private getControlProperties(): IVisualizationProperties {
-        const axisProperties = this.props.properties?.controls?.[this.props.axis];
+const LabelSubsection = memo(function LabelSubsection({
+    disabled,
+    configPanelDisabled,
+    axis,
+    properties,
+    pushData,
+    showFormat,
+}: ILabelSubsection) {
+    const getControlProperties = (): IVisualizationProperties => {
+        const axisProperties = properties?.controls?.[axis];
 
         const axisVisible = axisProperties?.visible ?? true;
         const axisLabelsEnabled = axisProperties?.labelsEnabled ?? true;
@@ -64,7 +35,40 @@ class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComp
             axisVisible,
             axisLabelsEnabled,
         };
-    }
-}
+    };
 
-export default injectIntl(LabelSubsection);
+    const { axisVisible, axisLabelsEnabled } = getControlProperties();
+
+    return (
+        <ConfigSubsection
+            axisType={axis}
+            title={messages.axisLabels.id}
+            valuePath={`${axis}.labelsEnabled`}
+            properties={properties}
+            pushData={pushData}
+            canBeToggled={true}
+            toggledOn={axisLabelsEnabled}
+            toggleDisabled={disabled || !axisVisible}
+            showDisabledMessage={!configPanelDisabled && disabled}
+        >
+            {showFormat ? (
+                <LabelFormatControl
+                    disabled={disabled}
+                    configPanelDisabled={configPanelDisabled}
+                    axis={axis}
+                    properties={properties}
+                    pushData={pushData}
+                />
+            ) : null}
+            <LabelRotationControl
+                disabled={disabled}
+                configPanelDisabled={configPanelDisabled}
+                axis={axis}
+                properties={properties}
+                pushData={pushData}
+            />
+        </ConfigSubsection>
+    );
+});
+
+export default LabelSubsection;

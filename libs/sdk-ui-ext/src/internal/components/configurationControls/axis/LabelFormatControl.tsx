@@ -1,7 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
 import { getTranslatedDropdownItems } from "../../../utils/translations.js";
@@ -35,8 +35,15 @@ const getControlProperties = (
     };
 };
 
-const LabelFormatControlComponent: React.FC<ILabelFormatControl & WrappedComponentProps> = (props) => {
-    const { disabled, properties, axis, configPanelDisabled, pushData, intl } = props;
+export function LabelFormatControl({
+    disabled,
+    properties,
+    axis,
+    configPanelDisabled,
+    pushData,
+}: ILabelFormatControl) {
+    const intl = useIntl();
+
     const { axisVisible, axisLabelsEnabled, axisFormat } = getControlProperties(properties, axis);
     const isDisabled = disabled || !axisVisible || !axisLabelsEnabled;
 
@@ -52,6 +59,4 @@ const LabelFormatControlComponent: React.FC<ILabelFormatControl & WrappedCompone
             items={getTranslatedDropdownItems(formatDropdownItems, intl)}
         />
     );
-};
-
-export const LabelFormatControl = injectIntl(LabelFormatControlComponent);
+}

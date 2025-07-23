@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { CorePivotTableAgImpl } from "./CorePivotTable.js";
 import {
@@ -117,50 +117,52 @@ const validateConfig = (props: IPivotTableProps): IPivotTableConfig => {
     return config;
 };
 
-class RenderPivotTable extends React.Component<IPivotTableProps> {
-    public render() {
-        const { exportTitle, backend, workspace, config = {} } = this.props;
+function RenderPivotTable(props: IPivotTableProps) {
+    const { exportTitle, backend, workspace, config = {} } = props;
 
-        invariant(
-            backend,
-            "Backend was not provided for PivotTable. Either pass it as a prop or use BackendContext.",
-        );
+    invariant(
+        backend,
+        "Backend was not provided for PivotTable. Either pass it as a prop or use BackendContext.",
+    );
 
-        invariant(
-            workspace,
-            "Workspace was not provided for PivotTable. Either pass it as a prop or use WorkspaceContext.",
-        );
+    invariant(
+        workspace,
+        "Workspace was not provided for PivotTable. Either pass it as a prop or use WorkspaceContext.",
+    );
 
-        const newProps: IPivotTableNonBucketProps = omit<IPivotTableProps, keyof IPivotTableBucketProps>(
-            this.props,
-            ["measures", "rows", "columns", "totals", "filters", "sortBy"],
-        );
+    const newProps: IPivotTableNonBucketProps = omit<IPivotTableProps, keyof IPivotTableBucketProps>(props, [
+        "measures",
+        "rows",
+        "columns",
+        "totals",
+        "filters",
+        "sortBy",
+    ]);
 
-        const pivotTableConfig: IPivotTableConfig = {
-            ...validateConfig(this.props),
-            menu: pivotTableMenuForCapabilities(backend.capabilities, config?.menu),
-        };
-        const corePivotProps: Partial<ICorePivotTableProps> = omit(newProps, ["backend", "workspace"]);
-        const execution = prepareExecution(this.props);
+    const pivotTableConfig: IPivotTableConfig = {
+        ...validateConfig(props),
+        menu: pivotTableMenuForCapabilities(backend.capabilities, config?.menu),
+    };
+    const corePivotProps: Partial<ICorePivotTableProps> = omit(newProps, ["backend", "workspace"]);
+    const execution = prepareExecution(props);
 
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <IntlTranslationsProvider>
-                    {(translationProps: ITranslationsComponentProps) => {
-                        return (
-                            <CorePivotTableAgImpl
-                                {...corePivotProps}
-                                config={pivotTableConfig}
-                                intl={translationProps.intl}
-                                execution={execution}
-                                exportTitle={exportTitle || "PivotTable"}
-                            />
-                        );
-                    }}
-                </IntlTranslationsProvider>
-            </IntlWrapper>
-        );
-    }
+    return (
+        <IntlWrapper locale={props.locale}>
+            <IntlTranslationsProvider>
+                {(translationProps: ITranslationsComponentProps) => {
+                    return (
+                        <CorePivotTableAgImpl
+                            {...corePivotProps}
+                            config={pivotTableConfig}
+                            intl={translationProps.intl}
+                            execution={execution}
+                            exportTitle={exportTitle || "PivotTable"}
+                        />
+                    );
+                }}
+            </IntlTranslationsProvider>
+        </IntlWrapper>
+    );
 }
 
 const WrappedPivotTable = withContexts(RenderPivotTable);

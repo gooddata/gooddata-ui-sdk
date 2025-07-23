@@ -1,6 +1,6 @@
-// (C) 2019-2024 GoodData Corporation
-import React, { ComponentProps } from "react";
-import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+// (C) 2019-2025 GoodData Corporation
+import React, { ComponentProps, useState, useEffect, useRef, useCallback } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import noop from "lodash/noop.js";
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -57,183 +57,155 @@ export interface IInputControlState {
 
 const MAX_NUMBER_LENGTH = 15;
 
-export class InputControl extends React.Component<
-    IInputControlProps & WrappedComponentProps,
-    IInputControlState
-> {
-    public static defaultProps = {
-        value: "",
-        type: "text",
-        disabled: false,
-        pushData: noop,
-        max: Number.MAX_SAFE_INTEGER,
-        min: Number.MIN_SAFE_INTEGER,
-        step: 1,
-        showDisabledMessage: false,
-        hasWarning: false,
-        validateAndPushDataCallback: noop,
-    };
+export default function InputControl({
+    valuePath,
+    properties,
+    labelText,
+    value: propValue = "",
+    placeholder,
+    type = "text",
+    disabled = false,
+    showDisabledMessage = false,
+    disabledMessageId,
+    hasWarning = false,
+    disabledMessageAlignPoints,
+    pushData = noop,
+    maxLength,
+    description,
+    descriptionValues,
+    validateFn,
+    transformFn,
+}: IInputControlProps) {
+    const intl = useIntl();
 
-    private inputRef: HTMLElement;
+    const [value, setValue] = useState(propValue);
+    const [lastSentValue, setLastSentValue] = useState(propValue);
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    constructor(props: IInputControlProps & WrappedComponentProps) {
-        super(props);
-
-        this.state = {
-            value: props.value,
-            lastSentValue: props.value,
-        };
-
-        this.onValueChanged = this.onValueChanged.bind(this);
-        this.onKeyPress = this.onKeyPress.bind(this);
-        this.onBlur = this.onBlur.bind(this);
-        this.triggerBlur = this.triggerBlur.bind(this);
-    }
-
-    public UNSAFE_componentWillReceiveProps(newProps: IInputControlProps & WrappedComponentProps): void {
-        if (newProps.value !== this.state.value) {
-            this.setState({
-                value: newProps.value,
-                lastSentValue: newProps.value,
-            });
+    useEffect(() => {
+        if (propValue !== value) {
+            setValue(propValue);
+            setLastSentValue(propValue);
         }
-    }
+    }, [propValue, value]);
 
-    public render() {
-        const {
-            disabled,
-            labelText,
-            placeholder,
-            showDisabledMessage,
-            disabledMessageId,
-            disabledMessageAlignPoints,
-            intl,
-            type,
-            maxLength,
-            description,
-            descriptionValues,
-        } = this.props;
-
-        return (
-            <DisabledBubbleMessage
-                showDisabledMessage={showDisabledMessage}
-                messageId={disabledMessageId}
-                alignPoints={disabledMessageAlignPoints}
-            >
-                <>
-                    <label className="adi-bucket-inputfield s-adi-bucket-inputfield gd-input gd-input-small">
-                        <span className="input-label-text">{getTranslation(labelText, intl)}</span>
-                        <input
-                            ref={(input) => (this.inputRef = input)}
-                            className={this.getInputClassNames()}
-                            value={this.state.value}
-                            placeholder={getTranslation(placeholder, intl)}
-                            disabled={disabled}
-                            onKeyPress={this.onKeyPress}
-                            onBlur={this.onBlur}
-                            onChange={this.onValueChanged}
-                            maxLength={type === "number" ? MAX_NUMBER_LENGTH : maxLength}
-                        />
-                    </label>
-                    {description ? (
-                        <div className="adi-bucket-inputfield-description">
-                            <FormattedMessage id={description} values={descriptionValues} />
-                        </div>
-                    ) : null}
-                </>
-            </DisabledBubbleMessage>
-        );
-    }
-
-    private getInputClassNames() {
-        const { type, hasWarning } = this.props;
-
+    const getInputClassNames = useCallback(() => {
         return cx("gd-input-field", "gd-input-field-small", {
             "has-warning": hasWarning,
             number: type === "number",
         });
-    }
+    }, [type, hasWarning]);
 
-    private isValid(type: string, value: string) {
-        const { validateFn } = this.props;
-        if (validateFn) {
-            return validateFn(value);
-        }
+    const isValid = useCallback(
+        (type: string, value: string) => {
+            if (validateFn) {
+                return validateFn(value);
+            }
 
-        if (type === "number") {
-            // allow only numbers, `-` and string doesn't starts with `.`
-            return !value.startsWith(".") && (!isNaN(Number(value)) || value === "-");
-        }
+            if (type === "number") {
+                // allow only numbers, `-` and string doesn't starts with `.`
+                return !value.startsWith(".") && (!isNaN(Number(value)) || value === "-");
+            }
 
-        return true;
-    }
+            return true;
+        },
+        [validateFn],
+    );
 
-    private onValueChanged(event: React.ChangeEvent<HTMLInputElement>) {
-        const { type } = this.props;
-        const { value } = event.target;
+    const modifyDataForSending = useCallback(
+        (value: string) => {
+            if (transformFn) {
+                return transformFn(value);
+            }
 
-        if (this.isValid(type, value)) {
-            this.setState({ value });
-        }
-    }
+            if (type === "number") {
+                return value.replace(/\.+$/, "");
+            }
 
-    private triggerBlur() {
-        if (this.inputRef) {
-            this.inputRef.blur();
-        }
-    }
+            return value;
+        },
+        [type, transformFn],
+    );
 
-    private modifyDataForSending(value: string) {
-        const { type, transformFn } = this.props;
-
-        if (transformFn) {
-            return transformFn(value);
-        }
-
-        if (type === "number") {
-            return value.replace(/\.+$/, "");
-        }
-
-        return value;
-    }
-
-    private emitData() {
-        const { valuePath, properties, pushData } = this.props;
-        const { value } = this.state;
-
-        const modifiedData = this.modifyDataForSending(value);
+    const emitData = useCallback(() => {
+        const modifiedData = modifyDataForSending(value);
 
         const clonedProperties = cloneDeep(properties);
         set(clonedProperties, `controls.${valuePath}`, modifiedData);
 
-        this.setState({ value: modifiedData });
+        setValue(modifiedData);
 
         pushData({ properties: clonedProperties });
 
         return modifiedData;
-    }
+    }, [value, modifyDataForSending, properties, valuePath, pushData]);
 
-    private onBlur() {
-        const { value, lastSentValue } = this.state;
-
-        if (lastSentValue !== value) {
-            const validatedData = this.emitData();
-            this.setState({ lastSentValue: validatedData });
+    const triggerBlur = useCallback(() => {
+        if (inputRef.current) {
+            inputRef.current.blur();
         }
-    }
+    }, []);
 
-    private onKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
-        if (event.key === "Enter") {
-            const { value, lastSentValue } = this.state;
+    const onValueChanged = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            const { value } = event.target;
 
-            if (lastSentValue !== value) {
-                const validatedData = this.emitData();
-                this.setState({ lastSentValue: validatedData }, this.triggerBlur);
-            } else {
-                this.triggerBlur();
+            if (isValid(type, value)) {
+                setValue(value);
             }
-        }
-    }
-}
+        },
+        [type, isValid],
+    );
 
-export default injectIntl(InputControl);
+    const onBlur = useCallback(() => {
+        if (lastSentValue !== value) {
+            const validatedData = emitData();
+            setLastSentValue(validatedData);
+        }
+    }, [value, lastSentValue, emitData]);
+
+    const onKeyPress = useCallback(
+        (event: React.KeyboardEvent<HTMLInputElement>) => {
+            if (event.key === "Enter") {
+                if (lastSentValue !== value) {
+                    const validatedData = emitData();
+                    setLastSentValue(validatedData);
+                    triggerBlur();
+                } else {
+                    triggerBlur();
+                }
+            }
+        },
+        [value, lastSentValue, emitData, triggerBlur],
+    );
+
+    return (
+        <DisabledBubbleMessage
+            showDisabledMessage={showDisabledMessage}
+            messageId={disabledMessageId}
+            alignPoints={disabledMessageAlignPoints}
+        >
+            <>
+                <label className="adi-bucket-inputfield s-adi-bucket-inputfield gd-input gd-input-small">
+                    <span className="input-label-text">{getTranslation(labelText, intl)}</span>
+                    <input
+                        ref={inputRef}
+                        className={getInputClassNames()}
+                        value={value}
+                        placeholder={getTranslation(placeholder, intl)}
+                        disabled={disabled}
+                        onKeyPress={onKeyPress}
+                        onBlur={onBlur}
+                        onChange={onValueChanged}
+                        maxLength={type === "number" ? MAX_NUMBER_LENGTH : maxLength}
+                    />
+                </label>
+                {description ? (
+                    <div className="adi-bucket-inputfield-description">
+                        <FormattedMessage id={description} values={descriptionValues} />
+                    </div>
+                ) : null}
+            </>
+        </DisabledBubbleMessage>
+    );
+}

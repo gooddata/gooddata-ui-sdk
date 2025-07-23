@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo } from "react";
+import { useIntl } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
 import { legendPositionDropdownItems } from "../../../constants/dropdowns.js";
@@ -16,25 +16,31 @@ export interface ILegendPositionControl {
     pushData: (data: any) => any;
 }
 
-class LegendPositionControl extends React.PureComponent<ILegendPositionControl & WrappedComponentProps> {
-    public render() {
-        return (
-            <DropdownControl
-                value={this.props.value}
-                valuePath="legend.position"
-                labelText={messages.position.id}
-                disabled={this.props.disabled}
-                properties={this.props.properties}
-                pushData={this.props.pushData}
-                items={this.generateDropdownItems()}
-                showDisabledMessage={this.props.showDisabledMessage}
-            />
-        );
-    }
+const LegendPositionControl = memo(function LegendPositionControl({
+    value,
+    disabled,
+    properties,
+    pushData,
+    showDisabledMessage,
+}: ILegendPositionControl) {
+    const intl = useIntl();
 
-    private generateDropdownItems() {
-        return getTranslatedDropdownItems(legendPositionDropdownItems, this.props.intl);
-    }
-}
+    const generateDropdownItems = () => {
+        return getTranslatedDropdownItems(legendPositionDropdownItems, intl);
+    };
 
-export default injectIntl(LegendPositionControl);
+    return (
+        <DropdownControl
+            value={value}
+            valuePath="legend.position"
+            labelText={messages.position.id}
+            disabled={disabled}
+            properties={properties}
+            pushData={pushData}
+            items={generateDropdownItems()}
+            showDisabledMessage={showDisabledMessage}
+        />
+    );
+});
+
+export default LegendPositionControl;

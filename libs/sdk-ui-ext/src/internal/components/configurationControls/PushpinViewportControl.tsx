@@ -1,12 +1,11 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 
 import DropdownControl from "./DropdownControl.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 import { pushpinViewportDropdownItems } from "../../constants/dropdowns.js";
-import { IGeoConfigViewport } from "@gooddata/sdk-ui-geo";
 import { messages } from "../../../locales.js";
 
 export interface IPushpinViewportControl {
@@ -15,13 +14,15 @@ export interface IPushpinViewportControl {
     pushData: (data: any) => any;
 }
 
-function getPushpinProperty(props: IPushpinViewportControl & WrappedComponentProps): IGeoConfigViewport {
-    return props.properties?.controls?.viewport ?? { area: "auto" };
-}
+export default function PushpinViewportControl({
+    disabled,
+    properties,
+    pushData,
+}: IPushpinViewportControl): React.ReactElement {
+    const area = properties?.controls?.viewport.area ?? "auto";
 
-function PushpinViewportControl(props: IPushpinViewportControl & WrappedComponentProps): React.ReactElement {
-    const { area } = getPushpinProperty(props);
-    const { disabled, properties, pushData, intl } = props;
+    const intl = useIntl();
+
     return (
         <div className="s-pushpin-viewport-control">
             <DropdownControl
@@ -37,5 +38,3 @@ function PushpinViewportControl(props: IPushpinViewportControl & WrappedComponen
         </div>
     );
 }
-
-export default injectIntl(PushpinViewportControl);
