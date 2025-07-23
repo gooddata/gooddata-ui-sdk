@@ -78,11 +78,26 @@ function loadColorPalette(ctx: DashboardContext): Promise<IColorPalette> {
     return backend.workspace(workspace).styling().getColorPalette();
 }
 
+const conditionallyStripToDateFilters = (
+    config: IDateFilterConfig,
+    enableToDateFilters: boolean,
+): IDateFilterConfig => {
+    if (enableToDateFilters) {
+        return config;
+    }
+
+    return {
+        ...config,
+        relativePresets: config.relativePresets?.filter((preset) => !preset.boundedFilter) ?? [],
+    };
+};
+
 function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig, cmd: InitializeDashboard) {
+    const enableToDateFilters = cmd.payload.config?.settings?.enableToDateFilters ?? false;
     if (config.dateFilterConfig) {
-        return config.dateFilterConfig;
+        return conditionallyStripToDateFilters(config.dateFilterConfig, enableToDateFilters);
     } else if (config?.settings?.dateFilterConfig) {
-        return config.settings.dateFilterConfig;
+        return conditionallyStripToDateFilters(config.settings.dateFilterConfig, enableToDateFilters);
     }
 
     const customDateFilterConfig: PromiseFnReturnType<typeof loadCustomDateFilterConfig> = yield call(
@@ -91,7 +106,7 @@ function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig
     );
 
     if (customDateFilterConfig) {
-        return customDateFilterConfig;
+        return conditionallyStripToDateFilters(customDateFilterConfig, enableToDateFilters);
     } else {
         const result: PromiseFnReturnType<typeof loadDateFilterConfig> = yield call(
             loadDateFilterConfig,
@@ -108,7 +123,10 @@ function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig
             yield call(onDateFilterConfigValidationError, ctx, "NO_CONFIG", cmd.correlationId);
         }
 
-        return result?.items[0] ?? defaultDateFilterConfig;
+        return conditionallyStripToDateFilters(
+            result?.items[0] ?? defaultDateFilterConfig,
+            enableToDateFilters,
+        );
     }
 }
 
