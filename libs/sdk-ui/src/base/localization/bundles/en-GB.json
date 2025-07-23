@@ -749,5 +749,9 @@
     "table.bulkActions.chooseAction": "Select an action...",
     "table.bulkActions.selectedCount": "{selectedCount} of {totalCount} chosen",
     "table.emptyState.noMatch": "No match found",
-    "table.emptyState.tryAdjustingFilters": "Verify the spelling or modify the filters."
+    "table.emptyState.tryAdjustingFilters": "Verify the spelling or modify the filters.",
+    "filters.thisWeekToDate.title": "This week to date (WTD)",
+    "filters.thisMonthToDate.title": "This month to date (MTD)",
+    "filters.thisQuarterToDate.title": "This quarter to date (QTD)",
+    "filters.thisYearToDate.title": "This year to date (YTD)"
 }

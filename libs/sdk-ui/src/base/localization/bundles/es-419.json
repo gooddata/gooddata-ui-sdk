@@ -740,5 +740,9 @@
     "table.bulkActions.chooseAction": "Elige una acción...",
     "table.bulkActions.selectedCount": "{selectedCount} de {totalCount} seleccionados",
     "table.emptyState.noMatch": "No se encontró ninguna coincidencia",
-    "table.emptyState.tryAdjustingFilters": "Corregir la ortografía o ajustar los filtros."
+    "table.emptyState.tryAdjustingFilters": "Corregir la ortografía o ajustar los filtros.",
+    "filters.thisWeekToDate.title": "Esta semana hasta la fecha (WTD)",
+    "filters.thisMonthToDate.title": "Este mes hasta la fecha (MTD)",
+    "filters.thisQuarterToDate.title": "Este trimestre hasta la fecha (QTD)",
+    "filters.thisYearToDate.title": "En lo que va de año (YTD)"
 }

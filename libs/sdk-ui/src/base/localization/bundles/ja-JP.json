@@ -740,5 +740,9 @@
     "table.bulkActions.chooseAction": "アクションを選択...",
     "table.bulkActions.selectedCount": "{selectedCount} / {totalCount} 選択済み",
     "table.emptyState.noMatch": "一致するものがありません",
-    "table.emptyState.tryAdjustingFilters": "スペルをチェックするか、フィルターを調整する。"
+    "table.emptyState.tryAdjustingFilters": "スペルをチェックするか、フィルターを調整する。",
+    "filters.thisWeekToDate.title": "今週から今日まで（WTD）",
+    "filters.thisMonthToDate.title": "今月から今日まで（MTD）",
+    "filters.thisQuarterToDate.title": "今四半期累計（QTD）",
+    "filters.thisYearToDate.title": "今年（YTD）"
 }

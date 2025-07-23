@@ -740,5 +740,9 @@
     "table.bulkActions.chooseAction": "Valitse toiminto...",
     "table.bulkActions.selectedCount": "{selectedCount} / {totalCount} valittu",
     "table.emptyState.noMatch": "Ei osumia",
-    "table.emptyState.tryAdjustingFilters": "Tarkista oikeinkirjoitus tai säädä suodattimia."
+    "table.emptyState.tryAdjustingFilters": "Tarkista oikeinkirjoitus tai säädä suodattimia.",
+    "filters.thisWeekToDate.title": "Tällä viikolla tähän mennessä (WTD)",
+    "filters.thisMonthToDate.title": "Tässä kuussa tähän mennessä (MTD)",
+    "filters.thisQuarterToDate.title": "Tähänastinen vuosineljännes (QTD)",
+    "filters.thisYearToDate.title": "Tämä vuosi tähän mennessä (YTD)"
 }

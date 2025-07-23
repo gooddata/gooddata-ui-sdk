@@ -740,5 +740,9 @@
     "table.bulkActions.chooseAction": "Wählen Sie eine Aktion...",
     "table.bulkActions.selectedCount": "{selectedCount} von {totalCount} ausgewählten",
     "table.emptyState.noMatch": "Keine Übereinstimmung gefunden",
-    "table.emptyState.tryAdjustingFilters": "Überprüfen Sie die Rechtschreibung oder passen Sie die Filter an."
+    "table.emptyState.tryAdjustingFilters": "Überprüfen Sie die Rechtschreibung oder passen Sie die Filter an.",
+    "filters.thisWeekToDate.title": "Diese Woche bis heute (WTD)",
+    "filters.thisMonthToDate.title": "Diesen Monat bis heute (MTD)",
+    "filters.thisQuarterToDate.title": "Dieses Quartal bis heute (QTD)",
+    "filters.thisYearToDate.title": "Dieses Jahr bis heute (YTD)"
 }

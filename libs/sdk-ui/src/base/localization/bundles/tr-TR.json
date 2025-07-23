@@ -749,5 +749,9 @@
     "table.bulkActions.chooseAction": "Bir eylem seçin...",
     "table.bulkActions.selectedCount": "{selectedCount} / {totalCount} seçildi",
     "table.emptyState.noMatch": "Eşleşme bulunamadı",
-    "table.emptyState.tryAdjustingFilters": "Yazımı kontrol edin veya filtreleri ayarlayın."
+    "table.emptyState.tryAdjustingFilters": "Yazımı kontrol edin veya filtreleri ayarlayın.",
+    "filters.thisWeekToDate.title": "Bu hafta itibarıyla (WTD)",
+    "filters.thisMonthToDate.title": "Bu ayın başından bugüne (MTD)",
+    "filters.thisQuarterToDate.title": "Bu çeyrekten bugüne (QTD)",
+    "filters.thisYearToDate.title": "Bu yılın başından bugüne (YTD)"
 }
