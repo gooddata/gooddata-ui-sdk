@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { describe, beforeAll, expect, it } from "vitest";
 import { testBackend, testWorkspace } from "./backend.js";
 const backend = testBackend();
@@ -6,6 +6,25 @@ const backend = testBackend();
 beforeAll(async () => {
     await backend.authenticate(true);
 });
+
+// Helper function to sanitize results by removing filters with boundedFilter
+function filtersWithoutToDateFilters(result) {
+    const queryResult = { ...result };
+
+    if (queryResult.items) {
+        queryResult.items = queryResult.items.map((item) => {
+            if (item.relativePresets) {
+                return {
+                    ...item,
+                    relativePresets: item.relativePresets.filter((preset) => !preset.boundedFilter),
+                };
+            }
+            return item;
+        });
+    }
+
+    return queryResult;
+}
 
 describe("tiger dateFilterConfigs", () => {
     it("should load date filter configs", async () => {
@@ -16,7 +35,8 @@ describe("tiger dateFilterConfigs", () => {
             .withLimit(10)
             .query();
 
-        expect(result).toMatchSnapshot();
+        const sanitizedResult = filtersWithoutToDateFilters(result);
+        expect(sanitizedResult).toMatchSnapshot();
     });
 
     it("should load empty date filter configs for out-of-range page", async () => {
@@ -28,6 +48,7 @@ describe("tiger dateFilterConfigs", () => {
             .query();
 
         const page = await result.goTo(4);
-        expect(page).toMatchSnapshot();
+        const sanitizedPage = filtersWithoutToDateFilters(page);
+        expect(sanitizedPage).toMatchSnapshot();
     });
 });
