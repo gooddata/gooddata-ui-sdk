@@ -749,5 +749,9 @@
     "table.bulkActions.chooseAction": "Wybierz działanie...",
     "table.bulkActions.selectedCount": "{selectedCount} z {totalCount} wybranych",
     "table.emptyState.noMatch": "Nie znaleziono dopasowania",
-    "table.emptyState.tryAdjustingFilters": "Sprawdź pisownię lub dostosuj filtry."
+    "table.emptyState.tryAdjustingFilters": "Sprawdź pisownię lub dostosuj filtry.",
+    "filters.thisWeekToDate.title": "Bieżący tydzień (WTD)",
+    "filters.thisMonthToDate.title": "Od początku miesiąca (MTD)",
+    "filters.thisQuarterToDate.title": "Od początku tego kwartału (QTD)",
+    "filters.thisYearToDate.title": "Od początku roku (YTD)"
 }

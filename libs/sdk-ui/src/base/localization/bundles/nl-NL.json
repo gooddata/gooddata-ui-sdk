@@ -740,5 +740,9 @@
     "table.bulkActions.chooseAction": "Kies een actie...",
     "table.bulkActions.selectedCount": "{selectedCount} van {totalCount} geselecteerd",
     "table.emptyState.noMatch": "Geen overeenkomst gevonden",
-    "table.emptyState.tryAdjustingFilters": "Controleer de spelling of pas filters aan."
+    "table.emptyState.tryAdjustingFilters": "Controleer de spelling of pas filters aan.",
+    "filters.thisWeekToDate.title": "Deze week tot nu toe (WTD)",
+    "filters.thisMonthToDate.title": "Deze maand tot datum (MTD)",
+    "filters.thisQuarterToDate.title": "Dit kwartaal tot nu toe (QTD)",
+    "filters.thisYearToDate.title": "Dit jaar tot nu toe (YTD)"
 }

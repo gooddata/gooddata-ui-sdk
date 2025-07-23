@@ -749,5 +749,9 @@
     "table.bulkActions.chooseAction": "작업을 선택하세요...",
     "table.bulkActions.selectedCount": "선택된 {selectedCount} 중 {totalCount}",
     "table.emptyState.noMatch": "일치하는 항목이 없습니다",
-    "table.emptyState.tryAdjustingFilters": "철자를 확인하거나 필터를 조정하세요."
+    "table.emptyState.tryAdjustingFilters": "철자를 확인하거나 필터를 조정하세요.",
+    "filters.thisWeekToDate.title": "이번 주 현재 (WTD)",
+    "filters.thisMonthToDate.title": "이번 달 현재 (MTD)",
+    "filters.thisQuarterToDate.title": "이번 분기 누적 (QTD)",
+    "filters.thisYearToDate.title": "올해 누적 (YTD)"
 }

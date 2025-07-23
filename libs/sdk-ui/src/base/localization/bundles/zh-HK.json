@@ -740,5 +740,9 @@
     "table.bulkActions.chooseAction": "選擇作...",
     "table.bulkActions.selectedCount": "{selectedCount} / {totalCount} 已選擇",
     "table.emptyState.noMatch": "未搵到匹配項",
-    "table.emptyState.tryAdjustingFilters": "檢查拼寫或調整過濾器。"
+    "table.emptyState.tryAdjustingFilters": "檢查拼寫或調整過濾器。",
+    "filters.thisWeekToDate.title": "本周至今（WTD）",
+    "filters.thisMonthToDate.title": "本月迄今（ MTD ）",
+    "filters.thisQuarterToDate.title": "本季度迄今（ QTD ）",
+    "filters.thisYearToDate.title": "今年至今（YTD）"
 }

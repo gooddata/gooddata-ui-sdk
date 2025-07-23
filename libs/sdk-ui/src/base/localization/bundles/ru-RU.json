@@ -749,5 +749,9 @@
     "table.bulkActions.chooseAction": "Выберите действие...",
     "table.bulkActions.selectedCount": "{selectedCount} из {totalCount} выбрано",
     "table.emptyState.noMatch": "Совпадений не найдено",
-    "table.emptyState.tryAdjustingFilters": "Проверьте правописание или настройте фильтры."
+    "table.emptyState.tryAdjustingFilters": "Проверьте правописание или настройте фильтры.",
+    "filters.thisWeekToDate.title": "На текущую неделю (WTD)",
+    "filters.thisMonthToDate.title": "С начала месяца (MTD)",
+    "filters.thisQuarterToDate.title": "С начала квартала (QTD)",
+    "filters.thisYearToDate.title": "С начала года (YTD)"
 }

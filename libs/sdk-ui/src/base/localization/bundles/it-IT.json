@@ -740,5 +740,9 @@
     "table.bulkActions.chooseAction": "Scegliere un'azione...",
     "table.bulkActions.selectedCount": " selectedCount} di {totalCount} selezionato",
     "table.emptyState.noMatch": "Nessuna corrispondenza trovata",
-    "table.emptyState.tryAdjustingFilters": "Controllare l'ortografia o regolare i filtri."
+    "table.emptyState.tryAdjustingFilters": "Controllare l'ortografia o regolare i filtri.",
+    "filters.thisWeekToDate.title": "Questa settimana ad oggi (WTD)",
+    "filters.thisMonthToDate.title": "Questo mese fino ad oggi (MTD)",
+    "filters.thisQuarterToDate.title": "Questo trimestre fino ad oggi (QTD)",
+    "filters.thisYearToDate.title": "Questo anno fino ad oggi (YTD)"
 }
