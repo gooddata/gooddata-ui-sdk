@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
@@ -15,11 +15,11 @@ import {
     UnmountFunction,
 } from "../../interfaces/Visualization.js";
 
-export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps & { onAfterRender?: () => void };
-function LocalizedUnknownVisualizationClass({
-    intl,
-    onAfterRender,
-}: IIntlLocalizedUnknownVisualizationClass) {
+export type IIntlLocalizedUnknownVisualizationClass = { onAfterRender?: () => void };
+
+function IntlLocalizedUnknownVisualizationClass({ onAfterRender }: IIntlLocalizedUnknownVisualizationClass) {
+    const intl = useIntl();
+
     const errorDetails = React.useMemo(() => {
         return newErrorMapping(intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN];
     }, [intl]);
@@ -31,10 +31,6 @@ function LocalizedUnknownVisualizationClass({
     const { message, description } = errorDetails;
     return <ErrorComponent message={message} description={description} />;
 }
-export const IntlLocalizedUnknownVisualizationClass = injectIntl<
-    "intl",
-    IIntlLocalizedUnknownVisualizationClass
->(LocalizedUnknownVisualizationClass);
 
 export class PluggableUnknownChart extends AbstractPluggableVisualization {
     private renderFun: RenderFunction;

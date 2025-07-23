@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useState, useCallback, memo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
@@ -12,8 +11,9 @@ import { isComparisonConditionOperator, isRangeConditionOperator } from "@goodda
 import TreatNullValuesAsZeroCheckbox from "./TreatNullValuesAsZeroCheckbox.js";
 import { WarningMessage } from "./typings.js";
 import { WarningMessageComponent } from "./WarningMessage.js";
+import { useIntl } from "react-intl";
 
-interface IDropdownBodyOwnProps {
+interface IDropdownBodyProps {
     operator: MeasureValueFilterOperator;
     value: IMeasureValueFilterValue;
     usePercentage?: boolean;
@@ -33,8 +33,6 @@ interface IDropdownBodyOwnProps {
     enableOperatorSelection?: boolean;
 }
 
-type IDropdownBodyProps = IDropdownBodyOwnProps & WrappedComponentProps;
-
 interface IDropdownBodyState {
     operator: MeasureValueFilterOperator;
     value: IMeasureValueFilterValue;
@@ -43,7 +41,9 @@ interface IDropdownBodyState {
 
 const DefaultValuePrecision = 6;
 
-const DropdownBodyWrapped = memo(function DropdownBodyWrapped(props: IDropdownBodyProps) {
+export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: IDropdownBodyProps) {
+    const intl = useIntl();
+
     const {
         operator: propsOperator,
         value,
@@ -243,7 +243,7 @@ const DropdownBodyWrapped = memo(function DropdownBodyWrapped(props: IDropdownBo
         return null;
     }, [props, state, handleValueChange, handleFromChange, handleToChange, onApply]);
 
-    const { onCancel, warningMessage, displayTreatNullAsZeroOption, enableOperatorSelection, intl } = props;
+    const { onCancel, warningMessage, displayTreatNullAsZeroOption, enableOperatorSelection } = props;
     const { operator, enabledTreatNullValuesAsZero } = state;
 
     return (
@@ -293,9 +293,7 @@ const DropdownBodyWrapped = memo(function DropdownBodyWrapped(props: IDropdownBo
     );
 });
 
-export const DropdownBodyWithIntl = injectIntl(DropdownBodyWrapped);
-
-export const DropdownBody = memo(function DropdownBody(props: IDropdownBodyOwnProps) {
+export const DropdownBody = memo(function DropdownBody(props: IDropdownBodyProps) {
     return (
         <IntlWrapper locale={props.locale}>
             <DropdownBodyWithIntl {...props} />

@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo, useState, useCallback } from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
 import { ColorPicker } from "@gooddata/sdk-ui-kit";
@@ -29,13 +28,6 @@ export interface IColorDropdownOwnProps {
     children?: React.ReactNode;
 }
 
-export interface IColorDropdownState {
-    isDropdownOpen: boolean;
-    dropdownVersion: DropdownVersionType;
-}
-
-export type IColorDropdownProps = IColorDropdownOwnProps & WrappedComponentProps;
-
 const COLOR_FOR_UNKNOWN_ITEM: IRgbColorValue = {
     r: 255,
     g: 0,
@@ -49,7 +41,7 @@ const ColorDropdown = memo(function ColorDropdown({
     onColorSelected: onColorSelectedProp,
     disabled,
     children,
-}: IColorDropdownProps) {
+}: IColorDropdownOwnProps) {
     const [id] = useState(() => uuidv4());
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [dropdownVersion, setDropdownVersion] = useState(DropdownVersionType.ColorPalette);
@@ -199,4 +191,4 @@ const ColorDropdown = memo(function ColorDropdown({
     );
 });
 
-export default injectIntl<"intl", IColorDropdownProps>(ColorDropdown);
+export default ColorDropdown;

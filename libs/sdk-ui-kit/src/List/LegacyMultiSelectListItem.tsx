@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { memo } from "react";
-import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import noop from "lodash/noop.js";
 
@@ -10,7 +10,6 @@ import { stringUtils } from "@gooddata/util";
  * @internal
  */
 export interface ILegacyMultiSelectListItemProps {
-    intl: IntlShape;
     isLoading?: boolean;
     onMouseOut?: (source: any) => void;
     onMouseOver?: (source: any) => void;
@@ -82,4 +81,4 @@ export const LegacyMultiSelectListItem = memo(function LegacyMultiSelectListItem
     );
 });
 
-export default injectIntl(LegacyMultiSelectListItem);
+export default LegacyMultiSelectListItem;

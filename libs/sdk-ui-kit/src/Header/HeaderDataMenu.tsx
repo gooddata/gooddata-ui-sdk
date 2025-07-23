@@ -1,6 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { injectIntl, IntlShape } from "react-intl";
+import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 import cx from "classnames";
 
@@ -21,18 +21,16 @@ export interface IHeaderDataMenuItem extends IHeaderMenuItem {
  * @internal
  */
 export interface IHeaderDataMenuProps {
-    intl: IntlShape;
     className?: string;
     onMenuItemClick: (item: IHeaderDataMenuItem) => void;
     dataMenuItems: IHeaderDataMenuItem[];
 }
+/**
+ * @internal
+ */
+export function HeaderDataMenu({ onMenuItemClick, dataMenuItems, className }: IHeaderDataMenuProps) {
+    const intl = useIntl();
 
-export const CoreHeaderDataMenu: React.FC<IHeaderDataMenuProps> = ({
-    intl,
-    onMenuItemClick,
-    dataMenuItems,
-    className,
-}) => {
     const renderSection = (items: IHeaderDataMenuItem[]) => {
         return items.map((item: IHeaderDataMenuItem) => {
             const { isDisable, tooltipText, isActive, className, key, onClick } = item;
@@ -78,9 +76,4 @@ export const CoreHeaderDataMenu: React.FC<IHeaderDataMenuProps> = ({
             </ul>
         </div>
     );
-};
-
-/**
- * @internal
- */
-export const HeaderDataMenu = injectIntl(CoreHeaderDataMenu);
+}

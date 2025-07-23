@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
 import noop from "lodash/noop.js";
 import { IChartConfig } from "../../../interfaces/index.js";
 import {
@@ -32,13 +31,13 @@ export interface IXirrTransformationProps {
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
-function XirrTransformation({
+export default function XirrTransformation({
     drillableItems = [],
     config = {},
     onDrill = () => true,
     onAfterRender = noop,
     dataView,
-}: IXirrTransformationProps & WrappedComponentProps) {
+}: IXirrTransformationProps) {
     const getDisableDrillUnderlineFromConfig = (): boolean => (config ? config.disableDrillUnderline : false);
 
     const handleFiredDrillEvent = (item: IHeadlineFiredDrillEventItemContext, target: HTMLElement) => {
@@ -62,5 +61,3 @@ function XirrTransformation({
         />
     );
 }
-
-export default injectIntl(XirrTransformation);

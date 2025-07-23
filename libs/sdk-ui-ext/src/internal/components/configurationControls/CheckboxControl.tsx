@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
@@ -19,18 +19,19 @@ export interface ICheckboxControlProps {
     isValueInverted?: boolean;
 }
 
-function CheckboxControl({
+export default function CheckboxControl({
     checked = false,
     disabled = false,
     showDisabledMessage = false,
     labelText,
-    intl,
     valuePath,
     disabledMessageId,
     properties,
     pushData,
     isValueInverted = false,
-}: ICheckboxControlProps & WrappedComponentProps) {
+}: ICheckboxControlProps) {
+    const intl = useIntl();
+
     const onValueChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         const clonedProperties = cloneDeep(properties);
         set(
@@ -58,5 +59,3 @@ function CheckboxControl({
         </DisabledBubbleMessage>
     );
 }
-
-export default injectIntl(CheckboxControl);

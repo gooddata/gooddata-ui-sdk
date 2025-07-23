@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
 import { getTranslatedDropdownItems } from "../../../utils/translations.js";
@@ -9,16 +9,21 @@ import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { messages } from "../../../../locales.js";
 
-const NamePositionControl = memo(function NamePositionControl(
-    props: IConfigItemSubsection & WrappedComponentProps,
-) {
+export const NamePositionControl = memo(function NamePositionControl({
+    axis,
+    properties,
+    pushData,
+    disabled,
+    configPanelDisabled,
+}: IConfigItemSubsection) {
+    const intl = useIntl();
+
     const isXAxis = (): boolean => {
-        const { axis } = props;
         return axis === "xaxis" || axis === "secondary_xaxis";
     };
 
     const getControlProperties = (): IVisualizationProperties => {
-        const axisProperties = props.properties?.controls?.[props.axis];
+        const axisProperties = properties?.controls?.[axis];
 
         const axisVisible = axisProperties?.visible ?? true;
         const axisNameVisible = axisProperties?.name?.visible ?? true;
@@ -32,7 +37,6 @@ const NamePositionControl = memo(function NamePositionControl(
     };
 
     const { axisVisible, axisNameVisible, namePosition } = getControlProperties();
-    const { axis, properties, pushData, disabled, configPanelDisabled, intl } = props;
 
     const isDisabled = disabled || !axisVisible || !axisNameVisible;
     const items = getTranslatedDropdownItems(
@@ -53,4 +57,4 @@ const NamePositionControl = memo(function NamePositionControl(
     );
 });
 
-export default injectIntl(NamePositionControl);
+export default NamePositionControl;

@@ -1,14 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { memo, ReactNode } from "react";
-import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 import identity from "lodash/identity.js";
 import cx from "classnames";
 
 import { IHeaderMenuProps, IHeaderMenuItem } from "./typings.js";
 
-function WrappedHeaderMenu(props: IHeaderMenuProps & WrappedComponentProps): ReactNode {
-    const { className = "", onMenuItemClick = identity, sections = [], intl } = props;
+export const HeaderMenu = memo(function HeaderMenu({
+    className = "",
+    onMenuItemClick = identity,
+    sections = [],
+}: IHeaderMenuProps): ReactNode {
+    const intl = useIntl();
 
     function getClassNames(): string {
         return cx("gd-header-menu", className);
@@ -59,6 +63,4 @@ function WrappedHeaderMenu(props: IHeaderMenuProps & WrappedComponentProps): Rea
     }
 
     return <div className={getClassNames()}>{renderSections()}</div>;
-}
-
-export const HeaderMenu = memo(injectIntl(WrappedHeaderMenu));
+});

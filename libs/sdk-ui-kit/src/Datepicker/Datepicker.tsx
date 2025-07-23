@@ -10,7 +10,7 @@ import isSameDay from "date-fns/isSameDay/index.js";
 import classNames from "classnames";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { WeekStart } from "@gooddata/sdk-model";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { ClassNames, DayPicker, DayPickerProps } from "react-day-picker";
 
 import { IAlignPoint } from "../typings/positioning.js";
@@ -63,7 +63,7 @@ export interface IDatePickerOwnProps {
     onDateInputKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-export type DatePickerProps = IDatePickerOwnProps & WrappedComponentProps;
+export type DatePickerProps = IDatePickerOwnProps;
 
 const convertedLocales: Record<string, Locale> = {
     "en-US": enUS,
@@ -139,7 +139,6 @@ export const WrappedDatePicker = memo(function WrappedDatePicker({
     className = "",
     date = new Date(),
     dateFormat = DEFAULT_DATE_FORMAT,
-    intl,
     onAlign = noop,
     onBlur = noop,
     onChange = noop,
@@ -150,7 +149,9 @@ export const WrappedDatePicker = memo(function WrappedDatePicker({
     size = "",
     tabIndex = 0,
     weekStart = "Sunday" as const,
-}: DatePickerProps) {
+}: IDatePickerOwnProps) {
+    const intl = useIntl();
+
     const rootRef = useRef<HTMLElement>();
     const datePickerContainerRef = useRef<HTMLDivElement>();
     const inputRef = useRef<HTMLInputElement>();
@@ -411,15 +412,13 @@ export const WrappedDatePicker = memo(function WrappedDatePicker({
     );
 });
 
-const DatePickerWithIntl = injectIntl(WrappedDatePicker);
-
 /**
  * @internal
  */
 export const Datepicker = memo(function Datepicker(props: IDatePickerOwnProps) {
     return (
         <IntlWrapper locale={props.locale}>
-            <DatePickerWithIntl {...props} />
+            <WrappedDatePicker {...props} />
         </IntlWrapper>
     );
 });

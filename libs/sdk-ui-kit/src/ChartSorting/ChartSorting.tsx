@@ -1,6 +1,6 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useState, useCallback, useMemo } from "react";
-import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ISortItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import isEqual from "lodash/isEqual.js";
@@ -13,7 +13,7 @@ import { Button } from "../Button/index.js";
 /**
  * @internal
  */
-export interface ChartSortingOwnProps {
+export interface ChartSortingProps {
     currentSort: ISortItem[];
     availableSorts: IAvailableSortsGroup[];
     bucketItems: IBucketItemDescriptors;
@@ -27,21 +27,17 @@ export interface ChartSortingOwnProps {
 /**
  * @internal
  */
-export type ChartSortingProps = ChartSortingOwnProps & WrappedComponentProps;
-
-/**
- * @internal
- */
-export const ChartSorting: React.FC<ChartSortingProps> = ({
+export function ChartSortingWithIntl({
     currentSort,
     availableSorts,
-    intl,
     bucketItems,
     buttonNode,
     onCancel,
     onApply,
     enableRenamingMeasureToMetric,
-}) => {
+}: ChartSortingProps) {
+    const intl = useIntl();
+
     const [currentSelectedSort, setCurrentSort] = useState<ISortItem[]>(currentSort);
 
     const handleApply = useCallback(() => {
@@ -85,18 +81,15 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
             </div>
         </ChartSortingDropdownBody>
     );
-};
+}
 
 /**
  * @internal
  */
-export const ChartSortingWithIntl = injectIntl(ChartSorting);
-
-/**
- * @internal
- */
-export const ChartSortingDialog: React.FC<ChartSortingOwnProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <ChartSortingWithIntl {...props} />
-    </IntlWrapper>
-);
+export function ChartSortingDialog(props: ChartSortingProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <ChartSortingWithIntl {...props} />
+        </IntlWrapper>
+    );
+}

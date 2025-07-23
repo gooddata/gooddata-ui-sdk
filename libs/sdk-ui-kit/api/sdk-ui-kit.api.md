@@ -50,8 +50,6 @@ import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { WeekStart } from '@gooddata/sdk-model';
-import { WithIntlProps } from 'react-intl';
-import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
 export function accessibilityConfigToAttributes(accessibilityConfig?: IAccessibilityConfigBase): React_2.HTMLAttributes<HTMLElement>;
@@ -92,7 +90,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Omit<WithIntlProps<IAppHeaderProps & WrappedComponentProps>, "theme" | "themeIsLoading" | "themeStatus">>;
+export const AppHeader: React_2.ComponentType<Omit<IAppHeaderProps, "theme" | "themeIsLoading" | "themeStatus">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -217,10 +215,10 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React_2.PureCo
 export const Button: React_2.ForwardRefExoticComponent<IButtonProps & React_2.RefAttributes<HTMLElement>>;
 
 // @internal (undocumented)
-export const ChartSortingDialog: React_2.FC<ChartSortingOwnProps>;
+export function ChartSortingDialog(props: ChartSortingProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export interface ChartSortingOwnProps {
+export interface ChartSortingProps {
     // (undocumented)
     availableSorts: IAvailableSortsGroup[];
     // (undocumented)
@@ -240,12 +238,7 @@ export interface ChartSortingOwnProps {
 }
 
 // @internal (undocumented)
-export type ChartSortingProps = ChartSortingOwnProps & WrappedComponentProps;
-
-// @internal (undocumented)
-export const ChartSortingWithIntl: React_2.FC<WithIntlProps<ChartSortingProps>> & {
-    WrappedComponent: React_2.ComponentType<ChartSortingProps>;
-};
+export function ChartSortingWithIntl({ currentSort, availableSorts, bucketItems, buttonNode, onCancel, onApply, enableRenamingMeasureToMetric, }: ChartSortingProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const Checkbox: React_2.NamedExoticComponent<CheckboxProps>;
@@ -286,9 +279,7 @@ export function CodeOptions({ option, onChange }: ICodeOptionsProps): React_2.JS
 export type Color = string;
 
 // @internal (undocumented)
-export const ColorPicker: React_2.FC<WithIntlProps<IColorPickerProps & WrappedComponentProps>> & {
-    WrappedComponent: React_2.ComponentType<IColorPickerProps & WrappedComponentProps>;
-};
+export function ColorPicker(props: IColorPickerProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const ColorPickerPointer: React_2.FC;
@@ -485,9 +476,7 @@ export const ExportDialog: React_2.NamedExoticComponent<IExportDialogProps>;
 export const ExportDialogBase: React_2.NamedExoticComponent<IExportDialogBaseProps>;
 
 // @internal (undocumented)
-export const FilterLabel: React_2.FC<WithIntlProps<IFilterLabelProps & WrappedComponentProps>> & {
-    WrappedComponent: React_2.ComponentType<IFilterLabelProps & WrappedComponentProps>;
-};
+export const FilterLabel: React_2.NamedExoticComponent<IFilterLabelProps>;
 
 // @internal
 export const findInteractiveItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], predicate: (item: IUiMenuInteractiveItem<T>) => boolean) => IUiMenuInteractiveItem<T> | undefined;
@@ -716,9 +705,7 @@ export const HeaderBadge: React_2.FC<IHeaderBadgeProps>;
 export const HeaderBadgeWithModal: React_2.FC<IHeaderBadgeWithModalProps>;
 
 // @internal (undocumented)
-export const HeaderDataMenu: React_2.FC<WithIntlProps<IHeaderDataMenuProps>> & {
-    WrappedComponent: React_2.ComponentType<IHeaderDataMenuProps>;
-};
+export function HeaderDataMenu({ onMenuItemClick, dataMenuItems, className }: IHeaderDataMenuProps): React_2.JSX.Element;
 
 // @internal
 export type HeaderSearchContext = {
@@ -730,9 +717,7 @@ export type HeaderSearchContext = {
 export const HeaderSearchProvider: ({ children, ...rest }: React_3.PropsWithChildren<HeaderSearchContext>) => React_3.JSX.Element;
 
 // @internal (undocumented)
-export const HeaderWorkspacePicker: React_2.FC<WithIntlProps<IHeaderWorkspacePickerProps>> & {
-    WrappedComponent: React_2.ComponentType<IHeaderWorkspacePickerProps>;
-};
+export function HeaderWorkspacePicker({ isLoading, workspaces, selectedWorkspace, totalWorkspacesCount, searchString, showSearch, onOpen, onSelect, onSearch, onScrollEnd, projectPickerFooter, className, isRenamingProjectToWorkspaceEnabled, }: IHeaderWorkspacePickerProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type HelpMenuDropdownAlignPoints = "br tr" | "bl tl";
@@ -2207,8 +2192,6 @@ export interface IHeaderDataMenuProps {
     // (undocumented)
     dataMenuItems: IHeaderDataMenuItem[];
     // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
     onMenuItemClick: (item: IHeaderDataMenuItem) => void;
 }
 
@@ -2278,8 +2261,6 @@ export interface IHeaderWorkspace {
 export interface IHeaderWorkspacePickerProps {
     // (undocumented)
     className?: string;
-    // (undocumented)
-    intl: IntlShape;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
@@ -2899,8 +2880,6 @@ export interface ILegacyListState {
 // @internal (undocumented)
 export interface ILegacyMultiSelectListItemProps {
     // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
     isLoading?: boolean;
     // (undocumented)
     onMouseOut?: (source: any) => void;
@@ -3308,8 +3287,6 @@ export interface IMultiSelectListProps<T> {
     // (undocumented)
     height?: number;
     // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
     isInverted?: boolean;
     // (undocumented)
     isMobile?: boolean;
@@ -3572,9 +3549,7 @@ export type InsightCodeType = "definition" | "reference";
 export const InsightIcon: React_2.FC<IInsightIconProps>;
 
 // @internal (undocumented)
-export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & WrappedComponentProps>> & {
-    WrappedComponent: React_2.ComponentType<IInsightListItemProps & WrappedComponentProps>;
-};
+export function InsightListItem({ title, description, updated, type, isSelected, isLoading, filters, separators, LoadingComponent, onClick, onDescriptionPanelOpen, showDescriptionPanel, useRichText, useReferences, richTextExecConfig, width, isLocked, onDelete, metadataTimeZone, }: IInsightListItemProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;
@@ -5181,7 +5156,8 @@ export function LegacyList({ className, onScroll, onScrollStart, onSelect, width
 export function LegacyListItem<T>({ item, listItemClass }: ILegacyListItemProps<T>): JSX.Element;
 
 // @internal @deprecated (undocumented)
-export const LegacyMultiSelectList: <T>(props: ILegacyMultiSelectListProps<T>) => any;
+export function LegacyMultiSelectList<T>({ isInverted, isSearching, selection, getItemKey, isMobile, isSelected, listItemClass, // TODO add tests
+    filteredItemsCount, onItemMouseOut, onItemMouseOver, onRangeChange, onSelect, onSelectAll, onSelectNone, onSelectOnly, rowItem: rowItemProp, selectAllCheckbox, tagName, items, itemsCount, height, itemHeight, width, }: ILegacyMultiSelectListProps<T>): React_2.JSX.Element;
 
 // @internal @deprecated (undocumented)
 export const LegacyMultiSelectListItem: React_2.NamedExoticComponent<ILegacyMultiSelectListItemProps>;
@@ -5300,9 +5276,7 @@ export const MetadataList: React_2.FC<IMetadataListProps>;
 export const modifierNegator: "!";
 
 // @internal (undocumented)
-export const MultiSelectList: React_2.FC<WithIntlProps<IMultiSelectListProps<unknown>>> & {
-    WrappedComponent: React_2.ComponentType<IMultiSelectListProps<unknown>>;
-};
+export function MultiSelectList<T>({ isMobile, width, height, items, itemHeight, itemsCount, onScrollEnd, renderItem, selectedItems, listClassNames, onSelectAll, onSelectNone, isInverted, isSearching, isSelected, filteredItemsCount, selectAllCheckbox, tagName, }: IMultiSelectListProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const MultiSelectListItem: React_2.NamedExoticComponent<IMultiSelectListItemProps>;

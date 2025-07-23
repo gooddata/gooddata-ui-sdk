@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
 import { confidenceDropdownItems } from "../../../constants/dropdowns.js";
@@ -16,25 +16,31 @@ export interface IForecastConfidenceControl {
     pushData: (data: any) => any;
 }
 
-const ForecastConfidenceControl = memo(function ForecastConfidenceControl(
-    props: IForecastConfidenceControl & WrappedComponentProps,
-) {
+const ForecastConfidenceControl = memo(function ForecastConfidenceControl({
+    value,
+    disabled,
+    properties,
+    pushData,
+    showDisabledMessage,
+}: IForecastConfidenceControl) {
+    const intl = useIntl();
+
     const generateDropdownItems = () => {
-        return getTranslatedDropdownItems(confidenceDropdownItems, props.intl);
+        return getTranslatedDropdownItems(confidenceDropdownItems, intl);
     };
 
     return (
         <DropdownControl
-            value={props.value}
+            value={value}
             valuePath="forecast.confidence"
             labelText={messages.forecastConfidence.id}
-            disabled={props.disabled}
-            properties={props.properties}
-            pushData={props.pushData}
+            disabled={disabled}
+            properties={properties}
+            pushData={pushData}
             items={generateDropdownItems()}
-            showDisabledMessage={props.showDisabledMessage}
+            showDisabledMessage={showDisabledMessage}
         />
     );
 });
 
-export default injectIntl(ForecastConfidenceControl);
+export default ForecastConfidenceControl;

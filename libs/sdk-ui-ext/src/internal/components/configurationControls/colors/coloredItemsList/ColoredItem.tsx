@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import ColoredItemContent from "./ColoredItemContent.js";
 import ColorDropdown from "../colorDropdown/ColorDropdown.js";
@@ -19,8 +19,13 @@ export interface IColoredItemProps {
     disabled?: boolean;
 }
 
-const ColoredItem = memo(function ColoredItem(props: IColoredItemProps & WrappedComponentProps) {
-    const { item, colorPalette, showCustomPicker = false, intl, onSelect } = props;
+const ColoredItem = memo(function ColoredItem({
+    item,
+    colorPalette,
+    showCustomPicker = false,
+    onSelect,
+}: IColoredItemProps) {
+    const intl = useIntl();
 
     const renderLoadingItem = () => {
         return <div className="gd-list-item gd-list-item-not-loaded" />;
@@ -62,4 +67,4 @@ const ColoredItem = memo(function ColoredItem(props: IColoredItemProps & Wrapped
     );
 });
 
-export default injectIntl(ColoredItem);
+export default ColoredItem;

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useState, useEffect } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import cloneDeep from "lodash/cloneDeep.js";
 import noop from "lodash/noop.js";
@@ -27,9 +27,7 @@ export interface IConfigSectionOwnProps {
     toggleMessageId?: string;
 }
 
-export type IConfigSectionProps = IConfigSectionOwnProps & WrappedComponentProps;
-
-export function ConfigSection(props: IConfigSectionProps) {
+export default function ConfigSection(props: IConfigSectionOwnProps) {
     const {
         id,
         valuePath,
@@ -45,8 +43,9 @@ export function ConfigSection(props: IConfigSectionProps) {
         pushData = noop,
         children,
         toggleMessageId,
-        intl,
     } = props;
+
+    const intl = useIntl();
 
     const [collapsed, setCollapsed] = useState(() => propertiesMeta?.[id]?.collapsed ?? true);
 
@@ -137,5 +136,3 @@ export function ConfigSection(props: IConfigSectionProps) {
         </div>
     );
 }
-
-export default injectIntl<"intl", IConfigSectionProps>(ConfigSection);

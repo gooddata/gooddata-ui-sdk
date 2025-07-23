@@ -4,7 +4,7 @@ import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import parseDate from "date-fns/parse/index.js";
 import { userEvent } from "@testing-library/user-event";
 import { WrappedDatePicker, DatePickerProps } from "../Datepicker.js";
-import { createIntlMock } from "@gooddata/sdk-ui";
+import { createIntlMock, withIntlForTest } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 
 const defaultDateFormat = "MM/dd/yyyy";
@@ -21,7 +21,9 @@ describe("DatePicker", () => {
             ...defaultProps,
             ...customProps,
         };
-        return render(<WrappedDatePicker {...props} />);
+        const Wrapped = withIntlForTest(WrappedDatePicker);
+
+        return render(<Wrapped {...props} />);
     }
 
     const openCalendar = async () => {

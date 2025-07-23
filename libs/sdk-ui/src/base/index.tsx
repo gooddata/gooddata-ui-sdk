@@ -201,9 +201,8 @@ export { messagesMap } from "./localization/messagesMap.js";
 export type {
     ITranslationsComponentProps,
     ITranslationsProviderOwnProps,
-    ITranslationsProviderProps,
 } from "./localization/TranslationsProvider.js";
-export { TranslationsProvider, IntlTranslationsProvider } from "./localization/TranslationsProvider.js";
+export { IntlTranslationsProvider } from "./localization/TranslationsProvider.js";
 export {
     createIntlMock,
     withIntl,

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import DropdownControl from "./DropdownControl.js";
 
 import { dataPointsDropdownLabels } from "../../constants/dropdowns.js";
@@ -16,14 +16,15 @@ export interface IDataPointsControlProps {
     defaultValue?: string | boolean;
 }
 
-function DataPointsControl({
+export default function DataPointsControl({
     pushData,
     properties,
-    intl,
     isDisabled,
     showDisabledMessage = false,
     defaultValue = "auto",
-}: IDataPointsControlProps & WrappedComponentProps) {
+}: IDataPointsControlProps) {
+    const intl = useIntl();
+
     const dataPoints = properties?.controls?.dataPoints?.visible ?? defaultValue;
 
     return (
@@ -41,5 +42,3 @@ function DataPointsControl({
         </div>
     );
 }
-
-export default injectIntl(DataPointsControl);

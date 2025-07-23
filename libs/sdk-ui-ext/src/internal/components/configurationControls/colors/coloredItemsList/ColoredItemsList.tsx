@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo, useState, useRef } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 
@@ -12,7 +11,7 @@ const VISIBLE_ITEMS_COUNT = 5;
 const SEARCHFIELD_VISIBILITY_THRESHOLD = 7;
 const DROPDOWN_BODY_WIDTH = 218;
 
-export interface IColoredItemsListOwnProps {
+export interface IColoredItemsListProps {
     colorPalette: IColorPalette;
     inputItems: IColoredItem[];
     onSelect: (selectedColorItem: IColoredItem, color: IColor) => void;
@@ -25,18 +24,14 @@ export interface IColoredItemsListState {
     searchString?: string;
 }
 
-export type IColoredItemsListProps = IColoredItemsListOwnProps & WrappedComponentProps;
-
-export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredItemsListProps) {
-    const {
-        colorPalette,
-        inputItems,
-        onSelect: onSelectProp,
-        showCustomPicker,
-        disabled = false,
-        isLoading = false,
-    } = props;
-
+export const ColoredItemsList = memo(function ColoredItemsList({
+    colorPalette,
+    inputItems,
+    onSelect: onSelectProp,
+    showCustomPicker,
+    disabled = false,
+    isLoading = false,
+}: IColoredItemsListProps) {
     const [searchString, setSearchString] = useState<string>("");
     const listRef = useRef<any>();
 
@@ -96,4 +91,4 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
     );
 });
 
-export default injectIntl(ColoredItemsList);
+export default ColoredItemsList;

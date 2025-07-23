@@ -1,19 +1,21 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactNode, useRef, useState, useEffect, memo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { IFilterLabelProps } from "./typings.js";
 
-function WrappedFilterLabel(props: IFilterLabelProps & WrappedComponentProps): ReactNode {
-    const {
-        isAllSelected = false,
-        isDate = false,
-        selection = "",
-        noData = false,
-        selectionSize,
-        intl,
-        title,
-    } = props;
+/**
+ * @internal
+ */
+export const FilterLabel = memo(function FilterLabel({
+    isAllSelected = false,
+    isDate = false,
+    selection = "",
+    noData = false,
+    selectionSize,
+    title,
+}: IFilterLabelProps): ReactNode {
+    const intl = useIntl();
 
     const [hasEllipsis, setHasEllipsis] = useState<boolean>(false);
     const labelRef = useRef<HTMLSpanElement>(null);
@@ -94,9 +96,4 @@ function WrappedFilterLabel(props: IFilterLabelProps & WrappedComponentProps): R
             {renderSelection()}
         </div>
     );
-}
-
-/**
- * @internal
- */
-export const FilterLabel = injectIntl(memo(WrappedFilterLabel));
+});

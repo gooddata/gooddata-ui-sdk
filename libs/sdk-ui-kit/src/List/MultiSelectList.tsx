@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { injectIntl, IntlShape } from "react-intl";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 
 import { List } from "./List.js";
@@ -19,7 +19,6 @@ export interface IMultiSelectRenderItemProps<T> {
  * @internal
  */
 export interface IMultiSelectListProps<T> {
-    intl: IntlShape;
     height?: number;
     width?: number;
     itemHeight?: number;
@@ -46,28 +45,30 @@ export interface IMultiSelectListProps<T> {
     listClassNames?: string;
 }
 
-function MultiSelectListCore<T>(props: IMultiSelectListProps<T>) {
-    const {
-        isMobile,
-        width,
-        height,
-        items,
-        itemHeight,
-        itemsCount,
-        onScrollEnd,
-        renderItem,
-        selectedItems,
-        listClassNames,
-        onSelectAll,
-        onSelectNone,
-        isInverted,
-        isSearching,
-        isSelected,
-        filteredItemsCount,
-        selectAllCheckbox,
-        intl,
-        tagName,
-    } = props;
+/**
+ * @internal
+ */
+export function MultiSelectList<T>({
+    isMobile,
+    width,
+    height,
+    items,
+    itemHeight,
+    itemsCount,
+    onScrollEnd,
+    renderItem,
+    selectedItems,
+    listClassNames,
+    onSelectAll,
+    onSelectNone,
+    isInverted,
+    isSearching,
+    isSelected,
+    filteredItemsCount,
+    selectAllCheckbox,
+    tagName,
+}: IMultiSelectListProps<T>) {
+    const intl = useIntl();
 
     const getSelectionString = (selection: T[]) => {
         if (!selection.length) {
@@ -280,8 +281,3 @@ function MultiSelectListCore<T>(props: IMultiSelectListProps<T>) {
         </div>
     );
 }
-
-/**
- * @internal
- */
-export const MultiSelectList = injectIntl(MultiSelectListCore);

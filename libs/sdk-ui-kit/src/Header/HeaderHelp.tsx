@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useState, useRef, useCallback } from "react";
-import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
 
@@ -22,7 +22,6 @@ interface IHelpItem {
 }
 
 interface IHeaderHelpProps {
-    intl: IntlShape;
     className: string;
     helpMenuDropdownAlignPoints?: HelpMenuDropdownAlignPoints;
     items: IHelpItem[];
@@ -32,7 +31,7 @@ interface IHeaderHelpProps {
     helpRedirectUrl?: string;
 }
 
-export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
+export function HeaderHelp({
     className,
     items,
     helpMenuDropdownAlignPoints,
@@ -40,8 +39,9 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
     disableDropdown,
     onHelpClicked,
     helpRedirectUrl,
-    intl,
-}) => {
+}: IHeaderHelpProps) {
+    const intl = useIntl();
+
     const [isOpen, setIsOpen] = useState(false);
     const helpMenuButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -169,6 +169,4 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
             {renderHelpMenu()}
         </Button>
     );
-};
-
-export const HeaderHelp = injectIntl(CoreHeaderHelp);
+}

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { injectIntl, IntlShape } from "react-intl";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 
 import { HeaderWorkspacePickerButton } from "./HeaderWorkspacePickerButton.js";
@@ -22,7 +22,6 @@ export interface IHeaderWorkspace {
  * @internal
  */
 export interface IHeaderWorkspacePickerProps {
-    intl: IntlShape;
     className?: string;
 
     isLoading?: boolean;
@@ -54,8 +53,10 @@ const renderProjectPickerFooter = (projectPickerFooter?: React.ReactNode) => {
     return comp;
 };
 
-export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = ({
-    intl,
+/**
+ * @internal
+ */
+export function HeaderWorkspacePicker({
     isLoading,
     workspaces,
     selectedWorkspace,
@@ -69,7 +70,9 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
     projectPickerFooter,
     className,
     isRenamingProjectToWorkspaceEnabled,
-}) => {
+}: IHeaderWorkspacePickerProps) {
+    const intl = useIntl();
+
     const t = intl.formatMessage;
 
     const dropdownClassNames = cx({
@@ -150,8 +153,4 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
             )}
         />
     );
-};
-/**
- * @internal
- */
-export const HeaderWorkspacePicker = injectIntl(CoreHeaderWorkspacePicker);
+}

@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -16,14 +16,15 @@ export interface IContinuousLineControlProps {
     pushData(data: any): void;
 }
 
-function ContinuousLineControl({
+export default function ContinuousLineControl({
     properties,
     valuePath = "continuousLine.enabled",
     checked = false,
     disabled = false,
     pushData,
-    intl,
-}: IContinuousLineControlProps & WrappedComponentProps) {
+}: IContinuousLineControlProps) {
+    const intl = useIntl();
+
     const onValueChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         const clonedProperties = cloneDeep(properties);
         set(clonedProperties, `controls.${valuePath}`, event.target.checked);
@@ -58,5 +59,3 @@ function ContinuousLineControl({
         </BubbleHoverTrigger>
     );
 }
-
-export default injectIntl(ContinuousLineControl);

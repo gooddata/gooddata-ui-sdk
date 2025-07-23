@@ -2,7 +2,7 @@
 import React from "react";
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { IColor } from "@gooddata/sdk-model";
 import { Button } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -29,7 +29,7 @@ export interface IColorsSectionProps {
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
 
-function ColorsSection({
+export default function ColorsSection({
     colors,
     pushData,
     properties,
@@ -38,8 +38,9 @@ function ColorsSection({
     showCustomPicker,
     controlsDisabled,
     isLoading,
-    intl,
-}: IColorsSectionProps & WrappedComponentProps) {
+}: IColorsSectionProps) {
+    const intl = useIntl();
+
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
         const { mappingHeader } = selectedColorItem;
         const result = getProperties(properties, mappingHeader, color);
@@ -134,5 +135,3 @@ function ColorsSection({
         </ConfigSection>
     );
 }
-
-export default injectIntl(ColorsSection);

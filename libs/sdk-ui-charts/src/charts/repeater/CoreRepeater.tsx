@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { useMemo, useEffect } from "react";
-import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import noop from "lodash/noop.js";
 import {
     LoadingComponent as SDKLoadingComponent,
@@ -27,7 +27,7 @@ export * from "./columnWidths.js";
 /**
  * @internal
  */
-export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedComponentProps {
+export interface ICoreRepeaterChartProps extends ICoreChartProps {
     theme?: ITheme;
 
     /**
@@ -38,25 +38,23 @@ export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedCompone
     onColumnResized?: RepeaterColumnResizedCallback;
 }
 
-export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
-    const {
-        execution,
-        ErrorComponent = SDKErrorComponent,
-        LoadingComponent = SDKLoadingComponent,
-        onLoadingChanged,
-        pushData,
-        onError,
-        onColumnResized,
-        onDataView,
-        config = {},
-        drillableItems = [],
-        onDrill = noop,
-        afterRender = noop,
-    } = props;
-
+export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = ({
+    execution,
+    ErrorComponent = SDKErrorComponent,
+    LoadingComponent = SDKLoadingComponent,
+    onLoadingChanged,
+    pushData,
+    onError,
+    onColumnResized,
+    onDataView,
+    config = {},
+    drillableItems = [],
+    onDrill = noop,
+    afterRender = noop,
+}) => {
     const intl = useIntl();
 
-    const enableCancelling = props.config?.enableExecutionCancelling ?? false;
+    const enableCancelling = config.enableExecutionCancelling ?? false;
 
     const { result, error } = useCancelablePromise(
         {
@@ -198,7 +196,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
     );
 };
 
-const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));
+const CoreRepeaterWithIntl = withTheme(CoreRepeaterImpl);
 
 /**
  * @internal

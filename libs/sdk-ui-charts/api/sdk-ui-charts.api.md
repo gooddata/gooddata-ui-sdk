@@ -46,7 +46,6 @@ import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
-import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export const AreaChart: (props: IAreaChartProps) => React_2.JSX.Element;
@@ -466,7 +465,7 @@ export interface ICoreHeadlineExtendedProps {
 }
 
 // @internal (undocumented)
-export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedComponentProps {
+export interface ICoreRepeaterChartProps extends ICoreChartProps {
     onColumnResized?: RepeaterColumnResizedCallback;
     // (undocumented)
     theme?: ITheme;

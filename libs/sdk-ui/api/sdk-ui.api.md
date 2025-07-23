@@ -8,7 +8,6 @@ import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-model';
 import { DependencyList } from 'react';
-import { FC } from 'react';
 import { ForecastDataValue } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -66,8 +65,6 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { TotalType } from '@gooddata/sdk-model';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
-import { WithIntlProps } from 'react-intl';
-import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export type AnyArrayOf<T> = T[] | ArrayOf<T>;
@@ -1109,9 +1106,7 @@ export interface IMeasureTitleProps {
 }
 
 // @internal (undocumented)
-export const IntlTranslationsProvider: FC<WithIntlProps<ITranslationsProviderProps>> & {
-    WrappedComponent: ComponentType<ITranslationsProviderProps>;
-};
+export const IntlTranslationsProvider: NamedExoticComponent<ITranslationsProviderOwnProps>;
 
 // @internal (undocumented)
 export const IntlWrapper: React_2.FC<IIntlWrapperProps>;
@@ -1721,9 +1716,6 @@ export interface ITranslationsProviderOwnProps {
     children: any;
 }
 
-// @internal (undocumented)
-export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
-
 // @public
 export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any, any>> = (resolutionContext: ComposedPlaceholderResolutionContext<T>) => PlaceholderResolvedValue<T>;
 
@@ -2016,9 +2008,6 @@ export const TranslationsCustomizationContextProvider: React_2.FC<ITranslationsC
 
 // @beta
 export const TranslationsCustomizationProvider: React_2.FC<ITranslationsCustomizationProviderProps>;
-
-// @internal (undocumented)
-export const TranslationsProvider: NamedExoticComponent<ITranslationsProviderProps>;
 
 // @public
 export class UnauthorizedSdkError extends GoodDataSdkError {

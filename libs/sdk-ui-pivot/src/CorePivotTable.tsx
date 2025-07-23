@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { AgGridReact } from "ag-grid-react";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import {
     BucketNames,
@@ -196,6 +196,8 @@ export function CorePivotTableAgImpl({
     onColumnResized = noop,
     ...props
 }: ICorePivotTableProps) {
+    const intl = useIntl();
+
     const { execution } = props;
 
     // Separated state for better performance and maintainability
@@ -219,7 +221,7 @@ export function CorePivotTableAgImpl({
         error: undefined,
     });
 
-    const errorMapRef = useRef<IErrorDescriptors>(newErrorMapping(props.intl));
+    const errorMapRef = useRef<IErrorDescriptors>(newErrorMapping(intl));
     const containerRef = useRef<HTMLDivElement | undefined>();
     const pivotTableIdRef = useRef<string>(uuidv4().replace(/-/g, ""));
     const internalRef = useRef<InternalTableState>(new InternalTableState());
@@ -1356,7 +1358,7 @@ export function CorePivotTableAgImpl({
     );
 }
 
-const CorePivotTableWithIntl = injectIntl(withTheme(CorePivotTableAgImpl));
+const CorePivotTableWithIntl = withTheme(CorePivotTableAgImpl);
 
 /**
  * @internal

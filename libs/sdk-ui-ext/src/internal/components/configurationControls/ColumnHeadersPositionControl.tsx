@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 
 import DropdownControl from "./DropdownControl.js";
@@ -21,14 +21,15 @@ export interface IColumnHeadersPositionControlProps {
     defaultValue?: string;
 }
 
-function ColumnHeadersPositionControl({
+export default function ColumnHeadersPositionControl({
     pushData,
     properties,
-    intl,
     isDisabled,
     defaultValue = "top",
     insight,
-}: IColumnHeadersPositionControlProps & WrappedComponentProps) {
+}: IColumnHeadersPositionControlProps) {
+    const intl = useIntl();
+
     const columnHeadersPosition = isSetColumnHeadersPositionToLeftAllowed(insight)
         ? (properties?.controls?.columnHeadersPosition ?? defaultValue)
         : defaultValue;
@@ -48,5 +49,3 @@ function ColumnHeadersPositionControl({
         </ConfigSubsection>
     );
 }
-
-export default injectIntl(ColumnHeadersPositionControl);

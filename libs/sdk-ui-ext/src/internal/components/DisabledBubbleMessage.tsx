@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { getTranslation } from "../utils/translations.js";
@@ -14,16 +14,15 @@ export interface IBubbleMessageOwnProps {
     children?: React.ReactNode;
 }
 
-export type IBubbleMessageProps = IBubbleMessageOwnProps & WrappedComponentProps;
-
 export const DisabledBubbleMessage = memo(function DisabledBubbleMessage({
     className,
     alignPoints = [{ align: "cr cl" }],
     children,
-    intl,
     messageId = messages.notApplicable.id,
     showDisabledMessage,
-}: IBubbleMessageProps) {
+}: IBubbleMessageOwnProps) {
+    const intl = useIntl();
+
     const getBubbleClassNames = (): string => {
         return cx("bubble-primary", {
             invisible: !showDisabledMessage,
@@ -40,4 +39,4 @@ export const DisabledBubbleMessage = memo(function DisabledBubbleMessage({
     );
 });
 
-export default injectIntl<"intl", IBubbleMessageProps>(DisabledBubbleMessage);
+export default DisabledBubbleMessage;

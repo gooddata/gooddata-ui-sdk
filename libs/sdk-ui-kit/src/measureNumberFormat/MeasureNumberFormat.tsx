@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { memo, useState, useRef, useCallback, useMemo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 
 import { IFormatPreset, IFormatTemplate, IToggleButtonProps, PresetType } from "./typings.js";
@@ -29,24 +29,21 @@ export interface IMeasureNumberFormatOwnProps {
     disabled?: boolean;
 }
 
-export type MeasureNumberFormatProps = IMeasureNumberFormatOwnProps & WrappedComponentProps;
-
-const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat(props: MeasureNumberFormatProps) {
-    const {
-        toggleButton: ToggleButton,
-        disabled,
-        anchorElementSelector,
-        presets,
-        separators,
-        selectedFormat,
-        defaultCustomFormat,
-        presetsDropdownPositioning,
-        customFormatDialogPositioning,
-        documentationLink,
-        templates,
-        intl,
-        setFormat,
-    } = props;
+const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat({
+    toggleButton: ToggleButton,
+    disabled,
+    anchorElementSelector,
+    presets,
+    separators,
+    selectedFormat,
+    defaultCustomFormat,
+    presetsDropdownPositioning,
+    customFormatDialogPositioning,
+    documentationLink,
+    templates,
+    setFormat,
+}: IMeasureNumberFormatOwnProps) {
+    const intl = useIntl();
 
     const toggleButtonEl = useRef<HTMLElement>();
 
@@ -169,15 +166,13 @@ const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat(prop
     );
 });
 
-const MeasureNumberFormatWithIntl = injectIntl(WrappedMeasureNumberFormat);
-
 /**
  * @internal
  */
 export const MeasureNumberFormat = memo(function MeasureNumberFormat(props: IMeasureNumberFormatOwnProps) {
     return (
         <IntlWrapper locale={props.locale}>
-            <MeasureNumberFormatWithIntl {...props} />
+            <WrappedMeasureNumberFormat {...props} />
         </IntlWrapper>
     );
 });

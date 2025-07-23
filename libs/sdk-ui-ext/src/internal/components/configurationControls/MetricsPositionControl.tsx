@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import DropdownControl from "./DropdownControl.js";
 
 import { metricsPositionDropdownItems } from "../../constants/dropdowns.js";
@@ -17,14 +17,15 @@ export interface IMetricsPositionControlProps {
     defaultValue?: string;
 }
 
-function MetricsPositionControl({
+export default function MetricsPositionControl({
     pushData,
     properties,
-    intl,
     isDisabled,
     showDisabledMessage = false,
     defaultValue = "columns",
-}: IMetricsPositionControlProps & WrappedComponentProps) {
+}: IMetricsPositionControlProps) {
+    const intl = useIntl();
+
     const metricsPosition = properties?.controls?.measureGroupDimension ?? defaultValue;
 
     return (
@@ -42,5 +43,3 @@ function MetricsPositionControl({
         </ConfigSubsection>
     );
 }
-
-export default injectIntl(MetricsPositionControl);

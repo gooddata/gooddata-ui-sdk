@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { convertDrillableItemsToPredicates, fireDrillEvent } from "@gooddata/sdk-ui";
 import LegacyHeadline from "../headlines/LegacyHeadline.js";
 import {
@@ -17,8 +17,14 @@ import { IHeadlineFiredDrillEventItemContext } from "../interfaces/DrillEvents.j
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
-function LegacyHeadlineTransformation(props: IHeadlineTransformationProps & WrappedComponentProps) {
-    const { intl, drillableItems = [], dataView, config, onAfterRender = noop, onDrill = () => true } = props;
+export default function LegacyHeadlineTransformation({
+    drillableItems = [],
+    dataView,
+    config,
+    onAfterRender = noop,
+    onDrill = () => true,
+}: IHeadlineTransformationProps) {
+    const intl = useIntl();
 
     const getDisableDrillUnderlineFromConfig = () => {
         if (config) {
@@ -49,5 +55,3 @@ function LegacyHeadlineTransformation(props: IHeadlineTransformationProps & Wrap
         />
     );
 }
-
-export default injectIntl(LegacyHeadlineTransformation);

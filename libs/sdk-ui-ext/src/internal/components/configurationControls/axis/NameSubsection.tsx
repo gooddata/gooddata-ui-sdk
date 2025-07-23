@@ -1,13 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
 import NamePositionControl from "./NamePositionControl.js";
 import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { messages } from "../../../../locales.js";
 
-function NameSubsection(props: IConfigItemSubsection & WrappedComponentProps) {
+export const NameSubsection = memo(function NameSubsection(props: IConfigItemSubsection) {
     const getControlProperties = (): IVisualizationProperties => {
         const axisProperties = props.properties?.controls?.[props.axis];
 
@@ -44,6 +43,6 @@ function NameSubsection(props: IConfigItemSubsection & WrappedComponentProps) {
             />
         </ConfigSubsection>
     );
-}
+});
 
-export default injectIntl(memo(NameSubsection));
+export default NameSubsection;

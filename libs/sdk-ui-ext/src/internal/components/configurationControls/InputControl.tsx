@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { ComponentProps, useState, useEffect, useRef } from "react";
-import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import noop from "lodash/noop.js";
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -57,7 +57,7 @@ export interface IInputControlState {
 
 const MAX_NUMBER_LENGTH = 15;
 
-export function InputControl({
+export default function InputControl({
     valuePath,
     properties,
     labelText,
@@ -75,8 +75,9 @@ export function InputControl({
     descriptionValues,
     validateFn,
     transformFn,
-    intl,
-}: IInputControlProps & WrappedComponentProps) {
+}: IInputControlProps) {
+    const intl = useIntl();
+
     const [value, setValue] = useState(propValue);
     const [lastSentValue, setLastSentValue] = useState(propValue);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -200,5 +201,3 @@ export function InputControl({
         </DisabledBubbleMessage>
     );
 }
-
-export default injectIntl(InputControl);

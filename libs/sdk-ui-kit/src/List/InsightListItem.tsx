@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useRef, useEffect } from "react";
 import cx from "classnames";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
 
@@ -80,7 +80,7 @@ export const InsightListItemTypeIcon: React.FC<{ type: string }> = ({ type }) =>
 /**
  * @internal
  */
-function InsightListItemCore({
+export function InsightListItem({
     title,
     description,
     updated,
@@ -99,9 +99,10 @@ function InsightListItemCore({
     width,
     isLocked,
     onDelete,
-    intl,
     metadataTimeZone,
-}: IInsightListItemProps & WrappedComponentProps) {
+}: IInsightListItemProps) {
+    const intl = useIntl();
+
     const shortenedTextRef = useRef<ShortenedText>(null);
 
     useEffect(() => {
@@ -201,8 +202,3 @@ function InsightListItemCore({
         </div>
     );
 }
-
-/**
- * @internal
- */
-export const InsightListItem = injectIntl(InsightListItemCore);

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import noop from "lodash/noop.js";
 import set from "lodash/set.js";
@@ -22,26 +22,19 @@ export interface IConfigSubsectionOwnProps {
     children?: React.ReactNode;
 }
 
-export interface IConfigSubsectionState {
-    disabled: boolean;
-}
-
-export type IConfigSubsectionProps = IConfigSubsectionOwnProps & WrappedComponentProps;
-
-function ConfigSubsection(props: IConfigSubsectionProps) {
-    const {
-        title,
-        intl,
-        canBeToggled = false,
-        toggleDisabled = false,
-        toggledOn = true,
-        pushData = noop,
-        showDisabledMessage = false,
-        valuePath,
-        properties,
-        axisType,
-        children,
-    } = props;
+export default function ConfigSubsection({
+    title,
+    canBeToggled = false,
+    toggleDisabled = false,
+    toggledOn = true,
+    pushData = noop,
+    showDisabledMessage = false,
+    valuePath,
+    properties,
+    axisType,
+    children,
+}: IConfigSubsectionOwnProps) {
+    const intl = useIntl();
 
     const toggleValue = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (valuePath && properties && pushData) {
@@ -95,5 +88,3 @@ function ConfigSubsection(props: IConfigSubsectionProps) {
         </div>
     );
 }
-
-export default injectIntl<"intl", IConfigSubsectionProps>(ConfigSubsection);

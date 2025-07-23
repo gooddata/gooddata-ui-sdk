@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useState } from "react";
 import isEqual from "lodash/isEqual.js";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { ColorFormats } from "tinycolor2";
 
 import { Button } from "../Button/index.js";
@@ -13,7 +13,12 @@ import { ColorsPreview } from "./components/ColorsPreview.js";
 import { getRgbFromHslColor, getHslFromRgbColor, isHslColorBlackOrWhite } from "./utils.js";
 import { IColorPickerProps } from "./typings.js";
 
-function WrappedColorPicker(props: IColorPickerProps & WrappedComponentProps) {
+/**
+ * @internal
+ */
+export function ColorPicker(props: IColorPickerProps) {
+    const intl = useIntl();
+
     const currentHslColor = getHslFromRgbColor(props.initialRgbColor);
     const [draftHslColor, setDraftHslColor] = useState<ColorFormats.HSL>(currentHslColor);
 
@@ -33,7 +38,6 @@ function WrappedColorPicker(props: IColorPickerProps & WrappedComponentProps) {
     };
 
     const currentHslColorForPreview = getHslFromRgbColor(props.initialRgbColor);
-    const { intl } = props;
 
     return (
         <div className="color-picker-container" aria-label="Color picker">
@@ -69,8 +73,3 @@ function WrappedColorPicker(props: IColorPickerProps & WrappedComponentProps) {
         </div>
     );
 }
-
-/**
- * @internal
- */
-export const ColorPicker = injectIntl(WrappedColorPicker);

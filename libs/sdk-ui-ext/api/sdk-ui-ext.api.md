@@ -40,8 +40,6 @@ import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { UiSkeleton } from '@gooddata/sdk-ui-kit';
 import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
-import { WithIntlProps } from 'react-intl';
-import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
 export const AddDataSourceToSubjects: React_2.FC<IAddDataSourceToSubjectsProps>;
@@ -643,9 +641,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeI
 export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
-export const InsightError: React_2.FC<WithIntlProps<IInsightErrorProps & WrappedComponentProps>> & {
-    WrappedComponent: React_2.ComponentType<IInsightErrorProps & WrappedComponentProps>;
-};
+export function InsightError({ error, ErrorComponent, height, clientHeight, }: IInsightErrorProps): React_2.JSX.Element;
 
 // @internal
 export const InsightRenderer: React_2.FC<IInsightRendererProps>;

@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
-import { ChartSortingOwnProps } from "@gooddata/sdk-ui-kit";
+import { ChartSortingProps } from "@gooddata/sdk-ui-kit";
 import { attributeLocalId, localIdRef, measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 
 type SortingPropsMock = {
-    currentSort: ChartSortingOwnProps["currentSort"];
-    availableSorts: ChartSortingOwnProps["availableSorts"];
+    currentSort: ChartSortingProps["currentSort"];
+    availableSorts: ChartSortingProps["availableSorts"];
 };
 
 export const singleAttributeSortConfig: SortingPropsMock = {

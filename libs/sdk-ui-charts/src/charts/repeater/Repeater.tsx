@@ -10,7 +10,6 @@ import {
     NullableFiltersOrPlaceholders,
     withContexts,
     AttributesMeasuresOrPlaceholders,
-    ITranslationsComponentProps,
     IntlTranslationsProvider,
     IntlWrapper,
     ExplicitDrill,
@@ -89,9 +88,7 @@ export function RenderRepeater(props: IRepeaterProps): JSX.Element {
     return (
         <IntlWrapper locale={props.locale}>
             <IntlTranslationsProvider>
-                {(translationProps: ITranslationsComponentProps) => {
-                    return <CoreRepeater intl={translationProps.intl} {...toCoreRepeaterProps(props)} />;
-                }}
+                <CoreRepeater {...toCoreRepeaterProps(props)} />
             </IntlTranslationsProvider>
         </IntlWrapper>
     );

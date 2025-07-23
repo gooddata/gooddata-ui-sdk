@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useState, memo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact.js";
 import first from "lodash/first.js";
@@ -25,14 +25,23 @@ export interface ISaveAsDialogRendererOwnProps {
 /**
  * @internal
  */
-export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog(
-    props: ISaveAsDialogRendererOwnProps & WrappedComponentProps,
-) {
+export const SaveAsDialogRendererIntl = memo(function SaveAsDialogRendererIntl({
+    isDashboardLoaded,
+    isDashboardSaving,
+    dashboardTitle: dashboardTitleProp,
+    onSubmit: onSubmitProp,
+    isInEditMode,
+    onCancel = noop,
+    isKpiWidgetEnabled,
+    isScheduleEmailsEnabled,
+}: ISaveAsDialogRendererOwnProps) {
+    const intl = useIntl();
+
     const getDefaultDashboardTitle = (): string => {
-        return props.intl.formatMessage(
+        return intl.formatMessage(
             { id: "dialogs.save.as.new.default.title" },
             {
-                title: props.dashboardTitle,
+                title: dashboardTitleProp,
             },
         );
     };
@@ -40,8 +49,6 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog(
     const [dashboardTitle, setDashboardTitle] = useState(getDefaultDashboardTitle());
 
     const canCreateDashboard = (): boolean => {
-        const { isDashboardLoaded, isDashboardSaving } = props;
-
         return isDashboardLoaded && !isDashboardSaving;
     };
 
@@ -61,18 +68,17 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog(
     const onSubmit = (): void => {
         const title = dashboardTitle.trim();
         if (canCreateDashboard() && title !== "") {
-            props.onSubmit(
+            onSubmitProp(
                 title,
                 true, // switch to the new dashboard
                 // do not reuse the filter context in edit mode, create a new one with the current filter state
                 // otherwise use the original filter context values when creating a copy
-                !props.isInEditMode,
+                !isInEditMode,
             );
         }
     };
 
     const getNoteText = (): string => {
-        const { isKpiWidgetEnabled, isScheduleEmailsEnabled, intl } = props;
         const messageId = first(
             compact([
                 isKpiWidgetEnabled && isScheduleEmailsEnabled && messages.saveAsNewAlertsAndEmailsMessage.id,
@@ -84,12 +90,6 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog(
         return messageId ? intl.formatMessage({ id: messageId }) : "";
     };
 
-    const {
-        intl: { formatMessage },
-        onCancel = noop,
-        isDashboardSaving,
-    } = props;
-
     const noteText = getNoteText();
 
     return (
@@ -98,13 +98,13 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog(
             onSubmit={onSubmit}
             isPositive
             className="s-dialog save-as-new-dialog"
-            headline={formatMessage({ id: "dialogs.save.as.new.title" })}
-            cancelButtonText={formatMessage({ id: "cancel" })}
-            submitButtonText={formatMessage({ id: "create.dashboard" })}
+            headline={intl.formatMessage({ id: "dialogs.save.as.new.title" })}
+            cancelButtonText={intl.formatMessage({ id: "cancel" })}
+            submitButtonText={intl.formatMessage({ id: "create.dashboard" })}
             isSubmitDisabled={isDashboardSaving || dashboardTitle.trim() === ""}
         >
             <Typography tagName="p" className="dashboard-note">
-                {formatMessage({ id: "dialogs.save.as.new.desc" })}
+                {intl.formatMessage({ id: "dialogs.save.as.new.desc" })}
             </Typography>
             <div className="dashboard-title">
                 <Input
@@ -121,8 +121,6 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog(
         </ConfirmDialog>
     );
 });
-
-export const SaveAsDialogRendererIntl = injectIntl(SaveAsNewDashboardDialog);
 
 export const SaveAsDialogRenderer: React.FC<ISaveAsDialogRendererOwnProps> = (props) => (
     <IntlWrapper locale={props.locale}>

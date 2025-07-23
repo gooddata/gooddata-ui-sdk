@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import DropdownControl from "./DropdownControl.js";
 import CheckboxControl from "../configurationControls/CheckboxControl.js";
 
@@ -20,17 +20,18 @@ export interface IDataLabelsControlProps {
     enablePercentLabels?: boolean;
 }
 
-function DataLabelsControl({
+export default function DataLabelsControl({
     pushData,
     properties,
-    intl,
     isDisabled,
     showDisabledMessage = false,
     defaultValue = "auto",
     isTotalsDisabled = true,
     enableSeparateTotalLabels = false,
     enablePercentLabels,
-}: IDataLabelsControlProps & WrappedComponentProps) {
+}: IDataLabelsControlProps) {
+    const intl = useIntl();
+
     const dataLabels = properties?.controls?.dataLabels?.visible ?? defaultValue;
     const totalLabels = properties?.controls?.dataLabels?.totalsVisible ?? defaultValue;
     const percentLabels = properties?.controls?.dataLabels?.percentsVisible ?? true;
@@ -85,5 +86,3 @@ function DataLabelsControl({
         </div>
     );
 }
-
-export default injectIntl(DataLabelsControl);

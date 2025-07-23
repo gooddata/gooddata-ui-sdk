@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useState, useCallback } from "react";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import keyBy from "lodash/keyBy.js";
 import values from "lodash/values.js";
@@ -14,13 +14,13 @@ import LegacyMultiSelectListItem from "./LegacyMultiSelectListItem.js";
 import { Message } from "../Messages/index.js";
 import { guidFor } from "./guid.js";
 
-const NoItemsFound: React.FC = () => {
+function NoItemsFound() {
     return (
         <div className="gd-list-noResults s-list-no-results">
             <FormattedMessage id="gs.list.noItemsFound" />
         </div>
     );
-};
+}
 
 const LoadingMessage: React.FC = () => {
     return <div>...</div>;
@@ -102,14 +102,11 @@ export function LegacyInvertableList<T>({
     itemHeight,
     items,
     itemsCount,
-    limitHitWarningClass: LimitHitWarningClass = injectIntl<
-        "intl",
-        ILimitHitWarningProps & WrappedComponentProps
-    >(LimitHitWarning),
+    limitHitWarningClass: LimitHitWarningClass = LimitHitWarning,
     listItemClass = LegacyMultiSelectListItem,
     maxSelectionSize,
     noItemsFound,
-    noItemsFoundClass: NoItemsFoundClass = injectIntl(NoItemsFound),
+    noItemsFoundClass: NoItemsFoundClass = NoItemsFound,
     onRangeChange = noop,
     onSearch,
     onSelect = noop,

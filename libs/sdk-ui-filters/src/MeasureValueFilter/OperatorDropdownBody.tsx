@@ -5,19 +5,22 @@ import { Separator, Overlay } from "@gooddata/sdk-ui-kit";
 import OperatorDropdownItem from "./OperatorDropdownItem.js";
 import { MeasureValueFilterOperator } from "./types.js";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-interface IOperatorDropdownBodyOwnProps {
+interface IOperatorDropdownBodyProps {
     selectedOperator: MeasureValueFilterOperator;
     onSelect: (operator: MeasureValueFilterOperator) => void;
     onClose: () => void;
     alignTo: string;
 }
 
-type IOperatorDropdownBodyProps = IOperatorDropdownBodyOwnProps & WrappedComponentProps;
-
-const OperatorDropdownBody = memo(function OperatorDropdownBody(props: IOperatorDropdownBodyProps) {
-    const { onSelect, onClose, selectedOperator, alignTo, intl } = props;
+const OperatorDropdownBody = memo(function OperatorDropdownBody({
+    onSelect,
+    onClose,
+    selectedOperator,
+    alignTo,
+}: IOperatorDropdownBodyProps) {
+    const intl = useIntl();
 
     return (
         <Overlay
@@ -85,4 +88,4 @@ const OperatorDropdownBody = memo(function OperatorDropdownBody(props: IOperator
     );
 });
 
-export default injectIntl(OperatorDropdownBody);
+export default OperatorDropdownBody;

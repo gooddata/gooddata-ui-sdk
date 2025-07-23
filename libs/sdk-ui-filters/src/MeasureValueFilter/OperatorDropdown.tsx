@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { memo, useState } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize.js";
 import { Button } from "@gooddata/sdk-ui-kit";
@@ -10,19 +10,19 @@ import OperatorDropdownBody from "./OperatorDropdownBody.js";
 import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator.js";
 import { MeasureValueFilterOperator } from "./types.js";
 
-interface IOperatorDropdownOwnProps {
+interface IOperatorDropdownProps {
     onSelect: (operator: MeasureValueFilterOperator) => void;
     operator: MeasureValueFilterOperator;
     isDisabled?: boolean;
 }
 
-type IOperatorDropdownProps = IOperatorDropdownOwnProps & WrappedComponentProps;
-
 export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorDropdownProps) {
+    const intl = useIntl();
+
     const [opened, setOpened] = useState(false);
 
     const renderDropdownButton = () => {
-        const { intl, operator, isDisabled } = props;
+        const { operator, isDisabled } = props;
 
         const operatorTranslationKey = getOperatorTranslationKey(operator);
         const title = capitalize(
@@ -81,4 +81,4 @@ export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorD
     );
 });
 
-export default injectIntl(OperatorDropdown);
+export default OperatorDropdown;

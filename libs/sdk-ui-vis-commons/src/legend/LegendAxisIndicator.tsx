@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { messages } from "../locales.js";
 
 export interface ILegendAxisIndicatorProps {
@@ -9,8 +9,13 @@ export interface ILegendAxisIndicatorProps {
     width?: number;
 }
 
-function LegendAxisIndicatorClass(props: ILegendAxisIndicatorProps & WrappedComponentProps) {
-    const { labelKey, width, data, intl } = props;
+export const LegendAxisIndicator = memo(function LegendAxisIndicator({
+    labelKey,
+    width,
+    data,
+}: ILegendAxisIndicatorProps) {
+    const intl = useIntl();
+
     const style = width ? { width: `${width}px` } : {};
     const values = (data || []).reduce((result: { [index: number]: string }, key: string, index: number) => {
         result[index] = intl.formatMessage(messages[key as keyof typeof messages]);
@@ -30,6 +35,4 @@ function LegendAxisIndicatorClass(props: ILegendAxisIndicatorProps & WrappedComp
             </div>
         </div>
     );
-}
-
-export const LegendAxisIndicator = injectIntl(memo(LegendAxisIndicatorClass));
+});

@@ -1,11 +1,11 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
 import { Button, Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types.js";
 import { AttributeDropdownBody } from "./AttributeDropdownBody.js";
-import { IntlShape, WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
+import { IntlShape, FormattedMessage, useIntl } from "react-intl";
 
 const getItemTitle = (selectedItem: IAttributeDropdownItem, intl: IntlShape): string =>
     selectedItem ? selectedItem.title : intl.formatMessage({ id: "rankingFilter.allRecords" });
@@ -18,7 +18,7 @@ const getItemIcon = (selectedItem: IAttributeDropdownItem): string => {
     }
 };
 
-interface IAttributeDropdownComponentProps {
+interface AttributeDropdownProps {
     items: IAttributeDropdownItem[];
     selectedItemRef: ObjRefInScope;
     onSelect: (ref?: ObjRefInScope) => void;
@@ -27,17 +27,16 @@ interface IAttributeDropdownComponentProps {
     customGranularitySelection?: ICustomGranularitySelection;
 }
 
-type AttributeDropdownProps = IAttributeDropdownComponentProps & WrappedComponentProps;
-
-const AttributeDropdownComponent: React.FC<AttributeDropdownProps> = ({
+export function AttributeDropdown({
     items,
     selectedItemRef,
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
-    intl,
-}) => {
+}: AttributeDropdownProps) {
+    const intl = useIntl();
+
     const [isOpen, setIsOpen] = useState(false);
     const isDisabled = items.length === 1;
 
@@ -98,6 +97,4 @@ const AttributeDropdownComponent: React.FC<AttributeDropdownProps> = ({
             ) : null}
         </>
     );
-};
-
-export const AttributeDropdown = injectIntl(AttributeDropdownComponent);
+}

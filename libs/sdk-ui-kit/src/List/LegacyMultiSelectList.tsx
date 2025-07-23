@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import noop from "lodash/noop.js";
 
@@ -45,38 +45,35 @@ export interface ILegacyMultiSelectListProps<T> {
 }
 
 /**
- * @deprecated  This component is deprecated use MultiSelectList
+ * @deprecated  This component is deprecated, use MultiSelectList instead
  * @internal
  */
-function LegacyMultiSelectList<T>(
-    props: ILegacyMultiSelectListProps<T> & WrappedComponentProps,
-): JSX.Element {
-    const {
-        isInverted = false,
-        isSearching = false,
-        selection = [] as T[],
-        getItemKey = guidFor,
-        isMobile = false,
-        isSelected = (): boolean => false,
-        listItemClass = LegacyMultiSelectListItem, // TODO add tests
-        filteredItemsCount = 0,
-        onItemMouseOut = noop,
-        onItemMouseOver = noop,
-        onRangeChange = noop,
-        onSelect = noop,
-        onSelectAll = noop,
-        onSelectNone = noop,
-        onSelectOnly = noop,
-        rowItem: rowItemProp = null as React.ReactElement,
-        selectAllCheckbox = false,
-        tagName = "",
-        intl,
-        items,
-        itemsCount,
-        height,
-        itemHeight,
-        width,
-    } = props;
+export default function LegacyMultiSelectList<T>({
+    isInverted = false,
+    isSearching = false,
+    selection = [] as T[],
+    getItemKey = guidFor,
+    isMobile = false,
+    isSelected = (): boolean => false,
+    listItemClass = LegacyMultiSelectListItem, // TODO add tests
+    filteredItemsCount = 0,
+    onItemMouseOut = noop,
+    onItemMouseOver = noop,
+    onRangeChange = noop,
+    onSelect = noop,
+    onSelectAll = noop,
+    onSelectNone = noop,
+    onSelectOnly = noop,
+    rowItem: rowItemProp = null as React.ReactElement,
+    selectAllCheckbox = false,
+    tagName = "",
+    items,
+    itemsCount,
+    height,
+    itemHeight,
+    width,
+}: ILegacyMultiSelectListProps<T>) {
+    const intl = useIntl();
 
     const isEmpty = useCallback((): boolean => {
         if (selection.length === 0) {
@@ -317,13 +314,3 @@ function LegacyMultiSelectList<T>(
         </div>
     );
 }
-
-/**
- * @internal
- * @deprecated This component is deprecated use MultiSelectList instead
- */
-const LegacyMultiSelectListWithIntl = injectIntl(LegacyMultiSelectList) as <T>(
-    props: ILegacyMultiSelectListProps<T>,
-) => any;
-
-export default LegacyMultiSelectListWithIntl;

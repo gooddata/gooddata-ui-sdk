@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { memo, useState } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 import { InputWithNumberFormat } from "../../../Form/index.js";
 
@@ -14,12 +14,12 @@ interface ICustomFormatPreviewOwnProps {
     separators?: ISeparators;
 }
 
-type ICustomFormatPreviewProps = ICustomFormatPreviewOwnProps & WrappedComponentProps;
+export const Preview = memo(function Preview(props: ICustomFormatPreviewOwnProps) {
+    const intl = useIntl();
 
-export const Preview = memo(function Preview(props: ICustomFormatPreviewProps) {
     const [preview, setPreview] = useState<number>(DEFAULT_PREVIEW_VALUE);
 
-    const { format, separators, intl } = props;
+    const { format, separators } = props;
 
     const onPreviewChange = (value: number): void => {
         setPreview(value);
@@ -55,4 +55,4 @@ export const Preview = memo(function Preview(props: ICustomFormatPreviewProps) {
     );
 });
 
-export default injectIntl(Preview);
+export default Preview;

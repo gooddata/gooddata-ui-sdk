@@ -1,7 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { useRef } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import React, { memo, useRef } from "react";
+import { useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import cx from "classnames";
@@ -10,7 +10,7 @@ import { IPushData } from "@gooddata/sdk-ui";
 
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { messages } from "../../../../locales.js";
-import { ConfigSection } from "../ConfigSection.js";
+import ConfigSection from "../ConfigSection.js";
 
 import { ConfigEditor } from "./ConfigEditor.js";
 import { useOverflow } from "./useOverflow.js";
@@ -22,13 +22,14 @@ export interface IAdvancedSectionProps {
     pushData: (data: IPushData) => any;
 }
 
-const AdvancedSection: React.FC<IAdvancedSectionProps & WrappedComponentProps> = ({
+const AdvancedSection = memo(function AdvancedSection({
     properties,
     propertiesMeta,
     pushData,
-    intl,
     controlsDisabled,
-}) => {
+}: IAdvancedSectionProps) {
+    const intl = useIntl();
+
     const [showDialog, setShowDialog] = React.useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLPreElement>(null);
@@ -60,7 +61,6 @@ const AdvancedSection: React.FC<IAdvancedSectionProps & WrappedComponentProps> =
                 title={messages.advancedSection.id}
                 propertiesMeta={propertiesMeta}
                 pushData={pushData}
-                intl={intl}
             >
                 {configurationValue === undefined ? (
                     <div className="gd-chart-override-no-value">
@@ -89,6 +89,6 @@ const AdvancedSection: React.FC<IAdvancedSectionProps & WrappedComponentProps> =
             </ConfigSection>
         </>
     );
-};
+});
 
-export default injectIntl(React.memo(AdvancedSection));
+export default AdvancedSection;

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     ErrorComponent as DefaultError,
     GoodDataSdkError,
@@ -6,7 +6,7 @@ import {
     IErrorProps,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import React, { useMemo } from "react";
 
 /**
@@ -19,13 +19,17 @@ export interface IInsightErrorProps {
     clientHeight?: number;
 }
 
-const InsightErrorCore: React.FC<IInsightErrorProps & WrappedComponentProps> = ({
+/**
+ * @internal
+ */
+export function InsightError({
     error,
     ErrorComponent = DefaultError,
     height,
-    intl,
     clientHeight,
-}) => {
+}: IInsightErrorProps) {
+    const intl = useIntl();
+
     const errorMapping = useMemo<IErrorDescriptors>(() => newErrorMapping(intl), [intl]);
     const errorProps = useMemo(
         () => errorMapping[error.getMessage()] ?? { message: error.message },
@@ -33,9 +37,4 @@ const InsightErrorCore: React.FC<IInsightErrorProps & WrappedComponentProps> = (
     );
 
     return <ErrorComponent {...errorProps} height={height} clientHeight={clientHeight} />;
-};
-
-/**
- * @internal
- */
-export const InsightError = injectIntl(InsightErrorCore);
+}

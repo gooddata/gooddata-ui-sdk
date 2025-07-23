@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { memo } from "react";
-import { injectIntl, WrappedComponentProps, IntlShape } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 import { messages } from "../../locales.js";
 import { emptyHeaderTitleFromIntl } from "./intlUtils.js";
 
@@ -29,21 +29,15 @@ const getNumericSymbols = (intl: IntlShape): string[] => {
 /**
  * @internal
  */
-export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
+export const IntlTranslationsProvider = memo(function TranslationsProvider({
+    children,
+}: ITranslationsProviderOwnProps) {
+    const intl = useIntl();
 
-/**
- * @internal
- */
-export const TranslationsProvider = memo(function TranslationsProvider(props: ITranslationsProviderProps) {
     const translationProps: ITranslationsComponentProps = {
-        numericSymbols: getNumericSymbols(props.intl),
-        emptyHeaderString: emptyHeaderTitleFromIntl(props.intl),
-        intl: props.intl,
+        numericSymbols: getNumericSymbols(intl),
+        emptyHeaderString: emptyHeaderTitleFromIntl(intl),
+        intl,
     };
-    return props.children(translationProps);
+    return children(translationProps);
 });
-
-/**
- * @internal
- */
-export const IntlTranslationsProvider = injectIntl<"intl", ITranslationsProviderProps>(TranslationsProvider);

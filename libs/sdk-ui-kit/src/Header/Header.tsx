@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import differenceInMonths from "date-fns/differenceInMonths/index.js";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays/index.js";
@@ -47,42 +47,41 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
         .reduce((sum, childWidth) => sum + childWidth, SAFETY_PADDING);
 }
 
-function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
-    const {
-        logoHref = "/",
-        accountMenuItems = [],
-        helpMenuItems = [],
-        menuItemsGroups = [],
-        search = null,
-        notificationsPanel = null,
-        workspacePicker,
-        isAccessibilityCompliant,
-        intl,
-        logoUrl,
-        logoTitle,
-        className,
-        activeColor,
-        headerColor,
-        headerTextColor,
-        documentationUrl,
-        expiredDate,
-        showUpsellButton,
-        onUpsellButtonClick,
-        badges,
-        showStaticHelpMenu,
-        userName,
-        theme,
-        helpMenuDropdownAlignPoints: helpDropdownAlign,
-        disableHelpDropdown,
-        onHelpClick,
-        helpRedirectUrl,
-        showInviteItem,
-        onInviteItemClick,
-        showChatItem,
-        onChatItemClick,
-        onLogoClick,
-        onMenuItemClick,
-    } = props;
+function AppHeaderCore({
+    logoHref = "/",
+    accountMenuItems = [],
+    helpMenuItems = [],
+    menuItemsGroups = [],
+    search = null,
+    notificationsPanel = null,
+    workspacePicker,
+    isAccessibilityCompliant,
+    logoUrl,
+    logoTitle,
+    className,
+    activeColor,
+    headerColor,
+    headerTextColor,
+    documentationUrl,
+    expiredDate,
+    showUpsellButton,
+    onUpsellButtonClick,
+    badges,
+    showStaticHelpMenu,
+    userName,
+    theme,
+    helpMenuDropdownAlignPoints: helpDropdownAlign,
+    disableHelpDropdown,
+    onHelpClick,
+    helpRedirectUrl,
+    showInviteItem,
+    onInviteItemClick,
+    showChatItem,
+    onChatItemClick,
+    onLogoClick,
+    onMenuItemClick,
+}: IAppHeaderProps) {
+    const intl = useIntl();
 
     const [state, setState] = useState<IAppHeaderState>({
         childrenWidth: 0,
@@ -674,6 +673,4 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
 /**
  * @internal
  */
-export const AppHeader = withTheme(
-    injectIntl<"intl", IAppHeaderProps & WrappedComponentProps>(AppHeaderCore),
-);
+export const AppHeader = withTheme(AppHeaderCore);

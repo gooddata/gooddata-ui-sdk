@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import {
     Dropdown,
     DropdownList,
@@ -48,8 +48,9 @@ const DropdownControl = memo(function DropdownControl({
     disabledMessageAlignPoints,
     customListItem: ListItem = SingleSelectListItem,
     pushData,
-    intl,
-}: IDropdownControlProps & WrappedComponentProps) {
+}: IDropdownControlProps) {
+    const intl = useIntl();
+
     const getSelectedItem = (value: string | number): IDropdownItem => {
         if (items) {
             return items.find((item) => item.value === value);
@@ -133,4 +134,4 @@ const DropdownControl = memo(function DropdownControl({
     );
 });
 
-export default injectIntl(DropdownControl);
+export default DropdownControl;

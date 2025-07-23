@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useState, useCallback } from "react";
-import { injectIntl, FormattedMessage, IntlShape, IntlProvider } from "react-intl";
+import { FormattedMessage, IntlProvider, useIntl } from "react-intl";
 import { MediaQuery } from "react-responsive";
 
 import { Button, Overlay, FullScreenOverlay } from "@gooddata/sdk-ui-kit";
@@ -9,10 +9,11 @@ import "../styles/goodstrap.scss";
 
 interface IOverlayExampleProps {
     index: number;
-    intl: IntlShape;
 }
 
-function OverlayExample({ index = 0, intl }: IOverlayExampleProps) {
+function InjectedOverlayExample({ index = 0 }: IOverlayExampleProps) {
+    const intl = useIntl();
+
     const [isOpen, setIsOpen] = useState(false);
 
     const buttonText = useCallback(() => {
@@ -122,8 +123,6 @@ function OverlayExample({ index = 0, intl }: IOverlayExampleProps) {
         </div>
     );
 }
-
-const InjectedOverlayExample = injectIntl(OverlayExample);
 
 function OverlayExamples() {
     return (

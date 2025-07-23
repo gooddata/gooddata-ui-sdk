@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useState, useEffect } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { Message } from "@gooddata/sdk-ui-kit";
 
@@ -25,7 +25,9 @@ const defaultMinMaxControlState = {
     },
 };
 
-function MinMaxControl(props: IMinMaxControlProps & WrappedComponentProps) {
+export default function MinMaxControl(props: IMinMaxControlProps) {
+    const intl = useIntl();
+
     const [state, setState] = useState<IMinMaxControlState>(defaultMinMaxControlState);
 
     // Handle getDerivedStateFromProps logic
@@ -40,6 +42,7 @@ function MinMaxControl(props: IMinMaxControlProps & WrappedComponentProps) {
             data,
             state,
             props,
+            intl,
             (newState: Partial<IMinMaxControlState>) =>
                 setState((prevState) => ({ ...prevState, ...newState })),
             defaultMinMaxControlState,
@@ -51,6 +54,7 @@ function MinMaxControl(props: IMinMaxControlProps & WrappedComponentProps) {
             data,
             state,
             props,
+            intl,
             (newState: Partial<IMinMaxControlState>) =>
                 setState((prevState) => ({ ...prevState, ...newState })),
             defaultMinMaxControlState,
@@ -136,5 +140,3 @@ function MinMaxControl(props: IMinMaxControlProps & WrappedComponentProps) {
         </ConfigSubsection>
     );
 }
-
-export default injectIntl(MinMaxControl);

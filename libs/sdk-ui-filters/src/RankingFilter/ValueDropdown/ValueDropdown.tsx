@@ -1,18 +1,19 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { DynamicSelect } from "../../DateFilter/DynamicSelect/DynamicSelect.js";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { sanitizeCustomInput, sanitizeInput } from "./utils.js";
 
-interface IValueDropdownOwnProps {
+interface ValueDropdownProps {
     selectedValue: number;
     onSelect: (value: number) => void;
 }
 
-type ValueDropdownProps = IValueDropdownOwnProps & WrappedComponentProps;
+export function ValueDropdown({ selectedValue, onSelect }: ValueDropdownProps) {
+    const intl = useIntl();
 
-const ValueDropdownComponent: React.FC<ValueDropdownProps> = ({ selectedValue, onSelect, intl }) => {
     const getDropdownItems = (value: string) => sanitizeInput(value, intl);
+
     return (
         <DynamicSelect
             getItems={getDropdownItems}
@@ -23,6 +24,4 @@ const ValueDropdownComponent: React.FC<ValueDropdownProps> = ({ selectedValue, o
             customValueValidator={sanitizeCustomInput}
         />
     );
-};
-
-export const ValueDropdown = injectIntl(ValueDropdownComponent);
+}

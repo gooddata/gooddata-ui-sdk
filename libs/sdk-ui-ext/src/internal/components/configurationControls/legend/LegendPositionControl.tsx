@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
 import { legendPositionDropdownItems } from "../../../constants/dropdowns.js";
@@ -16,25 +16,31 @@ export interface ILegendPositionControl {
     pushData: (data: any) => any;
 }
 
-const LegendPositionControl = memo(function LegendPositionControl(
-    props: ILegendPositionControl & WrappedComponentProps,
-) {
+const LegendPositionControl = memo(function LegendPositionControl({
+    value,
+    disabled,
+    properties,
+    pushData,
+    showDisabledMessage,
+}: ILegendPositionControl) {
+    const intl = useIntl();
+
     const generateDropdownItems = () => {
-        return getTranslatedDropdownItems(legendPositionDropdownItems, props.intl);
+        return getTranslatedDropdownItems(legendPositionDropdownItems, intl);
     };
 
     return (
         <DropdownControl
-            value={props.value}
+            value={value}
             valuePath="legend.position"
             labelText={messages.position.id}
-            disabled={props.disabled}
-            properties={props.properties}
-            pushData={props.pushData}
+            disabled={disabled}
+            properties={properties}
+            pushData={pushData}
             items={generateDropdownItems()}
-            showDisabledMessage={props.showDisabledMessage}
+            showDisabledMessage={showDisabledMessage}
         />
     );
 });
 
-export default injectIntl(LegendPositionControl);
+export default LegendPositionControl;

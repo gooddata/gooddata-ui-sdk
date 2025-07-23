@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { memo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 import { StreamLanguage } from "@codemirror/language";
 
@@ -123,17 +123,20 @@ export const formattingLanguage = StreamLanguage.define<LanguageState>({
 
 const codeMirrorExtensions = [formattingLanguage];
 
-interface IFormatInputOwnProps {
+interface IFormatInputProps {
     format: string;
     onFormatChange: (format: string) => void;
     separators?: ISeparators;
     templates?: ReadonlyArray<IFormatTemplate>;
 }
 
-type IFormatInputProps = IFormatInputOwnProps & WrappedComponentProps;
-
-const FormatInput = memo(function FormatInput(props: IFormatInputProps) {
-    const { format, onFormatChange, separators, templates, intl } = props;
+const FormatInput = memo(function FormatInput({
+    format,
+    onFormatChange,
+    separators,
+    templates,
+}: IFormatInputProps) {
+    const intl = useIntl();
 
     const handleInputChange = (value: string) => {
         onFormatChange(value);
@@ -161,6 +164,4 @@ const FormatInput = memo(function FormatInput(props: IFormatInputProps) {
     );
 });
 
-const FormatInputWithIntl = injectIntl(FormatInput);
-
-export default FormatInputWithIntl;
+export default FormatInput;

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
 import { getTranslatedDropdownItems } from "../../../utils/translations.js";
@@ -17,9 +17,17 @@ export interface ILabelRotationControl {
     pushData: (data: any) => any;
 }
 
-function LabelRotationControl(props: ILabelRotationControl & WrappedComponentProps) {
+const LabelRotationControl = memo(function LabelRotationControl({
+    properties,
+    axis,
+    disabled,
+    configPanelDisabled,
+    pushData,
+}: ILabelRotationControl) {
+    const intl = useIntl();
+
     const getControlProperties = (): IVisualizationProperties => {
-        const axisProperties = props.properties?.controls?.[props.axis];
+        const axisProperties = properties?.controls?.[axis];
 
         const axisVisible = axisProperties?.visible ?? true;
         const axisLabelsEnabled = axisProperties?.labelsEnabled ?? true;
@@ -34,19 +42,18 @@ function LabelRotationControl(props: ILabelRotationControl & WrappedComponentPro
 
     const { axisVisible, axisLabelsEnabled, axisRotation } = getControlProperties();
 
-    const isDisabled = props.disabled || !axisVisible || !axisLabelsEnabled;
+    const isDisabled = disabled || !axisVisible || !axisLabelsEnabled;
     return (
         <DropdownControl
             value={axisRotation}
-            valuePath={`${props.axis}.rotation`}
+            valuePath={`${axis}.rotation`}
             labelText={messages.axisRotation.id}
             disabled={isDisabled}
-            showDisabledMessage={!props.configPanelDisabled && isDisabled}
-            properties={props.properties}
-            pushData={props.pushData}
-            items={getTranslatedDropdownItems(rotationDropdownItems, props.intl)}
+            showDisabledMessage={!configPanelDisabled && isDisabled}
+            properties={properties}
+            pushData={pushData}
+            items={getTranslatedDropdownItems(rotationDropdownItems, intl)}
         />
     );
-}
-
-export default injectIntl(memo(LabelRotationControl));
+});
+export default LabelRotationControl;

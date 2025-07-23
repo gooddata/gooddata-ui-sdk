@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
 import { AxisType } from "../../../interfaces/AxisType.js";
 import LabelRotationControl from "./LabelRotationControl.js";
@@ -18,9 +17,16 @@ export interface ILabelSubsection {
     showFormat?: boolean;
 }
 
-function LabelSubsection(props: ILabelSubsection & WrappedComponentProps) {
+const LabelSubsection = memo(function LabelSubsection({
+    disabled,
+    configPanelDisabled,
+    axis,
+    properties,
+    pushData,
+    showFormat,
+}: ILabelSubsection) {
     const getControlProperties = (): IVisualizationProperties => {
-        const axisProperties = props.properties?.controls?.[props.axis];
+        const axisProperties = properties?.controls?.[axis];
 
         const axisVisible = axisProperties?.visible ?? true;
         const axisLabelsEnabled = axisProperties?.labelsEnabled ?? true;
@@ -35,34 +41,34 @@ function LabelSubsection(props: ILabelSubsection & WrappedComponentProps) {
 
     return (
         <ConfigSubsection
-            axisType={props.axis}
+            axisType={axis}
             title={messages.axisLabels.id}
-            valuePath={`${props.axis}.labelsEnabled`}
-            properties={props.properties}
-            pushData={props.pushData}
+            valuePath={`${axis}.labelsEnabled`}
+            properties={properties}
+            pushData={pushData}
             canBeToggled={true}
             toggledOn={axisLabelsEnabled}
-            toggleDisabled={props.disabled || !axisVisible}
-            showDisabledMessage={!props.configPanelDisabled && props.disabled}
+            toggleDisabled={disabled || !axisVisible}
+            showDisabledMessage={!configPanelDisabled && disabled}
         >
-            {props.showFormat ? (
+            {showFormat ? (
                 <LabelFormatControl
-                    disabled={props.disabled}
-                    configPanelDisabled={props.configPanelDisabled}
-                    axis={props.axis}
-                    properties={props.properties}
-                    pushData={props.pushData}
+                    disabled={disabled}
+                    configPanelDisabled={configPanelDisabled}
+                    axis={axis}
+                    properties={properties}
+                    pushData={pushData}
                 />
             ) : null}
             <LabelRotationControl
-                disabled={props.disabled}
-                configPanelDisabled={props.configPanelDisabled}
-                axis={props.axis}
-                properties={props.properties}
-                pushData={props.pushData}
+                disabled={disabled}
+                configPanelDisabled={configPanelDisabled}
+                axis={axis}
+                properties={properties}
+                pushData={pushData}
             />
         </ConfigSubsection>
     );
-}
+});
 
-export default memo(injectIntl(LabelSubsection));
+export default LabelSubsection;

@@ -395,7 +395,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         };
     }
 
-    const IntlLoadingHOC = injectIntl<"intl", T & ILoadingInjectedProps>(LoadingHOCWrapped);
+    const IntlLoadingHOC = injectIntl(LoadingHOCWrapped);
 
     return class LoadingHOC extends React.Component<T> {
         public render() {
