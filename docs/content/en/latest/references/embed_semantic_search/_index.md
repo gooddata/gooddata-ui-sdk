@@ -284,7 +284,8 @@ const MyCustomSearchComponentWithAiAssistant = () => {
                 renderFooter={({ value }, { closeSearch }) => (
                     <FooterButtonAiAssistant
                         onClick={() => {
-                            setAskedQuestion(value);
+                            // You can extend the search query with additional context.
+                            setAskedQuestion(`Build new visualization based on: ${value}`);
                             closeSearch();
                         }}
                     />
