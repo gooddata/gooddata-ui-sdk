@@ -18,10 +18,15 @@ const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }]
  *
  * @beta
  */
-export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElementsSelectItemProps> = (
-    props,
-) => {
-    const { item, isSelected, focusedAction, onSelect, onSelectOnly, onDeselect, primaryLabelTitle } = props;
+export function AttributeFilterElementsSelectItem({
+    item,
+    isSelected,
+    focusedAction,
+    onSelect,
+    onSelectOnly,
+    onDeselect,
+    primaryLabelTitle,
+}: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
     const itemRef = useRef<HTMLDivElement>(null);
 
@@ -133,4 +138,4 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
             />
         </div>
     );
-};
+}

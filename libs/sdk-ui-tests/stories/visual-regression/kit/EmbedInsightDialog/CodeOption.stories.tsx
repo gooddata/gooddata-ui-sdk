@@ -5,7 +5,7 @@ import { CodeOptions, IReactOptions } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-const FullExampleByDefinition: React.VFC = () => {
+function FullExampleByDefinition() {
     const [option, setOption] = useState<IReactOptions>({
         type: "react",
         componentType: "reference",
@@ -20,9 +20,9 @@ const FullExampleByDefinition: React.VFC = () => {
             <CodeOptions option={option} onChange={(opt) => setOption(opt)} />
         </>
     );
-};
+}
 
-const FullExampleByReference: React.VFC = () => {
+function FullExampleByReference() {
     const [option, setOption] = useState<IReactOptions>({
         type: "react",
         componentType: "reference",
@@ -37,9 +37,9 @@ const FullExampleByReference: React.VFC = () => {
             <CodeOptions option={option} onChange={(opt) => setOption(opt)} />
         </>
     );
-};
+}
 
-const CustomHeightExampleByDefinition: React.VFC = () => {
+function CustomHeightExampleByDefinition() {
     const [option, setOption] = useState<IReactOptions>({
         type: "react",
         componentType: "definition",
@@ -54,9 +54,9 @@ const CustomHeightExampleByDefinition: React.VFC = () => {
             <CodeOptions option={option} onChange={(opt) => setOption(opt)} />
         </>
     );
-};
+}
 
-const CustomHeightExampleByReference: React.VFC = () => {
+function CustomHeightExampleByReference() {
     const [option, setOption] = useState<IReactOptions>({
         type: "react",
         componentType: "reference",
@@ -71,9 +71,9 @@ const CustomHeightExampleByReference: React.VFC = () => {
             <CodeOptions option={option} onChange={(opt) => setOption(opt)} />
         </>
     );
-};
+}
 
-const CustomHeightFullDefinedExampleByDefinition: React.VFC = () => {
+function CustomHeightFullDefinedExampleByDefinition() {
     const [option, setOption] = useState<IReactOptions>({
         type: "react",
         componentType: "definition",
@@ -90,9 +90,9 @@ const CustomHeightFullDefinedExampleByDefinition: React.VFC = () => {
             <CodeOptions option={option} onChange={(opt) => setOption(opt)} />
         </>
     );
-};
+}
 
-const CustomHeightFullDefinedExampleByReference: React.VFC = () => {
+function CustomHeightFullDefinedExampleByReference() {
     const [option, setOption] = useState<IReactOptions>({
         type: "react",
         componentType: "reference",
@@ -109,9 +109,9 @@ const CustomHeightFullDefinedExampleByReference: React.VFC = () => {
             <CodeOptions option={option} onChange={(opt) => setOption(opt)} />
         </>
     );
-};
+}
 
-const CodeOptionExamples: React.VFC = () => {
+function CodeOptionExamples() {
     return (
         <InternalIntlWrapper>
             <div className="screenshot-target library-component">
@@ -126,7 +126,7 @@ const CodeOptionExamples: React.VFC = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/EmbedInsightDialog/CodeOption",

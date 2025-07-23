@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Message } from "@gooddata/sdk-ui-kit";
@@ -16,8 +16,10 @@ export interface IAttributeFilterElementsSelectErrorProps {
  * Component that displays a generic error message.
  * @beta
  */
-export const AttributeFilterElementsSelectError: React.VFC = () => (
-    <Message type="error">
-        <FormattedMessage id="gs.list.error" />
-    </Message>
-);
+export function AttributeFilterElementsSelectError() {
+    return (
+        <Message type="error">
+            <FormattedMessage id="gs.list.error" />
+        </Message>
+    );
+}

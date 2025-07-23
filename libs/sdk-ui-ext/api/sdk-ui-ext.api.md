@@ -122,7 +122,7 @@ export const DeleteUserGroupsDialog: React_2.FC<IDeleteUserGroupsDialogProps>;
 export const DeleteUsersDialog: React_2.FC<IDeleteUsersDialogProps>;
 
 // @internal (undocumented)
-export const EmbedInsightDialog: React_2.VFC<IEmbedInsightDialogProps>;
+export function EmbedInsightDialog(props: IEmbedInsightDialogProps): React_2.JSX.Element;
 
 // @alpha (undocumented)
 export class EmptyAfmSdkError extends GoodDataSdkError {

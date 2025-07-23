@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { Message } from "../../../../Messages/index.js";
@@ -7,9 +7,7 @@ export interface IPrepareEnvMessageProps {
     integrationDocLink: string;
 }
 
-export const PrepareEnvMessage: React.VFC<IPrepareEnvMessageProps> = (props) => {
-    const { integrationDocLink } = props;
-
+export function PrepareEnvMessage({ integrationDocLink }: IPrepareEnvMessageProps) {
     if (integrationDocLink) {
         return (
             <Message type="progress" className="embed-insight-dialog-prep-env-message">
@@ -27,4 +25,4 @@ export const PrepareEnvMessage: React.VFC<IPrepareEnvMessageProps> = (props) => 
     }
 
     return null;
-};
+}

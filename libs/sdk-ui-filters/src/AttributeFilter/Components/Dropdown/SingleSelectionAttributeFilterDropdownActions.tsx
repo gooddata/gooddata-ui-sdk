@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 
 /**
@@ -6,6 +6,6 @@ import React from "react";
  *
  * @beta
  */
-export const SingleSelectionAttributeFilterDropdownActions: React.VFC = () => {
+export function SingleSelectionAttributeFilterDropdownActions() {
     return <div />;
-};
+}

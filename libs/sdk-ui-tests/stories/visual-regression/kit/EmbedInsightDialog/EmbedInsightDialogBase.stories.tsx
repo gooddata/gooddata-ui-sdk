@@ -8,7 +8,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 import { code } from "./CodeMock.js";
 
-const EmbedInsightDialogBaseExamples: React.VFC = () => {
+function EmbedInsightDialogBaseExamples() {
     const [reactOptions, setReactOptions] = useState<IReactOptions>({
         type: "react",
         codeType: "ts",
@@ -149,7 +149,7 @@ const EmbedInsightDialogBaseExamples: React.VFC = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/EmbedInsightDialog/EmbedInsightDialogBase",

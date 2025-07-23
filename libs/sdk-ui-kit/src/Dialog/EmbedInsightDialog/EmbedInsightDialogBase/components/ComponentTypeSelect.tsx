@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { ChangeEvent, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -18,9 +18,10 @@ export interface IComponentTypeSelectProps {
 /**
  * @internal
  */
-export const ComponentTypeSelect: React.VFC<IComponentTypeSelectProps> = (props) => {
-    const { selectedComponentType, onComponentTypeChanged } = props;
-
+export function ComponentTypeSelect({
+    selectedComponentType,
+    onComponentTypeChanged,
+}: IComponentTypeSelectProps) {
     const onCheck = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value as InsightCodeType;
@@ -52,7 +53,7 @@ export const ComponentTypeSelect: React.VFC<IComponentTypeSelectProps> = (props)
             />
         </div>
     );
-};
+}
 
 const getChangesLabelId = (codeType: InsightCodeType): string => {
     return dialogChangeMessageLabels[codeType].id;

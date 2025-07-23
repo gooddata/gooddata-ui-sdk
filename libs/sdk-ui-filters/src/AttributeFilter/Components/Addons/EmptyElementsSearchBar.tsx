@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { IAttributeFilterElementsSearchBarProps } from "../ElementsSelect/AttributeFilterElementsSearchBar.js";
 
@@ -6,6 +6,6 @@ import { IAttributeFilterElementsSearchBarProps } from "../ElementsSelect/Attrib
  * This component render empty ElementsSearchBar
  * @internal
  */
-export const EmptyElementsSearchBar: React.VFC<IAttributeFilterElementsSearchBarProps> = (_props) => {
+export function EmptyElementsSearchBar(_props: IAttributeFilterElementsSearchBarProps) {
     return <div className="gd-empty-select-search-bar" />;
-};
+}

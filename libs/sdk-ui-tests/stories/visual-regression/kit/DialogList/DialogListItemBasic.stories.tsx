@@ -13,7 +13,7 @@ const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
     return <div style={{ width: 350, height: 60, margin: "30 0" }}>{children}</div>;
 };
 
-const DialogListItemBasicExamples: React.VFC = () => {
+function DialogListItemBasicExamples() {
     const onClick = action("onClick");
     const onDelete = action("onDelete");
     const theme = useTheme();
@@ -170,7 +170,7 @@ const DialogListItemBasicExamples: React.VFC = () => {
             </div>
         </>
     );
-};
+}
 
 const testItemSelector = ".s-dialog-list-item-basic";
 

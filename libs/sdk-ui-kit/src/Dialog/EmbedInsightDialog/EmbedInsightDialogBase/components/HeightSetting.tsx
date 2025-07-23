@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { SingleSelectListItem } from "../../../../List/index.js";
 import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown/index.js";
@@ -18,9 +18,7 @@ export interface IHeightSettingProps {
 /**
  * @internal
  */
-export const HeightSetting: React.VFC<IHeightSettingProps> = (props) => {
-    const { value, onValueChange, unit = DEFAULT_UNIT } = props;
-
+export function HeightSetting({ value, onValueChange, unit = DEFAULT_UNIT }: IHeightSettingProps) {
     const onChange = useCallback(
         (val: string) => {
             if (val !== value) {
@@ -46,7 +44,7 @@ export const HeightSetting: React.VFC<IHeightSettingProps> = (props) => {
             <UnitSelect selectedUnit={unit} onSelectUnit={onUnitChange} />
         </div>
     );
-};
+}
 
 interface IDropdownItem {
     id: UnitsType;
@@ -60,9 +58,7 @@ interface UnitSelectProps {
 
 const items: IDropdownItem[] = UNITS.map((u) => ({ id: u, title: u }));
 
-const UnitSelect: React.VFC<UnitSelectProps> = (props) => {
-    const { selectedUnit, onSelectUnit } = props;
-
+function UnitSelect({ selectedUnit, onSelectUnit }: UnitSelectProps) {
     return (
         <Dropdown
             renderBody={({ closeDropdown }) => (
@@ -88,4 +84,4 @@ const UnitSelect: React.VFC<UnitSelectProps> = (props) => {
             )}
         />
     );
-};
+}

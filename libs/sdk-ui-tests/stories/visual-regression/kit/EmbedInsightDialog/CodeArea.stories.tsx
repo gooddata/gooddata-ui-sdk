@@ -11,7 +11,7 @@ const AreaWrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
     return <div style={{ width: 600, height: 250, margin: 20 }}>{children}</div>;
 };
 
-const CodeAreaExamples: React.VFC = () => {
+function CodeAreaExamples() {
     return (
         <>
             <div className="screenshot-target">
@@ -40,7 +40,7 @@ const CodeAreaExamples: React.VFC = () => {
             </div>
         </>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/EmbedInsightDialog/CodeArea",

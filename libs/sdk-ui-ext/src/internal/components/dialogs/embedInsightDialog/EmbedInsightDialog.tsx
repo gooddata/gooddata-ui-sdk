@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { IColorPalette, IExecutionConfig, IInsight, ITheme } from "@gooddata/sdk-model";
@@ -49,7 +49,7 @@ export interface IEmbedInsightDialogProps {
 /**
  * @internal
  */
-export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) => {
+export function EmbedInsightDialog(props: IEmbedInsightDialogProps) {
     const { locale, openSaveInsightDialog, onClose, onCopyCode, showWebComponentsTab } = props;
 
     const {
@@ -81,7 +81,7 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
             </ModalOverlay>
         </IntlWrapper>
     );
-};
+}
 
 const useEmbedInsightDialog = (props: IEmbedInsightDialogProps) => {
     const {

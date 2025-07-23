@@ -26,7 +26,7 @@ const ALIGN_POINTS = [
 /**
  * @internal
  */
-export const AttributeFilterDropdown: React.VFC = () => {
+export function AttributeFilterDropdown() {
     const { DropdownButtonComponent, DropdownBodyComponent, LoadingComponent, ErrorComponent } =
         useAttributeFilterComponentsContext();
 
@@ -133,7 +133,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
             )}
         />
     );
-};
+}
 
 function useLastValidValue<T>(value: T, isValid: boolean): T {
     const lastValidValue = useRef<T | undefined>();

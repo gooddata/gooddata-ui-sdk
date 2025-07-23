@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { ILocale, LOCALES } from "@gooddata/sdk-ui";
@@ -23,9 +23,13 @@ export interface ILocaleSettingProps {
 /**
  * @internal
  */
-export const LocaleSetting: React.VFC<ILocaleSettingProps> = (props) => {
+export function LocaleSetting({
+    isChecked,
+    selectedLocal,
+    onChecked,
+    onLocaleSelected,
+}: ILocaleSettingProps) {
     const intl = useIntl();
-    const { isChecked, selectedLocal, onChecked, onLocaleSelected } = props;
 
     return (
         <>
@@ -48,7 +52,7 @@ export const LocaleSetting: React.VFC<ILocaleSettingProps> = (props) => {
             ) : null}
         </>
     );
-};
+}
 
 interface LocaleSelectProps {
     selectedLocale: ILocale;

@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
 import cx from "classnames";
@@ -27,16 +27,15 @@ export interface IDialogListHeaderProps {
 /**
  * @internal
  */
-export const DialogListHeader: React.VFC<IDialogListHeaderProps> = (props) => {
-    const {
-        className,
-        gdIconName = "gd-icon-plus",
-        title,
-        buttonTitle,
-        buttonDisabled,
-        buttonTooltipText,
-        onButtonClick,
-    } = props;
+export function DialogListHeader({
+    className,
+    gdIconName = "gd-icon-plus",
+    title,
+    buttonTitle,
+    buttonDisabled,
+    buttonTooltipText,
+    onButtonClick,
+}: IDialogListHeaderProps) {
     const headerClassNames = cx("gd-dialog-list-header s-dialog-list-header", className);
     const buttonClassNames = cx("gd-button", "gd-button-link", gdIconName, "s-dialog-list-header-button", {
         disabled: buttonDisabled,
@@ -73,4 +72,4 @@ export const DialogListHeader: React.VFC<IDialogListHeaderProps> = (props) => {
             ) : null}
         </div>
     );
-};
+}

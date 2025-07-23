@@ -5,7 +5,7 @@ import { CodeLanguageSelect, CodeLanguageType } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-const CodeLanguageSelectorExamples: React.VFC = () => {
+function CodeLanguageSelectorExamples() {
     const [lang, setLang] = useState<CodeLanguageType>("ts");
 
     const onLanguageChanged = (lang: CodeLanguageType) => {
@@ -19,7 +19,7 @@ const CodeLanguageSelectorExamples: React.VFC = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/EmbedInsightDialog/CodeLanguageSelect",
