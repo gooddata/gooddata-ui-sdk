@@ -391,7 +391,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
 //
 
 function optionsKey(options: IWorkspaceCatalogFactoryOptions): string {
-    return stringify(options);
+    return stringify(options) || "undefined";
 }
 
 class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
@@ -698,7 +698,8 @@ function elementsCacheKey(
         validateBy?: ObjRef[];
     },
 ): string {
-    return new SparkMD5().append(objRefToString(ref)).append(stringify(settings)).end();
+    const fingerprint = stringify(settings) || "undefined";
+    return new SparkMD5().append(objRefToString(ref)).append(fingerprint).end();
 }
 
 function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): AttributeCacheEntry {
@@ -848,15 +849,15 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             });
 
             if (idCacheKey) {
-                cache.set(idCacheKey, cacheItem);
+                cache.set(idCacheKey, cacheItem as Promise<IAttributeDisplayFormMetadataObject>);
             }
 
             if (uriCacheKey) {
-                cache.set(uriCacheKey, cacheItem);
+                cache.set(uriCacheKey, cacheItem as Promise<IAttributeDisplayFormMetadataObject>);
             }
         }
 
-        return cacheItem;
+        return cacheItem as Promise<IAttributeDisplayFormMetadataObject>;
     };
 
     public getAttributeDisplayForms = async (
@@ -873,7 +874,10 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
 
                 const cacheHit = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
 
-                return { ref, cacheHit };
+                return {
+                    ref,
+                    cacheHit: cacheHit as Promise<IAttributeDisplayFormMetadataObject> | undefined,
+                };
             },
         );
 
@@ -936,15 +940,15 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             });
 
             if (idCacheKey) {
-                cache.set(idCacheKey, cacheItem);
+                cache.set(idCacheKey, cacheItem as Promise<IAttributeMetadataObject>);
             }
 
             if (uriCacheKey) {
-                cache.set(uriCacheKey, cacheItem);
+                cache.set(uriCacheKey, cacheItem as Promise<IAttributeMetadataObject>);
             }
         }
 
-        return cacheItem;
+        return cacheItem as Promise<IAttributeMetadataObject>;
     };
 
     getAttributeDatasetMeta = async (ref: ObjRef): Promise<IMetadataObject> => {
@@ -964,11 +968,11 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             });
 
             if (idCacheKey) {
-                cache.set(idCacheKey, cacheItem);
+                cache.set(idCacheKey, cacheItem as Promise<IMetadataObject>);
             }
         }
 
-        return cacheItem;
+        return cacheItem as Promise<IMetadataObject>;
     };
 
     public async getAttributesWithReferences(refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
@@ -1222,7 +1226,7 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
 
     public query(): Promise<IAutomationsQueryResult> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
-        const key = stringify(this.settings);
+        const key = stringify(this.settings) || "undefined";
 
         const result = cache.queries.get(key);
 
@@ -1256,7 +1260,7 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
 
     public getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace).automations;
-        const key = stringify(options);
+        const key = stringify(options) || "undefined";
 
         const result = cache.get(key);
 

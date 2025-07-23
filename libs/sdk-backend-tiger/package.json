@@ -61,9 +61,9 @@
         "lodash": "^4.17.21",
         "spark-md5": "^3.0.0",
         "ts-invariant": "^0.7.5",
-        "tslib": "^2.5.0",
+        "tslib": "2.8.1",
         "uuid": "^8.3.2",
-        "lru-cache": "^10.0.1",
+        "lru-cache": "11.1.0",
         "eventsource-parser": "~3.0.0",
         "emailjs-mime-codec": "^2.0.9"
     },

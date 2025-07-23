@@ -14,20 +14,6 @@
      * will recalculate all version selections.
      */
     "preferredVersions": {
-/*        "@types/node": "^22.13.0",
-        "@types/lodash": "^4.14.202",
-        "@microsoft/api-extractor": "^7.52.8",
-        "@microsoft/api-documenter": "^7.17.0",
-        "@gooddata/frontend-npm-scripts": "1.2.0",
-
-        "prettier": "^3.6.2",
-        "tslib": "^2.5.0",
-        "typescript": "5.8.3",
-
-        // we need correct peer dependency for heroku package in sdk-examples
-        "@opentelemetry/api":"1.4.1",
-        "csstype":"3.1.2"*/
-
         /**
          * When someone asks for "^1.0.0" make sure they get "1.2.3" when working in this repo,
          * instead of the latest version.
@@ -46,7 +32,6 @@
      * This design avoids unnecessary churn in this file.
      */
     "allowedAlternativeVersions": {
-        "cypress": ["^9.7.0"] // TODO migrate plugin tests to Cypress 10 as well
         /**
          * For example, allow some projects to use an older TypeScript compiler
          * (in addition to whatever "usual" version is being used by other projects in the repo):

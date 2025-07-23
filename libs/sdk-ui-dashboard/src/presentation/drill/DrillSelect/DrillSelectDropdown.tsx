@@ -253,7 +253,7 @@ export const createDrillSelectItems = ({
                 type: DrillType.DRILL_DOWN,
                 name: drillTitle ?? title ?? "NULL", // TODO localize this? drilldown is currently only on bear and that does not support nulls anyway
                 drillDefinition,
-                id: stringify(drillDefinition),
+                id: stringify(drillDefinition) || "undefined",
             };
         }
         if (isDrillToInsight(drillDefinition)) {
@@ -264,7 +264,7 @@ export const createDrillSelectItems = ({
                 type: DrillType.DRILL_TO_INSIGHT,
                 name: title!,
                 drillDefinition,
-                id: stringify(drillDefinition),
+                id: stringify(drillDefinition) || "undefined",
             };
         }
 
@@ -276,7 +276,7 @@ export const createDrillSelectItems = ({
                 type: DrillType.DRILL_TO_DASHBOARD,
                 name: title!,
                 drillDefinition,
-                id: stringify(drillDefinition),
+                id: stringify(drillDefinition) || "undefined",
             };
         }
 
@@ -293,7 +293,7 @@ export const createDrillSelectItems = ({
                 name: intl.formatMessage({ id: "drill_modal_picker.more.details" }),
                 drillDefinition,
                 attributeValue,
-                id: stringify(drillDefinition),
+                id: stringify(drillDefinition) || "undefined",
             };
         }
 
@@ -310,7 +310,7 @@ export const createDrillSelectItems = ({
                 name: title,
                 type: DrillType.CROSS_FILTERING,
                 drillDefinition,
-                id: stringify(drillDefinition),
+                id: stringify(drillDefinition) || "undefined",
             };
         }
 

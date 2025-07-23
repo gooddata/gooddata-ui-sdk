@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import stringify from "json-stable-stringify";
 import { IMeasureFilter } from "../filter/index.js";
@@ -29,14 +29,16 @@ function simpleMeasureFingerprint(measure: IMeasure<IMeasureDefinition>): string
         measureDefinitionWithSanitizedFilters,
     );
 
-    return stringify({
+    const fingerprint = {
         measure: {
             ...measure.measure,
             definition: {
                 measureDefinition: measureDefinitionWithDefaults,
             },
         },
-    });
+    };
+
+    return stringify(fingerprint) || "undefined";
 }
 
 /**
@@ -58,5 +60,5 @@ export function measureFingerprint(measure: IMeasure): string {
         return simpleMeasureFingerprint(measure);
     }
 
-    return stringify(measure);
+    return stringify(measure) || "undefined";
 }

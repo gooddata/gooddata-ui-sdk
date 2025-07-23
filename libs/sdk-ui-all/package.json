@@ -46,7 +46,7 @@
         "@gooddata/sdk-ui-filters": "workspace:*",
         "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
-        "tslib": "^2.5.0"
+        "tslib": "2.8.1"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
