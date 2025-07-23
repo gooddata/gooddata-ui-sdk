@@ -172,7 +172,10 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
         // the visualization we may have from earlier is no longer valid -> get rid of it
         this.unmountVisualization();
 
-        const visualizationFactory = FullVisualizationCatalog.forInsight(this.props.insight).getFactory();
+        const visualizationFactory = FullVisualizationCatalog.forInsight(
+            this.props.insight,
+            this.props.settings?.enableNewPivotTable ?? false,
+        ).getFactory();
 
         this.visualization = visualizationFactory({
             backend: this.props.backend,

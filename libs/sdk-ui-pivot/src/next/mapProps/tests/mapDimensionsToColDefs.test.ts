@@ -13,8 +13,6 @@ const backend = compositeBackend({
     backend: withNormalization(recordedBackend(ReferenceRecordings.Recordings)),
 });
 
-const signal = new AbortController().signal;
-
 const DEFAULT_PARAMS: IGetExecutionParams = {
     backend,
     workspace,
@@ -25,7 +23,6 @@ const DEFAULT_PARAMS: IGetExecutionParams = {
     sortBy: [],
     totals: [],
     measureGroupDimension: "columns",
-    signal,
 };
 
 const modifiedCreatedYear: IAttribute = modifyAttribute(
@@ -38,8 +35,12 @@ async function getColDefs(params: Partial<IGetExecutionParams>) {
         ...DEFAULT_PARAMS,
         ...params,
     };
-    const execution = await getExecution(paramsWithDefaults);
-    const colDefs = mapDimensionsToColDefs(execution.dimensions, paramsWithDefaults.measureGroupDimension);
+    const execution = getExecution(paramsWithDefaults);
+    const executionResult = await execution.execute();
+    const colDefs = mapDimensionsToColDefs(
+        executionResult.dimensions,
+        paramsWithDefaults.measureGroupDimension,
+    );
     return colDefs;
 }
 

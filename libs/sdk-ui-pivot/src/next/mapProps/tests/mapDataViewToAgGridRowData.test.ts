@@ -18,8 +18,6 @@ const backend = compositeBackend({
     backend: withNormalization(recordedBackend(ReferenceRecordings.Recordings)),
 });
 
-const signal = new AbortController().signal;
-
 const DEFAULT_PARAMS: IGetExecutionParams = {
     backend,
     workspace,
@@ -30,7 +28,6 @@ const DEFAULT_PARAMS: IGetExecutionParams = {
     sortBy: [],
     totals: [],
     measureGroupDimension: "columns",
-    signal,
 };
 
 const modifiedCreatedYear: IAttribute = modifyAttribute(
@@ -49,7 +46,8 @@ async function getRowData(
         ...DEFAULT_PARAMS,
         ...params,
     };
-    const executionResult = await getExecution(paramsWithDefaults);
+    const execution = getExecution(paramsWithDefaults);
+    const executionResult = await execution.execute();
     const dataView = await getPaginatedExecutionDataView({ executionResult, startRow: 0, endRow: 100 });
     const rowData = mapDataViewToAgGridRowData(dataView, params.columnHeadersPosition);
     return {

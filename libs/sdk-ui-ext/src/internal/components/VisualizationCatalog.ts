@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import last from "lodash/last.js";
 import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { IVisualizationDescriptor } from "../interfaces/VisualizationDescriptor.js";
@@ -26,6 +26,7 @@ import { SankeyChartDescriptor } from "./pluggableVisualizations/sankeyChart/San
 import { DependencyWheelChartDescriptor } from "./pluggableVisualizations/dependencyWheelChart/DependencyWheelChartDescriptor.js";
 import { WaterfallChartDescriptor } from "./pluggableVisualizations/waterfallChart/WaterfallChartDescriptor.js";
 import { RepeaterDescriptor } from "./pluggableVisualizations/repeater/RepeaterDescriptor.js";
+import { PivotTableNextDescriptor } from "./pluggableVisualizations/pivotTableNext/PivotTableNextDescriptor.js";
 
 /**
  * Visualization catalog is able to resolve visualization class to factory function that will
@@ -38,9 +39,10 @@ export interface IVisualizationCatalog {
      * Looks up pluggable visualization descriptor by vis class URI.
      *
      * @param uri - visualization URI (in format such as local:<type>)
+     * @param enablePivotTableNext - enable new pivot table
      * @alpha
      */
-    forUri(uri: string): IVisualizationDescriptor;
+    forUri(uri: string, enablePivotTableNext?: boolean): IVisualizationDescriptor;
 
     /**
      * Looks up whether there is a pluggable visualization descriptor for a given vis class URI.
@@ -54,9 +56,10 @@ export interface IVisualizationCatalog {
      * Looks up pluggable visualization descriptor that provides all access to the visualization.
      *
      * @param insight - insight to render
+     * @param enablePivotTableNext - enable new pivot table
      * @alpha
      */
-    forInsight(insight: IInsightDefinition): IVisualizationDescriptor;
+    forInsight(insight: IInsightDefinition, enablePivotTableNext?: boolean): IVisualizationDescriptor;
 
     /**
      * Looks up whether there is a pluggable visualization descriptor for the provided insight.
@@ -77,8 +80,9 @@ type TypeToClassMapping = {
 export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
     constructor(private readonly mapping: TypeToClassMapping) {}
 
-    public forUri(uri: string): IVisualizationDescriptor {
-        const VisType = this.findInMapping(uri);
+    public forUri(uri: string, enablePivotTableNext?: boolean): IVisualizationDescriptor {
+        const sanitizedUri = enablePivotTableNext && uri === "local:table" ? "local:tablenext" : uri;
+        const VisType = this.findInMapping(sanitizedUri);
 
         if (!VisType) {
             console.warn(
@@ -94,13 +98,13 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
         return !!this.findInMapping(uri);
     }
 
-    public forInsight(insight: IInsightDefinition): IVisualizationDescriptor {
+    public forInsight(insight: IInsightDefinition, enablePivotTableNext?: boolean): IVisualizationDescriptor {
         /*
          * the URIs follow "local:visualizationType" format
          */
-        const visClassUri = insightVisualizationUrl(insight);
+        const vizClass = insightVisualizationUrl(insight);
 
-        return this.forUri(visClassUri);
+        return this.forUri(vizClass, enablePivotTableNext);
     }
 
     public hasDescriptorForInsight(insight: IInsightDefinition): boolean {
@@ -145,6 +149,7 @@ const DefaultVisualizations = {
     dependencywheel: DependencyWheelChartDescriptor,
     waterfall: WaterfallChartDescriptor,
     repeater: RepeaterDescriptor,
+    tablenext: PivotTableNextDescriptor,
 };
 
 /**

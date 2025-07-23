@@ -18,7 +18,6 @@ export interface IGetExecutionParams {
     sortBy: ISortItem[];
     totals: ITotal[];
     measureGroupDimension: MeasureGroupDimension;
-    signal: AbortSignal;
 }
 
 /**
@@ -76,7 +75,7 @@ function getDimensions(
 /**
  * @internal
  */
-export async function getExecution({
+export function getExecution({
     backend,
     workspace,
     columns,
@@ -85,7 +84,6 @@ export async function getExecution({
     filters,
     sortBy,
     totals,
-    signal,
     measureGroupDimension,
 }: IGetExecutionParams) {
     const rowTotals = totals.filter((total) =>
@@ -103,23 +101,17 @@ export async function getExecution({
         newBucket(BucketNames.COLUMNS, ...columns, ...columnTotals),
     ];
 
-    const execution = backend
-        .workspace(workspace)
-        .execution()
-        .forDefinition({
-            workspace,
-            attributes,
-            measures,
-            dimensions,
-            filters,
-            buckets,
-            sortBy,
-            // TODO: if this is missing, it's causing recordings not matching
-            postProcessing: {},
-        })
-        .withSignal(signal);
-
-    return execution.execute();
+    return backend.workspace(workspace).execution().forDefinition({
+        workspace,
+        attributes,
+        measures,
+        dimensions,
+        filters,
+        buckets,
+        sortBy,
+        // TODO: if this is missing, it's causing recordings not matching
+        postProcessing: {},
+    });
 }
 
 /**

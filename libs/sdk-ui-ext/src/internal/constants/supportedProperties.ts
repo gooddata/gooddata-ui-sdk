@@ -342,6 +342,16 @@ export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
     "chartConfigOverride",
 ];
 
+export const PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES = [
+    "columnWidths",
+    "measureGroupDimension",
+    "columnHeadersPosition",
+    "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
+];
+
 export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
     "legend",

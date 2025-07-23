@@ -8,6 +8,10 @@ import {
     IMeasureLocatorItem,
     ITotalLocatorItem,
     newMeasureSortFromLocators,
+    IAttribute,
+    IMeasure,
+    attributeLocalId,
+    measureLocalId,
 } from "@gooddata/sdk-model";
 import { SortModelItem } from "ag-grid-community";
 import { ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
@@ -132,6 +136,53 @@ export function getDesiredSorts(
         } else {
             console.warn(`No column definition found for colId: ${colId}`);
         }
+    }
+
+    return sortItems;
+}
+
+/**
+ * Maps AG Grid sort model to sort items.
+ *
+ * @param sortModel - The sort model from AG Grid
+ * @param rows - Row attributes for mapping
+ * @param measures - Measures for mapping
+ * @returns Array of sort items
+ *
+ * @internal
+ */
+export function mapSortModelToSortItems(
+    sortModel: SortModelItem[],
+    rows: IAttribute[],
+    measures: IMeasure[],
+): ISortItem[] {
+    if (!sortModel || sortModel.length === 0) {
+        return [];
+    }
+
+    const sortItems: ISortItem[] = [];
+
+    for (const sortItem of sortModel) {
+        const { colId, sort } = sortItem;
+        if (!colId || !sort) continue;
+
+        // First, try to match against attributes (rows)
+        const matchingAttribute = rows.find((attr) => attributeLocalId(attr) === colId);
+
+        if (matchingAttribute) {
+            sortItems.push(newAttributeSort(matchingAttribute, sort));
+            continue;
+        }
+
+        // If no attribute match, try to match against measures
+        const matchingMeasure = measures.find((measure) => measureLocalId(measure) === colId);
+
+        if (matchingMeasure) {
+            sortItems.push(newMeasureSort(matchingMeasure, sort));
+            continue;
+        }
+
+        console.warn(`No matching attribute or measure found for colId: ${colId}`);
     }
 
     return sortItems;
