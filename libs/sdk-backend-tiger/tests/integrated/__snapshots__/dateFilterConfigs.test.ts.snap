@@ -372,6 +372,19 @@ InMemoryPaging {
           "visible": true,
         },
         {
+            from: 0,
+            to: 0,
+            granularity: "GDC.time.week_us",
+            localIdentifier: "THIS_WEEK_TO_DATE",
+            type: "relativePreset",
+            visible: true,
+            name: "",
+            boundedFilter: {
+                granularity: "GDC.time.date",
+                to: 0,
+            },
+        },
+        {
           "from": -1,
           "granularity": "GDC.time.week_us",
           "localIdentifier": "LAST_WEEK",
@@ -444,6 +457,19 @@ InMemoryPaging {
           "visible": true,
         },
         {
+            from: 0,
+            to: 0,
+            granularity: "GDC.time.month",
+            localIdentifier: "THIS_MONTH_TO_DATE",
+            type: "relativePreset",
+            visible: true,
+            name: "",
+            boundedFilter: {
+                granularity: "GDC.time.date",
+                to: 0,
+            },
+        },
+        {
           "from": -1,
           "granularity": "GDC.time.month",
           "localIdentifier": "LAST_MONTH",
@@ -471,6 +497,19 @@ InMemoryPaging {
           "visible": true,
         },
         {
+            from: 0,
+            to: 0,
+            granularity: "GDC.time.quarter",
+            localIdentifier: "THIS_QUARTER_TO_DATE",
+            type: "relativePreset",
+            visible: true,
+            name: "",
+            boundedFilter: {
+                granularity: "GDC.time.date",
+                to: 0,
+            },
+        },
+        {
           "from": -1,
           "granularity": "GDC.time.quarter",
           "localIdentifier": "LAST_QUARTER",
@@ -496,6 +535,19 @@ InMemoryPaging {
           "to": 0,
           "type": "relativePreset",
           "visible": true,
+        },
+        {
+            from: 0,
+            to: 0,
+            granularity: "GDC.time.year",
+            localIdentifier: "THIS_YEAR_TO_DATE",
+            type: "relativePreset",
+            visible: true,
+            name: "",
+            boundedFilter: {
+                granularity: "GDC.time.date",
+                to: 0,
+            },
         },
         {
           "from": -1,
