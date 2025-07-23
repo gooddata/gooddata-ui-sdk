@@ -92,6 +92,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
             displayAsLabel?: ObjRef,
             isWorkingSelectionChange?: boolean,
             isResultOfMigration?: boolean,
+            isSelectionInvalid?: boolean,
         ) => {
             const convertedFilter = supportElementUris
                 ? filter
@@ -138,6 +139,8 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         localIdentifier!,
                         attributeElements,
                         negativeSelection ? "NOT_IN" : "IN",
+                        undefined,
+                        isSelectionInvalid,
                     ),
                 );
             } else if (isResultOfMigration) {

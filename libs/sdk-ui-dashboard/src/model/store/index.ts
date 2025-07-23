@@ -192,6 +192,7 @@ export {
     selectFilterContextAttributeFilterByDisplayForm,
     selectOriginalFilterContextDefinition,
     selectOriginalFilterContextFilters,
+    selectFiltersWithInvalidSelection,
     selectAttributeFilterDescendants,
     selectAttributeFilterDisplayFormByLocalId,
     selectIsCircularDependency,
@@ -201,6 +202,7 @@ export {
     selectFilterContextDateFilterByDataSet,
     selectPreloadedAttributesWithReferences,
     selectDefaultFilterOverrides,
+    selectNamesOfFiltersWithInvalidSelection,
 } from "./filterContext/filterContextSelectors.js";
 export { getFilterIdentifier } from "./filterContext/filterContextUtils.js";
 export type { IImplicitDrillWithPredicates } from "./widgetDrills/widgetDrillSelectors.js";

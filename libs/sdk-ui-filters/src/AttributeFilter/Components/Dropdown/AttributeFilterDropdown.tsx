@@ -124,7 +124,7 @@ export function AttributeFilterDropdown() {
                 >
                     <DropdownBodyComponent
                         onApplyButtonClick={() => {
-                            onApply();
+                            onApply(true, withoutApply);
                             closeDropdown();
                         }}
                         onCancelButtonClick={closeDropdown}

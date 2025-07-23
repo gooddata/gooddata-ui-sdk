@@ -190,8 +190,10 @@ export type AttributeFilterControllerData = {
 export type AttributeFilterControllerCallbacks = {
     /**
      * Apply changes from working selection to committed selection.
+     * @param applyRegardlessWithoutApplySetting - If true, apply changes regardless of the withoutApply setting.
+     * @param applyToWorkingOnly - If true, apply changes to working selection only.
      */
-    onApply: () => void;
+    onApply: (applyRegardlessWithoutApplySetting?: boolean, applyToWorkingOnly?: boolean) => void;
 
     /**
      * Request next page of elements that respect current search criteria.
