@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 import * as React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
 import { IGenAIVisualization } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
@@ -16,18 +16,14 @@ export type VisualizationSaveDialogProps = {
     type: "save" | "explore";
 };
 
-export type VisualizationSaveDialogDispatchProps = {
-    saveVisualizationAction: typeof saveVisualizationAction;
-};
-
-function VisualizationSaveDialogCore({
+export function VisualizationSaveDialog({
     onClose,
     visualization,
     messageId,
-    saveVisualizationAction,
     type,
-}: VisualizationSaveDialogProps & VisualizationSaveDialogDispatchProps) {
+}: VisualizationSaveDialogProps) {
     const intl = useIntl();
+    const dispatch = useDispatch();
 
     const [value, setValue] = React.useState<string>(visualization.title);
     const { setSavingStarted } = useVisualisationSaving(visualization, onClose);
@@ -38,12 +34,14 @@ function VisualizationSaveDialogCore({
             onCancel={onClose}
             onSubmit={() => {
                 setSavingStarted(true);
-                saveVisualizationAction({
-                    visualizationId: visualization.id,
-                    visualizationTitle: value || visualization.title,
-                    assistantMessageId: messageId,
-                    explore: type === "explore",
-                });
+                dispatch(
+                    saveVisualizationAction({
+                        visualizationId: visualization.id,
+                        visualizationTitle: value || visualization.title,
+                        assistantMessageId: messageId,
+                        explore: type === "explore",
+                    }),
+                );
             }}
             isPositive
             autofocusOnOpen={false}
@@ -77,9 +75,3 @@ function VisualizationSaveDialogCore({
         </ConfirmDialog>
     );
 }
-
-const mapDispatchToProps = {
-    saveVisualizationAction,
-};
-
-export const VisualizationSaveDialog: any = connect(null, mapDispatchToProps)(VisualizationSaveDialogCore);

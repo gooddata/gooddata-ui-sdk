@@ -1,13 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { ReactNode, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import cx from "classnames";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { SyntaxHighlightingInput, Button } from "@gooddata/sdk-ui-kit";
 import { CatalogItem } from "@gooddata/sdk-model";
 import { EditorView } from "@codemirror/view";
 
-import { asyncProcessSelector, newMessageAction, RootState } from "../store/index.js";
+import { asyncProcessSelector, newMessageAction } from "../store/index.js";
 import { makeTextContents, makeUserMessage } from "../model.js";
 
 import { collectReferences, useCompletion } from "./completion/index.js";
@@ -20,15 +20,6 @@ export type InputOwnProps = {
     canManage?: boolean;
     canAnalyze?: boolean;
     targetRef?: React.LegacyRef<HTMLDivElement>;
-};
-
-type InputStateProps = {
-    isBusy: boolean;
-    isEvaluating: boolean;
-};
-
-type InputDispatchProps = {
-    newMessage: typeof newMessageAction;
 };
 
 const messages = defineMessages({
@@ -50,17 +41,13 @@ const isMac =
     typeof navigator !== "undefined" &&
     (navigator.platform.toUpperCase().indexOf("MAC") >= 0 || navigator.userAgent.includes("Macintosh"));
 
-function InputComponent({
-    isBusy,
-    isEvaluating,
-    newMessage,
-    autofocus = false,
-    catalogItems,
-    canManage,
-    canAnalyze,
-    targetRef,
-}: InputOwnProps & InputStateProps & InputDispatchProps) {
+export function Input({ autofocus = false, catalogItems, canManage, canAnalyze, targetRef }: InputOwnProps) {
     const intl = useIntl();
+    const dispatch = useDispatch();
+
+    const process = useSelector(asyncProcessSelector);
+    const isBusy = !!process;
+    const isEvaluating = process === "evaluating";
 
     const [value, setValue] = useState("");
     const [editorApi, setApi] = useState<EditorView | null>(null);
@@ -105,7 +92,11 @@ function InputComponent({
     );
 
     const handleSubmit = () => {
-        newMessage(makeUserMessage([makeTextContents(value, collectReferences(value, used.current))]));
+        dispatch(
+            newMessageAction(
+                makeUserMessage([makeTextContents(value, collectReferences(value, used.current))]),
+            ),
+        );
         setValue("");
     };
 
@@ -192,18 +183,3 @@ function InputComponent({
         </div>
     );
 }
-
-const mapStateToProps = (state: RootState): { isBusy: boolean; isEvaluating: boolean } => {
-    const asyncState = asyncProcessSelector(state);
-
-    return {
-        isBusy: !!asyncState,
-        isEvaluating: asyncState === "evaluating",
-    };
-};
-
-const mapDispatchToProps = {
-    newMessage: newMessageAction,
-};
-
-export const Input: React.FC<InputOwnProps> = connect(mapStateToProps, mapDispatchToProps)(InputComponent);

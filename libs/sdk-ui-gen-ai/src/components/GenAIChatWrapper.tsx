@@ -3,11 +3,10 @@ import React, { useCallback } from "react";
 import { Button, Typography, UiNavigationBypass, useKeyboardNavigationTarget } from "@gooddata/sdk-ui-kit";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { FormattedMessage, useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
 import {
-    RootState,
     loadThreadAction,
     cancelAsyncAction,
     clearThreadAction,
@@ -28,15 +27,6 @@ export type GenAIChatOwnProps = {
     initializing?: boolean;
 };
 
-type GenAIChatWrapperProps = GenAIChatOwnProps & {
-    loadThread: typeof loadThreadAction;
-    cancelLoading: typeof cancelAsyncAction;
-    clearThread: typeof clearThreadAction;
-    autofocus?: boolean;
-    initializing?: boolean;
-    isClearing?: boolean;
-};
-
 const GEN_AI_SECTION = "ai";
 const CREATE_LLM_PROVIDER_ACTION = "create-llm-provider";
 const GEN_AI_INPUT_ANCHOR_ID = "gd-gen-ai-input";
@@ -45,24 +35,20 @@ const GEN_AI_INPUT_ANCHOR_ID = "gd-gen-ai-input";
  * UI component that renders the Gen AI chat.
  * @internal
  */
-const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
-    loadThread,
-    clearThread,
-    cancelLoading,
-    autofocus,
-    initializing,
-    isClearing,
-}) => {
+export function GenAIChatWrapper({ autofocus, initializing }: GenAIChatOwnProps) {
     const intl = useIntl();
+    const dispatch = useDispatch();
     const workspaceId = useWorkspaceStrict();
     const { linkHandler, allowNativeLinks, catalogItems, canManage, canAnalyze, canFullControl } =
         useConfig();
     const { checking, evaluated, count, restart } = useEndpointCheck(canFullControl);
 
+    const isClearing = useSelector(asyncProcessSelector) === "clearing";
+
     useThreadLoading({
         initializing: initializing || checking,
-        loadThread,
-        cancelLoading,
+        loadThread: dispatch(loadThreadAction),
+        cancelLoading: dispatch(cancelAsyncAction),
     });
 
     const { targetRef } = useKeyboardNavigationTarget({
@@ -96,7 +82,7 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
                 errorMessage={intl.formatMessage({ id: "gd.gen-ai.global-no-llm" })}
                 errorDescription={intl.formatMessage({ id: "gd.gen-ai.global-no-llm.description" })}
                 clearError={() => {
-                    clearThread();
+                    dispatch(clearThreadAction());
                     restart();
                 }}
                 clearing={isClearing}
@@ -131,9 +117,9 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
             </div>
         </ErrorBoundary>
     );
-};
+}
 
-const NavigationBypass: React.FC = () => {
+function NavigationBypass() {
     const intl = useIntl();
     const bypassBlocks = [
         {
@@ -148,19 +134,4 @@ const NavigationBypass: React.FC = () => {
             items={bypassBlocks}
         />
     );
-};
-
-const mapStateToProps = (state: RootState) => ({
-    isClearing: asyncProcessSelector(state) === "clearing",
-});
-
-const mapDispatchToProps = {
-    loadThread: loadThreadAction,
-    cancelLoading: cancelAsyncAction,
-    clearThread: clearThreadAction,
-};
-
-export const GenAIChatWrapper: React.FC<GenAIChatOwnProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(GenAIChatWrapperComponent);
+}

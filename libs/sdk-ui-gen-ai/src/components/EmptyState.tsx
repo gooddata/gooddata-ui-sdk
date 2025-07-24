@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { makeAssistantMessage, makeTextContents, makeUserMessage } from "../model.js";
 import { setMessagesAction } from "../store/index.js";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
@@ -27,12 +27,9 @@ const quickOptions = [
     },
 ];
 
-type EmptyStateDispatchProps = {
-    setMessagesAction: typeof setMessagesAction;
-};
-
-function EmptyStateComponent({ setMessagesAction }: EmptyStateDispatchProps) {
+export function EmptyState() {
     const intl = useIntl();
+    const dispatch = useDispatch();
 
     return (
         <div className="gd-gen-ai-chat__messages__empty">
@@ -47,15 +44,19 @@ function EmptyStateComponent({ setMessagesAction }: EmptyStateDispatchProps) {
                 <Button
                     key={option.title.id}
                     onClick={() =>
-                        setMessagesAction({
-                            messages: [
-                                makeUserMessage([makeTextContents(intl.formatMessage(option.question), [])]),
-                                makeAssistantMessage(
-                                    [makeTextContents(intl.formatMessage(option.answer), [])],
-                                    true,
-                                ),
-                            ],
-                        })
+                        dispatch(
+                            setMessagesAction({
+                                messages: [
+                                    makeUserMessage([
+                                        makeTextContents(intl.formatMessage(option.question), []),
+                                    ]),
+                                    makeAssistantMessage(
+                                        [makeTextContents(intl.formatMessage(option.answer), [])],
+                                        true,
+                                    ),
+                                ],
+                            }),
+                        )
                     }
                     variant="secondary"
                 >
@@ -68,9 +69,3 @@ function EmptyStateComponent({ setMessagesAction }: EmptyStateDispatchProps) {
         </div>
     );
 }
-
-const mapDispatchToProps: EmptyStateDispatchProps = {
-    setMessagesAction,
-};
-
-export const EmptyState: React.FC = connect(null, mapDispatchToProps)(EmptyStateComponent);

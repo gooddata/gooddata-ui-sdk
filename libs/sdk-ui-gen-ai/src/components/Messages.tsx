@@ -1,25 +1,26 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import Skeleton from "react-loading-skeleton";
 import { useIntl } from "react-intl";
 
-import { asyncProcessSelector, RootState, messagesSelector } from "../store/index.js";
+import { asyncProcessSelector, messagesSelector } from "../store/index.js";
 import { isAssistantMessage, isUserMessage } from "../model.js";
 
 import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
 import { EmptyState } from "./EmptyState.js";
 
 type MessagesComponentProps = {
-    messages: ReturnType<typeof messagesSelector>;
-    loading: ReturnType<typeof asyncProcessSelector>;
     initializing?: boolean;
 };
 
-const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading, initializing }) => {
-    const { scrollerRef } = useMessageScroller(messages);
+export function Messages({ initializing }: MessagesComponentProps) {
     const intl = useIntl();
+    const messages = useSelector(messagesSelector);
+    const loading = useSelector(asyncProcessSelector);
+
+    const { scrollerRef } = useMessageScroller(messages);
     const isLoading = loading === "loading" || loading === "clearing" || initializing;
     const isEmpty = !messages.length && !isLoading;
 
@@ -63,7 +64,7 @@ const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading
             </div>
         </div>
     );
-};
+}
 
 function useMessageScroller(messages: ReturnType<typeof messagesSelector>) {
     const scrollerRef = React.useRef<HTMLDivElement | null>(null);
@@ -85,10 +86,3 @@ function useMessageScroller(messages: ReturnType<typeof messagesSelector>) {
 const assertNever = (value: never): never => {
     throw new Error(`Unhandled message role: ${value}`);
 };
-
-const mapStateToProps = (state: RootState): MessagesComponentProps => ({
-    messages: messagesSelector(state),
-    loading: asyncProcessSelector(state),
-});
-
-export const Messages: any = connect(mapStateToProps)(MessagesComponent);

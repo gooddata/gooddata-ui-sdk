@@ -4,7 +4,7 @@ import React from "react";
 import cx from "classnames";
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { AssistantMessage, isErrorContents } from "../../model.js";
 import { setUserFeedback } from "../../store/index.js";
@@ -14,12 +14,12 @@ import { AgentIcon } from "./AgentIcon.js";
 
 type AssistantMessageProps = {
     message: AssistantMessage;
-    setUserFeedback: typeof setUserFeedback;
     isLast?: boolean;
 };
 
-function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: AssistantMessageProps) {
+export function AssistantMessageComponent({ message, isLast }: AssistantMessageProps) {
     const intl = useIntl();
+    const dispatch = useDispatch();
 
     const classNames = cx(
         "gd-gen-ai-chat__messages__message",
@@ -62,10 +62,12 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                                     message.feedback === "POSITIVE",
                             })}
                             onClick={() =>
-                                setUserFeedback({
-                                    assistantMessageId: message.localId,
-                                    feedback: message.feedback === "POSITIVE" ? "NONE" : "POSITIVE",
-                                })
+                                dispatch(
+                                    setUserFeedback({
+                                        assistantMessageId: message.localId,
+                                        feedback: message.feedback === "POSITIVE" ? "NONE" : "POSITIVE",
+                                    }),
+                                )
                             }
                             accessibilityConfig={{
                                 ariaLabel: intl.formatMessage({ id: "gd.gen-ai.feedback.like" }),
@@ -98,12 +100,3 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
         </div>
     );
 }
-
-const mapDispatchToProps = {
-    setUserFeedback,
-};
-
-export const AssistantMessageComponent: any = connect(
-    null,
-    mapDispatchToProps,
-)(AssistantMessageComponentCore);
