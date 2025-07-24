@@ -53,8 +53,10 @@ export type OnSelectCallbackType = (
     selectionMode?: DashboardAttributeFilterSelectionMode,
     selectionTitles?: IAttributeElement[],
     displayAsLabel?: ObjRef,
+    isResultOfMigration?: boolean,
     additionalProps?: {
         isSelectionInvalid?: boolean;
+        applyToWorkingOnly?: boolean;
     },
 ) => void;
 

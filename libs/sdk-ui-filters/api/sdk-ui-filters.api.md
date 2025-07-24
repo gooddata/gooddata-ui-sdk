@@ -1316,8 +1316,9 @@ export type OnLoadNextElementsPageStartCallbackPayload = CallbackPayloadWithCorr
 export type OnLoadNextElementsPageSuccessCallbackPayload = CallbackPayloadWithCorrelation<ILoadElementsResult>;
 
 // @public (undocumented)
-export type OnSelectCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef, additionalProps?: {
+export type OnSelectCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef, isResultOfMigration?: boolean, additionalProps?: {
     isSelectionInvalid?: boolean;
+    applyToWorkingOnly?: boolean;
 }) => void;
 
 // @public

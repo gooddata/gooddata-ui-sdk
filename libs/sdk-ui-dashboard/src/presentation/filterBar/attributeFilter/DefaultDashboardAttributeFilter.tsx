@@ -505,6 +505,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     selectionMode,
                     selectionTitles,
                     displayAsLabel,
+                    isResultOfMigration,
                     additionalProps,
                 ) => {
                     if (isApplyAllAtOnceEnabledAndSet) {
@@ -519,7 +520,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                             ),
                             displayAsLabel,
                             true,
-                            false,
+                            isResultOfMigration,
                             additionalProps?.isSelectionInvalid,
                         );
                     }
