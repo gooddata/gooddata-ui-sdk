@@ -189,7 +189,7 @@ export const useAttributeFilterController = (
             setShouldReloadElements,
             displayAsLabel,
             withoutApply,
-            isSelectionInvalid: attributeFilterControllerData.isSelectionInvalid,
+            isSelectionInvalid: withoutApply && attributeFilterControllerData.isSelectionInvalid,
         },
         supportsKeepingDependentFiltersSelection,
         supportsCircularDependencyInFilters,
