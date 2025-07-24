@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-theme-provider",
-    "version": "10.35.0-alpha.51",
+    "version": "10.35.0-alpha.52",
     "description": "GoodData SDK - Theme provider",
     "repository": {
         "type": "git",
