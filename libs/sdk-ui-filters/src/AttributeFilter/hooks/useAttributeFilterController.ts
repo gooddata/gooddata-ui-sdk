@@ -666,7 +666,7 @@ function updateAutomaticResettingFilter(
         setConnectedPlaceholderValue(nextFilter);
 
         const displayAsLabel = handler.getDisplayAsLabel();
-        onSelect?.(nextFilter, isInverted, selectionMode, [], displayAsLabel, { isSelectionInvalid });
+        onSelect?.(nextFilter, isInverted, selectionMode, [], displayAsLabel, false, { isSelectionInvalid });
         onApply?.(nextFilter, isInverted, selectionMode, [], displayAsLabel, false, { isSelectionInvalid });
 
         return "init-parent";
