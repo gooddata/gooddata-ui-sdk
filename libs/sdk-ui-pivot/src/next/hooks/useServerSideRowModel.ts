@@ -6,6 +6,7 @@ import { AgGridRowData } from "../types/internal.js";
 import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../constants/agGrid.js";
 import { createServerSideDataSource } from "../dataSource/createServerSideDataSource.js";
 import { getColumnHeadersPosition, getExecutionProps, getIsPivotMode } from "../mapProps/props.js";
+import { useTableMetadata } from "../context/TableMetadataContext.js";
 
 /**
  * @alpha
@@ -17,6 +18,7 @@ export const useServerSideRowModel = (
     const isPivotMode = getIsPivotMode(props);
     const columnHeadersPosition = getColumnHeadersPosition(props);
     const { rows, measures, sortBy } = getExecutionProps(props);
+    const { setCurrentDataView } = useTableMetadata();
 
     const dataSource = useMemo(
         () =>
@@ -27,8 +29,9 @@ export const useServerSideRowModel = (
                 isPivotMode,
                 executionResult,
                 columnHeadersPosition,
+                setCurrentDataView,
             }),
-        [columnHeadersPosition, executionResult, isPivotMode, measures, rows, sortBy],
+        [columnHeadersPosition, executionResult, isPivotMode, measures, rows, sortBy, setCurrentDataView],
     );
 
     return {

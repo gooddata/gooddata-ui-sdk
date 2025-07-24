@@ -51,11 +51,19 @@ export function mapDataViewToAgGridRowData(
     const grandTotalRowData: AgGridRowData[] = [];
 
     tableData.data.forEach((row, rowIndex) => {
-        const data: AgGridRowData = {};
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        const data: AgGridRowData = { meta: {} as Record<string, ITableDataValue>, row: [] };
 
         row.forEach((cell) => {
             const key = buildColumnKey(cell.columnDefinition, tableData.isTransposed, columnHeadersPosition);
             data[key] = cell.formattedValue;
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            data.meta[key] = cell;
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            data.row.push(cell.value);
         });
 
         if (tableData.rowDefinitions[rowIndex].type === "grandTotal") {
