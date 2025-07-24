@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { IServerSideDatasource, IServerSideGetRowsParams, LoadSuccessParams } from "ag-grid-enterprise";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade } from "@gooddata/sdk-ui";
 import { ColumnHeadersPosition } from "../types/public.js";
 import { AgGridRowData } from "../types/internal.js";
 import { getPaginatedExecutionDataView } from "../execution/getExecution.js";
@@ -23,6 +24,7 @@ interface ICreateServerSideDataSourceParams {
     executionResult: IExecutionResult;
     isPivotMode: boolean;
     columnHeadersPosition: ColumnHeadersPosition;
+    setCurrentDataView: (dataView: DataViewFacade | null) => void;
 }
 
 export const createServerSideDataSource = ({
@@ -32,6 +34,7 @@ export const createServerSideDataSource = ({
     executionResult,
     isPivotMode,
     columnHeadersPosition = "top",
+    setCurrentDataView,
 }: ICreateServerSideDataSourceParams): IServerSideDatasource<AgGridRowData> => {
     const abortController = new AbortController();
     let isFirstRequest = true;
@@ -40,6 +43,8 @@ export const createServerSideDataSource = ({
     return {
         destroy: () => {
             abortController.abort();
+            // Clear the context when data source is destroyed
+            setCurrentDataView(null);
         },
         getRows: async (params: IServerSideGetRowsParams<AgGridRowData>) => {
             const startRow = params.request.startRow ?? 0;
@@ -83,7 +88,9 @@ export const createServerSideDataSource = ({
                     if (isPivotMode) {
                         successParam.pivotResultFields = pivotResultFields;
                     }
+
                     resultColumnDefinitionByColId = columnDefinitionByColId;
+                    setCurrentDataView(dataView);
 
                     params.success(successParam);
                     params.api.setGridOption("pinnedBottomRowData", grandTotalRowData);

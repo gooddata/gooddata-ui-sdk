@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ModuleRegistry, AllEnterpriseModule } from "ag-grid-enterprise";
-import { SortChangedEvent } from "ag-grid-community";
+import isEqual from "lodash/isEqual.js";
 import { ErrorComponent } from "./components/ErrorComponent.js";
 import { LoadingComponent } from "./components/LoadingComponent.js";
 import {
@@ -12,6 +12,8 @@ import {
 } from "./types/public.js";
 import { useInitExecution, useInitExecutionResult } from "./hooks/useInitExecution.js";
 import { useServerSideRowModel } from "./hooks/useServerSideRowModel.js";
+import { useDrilling } from "./hooks/useDrilling.js";
+import { useSorting } from "./hooks/useSorting.js";
 import {
     getIsPivotMode,
     getMeasureGroupDimension,
@@ -19,10 +21,9 @@ import {
     getColumnHeadersPosition,
 } from "./mapProps/props.js";
 import { mapDimensionsToColDefs } from "./mapProps/mapDimensionsToColDefs.js";
-import { mapSortModelToSortItems } from "./mapProps/mapSortModelToSortItems.js";
 import { AG_GRID_DEFAULT_PROPS } from "./constants/agGrid.js";
 import { PAGE_SIZE } from "./constants/internal.js";
-import isEqual from "lodash/isEqual.js";
+import { TableMetadataProvider } from "./context/TableMetadataContext.js";
 
 /**
  * Simple wrapper for the core pivot table component that creates execution based on provided props.
@@ -67,7 +68,11 @@ function CorePivotTableNext(props: ICorePivotTableNextProps) {
         return <LoadingComponent />;
     }
 
-    return <RenderAgGrid {...props} executionResult={executionResult} />;
+    return (
+        <TableMetadataProvider>
+            <RenderAgGrid {...props} executionResult={executionResult} />
+        </TableMetadataProvider>
+    );
 }
 
 function RenderAgGrid(props: ICorePivotTableInnerNextProps) {
@@ -78,10 +83,12 @@ function RenderAgGrid(props: ICorePivotTableInnerNextProps) {
         ]);
     }, []);
 
-    const { executionResult, pushData } = props;
+    const { executionResult, pushData, drillableItems, onDrill } = props;
     const serverSideRowModelProps = useServerSideRowModel({ ...props, executionResult });
     const measureGroupDimension = getMeasureGroupDimension(props);
     const { sortBy, rows, measures } = getExecutionProps(props);
+    const sortingHandlers = useSorting({ pushData, rows, measures });
+    const drillingHandlers = useDrilling({ drillableItems, onDrill });
 
     const columnDefs = executionResult?.dimensions
         ? mapDimensionsToColDefs(executionResult.dimensions, measureGroupDimension, sortBy)
@@ -89,39 +96,15 @@ function RenderAgGrid(props: ICorePivotTableInnerNextProps) {
 
     const isPivotMode = getIsPivotMode(props);
 
-    const onSortChanged = useCallback(
-        (event: SortChangedEvent) => {
-            if (!pushData) {
-                return;
-            }
-
-            // Get the current sort model from ag-grid
-            const sortModel = event.api
-                .getColumnState()
-                .filter((col) => col.sort !== null)
-                .map((col) => ({
-                    colId: col.colId!,
-                    sort: col.sort!,
-                }));
-
-            const sortItems = mapSortModelToSortItems(sortModel, rows, measures);
-
-            pushData({
-                properties: {
-                    sortItems,
-                },
-            });
-        },
-        [pushData, rows, measures],
-    );
-
     return (
         <AgGridReact
             {...AG_GRID_DEFAULT_PROPS}
             {...serverSideRowModelProps}
             columnDefs={columnDefs}
             pivotMode={isPivotMode}
-            onSortChanged={onSortChanged}
+            onSortChanged={sortingHandlers.onSortChanged}
+            onCellClicked={drillingHandlers.onCellClicked}
+            onCellKeyDown={drillingHandlers.onCellKeyDown}
         />
     );
 }
@@ -140,6 +123,8 @@ const MemoizedCorePivotTableNext = React.memo(CorePivotTableNext, (prevProps, ne
     const columnsChanged = !isEqual(prevProps.columns, nextProps.columns);
     const filtersChanged = !isEqual(prevProps.filters, nextProps.filters);
     const sortChanged = !isEqual(prevProps.sortBy, nextProps.sortBy);
+    const totalsChanged = !isEqual(prevProps.totals, nextProps.totals);
+    const drillableItemsChanged = !isEqual(prevProps.drillableItems, nextProps.drillableItems);
     const themeChanged = prevProps.theme !== nextProps.theme;
 
     return !(
@@ -150,6 +135,8 @@ const MemoizedCorePivotTableNext = React.memo(CorePivotTableNext, (prevProps, ne
         columnsChanged ||
         filtersChanged ||
         sortChanged ||
+        totalsChanged ||
+        drillableItemsChanged ||
         themeChanged
     );
 });

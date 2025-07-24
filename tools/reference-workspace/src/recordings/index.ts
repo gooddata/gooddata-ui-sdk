@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-07-23T09:19:31.748Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-07-24T13:08:30.903Z; */
 
 import fp_004031cbc9081950b7284311b004fe11_definition from "./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json" with { type: "json" };
 import fp_004031cbc9081950b7284311b004fe11_executionResult from "./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json" with { type: "json" };
@@ -325,6 +325,16 @@ const fp_2fb05a685de09ac7bcfee93b373efde7 = {
     definition: fp_2fb05a685de09ac7bcfee93b373efde7_definition,
     executionResult: fp_2fb05a685de09ac7bcfee93b373efde7_executionResult,
     dataView_all: fp_2fb05a685de09ac7bcfee93b373efde7_dataView_all,
+};
+import fp_300c0b908199156a328388972230be9a_definition from "./uiTestScenarios/executions/300c0b908199156a328388972230be9a/definition.json" with { type: "json" };
+import fp_300c0b908199156a328388972230be9a_executionResult from "./uiTestScenarios/executions/300c0b908199156a328388972230be9a/executionResult.json" with { type: "json" };
+import fp_300c0b908199156a328388972230be9a_dataView_o0_0s100_1000 from "./uiTestScenarios/executions/300c0b908199156a328388972230be9a/dataView_o0_0s100_1000.json" with { type: "json" };
+import fp_300c0b908199156a328388972230be9a_scenarios from "./uiTestScenarios/executions/300c0b908199156a328388972230be9a/scenarios.json" with { type: "json" };
+const fp_300c0b908199156a328388972230be9a = {
+    definition: fp_300c0b908199156a328388972230be9a_definition,
+    executionResult: fp_300c0b908199156a328388972230be9a_executionResult,
+    dataView_o0_0s100_1000: fp_300c0b908199156a328388972230be9a_dataView_o0_0s100_1000,
+    scenarios: fp_300c0b908199156a328388972230be9a_scenarios,
 };
 import fp_3014bf2b850217c6e41b106f1f63aa2e_definition from "./uiTestScenarios/executions/3014bf2b850217c6e41b106f1f63aa2e/definition.json" with { type: "json" };
 import fp_3014bf2b850217c6e41b106f1f63aa2e_executionResult from "./uiTestScenarios/executions/3014bf2b850217c6e41b106f1f63aa2e/executionResult.json" with { type: "json" };
@@ -2475,6 +2485,10 @@ export const Scenarios = {
         MultipleMeasuresAndNoColumnsWithTotals: {
             scenarioIndex: 1,
             execution: fp_2c58bdd28e3e7df3cfb5eb992aaaad40,
+        },
+        SingleMeasurePivotSortedByFirstAndSecondRowAttr: {
+            scenarioIndex: 0,
+            execution: fp_300c0b908199156a328388972230be9a,
         },
         MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling: {
             scenarioIndex: 1,
@@ -7332,6 +7346,10 @@ import i_PivotTableNext_ac898cdc21068a38ed4b3fa5b401f9c9_obj from "./uiTestScena
 const i_PivotTableNext_ac898cdc21068a38ed4b3fa5b401f9c9 = {
     obj: i_PivotTableNext_ac898cdc21068a38ed4b3fa5b401f9c9_obj,
 };
+import i_PivotTableNext_ad4925a03d3f66342afde53553e56c09_obj from "./uiTestScenarios/insights/PivotTableNext.ad4925a03d3f66342afde53553e56c09/obj.json" with { type: "json" };
+const i_PivotTableNext_ad4925a03d3f66342afde53553e56c09 = {
+    obj: i_PivotTableNext_ad4925a03d3f66342afde53553e56c09_obj,
+};
 import i_PivotTableNext_ad6fb668a230bf5771c75c273c1f3d20_obj from "./uiTestScenarios/insights/PivotTableNext.ad6fb668a230bf5771c75c273c1f3d20/obj.json" with { type: "json" };
 const i_PivotTableNext_ad6fb668a230bf5771c75c273c1f3d20 = {
     obj: i_PivotTableNext_ad6fb668a230bf5771c75c273c1f3d20_obj,
@@ -7339,6 +7357,10 @@ const i_PivotTableNext_ad6fb668a230bf5771c75c273c1f3d20 = {
 import i_PivotTableNext_ae0c8604ff1a171706d217e93378f41b_obj from "./uiTestScenarios/insights/PivotTableNext.ae0c8604ff1a171706d217e93378f41b/obj.json" with { type: "json" };
 const i_PivotTableNext_ae0c8604ff1a171706d217e93378f41b = {
     obj: i_PivotTableNext_ae0c8604ff1a171706d217e93378f41b_obj,
+};
+import i_PivotTableNext_b4d6d9d8e367e241eb24e4c378fb4348_obj from "./uiTestScenarios/insights/PivotTableNext.b4d6d9d8e367e241eb24e4c378fb4348/obj.json" with { type: "json" };
+const i_PivotTableNext_b4d6d9d8e367e241eb24e4c378fb4348 = {
+    obj: i_PivotTableNext_b4d6d9d8e367e241eb24e4c378fb4348_obj,
 };
 import i_PivotTableNext_b5d9b5bda82e74ae0ad720270f1f8448_obj from "./uiTestScenarios/insights/PivotTableNext.b5d9b5bda82e74ae0ad720270f1f8448/obj.json" with { type: "json" };
 const i_PivotTableNext_b5d9b5bda82e74ae0ad720270f1f8448 = {
@@ -9101,6 +9123,7 @@ export const Recordings: RecordingIndex = {
         fp_2eb966d16acbb32e1d4c79db521ae692,
         fp_2f0d37f1da514db95959c120a62ffd4c,
         fp_2fb05a685de09ac7bcfee93b373efde7,
+        fp_300c0b908199156a328388972230be9a,
         fp_3014bf2b850217c6e41b106f1f63aa2e,
         fp_31e13a5611cf85a7e0b275b8beeb923d,
         fp_31fb4f2ee42e8414a1a92bc2f4eaae12,
@@ -10493,8 +10516,10 @@ export const Recordings: RecordingIndex = {
             i_PivotTableNext_a8c1009c4d04d865e652a83f79e8d457,
             i_PivotTableNext_a9c392d0bff2c87efe934d708de96e16,
             i_PivotTableNext_ac898cdc21068a38ed4b3fa5b401f9c9,
+            i_PivotTableNext_ad4925a03d3f66342afde53553e56c09,
             i_PivotTableNext_ad6fb668a230bf5771c75c273c1f3d20,
             i_PivotTableNext_ae0c8604ff1a171706d217e93378f41b,
+            i_PivotTableNext_b4d6d9d8e367e241eb24e4c378fb4348,
             i_PivotTableNext_b5d9b5bda82e74ae0ad720270f1f8448,
             i_PivotTableNext_b78bdff86c2381637537be100db2de00,
             i_PivotTableNext_bd8de61c4c2180f924e6861d46271ce5,

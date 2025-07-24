@@ -13,13 +13,14 @@ import {
     // getCommonPivotTableSizingConfig,
     PivotTableWithMeasuresAndColumnsOnly,
 } from "./base.js";
-// import {
-//     AmountMeasurePredicate,
-//     WonMeasurePredicate,
-//     DepartmentPredicate,
-//     ProductPredicate,
-//     RegionPredicate,
-// } from "../_infra/predicates.js";
+import {
+    AmountMeasurePredicate,
+    WonMeasurePredicate,
+    DepartmentPredicate,
+    ProductPredicate,
+    RegionPredicate,
+} from "../_infra/predicates.js";
+import { action } from "storybook/internal/actions";
 
 export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("transposition")
@@ -92,8 +93,8 @@ export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNe
         config: {
             measureGroupDimension: "rows",
         },
-        // drillableItems: [ProductPredicate, DepartmentPredicate, AmountMeasurePredicate, WonMeasurePredicate],
-        // onDrill: action("onDrill"),
+        drillableItems: [ProductPredicate, DepartmentPredicate, AmountMeasurePredicate, WonMeasurePredicate],
+        onDrill: action("onDrill"),
     })
     .addScenario("two measures in rows and only column attrs on left", {
         ...PivotTableWithMeasuresAndColumnsOnly,
@@ -108,8 +109,8 @@ export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNe
             measureGroupDimension: "rows",
             columnHeadersPosition: "left",
         },
-        // drillableItems: [DepartmentPredicate, RegionPredicate, AmountMeasurePredicate, WonMeasurePredicate],
-        // onDrill: action("onDrill"),
+        drillableItems: [DepartmentPredicate, RegionPredicate, AmountMeasurePredicate, WonMeasurePredicate],
+        onDrill: action("onDrill"),
     })
     .addScenario("two measures in rows and column attrs on top, with invalid drilling on attributes", {
         ...PivotTableWithMeasuresAndColumnsOnly,
@@ -117,8 +118,8 @@ export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNe
             measureGroupDimension: "rows",
             columnHeadersPosition: "top",
         },
-        // drillableItems: [DepartmentPredicate, RegionPredicate],
-        // onDrill: action("onDrill"),
+        drillableItems: [DepartmentPredicate, RegionPredicate],
+        onDrill: action("onDrill"),
     })
     .addScenario("two measures in rows and column attrs on top, with drilling on metrics", {
         ...PivotTableWithMeasuresAndColumnsOnly,
@@ -126,8 +127,8 @@ export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNe
             measureGroupDimension: "rows",
             columnHeadersPosition: "top",
         },
-        // drillableItems: [AmountMeasurePredicate, WonMeasurePredicate],
-        // onDrill: action("onDrill"),
+        drillableItems: [AmountMeasurePredicate, WonMeasurePredicate],
+        onDrill: action("onDrill"),
     })
     .addScenario("two measures in rows and column attrs on left, with totals", {
         ...PivotTableWithMeasuresAndColumnsOnly,

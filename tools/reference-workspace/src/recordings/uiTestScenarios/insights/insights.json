@@ -4129,6 +4129,9 @@
         "scenarioName": "two measures in rows and column attrs on top, with drilling on metrics",
         "visName": "PivotTableNext"
     },
+    "PivotTableNext.ad4925a03d3f66342afde53553e56c09": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - with drill on all row atributes."
+    },
     "PivotTableNext.ad6fb668a230bf5771c75c273c1f3d20": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - two measures and one column/row subtotal.",
         "scenarioName": "two measures and one column/row subtotal",
@@ -4138,6 +4141,9 @@
         "comment": "Auto-generated insight for test scenario PivotTableNext - two measures and one subtotal.",
         "scenarioName": "two measures and one subtotal",
         "visName": "PivotTableNext"
+    },
+    "PivotTableNext.b4d6d9d8e367e241eb24e4c378fb4348": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - with drill on all row attributes and measures."
     },
     "PivotTableNext.b5d9b5bda82e74ae0ad720270f1f8448": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - two measures with row attribute.",

@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { IAnalyticalBackend, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IAttribute, IFilter, IMeasure, ISortItem, ITheme, ITotal } from "@gooddata/sdk-model";
-import { IVisualizationCallbacks } from "@gooddata/sdk-ui";
+import { IVisualizationCallbacks, ExplicitDrill, IVisualizationProps } from "@gooddata/sdk-ui";
 
 /**
  * Whether to display measures in columns or rows (transposed).
@@ -52,7 +52,7 @@ export type PivotTableNextConfig = {
 /**
  * @alpha
  */
-export interface IPivotTableNextProps {
+export interface IPivotTableNextProps extends IVisualizationProps, IVisualizationCallbacks {
     /**
      * Backend to use for the pivot table.
      */
@@ -94,6 +94,11 @@ export interface IPivotTableNextProps {
     sortBy?: ISortItem[];
 
     /**
+     * Configure drillability; e.g. which parts of the visualization can be interacted with.
+     */
+    drillableItems?: ExplicitDrill[];
+
+    /**
      * Configuration for the pivot table.
      */
     config?: PivotTableNextConfig;
@@ -110,7 +115,7 @@ export interface IPivotTableNextProps {
 /**
  * @alpha
  */
-export interface ICorePivotTableNextProps extends IPivotTableNextProps, IVisualizationCallbacks {
+export interface ICorePivotTableNextProps extends IPivotTableNextProps {
     execution: IPreparedExecution;
     theme?: ITheme;
 }
