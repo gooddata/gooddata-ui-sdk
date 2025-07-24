@@ -202,19 +202,3 @@ $measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace
 $default-gd-medium-gray: #687581;
 $gd-medium-gray: var(--gd-palette-complementary-7-from-theme, $default-gd-medium-gray);
 $gd-delete-item-background: var(--gd-palette-error-lightest, #fff2f1);
-
-$theme-colors-map: (
-    "primary": "primary-base",
-    "warning": "warning-base",
-    "error": "error-base",
-    "complementary-0": "complementary-0",
-    "complementary-1": "complementary-1",
-    "complementary-2": "complementary-2",
-    "complementary-3": "complementary-3",
-    "complementary-4": "complementary-4",
-    "complementary-5": "complementary-5",
-    "complementary-6": "complementary-6",
-    "complementary-7": "complementary-7",
-    "complementary-8": "complementary-8",
-    "complementary-9": "complementary-9",
-);

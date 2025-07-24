@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
-import { AsyncTable } from "@gooddata/sdk-ui-kit";
+import { UiAsyncTable } from "@gooddata/sdk-ui-kit";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useAutomationColumns } from "./columns/useAutomationColumns.js";
@@ -29,7 +29,7 @@ export const AutomationsCore = (props: IAutomationsCoreProps) => {
 
     return (
         <div>
-            <AsyncTable<IAutomationMetadataObject>
+            <UiAsyncTable<IAutomationMetadataObject>
                 items={automations}
                 totalItemsCount={totalItemsCount}
                 isLoading={status === "loading" || status === "pending"}

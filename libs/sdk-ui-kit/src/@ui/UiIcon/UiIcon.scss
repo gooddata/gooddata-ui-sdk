@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-@use "../../../styles/scss/variables";
+@use "../themeColorsMap";
 
 .gd-ui-kit-icon {
     fill: var(--gd-icon-fill-color);
@@ -15,7 +15,7 @@
     }
 
     &--color {
-        @each $key, $value in variables.$theme-colors-map {
+        @each $key, $value in themeColorsMap.$theme-colors-map {
             &-#{$key} {
                 --gd-icon-fill-color: var(--gd-palette-#{$value});
             }
@@ -41,7 +41,7 @@
     }
 
     &--color {
-        @each $key, $value in variables.$theme-colors-map {
+        @each $key, $value in themeColorsMap.$theme-colors-map {
             &-#{$key} {
                 --gd-icon-background-color: var(--gd-palette-#{$value});
             }

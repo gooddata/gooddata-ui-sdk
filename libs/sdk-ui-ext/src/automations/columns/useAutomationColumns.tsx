@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { IColumn, Item, ItemsWrapper, Separator } from "@gooddata/sdk-ui-kit";
+import { UiAsyncTableColumn, Item, ItemsWrapper, Separator } from "@gooddata/sdk-ui-kit";
 import { useWorkspace } from "@gooddata/sdk-ui";
 import React, { useMemo } from "react";
 import { AutomationColumnDefinition, AutomationsColumnName, AutomationsType } from "../types.js";
@@ -14,12 +14,12 @@ import { DEFAULT_COLUMN_WIDTHS } from "../constants.js";
 export const useAutomationColumns = (
     type: AutomationsType,
     columnDefinitions: Array<AutomationColumnDefinition>,
-): IColumn<IAutomationMetadataObject>[] => {
+): UiAsyncTableColumn<IAutomationMetadataObject>[] => {
     const workspace = useWorkspace();
     const intl = useIntl();
 
     const allColumns = useMemo(
-        (): Partial<Record<AutomationsColumnName, IColumn<IAutomationMetadataObject>>> => ({
+        (): Partial<Record<AutomationsColumnName, UiAsyncTableColumn<IAutomationMetadataObject>>> => ({
             ["id"]: {
                 key: "id",
                 label: intl.formatMessage(messages.columnId),

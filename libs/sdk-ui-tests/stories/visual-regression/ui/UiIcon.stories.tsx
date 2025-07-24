@@ -5,6 +5,13 @@ import React from "react";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const iconCombinations = propCombinationsFor({ label: "icon", size: 20 } as UiIconProps);
+const iconWithBackgroundCombinations = propCombinationsFor({
+    label: "icon with background",
+    size: 14,
+    backgroundSize: 27,
+    color: "complementary-9",
+    type: "check",
+} as UiIconProps);
 const types = Object.keys(iconPaths) as Array<keyof typeof iconPaths>;
 const iconSizes = iconCombinations("size", [12, 20]);
 const iconColors = iconCombinations(
@@ -28,6 +35,28 @@ const iconColors = iconCombinations(
 );
 const iconHidden = iconCombinations("ariaHidden", [true, false]);
 const iconSingleRow = iconCombinations("type", ["alert"]);
+
+const backgroundColors = iconWithBackgroundCombinations("backgroundColor", [
+    "primary",
+    "warning",
+    "error",
+    "complementary-9",
+    "complementary-8",
+    "complementary-7",
+    "complementary-6",
+    "complementary-5",
+    "complementary-4",
+    "complementary-3",
+    "complementary-2",
+    "complementary-1",
+    "complementary-0",
+]);
+const backgroundShapesTypeFill = iconWithBackgroundCombinations("backgroundShape", ["circle", "square"], {
+    backgroundType: "fill",
+});
+const backgroundShapesTypeBorder = iconWithBackgroundCombinations("backgroundShape", ["circle", "square"], {
+    backgroundType: "border",
+});
 
 const UiIconTest: React.FC<{ showCode?: boolean; iconGallery?: boolean }> = ({
     showCode,
@@ -81,7 +110,15 @@ const UiIconTest: React.FC<{ showCode?: boolean; iconGallery?: boolean }> = ({
                     align="center"
                     cellWidth={200}
                 />
-
+                <h1 className={"gd-typography gd-typography--h1"}>Background</h1>
+                <ComponentTable
+                    columnsBy={backgroundColors}
+                    rowsBy={[backgroundShapesTypeFill, backgroundShapesTypeBorder]}
+                    Component={UiIcon}
+                    codeSnippet={showCode ? "UiIcon" : undefined}
+                    align="center"
+                    cellWidth={200}
+                />
                 <h1 className={"gd-typography gd-typography--h1"}>Accessibility</h1>
                 <ComponentTable
                     rowsBy={[iconSingleRow]}

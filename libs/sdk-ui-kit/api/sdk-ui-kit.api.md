@@ -48,7 +48,7 @@ import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
-import { SortDirection as SortDirection_2 } from '@gooddata/sdk-model';
+import { SortDirection } from '@gooddata/sdk-model';
 import { WeekStart } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
@@ -105,14 +105,6 @@ export type ArrowOffsets = Record<string, ArrowOffset>;
 
 // @internal (undocumented)
 export function AsyncList<T>(props: IAsyncListProps<T>): React_2.JSX.Element;
-
-// @internal (undocumented)
-export const AsyncTable: <T extends {
-    id: string;
-}>(props: IAsyncTableProps<T>) => React_2.JSX.Element;
-
-// @internal (undocumented)
-export const AsyncTableTitle: ({ title, onSearch, renderIcon, actions }: IAsyncTableTitleProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export class AutoSize extends Component<IAutoSizeProps> {
@@ -998,96 +990,6 @@ export interface IAsyncListProps<T> {
 }
 
 // @internal (undocumented)
-export interface IAsyncTableFilter {
-    // (undocumented)
-    label: string;
-    // (undocumented)
-    onItemClick: (option: IAsyncTableFilterOption) => void;
-    // (undocumented)
-    options: Array<IAsyncTableFilterOption>;
-    // (undocumented)
-    selected?: IAsyncTableFilterOption;
-}
-
-// @internal (undocumented)
-export interface IAsyncTableFilterOption {
-    // (undocumented)
-    label?: string;
-    // (undocumented)
-    value: string;
-}
-
-// @internal (undocumented)
-export interface IAsyncTableProps<T extends {
-    id: string;
-}> {
-    // (undocumented)
-    bulkActions?: Array<IBulkAction>;
-    // (undocumented)
-    columns: Array<IColumn<T>>;
-    // (undocumented)
-    filters?: Array<IAsyncTableFilter>;
-    // (undocumented)
-    hasNextPage?: boolean;
-    // (undocumented)
-    isLoading?: boolean;
-    // (undocumented)
-    items: T[];
-    // (undocumented)
-    loadNextPage?: () => void;
-    // (undocumented)
-    locale?: string;
-    // (undocumented)
-    maxHeight?: number;
-    // (undocumented)
-    onItemClick?: (item: T) => void;
-    // (undocumented)
-    onSearch?: (search: string) => void;
-    // (undocumented)
-    onSort?: (key: keyof T) => void;
-    // (undocumented)
-    renderHeader?: () => React.ReactNode;
-    // (undocumented)
-    renderItem?: (item: T) => React.ReactNode;
-    // (undocumented)
-    selectedItemIds?: Array<string>;
-    // (undocumented)
-    setSelectedItemIds?: (items: Array<string>) => void;
-    // (undocumented)
-    skeletonItemsCount?: number;
-    // (undocumented)
-    smallHeader?: boolean;
-    // (undocumented)
-    sortBy?: keyof T;
-    // (undocumented)
-    sortDirection?: SortDirection;
-    // (undocumented)
-    totalItemsCount?: number;
-    // (undocumented)
-    width?: number;
-}
-
-// @internal (undocumented)
-export interface IAsyncTableTitleAction {
-    // (undocumented)
-    renderAction: () => React_2.ReactNode;
-}
-
-// @internal (undocumented)
-export interface IAsyncTableTitleProps {
-    // (undocumented)
-    actions: Array<IAsyncTableTitleAction>;
-    // (undocumented)
-    onSearch?: (search: string) => void;
-    // (undocumented)
-    renderIcon?: () => React_2.ReactNode;
-    // (undocumented)
-    scrollToStart: () => void;
-    // (undocumented)
-    title: string;
-}
-
-// @internal (undocumented)
 export interface IAutoSizeChildren {
     // (undocumented)
     height: number;
@@ -1241,14 +1143,6 @@ export interface IBucketItemDescriptors {
 }
 
 // @internal (undocumented)
-export interface IBulkAction {
-    // (undocumented)
-    label: string;
-    // (undocumented)
-    onClick: () => void;
-}
-
-// @internal (undocumented)
 export interface IButtonAccessibilityConfig extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
 }
 
@@ -1338,40 +1232,6 @@ export interface IColorPreviewProps {
     className?: string;
     // (undocumented)
     colors: string[];
-}
-
-// @internal (undocumented)
-export interface IColumn<T> {
-    // (undocumented)
-    bold?: boolean;
-    // (undocumented)
-    getMultiLineTextContent?: (item: T) => Array<string>;
-    // (undocumented)
-    getTextContent?: (item: T) => string;
-    // (undocumented)
-    getTextHref?: (item: T) => string;
-    // (undocumented)
-    getTextTitle?: (item: T) => string;
-    // (undocumented)
-    key?: keyof T;
-    // (undocumented)
-    label?: string;
-    // (undocumented)
-    renderBadge?: (item: T) => React.ReactNode;
-    // (undocumented)
-    renderButton?: (item: T) => React.ReactNode;
-    // (undocumented)
-    renderMenu?: (item: T) => React.ReactNode;
-    // (undocumented)
-    renderPrefixIcon?: (item: T) => React.ReactNode;
-    // (undocumented)
-    renderRoleIcon?: (item: T) => React.ReactNode;
-    // (undocumented)
-    renderSuffixIcon?: (item: T) => React.ReactNode;
-    // (undocumented)
-    sortable?: boolean;
-    // (undocumented)
-    width?: number;
 }
 
 // @internal (undocumented)
@@ -4611,7 +4471,7 @@ export interface ISortTypeItem {
     // (undocumented)
     localIdentifier: string;
     // (undocumented)
-    sortDirection: SortDirection_2;
+    sortDirection: SortDirection;
     // (undocumented)
     title: string;
     // (undocumented)
@@ -5941,9 +5801,6 @@ export enum SORT_TARGET_TYPE {
 export function sortDateDatasets<T extends IDateDataset>(dateDatasets: T[], recommendedDate?: T, unrelatedDate?: T): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
-export type SortDirection = "asc" | "desc";
-
-// @internal (undocumented)
 export class Spinner extends PureComponent<ISpinnerProps> {
     // (undocumented)
     static defaultProps: {
@@ -6121,6 +5978,146 @@ export const Typography: React_2.FC<ITypographyProps>;
 
 // @internal (undocumented)
 export type TypographyTagName = "h1" | "h2" | "h3" | "p";
+
+// @internal (undocumented)
+export const UiAsyncTable: <T extends {
+    id: string;
+}>(props: UiAsyncTableProps<T>) => React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiAsyncTableBulkAction {
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onClick: () => void;
+}
+
+// @internal (undocumented)
+export interface UiAsyncTableColumn<T> {
+    // (undocumented)
+    bold?: boolean;
+    // (undocumented)
+    getMultiLineTextContent?: (item: T) => Array<string>;
+    // (undocumented)
+    getTextContent?: (item: T) => string;
+    // (undocumented)
+    getTextHref?: (item: T) => string;
+    // (undocumented)
+    getTextTitle?: (item: T) => string;
+    // (undocumented)
+    key?: keyof T;
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    renderBadge?: (item: T) => React.ReactNode;
+    // (undocumented)
+    renderButton?: (item: T) => React.ReactNode;
+    // (undocumented)
+    renderMenu?: (item: T) => React.ReactNode;
+    // (undocumented)
+    renderPrefixIcon?: (item: T) => React.ReactNode;
+    // (undocumented)
+    renderRoleIcon?: (item: T) => React.ReactNode;
+    // (undocumented)
+    renderSuffixIcon?: (item: T) => React.ReactNode;
+    // (undocumented)
+    sortable?: boolean;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface UiAsyncTableFilter {
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onItemClick: (option: UiAsyncTableFilterOption) => void;
+    // (undocumented)
+    options: Array<UiAsyncTableFilterOption>;
+    // (undocumented)
+    selected?: UiAsyncTableFilterOption;
+}
+
+// @internal (undocumented)
+export interface UiAsyncTableFilterOption {
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    value: string;
+}
+
+// @internal (undocumented)
+export interface UiAsyncTableProps<T extends {
+    id: string;
+}> {
+    // (undocumented)
+    bulkActions?: Array<UiAsyncTableBulkAction>;
+    // (undocumented)
+    columns: Array<UiAsyncTableColumn<T>>;
+    // (undocumented)
+    filters?: Array<UiAsyncTableFilter>;
+    // (undocumented)
+    hasNextPage?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    items: T[];
+    // (undocumented)
+    loadNextPage?: () => void;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    maxHeight?: number;
+    // (undocumented)
+    onItemClick?: (item: T) => void;
+    // (undocumented)
+    onSearch?: (search: string) => void;
+    // (undocumented)
+    onSort?: (key: keyof T) => void;
+    // (undocumented)
+    renderHeader?: () => React.ReactNode;
+    // (undocumented)
+    renderItem?: (item: T) => React.ReactNode;
+    // (undocumented)
+    selectedItemIds?: Array<string>;
+    // (undocumented)
+    setSelectedItemIds?: (items: Array<string>) => void;
+    // (undocumented)
+    skeletonItemsCount?: number;
+    // (undocumented)
+    smallHeader?: boolean;
+    // (undocumented)
+    sortBy?: keyof T;
+    // (undocumented)
+    sortDirection?: SortDirection;
+    // (undocumented)
+    totalItemsCount?: number;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export const UiAsyncTableTitle: ({ title, onSearch, renderIcon, actions }: UiAsyncTableTitleProps) => React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiAsyncTableTitleAction {
+    // (undocumented)
+    renderAction: () => React.ReactNode;
+}
+
+// @internal (undocumented)
+export interface UiAsyncTableTitleProps {
+    // (undocumented)
+    actions: Array<UiAsyncTableTitleAction>;
+    // (undocumented)
+    onSearch?: (search: string) => void;
+    // (undocumented)
+    renderIcon?: () => React.ReactNode;
+    // (undocumented)
+    scrollToStart: () => void;
+    // (undocumented)
+    title: string;
+}
 
 // @internal
 export const UiAutofocus: React_2.FC<{

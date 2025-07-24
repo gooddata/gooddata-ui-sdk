@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { e } from "./asyncTableBem.js";
+import { e } from "../asyncTableBem.js";
 
 export const WithConditionalAnchor = ({ href, children }: { href?: string; children: React.ReactNode }) => {
     return href ? (

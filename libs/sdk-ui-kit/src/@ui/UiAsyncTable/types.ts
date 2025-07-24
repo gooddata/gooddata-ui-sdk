@@ -1,12 +1,14 @@
 // (C) 2025 GoodData Corporation
 
+import { SortDirection } from "@gooddata/sdk-model";
+
 /**
  * @internal
  */
-export interface IAsyncTableProps<T extends { id: string }> {
+export interface UiAsyncTableProps<T extends { id: string }> {
     items: T[];
     totalItemsCount?: number;
-    columns: Array<IColumn<T>>;
+    columns: Array<UiAsyncTableColumn<T>>;
     onItemClick?: (item: T) => void;
 
     //default: add up all column widths
@@ -23,7 +25,7 @@ export interface IAsyncTableProps<T extends { id: string }> {
     loadNextPage?: () => void;
 
     //filters
-    filters?: Array<IAsyncTableFilter>;
+    filters?: Array<UiAsyncTableFilter>;
 
     //sorting
     sortBy?: keyof T;
@@ -34,7 +36,7 @@ export interface IAsyncTableProps<T extends { id: string }> {
     onSearch?: (search: string) => void;
 
     //bulk actions
-    bulkActions?: Array<IBulkAction>;
+    bulkActions?: Array<UiAsyncTableBulkAction>;
     selectedItemIds?: Array<string>;
     setSelectedItemIds?: (items: Array<string>) => void;
 
@@ -49,7 +51,7 @@ export interface IAsyncTableProps<T extends { id: string }> {
 /**
  * @internal
  */
-export interface IColumn<T> {
+export interface UiAsyncTableColumn<T> {
     key?: keyof T;
     label?: string;
     width?: number;
@@ -70,22 +72,17 @@ export interface IColumn<T> {
 /**
  * @internal
  */
-export type SortDirection = "asc" | "desc";
-
-/**
- * @internal
- */
-export interface IAsyncTableFilter {
+export interface UiAsyncTableFilter {
     label: string;
-    options: Array<IAsyncTableFilterOption>;
-    onItemClick: (option: IAsyncTableFilterOption) => void;
-    selected?: IAsyncTableFilterOption;
+    options: Array<UiAsyncTableFilterOption>;
+    onItemClick: (option: UiAsyncTableFilterOption) => void;
+    selected?: UiAsyncTableFilterOption;
 }
 
 /**
  * @internal
  */
-export interface IAsyncTableFilterOption {
+export interface UiAsyncTableFilterOption {
     value: string;
     label?: string;
 }
@@ -93,15 +90,33 @@ export interface IAsyncTableFilterOption {
 /**
  * @internal
  */
-export interface IBulkAction {
+export interface UiAsyncTableBulkAction {
     label: string;
     onClick: () => void;
 }
 
+/**
+ * @internal
+ */
+export interface UiAsyncTableTitleProps {
+    title: string;
+    renderIcon?: () => React.ReactNode;
+    onSearch?: (search: string) => void;
+    actions: Array<UiAsyncTableTitleAction>;
+    scrollToStart: () => void;
+}
+
+/**
+ * @internal
+ */
+export interface UiAsyncTableTitleAction {
+    renderAction: () => React.ReactNode;
+}
+
 //subcomponent props
 
-export interface IAsyncTableHeaderProps<T> {
-    columns: Array<IColumn<T>>;
+export interface UiAsyncTableHeaderProps<T> {
+    columns: Array<UiAsyncTableColumn<T>>;
     handleColumnClick: (key?: keyof T) => void;
     sortBy?: keyof T;
     sortDirection?: SortDirection;
@@ -111,9 +126,9 @@ export interface IAsyncTableHeaderProps<T> {
     largeRow?: boolean;
 }
 
-export interface IAsyncTableRowProps<T extends { id: string }> {
+export interface UiAsyncTableRowProps<T extends { id: string }> {
     item?: T;
-    columns: Array<IColumn<T>>;
+    columns: Array<UiAsyncTableColumn<T>>;
     onSelect?: (item: T) => void;
     onClick?: (item: T) => void;
     hasCheckbox?: boolean;
@@ -121,16 +136,16 @@ export interface IAsyncTableRowProps<T extends { id: string }> {
     isSelected?: boolean;
 }
 
-export type IAsyncTableCheckboxProps = {
+export type UiAsyncTableCheckboxProps = {
     onChange?: () => void;
     checked?: boolean;
     indeterminate?: boolean;
     disabled?: boolean;
 };
 
-export interface IAsyncTableToolbarProps<T extends { id: string }> {
-    filters?: Array<IAsyncTableFilter>;
-    bulkActions?: Array<IBulkAction>;
+export interface UiAsyncTableToolbarProps<T extends { id: string }> {
+    filters?: Array<UiAsyncTableFilter>;
+    bulkActions?: Array<UiAsyncTableBulkAction>;
     scrollToStart: () => void;
     selectedItemIds: Array<string>;
     setSelectedItemIds: (items: Array<string>) => void;
@@ -139,16 +154,16 @@ export interface IAsyncTableToolbarProps<T extends { id: string }> {
     onSearch?: (search: string) => void;
 }
 
-export interface IAsyncTableFilterProps extends IAsyncTableFilter {
+export interface UiAsyncTableFilterProps extends UiAsyncTableFilter {
     scrollToStart: () => void;
 }
 
-export type IAsyncTableDropdownItemProps = {
+export type UiAsyncTableDropdownItemProps = {
     label: string;
     onSelect: () => void;
     isSelected?: boolean;
 };
 
-export interface IAsyncTableBulkActionsProps {
-    bulkActions: Array<IBulkAction>;
+export interface UiAsyncTableBulkActionsProps {
+    bulkActions: Array<UiAsyncTableBulkAction>;
 }

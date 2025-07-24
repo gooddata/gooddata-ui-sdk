@@ -67,7 +67,7 @@ export * from "./RichText/index.js";
 export * from "./RecurrenceForm/index.js";
 export * from "./AddButton/index.js";
 export * from "./ZoomContext/ZoomContext.js";
-export * from "./Table/index.js";
+// export * from "./Table/index.js";
 /**
  * New components
  */
@@ -257,3 +257,16 @@ export type {
     IUiNavigationBypassProps,
     IUiNavigationItem,
 } from "./@ui/UiNavigationBypass/UiNavigationBypass.js";
+
+export type {
+    UiAsyncTableProps,
+    UiAsyncTableColumn,
+    UiAsyncTableFilter,
+    UiAsyncTableFilterOption,
+    UiAsyncTableBulkAction,
+} from "./@ui/UiAsyncTable/types.js";
+
+export type { UiAsyncTableTitleProps, UiAsyncTableTitleAction } from "./@ui/UiAsyncTable/types.js";
+
+export { UiAsyncTable } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTable.js";
+export { UiAsyncTableTitle } from "./@ui/UiAsyncTable/UiAsyncTableTitle/UiAsyncTableTitle.js";

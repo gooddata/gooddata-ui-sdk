@@ -1,16 +1,16 @@
 // (C) 2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import { e } from "./asyncTableBem.js";
+import { e } from "../asyncTableBem.js";
 import { AsyncTableFilter } from "./AsyncTableFilter.js";
-import { AsyncTableCheckbox } from "./AsyncTableCheckbox.js";
-import { AsyncTableBulkActions } from "./AsyncTableBulkActions.js";
+import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
+import { UiAsyncTableBulkActions } from "./UiAsyncTableBulkActions.js";
 import { useIntl } from "react-intl";
 import { messages } from "../locales.js";
-import { IAsyncTableToolbarProps } from "./types.js";
+import { UiAsyncTableToolbarProps } from "../types.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
-import { Input } from "../../Form/Input.js";
+import { Input } from "../../../Form/Input.js";
 
-export function AsyncTableToolbar<T extends { id: string }>(props: IAsyncTableToolbarProps<T>) {
+export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTableToolbarProps<T>) {
     const {
         isChecked,
         isCheckboxIndeterminate,
@@ -24,7 +24,7 @@ export function AsyncTableToolbar<T extends { id: string }>(props: IAsyncTableTo
     } = useAsyncTableToolbar(props);
     return hasContent ? (
         <div className={e("toolbar", { checkbox })}>
-            <AsyncTableCheckbox
+            <UiAsyncTableCheckbox
                 onChange={handleCheckboxChange}
                 checked={isChecked}
                 indeterminate={isCheckboxIndeterminate}
@@ -46,7 +46,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     totalItemsCount,
     items,
     onSearch,
-}: IAsyncTableToolbarProps<T>) => {
+}: UiAsyncTableToolbarProps<T>) => {
     const intl = useIntl();
     const { searchValue, setSearchValue } = useAsyncTableSearch(onSearch);
 
@@ -68,7 +68,9 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                             totalCount: totalItemsCount,
                         })}
                     </div>
-                    {selectedItemIds.length > 0 ? <AsyncTableBulkActions bulkActions={bulkActions} /> : null}
+                    {selectedItemIds.length > 0 ? (
+                        <UiAsyncTableBulkActions bulkActions={bulkActions} />
+                    ) : null}
                 </>
             );
         }

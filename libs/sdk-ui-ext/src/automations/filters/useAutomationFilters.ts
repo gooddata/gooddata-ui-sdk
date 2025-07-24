@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
-import { IAsyncTableFilter, IAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
+import { UiAsyncTableFilter, UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 import { useFilterOptions } from "./FilterOptionsContext.js";
 import { messages } from "../messages.js";
 
@@ -13,7 +13,7 @@ export const ALL_CREATED_BY_FILTER_VALUE = "__ALL_CREATED_BY__";
 //generic filter hook
 
 const useAutomationFilter = (
-    filterOptions: IAsyncTableFilterOption[],
+    filterOptions: UiAsyncTableFilterOption[],
     allFilterOptionValue: string,
     allFilterOptionLabel: string,
     filterLabel,
@@ -27,14 +27,14 @@ const useAutomationFilter = (
     );
 
     const isAllFilter = useCallback(
-        (filter: IAsyncTableFilterOption) => filter.value === allFilterOptionValue,
+        (filter: UiAsyncTableFilterOption) => filter.value === allFilterOptionValue,
         [allFilterOptionValue],
     );
 
     const [selectedFilterOption, setSelectedFilterOption] =
-        useState<IAsyncTableFilterOption>(allFilterOption);
+        useState<UiAsyncTableFilterOption>(allFilterOption);
 
-    const filter: IAsyncTableFilter = useMemo(() => {
+    const filter: UiAsyncTableFilter = useMemo(() => {
         return {
             label: filterLabel,
             options: [allFilterOption, ...filterOptions],

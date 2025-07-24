@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { IColumn } from "./types.js";
-import { UiSkeleton } from "../../@ui/UiSkeleton/UiSkeleton.js";
-import { UiPagedVirtualListSkeletonItemProps } from "../../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+import { UiAsyncTableColumn } from "../types.js";
+import { UiSkeleton } from "../../UiSkeleton/UiSkeleton.js";
+import { UiPagedVirtualListSkeletonItemProps } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import {
     CHECKBOX_COLUMN_WIDTH,
     COLUMN_PADDING,
@@ -12,7 +12,7 @@ import {
 } from "./constants.js";
 
 export function skeletonItemFactory<T extends { id: string }>(
-    columns: IColumn<T>[],
+    columns: UiAsyncTableColumn<T>[],
     hasCheckbox?: boolean,
 ): React.ComponentType<UiPagedVirtualListSkeletonItemProps> {
     return function SkeletonItem() {

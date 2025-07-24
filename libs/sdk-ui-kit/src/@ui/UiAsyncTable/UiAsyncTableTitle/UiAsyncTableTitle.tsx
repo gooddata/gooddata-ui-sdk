@@ -1,34 +1,17 @@
 // (C) 2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { e } from "../AsyncTable/asyncTableBem.js";
-import { Input } from "../../Form/Input.js";
-import { SeparatorLine } from "../../SeparatorLine/SeparatorLine.js";
+import { e } from "../asyncTableBem.js";
+import { Input } from "../../../Form/Input.js";
+import { SeparatorLine } from "../../../SeparatorLine/SeparatorLine.js";
 import { useIntl } from "react-intl";
 import { messages } from "../locales.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
+import { UiAsyncTableTitleAction, UiAsyncTableTitleProps } from "../types.js";
 
 /**
  * @internal
  */
-export interface IAsyncTableTitleProps {
-    title: string;
-    renderIcon?: () => React.ReactNode;
-    onSearch?: (search: string) => void;
-    actions: Array<IAsyncTableTitleAction>;
-    scrollToStart: () => void;
-}
-
-/**
- * @internal
- */
-export interface IAsyncTableTitleAction {
-    renderAction: () => React.ReactNode;
-}
-
-/**
- * @internal
- */
-export const AsyncTableTitle = ({ title, onSearch, renderIcon, actions }: IAsyncTableTitleProps) => {
+export const UiAsyncTableTitle = ({ title, onSearch, renderIcon, actions }: UiAsyncTableTitleProps) => {
     const { renderIconWithWrapper, renderSearchWithWrapper, renderActionsWithWrapper } = useAsyncTableTitle(
         renderIcon,
         onSearch,
@@ -51,7 +34,7 @@ export const AsyncTableTitle = ({ title, onSearch, renderIcon, actions }: IAsync
 const useAsyncTableTitle = (
     renderIcon?: () => React.ReactNode,
     onSearch?: (search: string) => void,
-    actions?: Array<IAsyncTableTitleAction>,
+    actions?: Array<UiAsyncTableTitleAction>,
 ) => {
     const intl = useIntl();
     const { searchValue, setSearchValue } = useAsyncTableSearch(onSearch);

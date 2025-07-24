@@ -1,17 +1,17 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback } from "react";
-import { e } from "./asyncTableBem.js";
-import { AsyncTableCheckbox } from "./AsyncTableCheckbox.js";
-import { UiIconButton } from "../../@ui/UiIconButton/UiIconButton.js";
-import { Dropdown } from "../../Dropdown/Dropdown.js";
+import { e } from "../asyncTableBem.js";
+import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
+import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
+import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { useIntl } from "react-intl";
 import { messages } from "../locales.js";
-import { IAsyncTableRowProps, IColumn } from "./types.js";
+import { UiAsyncTableRowProps, UiAsyncTableColumn } from "../types.js";
 import { getColumnWidth } from "./utils.js";
 import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 
-export function AsyncTableRow<T extends { id: string }>({
+export function UiAsyncTableRow<T extends { id: string }>({
     item,
     columns,
     onSelect,
@@ -19,12 +19,14 @@ export function AsyncTableRow<T extends { id: string }>({
     isSelected,
     hasCheckbox,
     isLarge,
-}: IAsyncTableRowProps<T>) {
+}: UiAsyncTableRowProps<T>) {
     const { renderCellContent } = useRenderCellContent<T>({ isLarge });
 
     return (
         <div onClick={() => onClick?.(item)} className={e("row", { large: isLarge })}>
-            {hasCheckbox ? <AsyncTableCheckbox checked={isSelected} onChange={() => onSelect(item)} /> : null}
+            {hasCheckbox ? (
+                <UiAsyncTableCheckbox checked={isSelected} onChange={() => onSelect(item)} />
+            ) : null}
             {columns.map((column, index) => {
                 const { bold, renderMenu, width: widthProp } = column;
                 const width = getColumnWidth(!!renderMenu, isLarge, widthProp);
@@ -163,7 +165,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                 getTextTitle,
                 getTextHref,
                 key,
-            }: IColumn<T>,
+            }: UiAsyncTableColumn<T>,
             item: T,
         ) => {
             if (renderButton) {
