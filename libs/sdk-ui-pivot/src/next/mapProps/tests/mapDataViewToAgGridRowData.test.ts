@@ -50,6 +50,13 @@ async function getRowData(
     const executionResult = await execution.execute();
     const dataView = await getPaginatedExecutionDataView({ executionResult, startRow: 0, endRow: 100 });
     const rowData = mapDataViewToAgGridRowData(dataView, params.columnHeadersPosition);
+
+    // TODO: remove once typed properly
+    rowData.rowData.forEach((row) => {
+        delete row.meta;
+        delete row.row;
+    });
+
     return {
         rowData: rowData.rowData,
         grandTotalRowData: rowData.grandTotalRowData,
