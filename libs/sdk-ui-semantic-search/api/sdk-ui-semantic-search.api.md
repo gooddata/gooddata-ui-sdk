@@ -45,7 +45,7 @@ export type SemanticSearchProps = {
     backend?: IAnalyticalBackend;
     workspace?: string;
     locale?: string;
-    onSelect: (item: ISemanticSearchResultItem) => void;
+    onSelect: (item: ISemanticSearchResultItem | ISemanticSearchRelationship) => void;
     onError?: (errorMessage: string) => void;
     className?: string;
     objectTypes?: GenAIObjectType[];

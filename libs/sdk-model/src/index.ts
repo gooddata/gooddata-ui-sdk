@@ -1075,6 +1075,7 @@ export {
 } from "./automations/index.js";
 
 export type { ISemanticSearchResultItem, ISemanticSearchRelationship } from "./genAI/semanticSearch.js";
+export { isSemanticSearchResultItem, isSemanticSearchRelationship } from "./genAI/semanticSearch.js";
 
 export type {
     IGenAIChatInteraction,
