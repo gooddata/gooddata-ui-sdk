@@ -50,6 +50,37 @@ export interface ApiEntitlement {
     expiry?: string;
 }
 /**
+ * Entity representing user in authentication system.
+ * @export
+ * @interface AuthUser
+ */
+export interface AuthUser {
+    /**
+     * Email - used as lookup (must be unique). For PUT method, it must be same as in URL
+     * @type {string}
+     * @memberof AuthUser
+     */
+    email: string;
+    /**
+     * User password. It is not returned by GET method.
+     * @type {string}
+     * @memberof AuthUser
+     */
+    password?: string;
+    /**
+     * User description, which will be visible in application.
+     * @type {string}
+     * @memberof AuthUser
+     */
+    displayName: string;
+    /**
+     * Field, which should be stored in metadata in authenticationId field. In PUT and POST method it must be not present, or equal to value calculated by backend (e.g. returned from previous GET).
+     * @type {string}
+     * @memberof AuthUser
+     */
+    authenticationId?: string;
+}
+/**
  *
  * @export
  * @interface FeatureFlagsContext
@@ -564,6 +595,85 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 export const AuthenticationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUser: async (authUser: AuthUser, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authUser' is not null or undefined
+            assertParamExists("createUser", "authUser", authUser);
+            const localVarPath = `/api/v1/auth/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof authUser !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(authUser !== undefined ? authUser : {})
+                : authUser || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteUser: async (userEmail: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userEmail' is not null or undefined
+            assertParamExists("deleteUser", "userEmail", userEmail);
+            const localVarPath = `/api/v1/auth/users/{userEmail}`.replace(
+                `{${"userEmail"}}`,
+                encodeURIComponent(String(userEmail)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns a Profile including Organization and Current User Information.
          * @summary Get Profile
          * @param {*} [options] Override http request option.
@@ -594,6 +704,126 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUser: async (userEmail: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userEmail' is not null or undefined
+            assertParamExists("getUser", "userEmail", userEmail);
+            const localVarPath = `/api/v1/auth/users/{userEmail}`.replace(
+                `{${"userEmail"}}`,
+                encodeURIComponent(String(userEmail)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsers: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/auth/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
+         * @param {string} userEmail
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateUser: async (
+            userEmail: string,
+            authUser: AuthUser,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userEmail' is not null or undefined
+            assertParamExists("updateUser", "userEmail", userEmail);
+            // verify required parameter 'authUser' is not null or undefined
+            assertParamExists("updateUser", "authUser", authUser);
+            const localVarPath = `/api/v1/auth/users/{userEmail}`.replace(
+                `{${"userEmail"}}`,
+                encodeURIComponent(String(userEmail)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof authUser !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(authUser !== undefined ? authUser : {})
+                : authUser || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     };
 };
 
@@ -605,6 +835,34 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = AuthenticationApiAxiosParamCreator(configuration);
     return {
         /**
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createUser(
+            authUser: AuthUser,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createUser(authUser, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteUser(
+            userEmail: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteUser(userEmail, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns a Profile including Organization and Current User Information.
          * @summary Get Profile
          * @param {*} [options] Override http request option.
@@ -614,6 +872,52 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Profile>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProfile(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUser(
+            userEmail: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUser(userEmail, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUsers(
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AuthUser>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsers(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
+         * @param {string} userEmail
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateUser(
+            userEmail: string,
+            authUser: AuthUser,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(
+                userEmail,
+                authUser,
+                options,
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     };
@@ -631,6 +935,36 @@ export const AuthenticationApiFactory = function (
     const localVarFp = AuthenticationApiFp(configuration);
     return {
         /**
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
+         * @param {AuthenticationApiCreateUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUser(
+            requestParameters: AuthenticationApiCreateUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AuthUser> {
+            return localVarFp
+                .createUser(requestParameters.authUser, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
+         * @param {AuthenticationApiDeleteUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteUser(
+            requestParameters: AuthenticationApiDeleteUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteUser(requestParameters.userEmail, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Returns a Profile including Organization and Current User Information.
          * @summary Get Profile
          * @param {*} [options] Override http request option.
@@ -638,6 +972,45 @@ export const AuthenticationApiFactory = function (
          */
         getProfile(options?: AxiosRequestConfig): AxiosPromise<Profile> {
             return localVarFp.getProfile(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
+         * @param {AuthenticationApiGetUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUser(
+            requestParameters: AuthenticationApiGetUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AuthUser> {
+            return localVarFp
+                .getUser(requestParameters.userEmail, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsers(options?: AxiosRequestConfig): AxiosPromise<Array<AuthUser>> {
+            return localVarFp.getUsers(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
+         * @param {AuthenticationApiUpdateUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateUser(
+            requestParameters: AuthenticationApiUpdateUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AuthUser> {
+            return localVarFp
+                .updateUser(requestParameters.userEmail, requestParameters.authUser, options)
+                .then((request) => request(axios, basePath));
         },
     };
 };
@@ -649,6 +1022,32 @@ export const AuthenticationApiFactory = function (
  */
 export interface AuthenticationApiInterface {
     /**
+     * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Create a user
+     * @param {AuthenticationApiCreateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthenticationApiInterface
+     */
+    createUser(
+        requestParameters: AuthenticationApiCreateUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AuthUser>;
+
+    /**
+     * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Delete a user
+     * @param {AuthenticationApiDeleteUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthenticationApiInterface
+     */
+    deleteUser(
+        requestParameters: AuthenticationApiDeleteUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
      * Returns a Profile including Organization and Current User Information.
      * @summary Get Profile
      * @param {*} [options] Override http request option.
@@ -656,6 +1055,104 @@ export interface AuthenticationApiInterface {
      * @memberof AuthenticationApiInterface
      */
     getProfile(options?: AxiosRequestConfig): AxiosPromise<Profile>;
+
+    /**
+     * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get a user
+     * @param {AuthenticationApiGetUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthenticationApiInterface
+     */
+    getUser(
+        requestParameters: AuthenticationApiGetUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AuthUser>;
+
+    /**
+     * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get all users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthenticationApiInterface
+     */
+    getUsers(options?: AxiosRequestConfig): AxiosPromise<Array<AuthUser>>;
+
+    /**
+     * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Update a user
+     * @param {AuthenticationApiUpdateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthenticationApiInterface
+     */
+    updateUser(
+        requestParameters: AuthenticationApiUpdateUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AuthUser>;
+}
+
+/**
+ * Request parameters for createUser operation in AuthenticationApi.
+ * @export
+ * @interface AuthenticationApiCreateUserRequest
+ */
+export interface AuthenticationApiCreateUserRequest {
+    /**
+     *
+     * @type {AuthUser}
+     * @memberof AuthenticationApiCreateUser
+     */
+    readonly authUser: AuthUser;
+}
+
+/**
+ * Request parameters for deleteUser operation in AuthenticationApi.
+ * @export
+ * @interface AuthenticationApiDeleteUserRequest
+ */
+export interface AuthenticationApiDeleteUserRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof AuthenticationApiDeleteUser
+     */
+    readonly userEmail: string;
+}
+
+/**
+ * Request parameters for getUser operation in AuthenticationApi.
+ * @export
+ * @interface AuthenticationApiGetUserRequest
+ */
+export interface AuthenticationApiGetUserRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof AuthenticationApiGetUser
+     */
+    readonly userEmail: string;
+}
+
+/**
+ * Request parameters for updateUser operation in AuthenticationApi.
+ * @export
+ * @interface AuthenticationApiUpdateUserRequest
+ */
+export interface AuthenticationApiUpdateUserRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof AuthenticationApiUpdateUser
+     */
+    readonly userEmail: string;
+
+    /**
+     *
+     * @type {AuthUser}
+     * @memberof AuthenticationApiUpdateUser
+     */
+    readonly authUser: AuthUser;
 }
 
 /**
@@ -665,6 +1162,34 @@ export interface AuthenticationApiInterface {
  * @extends {BaseAPI}
  */
 export class AuthenticationApi extends BaseAPI implements AuthenticationApiInterface {
+    /**
+     * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Create a user
+     * @param {AuthenticationApiCreateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthenticationApi
+     */
+    public createUser(requestParameters: AuthenticationApiCreateUserRequest, options?: AxiosRequestConfig) {
+        return AuthenticationApiFp(this.configuration)
+            .createUser(requestParameters.authUser, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Delete a user
+     * @param {AuthenticationApiDeleteUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthenticationApi
+     */
+    public deleteUser(requestParameters: AuthenticationApiDeleteUserRequest, options?: AxiosRequestConfig) {
+        return AuthenticationApiFp(this.configuration)
+            .deleteUser(requestParameters.userEmail, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Returns a Profile including Organization and Current User Information.
      * @summary Get Profile
@@ -677,6 +1202,47 @@ export class AuthenticationApi extends BaseAPI implements AuthenticationApiInter
             .getProfile(options)
             .then((request) => request(this.axios, this.basePath));
     }
+
+    /**
+     * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get a user
+     * @param {AuthenticationApiGetUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthenticationApi
+     */
+    public getUser(requestParameters: AuthenticationApiGetUserRequest, options?: AxiosRequestConfig) {
+        return AuthenticationApiFp(this.configuration)
+            .getUser(requestParameters.userEmail, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get all users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthenticationApi
+     */
+    public getUsers(options?: AxiosRequestConfig) {
+        return AuthenticationApiFp(this.configuration)
+            .getUsers(options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Update a user
+     * @param {AuthenticationApiUpdateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthenticationApi
+     */
+    public updateUser(requestParameters: AuthenticationApiUpdateUserRequest, options?: AxiosRequestConfig) {
+        return AuthenticationApiFp(this.configuration)
+            .updateUser(requestParameters.userEmail, requestParameters.authUser, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
 }
 
 /**
@@ -686,6 +1252,85 @@ export class AuthenticationApi extends BaseAPI implements AuthenticationApiInter
 export const UserAuthorizationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUser: async (authUser: AuthUser, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authUser' is not null or undefined
+            assertParamExists("createUser", "authUser", authUser);
+            const localVarPath = `/api/v1/auth/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof authUser !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(authUser !== undefined ? authUser : {})
+                : authUser || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteUser: async (userEmail: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userEmail' is not null or undefined
+            assertParamExists("deleteUser", "userEmail", userEmail);
+            const localVarPath = `/api/v1/auth/users/{userEmail}`.replace(
+                `{${"userEmail"}}`,
+                encodeURIComponent(String(userEmail)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns a Profile including Organization and Current User Information.
          * @summary Get Profile
          * @param {*} [options] Override http request option.
@@ -693,6 +1338,74 @@ export const UserAuthorizationApiAxiosParamCreator = function (configuration?: C
          */
         getProfile: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/profile`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUser: async (userEmail: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userEmail' is not null or undefined
+            assertParamExists("getUser", "userEmail", userEmail);
+            const localVarPath = `/api/v1/auth/users/{userEmail}`.replace(
+                `{${"userEmail"}}`,
+                encodeURIComponent(String(userEmail)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsers: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/auth/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -761,6 +1474,58 @@ export const UserAuthorizationApiAxiosParamCreator = function (configuration?: C
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
+         * @param {string} userEmail
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateUser: async (
+            userEmail: string,
+            authUser: AuthUser,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userEmail' is not null or undefined
+            assertParamExists("updateUser", "userEmail", userEmail);
+            // verify required parameter 'authUser' is not null or undefined
+            assertParamExists("updateUser", "authUser", authUser);
+            const localVarPath = `/api/v1/auth/users/{userEmail}`.replace(
+                `{${"userEmail"}}`,
+                encodeURIComponent(String(userEmail)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof authUser !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(authUser !== undefined ? authUser : {})
+                : authUser || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     };
 };
 
@@ -772,6 +1537,34 @@ export const UserAuthorizationApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = UserAuthorizationApiAxiosParamCreator(configuration);
     return {
         /**
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createUser(
+            authUser: AuthUser,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createUser(authUser, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteUser(
+            userEmail: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteUser(userEmail, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns a Profile including Organization and Current User Information.
          * @summary Get Profile
          * @param {*} [options] Override http request option.
@@ -781,6 +1574,32 @@ export const UserAuthorizationApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Profile>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProfile(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUser(
+            userEmail: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUser(userEmail, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUsers(
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AuthUser>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsers(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -795,6 +1614,26 @@ export const UserAuthorizationApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.processInvitation(invitation, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
+         * @param {string} userEmail
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateUser(
+            userEmail: string,
+            authUser: AuthUser,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(
+                userEmail,
+                authUser,
+                options,
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     };
@@ -812,6 +1651,36 @@ export const UserAuthorizationApiFactory = function (
     const localVarFp = UserAuthorizationApiFp(configuration);
     return {
         /**
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
+         * @param {UserAuthorizationApiCreateUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUser(
+            requestParameters: UserAuthorizationApiCreateUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AuthUser> {
+            return localVarFp
+                .createUser(requestParameters.authUser, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
+         * @param {UserAuthorizationApiDeleteUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteUser(
+            requestParameters: UserAuthorizationApiDeleteUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteUser(requestParameters.userEmail, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Returns a Profile including Organization and Current User Information.
          * @summary Get Profile
          * @param {*} [options] Override http request option.
@@ -819,6 +1688,30 @@ export const UserAuthorizationApiFactory = function (
          */
         getProfile(options?: AxiosRequestConfig): AxiosPromise<Profile> {
             return localVarFp.getProfile(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
+         * @param {UserAuthorizationApiGetUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUser(
+            requestParameters: UserAuthorizationApiGetUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AuthUser> {
+            return localVarFp
+                .getUser(requestParameters.userEmail, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsers(options?: AxiosRequestConfig): AxiosPromise<Array<AuthUser>> {
+            return localVarFp.getUsers(options).then((request) => request(axios, basePath));
         },
         /**
          * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
@@ -835,6 +1728,21 @@ export const UserAuthorizationApiFactory = function (
                 .processInvitation(requestParameters.invitation, options)
                 .then((request) => request(axios, basePath));
         },
+        /**
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
+         * @param {UserAuthorizationApiUpdateUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateUser(
+            requestParameters: UserAuthorizationApiUpdateUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AuthUser> {
+            return localVarFp
+                .updateUser(requestParameters.userEmail, requestParameters.authUser, options)
+                .then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -845,6 +1753,32 @@ export const UserAuthorizationApiFactory = function (
  */
 export interface UserAuthorizationApiInterface {
     /**
+     * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Create a user
+     * @param {UserAuthorizationApiCreateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    createUser(
+        requestParameters: UserAuthorizationApiCreateUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AuthUser>;
+
+    /**
+     * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Delete a user
+     * @param {UserAuthorizationApiDeleteUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    deleteUser(
+        requestParameters: UserAuthorizationApiDeleteUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
      * Returns a Profile including Organization and Current User Information.
      * @summary Get Profile
      * @param {*} [options] Override http request option.
@@ -852,6 +1786,28 @@ export interface UserAuthorizationApiInterface {
      * @memberof UserAuthorizationApiInterface
      */
     getProfile(options?: AxiosRequestConfig): AxiosPromise<Profile>;
+
+    /**
+     * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get a user
+     * @param {UserAuthorizationApiGetUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    getUser(
+        requestParameters: UserAuthorizationApiGetUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AuthUser>;
+
+    /**
+     * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get all users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    getUsers(options?: AxiosRequestConfig): AxiosPromise<Array<AuthUser>>;
 
     /**
      * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
@@ -865,6 +1821,61 @@ export interface UserAuthorizationApiInterface {
         requestParameters: UserAuthorizationApiProcessInvitationRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
+
+    /**
+     * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Update a user
+     * @param {UserAuthorizationApiUpdateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    updateUser(
+        requestParameters: UserAuthorizationApiUpdateUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AuthUser>;
+}
+
+/**
+ * Request parameters for createUser operation in UserAuthorizationApi.
+ * @export
+ * @interface UserAuthorizationApiCreateUserRequest
+ */
+export interface UserAuthorizationApiCreateUserRequest {
+    /**
+     *
+     * @type {AuthUser}
+     * @memberof UserAuthorizationApiCreateUser
+     */
+    readonly authUser: AuthUser;
+}
+
+/**
+ * Request parameters for deleteUser operation in UserAuthorizationApi.
+ * @export
+ * @interface UserAuthorizationApiDeleteUserRequest
+ */
+export interface UserAuthorizationApiDeleteUserRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof UserAuthorizationApiDeleteUser
+     */
+    readonly userEmail: string;
+}
+
+/**
+ * Request parameters for getUser operation in UserAuthorizationApi.
+ * @export
+ * @interface UserAuthorizationApiGetUserRequest
+ */
+export interface UserAuthorizationApiGetUserRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof UserAuthorizationApiGetUser
+     */
+    readonly userEmail: string;
 }
 
 /**
@@ -882,12 +1893,67 @@ export interface UserAuthorizationApiProcessInvitationRequest {
 }
 
 /**
+ * Request parameters for updateUser operation in UserAuthorizationApi.
+ * @export
+ * @interface UserAuthorizationApiUpdateUserRequest
+ */
+export interface UserAuthorizationApiUpdateUserRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof UserAuthorizationApiUpdateUser
+     */
+    readonly userEmail: string;
+
+    /**
+     *
+     * @type {AuthUser}
+     * @memberof UserAuthorizationApiUpdateUser
+     */
+    readonly authUser: AuthUser;
+}
+
+/**
  * UserAuthorizationApi - object-oriented interface
  * @export
  * @class UserAuthorizationApi
  * @extends {BaseAPI}
  */
 export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationApiInterface {
+    /**
+     * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Create a user
+     * @param {UserAuthorizationApiCreateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public createUser(
+        requestParameters: UserAuthorizationApiCreateUserRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return UserAuthorizationApiFp(this.configuration)
+            .createUser(requestParameters.authUser, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Delete a user
+     * @param {UserAuthorizationApiDeleteUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public deleteUser(
+        requestParameters: UserAuthorizationApiDeleteUserRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return UserAuthorizationApiFp(this.configuration)
+            .deleteUser(requestParameters.userEmail, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Returns a Profile including Organization and Current User Information.
      * @summary Get Profile
@@ -898,6 +1964,33 @@ export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationAp
     public getProfile(options?: AxiosRequestConfig) {
         return UserAuthorizationApiFp(this.configuration)
             .getProfile(options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get a user
+     * @param {UserAuthorizationApiGetUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public getUser(requestParameters: UserAuthorizationApiGetUserRequest, options?: AxiosRequestConfig) {
+        return UserAuthorizationApiFp(this.configuration)
+            .getUser(requestParameters.userEmail, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get all users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public getUsers(options?: AxiosRequestConfig) {
+        return UserAuthorizationApiFp(this.configuration)
+            .getUsers(options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -915,6 +2008,23 @@ export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationAp
     ) {
         return UserAuthorizationApiFp(this.configuration)
             .processInvitation(requestParameters.invitation, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Update a user
+     * @param {UserAuthorizationApiUpdateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public updateUser(
+        requestParameters: UserAuthorizationApiUpdateUserRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return UserAuthorizationApiFp(this.configuration)
+            .updateUser(requestParameters.userEmail, requestParameters.authUser, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }

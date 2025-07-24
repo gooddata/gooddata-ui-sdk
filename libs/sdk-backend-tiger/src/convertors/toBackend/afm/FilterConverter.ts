@@ -174,7 +174,6 @@ function convertRelativeDateFilter(
     }
 
     const datasetRef = relativeDateFilter.dataSet;
-    const dataset = toDateDataSetQualifier(datasetRef);
     const localIdentifier = relativeDateFilter.localIdentifier;
 
     const boundedFilter = isRelativeBoundedDateFilterBody(relativeDateFilter)
@@ -187,14 +186,13 @@ function convertRelativeDateFilter(
                   to: isUpperBound(relativeDateFilter.boundedFilter)
                       ? Number(relativeDateFilter.boundedFilter.to)
                       : undefined,
-                  dataset,
               },
           }
         : undefined;
 
     return {
         relativeDateFilter: {
-            dataset,
+            dataset: toDateDataSetQualifier(datasetRef),
             granularity: toTigerGranularity(relativeDateFilter.granularity as any),
             from: Number(relativeDateFilter.from),
             to: Number(relativeDateFilter.to),
