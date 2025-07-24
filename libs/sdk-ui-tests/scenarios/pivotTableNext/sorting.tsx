@@ -11,8 +11,8 @@ import {
 
 export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("sorting")
-    .withDefaultTags("no-plug-viz-tests")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
+    .withDefaultTestTypes("api")
     .addScenario("single measure pivot sorted by first row attr", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
         sortBy: [newAttributeSort(ReferenceMd.Product.Name, "desc")],

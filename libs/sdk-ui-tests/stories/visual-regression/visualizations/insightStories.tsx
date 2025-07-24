@@ -89,9 +89,12 @@ const ReportReadyResolver = andResolver(
 );
 
 export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
+    const isPivotTableNext = testScenario.vis === "PivotTableNext";
+
     const settings = {
         ...DefaultSettings,
         ...testScenario.backendSettings,
+        enableNewPivotTable: isPivotTableNext,
     };
 
     const backend = StorybookBackend({ globalSettings: settings });
