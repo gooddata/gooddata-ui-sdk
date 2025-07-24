@@ -23,7 +23,7 @@ export function AsyncTableRow<T extends { id: string }>({
     const { renderCellContent } = useRenderCellContent<T>({ isLarge });
 
     return (
-        <div onClick={() => onClick(item)} className={e("row", { large: isLarge })}>
+        <div onClick={() => onClick?.(item)} className={e("row", { large: isLarge })}>
             {hasCheckbox ? <AsyncTableCheckbox checked={isSelected} onChange={() => onSelect(item)} /> : null}
             {columns.map((column, index) => {
                 const { bold, renderMenu, width: widthProp } = column;
@@ -100,7 +100,11 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
         ) => {
             if (getMultiLineTextContent) {
                 return getMultiLineTextContent(item).map((line, index) => (
-                    <span title={titleProvided ? undefined : line} key={index}>
+                    <span
+                        title={titleProvided ? undefined : line}
+                        className={e("text-line", { first: index === 0 })}
+                        key={index}
+                    >
                         {line}
                     </span>
                 ));

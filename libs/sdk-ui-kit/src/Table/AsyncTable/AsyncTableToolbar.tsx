@@ -76,7 +76,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     }, [bulkActions, selectedItemIds, totalItemsCount, intl]);
 
     const renderFilters = useCallback(() => {
-        return filters.length ? (
+        return filters?.length ? (
             <>
                 <div className={e("toolbar-label")}>{intl.formatMessage(messages.filterLabel)}</div>
                 {filters.map((filter) => (

@@ -1,17 +1,26 @@
 // (C) 2025 GoodData Corporation
 
-import { AutomationType } from "@gooddata/sdk-backend-spi";
-import { IListedDashboard, IUser, IWorkspaceUser } from "@gooddata/sdk-model";
+import { AutomationType, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import {
+    IAutomationMetadataObject,
+    IListedDashboard,
+    IUser,
+    IWorkspaceUser,
+    SortDirection,
+} from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-export interface FilterOptionsContextValue {
-    currentUser: IUser | null;
-    workspaceUsers: IWorkspaceUser[];
-    dashboards: IListedDashboard[];
-    dashboardsError: GoodDataSdkError | null;
-    currentUserError: GoodDataSdkError | null;
-    workspaceUsersError: GoodDataSdkError | null;
-    isCurrentUser: (userLogin: string) => boolean;
+/**
+ * @internal
+ */
+export interface IAutomationsProps {
+    backend?: IAnalyticalBackend;
+    workspace?: string;
+    locale?: string;
+    selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
+    maxHeight?: number;
+    pageSize?: number;
+    type?: AutomationsType;
 }
 
 /**
@@ -76,3 +85,32 @@ export type AutomationColumnDefinition = {
  * @internal
  */
 export type AutomationsFilter = "dashboard" | "createdBy" | "recipients" | "state" | "workspace";
+
+export interface IAutomationsCoreProps {
+    type: AutomationsType;
+    selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
+    maxHeight: number;
+    pageSize: number;
+}
+
+export interface FilterOptionsContextValue {
+    currentUser: IUser | null;
+    workspaceUsers: IWorkspaceUser[];
+    dashboards: IListedDashboard[];
+    dashboardsError: GoodDataSdkError | null;
+    currentUserError: GoodDataSdkError | null;
+    workspaceUsersError: GoodDataSdkError | null;
+    isCurrentUser: (userLogin: string) => boolean;
+}
+
+export interface IAutomationsState {
+    automations: IAutomationMetadataObject[];
+    totalItemsCount: number;
+    hasNextPage: boolean;
+    page: number;
+    search: string;
+    selectedIds: Array<string>;
+    sortBy: keyof IAutomationMetadataObject;
+    sortDirection: SortDirection;
+    invalidationId: number;
+}

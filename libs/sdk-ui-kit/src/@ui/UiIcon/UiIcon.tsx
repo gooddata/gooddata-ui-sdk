@@ -4,6 +4,8 @@ import { IconType } from "../@types/icon.js";
 import { ThemeColor } from "../@types/themeColors.js";
 import { b } from "./iconBem.js";
 import { iconPaths } from "./icons.js";
+import { UiIconBackground } from "./UiIconBackground.js";
+import { BackgroundShape, BackgroundType } from "../@types/background.js";
 
 /**
  * @internal
@@ -14,6 +16,11 @@ export interface UiIconProps {
     label?: string;
     size?: number;
     ariaHidden?: boolean;
+    //background
+    backgroundSize?: number;
+    backgroundColor?: ThemeColor;
+    backgroundType?: BackgroundType;
+    backgroundShape?: BackgroundShape;
     /**
      * SVGs are inline by default. The icon can be set to block to behave better in flex layouts and similar.
      * @defaultValue "inline"
@@ -24,17 +31,35 @@ export interface UiIconProps {
 /**
  * @internal
  */
-export const UiIcon = ({ type, label, color, layout = "inline", ariaHidden, size = 20 }: UiIconProps) => {
+export const UiIcon = ({
+    type,
+    label,
+    color,
+    layout = "inline",
+    ariaHidden,
+    size = 20,
+    backgroundSize,
+    backgroundColor,
+    backgroundType,
+    backgroundShape,
+}: UiIconProps) => {
     return (
-        <svg
-            className={b({ color, layout })}
-            width={size}
-            height={size}
-            viewBox="0 0 20 20"
-            aria-hidden={ariaHidden}
+        <UiIconBackground
+            size={backgroundSize}
+            color={backgroundColor}
+            type={backgroundType}
+            shape={backgroundShape}
         >
-            {label ? <title>{label}</title> : null}
-            {iconPaths[type]}
-        </svg>
+            <svg
+                className={b({ color, layout })}
+                width={size}
+                height={size}
+                viewBox="0 0 20 20"
+                aria-hidden={ariaHidden}
+            >
+                {label ? <title>{label}</title> : null}
+                {iconPaths[type]}
+            </svg>
+        </UiIconBackground>
     );
 };

@@ -132,6 +132,12 @@ export class AutoSize extends Component<IAutoSizeProps> {
 // @internal (undocumented)
 export const BackButton: React_2.FC<IBackButtonProps>;
 
+// @internal (undocumented)
+export type BackgroundShape = "circle" | "square";
+
+// @internal (undocumented)
+export type BackgroundType = "fill" | "border";
+
 // @internal
 export const bem: (block: `gd-ui-kit-${string}`) => {
     b: (props?: StyleProps) => string;
@@ -6231,7 +6237,7 @@ export const UiFocusTrap: React_3.FC<{
 }>;
 
 // @internal (undocumented)
-export const UiIcon: ({ type, label, color, layout, ariaHidden, size }: UiIconProps) => React_2.JSX.Element;
+export const UiIcon: ({ type, label, color, layout, ariaHidden, size, backgroundSize, backgroundColor, backgroundType, backgroundShape, }: UiIconProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export const UiIconButton: React_2.ForwardRefExoticComponent<UiIconButtonPublicProps & React_2.RefAttributes<HTMLButtonElement>>;
@@ -6271,6 +6277,14 @@ export interface UiIconButtonPublicProps {
 export interface UiIconProps {
     // (undocumented)
     ariaHidden?: boolean;
+    // (undocumented)
+    backgroundColor?: ThemeColor;
+    // (undocumented)
+    backgroundShape?: BackgroundShape;
+    // (undocumented)
+    backgroundSize?: number;
+    // (undocumented)
+    backgroundType?: BackgroundType;
     // (undocumented)
     color?: ThemeColor;
     // (undocumented)
@@ -6577,23 +6591,6 @@ export const unrelatedHeader: IDateDatasetHeader;
 
 // @internal
 export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[]): IUiMenuItem<T>[];
-
-// @internal
-export const useDebouncedState: <T>(initialValue: T, delay: number) => UseDebouncedStateOutput<T>;
-
-// @internal
-export type UseDebouncedStateOutput<T> = [
-/**
-* The current value.
-*/
-T,
-(value: T) => void,
-/**
-* The debounced value.
-*/
-T,
-(value: T) => void
-];
 
 // @internal (undocumented)
 export function useElementSize(): {

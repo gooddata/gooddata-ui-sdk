@@ -9,7 +9,7 @@ import AsyncTableDropdownItem from "./AsyncTableDropdownItem.js";
 import { useIntl } from "react-intl";
 import { messages } from "../locales.js";
 import { IAsyncTableFilterOption, IAsyncTableFilterProps } from "./types.js";
-import { useDebouncedState } from "../../utils/debounce.js";
+import { useDebouncedState } from "@gooddata/sdk-ui";
 
 /**
  * @internal

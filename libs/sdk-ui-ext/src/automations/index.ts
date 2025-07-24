@@ -2,6 +2,7 @@
 
 export * from "./Automations.js";
 export type {
+    IAutomationsProps,
     AutomationsType,
     AutomationsColumnName,
     AlertAutomationsColumnName,

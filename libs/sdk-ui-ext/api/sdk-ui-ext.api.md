@@ -83,15 +83,7 @@ export type AutomationColumnDefinition = {
 };
 
 // @internal
-export const Automations: ({ backend, workspace, locale, selectedColumnDefinitions, maxHeight, pageSize, type, }: {
-    backend?: IAnalyticalBackend;
-    workspace?: string;
-    locale?: string;
-    selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
-    maxHeight?: number;
-    pageSize?: number;
-    type?: AutomationsType;
-}) => React_2.JSX.Element;
+export const Automations: ({ backend, workspace, locale, selectedColumnDefinitions, maxHeight, pageSize, type, }: IAutomationsProps) => React_2.JSX.Element;
 
 // @internal
 export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName | AlertAutomationsColumnName;
@@ -313,6 +305,24 @@ export interface IAttributeHierarchyDialogProps {
     onDeleteSuccess?: () => void;
     // (undocumented)
     onSaveOrUpdateSuccess?: (attributeHierarchy: ICatalogAttributeHierarchy) => void;
+}
+
+// @internal (undocumented)
+export interface IAutomationsProps {
+    // (undocumented)
+    backend?: IAnalyticalBackend;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    maxHeight?: number;
+    // (undocumented)
+    pageSize?: number;
+    // (undocumented)
+    selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
+    // (undocumented)
+    type?: AutomationsType;
+    // (undocumented)
+    workspace?: string;
 }
 
 // @internal (undocumented)

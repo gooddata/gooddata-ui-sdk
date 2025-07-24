@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { IAutomationsState } from "./types.js";
+
 export const COMPARISON_OPERATOR_LESS_THAN = "LESS_THAN";
 export const COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO";
 export const COMPARISON_OPERATOR_GREATER_THAN = "GREATER_THAN";
@@ -56,3 +58,15 @@ export const DEFAULT_COLUMN_WIDTHS = {
     CREATED_AT: 225,
     NOTIFICATION_CHANNEL: 225,
 } as const;
+
+export const AutomationsDefaultState: IAutomationsState = {
+    automations: [],
+    totalItemsCount: 0,
+    hasNextPage: true,
+    page: 0,
+    search: "",
+    selectedIds: [],
+    sortBy: "title",
+    sortDirection: "asc",
+    invalidationId: 0,
+};
