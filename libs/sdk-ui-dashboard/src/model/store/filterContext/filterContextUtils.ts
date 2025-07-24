@@ -65,7 +65,8 @@ export function applyFilterContext(
             if (!workingFilter?.dateFilter) {
                 return appliedFilter;
             }
-            return {
+
+            const dateFilter = {
                 dateFilter: {
                     ...appliedFilter.dateFilter,
                     type: workingFilter.dateFilter.type,
@@ -74,6 +75,15 @@ export function applyFilterContext(
                     to: workingFilter.dateFilter.to,
                 },
             };
+
+            const { from, to } = dateFilter.dateFilter;
+
+            if (from === undefined && to === undefined) {
+                delete dateFilter.dateFilter.from;
+                delete dateFilter.dateFilter.to;
+            }
+
+            return dateFilter;
         } else {
             throw new Error("Unknown filter type");
         }
