@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import React, { memo, useState } from "react";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize.js";
 import { Button } from "@gooddata/sdk-ui-kit";
@@ -10,42 +10,19 @@ import OperatorDropdownBody from "./OperatorDropdownBody.js";
 import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator.js";
 import { MeasureValueFilterOperator } from "./types.js";
 
-interface IOperatorDropdownOwnProps {
+interface IOperatorDropdownProps {
     onSelect: (operator: MeasureValueFilterOperator) => void;
     operator: MeasureValueFilterOperator;
     isDisabled?: boolean;
 }
 
-type IOperatorDropdownProps = IOperatorDropdownOwnProps & WrappedComponentProps;
+export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorDropdownProps) {
+    const intl = useIntl();
 
-interface IOperatorDropdownState {
-    opened: boolean;
-}
+    const [opened, setOpened] = useState(false);
 
-export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps, IOperatorDropdownState> {
-    public state: IOperatorDropdownState = {
-        opened: false,
-    };
-
-    public render() {
-        return (
-            <>
-                {this.renderDropdownButton()}
-                {this.state.opened ? (
-                    <OperatorDropdownBody
-                        alignTo={".gd-mvf-operator-dropdown-button"}
-                        onSelect={this.handleOperatorSelected}
-                        selectedOperator={this.props.operator}
-                        onClose={this.closeOperatorDropdown}
-                    />
-                ) : null}
-            </>
-        );
-    }
-
-    private renderDropdownButton() {
-        const { intl, operator, isDisabled } = this.props;
-        const { opened } = this.state;
+    const renderDropdownButton = () => {
+        const { operator, isDisabled } = props;
 
         const operatorTranslationKey = getOperatorTranslationKey(operator);
         const title = capitalize(
@@ -72,23 +49,36 @@ export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps
                 title={title}
                 className={buttonClasses}
                 value={title}
-                onClick={this.handleOperatorDropdownButtonClick}
+                onClick={handleOperatorDropdownButtonClick}
                 iconLeft={`gd-icon-${getOperatorIcon(operator)}`}
                 iconRight={opened ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
                 disabled={isDisabled}
             />
         );
-    }
-
-    private handleOperatorSelected = (operator: MeasureValueFilterOperator) => {
-        this.closeOperatorDropdown();
-        this.props.onSelect(operator);
     };
 
-    private closeOperatorDropdown = () => this.setState({ opened: false });
+    const handleOperatorSelected = (operator: MeasureValueFilterOperator) => {
+        closeOperatorDropdown();
+        props.onSelect(operator);
+    };
 
-    private handleOperatorDropdownButtonClick = () =>
-        this.setState((state) => ({ ...state, opened: !state.opened }));
-}
+    const closeOperatorDropdown = () => setOpened(false);
 
-export default injectIntl(OperatorDropdown);
+    const handleOperatorDropdownButtonClick = () => setOpened((state) => !state);
+
+    return (
+        <>
+            {renderDropdownButton()}
+            {opened ? (
+                <OperatorDropdownBody
+                    alignTo={".gd-mvf-operator-dropdown-button"}
+                    onSelect={handleOperatorSelected}
+                    selectedOperator={props.operator}
+                    onClose={closeOperatorDropdown}
+                />
+            ) : null}
+        </>
+    );
+});
+
+export default OperatorDropdown;

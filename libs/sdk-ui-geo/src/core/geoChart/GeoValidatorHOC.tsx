@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import isEqual from "lodash/isEqual.js";
 import { injectIntl } from "react-intl";
@@ -161,7 +161,7 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
         }
     }
 
-    const IntlValidatorHOC = injectIntl<"intl", T & IGeoValidatorProps>(ValidatorHOCWrapped);
+    const IntlValidatorHOC = injectIntl(ValidatorHOCWrapped);
 
     return class ValidatorHOC extends React.Component<T & IGeoValidatorProps> {
         public render() {

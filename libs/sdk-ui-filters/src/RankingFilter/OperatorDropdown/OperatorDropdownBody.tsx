@@ -1,28 +1,27 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { OperatorDropdownItem } from "./OperatorDropdownItem.js";
 import { IOperatorDropdownItem } from "../types.js";
 
-interface IOperatorDropdownBodyComponentOwnProps {
+interface OperatorDropdownBodyComponentProps {
     items: IOperatorDropdownItem[];
     selectedValue: RankingFilterOperator;
     onSelect: (value: RankingFilterOperator) => void;
     onClose: () => void;
 }
 
-type OperatorDropdownBodyComponentProps = IOperatorDropdownBodyComponentOwnProps & WrappedComponentProps;
-
-const OperatorDropdownBodyComponent: React.FC<OperatorDropdownBodyComponentProps> = ({
+export function OperatorDropdownBody({
     items,
     selectedValue,
     onSelect,
     onClose,
-    intl,
-}) => {
+}: OperatorDropdownBodyComponentProps) {
+    const intl = useIntl();
+
     return (
         <Overlay
             closeOnOutsideClick={true}
@@ -47,6 +46,4 @@ const OperatorDropdownBodyComponent: React.FC<OperatorDropdownBodyComponentProps
             </div>
         </Overlay>
     );
-};
-
-export const OperatorDropdownBody = injectIntl(OperatorDropdownBodyComponent);
+}

@@ -1,17 +1,13 @@
-// (C) 2007-2020 GoodData Corporation
-import React, { PureComponent, ReactNode } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { memo, ReactNode } from "react";
 import cx from "classnames";
 import { ISpinnerProps } from "./typings.js";
 
 /**
  * @internal
  */
-export class Spinner extends PureComponent<ISpinnerProps> {
-    static defaultProps = {
-        className: "",
-    };
-
-    generateSpinnerTicks(): ReactNode[] {
+export const Spinner = memo(function Spinner({ className = "" }: ISpinnerProps) {
+    const generateSpinnerTicks = (): ReactNode[] => {
         const items = [];
 
         for (let i = 1; i <= 8; i += 1) {
@@ -20,15 +16,12 @@ export class Spinner extends PureComponent<ISpinnerProps> {
         }
 
         return items;
-    }
+    };
 
-    render(): ReactNode {
-        const { className } = this.props;
-        const spinnerClasses = cx({
-            "gd-dot-spinner": true,
-            [className]: !!className,
-        });
+    const spinnerClasses = cx({
+        "gd-dot-spinner": true,
+        [className]: !!className,
+    });
 
-        return <div className={spinnerClasses}>{this.generateSpinnerTicks()}</div>;
-    }
-}
+    return <div className={spinnerClasses}>{generateSpinnerTicks()}</div>;
+});

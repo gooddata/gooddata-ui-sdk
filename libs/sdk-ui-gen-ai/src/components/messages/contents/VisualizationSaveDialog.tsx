@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 import * as React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
 import { IGenAIVisualization } from "@gooddata/sdk-model";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { saveVisualizationAction } from "../../../store/index.js";
 
@@ -16,13 +16,15 @@ export type VisualizationSaveDialogProps = {
     type: "save" | "explore";
 };
 
-export type VisualizationSaveDialogDispatchProps = {
-    saveVisualizationAction: typeof saveVisualizationAction;
-};
+export function VisualizationSaveDialog({
+    onClose,
+    visualization,
+    messageId,
+    type,
+}: VisualizationSaveDialogProps) {
+    const intl = useIntl();
+    const dispatch = useDispatch();
 
-const VisualizationSaveDialogCore: React.FC<
-    VisualizationSaveDialogProps & VisualizationSaveDialogDispatchProps & WrappedComponentProps
-> = ({ onClose, visualization, messageId, saveVisualizationAction, intl, type }) => {
     const [value, setValue] = React.useState<string>(visualization.title);
     const { setSavingStarted } = useVisualisationSaving(visualization, onClose);
 
@@ -32,12 +34,14 @@ const VisualizationSaveDialogCore: React.FC<
             onCancel={onClose}
             onSubmit={() => {
                 setSavingStarted(true);
-                saveVisualizationAction({
-                    visualizationId: visualization.id,
-                    visualizationTitle: value || visualization.title,
-                    assistantMessageId: messageId,
-                    explore: type === "explore",
-                });
+                dispatch(
+                    saveVisualizationAction({
+                        visualizationId: visualization.id,
+                        visualizationTitle: value || visualization.title,
+                        assistantMessageId: messageId,
+                        explore: type === "explore",
+                    }),
+                );
             }}
             isPositive
             autofocusOnOpen={false}
@@ -70,13 +74,4 @@ const VisualizationSaveDialogCore: React.FC<
             />
         </ConfirmDialog>
     );
-};
-
-const mapDispatchToProps = {
-    saveVisualizationAction,
-};
-
-export const VisualizationSaveDialog: any = connect(
-    null,
-    mapDispatchToProps,
-)(injectIntl(VisualizationSaveDialogCore));
+}

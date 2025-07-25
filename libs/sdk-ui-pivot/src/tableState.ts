@@ -6,6 +6,91 @@ import { TableFacade } from "./impl/tableFacade.js";
 import { ICustomGridOptions } from "./impl/privateTypes.js";
 import { IScrollPosition } from "./impl/stickyRowHandler.js";
 
+/**
+ * Separated state interfaces for better performance and maintainability
+ *
+ * ## Why Separate State?
+ *
+ * The previous monolithic state caused unnecessary re-renders when unrelated
+ * properties changed. This separation provides:
+ *
+ * ### Performance Benefits:
+ * - **Reduced re-renders**: Components only re-render when relevant state changes
+ * - **Better memoization**: useCallback/useMemo dependencies are more granular
+ * - **Selective updates**: Update only the state slice that actually changed
+ *
+ * ### Maintainability Benefits:
+ * - **Clear separation of concerns**: Each state slice has a single responsibility
+ * - **Easier debugging**: State changes are isolated by domain
+ * - **Better testability**: Individual state slices can be tested in isolation
+ *
+ * ### Usage Guidelines:
+ * - Use `ITableRenderState` for initialization, loading, and render control
+ * - Use `ITableDataState` for data-related changes (totals, execution)
+ * - Use `ITableLayoutState` for UI layout and sizing changes
+ * - Use `ITableErrorState` for error handling
+ */
+
+/**
+ * Controls table rendering and initialization lifecycle
+ *
+ * This state should be updated when:
+ * - Table initialization starts/completes
+ * - Loading state changes
+ * - Render readiness changes
+ */
+export interface ITableRenderState {
+    readyToRender: boolean;
+    isLoading: boolean;
+}
+
+/**
+ * Manages data-related state including totals and execution
+ *
+ * This state should be updated when:
+ * - Column or row totals change
+ * - Execution definition changes
+ * - Data transformation occurs
+ */
+export interface ITableDataState {
+    columnTotals: ITotal[];
+    rowTotals: ITotal[];
+    tempExecution: IPreparedExecution;
+}
+
+/**
+ * Manages UI layout and sizing state
+ *
+ * This state should be updated when:
+ * - Table height changes
+ * - Column resizing occurs
+ * - Layout recalculation happens
+ */
+export interface ITableLayoutState {
+    desiredHeight: number | undefined;
+    resized: boolean;
+}
+
+/**
+ * Manages error state
+ *
+ * This state should be updated when:
+ * - Errors occur during execution
+ * - Error state needs to be cleared
+ */
+export interface ITableErrorState {
+    error?: string;
+}
+
+/**
+ * @deprecated Use separated states instead
+ * Legacy interface kept for backward compatibility during migration
+ *
+ * This monolithic state interface caused performance issues due to:
+ * - Unnecessary re-renders when unrelated properties changed
+ * - Complex state updates affecting multiple concerns
+ * - Difficult dependency tracking in useCallback/useMemo
+ */
 export interface ICorePivotTableState {
     readyToRender: boolean;
     columnTotals: ITotal[];

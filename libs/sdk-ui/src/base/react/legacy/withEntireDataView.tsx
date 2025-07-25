@@ -98,8 +98,8 @@ export interface ILoadingInjectedProps {
  * @internal
  */
 export function withEntireDataView<T extends IDataVisualizationProps>(
-    InnerComponent: React.ComponentClass<T & ILoadingInjectedProps>,
-): React.ComponentClass<T> {
+    InnerComponent: React.ComponentType<T & ILoadingInjectedProps>,
+): React.ComponentType<T> {
     class LoadingHOCWrapped extends React.Component<T & ILoadingInjectedProps, IDataViewLoadState> {
         public static defaultProps = InnerComponent.defaultProps || {};
 
@@ -395,7 +395,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         };
     }
 
-    const IntlLoadingHOC = injectIntl<"intl", T & ILoadingInjectedProps>(LoadingHOCWrapped);
+    const IntlLoadingHOC = injectIntl(LoadingHOCWrapped);
 
     return class LoadingHOC extends React.Component<T> {
         public render() {

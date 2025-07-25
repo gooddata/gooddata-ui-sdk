@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { PureComponent } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { memo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 
@@ -20,28 +20,15 @@ export interface IMultiSelectListItemProps {
 /**
  * @internal
  */
-export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps> {
-    public render(): JSX.Element {
-        const { title, onClick, onMouseOver, onMouseOut, isSelected } = this.props;
-
-        return (
-            <div
-                className={this.getClassNames()}
-                onClick={onClick}
-                onMouseOver={onMouseOver}
-                onMouseOut={onMouseOut}
-            >
-                <label className="input-checkbox-label">
-                    <input type="checkbox" className="input-checkbox" readOnly={true} checked={isSelected} />
-                    <span className="input-label-text">{title}</span>
-                </label>
-                {this.renderOnly()}
-            </div>
-        );
-    }
-
-    private getClassNames = () => {
-        const { title, isSelected } = this.props;
+export const MultiSelectListItem = memo(function MultiSelectListItem({
+    title,
+    onClick,
+    onMouseOver,
+    onMouseOut,
+    isSelected,
+    onOnly,
+}: IMultiSelectListItemProps) {
+    const getClassNames = () => {
         return cx({
             "gd-list-item": true,
             [`s-${stringUtils.simplifyText(title)}`]: true,
@@ -50,8 +37,7 @@ export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps
         });
     };
 
-    private renderOnly = () => {
-        const { onOnly } = this.props;
+    const renderOnly = () => {
         return (
             <span
                 className="gd-list-item-only"
@@ -66,4 +52,14 @@ export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps
             </span>
         );
     };
-}
+
+    return (
+        <div className={getClassNames()} onClick={onClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+            <label className="input-checkbox-label">
+                <input type="checkbox" className="input-checkbox" readOnly={true} checked={isSelected} />
+                <span className="input-label-text">{title}</span>
+            </label>
+            {renderOnly()}
+        </div>
+    );
+});

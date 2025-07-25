@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces/index.js";
 import { getValidColorPalette, ChartTransformation } from "../../highcharts/index.js";
 import noop from "lodash/noop.js";
-import { defaultCoreChartProps } from "../_commons/defaultProps.js";
+import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
 import {
     newErrorMapping,
     IErrorDescriptors,
@@ -34,70 +34,36 @@ export interface IBaseChartProps extends ICoreChartProps {
 
 type Props = IBaseChartProps & ILoadingInjectedProps;
 
-class StatelessBaseChart extends React.Component<Props> {
-    public static defaultProps: Pick<
-        Partial<Props>,
-        keyof typeof defaultCoreChartProps | "onDataTooLarge" | "onLegendReady" | "config"
-    > = {
-        ...defaultCoreChartProps,
-        onDataTooLarge: noop,
-        onLegendReady: noop,
-        config: {},
-    };
+const StatelessBaseChart: React.FC<Props> = (props) => {
+    const {
+        dataView,
+        error,
+        seType,
+        isLoading,
+        ErrorComponent,
+        LoadingComponent,
+        afterRender,
+        height,
+        width,
+        locale,
+        config = {},
+        type,
+        onDataTooLarge = noop,
+        pushData,
+        theme,
+        drillableItems,
+        onDrill,
+        onNegativeValues,
+        onLegendReady = noop,
+        intl,
+    } = withDefaultCoreChartProps(props);
 
-    private readonly errorMap: IErrorDescriptors;
+    const errorMap: IErrorDescriptors = useMemo(() => newErrorMapping(intl), [intl]);
 
-    constructor(props: Props) {
-        super(props);
-
-        this.errorMap = newErrorMapping(props.intl);
-    }
-
-    public render(): JSX.Element {
-        const { dataView, error, seType, isLoading } = this.props;
-
-        const ErrorComponent = this.props.ErrorComponent as React.ComponentType<IErrorProps>;
-        const LoadingComponent = this.props.LoadingComponent as React.ComponentType<ILoadingProps>;
-
-        if (error) {
-            const key = Object.prototype.hasOwnProperty.call(this.errorMap, seType)
-                ? seType
-                : Object.prototype.hasOwnProperty.call(this.errorMap, error)
-                  ? error
-                  : ErrorCodes.UNKNOWN_ERROR;
-
-            const errorProps = this.errorMap[key];
-            return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
-        }
-
-        // when in pageble mode (getPage present) never show loading (its handled by the component)
-        if (isLoading || !dataView) {
-            return LoadingComponent ? <LoadingComponent /> : null;
-        }
-
-        return this.renderChartTransformation();
-    }
-
-    private renderChartTransformation(): JSX.Element {
-        const {
-            afterRender,
-            height,
-            width,
-            locale,
-            config,
-            type,
-            dataView,
-            onDataTooLarge,
-            pushData,
-            theme,
-            drillableItems,
-            onDrill,
-            onNegativeValues,
-            onLegendReady,
-        } = this.props;
+    const renderChartTransformation = (): JSX.Element => {
         const colorPalette = getValidColorPalette(config);
         const fullConfig = { ...config, type, colorPalette };
-        const sanitizedConfig = getSanitizedStackingConfig(dataView.definition, fullConfig);
+        const sanitizedConfig = getSanitizedStackingConfig(dataView!.definition, fullConfig);
 
         return (
             <ThemeContextProvider theme={theme} themeIsLoading={false}>
@@ -111,7 +77,7 @@ class StatelessBaseChart extends React.Component<Props> {
                                     config={sanitizedConfig}
                                     drillableItems={drillableItems}
                                     locale={locale}
-                                    dataView={dataView}
+                                    dataView={dataView!}
                                     afterRender={afterRender}
                                     onDrill={onDrill}
                                     onDataTooLarge={onDataTooLarge}
@@ -126,8 +92,29 @@ class StatelessBaseChart extends React.Component<Props> {
                 </IntlWrapper>
             </ThemeContextProvider>
         );
+    };
+
+    const TypedErrorComponent = ErrorComponent as React.ComponentType<IErrorProps>;
+    const TypedLoadingComponent = LoadingComponent as React.ComponentType<ILoadingProps>;
+
+    if (error) {
+        const key = Object.prototype.hasOwnProperty.call(errorMap, seType)
+            ? seType
+            : Object.prototype.hasOwnProperty.call(errorMap, error)
+              ? error
+              : ErrorCodes.UNKNOWN_ERROR;
+
+        const errorProps = errorMap[key];
+        return TypedErrorComponent ? <TypedErrorComponent code={error} {...errorProps} /> : null;
     }
-}
+
+    // when in pageble mode (getPage present) never show loading (its handled by the component)
+    if (isLoading || !dataView) {
+        return TypedLoadingComponent ? <TypedLoadingComponent /> : null;
+    }
+
+    return renderChartTransformation();
+};
 
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disappear.

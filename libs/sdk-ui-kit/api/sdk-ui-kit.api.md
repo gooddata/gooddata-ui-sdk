@@ -50,8 +50,6 @@ import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { WeekStart } from '@gooddata/sdk-model';
-import { WithIntlProps } from 'react-intl';
-import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
 export function accessibilityConfigToAttributes(accessibilityConfig?: IAccessibilityConfigBase): React_2.HTMLAttributes<HTMLElement>;
@@ -92,7 +90,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Omit<WithIntlProps<IAppHeaderProps & WrappedComponentProps>, "theme" | "themeIsLoading" | "themeStatus">>;
+export const AppHeader: React_2.ComponentType<Omit<IAppHeaderProps, "theme" | "themeIsLoading" | "themeStatus">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -107,19 +105,7 @@ export type ArrowOffsets = Record<string, ArrowOffset>;
 export function AsyncList<T>(props: IAsyncListProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
-export class AutoSize extends Component<IAutoSizeProps> {
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-    // (undocumented)
-    state: {
-        width: number;
-        height: number;
-    };
-}
+export function AutoSize({ children }: IAutoSizeProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const BackButton: React_2.FC<IBackButtonProps>;
@@ -229,10 +215,10 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React_2.PureCo
 export const Button: React_2.ForwardRefExoticComponent<IButtonProps & React_2.RefAttributes<HTMLElement>>;
 
 // @internal (undocumented)
-export const ChartSortingDialog: React_2.FC<ChartSortingOwnProps>;
+export function ChartSortingDialog(props: ChartSortingProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export interface ChartSortingOwnProps {
+export interface ChartSortingProps {
     // (undocumented)
     availableSorts: IAvailableSortsGroup[];
     // (undocumented)
@@ -252,49 +238,29 @@ export interface ChartSortingOwnProps {
 }
 
 // @internal (undocumented)
-export type ChartSortingProps = ChartSortingOwnProps & WrappedComponentProps;
+export function ChartSortingWithIntl({ currentSort, availableSorts, bucketItems, buttonNode, onCancel, onApply, enableRenamingMeasureToMetric, }: ChartSortingProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const ChartSortingWithIntl: React_2.FC<WithIntlProps<ChartSortingProps>> & {
-    WrappedComponent: React_2.ComponentType<ChartSortingProps>;
-};
-
-// @internal (undocumented)
-export class Checkbox extends React_2.PureComponent<CheckboxProps> {
-    // (undocumented)
-    static defaultProps: {
-        disabled: boolean;
-        name: string;
-        text: string;
-        title: string;
-        value: boolean;
-        labelSize: string;
-        onChange: (...args: any[]) => void;
-    };
-    // (undocumented)
-    onChange: (e: React_2.ChangeEvent<HTMLInputElement>) => void;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const Checkbox: React_2.NamedExoticComponent<CheckboxProps>;
 
 // @internal (undocumented)
 export interface CheckboxProps {
     // (undocumented)
-    disabled: boolean;
+    disabled?: boolean;
     // (undocumented)
     id?: string;
     // (undocumented)
-    labelSize: LabelSize;
+    labelSize?: LabelSize;
     // (undocumented)
-    name: string;
+    name?: string;
     // (undocumented)
-    onChange: (e: boolean) => void;
+    onChange?: (e: boolean) => void;
     // (undocumented)
-    text: string;
+    text?: string;
     // (undocumented)
-    title: string;
+    title?: string;
     // (undocumented)
-    value: boolean;
+    value?: boolean;
 }
 
 // @internal (undocumented)
@@ -313,9 +279,7 @@ export function CodeOptions({ option, onChange }: ICodeOptionsProps): React_2.JS
 export type Color = string;
 
 // @internal (undocumented)
-export const ColorPicker: React_2.FC<WithIntlProps<IColorPickerProps & WrappedComponentProps>> & {
-    WrappedComponent: React_2.ComponentType<IColorPickerProps & WrappedComponentProps>;
-};
+export function ColorPicker(props: IColorPickerProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const ColorPickerPointer: React_2.FC;
@@ -333,10 +297,7 @@ export const ComponentLabelsProvider: React_2.FC<IComponentLabelsProviderProps>;
 export function ComponentTable<TProps extends object>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, cellStyle, }: IComponentTableProps<TProps>): React_2.JSX.Element;
 
 // @internal (undocumented)
-export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
-    // (undocumented)
-    render(): JSX.Element;
-}
+export const ConfirmDialog: React_2.NamedExoticComponent<IConfirmDialogBaseProps>;
 
 // @internal (undocumented)
 export const ConfirmDialogBase: React_2.NamedExoticComponent<IConfirmDialogBaseProps>;
@@ -361,10 +322,7 @@ export const CustomizableCheckmark: React_2.FC<ICustomizableCheckmarkProps>;
 export const DateDatasetsListItem: React_2.FC<IDateDatasetsListItemProps>;
 
 // @internal (undocumented)
-export class Datepicker extends React_2.PureComponent<IDatePickerOwnProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const Datepicker: React_2.NamedExoticComponent<IDatePickerOwnProps>;
 
 // @internal (undocumented)
 export const DEFAULT_ITEM_HEIGHT = 28;
@@ -509,10 +467,7 @@ export enum ENUM_KEY_CODE {
 }
 
 // @internal (undocumented)
-export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const ErrorOverlay: React_2.NamedExoticComponent<IErrorOverlayProps>;
 
 // @internal (undocumented)
 export const ExportDialog: React_2.NamedExoticComponent<IExportDialogProps>;
@@ -521,9 +476,7 @@ export const ExportDialog: React_2.NamedExoticComponent<IExportDialogProps>;
 export const ExportDialogBase: React_2.NamedExoticComponent<IExportDialogBaseProps>;
 
 // @internal (undocumented)
-export const FilterLabel: React_2.FC<WithIntlProps<IFilterLabelProps & WrappedComponentProps>> & {
-    WrappedComponent: React_2.ComponentType<IFilterLabelProps & WrappedComponentProps>;
-};
+export const FilterLabel: React_2.NamedExoticComponent<IFilterLabelProps>;
 
 // @internal
 export const findInteractiveItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], predicate: (item: IUiMenuInteractiveItem<T>) => boolean) => IUiMenuInteractiveItem<T> | undefined;
@@ -752,9 +705,7 @@ export const HeaderBadge: React_2.FC<IHeaderBadgeProps>;
 export const HeaderBadgeWithModal: React_2.FC<IHeaderBadgeWithModalProps>;
 
 // @internal (undocumented)
-export const HeaderDataMenu: React_2.FC<WithIntlProps<IHeaderDataMenuProps>> & {
-    WrappedComponent: React_2.ComponentType<IHeaderDataMenuProps>;
-};
+export function HeaderDataMenu({ onMenuItemClick, dataMenuItems, className }: IHeaderDataMenuProps): React_2.JSX.Element;
 
 // @internal
 export type HeaderSearchContext = {
@@ -766,9 +717,7 @@ export type HeaderSearchContext = {
 export const HeaderSearchProvider: ({ children, ...rest }: React_3.PropsWithChildren<HeaderSearchContext>) => React_3.JSX.Element;
 
 // @internal (undocumented)
-export const HeaderWorkspacePicker: React_2.FC<WithIntlProps<IHeaderWorkspacePickerProps>> & {
-    WrappedComponent: React_2.ComponentType<IHeaderWorkspacePickerProps>;
-};
+export function HeaderWorkspacePicker({ isLoading, workspaces, selectedWorkspace, totalWorkspacesCount, searchString, showSearch, onOpen, onSelect, onSearch, onScrollEnd, projectPickerFooter, className, isRenamingProjectToWorkspaceEnabled, }: IHeaderWorkspacePickerProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type HelpMenuDropdownAlignPoints = "br tr" | "bl tl";
@@ -2243,8 +2192,6 @@ export interface IHeaderDataMenuProps {
     // (undocumented)
     dataMenuItems: IHeaderDataMenuItem[];
     // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
     onMenuItemClick: (item: IHeaderDataMenuItem) => void;
 }
 
@@ -2314,8 +2261,6 @@ export interface IHeaderWorkspace {
 export interface IHeaderWorkspacePickerProps {
     // (undocumented)
     className?: string;
-    // (undocumented)
-    intl: IntlShape;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
@@ -2935,8 +2880,6 @@ export interface ILegacyListState {
 // @internal (undocumented)
 export interface ILegacyMultiSelectListItemProps {
     // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
     isLoading?: boolean;
     // (undocumented)
     onMouseOut?: (source: any) => void;
@@ -3344,8 +3287,6 @@ export interface IMultiSelectListProps<T> {
     // (undocumented)
     height?: number;
     // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
     isInverted?: boolean;
     // (undocumented)
     isMobile?: boolean;
@@ -3518,15 +3459,15 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     autocomplete?: string;
     // (undocumented)
-    className: string;
+    className?: string;
     // (undocumented)
-    clearOnEsc: boolean;
+    clearOnEsc?: boolean;
     // (undocumented)
-    disabled: boolean;
+    disabled?: boolean;
     // (undocumented)
-    hasError: boolean;
+    hasError?: boolean;
     // (undocumented)
-    hasWarning: boolean;
+    hasWarning?: boolean;
     // (undocumented)
     iconButton?: IconType;
     // (undocumented)
@@ -3534,45 +3475,45 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     id?: string;
     // (undocumented)
-    isSearch: boolean;
+    isSearch?: boolean;
     // (undocumented)
-    isSmall: boolean;
+    isSmall?: boolean;
     // (undocumented)
-    label: React_2.ReactNode;
+    label?: React_2.ReactNode;
     // (undocumented)
-    labelPositionTop: boolean;
+    labelPositionTop?: boolean;
     // (undocumented)
-    maxlength: number;
+    maxlength?: number;
     // (undocumented)
     name?: string;
     // (undocumented)
-    onBlur: (e: React_2.FocusEvent<HTMLInputElement>) => void;
+    onBlur?: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
-    onChange: (value: string | number, e?: React_2.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (value: string | number, e?: React_2.ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
-    onEnterKeyPress: () => void;
+    onEnterKeyPress?: () => void;
     // (undocumented)
-    onEscKeyPress: (e: React_2.KeyboardEvent) => void;
+    onEscKeyPress?: (e: React_2.KeyboardEvent) => void;
     // (undocumented)
-    onFocus: (e: React_2.FocusEvent<HTMLInputElement>) => void;
+    onFocus?: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
     onIconButtonClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
     // (undocumented)
     onKeyDown?: (e: React_2.KeyboardEvent) => void;
     // (undocumented)
-    placeholder: string;
+    placeholder?: string;
     // (undocumented)
-    prefix: string;
+    prefix?: string;
     // (undocumented)
-    readonly: boolean;
+    readonly?: boolean;
     // (undocumented)
     required?: boolean;
     // (undocumented)
-    suffix: string;
+    suffix?: string;
     // (undocumented)
     type?: string;
     // (undocumented)
-    value: string | number;
+    value?: string | number;
 }
 
 // @internal (undocumented)
@@ -3582,54 +3523,12 @@ export interface InputState {
 }
 
 // @internal (undocumented)
-export class InputWithNumberFormat extends React_2.PureComponent<InputWithNumberFormatProps, InputWithNumberFormatState> {
-    constructor(props: InputWithNumberFormatProps);
-    // (undocumented)
-    static defaultProps: {
-        separators: {
-            thousand: string;
-            decimal: string;
-        };
-        autofocus: boolean;
-        className: string;
-        clearOnEsc: boolean;
-        disabled: boolean;
-        hasError: boolean;
-        hasWarning: boolean;
-        isSearch: boolean;
-        isSmall: boolean;
-        maxlength: number;
-        onChange: (...args: any[]) => void;
-        onEscKeyPress: (...args: any[]) => void;
-        onEnterKeyPress: (...args: any[]) => void;
-        onBlur: (...args: any[]) => void;
-        onFocus: (...args: any[]) => void;
-        placeholder: string;
-        prefix: string;
-        readonly: boolean;
-        suffix: string;
-        label: string;
-        labelPositionTop: boolean;
-        value: string;
-    };
-    // (undocumented)
-    handleCaretShift(e: React_2.ChangeEvent<HTMLInputElement>): void;
-    // (undocumented)
-    onBlur: (e: React_2.FocusEvent<HTMLInputElement>) => void;
-    // (undocumented)
-    onChange: (value: number, e: React_2.ChangeEvent<HTMLInputElement>) => void;
-    // (undocumented)
-    onFocus: (e: React_2.FocusEvent<HTMLInputElement>) => void;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps({ value: newValue }: InputWithNumberFormatProps): void;
-}
+export const InputWithNumberFormat: React_2.NamedExoticComponent<InputWithNumberFormatProps>;
 
 // @internal (undocumented)
 export interface InputWithNumberFormatOwnProps {
     // (undocumented)
-    separators: Separators;
+    separators?: Separators;
 }
 
 // @internal (undocumented)
@@ -3650,9 +3549,7 @@ export type InsightCodeType = "definition" | "reference";
 export const InsightIcon: React_2.FC<IInsightIconProps>;
 
 // @internal (undocumented)
-export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & WrappedComponentProps>> & {
-    WrappedComponent: React_2.ComponentType<IInsightListItemProps & WrappedComponentProps>;
-};
+export function InsightListItem({ title, description, updated, type, isSelected, isLoading, filters, separators, LoadingComponent, onClick, onDescriptionPanelOpen, showDescriptionPanel, useRichText, useReferences, richTextExecConfig, width, isLocked, onDelete, metadataTimeZone, }: IInsightListItemProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;
@@ -5250,105 +5147,26 @@ export interface IZoomContextState {
 export type LabelSize = "small" | "normal";
 
 // @internal @deprecated (undocumented)
-export const LegacyInvertableList: <T>(props: ILegacyInvertableListProps<T>) => any;
+export function LegacyInvertableList<T>({ className, filteredItemsCount, getItemKey, height, isInverted, isLoading, isLoadingClass: IsLoadingClass, isMobile, itemHeight, items, itemsCount, limitHitWarningClass: LimitHitWarningClass, listItemClass, maxSelectionSize, noItemsFound, noItemsFoundClass: NoItemsFoundClass, onRangeChange, onSearch, onSelect, searchPlaceholder, searchString, selection, showSearchField, smallSearch, tagName, width, actionsAsCheckboxes, selectAllCheckbox, rowItem, isSearchFieldAutoFocused, }: ILegacyInvertableListProps<T>): React_2.JSX.Element;
 
 // @internal @deprecated (undocumented)
-export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
-    constructor(props: ILegacyListProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    static defaultProps: Pick<ILegacyListProps, "className" | "onScroll" | "onScrollStart" | "onSelect" | "width" | "height" | "itemHeight" | "itemHeightGetter" | "compensateBorder" | "scrollToSelected">;
-    // (undocumented)
-    render(): JSX.Element;
-}
+export function LegacyList({ className, onScroll, onScrollStart, onSelect, width, height, itemHeight, itemHeightGetter, compensateBorder, scrollToSelected, dataSource, rowItem, }: ILegacyListProps): React_2.JSX.Element;
 
 // @internal @deprecated (undocumented)
-export class LegacyListItem<T> extends Component<ILegacyListItemProps<T>> {
-    // (undocumented)
-    static defaultProps: {
-        item: {};
-    };
-    // (undocumented)
-    render(): JSX.Element;
-}
+export function LegacyListItem<T>({ item, listItemClass }: ILegacyListItemProps<T>): JSX.Element;
 
 // @internal @deprecated (undocumented)
-export const LegacyMultiSelectList: <T>(props: ILegacyMultiSelectListProps<T>) => any;
+export function LegacyMultiSelectList<T>({ isInverted, isSearching, selection, getItemKey, isMobile, isSelected, listItemClass, // TODO add tests
+    filteredItemsCount, onItemMouseOut, onItemMouseOver, onRangeChange, onSelect, onSelectAll, onSelectNone, onSelectOnly, rowItem: rowItemProp, selectAllCheckbox, tagName, items, itemsCount, height, itemHeight, width, }: ILegacyMultiSelectListProps<T>): React_2.JSX.Element;
 
 // @internal @deprecated (undocumented)
-export class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectListItemProps> {
-    constructor(props: ILegacyMultiSelectListItemProps);
-    // (undocumented)
-    static defaultProps: {
-        isLoading: boolean;
-        onMouseOver: (...args: any[]) => void;
-        onMouseOut: (...args: any[]) => void;
-        onOnly: (...args: any[]) => void;
-        onSelect: (...args: any[]) => void;
-        selected: boolean;
-        source: {};
-    };
-    // (undocumented)
-    protected getClassNames(): string;
-    // (undocumented)
-    protected handleMouseOut: () => void;
-    // (undocumented)
-    protected handleMouseOver: () => void;
-    // (undocumented)
-    protected handleSelect: () => void;
-    // (undocumented)
-    render(): JSX.Element;
-    // (undocumented)
-    protected renderOnly(): JSX.Element;
-}
+export const LegacyMultiSelectListItem: React_2.NamedExoticComponent<ILegacyMultiSelectListItemProps>;
 
 // @internal @deprecated (undocumented)
-export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectListProps<T>> {
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-        getItemKey: typeof guidFor;
-        items: any[];
-        itemsCount: number;
-        listItemClass: typeof LegacySingleSelectListItem;
-        onItemMouseOut: (...args: any[]) => void;
-        onItemMouseOver: (...args: any[]) => void;
-        onItemMouseEnter: (...args: any[]) => void;
-        onItemMouseLeave: (...args: any[]) => void;
-        onRangeChange: (...args: any[]) => void;
-        onScrollStart: (...args: any[]) => void;
-        onSelect: (...args: any[]) => void;
-        rowItem: React_2.ReactElement;
-        scrollToSelected: boolean;
-        selection: {};
-    };
-    // (undocumented)
-    render(): JSX.Element;
-}
+export function LegacySingleSelectList<T>(props: ILegacySingleSelectListProps<T>): JSX.Element;
 
 // @internal @deprecated (undocumented)
-export class LegacySingleSelectListItem extends Component<ILegacySingleSelectListItemProps, ILegacySingleSelectListItemState> {
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentDidUpdate(): void;
-    // (undocumented)
-    static defaultProps: {
-        onMouseOver: (...args: any[]) => void;
-        onMouseOut: (...args: any[]) => void;
-    };
-    // (undocumented)
-    node: HTMLSpanElement;
-    // (undocumented)
-    render(): JSX.Element;
-    // (undocumented)
-    readonly state: {
-        isOverflowed: boolean;
-    };
-}
+export function LegacySingleSelectListItem({ source, selected, onSelect, onMouseOver, onMouseOut, }: ILegacySingleSelectListItemProps): JSX.Element;
 
 // @internal (undocumented)
 export type LevelTypesUnion<Levels extends unknown[]> = Levels[number];
@@ -5423,10 +5241,7 @@ export const makeTabsKeyboardNavigation: <T extends React_2.KeyboardEvent | Keyb
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const MeasureNumberFormat: React_2.NamedExoticComponent<IMeasureNumberFormatOwnProps>;
 
 // @internal (undocumented)
 export type MeasureSortSuggestion = {
@@ -5461,15 +5276,10 @@ export const MetadataList: React_2.FC<IMetadataListProps>;
 export const modifierNegator: "!";
 
 // @internal (undocumented)
-export const MultiSelectList: React_2.FC<WithIntlProps<IMultiSelectListProps<unknown>>> & {
-    WrappedComponent: React_2.ComponentType<IMultiSelectListProps<unknown>>;
-};
+export function MultiSelectList<T>({ isMobile, width, height, items, itemHeight, itemsCount, onScrollEnd, renderItem, selectedItems, listClassNames, onSelectAll, onSelectNone, isInverted, isSearching, isSelected, filteredItemsCount, selectAllCheckbox, tagName, }: IMultiSelectListProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
-export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps> {
-    // (undocumented)
-    render(): JSX.Element;
-}
+export const MultiSelectListItem: React_2.NamedExoticComponent<IMultiSelectListItemProps>;
 
 // @internal (undocumented)
 export type NavigationDirection = "forward" | "backward";
@@ -5801,16 +5611,7 @@ export enum SORT_TARGET_TYPE {
 export function sortDateDatasets<T extends IDateDataset>(dateDatasets: T[], recommendedDate?: T, unrelatedDate?: T): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
-export class Spinner extends PureComponent<ISpinnerProps> {
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-    };
-    // (undocumented)
-    generateSpinnerTicks(): ReactNode[];
-    // (undocumented)
-    render(): ReactNode;
-}
+export const Spinner: React_2.NamedExoticComponent<ISpinnerProps>;
 
 // @internal (undocumented)
 export type SpinnerSize = "large" | "small";
@@ -5840,88 +5641,16 @@ export const SubMenu: React_2.FC<ISubMenuProps>;
 export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
 
 // @internal (undocumented)
-export class Tabs extends Component<ITabsProps, ITabsState> {
-    constructor(props: ITabsProps);
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-        onTabSelect: (...args: any[]) => void;
-        selectedTabId: string;
-        tabs: ITab[];
-    };
-    // (undocumented)
-    render(): JSX.Element;
-}
+export function Tabs(props: ITabsProps): JSX.Element;
 
 // @internal (undocumented)
-export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITextAreaWithSubmitState> {
-    constructor(props: ITextAreaWithSubmitProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-        maxLength: number;
-        rows: number;
-        onCancel: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onEditingStart: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onChange: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        placeholder: string;
-        scrollToEndOnEditingStart: boolean;
-        autofocus: boolean;
-        disabled: boolean;
-    };
-    // (undocumented)
-    edit: (_e?: React_2.MouseEvent<HTMLDivElement>) => void;
-    // (undocumented)
-    isClickOutsideTextarea(clickedTarget: EventTarget): boolean;
-    // (undocumented)
-    isMultiLine(): boolean;
-    // (undocumented)
-    onCancel: () => void;
-    // (undocumented)
-    onChange: (e: React_2.ChangeEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onDocumentClick: (e: MouseEvent) => void;
-    // (undocumented)
-    onKeyDown: (e: React_2.KeyboardEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onSelectStart(e: React_2.MouseEvent): void;
-    // (undocumented)
-    onSubmit: () => void;
-    // (undocumented)
-    removeListeners(): void;
-    // (undocumented)
-    render(): ReactNode;
-    // (undocumented)
-    renderTextarea(style?: {}): ReactNode;
-    // (undocumented)
-    renderTextAreaWithSubmitEdit(): ReactNode;
-    // (undocumented)
-    selectAndFocus: () => void;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps(newProps: ITextAreaWithSubmitProps): void;
-}
+export function TextAreaWithSubmit({ className, maxLength, rows, onCancel, onEditingStart, onChange, placeholder, scrollToEndOnEditingStart, autofocus, disabled, defaultValue, onSubmit: onSubmitProp, }: ITextAreaWithSubmitProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type ThemeColor = "primary" | "warning" | "error" | "complementary-0" | "complementary-1" | "complementary-2" | "complementary-3" | "complementary-4" | "complementary-5" | "complementary-6" | "complementary-7" | "complementary-8" | "complementary-9";
 
 // @internal (undocumented)
-export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const Timepicker: React_2.NamedExoticComponent<ITimepickerOwnProps>;
 
 // @internal (undocumented)
 export const ToastMessageContext: React_2.Context<ToastMessageContextType>;

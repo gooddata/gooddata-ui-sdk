@@ -3,7 +3,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import noop from "lodash/noop.js";
-import { InputControl, IInputControlProps } from "../InputControl.js";
+import InputControl, { IInputControlProps } from "../InputControl.js";
 import { createInternalIntl, InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 import { describe, it, expect, vi } from "vitest";
 

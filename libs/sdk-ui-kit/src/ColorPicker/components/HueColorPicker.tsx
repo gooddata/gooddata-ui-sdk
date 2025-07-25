@@ -1,9 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 /**
  * Copyright (c) 2015 Case Sandberg
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import React, { PureComponent, RefObject, ReactNode, CSSProperties } from "react";
+import React, { memo, useRef, useEffect, useCallback, CSSProperties } from "react";
 import { ColorFormats } from "tinycolor2";
 
 import { calculateHueChange } from "../utils.js";
@@ -13,70 +13,71 @@ export interface IHueColorPickerProps {
     onChange: (color: ColorFormats.HSL) => void;
 }
 
-export class HueColorPicker extends PureComponent<IHueColorPickerProps> {
-    private readonly hueContainer: RefObject<HTMLDivElement>;
+export const HueColorPicker = memo(function HueColorPicker({ initColor, onChange }: IHueColorPickerProps) {
+    const hueContainer = useRef<HTMLDivElement>(null);
 
-    constructor(props: IHueColorPickerProps) {
-        super(props);
-        this.hueContainer = React.createRef();
-    }
-
-    componentWillUnmount(): void {
-        this.unbindEventListeners();
-    }
-
-    getPointerStyle(): CSSProperties {
+    const getPointerStyle = (): CSSProperties => {
         return {
             position: "absolute",
-            left: `${(this.props.initColor.h * 100) / 360}%`,
+            left: `${(initColor.h * 100) / 360}%`,
         };
-    }
-
-    handleChange = (e: TouchEvent | MouseEvent): void => {
-        const change = calculateHueChange(e, this.props.initColor.h, this.hueContainer.current);
-        if (change && this.props.onChange) {
-            this.props.onChange(change);
-        }
     };
 
-    handleTouchChange = (e: React.TouchEvent): void => {
-        this.handleChange(e.nativeEvent);
-    };
+    const handleChange = useCallback(
+        (e: TouchEvent | MouseEvent): void => {
+            const change = calculateHueChange(e, initColor.h, hueContainer.current);
+            if (change && onChange) {
+                onChange(change);
+            }
+        },
+        [initColor.h, onChange],
+    );
 
-    handleMouseDown = (e: React.MouseEvent): void => {
-        this.bindEventListeners();
-        this.handleChange(e.nativeEvent);
-    };
+    const handleMouseUp = useCallback((): void => {
+        window.removeEventListener("mousemove", handleChange);
+        window.removeEventListener("mouseup", handleMouseUp);
+    }, [handleChange]);
 
-    handleMouseUp = (): void => {
-        this.unbindEventListeners();
-    };
+    const bindEventListeners = useCallback((): void => {
+        window.addEventListener("mousemove", handleChange);
+        window.addEventListener("mouseup", handleMouseUp);
+    }, [handleChange, handleMouseUp]);
 
-    bindEventListeners(): void {
-        window.addEventListener("mousemove", this.handleChange);
-        window.addEventListener("mouseup", this.handleMouseUp);
-    }
+    const handleTouchChange = useCallback(
+        (e: React.TouchEvent): void => {
+            handleChange(e.nativeEvent);
+        },
+        [handleChange],
+    );
 
-    unbindEventListeners(): void {
-        window.removeEventListener("mousemove", this.handleChange);
-        window.removeEventListener("mouseup", this.handleMouseUp);
-    }
+    const handleMouseDown = useCallback(
+        (e: React.MouseEvent): void => {
+            bindEventListeners();
+            handleChange(e.nativeEvent);
+        },
+        [bindEventListeners, handleChange],
+    );
 
-    render(): ReactNode {
-        return (
-            <div
-                role="hue-picker"
-                className="hue-picker hue-horizontal s-hue-picker"
-                ref={this.hueContainer}
-                onMouseDown={this.handleMouseDown}
-                onMouseUp={this.handleMouseUp}
-                onTouchMove={this.handleTouchChange}
-                onTouchStart={this.handleTouchChange}
-            >
-                <div style={this.getPointerStyle()}>
-                    <div className="color-picker-pointer s-color-picker-pointer" />
-                </div>
+    useEffect(() => {
+        return () => {
+            window.removeEventListener("mousemove", handleChange);
+            window.removeEventListener("mouseup", handleMouseUp);
+        };
+    }, [handleChange, handleMouseUp]);
+
+    return (
+        <div
+            role="hue-picker"
+            className="hue-picker hue-horizontal s-hue-picker"
+            ref={hueContainer}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onTouchMove={handleTouchChange}
+            onTouchStart={handleTouchChange}
+        >
+            <div style={getPointerStyle()}>
+                <div className="color-picker-pointer s-color-picker-pointer" />
             </div>
-        );
-    }
-}
+        </div>
+    );
+});

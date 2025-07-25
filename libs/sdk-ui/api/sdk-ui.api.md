@@ -60,12 +60,11 @@ import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-model';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { MessageDescriptor } from 'react-intl';
+import { NamedExoticComponent } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { TotalType } from '@gooddata/sdk-model';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
-import { WithIntlProps } from 'react-intl';
-import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export type AnyArrayOf<T> = T[] | ArrayOf<T>;
@@ -393,12 +392,7 @@ export const ErrorCodes: {
 };
 
 // @public
-export class ErrorComponent extends React_2.Component<IErrorProps> {
-    // (undocumented)
-    static defaultProps: Partial<IErrorProps>;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export function ErrorComponent({ icon, className, width, height, style, message, description, clientHeight, }: IErrorProps): React_2.JSX.Element;
 
 // @public
 export const Execute: (props: IExecuteProps) => React_2.JSX.Element;
@@ -1112,9 +1106,7 @@ export interface IMeasureTitleProps {
 }
 
 // @internal (undocumented)
-export const IntlTranslationsProvider: React_2.FC<WithIntlProps<ITranslationsProviderProps>> & {
-    WrappedComponent: React_2.ComponentType<ITranslationsProviderProps>;
-};
+export const IntlTranslationsProvider: NamedExoticComponent<ITranslationsProviderOwnProps>;
 
 // @internal (undocumented)
 export const IntlWrapper: React_2.FC<IIntlWrapperProps>;
@@ -1724,9 +1716,6 @@ export interface ITranslationsProviderOwnProps {
     children: any;
 }
 
-// @internal (undocumented)
-export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
-
 // @public
 export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any, any>> = (resolutionContext: ComposedPlaceholderResolutionContext<T>) => PlaceholderResolvedValue<T>;
 
@@ -1840,12 +1829,7 @@ export interface IWorkspaceProviderProps {
 export const Kpi: React_2.ComponentType<IKpiProps>;
 
 // @public
-export class LoadingComponent extends React_2.Component<ILoadingProps> {
-    // (undocumented)
-    static defaultProps: Partial<ILoadingProps>;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export function LoadingComponent({ className, color, speed, inline, height, width, imageHeight, imageWidth, }: ILoadingProps): React_2.JSX.Element;
 
 // @internal
 export const LOCALES: string[];
@@ -1971,7 +1955,7 @@ export class ProtectedReportSdkError extends GoodDataSdkError {
 export type PushDataCallback = (data: IPushData) => void;
 
 // @public
-export const RawExecute: React_2.ComponentClass<IRawExecuteProps, any>;
+export const RawExecute: React_2.ComponentType<IRawExecuteProps>;
 
 // @beta
 export const removeAllWordingTranslationsWithSpecialSuffix: (translations: Record<string, string>) => Record<string, string>;
@@ -2024,12 +2008,6 @@ export const TranslationsCustomizationContextProvider: React_2.FC<ITranslationsC
 
 // @beta
 export const TranslationsCustomizationProvider: React_2.FC<ITranslationsCustomizationProviderProps>;
-
-// @internal (undocumented)
-export class TranslationsProvider extends React_2.PureComponent<ITranslationsProviderProps> {
-    // (undocumented)
-    render(): any;
-}
 
 // @public
 export class UnauthorizedSdkError extends GoodDataSdkError {
@@ -2275,13 +2253,13 @@ export function withContexts<T extends {
 }>(Chart: React.ComponentType<T>): React.ComponentType<T>;
 
 // @internal
-export function withEntireDataView<T extends IDataVisualizationProps>(InnerComponent: React_2.ComponentClass<T & ILoadingInjectedProps>): React_2.ComponentClass<T>;
+export function withEntireDataView<T extends IDataVisualizationProps>(InnerComponent: React_2.ComponentType<T & ILoadingInjectedProps>): React_2.ComponentType<T>;
 
 // @internal
-export function withExecution<T>(params: IWithExecution<T>): (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => React.ComponentClass<T, any>;
+export function withExecution<T>(params: IWithExecution<T>): (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => React.ComponentType<T>;
 
 // @internal
-export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProps>): (WrappedComponent: React_2.ComponentType<TProps & WithLoadingResult>) => React_2.ComponentClass<TProps>;
+export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProps>): (WrappedComponent: React_2.ComponentType<TProps & WithLoadingResult>) => React_2.ComponentType<TProps>;
 
 // @internal (undocumented)
 export function withIntl<P>(WrappedComponent: React_2.FC<P> | React_2.ComponentClass<P>, customLocale?: ILocale, customMessages?: ITranslations): React_2.ComponentType<P>;

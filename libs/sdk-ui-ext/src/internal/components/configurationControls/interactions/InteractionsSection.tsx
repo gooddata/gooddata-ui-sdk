@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
-import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+import React, { memo } from "react";
+import { FormattedMessage } from "react-intl";
 
 import ConfigSection from "../ConfigSection.js";
 import { messages } from "../../../../locales.js";
@@ -33,17 +33,16 @@ export const QuestionMarkTooltip = (props: { tooltipText: string }) => {
     );
 };
 
-const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponentProps> = (props) => {
-    const {
-        areControlsDisabledGetter,
-        properties,
-        propertiesMeta,
-        pushData,
-        InteractionsDetailRenderer,
-        supportsAlertConfiguration,
-        supportsDrillDownConfiguration,
-        supportsScheduledExportsConfiguration,
-    } = props;
+const InteractionsSection = memo(function InteractionsSection({
+    areControlsDisabledGetter,
+    properties,
+    propertiesMeta,
+    pushData,
+    InteractionsDetailRenderer,
+    supportsAlertConfiguration,
+    supportsDrillDownConfiguration,
+    supportsScheduledExportsConfiguration,
+}: IInteractionsSectionProps) {
     const isDrillDownDisabled = properties?.controls?.disableDrillDown ?? false;
     const isAlertsDisabled = properties?.controls?.disableAlerts ?? false;
     const isScheduledExportsDisabled = properties?.controls?.disableScheduledExports ?? false;
@@ -102,6 +101,6 @@ const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponent
             {InteractionsDetailRenderer ? InteractionsDetailRenderer() : null}
         </ConfigSection>
     );
-};
+});
 
-export default injectIntl(React.memo(InteractionsSection));
+export default InteractionsSection;
