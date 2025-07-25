@@ -1,0 +1,51 @@
+# (C) 2024 GoodData Corporation
+
+name: Block Merge - Check Sync Label
+
+on:
+  workflow_call:
+    inputs:
+      commit-sha:
+        description: 'Commit SHA to check for associated PR'
+        required: false
+        type: string
+        default: ${{ github.sha }}
+
+jobs:
+  check-sync-label:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - uses: actions/github-script@v7
+        id: check-sync-label
+        with:
+          script: |
+            const pullRequests = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              commit_sha: '${{ inputs.commit-sha }}',
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            const pr = pullRequests?.data[0];
+            if (!pr) {
+              core.setFailed('No pull request found for this commit');
+              return;
+            }
+
+            const hasSync = pr.labels?.some((label) => label.name === 'sync');
+            if (!hasSync) {
+              const errorMessage = `❌ Pull request #${pr.number} cannot be merged.
+
+              🚫 MERGE BLOCKED: Only automated PRs generated from GDC-UI are allowed to be merged.
+
+              ℹ️  This PR is missing the required 'sync' label which indicates it's an automated PR from GDC-UI.
+
+              Please ensure this PR is generated through the proper GDC-UI automation process.`;
+
+              core.setFailed(errorMessage);
+              return;
+            }
+
+            console.log(`✅ Pull request #${pr.number} has the required 'sync' label and is allowed to merge`);
+          result-encoding: string
