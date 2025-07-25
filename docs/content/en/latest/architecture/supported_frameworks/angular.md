@@ -18,14 +18,14 @@ Depending on your use case, it might be easier to integrate our [WebComponents l
 Install the latest dependencies using either `npm` or `yarn`. Your application must be able to render React components from `@gooddata/sdk-ui-all` using a unique ID \(`uuid`\), and you also must be able to issue an `invariant` exception if the DOM node is not available.
 
 ```bash
-npm install --save uuid invariant react@^16.8.0 react-dom@^16.8.0 @gooddata/sdk-ui-all @gooddata/sdk-backend-bear
+npm install --save uuid invariant react@^18.0.0 react-dom@^18.0.0 @gooddata/sdk-ui-all @gooddata/sdk-backend-bear
 npm install --save-dev @types/react @types/react-dom
 ```
 
 or
 
 ```bash
-yarn add uuid invariant react@^16.8.0 react-dom@^16.8.0 @gooddata/sdk-ui-all @gooddata/sdk-backend-bear
+yarn add uuid invariant react@^18.0.0 react-dom@^18.0.0 @gooddata/sdk-ui-all @gooddata/sdk-backend-bear
 yarn add --dev @types/react @types/react-dom
 ```
 
