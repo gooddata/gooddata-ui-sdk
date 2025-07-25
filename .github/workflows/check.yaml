@@ -2,6 +2,7 @@ name: check
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
     branches:
       - master
       - release
@@ -47,6 +48,15 @@ jobs:
         env:
           github-token: ${{secrets.GITHUB_TOKEN}}
 
+  check-sync-label:
+    permissions:
+      contents: read
+      pull-requests: read
+    name: check-sync-label
+    uses: ./.github/workflows/rw-block-merge.yaml
+    with:
+      commit-sha: ${{ github.event.pull_request.head.sha }}
+
   build-validate-stage:
     permissions:
       id-token: write
@@ -64,6 +74,7 @@ jobs:
       labels: runners-small
     if: ${{ !cancelled() }}
     needs:
+      - check-sync-label
       - build-validate-stage
     steps:
       - name: Check if needed jobs succeeded
