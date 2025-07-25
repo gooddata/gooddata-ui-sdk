@@ -1,6 +1,6 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo } from "react";
+import { useIntl } from "react-intl";
 import {
     Dropdown,
     DropdownList,
@@ -36,87 +36,44 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
-class DropdownControl extends React.PureComponent<IDropdownControlProps & WrappedComponentProps> {
-    public static defaultProps = {
-        value: "",
-        items: [] as IDropdownItem[],
-        disabled: false,
-        width: 117,
-        showDisabledMessage: false,
-        customListItem: SingleSelectListItem,
+const DropdownControl = memo(function DropdownControl({
+    valuePath,
+    properties,
+    labelText,
+    value = "",
+    items = [] as IDropdownItem[],
+    disabled = false,
+    width = 117,
+    showDisabledMessage = false,
+    disabledMessageAlignPoints,
+    customListItem: ListItem = SingleSelectListItem,
+    pushData,
+}: IDropdownControlProps) {
+    const intl = useIntl();
+
+    const getSelectedItem = (value: string | number): IDropdownItem => {
+        if (items) {
+            return items.find((item) => item.value === value);
+        }
+
+        return undefined;
     };
 
-    constructor(props: IDropdownControlProps & WrappedComponentProps) {
-        super(props);
-        this.onSelect = this.onSelect.bind(this);
-        this.getSelectedItem = this.getSelectedItem.bind(this);
-    }
+    const onSelect = (selectedItem: IDropdownItem) => {
+        // we must not change the properties at any cost, so deep clone for now.
+        // ideally we should use st. like immer with copy on write to not clone everything all the time
+        const clonedProperties = cloneDeep(properties);
+        set(clonedProperties, `controls.${valuePath}`, selectedItem.value);
 
-    public render() {
-        const {
-            disabled,
-            labelText,
-            value,
-            width,
-            items,
-            showDisabledMessage,
-            disabledMessageAlignPoints,
-            customListItem: ListItem,
-            intl,
-        } = this.props;
-        const selectedItem = this.getSelectedItem(value) || {};
+        pushData({ properties: clonedProperties });
+    };
 
-        return (
-            <DisabledBubbleMessage
-                showDisabledMessage={showDisabledMessage}
-                alignPoints={disabledMessageAlignPoints}
-            >
-                <div className="adi-properties-dropdown-container">
-                    <span className="input-label-text">{getTranslation(labelText, intl)}</span>
-                    <label className="adi-bucket-inputfield gd-input gd-input-small">
-                        <Dropdown
-                            renderButton={({ isOpen, toggleDropdown }) => {
-                                return this.getDropdownButton(selectedItem, disabled, isOpen, toggleDropdown);
-                            }}
-                            closeOnParentScroll={true}
-                            closeOnMouseDrag={true}
-                            alignPoints={DROPDOWN_ALIGNMENTS}
-                            renderBody={({ closeDropdown, isMobile }) => {
-                                return (
-                                    <DropdownList
-                                        width={width}
-                                        isMobile={isMobile}
-                                        items={items}
-                                        renderItem={({ item }) => (
-                                            <ListItem
-                                                title={item.title}
-                                                isSelected={item.value === selectedItem.value}
-                                                onClick={() => {
-                                                    this.onSelect(item);
-                                                    closeDropdown();
-                                                }}
-                                                type={item.type}
-                                                icon={item.icon}
-                                                info={item.info}
-                                            />
-                                        )}
-                                    />
-                                );
-                            }}
-                            className="adi-bucket-dropdown"
-                        />
-                    </label>
-                </div>
-            </DisabledBubbleMessage>
-        );
-    }
-
-    private getDropdownButton(
+    const getDropdownButton = (
         selectedItem: IDropdownItem,
         disabled: boolean,
         isOpen: boolean,
         toggleDropdown: () => void,
-    ) {
+    ) => {
         const { icon, title } = selectedItem;
 
         return (
@@ -128,26 +85,53 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
                 disabled={disabled}
             />
         );
-    }
+    };
 
-    private onSelect(selectedItem: IDropdownItem) {
-        const { valuePath, properties, pushData } = this.props;
+    const selectedItem = getSelectedItem(value) || {};
 
-        // we must not change the properties at any cost, so deep clone for now.
-        // ideally we should use st. like immer with copy on write to not clone everything all the time
-        const clonedProperties = cloneDeep(properties);
-        set(clonedProperties, `controls.${valuePath}`, selectedItem.value);
+    return (
+        <DisabledBubbleMessage
+            showDisabledMessage={showDisabledMessage}
+            alignPoints={disabledMessageAlignPoints}
+        >
+            <div className="adi-properties-dropdown-container">
+                <span className="input-label-text">{getTranslation(labelText, intl)}</span>
+                <label className="adi-bucket-inputfield gd-input gd-input-small">
+                    <Dropdown
+                        renderButton={({ isOpen, toggleDropdown }) => {
+                            return getDropdownButton(selectedItem, disabled, isOpen, toggleDropdown);
+                        }}
+                        closeOnParentScroll={true}
+                        closeOnMouseDrag={true}
+                        alignPoints={DROPDOWN_ALIGNMENTS}
+                        renderBody={({ closeDropdown, isMobile }) => {
+                            return (
+                                <DropdownList
+                                    width={width}
+                                    isMobile={isMobile}
+                                    items={items}
+                                    renderItem={({ item }) => (
+                                        <ListItem
+                                            title={item.title}
+                                            isSelected={item.value === selectedItem.value}
+                                            onClick={() => {
+                                                onSelect(item);
+                                                closeDropdown();
+                                            }}
+                                            type={item.type}
+                                            icon={item.icon}
+                                            info={item.info}
+                                        />
+                                    )}
+                                />
+                            );
+                        }}
+                        className="adi-bucket-dropdown"
+                    />
+                </label>
+            </div>
+        </DisabledBubbleMessage>
+    );
+});
 
-        pushData({ properties: clonedProperties });
-    }
-
-    private getSelectedItem(value: string | number): IDropdownItem {
-        if (this.props.items) {
-            return this.props.items.find((item) => item.value === value);
-        }
-
-        return undefined;
-    }
-}
-
-export default injectIntl(DropdownControl);
+export default DropdownControl;

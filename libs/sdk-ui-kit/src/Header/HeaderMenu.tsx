@@ -1,28 +1,28 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { PureComponent, ReactNode } from "react";
-import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
+import React, { memo, ReactNode } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 import identity from "lodash/identity.js";
 import cx from "classnames";
 
 import { IHeaderMenuProps, IHeaderMenuItem } from "./typings.js";
 
-class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponentProps> {
-    static defaultProps: Pick<IHeaderMenuProps, "className" | "onMenuItemClick" | "sections"> = {
-        className: "",
-        onMenuItemClick: identity,
-        sections: [],
-    };
+export const HeaderMenu = memo(function HeaderMenu({
+    className = "",
+    onMenuItemClick = identity,
+    sections = [],
+}: IHeaderMenuProps): ReactNode {
+    const intl = useIntl();
 
-    getClassNames(): string {
-        return cx("gd-header-menu", this.props.className);
+    function getClassNames(): string {
+        return cx("gd-header-menu", className);
     }
 
-    renderSection(items: IHeaderMenuItem[]): ReactNode {
+    function renderSection(items: IHeaderMenuItem[]): ReactNode {
         return items.map((item) => {
             const clickHandler = item.onClick
                 ? item.onClick
-                : (event: React.MouseEvent) => this.props.onMenuItemClick(item, event);
+                : (event: React.MouseEvent) => onMenuItemClick(item, event);
 
             const classNames = cx("gd-header-menu-item gd-list-help-menu-item", {
                 active: item.isActive,
@@ -48,23 +48,19 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
         });
     }
 
-    renderSections(): ReactNode {
-        return this.props.sections.map((items) => {
+    function renderSections(): ReactNode {
+        return sections.map((items) => {
             return (
                 <nav
-                    aria-label={this.props.intl.formatMessage({ id: "gs.header.menu.accessibility.label" })}
+                    aria-label={intl.formatMessage({ id: "gs.header.menu.accessibility.label" })}
                     key={`section-${uuid()}`}
                     className="gd-header-menu-section gd-header-measure"
                 >
-                    {this.renderSection(items)}
+                    {renderSection(items)}
                 </nav>
             );
         });
     }
 
-    render(): ReactNode {
-        return <div className={this.getClassNames()}>{this.renderSections()}</div>;
-    }
-}
-
-export const HeaderMenu = injectIntl(WrappedHeaderMenu);
+    return <div className={getClassNames()}>{renderSections()}</div>;
+});

@@ -1,6 +1,6 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo } from "react";
+import { useIntl } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
 import { confidenceDropdownItems } from "../../../constants/dropdowns.js";
@@ -16,27 +16,31 @@ export interface IForecastConfidenceControl {
     pushData: (data: any) => any;
 }
 
-class ForecastConfidenceControl extends React.PureComponent<
-    IForecastConfidenceControl & WrappedComponentProps
-> {
-    public render() {
-        return (
-            <DropdownControl
-                value={this.props.value}
-                valuePath="forecast.confidence"
-                labelText={messages.forecastConfidence.id}
-                disabled={this.props.disabled}
-                properties={this.props.properties}
-                pushData={this.props.pushData}
-                items={this.generateDropdownItems()}
-                showDisabledMessage={this.props.showDisabledMessage}
-            />
-        );
-    }
+const ForecastConfidenceControl = memo(function ForecastConfidenceControl({
+    value,
+    disabled,
+    properties,
+    pushData,
+    showDisabledMessage,
+}: IForecastConfidenceControl) {
+    const intl = useIntl();
 
-    private generateDropdownItems() {
-        return getTranslatedDropdownItems(confidenceDropdownItems, this.props.intl);
-    }
-}
+    const generateDropdownItems = () => {
+        return getTranslatedDropdownItems(confidenceDropdownItems, intl);
+    };
 
-export default injectIntl(ForecastConfidenceControl);
+    return (
+        <DropdownControl
+            value={value}
+            valuePath="forecast.confidence"
+            labelText={messages.forecastConfidence.id}
+            disabled={disabled}
+            properties={properties}
+            pushData={pushData}
+            items={generateDropdownItems()}
+            showDisabledMessage={showDisabledMessage}
+        />
+    );
+});
+
+export default ForecastConfidenceControl;

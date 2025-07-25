@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useState, useRef, useCallback } from "react";
 import { PositionedMenuContent } from "./PositionedMenuContent.js";
 import { IMenuPositionConfig } from "../MenuSharedTypes.js";
 import { RenderChildrenInPortal } from "../utils/RenderChildrenInPortal.js";
@@ -38,70 +38,60 @@ const PortalIfTopLevelMenu = ({
         <React.Fragment>{children}</React.Fragment>
     );
 
-export class MenuPosition extends React.Component<IMenuPositionProps, IMenuPositionState> {
-    public static defaultProps = {
-        contentWrapper: React.Fragment,
-    };
+export function MenuPosition(props: IMenuPositionProps) {
+    const {
+        portalTarget,
+        topLevelMenu,
+        contentWrapper: ContentWrapper = React.Fragment,
+        toggler,
+        opened,
+        alignment,
+        spacing,
+        offset,
+        togglerWrapperClassName,
+        children,
+    } = props;
 
-    public state = {
-        togglerElInitialized: false,
-    };
-
-    private togglerEl: HTMLElement | null = null;
+    const [togglerElInitialized, setTogglerElInitialized] = useState(false);
+    const togglerEl = useRef<HTMLElement | null>(null);
 
     // React Measure is not used because it cannot detect the left/top coordinate
     // changes of absolute positioned blocks. This caused problems where left/top
     // positions from React Measure were outdated. To solve this we do the
     // measurements manually in PositionedMenuContent at the correct time.
 
-    public render() {
-        const {
-            portalTarget,
-            topLevelMenu,
-            contentWrapper: ContentWrapper,
-            toggler,
-            opened,
-            alignment,
-            spacing,
-            offset,
-            togglerWrapperClassName,
-            children,
-        } = this.props;
-        // Top level menu uses React portals to be rendered in body element (or
-        // any element specified in targetElement prop). Any submenus are rendered
-        // inside of previous menu, so they do not need any portals.
+    const setTogglerEl = useCallback((el: HTMLElement | null) => {
+        togglerEl.current = el;
+        setTogglerElInitialized(true);
+    }, []);
 
-        const MaybeWrapper = topLevelMenu ? React.Fragment : Wrapper;
+    // Top level menu uses React portals to be rendered in body element (or
+    // any element specified in targetElement prop). Any submenus are rendered
+    // inside of previous menu, so they do not need any portals.
 
-        return (
-            <MaybeWrapper>
-                <div className={topLevelMenu ? togglerWrapperClassName : undefined} ref={this.setTogglerEl}>
-                    {toggler}
-                </div>
+    const MaybeWrapper = topLevelMenu ? React.Fragment : Wrapper;
 
-                <PortalIfTopLevelMenu portalTarget={portalTarget} topLevelMenu={topLevelMenu}>
-                    {opened && this.state.togglerElInitialized ? (
-                        <ContentWrapper>
-                            <PositionedMenuContent
-                                alignment={alignment}
-                                spacing={spacing}
-                                offset={offset}
-                                topLevelMenu={topLevelMenu}
-                                togglerEl={this.togglerEl}
-                            >
-                                {children}
-                            </PositionedMenuContent>
-                        </ContentWrapper>
-                    ) : null}
-                </PortalIfTopLevelMenu>
-            </MaybeWrapper>
-        );
-    }
+    return (
+        <MaybeWrapper>
+            <div className={topLevelMenu ? togglerWrapperClassName : undefined} ref={setTogglerEl}>
+                {toggler}
+            </div>
 
-    private setTogglerEl = (el: HTMLElement | null) => {
-        this.togglerEl = el;
-        this.setState({
-            togglerElInitialized: true,
-        });
-    };
+            <PortalIfTopLevelMenu portalTarget={portalTarget} topLevelMenu={topLevelMenu}>
+                {opened && togglerElInitialized ? (
+                    <ContentWrapper>
+                        <PositionedMenuContent
+                            alignment={alignment}
+                            spacing={spacing}
+                            offset={offset}
+                            topLevelMenu={topLevelMenu}
+                            togglerEl={togglerEl.current}
+                        >
+                            {children}
+                        </PositionedMenuContent>
+                    </ContentWrapper>
+                ) : null}
+            </PortalIfTopLevelMenu>
+        </MaybeWrapper>
+    );
 }

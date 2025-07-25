@@ -1,6 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
 import noop from "lodash/noop.js";
 import { IChartConfig } from "../../../interfaces/index.js";
 import {
@@ -32,44 +31,33 @@ export interface IXirrTransformationProps {
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
-class XirrTransformation extends React.Component<IXirrTransformationProps & WrappedComponentProps> {
-    public static defaultProps: Pick<
-        IXirrTransformationProps,
-        "config" | "drillableItems" | "onDrill" | "onAfterRender"
-    > = {
-        config: {},
-        drillableItems: [],
-        onDrill: () => true,
-        onAfterRender: noop,
-    };
+export default function XirrTransformation({
+    drillableItems = [],
+    config = {},
+    onDrill = () => true,
+    onAfterRender = noop,
+    dataView,
+}: IXirrTransformationProps) {
+    const getDisableDrillUnderlineFromConfig = (): boolean => (config ? config.disableDrillUnderline : false);
 
-    public render() {
-        const { drillableItems, config, onAfterRender, dataView } = this.props;
-
-        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
-        const data = getHeadlineData(dataView);
-        const dataWithUpdatedDrilling = applyDrillableItems(data, drillablePredicates, dataView);
-        const disableDrillUnderline = this.getDisableDrillUnderlineFromConfig();
-        return (
-            <LegacyHeadline
-                data={dataWithUpdatedDrilling}
-                config={config}
-                onDrill={this.handleFiredDrillEvent}
-                onAfterRender={onAfterRender}
-                disableDrillUnderline={disableDrillUnderline}
-            />
-        );
-    }
-
-    private getDisableDrillUnderlineFromConfig = (): boolean =>
-        this.props.config ? this.props.config.disableDrillUnderline : false;
-
-    private handleFiredDrillEvent = (item: IHeadlineFiredDrillEventItemContext, target: HTMLElement) => {
-        const { onDrill, dataView } = this.props;
+    const handleFiredDrillEvent = (item: IHeadlineFiredDrillEventItemContext, target: HTMLElement) => {
         const drillEventData = buildDrillEventData(item, dataView);
 
         fireDrillEvent(onDrill, drillEventData, target);
     };
-}
 
-export default injectIntl(XirrTransformation);
+    const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+    const data = getHeadlineData(dataView);
+    const dataWithUpdatedDrilling = applyDrillableItems(data, drillablePredicates, dataView);
+    const disableDrillUnderline = getDisableDrillUnderlineFromConfig();
+
+    return (
+        <LegacyHeadline
+            data={dataWithUpdatedDrilling}
+            config={config}
+            onDrill={handleFiredDrillEvent}
+            onAfterRender={onAfterRender}
+            disableDrillUnderline={disableDrillUnderline}
+        />
+    );
+}

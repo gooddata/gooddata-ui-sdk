@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { DayPickerRangeProps, DateRange, SelectRangeEventHandler } from "react-day-picker";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { WeekStart } from "@gooddata/sdk-model";
 
 import { DateRangePosition } from "../interfaces/index.js";
@@ -267,21 +267,20 @@ export interface IDateRangePickerProps {
     submitForm: () => void;
 }
 
-type DateRangePickerProps = IDateRangePickerProps & WrappedComponentProps;
-
-const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
+export function DateRangePicker({
     range,
     onRangeChange,
     dateFormat,
     dayPickerProps,
-    intl,
     isMobile,
     isTimeEnabled,
     weekStart = "Sunday",
     shouldOverlayDatePicker = false,
     withoutApply = false,
     submitForm,
-}) => {
+}: IDateRangePickerProps) {
+    const intl = useIntl();
+
     const {
         selectedInput,
         isCalendarPopupOpen,
@@ -396,6 +395,4 @@ const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
             {HintPanel}
         </>
     );
-};
-
-export const DateRangePicker = injectIntl(DateRangePickerComponent);
+}

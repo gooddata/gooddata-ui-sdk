@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
@@ -15,31 +15,22 @@ import {
     UnmountFunction,
 } from "../../interfaces/Visualization.js";
 
-export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps & { onAfterRender?: () => void };
-export class LocalizedUnknownVisualizationClass extends React.Component<IIntlLocalizedUnknownVisualizationClass> {
-    private errorDetails: {
-        message: string;
-        description: string;
-    };
+export type IIntlLocalizedUnknownVisualizationClass = { onAfterRender?: () => void };
 
-    public componentDidMount(): void {
-        this.props.onAfterRender?.();
-    }
+function IntlLocalizedUnknownVisualizationClass({ onAfterRender }: IIntlLocalizedUnknownVisualizationClass) {
+    const intl = useIntl();
 
-    constructor(props: IIntlLocalizedUnknownVisualizationClass) {
-        super(props);
-        this.errorDetails = newErrorMapping(props.intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN];
-    }
+    const errorDetails = React.useMemo(() => {
+        return newErrorMapping(intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN];
+    }, [intl]);
 
-    public render(): JSX.Element {
-        const { message, description } = this.errorDetails;
-        return <ErrorComponent message={message} description={description} />;
-    }
+    React.useEffect(() => {
+        onAfterRender?.();
+    }, [onAfterRender]);
+
+    const { message, description } = errorDetails;
+    return <ErrorComponent message={message} description={description} />;
 }
-export const IntlLocalizedUnknownVisualizationClass = injectIntl<
-    "intl",
-    IIntlLocalizedUnknownVisualizationClass
->(LocalizedUnknownVisualizationClass);
 
 export class PluggableUnknownChart extends AbstractPluggableVisualization {
     private renderFun: RenderFunction;

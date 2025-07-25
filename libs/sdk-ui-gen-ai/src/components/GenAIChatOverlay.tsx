@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { connect } from "react-redux";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { Dialog, Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
@@ -34,14 +34,15 @@ export type GenAIChatOverlayProps = GenAIChatOverlayOwnProps &
     GenAIChatOverlayStateProps &
     GenAIChatOverlayDispatchProps;
 
-const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps & WrappedComponentProps> = ({
+function GenAIChatOverlayComponent({
     onClose,
     hasMessages,
     clearThread,
-    intl,
     isFullscreen,
     setFullscreen,
-}) => {
+}: GenAIChatOverlayProps) {
+    const intl = useIntl();
+
     const classNames = cx("gd-gen-ai-chat__window", {
         "gd-gen-ai-chat__window--fullscreen": isFullscreen,
     });
@@ -91,7 +92,7 @@ const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps & WrappedCompone
             <GenAIChatWrapper autofocus />
         </Dialog>
     );
-};
+}
 
 const mapStateToProps = (state: RootState): GenAIChatOverlayStateProps => ({
     hasMessages: hasMessagesSelector(state),
@@ -106,4 +107,4 @@ const mapDispatchToProps: GenAIChatOverlayDispatchProps = {
 export const GenAIChatOverlay: React.FC<GenAIChatOverlayOwnProps> = connect(
     mapStateToProps,
     mapDispatchToProps,
-)(injectIntl(GenAIChatOverlayComponent));
+)(GenAIChatOverlayComponent);

@@ -71,7 +71,6 @@ export function createGridOptions(
         getExecutionDefinition: tableMethods.getExecutionDefinition,
         getColumnTotals: tableMethods.getColumnTotals,
         getRowTotals: tableMethods.getRowTotals,
-        intl: props.intl,
         setLastSortedColId: tableMethods.setLastSortedColId,
     };
 

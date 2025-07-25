@@ -3,7 +3,7 @@
 import React from "react";
 import cx from "classnames";
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
 import { AssistantMessage, isErrorContents } from "../../model.js";
@@ -18,12 +18,9 @@ type AssistantMessageProps = {
     isLast?: boolean;
 };
 
-const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedComponentProps> = ({
-    message,
-    setUserFeedback,
-    isLast,
-    intl,
-}) => {
+function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: AssistantMessageProps) {
+    const intl = useIntl();
+
     const classNames = cx(
         "gd-gen-ai-chat__messages__message",
         "gd-gen-ai-chat__messages__message--assistant",
@@ -100,7 +97,7 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
             </div>
         </div>
     );
-};
+}
 
 const mapDispatchToProps = {
     setUserFeedback,
@@ -109,4 +106,4 @@ const mapDispatchToProps = {
 export const AssistantMessageComponent: any = connect(
     null,
     mapDispatchToProps,
-)(injectIntl(AssistantMessageComponentCore));
+)(AssistantMessageComponentCore);

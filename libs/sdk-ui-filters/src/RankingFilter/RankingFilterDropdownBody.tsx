@@ -1,8 +1,8 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState, useCallback } from "react";
 import { Button, BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { IRankingFilter, newRankingFilter, ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
-import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types.js";
 import { OperatorDropdown } from "./OperatorDropdown/OperatorDropdown.js";
 import { ValueDropdown } from "./ValueDropdown/ValueDropdown.js";
@@ -28,7 +28,7 @@ const isApplyButtonDisabled = (filter: IRankingFilter, filterState: IRankingFilt
     return operatorNotChanged && valueNotChanged && attributesNotChanged && measureNotChanged;
 };
 
-interface IRankingFilterDropdownBodyComponentOwnProps {
+interface RankingFilterDropdownBodyComponentProps {
     measureItems: IMeasureDropdownItem[];
     attributeItems: IAttributeDropdownItem[];
     filter: IRankingFilter;
@@ -40,10 +40,7 @@ interface IRankingFilterDropdownBodyComponentOwnProps {
     enableRenamingMeasureToMetric?: boolean;
 }
 
-type RankingFilterDropdownBodyComponentProps = IRankingFilterDropdownBodyComponentOwnProps &
-    WrappedComponentProps;
-
-const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComponentProps> = ({
+export function RankingFilterDropdownBody({
     measureItems,
     attributeItems,
     filter,
@@ -52,9 +49,10 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
-    intl,
     enableRenamingMeasureToMetric,
-}) => {
+}: RankingFilterDropdownBodyComponentProps) {
+    const intl = useIntl();
+
     const rankingFilter = filter.rankingFilter;
     const [value, setValue] = useState(rankingFilter.value);
     const [operator, setOperator] = useState(rankingFilter.operator);
@@ -141,6 +139,4 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
             </div>
         </div>
     );
-};
-
-export const RankingFilterDropdownBody = injectIntl(RankingFilterDropdownBodyComponent);
+}

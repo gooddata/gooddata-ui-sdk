@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import noop from "lodash/noop.js";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import {
@@ -192,7 +192,7 @@ type WithLoadingState = {
  */
 export function withExecutionLoading<TProps>(
     params: IWithExecutionLoading<TProps>,
-): (WrappedComponent: React.ComponentType<TProps & WithLoadingResult>) => React.ComponentClass<TProps> {
+): (WrappedComponent: React.ComponentType<TProps & WithLoadingResult>) => React.ComponentType<TProps> {
     const {
         promiseFactory,
         loadOnMount = true,
@@ -205,30 +205,20 @@ export function withExecutionLoading<TProps>(
 
     return (
         WrappedComponent: React.ComponentType<TProps & WithLoadingResult>,
-    ): React.ComponentClass<TProps> => {
-        class WithLoading extends React.Component<TProps, WithLoadingState> {
-            private isWithExecutionLoadingUnmounted: boolean = false;
-            private cancelablePromise: ICancelablePromise<DataViewFacade> | undefined;
-            private effectiveProps: TProps | undefined;
+    ): React.ComponentType<TProps> => {
+        function WithLoading(props: TProps) {
+            const isWithExecutionLoadingUnmountedRef = useRef<boolean>(false);
+            const cancelablePromiseRef = useRef<ICancelablePromise<DataViewFacade> | undefined>();
+            const effectivePropsRef = useRef<TProps | undefined>();
 
-            public state: WithLoadingState = {
+            const [state, setState] = useState<WithLoadingState>({
                 error: undefined,
                 isLoading: false,
                 result: undefined,
-            };
+            });
 
-            constructor(props: TProps) {
-                super(props);
-
-                this.fetch = this.fetch.bind(this);
-                this.startLoading = this.startLoading.bind(this);
-                this.setError = this.setError.bind(this);
-                this.setResult = this.setResult.bind(this);
-                this.getEvents = this.getEvents.bind(this);
-            }
-
-            private getEvents() {
-                const _events = typeof events === "function" ? events(this.props) : events;
+            const getEvents = useCallback(() => {
+                const _events = typeof events === "function" ? events(props) : events;
                 const {
                     onError = noop,
                     onLoadingChanged = noop,
@@ -244,155 +234,167 @@ export function withExecutionLoading<TProps>(
                     onLoadingStart,
                     onExportReady,
                 };
-            }
+            }, [props, events]);
 
-            private startLoading() {
-                const { onLoadingStart, onLoadingChanged } = this.getEvents();
+            const startLoading = useCallback(() => {
+                const { onLoadingStart, onLoadingChanged } = getEvents();
 
-                onLoadingStart(this.props);
-                onLoadingChanged(true, this.props);
+                onLoadingStart(props);
+                onLoadingChanged(true, props);
 
-                this.effectiveProps = undefined;
-                this.setState((state) => ({
+                effectivePropsRef.current = undefined;
+                setState((state) => ({
                     ...state,
                     isLoading: true,
                     error: undefined,
                     result: undefined,
                 }));
-            }
+            }, [props, getEvents]);
 
-            private setError(error: GoodDataSdkError) {
-                const { onError, onLoadingChanged, onExportReady } = this.getEvents();
+            const setError = useCallback(
+                (error: GoodDataSdkError) => {
+                    const { onError, onLoadingChanged, onExportReady } = getEvents();
 
-                onError(error, this.props);
-                onLoadingChanged(false, this.props);
-                onExportReady(createExportErrorFunction(error));
+                    onError(error, props);
+                    onLoadingChanged(false, props);
+                    onExportReady(createExportErrorFunction(error));
 
-                this.setState((state) => ({
-                    ...state,
-                    isLoading: false,
-                    error,
-                }));
-            }
+                    setState((state) => ({
+                        ...state,
+                        isLoading: false,
+                        error,
+                    }));
+                },
+                [props, getEvents],
+            );
 
-            private setResult(result: DataViewFacade) {
-                const { onLoadingFinish, onLoadingChanged, onExportReady } = this.getEvents();
-                const title = typeof exportTitle === "function" ? exportTitle(this.props) : exportTitle;
+            const setResult = useCallback(
+                (result: DataViewFacade) => {
+                    const { onLoadingFinish, onLoadingChanged, onExportReady } = getEvents();
+                    const title = typeof exportTitle === "function" ? exportTitle(props) : exportTitle;
 
-                onLoadingFinish(result, this.props);
-                onLoadingChanged(false, this.props);
-                onExportReady(createExportFunction(result.result(), title));
+                    onLoadingFinish(result, props);
+                    onLoadingChanged(false, props);
+                    onExportReady(createExportFunction(result.result(), title));
 
-                this.effectiveProps = this.props;
-                this.setState((state) => ({
-                    ...state,
-                    isLoading: false,
-                    error: undefined,
-                    result,
-                }));
-            }
+                    effectivePropsRef.current = props;
+                    setState((state) => ({
+                        ...state,
+                        isLoading: false,
+                        error: undefined,
+                        result,
+                    }));
+                },
+                [props, getEvents, exportTitle],
+            );
 
-            private async fetch(): Promise<void> {
-                if (this.cancelablePromise) {
-                    this.cancelablePromise.cancel();
+            const fetch = useCallback(async (): Promise<void> => {
+                if (cancelablePromiseRef.current) {
+                    cancelablePromiseRef.current.cancel();
                     // On refetch, when cancelablePromise was not fulfilled, throw cancel error immediately
-                    if (!this.cancelablePromise.getHasFulfilled()) {
-                        this.setError(new CancelledSdkError());
+                    if (!cancelablePromiseRef.current.getHasFulfilled()) {
+                        setError(new CancelledSdkError());
                     }
                 }
 
-                this.startLoading();
+                startLoading();
 
-                const readWindow = typeof window === "function" ? window(this.props) : window;
+                const readWindow = typeof window === "function" ? window(props) : window;
                 const enableRealCancellation =
                     typeof enableExecutionCancelling === "function"
-                        ? enableExecutionCancelling(this.props)
+                        ? enableExecutionCancelling(props)
                         : enableExecutionCancelling;
-                const promise = (signal?: AbortSignal) => promiseFactory(this.props, readWindow, signal);
-                this.cancelablePromise = makeCancelable(
+                const promise = (signal?: AbortSignal) => promiseFactory(props, readWindow, signal);
+                cancelablePromiseRef.current = makeCancelable(
                     (signal) => promise(enableRealCancellation ? signal : undefined),
                     enableRealCancellation,
                 );
 
                 try {
-                    const result = await this.cancelablePromise.promise;
-                    if (!this.isWithExecutionLoadingUnmounted) {
-                        this.setResult(result);
+                    const result = await cancelablePromiseRef.current.promise;
+                    if (!isWithExecutionLoadingUnmountedRef.current) {
+                        setResult(result);
                     }
                 } catch (err) {
                     // We throw cancel error immediately on refetch, when cancelablePromise was not fulfilled,
                     // but CancelablePromise throw cancel error after promise resolution, so here
                     // we don't care about it anymore.
-                    if (!this.isWithExecutionLoadingUnmounted && !isCancelError(err)) {
+                    if (!isWithExecutionLoadingUnmountedRef.current && !isCancelError(err)) {
                         const sdkError = convertError(err);
-                        this.setError(sdkError);
+                        setError(sdkError);
                     }
                 }
-            }
+            }, [props, window, enableExecutionCancelling, promiseFactory, startLoading, setError, setResult]);
 
-            private isStaleResult(): boolean {
-                return this.effectiveProps !== undefined && shouldRefetch(this.props, this.effectiveProps);
-            }
+            const isStaleResult = useCallback((): boolean => {
+                return (
+                    effectivePropsRef.current !== undefined && shouldRefetch(props, effectivePropsRef.current)
+                );
+            }, [props, shouldRefetch]);
 
-            public componentDidMount() {
-                this.isWithExecutionLoadingUnmounted = false;
-                const _loadOnMount =
-                    typeof loadOnMount === "function" ? loadOnMount(this.props) : loadOnMount;
+            // ComponentDidMount equivalent
+            useEffect(() => {
+                isWithExecutionLoadingUnmountedRef.current = false;
+                const _loadOnMount = typeof loadOnMount === "function" ? loadOnMount(props) : loadOnMount;
 
                 if (_loadOnMount) {
-                    this.fetch();
+                    fetch();
                 }
-            }
+            }, []); // Empty dependency array for mount only
 
-            public componentDidUpdate(prevProps: TProps) {
-                if (shouldRefetch(prevProps, this.props)) {
-                    this.fetch();
+            // ComponentDidUpdate equivalent
+            const prevPropsRef = useRef<TProps>();
+            useEffect(() => {
+                if (prevPropsRef.current && shouldRefetch(prevPropsRef.current, props)) {
+                    fetch();
                 }
-            }
+                prevPropsRef.current = props;
+            });
 
-            public componentWillUnmount() {
-                this.isWithExecutionLoadingUnmounted = true;
-                if (this.cancelablePromise) {
-                    this.cancelablePromise.cancel();
-                    if (!this.cancelablePromise.getHasFulfilled()) {
-                        this.setError(new CancelledSdkError());
+            // ComponentWillUnmount equivalent
+            useEffect(() => {
+                return () => {
+                    isWithExecutionLoadingUnmountedRef.current = true;
+                    if (cancelablePromiseRef.current) {
+                        cancelablePromiseRef.current.cancel();
+                        if (!cancelablePromiseRef.current.getHasFulfilled()) {
+                            setError(new CancelledSdkError());
+                        }
                     }
-                }
-            }
+                };
+            }, [setError]);
 
-            public render() {
-                const { result, isLoading, error } = this.state;
+            const { result, isLoading, error } = state;
 
-                if (this.isStaleResult()) {
-                    /*
-                     * When props update, this render will be called first and state will still contain
-                     * data calculated thus far. After the render, the componentDidUpdate will test whether
-                     * data reload is needed and if so trigger it.
-                     *
-                     * The problem with this is, that the child function would be called once with stale
-                     * data. This can lead to problems in expectations - the child function may work with
-                     * assumptions that the result is always up to date and try access data that is just not
-                     * there yet.
-                     */
-                    const executionResult = {
-                        result: undefined,
-                        isLoading: true,
-                        error: undefined,
-                        reload: this.fetch,
-                    };
-
-                    return <WrappedComponent {...this.props} {...executionResult} />;
-                }
-
+            if (isStaleResult()) {
+                /*
+                 * When props update, this render will be called first and state will still contain
+                 * data calculated thus far. After the render, the componentDidUpdate will test whether
+                 * data reload is needed and if so trigger it.
+                 *
+                 * The problem with this is, that the child function would be called once with stale
+                 * data. This can lead to problems in expectations - the child function may work with
+                 * assumptions that the result is always up to date and try access data that is just not
+                 * there yet.
+                 */
                 const executionResult = {
-                    result,
-                    isLoading,
-                    error,
-                    reload: this.fetch,
+                    result: undefined,
+                    isLoading: true,
+                    error: undefined,
+                    reload: fetch,
                 };
 
-                return <WrappedComponent {...this.props} {...executionResult} />;
+                return <WrappedComponent {...props} {...executionResult} />;
             }
+
+            const executionResult = {
+                result,
+                isLoading,
+                error,
+                reload: fetch,
+            };
+
+            return <WrappedComponent {...props} {...executionResult} />;
         }
 
         hoistNonReactStatics(WithLoading, WrappedComponent);

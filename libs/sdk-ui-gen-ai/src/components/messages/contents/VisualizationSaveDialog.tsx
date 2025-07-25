@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
 import { IGenAIVisualization } from "@gooddata/sdk-model";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { saveVisualizationAction } from "../../../store/index.js";
 
@@ -20,9 +20,15 @@ export type VisualizationSaveDialogDispatchProps = {
     saveVisualizationAction: typeof saveVisualizationAction;
 };
 
-const VisualizationSaveDialogCore: React.FC<
-    VisualizationSaveDialogProps & VisualizationSaveDialogDispatchProps & WrappedComponentProps
-> = ({ onClose, visualization, messageId, saveVisualizationAction, intl, type }) => {
+function VisualizationSaveDialogCore({
+    onClose,
+    visualization,
+    messageId,
+    saveVisualizationAction,
+    type,
+}: VisualizationSaveDialogProps & VisualizationSaveDialogDispatchProps) {
+    const intl = useIntl();
+
     const [value, setValue] = React.useState<string>(visualization.title);
     const { setSavingStarted } = useVisualisationSaving(visualization, onClose);
 
@@ -70,13 +76,10 @@ const VisualizationSaveDialogCore: React.FC<
             />
         </ConfirmDialog>
     );
-};
+}
 
 const mapDispatchToProps = {
     saveVisualizationAction,
 };
 
-export const VisualizationSaveDialog: any = connect(
-    null,
-    mapDispatchToProps,
-)(injectIntl(VisualizationSaveDialogCore));
+export const VisualizationSaveDialog: any = connect(null, mapDispatchToProps)(VisualizationSaveDialogCore);

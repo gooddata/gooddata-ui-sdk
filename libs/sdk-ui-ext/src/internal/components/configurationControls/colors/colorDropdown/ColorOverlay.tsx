@@ -1,5 +1,5 @@
-// (C) 2019-2023 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo, useEffect, useCallback } from "react";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 export enum DropdownVersionType {
@@ -55,53 +55,60 @@ const ALIGN_POINTS_CUSTOM_COLOR_PICKER = [
     },
 ];
 
-export default class ColorOverlay extends React.PureComponent<IColorOverlayProps> {
-    public componentWillUnmount(): void {
-        this.startScrollingPropagation();
-    }
-
-    public render() {
-        return (
-            <Overlay
-                alignTo={this.props.alignTo}
-                onClose={this.onClose}
-                alignPoints={this.getAlignPoints()}
-                closeOnOutsideClick={true}
-                closeOnParentScroll={true}
-                closeOnMouseDrag={true}
-            >
-                <div
-                    onMouseOver={this.stopScrollingPropagation}
-                    onMouseOut={this.startScrollingPropagation}
-                    aria-label="Color overlay content"
-                >
-                    {this.props.children}
-                </div>
-            </Overlay>
-        );
-    }
-
-    private stopScrollingPropagation = () => {
-        document.body.addEventListener("wheel", this.stopPropagation);
-    };
-
-    private startScrollingPropagation = () => {
-        document.body.removeEventListener("wheel", this.stopPropagation);
-    };
-
-    private stopPropagation = (e: WheelEvent) => {
+export const ColorOverlay = memo(function ColorOverlay({
+    alignTo,
+    dropdownVersion,
+    onClose: onCloseProp,
+    children,
+}: IColorOverlayProps) {
+    const stopPropagation = useCallback((e: WheelEvent) => {
         e.stopPropagation();
-    };
+    }, []);
 
-    private getAlignPoints() {
-        if (this.props.dropdownVersion === DropdownVersionType.ColorPalette) {
+    const stopScrollingPropagation = useCallback(() => {
+        document.body.addEventListener("wheel", stopPropagation);
+    }, [stopPropagation]);
+
+    const startScrollingPropagation = useCallback(() => {
+        document.body.removeEventListener("wheel", stopPropagation);
+    }, [stopPropagation]);
+
+    useEffect(() => {
+        return () => {
+            startScrollingPropagation();
+        };
+    }, [startScrollingPropagation]);
+
+    const getAlignPoints = useCallback(() => {
+        if (dropdownVersion === DropdownVersionType.ColorPalette) {
             return ALIGN_POINTS_COLOR_PALETTE_PICKER;
         }
 
         return ALIGN_POINTS_CUSTOM_COLOR_PICKER;
-    }
+    }, [dropdownVersion]);
 
-    private onClose = () => {
-        this.props.onClose();
-    };
-}
+    const onClose = useCallback(() => {
+        onCloseProp();
+    }, [onCloseProp]);
+
+    return (
+        <Overlay
+            alignTo={alignTo}
+            onClose={onClose}
+            alignPoints={getAlignPoints()}
+            closeOnOutsideClick={true}
+            closeOnParentScroll={true}
+            closeOnMouseDrag={true}
+        >
+            <div
+                onMouseOver={stopScrollingPropagation}
+                onMouseOut={startScrollingPropagation}
+                aria-label="Color overlay content"
+            >
+                {children}
+            </div>
+        </Overlay>
+    );
+});
+
+export default ColorOverlay;
