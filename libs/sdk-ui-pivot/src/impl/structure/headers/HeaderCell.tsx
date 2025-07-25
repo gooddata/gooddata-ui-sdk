@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { IntlShape } from "react-intl";
 import cx from "classnames";
 import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
@@ -46,94 +46,75 @@ export interface IHeaderCellState {
     currentSortDirection: SortDirection | null;
 }
 
-export default class HeaderCell extends React.Component<IHeaderCellProps, IHeaderCellState> {
-    public static defaultProps: Pick<
-        IHeaderCellProps,
-        | "sortDirection"
-        | "textAlign"
-        | "menuPosition"
-        | "menu"
-        | "enableSorting"
-        | "onMenuAggregationClick"
-        | "onSortClick"
-    > = {
-        sortDirection: null,
-        textAlign: ALIGN_LEFT,
-        menuPosition: ALIGN_LEFT,
-        menu: null,
-        enableSorting: false,
-        onMenuAggregationClick: () => null,
-        onSortClick: () => null,
-    };
+function HeaderCell({
+    sortDirection = null,
+    textAlign = ALIGN_LEFT,
+    menuPosition = ALIGN_LEFT,
+    menu = null,
+    enableSorting = false,
+    onMenuAggregationClick = () => null,
+    onSortClick = () => null,
+    displayText,
+    className,
+    defaultSortDirection,
+    intl,
+    colId,
+    getTableDescriptor,
+    getExecutionDefinition,
+    getColumnTotals,
+    getRowTotals,
+    isFocused,
+}: IHeaderCellProps) {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuButtonVisible, setIsMenuButtonVisible] = useState(false);
+    const [currentSortDirection, setCurrentSortDirection] = useState<SortDirection | null>(null);
 
-    private resetSortDirection = () => {
-        this.setState({
-            currentSortDirection: this.props.sortDirection!,
-        });
-    };
+    const resetSortDirection = useCallback(() => {
+        setCurrentSortDirection(sortDirection!);
+    }, [sortDirection]);
 
-    public state: IHeaderCellState = {
-        isMenuOpen: false,
-        isMenuButtonVisible: false,
-        currentSortDirection: null,
-    };
+    useEffect(() => {
+        resetSortDirection();
+    }, [resetSortDirection]);
 
-    public componentDidMount(): void {
-        this.resetSortDirection();
-    }
-
-    public componentDidUpdate(prevProps: Readonly<IHeaderCellProps>): void {
-        if (prevProps.isFocused !== this.props.isFocused) {
-            if (this.props.isFocused) {
-                this.onMouseEnterHeaderCellText();
-            } else {
-                this.onMouseLeaveHeaderCellText();
+    useEffect(() => {
+        setCurrentSortDirection((currentSortDirection) => {
+            if (sortDirection !== currentSortDirection) {
+                return sortDirection;
             }
+            return currentSortDirection;
+        });
+    }, [sortDirection]);
+
+    const onMouseEnterHeaderCellText = useCallback(() => {
+        if (enableSorting) {
+            let newSortDirection: SortDirection | null = null;
+            if (sortDirection === null) {
+                newSortDirection = defaultSortDirection ?? null;
+            } else if (sortDirection === "asc") {
+                newSortDirection = "desc";
+            } else if (sortDirection === "desc") {
+                newSortDirection = "asc";
+            } else {
+                newSortDirection = null;
+            }
+            setCurrentSortDirection(newSortDirection);
         }
-    }
+    }, [enableSorting, sortDirection, defaultSortDirection, setCurrentSortDirection]);
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IHeaderCellProps): void {
-        if (nextProps.sortDirection !== this.props.sortDirection) {
-            this.setState({
-                currentSortDirection: this.props.sortDirection!,
-            });
+    const onMouseLeaveHeaderCellText = useCallback(() => {
+        resetSortDirection();
+    }, [resetSortDirection]);
+
+    useEffect(() => {
+        if (isFocused) {
+            onMouseEnterHeaderCellText();
+        } else {
+            onMouseLeaveHeaderCellText();
         }
-    }
+    }, [isFocused, onMouseEnterHeaderCellText, onMouseLeaveHeaderCellText]);
 
-    public render() {
-        const { menuPosition, className } = this.props;
-
-        return (
-            <div
-                className={cx(
-                    "gd-pivot-table-header",
-                    {
-                        "gd-pivot-table-header--open": this.state.isMenuButtonVisible,
-                    },
-                    className,
-                )}
-                onMouseEnter={this.onMouseEnterHeaderCell}
-                onMouseLeave={this.onMouseLeaveHeaderCell}
-            >
-                {menuPosition === "left" && this.renderMenu()}
-                {this.renderText()}
-                {menuPosition === "right" && this.renderMenu()}
-            </div>
-        );
-    }
-
-    private renderMenu() {
-        const {
-            intl,
-            colId,
-            menu,
-            getTableDescriptor,
-            getExecutionDefinition,
-            getColumnTotals,
-            getRowTotals,
-        } = this.props;
-        const { isMenuOpen, isMenuButtonVisible } = this.state;
-
+    const renderMenu = () => {
         if (!menu?.aggregations) {
             return null;
         }
@@ -151,15 +132,13 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
                 getExecutionDefinition={getExecutionDefinition!}
                 getColumnTotals={getColumnTotals}
                 getRowTotals={getRowTotals}
-                onMenuOpenedChange={this.handleMenuOpenedChange}
-                onAggregationSelect={this.menuItemClick}
+                onMenuOpenedChange={handleMenuOpenedChange}
+                onAggregationSelect={menuItemClick}
             />
         );
-    }
+    };
 
-    private renderText() {
-        const { displayText, textAlign, enableSorting } = this.props;
-
+    const renderText = () => {
         const classes = cx(HEADER_LABEL_CLASS, "gd-pivot-table-header-label", {
             "gd-pivot-table-header-label--right": textAlign === "right",
             "gd-pivot-table-header-label--center": textAlign === "center",
@@ -169,20 +148,17 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         return (
             <div
                 className={classes}
-                onClick={this.onTextClick}
-                onMouseEnter={this.onMouseEnterHeaderCellText}
-                onMouseLeave={this.onMouseLeaveHeaderCellText}
+                onClick={onTextClick}
+                onMouseEnter={onMouseEnterHeaderCellText}
+                onMouseLeave={onMouseLeaveHeaderCellText}
             >
                 <span>{displayText ? displayText : ""}</span>
-                {this.renderSorting()}
+                {renderSorting()}
             </div>
         );
-    }
+    };
 
-    private renderSorting() {
-        const { enableSorting } = this.props;
-        const { currentSortDirection } = this.state;
-
+    const renderSorting = () => {
         const sortClasses = cx("s-sort-direction-arrow", `s-sorted-${currentSortDirection}`, {
             "gd-pivot-table-header-arrow-up": currentSortDirection === "asc",
             "gd-pivot-table-header-arrow-down": currentSortDirection === "desc",
@@ -196,42 +172,17 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
                 </span>
             )
         );
-    }
-
-    private onMouseEnterHeaderCell = () => {
-        this.showMenuButton();
     };
 
-    private onMouseLeaveHeaderCell = () => {
-        this.hideMenuButton();
+    const onMouseEnterHeaderCell = () => {
+        showMenuButton();
     };
 
-    private onMouseEnterHeaderCellText = () => {
-        if (this.props.enableSorting) {
-            const { sortDirection } = this.props;
-            let newSortDirection: SortDirection | null = null;
-            if (sortDirection === null) {
-                newSortDirection = this.props.defaultSortDirection ?? null;
-            } else if (sortDirection === "asc") {
-                newSortDirection = "desc";
-            } else if (sortDirection === "desc") {
-                newSortDirection = "asc";
-            } else {
-                newSortDirection = null;
-            }
-            this.setState({
-                currentSortDirection: newSortDirection,
-            });
-        }
+    const onMouseLeaveHeaderCell = () => {
+        hideMenuButton();
     };
 
-    private onMouseLeaveHeaderCellText = () => {
-        this.resetSortDirection();
-    };
-
-    private onTextClick = () => {
-        const { onSortClick, enableSorting } = this.props;
-
+    const onTextClick = () => {
         if (!enableSorting) {
             return;
         }
@@ -239,52 +190,62 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         onSortClick!();
     };
 
-    private showMenuButton = () => {
-        if (this.state.isMenuOpen) {
+    const showMenuButton = () => {
+        if (isMenuOpen) {
             return;
         }
 
-        this.setState({
-            isMenuButtonVisible: true,
-        });
+        setIsMenuButtonVisible(true);
     };
 
-    private hideMenuButton = () => {
-        if (this.state.isMenuOpen) {
+    const hideMenuButton = () => {
+        if (isMenuOpen) {
             return;
         }
 
-        this.setState({
-            isMenuButtonVisible: false,
-        });
+        setIsMenuButtonVisible(false);
     };
 
-    private hideAndCloseMenu = () => {
-        this.setState({
-            isMenuButtonVisible: false,
-            isMenuOpen: false,
-        });
+    const hideAndCloseMenu = () => {
+        setIsMenuButtonVisible(false);
+        setIsMenuOpen(false);
     };
 
-    private menuItemClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
-        this.hideAndCloseMenu();
-        if (this.props.onMenuAggregationClick) {
-            this.props.onMenuAggregationClick(menuAggregationClickConfig);
+    const menuItemClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
+        hideAndCloseMenu();
+        if (onMenuAggregationClick) {
+            onMenuAggregationClick(menuAggregationClickConfig);
         }
     };
 
-    private handleMenuOpenedChange = ({ opened, source }: IOnOpenedChangeParams) => {
-        this.setState({
-            isMenuOpen: opened,
-        });
+    const handleMenuOpenedChange = ({ opened, source }: IOnOpenedChangeParams) => {
+        setIsMenuOpen(opened);
 
         // When source is 'TOGGLER_BUTTON_CLICK' we do not want to hide menu
         // button visibility. Because user is hovering over this button
         // so we do not want to hide it.
         if (source === "OUTSIDE_CLICK" || source === "SCROLL") {
-            this.setState({
-                isMenuButtonVisible: false,
-            });
+            setIsMenuButtonVisible(false);
         }
     };
+
+    return (
+        <div
+            className={cx(
+                "gd-pivot-table-header",
+                {
+                    "gd-pivot-table-header--open": isMenuButtonVisible,
+                },
+                className,
+            )}
+            onMouseEnter={onMouseEnterHeaderCell}
+            onMouseLeave={onMouseLeaveHeaderCell}
+        >
+            {menuPosition === "left" && renderMenu()}
+            {renderText()}
+            {menuPosition === "right" && renderMenu()}
+        </div>
+    );
 }
+
+export default HeaderCell;

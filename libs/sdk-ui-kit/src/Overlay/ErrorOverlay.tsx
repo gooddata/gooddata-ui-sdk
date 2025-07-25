@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, memo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { Button } from "../Button/index.js";
@@ -78,12 +78,10 @@ const ErrorOverlayWithIntl = injectIntl(ErrorOverlayCore);
 /**
  * @internal
  */
-export class ErrorOverlay extends React.PureComponent<IErrorOverlayProps> {
-    public render() {
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <ErrorOverlayWithIntl {...this.props} />
-            </IntlWrapper>
-        );
-    }
-}
+export const ErrorOverlay = memo(function ErrorOverlay(props: IErrorOverlayProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <ErrorOverlayWithIntl {...props} />
+        </IntlWrapper>
+    );
+});

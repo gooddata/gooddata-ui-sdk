@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -29,25 +29,18 @@ export interface IColorsSectionProps {
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
 
-class ColorsSection extends React.Component<IColorsSectionProps & WrappedComponentProps> {
-    public render() {
-        const { pushData, propertiesMeta } = this.props;
-
-        return (
-            <ConfigSection
-                title={messages.colors.id}
-                pushData={pushData}
-                propertiesMeta={propertiesMeta}
-                id="colors_section"
-                className="adi-color-configuration"
-            >
-                {this.renderSectionContents()}
-            </ConfigSection>
-        );
-    }
-
-    private onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
-        const { properties, pushData } = this.props;
+function ColorsSection({
+    colors,
+    pushData,
+    properties,
+    propertiesMeta,
+    hasMeasures,
+    showCustomPicker,
+    controlsDisabled,
+    isLoading,
+    intl,
+}: IColorsSectionProps & WrappedComponentProps) {
+    const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
         const { mappingHeader } = selectedColorItem;
         const result = getProperties(properties, mappingHeader, color);
 
@@ -59,15 +52,12 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
         pushData(message);
     };
 
-    private isColoredListVisible() {
-        const { colors, hasMeasures, controlsDisabled, isLoading } = this.props;
-
+    const isColoredListVisible = () => {
         return isLoading || (!controlsDisabled && colors && colors.colorPalette && hasMeasures);
-    }
+    };
 
-    private renderResetButton() {
-        const { controlsDisabled } = this.props;
-        const isDisabled = controlsDisabled || this.isDefaultColorMapping();
+    const renderResetButton = () => {
+        const isDisabled = controlsDisabled || isDefaultColorMapping();
 
         const classes = cx("gd-color-reset-colors-section", {
             disabled: isDisabled,
@@ -76,18 +66,16 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
         return (
             <div className={classes}>
                 <Button
-                    value={getTranslation(messages.resetColors.id, this.props.intl)}
+                    value={getTranslation(messages.resetColors.id, intl)}
                     className="gd-button-link s-reset-colors-button"
-                    onClick={this.onResetColors}
+                    onClick={onResetColors}
                     disabled={isDisabled}
                 />
             </div>
         );
-    }
+    };
 
-    private renderColoredList() {
-        const { colors, showCustomPicker, controlsDisabled, isLoading } = this.props;
-
+    const renderColoredList = () => {
         const inputItems = getColoredInputItems(colors);
         const colorPalette = colors?.colorPalette ? colors.colorPalette : [];
 
@@ -96,25 +84,23 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
                 <ColoredItemsList
                     colorPalette={colorPalette}
                     inputItems={inputItems}
-                    onSelect={this.onSelect}
+                    onSelect={onSelect}
                     showCustomPicker={showCustomPicker}
                     disabled={controlsDisabled}
                     isLoading={isLoading}
                 />
-                {this.renderResetButton()}
+                {renderResetButton()}
             </div>
         );
-    }
+    };
 
-    private isDefaultColorMapping() {
-        const { properties } = this.props;
+    const isDefaultColorMapping = () => {
         const colorMapping = properties?.controls?.colorMapping ?? [];
         return !colorMapping || colorMapping.length === 0;
-    }
+    };
 
-    private onResetColors = () => {
-        const { properties, pushData } = this.props;
-        if (this.isDefaultColorMapping()) {
+    const onResetColors = () => {
+        if (isDefaultColorMapping()) {
             return;
         }
         const propertiesWithoutColorMapping = set(cloneDeep(properties), "controls.colorMapping", undefined);
@@ -126,17 +112,27 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
         pushData(message);
     };
 
-    private renderUnsupportedColoredList() {
+    const renderUnsupportedColoredList = () => {
         return (
-            <div className="gd-color-unsupported">
-                {getTranslation(messages.unsupportedColors.id, this.props.intl)}
-            </div>
+            <div className="gd-color-unsupported">{getTranslation(messages.unsupportedColors.id, intl)}</div>
         );
-    }
+    };
 
-    private renderSectionContents() {
-        return this.isColoredListVisible() ? this.renderColoredList() : this.renderUnsupportedColoredList();
-    }
+    const renderSectionContents = () => {
+        return isColoredListVisible() ? renderColoredList() : renderUnsupportedColoredList();
+    };
+
+    return (
+        <ConfigSection
+            title={messages.colors.id}
+            pushData={pushData}
+            propertiesMeta={propertiesMeta}
+            id="colors_section"
+            className="adi-color-configuration"
+        >
+            {renderSectionContents()}
+        </ConfigSection>
+    );
 }
 
 export default injectIntl(ColorsSection);

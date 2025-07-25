@@ -80,20 +80,7 @@ export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: stri
 export const FLUID_LEGEND_THRESHOLD = 768;
 
 // @internal (undocumented)
-export class FluidLegend extends React_2.PureComponent<IFluidLegendProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-    // (undocumented)
-    renderPaging: () => React_2.ReactNode;
-    // (undocumented)
-    renderSeries: (itemWidth: number, visibleItemsCount: number) => React_2.ReactNode;
-    // (undocumented)
-    state: {
-        showAll: boolean;
-    };
-    // (undocumented)
-    toggleShowAll: () => void;
-}
+export const FluidLegend: React_2.NamedExoticComponent<IFluidLegendProps>;
 
 // @internal (undocumented)
 export function formatLegendLabel(value: number, format: string | undefined, diff: number, numericSymbols: string[]): string;
@@ -138,10 +125,7 @@ export function getValidColorPalette(colors?: string[], colorPalette?: IColorPal
 export const HeadlinePagination: React_2.FC<IHeadlinePaginationProps>;
 
 // @internal (undocumented)
-export class HeatmapLegend extends React_2.PureComponent<IHeatmapLegendProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const HeatmapLegend: React_2.NamedExoticComponent<IHeatmapLegendProps>;
 
 // @internal (undocumented)
 export interface IBaseLegendItem {
@@ -458,29 +442,7 @@ export function isValidMappedColor(colorItem: IColor, colorPalette: IColorPalett
 export type ItemBorderRadiusPredicate = (item: any) => boolean;
 
 // @internal (undocumented)
-export class Legend extends React_2.PureComponent<ILegendProps> {
-    // (undocumented)
-    static defaultProps: {
-        responsive: boolean;
-        legendItemsEnabled: any;
-        height: number;
-        showFluidLegend: boolean;
-        isLegendOverHeight: boolean;
-        enableBorderRadius: boolean;
-    };
-    // (undocumented)
-    getSeries: () => any;
-    // (undocumented)
-    onItemClick: (item: ISeriesItem) => void;
-    // (undocumented)
-    render(): React_2.ReactNode;
-    // (undocumented)
-    renderFluid: () => React_2.ReactNode;
-    // (undocumented)
-    renderPopUpLegend: () => React_2.ReactNode;
-    // (undocumented)
-    renderStatic: () => React_2.ReactNode;
-}
+export const Legend: React_2.NamedExoticComponent<ILegendProps>;
 
 // @internal (undocumented)
 export type LegendOptionsItemType = IBaseLegendItem | IHeatmapLegendItem;

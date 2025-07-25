@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { useState, useCallback, memo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
@@ -43,85 +43,184 @@ interface IDropdownBodyState {
 
 const DefaultValuePrecision = 6;
 
-class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropdownBodyState> {
-    constructor(props: IDropdownBodyProps) {
-        super(props);
+const DropdownBodyWrapped = memo(function DropdownBodyWrapped(props: IDropdownBodyProps) {
+    const {
+        operator: propsOperator,
+        value,
+        usePercentage,
+        treatNullAsZeroValue,
+        valuePrecision = DefaultValuePrecision,
+    } = props;
 
-        const { operator, value, usePercentage, treatNullAsZeroValue } = props;
+    const trimToPrecision = useCallback(
+        (n: number): number => {
+            if (!n) {
+                return n;
+            }
+            return parseFloat(n.toFixed(valuePrecision));
+        },
+        [valuePrecision],
+    );
 
-        this.state = {
-            operator: operator || "ALL",
-            value: (usePercentage ? this.convertToPercentageValue(value, operator) : value) || {},
-            enabledTreatNullValuesAsZero: treatNullAsZeroValue,
-        };
-    }
+    const fromPercentToDecimal = useCallback((n: number): number => (n ? n / 100 : n), []);
 
-    public render() {
-        const { onCancel, warningMessage, displayTreatNullAsZeroOption, enableOperatorSelection, intl } =
-            this.props;
-        const { operator, enabledTreatNullValuesAsZero } = this.state;
+    const fromDecimalToPercent = useCallback((n: number): number => (n ? n * 100 : n), []);
 
-        return (
-            <div className="gd-mvf-dropdown-body gd-dialog gd-dropdown overlay s-mvf-dropdown-body">
-                <div className="gd-mvf-dropdown-content">
-                    {warningMessage ? (
-                        <div className="gd-mvf-dropdown-section">
-                            <WarningMessageComponent warningMessage={warningMessage} />
-                        </div>
-                    ) : null}
+    const convertToPercentageValue = useCallback(
+        (value: IMeasureValueFilterValue, operator: string): IMeasureValueFilterValue => {
+            if (!value) {
+                return value;
+            }
 
-                    <div className="gd-mvf-dropdown-section">
-                        <OperatorDropdown
-                            onSelect={this.handleOperatorSelection}
-                            operator={operator}
-                            isDisabled={!enableOperatorSelection}
-                        />
-                    </div>
+            return isComparisonConditionOperator(operator)
+                ? { value: trimToPrecision(fromDecimalToPercent(value.value)) }
+                : {
+                      from: trimToPrecision(fromDecimalToPercent(value.from)),
+                      to: trimToPrecision(fromDecimalToPercent(value.to)),
+                  };
+        },
+        [trimToPrecision, fromDecimalToPercent],
+    );
 
-                    {operator !== "ALL" ? (
-                        <div className="gd-mvf-dropdown-section">
-                            {this.renderInputSection()}{" "}
-                            {displayTreatNullAsZeroOption ? (
-                                <TreatNullValuesAsZeroCheckbox
-                                    onChange={this.handleTreatNullAsZeroClicked}
-                                    checked={enabledTreatNullValuesAsZero}
-                                    intl={intl}
-                                />
-                            ) : null}
-                        </div>
-                    ) : null}
-                </div>
-                <div className="gd-mvf-dropdown-footer">
-                    <Button
-                        className="gd-button-secondary gd-button-small s-mvf-dropdown-cancel"
-                        onClick={onCancel}
-                        value={intl.formatMessage({ id: "cancel" })}
-                    />
-                    <Button
-                        className="gd-button-action gd-button-small s-mvf-dropdown-apply"
-                        onClick={this.onApply}
-                        value={intl.formatMessage({ id: "apply" })}
-                        disabled={this.isApplyButtonDisabled()}
-                    />
-                </div>
-            </div>
-        );
-    }
+    const [state, setState] = useState<IDropdownBodyState>(() => ({
+        operator: propsOperator || "ALL",
+        value: (usePercentage ? convertToPercentageValue(value, propsOperator) : value) || {},
+        enabledTreatNullValuesAsZero: treatNullAsZeroValue,
+    }));
 
-    private renderInputSection = () => {
-        const { usePercentage, disableAutofocus, separators } = this.props;
+    const convertToRawValue = useCallback(
+        (value: IMeasureValueFilterValue, operator: string): IMeasureValueFilterValue => {
+            if (!value) {
+                return value;
+            }
+            return isComparisonConditionOperator(operator)
+                ? { value: trimToPrecision(fromPercentToDecimal(value.value)) }
+                : {
+                      from: trimToPrecision(fromPercentToDecimal(value.from)),
+                      to: trimToPrecision(fromPercentToDecimal(value.to)),
+                  };
+        },
+        [trimToPrecision, fromPercentToDecimal],
+    );
+
+    const isChanged = useCallback(
+        () =>
+            state.operator !== props.operator ||
+            state.enabledTreatNullValuesAsZero !== props.treatNullAsZeroValue,
+        [state.operator, state.enabledTreatNullValuesAsZero, props.operator, props.treatNullAsZeroValue],
+    );
+
+    const isApplyButtonDisabledForComparison = useCallback(() => {
+        const { value: stateValue = null } = state.value;
+
+        if (stateValue === null) {
+            return true;
+        }
+
+        if (props.value === null || isChanged()) {
+            return false;
+        }
+
+        if (props.usePercentage) {
+            return trimToPrecision(fromPercentToDecimal(stateValue)) === props.value.value;
+        }
+
+        return stateValue === props.value.value;
+    }, [state.value, props.value, props.usePercentage, isChanged, trimToPrecision, fromPercentToDecimal]);
+
+    const isApplyButtonDisabledForRange = useCallback(() => {
+        const { from = null, to = null } = state.value;
+
+        if (from === null || to === null) {
+            return true;
+        }
+
+        if (props.value === null || isChanged()) {
+            return false;
+        }
+
+        if (props.usePercentage) {
+            return (
+                trimToPrecision(fromPercentToDecimal(from)) === props.value.from &&
+                trimToPrecision(fromPercentToDecimal(to)) === props.value.to
+            );
+        }
+
+        return from === props.value.from && to === props.value.to;
+    }, [state.value, props.value, props.usePercentage, isChanged, trimToPrecision, fromPercentToDecimal]);
+
+    const isApplyButtonDisabledForAll = useCallback(() => {
+        return propsOperator === "ALL";
+    }, [propsOperator]);
+
+    const isApplyButtonDisabled = useCallback(() => {
+        const { operator } = state;
+
+        if (isComparisonConditionOperator(operator)) {
+            return isApplyButtonDisabledForComparison();
+        }
+
+        if (isRangeConditionOperator(operator)) {
+            return isApplyButtonDisabledForRange();
+        }
+
+        return isApplyButtonDisabledForAll();
+    }, [
+        state,
+        isApplyButtonDisabledForComparison,
+        isApplyButtonDisabledForRange,
+        isApplyButtonDisabledForAll,
+    ]);
+
+    const handleOperatorSelection = useCallback(
+        (operator: MeasureValueFilterOperator) => setState((prev) => ({ ...prev, operator })),
+        [],
+    );
+
+    const handleValueChange = useCallback((value: number) => {
+        setState((prev) => ({ ...prev, value: { ...prev.value, value } }));
+    }, []);
+
+    const handleFromChange = useCallback((from: number) => {
+        setState((prev) => ({ ...prev, value: { ...prev.value, from } }));
+    }, []);
+
+    const handleToChange = useCallback((to: number) => {
+        setState((prev) => ({ ...prev, value: { ...prev.value, to } }));
+    }, []);
+
+    const handleTreatNullAsZeroClicked = useCallback((checked: boolean) => {
+        setState((prev) => ({ ...prev, enabledTreatNullValuesAsZero: checked }));
+    }, []);
+
+    const onApply = useCallback(() => {
+        if (isApplyButtonDisabled()) {
+            return;
+        }
+
+        const { enabledTreatNullValuesAsZero, operator: stateOperator, value: stateValue } = state;
+        const { usePercentage } = props;
+
+        const finalOperator = stateOperator === "ALL" ? null : stateOperator;
+        const finalValue = usePercentage ? convertToRawValue(stateValue, stateOperator) : stateValue;
+
+        props.onApply(finalOperator, finalValue, enabledTreatNullValuesAsZero);
+    }, [isApplyButtonDisabled, state, props, convertToRawValue]);
+
+    const renderInputSection = useCallback(() => {
+        const { usePercentage, disableAutofocus, separators } = props;
         const {
             operator,
             value: { value = null, from = null, to = null },
-        } = this.state;
+        } = state;
 
         if (isComparisonConditionOperator(operator)) {
             return (
                 <ComparisonInput
                     value={value}
                     usePercentage={usePercentage}
-                    onValueChange={this.handleValueChange}
-                    onEnterKeyPress={this.onApply}
+                    onValueChange={handleValueChange}
+                    onEnterKeyPress={onApply}
                     disableAutofocus={disableAutofocus}
                     separators={separators}
                 />
@@ -132,9 +231,9 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
                     from={from}
                     to={to}
                     usePercentage={usePercentage}
-                    onFromChange={this.handleFromChange}
-                    onToChange={this.handleToChange}
-                    onEnterKeyPress={this.onApply}
+                    onFromChange={handleFromChange}
+                    onToChange={handleToChange}
+                    onEnterKeyPress={onApply}
                     disableAutofocus={disableAutofocus}
                     separators={separators}
                 />
@@ -142,153 +241,64 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
         }
 
         return null;
-    };
+    }, [props, state, handleValueChange, handleFromChange, handleToChange, onApply]);
 
-    private isApplyButtonDisabledForComparison() {
-        const { value = null } = this.state.value;
+    const { onCancel, warningMessage, displayTreatNullAsZeroOption, enableOperatorSelection, intl } = props;
+    const { operator, enabledTreatNullValuesAsZero } = state;
 
-        if (value === null) {
-            return true;
-        }
+    return (
+        <div className="gd-mvf-dropdown-body gd-dialog gd-dropdown overlay s-mvf-dropdown-body">
+            <div className="gd-mvf-dropdown-content">
+                {warningMessage ? (
+                    <div className="gd-mvf-dropdown-section">
+                        <WarningMessageComponent warningMessage={warningMessage} />
+                    </div>
+                ) : null}
 
-        if (this.props.value === null || this.isChanged()) {
-            return false;
-        }
+                <div className="gd-mvf-dropdown-section">
+                    <OperatorDropdown
+                        onSelect={handleOperatorSelection}
+                        operator={operator}
+                        isDisabled={!enableOperatorSelection}
+                    />
+                </div>
 
-        if (this.props.usePercentage) {
-            return this.trimToPrecision(this.fromPercentToDecimal(value)) === this.props.value.value;
-        }
-
-        return value === this.props.value.value;
-    }
-
-    private isApplyButtonDisabledForRange() {
-        const { from = null, to = null } = this.state.value;
-
-        if (from === null || to === null) {
-            return true;
-        }
-
-        if (this.props.value === null || this.isChanged()) {
-            return false;
-        }
-
-        if (this.props.usePercentage) {
-            return (
-                this.trimToPrecision(this.fromPercentToDecimal(from)) === this.props.value.from &&
-                this.trimToPrecision(this.fromPercentToDecimal(to)) === this.props.value.to
-            );
-        }
-
-        return from === this.props.value.from && to === this.props.value.to;
-    }
-
-    private isChanged = () =>
-        this.state.operator !== this.props.operator ||
-        this.state.enabledTreatNullValuesAsZero !== this.props.treatNullAsZeroValue;
-
-    private isApplyButtonDisabledForAll() {
-        return this.props.operator === "ALL";
-    }
-
-    private isApplyButtonDisabled = () => {
-        const { operator } = this.state;
-
-        if (isComparisonConditionOperator(operator)) {
-            return this.isApplyButtonDisabledForComparison();
-        }
-
-        if (isRangeConditionOperator(operator)) {
-            return this.isApplyButtonDisabledForRange();
-        }
-
-        return this.isApplyButtonDisabledForAll();
-    };
-
-    private handleOperatorSelection = (operator: MeasureValueFilterOperator) => this.setState({ operator });
-
-    private handleValueChange = (value: number) => {
-        this.setState({ value: { ...this.state.value, value } });
-    };
-
-    private handleFromChange = (from: number) => {
-        this.setState({ value: { ...this.state.value, from } });
-    };
-
-    private handleToChange = (to: number) => {
-        this.setState({ value: { ...this.state.value, to } });
-    };
-
-    private handleTreatNullAsZeroClicked = (checked: boolean) => {
-        this.setState({ enabledTreatNullValuesAsZero: checked });
-    };
-
-    private trimToPrecision = (n: number): number => {
-        const { valuePrecision = DefaultValuePrecision } = this.props;
-        if (!n) {
-            return n;
-        }
-        return parseFloat(n.toFixed(valuePrecision));
-    };
-
-    private fromPercentToDecimal = (n: number): number => (n ? n / 100 : n);
-
-    private fromDecimalToPercent = (n: number): number => (n ? n * 100 : n);
-
-    private convertToRawValue = (
-        value: IMeasureValueFilterValue,
-        operator: string,
-    ): IMeasureValueFilterValue => {
-        if (!value) {
-            return value;
-        }
-        return isComparisonConditionOperator(operator)
-            ? { value: this.trimToPrecision(this.fromPercentToDecimal(value.value)) }
-            : {
-                  from: this.trimToPrecision(this.fromPercentToDecimal(value.from)),
-                  to: this.trimToPrecision(this.fromPercentToDecimal(value.to)),
-              };
-    };
-
-    private convertToPercentageValue = (
-        value: IMeasureValueFilterValue,
-        operator: string,
-    ): IMeasureValueFilterValue => {
-        if (!value) {
-            return value;
-        }
-
-        return isComparisonConditionOperator(operator)
-            ? { value: this.trimToPrecision(this.fromDecimalToPercent(value.value)) }
-            : {
-                  from: this.trimToPrecision(this.fromDecimalToPercent(value.from)),
-                  to: this.trimToPrecision(this.fromDecimalToPercent(value.to)),
-              };
-    };
-
-    private onApply = () => {
-        if (this.isApplyButtonDisabled()) {
-            return;
-        }
-
-        const { enabledTreatNullValuesAsZero, operator: stateOperator, value: stateValue } = this.state;
-        const { usePercentage } = this.props;
-
-        const operator = stateOperator === "ALL" ? null : stateOperator;
-        const value = usePercentage ? this.convertToRawValue(stateValue, stateOperator) : stateValue;
-
-        this.props.onApply(operator, value, enabledTreatNullValuesAsZero);
-    };
-}
+                {operator !== "ALL" ? (
+                    <div className="gd-mvf-dropdown-section">
+                        {renderInputSection()}{" "}
+                        {displayTreatNullAsZeroOption ? (
+                            <TreatNullValuesAsZeroCheckbox
+                                onChange={handleTreatNullAsZeroClicked}
+                                checked={enabledTreatNullValuesAsZero}
+                                intl={intl}
+                            />
+                        ) : null}
+                    </div>
+                ) : null}
+            </div>
+            <div className="gd-mvf-dropdown-footer">
+                <Button
+                    className="gd-button-secondary gd-button-small s-mvf-dropdown-cancel"
+                    onClick={onCancel}
+                    value={intl.formatMessage({ id: "cancel" })}
+                />
+                <Button
+                    className="gd-button-action gd-button-small s-mvf-dropdown-apply"
+                    onClick={onApply}
+                    value={intl.formatMessage({ id: "apply" })}
+                    disabled={isApplyButtonDisabled()}
+                />
+            </div>
+        </div>
+    );
+});
 
 export const DropdownBodyWithIntl = injectIntl(DropdownBodyWrapped);
 
-export class DropdownBody extends React.PureComponent<IDropdownBodyOwnProps> {
-    public render() {
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <DropdownBodyWithIntl {...this.props} />
-            </IntlWrapper>
-        );
-    }
-}
+export const DropdownBody = memo(function DropdownBody(props: IDropdownBodyOwnProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <DropdownBodyWithIntl {...props} />
+        </IntlWrapper>
+    );
+});

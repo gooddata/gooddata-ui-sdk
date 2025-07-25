@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
 import { AxisType } from "../../../interfaces/AxisType.js";
@@ -18,44 +18,9 @@ export interface ILabelSubsection {
     showFormat?: boolean;
 }
 
-class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComponentProps> {
-    public render() {
-        const { axisVisible, axisLabelsEnabled } = this.getControlProperties();
-
-        return (
-            <ConfigSubsection
-                axisType={this.props.axis}
-                title={messages.axisLabels.id}
-                valuePath={`${this.props.axis}.labelsEnabled`}
-                properties={this.props.properties}
-                pushData={this.props.pushData}
-                canBeToggled={true}
-                toggledOn={axisLabelsEnabled}
-                toggleDisabled={this.props.disabled || !axisVisible}
-                showDisabledMessage={!this.props.configPanelDisabled && this.props.disabled}
-            >
-                {this.props.showFormat ? (
-                    <LabelFormatControl
-                        disabled={this.props.disabled}
-                        configPanelDisabled={this.props.configPanelDisabled}
-                        axis={this.props.axis}
-                        properties={this.props.properties}
-                        pushData={this.props.pushData}
-                    />
-                ) : null}
-                <LabelRotationControl
-                    disabled={this.props.disabled}
-                    configPanelDisabled={this.props.configPanelDisabled}
-                    axis={this.props.axis}
-                    properties={this.props.properties}
-                    pushData={this.props.pushData}
-                />
-            </ConfigSubsection>
-        );
-    }
-
-    private getControlProperties(): IVisualizationProperties {
-        const axisProperties = this.props.properties?.controls?.[this.props.axis];
+function LabelSubsection(props: ILabelSubsection & WrappedComponentProps) {
+    const getControlProperties = (): IVisualizationProperties => {
+        const axisProperties = props.properties?.controls?.[props.axis];
 
         const axisVisible = axisProperties?.visible ?? true;
         const axisLabelsEnabled = axisProperties?.labelsEnabled ?? true;
@@ -64,7 +29,40 @@ class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComp
             axisVisible,
             axisLabelsEnabled,
         };
-    }
+    };
+
+    const { axisVisible, axisLabelsEnabled } = getControlProperties();
+
+    return (
+        <ConfigSubsection
+            axisType={props.axis}
+            title={messages.axisLabels.id}
+            valuePath={`${props.axis}.labelsEnabled`}
+            properties={props.properties}
+            pushData={props.pushData}
+            canBeToggled={true}
+            toggledOn={axisLabelsEnabled}
+            toggleDisabled={props.disabled || !axisVisible}
+            showDisabledMessage={!props.configPanelDisabled && props.disabled}
+        >
+            {props.showFormat ? (
+                <LabelFormatControl
+                    disabled={props.disabled}
+                    configPanelDisabled={props.configPanelDisabled}
+                    axis={props.axis}
+                    properties={props.properties}
+                    pushData={props.pushData}
+                />
+            ) : null}
+            <LabelRotationControl
+                disabled={props.disabled}
+                configPanelDisabled={props.configPanelDisabled}
+                axis={props.axis}
+                properties={props.properties}
+                pushData={props.pushData}
+            />
+        </ConfigSubsection>
+    );
 }
 
-export default injectIntl(LabelSubsection);
+export default memo(injectIntl(LabelSubsection));

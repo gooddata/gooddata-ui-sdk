@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React, { Component } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useEffect, useRef, useState } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop.js";
@@ -31,71 +31,53 @@ export interface ILegacySingleSelectListItemState {
  * @internal
  * @deprecated This component is deprecated use SingleSelectListItem instead
  */
-export class LegacySingleSelectListItem extends Component<
-    ILegacySingleSelectListItemProps,
-    ILegacySingleSelectListItemState
-> {
-    static defaultProps = {
-        onMouseOver: noop,
-        onMouseOut: noop,
+export function LegacySingleSelectListItem({
+    source,
+    selected,
+    onSelect,
+    onMouseOver = noop,
+    onMouseOut = noop,
+}: ILegacySingleSelectListItemProps): JSX.Element {
+    const [isOverflowed, setIsOverflowed] = useState(false);
+    const nodeRef = useRef<HTMLSpanElement>(null);
+
+    const checkOverflow = (): void => {
+        if (nodeRef.current) {
+            // Checks if ellipsis has been applicated on title span
+            const newIsOverflowed = nodeRef.current.offsetWidth < nodeRef.current.scrollWidth;
+            if (newIsOverflowed !== isOverflowed) {
+                setIsOverflowed(newIsOverflowed);
+            }
+        }
     };
 
-    readonly state = { isOverflowed: false };
-    node: HTMLSpanElement = null;
+    useEffect(() => {
+        checkOverflow();
+    });
 
-    public componentDidMount(): void {
-        this.checkOverflow();
-    }
-
-    public componentDidUpdate(): void {
-        this.checkOverflow();
-    }
-
-    private getClassNames(): string {
-        const { source, selected } = this.props;
+    const getClassNames = (): string => {
         const generatedSeleniumClass = `s-${stringUtils.simplifyText(source.title)}`;
 
         return cx("gd-list-item", generatedSeleniumClass, { "is-selected": selected });
-    }
-
-    private checkOverflow(): void {
-        if (this.node) {
-            // Checks if ellipsis has been applicated on title span
-            const isOverflowed = this.node.offsetWidth < this.node.scrollWidth;
-            if (isOverflowed !== this.state.isOverflowed) {
-                // eslint-disable-next-line react/no-did-mount-set-state
-                this.setState({
-                    isOverflowed,
-                });
-            }
-        }
-    }
-
-    private handleSelect = (): void => {
-        this.props.onSelect(this.props.source);
     };
 
-    private handleMouseOver = (): void => {
-        this.props.onMouseOver(this.props.source);
+    const handleSelect = (): void => {
+        onSelect(source);
     };
 
-    private handleMouseOut = (): void => {
-        this.props.onMouseOut(this.props.source);
+    const handleMouseOver = (): void => {
+        onMouseOver(source);
     };
 
-    private renderTitle() {
-        const { title } = this.props.source;
-        const titleElement = (
-            <span
-                ref={(node) => {
-                    this.node = node;
-                }}
-            >
-                {title}
-            </span>
-        );
+    const handleMouseOut = (): void => {
+        onMouseOut(source);
+    };
 
-        if (this.state.isOverflowed) {
+    const renderTitle = () => {
+        const { title } = source;
+        const titleElement = <span ref={nodeRef}>{title}</span>;
+
+        if (isOverflowed) {
             return (
                 <BubbleHoverTrigger>
                     {titleElement}
@@ -114,29 +96,27 @@ export class LegacySingleSelectListItem extends Component<
         }
 
         return titleElement;
-    }
+    };
 
-    private renderIcon(icon: string) {
+    const renderIcon = (icon: string) => {
         if (icon) {
             const iconClasses = cx("gd-list-icon", icon);
             return <span className={iconClasses} />;
         }
 
         return null;
-    }
+    };
 
-    public render(): JSX.Element {
-        const icon = this.props.source?.icon;
-        return (
-            <div
-                className={this.getClassNames()}
-                onClick={this.handleSelect}
-                onMouseOver={this.handleMouseOver}
-                onMouseOut={this.handleMouseOut}
-            >
-                {this.renderIcon(icon)}
-                {this.renderTitle()}
-            </div>
-        );
-    }
+    const icon = source?.icon;
+    return (
+        <div
+            className={getClassNames()}
+            onClick={handleSelect}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+        >
+            {renderIcon(icon)}
+            {renderTitle()}
+        </div>
+    );
 }

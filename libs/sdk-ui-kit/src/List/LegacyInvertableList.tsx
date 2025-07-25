@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React, { Component } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useState, useCallback } from "react";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import keyBy from "lodash/keyBy.js";
@@ -90,294 +90,357 @@ export interface ILegacyInvertableListState {
  * @internal
  * @deprecated This component is deprecated use InvertableList instead
  */
-export class LegacyInvertableList<T> extends Component<
-    ILegacyInvertableListProps<T> & WrappedComponentProps,
-    ILegacyInvertableListState
-> {
-    static defaultProps = {
-        actionsAsCheckboxes: false,
-        className: undefined as string,
-        getItemKey: guidFor,
-        isInverted: true,
-        isLoading: false,
-        isLoadingClass: LoadingMessage,
-        isMobile: false,
-        limitHitWarningClass: injectIntl<"intl", ILimitHitWarningProps & WrappedComponentProps>(
-            LimitHitWarning,
-        ),
-        listItemClass: LegacyMultiSelectListItem,
-        noItemsFound: false,
-        noItemsFoundClass: injectIntl(NoItemsFound),
-        onRangeChange: noop,
-        onSelect: noop,
-        searchPlaceholder: "",
-        searchString: "",
-        selection: [] as any[],
-        showSearchField: true,
-        smallSearch: false,
-        tagName: "",
-        selectAllCheckbox: false,
-        isSearchFieldAutoFocused: true,
-    };
+export function LegacyInvertableList<T>({
+    className = undefined as string,
+    filteredItemsCount,
+    getItemKey = guidFor,
+    height,
+    isInverted = true,
+    isLoading = false,
+    isLoadingClass: IsLoadingClass = LoadingMessage,
+    isMobile = false,
+    itemHeight,
+    items,
+    itemsCount,
+    limitHitWarningClass: LimitHitWarningClass = injectIntl<
+        "intl",
+        ILimitHitWarningProps & WrappedComponentProps
+    >(LimitHitWarning),
+    listItemClass = LegacyMultiSelectListItem,
+    maxSelectionSize,
+    noItemsFound,
+    noItemsFoundClass: NoItemsFoundClass = injectIntl(NoItemsFound),
+    onRangeChange = noop,
+    onSearch,
+    onSelect = noop,
+    searchPlaceholder = "",
+    searchString = "",
+    selection = [] as any[],
+    showSearchField = true,
+    smallSearch = false,
+    tagName = "",
+    width,
+    actionsAsCheckboxes,
+    selectAllCheckbox,
+    rowItem,
+    isSearchFieldAutoFocused = true,
+}: ILegacyInvertableListProps<T>) {
+    const [notifyLimitHit, setNotifyLimitHit] = useState<boolean>(false);
 
-    constructor(props: ILegacyInvertableListProps<T> & WrappedComponentProps) {
-        super(props);
+    const indexByKey = useCallback(
+        (items: Array<T> = []) => {
+            return keyBy(items, getItemKey);
+        },
+        [getItemKey],
+    );
 
-        this.state = {
-            notifyLimitHit: false,
-        };
-    }
+    const intersectItems = useCallback(
+        (items: ReadonlyArray<T>, otherItems: Array<T>) => {
+            const otherItemsMap = indexByKey(otherItems);
 
-    private onSelect = (item: T) => {
-        const newSelection = this.toggleItemInSelection(item);
-
-        if (newSelection.length <= this.props.maxSelectionSize) {
-            this.notifyUpstreamOfSelectionChange(newSelection);
-        }
-
-        if (newSelection.length >= this.props.maxSelectionSize) {
-            // Flash the limit exceeded info
-            this.setState({
-                notifyLimitHit: true,
+            return items.filter((item) => {
+                const itemKey = getItemKey(item);
+                return !!otherItemsMap[itemKey];
             });
+        },
+        [getItemKey, indexByKey],
+    );
 
-            // remove the class that causes flashing animation
-            setTimeout(() => {
-                this.setState({
-                    notifyLimitHit: false,
-                });
-            }, 1000);
-        }
-    };
+    const subtractItems = useCallback(
+        (items: ReadonlyArray<T>, otherItems: Array<T>) => {
+            const otherItemsMap = indexByKey(otherItems);
 
-    private onSelectAll = () => {
-        if (this.props.searchString) {
-            if (this.props.isInverted) {
-                this.shrinkSelection();
+            return items.filter((item) => {
+                const itemKey = getItemKey(item);
+                return !otherItemsMap[itemKey];
+            });
+        },
+        [getItemKey, indexByKey],
+    );
+
+    const toggleItemInSelection = useCallback(
+        (item: T) => {
+            const selectionMap = indexByKey(selection);
+            const itemKey = getItemKey(item);
+
+            if (selectionMap[itemKey]) {
+                delete selectionMap[itemKey];
             } else {
-                this.growSelection();
+                selectionMap[itemKey] = item;
             }
-        } else {
-            this.props.onSelect([], true);
-        }
-    };
 
-    private onSelectNone = () => {
-        if (this.props.searchString) {
-            if (this.props.isInverted) {
-                this.growSelection();
-            } else {
-                this.shrinkSelection();
-            }
-        } else {
-            this.props.onSelect([], false);
-        }
-    };
-
-    private onSelectOnly = (item: T) => {
-        this.props.onSelect([item], false);
-    };
-
-    // private onSearchChange(searchString: string) {
-    //     this.props.onSearch(searchString);
-    // }
-
-    private onRangeChange = (...args: [number, number]) => {
-        this.props.onRangeChange(this.props.searchString, ...args);
-    };
-
-    /**
-     * Remove selected visible items from selection.
-     */
-    private shrinkSelection() {
-        const { items, selection } = this.props;
-
-        const visibleSelection = this.intersectItems(items, selection);
-        const newSelection = this.subtractItems(selection, visibleSelection);
-
-        this.notifyUpstreamOfSelectionChange(newSelection);
-    }
-
-    private intersectItems(items: ReadonlyArray<T>, otherItems: Array<T>) {
-        const otherItemsMap = this.indexByKey(otherItems);
-
-        return items.filter((item) => {
-            const itemKey = this.props.getItemKey(item);
-            return !!otherItemsMap[itemKey];
-        });
-    }
-
-    private subtractItems(items: ReadonlyArray<T>, otherItems: Array<T>) {
-        const otherItemsMap = this.indexByKey(otherItems);
-
-        return items.filter((item) => {
-            const itemKey = this.props.getItemKey(item);
-            return !otherItemsMap[itemKey];
-        });
-    }
-
-    private indexByKey(items: Array<T> = []) {
-        return keyBy(items, this.props.getItemKey);
-    }
-
-    private toggleItemInSelection(item: T) {
-        const selectionMap = this.indexByKey(this.props.selection);
-        const itemKey = this.props.getItemKey(item);
-
-        if (selectionMap[itemKey]) {
-            delete selectionMap[itemKey];
-        } else {
-            selectionMap[itemKey] = item;
-        }
-
-        return values(selectionMap);
-    }
-
-    /**
-     * Add unselected visible items to the selection until selection size limit is reached.
-     */
-    private growSelection() {
-        const { maxSelectionSize, items, selection } = this.props;
-        const selectionSizeLeft = maxSelectionSize - selection.length;
-
-        const selectableItems = this.subtractItems(items, selection);
-        const itemsToSelect = take<T>(selectableItems, selectionSizeLeft);
-        const newSelection = [...selection, ...itemsToSelect];
-
-        this.notifyUpstreamOfSelectionChange(newSelection);
-    }
+            return values(selectionMap);
+        },
+        [getItemKey, indexByKey, selection],
+    );
 
     /**
      * If change in selection happens to select all or unselect all items it is converted
      * to the respective empty selection.
      */
-    private notifyUpstreamOfSelectionChange(newSelection: Array<T>) {
-        const { itemsCount, searchString } = this.props;
-        let { isInverted } = this.props;
-        let selection: Array<T>;
+    const notifyUpstreamOfSelectionChange = useCallback(
+        (newSelection: Array<T>) => {
+            let propsIsInverted = isInverted;
+            let selectionToReturn: Array<T>;
 
-        const lastItemSelected = !isInverted && !searchString && newSelection.length === itemsCount;
+            const lastItemSelected = !propsIsInverted && !searchString && newSelection.length === itemsCount;
 
-        if (lastItemSelected) {
-            selection = [];
-            isInverted = !isInverted;
+            if (lastItemSelected) {
+                selectionToReturn = [];
+                propsIsInverted = !propsIsInverted;
+            } else {
+                selectionToReturn = newSelection;
+            }
+
+            onSelect(selectionToReturn, propsIsInverted);
+        },
+        [isInverted, itemsCount, searchString, onSelect],
+    );
+
+    /**
+     * Add unselected visible items to the selection until selection size limit is reached.
+     */
+    const growSelection = useCallback(() => {
+        const selectionSizeLeft = maxSelectionSize - selection.length;
+
+        const selectableItems = subtractItems(items, selection);
+        const itemsToSelect = take<T>(selectableItems, selectionSizeLeft);
+        const newSelection = [...selection, ...itemsToSelect];
+
+        notifyUpstreamOfSelectionChange(newSelection);
+    }, [maxSelectionSize, items, selection, subtractItems, notifyUpstreamOfSelectionChange]);
+
+    /**
+     * Remove selected visible items from selection.
+     */
+    const shrinkSelection = useCallback(() => {
+        const visibleSelection = intersectItems(items, selection);
+        const newSelection = subtractItems(selection, visibleSelection);
+
+        notifyUpstreamOfSelectionChange(newSelection);
+    }, [items, intersectItems, selection, subtractItems, notifyUpstreamOfSelectionChange]);
+
+    const onSelectHandler = useCallback(
+        (item: T) => {
+            const newSelection = toggleItemInSelection(item);
+
+            if (newSelection.length <= maxSelectionSize) {
+                notifyUpstreamOfSelectionChange(newSelection);
+            }
+
+            if (newSelection.length >= maxSelectionSize) {
+                // Flash the limit exceeded info
+                setNotifyLimitHit(true);
+
+                // remove the class that causes flashing animation
+                setTimeout(() => {
+                    setNotifyLimitHit(false);
+                }, 1000);
+            }
+        },
+        [toggleItemInSelection, maxSelectionSize, notifyUpstreamOfSelectionChange],
+    );
+
+    const onSelectAll = useCallback(() => {
+        if (searchString) {
+            if (isInverted) {
+                shrinkSelection();
+            } else {
+                growSelection();
+            }
         } else {
-            selection = newSelection;
+            onSelect([], true);
         }
+    }, [searchString, isInverted, shrinkSelection, growSelection, onSelect]);
 
-        this.props.onSelect(selection, isInverted);
-    }
+    const onSelectNone = useCallback(() => {
+        if (searchString) {
+            if (isInverted) {
+                growSelection();
+            } else {
+                shrinkSelection();
+            }
+        } else {
+            onSelect([], false);
+        }
+    }, [searchString, isInverted, growSelection, shrinkSelection, onSelect]);
 
-    private isItemChecked(selectionMap: Record<string, any>, item: T) {
-        const key = this.props.getItemKey(item);
-        const itemInSelection = has(selectionMap, key);
+    const onSelectOnly = useCallback(
+        (item: T) => {
+            onSelect([item], false);
+        },
+        [onSelect],
+    );
 
-        // in inverted mode selection lists unchecked items
-        // in normal mode selection contains checked items
-        return this.props.isInverted ? !itemInSelection : itemInSelection;
-    }
+    // private onSearchChange(searchString: string) {
+    //     this.props.onSearch(searchString);
+    // }
 
-    private renderLimitHitWarning() {
-        const { maxSelectionSize, selection } = this.props;
+    const onRangeChangeHandler = useCallback(
+        (...args: [number, number]) => {
+            onRangeChange(searchString, ...args);
+        },
+        [onRangeChange, searchString],
+    );
+
+    const isItemChecked = useCallback(
+        (selectionMap: Record<string, any>, item: T) => {
+            const key = getItemKey(item);
+            const itemInSelection = has(selectionMap, key);
+
+            // in inverted mode selection lists unchecked items
+            // in normal mode selection contains checked items
+            return isInverted ? !itemInSelection : itemInSelection;
+        },
+        [getItemKey, isInverted],
+    );
+
+    const renderLimitHitWarning = useCallback(() => {
         const limitHit = selection.length >= maxSelectionSize;
 
         if (limitHit) {
-            return (
-                <this.props.limitHitWarningClass
-                    limit={maxSelectionSize}
-                    bounce={this.state.notifyLimitHit}
-                />
-            );
+            return <LimitHitWarningClass limit={maxSelectionSize} bounce={notifyLimitHit} />;
         }
 
         return null;
-    }
+    }, [maxSelectionSize, selection.length, LimitHitWarningClass, notifyLimitHit]);
 
-    private renderSearchField() {
-        return this.props.showSearchField ? (
+    const renderSearchField = useCallback(() => {
+        return showSearchField ? (
             <Input
-                autofocus={this.props.isSearchFieldAutoFocused}
+                autofocus={isSearchFieldAutoFocused}
                 className="gd-list-searchfield gd-flex-item-mobile s-attribute-filter-button-search-field"
                 clearOnEsc
                 isSearch
-                isSmall={this.props.smallSearch}
-                onChange={this.props.onSearch}
-                placeholder={this.props.searchPlaceholder}
-                value={this.props.searchString}
+                isSmall={smallSearch}
+                onChange={onSearch}
+                placeholder={searchPlaceholder}
+                value={searchString}
             />
         ) : null;
-    }
+    }, [showSearchField, isSearchFieldAutoFocused, smallSearch, onSearch, searchPlaceholder, searchString]);
 
-    private renderList() {
-        return this.props.isLoading ? (
-            this.renderLoading()
-        ) : (
-            <div className="gd-flex-item-stretch-mobile gd-flex-row-container-mobile">
-                {this.renderListOrNoItems()}
-                {this.renderLimitHitWarning()}
-            </div>
-        );
-    }
-
-    private renderListOrNoItems() {
-        const { items, searchString, filteredItemsCount, height, selection } = this.props;
-
+    const renderListOrNoItems = useCallback(() => {
         if (searchString && filteredItemsCount === 0) {
-            return <this.props.noItemsFoundClass height={height} />;
+            return <NoItemsFoundClass height={height} />;
         }
 
-        const selectionMap = this.indexByKey(selection);
-        const isChecked = this.isItemChecked.bind(this, selectionMap);
+        const selectionMap = indexByKey(selection);
+        const isChecked = (item: T) => isItemChecked(selectionMap, item);
 
         const listProps = {
-            ...this.props,
+            className,
+            filteredItemsCount,
+            getItemKey,
+            height,
+            isInverted,
+            isLoading,
+            isLoadingClass: IsLoadingClass,
+            isMobile,
+            itemHeight,
+            items,
             itemsCount: filteredItemsCount,
+            limitHitWarningClass: LimitHitWarningClass,
+            listItemClass,
+            maxSelectionSize,
+            noItemsFound,
+            noItemsFoundClass: NoItemsFoundClass,
+            onRangeChange,
+            onSearch,
+            onSelect,
+            searchPlaceholder,
+            searchString,
+            selection,
+            showSearchField,
+            smallSearch,
+            tagName,
+            width,
+            actionsAsCheckboxes,
+            selectAllCheckbox,
+            rowItem,
+            isSearchFieldAutoFocused,
         };
 
         return (
             <LegacyMultiSelectList
                 {...listProps}
-                onSelect={this.onSelect}
-                onSelectAll={this.onSelectAll}
-                onSelectNone={this.onSelectNone}
-                onSelectOnly={this.onSelectOnly}
+                onSelect={onSelectHandler}
+                onSelectAll={onSelectAll}
+                onSelectNone={onSelectNone}
+                onSelectOnly={onSelectOnly}
                 items={items}
                 isSelected={isChecked} // eslint-disable-line react/jsx-no-bind
                 isSearching={!!searchString.length}
-                listItemClass={this.props.listItemClass}
-                onRangeChange={this.onRangeChange}
-                tagName={this.props.tagName}
+                listItemClass={listItemClass}
+                onRangeChange={onRangeChangeHandler}
+                tagName={tagName}
             />
         );
-    }
+    }, [
+        searchString,
+        filteredItemsCount,
+        NoItemsFoundClass,
+        height,
+        indexByKey,
+        selection,
+        isItemChecked,
+        className,
+        getItemKey,
+        isInverted,
+        isLoading,
+        IsLoadingClass,
+        isMobile,
+        itemHeight,
+        items,
+        LimitHitWarningClass,
+        listItemClass,
+        maxSelectionSize,
+        noItemsFound,
+        onRangeChange,
+        onSearch,
+        onSelect,
+        searchPlaceholder,
+        showSearchField,
+        smallSearch,
+        tagName,
+        width,
+        actionsAsCheckboxes,
+        selectAllCheckbox,
+        rowItem,
+        isSearchFieldAutoFocused,
+        onSelectHandler,
+        onSelectAll,
+        onSelectNone,
+        onSelectOnly,
+        onRangeChangeHandler,
+    ]);
 
-    private renderLoading() {
-        return <this.props.isLoadingClass height={this.props.height} />;
-    }
+    const renderLoading = useCallback(() => {
+        return <IsLoadingClass height={height} />;
+    }, [IsLoadingClass, height]);
 
-    public render(): JSX.Element {
-        const { isMobile, className } = this.props;
-
-        const classNames = cx(className, {
-            "gd-flex-item-stretch-mobile": isMobile,
-            "gd-flex-row-container-mobile": isMobile,
-        });
-
-        return (
-            <div className={classNames}>
-                {this.renderSearchField()}
-                {this.renderList()}
+    const renderList = useCallback(() => {
+        return isLoading ? (
+            renderLoading()
+        ) : (
+            <div className="gd-flex-item-stretch-mobile gd-flex-row-container-mobile">
+                {renderListOrNoItems()}
+                {renderLimitHitWarning()}
             </div>
         );
-    }
+    }, [isLoading, renderListOrNoItems, renderLimitHitWarning, renderLoading]);
+
+    const classNames = cx(className, {
+        "gd-flex-item-stretch-mobile": isMobile,
+        "gd-flex-row-container-mobile": isMobile,
+    });
+
+    return (
+        <div className={classNames}>
+            {renderSearchField()}
+            {renderList()}
+        </div>
+    );
 }
 
-/**
- * @internal
- * @deprecated This component is deprecated use InvertableList instead
- */
-const LegacyInvertableListWithIntl = injectIntl(LegacyInvertableList) as <T>(
-    props: ILegacyInvertableListProps<T>,
-) => any;
-
-export default LegacyInvertableListWithIntl;
+export default LegacyInvertableList;

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { memo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize.js";
@@ -20,46 +20,19 @@ interface IOperatorDropdownItemOwnProps {
 
 type IOperatorDropdownItemProps = IOperatorDropdownItemOwnProps & WrappedComponentProps;
 
-export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownItemProps> {
-    public static defaultProps: any = {
-        onClick: noop,
-        bubbleText: null,
-    };
-
-    public render() {
-        const { intl, operator, selectedOperator, bubbleText } = this.props;
-
-        const className = cx(
-            "gd-list-item",
-            "gd-list-item-shortened",
-            `s-mvf-operator-${stringUtils.simplifyText(operator)}`,
-            {
-                "is-selected": selectedOperator === operator,
-            },
-        );
-
-        const operatorTranslationKey = getOperatorTranslationKey(operator);
-        const title =
-            operatorTranslationKey === undefined
-                ? operator
-                : intl.formatMessage({ id: operatorTranslationKey });
-
-        return (
-            <div className={className} onClick={this.handleOnClick}>
-                <div className={`gd-icon-${getOperatorIcon(operator)}`} title={title} />
-                <span title={title}>{capitalize(title)}</span>
-                {bubbleText ? this.renderBubble(bubbleText) : null}
-            </div>
-        );
-    }
-
-    public handleOnClick = (e: React.MouseEvent<HTMLDivElement>): void => {
-        const { operator, onClick } = this.props;
+export const OperatorDropdownItem = memo(function OperatorDropdownItem({
+    intl,
+    operator,
+    selectedOperator,
+    bubbleText = null,
+    onClick = noop,
+}: IOperatorDropdownItemProps) {
+    const handleOnClick = (e: React.MouseEvent<HTMLDivElement>): void => {
         onClick(operator);
         e.preventDefault();
     };
 
-    private renderBubble(message: string) {
+    const renderBubble = (message: string) => {
         return (
             <div className="tooltip-bubble">
                 <BubbleHoverTrigger tagName={"div"} showDelay={400} hideDelay={200}>
@@ -70,7 +43,28 @@ export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownI
                 </BubbleHoverTrigger>
             </div>
         );
-    }
-}
+    };
+
+    const className = cx(
+        "gd-list-item",
+        "gd-list-item-shortened",
+        `s-mvf-operator-${stringUtils.simplifyText(operator)}`,
+        {
+            "is-selected": selectedOperator === operator,
+        },
+    );
+
+    const operatorTranslationKey = getOperatorTranslationKey(operator);
+    const title =
+        operatorTranslationKey === undefined ? operator : intl.formatMessage({ id: operatorTranslationKey });
+
+    return (
+        <div className={className} onClick={handleOnClick}>
+            <div className={`gd-icon-${getOperatorIcon(operator)}`} title={title} />
+            <span title={title}>{capitalize(title)}</span>
+            {bubbleText ? renderBubble(bubbleText) : null}
+        </div>
+    );
+});
 
 export default injectIntl(OperatorDropdownItem);

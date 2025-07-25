@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import React, { memo, useCallback } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ChartOrientationType } from "@gooddata/sdk-ui-charts";
 import { IPushData } from "@gooddata/sdk-ui";
@@ -57,54 +57,55 @@ export function getAxesByChartOrientation(properties: IVisualizationProperties) 
     };
 }
 
-class OrientationDropdownControl extends React.PureComponent<
-    IOrientationDropdownControl & WrappedComponentProps
-> {
-    constructor(props: IOrientationDropdownControl & WrappedComponentProps) {
-        super(props);
-        this.handleOrientationChanged = this.handleOrientationChanged.bind(this);
-    }
+export const OrientationDropdownControl = memo(function OrientationDropdownControl({
+    disabled,
+    value,
+    showDisabledMessage,
+    properties,
+    pushData,
+    intl,
+}: IOrientationDropdownControl & WrappedComponentProps) {
+    const handleOrientationChanged = useCallback(
+        (data: IPushData) => {
+            const { properties: dataProperties } = data;
+            const isChanged =
+                dataProperties?.controls?.orientation?.position !==
+                properties?.controls?.orientation?.position;
 
-    private handleOrientationChanged(data: IPushData) {
-        const { properties } = data;
-        const isChanged =
-            properties?.controls?.orientation?.position !==
-            this.props.properties?.controls?.orientation?.position;
+            if (isChanged) {
+                const { xaxis, yaxis } = getAxesByChartOrientation(dataProperties);
+                const cloneProperties = {
+                    ...dataProperties,
+                    controls: {
+                        ...dataProperties.controls,
+                        ...(xaxis ? { xaxis } : {}),
+                        ...(yaxis ? { yaxis } : {}),
+                    },
+                };
+                pushData({ ...data, properties: cloneProperties });
+            } else {
+                pushData(data);
+            }
+        },
+        [properties, pushData],
+    );
 
-        if (isChanged) {
-            const { xaxis, yaxis } = getAxesByChartOrientation(properties);
-            const cloneProperties = {
-                ...properties,
-                controls: {
-                    ...properties.controls,
-                    ...(xaxis ? { xaxis } : {}),
-                    ...(yaxis ? { yaxis } : {}),
-                },
-            };
-            this.props.pushData({ ...data, properties: cloneProperties });
-        } else {
-            this.props.pushData(data);
-        }
-    }
+    const generateDropdownItems = useCallback(() => {
+        return getTranslatedDropdownItems(orientationDropdownItems, intl);
+    }, [intl]);
 
-    public render() {
-        return (
-            <DropdownControl
-                value={this.props.value}
-                valuePath="orientation.position"
-                labelText={messages.orientationTitle.id}
-                disabled={this.props.disabled}
-                properties={this.props.properties}
-                pushData={this.handleOrientationChanged}
-                items={this.generateDropdownItems()}
-                showDisabledMessage={this.props.showDisabledMessage}
-            />
-        );
-    }
-
-    private generateDropdownItems() {
-        return getTranslatedDropdownItems(orientationDropdownItems, this.props.intl);
-    }
-}
+    return (
+        <DropdownControl
+            value={value}
+            valuePath="orientation.position"
+            labelText={messages.orientationTitle.id}
+            disabled={disabled}
+            properties={properties}
+            pushData={handleOrientationChanged}
+            items={generateDropdownItems()}
+            showDisabledMessage={showDisabledMessage}
+        />
+    );
+});
 
 export default injectIntl(OrientationDropdownControl);

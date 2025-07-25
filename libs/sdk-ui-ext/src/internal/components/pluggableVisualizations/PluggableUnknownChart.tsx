@@ -16,25 +16,20 @@ import {
 } from "../../interfaces/Visualization.js";
 
 export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps & { onAfterRender?: () => void };
-export class LocalizedUnknownVisualizationClass extends React.Component<IIntlLocalizedUnknownVisualizationClass> {
-    private errorDetails: {
-        message: string;
-        description: string;
-    };
+function LocalizedUnknownVisualizationClass({
+    intl,
+    onAfterRender,
+}: IIntlLocalizedUnknownVisualizationClass) {
+    const errorDetails = React.useMemo(() => {
+        return newErrorMapping(intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN];
+    }, [intl]);
 
-    public componentDidMount(): void {
-        this.props.onAfterRender?.();
-    }
+    React.useEffect(() => {
+        onAfterRender?.();
+    }, [onAfterRender]);
 
-    constructor(props: IIntlLocalizedUnknownVisualizationClass) {
-        super(props);
-        this.errorDetails = newErrorMapping(props.intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN];
-    }
-
-    public render(): JSX.Element {
-        const { message, description } = this.errorDetails;
-        return <ErrorComponent message={message} description={description} />;
-    }
+    const { message, description } = errorDetails;
+    return <ErrorComponent message={message} description={description} />;
 }
 export const IntlLocalizedUnknownVisualizationClass = injectIntl<
     "intl",
