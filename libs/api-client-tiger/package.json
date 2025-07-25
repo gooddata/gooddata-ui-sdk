@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "10.36.0-alpha.5",
+    "version": "10.36.0-alpha.6",
     "author": "GoodData",
     "description": "API Client for GoodData Cloud and GoodData.CN",
     "repository": {
