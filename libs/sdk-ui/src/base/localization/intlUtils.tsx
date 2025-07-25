@@ -1,9 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { ReactNode } from "react";
 import { IntlProvider, createIntl, IntlShape } from "react-intl";
 import { ITranslations, messagesMap } from "./messagesMap.js";
 import { DefaultLocale, ILocale, isLocale } from "./Locale.js";
 import { wrapDisplayName } from "../react/wrapDisplayName.js";
+import type { IntlConfig } from "react-intl/src/types.js";
 
 /**
  * @internal
@@ -84,6 +85,39 @@ export function withIntl<P>(
     }
 
     return wrapDisplayName("withIntl", WrappedComponent)(WithIntl);
+}
+
+/**
+ * @internal
+ */
+export function Intl({
+    children,
+    customLocale,
+    customMessages,
+    forTest = false,
+}: {
+    children: ReactNode;
+    customLocale?: ILocale;
+    customMessages?: ITranslations;
+    forTest?: boolean;
+}) {
+    const locale = customLocale ?? DefaultLocale;
+    const messages = customMessages ?? resolveLocaleDefaultMessages(locale, messagesMap);
+
+    const props: IntlConfig = { locale, messages };
+
+    if (forTest) {
+        // this pattern is used, because sometimes, passing undefined can bypass the defaultProp in the other component,
+        // in this case IntlProvider, which would mean that our onError function will be undefined, which is not ideal.
+
+        props.onError = (error) => {
+            if (!error.message?.includes("MISSING_TRANSLATION")) {
+                console.warn("IntlProvider test error:", error);
+            }
+        };
+    }
+
+    return <IntlProvider {...props}>{children}</IntlProvider>;
 }
 
 /**

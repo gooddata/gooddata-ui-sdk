@@ -83,7 +83,7 @@ export interface IWithExecution<T> {
  */
 export function withExecution<T>(
     params: IWithExecution<T>,
-): (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => React.ComponentClass<T, any> {
+): (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => React.ComponentType<T> {
     const { execution, events, loadOnMount, shouldRefetch, window, exportTitle, enableExecutionCancelling } =
         params;
 

@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React, { Component } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React from "react";
 import pick from "lodash/pick.js";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -37,73 +37,67 @@ export interface ILegacySingleSelectListProps<T> {
  * @internal
  * @deprecated This component is deprecated use SingleSelectList instead
  */
-export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectListProps<T>> {
-    static defaultProps = {
-        className: "",
-        getItemKey: guidFor,
-        items: [] as any[],
-        itemsCount: 0,
-        listItemClass: LegacySingleSelectListItem,
-        onItemMouseOut: noop,
-        onItemMouseOver: noop,
-        onItemMouseEnter: noop,
-        onItemMouseLeave: noop,
-        onRangeChange: noop,
-        onScrollStart: noop,
-        onSelect: noop,
-        rowItem: null as React.ReactElement,
-        scrollToSelected: false,
-        selection: {},
+export function LegacySingleSelectList<T>(props: ILegacySingleSelectListProps<T>): JSX.Element {
+    const {
+        className = "",
+        getItemKey = guidFor,
+        items = [] as T[],
+        itemsCount = 0,
+        listItemClass = LegacySingleSelectListItem,
+        onItemMouseOut = noop,
+        onItemMouseOver = noop,
+        onItemMouseEnter = noop,
+        onItemMouseLeave = noop,
+        onRangeChange = noop,
+        onScrollStart = noop,
+        onSelect = noop,
+        rowItem = null as React.ReactElement,
+        scrollToSelected = false,
+        selection = {},
+    } = props;
+
+    const getSelectableItems = () => {
+        return items.map((source: T) => ({
+            source,
+            onSelect,
+            onMouseOver: onItemMouseOver,
+            onMouseOut: onItemMouseOut,
+            onMouseEnter: onItemMouseEnter,
+            onMouseLeave: onItemMouseLeave,
+            selected: source === selection,
+            id: getItemKey(source),
+        }));
     };
 
-    private getSelectableItems() {
-        const { props } = this;
+    const getClassNames = (): string => {
+        return cx("gd-list", className);
+    };
 
-        return props.items.map((source: T) => ({
-            source,
-            onSelect: props.onSelect,
-            onMouseOver: props.onItemMouseOver,
-            onMouseOut: props.onItemMouseOut,
-            onMouseEnter: props.onItemMouseEnter,
-            onMouseLeave: props.onItemMouseLeave,
-            selected: source === props.selection,
-            id: props.getItemKey(source),
-        }));
-    }
-
-    private getClassNames(): string {
-        return cx("gd-list", this.props.className);
-    }
-
-    private getRowItem() {
-        const { rowItem, listItemClass } = this.props;
-
+    const getRowItem = () => {
         return rowItem || <LegacyListItem listItemClass={listItemClass} />;
-    }
+    };
 
-    private getDataSource() {
-        const selectableItems = this.getSelectableItems();
+    const getDataSource = () => {
+        const selectableItems = getSelectableItems();
 
         return {
-            rowsCount: this.props.itemsCount || selectableItems.length,
+            rowsCount: itemsCount || selectableItems.length,
             getObjectAt: (rowIndex: number) => selectableItems[rowIndex],
         };
-    }
+    };
 
-    public render(): JSX.Element {
-        const rowItem = this.getRowItem();
-        const dataSource = this.getDataSource();
+    const rowItemElement = getRowItem();
+    const dataSource = getDataSource();
 
-        return (
-            <LegacyList
-                className={this.getClassNames()}
-                {...pick(this.props, ["width", "height", "itemHeight"])}
-                dataSource={dataSource}
-                rowItem={rowItem}
-                onScroll={this.props.onRangeChange}
-                onScrollStart={this.props.onScrollStart}
-                scrollToSelected={this.props.scrollToSelected}
-            />
-        );
-    }
+    return (
+        <LegacyList
+            className={getClassNames()}
+            {...pick(props, ["width", "height", "itemHeight"])}
+            dataSource={dataSource}
+            rowItem={rowItemElement}
+            onScroll={onRangeChange}
+            onScrollStart={onScrollStart}
+            scrollToSelected={scrollToSelected}
+        />
+    );
 }

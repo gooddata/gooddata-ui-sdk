@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import * as React from "react";
 import classnames from "classnames";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { Input, LoadingMask, Message, useHeaderSearch } from "@gooddata/sdk-ui-kit";
@@ -115,9 +115,9 @@ export type SearchOverlayProps = {
 /**
  * Core implementation of the SemanticSearchOverlay component.
  */
-const SearchOverlayCore: React.FC<
-    WrappedComponentProps & Omit<SearchOverlayProps, "locale" | "metadataTimezone">
-> = (props) => {
+function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataTimezone">) {
+    const intl = useIntl();
+
     const {
         onSelect,
         onSearch,
@@ -127,7 +127,6 @@ const SearchOverlayCore: React.FC<
         deepSearch,
         limit = LIMIT,
         className,
-        intl,
         threshold = THRESHOLD,
         renderFooter,
     } = props;
@@ -366,12 +365,7 @@ const SearchOverlayCore: React.FC<
             })()}
         </div>
     );
-};
-
-/**
- * Inject `intl` prop to the component.
- */
-const SearchOverlayWithIntl = injectIntl(SearchOverlayCore);
+}
 
 /**
  * A component that allows users to search for insights, metrics, attributes, and other objects using semantic search.
@@ -382,7 +376,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ locale, metadataTi
     return (
         <MetadataTimezoneProvider value={metadataTimezone}>
             <IntlWrapper locale={locale}>
-                <SearchOverlayWithIntl {...props} />
+                <SearchOverlayCore {...props} />
             </IntlWrapper>
         </MetadataTimezoneProvider>
     );

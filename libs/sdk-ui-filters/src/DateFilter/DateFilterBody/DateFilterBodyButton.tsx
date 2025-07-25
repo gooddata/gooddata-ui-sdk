@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 interface IDateFilterBodyButtonProps {
@@ -10,16 +10,21 @@ interface IDateFilterBodyButtonProps {
     disabled?: boolean;
 }
 
-const DateFilterBodyButtonComponent: React.FC<IDateFilterBodyButtonProps & WrappedComponentProps> = (
-    props,
-) => (
-    <Button
-        type="button"
-        value={props.intl.formatMessage({ id: props.messageId })}
-        className={props.className}
-        disabled={props.disabled}
-        onClick={props.onClick}
-    />
-);
+export function DateFilterBodyButton({
+    messageId,
+    className,
+    disabled,
+    onClick,
+}: IDateFilterBodyButtonProps) {
+    const intl = useIntl();
 
-export const DateFilterBodyButton = injectIntl(DateFilterBodyButtonComponent);
+    return (
+        <Button
+            type="button"
+            value={intl.formatMessage({ id: messageId })}
+            className={className}
+            disabled={disabled}
+            onClick={onClick}
+        />
+    );
+}

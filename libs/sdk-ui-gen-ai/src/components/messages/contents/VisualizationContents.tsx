@@ -16,7 +16,7 @@ import {
     useId,
 } from "@gooddata/sdk-ui-kit";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
 import { useIntl } from "react-intl";
 import {
@@ -31,7 +31,6 @@ import { makeTextContents, makeUserMessage, VisualizationContents } from "../../
 import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
 import {
-    RootState,
     newMessageAction,
     visualizationErrorAction,
     copyToClipboardAction,
@@ -58,19 +57,17 @@ export type VisualizationContentsProps = {
     messageId: string;
     useMarkdown?: boolean;
     showSuggestions?: boolean;
-    colorPalette?: IColorPalette;
-    onCopyToClipboard?: (data: { content: string }) => void;
 };
 
-const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> = ({
+export function VisualizationContentsComponent({
     content,
     messageId,
     useMarkdown,
-    colorPalette,
     showSuggestions = false,
-    onCopyToClipboard,
-}) => {
+}: VisualizationContentsProps) {
     const dispatch = useDispatch();
+    const colorPalette = useSelector(colorPaletteSelector);
+
     const className = cx(
         "gd-gen-ai-chat__messages__content",
         "gd-gen-ai-chat__messages__content--visualization",
@@ -186,7 +183,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                         visualization.savedVisualizationId,
                     );
                     copy(link);
-                    onCopyToClipboard?.({ content: link });
+                    dispatch(copyToClipboardAction?.({ content: link }));
                 }
                 setMenuButtonOpen(false);
                 break;
@@ -413,7 +410,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
             ) : null}
         </div>
     );
-};
+}
 
 const assertNever = (value: never): never => {
     throw new Error("Unknown visualization type: " + value);
@@ -578,16 +575,3 @@ const renderHeadline = (
         onLoadingChanged={onLoadingChanged}
     />
 );
-
-const mapDispatchToProps = {
-    onCopyToClipboard: copyToClipboardAction,
-};
-
-const mapStateToProps = (state: RootState): Pick<VisualizationContentsProps, "colorPalette"> => ({
-    colorPalette: colorPaletteSelector(state),
-});
-
-export const VisualizationContentsComponent: any = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(VisualizationContentsComponentCore);

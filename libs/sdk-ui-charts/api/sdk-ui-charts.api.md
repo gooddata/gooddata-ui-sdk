@@ -46,7 +46,6 @@ import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
-import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export const AreaChart: (props: IAreaChartProps) => React_2.JSX.Element;
@@ -58,7 +57,7 @@ export type AxisNamePosition = "high" | "low" | "middle";
 export const BarChart: (props: IBarChartProps) => React_2.JSX.Element;
 
 // @internal
-export const BaseChart: React_2.ComponentClass<IBaseChartProps, any>;
+export const BaseChart: React_2.ComponentType<IBaseChartProps>;
 
 // @internal (undocumented)
 export const BOTTOM = "bottom";
@@ -135,13 +134,13 @@ export function constructRepeaterBuckets(rowAttribute: IAttribute, columns: IAtt
 export function constructRepeaterDimensions(buckets: IBucket[]): IDimension[];
 
 // @internal (undocumented)
-export const CoreHeadline: React_2.ComponentClass<ICoreChartProps & ICoreHeadlineExtendedProps, any>;
+export const CoreHeadline: React_2.ComponentType<ICoreChartProps & ICoreHeadlineExtendedProps>;
 
 // @internal (undocumented)
 export const CoreRepeater: React_2.FC<ICoreRepeaterChartProps>;
 
 // @internal
-export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
+export const CoreXirr: React_2.ComponentType<ICoreChartProps>;
 
 // @internal
 export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig, enableNewHeadline: boolean) => IHeadlineProvider;
@@ -466,7 +465,7 @@ export interface ICoreHeadlineExtendedProps {
 }
 
 // @internal (undocumented)
-export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedComponentProps {
+export interface ICoreRepeaterChartProps extends ICoreChartProps {
     onColumnResized?: RepeaterColumnResizedCallback;
     // (undocumented)
     theme?: ITheme;

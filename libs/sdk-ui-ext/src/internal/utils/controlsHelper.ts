@@ -1,6 +1,6 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import set from "lodash/set.js";
-import { WrappedComponentProps } from "react-intl";
+import { IntlShape } from "react-intl";
 import { BucketNames, IPushData } from "@gooddata/sdk-ui";
 import {
     bucketItems,
@@ -36,7 +36,8 @@ function isInvalidOrMinMaxError(value: string, minNumberValue: number, maxNumber
 export function maxInputValidateAndPushData(
     data: IPushData,
     state: IMinMaxControlState,
-    props: IMinMaxControlProps & WrappedComponentProps,
+    props: IMinMaxControlProps,
+    intl: IntlShape,
     setState: (data: Partial<IMinMaxControlState>) => void,
     defaultState: IMinMaxControlState,
 ): void {
@@ -65,7 +66,7 @@ export function maxInputValidateAndPushData(
             maxScale: {
                 hasWarning: true,
                 // no error message for dash
-                warningMessage: maxIsMinus ? "" : getTranslation(messages.axisMaxWarning.id, props.intl),
+                warningMessage: maxIsMinus ? "" : getTranslation(messages.axisMaxWarning.id, intl),
                 incorrectValue: maxValue,
             },
         });
@@ -94,7 +95,8 @@ export function maxInputValidateAndPushData(
 export function minInputValidateAndPushData(
     data: IPushData,
     state: IMinMaxControlState,
-    props: IMinMaxControlProps & WrappedComponentProps,
+    props: IMinMaxControlProps,
+    intl: IntlShape,
     setState: (data: Partial<IMinMaxControlState>) => void,
     defaultState: IMinMaxControlState,
 ): void {
@@ -123,7 +125,7 @@ export function minInputValidateAndPushData(
             minScale: {
                 hasWarning: true,
                 // no error message for dash
-                warningMessage: minIsDash ? "" : getTranslation(messages.axisMinWarning.id, props.intl),
+                warningMessage: minIsDash ? "" : getTranslation(messages.axisMinWarning.id, intl),
                 incorrectValue: minValue,
             },
         });

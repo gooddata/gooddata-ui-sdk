@@ -1,5 +1,5 @@
-// (C) 2007-2023 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useCallback, useMemo } from "react";
 import isNumber from "lodash/isNumber.js";
 import defaultTo from "lodash/defaultTo.js";
 import clamp from "lodash/clamp.js";
@@ -16,90 +16,90 @@ const isNumericOrEmptyString = (value: unknown): value is number | "" => value =
 const UP_ARROW_CODE = 38;
 const DOWN_ARROW_CODE = 40;
 
-export class NumericInput extends React.Component<{
+export function NumericInput({
+    value,
+    onChange,
+    placeholder,
+    min,
+    max,
+}: {
     value: NumericInputValue;
     onChange: (value: NumericInputValue) => void;
     placeholder?: string;
     min?: number;
     max?: number;
-}> {
-    public render() {
-        const {
-            props,
-            handleChange,
-            handleKeyDown,
-            increment,
-            decrement,
-            isIncrementDisabled,
-            isDecrementDisabled,
-        } = this;
-        return (
-            <label className="gd-input gd-input-with-suffix gd-numeric-input">
-                <input
-                    type="text"
-                    className="gd-input-field"
-                    value={props.value}
-                    placeholder={props.placeholder}
-                    onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                />
-                <ArrowButton
-                    arrowDirection="increment"
-                    disabled={isIncrementDisabled()}
-                    onClick={increment}
-                />
-                <ArrowButton
-                    arrowDirection="decrement"
-                    disabled={isDecrementDisabled()}
-                    onClick={decrement}
-                />
-            </label>
-        );
-    }
+}) {
+    const isIncrementDisabled = useCallback(
+        () => !isNumericOrEmptyString(value) || (max !== undefined && isNumber(value) && value >= max),
+        [value, max],
+    );
 
-    private isIncrementDisabled = () =>
-        !isNumericOrEmptyString(this.props.value) ||
-        (this.props.max !== undefined && isNumber(this.props.value) && this.props.value >= this.props.max);
+    const isDecrementDisabled = useCallback(
+        () => !isNumericOrEmptyString(value) || (min !== undefined && isNumber(value) && value <= min),
+        [value, min],
+    );
 
-    private isDecrementDisabled = () =>
-        !isNumericOrEmptyString(this.props.value) ||
-        (this.props.min !== undefined && isNumber(this.props.value) && this.props.value <= this.props.min);
+    const clampToRange = useCallback(
+        (val: number): number => {
+            const upperBound = defaultTo(max, Infinity);
+            const lowerBound = defaultTo(min, -Infinity);
+            return clamp(val, lowerBound, upperBound);
+        },
+        [max, min],
+    );
 
-    private clampToRange = (value: number): number => {
-        const { max, min } = this.props;
-        const upperBound = defaultTo(max, Infinity);
-        const lowerBound = defaultTo(min, -Infinity);
-        return clamp(value, lowerBound, upperBound);
-    };
+    const handleChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            if (isIntermediateValue(e.target.value)) {
+                onChange(e.target.value);
+            }
+            const parsedValue = Number.parseInt(e.target.value, 10);
+            if (Number.isInteger(parsedValue)) {
+                onChange(parsedValue);
+            }
+        },
+        [onChange],
+    );
 
-    private handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (isIntermediateValue(e.target.value)) {
-            this.props.onChange(e.target.value);
-        }
-        const parsedValue = Number.parseInt(e.target.value, 10);
-        if (Number.isInteger(parsedValue)) {
-            this.props.onChange(parsedValue);
-        }
-    };
+    const valueChanger = useCallback(
+        (delta: number) => () => onChange(isIntermediateValue(value) ? delta : clampToRange(value + delta)),
+        [value, onChange, clampToRange],
+    );
 
-    private valueChanger = (delta: number) => () =>
-        this.props.onChange(
-            isIntermediateValue(this.props.value) ? delta : this.clampToRange(this.props.value + delta),
-        );
+    const increment = useCallback(() => valueChanger(1)(), [valueChanger]);
 
-    private increment = this.valueChanger(1);
+    const decrement = useCallback(() => valueChanger(-1)(), [valueChanger]);
 
-    private decrement = this.valueChanger(-1);
+    const keyDownHandlers: Record<string, () => void> = useMemo(
+        () => ({
+            [UP_ARROW_CODE]: () => unless(isIncrementDisabled, increment),
+            [DOWN_ARROW_CODE]: () => unless(isDecrementDisabled, decrement),
+        }),
+        [isIncrementDisabled, increment, isDecrementDisabled, decrement],
+    );
 
-    private keyDownHandlers: Record<string, () => void> = {
-        [UP_ARROW_CODE]: () => unless(this.isIncrementDisabled, this.increment),
-        [DOWN_ARROW_CODE]: () => unless(this.isDecrementDisabled, this.decrement),
-    };
+    const handleKeyDown = useCallback(
+        (e: React.KeyboardEvent<HTMLInputElement>) => {
+            const handler = keyDownHandlers[e.keyCode];
+            if (handler) {
+                handler();
+            }
+        },
+        [keyDownHandlers],
+    );
 
-    private handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const handler = this.keyDownHandlers[e.keyCode];
-        if (handler) {
-            handler();
-        }
-    };
+    return (
+        <label className="gd-input gd-input-with-suffix gd-numeric-input">
+            <input
+                type="text"
+                className="gd-input-field"
+                value={value}
+                placeholder={placeholder}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+            />
+            <ArrowButton arrowDirection="increment" disabled={isIncrementDisabled()} onClick={increment} />
+            <ArrowButton arrowDirection="decrement" disabled={isDecrementDisabled()} onClick={decrement} />
+        </label>
+    );
 }

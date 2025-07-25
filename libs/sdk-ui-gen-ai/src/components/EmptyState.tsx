@@ -1,10 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { makeAssistantMessage, makeTextContents, makeUserMessage } from "../model.js";
 import { setMessagesAction } from "../store/index.js";
-import { defineMessage, FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 
 const quickOptions = [
     {
@@ -27,14 +27,10 @@ const quickOptions = [
     },
 ];
 
-type EmptyStateDispatchProps = {
-    setMessagesAction: typeof setMessagesAction;
-};
+export function EmptyState() {
+    const intl = useIntl();
+    const dispatch = useDispatch();
 
-const EmptyStateComponent: React.FC<EmptyStateDispatchProps & WrappedComponentProps> = ({
-    setMessagesAction,
-    intl,
-}) => {
     return (
         <div className="gd-gen-ai-chat__messages__empty">
             <h3 className="gd-typography gd-typography--h1">
@@ -48,15 +44,19 @@ const EmptyStateComponent: React.FC<EmptyStateDispatchProps & WrappedComponentPr
                 <Button
                     key={option.title.id}
                     onClick={() =>
-                        setMessagesAction({
-                            messages: [
-                                makeUserMessage([makeTextContents(intl.formatMessage(option.question), [])]),
-                                makeAssistantMessage(
-                                    [makeTextContents(intl.formatMessage(option.answer), [])],
-                                    true,
-                                ),
-                            ],
-                        })
+                        dispatch(
+                            setMessagesAction({
+                                messages: [
+                                    makeUserMessage([
+                                        makeTextContents(intl.formatMessage(option.question), []),
+                                    ]),
+                                    makeAssistantMessage(
+                                        [makeTextContents(intl.formatMessage(option.answer), [])],
+                                        true,
+                                    ),
+                                ],
+                            }),
+                        )
                     }
                     variant="secondary"
                 >
@@ -68,10 +68,4 @@ const EmptyStateComponent: React.FC<EmptyStateDispatchProps & WrappedComponentPr
             ))}
         </div>
     );
-};
-
-const mapDispatchToProps: EmptyStateDispatchProps = {
-    setMessagesAction,
-};
-
-export const EmptyState: React.FC = connect(null, mapDispatchToProps)(injectIntl(EmptyStateComponent));
+}

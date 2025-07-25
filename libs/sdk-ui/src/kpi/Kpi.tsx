@@ -1,11 +1,11 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IMeasure, INullableFilter, ISeparators } from "@gooddata/sdk-model";
 import { IRawExecuteProps, IWithLoadingEvents, RawExecute } from "../execution/index.js";
 import { FormattedNumber } from "./FormattedNumber.js";
 import { KpiError } from "./KpiError.js";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import isNil from "lodash/isNil.js";
 import isArray from "lodash/isArray.js";
 import {
@@ -24,7 +24,7 @@ import { invariant } from "ts-invariant";
 
 const KpiLoading = () => <LoadingComponent inline={true} />;
 
-const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = (props) => {
+const CoreKpi: React.FC<IKpiProps> = (props) => {
     const {
         backend,
         workspace,
@@ -37,8 +37,9 @@ const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = (props) => {
         onLoadingChanged,
         onLoadingFinish,
         onLoadingStart,
-        intl,
     } = props;
+
+    const intl = useIntl();
 
     invariant(
         backend && workspace,
@@ -105,13 +106,11 @@ const getMeasureFormat = (result: DataViewFacade) => {
     return headerItems?.[0]?.measureHeaderItem?.format;
 };
 
-const IntlKpi = injectIntl(CoreKpi);
-
 const RenderKpi: React.FC<IKpiProps> = (props) => {
     const { locale } = props;
     return (
         <IntlWrapper locale={locale}>
-            <IntlKpi {...props} />
+            <CoreKpi {...props} />
         </IntlWrapper>
     );
 };

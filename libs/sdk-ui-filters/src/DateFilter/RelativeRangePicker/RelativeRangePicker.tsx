@@ -11,7 +11,7 @@ import {
     findRelativeDateFilterOptionByValue,
     getRelativeDateFilterItems,
 } from "../DynamicSelect/utils.js";
-import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
 import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu.js";
 import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces/index.js";
@@ -150,9 +150,14 @@ const RelativeRangePickerSelect = React.memo((props: IRelativeRangePickerSelectP
 
 const mobileVisibleItemsRange = 5;
 
-const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & WrappedComponentProps> = (props) => {
-    const { selectedFilterOption, intl, isMobile, accessibilityConfig, id, onSelectedFilterOptionChange } =
-        props;
+export function RelativeRangePicker({
+    selectedFilterOption,
+    isMobile,
+    accessibilityConfig,
+    id,
+    onSelectedFilterOptionChange,
+}: IRelativeRangePickerProps) {
+    const intl = useIntl();
 
     const getItems = useMemo(
         () => getItemsFactory(selectedFilterOption.granularity, isMobile, intl),
@@ -333,6 +338,4 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
             />
         </div>
     );
-};
-
-export const RelativeRangePicker = injectIntl(RelativeRangePickerComponent);
+}

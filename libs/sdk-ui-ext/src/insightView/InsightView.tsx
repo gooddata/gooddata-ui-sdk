@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
 import {
     IInsight,
     idRef,
@@ -42,7 +41,7 @@ interface IInsightViewCoreState {
     visualizationError: GoodDataSdkError | undefined;
 }
 
-const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (props) => {
+function InsightViewCore(props: IInsightViewProps) {
     const {
         insight,
         backend,
@@ -255,9 +254,9 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
             </div>
         </div>
     );
-};
+}
 
-export const IntlInsightView = withMapboxToken(withContexts(injectIntl(InsightViewCore)));
+export const IntlInsightView = withMapboxToken(withContexts(InsightViewCore));
 
 /**
  * Renders insight which was previously created and saved in the Analytical Designer.

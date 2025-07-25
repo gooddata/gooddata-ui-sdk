@@ -13,10 +13,7 @@ export interface ISdkComponentProps {
 }
 
 // @public (undocumented)
-export class SdkComponent extends React_2.Component<ISdkComponentProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export function SdkComponent({ message }: ISdkComponentProps): React_2.JSX.Element;
 
 // (No @packageDocumentation comment for this package)
 

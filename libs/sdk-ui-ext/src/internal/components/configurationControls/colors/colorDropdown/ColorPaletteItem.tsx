@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo, useRef, useEffect } from "react";
 import { IColor, IColorFromPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import cx from "classnames";
 
@@ -11,70 +11,60 @@ export interface IColorPaletteItemProps {
     onColorSelected: (color: IColor) => void;
 }
 
-export default class ColorPaletteItem extends React.PureComponent<IColorPaletteItemProps> {
-    private itemRef: any;
+export const ColorPaletteItem = memo(function ColorPaletteItem(props: IColorPaletteItemProps) {
+    const itemRef = useRef<any>();
 
-    constructor(props: IColorPaletteItemProps) {
-        super(props);
-        this.itemRef = (React as any).createRef();
-    }
+    useEffect(() => {
+        scrollSelectedItemIntoParent();
+    });
 
-    public render() {
-        return (
-            <div
-                aria-label={this.getRgbStringFromPaletteItem()}
-                ref={this.itemRef}
-                onClick={this.onColorSelected}
-                style={{
-                    backgroundColor: this.getRgbStringFromPaletteItem(),
-                }}
-                className={this.getClassNames()}
-            />
-        );
-    }
-
-    public componentDidMount(): void {
-        this.scrollSelectedItemIntoParent();
-    }
-
-    private scrollSelectedItemIntoParent() {
-        if (
-            this.props.selected &&
-            this.itemRef.current &&
-            this.itemRef.current.parentNode &&
-            this.isItemVisible()
-        ) {
-            const target = this.itemRef.current;
+    const scrollSelectedItemIntoParent = () => {
+        if (props.selected && itemRef.current && itemRef.current.parentNode && isItemVisible()) {
+            const target = itemRef.current;
             target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop - ITEM_MARGIN;
         }
-    }
+    };
 
-    private isItemVisible() {
-        const target = this.itemRef.current;
+    const isItemVisible = () => {
+        const target = itemRef.current;
         const offset = target.offsetTop - target.parentNode.offsetTop;
         const itemHeight = target.clientHeight;
         const parentHeight = target.parentNode.clientHeight;
 
         return parentHeight < offset + itemHeight;
-    }
+    };
 
-    private getClassNames() {
-        return cx("gd-color-list-item", `s-color-list-item-${this.props.paletteItem.guid}`, {
-            "gd-color-list-item-active": this.props.selected,
+    const getClassNames = () => {
+        return cx("gd-color-list-item", `s-color-list-item-${props.paletteItem.guid}`, {
+            "gd-color-list-item-active": props.selected,
         });
-    }
+    };
 
-    private getRgbStringFromPaletteItem() {
-        const { r, g, b } = this.props.paletteItem.fill;
+    const getRgbStringFromPaletteItem = () => {
+        const { r, g, b } = props.paletteItem.fill;
         return `rgb(${r},${g},${b})`;
-    }
+    };
 
-    private onColorSelected = () => {
+    const onColorSelected = () => {
         const selectedItem: IColorFromPalette = {
             type: "guid",
-            value: this.props.paletteItem.guid,
+            value: props.paletteItem.guid,
         };
 
-        this.props.onColorSelected(selectedItem);
+        props.onColorSelected(selectedItem);
     };
-}
+
+    return (
+        <div
+            aria-label={getRgbStringFromPaletteItem()}
+            ref={itemRef}
+            onClick={onColorSelected}
+            style={{
+                backgroundColor: getRgbStringFromPaletteItem(),
+            }}
+            className={getClassNames()}
+        />
+    );
+});
+
+export default ColorPaletteItem;
