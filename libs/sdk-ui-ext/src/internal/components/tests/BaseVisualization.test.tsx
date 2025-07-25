@@ -149,7 +149,7 @@ describe("BaseVisualization", () => {
         const columnAddBucketItemsCall = vi.fn();
         class DummyColumn extends DummyClass {
             constructor() {
-                super(DummyVisConstruct);
+                super(DummyVisConstruct as unknown as IVisConstruct);
                 columnConstructorCall();
             }
 

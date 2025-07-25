@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import {
     ColumnWidthItem,
@@ -31,7 +31,10 @@ describe("updateColumnDefinitionsWithWidths", () => {
                         ReferenceMd.ForecastCategory,
                         ReferenceData.ForecastCategory.Include.uri,
                     ),
-                    newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.EastCoast.uri),
+                    newAttributeColumnLocator(
+                        ReferenceMd.Region.Default,
+                        ReferenceData.Region.EastCoast.uri!,
+                    ),
                 ],
                 200,
             ),

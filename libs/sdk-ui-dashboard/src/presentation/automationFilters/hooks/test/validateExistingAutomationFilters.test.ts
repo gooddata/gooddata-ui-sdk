@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import { createIntlMock } from "@gooddata/sdk-ui";
 import {
     dashboardFilterLocalIdentifier,
     FilterContextItem,
@@ -140,14 +139,6 @@ const changedAttributeFilterContextItem: FilterContextItem = {
 
 const commonInsightAllTimeDateFilter = newAllTimeFilter(commonDataSetRef);
 const commonInsightNonAllTimeDateFilter = newRelativeDateFilter(commonDataSetRef, "GDC.time.date", 1, 2);
-const commonInsightChangedNonAllTimeDateFilter = newRelativeDateFilter(
-    commonDataSetRef,
-    "GDC.time.date",
-    3,
-    4,
-);
-
-const nonCommonInsightAllTimeDateFilter = newAllTimeFilter(nonCommonDataSetRef);
 const nonCommonInsightNonAllTimeDateFilter = newRelativeDateFilter(
     nonCommonDataSetRef,
     "GDC.time.date",

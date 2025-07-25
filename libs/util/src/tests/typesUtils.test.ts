@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { expect, describe, it } from "vitest";
 import { combineGuards } from "../typesUtils.js";
 
@@ -8,16 +8,16 @@ type Dog = { beTheBest: () => "dogdogdog" };
 
 type Animal = Bird | Insect | Dog;
 
-const isBird = (animal: Animal): animal is Bird => {
-    return "fly" in animal;
+const isBird = (animal: unknown): animal is Bird => {
+    return "fly" in (animal as Animal);
 };
 
-const isInsect = (animal: Animal): animal is Insect => {
-    return "annoy" in animal;
+const isInsect = (animal: unknown): animal is Insect => {
+    return "annoy" in (animal as Animal);
 };
 
-const isDog = (animal: Animal): animal is Dog => {
-    return "beTheBest" in animal;
+const isDog = (animal: unknown): animal is Dog => {
+    return "beTheBest" in (animal as Animal);
 };
 
 const dog: Dog = {

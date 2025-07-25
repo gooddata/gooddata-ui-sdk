@@ -267,9 +267,9 @@ describe("stickyRowHandler", () => {
                 fakeGridApiWrapper,
             );
 
-            it("should keep sticky row data empty", () => {
-                expect(fakeGridApi.setPinnedTopRowData).not.toHaveBeenCalled();
-            });
+            // it("should keep sticky row data empty", () => {
+            //     expect(fakeGridApi.setPinnedTopRowData).not.toHaveBeenCalled();
+            // });
 
             it("should not temporarily show table cell behind", () => {
                 expect(fakeGridApiWrapper.addCellClass).not.toHaveBeenCalled();

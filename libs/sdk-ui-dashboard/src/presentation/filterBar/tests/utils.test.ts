@@ -1,8 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { describe, it, expect, vi } from "vitest";
 import cloneDeep from "lodash/cloneDeep.js";
 import {
     DashboardAttributeFilterConfigModeValues,
+    DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
 } from "@gooddata/sdk-model";
 
@@ -84,6 +85,7 @@ describe("utils", () => {
                     filterBarAttributeFilterIndexes,
                     DashboardDateFilterConfigModeValues.HIDDEN,
                     effectedAttributeFiltersModeMap,
+                    {} as unknown as Map<string, DashboardDateFilterConfigMode>,
                 ),
             ).toBe(true);
         });
@@ -94,12 +96,13 @@ describe("utils", () => {
                     [
                         ...filterBarAttributeFilterIndexes,
                         {
-                            type: "attributeFilterPlaceholder",
+                            type: "filterPlaceholder",
                             filterIndex: 2,
                         },
                     ],
                     DashboardDateFilterConfigModeValues.HIDDEN,
                     effectedAttributeFiltersModeMap,
+                    {} as unknown as Map<string, DashboardDateFilterConfigMode>,
                 ),
             ).toBe(false);
         });
@@ -110,6 +113,7 @@ describe("utils", () => {
                     filterBarAttributeFilterIndexes,
                     DashboardDateFilterConfigModeValues.READONLY,
                     effectedAttributeFiltersModeMap,
+                    {} as unknown as Map<string, DashboardDateFilterConfigMode>,
                 ),
             ).toBe(false);
         });
@@ -126,6 +130,7 @@ describe("utils", () => {
                     filterBarAttributeFilterIndexes,
                     DashboardDateFilterConfigModeValues.HIDDEN,
                     attributeFiltersModeMap,
+                    {} as unknown as Map<string, DashboardDateFilterConfigMode>,
                 ),
             ).toBe(false);
         });

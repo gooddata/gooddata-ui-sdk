@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { describe, it, expect, vi, afterEach } from "vitest";
@@ -7,6 +7,7 @@ import { PluggableWaterfallChart } from "../PluggableWaterfallChart.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
+import { IVisConstruct } from "src/internal/interfaces/Visualization.js";
 
 describe("PluggableWaterfallChart", () => {
     const mockElement = document.createElement("div");
@@ -27,7 +28,7 @@ describe("PluggableWaterfallChart", () => {
     };
 
     function createComponent(props = defaultProps) {
-        return new PluggableWaterfallChart(props);
+        return new PluggableWaterfallChart(props as unknown as IVisConstruct);
     }
 
     afterEach(() => {

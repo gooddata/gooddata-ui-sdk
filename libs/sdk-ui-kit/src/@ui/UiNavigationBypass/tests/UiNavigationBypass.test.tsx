@@ -2,11 +2,11 @@
 
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { IntlProvider } from "react-intl";
 import { describe, it, expect, vi } from "vitest";
 import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
-import { UiNavigationBypass } from "../UiNavigationBypass";
+import { UiNavigationBypass } from "../UiNavigationBypass.js";
 
 describe("UiNavigationBypass", () => {
     const items = [

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
 
@@ -58,7 +58,7 @@ describe("PluggableAreaChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
-    };
+    } as unknown as IVisConstruct;
 
     const executionFactory = dummyBackend().workspace("PROJECTID").execution();
 

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { DEFAULT_DATE_FORMAT } from "../../constants/Platform.js";
@@ -48,7 +48,7 @@ describe("ExtendedDateFilterBody", () => {
             onApplyClick: vi.fn(),
             onCancelClick: vi.fn(),
             closeDropdown: vi.fn(),
-        };
+        } as unknown as IDateFilterBodyProps;
         const Wrapped = withIntl(DateFilterBody);
         return render(<Wrapped {...mockProps} {...props} />);
     };

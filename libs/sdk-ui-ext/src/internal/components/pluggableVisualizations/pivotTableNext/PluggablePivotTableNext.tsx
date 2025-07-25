@@ -331,8 +331,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             return;
         }
 
-        const { customVisualizationConfig = {}, theme, custom } = options;
-        const drillableItems = custom?.drillableItems;
+        const { customVisualizationConfig = {}, theme } = options;
         const execution = this.getExecution(options, insight, executionFactory);
 
         // Extract bucket data to send down the pivot table
@@ -367,7 +366,6 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             columns,
             filters,
             sortBy,
-            drillableItems,
             config: tableConfig,
             theme,
         };

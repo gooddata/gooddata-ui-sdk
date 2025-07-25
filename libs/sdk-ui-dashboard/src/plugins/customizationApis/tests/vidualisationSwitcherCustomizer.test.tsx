@@ -5,11 +5,11 @@ import { idRef, IVisualizationSwitcherWidget } from "@gooddata/sdk-model";
 import { render } from "@testing-library/react";
 import { invariant } from "ts-invariant";
 
-import { DefaultVisualizationSwitcherCustomizer } from "../visualizationSwitcherCustomizer";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types";
+import { DefaultVisualizationSwitcherCustomizer } from "../visualizationSwitcherCustomizer.js";
+import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //

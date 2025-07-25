@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { describe, it, expect, vi, afterAll, beforeAll } from "vitest";
 import "vitest-dom/extend-expect";
 

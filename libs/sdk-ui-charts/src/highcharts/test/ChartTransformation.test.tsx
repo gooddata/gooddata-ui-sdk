@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -14,17 +14,26 @@ import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace"
 import * as fixtures from "../../../__mocks__/fixtures.js";
 import { recordedDataFacade } from "../../../__mocks__/recordings.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-const BarChartNoAttributes = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.SingleMeasure);
-const BarChartView = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy);
+const BarChartNoAttributes = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BarChart.SingleMeasure as unknown as ScenarioRecording,
+);
+const BarChartView = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy as unknown as ScenarioRecording,
+);
 const BarChartMultipleMeasures = recordedDataFacade(
-    ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures,
+    ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures as unknown as ScenarioRecording,
 );
-const BarChartTwoMeasures = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy);
+const BarChartTwoMeasures = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy as unknown as ScenarioRecording,
+);
 const BarChartViewAndStack = recordedDataFacade(
-    ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+    ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy as unknown as ScenarioRecording,
 );
-const PieChartSingleMeasure = recordedDataFacade(ReferenceRecordings.Scenarios.PieChart.SingleMeasure);
+const PieChartSingleMeasure = recordedDataFacade(
+    ReferenceRecordings.Scenarios.PieChart.SingleMeasure as unknown as ScenarioRecording,
+);
 
 /**
  * This mock enables us to test props as parameters of the called chart function

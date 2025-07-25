@@ -3,11 +3,11 @@
 import { describe, it, expect, vi } from "vitest";
 import { dummyBackend } from "@gooddata/sdk-backend-base";
 
-import { dashboardInitialize } from "../dashboardInitialize";
-import { DashboardContext } from "../../../../types/commonTypes";
+import { dashboardInitialize } from "../dashboardInitialize.js";
+import { DashboardContext } from "../../../../types/commonTypes.js";
 
 vi.mock("../../../widgets/common/loadInsight.js", () => ({
-    loadInsight: async (ctx: DashboardContext, ref: any) => {
+    loadInsight: async (_ctx: DashboardContext, ref: any) => {
         return {
             insight: {
                 ref,
@@ -21,10 +21,10 @@ vi.mock("../../../widgets/common/loadInsight.js", () => ({
 describe("adhocDashboard", () => {
     const ctx: DashboardContext = {
         backend: dummyBackend(),
-        dashboardRef: null,
+        dashboardRef: undefined,
         clientId: "client",
         workspace: "workspace",
-        filterContextRef: null,
+        filterContextRef: undefined,
         config: {
             initialContent: [],
         },

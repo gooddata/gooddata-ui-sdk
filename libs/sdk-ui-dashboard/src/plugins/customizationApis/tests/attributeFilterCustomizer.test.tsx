@@ -16,7 +16,7 @@ import {
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 
 import { DefaultAttributeFiltersCustomizer } from "../attributeFiltersCustomizer.js";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //

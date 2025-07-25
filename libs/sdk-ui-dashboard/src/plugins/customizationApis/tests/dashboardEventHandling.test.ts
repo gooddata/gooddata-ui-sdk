@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { DefaultDashboardEventHandling } from "../dashboardEventHandling.js";
 import { DashboardEventHandler, singleEventTypeHandler } from "../../../model/index.js";
@@ -134,8 +134,8 @@ describe("dashboard event handling", () => {
      * by the tests above (and in a simpler fashion); handler creation logic is the same.
      */
     describe("after registration", () => {
-        let registerFn: vi.Mock;
-        let unregisterFn: vi.Mock;
+        let registerFn: ReturnType<typeof vi.fn>;
+        let unregisterFn: ReturnType<typeof vi.fn>;
         let Facade: DefaultDashboardEventHandling;
 
         beforeEach(() => {

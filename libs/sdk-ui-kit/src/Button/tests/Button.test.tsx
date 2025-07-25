@@ -14,7 +14,7 @@ describe("ReactButton", () => {
         it("should call onClick callback on click", async () => {
             const onClick = vi.fn();
             renderButton({
-                type: "primary",
+                type: "primary" as "button" | "submit" | "reset",
                 disabled: false,
                 onClick,
             });
@@ -28,7 +28,7 @@ describe("ReactButton", () => {
         it("should not call onClick callback on click when disabled", async () => {
             const onClick = vi.fn();
             renderButton({
-                type: "primary",
+                type: "primary" as "button" | "submit" | "reset",
                 disabled: true,
                 onClick,
             });
@@ -43,7 +43,7 @@ describe("ReactButton", () => {
     describe("render as link", () => {
         it("it should be possible to render as anchor", () => {
             renderButton({
-                type: "link",
+                type: "link" as "button" | "submit" | "reset",
                 tagName: "a",
                 value: "My link",
             });
@@ -53,7 +53,7 @@ describe("ReactButton", () => {
 
         it("it should be rendered as HTML button by default", () => {
             renderButton({
-                type: "link",
+                type: "link" as "button" | "submit" | "reset",
                 value: "My link",
             });
 

@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { DialogListItemBasic } from "../DialogListItemBasic.js";
 import { IDialogListItemComponentProps } from "../typings.js";
 import { describe, it, expect, vi } from "vitest";

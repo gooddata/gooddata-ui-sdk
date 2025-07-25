@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { getMVS } from "../../_util/test/helper.js";
 import { IColorMapping } from "../../../../interfaces/index.js";
@@ -11,11 +11,13 @@ import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace"
 import range from "lodash/range.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { describe, it, expect } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 describe("ScatterPlotColorStrategy", () => {
     it("should create palette with same color from first measure for all attribute elements", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.ScatterPlot.XAndYAxisMeasuresAndAttribute,
+            ReferenceRecordings.Scenarios.ScatterPlot
+                .XAndYAxisMeasuresAndAttribute as unknown as ScenarioRecording,
         );
         const { viewByAttribute } = getMVS(dv);
         const type = "scatter";
@@ -54,7 +56,8 @@ describe("ScatterPlotColorStrategy", () => {
 
     it("should create palette with different colors from all segmentBy attribute elements", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.ScatterPlot.XAndYAxisMeasuresAttributeAndSegmentation,
+            ReferenceRecordings.Scenarios.ScatterPlot
+                .XAndYAxisMeasuresAttributeAndSegmentation as unknown as ScenarioRecording,
         );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "scatter";

@@ -43,7 +43,6 @@ vi.mock("../HighChartsRenderer.js", () => {
         width,
         afterRender,
         zoomable,
-        locale,
     }) => {
         // Call callbacks to simulate component lifecycle
         if (onLegendReady) {
@@ -178,7 +177,6 @@ vi.mock("highcharts/modules/dependency-wheel.js", () => ({}));
 import { HighChartsRenderer, FLUID_LEGEND_THRESHOLD } from "../HighChartsRenderer.js";
 import { getHighchartsOptions } from "../../chartTypes/_chartCreators/highChartsCreators.js";
 import * as chartModule from "../Chart.js";
-import * as legendModule from "@gooddata/sdk-ui-vis-commons";
 
 // Helper function to create component
 function createComponent(customProps: any = {}, zoomable = false) {
@@ -290,7 +288,7 @@ describe("HighChartsRenderer", () => {
 
     it("should use custom Chart renderer", () => {
         const chartRenderer = vi.fn().mockReturnValue(<div data-testid="custom-chart">Custom Chart</div>);
-        const { getByTestId } = render(createComponent({ chartRenderer }));
+        render(createComponent({ chartRenderer }));
         expect(chartRenderer).toHaveBeenCalledTimes(1);
         expect(chartRenderer).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -304,7 +302,7 @@ describe("HighChartsRenderer", () => {
 
     it("should use custom Legend renderer", () => {
         const legendRenderer = vi.fn().mockReturnValue(<div data-testid="custom-legend">Custom Legend</div>);
-        const { getByTestId } = render(
+        render(
             createComponent({
                 legend: {
                     enabled: true,

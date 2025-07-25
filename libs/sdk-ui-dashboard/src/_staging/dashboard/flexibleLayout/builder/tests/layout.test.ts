@@ -10,7 +10,7 @@ import {
     widgetWithNestedLayout,
 } from "./utils.js";
 import { describe, it, expect } from "vitest";
-import { serializeLayoutSectionPath } from "../../../../layout/coordinates";
+import { serializeLayoutSectionPath } from "../../../../layout/coordinates.js";
 import { IDashboardLayoutItemBuilder, IDashboardLayoutSectionBuilder } from "../interfaces.js";
 
 describe("DashboardLayoutBuilder", () => {
@@ -141,7 +141,7 @@ describe("DashboardLayoutBuilder", () => {
         it("should add a section at the provided path", () => {
             const createSectionWithNestedLayout = (
                 layoutSectionBuilder: IDashboardLayoutSectionBuilder<any>,
-                title,
+                title: string,
             ) => {
                 const createItemWithNestedLayout = (itemBuilder: IDashboardLayoutItemBuilder<any>) => {
                     const nestedLayoutBuilder = createEmptyDashboardLayoutBuilder()
@@ -194,7 +194,7 @@ describe("DashboardLayoutBuilder", () => {
         it("should remove the section from the nested layout", () => {
             const createSectionWithNestedLayout = (
                 layoutSectionBuilder: IDashboardLayoutSectionBuilder<any>,
-                title,
+                title: string,
             ) => {
                 const createItemWithNestedLayout = (itemBuilder: IDashboardLayoutItemBuilder<any>) => {
                     const nestedLayoutBuilder = createEmptyDashboardLayoutBuilder()
@@ -252,7 +252,7 @@ describe("DashboardLayoutBuilder", () => {
         it("should modify the section in nested layout", () => {
             const createSectionWithNestedLayout = (
                 layoutSectionBuilder: IDashboardLayoutSectionBuilder<any>,
-                title,
+                title: string,
             ) => {
                 const createItemWithNestedLayout = (itemBuilder: IDashboardLayoutItemBuilder<any>) => {
                     const nestedLayoutBuilder = createEmptyDashboardLayoutBuilder()
@@ -313,7 +313,7 @@ describe("DashboardLayoutBuilder", () => {
         it("should move the section in nested layout", () => {
             const createSectionWithNestedLayout = (
                 layoutSectionBuilder: IDashboardLayoutSectionBuilder<any>,
-                title,
+                title: string,
             ) => {
                 const createItemWithNestedLayout = (itemBuilder: IDashboardLayoutItemBuilder<any>) => {
                     const nestedLayoutBuilder = createEmptyDashboardLayoutBuilder()

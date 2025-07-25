@@ -147,7 +147,7 @@ describe("mapDataViewToAgGridRowData", () => {
         });
 
         it("should create row data for two measures with row attribute", async () => {
-            const rowData = await getRowData({
+            await getRowData({
                 measures: [ReferenceMd.Amount, ReferenceMd.Won],
                 rows: [ReferenceMd.Product.Name],
             });

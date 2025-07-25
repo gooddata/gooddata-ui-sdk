@@ -25,6 +25,7 @@ import {
     ISortItem,
     newAttributeSort,
     ISettings,
+    ITheme,
 } from "@gooddata/sdk-model";
 import { defaultImport } from "default-import";
 
@@ -467,7 +468,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             measureGroupDimension,
         };
 
-        const pivotTableProps: ICorePivotTableProps = {
+        const pivotTableProps: ICorePivotTableProps & { theme: ITheme } = {
             ...this.createCorePivotTableProps(),
             execution,
             drillableItems,

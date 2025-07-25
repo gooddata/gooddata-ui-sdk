@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { generateTooltipSankeyChartFn } from "../../_chartOptions/chartTooltips.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
@@ -6,11 +6,13 @@ import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
 import { DEFAULT_TOOLTIP_CONTENT_WIDTH } from "./sankeyChart.fixture.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import { describe, it, expect } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 describe("SankeyChart tooltip", () => {
     it("should render tooltip for node correctly", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.SankeyChart.MeasureAttributeFromAndAttributeTo,
+            ReferenceRecordings.Scenarios.SankeyChart
+                .MeasureAttributeFromAndAttributeTo as unknown as ScenarioRecording,
         );
         const { measureGroup, viewByAttribute, viewByParentAttribute } = getMVSForViewByTwoAttributes(dv);
         const tooltipFn = generateTooltipSankeyChartFn(
@@ -32,7 +34,8 @@ describe("SankeyChart tooltip", () => {
 
     it("should render tooltip for node correctly ( show in percent )", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.SankeyChart.MeasureAttributeFromAndAttributeTo,
+            ReferenceRecordings.Scenarios.SankeyChart
+                .MeasureAttributeFromAndAttributeTo as unknown as ScenarioRecording,
         );
         const { measureGroup, viewByAttribute, viewByParentAttribute } = getMVSForViewByTwoAttributes(dv);
         const measureItem = cloneDeep(measureGroup.items[0]);
@@ -52,7 +55,8 @@ describe("SankeyChart tooltip", () => {
 
     it("should render tooltip for connection correctly", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.SankeyChart.MeasureAttributeFromAndAttributeTo,
+            ReferenceRecordings.Scenarios.SankeyChart
+                .MeasureAttributeFromAndAttributeTo as unknown as ScenarioRecording,
         );
         const { measureGroup, viewByAttribute, viewByParentAttribute } = getMVSForViewByTwoAttributes(dv);
         const tooltipFn = generateTooltipSankeyChartFn(
@@ -75,7 +79,8 @@ describe("SankeyChart tooltip", () => {
 
     it("should render tooltip for connection correctly ( show in percent )", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.SankeyChart.MeasureAttributeFromAndAttributeTo,
+            ReferenceRecordings.Scenarios.SankeyChart
+                .MeasureAttributeFromAndAttributeTo as unknown as ScenarioRecording,
         );
         const { measureGroup, viewByAttribute, viewByParentAttribute } = getMVSForViewByTwoAttributes(dv);
         const measureItem = cloneDeep(measureGroup.items[0]);

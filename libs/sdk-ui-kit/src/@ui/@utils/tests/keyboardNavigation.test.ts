@@ -2,7 +2,7 @@
 
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
-import { makeMenuKeyboardNavigation } from "../keyboardNavigation";
+import { makeMenuKeyboardNavigation } from "../keyboardNavigation.js";
 
 describe("makeMenuKeyboardNavigation", () => {
     // Helper function to create a keyboard event

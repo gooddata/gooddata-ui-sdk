@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { act, render } from "@testing-library/react";
 import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";
@@ -15,7 +15,7 @@ import {
     newMeasureValueFilter,
     newRankingFilter,
 } from "@gooddata/sdk-model";
-import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
@@ -37,7 +37,8 @@ const intlMock = createIntlMock({
 describe("AggregationsMenu", () => {
     const attributeColumnId = "c_0";
     const fixture = recordedDataFacade(
-        ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndTwoColumnAttributes,
+        ReferenceRecordings.Scenarios.PivotTable
+            .SingleMeasureWithTwoRowAndTwoColumnAttributes as ScenarioRecording,
         DataViewFirstPage,
     );
     const tableDescriptor = TableDescriptor.for(fixture, "empty value");
@@ -139,7 +140,7 @@ describe("AggregationsMenu", () => {
 
     it("should render menu when table has column attributes but not rows", () => {
         const fixture = recordedDataFacade(
-            ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithColumnAttribute,
+            ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithColumnAttribute as ScenarioRecording,
             DataViewFirstPage,
         );
         const tableDescriptor = TableDescriptor.for(fixture, "empty value");

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IHeaderPredicateContext } from "../HeaderPredicate.js";
 import { barChartForDrillTests } from "../../../../__mocks__/fixtures.js";
 import {
@@ -178,7 +178,7 @@ export const attributeDescriptor: IAttributeDescriptor = {
             ref: uriRef("/attributeElementUri"),
         },
     },
-};
+} as IAttributeDescriptor;
 
 export const attributeHeaderItem: IResultAttributeHeader = {
     attributeHeaderItem: {

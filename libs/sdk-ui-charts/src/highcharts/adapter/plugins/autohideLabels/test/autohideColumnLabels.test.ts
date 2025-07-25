@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import { Point } from "../../../../lib/index.js";
 import * as autohideColumnLabels from "../autohideColumnLabels.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { ISeriesDataItem, IUnsafeDataLabels, UnsafeInternals } from "../../../../typings/unsafe.js";

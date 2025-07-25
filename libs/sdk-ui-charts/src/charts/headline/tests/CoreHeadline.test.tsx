@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import { ICoreChartProps } from "../../../interfaces/chartProps.js";
@@ -7,6 +7,7 @@ import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { CoreHeadline, ICoreHeadlineExtendedProps } from "../CoreHeadline.js";
 import LegacyHeadlineTransformation from "../internal/transformations/LegacyHeadlineTransformation.js";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
@@ -27,8 +28,12 @@ describe("CoreHeadline", () => {
         return render(<CoreHeadline {...props} afterRender={afterRender} drillableItems={[]} />);
     }
 
-    const singleMeasureHeadline = recordedDataFacade(ReferenceRecordings.Scenarios.Headline.SingleMeasure);
-    const twoMeasureHeadline = recordedDataFacade(ReferenceRecordings.Scenarios.Headline.SingleMeasure);
+    const singleMeasureHeadline = recordedDataFacade(
+        ReferenceRecordings.Scenarios.Headline.SingleMeasure as unknown as ScenarioRecording,
+    );
+    const twoMeasureHeadline = recordedDataFacade(
+        ReferenceRecordings.Scenarios.Headline.SingleMeasure as unknown as ScenarioRecording,
+    );
 
     const singleMeasureExec = singleMeasureHeadline.result().transform();
     const twoMeasureExec = twoMeasureHeadline.result().transform();

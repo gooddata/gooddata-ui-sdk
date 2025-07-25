@@ -1,7 +1,7 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
@@ -15,10 +15,11 @@ describe("ColorPaletteDataLoader", () => {
         ...baseBackend,
         workspace: () => ({
             ...baseBackend.workspace(workspace),
-            styling: () => ({
-                getColorPalette,
-                getTheme: noop as any,
-            }),
+            styling: () =>
+                ({
+                    getColorPalette,
+                    getTheme: noop as any,
+                }) as unknown as IWorkspaceStylingService,
         }),
     });
 

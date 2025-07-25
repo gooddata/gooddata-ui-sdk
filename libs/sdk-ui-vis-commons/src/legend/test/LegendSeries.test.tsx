@@ -33,7 +33,7 @@ describe("LegendSeries", () => {
         },
     ];
 
-    let onToggleItem: jest.Mock;
+    let onToggleItem: ReturnType<typeof vi.fn>;
 
     beforeEach(() => {
         onToggleItem = vi.fn();

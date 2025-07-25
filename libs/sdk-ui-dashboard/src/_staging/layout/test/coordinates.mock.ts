@@ -1,14 +1,14 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { IDashboardLayout, idRef, IInsightWidget, IDashboardWidget } from "@gooddata/sdk-model";
-import { ExtendedDashboardWidget } from "../../../model";
+import { IDashboardLayout, idRef, IInsightWidget } from "@gooddata/sdk-model";
+import { ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
 
 const buildInsightWidget = (name: string): IInsightWidget => ({
     type: "insight",
     insight: idRef(name),
     drills: [],
     title: name,
-    description: undefined,
+    description: "",
     ignoredDrillDownHierarchies: [],
     ignoreDashboardFilters: [],
     ref: idRef(name),

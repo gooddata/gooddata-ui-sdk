@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { describe, it, expect } from "vitest";
-import { breakupSlideTransformer } from "../breakupSlideTransformer";
+import { breakupSlideTransformer } from "../breakupSlideTransformer.js";
 
 describe("BreakupSlideTransformer", () => {
     it("no title or description", () => {

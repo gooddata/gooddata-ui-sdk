@@ -37,7 +37,7 @@ describe("searchForLocatorMatch", () => {
         [
             "matches valid locator in single column attribute table",
             [
-                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.EastCoast.uri),
+                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.EastCoast.uri!),
                 newMeasureColumnLocator(ReferenceMd.Amount),
             ],
             SingleMeasureWithColumnAttribute,
@@ -47,7 +47,7 @@ describe("searchForLocatorMatch", () => {
             "matches another valid locator in single column attribute table",
             [
                 newMeasureColumnLocator(ReferenceMd.Amount),
-                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri),
+                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri!),
             ],
             SingleMeasureWithColumnAttribute,
             "c_1",
@@ -65,7 +65,7 @@ describe("searchForLocatorMatch", () => {
             "does match locator in table with two column attributes and single measure",
             [
                 newMeasureColumnLocator(ReferenceMd.Amount),
-                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.EastCoast.uri),
+                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.EastCoast.uri!),
                 newAttributeColumnLocator(
                     ReferenceMd.StageName.Default,
                     ReferenceData.StageName.Interest.uri,
@@ -82,7 +82,7 @@ describe("searchForLocatorMatch", () => {
                     ReferenceData.StageName.Negotiation.uri,
                 ),
                 newMeasureColumnLocator(ReferenceMd.Amount),
-                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri),
+                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri!),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
             "c_11",
@@ -92,7 +92,7 @@ describe("searchForLocatorMatch", () => {
             [
                 newAttributeColumnLocator(ReferenceMd.StageName.Default, "/does/not/exist"),
                 newMeasureColumnLocator(ReferenceMd.Amount),
-                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri),
+                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri!),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
             undefined,
@@ -118,7 +118,7 @@ describe("searchForLocatorMatch", () => {
                     ReferenceData.StageName.Negotiation.uri,
                 ),
                 newMeasureColumnLocator(ReferenceMd.Probability),
-                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri),
+                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri!),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
             undefined,
@@ -127,7 +127,7 @@ describe("searchForLocatorMatch", () => {
             "does not match when insufficient attribute locators in table with two column attributes and single measure",
             [
                 newMeasureColumnLocator(ReferenceMd.Probability),
-                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri),
+                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri!),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
             undefined,
@@ -141,7 +141,7 @@ describe("searchForLocatorMatch", () => {
                     ReferenceData.StageName.Negotiation.uri,
                 ),
                 newMeasureColumnLocator(ReferenceMd.Probability),
-                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri),
+                newAttributeColumnLocator(ReferenceMd.Region.Default, ReferenceData.Region.WestCoast.uri!),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
             undefined,

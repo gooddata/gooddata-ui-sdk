@@ -2,7 +2,7 @@
 
 import { describe, it, expect } from "vitest";
 
-import { ILayoutItemPath, ILayoutSectionPath } from "../../../types";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";
 import {
     areLayoutPathsEqual,
     areItemsInSameSection,
@@ -23,8 +23,10 @@ import {
     getParentPath,
     getCommonPath,
     areSameCoordinates,
-} from "../coordinates";
-import { NESTED_LAYOUT } from "./coordinates.mock";
+} from "../coordinates.js";
+import { NESTED_LAYOUT } from "./coordinates.mock.js";
+import { IDashboardLayout } from "@gooddata/sdk-model";
+import { ExtendedDashboardWidget } from "src/model/index.js";
 
 describe("coordinates", () => {
     describe("areSameCoordinates", () => {
@@ -111,10 +113,12 @@ describe("coordinates", () => {
             (
                 expectedResult: boolean,
                 _description: string,
-                path1: ILayoutItemPath,
-                path2: ILayoutItemPath,
+                path1: ILayoutItemPath | undefined,
+                path2: ILayoutItemPath | undefined,
             ) => {
-                expect(areLayoutPathsEqual(path1, path2)).toBe(expectedResult);
+                expect(areLayoutPathsEqual(path1 as ILayoutItemPath, path2 as ILayoutItemPath)).toBe(
+                    expectedResult,
+                );
             },
         );
     });
@@ -218,13 +222,10 @@ describe("coordinates", () => {
             ],
         ])(
             "should return %s when %s",
-            (
-                expectedResult: boolean,
-                _description: string,
-                path1: ILayoutItemPath,
-                path2: ILayoutItemPath,
-            ) => {
-                expect(areItemsInSameSection(path1, path2)).toBe(expectedResult);
+            (expectedResult: boolean, _description: string, path1: unknown, path2: unknown) => {
+                expect(areItemsInSameSection(path1 as ILayoutItemPath, path2 as ILayoutItemPath)).toBe(
+                    expectedResult,
+                );
             },
         );
     });
@@ -450,20 +451,17 @@ describe("coordinates", () => {
             ],
         ])(
             "should return %s when %s",
-            (
-                expectedResult: boolean,
-                _description: string,
-                path1: ILayoutSectionPath,
-                path2: ILayoutSectionPath,
-            ) => {
-                expect(areSectionLayoutPathsEqual(path1, path2)).toBe(expectedResult);
+            (expectedResult: boolean, _description: string, path1: unknown, path2: unknown) => {
+                expect(
+                    areSectionLayoutPathsEqual(path1 as ILayoutSectionPath, path2 as ILayoutSectionPath),
+                ).toBe(expectedResult);
             },
         );
     });
 
     describe("asLayoutItemPath", () => {
         it("should throw when provided section path is undefined", () => {
-            expect(() => asLayoutItemPath(undefined, 1)).toThrowError();
+            expect(() => asLayoutItemPath(undefined as unknown as ILayoutSectionPath, 1)).toThrowError();
         });
 
         it("should create root item path from section path (parent set as undefined)", () => {
@@ -512,7 +510,7 @@ describe("coordinates", () => {
 
     describe("asSectionPath", () => {
         it("should throw when provided section path is undefined", () => {
-            expect(() => asSectionPath(undefined)).toThrowError();
+            expect(() => asSectionPath(undefined as unknown as ILayoutItemPath)).toThrowError();
         });
 
         it("should create path to root item's section", () => {
@@ -541,7 +539,7 @@ describe("coordinates", () => {
 
     describe("getItemIndex", () => {
         it("should throw when provided item path is undefined", () => {
-            expect(() => getItemIndex(undefined)).toThrowError();
+            expect(() => getItemIndex(undefined as unknown as ILayoutItemPath)).toThrowError();
         });
 
         it("should return index of the leaf item in the root path", () => {
@@ -560,7 +558,7 @@ describe("coordinates", () => {
 
     describe("getSectionIndex", () => {
         it("should throw when provided item path is undefined", () => {
-            expect(() => getSectionIndex(undefined)).toThrowError();
+            expect(() => getSectionIndex(undefined as unknown as ILayoutSectionPath)).toThrowError();
         });
 
         it("should return index of the leaf section in the root item path", () => {
@@ -587,7 +585,7 @@ describe("coordinates", () => {
 
     describe("updateItemIndex", () => {
         it("should throw when provided item path is undefined", () => {
-            expect(() => updateItemIndex(undefined, 1)).toThrowError();
+            expect(() => updateItemIndex(undefined as unknown as ILayoutItemPath, 1)).toThrowError();
         });
         it("should throw when provided item path is empty", () => {
             expect(() => updateItemIndex([], 1)).toThrowError();
@@ -617,7 +615,7 @@ describe("coordinates", () => {
 
     describe("updateSectionIndex", () => {
         it("should throw when provided item path is undefined", () => {
-            expect(() => updateSectionIndex(undefined, 1)).toThrowError();
+            expect(() => updateSectionIndex(undefined as unknown as ILayoutSectionPath, 1)).toThrowError();
         });
 
         it("should update section index of the root section", () => {
@@ -636,7 +634,7 @@ describe("coordinates", () => {
 
     describe("updateItem", () => {
         it("should throw when provided item path is undefined", () => {
-            expect(() => updateItem(undefined, 1, 2)).toThrowError();
+            expect(() => updateItem(undefined as unknown as ILayoutItemPath, 1, 2)).toThrowError();
         });
         it("should throw when provided item path is empty", () => {
             expect(() => updateItem([], 1, 4)).toThrowError();
@@ -667,11 +665,21 @@ describe("coordinates", () => {
 
     describe("isItemInSection", () => {
         it("should throw when provided item path is undefined", () => {
-            expect(() => isItemInSection(undefined, { parent: undefined, sectionIndex: 1 })).toThrowError();
+            expect(() =>
+                isItemInSection(undefined as unknown as ILayoutItemPath, {
+                    parent: undefined,
+                    sectionIndex: 1,
+                }),
+            ).toThrowError();
         });
 
         it("should throw when provided section path is undefined", () => {
-            expect(() => isItemInSection([{ itemIndex: 8, sectionIndex: 1 }], undefined)).toThrowError();
+            expect(() =>
+                isItemInSection(
+                    [{ itemIndex: 8, sectionIndex: 1 }],
+                    undefined as unknown as ILayoutSectionPath,
+                ),
+            ).toThrowError();
         });
 
         it("should return true when root item is in the same root section", () => {
@@ -741,7 +749,7 @@ describe("coordinates", () => {
 
     describe("findItem", () => {
         it("should throw when provided item path is undefined", () => {
-            expect(() => findItem(NESTED_LAYOUT, undefined)).toThrowError();
+            expect(() => findItem(NESTED_LAYOUT, undefined as unknown as ILayoutItemPath)).toThrowError();
         });
 
         it("should throw when provided item path is empty", () => {
@@ -749,7 +757,11 @@ describe("coordinates", () => {
         });
 
         it("should throw when provided layout is undefined", () => {
-            expect(() => findItem(undefined, [{ itemIndex: 2, sectionIndex: 3 }])).toThrowError();
+            expect(() =>
+                findItem(undefined as unknown as IDashboardLayout<ExtendedDashboardWidget>, [
+                    { itemIndex: 2, sectionIndex: 3 },
+                ]),
+            ).toThrowError();
         });
 
         it("should throw when root item is not found in the layout (wrong item index)", () => {
@@ -793,7 +805,9 @@ describe("coordinates", () => {
 
     describe("findSection", () => {
         it("should throw when provided section path is undefined", () => {
-            expect(() => findSection(NESTED_LAYOUT, undefined)).toThrowError();
+            expect(() =>
+                findSection(NESTED_LAYOUT, undefined as unknown as ILayoutSectionPath),
+            ).toThrowError();
         });
 
         describe("layout item path", () => {
@@ -802,7 +816,11 @@ describe("coordinates", () => {
             });
 
             it("should throw when provided layout is undefined", () => {
-                expect(() => findSection(undefined, [{ itemIndex: 2, sectionIndex: 3 }])).toThrowError();
+                expect(() =>
+                    findSection(undefined as unknown as IDashboardLayout<ExtendedDashboardWidget>, [
+                        { itemIndex: 2, sectionIndex: 3 },
+                    ]),
+                ).toThrowError();
             });
 
             it("should throw when root section is not found in the layout", () => {
@@ -881,7 +899,9 @@ describe("coordinates", () => {
 
     describe("findSections", () => {
         it("should throw when provided section path is undefined", () => {
-            expect(() => findSections(NESTED_LAYOUT, undefined)).toThrowError();
+            expect(() =>
+                findSections(NESTED_LAYOUT, undefined as unknown as ILayoutSectionPath),
+            ).toThrowError();
         });
 
         describe("layout item path", () => {
@@ -890,7 +910,11 @@ describe("coordinates", () => {
             });
 
             it("should throw when provided layout is undefined", () => {
-                expect(() => findSections(undefined, [{ itemIndex: 2, sectionIndex: 3 }])).toThrowError();
+                expect(() =>
+                    findSections(undefined as unknown as IDashboardLayout<ExtendedDashboardWidget>, [
+                        { itemIndex: 2, sectionIndex: 3 },
+                    ]),
+                ).toThrowError();
             });
 
             it("should throw when root section is not found in the layout", () => {

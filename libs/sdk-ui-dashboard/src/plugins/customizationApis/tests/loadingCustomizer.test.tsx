@@ -4,11 +4,11 @@ import { ILoadingProps } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render } from "@testing-library/react";
 
-import { DefaultLoadingCustomizer } from "../loadingCustomizer";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types";
+import { DefaultLoadingCustomizer } from "../loadingCustomizer.js";
+import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //

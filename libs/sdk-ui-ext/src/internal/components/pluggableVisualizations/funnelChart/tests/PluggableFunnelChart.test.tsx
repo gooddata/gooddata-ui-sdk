@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import { PluggableFunnelChart } from "../PluggableFunnelChart.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
@@ -24,7 +24,7 @@ describe("PluggableFunnelChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
-    };
+    } as unknown as IVisConstruct;
 
     afterEach(() => {
         mockRenderFun.mockReset();

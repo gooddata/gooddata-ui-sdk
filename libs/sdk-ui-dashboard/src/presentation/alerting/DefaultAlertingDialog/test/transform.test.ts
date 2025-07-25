@@ -2,6 +2,7 @@
 
 import { createIntlMock } from "@gooddata/sdk-ui";
 import {
+    IAutomationAlertCondition,
     IAutomationAlertRelativeCondition,
     IAutomationMetadataObject,
     IDataSetMetadataObject,
@@ -527,7 +528,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseComparison.alert,
                     condition: {
-                        ...baseComparison.alert.condition,
+                        ...baseComparison.alert?.condition,
                         left: {
                             format: "#,##0.00",
                             id: "localMetric1",
@@ -535,7 +536,7 @@ describe("alert transforms", () => {
                         },
                     },
                     execution: {
-                        ...baseComparison.alert.execution,
+                        ...baseComparison.alert?.execution,
                         measures: [simpleMetric1.measure],
                     },
                 },
@@ -550,7 +551,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseComparison.alert,
                     condition: {
-                        ...baseComparison.alert.condition,
+                        ...baseComparison.alert?.condition,
                         left: {
                             format: "#,##0.00",
                             id: "localPPMetric1",
@@ -558,7 +559,7 @@ describe("alert transforms", () => {
                         },
                     },
                     execution: {
-                        ...baseComparison.alert.execution,
+                        ...baseComparison.alert?.execution,
                         measures: [previousPeriodMetric.measure],
                     },
                 },
@@ -573,7 +574,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseComparison.alert,
                     condition: {
-                        ...baseComparison.alert.condition,
+                        ...baseComparison.alert?.condition,
                         operator: "GREATER_THAN",
                         left: {
                             format: "#,##0.00",
@@ -582,7 +583,7 @@ describe("alert transforms", () => {
                         },
                     },
                     execution: {
-                        ...baseComparison.alert.execution,
+                        ...baseComparison.alert?.execution,
                         measures: [simpleMetric1.measure],
                     },
                 },
@@ -597,7 +598,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseRelative.alert,
                     condition: {
-                        ...baseRelative.alert.condition,
+                        ...baseRelative.alert?.condition,
                         measure: {
                             operator: "CHANGE",
                             left: {
@@ -613,7 +614,7 @@ describe("alert transforms", () => {
                         },
                     },
                     execution: {
-                        ...baseRelative.alert.execution,
+                        ...baseRelative.alert?.execution,
                         measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
                     },
                 },
@@ -628,7 +629,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseRelative.alert,
                     condition: {
-                        ...baseRelative.alert.condition,
+                        ...baseRelative.alert?.condition,
                         measure: {
                             operator: "CHANGE",
                             left: {
@@ -644,7 +645,7 @@ describe("alert transforms", () => {
                         },
                     },
                     execution: {
-                        ...baseRelative.alert.execution,
+                        ...baseRelative.alert?.execution,
                         measures: [
                             previousPeriodMetric1.measure,
                             previousPeriodMetric1.comparators[0].measure,
@@ -662,7 +663,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseRelative.alert,
                     condition: {
-                        ...baseRelative.alert.condition,
+                        ...baseRelative.alert?.condition,
                         measure: {
                             operator: "CHANGE",
                             left: {
@@ -678,7 +679,7 @@ describe("alert transforms", () => {
                         },
                     },
                     execution: {
-                        ...baseRelative.alert.execution,
+                        ...baseRelative.alert?.execution,
                         measures: [
                             previousPeriodMetric2.measure,
                             previousPeriodMetric2.comparators[0].measure,
@@ -696,7 +697,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseComparison.alert,
                     condition: {
-                        ...baseComparison.alert.condition,
+                        ...baseComparison.alert?.condition,
                         left: {
                             format: "#,##0.00",
                             id: "localArtMetric1",
@@ -704,7 +705,7 @@ describe("alert transforms", () => {
                         },
                     },
                     execution: {
-                        ...baseComparison.alert.execution,
+                        ...baseComparison.alert?.execution,
                         measures: [arithmeticMetric1.measure],
                         auxMeasures: [simpleMetric1.measure, simpleMetric2.measure],
                     },
@@ -721,7 +722,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseComparison.alert,
                     condition: {
-                        ...baseComparison.alert.condition,
+                        ...baseComparison.alert?.condition,
                         right: 25,
                     },
                 },
@@ -735,7 +736,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseRelative.alert,
                     condition: {
-                        ...baseRelative.alert.condition,
+                        ...baseRelative.alert?.condition,
                         threshold: 25,
                     },
                 },
@@ -774,11 +775,11 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseComparison.alert,
                     condition: {
-                        ...baseComparison.alert.condition,
+                        ...baseComparison.alert?.condition,
                         operator: "LESS_THAN",
                     },
                     execution: {
-                        ...baseComparison.alert.execution,
+                        ...baseComparison.alert?.execution,
                         measures: [simpleMetric1.measure],
                     },
                 },
@@ -797,11 +798,11 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseComparison.alert,
                     condition: {
-                        ...baseComparison.alert.condition,
+                        ...baseComparison.alert?.condition,
                         operator: "LESS_THAN",
                     },
                     execution: {
-                        ...baseComparison.alert.execution,
+                        ...baseComparison.alert?.execution,
                         measures: [simpleMetric1.measure],
                     },
                 },
@@ -818,7 +819,7 @@ describe("alert transforms", () => {
                 "CHANGES_BY",
                 "DIFFERENCE",
             );
-            const cond = baseRelative.alert.condition as IAutomationAlertRelativeCondition;
+            const cond = baseRelative.alert?.condition as IAutomationAlertRelativeCondition;
             expect(res).toEqual({
                 ...baseRelative,
                 alert: {
@@ -842,7 +843,7 @@ describe("alert transforms", () => {
                         },
                     },
                     execution: {
-                        ...baseRelative.alert.execution,
+                        ...baseRelative.alert?.execution,
                         measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
                     },
                 },
@@ -857,7 +858,7 @@ describe("alert transforms", () => {
                 "CHANGES_BY",
                 "DIFFERENCE",
             );
-            const cond = baseRelative.alert.condition as IAutomationAlertRelativeCondition;
+            const cond = baseRelative.alert?.condition as IAutomationAlertRelativeCondition;
             expect(res).toEqual({
                 ...baseRelative,
                 alert: {
@@ -881,7 +882,7 @@ describe("alert transforms", () => {
                         },
                     },
                     execution: {
-                        ...baseRelative.alert.execution,
+                        ...baseRelative.alert?.execution,
                         measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
                     },
                 },
@@ -902,7 +903,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseComparison.alert,
                     execution: {
-                        ...baseComparison.alert.execution,
+                        ...baseComparison.alert?.execution,
                         attributes: [attrRegion.attribute],
                         filters: [
                             {
@@ -932,7 +933,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseComparison.alert,
                     execution: {
-                        ...baseComparison.alert.execution,
+                        ...baseComparison.alert?.execution,
                         attributes: [attrRegion.attribute],
                         filters: [
                             {
@@ -962,7 +963,7 @@ describe("alert transforms", () => {
                 alert: {
                     ...baseComparison.alert,
                     execution: {
-                        ...baseComparison.alert.execution,
+                        ...baseComparison.alert?.execution,
                         attributes: [attrRegion.attribute],
                         filters: [
                             {
@@ -1005,11 +1006,11 @@ describe("alert transforms", () => {
 
         it("no dataset and granularity provided", () => {
             const comp = previousPeriodMetric.comparators[0];
-            const cond = baseRelative.alert.condition;
+            const cond = baseRelative.alert?.condition;
             const { execution, metadata } = transformAlertExecutionByMetric(
                 allMetrics,
                 baseRelative,
-                cond,
+                cond as unknown as IAutomationAlertCondition,
                 previousPeriodMetric,
                 comp,
             );
@@ -1020,7 +1021,7 @@ describe("alert transforms", () => {
                 auxMeasures: [],
                 attributes: [],
             });
-            expect(metadata.filters).toEqual(undefined);
+            expect(metadata?.filters).toEqual(undefined);
         });
 
         it("dataset and granularity provided", () => {
@@ -1029,12 +1030,12 @@ describe("alert transforms", () => {
                 dataset,
                 granularity: "GDC.time.quarter",
             };
-            const cond = baseRelative.alert.condition;
+            const cond = baseRelative.alert?.condition;
 
             const res1 = transformAlertExecutionByMetric(
                 allMetrics,
                 baseRelative,
-                cond,
+                cond as unknown as IAutomationAlertCondition,
                 previousPeriodMetric,
                 comp1,
             );
@@ -1058,7 +1059,7 @@ describe("alert transforms", () => {
                 auxMeasures: [],
                 attributes: [],
             });
-            expect(res1.metadata.filters).toEqual(["relativeDateFilter_date_GDC.time.quarter"]);
+            expect(res1.metadata?.filters).toEqual(["relativeDateFilter_date_GDC.time.quarter"]);
         });
 
         it("dataset and granularity provided with replacing old filter", () => {
@@ -1067,12 +1068,12 @@ describe("alert transforms", () => {
                 dataset,
                 granularity: "GDC.time.quarter",
             };
-            const cond = baseRelativeWithFilter.alert.condition;
+            const cond = baseRelativeWithFilter.alert?.condition;
 
             const res1 = transformAlertExecutionByMetric(
                 allMetrics,
                 baseRelativeWithFilter,
-                cond,
+                cond as unknown as IAutomationAlertCondition,
                 previousPeriodMetric,
                 comp1,
             );
@@ -1096,7 +1097,7 @@ describe("alert transforms", () => {
                 auxMeasures: [],
                 attributes: [],
             });
-            expect(res1.metadata.filters).toEqual(["relativeDateFilter_date_GDC.time.quarter"]);
+            expect(res1.metadata?.filters).toEqual(["relativeDateFilter_date_GDC.time.quarter"]);
         });
 
         it("dataset and granularity provided with existing filter, add on start", () => {
@@ -1105,12 +1106,12 @@ describe("alert transforms", () => {
                 dataset,
                 granularity: "GDC.time.quarter",
             };
-            const cond = baseRelativeWithUserFilter.alert.condition;
+            const cond = baseRelativeWithUserFilter.alert?.condition;
 
             const res1 = transformAlertExecutionByMetric(
                 allMetrics,
                 baseRelativeWithUserFilter,
-                cond,
+                cond as unknown as IAutomationAlertCondition,
                 previousPeriodMetric,
                 comp1,
             );
@@ -1129,13 +1130,13 @@ describe("alert transforms", () => {
                             to: 0,
                         },
                     },
-                    ...baseRelativeWithUserFilter.alert.execution.filters,
+                    ...(baseRelativeWithUserFilter.alert?.execution?.filters ?? []),
                 ],
                 measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
                 auxMeasures: [],
                 attributes: [],
             });
-            expect(res1.metadata.filters).toEqual(["relativeDateFilter_date_GDC.time.quarter"]);
+            expect(res1.metadata?.filters).toEqual(["relativeDateFilter_date_GDC.time.quarter"]);
         });
     });
 
@@ -1153,19 +1154,19 @@ describe("alert transforms", () => {
         it("getAlertMeasure - comparison", () => {
             const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const data = getAlertMeasure([simpleMetric1], update.alert);
-            expect(data.measure.measure.localIdentifier).toEqual("localMetric1");
+            expect(data?.measure?.measure?.localIdentifier).toEqual("localMetric1");
         });
 
         it("getAlertMeasure - relative, primary", () => {
             const update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             const data = getAlertMeasure([previousPeriodMetric], update.alert);
-            expect(data.measure.measure.localIdentifier).toEqual("localPPMetric1");
+            expect(data?.measure?.measure?.localIdentifier).toEqual("localPPMetric1");
         });
 
         it("getAlertMeasure - relative, not primary", () => {
             const update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric1);
             const data = getAlertMeasure([previousPeriodMetric1], update.alert);
-            expect(data.measure.measure.localIdentifier).toEqual("localPPMetric2");
+            expect(data?.measure?.measure?.localIdentifier).toEqual("localPPMetric2");
         });
 
         it("getAlertCompareOperator - comparison", () => {
@@ -1411,7 +1412,7 @@ describe("alert transforms", () => {
 
         it("isAlertValueDefined, baseRelative, undefined", () => {
             let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
-            update = transformAlertByValue(update, undefined);
+            update = transformAlertByValue(update, undefined as unknown as number);
             const res = isAlertValueDefined(update.alert);
             expect(res).toEqual(false);
         });
@@ -1424,7 +1425,7 @@ describe("alert transforms", () => {
 
         it("isAlertValueDefined, baseComparison, undefined", () => {
             let update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
-            update = transformAlertByValue(update, undefined);
+            update = transformAlertByValue(update, undefined as unknown as number);
             const res = isAlertValueDefined(update.alert);
             expect(res).toEqual(false);
         });

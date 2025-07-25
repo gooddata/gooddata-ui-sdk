@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import noop from "lodash/noop.js";
 import DropdownControl, { IDropdownControlProps } from "../DropdownControl.js";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";

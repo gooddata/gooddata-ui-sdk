@@ -15,7 +15,7 @@ describe("withDrillable", () => {
     const wrappedComponentClassName = "s-wrapped-component-class-name";
     const WrappedComponent = vi.fn().mockReturnValue(<div className={wrappedComponentClassName}></div>);
     const WithDrillableComponent = withDrillable(WrappedComponent);
-    const renderWithDrillableComponent = (props: IWithDrillableItemProps) => {
+    const renderWithDrillableComponent = (props: IWithDrillableItemProps<unknown>) => {
         const WrappedWithDrillableComponent = withIntl(WithDrillableComponent);
         return render(<WrappedWithDrillableComponent {...props} />);
     };

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     IFilterContext,
@@ -10,6 +10,7 @@ import {
     IListedDashboard,
     idRef,
     IDrillToDashboard,
+    IAttributeDescriptor,
 } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
@@ -17,8 +18,8 @@ import { ComplexDashboardIdentifier } from "./ComplexDashboard.fixtures.js";
 import { IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
 
 export const SimpleDashboardIdentifier = "adb4fefa-c5ad-410e-bb2c-d6933e0ec7a0";
-export const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
-    .dash_adb4fefa_c5ad_410e_bb2c_d6933e0ec7a0.obj as IDashboardWithReferences;
+export const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata?.dashboards
+    ?.dash_adb4fefa_c5ad_410e_bb2c_d6933e0ec7a0.obj as IDashboardWithReferences;
 export const SimpleDashboardLayout = SimpleDashboardWithReferences.dashboard.layout!;
 export const SimpleDashboardFilterContext = SimpleDashboardWithReferences.dashboard
     .filterContext as IFilterContext;
@@ -90,7 +91,7 @@ export const SimpleDashboardSimpleSortedTableWidgetDrillTargets: IAvailableDrill
                             uri: "/gdc/md/referenceworkspace/obj/1055",
                         },
                     },
-                },
+                } as unknown as IAttributeDescriptor,
                 {
                     attributeHeader: {
                         name: "Department",
@@ -109,7 +110,7 @@ export const SimpleDashboardSimpleSortedTableWidgetDrillTargets: IAvailableDrill
                             uri: "/gdc/md/referenceworkspace/obj/1089",
                         },
                     },
-                },
+                } as unknown as IAttributeDescriptor,
             ],
         },
     ],
@@ -133,7 +134,7 @@ export const SimpleDashboardSimpleSortedTableWidgetDrillTargets: IAvailableDrill
                         uri: "/gdc/md/referenceworkspace/obj/1055",
                     },
                 },
-            },
+            } as unknown as IAttributeDescriptor,
             intersectionAttributes: [
                 {
                     attributeHeader: {
@@ -153,7 +154,7 @@ export const SimpleDashboardSimpleSortedTableWidgetDrillTargets: IAvailableDrill
                             uri: "/gdc/md/referenceworkspace/obj/1055",
                         },
                     },
-                },
+                } as unknown as IAttributeDescriptor,
             ],
         },
     ],
@@ -193,7 +194,7 @@ export const SimpleDashboarddrillToAttributeUrlWidgetDrillTargets: IAvailableDri
                             uri: "/gdc/md/referenceworkspace/obj/1067",
                         },
                     },
-                },
+                } as unknown as IAttributeDescriptor,
             ],
         },
     ],
@@ -217,7 +218,7 @@ export const SimpleDashboarddrillToAttributeUrlWidgetDrillTargets: IAvailableDri
                         uri: "/gdc/md/referenceworkspace/obj/1067",
                     },
                 },
-            },
+            } as unknown as IAttributeDescriptor,
             intersectionAttributes: [
                 {
                     attributeHeader: {
@@ -237,7 +238,7 @@ export const SimpleDashboarddrillToAttributeUrlWidgetDrillTargets: IAvailableDri
                             uri: "/gdc/md/referenceworkspace/obj/1067",
                         },
                     },
-                },
+                } as unknown as IAttributeDescriptor,
             ],
         },
     ],

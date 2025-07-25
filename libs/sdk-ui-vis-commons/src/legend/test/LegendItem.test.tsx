@@ -2,7 +2,7 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import LegendItem from "../LegendItem.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, MockInstance } from "vitest";
 import { LegendSeriesContextStore } from "../context.js";
 import { ISeriesItem } from "../types.js";
 
@@ -14,12 +14,12 @@ describe("LegendItem", () => {
     };
 
     const mockContextValue = {
-        focusedItem: undefined,
-        makeItemId: (item: ISeriesItem) => `test-id-${item?.name}`,
+        focusedItem: undefined as unknown as ISeriesItem,
+        makeItemId: (item?: ISeriesItem) => `test-id-${item?.name}`,
         descriptionId: "test-description-id",
     };
 
-    let onItemClick: jest.Mock;
+    let onItemClick: MockInstance;
 
     beforeEach(() => {
         onItemClick = vi.fn();

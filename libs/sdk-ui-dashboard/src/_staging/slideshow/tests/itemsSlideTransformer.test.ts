@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { describe, it, expect } from "vitest";
-import { itemsSlideTransformer } from "../itemsSlideTransformer";
+import { itemsSlideTransformer } from "../itemsSlideTransformer.js";
 import { IDashboardLayoutItem } from "@gooddata/sdk-model";
 
 const widget1 = {
@@ -58,7 +58,10 @@ describe("ItemsSlideTransformer", () => {
         const data = itemsSlideTransformer(
             {
                 type: "IDashboardLayoutSection",
-                items: [widget1 as IDashboardLayoutItem, widget2 as IDashboardLayoutItem],
+                items: [
+                    widget1 as unknown as IDashboardLayoutItem,
+                    widget2 as unknown as IDashboardLayoutItem,
+                ],
             },
             (item) => [
                 {

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
-import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import { ColumnWidthItem } from "../../../columnWidths.js";
@@ -8,14 +8,14 @@ import { ResizedColumnsStore } from "../columnSizing.js";
 import { Column, GridApi } from "ag-grid-community";
 
 const ColumnOnlyResult = recordedDataFacade(
-    ReferenceRecordings.Scenarios.PivotTable.SingleColumn,
+    ReferenceRecordings.Scenarios.PivotTable.SingleColumn as ScenarioRecording,
     DataViewFirstPage,
 );
 
 export const ColumnOnlyResultDescriptor = TableDescriptor.for(ColumnOnlyResult, "empty value");
 
 export const TwoMeasuresWithRowAttribute = recordedDataFacade(
-    ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithRowAttribute,
+    ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithRowAttribute as ScenarioRecording,
     DataViewFirstPage,
 );
 
@@ -25,7 +25,7 @@ export const TwoMeasuresWithRowAttributeDescriptor = TableDescriptor.for(
 );
 
 const SingleMeasureWithRowAttribute = recordedDataFacade(
-    ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAttribute,
+    ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAttribute as ScenarioRecording,
     DataViewFirstPage,
 );
 
@@ -35,7 +35,7 @@ export const SingleMeasureWithRowAttributeDescriptor = TableDescriptor.for(
 );
 
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributes = recordedDataFacade(
-    ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithTwoRowAndTwoColumnAttributes,
+    ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithTwoRowAndTwoColumnAttributes as ScenarioRecording,
     DataViewFirstPage,
 );
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor = TableDescriptor.for(

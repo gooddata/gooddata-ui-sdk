@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useState } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { platformDateFormat } from "../constants/Platform.js";
@@ -209,7 +209,7 @@ const relativeFormGranularityTab = (intlGranularity: string) => `.gd-tab.s-granu
 
 const defaultDateFormat: string = "MM/dd/yyyy";
 
-export const createDateFilter = (customProps: Partial<IDateFilterProps> = {}) => {
+export const createDateFilter = (customProps: Partial<IDateFilterProps> = {}): ReturnType<typeof render> => {
     const props: IDateFilterProps = { ...defaultProps, ...customProps };
 
     return render(<DateFilter {...props} />);
@@ -218,7 +218,9 @@ export const createDateFilter = (customProps: Partial<IDateFilterProps> = {}) =>
 /**
  * Use this component renderer if you need to check some state changes regarding apply handler
  */
-export const createDateFilterWithState = (customProps: Partial<IDateFilterProps> = {}) => {
+export const createDateFilterWithState = (
+    customProps: Partial<IDateFilterProps> = {},
+): ReturnType<typeof render> => {
     const props: IDateFilterProps = { ...defaultProps, ...customProps };
 
     return render(<DateFilterWithState {...props} />);

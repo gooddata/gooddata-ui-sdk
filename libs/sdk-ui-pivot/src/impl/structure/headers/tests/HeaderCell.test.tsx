@@ -2,7 +2,7 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import HeaderCell from "../HeaderCell.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
@@ -11,7 +11,8 @@ import { describe, it, expect, vi } from "vitest";
 
 describe("HeaderCell renderer", () => {
     const fixture = recordedDataFacade(
-        ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
+        ReferenceRecordings.Scenarios.PivotTable
+            .SingleMeasureWithTwoRowAndOneColumnAttributes as ScenarioRecording,
         DataViewFirstPage,
     );
     const tableDescriptor = TableDescriptor.for(fixture, "empty value");

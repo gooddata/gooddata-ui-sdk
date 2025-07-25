@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import { PluggableGeoPushpinChart } from "../PluggableGeoPushpinChart.js";
@@ -25,7 +25,7 @@ describe("PluggableGeoPushpinChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
-    };
+    } as unknown as IVisConstruct;
 
     function createComponent(props: IVisConstruct = defaultProps) {
         return new PluggableGeoPushpinChart(props);

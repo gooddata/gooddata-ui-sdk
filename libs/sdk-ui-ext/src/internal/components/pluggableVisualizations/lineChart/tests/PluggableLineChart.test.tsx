@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import {
     IBucketOfFun,
@@ -50,7 +50,7 @@ describe("PluggableLineChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
-    };
+    } as unknown as IVisConstruct;
 
     function createComponent(props = defaultProps) {
         return new PluggableLineChart(props);

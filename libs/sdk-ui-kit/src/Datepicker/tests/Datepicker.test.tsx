@@ -2,7 +2,7 @@
 import React from "react";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import parseDate from "date-fns/parse/index.js";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { WrappedDatePicker, DatePickerProps } from "../Datepicker.js";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";

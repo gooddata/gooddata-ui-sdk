@@ -12,6 +12,7 @@ import {
     insightProperties,
     insightSetBuckets,
     IColorMappingItem,
+    ITheme,
 } from "@gooddata/sdk-model";
 import {
     RepeaterColumnWidthItem,
@@ -375,6 +376,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                 onDataView={this.onDataView}
                 onColumnResized={this.onColumnResized}
                 intl={this.intl}
+                theme={undefined as unknown as ITheme}
             />,
             this.getElement(),
         );

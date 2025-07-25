@@ -1,0 +1,31 @@
+{
+    "exclude": ["**/tests", "**/test"],
+    "include": [
+        "src/**/*",
+        "src/**/*.json",
+        "scenarios/**/*",
+        "scenarios/**/*.json",
+        "stories/**/*",
+        "stories/**/*.json"
+    ],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "rootDirs": ["./src", "./scenarios", "./stories"],
+        "outDir": "./esm",
+        "target": "ES2022",
+        "lib": ["ES2022", "DOM"],
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "jsx": "react",
+        "importHelpers": true,
+        "incremental": false,
+        "resolveJsonModule": true,
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true
+    }
+}

@@ -16,7 +16,7 @@ import {
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 
 import { DefaultDashboardContentCustomizer } from "../dashboardContentCustomizer.js";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //

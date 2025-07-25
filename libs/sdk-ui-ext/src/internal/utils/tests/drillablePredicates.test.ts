@@ -1,14 +1,14 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { convertPostMessageToDrillablePredicates } from "../drillablePredicates.js";
-import { describe, it, expect, vi, SpyInstance, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, vi, MockInstance, beforeEach, afterEach } from "vitest";
 import { IHeaderPredicate, HeaderPredicates } from "@gooddata/sdk-ui";
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 
 describe("convertPostMessageToDrillablePredicates", () => {
-    let uriMatchSpy: SpyInstance;
-    let identifierMatchSpy: SpyInstance;
-    let composedFromUriSpy: SpyInstance;
-    let composedFromIdentifierSpy: SpyInstance;
+    let uriMatchSpy: MockInstance;
+    let identifierMatchSpy: MockInstance;
+    let composedFromUriSpy: MockInstance;
+    let composedFromIdentifierSpy: MockInstance;
 
     function assertPredicates(result: IHeaderPredicate[], expectedCount: number) {
         expect(result).toHaveLength(expectedCount);

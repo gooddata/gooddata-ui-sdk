@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import { AnyCol } from "../../structure/tableDescriptorTypes.js";
 import { IGridRow } from "../../data/resultTypes.js";
@@ -50,6 +50,6 @@ describe("createDrillHeaders", () => {
     ];
 
     it.each(Scenarios)("should generate drill item containing %s", (_desc, col, row) => {
-        expect(createDrillHeaders(col, row, "top", false)).toMatchSnapshot();
+        expect(createDrillHeaders(col, row!, "top", false)).toMatchSnapshot();
     });
 });

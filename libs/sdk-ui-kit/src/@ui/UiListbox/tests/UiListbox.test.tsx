@@ -292,9 +292,9 @@ describe("UiListbox", () => {
 
     it("should skip static items when navigating with keyboard", () => {
         const itemsWithStatic: IUiListboxItem<string, string>[] = [
-            mockItems[0],
+            mockItems[0] as IUiListboxItem<string, string>,
             { type: "static", data: "static-data" },
-            mockItems[1],
+            mockItems[1] as IUiListboxItem<string, string>,
         ];
 
         renderListbox({ items: itemsWithStatic });

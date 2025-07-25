@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { describe, it, expect } from "vitest";
 import { IDashboardLayout } from "@gooddata/sdk-model";
-import { layoutTransformer } from "../layoutTransformer";
+import { layoutTransformer } from "../layoutTransformer.js";
 
 const widget1 = {
     size: {
@@ -35,20 +35,7 @@ const widget2 = {
         drills: [],
     },
 };
-const switcher1 = {
-    size: {
-        xl: {
-            gridWidth: 4,
-            gridHeight: 4,
-        },
-    },
-    type: "IDashboardLayoutItem",
-    widget: {
-        type: "visualizationSwitcher",
-        visualizations: [widget1, widget2],
-        ref: { type: "insight", identifier: "switcher1" },
-    },
-};
+
 const layout = {
     type: "IDashboardLayout",
     sections: [],
@@ -56,11 +43,6 @@ const layout = {
         gridHeight: 20,
         gridWidth: 12,
     },
-};
-
-const base = {
-    gridWidth: 12,
-    gridHeight: 22,
 };
 
 describe("LayoutTransformer", () => {
@@ -94,7 +76,7 @@ describe("LayoutTransformer", () => {
                     items: [widget2],
                 },
             ],
-        } as IDashboardLayout);
+        } as unknown as IDashboardLayout);
 
         expect(data).toMatchSnapshot();
     });

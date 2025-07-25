@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
@@ -42,7 +42,7 @@ describe("PluggableHeatmap", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
-    };
+    } as unknown as IVisConstruct;
 
     afterEach(() => {
         mockRenderFun.mockReset();

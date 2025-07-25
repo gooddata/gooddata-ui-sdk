@@ -10,8 +10,8 @@ import {
     toNormalizedStartDate,
     toModifiedISOStringToTimezone,
     getTimezoneOffset,
-} from "../date";
-import { getUserTimezone } from "../timezone";
+} from "../date.js";
+import { getUserTimezone } from "../timezone.js";
 
 const toHours = -3600000;
 

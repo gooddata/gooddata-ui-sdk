@@ -41,7 +41,7 @@ function createTestConfigAccessors(dv: DataViewFacade): TableConfigAccessors {
         }),
         getMeasureGroupDimension: () => "columns",
         getColumnHeadersPosition: () => "top",
-    };
+    } as unknown as TableConfigAccessors;
 }
 
 function createTestPivotTableProps(dv: DataViewFacade): ICorePivotTableProps {

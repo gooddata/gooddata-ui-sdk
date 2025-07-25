@@ -34,8 +34,8 @@ describe("SemanticSearch component", () => {
 
         const input = baseElement.querySelector("input");
         expect(input).not.toBe(null);
-        fireEvent.focus(input);
-        fireEvent.input(input, { target: { value: "test" } });
+        fireEvent.focus(input!);
+        fireEvent.input(input!, { target: { value: "test" } });
 
         if (state & WITH_DEBOUNCE) {
             await act(() => vi.advanceTimersByTimeAsync(DEBOUNCE_TIME));
@@ -64,7 +64,7 @@ describe("SemanticSearch component", () => {
         const { baseElement, callback } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
         const firstItem = baseElement.querySelector(".gd-semantic-search__results-item__content");
-        fireEvent.click(firstItem);
+        fireEvent.click(firstItem!);
 
         expect(callback).toHaveBeenCalledOnce();
     });
@@ -73,7 +73,7 @@ describe("SemanticSearch component", () => {
         const { baseElement } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
         const firstItem = baseElement.querySelector(".gd-semantic-search__results-item");
-        expect(firstItem.className).to.include("gd-semantic-search__results-item--active");
+        expect(firstItem?.className).to.include("gd-semantic-search__results-item--active");
     });
 
     it("should allow user to select with Enter key", async () => {

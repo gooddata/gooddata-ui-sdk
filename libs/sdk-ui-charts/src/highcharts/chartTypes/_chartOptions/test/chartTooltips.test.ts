@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 import { getTooltipWaterfallChart } from "../chartTooltips.js";
@@ -7,6 +7,7 @@ import { getMVS } from "../../_util/test/helper.js";
 import { IChartConfig } from "../../../../interfaces/index.js";
 import { IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
 import { describe, it, expect } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 describe("chartTooltips", () => {
     describe("getTooltipWaterfallChart", () => {
@@ -44,7 +45,8 @@ describe("chartTooltips", () => {
 
         it("should render the tooltip for normal data point with the expected format", () => {
             const dv = recordedDataFacade(
-                ReferenceRecordings.Scenarios.WaterfallChart.SingleMeasureWithViewBy,
+                ReferenceRecordings.Scenarios.WaterfallChart
+                    .SingleMeasureWithViewBy as unknown as ScenarioRecording,
             );
             const { viewByAttribute } = getMVS(dv);
             const tooltipRenderer = getTooltipWaterfallChart(viewByAttribute, chartConfig);
@@ -57,7 +59,8 @@ describe("chartTooltips", () => {
 
         it("should render the tooltip for total data point with the expected format", () => {
             const dv = recordedDataFacade(
-                ReferenceRecordings.Scenarios.WaterfallChart.SingleMeasureWithViewBy,
+                ReferenceRecordings.Scenarios.WaterfallChart
+                    .SingleMeasureWithViewBy as unknown as ScenarioRecording,
             );
             const { viewByAttribute } = getMVS(dv);
             const tooltipRenderer = getTooltipWaterfallChart(viewByAttribute, chartConfig);
@@ -69,7 +72,9 @@ describe("chartTooltips", () => {
         });
 
         it("should render the tooltip for normal data point when only metrics with the expected format", () => {
-            const dv = recordedDataFacade(ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures);
+            const dv = recordedDataFacade(
+                ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures as unknown as ScenarioRecording,
+            );
             const { viewByAttribute } = getMVS(dv);
             const tooltipRenderer = getTooltipWaterfallChart(viewByAttribute, chartConfig);
             const tooltipContent = tooltipRenderer(normalDataPoint, maxItemWidth, undefined);
@@ -80,7 +85,9 @@ describe("chartTooltips", () => {
         });
 
         it("should render the tooltip for total data point when only metrics with the expected format", () => {
-            const dv = recordedDataFacade(ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures);
+            const dv = recordedDataFacade(
+                ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures as unknown as ScenarioRecording,
+            );
             const { viewByAttribute } = getMVS(dv);
             const tooltipRenderer = getTooltipWaterfallChart(viewByAttribute, chartConfig);
             const tooltipContent = tooltipRenderer(totalDataPoint, maxItemWidth, undefined);

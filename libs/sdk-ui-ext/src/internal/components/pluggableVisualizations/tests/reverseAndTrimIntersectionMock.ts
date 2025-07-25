@@ -1,9 +1,9 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { IDrillDownDefinition } from "../../../interfaces/Visualization.js";
-import { localIdRef } from "@gooddata/sdk-model";
+import { IAttributeDescriptorBody, localIdRef } from "@gooddata/sdk-model";
 
 const { Department, Region, Won } = ReferenceMd;
 const drillConfigRegion: IDrillDownDefinition = {
@@ -32,7 +32,7 @@ const directSalesHeader: IDrillEventIntersectionElement = {
             },
             identifier: null,
             formOf: null,
-        },
+        } as IAttributeDescriptorBody,
     },
 };
 
@@ -51,7 +51,7 @@ const westCoastHeader: IDrillEventIntersectionElement = {
             },
             identifier: null,
             formOf: null,
-        },
+        } as IAttributeDescriptorBody,
     },
 };
 

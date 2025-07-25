@@ -1,6 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { idRef, FilterContextItem, IFilterContext, IWidgetDefinition } from "@gooddata/sdk-model";
+import { idRef, FilterContextItem, IFilterContext, IWidgetDefinition, Identifier } from "@gooddata/sdk-model";
 import { describe, it, expect } from "vitest";
 
 import {
@@ -28,7 +28,7 @@ describe("filterConverters tests", () => {
             title: "Widget",
             type: "insight",
             dateDataSet: ReferenceMd.DateDatasets.Activity.ref,
-            insight: idRef(ReferenceMd.Insights.Test),
+            insight: idRef((ReferenceMd.Insights as unknown as { Test: Identifier }).Test),
         };
 
         const scenarios: Scenario[] = [

@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import noop from "lodash/noop.js";
 import { InputControl, IInputControlProps } from "../InputControl.js";
 import { createInternalIntl, InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";

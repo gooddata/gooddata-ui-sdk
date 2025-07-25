@@ -37,6 +37,8 @@ describe("DataLabelsControl", () => {
                 return HIDE_LABEL;
             case "auto":
                 return AUTO_LABEL;
+            default:
+                return ""; // Todo: fix this
         }
     };
 

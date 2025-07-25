@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { ISortItem, newAttributeLocator, newMeasureSort } from "@gooddata/sdk-model";
 import { ReferenceRecordings, ReferenceMd, ReferenceData } from "@gooddata/reference-workspace";
@@ -24,19 +24,21 @@ describe("resultMetaMethods", () => {
     const Scenarios: Array<[string, ScenarioRecording, string, ISortItem[]]> = [
         [
             "are empty if there are no sorts",
-            ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
+            ReferenceRecordings.Scenarios.PivotTable
+                .SingleMeasureWithRowAndColumnAttributes as unknown as ScenarioRecording,
             DataViewFirstPage,
             [],
         ],
         [
             "strips invalid measure sort when no measures in result",
-            ReferenceRecordings.Scenarios.PivotTable.SingleAttribute,
+            ReferenceRecordings.Scenarios.PivotTable.SingleAttribute as unknown as ScenarioRecording,
             DataViewFirstPage,
             [newMeasureSort(ReferenceMd.Amount)],
         ],
         [
             "strips invalid measure sort when attribute not present",
-            ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
+            ReferenceRecordings.Scenarios.PivotTable
+                .SingleMeasureWithRowAndColumnAttributes as unknown as ScenarioRecording,
             DataViewFirstPage,
             [
                 newMeasureSort(ReferenceMd.Amount, "desc", [
@@ -46,7 +48,8 @@ describe("resultMetaMethods", () => {
         ],
         [
             "strips invalid measure sort when attribute element not present",
-            ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
+            ReferenceRecordings.Scenarios.PivotTable
+                .SingleMeasureWithRowAndColumnAttributes as unknown as ScenarioRecording,
             DataViewFirstPage,
             [
                 newMeasureSort(ReferenceMd.Amount, "desc", [
@@ -56,7 +59,8 @@ describe("resultMetaMethods", () => {
         ],
         [
             "strips invalid measure sort when measure not present",
-            ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
+            ReferenceRecordings.Scenarios.PivotTable
+                .SingleMeasureWithRowAndColumnAttributes as unknown as ScenarioRecording,
             DataViewFirstPage,
             [newMeasureSort(ReferenceMd.Won)],
         ],

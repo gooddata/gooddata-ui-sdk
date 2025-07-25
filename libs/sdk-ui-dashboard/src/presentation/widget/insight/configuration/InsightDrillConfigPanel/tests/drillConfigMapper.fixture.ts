@@ -1,7 +1,8 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
 import { IGlobalDrillDownAttributeHierarchyDefinition } from "../../../../../../types.js";
+import { IAttributeDescriptor } from "@gooddata/sdk-model";
 
 export const globalDrillDowns: IGlobalDrillDownAttributeHierarchyDefinition[] = [
     {
@@ -83,7 +84,7 @@ export const availableDrillTargets: IAvailableDrillTargets = {
                         name: "Product Name",
                         totalItems: [],
                     },
-                },
+                } as unknown as IAttributeDescriptor,
                 {
                     attributeHeader: {
                         uri: "",
@@ -105,7 +106,7 @@ export const availableDrillTargets: IAvailableDrillTargets = {
                         name: "Region",
                         totalItems: [],
                     },
-                },
+                } as unknown as IAttributeDescriptor,
                 {
                     attributeHeader: {
                         uri: "",
@@ -127,7 +128,7 @@ export const availableDrillTargets: IAvailableDrillTargets = {
                         name: "Department",
                         totalItems: [],
                     },
-                },
+                } as unknown as IAttributeDescriptor,
             ],
         },
     ],
@@ -154,7 +155,7 @@ export const availableDrillTargets: IAvailableDrillTargets = {
                     name: "Product Name",
                     totalItems: [],
                 },
-            },
+            } as unknown as IAttributeDescriptor,
             intersectionAttributes: [
                 {
                     attributeHeader: {
@@ -177,7 +178,7 @@ export const availableDrillTargets: IAvailableDrillTargets = {
                         name: "Product Name",
                         totalItems: [],
                     },
-                },
+                } as unknown as IAttributeDescriptor,
             ],
         },
         {
@@ -202,7 +203,7 @@ export const availableDrillTargets: IAvailableDrillTargets = {
                     name: "Region",
                     totalItems: [],
                 },
-            },
+            } as unknown as IAttributeDescriptor,
             intersectionAttributes: [
                 {
                     attributeHeader: {
@@ -225,7 +226,7 @@ export const availableDrillTargets: IAvailableDrillTargets = {
                         name: "Region",
                         totalItems: [],
                     },
-                },
+                } as unknown as IAttributeDescriptor,
             ],
         },
         {
@@ -250,7 +251,7 @@ export const availableDrillTargets: IAvailableDrillTargets = {
                     name: "Department",
                     totalItems: [],
                 },
-            },
+            } as unknown as IAttributeDescriptor,
             intersectionAttributes: [
                 {
                     attributeHeader: {
@@ -273,7 +274,7 @@ export const availableDrillTargets: IAvailableDrillTargets = {
                         name: "Region",
                         totalItems: [],
                     },
-                },
+                } as unknown as IAttributeDescriptor,
                 {
                     attributeHeader: {
                         uri: "",
@@ -295,7 +296,7 @@ export const availableDrillTargets: IAvailableDrillTargets = {
                         name: "Department",
                         totalItems: [],
                     },
-                },
+                } as unknown as IAttributeDescriptor,
             ],
         },
     ],

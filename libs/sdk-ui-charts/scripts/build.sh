@@ -11,7 +11,7 @@ _common-build() {
 
 build() {
     _common-build
-    tsc -p tsconfig.json
+    tsc -p tsconfig.build.json
     npm run api-extractor
 }
 

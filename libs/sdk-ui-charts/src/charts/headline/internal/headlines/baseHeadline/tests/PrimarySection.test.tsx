@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterAll, beforeEach, describe, expect, it, SpyInstance, vi } from "vitest";
+import { afterAll, beforeEach, describe, expect, it, MockInstance, vi } from "vitest";
 import { render } from "@testing-library/react";
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
 import PrimarySection from "../PrimarySection.js";
@@ -9,8 +9,8 @@ import * as PrimarySectionContent from "../PrimarySectionContent.js";
 import * as PrimarySectionCompactContent from "../PrimarySectionCompactContent.js";
 
 describe("PrimarySection", () => {
-    let MockContent: SpyInstance;
-    let MockCompactContent: SpyInstance;
+    let MockContent: MockInstance;
+    let MockCompactContent: MockInstance;
 
     const renderPrimarySection = () => {
         const props = {

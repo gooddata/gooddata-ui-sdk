@@ -9,7 +9,7 @@ import { ISeriesItem } from "../types.js";
 import { LegendSeriesContextStore } from "../context.js";
 
 describe("LegendList", () => {
-    let onItemClick: jest.Mock;
+    let onItemClick: ReturnType<typeof vi.fn>;
 
     beforeEach(() => {
         onItemClick = vi.fn();
@@ -24,8 +24,8 @@ describe("LegendList", () => {
         };
 
         const mockContextValue = {
-            focusedItem: undefined,
-            makeItemId: (item: ISeriesItem) => `test-id-${item?.name}`,
+            focusedItem: undefined as unknown as ISeriesItem,
+            makeItemId: (item?: ISeriesItem) => `test-id-${item?.name}`,
             descriptionId: "test-description-id",
         };
 

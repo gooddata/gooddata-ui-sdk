@@ -6,7 +6,7 @@ import { ExtendedDashboardWidget, ICustomWidget, newCustomWidget } from "../../.
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
 import { describe, it, expect, beforeEach } from "vitest";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 const EmptyLayout: IDashboardLayout<ExtendedDashboardWidget> = {
     type: "IDashboardLayout",
@@ -152,9 +152,8 @@ describe("fluid layout customizer", () => {
             newSection,
         );
 
-        let updatedLayout;
         expect(() => {
-            updatedLayout = Customizer.applyTransformations(LayoutWithNestedSections);
+            Customizer.applyTransformations(LayoutWithNestedSections);
         }).toThrowError('Nested layout at path [{"sectionIndex":0,"itemIndex":0}] does not exist.');
 
         expect(mutationContext).toEqual({

@@ -1,9 +1,9 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForItems } from "@gooddata/sdk-model";
 import { IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
-import Highcharts from "../../../lib/index.js";
+import { DrilldownEventObject } from "../../../lib/index.js";
 import { chartClick, getClickableElementNameByChartType } from "../drilldownEventing.js";
 import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent.js";
 import { describe, it, expect, vi } from "vitest";
@@ -76,7 +76,7 @@ describe("Drilldown Eventing", () => {
             },
         ],
     };
-    const pointClickEventData = { point } as Highcharts.DrilldownEventObject;
+    const pointClickEventData = { point } as DrilldownEventObject;
 
     it("should get clickable chart element name", () => {
         const fn = getClickableElementNameByChartType;
@@ -94,7 +94,7 @@ describe("Drilldown Eventing", () => {
     it("should call point drill context (non-group) when event.points given but null", () => {
         const drillConfig: IDrillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: vi.fn() };
-        const pointClickEventDataWithNullPoints: Highcharts.DrilldownEventObject = {
+        const pointClickEventDataWithNullPoints: DrilldownEventObject = {
             ...pointClickEventData,
             points: null,
         };
@@ -321,7 +321,7 @@ describe("Drilldown Eventing", () => {
         };
         const labelClickEventData = {
             points: [clickedPoint],
-        } as any as Highcharts.DrilldownEventObject;
+        } as any as DrilldownEventObject;
 
         chartClick(drillConfig, labelClickEventData, target as any as EventTarget, VisualizationTypes.LINE);
 
@@ -399,7 +399,7 @@ describe("Drilldown Eventing", () => {
         it("should return chart type for each point", () => {
             const drillConfig: IDrillConfig = { dataView, onDrill: vi.fn() };
             const target: any = { dispatchEvent: vi.fn() };
-            const pointClickEventData: Highcharts.DrilldownEventObject = {
+            const pointClickEventData: DrilldownEventObject = {
                 point: columnPoint,
                 points: [columnPoint, linePoint],
             } as any;
@@ -434,7 +434,7 @@ describe("Drilldown Eventing", () => {
         it("should fire event on cell click and fire correct data", () => {
             const drillConfig: IDrillConfig = { dataView, onDrill: () => true };
             const target: any = { dispatchEvent: vi.fn() };
-            const pointClickEventData: Highcharts.DrilldownEventObject = {
+            const pointClickEventData: DrilldownEventObject = {
                 point: linePoint,
                 points: null,
             } as any;
@@ -488,7 +488,7 @@ describe("Drilldown Eventing", () => {
         it("should NOT add elementChartType on cell click if it is not Combo chart", () => {
             const drillConfig: IDrillConfig = { dataView, onDrill: () => true };
             const target: any = { dispatchEvent: vi.fn() };
-            const pointClickEventData: Highcharts.DrilldownEventObject = {
+            const pointClickEventData: DrilldownEventObject = {
                 point: linePoint,
                 points: null,
             } as any;
@@ -572,7 +572,7 @@ describe("Drilldown Eventing", () => {
             const targetPointClickEventData: any = { point: targetPoint };
             chartClick(
                 drillConfig,
-                targetPointClickEventData as Highcharts.DrilldownEventObject,
+                targetPointClickEventData as DrilldownEventObject,
                 target as EventTarget,
                 VisualizationTypes.BULLET,
             );
