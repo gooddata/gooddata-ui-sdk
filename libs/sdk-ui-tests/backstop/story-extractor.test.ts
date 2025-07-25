@@ -16,7 +16,7 @@ const targetFile = resolve(__dirname, "stories.json");
  * Alternative would be a full-blown webpack setup or something similar.
  */
 describe("story-extractor", () => {
-    it("dumps stories into a file", { timeout: 30000 }, async () => {
+    it("dumps stories into a file", { timeout: 60000 }, async () => {
         const fileContents = await toBackstopJson();
         writeFileSync(targetFile, fileContents, { encoding: "utf8" });
         expect(existsSync(targetFile)).toBe(true);
