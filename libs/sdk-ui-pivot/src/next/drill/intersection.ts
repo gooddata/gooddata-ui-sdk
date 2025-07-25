@@ -12,7 +12,7 @@ import { extractAllColumnMappingHeaders, extractRowMappingHeadersUpToPosition } 
  * @returns Array of mapping headers
  */
 function createCellMappingHeadersForIntersection(
-    colDef: ColDef<AgGridRowData, string>,
+    colDef: ColDef<AgGridRowData, string | null>,
     data: AgGridRowData,
 ): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
@@ -48,7 +48,7 @@ function createCellMappingHeadersForIntersection(
  * @returns Array of drill intersection elements
  */
 export function createDrillIntersection(
-    colDef: ColDef<AgGridRowData, string>,
+    colDef: ColDef<AgGridRowData, string | null>,
     data: AgGridRowData,
 ): IDrillEventIntersectionElement[] {
     const mappingHeaders = createCellMappingHeadersForIntersection(colDef, data);

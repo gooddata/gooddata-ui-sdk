@@ -3,6 +3,7 @@
 exports[`mapDimensionsToColDefs > base > should create col defs for arithmetic measures 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -10,6 +11,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for arithmetic m
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -19,6 +21,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for arithmetic m
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -28,6 +31,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for arithmetic m
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -37,6 +41,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for arithmetic m
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -51,6 +56,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for arithmetic m
 exports[`mapDimensionsToColDefs > base > should create col defs for empty values 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -58,6 +64,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for empty values
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
     "headerName": "Department",
@@ -65,6 +72,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for empty values
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_attr.f_stage.stagename",
     "headerName": "Stage Name",
@@ -72,6 +80,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for empty values
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -79,6 +88,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for empty values
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -93,6 +103,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for empty values
 exports[`mapDimensionsToColDefs > base > should create col defs for single column attribute 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -105,6 +116,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single colum
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -119,6 +131,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric with column attribute 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -126,6 +139,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -140,6 +154,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric with row and column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -147,6 +162,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -154,6 +170,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -168,6 +185,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric with row attribute 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -175,6 +193,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -189,6 +208,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric with two row and one column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -196,6 +216,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
     "headerName": "Department",
@@ -203,6 +224,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -210,6 +232,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -224,6 +247,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric with two row and two column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -231,6 +255,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
     "headerName": "Department",
@@ -238,6 +263,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_attr.f_stage.stagename",
     "headerName": "Stage Name",
@@ -245,6 +271,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -252,6 +279,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -266,6 +294,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single row attribute 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -278,6 +307,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single row a
 exports[`mapDimensionsToColDefs > base > should create col defs for two measures 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -287,6 +317,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -301,6 +332,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
 exports[`mapDimensionsToColDefs > base > should create col defs for two measures with column attribute 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -308,6 +340,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -317,6 +350,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -331,6 +365,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
 exports[`mapDimensionsToColDefs > base > should create col defs for two measures with row and column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -338,6 +373,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -345,6 +381,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -354,6 +391,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -368,6 +406,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
 exports[`mapDimensionsToColDefs > base > should create col defs for two measures with three rows and two column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -375,6 +414,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
     "headerName": "Department",
@@ -382,6 +422,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_attr.f_owner.salesrep",
     "headerName": "Sales Rep",
@@ -389,6 +430,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_opportunitysnapshot.forecastcategory_id",
     "headerName": "Forecast Category",
@@ -396,6 +438,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -403,6 +446,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -412,6 +456,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -426,6 +471,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
 exports[`mapDimensionsToColDefs > base > should create col defs for two measures with two row and one column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -433,6 +479,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
     "headerName": "Department",
@@ -440,6 +487,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -447,6 +495,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -456,6 +505,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -470,6 +520,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
 exports[`mapDimensionsToColDefs > base > should create col defs for with attributes without measures 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_attr.f_stage.stagename",
     "headerName": "Stage Name",
@@ -477,6 +528,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for with attribu
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -484,6 +536,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for with attribu
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
     "headerName": "Department",
@@ -496,6 +549,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for with attribu
 exports[`mapDimensionsToColDefs > base > should create col defs for with two same dates 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_dt_oppcreated_timestamp.year",
     "headerName": "Created - Year",
@@ -503,6 +557,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for with two sam
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "created.test",
     "headerName": "Created - Year",
@@ -510,6 +565,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for with two sam
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "cellStyle": {
       "textAlign": "right",
@@ -524,6 +580,7 @@ exports[`mapDimensionsToColDefs > base > should create col defs for with two sam
 exports[`mapDimensionsToColDefs > transposition > should create col defs for single measure pivot with both attributes and metrics in rows 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",
@@ -531,6 +588,7 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for sin
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
     "headerName": "Department",
@@ -560,6 +618,7 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for sin
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_attr.f_stage.stagename",
     "headerName": "Stage Name",
@@ -567,6 +626,7 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for sin
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -601,6 +661,7 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
     "headerName": "Department",
@@ -608,6 +669,7 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -642,6 +704,7 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
     "headerName": "Department",
@@ -649,6 +712,7 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
     "headerName": "Region",
@@ -661,6 +725,7 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
 exports[`mapDimensionsToColDefs > transposition > should create col defs for two measures with single row attr with metrics in rows 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
     "headerName": "Product",

@@ -23,7 +23,7 @@ import {
 import { mapDimensionsToColDefs } from "./mapProps/mapDimensionsToColDefs.js";
 import { AG_GRID_DEFAULT_PROPS } from "./constants/agGrid.js";
 import { PAGE_SIZE } from "./constants/internal.js";
-import { TableMetadataProvider } from "./context/TableMetadataContext.js";
+import { TableMetadataProvider, useTableMetadata } from "./context/TableMetadataContext.js";
 
 /**
  * Simple wrapper for the core pivot table component that creates execution based on provided props.
@@ -89,23 +89,33 @@ function RenderAgGrid(props: ICorePivotTableInnerNextProps) {
     const { sortBy, rows, measures } = getExecutionProps(props);
     const sortingHandlers = useSorting({ pushData, rows, measures });
     const drillingHandlers = useDrilling({ drillableItems, onDrill });
+    const { currentDataView } = useTableMetadata();
 
-    const columnDefs = executionResult?.dimensions
-        ? mapDimensionsToColDefs(executionResult.dimensions, measureGroupDimension, sortBy)
-        : [];
+    const columnDefs =
+        currentDataView && executionResult?.dimensions
+            ? mapDimensionsToColDefs(
+                  executionResult.dimensions,
+                  measureGroupDimension,
+                  sortBy,
+                  drillableItems,
+                  currentDataView,
+              )
+            : [];
 
     const isPivotMode = getIsPivotMode(props);
 
     return (
-        <AgGridReact
-            {...AG_GRID_DEFAULT_PROPS}
-            {...serverSideRowModelProps}
-            columnDefs={columnDefs}
-            pivotMode={isPivotMode}
-            onSortChanged={sortingHandlers.onSortChanged}
-            onCellClicked={drillingHandlers.onCellClicked}
-            onCellKeyDown={drillingHandlers.onCellKeyDown}
-        />
+        <div className="gd-pivot-table-next">
+            <AgGridReact
+                {...AG_GRID_DEFAULT_PROPS}
+                {...serverSideRowModelProps}
+                columnDefs={columnDefs}
+                pivotMode={isPivotMode}
+                onSortChanged={sortingHandlers.onSortChanged}
+                onCellClicked={drillingHandlers.onCellClicked}
+                onCellKeyDown={drillingHandlers.onCellKeyDown}
+            />
+        </div>
     );
 }
 
