@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 import React, { useCallback, useMemo, useRef } from "react";
-import { e } from "./asyncTableBem.js";
-import { Dropdown } from "../Dropdown/Dropdown.js";
-import { UiButton } from "../@ui/UiButton/UiButton.js";
-import { UiAutofocus } from "../@ui/UiFocusManager/UiAutofocus.js";
-import { DropdownList } from "../Dropdown/DropdownList.js";
-import AsyncTableDropdownItem from "./AsyncTableDropdownItem.js";
+import { e } from "../asyncTableBem.js";
+import { Dropdown } from "../../../Dropdown/Dropdown.js";
+import { UiButton } from "../../UiButton/UiButton.js";
+import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
+import { DropdownList } from "../../../Dropdown/DropdownList.js";
+import UiAsyncTableDropdownItem from "./UiAsyncTableDropdownItem.js";
 import { useIntl } from "react-intl";
-import { messages } from "./locales.js";
-import { IAsyncTableFilterOption, IAsyncTableFilterProps } from "./types.js";
-import { useDebouncedState } from "../utils/debounce.js";
+import { messages } from "../locales.js";
+import { UiAsyncTableFilterOption, UiAsyncTableFilterProps } from "../types.js";
+import { useDebouncedState } from "@gooddata/sdk-ui";
 
 /**
  * @internal
@@ -20,7 +20,7 @@ export function AsyncTableFilter({
     selected,
     onItemClick,
     scrollToStart,
-}: IAsyncTableFilterProps) {
+}: UiAsyncTableFilterProps) {
     const intl = useIntl();
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [searchValue, setSearchValue, debouncedSearchValue] = useDebouncedState("", 300);
@@ -31,7 +31,7 @@ export function AsyncTableFilter({
     }, [options, debouncedSearchValue]);
 
     const onSelect = useCallback(
-        (item: IAsyncTableFilterOption, closeDropdown: () => void) => {
+        (item: UiAsyncTableFilterOption, closeDropdown: () => void) => {
             scrollToStart();
             onItemClick(item);
             closeDropdown();
@@ -45,7 +45,7 @@ export function AsyncTableFilter({
                 renderButton={({ toggleDropdown }) => (
                     <UiButton
                         ref={buttonRef}
-                        label={selected ? selected : label}
+                        label={selected ? selected.label : label}
                         onClick={() => toggleDropdown()}
                         size="small"
                         iconAfter="navigateDown"
@@ -54,13 +54,13 @@ export function AsyncTableFilter({
                 alignPoints={[{ align: "bl tl" }]}
                 renderBody={({ closeDropdown }) => (
                     <UiAutofocus>
-                        <DropdownList<IAsyncTableFilterOption>
+                        <DropdownList<UiAsyncTableFilterOption>
                             items={filteredOptions}
                             renderItem={({ item }) => (
-                                <AsyncTableDropdownItem
+                                <UiAsyncTableDropdownItem
                                     label={item.label ?? String(item.value)}
                                     onSelect={() => onSelect(item, closeDropdown)}
-                                    isSelected={item.value === selected}
+                                    isSelected={item.value === selected.value}
                                 />
                             )}
                             showSearch={true}

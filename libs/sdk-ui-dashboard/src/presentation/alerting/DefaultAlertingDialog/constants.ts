@@ -2,6 +2,7 @@
 import { IAlertComparisonOperator } from "@gooddata/sdk-model";
 import { SingleSelectListItemType } from "@gooddata/sdk-ui-kit";
 import { messages } from "./messages.js";
+import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "@gooddata/sdk-ui-ext";
 
 export type OperatorItemType<T = IAlertComparisonOperator> = {
     title: string;
@@ -10,36 +11,6 @@ export type OperatorItemType<T = IAlertComparisonOperator> = {
     type?: SingleSelectListItemType;
     info?: string;
 };
-
-export const COMPARISON_OPERATOR_LESS_THAN = "LESS_THAN";
-export const COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO";
-export const COMPARISON_OPERATOR_GREATER_THAN = "GREATER_THAN";
-export const COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL_TO = "GREATER_THAN_OR_EQUAL_TO";
-
-export const RELATIVE_OPERATOR_INCREASE_BY = "INCREASES_BY";
-export const RELATIVE_OPERATOR_DECREASE_BY = "DECREASES_BY";
-export const RELATIVE_OPERATOR_CHANGES_BY = "CHANGES_BY";
-
-export const ARITHMETIC_OPERATOR_DIFFERENCE = "DIFFERENCE";
-export const ARITHMETIC_OPERATOR_CHANGE = "CHANGE";
-
-export const COMPARISON_OPERATORS = {
-    COMPARISON_OPERATOR_LESS_THAN,
-    COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO,
-    COMPARISON_OPERATOR_GREATER_THAN,
-    COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL_TO,
-} as const;
-
-export const RELATIVE_OPERATORS = {
-    RELATIVE_OPERATOR_INCREASE_BY,
-    RELATIVE_OPERATOR_DECREASE_BY,
-    RELATIVE_OPERATOR_CHANGES_BY,
-} as const;
-
-export const ARITHMETIC_OPERATORS = {
-    ARITHMETIC_OPERATOR_DIFFERENCE,
-    ARITHMETIC_OPERATOR_CHANGE,
-} as const;
 
 export const COMPARISON_OPERATOR_OPTIONS: OperatorItemType[] = [
     {

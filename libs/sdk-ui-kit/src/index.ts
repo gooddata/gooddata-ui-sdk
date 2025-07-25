@@ -17,7 +17,6 @@ export * from "./typings/accessibility.js";
 export * from "./utils/constants.js";
 export * from "./utils/featureFlags.js";
 export * from "./utils/drag.js";
-export * from "./utils/debounce.js";
 export * from "./utils/dateTimeConfig.js";
 export * from "./utils/events.js";
 export * from "./utils/useId.js";
@@ -68,7 +67,7 @@ export * from "./RichText/index.js";
 export * from "./RecurrenceForm/index.js";
 export * from "./AddButton/index.js";
 export * from "./ZoomContext/ZoomContext.js";
-export * from "./Table/index.js";
+// export * from "./Table/index.js";
 /**
  * New components
  */
@@ -108,6 +107,7 @@ export { UiCheckbox } from "./@ui/UiCheckbox/UiCheckbox.js";
 export type { UiCheckboxProps } from "./@ui/UiCheckbox/UiCheckbox.js";
 export { UiIcon } from "./@ui/UiIcon/UiIcon.js";
 export type { UiIconProps } from "./@ui/UiIcon/UiIcon.js";
+export type { BackgroundType, BackgroundShape } from "./@ui/@types/background.js";
 export { iconPaths } from "./@ui/UiIcon/icons.js";
 export { UiSkeleton } from "./@ui/UiSkeleton/UiSkeleton.js";
 export type { UiSkeletonProps } from "./@ui/UiSkeleton/UiSkeleton.js";
@@ -257,3 +257,16 @@ export type {
     IUiNavigationBypassProps,
     IUiNavigationItem,
 } from "./@ui/UiNavigationBypass/UiNavigationBypass.js";
+
+export type {
+    UiAsyncTableProps,
+    UiAsyncTableColumn,
+    UiAsyncTableFilter,
+    UiAsyncTableFilterOption,
+    UiAsyncTableBulkAction,
+} from "./@ui/UiAsyncTable/types.js";
+
+export type { UiAsyncTableTitleProps, UiAsyncTableTitleAction } from "./@ui/UiAsyncTable/types.js";
+
+export { UiAsyncTable } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTable.js";
+export { UiAsyncTableTitle } from "./@ui/UiAsyncTable/UiAsyncTableTitle/UiAsyncTableTitle.js";

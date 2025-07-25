@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-@use "./mixins";
+@use "../../../styles/scss/mixins";
 
 .gd-ui-kit-async-table {
     $root: &;
@@ -88,10 +88,6 @@
         box-sizing: border-box;
         border-bottom: 1px solid var(--gd-palette-complementary-2);
 
-        > * {
-            flex: 0 0 auto;
-        }
-
         &--bold {
             font-weight: 700;
         }
@@ -101,6 +97,10 @@
             justify-content: center;
             cursor: pointer;
         }
+    }
+
+    &__link {
+        width: 100%;
     }
 
     &__text {
@@ -114,12 +114,18 @@
             flex-direction: column;
             font-size: var(--gd-table-multi-line-font-size);
             line-height: var(--gd-table-multi-line-line-height);
+        }
+    }
 
-            > span:first-child {
-                font-size: var(--gd-table-multi-line-font-size-large);
-                line-height: var(--gd-table-multi-line-line-height-large);
-                font-weight: 700;
-            }
+    &__text-line {
+        text-overflow: inherit;
+        overflow: inherit;
+        white-space: inherit;
+
+        &--first {
+            font-size: var(--gd-table-multi-line-font-size-large);
+            line-height: var(--gd-table-multi-line-line-height-large);
+            font-weight: 700;
         }
     }
 
@@ -129,6 +135,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        flex: none;
     }
 
     &__role-icon {
@@ -139,8 +146,13 @@
         margin-right: var(--gd-spacing-5px);
     }
 
-    &__suffix-icon {
+    &__suffix-icon,
+    &__badge {
         margin-left: var(--gd-spacing-5px);
+    }
+
+    &__badge {
+        flex: none;
     }
 
     &__sort {
@@ -150,10 +162,6 @@
         svg {
             transform: rotate(180deg);
         }
-    }
-
-    &__badge {
-        margin-left: var(--gd-spacing-5px);
     }
 
     &__toolbar {
@@ -192,6 +200,10 @@
         color: var(--gd-palette-complementary-7);
         font-size: var(--gd-table-counter-font-size);
         padding-right: var(--gd-spacing-20px);
+    }
+
+    &__toolbar-search {
+        margin-left: auto;
     }
 
     &__dropdown-item {

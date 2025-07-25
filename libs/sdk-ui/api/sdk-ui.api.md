@@ -2146,6 +2146,23 @@ export type UseDataExportCallbacks = UseCancelablePromiseCallbacks<string, GoodD
 // @public
 export type UseDataExportState = UseCancelablePromiseState<string, GoodDataSdkError>;
 
+// @internal
+export const useDebouncedState: <T>(initialValue: T, delay: number) => UseDebouncedStateOutput<T>;
+
+// @internal
+export type UseDebouncedStateOutput<T> = [
+/**
+* The current value.
+*/
+T,
+(value: T) => void,
+/**
+* The debounced value.
+*/
+T,
+(value: T) => void
+];
+
 // @public
 export function useExecutionDataView(config: IUseExecutionDataViewConfig & UseExecutionDataViewCallbacks, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 

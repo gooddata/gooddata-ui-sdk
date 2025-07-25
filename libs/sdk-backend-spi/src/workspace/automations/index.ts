@@ -9,7 +9,7 @@ import { IPagedResource } from "../../common/paging.js";
  * @alpha
  */
 
-export type AutomationType = "schedule" | "trigger";
+export type AutomationType = "schedule" | "trigger" | "alert";
 
 /**
  * Configuration options for loading automation metadata objects.

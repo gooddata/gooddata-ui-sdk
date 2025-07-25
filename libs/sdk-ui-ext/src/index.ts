@@ -24,7 +24,7 @@ import {
 
 export { clearInsightViewCaches } from "./dataLoaders/index.js";
 export * from "./insightView/index.js";
-
+export * from "./automations/index.js";
 // exported for sdk-ui-dashboard
 export type {
     IDrillDownDefinition,

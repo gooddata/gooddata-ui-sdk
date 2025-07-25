@@ -167,7 +167,7 @@ export type AuthenticationFlow = {
 };
 
 // @alpha
-export type AutomationType = "schedule" | "trigger";
+export type AutomationType = "schedule" | "trigger" | "alert";
 
 // @beta
 export type CancelableOptions = {

@@ -11,6 +11,7 @@ export interface UiCheckboxProps {
     onChange?: (e: React.ChangeEvent) => void;
     preventDefault?: boolean;
     indeterminate?: boolean;
+    disabled?: boolean;
 }
 
 const { b, e } = bem("gd-ui-kit-checkbox");
@@ -23,6 +24,7 @@ export const UiCheckbox: React.FC<UiCheckboxProps> = ({
     onChange = () => {},
     preventDefault = false,
     indeterminate = false,
+    disabled = false,
 }) => (
     <label className={b()}>
         <input
@@ -30,8 +32,9 @@ export const UiCheckbox: React.FC<UiCheckboxProps> = ({
             className={e("input")}
             checked={checked}
             onChange={onChange}
+            disabled={disabled}
             onClick={(e) => preventDefault && e.stopPropagation()}
         />
-        <span className={e("box", { checked, indeterminate })} />
+        <span className={e("box", { checked, indeterminate, disabled })} />
     </label>
 );

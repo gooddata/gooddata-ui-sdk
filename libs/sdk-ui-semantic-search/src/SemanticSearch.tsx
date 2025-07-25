@@ -1,7 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
-import { useDebouncedState, Input, Dropdown } from "@gooddata/sdk-ui-kit";
+import { Input, Dropdown } from "@gooddata/sdk-ui-kit";
+import { useDebouncedState } from "@gooddata/sdk-ui";
 import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { SearchResultsDropdownList } from "./SearchResultsDropdownList.js";
 import { useSemanticSearch, useElementWidth } from "./hooks/index.js";

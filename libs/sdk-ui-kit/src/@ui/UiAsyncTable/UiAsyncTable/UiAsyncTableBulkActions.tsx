@@ -1,16 +1,16 @@
 // (C) 2025 GoodData Corporation
 import React, { useRef } from "react";
-import { e } from "./asyncTableBem.js";
-import { Dropdown } from "../Dropdown/Dropdown.js";
-import { UiButton } from "../@ui/UiButton/UiButton.js";
-import { UiAutofocus } from "../@ui/UiFocusManager/UiAutofocus.js";
-import { DropdownList } from "../Dropdown/DropdownList.js";
-import AsyncTableDropdownItem from "./AsyncTableDropdownItem.js";
+import { e } from "../asyncTableBem.js";
+import { Dropdown } from "../../../Dropdown/Dropdown.js";
+import { UiButton } from "../../UiButton/UiButton.js";
+import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
+import { DropdownList } from "../../../Dropdown/DropdownList.js";
+import UiAsyncTableDropdownItem from "./UiAsyncTableDropdownItem.js";
 import { useIntl } from "react-intl";
-import { messages } from "./locales.js";
-import { IAsyncTableBulkActionsProps } from "./types.js";
+import { messages } from "../locales.js";
+import { UiAsyncTableBulkActionsProps } from "../types.js";
 
-export function AsyncTableBulkActions({ bulkActions }: IAsyncTableBulkActionsProps) {
+export function UiAsyncTableBulkActions({ bulkActions }: UiAsyncTableBulkActionsProps) {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const intl = useIntl();
 
@@ -24,7 +24,7 @@ export function AsyncTableBulkActions({ bulkActions }: IAsyncTableBulkActionsPro
                         label={intl.formatMessage(messages.chooseAction)}
                         onClick={() => toggleDropdown()}
                         size="small"
-                        iconAfter="chevronDown"
+                        iconAfter="navigateDown"
                     />
                 )}
                 alignPoints={[{ align: "bl tl" }]}
@@ -33,7 +33,7 @@ export function AsyncTableBulkActions({ bulkActions }: IAsyncTableBulkActionsPro
                         <DropdownList
                             items={bulkActions}
                             renderItem={({ item }) => (
-                                <AsyncTableDropdownItem
+                                <UiAsyncTableDropdownItem
                                     label={item.label}
                                     onSelect={() => {
                                         item.onClick();
