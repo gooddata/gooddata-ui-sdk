@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IDashboardLayout,
     IDashboardLayoutSection,
@@ -14,7 +14,7 @@ import {
     defaultItemXlSize,
 } from "./utils.js";
 import { describe, it, expect } from "vitest";
-import { serializeLayoutItemPath } from "../../../../layout/coordinates";
+import { serializeLayoutItemPath } from "../../../../layout/coordinates.js";
 
 describe("DashboardLayoutSectionBuilder", () => {
     describe("constructors", () => {

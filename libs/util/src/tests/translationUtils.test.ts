@@ -71,7 +71,7 @@ describe("sanitizeLocaleForMoment", () => {
     });
 
     it("should not fail with falsy value", () => {
-        const actual = sanitizeLocaleForMoment(undefined);
+        const actual = sanitizeLocaleForMoment(undefined as unknown as string);
         expect(actual).toBeUndefined();
     });
 });

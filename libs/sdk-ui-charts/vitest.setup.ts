@@ -29,5 +29,5 @@ afterEach(() => {
 });
 
 global.CSS = {
-    supports: (property: string, value: string) => false,
+    supports: (_property: string, _value: string) => false,
 } as any;

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
 import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions.js";
 import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
@@ -10,6 +10,7 @@ import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { getSeries } from "../chartSeries.js";
 import { getDrillableSeries } from "../chartDrilling.js";
 import { describe, it, expect } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 describe("getCategoriesForTwoAttributes", () => {
     const attributeDescriptor: IAttributeDescriptor["attributeHeader"] = {
@@ -24,7 +25,7 @@ describe("getCategoriesForTwoAttributes", () => {
             ref: uriRef("uri"),
             name: "name",
         },
-    };
+    } as IAttributeDescriptor["attributeHeader"];
 
     it("should return categories for two attributes", () => {
         const viewByAttribute: IUnwrappedAttributeHeadersWithItems = {
@@ -207,7 +208,9 @@ describe("getCategoriesForTwoAttributes", () => {
 });
 
 describe("getDrillableSeriesWithParentAttribute", () => {
-    const dv = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithTwoViewBy);
+    const dv = recordedDataFacade(
+        ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithTwoViewBy as unknown as ScenarioRecording,
+    );
     const { measureGroup, viewByAttribute, viewByParentAttribute, stackByAttribute } =
         getMVSForViewByTwoAttributes(dv);
     const type = "column";

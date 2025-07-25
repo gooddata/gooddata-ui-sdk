@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { generateChartOptions } from "../../chartTypes/_util/test/helper.js";
 
 import buildLegendOptions, { getLegendItems, shouldLegendBeEnabled } from "../legendBuilder.js";
@@ -8,28 +8,35 @@ import { measureLocalId } from "@gooddata/sdk-model";
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 import { DEFAULT_LEGEND_CONFIG } from "@gooddata/sdk-ui-vis-commons";
 import { describe, it, expect } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 const rec = recordedDataFacade;
 
 describe("shouldLegendBeEnabled", () => {
     it("should return false by default", () => {
         const chartOptions = generateChartOptions(
-            rec(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy),
+            rec(
+                ReferenceRecordings.Scenarios.BarChart
+                    .SingleMeasureWithViewBy as unknown as ScenarioRecording,
+            ),
         );
         expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
     });
 
     it("should return true if chart has more than one series", () => {
         const chartOptions = generateChartOptions(
-            rec(ReferenceRecordings.Scenarios.BarChart.FourMeasuresAndPoP),
+            rec(ReferenceRecordings.Scenarios.BarChart.FourMeasuresAndPoP as unknown as ScenarioRecording),
         );
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
     it("should return true if pie chart has more than one value", () => {
-        const chartOptions = generateChartOptions(rec(ReferenceRecordings.Scenarios.PieChart.TwoMeasures), {
-            type: "pie",
-        });
+        const chartOptions = generateChartOptions(
+            rec(ReferenceRecordings.Scenarios.PieChart.TwoMeasures as unknown as ScenarioRecording),
+            {
+                type: "pie",
+            },
+        );
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
@@ -37,7 +44,7 @@ describe("shouldLegendBeEnabled", () => {
         const chartOptions = generateChartOptions(
             rec(
                 ReferenceRecordings.Scenarios.ColumnChart
-                    .SingleMeasureWithViewByAndStackByFilteredToSingleStack,
+                    .SingleMeasureWithViewByAndStackByFilteredToSingleStack as unknown as ScenarioRecording,
             ),
             {
                 type: "column",
@@ -50,7 +57,7 @@ describe("shouldLegendBeEnabled", () => {
         const chartOptions = generateChartOptions(
             rec(
                 ReferenceRecordings.Scenarios.ColumnChart
-                    .SingleMeasureWithViewByAndStackByFilteredToSingleStack,
+                    .SingleMeasureWithViewByAndStackByFilteredToSingleStack as unknown as ScenarioRecording,
             ),
             {
                 type: "line",
@@ -60,31 +67,39 @@ describe("shouldLegendBeEnabled", () => {
     });
 
     it("should return false if the treemap is stacked and has only one measure item", () => {
-        const dv = rec(ReferenceRecordings.Scenarios.Treemap.SingleMeasureAndSegment);
+        const dv = rec(
+            ReferenceRecordings.Scenarios.Treemap.SingleMeasureAndSegment as unknown as ScenarioRecording,
+        );
         const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
     });
 
     it("should return true if the treemap is stacked and has many measures", () => {
-        const dv = rec(ReferenceRecordings.Scenarios.Treemap.ArithmeticMeasuresAndSegment);
+        const dv = rec(
+            ReferenceRecordings.Scenarios.Treemap
+                .ArithmeticMeasuresAndSegment as unknown as ScenarioRecording,
+        );
         const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
     it("should return true if the treemap has many measures", () => {
-        const dv = rec(ReferenceRecordings.Scenarios.Treemap.TwoMeasures);
+        const dv = rec(ReferenceRecordings.Scenarios.Treemap.TwoMeasures as unknown as ScenarioRecording);
         const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
     it("should return false if the treemap has only one measures", () => {
-        const dv = rec(ReferenceRecordings.Scenarios.Treemap.SingleMeasure);
+        const dv = rec(ReferenceRecordings.Scenarios.Treemap.SingleMeasure as unknown as ScenarioRecording);
         const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
     });
 
     it("should return true if the treemap has view by and has only one view by item", () => {
-        const dv = rec(ReferenceRecordings.Scenarios.Treemap.SingleMeasureAndViewByFilteredToOneElement);
+        const dv = rec(
+            ReferenceRecordings.Scenarios.Treemap
+                .SingleMeasureAndViewByFilteredToOneElement as unknown as ScenarioRecording,
+        );
         const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
@@ -118,7 +133,7 @@ describe("shouldLegendBeEnabled", () => {
 describe("getLegendItems", () => {
     it("should return correct legend items for regular charts", () => {
         const chartOptions = generateChartOptions(
-            rec(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy),
+            rec(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy as unknown as ScenarioRecording),
         );
         expect(getLegendItems(chartOptions)).toEqual([
             {
@@ -144,7 +159,7 @@ describe("getLegendItems", () => {
             },
         };
         const chartOptions = generateChartOptions(
-            rec(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy),
+            rec(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy as unknown as ScenarioRecording),
             config,
         );
         expect(getLegendItems(chartOptions)).toEqual([
@@ -166,7 +181,10 @@ describe("getLegendItems", () => {
     it("should return correct legend items for charts with stackBy and viewBy", () => {
         // dataset with one measure
         const chartOptions = generateChartOptions(
-            rec(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy),
+            rec(
+                ReferenceRecordings.Scenarios.BarChart
+                    .SingleMeasureWithViewByAndStackBy as unknown as ScenarioRecording,
+            ),
         );
         expect(getLegendItems(chartOptions)).toEqual([
             {
@@ -185,9 +203,12 @@ describe("getLegendItems", () => {
     });
 
     it("should return correct legend items for pie charts", () => {
-        const chartOptions = generateChartOptions(rec(ReferenceRecordings.Scenarios.PieChart.TwoMeasures), {
-            type: "pie",
-        });
+        const chartOptions = generateChartOptions(
+            rec(ReferenceRecordings.Scenarios.PieChart.TwoMeasures as unknown as ScenarioRecording),
+            {
+                type: "pie",
+            },
+        );
         expect(getLegendItems(chartOptions)).toEqual([
             {
                 color: "rgb(20,178,226)",
@@ -239,7 +260,9 @@ describe("getLegendItems", () => {
 });
 
 describe("getLegend", () => {
-    const chartOptions = generateChartOptions(rec(ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures));
+    const chartOptions = generateChartOptions(
+        rec(ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures as unknown as ScenarioRecording),
+    );
     const legend = buildLegendOptions({}, chartOptions);
 
     it("should assign enabled: false if disabled by config", () => {

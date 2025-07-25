@@ -1,4 +1,5 @@
-/* eslint-disable header/header */
+// (C) 2025 GoodData Corporation
+
 // THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-10-17T14:42:41.833Z;
 import {
     newAttribute,
@@ -8,7 +9,7 @@ import {
     IMeasureDefinition,
     modifySimpleMeasure,
     newNegativeAttributeFilter,
-} from "../src";
+} from "../src/index.js";
 
 /*
  * Contents of this file were taken from the tools/reference-workspace project; sdk-model cannot depend on that

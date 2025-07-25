@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { AddGranteeSelect } from "../AddGranteeSelect.js";
@@ -20,7 +20,7 @@ import {
 import { mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
 import { uriRef, IAvailableAccessGrantee } from "@gooddata/sdk-model";
 import { describe, it, expect, vi } from "vitest";
-import { IBackendCapabilities } from "sdk-backend-spi/esm/index.js";
+import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 
 const defaultProps: IAddGranteeSelectProps = {
     onSelectGrantee: noop,

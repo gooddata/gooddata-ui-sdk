@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { IAttribute, IInsightDefinition, IMeasure } from "@gooddata/sdk-model";
 import { VisualizationTypes, DefaultLocale } from "@gooddata/sdk-ui";
 import { describe, it, expect } from "vitest";

@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { TextAreaWithSubmit } from "../TextAreaWithSubmit.js";
 import { ITextAreaWithSubmitProps } from "../typings.js";
 import { describe, it, expect, vi, Mock } from "vitest";

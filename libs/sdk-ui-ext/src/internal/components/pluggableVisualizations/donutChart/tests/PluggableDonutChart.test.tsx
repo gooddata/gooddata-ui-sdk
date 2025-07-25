@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import { PluggableDonutChart } from "../PluggableDonutChart.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
@@ -25,7 +25,7 @@ describe("PluggableDonutChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
-    };
+    } as unknown as IVisConstruct;
 
     function createComponent(props = defaultProps) {
         return new PluggableDonutChart(props);

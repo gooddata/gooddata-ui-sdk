@@ -1,8 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { describe, it, expect } from "vitest";
-import { switcherSlideTransformer } from "../switcherSlideTransformer";
 import { IDashboardLayoutItem } from "@gooddata/sdk-model";
-import { widgetSlideTransformer } from "../widgetSlideTransformer";
+import { widgetSlideTransformer } from "../widgetSlideTransformer.js";
 
 const widget1 = {
     size: {
@@ -27,7 +26,7 @@ const base = {
 
 describe("WidgetSlideTransformer", () => {
     it("always transform", () => {
-        const data = widgetSlideTransformer(widget1 as IDashboardLayoutItem);
+        const data = widgetSlideTransformer(widget1 as unknown as IDashboardLayoutItem);
 
         expect(data).toEqual([
             {

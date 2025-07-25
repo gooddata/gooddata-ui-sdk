@@ -1,16 +1,16 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import AggregationsSubMenu, { IAggregationsSubMenuProps } from "../AggregationsSubMenu.js";
 import { IColumnTotal } from "../aggregationsMenuTypes.js";
-import { uriRef } from "@gooddata/sdk-model";
+import { IAttributeDescriptor, uriRef } from "@gooddata/sdk-model";
 import { describe, it, expect, vi } from "vitest";
 
 const intlMock = createIntlMock();
 
 describe("AggregationsSubMenu", () => {
-    const rowAttributeHeaders = [
+    const rowAttributeHeaders: IAttributeDescriptor[] = [
         {
             attributeHeader: {
                 formOf: {
@@ -41,9 +41,9 @@ describe("AggregationsSubMenu", () => {
                 ref: uriRef("/gdc/md/project_id/obj/2nd_attr_df_uri_id"),
             },
         },
-    ];
+    ] as unknown as IAttributeDescriptor[];
 
-    const columnAttributeHeaders = [
+    const columnAttributeHeaders: IAttributeDescriptor[] = [
         {
             attributeHeader: {
                 formOf: {
@@ -74,7 +74,7 @@ describe("AggregationsSubMenu", () => {
                 ref: uriRef("/gdc/md/project_id/obj/4th_attr_df_uri_id"),
             },
         },
-    ];
+    ] as unknown as IAttributeDescriptor[];
 
     function renderComponent(customProps: Partial<IAggregationsSubMenuProps> = {}) {
         const onAggregationSelect = vi.fn();

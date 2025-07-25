@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import { IVisProps, IDrillDownContext } from "../../../interfaces/Visualization.js";
+// (C) 2019-2025 GoodData Corporation
+import { IVisProps, IDrillDownContext, IVisConstruct } from "../../../interfaces/Visualization.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import { BucketNames } from "@gooddata/sdk-ui";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
@@ -11,7 +11,7 @@ import { describe, it, expect } from "vitest";
 describe("AbstractPluggableVisualization", () => {
     class DummyPluggableVisualization extends AbstractPluggableVisualization {
         constructor() {
-            super(DummyVisConstruct);
+            super(DummyVisConstruct as unknown as IVisConstruct);
         }
 
         public getExtendedReferencePoint(): Promise<any> {

@@ -55,6 +55,7 @@ import {
     ObjRef,
     uriRef,
     attributeLocalId,
+    ITheme,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { CoreGeoChart, getGeoChartDimensions, IGeoConfig, ICoreGeoChartProps } from "@gooddata/sdk-ui-geo";
@@ -298,7 +299,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const fullConfig = this.buildVisualizationConfig(options, supportedControls);
         const execution = this.getExecution(options, insight, executionFactory);
 
-        const geoPushpinProps: ICoreGeoChartProps & WrappedComponentProps = {
+        const geoPushpinProps: ICoreGeoChartProps & WrappedComponentProps & { theme: ITheme } = {
             drillableItems,
             config: updateConfigWithSettings(fullConfig, this.featureFlags),
             height: resultingHeight,

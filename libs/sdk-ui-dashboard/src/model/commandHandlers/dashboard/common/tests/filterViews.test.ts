@@ -1,7 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { it, describe, expect } from "vitest";
-import { changeFilterContextSelection } from "../filterViews";
+import { changeFilterContextSelection } from "../filterViews.js";
 import { FilterContextItem, IFilterContext } from "@gooddata/sdk-model";
 
 const buildFilterContext = (filters: FilterContextItem[]): IFilterContext => ({

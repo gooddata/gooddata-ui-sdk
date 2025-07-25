@@ -3,7 +3,7 @@ import React from "react";
 import includes from "lodash/includes.js";
 import { withIntl } from "@gooddata/sdk-ui";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 
 import { customMessages } from "./customDictionary.js";

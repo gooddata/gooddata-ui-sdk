@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { getMVS } from "../../_util/test/helper.js";
 import { IColorMapping } from "../../../../interfaces/index.js";
@@ -9,10 +9,13 @@ import { BubbleChartColorStrategy } from "../bubbleChartColoring.js";
 import { ReferenceRecordings, ReferenceMd, ReferenceData } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { describe, it, expect } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 describe("BubbleChartStrategy", () => {
     it("should create palette with color from first measure", () => {
-        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.BubbleChart.XAxisMeasure);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.BubbleChart.XAxisMeasure as unknown as ScenarioRecording,
+        );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "bubble";
 
@@ -48,7 +51,8 @@ describe("BubbleChartStrategy", () => {
 
     it("should create palette with color for each attribute element", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.BubbleChart.XAndYAxisAndSizeMeasuresWithViewBy,
+            ReferenceRecordings.Scenarios.BubbleChart
+                .XAndYAxisAndSizeMeasuresWithViewBy as unknown as ScenarioRecording,
         );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "bubble";

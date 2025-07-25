@@ -1,14 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import noop from "lodash/noop.js";
 import set from "lodash/set.js";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 import ContinuousLineControl, { IContinuousLineControlProps } from "../ContinuousLineControl.js";
 import { describe, it, expect, vi } from "vitest";
-import { defaultImport } from "default-import";
 
 describe("ContinuousLineControl", () => {
     const defaultProps = {

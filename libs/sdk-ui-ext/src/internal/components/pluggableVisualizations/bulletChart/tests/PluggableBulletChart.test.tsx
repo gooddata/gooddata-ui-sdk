@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import { PluggableBulletChart } from "../PluggableBulletChart.js";
@@ -47,7 +47,7 @@ describe("PluggableBulletChart", () => {
         },
         renderFun: mockRenderFun,
         visualizationProperties: {},
-    };
+    } as unknown as IVisConstruct;
 
     const bulletChart = createComponent();
 

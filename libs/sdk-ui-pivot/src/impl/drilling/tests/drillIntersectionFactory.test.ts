@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ReferenceData } from "@gooddata/reference-workspace";
 import { createTestRow, TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor } from "./drilling.fixture.js";
 import { createDrillIntersection } from "../drillIntersectionFactory.js";
@@ -23,10 +23,10 @@ describe("createDrillIntersection", () => {
     }
 
     it("creates drill intersection for row attribute", () => {
-        expect(createDrillIntersection(testCellEvent(SliceCol, TestRow), TestTable)).toMatchSnapshot();
+        expect(createDrillIntersection(testCellEvent(SliceCol, TestRow), TestTable, [])).toMatchSnapshot();
     });
 
     it("creates drill intersection for measure cell attribute", () => {
-        expect(createDrillIntersection(testCellEvent(LeafCol, TestRow), TestTable)).toMatchSnapshot();
+        expect(createDrillIntersection(testCellEvent(LeafCol, TestRow), TestTable, [])).toMatchSnapshot();
     });
 });

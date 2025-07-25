@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IBucketFilter, IBucketItem } from "../../../../interfaces/Visualization.js";
 
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
@@ -18,7 +18,7 @@ import {
     validMixedValuesColumnWidthItem,
 } from "./widthItemsMock.js";
 import { adaptReferencePointWidthItemsToPivotTable } from "../widthItemsHelpers.js";
-import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
 import { uriRef } from "@gooddata/sdk-model";
 import { describe, it, expect } from "vitest";
 
@@ -51,6 +51,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             previousRowAttributes,
             previousColumnAttributes,
             [],
+            undefined as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validAttributeColumnWidthItem, validMeasureColumnWidthItem]);
@@ -72,6 +73,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             previousRowAttributes,
             previousColumnAttributes,
             [],
+            undefined as MeasureGroupDimension,
         );
 
         expect(result).toEqual([
@@ -92,6 +94,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [],
+            undefined as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validAllMeasureColumnWidthItem]);
@@ -108,6 +111,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [],
+            undefined as MeasureGroupDimension,
         );
 
         expect(result).toEqual([]);
@@ -124,6 +128,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [],
+            undefined as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validWeakMeasureColumnWidthItem]);
@@ -142,6 +147,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [],
+            undefined as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validWeakMeasureColumnWidthItem]);
@@ -161,6 +167,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [],
+            undefined as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validWeakMeasureColumnWidthItem]);
@@ -190,6 +197,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [filter],
+            undefined as MeasureGroupDimension,
         );
 
         expect(result).toEqual([]);
@@ -219,6 +227,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [filter],
+            undefined as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validMeasureColumnWidthItem]);
@@ -248,6 +257,7 @@ describe("adaptReferencePointWidthItemsToPivotTable transposed", () => {
             [],
             [],
             [],
+            undefined as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validSliceMeasureColumnWidthItem, validMixedValuesColumnWidthItem]);

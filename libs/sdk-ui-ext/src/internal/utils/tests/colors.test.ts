@@ -1,5 +1,5 @@
-// (C) 2019-2023 GoodData Corporation
-import { DefaultColorPalette, IMappingHeader } from "@gooddata/sdk-ui";
+// (C) 2019-2025 GoodData Corporation
+import { DefaultColorPalette, IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
 import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors.js";
 import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors.js";
 import { GuidType, IColor, idRef, uriRef } from "@gooddata/sdk-model";
@@ -164,7 +164,10 @@ describe("color utils", () => {
 
             const properties = getProperties(richColorMapping);
 
-            const result = getValidProperties(properties, attributeHeaderColorAssignments);
+            const result = getValidProperties(
+                properties,
+                attributeHeaderColorAssignments as unknown as IColorAssignment[],
+            );
             expect(result.controls.colorMapping).toEqual(colorMapping);
         });
 
@@ -186,7 +189,10 @@ describe("color utils", () => {
 
             const properties = getProperties(richColorMapping);
 
-            const result = getValidProperties(properties, tigerAttributeHeaderColorAssignments);
+            const result = getValidProperties(
+                properties,
+                tigerAttributeHeaderColorAssignments as unknown as IColorAssignment[],
+            );
             expect(result.controls.colorMapping).toEqual(colorMapping);
         });
 
@@ -252,7 +258,7 @@ describe("color utils", () => {
                     ref: uriRef("a1"),
                 },
             },
-        };
+        } as IMappingHeader;
 
         const tigerAttributeHeader = {
             attributeHeader: {
@@ -268,7 +274,7 @@ describe("color utils", () => {
                     ref: uriRef("a1"),
                 },
             },
-        };
+        } as IMappingHeader;
 
         it("should assign measure item to properties", () => {
             const measureItem: IMappingHeader = {

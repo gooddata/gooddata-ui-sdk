@@ -48,6 +48,7 @@ import { getDrillableSeries } from "../chartDrilling.js";
 import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);
@@ -168,7 +169,8 @@ describe("chartOptionsBuilder", () => {
             });
             it('should validate with "dataTooLarge: true" against nodes limit', () => {
                 const dv = recordedDataFacade(
-                    ReferenceRecordings.Scenarios.SankeyChart.MeasureAttributeFromAndAttributeTo,
+                    ReferenceRecordings.Scenarios.SankeyChart
+                        .MeasureAttributeFromAndAttributeTo as unknown as ScenarioRecording,
                 );
                 const sankeyChartOptions = generateChartOptions(dv, {
                     type: "sankey",
@@ -245,7 +247,8 @@ describe("chartOptionsBuilder", () => {
 
             it('should validate with "dataTooLarge: true" against default sankey chart nodes limit', () => {
                 const dv = recordedDataFacade(
-                    ReferenceRecordings.Scenarios.SankeyChart.MeasureAttributeFromAndAttributeTo,
+                    ReferenceRecordings.Scenarios.SankeyChart
+                        .MeasureAttributeFromAndAttributeTo as unknown as ScenarioRecording,
                 );
                 const sankeyChartOptions = generateChartOptions(dv, {
                     type: "sankey",
@@ -3239,7 +3242,7 @@ describe("chartOptionsBuilder", () => {
                             },
                         },
                     ],
-                };
+                } as IUnwrappedAttributeHeadersWithItems;
 
                 const stackBy: IUnwrappedAttributeHeadersWithItems = {
                     uri: "",
@@ -3261,7 +3264,7 @@ describe("chartOptionsBuilder", () => {
                             },
                         },
                     ],
-                };
+                } as IUnwrappedAttributeHeadersWithItems;
 
                 const point = {
                     value: 300,

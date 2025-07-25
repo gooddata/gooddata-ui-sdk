@@ -127,7 +127,7 @@ describe("mapDimensionsToColDefs", () => {
         });
 
         it("should create col defs for two measures with row attribute", async () => {
-            const rowData = await getColDefs({
+            await getColDefs({
                 measures: [ReferenceMd.Amount, ReferenceMd.Won],
                 rows: [ReferenceMd.Product.Name],
             });

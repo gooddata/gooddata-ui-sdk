@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
@@ -15,5 +15,5 @@ export const BeforeTestCorrelation = "beforeTestId";
  * Empty dashboard. No filter context, empty layout.
  */
 export const EmptyDashboardIdentifier = "emptyDashboard";
-export const EmptyDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
-    .dash_emptyDashboard.obj as IDashboardWithReferences;
+export const EmptyDashboardWithReferences = ReferenceRecordings.Recordings.metadata?.dashboards
+    ?.dash_emptyDashboard.obj as IDashboardWithReferences;

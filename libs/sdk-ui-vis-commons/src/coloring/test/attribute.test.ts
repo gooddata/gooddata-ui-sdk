@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { IColorPaletteItem, RgbType, IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
@@ -9,6 +9,7 @@ import { recordedDataFacade } from "../../../__mocks__/recordings.js";
 import { getColorsFromStrategy } from "./helper.js";
 import { IColorMapping } from "../types.js";
 import { describe, it, expect } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 const RgbPalette: IColorPalette = [
     {
@@ -56,7 +57,7 @@ function getAttributeDescriptors(dv: DataViewFacade) {
 describe("AttributeColorStrategy", () => {
     it("should return AttributeColorStrategy with two colors from default color palette", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy as ScenarioRecording,
         );
         const { viewByAttribute, stackByAttribute } = getAttributeDescriptors(dv);
 
@@ -80,7 +81,7 @@ describe("AttributeColorStrategy", () => {
 
     it("should return AttributeColorStrategy with two colors from custom color palette", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy as ScenarioRecording,
         );
         const { viewByAttribute, stackByAttribute } = getAttributeDescriptors(dv);
 
@@ -104,12 +105,12 @@ describe("AttributeColorStrategy", () => {
 
     it("should return AttributeColorStrategy with properly applied mapping", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy as ScenarioRecording,
         );
         const { viewByAttribute, stackByAttribute } = getAttributeDescriptors(dv);
         const colorMapping: IColorMapping[] = [
             {
-                predicate: HeaderPredicates.attributeItemNameMatch(ReferenceData.Region.EastCoast.title),
+                predicate: HeaderPredicates.attributeItemNameMatch(ReferenceData.Region.EastCoast.title!),
                 color: {
                     type: "guid",
                     value: "blue",
@@ -127,7 +128,7 @@ describe("AttributeColorStrategy", () => {
                 },
             },
             {
-                predicate: HeaderPredicates.uriMatch(ReferenceData.Region.WestCoast.uri),
+                predicate: HeaderPredicates.uriMatch(ReferenceData.Region.WestCoast.uri!),
                 color: {
                     type: "rgb" as RgbType,
                     value: {

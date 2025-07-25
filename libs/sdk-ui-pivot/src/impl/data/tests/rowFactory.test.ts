@@ -1,8 +1,8 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import { createIntlMock } from "@gooddata/sdk-ui";
 import { getRow, getRowTotals } from "../rowFactory.js";
-import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
@@ -13,7 +13,7 @@ const intl = createIntlMock();
 describe("getRowTotals", () => {
     it("should return total rows", () => {
         const fixture = recordedDataFacade(
-            ReferenceRecordings.Scenarios.PivotTable.SingleMeasureAndMultipleGrandTotals,
+            ReferenceRecordings.Scenarios.PivotTable.SingleMeasureAndMultipleGrandTotals as ScenarioRecording,
             DataViewFirstPage,
         );
         const tableDescriptor = TableDescriptor.for(fixture, "empty value");
@@ -22,7 +22,8 @@ describe("getRowTotals", () => {
     });
     it("should return null when no totals are defined", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
+            ReferenceRecordings.Scenarios.PivotTable
+                .SingleMeasureWithRowAndColumnAttributes as ScenarioRecording,
             DataViewFirstPage,
         );
         const tableDescriptor = TableDescriptor.for(dv, "empty value");
@@ -34,7 +35,8 @@ describe("getRowTotals", () => {
 describe("getRow", () => {
     it("should return a grid row", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
+            ReferenceRecordings.Scenarios.PivotTable
+                .SingleMeasureWithRowAndColumnAttributes as ScenarioRecording,
             DataViewFirstPage,
         );
         const tableDescriptor = TableDescriptor.for(dv, "empty value");
@@ -46,7 +48,7 @@ describe("getRow", () => {
     });
     it("should return subtotal row", () => {
         const dv = recordedDataFacade(
-            ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresAndMultipleSubtotals,
+            ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresAndMultipleSubtotals as ScenarioRecording,
             DataViewFirstPage,
         );
         const tableDescriptor = TableDescriptor.for(dv, "empty value");

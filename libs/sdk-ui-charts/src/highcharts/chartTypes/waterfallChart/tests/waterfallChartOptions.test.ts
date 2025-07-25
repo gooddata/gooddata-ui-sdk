@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DefaultColorPalette, IColorAssignment, localIdentifierMatch } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
@@ -93,7 +93,8 @@ describe("waterfallChartOptions", () => {
     describe("buildWaterfallChartSeries", () => {
         it("should render the series with the total column at the end", () => {
             const waterfallSeries = renderChartOptions(
-                ReferenceRecordings.Scenarios.WaterfallChart.SingleMeasureWithViewBy,
+                ReferenceRecordings.Scenarios.WaterfallChart
+                    .SingleMeasureWithViewBy as unknown as ScenarioRecording,
             );
             const seriesData = waterfallSeries[0].data;
 
@@ -102,7 +103,8 @@ describe("waterfallChartOptions", () => {
 
         it("should custom the total column name", () => {
             const waterfallSeries = renderChartOptions(
-                ReferenceRecordings.Scenarios.WaterfallChart.SingleMeasureWithViewBy,
+                ReferenceRecordings.Scenarios.WaterfallChart
+                    .SingleMeasureWithViewBy as unknown as ScenarioRecording,
                 { name: "Balance" },
             );
             const seriesData = waterfallSeries[0].data;
@@ -112,7 +114,8 @@ describe("waterfallChartOptions", () => {
 
         it("should not display the total column when the config is not enabled", () => {
             const waterfallSeries = renderChartOptions(
-                ReferenceRecordings.Scenarios.WaterfallChart.SingleMeasureWithViewBy,
+                ReferenceRecordings.Scenarios.WaterfallChart
+                    .SingleMeasureWithViewBy as unknown as ScenarioRecording,
                 { enabled: false, name: "Balance" },
             );
             const seriesData = waterfallSeries[0].data;
@@ -124,7 +127,7 @@ describe("waterfallChartOptions", () => {
     describe("getColorAssignment", () => {
         it("should render the all two color assignment item", () => {
             const waterfallSeries = renderChartOptions(
-                ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures,
+                ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures as unknown as ScenarioRecording,
             );
             const colorAssignment = getColorAssignment(
                 waterfallColorAssignments,
@@ -137,7 +140,7 @@ describe("waterfallChartOptions", () => {
 
         it("should not render the total color assignment", () => {
             const waterfallSeries = renderChartOptions(
-                ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures,
+                ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures as unknown as ScenarioRecording,
             );
             const colorAssignment = getColorAssignment(
                 waterfallColorAssignments,
@@ -154,7 +157,7 @@ describe("waterfallChartOptions", () => {
 
         it("should render the total color assignment when one metric is total", () => {
             const waterfallSeries = renderChartOptions(
-                ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures,
+                ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures as unknown as ScenarioRecording,
             );
             const colorAssignment = getColorAssignment(
                 waterfallColorAssignments,

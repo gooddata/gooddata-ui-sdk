@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -6,7 +6,7 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { PluggablePieChart } from "../PluggablePieChart.js";
 
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import { IBucketOfFun } from "../../../../interfaces/Visualization.js";
+import { IBucketOfFun, IVisConstruct } from "../../../../interfaces/Visualization.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
 import { describe, it, expect, vi, afterEach } from "vitest";
@@ -31,7 +31,7 @@ describe("PluggablePieChart", () => {
     };
 
     function createComponent(props = defaultProps) {
-        return new PluggablePieChart(props);
+        return new PluggablePieChart(props as unknown as IVisConstruct);
     }
 
     afterEach(() => {

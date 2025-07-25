@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
@@ -46,7 +46,7 @@ describe("PluggableColumnBarCharts", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: noop,
-    };
+    } as unknown as IVisConstruct;
 
     function createComponent(props = defaultProps) {
         return new PluggableColumnChart(props);

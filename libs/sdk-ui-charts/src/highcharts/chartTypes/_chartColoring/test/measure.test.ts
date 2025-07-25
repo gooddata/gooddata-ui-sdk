@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
@@ -11,10 +11,13 @@ import { IColorMapping } from "../../../../interfaces/index.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { TwoColorPalette } from "./color.fixture.js";
 import { getColorsFromStrategy } from "./helper.js";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 describe("MeasureColorStrategy", () => {
     describe("derived measure color", () => {
-        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.ViewByDateAndPoPMeasure);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.BarChart.ViewByDateAndPoPMeasure as unknown as ScenarioRecording,
+        );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "column";
         const colorMapping: IColorMapping[] = [
@@ -111,7 +114,9 @@ describe("MeasureColorStrategy", () => {
          * - arithmetic
          *
          */
-        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.FourMeasuresAndPoP);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.BarChart.FourMeasuresAndPoP as unknown as ScenarioRecording,
+        );
 
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "column";
@@ -139,7 +144,9 @@ describe("MeasureColorStrategy", () => {
     });
 
     it("should just return the original palette if there are no pop measures shorten to cover all legend items", () => {
-        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.SingleMeasure);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.BarChart.SingleMeasure as unknown as ScenarioRecording,
+        );
         const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "column";
         const colorPalette: IColorPalette = undefined;
@@ -161,7 +168,9 @@ describe("MeasureColorStrategy", () => {
     });
 
     it("should return only non-derived measures in getColorAssignment", () => {
-        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.ViewByDateAndPoPMeasure);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.BarChart.ViewByDateAndPoPMeasure as unknown as ScenarioRecording,
+        );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "column";
 

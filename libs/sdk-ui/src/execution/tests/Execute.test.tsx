@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
@@ -11,6 +11,7 @@ import { createExecution, CreateExecutionOptions } from "../createExecution.js";
 import { LoadingComponent } from "../../base/react/LoadingComponent.js";
 import { IExecuteErrorComponent } from "../interfaces.js";
 import { Mock, vi, describe, it, expect } from "vitest";
+import { AttributeMeasureOrPlaceholder } from "src/base/index.js";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => vi.fn((_) => <div />);
@@ -238,19 +239,36 @@ describe("Execute", () => {
 describe("createExecution", () => {
     const Scenarios: Array<[string, Partial<IExecuteProps>]> = [
         ["unscoped series only", { seriesBy: [ReferenceMd.Amount] }],
-        ["scoped series only", { seriesBy: [ReferenceMd.Amount, ReferenceMd.Region] }],
+        [
+            "scoped series only",
+            {
+                seriesBy: [
+                    ReferenceMd.Amount,
+                    ReferenceMd.Region as unknown as AttributeMeasureOrPlaceholder,
+                ],
+            },
+        ],
         [
             "unscoped series with slicing",
             { seriesBy: [ReferenceMd.Amount], slicesBy: [ReferenceMd.Product.Name] },
         ],
         [
             "scoped series with slicing",
-            { seriesBy: [ReferenceMd.Amount, ReferenceMd.Region], slicesBy: [ReferenceMd.Product.Name] },
+            {
+                seriesBy: [
+                    ReferenceMd.Amount,
+                    ReferenceMd.Region as unknown as AttributeMeasureOrPlaceholder,
+                ],
+                slicesBy: [ReferenceMd.Product.Name],
+            },
         ],
         [
             "scoped series with slicing and filter",
             {
-                seriesBy: [ReferenceMd.Amount, ReferenceMd.Region],
+                seriesBy: [
+                    ReferenceMd.Amount,
+                    ReferenceMd.Region as unknown as AttributeMeasureOrPlaceholder,
+                ],
                 slicesBy: [ReferenceMd.Product.Name],
                 filters: [newPositiveAttributeFilter(ReferenceMd.Product.Name, ["CompuSci"])],
             },
@@ -258,7 +276,10 @@ describe("createExecution", () => {
         [
             "scoped series with slicing and sortBy",
             {
-                seriesBy: [ReferenceMd.Amount, ReferenceMd.Region],
+                seriesBy: [
+                    ReferenceMd.Amount,
+                    ReferenceMd.Region as unknown as AttributeMeasureOrPlaceholder,
+                ],
                 slicesBy: [ReferenceMd.Product.Name],
                 sortBy: [newAttributeSort(ReferenceMd.Product.Name, "desc")],
             },
@@ -266,7 +287,10 @@ describe("createExecution", () => {
         [
             "scoped series with slicing and totals",
             {
-                seriesBy: [ReferenceMd.Amount, ReferenceMd.Region],
+                seriesBy: [
+                    ReferenceMd.Amount,
+                    ReferenceMd.Region as unknown as AttributeMeasureOrPlaceholder,
+                ],
                 slicesBy: [ReferenceMd.Product.Name],
                 totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name)],
             },

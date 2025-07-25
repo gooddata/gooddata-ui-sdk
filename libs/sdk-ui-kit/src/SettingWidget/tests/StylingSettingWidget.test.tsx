@@ -2,7 +2,7 @@
 
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { ITheme } from "@gooddata/sdk-model";
 import { describe, it, expect, vi, beforeEach } from "vitest";

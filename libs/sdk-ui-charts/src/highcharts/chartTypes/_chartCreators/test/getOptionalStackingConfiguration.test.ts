@@ -1,6 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import Highcharts, { HighchartsOptions } from "../../../lib/index.js";
+import { HighchartsOptions, CSSObject } from "../../../lib/index.js";
 import getOptionalStackingConfiguration, {
     convertMinMaxFromPercentToNumber,
     getParentAttributeConfiguration,
@@ -348,9 +348,7 @@ describe("getOptionalStackingConfiguration", () => {
                 ],
             };
 
-            it.each<
-                [stackConfig: string, type: string, stackType: StackingType, labelStyle: Highcharts.CSSObject]
-            >([
+            it.each<[stackConfig: string, type: string, stackType: StackingType, labelStyle: CSSObject]>([
                 ["stackMeasures", VisualizationTypes.COLUMN, "normal", WHITE_LABEL],
                 ["stackMeasures", VisualizationTypes.AREA, "normal", BLACK_LABEL],
                 ["stackMeasuresToPercent", VisualizationTypes.COLUMN, "percent", WHITE_LABEL],

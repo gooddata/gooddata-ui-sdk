@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { describe, it, expect, vi } from "vitest";
 import { act, renderHook } from "@testing-library/react";
@@ -12,8 +12,8 @@ describe("useSearchMetrics hook", () => {
         workspaceId: "test",
         title: "selected",
         description: "",
-        createdAt: null,
-        modifiedAt: null,
+        createdAt: undefined,
+        modifiedAt: undefined,
         score: 0.5,
         scoreTitle: 0.5,
         scoreDescriptor: 0.5,
@@ -26,8 +26,8 @@ describe("useSearchMetrics hook", () => {
         workspaceId: "test",
         title: "selected2",
         description: "",
-        createdAt: null,
-        modifiedAt: null,
+        createdAt: undefined,
+        modifiedAt: undefined,
         score: 0.4,
         scoreTitle: 0.4,
         scoreDescriptor: 0.4,

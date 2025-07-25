@@ -14,12 +14,14 @@ type IDashboardEditLayoutWidgetRendererOwnProps =
 
 export type IDashboardEditLayoutWidgetRendererProps = IDashboardEditLayoutWidgetRendererOwnProps;
 
+const screen = "xl"; // Todo: figure out what this was supposed to be?
+
 export const RenderDashboardEditLayoutWidgetRenderer: React.FC<IDashboardEditLayoutWidgetRendererProps> = (
     props,
 ) => {
     const contentRef = useRef<HTMLDivElement>() as React.RefObject<HTMLDivElement>;
 
-    const { screen, item, DefaultWidgetRenderer } = props;
+    const { item, DefaultWidgetRenderer } = props;
 
     const { isEnableKDWidgetCustomHeight } = {
         isEnableKDWidgetCustomHeight: false,

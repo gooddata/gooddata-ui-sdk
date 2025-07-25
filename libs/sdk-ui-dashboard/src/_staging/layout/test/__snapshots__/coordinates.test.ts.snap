@@ -9,7 +9,7 @@ exports[`coordinates > findItem > should find nested item (insight4) in the layo
   },
   "type": "IDashboardLayoutItem",
   "widget": {
-    "description": undefined,
+    "description": "",
     "drills": [],
     "identifier": "insight4",
     "ignoreDashboardFilters": [],
@@ -36,7 +36,7 @@ exports[`coordinates > findItem > should find root item (insight1) in the layout
   },
   "type": "IDashboardLayoutItem",
   "widget": {
-    "description": undefined,
+    "description": "",
     "drills": [],
     "identifier": "insight1",
     "ignoreDashboardFilters": [],
@@ -68,7 +68,7 @@ exports[`coordinates > findSection > layout item path > should find nested secti
       },
       "type": "IDashboardLayoutItem",
       "widget": {
-        "description": undefined,
+        "description": "",
         "drills": [],
         "identifier": "insight4",
         "ignoreDashboardFilters": [],
@@ -103,7 +103,7 @@ exports[`coordinates > findSection > layout item path > should find root section
       },
       "type": "IDashboardLayoutItem",
       "widget": {
-        "description": undefined,
+        "description": "",
         "drills": [],
         "identifier": "insight1",
         "ignoreDashboardFilters": [],
@@ -145,7 +145,7 @@ exports[`coordinates > findSection > layout item path > should find root section
                 },
                 "type": "IDashboardLayoutItem",
                 "widget": {
-                  "description": undefined,
+                  "description": "",
                   "drills": [],
                   "identifier": "insight2",
                   "ignoreDashboardFilters": [],
@@ -169,7 +169,7 @@ exports[`coordinates > findSection > layout item path > should find root section
                 },
                 "type": "IDashboardLayoutItem",
                 "widget": {
-                  "description": undefined,
+                  "description": "",
                   "drills": [],
                   "identifier": "insight3",
                   "ignoreDashboardFilters": [],
@@ -201,7 +201,7 @@ exports[`coordinates > findSection > layout item path > should find root section
                 },
                 "type": "IDashboardLayoutItem",
                 "widget": {
-                  "description": undefined,
+                  "description": "",
                   "drills": [],
                   "identifier": "insight4",
                   "ignoreDashboardFilters": [],
@@ -244,7 +244,7 @@ exports[`coordinates > findSection > layout section path > should find nested se
       },
       "type": "IDashboardLayoutItem",
       "widget": {
-        "description": undefined,
+        "description": "",
         "drills": [],
         "identifier": "insight4",
         "ignoreDashboardFilters": [],
@@ -279,7 +279,7 @@ exports[`coordinates > findSection > layout section path > should find root sect
       },
       "type": "IDashboardLayoutItem",
       "widget": {
-        "description": undefined,
+        "description": "",
         "drills": [],
         "identifier": "insight1",
         "ignoreDashboardFilters": [],
@@ -321,7 +321,7 @@ exports[`coordinates > findSection > layout section path > should find root sect
                 },
                 "type": "IDashboardLayoutItem",
                 "widget": {
-                  "description": undefined,
+                  "description": "",
                   "drills": [],
                   "identifier": "insight2",
                   "ignoreDashboardFilters": [],
@@ -345,7 +345,7 @@ exports[`coordinates > findSection > layout section path > should find root sect
                 },
                 "type": "IDashboardLayoutItem",
                 "widget": {
-                  "description": undefined,
+                  "description": "",
                   "drills": [],
                   "identifier": "insight3",
                   "ignoreDashboardFilters": [],
@@ -377,7 +377,7 @@ exports[`coordinates > findSection > layout section path > should find root sect
                 },
                 "type": "IDashboardLayoutItem",
                 "widget": {
-                  "description": undefined,
+                  "description": "",
                   "drills": [],
                   "identifier": "insight4",
                   "ignoreDashboardFilters": [],
@@ -421,7 +421,7 @@ exports[`coordinates > findSections > layout item path > should find nested sect
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight2",
           "ignoreDashboardFilters": [],
@@ -445,7 +445,7 @@ exports[`coordinates > findSections > layout item path > should find nested sect
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight3",
           "ignoreDashboardFilters": [],
@@ -477,7 +477,7 @@ exports[`coordinates > findSections > layout item path > should find nested sect
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight4",
           "ignoreDashboardFilters": [],
@@ -514,7 +514,7 @@ exports[`coordinates > findSections > layout item path > should find root sectio
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight1",
           "ignoreDashboardFilters": [],
@@ -556,7 +556,7 @@ exports[`coordinates > findSections > layout item path > should find root sectio
                   },
                   "type": "IDashboardLayoutItem",
                   "widget": {
-                    "description": undefined,
+                    "description": "",
                     "drills": [],
                     "identifier": "insight2",
                     "ignoreDashboardFilters": [],
@@ -580,7 +580,7 @@ exports[`coordinates > findSections > layout item path > should find root sectio
                   },
                   "type": "IDashboardLayoutItem",
                   "widget": {
-                    "description": undefined,
+                    "description": "",
                     "drills": [],
                     "identifier": "insight3",
                     "ignoreDashboardFilters": [],
@@ -612,7 +612,7 @@ exports[`coordinates > findSections > layout item path > should find root sectio
                   },
                   "type": "IDashboardLayoutItem",
                   "widget": {
-                    "description": undefined,
+                    "description": "",
                     "drills": [],
                     "identifier": "insight4",
                     "ignoreDashboardFilters": [],
@@ -652,7 +652,7 @@ exports[`coordinates > findSections > layout item path > should find root sectio
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight5",
           "ignoreDashboardFilters": [],
@@ -689,7 +689,7 @@ exports[`coordinates > findSections > layout section path > should find nested s
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight2",
           "ignoreDashboardFilters": [],
@@ -713,7 +713,7 @@ exports[`coordinates > findSections > layout section path > should find nested s
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight3",
           "ignoreDashboardFilters": [],
@@ -745,7 +745,7 @@ exports[`coordinates > findSections > layout section path > should find nested s
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight4",
           "ignoreDashboardFilters": [],
@@ -782,7 +782,7 @@ exports[`coordinates > findSections > layout section path > should find root sec
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight1",
           "ignoreDashboardFilters": [],
@@ -824,7 +824,7 @@ exports[`coordinates > findSections > layout section path > should find root sec
                   },
                   "type": "IDashboardLayoutItem",
                   "widget": {
-                    "description": undefined,
+                    "description": "",
                     "drills": [],
                     "identifier": "insight2",
                     "ignoreDashboardFilters": [],
@@ -848,7 +848,7 @@ exports[`coordinates > findSections > layout section path > should find root sec
                   },
                   "type": "IDashboardLayoutItem",
                   "widget": {
-                    "description": undefined,
+                    "description": "",
                     "drills": [],
                     "identifier": "insight3",
                     "ignoreDashboardFilters": [],
@@ -880,7 +880,7 @@ exports[`coordinates > findSections > layout section path > should find root sec
                   },
                   "type": "IDashboardLayoutItem",
                   "widget": {
-                    "description": undefined,
+                    "description": "",
                     "drills": [],
                     "identifier": "insight4",
                     "ignoreDashboardFilters": [],
@@ -920,7 +920,7 @@ exports[`coordinates > findSections > layout section path > should find root sec
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight5",
           "ignoreDashboardFilters": [],
@@ -957,7 +957,7 @@ exports[`coordinates > findSections > layout section path > should return nested
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight2",
           "ignoreDashboardFilters": [],
@@ -981,7 +981,7 @@ exports[`coordinates > findSections > layout section path > should return nested
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight3",
           "ignoreDashboardFilters": [],
@@ -1013,7 +1013,7 @@ exports[`coordinates > findSections > layout section path > should return nested
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight4",
           "ignoreDashboardFilters": [],
@@ -1050,7 +1050,7 @@ exports[`coordinates > findSections > layout section path > should return root s
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight1",
           "ignoreDashboardFilters": [],
@@ -1092,7 +1092,7 @@ exports[`coordinates > findSections > layout section path > should return root s
                   },
                   "type": "IDashboardLayoutItem",
                   "widget": {
-                    "description": undefined,
+                    "description": "",
                     "drills": [],
                     "identifier": "insight2",
                     "ignoreDashboardFilters": [],
@@ -1116,7 +1116,7 @@ exports[`coordinates > findSections > layout section path > should return root s
                   },
                   "type": "IDashboardLayoutItem",
                   "widget": {
-                    "description": undefined,
+                    "description": "",
                     "drills": [],
                     "identifier": "insight3",
                     "ignoreDashboardFilters": [],
@@ -1148,7 +1148,7 @@ exports[`coordinates > findSections > layout section path > should return root s
                   },
                   "type": "IDashboardLayoutItem",
                   "widget": {
-                    "description": undefined,
+                    "description": "",
                     "drills": [],
                     "identifier": "insight4",
                     "ignoreDashboardFilters": [],
@@ -1188,7 +1188,7 @@ exports[`coordinates > findSections > layout section path > should return root s
         },
         "type": "IDashboardLayoutItem",
         "widget": {
-          "description": undefined,
+          "description": "",
           "drills": [],
           "identifier": "insight5",
           "ignoreDashboardFilters": [],

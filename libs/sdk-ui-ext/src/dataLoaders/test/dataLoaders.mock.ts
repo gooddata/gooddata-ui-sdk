@@ -14,7 +14,7 @@ export const noopWorkspaceInsightsService: IWorkspaceInsightsService = {
     getVisualizationClass: noop as any,
     getVisualizationClasses: noop as any,
     updateInsight: noop as any,
-};
+} as IWorkspaceInsightsService;
 
 export const noopWorkspaceDashboardsService: IWorkspaceDashboardsService = {
     createDashboard: noop as any,
@@ -53,4 +53,4 @@ export const noopWorkspaceDashboardsService: IWorkspaceDashboardsService = {
     deleteFilterView: noop as any,
     setFilterViewAsDefault: noop as any,
     workspace: "workspace",
-};
+} as IWorkspaceDashboardsService;

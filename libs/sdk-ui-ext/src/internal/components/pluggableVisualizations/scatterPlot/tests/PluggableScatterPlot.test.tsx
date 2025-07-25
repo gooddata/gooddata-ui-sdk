@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import { PluggableScatterPlot } from "../PluggableScatterPlot.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
@@ -7,6 +7,7 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
 import { describe, it, expect, vi, afterEach } from "vitest";
+import { IVisConstruct } from "src/internal/interfaces/Visualization.js";
 
 describe("PluggableScatterPlot", () => {
     const mockElement = document.createElement("div");
@@ -27,7 +28,7 @@ describe("PluggableScatterPlot", () => {
     };
 
     function createComponent(props = defaultProps) {
-        return new PluggableScatterPlot(props);
+        return new PluggableScatterPlot(props as unknown as IVisConstruct);
     }
 
     afterEach(() => {

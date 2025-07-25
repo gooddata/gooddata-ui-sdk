@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
-import { remarkReferences } from "../remark-references";
+import { remarkReferences } from "../remark-references.js";
 
 describe("testing remark plugin to extract references", () => {
     const mdTree = {

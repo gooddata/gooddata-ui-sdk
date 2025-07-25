@@ -7,12 +7,13 @@ import HeaderCell from "../HeaderCell.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { SingleColumn } from "../../tests/table.fixture.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const fixture = recordedDataFacade(
-    ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
+    ReferenceRecordings.Scenarios.PivotTable
+        .SingleMeasureWithTwoRowAndOneColumnAttributes as ScenarioRecording,
     DataViewFirstPage,
 );
 const tableDescriptor = TableDescriptor.for(fixture, "empty value");

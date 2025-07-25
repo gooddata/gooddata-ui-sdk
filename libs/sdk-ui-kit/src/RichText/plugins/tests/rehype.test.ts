@@ -4,8 +4,8 @@ import { describe, expect, it } from "vitest";
 import { Root } from "mdast";
 
 import { createIntlMock, DataPoint } from "@gooddata/sdk-ui";
-import { rehypeReferences } from "../rehype-references";
-import { EvaluatedMetric } from "../../hooks/useEvaluatedMetricsAndAttributes";
+import { rehypeReferences } from "../rehype-references.js";
+import { EvaluatedMetric } from "../../hooks/useEvaluatedMetricsAndAttributes.js";
 
 describe("testing rehype plugin to extract references", () => {
     const intl = createIntlMock();

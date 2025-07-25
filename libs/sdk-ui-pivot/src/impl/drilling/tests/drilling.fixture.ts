@@ -1,6 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
-import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IGridRow } from "../../data/resultTypes.js";
@@ -9,7 +9,7 @@ import { IResultAttributeHeader } from "@gooddata/sdk-model";
 import { fromPairs } from "lodash";
 
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributes = recordedDataFacade(
-    ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithTwoRowAndTwoColumnAttributes,
+    ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithTwoRowAndTwoColumnAttributes as ScenarioRecording,
     DataViewFirstPage,
 );
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor = TableDescriptor.for(
@@ -17,7 +17,8 @@ export const TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor = TableDescri
     "empty value",
 );
 export const OneMeasureAndRepeatingRowAttributesOnDifferentPositions = recordedDataFacade(
-    ReferenceRecordings.Scenarios.PivotTable.OneMeasureAndRepeatingRowAttributesOnDifferentPositions,
+    ReferenceRecordings.Scenarios.PivotTable
+        .OneMeasureAndRepeatingRowAttributesOnDifferentPositions as ScenarioRecording,
     DataViewFirstPage,
 );
 

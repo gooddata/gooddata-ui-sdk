@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { describe, it, expect } from "vitest";
-import { switcherSlideTransformer } from "../switcherSlideTransformer";
+import { switcherSlideTransformer } from "../switcherSlideTransformer.js";
 import { IDashboardLayoutItem } from "@gooddata/sdk-model";
 
 const widget1 = {
@@ -49,14 +49,10 @@ const switcher1 = {
         ref: { type: "insight", identifier: "switcher1" },
     },
 };
-const base = {
-    gridWidth: 12,
-    gridHeight: 22,
-};
 
 describe("SwitcherSlideTransformer", () => {
     it("no switcher", () => {
-        const data = switcherSlideTransformer(widget1 as IDashboardLayoutItem);
+        const data = switcherSlideTransformer(widget1 as unknown as IDashboardLayoutItem);
 
         expect(data).toBe(undefined);
     });

@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { DefaultColorPalette, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     getColorMappingPredicate,
@@ -113,7 +113,7 @@ describe("getColorMappingPredicate", () => {
                 name: "attributeElementName",
             },
         },
-    };
+    } as IAttributeDescriptor;
 
     const attributeHeaderItem: IResultAttributeHeader = {
         attributeHeaderItem: {

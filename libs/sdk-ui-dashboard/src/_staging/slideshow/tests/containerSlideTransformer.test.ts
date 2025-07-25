@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { describe, it, expect } from "vitest";
-import { containerSlideTransformer } from "../containerSlideTransformer";
-import { sectionLayoutSection } from "../sectionSlideTransformer";
+import { containerSlideTransformer } from "../containerSlideTransformer.js";
+import { sectionLayoutSection } from "../sectionSlideTransformer.js";
 
 const widget1 = {
     size: {
@@ -48,10 +48,6 @@ const switcher1 = {
         visualizations: [widget1, widget2],
         ref: { type: "insight", identifier: "switcher1" },
     },
-};
-const base = {
-    gridHeight: 22,
-    gridWidth: 12,
 };
 
 describe("ContainerSlideTransformer", () => {

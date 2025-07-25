@@ -1,7 +1,11 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IUserWorkspaceSettings,
+    IWorkspaceSettingsService,
+} from "@gooddata/sdk-backend-spi";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 import { userWorkspaceSettingsDataLoaderFactory } from "../UserWorkspaceSettingsDataLoader.js";
@@ -16,16 +20,17 @@ describe("UserWorkspaceSettingsDataLoader", () => {
         ...baseBackend,
         workspace: () => ({
             ...baseBackend.workspace(workspace),
-            settings: () => ({
-                getSettingsForCurrentUser,
-                getSettings: noop as any,
-                setLocale: (_locale: string) => Promise.resolve(),
-                setDateFormat: (_locale: string) => Promise.resolve(),
-                setTimezone: (_locale: string) => Promise.resolve(),
-                setWeekStart: (_locale: string) => Promise.resolve(),
-                setTheme: (_themeId: string) => Promise.resolve(),
-                setColorPalette: (_colorPaletteId: string) => Promise.resolve(),
-            }),
+            settings: () =>
+                ({
+                    getSettingsForCurrentUser,
+                    getSettings: noop as any,
+                    setLocale: (_locale: string) => Promise.resolve(),
+                    setDateFormat: (_locale: string) => Promise.resolve(),
+                    setTimezone: (_locale: string) => Promise.resolve(),
+                    setWeekStart: (_locale: string) => Promise.resolve(),
+                    setTheme: (_themeId: string) => Promise.resolve(),
+                    setColorPalette: (_colorPaletteId: string) => Promise.resolve(),
+                }) as IWorkspaceSettingsService,
         }),
     });
 

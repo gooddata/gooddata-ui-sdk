@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import * as React from "react";
 
 import { DashboardLayoutEditSectionHeader } from "../../../DefaultDashboardLayoutRenderer/index.js";
@@ -20,6 +20,7 @@ export const RenderDashboardEditLayoutSectionHeader: React.FC<IDashboardEditLayo
 
     return (
         <DashboardLayoutEditSectionHeader
+            // @ts-expect-error this is weird, who did this?
             title={title}
             description={description}
             renderHeader={

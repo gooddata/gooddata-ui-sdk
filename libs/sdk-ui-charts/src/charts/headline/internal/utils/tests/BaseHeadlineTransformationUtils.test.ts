@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
 import { DataViewFacade, ExplicitDrill, HeadlineElementType } from "@gooddata/sdk-ui";
@@ -24,7 +24,8 @@ describe("BaseHeadlineTransformationUtils", () => {
 
     describe("createBaseHeadlineItem", () => {
         const dataFacade = recordedDataFacade(
-            ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithThreeMeasures,
+            ReferenceRecordings.Scenarios.Headline
+                .MultiMeasuresWithThreeMeasures as unknown as ScenarioRecording,
         );
         const [firstExecutionData] = getExecutionData(DataViewFacade.for(dataFacade.dataView));
 

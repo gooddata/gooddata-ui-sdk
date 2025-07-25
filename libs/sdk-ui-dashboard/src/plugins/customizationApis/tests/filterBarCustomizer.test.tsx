@@ -3,11 +3,11 @@ import React from "react";
 import { HiddenFilterBar, IFilterBarProps } from "../../../presentation/index.js";
 import { DefaultFilterBarCustomizer } from "../filterBarCustomizer.js";
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
-import { describe, it, expect, vi, beforeEach, beforeAll } from "vitest";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 import { invariant } from "ts-invariant";
 import { render } from "@testing-library/react";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //

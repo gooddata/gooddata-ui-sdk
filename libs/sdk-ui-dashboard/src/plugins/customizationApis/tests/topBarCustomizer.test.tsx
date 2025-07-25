@@ -3,12 +3,12 @@ import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render } from "@testing-library/react";
 
-import { ITopBarProps } from "../../../presentation/index.js";
-import { DefaultTopBarCustomizer } from "../topBarCustomizer";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types";
+import { IButtonBarProps, ITopBarProps } from "../../../presentation/index.js";
+import { DefaultTopBarCustomizer } from "../topBarCustomizer.js";
+import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //
@@ -37,6 +37,7 @@ function renderToHtml(customizer: DefaultTopBarCustomizer) {
             editButtonProps: {
                 isVisible: true,
                 isEnabled: true,
+                tooltipText: "",
                 onEditClick: () => {},
             },
             saveAsNewButtonProps: {
@@ -57,7 +58,7 @@ function renderToHtml(customizer: DefaultTopBarCustomizer) {
             },
             DefaultButtonBar: () => <div>DefaultButtonBar</div>,
             buttons: <div></div>,
-        },
+        } as unknown as IButtonBarProps,
         lockedStatusProps: {
             isLocked: false,
         },

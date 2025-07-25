@@ -1,15 +1,15 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { describe, it, expect } from "vitest";
-import { RootState } from "../../types";
-import { lastMessageSelector } from "../messagesSelectors";
+import { RootState } from "../../types.js";
+import { lastMessageSelector } from "../messagesSelectors.js";
 
 const dummyState: RootState = {
     messages: {
         messageOrder: ["1", "2"],
         messages: {
             "1": {
-                id: 1,
+                id: "1",
                 localId: "1",
                 created: Date.now(),
                 role: "user",
@@ -23,7 +23,7 @@ const dummyState: RootState = {
                 ],
             },
             "2": {
-                id: 2,
+                id: "2",
                 localId: "2",
                 created: Date.now() + 1000,
                 role: "assistant",
@@ -39,7 +39,7 @@ const dummyState: RootState = {
         },
         verbose: false,
     },
-};
+} as unknown as RootState;
 
 describe("messagesSelectors", () => {
     describe("lastMessageSelector", () => {

@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import { cleanup } from "@testing-library/react";
-import { afterEach, expect, vi } from "vitest";
+import { afterEach, expect } from "vitest";
 
 /**
  * In order to be able to use extended matchers like "toBeInDocument", we use vitest-dom instead of testing-library/jest-dom.
@@ -59,5 +59,5 @@ afterEach(() => {
 });
 
 global.CSS = {
-    supports: (property: string, value: string) => false,
+    supports: (_property: string, _value: string) => false,
 } as any;

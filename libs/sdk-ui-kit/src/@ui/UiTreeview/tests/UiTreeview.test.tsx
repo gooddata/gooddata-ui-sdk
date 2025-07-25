@@ -4,13 +4,8 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { UiStaticTreeview, UiLeveledTreeview } from "../UiTreeview.js";
 import { describe, it, expect, vi } from "vitest";
-import {
-    IUiLeveledTreeViewProps,
-    IUiStaticTreeViewProps,
-    UiLeveledTreeView,
-    UiStaticTreeView,
-} from "../types";
-import { b, e } from "../treeviewBem";
+import * as types from "../types.js";
+import { b, e } from "../treeviewBem.js";
 
 type StaticItem = { id: string; value: string };
 type Level1Item = { level: 1; type: "visualisation"; id: string };
@@ -30,7 +25,7 @@ type Level2Item = { level: 2; type: "dashboard" | "insight" | "metric"; id: stri
 // stringTitle: "File A5" //disabled
 // stringTitle: "File B5"
 
-const treeStatic: UiStaticTreeView<StaticItem>[] = [
+const treeStatic: types.UiStaticTreeView<StaticItem>[] = [
     {
         item: {
             id: "parent-a",
@@ -152,7 +147,7 @@ const treeStatic: UiStaticTreeView<StaticItem>[] = [
 // stringTitle: "File A2"
 // stringTitle: "File B2"
 
-const treeLeveled: UiLeveledTreeView<[Level1Item, Level2Item]>[] = [
+const treeLeveled: types.UiLeveledTreeView<[Level1Item, Level2Item]>[] = [
     {
         item: {
             id: "parent-a",
@@ -245,7 +240,7 @@ const treeLeveled: UiLeveledTreeView<[Level1Item, Level2Item]>[] = [
 
 describe("UiTreeview", () => {
     const renderStaticTreeView = (
-        props: Omit<IUiStaticTreeViewProps<StaticItem>, "ariaAttributes" | "items"> = {},
+        props: Omit<types.IUiStaticTreeViewProps<StaticItem>, "ariaAttributes" | "items"> = {},
     ) => {
         const defaultAriaAttributes = {
             id: "test-dropdown-list",
@@ -266,7 +261,7 @@ describe("UiTreeview", () => {
     };
 
     const renderLeveledTreeView = (
-        props: Omit<IUiLeveledTreeViewProps<[Level1Item, Level2Item]>, "ariaAttributes" | "items"> = {},
+        props: Omit<types.IUiLeveledTreeViewProps<[Level1Item, Level2Item]>, "ariaAttributes" | "items"> = {},
     ) => {
         const defaultAriaAttributes = {
             id: "test-dropdown-list",

@@ -1,10 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 
-import { ResizeOverlayProps, ResizeOverlay } from "../ResizeOverlay";
-import { IntlWrapper } from "../../../../localization";
+import { ResizeOverlayProps, ResizeOverlay } from "../ResizeOverlay.js";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 
 const defaultProps: ResizeOverlayProps = {
     isResizingColumnOrRow: false,

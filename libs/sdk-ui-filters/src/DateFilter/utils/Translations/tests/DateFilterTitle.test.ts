@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT_WITH_TIME } from "../../../constants/Platform.js";
 import {
     getDateFilterRepresentation,
@@ -22,7 +22,7 @@ import { describe, it, expect } from "vitest";
 
 const serializingTranslator: IDateAndMessageTranslator = {
     formatDate: (id, options) => `${id}__${JSON.stringify(options)}`,
-    formatMessage: (id: any, values: any) => `${id.id}__${JSON.stringify(values)}`,
+    formatMessage: (id: any, values: any) => `${id.id}__${JSON.stringify(values)}` as any,
 };
 
 describe("getDateFilterTitleUsingTranslator", () => {

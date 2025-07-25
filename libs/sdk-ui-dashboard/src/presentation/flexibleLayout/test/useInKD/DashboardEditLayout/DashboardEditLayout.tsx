@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { objRefToString } from "@gooddata/sdk-model";
 import React, { Fragment } from "react";
 
@@ -28,15 +28,18 @@ export interface IDashboardEditLayoutDispatchProps {
 
 export type IDashboardEditLayoutProps = IDashboardEditLayoutStateProps & IDashboardEditLayoutDispatchProps;
 
+const screen = "xl"; // Todo: figure out what this was supposed to be?
+
 export const RenderDashboardEditLayout: React.FC<IDashboardEditLayoutProps> = (props) => {
     const { layout, rowIdsByRowOrder, shouldUseRowRenderer } = props;
 
     return (
         layout && (
+            // @ts-ignore
             <DashboardLayout
                 layout={layout}
                 sectionKeyGetter={(p) =>
-                    rowIdsByRowOrder?.[p.section.index()] ?? p.section.index().toString()
+                    rowIdsByRowOrder?.[p.section.index() as unknown as number] ?? p.section.index().toString()
                 }
                 sectionRenderer={(renderProps) => <DashboardEditLayoutSectionRenderer {...renderProps} />}
                 sectionHeaderRenderer={(renderProps) => (
@@ -52,7 +55,7 @@ export const RenderDashboardEditLayout: React.FC<IDashboardEditLayoutProps> = (p
                     shouldUseRowRenderer ? (
                         <DashboardEditLayoutRowRenderer
                             layoutItems={renderProps.items}
-                            screen={renderProps.screen}
+                            screen={screen}
                             section={renderProps.section}
                         >
                             {renderProps.children}

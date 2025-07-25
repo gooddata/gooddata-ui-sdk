@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { PluggableDependencyWheelChart } from "../PluggableDependencyWheelChart.js";
@@ -24,7 +24,7 @@ describe("PluggableDependencyWheelChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
-    };
+    } as unknown as IVisConstruct;
 
     afterEach(() => {
         mockRenderFun.mockReset();

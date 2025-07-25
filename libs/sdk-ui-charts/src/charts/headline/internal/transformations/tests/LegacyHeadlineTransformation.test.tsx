@@ -8,7 +8,6 @@ import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,
     headlineWithTwoMeasures,
-    headlineWithTwoMeasuresWithIdentifier,
 } from "../../../../../../__mocks__/fixtures.js";
 import {
     DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER,
@@ -45,7 +44,7 @@ describe("HeadlineTransformation", () => {
         });
 
         // Create a drill event handler for testing
-        drillEventHandler = vi.fn((event) => true);
+        drillEventHandler = vi.fn((_event) => true);
     });
 
     afterEach(() => {

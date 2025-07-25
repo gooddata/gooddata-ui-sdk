@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { getMVS } from "../../_util/test/helper.js";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
@@ -13,10 +13,13 @@ import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { HEATMAP_BLUE_COLOR_PALETTE } from "../../_util/color.js";
 import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import { describe, it, expect } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 describe("HeatmapColorStrategy", () => {
     it("should return HeatmapColorStrategy strategy with 7 colors from default heatmap color palette", () => {
-        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns as unknown as ScenarioRecording,
+        );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "heatmap";
 
@@ -40,7 +43,9 @@ describe("HeatmapColorStrategy", () => {
         "should return HeatmapColorStrategy strategy with 7 colors" +
             " based on the first color from custom palette",
         () => {
-            const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
+            const dv = recordedDataFacade(
+                ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns as unknown as ScenarioRecording,
+            );
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "heatmap";
 
@@ -74,7 +79,9 @@ describe("HeatmapColorStrategy", () => {
         "should return HeatmapColorStrategy strategy with 7 colors" +
             " based on the first color from custom palette when color mapping given but not applicable",
         () => {
-            const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
+            const dv = recordedDataFacade(
+                ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns as unknown as ScenarioRecording,
+            );
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "heatmap";
 
@@ -115,7 +122,9 @@ describe("HeatmapColorStrategy", () => {
     );
 
     it("should return HeatmapColorStrategy with properly applied mapping", () => {
-        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns as unknown as ScenarioRecording,
+        );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "heatmap";
 
@@ -154,7 +163,9 @@ describe("HeatmapColorStrategy", () => {
     });
 
     it("should generate dark theme colors from theme chart background", () => {
-        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns as unknown as ScenarioRecording,
+        );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "heatmap";
 
@@ -325,7 +336,10 @@ describe("HeatmapColorStrategy", () => {
         it.each(Scenarios)(
             "should return %s when input is %s",
             (_desc, theme, customColors, expectedColors) => {
-                const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
+                const dv = recordedDataFacade(
+                    ReferenceRecordings.Scenarios.Heatmap
+                        .MeasureRowsAndColumns as unknown as ScenarioRecording,
+                );
                 const { viewByAttribute, stackByAttribute } = getMVS(dv);
 
                 const colorStrategy = ColorFactory.getColorStrategy(

@@ -5,7 +5,7 @@ import { invariant } from "ts-invariant";
 import includes from "lodash/includes.js";
 import { render } from "@testing-library/react";
 import { IInsight, insightTags, insightTitle, IInsightWidget } from "@gooddata/sdk-model";
-import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
+import { InsightRecording, recordedInsight } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { DefaultInsightCustomizer } from "../insightCustomizer.js";
@@ -17,14 +17,15 @@ import {
     OptionalInsightComponentProvider,
 } from "../../../presentation/index.js";
 import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
-import { EMPTY_MUTATIONS } from "./utils";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //
 //
 
 const TestInsight: IInsight = recordedInsight(
-    ReferenceRecordings.Insights.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
+    ReferenceRecordings.Insights.PivotTable
+        .SingleMeasureWithTwoRowAndOneColumnAttributes as unknown as InsightRecording,
 );
 const TestInsightWithTag1: IInsight = { insight: { ...TestInsight.insight, tags: ["tag1"] } };
 const TestInsightWithTag2: IInsight = { insight: { ...TestInsight.insight, tags: ["tag2"] } };

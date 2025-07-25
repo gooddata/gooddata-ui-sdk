@@ -1,7 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
-import { DataViewFirstPage, dummyDataView, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import {
+    DataViewFirstPage,
+    dummyDataView,
+    recordedDataView,
+    ScenarioRecording,
+} from "@gooddata/sdk-backend-mockingbird";
 import { newDataAccessMethods } from "../dataAccessMethods.js";
 import { emptyDef, measureLocalId } from "@gooddata/sdk-model";
 import { DataAccessConfig, DefaultDataAccessConfig } from "../../dataAccessConfig.js";
@@ -24,7 +29,7 @@ describe("DataAccessMethods", () => {
 
     describe("for data view with empty first dimension", () => {
         const DataViewWithEmptyFirstDim = recordedDataView(
-            ReferenceRecordings.Scenarios.AreaChart.SingleMeasure,
+            ReferenceRecordings.Scenarios.AreaChart.SingleMeasure as unknown as ScenarioRecording,
         );
 
         it("should correctly extract data", () => {
@@ -61,7 +66,7 @@ describe("DataAccessMethods", () => {
 
     describe("for data view with two series and single-dim result", () => {
         const DataWithTwoSeriesAndNoSlices = recordedDataView(
-            ReferenceRecordings.Scenarios.Headline.TwoMeasures,
+            ReferenceRecordings.Scenarios.Headline.TwoMeasures as unknown as ScenarioRecording,
         );
 
         it("should correctly extract data", () => {
@@ -107,7 +112,8 @@ describe("DataAccessMethods", () => {
 
     describe("for data with scopes series and empty slice dim", () => {
         const DataWithWithScopedSeriesAndNoSlices = recordedDataView(
-            ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithColumnAttribute,
+            ReferenceRecordings.Scenarios.PivotTable
+                .TwoMeasuresWithColumnAttribute as unknown as ScenarioRecording,
             DataViewFirstPage,
         );
 
@@ -141,7 +147,8 @@ describe("DataAccessMethods", () => {
 
     describe("for data with scoped series and slices", () => {
         const DataViewWithSeriesAndSlices = recordedDataView(
-            ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithRowAndColumnAttributes,
+            ReferenceRecordings.Scenarios.PivotTable
+                .TwoMeasuresWithRowAndColumnAttributes as unknown as ScenarioRecording,
             DataViewFirstPage,
         );
 
@@ -179,7 +186,8 @@ describe("DataAccessMethods", () => {
 
     describe("for data with scoped series and slices with totals", () => {
         const DataViewWithSeriesAndSlices = recordedDataView(
-            ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresAndMultipleSubtotals,
+            ReferenceRecordings.Scenarios.PivotTable
+                .TwoMeasuresAndMultipleSubtotals as unknown as ScenarioRecording,
             DataViewFirstPage,
         );
 

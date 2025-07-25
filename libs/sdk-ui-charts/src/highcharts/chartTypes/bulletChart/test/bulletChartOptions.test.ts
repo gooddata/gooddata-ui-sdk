@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { getBulletChartSeries } from "../bulletChartSeries.js";
 import { IColorPalette } from "@gooddata/sdk-model";
 import BulletChartColorStrategy from "../bulletChartColoring.js";
@@ -7,6 +7,7 @@ import cloneDeep from "lodash/cloneDeep.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { describe, it, expect } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 const getColorStrategy = (colorPalette: IColorPalette, dv: DataViewFacade) =>
     new BulletChartColorStrategy(colorPalette, undefined, undefined, undefined, dv);
@@ -33,15 +34,18 @@ const colorPaletteBlue: IColorPalette = [
     },
 ];
 
-const PrimaryMeasure = recordedDataFacade(ReferenceRecordings.Scenarios.BulletChart.PrimaryMeasure);
+const PrimaryMeasure = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BulletChart.PrimaryMeasure as unknown as ScenarioRecording,
+);
 const PrimaryAndComparative = recordedDataFacade(
-    ReferenceRecordings.Scenarios.BulletChart.PrimaryAndComparativeMeasures,
+    ReferenceRecordings.Scenarios.BulletChart.PrimaryAndComparativeMeasures as unknown as ScenarioRecording,
 );
 const PrimaryAndTarget = recordedDataFacade(
-    ReferenceRecordings.Scenarios.BulletChart.PrimaryAndTargetMeasures,
+    ReferenceRecordings.Scenarios.BulletChart.PrimaryAndTargetMeasures as unknown as ScenarioRecording,
 );
 const AllMeasures = recordedDataFacade(
-    ReferenceRecordings.Scenarios.BulletChart.PrimaryTargetAndComparativeMeasures,
+    ReferenceRecordings.Scenarios.BulletChart
+        .PrimaryTargetAndComparativeMeasures as unknown as ScenarioRecording,
 );
 
 describe("getBulletChartSeries", () => {
@@ -59,7 +63,8 @@ describe("getBulletChartSeries", () => {
 
     it("should set hidden classname to target series and its y value to 0 if execution value is null", () => {
         const HackedUpNullValue = cloneDeep(
-            ReferenceRecordings.Scenarios.BulletChart.PrimaryAndTargetMeasures,
+            ReferenceRecordings.Scenarios.BulletChart
+                .PrimaryAndTargetMeasures as unknown as ScenarioRecording,
         );
         HackedUpNullValue.execution.dataView_all.data[1][0] = null;
 

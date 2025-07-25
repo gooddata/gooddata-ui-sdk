@@ -504,7 +504,6 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     isInverted,
                     selectionMode,
                     selectionTitles,
-                    displayAsLabel,
                     isResultOfMigration,
                     additionalProps,
                 ) => {
@@ -520,8 +519,9 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                             ),
                             displayAsLabel,
                             true,
-                            isResultOfMigration,
-                            additionalProps?.isSelectionInvalid,
+                            isResultOfMigration as unknown as boolean | undefined,
+                            (additionalProps as unknown as { isSelectionInvalid?: boolean })
+                                ?.isSelectionInvalid,
                         );
                     }
                 }}

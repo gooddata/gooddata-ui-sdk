@@ -2,7 +2,7 @@
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { EditableLabel } from "../EditableLabel.js";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { IEditableLabelProps } from "../typings.js";
 import { describe, it, expect, vi, Mock } from "vitest";
 

@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import range from "lodash/range.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { IColorPalette, IMeasure, ITheme } from "@gooddata/sdk-model";
@@ -9,6 +9,7 @@ import { ReferenceMd, ReferenceMdExt, ReferenceRecordings } from "@gooddata/refe
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { describe, it, expect } from "vitest";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 const defaultColorMapping: IColorMapping[] = [
     {
@@ -45,13 +46,14 @@ const getBulletColorStrategy = (props: {
 };
 
 const PrimaryAndComparative = recordedDataFacade(
-    ReferenceRecordings.Scenarios.BulletChart.PrimaryAndComparativeMeasures,
+    ReferenceRecordings.Scenarios.BulletChart.PrimaryAndComparativeMeasures as unknown as ScenarioRecording,
 );
 const PrimaryAndTarget = recordedDataFacade(
-    ReferenceRecordings.Scenarios.BulletChart.PrimaryAndTargetMeasures,
+    ReferenceRecordings.Scenarios.BulletChart.PrimaryAndTargetMeasures as unknown as ScenarioRecording,
 );
 const AllMeasures = recordedDataFacade(
-    ReferenceRecordings.Scenarios.BulletChart.PrimaryTargetAndComparativeMeasures,
+    ReferenceRecordings.Scenarios.BulletChart
+        .PrimaryTargetAndComparativeMeasures as unknown as ScenarioRecording,
 );
 
 describe("BulletChartColorStrategy", () => {

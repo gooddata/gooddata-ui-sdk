@@ -7,8 +7,14 @@ import { IntlProvider } from "react-intl";
 import { pickCorrectWording, messagesMap } from "@gooddata/sdk-ui";
 import { UiMenu } from "../UiMenu.js";
 import { describe, it, expect, vi } from "vitest";
-import { e, b } from "../menuBem.js";
-import { IUiMenuItem, IUiMenuInteractiveItemProps, IUiMenuStaticItemProps, IUiMenuProps } from "../types.js";
+import { b } from "../menuBem.js";
+import {
+    IUiMenuItem,
+    IUiMenuInteractiveItemProps,
+    IUiMenuStaticItemProps,
+    UiMenuProps,
+    IUiMenuGroupItemProps,
+} from "../types.js";
 import { typedUiMenuContextStore } from "../context.js";
 
 describe("UiMenu", () => {
@@ -47,7 +53,7 @@ describe("UiMenu", () => {
         enableRenamingMeasureToMetric: true,
     });
 
-    const renderMenu = (props: Partial<IUiMenuProps> = {}) => {
+    const renderMenu = (props: Partial<UiMenuProps> = {}) => {
         const defaultAriaAttributes = {
             id: "test-dropdown-menu",
             "aria-labelledby": "test-dropdown-button",
@@ -307,7 +313,7 @@ describe("UiMenu", () => {
         expect(menu).toHaveAttribute("role", "menu");
 
         // Check that items have proper ARIA attributes
-        const items = screen.getAllByRole("menuitem");
+        screen.getAllByRole("menuitem");
 
         // Item with submenu should have aria-haspopup
         const itemWithSubmenu = screen.getByText("Item 4").closest("li");
@@ -394,7 +400,7 @@ describe("UiMenu", () => {
     });
 
     it("should render with custom GroupItemComponent", () => {
-        const CustomGroupItemComponent = ({ item }: UiMenuGroupItemProps<{ group: string }>) => {
+        const CustomGroupItemComponent = ({ item }: IUiMenuGroupItemProps<{ group: string }>) => {
             const { ItemComponent } = typedUiMenuContextStore<{ group: string }>().useContextStore((ctx) => ({
                 ItemComponent: ctx.ItemComponent,
             }));

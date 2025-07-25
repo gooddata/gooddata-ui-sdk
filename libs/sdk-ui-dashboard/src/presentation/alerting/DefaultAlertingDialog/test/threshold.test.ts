@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { convertThresholdValue } from "../utils/threshold";
+import { convertThresholdValue } from "../utils/threshold.js";
 
 const trend = `[<0][green]▲ #,##0.0%;
 [=0][black]#,##0.0%;
@@ -37,7 +37,7 @@ describe("threshold round", () => {
         ["123.999", currency, 124],
         ["1234.999", currency, 1235],
         ["999999999999999999999", "#,##0.00", 1e21],
-    ])("should round number %s with format %s to %d", (value: string, format: string, expected: number) => {
+    ])("should round number %s with format %s to %d", (value: string, format: string, expected?: number) => {
         const x = convertThresholdValue(value, format);
         expect(x).toBe(expected);
     });

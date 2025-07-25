@@ -45,12 +45,12 @@ const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<any> = {
     isWidgetItemWithKpiRef: () => false,
     isWidgetItemWithRef: () => false,
     sizeForScreenWithFallback: (_screen: ScreenSize) => undefined,
-};
+} as unknown as IDashboardLayoutItemFacade<any>;
 
 export const RenderDashboardEditLayoutSectionHeaderRenderer: React.FC<
     IDashboardLayoutSectionHeaderRendererProps
 > = (props) => {
-    const { section, screen, DefaultSectionHeaderRenderer } = props;
+    const { section, DefaultSectionHeaderRenderer } = props;
 
     const rowId = "rowId";
     const hasJustOneDropZone = false;

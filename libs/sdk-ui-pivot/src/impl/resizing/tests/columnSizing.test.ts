@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import {
@@ -102,7 +102,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.EastCoast.uri,
+                            ReferenceData.Region.EastCoast.uri!,
                         ),
                     ],
                     100,
@@ -122,7 +122,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.EastCoast.uri,
+                            ReferenceData.Region.EastCoast.uri!,
                         ),
                     ],
                     "auto",
@@ -142,7 +142,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.EastCoast.uri,
+                            ReferenceData.Region.EastCoast.uri!,
                         ),
                     ],
                     100,
@@ -156,7 +156,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.WestCoast.uri,
+                            ReferenceData.Region.WestCoast.uri!,
                         ),
                     ],
                     200,
@@ -176,7 +176,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.EastCoast.uri,
+                            ReferenceData.Region.EastCoast.uri!,
                         ),
                     ],
                     100,
@@ -190,7 +190,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.EastCoast.uri,
+                            ReferenceData.Region.EastCoast.uri!,
                         ),
                     ],
                     200,
@@ -210,7 +210,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.EastCoast.uri,
+                            ReferenceData.Region.EastCoast.uri!,
                         ),
                     ],
                     "auto",
@@ -224,7 +224,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.EastCoast.uri,
+                            ReferenceData.Region.EastCoast.uri!,
                         ),
                     ],
                     "auto",
@@ -259,7 +259,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.EastCoast.uri,
+                            ReferenceData.Region.EastCoast.uri!,
                         ),
                     ],
                     200,
@@ -280,7 +280,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.EastCoast.uri,
+                            ReferenceData.Region.EastCoast.uri!,
                         ),
                     ],
                     200,
@@ -546,7 +546,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.EastCoast.uri,
+                            ReferenceData.Region.EastCoast.uri!,
                         ),
                     ],
                     100,
@@ -756,7 +756,7 @@ describe("ResizedColumnStore", () => {
                         ),
                         newAttributeColumnLocator(
                             ReferenceMd.Region.Default,
-                            ReferenceData.Region.EastCoast.uri,
+                            ReferenceData.Region.EastCoast.uri!,
                         ),
                     ],
                     125,
