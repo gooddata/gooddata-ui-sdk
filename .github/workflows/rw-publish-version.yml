@@ -61,7 +61,7 @@ jobs:
         runs-on: [ubuntu-latest]
         steps:
             - name: Inform to slack when publish workflows failed
-              uses: slackapi/slack-github-action@v1.25.0
+              uses: slackapi/slack-github-action@v2.1.1
               with:
                   channel-id: "#javascript-notifications"
                   slack-message: ":warning: Publish to NPM in *gooddata-ui-sdk* encountered an error during execution. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>* for further information."
