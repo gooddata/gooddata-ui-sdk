@@ -32,8 +32,8 @@
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
         "populate-ref": "GDC_STORE_DEFS=\"../../tools\" vitest run tests/smoke-and-capture/",
-        "story-generator": "vitest --run backstop/story-generator.test.ts && npm run prettier-write",
-        "story-extractor": "vitest --run backstop/story-extractor.test.ts",
+        "story-generator": "vite-node backstop/story-generator.ts && npm run prettier-write",
+        "story-extractor": "vite-node backstop/story-extractor.ts",
         "prettier-check": "prettier --check '{src,stories,scenarios,tests,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,scenarios,tests,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
@@ -152,6 +152,7 @@
         "typescript": "5.8.3",
         "uuid": "^8.3.2",
         "vite": "^5.4.3",
+        "vite-node": "^3.2.4",
         "vitest": "3.2.4"
     }
 }

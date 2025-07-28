@@ -4606,6 +4606,9 @@ importers:
       vite:
         specifier: ^5.4.3
         version: 5.4.3(@types/node@22.16.4)(sass@1.69.5)
+      vite-node:
+        specifier: ^3.2.4
+        version: 3.2.4(@types/node@22.16.4)(sass@1.69.5)
       vite-plugin-static-copy:
         specifier: ^3.1.1
         version: 3.1.1(vite@5.4.3)
@@ -17274,7 +17277,7 @@ packages:
   /micromark@2.11.4:
     resolution: {integrity: sha512-+WoovN/ppKolQOFIAajxi7Lu9kInbPxFuTBVEavFcL8eAfVstoc5MocPmqBeAdBOJV00uaVjegzH4+MA0DN/uA==}
     dependencies:
-      debug: 4.4.0
+      debug: 4.4.1
       parse-entities: 2.0.0
     transitivePeerDependencies:
       - supports-color
