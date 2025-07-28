@@ -44,14 +44,12 @@ export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> 
                         isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
                     />
                 ) : null}
-                {!withoutApply ? (
-                    <AttributeFilterSelectionStatus
-                        isInverted={isInverted}
-                        getItemTitle={getItemTitle}
-                        selectedItems={selectedItems}
-                        selectedItemsLimit={selectedItemsLimit}
-                    />
-                ) : null}
+                <AttributeFilterSelectionStatus
+                    isInverted={isInverted}
+                    getItemTitle={getItemTitle}
+                    selectedItems={selectedItems}
+                    selectedItemsLimit={selectedItemsLimit}
+                />
                 <AttributeFilterIrrelevantSelectionStatus
                     parentFilterTitles={parentFilterTitles}
                     irrelevantSelection={irrelevantSelection}
