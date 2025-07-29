@@ -103,7 +103,7 @@
         "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-regexp": "^1.9.0",
         "eslint-plugin-sonarjs": "^0.16.0",
-        "eslint-plugin-tsdoc": "^0.2.14",
+        "eslint-plugin-tsdoc": "^0.4.0",
         "fork-ts-checker-webpack-plugin": "^9.0.2",
         "json-loader": "~0.5.7",
         "prettier": "^3.6.2",
