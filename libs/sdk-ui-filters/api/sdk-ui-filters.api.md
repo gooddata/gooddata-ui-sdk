@@ -677,6 +677,7 @@ export interface IAttributeFilterSelectionStatusProps {
     isInverted: boolean;
     selectedItems: IAttributeElement[];
     selectedItemsLimit: number;
+    showSelectionStatus?: boolean;
 }
 
 // @beta

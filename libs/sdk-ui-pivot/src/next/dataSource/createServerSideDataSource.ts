@@ -24,7 +24,7 @@ interface ICreateServerSideDataSourceParams {
     executionResult: IExecutionResult;
     isPivotMode: boolean;
     columnHeadersPosition: ColumnHeadersPosition;
-    setCurrentDataView: (dataView: DataViewFacade | null) => void;
+    setCurrentDataView: (dataView: DataViewFacade | undefined) => void;
 }
 
 export const createServerSideDataSource = ({
@@ -44,7 +44,7 @@ export const createServerSideDataSource = ({
         destroy: () => {
             abortController.abort();
             // Clear the context when data source is destroyed
-            setCurrentDataView(null);
+            setCurrentDataView(undefined);
         },
         getRows: async (params: IServerSideGetRowsParams<AgGridRowData>) => {
             const startRow = params.request.startRow ?? 0;

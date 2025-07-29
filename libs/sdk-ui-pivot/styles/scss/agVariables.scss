@@ -1,0 +1,29 @@
+// (C) 2025 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "gdVariables" as gd;
+
+// AG grid theme variables mixin
+@mixin ag-grid-theme-variables {
+    // general
+    --ag-font-family: #{kit-variables.$gd-font-primary};
+    --ag-font-size: 12px;
+    --ag-grid-size: 4px;
+    --ag-border-color: transparent;
+    --ag-foreground-color: #{gd.$custom-foreground-color};
+    --ag-background-color: #{gd.$custom-background-color};
+    --ag-secondary-foreground-color: #{gd.$custom-secondary-foreground-color};
+    --ag-disabled-foreground-color: #{kit-variables.$gd-color-state-blank};
+    --ag-modal-overlay-background-color: #{gd.$custom-background-color};
+
+    // header
+    --ag-header-font-weight: 400;
+    --ag-header-text-color: #{gd.$header-label-color};
+    --ag-header-foreground-color: #{gd.$header-label-color};
+    --ag-header-background-color: #{gd.$custom-background-color};
+    --ag-header-cell-hover-background-color: #{gd.$header-hover-background-color};
+    --ag-header-row-border: 1px solid #{gd.$cell-border-color};
+
+    // rows
+    --ag-odd-row-background-color: transparent;
+    --ag-row-hover-color: #{gd.$row-hover-background-color};
+}

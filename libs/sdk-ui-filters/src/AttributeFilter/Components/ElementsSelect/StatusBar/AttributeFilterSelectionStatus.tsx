@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { InvertableSelectStatusBar } from "@gooddata/sdk-ui-kit";
@@ -28,6 +28,11 @@ export interface IAttributeFilterSelectionStatusProps {
      * Maximum elements in selection.
      */
     selectedItemsLimit: number;
+
+    /**
+     * Display selection status.
+     */
+    showSelectionStatus?: boolean;
 }
 
 /**
@@ -35,7 +40,7 @@ export interface IAttributeFilterSelectionStatusProps {
  * @beta
  */
 export const AttributeFilterSelectionStatus: React.FC<IAttributeFilterSelectionStatusProps> = (props) => {
-    const { isInverted, selectedItems, getItemTitle, selectedItemsLimit } = props;
+    const { isInverted, selectedItems, getItemTitle, selectedItemsLimit, showSelectionStatus } = props;
     return (
         <InvertableSelectStatusBar
             className="gd-attribute-filter-selection-status__next"
@@ -43,6 +48,7 @@ export const AttributeFilterSelectionStatus: React.FC<IAttributeFilterSelectionS
             getItemTitle={getItemTitle}
             selectedItems={selectedItems}
             selectedItemsLimit={selectedItemsLimit}
+            showSelectionStatus={showSelectionStatus}
         />
     );
 };

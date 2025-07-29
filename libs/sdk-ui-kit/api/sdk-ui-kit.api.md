@@ -2679,6 +2679,8 @@ export interface IInvertableSelectStatusBarProps<T> {
     selectedItems: T[];
     // (undocumented)
     selectedItemsLimit: number;
+    // (undocumented)
+    showSelectionStatus?: boolean;
 }
 
 // @internal (undocumented)
@@ -4810,6 +4812,8 @@ export interface IUiLeveledTreeViewProps<Levels extends any[]> extends IUiTreeVi
 export interface IUiLinkProps extends Omit<React_2.HTMLProps<HTMLAnchorElement>, "className"> {
     // (undocumented)
     flipUnderline?: boolean;
+    // (undocumented)
+    fullWidth?: boolean;
     // (undocumented)
     variant: "primary" | "secondary" | "inverse";
 }

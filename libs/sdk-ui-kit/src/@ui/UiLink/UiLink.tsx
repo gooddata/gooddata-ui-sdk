@@ -11,6 +11,7 @@ const { b } = bem("gd-ui-kit-link");
 export interface IUiLinkProps extends Omit<React.HTMLProps<HTMLAnchorElement>, "className"> {
     variant: "primary" | "secondary" | "inverse";
     flipUnderline?: boolean;
+    fullWidth?: boolean;
 }
 
 /**
@@ -19,7 +20,8 @@ export interface IUiLinkProps extends Omit<React.HTMLProps<HTMLAnchorElement>, "
 export const UiLink: React.FC<IUiLinkProps> = ({
     variant = "secondary",
     flipUnderline = false,
+    fullWidth = false,
     ...anchorProps
 }) => {
-    return <a className={b({ variant, flipUnderline })} {...anchorProps} />;
+    return <a className={b({ variant, flipUnderline, fullWidth })} {...anchorProps} />;
 };

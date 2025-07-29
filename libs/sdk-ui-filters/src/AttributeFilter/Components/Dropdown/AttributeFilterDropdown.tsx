@@ -57,10 +57,7 @@ export function AttributeFilterDropdown() {
         withoutApply ? isWorkingSelectionInverted : isCommittedSelectionInverted,
         !isSelectionInvalid || !withoutApply,
     );
-    const selectionElements = useLastValidValue(
-        withoutApply ? workingSelectionElements : committedSelectionElements,
-        !isSelectionInvalid || !withoutApply,
-    );
+    const selectionElements = withoutApply ? workingSelectionElements : committedSelectionElements;
     const subtitle = useResolveAttributeFilterSubtitle(isSelectionInverted, selectionElements);
 
     const isMultiselect = selectionMode !== "single";
