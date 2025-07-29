@@ -30,12 +30,20 @@ const openScheduleEmailDialog: UiReducer<PayloadAction<IScheduleEmailContext & {
     state,
     action,
 ) => {
-    const { widgetRef, openedFrom } = action.payload;
+    const { widgetRef, schedule, openedFrom } = action.payload;
 
     state.scheduleEmailDialog.open = true;
 
+    if (schedule) {
+        state.scheduleEmailDialog.context = {
+            ...(state.scheduleEmailDialog.context || {}),
+            schedule,
+        };
+    }
+
     if (widgetRef) {
         state.scheduleEmailDialog.context = {
+            ...(state.scheduleEmailDialog.context || {}),
             widgetRef,
         };
 

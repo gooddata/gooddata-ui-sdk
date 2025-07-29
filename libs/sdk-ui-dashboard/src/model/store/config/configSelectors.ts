@@ -852,6 +852,18 @@ export const selectFocusObject: DashboardSelector<DashboardFocusObject> = create
 );
 
 /**
+ * Returns whether open automation on load is enabled.
+ *
+ * @internal
+ */
+export const selectOpenAutomationOnLoad: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.openAutomationOnLoad ?? false;
+    },
+);
+
+/**
  * Returns whether external recipients are enabled.
  *
  * @internal

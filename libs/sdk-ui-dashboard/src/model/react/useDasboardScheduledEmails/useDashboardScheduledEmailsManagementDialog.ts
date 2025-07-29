@@ -13,7 +13,6 @@ import { useDashboardAutomations } from "../useDashboardAutomations/useDashboard
  */
 export interface IUseDashboardScheduledEmailsManagementDialogProps {
     setShouldReturnToManagementDialog: (value: boolean) => void;
-    setScheduledExportToEdit: (automation?: IAutomationMetadataObject) => void;
 }
 
 /**
@@ -21,7 +20,6 @@ export interface IUseDashboardScheduledEmailsManagementDialogProps {
  */
 export const useDashboardScheduledEmailsManagementDialog = ({
     setShouldReturnToManagementDialog,
-    setScheduledExportToEdit,
 }: IUseDashboardScheduledEmailsManagementDialogProps) => {
     const { addSuccess, addError } = useToastMessage();
 
@@ -77,7 +75,7 @@ export const useDashboardScheduledEmailsManagementDialog = ({
         (widget?: IWidget) => {
             setShouldReturnToManagementDialog(true);
             closeScheduleEmailingManagementDialog();
-            openScheduleEmailingDialog(widget);
+            openScheduleEmailingDialog({ widget });
         },
         [
             setShouldReturnToManagementDialog,
@@ -91,36 +89,27 @@ export const useDashboardScheduledEmailsManagementDialog = ({
         (schedule: IAutomationMetadataObject, widget?: IWidget) => {
             setShouldReturnToManagementDialog(true);
             closeScheduleEmailingManagementDialog();
-            setScheduledExportToEdit(schedule);
-            openScheduleEmailingDialog(widget);
+            openScheduleEmailingDialog({ widget, schedule });
         },
         [
             closeScheduleEmailingManagementDialog,
             openScheduleEmailingDialog,
-            setScheduledExportToEdit,
             setShouldReturnToManagementDialog,
         ],
     );
 
     // Delete
     const onScheduleEmailingManagementDeleteSuccess = useCallback(() => {
-        setScheduledExportToEdit(undefined);
         closeScheduleEmailingDialog();
         addSuccess(messages.scheduleEmailDeleteSuccess);
         refreshAutomations();
-    }, [addSuccess, closeScheduleEmailingDialog, refreshAutomations, setScheduledExportToEdit]);
+    }, [addSuccess, closeScheduleEmailingDialog, refreshAutomations]);
 
     const onScheduleEmailingManagementDeleteError = useCallback(() => {
-        setScheduledExportToEdit(undefined);
         closeScheduleEmailingDialog();
         closeScheduleEmailingManagementDialog();
         addError(messages.scheduleManagementDeleteError);
-    }, [
-        setScheduledExportToEdit,
-        closeScheduleEmailingDialog,
-        closeScheduleEmailingManagementDialog,
-        addError,
-    ]);
+    }, [closeScheduleEmailingDialog, closeScheduleEmailingManagementDialog, addError]);
 
     return {
         defaultOnScheduleEmailingManagement,

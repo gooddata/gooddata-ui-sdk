@@ -368,6 +368,11 @@ export interface IScheduleEmailContext {
      * Widget to schedule email for.
      */
     widgetRef?: ObjRef | undefined;
+
+    /**
+     * Schedule to edit.
+     */
+    schedule?: IAutomationMetadataObject;
 }
 
 /**

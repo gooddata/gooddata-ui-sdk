@@ -25,16 +25,7 @@ import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";
 /**
  * @internal
  */
-export interface IUseDashboardScheduledEmailsDialogProps {
-    setScheduledExportToEdit: (automation?: IAutomationMetadataObject) => void;
-}
-
-/**
- * @internal
- */
-export const useDashboardScheduledEmailsDialog = ({
-    setScheduledExportToEdit,
-}: IUseDashboardScheduledEmailsDialogProps) => {
+export const useDashboardScheduledEmailsDialog = () => {
     const { addSuccess, addError } = useToastMessage();
     const { automationInteraction } = useDashboardUserInteraction();
 
@@ -62,7 +53,7 @@ export const useDashboardScheduledEmailsDialog = ({
                 return;
             }
 
-            openScheduleEmailingDialog(widget, "dashboard");
+            openScheduleEmailingDialog({ widget, openedFrom: "dashboard" });
             setShouldReturnToManagementDialog(false);
         },
         [dashboardRef, openScheduleEmailingDialog, setShouldReturnToManagementDialog],
@@ -71,7 +62,7 @@ export const useDashboardScheduledEmailsDialog = ({
     // Open / Close
     const onScheduleEmailingOpen = useCallback(
         (widget?: IWidget) => {
-            openScheduleEmailingDialog(widget, "widget");
+            openScheduleEmailingDialog({ widget, openedFrom: "widget" });
             setShouldReturnToManagementDialog(false);
         },
         [openScheduleEmailingDialog, setShouldReturnToManagementDialog],
@@ -83,24 +74,16 @@ export const useDashboardScheduledEmailsDialog = ({
             if (shouldReturnToManagementDialog) {
                 openScheduleEmailingManagementDialog(widget);
             }
-
-            setScheduledExportToEdit(undefined);
         },
-        [
-            shouldReturnToManagementDialog,
-            closeScheduleEmailingDialog,
-            openScheduleEmailingManagementDialog,
-            setScheduledExportToEdit,
-        ],
+        [shouldReturnToManagementDialog, closeScheduleEmailingDialog, openScheduleEmailingManagementDialog],
     );
 
     const onScheduleEmailingBack = useCallback(
         (widget?: IWidget) => {
             closeScheduleEmailingDialog();
             openScheduleEmailingManagementDialog(widget);
-            setScheduledExportToEdit(undefined);
         },
-        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, setScheduledExportToEdit],
+        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog],
     );
 
     // Create
@@ -161,23 +144,15 @@ export const useDashboardScheduledEmailsDialog = ({
             closeScheduleEmailingDialog();
             openScheduleEmailingManagementDialog(widget);
             addSuccess(messages.scheduleEmailSaveSuccess);
-            setScheduledExportToEdit(undefined);
             refreshAutomations();
         },
-        [
-            closeScheduleEmailingDialog,
-            openScheduleEmailingManagementDialog,
-            addSuccess,
-            setScheduledExportToEdit,
-            refreshAutomations,
-        ],
+        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, addSuccess, refreshAutomations],
     );
 
     const onScheduleEmailingSaveError = useCallback(() => {
         closeScheduleEmailingDialog();
         addError(messages.scheduleEmailSaveError);
-        setScheduledExportToEdit(undefined);
-    }, [closeScheduleEmailingDialog, addError, setScheduledExportToEdit]);
+    }, [closeScheduleEmailingDialog, addError]);
 
     return {
         defaultOnScheduleEmailing,
