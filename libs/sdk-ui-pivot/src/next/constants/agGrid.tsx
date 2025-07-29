@@ -67,6 +67,12 @@ const SORTING_PROPS: AgGridReactProps = {
     },
 };
 
+const HEADER_PROPS: AgGridReactProps = {
+    defaultColGroupDef: {
+        headerClass: "gd-header-cell",
+    },
+};
+
 /**
  * @internal
  */
@@ -80,4 +86,5 @@ export const AG_GRID_DEFAULT_PROPS: AgGridReactProps = merge(
     AGGREGATION_PROPS,
     PAGING_PROPS,
     SORTING_PROPS,
+    HEADER_PROPS,
 );

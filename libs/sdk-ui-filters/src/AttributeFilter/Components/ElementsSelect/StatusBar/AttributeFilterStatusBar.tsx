@@ -44,14 +44,13 @@ export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> 
                         isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
                     />
                 ) : null}
-                {!withoutApply ? (
-                    <AttributeFilterSelectionStatus
-                        isInverted={isInverted}
-                        getItemTitle={getItemTitle}
-                        selectedItems={selectedItems}
-                        selectedItemsLimit={selectedItemsLimit}
-                    />
-                ) : null}
+                <AttributeFilterSelectionStatus
+                    isInverted={isInverted}
+                    getItemTitle={getItemTitle}
+                    selectedItems={selectedItems}
+                    selectedItemsLimit={selectedItemsLimit}
+                    showSelectionStatus={!withoutApply}
+                />
                 <AttributeFilterIrrelevantSelectionStatus
                     parentFilterTitles={parentFilterTitles}
                     irrelevantSelection={irrelevantSelection}
@@ -63,14 +62,13 @@ export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> 
 
     return (
         <div className="gd-attribute-filter-status-bar__next">
-            {!withoutApply ? (
-                <AttributeFilterSelectionStatus
-                    isInverted={isInverted}
-                    getItemTitle={getItemTitle}
-                    selectedItems={selectedItems}
-                    selectedItemsLimit={selectedItemsLimit}
-                />
-            ) : null}
+            <AttributeFilterSelectionStatus
+                isInverted={isInverted}
+                getItemTitle={getItemTitle}
+                selectedItems={selectedItems}
+                selectedItemsLimit={selectedItemsLimit}
+                showSelectionStatus={!withoutApply}
+            />
             {isFilteredByParentFilters && totalElementsCountWithCurrentSettings > 0 ? (
                 <AttributeFilterFilteredStatus parentFilterTitles={parentFilterTitles} />
             ) : null}

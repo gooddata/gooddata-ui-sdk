@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger, isActionKey } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, isSpaceKey } from "@gooddata/sdk-ui-kit";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 import { ExcludeCurrentPeriodToggleLabel } from "./ExcludeCurrentPeriodToggleLabel.js";
@@ -27,7 +27,7 @@ export const ExcludeCurrentPeriodToggle: React.FC<IExcludeCurrentPeriodTogglePro
             return;
         }
 
-        if (isActionKey(e)) {
+        if (isSpaceKey(e)) {
             e.preventDefault();
             onChange(!value);
         }

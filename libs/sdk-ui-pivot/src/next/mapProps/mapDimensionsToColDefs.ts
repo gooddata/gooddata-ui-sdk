@@ -18,6 +18,8 @@ import {
     METRIC_GROUP_VALUE_COL_DEF_ID,
 } from "../constants/internal.js";
 import { AgGridRowData } from "../types/internal.js";
+import { getCellClassName } from "../styling/cell.js";
+import { DataViewFacade, ExplicitDrill } from "@gooddata/sdk-ui";
 
 function metricCellRenderer(params: ICellRendererParams<AgGridRowData, string | null>) {
     const value = params.value;
@@ -32,7 +34,6 @@ const METRIC_GROUP_NAME_COL_DEF: ColDef<AgGridRowData, string | null> = {
     headerName: "",
     suppressHeaderMenuButton: true,
     sortable: false,
-    cellStyle: { textAlign: "right" },
     valueGetter: (params) => {
         return params.data?.[METRIC_GROUP_NAME_COL_DEF_ID];
     },
@@ -44,7 +45,6 @@ const METRIC_GROUP_VALUE_COL_DEF: ColDef<AgGridRowData, string | null> = {
     headerName: "",
     suppressHeaderMenuButton: true,
     sortable: false,
-    cellStyle: { textAlign: "right" },
     valueGetter: (params) => {
         return params.data?.[METRIC_GROUP_VALUE_COL_DEF_ID];
     },
@@ -55,12 +55,18 @@ function attributeDescriptorToColDef(
     attributeDescriptor: IAttributeDescriptor,
     isPivoting: boolean,
     initialSort?: ISortItem,
+    drillableItems?: ExplicitDrill[],
+    dv?: DataViewFacade,
 ): ColDef<AgGridRowData, string | null> {
     const attributeLocalIdentifier = attributeDescriptor.attributeHeader.localIdentifier;
     const colDef: ColDef<AgGridRowData, string | null> = {
         field: attributeLocalIdentifier,
         headerName: attributeDescriptor.attributeHeader.formOf.name,
+        headerClass: "gd-header-cell",
         pivot: isPivoting,
+        cellClass: (params) => {
+            return getCellClassName(params, drillableItems, dv);
+        },
         valueGetter: (params) => {
             return params.data?.[attributeLocalIdentifier];
         },
@@ -100,13 +106,18 @@ function attributeDescriptorToColDef(
 function measureDescriptorToColDef(
     measureDescriptor: IMeasureDescriptor,
     initialSort?: ISortItem,
+    drillableItems?: ExplicitDrill[],
+    dv?: DataViewFacade,
 ): ColDef<AgGridRowData, string | null> {
     const measureLocalIdentifier = measureDescriptor.measureHeaderItem.localIdentifier;
     const colDef: ColDef<AgGridRowData, string | null> = {
         field: measureLocalIdentifier,
         headerName: measureDescriptor.measureHeaderItem.name,
+        headerClass: "gd-header-cell",
         // aggFunc: "sum",
-        cellStyle: { textAlign: "right" },
+        cellClass: (params) => {
+            return getCellClassName(params, drillableItems, dv);
+        },
         valueGetter: (params) => {
             return params.data?.[measureLocalIdentifier];
         },
@@ -133,6 +144,8 @@ export function mapDimensionsToColDefs(
     dimensionDescriptors: IDimensionDescriptor[],
     measureGroupDimension: "columns" | "rows",
     initialSortBy?: ISortItem[],
+    drillableItems?: ExplicitDrill[],
+    dv?: DataViewFacade,
 ): ColDef<AgGridRowData, string | null>[] {
     const colDefs: ColDef<AgGridRowData, string | null>[] = [];
 
@@ -153,7 +166,15 @@ export function mapDimensionsToColDefs(
                     return false;
                 });
 
-                colDefs.push(attributeDescriptorToColDef(dimensionItemDescriptor, isPivoting, matchingSort));
+                colDefs.push(
+                    attributeDescriptorToColDef(
+                        dimensionItemDescriptor,
+                        isPivoting,
+                        matchingSort,
+                        drillableItems,
+                        dv,
+                    ),
+                );
             } else if (isMeasureGroupDescriptor(dimensionItemDescriptor)) {
                 if (measureGroupDimension === "columns") {
                     // If we are rendering metrics as columns, we need to create a column for each measure.
@@ -171,7 +192,7 @@ export function mapDimensionsToColDefs(
                             return false;
                         });
 
-                        colDefs.push(measureDescriptorToColDef(measure, matchingSort));
+                        colDefs.push(measureDescriptorToColDef(measure, matchingSort, drillableItems, dv));
                     });
                 } else if (measureGroupDimension === "rows") {
                     // If we are rendering metrics as rows, we need to create two columns for the metric group - one for the metric name and one for the metric value.

@@ -97,6 +97,7 @@ const handleTabNavigation = (
     const focusableElementsSelector = [
         '[tabindex]:not([tabindex="-1"]):not(:disabled):not([aria-disabled="true"])',
         'input:not(:disabled):not([aria-disabled="true"])',
+        'button:not([tabindex="-1"]):not(:disabled):not([aria-disabled="true"])',
     ].join(",");
 
     const focusableElements = Array.from(

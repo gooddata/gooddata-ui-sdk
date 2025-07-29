@@ -504,6 +504,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     isInverted,
                     selectionMode,
                     selectionTitles,
+                    displayAsLabel,
                     isResultOfMigration,
                     additionalProps,
                 ) => {
