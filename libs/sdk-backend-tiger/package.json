@@ -71,7 +71,7 @@
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.1",
         "@gooddata/reference-workspace": "workspace:*",
-        "@gooddata/fixtures": "2.0.0",
+        "@gooddata/fixtures": "2.0.1",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.52.8",
         "@types/lodash": "^4.14.202",
