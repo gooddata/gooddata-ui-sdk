@@ -2,6 +2,18 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.36.0",
+            "tag": "@gooddata/sdk-ui-all_v10.36.0",
+            "date": "Tue, 29 Jul 2025 13:43:27 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Fix keyboard navigation in chart legend"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.35.0",
             "tag": "@gooddata/sdk-ui-all_v10.35.0",
             "date": "Thu, 24 Jul 2025 10:25:27 GMT",
