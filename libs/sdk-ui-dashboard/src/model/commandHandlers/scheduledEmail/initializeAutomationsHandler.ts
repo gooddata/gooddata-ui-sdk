@@ -14,8 +14,10 @@ import {
     selectIsReadOnly,
     selectExternalRecipient,
     selectEnableNotificationChannelIdentifiers,
+    selectOpenAutomationOnLoad,
 } from "../../store/config/configSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
+import { uiActions } from "../../store/ui/index.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
 import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
@@ -83,6 +85,8 @@ export function* initializeAutomationsHandler(
     const { automationId }: ReturnType<typeof selectFocusObject> = yield select(selectFocusObject);
     const externalRecipient: ReturnType<typeof selectExternalRecipient> =
         yield select(selectExternalRecipient);
+    const openAutomationOnLoad: ReturnType<typeof selectOpenAutomationOnLoad> =
+        yield select(selectOpenAutomationOnLoad);
 
     if (
         !dashboardId ||
@@ -184,6 +188,30 @@ export function* initializeAutomationsHandler(
                 if (targetExportDefinitionFilters.length === 0 || sanitizedFiltersToSet.length > 0) {
                     const cmd = changeFilterContextSelection(sanitizedFiltersToSet, true, automationId);
                     yield call(changeFilterContextSelectionHandler, ctx, cmd);
+                }
+            }
+
+            if (targetAutomation && openAutomationOnLoad) {
+                const widgetRef = targetWidget && idRef(targetWidget);
+
+                if (targetAutomation.alert) {
+                    yield put(
+                        uiActions.openAlertingDialog({
+                            widgetRef: widgetRef ? widgetRef : undefined,
+                            alert: targetAutomation,
+                        }),
+                    );
+                }
+
+                if (targetAutomation.schedule) {
+                    yield put(
+                        uiActions.openScheduleEmailDialog({
+                            ...(widgetRef
+                                ? { widgetRef, openedFrom: "widget" }
+                                : { openedFrom: "dashboard" }),
+                            schedule: targetAutomation,
+                        }),
+                    );
                 }
             }
         }

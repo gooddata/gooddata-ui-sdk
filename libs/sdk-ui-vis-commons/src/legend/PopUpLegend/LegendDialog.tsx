@@ -9,6 +9,7 @@ import {
     useIdPrefixed,
     DialogCloseButton,
     UiAutofocus,
+    UiFocusTrap,
 } from "@gooddata/sdk-ui-kit";
 import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints.js";
 
@@ -65,18 +66,22 @@ const LegendDialogContent: React.FC<ILegendDialogContent> = ({ title, onCloseDia
             onBlur={handleBlur}
             ref={dialogRef}
         >
-            <div className="legend-header">
-                <div className="legend-header-title" id={titleId}>
-                    {title}
+            <UiFocusTrap>
+                <div className="legend-header">
+                    <div className="legend-header-title" id={titleId}>
+                        {title}
+                    </div>
+                    <DialogCloseButton
+                        className={
+                            "s-legend-close legend-close gd-icon-cross gd-button-link gd-button-icon-only"
+                        }
+                        onClose={handleClose}
+                    />
                 </div>
-                <DialogCloseButton
-                    className={"s-legend-close legend-close gd-icon-cross gd-button-link gd-button-icon-only"}
-                    onClose={handleClose}
-                />
-            </div>
-            <UiAutofocus>
-                <div className="legend-content">{children}</div>
-            </UiAutofocus>
+                <UiAutofocus>
+                    <div className="legend-content">{children}</div>
+                </UiAutofocus>
+            </UiFocusTrap>
         </div>
     );
 };

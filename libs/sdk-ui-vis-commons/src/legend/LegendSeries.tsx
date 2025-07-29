@@ -23,42 +23,48 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
 ) {
     const { formatMessage } = useIntl();
 
+    const focusableSeriesItems = React.useMemo(() => {
+        return series.filter(
+            (item) => item.type !== "legendAxisIndicator" && item.type !== "legendSeparator",
+        );
+    }, [series]);
+
     const [focusedIndex, setFocusedIndex] = React.useState(0);
     const id = useIdPrefixed("LegendSeries");
 
     React.useEffect(() => {
         setFocusedIndex(0);
-    }, [series.length]);
+    }, [focusableSeriesItems.length]);
 
-    const contextValue = useLegendSeriesContextValue({ series, id, focusedIndex });
+    const contextValue = useLegendSeriesContextValue({ series: focusableSeriesItems, id, focusedIndex });
     const { makeItemId, descriptionId } = contextValue;
 
     const keyDownDepsRef = useAutoupdateRef({
         focusedIndex,
         onToggleItem,
-        series,
+        focusableSeries: focusableSeriesItems,
     });
     const handleKeyDown = React.useMemo<React.KeyboardEventHandler>(
         () =>
             makeLinearKeyboardNavigation({
                 onFocusNext: () => {
-                    const { series } = keyDownDepsRef.current;
+                    const { focusableSeries } = keyDownDepsRef.current;
 
                     setFocusedIndex((prevIndex) => {
                         const nextIndex = prevIndex + 1;
-                        if (nextIndex >= series.length) {
+                        if (nextIndex >= focusableSeries.length) {
                             return 0;
                         }
                         return nextIndex;
                     });
                 },
                 onFocusPrevious: () => {
-                    const { series } = keyDownDepsRef.current;
+                    const { focusableSeries } = keyDownDepsRef.current;
 
                     setFocusedIndex((prevIndex) => {
                         const nextIndex = prevIndex - 1;
                         if (nextIndex < 0) {
-                            return series.length - 1;
+                            return focusableSeries.length - 1;
                         }
                         return nextIndex;
                     });
@@ -67,14 +73,14 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
                     setFocusedIndex(0);
                 },
                 onFocusLast: () => {
-                    const { series } = keyDownDepsRef.current;
+                    const { focusableSeries } = keyDownDepsRef.current;
 
-                    setFocusedIndex(series.length - 1);
+                    setFocusedIndex(focusableSeries.length - 1);
                 },
                 onSelect: () => {
-                    const { onToggleItem, focusedIndex, series } = keyDownDepsRef.current;
+                    const { onToggleItem, focusedIndex, focusableSeries } = keyDownDepsRef.current;
 
-                    onToggleItem(series[focusedIndex]);
+                    onToggleItem(focusableSeries[focusedIndex]);
                 },
             }),
         [keyDownDepsRef],
@@ -85,7 +91,7 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
             <div
                 className={cx("series-wrapper legend-series-wrapper", className)}
                 role={"group"}
-                aria-activedescendant={makeItemId(series[focusedIndex])}
+                aria-activedescendant={makeItemId(focusableSeriesItems[focusedIndex])}
                 tabIndex={0}
                 onKeyDown={handleKeyDown}
             >
