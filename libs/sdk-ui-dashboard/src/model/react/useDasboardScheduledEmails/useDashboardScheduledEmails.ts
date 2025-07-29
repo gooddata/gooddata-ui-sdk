@@ -1,9 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
-import { useState } from "react";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+
 import { useDashboardScheduledEmailsData } from "./useDashboardScheduledEmailsData.js";
 import { useDashboardScheduledEmailsDialog } from "./useDashboardScheduledEmailsDialog.js";
 import { useDashboardScheduledEmailsManagementDialog } from "./useDashboardScheduledEmailsManagementDialog.js";
+import { useDashboardSelector } from "../DashboardStoreProvider.js";
+import { selectIsScheduleEmailDialogContext } from "../../../model/store/ui/uiSelectors.js";
 
 /**
  * Hook that handles schedule emailing dialogs.
@@ -14,7 +15,8 @@ export const useDashboardScheduledEmails = () => {
     /**
      * Active selected scheduled export to be edited in the dialog (is available only for editing, is not used for creation)
      */
-    const [scheduledExportToEdit, setScheduledExportToEdit] = useState<IAutomationMetadataObject>();
+    const scheduleEmailingDialogContext = useDashboardSelector(selectIsScheduleEmailDialogContext);
+    const scheduledExportToEdit = scheduleEmailingDialogContext?.schedule;
 
     const {
         // Data
@@ -45,7 +47,7 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingSaveError,
         onScheduleEmailingSaveSuccess,
         setShouldReturnToManagementDialog,
-    } = useDashboardScheduledEmailsDialog({ setScheduledExportToEdit });
+    } = useDashboardScheduledEmailsDialog();
 
     const {
         defaultOnScheduleEmailingManagement,
@@ -58,7 +60,6 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingManagementOpen,
     } = useDashboardScheduledEmailsManagementDialog({
         setShouldReturnToManagementDialog,
-        setScheduledExportToEdit,
     });
 
     return {

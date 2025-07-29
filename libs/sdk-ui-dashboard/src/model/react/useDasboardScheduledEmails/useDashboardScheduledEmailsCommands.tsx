@@ -1,9 +1,18 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
-import { areObjRefsEqual, isInsightWidget, IWidget } from "@gooddata/sdk-model";
+import { areObjRefsEqual, IAutomationMetadataObject, isInsightWidget, IWidget } from "@gooddata/sdk-model";
 import { selectEnableScheduling, selectInsights, selectWidgets, uiActions } from "../../store/index.js";
 import { useDashboardDispatch, useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";
+
+/**
+ * @internal
+ */
+interface IOpenScheduleEmailingDialogOptions {
+    widget?: IWidget;
+    openedFrom?: string;
+    schedule?: IAutomationMetadataObject;
+}
 
 /**
  * @internal
@@ -19,11 +28,14 @@ export const useDashboardScheduledEmailsCommands = () => {
 
     // Single Schedule Dialog
     const openScheduleEmailingDialog = useCallback(
-        (widget?: IWidget, openedFrom?: string) => {
+        (options: IOpenScheduleEmailingDialogOptions = {}) => {
+            const { widget, openedFrom, schedule } = options;
+
             if (isScheduledEmailingEnabled) {
                 dispatch(
                     uiActions.openScheduleEmailDialog({
                         ...(widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom }),
+                        ...(schedule ? { schedule } : {}),
                     }),
                 );
 

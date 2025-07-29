@@ -318,6 +318,16 @@ export interface DashboardConfig {
     disableUserFilterReset?: boolean;
 
     /**
+     * @alpha
+     *
+     * Open automation on load
+     *
+     * @remarks
+     * If set to true, the selected automation form focus object will be opened on dashboard load.
+     */
+    openAutomationOnLoad?: boolean;
+
+    /**
      * @beta
      *
      * Specify the focus object in which context the dashboard should be opened.
@@ -464,6 +474,7 @@ export type ResolvedDashboardConfig = Omit<
     | "workspaceDescriptor"
     | "evaluationFrequency"
     | "externalRecipient"
+    | "openAutomationOnLoad"
 > &
     DashboardConfig;
 

@@ -154,17 +154,17 @@ export const isElementSubmitButton = (event: React.KeyboardEvent) => {
 
 const focusableElementsSelector = [
     // Interactive form elements
-    'button:not(:disabled):not([aria-disabled="true"])',
-    'input:not(:disabled):not([aria-disabled="true"])',
-    'select:not(:disabled):not([aria-disabled="true"])',
-    'textarea:not(:disabled):not([aria-disabled="true"])',
+    "button:not(:disabled)",
+    "input:not(:disabled)",
+    "select:not(:disabled)",
+    "textarea:not(:disabled)",
 
     // Links and areas
     "a[href]",
     "area[href]",
 
     // Custom elements with tabindex
-    '[tabindex]:not(:disabled):not([aria-disabled="true"])',
+    "[tabindex]:not(:disabled)",
 
     // Media with controls
     "audio[controls]",

@@ -1582,6 +1582,8 @@ export interface DashboardConfig {
     // @beta
     menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
     objectAvailability?: ObjectAvailabilityConfig;
+    // @alpha
+    openAutomationOnLoad?: boolean;
     overrideDefaultFilters?: FilterContextItem[];
     overrideTitle?: string;
     // @alpha
@@ -5938,6 +5940,7 @@ export interface IScheduledEmailManagementDialogProps {
 
 // @internal (undocumented)
 export interface IScheduleEmailContext {
+    schedule?: IAutomationMetadataObject;
     widgetRef?: ObjRef | undefined;
 }
 
@@ -7974,7 +7977,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
