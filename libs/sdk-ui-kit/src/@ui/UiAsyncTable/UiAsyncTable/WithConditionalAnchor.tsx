@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { e } from "../asyncTableBem.js";
+import { UiLink } from "../../UiLink/UiLink.js";
 
 export const WithConditionalAnchor = ({ href, children }: { href?: string; children: React.ReactNode }) => {
     return href ? (
-        <a className={e("link")} href={href}>
+        <UiLink variant="secondary" href={href} fullWidth>
             {children}
-        </a>
+        </UiLink>
     ) : (
         children
     );

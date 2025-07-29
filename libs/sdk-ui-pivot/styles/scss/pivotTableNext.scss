@@ -1,0 +1,61 @@
+// (C) 2025 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "agVariables" as ag;
+@use "gdVariables" as gd;
+
+.gd-pivot-table-next {
+    @include ag.ag-grid-theme-variables;
+
+    width: 100%;
+    height: 100%;
+
+    .gd-header-cell {
+        border: none;
+        border-top: gd.$cell-border;
+        border-top-color: gd.$cell-border-color;
+        border-left: gd.$cell-border;
+        border-left-color: gd.$cell-border-color;
+
+        &--attribute {
+            text-align: left;
+        }
+
+        &--metric {
+            text-align: right;
+        }
+    }
+
+    .gd-cell {
+        border: none;
+        border-top: gd.$cell-border;
+        border-top-color: gd.$cell-border-color;
+        border-left: gd.$cell-border;
+        border-left-color: gd.$cell-border-color;
+
+        &--drillable {
+            font-weight: bold;
+            cursor: pointer;
+            color: gd.$custom-foreground-color;
+        }
+
+        &--drillable:hover {
+            text-decoration: underline;
+        }
+
+        &--attribute {
+            text-align: left;
+        }
+
+        &--metric {
+            text-align: right;
+        }
+    }
+
+    .ag-row-first .gd-cell {
+        border-top: none;
+    }
+
+    .ag-column-first.gd-cell {
+        border-left: none;
+    }
+}

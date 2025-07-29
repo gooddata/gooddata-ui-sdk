@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { InvertableSelectLimitWarning } from "./InvertableSelectLimitWarning.js";
@@ -12,23 +12,35 @@ export interface IInvertableSelectStatusBarProps<T> {
     selectedItems: T[];
     getItemTitle: (item: T) => string;
     selectedItemsLimit: number;
+    showSelectionStatus?: boolean;
 }
 
 /**
  * @internal
  */
 export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarProps<T>) {
-    const { className, selectedItems, getItemTitle, isInverted, selectedItemsLimit } = props;
+    const {
+        className,
+        selectedItems,
+        getItemTitle,
+        isInverted,
+        selectedItemsLimit,
+        showSelectionStatus = true,
+    } = props;
 
     return (
         <>
-            <div className={cx([className, "gd-invertable-select-selection-status", "s-list-status-bar"])}>
-                <InvertableSelectStatus
-                    selectedItems={selectedItems}
-                    getItemTitle={getItemTitle}
-                    isInverted={isInverted}
-                />
-            </div>
+            {showSelectionStatus ? (
+                <div
+                    className={cx([className, "gd-invertable-select-selection-status", "s-list-status-bar"])}
+                >
+                    <InvertableSelectStatus
+                        selectedItems={selectedItems}
+                        getItemTitle={getItemTitle}
+                        isInverted={isInverted}
+                    />
+                </div>
+            ) : null}
             {selectedItems.length >= selectedItemsLimit ? (
                 <InvertableSelectLimitWarning
                     limit={selectedItemsLimit}

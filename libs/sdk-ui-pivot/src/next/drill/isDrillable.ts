@@ -23,12 +23,12 @@ import {
  * @returns Array of mapping headers
  */
 function getCellDrillHeaders(
-    colDef: ColDef<AgGridRowData, string>,
+    colDef: ColDef<AgGridRowData, string | null>,
     data: AgGridRowData,
     isTransposed: boolean,
 ): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
-    const colId = colDef.colId!;
+    const colId = colDef.colId ?? colDef.field; // TODO: why?
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const colData = data.meta[colId] as ITableDataValue;
@@ -60,18 +60,17 @@ function getCellDrillHeaders(
  * @param data - The row data from ag-grid
  * @param drillableItems - Array of drillable items to check against
  * @param dv - Current data view facade for context
- * @param isTransposed - Whether the table is transposed
  * @returns True if the cell is drillable, false otherwise
  */
 export function isCellDrillable(
-    colDef: ColDef<AgGridRowData, string>,
+    colDef: ColDef<AgGridRowData, string | null>,
     data: AgGridRowData,
     drillableItems: ExplicitDrill[],
-    dv: DataViewFacade,
-    isTransposed: boolean,
+    dv?: DataViewFacade,
 ): boolean {
+    const isTransposed = dv?.data().asTable().isTransposed ?? false;
     const mappingHeaders = getCellDrillHeaders(colDef, data, isTransposed);
-    if (mappingHeaders.length === 0) {
+    if (mappingHeaders.length === 0 || !dv) {
         return false;
     }
 

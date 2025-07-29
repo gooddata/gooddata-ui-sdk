@@ -73,7 +73,7 @@ jobs:
             echo "runners=1" >> $GITHUB_OUTPUT
           else
             # hardcode runners count
-            COUNT=3
+            COUNT=2
             MATRIX="["
             for i in $(seq 1 $COUNT); do
               if [ $i -ne 1 ]; then

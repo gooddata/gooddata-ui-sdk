@@ -3,45 +3,43 @@
 exports[`mapDimensionsToColDefs > base > should create col defs for arithmetic measures 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    "headerClass": "gd-header-cell",
     "headerName": "Won",
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_358184a8_9fa7cb9ce4d2947059b490e24a925317",
+    "headerClass": "gd-header-cell",
     "headerName": "Calculated 'Lost' measure",
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_7ff816a7_82e019308ff681db5738ce5040bc533d",
+    "headerClass": "gd-header-cell",
     "headerName": "Ratio of Won and Lost",
     "valueGetter": [Function],
   },
@@ -51,39 +49,46 @@ exports[`mapDimensionsToColDefs > base > should create col defs for arithmetic m
 exports[`mapDimensionsToColDefs > base > should create col defs for empty values 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Department",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_attr.f_stage.stagename",
+    "headerClass": "gd-header-cell",
     "headerName": "Stage Name",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
@@ -93,8 +98,10 @@ exports[`mapDimensionsToColDefs > base > should create col defs for empty values
 exports[`mapDimensionsToColDefs > base > should create col defs for single column attribute 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": true,
     "valueGetter": [Function],
@@ -105,11 +112,10 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single colum
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
@@ -119,18 +125,19 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric with column attribute 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
@@ -140,25 +147,28 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric with row and column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
@@ -168,18 +178,19 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric with row attribute 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
@@ -189,32 +200,37 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric with two row and one column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Department",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
@@ -224,39 +240,46 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single metric with two row and two column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Department",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_attr.f_stage.stagename",
+    "headerClass": "gd-header-cell",
     "headerName": "Stage Name",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
@@ -266,8 +289,10 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single metri
 exports[`mapDimensionsToColDefs > base > should create col defs for single row attribute 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
@@ -278,20 +303,18 @@ exports[`mapDimensionsToColDefs > base > should create col defs for single row a
 exports[`mapDimensionsToColDefs > base > should create col defs for two measures 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    "headerClass": "gd-header-cell",
     "headerName": "Won",
     "valueGetter": [Function],
   },
@@ -301,27 +324,27 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
 exports[`mapDimensionsToColDefs > base > should create col defs for two measures with column attribute 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    "headerClass": "gd-header-cell",
     "headerName": "Won",
     "valueGetter": [Function],
   },
@@ -331,34 +354,36 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
 exports[`mapDimensionsToColDefs > base > should create col defs for two measures with row and column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    "headerClass": "gd-header-cell",
     "headerName": "Won",
     "valueGetter": [Function],
   },
@@ -368,55 +393,63 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
 exports[`mapDimensionsToColDefs > base > should create col defs for two measures with three rows and two column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Department",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_attr.f_owner.salesrep",
+    "headerClass": "gd-header-cell",
     "headerName": "Sales Rep",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_opportunitysnapshot.forecastcategory_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Forecast Category",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    "headerClass": "gd-header-cell",
     "headerName": "Won",
     "valueGetter": [Function],
   },
@@ -426,41 +459,45 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
 exports[`mapDimensionsToColDefs > base > should create col defs for two measures with two row and one column attributes 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Department",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    "headerClass": "gd-header-cell",
     "headerName": "Won",
     "valueGetter": [Function],
   },
@@ -470,22 +507,28 @@ exports[`mapDimensionsToColDefs > base > should create col defs for two measures
 exports[`mapDimensionsToColDefs > base > should create col defs for with attributes without measures 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_attr.f_stage.stagename",
+    "headerClass": "gd-header-cell",
     "headerName": "Stage Name",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Department",
     "pivot": true,
     "valueGetter": [Function],
@@ -496,25 +539,28 @@ exports[`mapDimensionsToColDefs > base > should create col defs for with attribu
 exports[`mapDimensionsToColDefs > base > should create col defs for with two same dates 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_dt_oppcreated_timestamp.year",
+    "headerClass": "gd-header-cell",
     "headerName": "Created - Year",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "created.test",
+    "headerClass": "gd-header-cell",
     "headerName": "Created - Year",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "headerClass": "gd-header-cell",
     "headerName": "Amount",
     "valueGetter": [Function],
   },
@@ -524,24 +570,25 @@ exports[`mapDimensionsToColDefs > base > should create col defs for with two sam
 exports[`mapDimensionsToColDefs > transposition > should create col defs for single measure pivot with both attributes and metrics in rows 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Department",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "measureGroup_name",
     "headerName": "",
     "sortable": false,
@@ -550,9 +597,6 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for sin
   },
   {
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "measureGroup_value",
     "headerName": "",
     "sortable": false,
@@ -560,15 +604,19 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for sin
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_attr.f_stage.stagename",
+    "headerClass": "gd-header-cell",
     "headerName": "Stage Name",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
@@ -580,9 +628,6 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
 [
   {
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "measureGroup_name",
     "headerName": "",
     "sortable": false,
@@ -591,9 +636,6 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
   },
   {
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "measureGroup_value",
     "headerName": "",
     "sortable": false,
@@ -601,15 +643,19 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Department",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
@@ -621,9 +667,6 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
 [
   {
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "measureGroup_name",
     "headerName": "",
     "sortable": false,
@@ -632,9 +675,6 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
   },
   {
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "measureGroup_value",
     "headerName": "",
     "sortable": false,
@@ -642,15 +682,19 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.department_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Department",
     "pivot": true,
     "valueGetter": [Function],
   },
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_f_owner.region_id",
+    "headerClass": "gd-header-cell",
     "headerName": "Region",
     "pivot": true,
     "valueGetter": [Function],
@@ -661,17 +705,16 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
 exports[`mapDimensionsToColDefs > transposition > should create col defs for two measures with single row attr with metrics in rows 1`] = `
 [
   {
+    "cellClass": [Function],
     "cellRenderer": [Function],
     "field": "a_label.f_product.product.name",
+    "headerClass": "gd-header-cell",
     "headerName": "Product",
     "pivot": false,
     "valueGetter": [Function],
   },
   {
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "measureGroup_name",
     "headerName": "",
     "sortable": false,
@@ -680,9 +723,6 @@ exports[`mapDimensionsToColDefs > transposition > should create col defs for two
   },
   {
     "cellRenderer": [Function],
-    "cellStyle": {
-      "textAlign": "right",
-    },
     "field": "measureGroup_value",
     "headerName": "",
     "sortable": false,

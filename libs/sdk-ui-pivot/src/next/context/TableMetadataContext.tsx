@@ -7,8 +7,8 @@ import { DataViewFacade } from "@gooddata/sdk-ui";
  * @internal
  */
 interface ITableMetadataContext {
-    currentDataView: DataViewFacade | null;
-    setCurrentDataView: (dataView: DataViewFacade | null) => void;
+    currentDataView: DataViewFacade | undefined;
+    setCurrentDataView: (dataView: DataViewFacade | undefined) => void;
 }
 
 const TableMetadataContext = createContext<ITableMetadataContext | undefined>(undefined);
@@ -18,7 +18,7 @@ const TableMetadataContext = createContext<ITableMetadataContext | undefined>(un
  * @internal
  */
 export function TableMetadataProvider({ children }: { children: ReactNode }) {
-    const [currentDataView, setCurrentDataView] = useState<DataViewFacade | null>(null);
+    const [currentDataView, setCurrentDataView] = useState<DataViewFacade | undefined>(undefined);
 
     return (
         <TableMetadataContext.Provider

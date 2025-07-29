@@ -32,7 +32,7 @@ export function useDrilling(props: IUseDrillingProps) {
     const { currentDataView } = useTableMetadata();
 
     const onCellClicked = useCallback(
-        (event: CellClickedEvent<AgGridRowData, string>) => {
+        (event: CellClickedEvent<AgGridRowData, string | null>) => {
             if (!onDrill || drillableItems.length === 0 || !currentDataView) {
                 return false;
             }
@@ -42,8 +42,7 @@ export function useDrilling(props: IUseDrillingProps) {
                 return false;
             }
 
-            const isTransposed = currentDataView.data().asTable().isTransposed;
-            if (!isCellDrillable(colDef, data, drillableItems, currentDataView, isTransposed)) {
+            if (!isCellDrillable(colDef, data, drillableItems, currentDataView)) {
                 return false;
             }
 
@@ -104,7 +103,7 @@ export function useDrilling(props: IUseDrillingProps) {
             }
 
             // Trigger the same drill logic as cell click
-            const cellEvent = event as unknown as CellClickedEvent<AgGridRowData, string>;
+            const cellEvent = event as unknown as CellClickedEvent<AgGridRowData, string | null>;
             onCellClicked(cellEvent);
         },
         [onCellClicked, onDrill, drillableItems],

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import groupBy from "lodash/groupBy.js";
 import isEmpty from "lodash/isEmpty.js";
 import {
@@ -144,6 +144,20 @@ export const FallbackToDefault: DateFilterConfigValidationResult[] = [
     "NoVisibleOptions",
 ];
 
+const conditionallyStripToDateFilters = (
+    config: IDateFilterConfig,
+    enableToDateFilters: boolean,
+): IDateFilterConfig => {
+    if (enableToDateFilters) {
+        return config;
+    }
+
+    return {
+        ...config,
+        relativePresets: config.relativePresets?.filter((preset) => !preset.boundedFilter) ?? [],
+    };
+};
+
 /**
  * Given the date filter config loaded from backend and the settings, this function will perform validation
  * of the config and if needed also cleanup of invalid/disabled presets.
@@ -153,7 +167,9 @@ export function getValidDateFilterConfig(
     settings: ISettings,
 ): [IDateFilterConfig, DateFilterConfigValidationResult] {
     const configValidation = validateDateFilterConfig(config);
-    const validConfig = !includes(FallbackToDefault, configValidation) ? config : defaultDateFilterConfig;
+    const validConfig = !includes(FallbackToDefault, configValidation)
+        ? conditionallyStripToDateFilters(config, settings.enableToDateFilters ?? false)
+        : defaultDateFilterConfig;
 
     const dateFilterConfig = !settings.enableWeekFilters ? filterOutWeeks(validConfig) : validConfig;
 

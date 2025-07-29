@@ -78,8 +78,10 @@ const useDateInput = ({
 
     useEffect(() => {
         const newValue = formatDate(value, dateFormat);
-        setInputValue(newValue);
+        // Only update input value if we have a valid date from parent
+        // This preserves invalid user input so they can correct it
         if (newValue !== undefined) {
+            setInputValue(newValue);
             setErrorCause(undefined);
         }
     }, [value, dateFormat]);
