@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-dependentfilters",
-    "version": "10.36.0-beta.0",
+    "version": "10.36.0",
     "title": "Dependent Filters Example",
     "description": "This example demonstrates how to use multiple attribute filters linked together to filter data in a visualization.",
     "author": "GoodData",

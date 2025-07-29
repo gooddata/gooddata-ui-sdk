@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 24 Jul 2025 10:25:27 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Jul 2025 13:43:27 GMT and should not be manually modified.
+
+## 10.36.0
+
+Tue, 29 Jul 2025 13:43:27 GMT
+
+### Updates
+
+- Fix keyboard navigation in chart legend
 
 ## 10.35.0
 
