@@ -14,7 +14,7 @@
     "author": "Mara3l",
     "homepage": "https://www.gooddata.com/docs/gooddata-ui/",
     "devDependencies": {
-        "hugo-extended": "^0.115.4"
+        "hugo-extended": "^0.148.0"
     },
     "scripts": {
         "build": "hugo",
