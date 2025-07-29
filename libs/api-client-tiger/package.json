@@ -71,7 +71,7 @@
         "eslint-plugin-prettier": "^5.5.1",
         "eslint-plugin-regexp": "^1.9.0",
         "eslint-plugin-sonarjs": "^0.16.0",
-        "eslint-plugin-tsdoc": "^0.2.14",
+        "eslint-plugin-tsdoc": "^0.4.0",
         "fix-esm-import-path": "^1.4.0",
         "mkdirp": "^1.0.4",
         "prettier": "^3.6.2",

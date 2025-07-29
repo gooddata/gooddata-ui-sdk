@@ -88,7 +88,7 @@
         "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-regexp": "^1.9.0",
         "eslint-plugin-sonarjs": "^0.16.0",
-        "eslint-plugin-tsdoc": "^0.2.14",
+        "eslint-plugin-tsdoc": "^0.4.0",
         "html-webpack-plugin": "^5.3.1",
         "prettier": "^3.6.2",
         "process": "^0.11.10",
