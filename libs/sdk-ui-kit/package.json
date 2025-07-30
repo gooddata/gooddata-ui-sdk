@@ -104,7 +104,7 @@
         "@lezer/highlight": "~1.2.1",
         "@codemirror/commands": "~6.8.1",
         "@floating-ui/dom": "1.6.13",
-        "@floating-ui/react-dom": "2.1.2",
+        "@floating-ui/react-dom": "2.1.5",
         "@floating-ui/react": "~0.27.12"
     },
     "peerDependencies": {
