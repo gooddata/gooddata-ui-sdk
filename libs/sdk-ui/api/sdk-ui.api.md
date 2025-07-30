@@ -62,6 +62,7 @@ import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { MessageDescriptor } from 'react-intl';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
+import { ReactNode } from 'react';
 import { TotalType } from '@gooddata/sdk-model';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { WithIntlProps } from 'react-intl';
@@ -1110,6 +1111,15 @@ export interface IMeasureTitleProps {
     // (undocumented)
     title?: string;
 }
+
+// @internal (undocumented)
+function Intl_2({ children, customLocale, customMessages, forTest, }: {
+    children: ReactNode;
+    customLocale?: ILocale;
+    customMessages?: ITranslations;
+    forTest?: boolean;
+}): React_2.JSX.Element;
+export { Intl_2 as Intl }
 
 // @internal (undocumented)
 export const IntlTranslationsProvider: React_2.FC<WithIntlProps<ITranslationsProviderProps>> & {

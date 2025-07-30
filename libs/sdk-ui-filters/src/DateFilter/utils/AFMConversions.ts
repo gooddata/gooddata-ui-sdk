@@ -38,7 +38,7 @@ export const mapRelativeFilterToAfm = (
             from,
             to,
             granularity,
-            boundedFilter,
+            ...(boundedFilter ? { boundedFilter } : {}),
         },
     };
 };
