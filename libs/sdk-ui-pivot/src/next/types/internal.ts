@@ -1,5 +1,10 @@
 // (C) 2025 GoodData Corporation
 
+import { DataViewFacade, ITableColumnDefinition, IVisualizationCallbacks } from "@gooddata/sdk-ui";
+import { IPivotTableNextProps } from "./public.js";
+import { IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
+
 /**
  * Data transformed to a structure used by ag-grid.
  *
@@ -18,3 +23,31 @@
  * @internal
  */
 export type AgGridRowData = Record<string, string | null>;
+
+/**
+ * @internal
+ */
+export interface ICorePivotTableNextProps extends IPivotTableNextProps, IVisualizationCallbacks {
+    execution: IPreparedExecution;
+    theme?: ITheme;
+}
+
+/**
+ * @internal
+ */
+export interface ICorePivotTableInnerNextProps extends ICorePivotTableNextProps, IInitialExecutionData {}
+
+/**
+ * @internal
+ */
+export interface IInitialExecutionData {
+    initialExecutionResult: IExecutionResult;
+    initialDataView: DataViewFacade;
+}
+
+/**
+ * @internal
+ */
+export interface ITableColumnDefinitionByColId {
+    [colId: string]: ITableColumnDefinition;
+}

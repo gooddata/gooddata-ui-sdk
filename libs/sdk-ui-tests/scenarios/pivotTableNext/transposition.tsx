@@ -10,7 +10,7 @@ import {
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
     PivotTableWithMeasuresAndRowsOnly,
     PivotTableWithMeasuresAndColumnOnly,
-    // getCommonPivotTableSizingConfig,
+    getCommonPivotTableSizingConfig,
     PivotTableWithMeasuresAndColumnsOnly,
 } from "./base.js";
 import {
@@ -25,7 +25,7 @@ import { action } from "storybook/internal/actions";
 export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("transposition")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
-    .withDefaultTestTypes("api")
+    // .withDefaultTestTypes("api")
     .withDefaultBackendSettings({
         enablePivotTableTransposition: true,
         enableColumnHeadersPosition: true,
@@ -57,7 +57,7 @@ export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNe
             // newTotal("nat", ReferenceMd.Won, ReferenceMd.Region.Default),
         ],
         config: {
-            // ...getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
+            ...getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
             measureGroupDimension: "rows",
         },
     })
@@ -72,7 +72,7 @@ export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNe
             // newTotal("nat", ReferenceMd.Won, ReferenceMd.Region.Default),
         ],
         config: {
-            // ...getCommonPivotTableSizingConfig([ReferenceMd.Region.Default, ReferenceMd.Department.Default]),
+            ...getCommonPivotTableSizingConfig([ReferenceMd.Region.Default, ReferenceMd.Department.Default]),
             measureGroupDimension: "rows",
         },
     })

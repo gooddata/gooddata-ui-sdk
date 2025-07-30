@@ -69,13 +69,6 @@ To run the tests against a mock backend follow these steps:
     - videos in `cypress/videos`
     - if you are running tests in record mode, then you can see all calls logged in `recording/mappings`
 
-### Running things on Apple Silicon
-
-Currently, our ECR images do not support ARM64 tags, so to run Docker things in this repo locally, search for
-`020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/` in this folder and remove it.
-This will make your docker use upstream images that do support ARM64 and thus your Mac will run them natively.
-Do not commit this change!
-
 ### Run tests against wiremock backend with live Cypress controls (tests are importing their recorded mapping files)
 
 Good for debugging the tooling when tests are passing with live backend but fail on CI.

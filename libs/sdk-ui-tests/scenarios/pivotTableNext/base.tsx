@@ -5,28 +5,28 @@ import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import {
     IPivotTableNextProps,
     PivotTableNext,
-    // IPivotTableConfig,
-    // newWidthForAttributeColumn,
-    // newWidthForAllColumnsForMeasure,
+    PivotTableNextConfig,
+    newWidthForAttributeColumn,
+    newWidthForAllColumnsForMeasure,
 } from "@gooddata/sdk-ui-pivot/next";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
 import { requestPages } from "@gooddata/mock-handling";
 import { IAttribute, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
-// export function getCommonPivotTableSizingConfig(attributesUsed: IAttribute[] = []): IPivotTableConfig {
-//     return {
-//         columnSizing: {
-//             columnWidths: [
-//                 newWidthForAllColumnsForMeasure(ReferenceMd.Amount, 100),
-//                 newWidthForAllColumnsForMeasure(ReferenceMd.Probability, 100),
-//                 newWidthForAllColumnsForMeasure(ReferenceMd.Won, 100),
-//                 ...attributesUsed.map((attribute) => newWidthForAttributeColumn(attribute, 120)),
-//             ],
-//             defaultWidth: "unset",
-//             growToFit: false,
-//         },
-//     };
-// }
+export function getCommonPivotTableSizingConfig(attributesUsed: IAttribute[] = []): PivotTableNextConfig {
+    return {
+        columnSizing: {
+            columnWidths: [
+                newWidthForAllColumnsForMeasure(ReferenceMd.Amount, 100),
+                newWidthForAllColumnsForMeasure(ReferenceMd.Probability, 100),
+                newWidthForAllColumnsForMeasure(ReferenceMd.Won, 100),
+                ...attributesUsed.map((attribute) => newWidthForAttributeColumn(attribute, 120)),
+            ],
+            defaultWidth: "unset",
+            growToFit: false,
+        },
+    };
+}
 
 export const PivotTableWithSingleColumn = {
     columns: [ReferenceMd.Product.Name],
@@ -122,7 +122,7 @@ export const PivotTableWithRepeatingRowAttributes = {
 export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
-    .withDefaultTestTypes("api")
+    // .withDefaultTestTypes("api")
     .addScenario("single attribute", {
         rows: [ReferenceMd.Product.Name],
         columns: [],
