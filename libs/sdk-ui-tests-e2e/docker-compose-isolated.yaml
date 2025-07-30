@@ -33,7 +33,7 @@ services:
             - backend-mock
 
     backend-mock:
-        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/wiremock/wiremock:3.13.1
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/wiremock/wiremock:3.13.1
         # Use "--print-all-network-traffic --verbose" for verbose logging
         command: "--proxy-all=${HOST:-https://staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
         user: "$USER_UID:$USER_GID"
