@@ -1,5 +1,5 @@
-// (C) 2024 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2024-2025 GoodData Corporation
+import React, { ReactElement, useCallback } from "react";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import compact from "lodash/compact.js";
@@ -80,7 +80,7 @@ export function useWidgetDeleteDialogProps(): IWidgetDeleteDialogProps {
 /**
  * @internal
  */
-export const DefaultWidgetDeleteDialog = (props: IWidgetDeleteDialogProps): JSX.Element | null => {
+export const DefaultWidgetDeleteDialog = (props: IWidgetDeleteDialogProps): ReactElement | null => {
     const { isVisible, showAlertsMessage, showSchedulesMessage, onDelete, onCancel, widget } = props;
     const intl = useIntl();
 

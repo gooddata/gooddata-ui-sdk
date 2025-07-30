@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { WithDrillSelect } from "../../../../drill/index.js";
 import { IDashboardInsightProps } from "../../types.js";
@@ -9,7 +9,7 @@ import { DashboardInsight } from "./DashboardInsight.js";
 /**
  * @internal
  */
-export const DashboardInsightWithDrillSelect = (props: IDashboardInsightProps): JSX.Element => {
+export const DashboardInsightWithDrillSelect = (props: IDashboardInsightProps): ReactElement => {
     const {
         widget,
         drillStep,

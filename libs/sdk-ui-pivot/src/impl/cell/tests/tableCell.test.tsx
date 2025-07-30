@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { render } from "@testing-library/react";
 import identity from "lodash/identity.js";
-import React from "react";
+import React, { ReactElement } from "react";
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "../cellUtils.js";
 import { createCellRenderer } from "../cellRenderer.js";
 import { describe, it, expect } from "vitest";
@@ -19,7 +19,7 @@ async function createTestRenderer() {
 const mountWithTheme = (
     theme: ITheme,
     params: ICellRendererParams,
-    CellRenderer: (params: ICellRendererParams) => JSX.Element,
+    CellRenderer: (params: ICellRendererParams) => ReactElement,
 ) =>
     render(
         <ThemeProvider theme={theme}>

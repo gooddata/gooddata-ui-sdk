@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React from "react";
+// (C) 2023-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import { IntlShape } from "react-intl";
 import cx from "classnames";
 import {
@@ -21,7 +21,7 @@ interface IAggregationsSubMenuItemsProps {
     measureLocalIdentifiers: string[];
     totals: IColumnTotal[];
     isColumn: boolean;
-    icon: JSX.Element;
+    icon: ReactElement;
     headerText: string;
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
 }

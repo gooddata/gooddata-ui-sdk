@@ -1,5 +1,6 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import * as React from "react";
+import { ReactElement } from "react";
 import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader.js";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
 import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable.js";
@@ -12,7 +13,7 @@ import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js
 
 export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,
-): JSX.Element | null {
+): ReactElement | null {
     const { section, screen } = props;
     const sectionHeader = section.header();
 

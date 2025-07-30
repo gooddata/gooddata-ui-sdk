@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { ReactElement, useMemo } from "react";
 import { Col, Row } from "react-grid-system";
 import reverse from "lodash/fp/reverse.js";
 
@@ -21,7 +21,7 @@ export function DashboardLayoutGridRowEdit<TWidget>(
     props: DashboardLayoutGridRowProps<TWidget> & {
         itemsInRowsByIndex: [number, IDashboardLayoutItemFacade<TWidget>[]][];
     },
-): JSX.Element {
+): ReactElement {
     const {
         section,
         itemKeyGetter = defaultItemKeyGetter,

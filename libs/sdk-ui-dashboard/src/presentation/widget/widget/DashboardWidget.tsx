@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { ReactElement, useMemo } from "react";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
     extendedWidgetDebugStr,
@@ -29,7 +29,7 @@ const MissingWidget: React.FC = () => {
 /**
  * @internal
  */
-export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
+export const DashboardWidget = (props: IDashboardWidgetProps): ReactElement => {
     const { WidgetComponentProvider, InsightWidgetComponentSet } = useDashboardComponentsContext();
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     const {

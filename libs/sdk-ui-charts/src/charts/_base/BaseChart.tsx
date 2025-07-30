@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces/index.js";
 import { getValidColorPalette, ChartTransformation } from "../../highcharts/index.js";
 import noop from "lodash/noop.js";
@@ -53,7 +53,7 @@ class StatelessBaseChart extends React.Component<Props> {
         this.errorMap = newErrorMapping(props.intl);
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const { dataView, error, seType, isLoading } = this.props;
 
         const ErrorComponent = this.props.ErrorComponent as React.ComponentType<IErrorProps>;
@@ -78,7 +78,7 @@ class StatelessBaseChart extends React.Component<Props> {
         return this.renderChartTransformation();
     }
 
-    private renderChartTransformation(): JSX.Element {
+    private renderChartTransformation(): ReactElement {
         const {
             afterRender,
             height,

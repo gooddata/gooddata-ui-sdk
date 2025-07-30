@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 
 import {
     renameDashboard,
@@ -80,7 +80,7 @@ export const useTopBarProps = (): ITopBarProps => {
     };
 };
 
-const TopBarCore = (props: ITopBarProps): JSX.Element => {
+const TopBarCore = (props: ITopBarProps): ReactElement => {
     const { menuButtonProps, titleProps, buttonBarProps, shareStatusProps, lockedStatusProps } = props;
     const snapshotExportAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
     const isExport = useDashboardSelector(selectIsExport);
@@ -113,7 +113,7 @@ const TopBarCore = (props: ITopBarProps): JSX.Element => {
 /**
  * @alpha
  */
-export function DefaultTopBar(props: ITopBarProps): JSX.Element {
+export function DefaultTopBar(props: ITopBarProps): ReactElement {
     const isExport = useDashboardSelector(selectIsExport);
     const snapshotExportAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
 

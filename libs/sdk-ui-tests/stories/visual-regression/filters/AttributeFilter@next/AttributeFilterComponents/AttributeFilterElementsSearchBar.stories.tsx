@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
@@ -9,7 +9,7 @@ import { AttributeFilterElementsSearchBar } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
-const AttributeFilterElementsSearchBarExamples = (): JSX.Element => {
+const AttributeFilterElementsSearchBarExamples = (): ReactElement => {
     return (
         <div style={{ width: 300 }}>
             <IntlWrapper>

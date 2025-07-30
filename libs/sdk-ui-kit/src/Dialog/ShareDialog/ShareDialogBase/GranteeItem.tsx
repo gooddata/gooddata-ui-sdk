@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import cx from "classnames";
 import {
@@ -48,7 +48,7 @@ interface IGranteeGroupItemProps {
     onDelete: (grantee: GranteeItem) => void;
 }
 
-const granteeUserTitleRenderer = (grantee: IGranteeUser, intl: IntlShape): JSX.Element => {
+const granteeUserTitleRenderer = (grantee: IGranteeUser, intl: IntlShape): ReactElement => {
     const userName = getGranteeLabel(grantee, intl);
 
     if (grantee.status === "Inactive") {

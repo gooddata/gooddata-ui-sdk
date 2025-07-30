@@ -787,5 +787,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "データ (.xlsx)",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "スライドデッキ (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>警告</strong> エクスポートを続行するには、オプションを選択してください。",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "エラーが発生しました：添付ファイルが選択されていません - エクスポートをスケジュールするには、少なくとも1つの添付ファイルを選択してください。"
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "エラーが発生しました：添付ファイルが選択されていません - エクスポートをスケジュールするには、少なくとも1つの添付ファイルを選択してください。",
+    "filterBar.invalidFilterSelection": "変更を適用するには、これらのフィルタの有効な値を選択します：{names}"
 }

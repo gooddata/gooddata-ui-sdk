@@ -46,6 +46,7 @@ import { OverlayController as OverlayController_2 } from './OverlayController.js
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
+import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
@@ -335,7 +336,7 @@ export function ComponentTable<TProps extends object>({ Component, columnsBy, ro
 // @internal (undocumented)
 export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
     // (undocumented)
-    render(): JSX.Element;
+    render(): ReactElement;
 }
 
 // @internal (undocumented)
@@ -480,7 +481,7 @@ export const DropdownButton: React_2.FC<IDropdownButtonProps>;
 export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): React_2.JSX.Element;
 
 // @internal
-export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element;
+export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement;
 
 // @internal (undocumented)
 export const DropdownTabs: React_2.FC<IDropdownTagsProps>;
@@ -807,9 +808,9 @@ export interface IAddButtonProps {
     // (undocumented)
     onClick?: () => void;
     // (undocumented)
-    title: JSX.Element;
+    title: ReactElement;
     // (undocumented)
-    tooltip?: JSX.Element;
+    tooltip?: ReactElement;
     // (undocumented)
     tooltipAlignPoints?: IAlignPoint[];
 }
@@ -982,9 +983,9 @@ export interface IAsyncListProps<T> {
     nextPageItemPlaceholdersCount?: number;
     onLoadNextPage?: () => void;
     // (undocumented)
-    renderItem: (props: IRenderListItemProps<T>) => JSX.Element;
+    renderItem: (props: IRenderListItemProps<T>) => ReactElement;
     // (undocumented)
-    renderLoadingItem?: (props: IRenderListItemProps<T>) => JSX.Element;
+    renderLoadingItem?: (props: IRenderListItemProps<T>) => ReactElement;
     // (undocumented)
     width?: number;
 }
@@ -1308,9 +1309,9 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     // (undocumented)
     dialogHeaderClassName?: string;
     // (undocumented)
-    footerLeftRenderer?: () => JSX.Element;
+    footerLeftRenderer?: () => ReactElement;
     // (undocumented)
-    headerLeftButtonRenderer?: () => JSX.Element;
+    headerLeftButtonRenderer?: () => ReactElement;
     // (undocumented)
     headline?: string;
     // (undocumented)
@@ -1336,7 +1337,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     // (undocumented)
     submitButtonTooltipText?: string;
     // (undocumented)
-    titleRightIconRenderer?: () => JSX.Element;
+    titleRightIconRenderer?: () => ReactElement;
     // (undocumented)
     warning?: string | React_2.ReactElement;
 }
@@ -1555,11 +1556,11 @@ export interface IDialogListHeaderProps {
 // @internal (undocumented)
 export interface IDialogListItem extends IDialogListItemBase {
     // (undocumented)
-    action?: JSX.Element;
+    action?: ReactElement;
     // (undocumented)
     deleteTooltipText?: string;
     // (undocumented)
-    icon?: JSX.Element;
+    icon?: ReactElement;
     // (undocumented)
     isClickable?: boolean;
     // (undocumented)
@@ -1595,7 +1596,7 @@ export interface IDialogListProps<T extends IDialogListItem = IDialogListItem> {
     // (undocumented)
     className?: string;
     // (undocumented)
-    emptyMessageElement?: JSX.Element;
+    emptyMessageElement?: ReactElement;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
@@ -1743,8 +1744,8 @@ export interface IDropdownInvertableSelectProps<T> {
     initialValue?: T[];
     onChange: (selectedItems: T[], isInverted: boolean) => void;
     options: T[];
-    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => JSX.Element;
-    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
+    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => ReactElement;
+    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
     title: string;
     width?: number;
 }
@@ -2482,7 +2483,7 @@ export interface IInvertableSelectAllCheckboxProps {
 // @internal (undocumented)
 export interface IInvertableSelectItem {
     // (undocumented)
-    icon?: JSX.Element;
+    icon?: ReactElement;
     // (undocumented)
     isDisabled?: boolean;
     // (undocumented)
@@ -2496,7 +2497,7 @@ export interface IInvertableSelectItem {
     // (undocumented)
     onOnly?: () => void;
     // (undocumented)
-    renderOnly?: (props: IInvertableSelectItemRenderOnlyProps) => JSX.Element;
+    renderOnly?: (props: IInvertableSelectItemRenderOnlyProps) => ReactElement;
     // (undocumented)
     title?: string;
 }
@@ -2554,19 +2555,19 @@ export interface IInvertableSelectProps<T> {
     // (undocumented)
     onSelect?: (items: T[], isInverted: boolean) => void;
     // (undocumented)
-    renderActions?: (props: IInvertableSelectRenderActionsProps) => JSX.Element;
+    renderActions?: (props: IInvertableSelectRenderActionsProps) => ReactElement;
     // (undocumented)
-    renderError?: (props: IInvertableSelectRenderErrorProps) => JSX.Element;
+    renderError?: (props: IInvertableSelectRenderErrorProps) => ReactElement;
     // (undocumented)
-    renderItem?: (props: IInvertableSelectRenderItemProps<T>) => JSX.Element;
+    renderItem?: (props: IInvertableSelectRenderItemProps<T>) => ReactElement;
     // (undocumented)
-    renderLoading?: (props: IInvertableSelectRenderLoadingProps) => JSX.Element;
+    renderLoading?: (props: IInvertableSelectRenderLoadingProps) => ReactElement;
     // (undocumented)
-    renderNoData?: (props: IInvertableSelectRenderNoDataProps) => JSX.Element;
+    renderNoData?: (props: IInvertableSelectRenderNoDataProps) => ReactElement;
     // (undocumented)
-    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => JSX.Element;
+    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => ReactElement;
     // (undocumented)
-    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
+    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
     // (undocumented)
     searchPlaceholder?: string;
     // (undocumented)
@@ -2736,19 +2737,19 @@ export interface IInvertableSelectVirtualisedProps<T> {
     // (undocumented)
     onSelect?: (items: T[], isInverted: boolean) => void;
     // (undocumented)
-    renderActions?: (props: IInvertableSelectVirtualisedRenderActionsProps) => JSX.Element;
+    renderActions?: (props: IInvertableSelectVirtualisedRenderActionsProps) => ReactElement;
     // (undocumented)
-    renderError?: (props: IInvertableSelectRenderErrorProps) => JSX.Element;
+    renderError?: (props: IInvertableSelectRenderErrorProps) => ReactElement;
     // (undocumented)
-    renderItem?: (props: IInvertableSelectVirtualisedRenderItemProps<T>) => JSX.Element;
+    renderItem?: (props: IInvertableSelectVirtualisedRenderItemProps<T>) => ReactElement;
     // (undocumented)
-    renderLoading?: (props: IInvertableSelectRenderLoadingProps) => JSX.Element;
+    renderLoading?: (props: IInvertableSelectRenderLoadingProps) => ReactElement;
     // (undocumented)
-    renderNoData?: (props: IInvertableSelectRenderNoDataProps) => JSX.Element;
+    renderNoData?: (props: IInvertableSelectRenderNoDataProps) => ReactElement;
     // (undocumented)
-    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => JSX.Element;
+    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => ReactElement;
     // (undocumented)
-    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
+    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
     // (undocumented)
     searchPlaceholder?: string;
     // (undocumented)
@@ -3095,7 +3096,7 @@ export interface IListProps<T> {
     // (undocumented)
     onScrollStart?: ScrollCallback;
     // (undocumented)
-    renderItem: (props: IRenderListItemProps<T>) => JSX.Element;
+    renderItem: (props: IRenderListItemProps<T>) => ReactElement;
     // (undocumented)
     scrollDirection?: -1 | 1;
     // (undocumented)
@@ -3372,7 +3373,7 @@ export interface IMultiSelectListProps<T> {
     // (undocumented)
     onSelectNone?: () => void;
     // (undocumented)
-    renderItem: (props: IMultiSelectRenderItemProps<T>) => JSX.Element;
+    renderItem: (props: IMultiSelectRenderItemProps<T>) => ReactElement;
     // (undocumented)
     selectAllCheckbox?: boolean;
     // (undocumented)
@@ -3992,7 +3993,7 @@ export interface IRichTextProps {
     // (undocumented)
     editRows?: number;
     // (undocumented)
-    emptyElement?: JSX.Element;
+    emptyElement?: ReactElement;
     // (undocumented)
     execConfig?: IExecutionConfig;
     filters?: IFilter[];
@@ -4027,7 +4028,7 @@ export interface IRichTextWithTooltipProps extends IRichTextProps {
     // (undocumented)
     tooltipDescription?: string;
     // (undocumented)
-    tooltipMarkdown?: JSX.Element;
+    tooltipMarkdown?: ReactElement;
 }
 
 // @internal (undocumented)
@@ -4540,7 +4541,7 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     // (undocumented)
     defaultItem: IStylingPickerItem<T>;
     // (undocumented)
-    emptyMessage: () => JSX.Element;
+    emptyMessage: () => ReactElement;
     // (undocumented)
     footerHelpLink?: string;
     // (undocumented)
@@ -5266,7 +5267,7 @@ export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
     // (undocumented)
     static defaultProps: Pick<ILegacyListProps, "className" | "onScroll" | "onScrollStart" | "onSelect" | "width" | "height" | "itemHeight" | "itemHeightGetter" | "compensateBorder" | "scrollToSelected">;
     // (undocumented)
-    render(): JSX.Element;
+    render(): ReactElement;
 }
 
 // @internal @deprecated (undocumented)
@@ -5276,7 +5277,7 @@ export class LegacyListItem<T> extends Component<ILegacyListItemProps<T>> {
         item: {};
     };
     // (undocumented)
-    render(): JSX.Element;
+    render(): ReactElement;
 }
 
 // @internal @deprecated (undocumented)
@@ -5304,9 +5305,9 @@ export class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectL
     // (undocumented)
     protected handleSelect: () => void;
     // (undocumented)
-    render(): JSX.Element;
+    render(): ReactElement;
     // (undocumented)
-    protected renderOnly(): JSX.Element;
+    protected renderOnly(): ReactElement;
 }
 
 // @internal @deprecated (undocumented)
@@ -5330,7 +5331,7 @@ export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectList
         selection: {};
     };
     // (undocumented)
-    render(): JSX.Element;
+    render(): ReactElement;
 }
 
 // @internal @deprecated (undocumented)
@@ -5347,7 +5348,7 @@ export class LegacySingleSelectListItem extends Component<ILegacySingleSelectLis
     // (undocumented)
     node: HTMLSpanElement;
     // (undocumented)
-    render(): JSX.Element;
+    render(): ReactElement;
     // (undocumented)
     readonly state: {
         isOverflowed: boolean;
@@ -5358,7 +5359,7 @@ export class LegacySingleSelectListItem extends Component<ILegacySingleSelectLis
 export type LevelTypesUnion<Levels extends unknown[]> = Levels[number];
 
 // @internal (undocumented)
-export function List<T>(props: IListProps<T>): JSX.Element;
+export function List<T>(props: IListProps<T>): ReactElement;
 
 // @internal (undocumented)
 export const LOADING_HEIGHT = 100;
@@ -5472,7 +5473,7 @@ export const MultiSelectList: React_2.FC<WithIntlProps<IMultiSelectListProps<unk
 // @internal (undocumented)
 export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps> {
     // (undocumented)
-    render(): JSX.Element;
+    render(): ReactElement;
 }
 
 // @internal (undocumented)
@@ -5835,7 +5836,7 @@ export const StylingExample: (props: IStylingExampleProps) => React_2.JSX.Elemen
 export type StylingPickerItemContent = ITheme | IColorPalette;
 
 // @internal (undocumented)
-export const StylingSettingWidget: <T extends StylingPickerItemContent>(props: IStylingSettingWidgetProps<T>) => JSX.Element;
+export const StylingSettingWidget: <T extends StylingPickerItemContent>(props: IStylingSettingWidgetProps<T>) => ReactElement;
 
 // @internal (undocumented)
 export const SubMenu: React_2.FC<ISubMenuProps>;
@@ -5854,7 +5855,7 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
         tabs: ITab[];
     };
     // (undocumented)
-    render(): JSX.Element;
+    render(): ReactElement;
 }
 
 // @internal (undocumented)
@@ -6731,7 +6732,7 @@ export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePic
 export const ZOOM_THRESHOLD = 1.2;
 
 // @internal
-export const ZoomAwareOverlay: <T extends HTMLElement = HTMLElement>(props: IOverlayProps<T>) => JSX.Element;
+export const ZoomAwareOverlay: <T extends HTMLElement = HTMLElement>(props: IOverlayProps<T>) => ReactElement;
 
 // @internal
 export const ZoomContext: React_2.Context<IZoomContextState>;

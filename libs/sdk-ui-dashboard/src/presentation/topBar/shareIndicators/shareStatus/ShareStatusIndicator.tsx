@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 import { IShareStatusProps } from "./types.js";
@@ -7,7 +7,7 @@ import { IShareStatusProps } from "./types.js";
 /**
  * @alpha
  */
-export const ShareStatusIndicator = (props: IShareStatusProps): JSX.Element | null => {
+export const ShareStatusIndicator = (props: IShareStatusProps): ReactElement | null => {
     const { shareStatus, isUnderStrictControl } = props;
 
     if (shareStatus !== "private") {

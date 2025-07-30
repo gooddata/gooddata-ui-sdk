@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import { ContentRect } from "react-measure";
 import { v4 } from "uuid";
 import set from "lodash/set.js";
@@ -81,11 +81,11 @@ export interface ILegendDetails {
     renderPopUp?: boolean;
 }
 
-export function renderChart(props: IChartProps): JSX.Element {
+export function renderChart(props: IChartProps): ReactElement {
     return <Chart {...props} />;
 }
 
-export function renderLegend(props: ILegendProps): JSX.Element {
+export function renderLegend(props: ILegendProps): ReactElement {
     return <Legend {...props} />;
 }
 

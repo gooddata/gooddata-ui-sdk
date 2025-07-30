@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { IButtonBarProps } from "./types.js";
 import {
@@ -14,7 +14,7 @@ import {
 /**
  * @alpha
  */
-export const DefaultButtonBar: React.FC<IButtonBarProps> = (props): JSX.Element => {
+export const DefaultButtonBar: React.FC<IButtonBarProps> = (props): ReactElement => {
     const {
         children,
         cancelButtonProps,

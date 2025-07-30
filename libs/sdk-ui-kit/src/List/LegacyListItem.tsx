@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React, { Component } from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { Component, ReactElement } from "react";
 
 /**
  * @internal
@@ -18,7 +18,7 @@ export class LegacyListItem<T> extends Component<ILegacyListItemProps<T>> {
         item: {},
     };
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const { item, listItemClass } = this.props;
         const ListItemComponent = listItemClass;
         const itemType = (item as any)?.source?.type ?? null;

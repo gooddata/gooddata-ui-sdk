@@ -44,6 +44,7 @@ import { MeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
+import { ReactElement } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
 import { WrappedComponentProps } from 'react-intl';
@@ -958,7 +959,7 @@ export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 export const PyramidChart: (props: IPyramidChartProps) => React_2.JSX.Element;
 
 // @beta (undocumented)
-export const Repeater: (props: IRepeaterProps) => JSX.Element;
+export const Repeater: (props: IRepeaterProps) => ReactElement;
 
 // @public (undocumented)
 export type RepeaterColumnLocator = IRepeaterAttributeColumnLocator | IRepeaterMeasureColumnLocator;
@@ -1005,6 +1006,6 @@ export const WaterfallChart: (props: IWaterfallChartProps) => React_2.JSX.Elemen
 export const withJsxExport: <T extends object>(Component: React_2.ComponentType<T>) => React_2.ComponentType<T>;
 
 // @beta
-export const Xirr: (props: IXirrProps) => JSX.Element;
+export const Xirr: (props: IXirrProps) => ReactElement;
 
 ```

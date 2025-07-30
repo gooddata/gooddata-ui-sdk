@@ -1,6 +1,6 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import React from "react";
+import React, { ReactElement } from "react";
 import Downshift, { ControllerStateAndHelpers, DownshiftProps, DownshiftState } from "downshift";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -31,7 +31,7 @@ export const Select = <V extends {}>({
     initialIsOpen = false,
     className,
     style = DEFAULT_STYLES,
-}: ISelectProps<V>): JSX.Element => {
+}: ISelectProps<V>): ReactElement => {
     const selectableOptions = getSelectableItems(items);
 
     return (

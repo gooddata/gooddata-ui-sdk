@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -37,7 +37,7 @@ const defaultGranteeItemComponentProps: Omit<IGranteeItemProps, "grantee"> = {
     isSharedObjectLocked: false,
 };
 
-const UserItemBasicExample = (): JSX.Element => {
+const UserItemBasicExample = (): ReactElement => {
     const border = { border: "1px solid black", width: 300 };
 
     return (
@@ -92,7 +92,7 @@ const UserItemBasicExample = (): JSX.Element => {
     );
 };
 
-const GroupItemBasicExample = (): JSX.Element => {
+const GroupItemBasicExample = (): ReactElement => {
     const border = { border: "1px solid black", width: 300 };
 
     return (
@@ -116,7 +116,7 @@ const GroupItemBasicExample = (): JSX.Element => {
     );
 };
 
-const GranularGranteeBasicExample = (): JSX.Element => {
+const GranularGranteeBasicExample = (): ReactElement => {
     const border = { border: "1px solid black", width: 300 };
 
     return (
@@ -141,7 +141,7 @@ const GranularGranteeBasicExample = (): JSX.Element => {
     );
 };
 
-const GranteeItemExamples = (): JSX.Element => {
+const GranteeItemExamples = (): ReactElement => {
     return (
         <InternalIntlWrapper>
             <div className="library-component screenshot-target">

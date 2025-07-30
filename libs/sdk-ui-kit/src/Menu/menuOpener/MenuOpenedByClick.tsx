@@ -1,12 +1,12 @@
-// (C) 2007-2018 GoodData Corporation
-import React, { useRef } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { ReactElement, useRef } from "react";
 
 import { OutsideClickHandler } from "../utils/OutsideClickHandler.js";
 import { MenuPosition } from "../positioning/MenuPosition.js";
 
 import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 
-export const MenuOpenedByClick = (props: IMenuOpenedBySharedProps): JSX.Element => {
+export const MenuOpenedByClick = (props: IMenuOpenedBySharedProps): ReactElement => {
     const outsideClick = () => props.onOpenedChange({ opened: false, source: "OUTSIDE_CLICK" });
     const togglerWrapperClick = () =>
         props.onOpenedChange({ opened: !props.opened, source: "TOGGLER_BUTTON_CLICK" });

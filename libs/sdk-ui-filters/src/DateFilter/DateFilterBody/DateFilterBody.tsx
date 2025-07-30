@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useEffect } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
 import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -55,7 +55,7 @@ export interface IDateFilterBodyProps {
     closeDropdown: () => void;
 
     errors?: IExtendedDateFilterErrors;
-    dateFilterButton: JSX.Element;
+    dateFilterButton: ReactElement;
 
     weekStart?: WeekStart;
     isConfigurationEnabled?: boolean;

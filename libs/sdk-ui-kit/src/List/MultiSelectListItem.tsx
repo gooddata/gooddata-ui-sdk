@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { PureComponent } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { PureComponent, ReactElement } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 
@@ -21,7 +21,7 @@ export interface IMultiSelectListItemProps {
  * @internal
  */
 export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps> {
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const { title, onClick, onMouseOver, onMouseOut, isSelected } = this.props;
 
         return (

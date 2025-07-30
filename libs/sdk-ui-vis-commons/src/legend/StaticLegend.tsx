@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import cx from "classnames";
 import noop from "lodash/noop.js";
 import { LegendList } from "./LegendList.js";
@@ -22,7 +22,7 @@ export interface IStaticLegendProps {
     label?: string;
     buttonOrientation?: ButtonsOrientationType;
     paginationHeight?: number;
-    customComponent?: JSX.Element | null;
+    customComponent?: ReactElement | null;
     isLabelVisible?: boolean;
     onItemClick?(item: ISeriesItem): void;
     onPageChanged?: (page: number) => void;

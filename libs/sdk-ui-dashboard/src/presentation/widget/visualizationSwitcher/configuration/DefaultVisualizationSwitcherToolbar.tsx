@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 
 import { IVisualizationSwitcherToolbarProps } from "./types.js";
 import { Toolbar } from "./Toolbar.js";
@@ -9,6 +9,6 @@ import { Toolbar } from "./Toolbar.js";
  */
 export const DefaultVisualizationSwitcherToolbar = (
     props: IVisualizationSwitcherToolbarProps,
-): JSX.Element => {
+): ReactElement => {
     return <Toolbar {...props} />;
 };

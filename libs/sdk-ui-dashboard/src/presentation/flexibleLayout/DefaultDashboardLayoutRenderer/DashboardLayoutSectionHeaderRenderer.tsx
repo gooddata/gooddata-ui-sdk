@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { useMemo } from "react";
+import React, { ReactElement, useMemo } from "react";
 
 import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
@@ -12,7 +12,7 @@ import { DashboardLayoutViewSectionHeader } from "./DashboardLayoutViewSectionHe
 
 export function DashboardLayoutSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<unknown>,
-): JSX.Element | null {
+): ReactElement | null {
     const { section, parentLayoutItemSize } = props;
     const sectionHeader = section.header();
     const screen = useScreenSize();

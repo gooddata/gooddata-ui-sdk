@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import { action } from "storybook/actions";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
@@ -14,7 +14,7 @@ const elements = [
     { title: "WonderKid", uri: "/uri2" },
 ];
 
-const AttributeFilterStatusBarExamples = (): JSX.Element => {
+const AttributeFilterStatusBarExamples = (): ReactElement => {
     return (
         <div style={{ width: 300 }}>
             <IntlWrapper>

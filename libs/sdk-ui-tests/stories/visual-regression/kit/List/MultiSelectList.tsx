@@ -26,7 +26,7 @@
 //     uri: "some uri",
 // };
 
-// const AttributeFilterListItemExamples = (): JSX.Element => {
+// const AttributeFilterListItemExamples = (): ReactElement => {
 //     return (
 //         <InternalIntlWrapper>
 //             <div style={{ width: 300 }}>

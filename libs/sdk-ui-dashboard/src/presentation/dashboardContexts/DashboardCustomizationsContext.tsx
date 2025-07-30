@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, ReactElement } from "react";
 
 import { DashboardLayoutExportTransformFn, DashboardExportSlideConfig } from "../../model/index.js";
 
@@ -44,7 +44,7 @@ export interface IDashboardCustomizationsProviderProps extends IDashboardCustomi
 /**
  * @internal
  */
-export function DashboardCustomizationsProvider(props: IDashboardCustomizationsProviderProps): JSX.Element {
+export function DashboardCustomizationsProvider(props: IDashboardCustomizationsProviderProps): ReactElement {
     const { children, ...components } = props;
     return (
         <DashboardCustomizationsContext.Provider value={components}>

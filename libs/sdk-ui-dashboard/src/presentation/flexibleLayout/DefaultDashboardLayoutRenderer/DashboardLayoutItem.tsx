@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React from "react";
+import React, { ReactElement } from "react";
 import {
     IDashboardLayoutItemRenderer,
     IDashboardLayoutWidgetRenderer,
@@ -26,7 +26,7 @@ const defaultItemRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => (
     <DashboardLayoutItemRenderer {...props} />
 );
 
-export function DashboardLayoutItem<TWidget>(props: IDashboardLayoutItemProps<TWidget>): JSX.Element {
+export function DashboardLayoutItem<TWidget>(props: IDashboardLayoutItemProps<TWidget>): ReactElement {
     const { item, itemRenderer = defaultItemRenderer, widgetRenderer, rowIndex } = props;
 
     const renderProps = {

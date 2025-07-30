@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import { PositionedMenuContent } from "./PositionedMenuContent.js";
 import { IMenuPositionConfig } from "../MenuSharedTypes.js";
 import { RenderChildrenInPortal } from "../utils/RenderChildrenInPortal.js";
@@ -8,7 +8,7 @@ export interface IMenuPositionProps extends IMenuPositionConfig {
     opened: boolean;
     topLevelMenu: boolean;
     portalTarget: Element;
-    contentWrapper?: (props: { children: React.ReactNode }) => JSX.Element;
+    contentWrapper?: (props: { children: React.ReactNode }) => ReactElement;
     toggler: React.ReactNode;
     togglerWrapperClassName?: string;
     children: React.ReactNode;

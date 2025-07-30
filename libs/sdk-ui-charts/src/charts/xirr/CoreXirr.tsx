@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import {
     newErrorMapping,
     IErrorDescriptors,
@@ -23,7 +23,7 @@ export class XirrStateless extends React.Component<Props> {
         this.errorMap = newErrorMapping(props.intl);
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const { dataView, error, isLoading } = this.props;
 
         const ErrorComponent = this.props.ErrorComponent;
@@ -47,7 +47,7 @@ export class XirrStateless extends React.Component<Props> {
         return this.renderVisualization();
     }
 
-    protected renderVisualization(): JSX.Element {
+    protected renderVisualization(): ReactElement {
         const { afterRender, drillableItems, locale, dataView, onDrill, config } = this.props;
 
         return (

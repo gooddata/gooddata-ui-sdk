@@ -787,5 +787,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "資料（.xlsx）",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "幻燈片（.pdf）",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>警告：</strong> 計劃匯出至少需要一個附件 - 選擇一個選項以繼續。",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "錯誤：未選擇附件 - 選擇至少一個附件來排程匯出。"
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "錯誤：未選擇附件 - 選擇至少一個附件來排程匯出。",
+    "filterBar.invalidFilterSelection": "若要套用更改，請為這些過濾器選擇有效值：{names}"
 }

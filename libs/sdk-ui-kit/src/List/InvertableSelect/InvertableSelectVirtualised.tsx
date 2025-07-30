@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import cx from "classnames";
 import DefaultMeasure from "react-measure";
 
@@ -127,13 +127,13 @@ export interface IInvertableSelectVirtualisedProps<T> {
 
     onApplyButtonClick?: () => void;
 
-    renderError?: (props: IInvertableSelectRenderErrorProps) => JSX.Element;
-    renderLoading?: (props: IInvertableSelectRenderLoadingProps) => JSX.Element;
-    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => JSX.Element;
-    renderNoData?: (props: IInvertableSelectRenderNoDataProps) => JSX.Element;
-    renderItem?: (props: IInvertableSelectVirtualisedRenderItemProps<T>) => JSX.Element;
-    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
-    renderActions?: (props: IInvertableSelectVirtualisedRenderActionsProps) => JSX.Element;
+    renderError?: (props: IInvertableSelectRenderErrorProps) => ReactElement;
+    renderLoading?: (props: IInvertableSelectRenderLoadingProps) => ReactElement;
+    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => ReactElement;
+    renderNoData?: (props: IInvertableSelectRenderNoDataProps) => ReactElement;
+    renderItem?: (props: IInvertableSelectVirtualisedRenderItemProps<T>) => ReactElement;
+    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
+    renderActions?: (props: IInvertableSelectVirtualisedRenderActionsProps) => ReactElement;
 }
 
 /**
@@ -280,7 +280,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
     };
 
     const itemRenderer = useCallback(
-        (item: T): JSX.Element => {
+        (item: T): ReactElement => {
             return renderItem({
                 onSelect: () => {
                     selectItems([item]);
@@ -391,17 +391,17 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
     );
 }
 
-function defaultError(props: IInvertableSelectRenderErrorProps): JSX.Element {
+function defaultError(props: IInvertableSelectRenderErrorProps): ReactElement {
     const { error } = props;
     return <ErrorComponent message={error?.message} />;
 }
 
-function defaultLoading(props: IInvertableSelectRenderLoadingProps): JSX.Element {
+function defaultLoading(props: IInvertableSelectRenderLoadingProps): ReactElement {
     const { height } = props;
     return <LoadingMask height={height} />;
 }
 
-function defaultSearchBar(props: IInvertableSelectRenderSearchBarProps): JSX.Element {
+function defaultSearchBar(props: IInvertableSelectRenderSearchBarProps): ReactElement {
     const { onSearch, searchPlaceholder, searchString } = props;
     return (
         <InvertableSelectSearchBar
@@ -413,11 +413,11 @@ function defaultSearchBar(props: IInvertableSelectRenderSearchBarProps): JSX.Ele
     );
 }
 
-function defaultNoData(): JSX.Element {
+function defaultNoData(): ReactElement {
     return <InvertableSelectNoResultsMatch />;
 }
 
-function defaultItem<T>(props: IInvertableSelectVirtualisedRenderItemProps<T>): JSX.Element {
+function defaultItem<T>(props: IInvertableSelectVirtualisedRenderItemProps<T>): ReactElement {
     return (
         <InvertableSelectItem
             title={props.title}
@@ -428,7 +428,7 @@ function defaultItem<T>(props: IInvertableSelectVirtualisedRenderItemProps<T>): 
     );
 }
 
-function defaultStatusBar<T>(props: IInvertableSelectRenderStatusBarProps<T>): JSX.Element {
+function defaultStatusBar<T>(props: IInvertableSelectRenderStatusBarProps<T>): ReactElement {
     const { isInverted, selectedItems, getItemTitle, selectedItemsLimit } = props;
     return (
         <InvertableSelectStatusBar
@@ -440,7 +440,7 @@ function defaultStatusBar<T>(props: IInvertableSelectRenderStatusBarProps<T>): J
     );
 }
 
-function defaultActions(props: IInvertableSelectVirtualisedRenderActionsProps): JSX.Element {
+function defaultActions(props: IInvertableSelectVirtualisedRenderActionsProps): ReactElement {
     const { checked, onToggle, onChange, isFiltered, totalItemsCount, isPartialSelection, isVisible } = props;
     return (
         <InvertableSelectAllCheckbox

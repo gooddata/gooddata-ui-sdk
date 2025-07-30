@@ -62,6 +62,7 @@ import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { MessageDescriptor } from 'react-intl';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
+import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { TotalType } from '@gooddata/sdk-model';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
@@ -1723,7 +1724,7 @@ export interface ITranslationsCustomizationContextProviderProps {
 export interface ITranslationsCustomizationProviderProps {
     backend?: IAnalyticalBackend;
     customize?(translations: Record<string, string>, settings?: IWorkspaceSettings): Record<string, string>;
-    render(translations: Record<string, string>): JSX.Element;
+    render(translations: Record<string, string>): ReactElement;
     translations: Record<string, string>;
     workspace?: string;
 }
@@ -1957,7 +1958,7 @@ export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
 export type PlaceholderResolvedValue<T> = T extends Array<infer A> ? Flatten<PlaceholderResolvedValue<A>>[] : T extends IPlaceholder<infer B> ? B : T extends IComposedPlaceholder<infer C, any, any> ? C : T;
 
 // @public
-export function PlaceholdersProvider(props: IPlaceholdersProviderProps): JSX.Element;
+export function PlaceholdersProvider(props: IPlaceholdersProviderProps): ReactElement;
 
 // @public
 export type PlaceholdersResolvedValues<Tuple extends any[]> = {

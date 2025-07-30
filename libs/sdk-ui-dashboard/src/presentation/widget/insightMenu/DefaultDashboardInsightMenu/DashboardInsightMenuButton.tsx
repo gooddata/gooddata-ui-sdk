@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { useIntl } from "react-intl";
@@ -8,7 +8,7 @@ import { IDashboardInsightMenuButtonProps } from "../types.js";
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { getDashboardInsightMenuButtonId } from "../../../../_staging/accessibility/elementId.js";
 
-export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonProps): JSX.Element | null => {
+export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonProps): ReactElement | null => {
     const { isOpen, items, widget, onClick } = props;
     const intl = useIntl();
 

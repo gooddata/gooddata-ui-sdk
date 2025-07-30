@@ -792,5 +792,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Данные (.xlsx)",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Презентация (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Предупреждение:</strong> Запланированные экспорты требуют как минимум одного вложения — выберите вариант, чтобы продолжить.",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "Ошибка: Вложения не выбраны — выберите хотя бы одно вложение для планирования экспорта."
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Ошибка: Вложения не выбраны — выберите хотя бы одно вложение для планирования экспорта.",
+    "filterBar.invalidFilterSelection": "Чтобы применить изменения, выберите допустимые значения для этих фильтров: {names}"
 }

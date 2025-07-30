@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import React, { useMemo } from "react";
+import React, { ReactElement, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
@@ -35,7 +35,7 @@ export interface IRichTextWithTooltipProps extends IRichTextProps {
     showTooltip?: boolean;
     tooltipAlignPoints?: IAlignPoint[];
     tooltipDescription?: string;
-    tooltipMarkdown?: JSX.Element;
+    tooltipMarkdown?: ReactElement;
 }
 
 const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({

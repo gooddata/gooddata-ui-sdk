@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { useState, ReactElement } from "react";
 import { IntlShape } from "react-intl";
 import classNames from "classnames";
 import { Button, Bubble } from "@gooddata/sdk-ui-kit";
@@ -9,7 +9,7 @@ import { isDarkTheme, useTheme } from "@gooddata/sdk-ui-theme-provider";
 interface IParameterProps {
     name: string;
     description?: string;
-    detailContent: JSX.Element;
+    detailContent: ReactElement;
     iconClassName: string;
     onAdd: () => void;
     intl: IntlShape;

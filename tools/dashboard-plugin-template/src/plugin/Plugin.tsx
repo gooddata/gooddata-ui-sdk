@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     DashboardContext,
     DashboardPluginV1,
@@ -19,7 +19,7 @@ import React from "react";
  * Component to render 'myCustomWidget'. If you create custom widget instance and also pass extra data,
  * then that data will be available in
  */
-function MyCustomWidget(_props: IDashboardWidgetProps): JSX.Element {
+function MyCustomWidget(_props: IDashboardWidgetProps): ReactElement {
     return <div>Hello from custom widget</div>;
 }
 

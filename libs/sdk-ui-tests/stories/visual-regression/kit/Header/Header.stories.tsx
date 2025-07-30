@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component } from "react";
+import React, { Component, ReactElement } from "react";
 // storiesOf removed for CSF migration
 import { withIntl } from "@gooddata/sdk-ui";
 import { action } from "storybook/actions";
@@ -289,7 +289,7 @@ class HeaderExamples extends Component {
         );
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         return (
             <div className="library-component screenshot-target">
                 <h4>Header</h4>

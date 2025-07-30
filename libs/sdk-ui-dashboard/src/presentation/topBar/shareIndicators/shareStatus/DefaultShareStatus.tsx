@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import { IShareStatusProps } from "./types.js";
 import {
     selectCanManageAnalyticalDashboard,
@@ -12,7 +12,7 @@ import { ShareStatusIndicator } from "./ShareStatusIndicator.js";
 /**
  * @alpha
  */
-export const DefaultShareStatus: React.FC<IShareStatusProps> = (props): JSX.Element | null => {
+export const DefaultShareStatus: React.FC<IShareStatusProps> = (props): ReactElement | null => {
     const arePermissionsEnabled = useDashboardSelector(selectEnableAnalyticalDashboardPermissions);
     const supportsAccessControl = useDashboardSelector(selectSupportsAccessControlCapability);
     const canManageAnalyticalDashboard = useDashboardSelector(selectCanManageAnalyticalDashboard);

@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React, { Component } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { Component, ReactElement } from "react";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import keyBy from "lodash/keyBy.js";
@@ -355,7 +355,7 @@ export class LegacyInvertableList<T> extends Component<
         return <this.props.isLoadingClass height={this.props.height} />;
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const { isMobile, className } = this.props;
 
         const classNames = cx(className, {

@@ -1,11 +1,11 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import { v4 as uuid } from "uuid";
 
 export interface IComponentMock<T> {
     id: string;
     selector: string;
-    component: (props: T) => JSX.Element;
+    component: (props: T) => ReactElement;
     componentWithProps: (mapProps: (props: T) => JSX.IntrinsicElements["div"]) => (props: T) => JSX.Element;
 }
 

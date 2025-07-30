@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import React, { ReactElement, ReactNode } from "react";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
@@ -53,7 +53,7 @@ const titleExtension = (
 
 const AttributeFilterDropdownButtonExamples: React.FC<AttributeFilterDropdownButtonExamplesProps> = (
     props,
-): JSX.Element => {
+): ReactElement => {
     const { isDraggable, icon } = props;
 
     return (

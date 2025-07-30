@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import compact from "lodash/compact.js";
 import omit from "lodash/omit.js";
 import { CoreGeoChart } from "./core/CoreGeoChart.js";
@@ -92,7 +92,7 @@ const getNonCoreProps = (
     return [...base, "longitude", "latitude"];
 };
 
-function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): JSX.Element {
+function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): ReactElement {
     const { backend, workspace, sortBy, filters, exportTitle, execConfig = {} } = props;
 
     const buckets = getBuckets(props);

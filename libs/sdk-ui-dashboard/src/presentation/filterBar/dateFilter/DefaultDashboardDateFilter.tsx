@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, ReactElement } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -39,7 +39,7 @@ import { useCurrentDateFilterConfig } from "../../dragAndDrop/index.js";
  *
  * @alpha
  */
-export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JSX.Element => {
+export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): ReactElement => {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
     const capabilities = useDashboardSelector(selectBackendCapabilities);

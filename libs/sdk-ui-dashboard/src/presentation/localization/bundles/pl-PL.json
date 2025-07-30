@@ -788,5 +788,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Dane (.xlsx)",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Prezentacja (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Ostrzeżenie:</strong> Zaplanowane eksporty wymagają co najmniej jednego załącznika — wybierz opcję, aby kontynuować.",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "Błąd: Nie wybrano załączników — wybierz co najmniej jeden załącznik, aby zaplanować eksport."
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Błąd: Nie wybrano załączników — wybierz co najmniej jeden załącznik, aby zaplanować eksport.",
+    "filterBar.invalidFilterSelection": "Aby zastosować zmiany, wybierz prawidłowe wartości dla tych filtrów: {names}"
 }

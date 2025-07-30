@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, ReactElement } from "react";
 import {
     IDashboardLayout,
     IDashboardWidget,
@@ -115,7 +115,7 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
  */
 export type IDashboardLayoutSectionRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutSectionRenderProps<TWidget> & TCustomProps,
-) => JSX.Element;
+) => ReactElement;
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionHeaderRenderer}.
@@ -158,7 +158,7 @@ export interface IDashboardLayoutSectionHeaderRenderProps<TWidget = IDashboardWi
  */
 export type IDashboardLayoutSectionHeaderRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutSectionHeaderRenderProps<TWidget> & TCustomProps,
-) => JSX.Element | null;
+) => ReactElement | null;
 
 /**
  * Default props provided to {@link IDashboardLayoutItemKeyGetter}
@@ -245,7 +245,7 @@ export interface IDashboardLayoutItemRenderProps<TWidget = IDashboardWidget> {
  */
 export type IDashboardLayoutItemRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutItemRenderProps<TWidget> & TCustomProps,
-) => JSX.Element;
+) => ReactElement;
 
 /**
  * Default props provided to {@link IDashboardLayoutItemRenderer}
@@ -318,7 +318,7 @@ export interface IDashboardLayoutWidgetRenderProps<TWidget = IDashboardWidget> {
  */
 export type IDashboardLayoutWidgetRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutWidgetRenderProps<TWidget> & TCustomProps,
-) => JSX.Element;
+) => ReactElement;
 
 /**
  * Default props provided to {@link IDashboardLayoutGridRowRenderer}
@@ -329,7 +329,7 @@ export interface IDashboardLayoutGridRowRenderProps<TWidget = IDashboardWidget> 
     /**
      * Items rendered in one row.
      */
-    children: JSX.Element[];
+    children: ReactElement[];
 
     /**
      * Dashboard layout section.
@@ -356,7 +356,7 @@ export interface IDashboardLayoutGridRowRenderProps<TWidget = IDashboardWidget> 
  */
 export type IDashboardLayoutGridRowRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutGridRowRenderProps<TWidget> & TCustomProps,
-) => JSX.Element;
+) => ReactElement;
 
 /**
  * Dashboard layout render props.
@@ -460,4 +460,4 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
  */
 export type IDashboardLayoutRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutRenderProps<TWidget> & TCustomProps,
-) => JSX.Element;
+) => ReactElement;

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import { useWidgetSelection } from "../../../model/index.js";
 import { CreationPanel } from "./CreationPanel.js";
 import { ISidebarProps } from "./types.js";
@@ -9,7 +9,7 @@ import { ISidebarProps } from "./types.js";
  */
 export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSidebar">> = (
     props,
-): JSX.Element => {
+): ReactElement => {
     const {
         configurationPanelClassName,
         WrapCreatePanelItemWithDragComponent,

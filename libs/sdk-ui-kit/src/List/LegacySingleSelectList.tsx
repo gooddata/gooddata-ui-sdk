@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React, { Component } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { Component, ReactElement } from "react";
 import pick from "lodash/pick.js";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -90,7 +90,7 @@ export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectList
         };
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const rowItem = this.getRowItem();
         const dataSource = this.getDataSource();
 

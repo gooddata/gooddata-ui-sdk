@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import cx from "classnames";
 import {
     IColorLegendBox,
@@ -39,11 +39,11 @@ interface ILegendBoxesProps {
     labels: IColorLegendLabel[];
 }
 
-export function ColorLabels(colorLabelProps: IColorLabelsProps): JSX.Element {
+export function ColorLabels(colorLabelProps: IColorLabelsProps): ReactElement {
     const { labels } = colorLabelProps;
     return (
         <div className="labels" data-testid="color-legend-labels">
-            {labels.map((item: IColorLegendLabel): JSX.Element => {
+            {labels.map((item: IColorLegendLabel): ReactElement => {
                 const { key, label, style } = item;
                 return (
                     <span key={key} style={style}>
@@ -55,11 +55,11 @@ export function ColorLabels(colorLabelProps: IColorLabelsProps): JSX.Element {
     );
 }
 
-export function ColorBoxes(colorBoxProps: IColorBoxesProps): JSX.Element {
+export function ColorBoxes(colorBoxProps: IColorBoxesProps): ReactElement {
     const { boxes } = colorBoxProps;
     return (
         <div className="boxes" data-testid="color-legend-boxes">
-            {boxes.map((box: IColorLegendBox): JSX.Element => {
+            {boxes.map((box: IColorLegendBox): ReactElement => {
                 const classes = cx("box", box.class);
                 const { key, style } = box;
                 return <span className={classes} key={key} style={style} />;
@@ -68,7 +68,7 @@ export function ColorBoxes(colorBoxProps: IColorBoxesProps): JSX.Element {
     );
 }
 
-function LegendBoxes({ renderLabelsFirst, boxes, labels }: ILegendBoxesProps): JSX.Element {
+function LegendBoxes({ renderLabelsFirst, boxes, labels }: ILegendBoxesProps): ReactElement {
     return (
         <>
             {renderLabelsFirst ? <ColorLabels labels={labels} /> : null}
@@ -78,7 +78,11 @@ function LegendBoxes({ renderLabelsFirst, boxes, labels }: ILegendBoxesProps): J
     );
 }
 
-function LegendWithTitle(props: { title: string; position: string; children: React.ReactNode }): JSX.Element {
+function LegendWithTitle(props: {
+    title: string;
+    position: string;
+    children: React.ReactNode;
+}): ReactElement {
     const { title, position, children } = props;
     const isHorizontal = position === TOP || position === BOTTOM;
     const classes = cx("heatmap-legend-with-title", { horizontal: isHorizontal });

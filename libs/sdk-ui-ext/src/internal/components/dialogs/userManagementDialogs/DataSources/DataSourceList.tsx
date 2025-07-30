@@ -1,5 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2021-2025 GoodData Corporation
+import React, { ReactElement, useMemo } from "react";
 
 import { sortByName } from "../utils.js";
 import { IGrantedDataSource, ListMode, WorkspacePermissionSubject } from "../types.js";
@@ -13,7 +13,7 @@ export interface IDataSourceListProps {
     mode: ListMode;
     onDelete: (workspace: IGrantedDataSource) => void;
     onChange?: (workspace: IGrantedDataSource) => void;
-    renderDataSourceIcon: (dataSource: IGrantedDataSource) => JSX.Element;
+    renderDataSourceIcon: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
 export const DataSourceList: React.FC<IDataSourceListProps> = ({

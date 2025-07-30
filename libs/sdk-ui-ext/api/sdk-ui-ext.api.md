@@ -38,6 +38,7 @@ import { LocalIdRef } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
+import { ReactElement } from 'react';
 import { UiSkeleton } from '@gooddata/sdk-ui-kit';
 import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 import { WithIntlProps } from 'react-intl';
@@ -216,7 +217,7 @@ export interface IAddDataSourceToSubjectsProps extends IWithTelemetryProps {
     // (undocumented)
     organizationId: string;
     // (undocumented)
-    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
     // (undocumented)
     subjectType: DataSourcePermissionSubject;
 }
@@ -712,7 +713,7 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     organizationId: string;
     // (undocumented)
-    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
     // (undocumented)
     selectedTab?: UserTabId;
     // (undocumented)
@@ -734,7 +735,7 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     organizationId: string;
     // (undocumented)
-    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
     // (undocumented)
     userGroupId: string;
 }

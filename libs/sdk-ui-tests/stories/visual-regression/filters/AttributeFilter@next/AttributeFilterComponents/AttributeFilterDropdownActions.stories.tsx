@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
@@ -9,7 +9,7 @@ import { AttributeFilterDropdownActions } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
-const AttributeFilterButtonsExamples = (): JSX.Element => {
+const AttributeFilterButtonsExamples = (): ReactElement => {
     return (
         <IntlWrapper>
             <div style={{ width: 400 }}>

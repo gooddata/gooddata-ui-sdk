@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
@@ -11,7 +11,7 @@ const elements = [
     { title: "WonderKid", uri: "/uri2" },
 ];
 
-const SingleSelectionAttributeFilterStatusBarExamples = (): JSX.Element => {
+const SingleSelectionAttributeFilterStatusBarExamples = (): ReactElement => {
     return (
         <div style={{ width: 300 }}>
             <IntlWrapper>

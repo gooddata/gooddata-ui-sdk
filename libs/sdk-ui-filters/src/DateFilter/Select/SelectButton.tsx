@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import cx from "classnames";
 import { ISelectItemOption } from "./types.js";
 import { itemToString } from "./utils.js";
@@ -13,7 +13,7 @@ export const SelectButton = <V extends {}>({
     selectedItem: ISelectItemOption<V>;
     isOpen: boolean;
     getToggleButtonProps: () => any;
-}): JSX.Element => (
+}): ReactElement => (
     // TODO: Replace with goodstrap Button once it supports aria props
     // This needs to be a button element, because Downshift requires something that can get focus
     <button

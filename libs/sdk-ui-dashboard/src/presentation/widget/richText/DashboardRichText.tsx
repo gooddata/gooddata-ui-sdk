@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { ReactElement, useMemo } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import { IDashboardRichTextProps } from "./types.js";
@@ -7,7 +7,7 @@ import { IDashboardRichTextProps } from "./types.js";
 /**
  * @internal
  */
-export const DashboardRichText = (props: IDashboardRichTextProps): JSX.Element => {
+export const DashboardRichText = (props: IDashboardRichTextProps): ReactElement => {
     const { widget } = props;
     const { RichTextWidgetComponentSet } = useDashboardComponentsContext();
     const RichTextComponent = useMemo(

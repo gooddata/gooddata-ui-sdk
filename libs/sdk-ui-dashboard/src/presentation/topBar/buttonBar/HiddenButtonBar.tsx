@@ -1,9 +1,11 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { ReactElement } from "react";
+
 /**
  * This implementation of button bar keeps it out of sight and effectively disables it.
  *
  * @alpha
  */
-export const HiddenButtonBar = (): JSX.Element | null => {
+export const HiddenButtonBar = (): ReactElement | null => {
     return null;
 };

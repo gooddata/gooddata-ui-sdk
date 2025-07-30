@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React, { Component } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { Component, ReactElement } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop.js";
@@ -125,7 +125,7 @@ export class LegacySingleSelectListItem extends Component<
         return null;
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const icon = this.props.source?.icon;
         return (
             <div

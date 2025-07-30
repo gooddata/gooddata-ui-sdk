@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -89,7 +89,7 @@ const backendWithFontChanged = recordedBackend(ReferenceRecordings.Recordings, {
     theme: themeWithFontChanged,
 });
 
-export const wrapWithTheme = (component: JSX.Element, tags: string[] = ["themed"]): JSX.Element =>
+export const wrapWithTheme = (component: ReactElement, tags: string[] = ["themed"]): ReactElement =>
     tags.includes("themed") ? (
         <ThemeProvider
             workspace={workspace}

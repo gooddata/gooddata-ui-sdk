@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React, { Component } from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { Component, ReactElement } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -301,7 +301,7 @@ export class LegacyMultiSelectList<T> extends Component<
         );
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const { isMobile, width, height, itemHeight } = this.props;
         const rowItem = this.getRowItem();
         const dataSource = this.getDataSource();

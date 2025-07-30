@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { ReactElement, useRef, useEffect, useCallback } from "react";
 import Markdown from "react-markdown";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -38,7 +38,7 @@ export interface IRichTextProps {
     editPlaceholder?: string;
     execConfig?: IExecutionConfig;
     editRows?: number;
-    emptyElement?: JSX.Element;
+    emptyElement?: ReactElement;
     className?: string;
     referencesEnabled?: boolean;
     /**
@@ -208,7 +208,7 @@ const RichTextEdit: React.FC<IRichTextEditProps> = ({
 
 interface IRichTextViewProps {
     value: string;
-    emptyElement?: JSX.Element;
+    emptyElement?: ReactElement;
     referencesEnabled?: boolean;
     filters?: IFilter[];
     isFiltersLoading?: boolean;

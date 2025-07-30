@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { ReactElement, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 import isEqual from "lodash/isEqual.js";
 import { Button } from "../Button/Button.js";
@@ -64,12 +64,12 @@ export interface IDropdownInvertableSelectProps<T> {
     /**
      * Render function for the status bar.
      */
-    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
+    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
 
     /**
      * Render function for the search bar.
      */
-    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => JSX.Element;
+    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => ReactElement;
 }
 
 const messages = defineMessages({

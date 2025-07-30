@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import { IntlProvider } from "react-intl";
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -14,7 +14,7 @@ const messages = {
     "message.accessibility.dismiss.notification": "Dismiss notification",
 };
 
-function renderMessage(options: Partial<IMessageProps>, children: JSX.Element = null) {
+function renderMessage(options: Partial<IMessageProps>, children: ReactElement = null) {
     return render(
         <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
             <Message type={"success"} {...options}>
