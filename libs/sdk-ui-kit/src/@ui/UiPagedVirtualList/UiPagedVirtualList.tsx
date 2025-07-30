@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, useMemo } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
 import { bem } from "../@utils/bem.js";
@@ -144,9 +144,18 @@ function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
         scrollToItem,
         scrollToItemKeyExtractor,
         scrollToIndex,
-        shouldLoadNextPage = (lastItemIndex, itemsCount, skeletonItemsCount) =>
-            lastItemIndex >= itemsCount - 1 - skeletonItemsCount,
+        shouldLoadNextPage: shouldLoadNextPageProps,
     } = props;
+
+    const defaultShouldLoadNextPage = useCallback(
+        (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) =>
+            lastItemIndex >= itemsCount - 1 - skeletonItemsCount,
+        [],
+    );
+
+    const shouldLoadNextPage = useMemo(() => {
+        return shouldLoadNextPageProps ?? defaultShouldLoadNextPage;
+    }, [shouldLoadNextPageProps, defaultShouldLoadNextPage]);
 
     const scrollContainerRef = React.useRef<HTMLDivElement>(null);
 

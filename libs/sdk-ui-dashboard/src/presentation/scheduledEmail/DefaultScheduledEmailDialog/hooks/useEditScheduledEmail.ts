@@ -259,9 +259,27 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         formats: DashboardAttachmentType[],
         dashboardFilters?: FilterContextItem[],
     ): void => {
-        if (formats.length > 0) {
-            // Create export definitions for all selected formats
-            const exportDefinitions = formats.map((format) =>
+        setEditedAutomation((s) => {
+            const currentExportDefinitions = s.exportDefinitions || [];
+
+            const currentDashboardExportDefinitions = currentExportDefinitions.filter((exportDefinition) =>
+                isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
+            );
+
+            const currentFormats = currentDashboardExportDefinitions.map(
+                (exportDefinition) => exportDefinition.requestPayload.format,
+            );
+
+            const formatsToKeep = currentFormats.filter((format) =>
+                formats.includes(format as DashboardAttachmentType),
+            );
+            const formatsToAdd = formats.filter((format) => !currentFormats.includes(format));
+
+            const keptExportDefinitions = currentDashboardExportDefinitions.filter((exportDefinition) =>
+                formatsToKeep.includes(exportDefinition.requestPayload.format),
+            );
+
+            const newExportDefinitions = formatsToAdd.map((format) =>
                 newDashboardExportDefinitionMetadataObjectDefinition({
                     dashboardId: dashboardId!,
                     dashboardTitle,
@@ -269,27 +287,39 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                     format,
                 }),
             );
-            setEditedAutomation((s) => ({
+
+            const updatedExportDefinitions = [...keptExportDefinitions, ...newExportDefinitions];
+
+            return {
                 ...s,
-                exportDefinitions,
-            }));
-        } else {
-            // Remove all dashboard export definitions
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.filter(
-                    (exportDefinition) =>
-                        !isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
-                ),
-            }));
-        }
+                exportDefinitions: updatedExportDefinitions,
+            };
+        });
     };
 
     const onWidgetAttachmentsChange = (formats: WidgetAttachmentType[]): void => {
         invariant(isWidget, "Widget or insight is missing in scheduling dialog context.");
-        if (formats.length > 0) {
-            // Create export definitions for all selected formats
-            const exportDefinitions = formats.map((format) =>
+        setEditedAutomation((s) => {
+            const currentExportDefinitions = s.exportDefinitions || [];
+
+            const currentWidgetExportDefinitions = currentExportDefinitions.filter((exportDefinition) =>
+                isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
+            );
+
+            const currentFormats = currentWidgetExportDefinitions.map(
+                (exportDefinition) => exportDefinition.requestPayload.format,
+            );
+
+            const formatsToKeep = currentFormats.filter((format) =>
+                formats.includes(format as WidgetAttachmentType),
+            );
+            const formatsToAdd = formats.filter((format) => !currentFormats.includes(format));
+
+            const keptExportDefinitions = currentWidgetExportDefinitions.filter((exportDefinition) =>
+                formatsToKeep.includes(exportDefinition.requestPayload.format),
+            );
+
+            const newExportDefinitions = formatsToAdd.map((format) =>
                 newWidgetExportDefinitionMetadataObjectDefinition({
                     insight,
                     widget,
@@ -299,17 +329,14 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                     dashboardFilters: effectiveDashboardFilters,
                 }),
             );
-            setEditedAutomation((s) => ({
+
+            const updatedExportDefinitions = [...keptExportDefinitions, ...newExportDefinitions];
+
+            return {
                 ...s,
-                exportDefinitions,
-            }));
-        } else {
-            // Remove all widget export definitions
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: [],
-            }));
-        }
+                exportDefinitions: updatedExportDefinitions,
+            };
+        });
     };
 
     const onDashboardAttachmentsChangeOld = (

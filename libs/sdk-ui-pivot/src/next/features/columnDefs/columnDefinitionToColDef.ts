@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { assertNever } from "@gooddata/sdk-model";
-import { ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { DataViewFacade, ExplicitDrill, ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { AgGridColumnDef } from "../../types/agGrid.js";
 import { createMeasureColumnDef } from "./createMeasureColumnDef.js";
 import { createAttributeColumnDef } from "./createAttributeColumnDef.js";
@@ -19,12 +19,14 @@ export function columnDefinitionToColDef(
     columnDefinition: ITableColumnDefinition,
     isTransposed: boolean,
     columnHeadersPosition: ColumnHeadersPosition,
+    drillableItems?: ExplicitDrill[],
+    dv?: DataViewFacade,
 ): AgGridColumnDef {
     const colId = columnDefinitionToColId(columnDefinition, isTransposed, columnHeadersPosition);
 
     switch (columnDefinition.type) {
         case "attribute":
-            return createAttributeColumnDef(colId, columnDefinition);
+            return createAttributeColumnDef(colId, columnDefinition, drillableItems, dv);
         case "value":
         case "subtotal":
         case "grandTotal": {
@@ -42,7 +44,7 @@ export function columnDefinitionToColDef(
 
             if (measureScope) {
                 const measureDescriptor = measureScope.descriptor;
-                return createMeasureColumnDef(colId, columnDefinition, measureDescriptor);
+                return createMeasureColumnDef(colId, columnDefinition, measureDescriptor, drillableItems, dv);
             } else if (attributeTotalScope) {
                 return createAttributeTotalColumnDefWithTransposition(
                     colId,

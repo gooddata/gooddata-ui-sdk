@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
-import { themeBalham } from "ag-grid-enterprise";
 import merge from "lodash/merge.js";
 import { AgGridProps } from "../types/agGrid.js";
+import { e } from "../features/styling/bem.js";
 
 /**
  * Separator used for pivoted values.
@@ -17,10 +17,6 @@ export const AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR = "|";
  * @internal
  */
 export const AG_GRID_DEFAULT_CACHE_BLOCK_SIZE = 100;
-
-const THEME_PROPS: AgGridProps = {
-    theme: themeBalham,
-};
 
 const ROW_GROUPING_PROPS: AgGridProps = {
     groupDisplayType: "multipleColumns",
@@ -59,7 +55,7 @@ const SORTING_PROPS: AgGridProps = {
 
 const STYLING_PROPS: AgGridProps = {
     defaultColGroupDef: {
-        headerClass: "gd-header-cell",
+        headerClass: e("header-cell"),
     },
 };
 
@@ -68,7 +64,6 @@ const STYLING_PROPS: AgGridProps = {
  */
 export const AG_GRID_DEFAULT_PROPS: AgGridProps = merge(
     {},
-    THEME_PROPS,
     ROW_GROUPING_PROPS,
     SIZING_PROPS,
     CELL_SELECTION_PROPS,

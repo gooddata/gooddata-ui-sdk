@@ -950,7 +950,7 @@ export const selectEnableRichTextDynamicReferences: DashboardSelector<boolean> =
 export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableDashboardFiltersApplyModes ?? false;
+        return state.settings?.enableDashboardFiltersApplyModes ?? true;
     },
 );
 
