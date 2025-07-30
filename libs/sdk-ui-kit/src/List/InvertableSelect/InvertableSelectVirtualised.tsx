@@ -316,6 +316,10 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         [searchString],
     );
 
+    const shouldLoadNextPage = useCallback((lastItemIndex: number, itemsCount: number) => {
+        return lastItemIndex >= itemsCount - 1;
+    }, []);
+
     return (
         <div className="gd-invertable-select">
             <div className="gd-invertable-select-search-bar" onKeyDown={handleSearchBarKeyDown}>
@@ -365,6 +369,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                                 scrollToItem={focusedItem}
                                                 scrollToItemKeyExtractor={getItemKey}
                                                 tabIndex={-1}
+                                                shouldLoadNextPage={shouldLoadNextPage}
                                             >
                                                 {itemRenderer}
                                             </UiPagedVirtualList>

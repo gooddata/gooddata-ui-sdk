@@ -19,6 +19,8 @@ import { useColumnSizingProps } from "./features/columnSizing/useColumnSizingPro
 import { useTextWrappingProps } from "./features/textWrapping/useTextWrappingProps.js";
 import { PivotTablePropsProvider, usePivotTableProps } from "./context/PivotTablePropsContext.js";
 import { dataViewToColumnDefs } from "./features/dataLoading/dataViewToColumnDefs.js";
+import { useThemeProps } from "./features/styling/useThemeProps.js";
+import { b } from "./features/styling/bem.js";
 
 /**
  * Simple wrapper for the core pivot table component that creates execution based on provided props.
@@ -93,6 +95,7 @@ function RenderAgGrid(initialExecutionData: IInitialExecutionData) {
         initialExecutionData,
         columnDefinitionByColId,
     );
+    const enhanceWithTheme = useThemeProps();
 
     const agGridReactProps = useMemo(
         () =>
@@ -102,6 +105,7 @@ function RenderAgGrid(initialExecutionData: IInitialExecutionData) {
                 enhanceWithSorting,
                 enhanceWithDrilling,
                 enhanceWithTextWrapping,
+                enhanceWithTheme,
             )(AG_GRID_DEFAULT_PROPS),
         [
             enhanceWithServerSideRowModel,
@@ -109,11 +113,12 @@ function RenderAgGrid(initialExecutionData: IInitialExecutionData) {
             enhanceWithSorting,
             enhanceWithDrilling,
             enhanceWithTextWrapping,
+            enhanceWithTheme,
         ],
     );
 
     return (
-        <div className="gd-pivot-table-next">
+        <div className={b()}>
             <AgGridReact {...agGridReactProps} columnDefs={columnDefs} pivotMode={isPivoted} />
         </div>
     );

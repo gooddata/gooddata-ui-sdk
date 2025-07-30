@@ -1,7 +1,9 @@
 // (C) 2025 GoodData Corporation
-import { ITableAttributeColumnDefinition } from "@gooddata/sdk-ui";
+import { DataViewFacade, ExplicitDrill, ITableAttributeColumnDefinition } from "@gooddata/sdk-ui";
 import { ATTRIBUTE_EMPTY_VALUE } from "../../constants/internal.js";
 import { AgGridCellRendererParams, AgGridColumnDef } from "../../types/agGrid.js";
+import { getCellClassName } from "../styling/cell.js";
+import { e } from "../styling/bem.js";
 
 /**
  * @internal
@@ -9,6 +11,8 @@ import { AgGridCellRendererParams, AgGridColumnDef } from "../../types/agGrid.js
 export function createAttributeColumnDef(
     colId: string,
     columnDefinition: ITableAttributeColumnDefinition,
+    drillableItems?: ExplicitDrill[],
+    dv?: DataViewFacade,
 ): AgGridColumnDef {
     const { attributeDescriptor } = columnDefinition;
     const attributeLocalIdentifier = attributeDescriptor.attributeHeader.localIdentifier;
@@ -17,6 +21,10 @@ export function createAttributeColumnDef(
         colId,
         field: colId,
         headerName: attributeDescriptor.attributeHeader.formOf.name,
+        headerClass: e("header-cell"),
+        cellClass: (params) => {
+            return getCellClassName(params, drillableItems, dv);
+        },
         valueGetter: (params) => {
             return params.data?.[colId];
         },

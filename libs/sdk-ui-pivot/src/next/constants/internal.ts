@@ -14,7 +14,7 @@ export const ATTRIBUTE_EMPTY_VALUE = "(empty value)";
 /**
  * @internal
  */
-export const METRIC_EMPTY_VALUE = "-";
+export const METRIC_EMPTY_VALUE = "–";
 
 /**
  * @internal

@@ -141,33 +141,3 @@ jobs:
           RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           PRERELEASE: ${{ needs.setup-params.outputs.prerelease-tag }}
-
-  notify-gdc-ui:
-    if: ${{  needs.setup-params.outputs.prerelease-id == 'alpha' }}
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-small
-    needs: [bump-version, publish-prerelease,setup-params]
-    steps:
-      - name: Set user
-        run: |
-          if [[ -z "${{ inputs.author-name }}" ]]; then
-            echo "UPD_AUTHOR=${{ github.actor }}" >> $GITHUB_ENV
-          else
-            echo "UPD_AUTHOR=${{ inputs.author-name }}" >> $GITHUB_ENV
-          fi
-      - name: Wait for NPM registry
-        run: |
-          #wait for npm registry to be updated
-          sleep 30
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
-          repository: gooddata/gdc-ui
-          event-type: public-sdk-update
-          client-payload: |
-            {
-              "githubuser": "${{ env.UPD_AUTHOR }}",
-              "version": "${{ needs.bump-version.outputs.version }}"
-            }

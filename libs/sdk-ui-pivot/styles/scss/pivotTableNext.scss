@@ -5,16 +5,19 @@
 
 .gd-pivot-table-next {
     @include ag.ag-grid-theme-variables;
+    $root: &;
 
     width: 100%;
     height: 100%;
 
-    .gd-header-cell {
+    &__header-cell {
         border: none;
         border-top: gd.$cell-border;
         border-top-color: gd.$cell-border-color;
         border-left: gd.$cell-border;
         border-left-color: gd.$cell-border-color;
+        align-items: flex-end;
+        padding-bottom: 2px;
 
         &--attribute {
             text-align: left;
@@ -23,9 +26,21 @@
         &--metric {
             text-align: right;
         }
+
+        &.ag-column-first {
+            border-left: none;
+            border-top: none;
+        }
     }
 
-    .gd-cell {
+    // First header row
+    .ag-header-row:first-child {
+        #{$root}__header-cell {
+            border-top: none;
+        }
+    }
+
+    &__cell {
         border: none;
         border-top: gd.$cell-border;
         border-top-color: gd.$cell-border-color;
@@ -49,13 +64,20 @@
         &--metric {
             text-align: right;
         }
+
+        &--null {
+            color: gd.$null-value-color;
+        }
+
+        &.ag-column-first {
+            border-left: none;
+        }
     }
 
-    .ag-row-first .gd-cell {
-        border-top: none;
-    }
-
-    .ag-column-first.gd-cell {
-        border-left: none;
+    // First cell row
+    .ag-row-first {
+        #{$root}__cell {
+            border-top: none;
+        }
     }
 }
