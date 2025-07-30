@@ -16,6 +16,7 @@ import { IMappingHeader } from '@gooddata/sdk-ui';
 import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
+import { ReactElement } from 'react';
 import { Rect } from 'react-measure';
 
 // @internal (undocumented)
@@ -236,9 +237,9 @@ export interface IHeadlinePaginationProps {
         previousAriaLabel?: string;
     };
     // (undocumented)
-    renderSecondaryItem: () => JSX.Element;
+    renderSecondaryItem: () => ReactElement;
     // (undocumented)
-    renderTertiaryItem: () => JSX.Element;
+    renderTertiaryItem: () => ReactElement;
 }
 
 // @internal (undocumented)
@@ -373,7 +374,7 @@ export interface IPopUpLegendProps {
     // (undocumented)
     containerId: string;
     // (undocumented)
-    customComponent?: JSX.Element | null;
+    customComponent?: ReactElement | null;
     // (undocumented)
     customComponentName?: string;
     // (undocumented)
@@ -430,7 +431,7 @@ export interface IStaticLegendProps {
     // (undocumented)
     containerHeight: number;
     // (undocumented)
-    customComponent?: JSX.Element | null;
+    customComponent?: ReactElement | null;
     // (undocumented)
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     // (undocumented)

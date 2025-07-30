@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import React, { PureComponent } from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { PureComponent, ReactElement } from "react";
 import { Overlay } from "../Overlay/index.js";
 import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
 import { IConfirmDialogBaseProps } from "./typings.js";
@@ -8,7 +8,7 @@ import { IConfirmDialogBaseProps } from "./typings.js";
  * @internal
  */
 export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const { containerClassName, ...dialogProps } = this.props;
 
         return (

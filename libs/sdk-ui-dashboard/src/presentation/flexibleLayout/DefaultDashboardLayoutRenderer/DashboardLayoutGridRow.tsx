@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { RenderMode } from "../../../types.js";
 import {
@@ -35,7 +35,7 @@ export interface DashboardLayoutGridRowProps<TWidget> {
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) =>
     serializeLayoutItemPath(item.index());
 
-export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowProps<TWidget>): JSX.Element {
+export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowProps<TWidget>): ReactElement {
     const {
         section,
         itemKeyGetter = defaultItemKeyGetter,

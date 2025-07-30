@@ -27,7 +27,7 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl tr" }];
 /**
  * @alpha
  */
-export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null => {
+export const DefaultMenuButton = (props: IMenuButtonProps): ReactElement | null => {
     const { menuItems } = props;
     const [isOpen, setIsOpen] = useState(false);
     const [autofocusSubmenu, setAutofocusSubmenu] = useState(false);

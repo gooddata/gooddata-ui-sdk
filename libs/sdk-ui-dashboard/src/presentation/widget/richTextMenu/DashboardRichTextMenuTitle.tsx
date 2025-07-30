@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { ReactElement, useMemo } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import { IDashboardRichTextMenuTitleProps } from "./types.js";
@@ -7,7 +7,7 @@ import { IDashboardRichTextMenuTitleProps } from "./types.js";
 /**
  * @internal
  */
-export const DashboardRichTextMenuTitle = (props: IDashboardRichTextMenuTitleProps): JSX.Element => {
+export const DashboardRichTextMenuTitle = (props: IDashboardRichTextMenuTitleProps): ReactElement => {
     const { widget } = props;
     const { RichTextMenuTitleComponentProvider } = useDashboardComponentsContext();
     const RichTextMenuTitleComponent = useMemo(

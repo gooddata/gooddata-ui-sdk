@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { Component } from "react";
+import React, { Component, ReactElement } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -112,7 +112,7 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
         return this.props.tabs.map(this.renderTab, this);
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const classNames = cx(this.props.className, {
             "gd-tabs": true,
             small: true,

@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import {
     ObjRef,
     IInsight,
@@ -97,7 +97,7 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
     return keyGetterProps.item.index().toString();
 };
 
-const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
+const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): ReactElement => {
     const { onFiltersChange, onDrill, onError } = props;
 
     const layout = useDashboardSelector(selectLayout);
@@ -185,7 +185,7 @@ const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element
 /**
  * @alpha
  */
-export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
+export const DefaultDashboardLayout = (props: IDashboardLayoutProps): ReactElement => {
     // this is where legacy fluid layout or new flexible layout is selected as a dashboard renderer
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     if (isFlexibleLayoutEnabled) {

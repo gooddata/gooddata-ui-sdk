@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, IMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
 import {
@@ -83,7 +83,7 @@ export const Headline = (props: IHeadlineProps) => {
     return <WrappedHeadline {...props} {...{ primaryMeasure, secondaryMeasure, filters }} />;
 };
 
-export function RenderHeadline(props: IHeadlineProps): JSX.Element {
+export function RenderHeadline(props: IHeadlineProps): ReactElement {
     const { backend, workspace, primaryMeasure } = props;
     invariant(primaryMeasure, "The property primaryMeasure must be specified.");
 

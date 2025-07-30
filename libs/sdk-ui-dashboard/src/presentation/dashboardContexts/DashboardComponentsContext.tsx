@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, ReactElement } from "react";
 import {
     ErrorComponent,
     IErrorProps,
@@ -190,7 +190,7 @@ export interface IDashboardComponentsProviderProps extends IDashboardComponentsC
 /**
  * @internal
  */
-export function DashboardComponentsProvider(props: IDashboardComponentsProviderProps): JSX.Element {
+export function DashboardComponentsProvider(props: IDashboardComponentsProviderProps): ReactElement {
     const { children, ...components } = props;
     return (
         <DashboardComponentsContext.Provider value={components}>

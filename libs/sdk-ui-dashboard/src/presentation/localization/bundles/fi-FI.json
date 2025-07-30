@@ -787,5 +787,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Tiedot (.xlsx)",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Liukukansi (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Varoitus:</strong> Ajastetut viennit edellyttävät vähintään yhtä liitettä — valitse vaihtoehto jatkaaksesi.",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "Virhe: Liitetiedostoja ei ole valittu — valitse vähintään yksi liite viennin ajoittamiseksi."
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Virhe: Liitetiedostoja ei ole valittu — valitse vähintään yksi liite viennin ajoittamiseksi.",
+    "filterBar.invalidFilterSelection": "Ota muutokset käyttöön valitsemalla kelvolliset arvot näille suodattimille: {names}"
 }

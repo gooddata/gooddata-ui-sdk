@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import React, { useCallback, ReactElement } from "react";
 import cx from "classnames";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { Button } from "../Button/Button.js";
@@ -13,10 +13,10 @@ const defaultTooltipAlignPoints = [{ align: "cl cr" }, { align: "cr cl" }];
  * @internal
  */
 export interface IAddButtonProps {
-    title: JSX.Element;
+    title: ReactElement;
     isDisabled?: boolean;
     onClick?: () => void;
-    tooltip?: JSX.Element;
+    tooltip?: ReactElement;
     tooltipAlignPoints?: IAlignPoint[];
     className?: string;
 }

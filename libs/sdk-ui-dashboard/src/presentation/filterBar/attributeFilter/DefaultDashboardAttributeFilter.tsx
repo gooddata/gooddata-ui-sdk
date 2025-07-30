@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ReactNode, useCallback, useMemo, useState } from "react";
+import React, { ReactNode, useCallback, useMemo, useState, ReactElement } from "react";
 import { useIntl } from "react-intl";
 import {
     AttributeFilterButton,
@@ -68,7 +68,7 @@ import { useDependentDateFilters } from "./useDependentDateFilters.js";
  */
 export const DefaultDashboardAttributeFilter = (
     props: IDashboardAttributeFilterProps,
-): JSX.Element | null => {
+): ReactElement | null => {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     // Wait for batch preload of the required attribute filter data (labels and datasets), otherwise, each filter will spawn its own request.
     const filtersPreloaded = useDashboardSelector(selectPreloadedAttributesWithReferences);
@@ -81,7 +81,7 @@ export const DefaultDashboardAttributeFilter = (
     return <DefaultDashboardAttributeFilterInner {...props} />;
 };
 
-const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterProps): JSX.Element | null => {
+const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterProps): ReactElement | null => {
     const {
         filter,
         workingFilter,

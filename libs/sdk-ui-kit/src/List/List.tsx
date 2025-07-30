@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { Table, Column, Cell } from "fixed-data-table-2";
 import cx from "classnames";
 
@@ -29,7 +29,7 @@ export interface IListProps<T> {
     itemHeight?: number;
     maxVisibleItemsCount?: number;
     itemHeightGetter?: (index: number) => number;
-    renderItem: (props: IRenderListItemProps<T>) => JSX.Element;
+    renderItem: (props: IRenderListItemProps<T>) => ReactElement;
 
     scrollToItem?: T;
     scrollDirection?: -1 | 1;
@@ -58,7 +58,7 @@ export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex
 /**
  * @internal
  */
-export function List<T>(props: IListProps<T>): JSX.Element {
+export function List<T>(props: IListProps<T>): ReactElement {
     const {
         className = "",
         compensateBorder = true,

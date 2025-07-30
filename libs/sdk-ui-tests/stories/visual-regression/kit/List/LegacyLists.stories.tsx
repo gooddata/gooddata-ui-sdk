@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component } from "react";
+import React, { Component, ReactElement } from "react";
 import noop from "lodash/noop.js";
 import times from "lodash/times.js";
 import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-kit";
@@ -97,7 +97,7 @@ class LegacyListExamples extends Component<unknown, ILegacyListExamplesState> {
         return <LegacySingleSelectList {...defaultListProps} selection={items[0]} />;
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         return (
             <div className="library-component screenshot-target">
                 <div className="list-item-list-example">

@@ -2,7 +2,7 @@
 import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
-import React, { useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import {
     Container,
     ScreenClass,
@@ -48,7 +48,7 @@ const defaultSectionKeyGetter: IDashboardLayoutSectionKeyGetter<unknown> = ({ se
  *
  * @alpha
  */
-export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWidget>): JSX.Element {
+export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWidget>): ReactElement {
     const {
         layout,
         sectionKeyGetter = defaultSectionKeyGetter,

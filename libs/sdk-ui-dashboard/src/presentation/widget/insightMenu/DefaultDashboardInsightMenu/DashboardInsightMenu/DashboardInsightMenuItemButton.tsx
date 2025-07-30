@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Item } from "@gooddata/sdk-ui-kit";
 import { IInsightMenuItemButton } from "../../types.js";
@@ -31,7 +31,7 @@ export const DashboardInsightMenuItemButton: React.FC<
 };
 
 function renderButtonWithTooltip(
-    button: JSX.Element,
+    button: ReactElement,
     id: string,
     disabled?: boolean,
     tooltip?: string | ReactNode,

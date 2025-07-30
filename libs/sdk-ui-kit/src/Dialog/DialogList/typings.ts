@@ -1,5 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
+import { ReactElement } from "react";
+
 /**
  * @internal
  */
@@ -13,12 +15,12 @@ export interface IDialogListItemBase {
  */
 export interface IDialogListItem extends IDialogListItemBase {
     subtitle?: string;
-    icon?: JSX.Element;
+    icon?: ReactElement;
     isDisabled?: boolean;
     isClickable?: boolean;
     isDeletable?: boolean;
     deleteTooltipText?: string;
-    action?: JSX.Element;
+    action?: ReactElement;
 }
 
 /**
@@ -45,7 +47,7 @@ export interface IDialogListProps<T extends IDialogListItem = IDialogListItem> {
     items: Array<T>;
     isLoading?: boolean;
     className?: string;
-    emptyMessageElement?: JSX.Element;
+    emptyMessageElement?: ReactElement;
     itemComponent?: DialogListItemComponent<T>;
     itemClassName?: string;
     onItemClick?: (item: T) => void;

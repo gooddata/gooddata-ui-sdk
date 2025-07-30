@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 import { ISeparators } from "@gooddata/sdk-ui";
 
@@ -19,7 +19,7 @@ const ComparisonInput = ({
     onValueChange,
     onEnterKeyPress,
     separators,
-}: IComparisonInputProps): JSX.Element => {
+}: IComparisonInputProps): ReactElement => {
     return (
         <InputWithNumberFormat
             className="s-mvf-comparison-value-input"

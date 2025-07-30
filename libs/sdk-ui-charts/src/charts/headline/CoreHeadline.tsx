@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import {
     newErrorMapping,
     IErrorDescriptors,
@@ -34,7 +34,7 @@ export class HeadlineStateless extends React.Component<CoreHeadlineProps> {
         this.errorMap = newErrorMapping(props.intl);
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const { dataView, error, isLoading } = this.props;
 
         const ErrorComponent = this.props.ErrorComponent;
@@ -58,7 +58,7 @@ export class HeadlineStateless extends React.Component<CoreHeadlineProps> {
         return this.renderVisualization();
     }
 
-    protected renderVisualization(): JSX.Element {
+    protected renderVisualization(): ReactElement {
         const {
             afterRender,
             drillableItems,

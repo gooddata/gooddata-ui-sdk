@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 
-export const SmallScreenDecorator = (components: JSX.Element): JSX.Element => {
+export const SmallScreenDecorator = (components: ReactElement): ReactElement => {
     const style: React.CSSProperties = {
         width: 600,
         height: 400,

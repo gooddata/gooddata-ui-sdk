@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import React, { ReactElement } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition } from "@gooddata/sdk-model";
@@ -31,7 +31,7 @@ export class LocalizedUnknownVisualizationClass extends React.Component<IIntlLoc
         this.errorDetails = newErrorMapping(props.intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN];
     }
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const { message, description } = this.errorDetails;
         return <ErrorComponent message={message} description={description} />;
     }

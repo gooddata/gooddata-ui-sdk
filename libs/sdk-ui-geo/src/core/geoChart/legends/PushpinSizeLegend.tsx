@@ -1,5 +1,5 @@
-// (C) 2020-2023 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import cx from "classnames";
 import { calculateAverage } from "../helpers/geoChart/common.js";
 import { formatLegendLabel } from "@gooddata/sdk-ui-vis-commons";
@@ -13,7 +13,7 @@ export interface IPushpinSizeLegendProps {
     showMiddleCircle: boolean;
 }
 
-export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): JSX.Element | null {
+export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): ReactElement | null {
     const { sizes = [], format, numericSymbols = [], measureName, isSmall, showMiddleCircle } = props;
     const sizeData = getSizeData(sizes);
 

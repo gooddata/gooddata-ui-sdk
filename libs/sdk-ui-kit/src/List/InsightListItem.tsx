@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, createRef } from "react";
+import React, { Component, ReactElement, createRef } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
@@ -83,7 +83,7 @@ export const InsightListItemTypeIcon: React.FC<{ type: string }> = ({ type }) =>
 export class InsightListItemCore extends Component<IInsightListItemProps & WrappedComponentProps> {
     private shortenedTextRef = createRef<ShortenedText>();
 
-    public render(): JSX.Element {
+    public render(): ReactElement {
         const {
             title,
             description,

@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { ReactElement, useMemo } from "react";
 import { IDataView, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     isWidget,
@@ -104,7 +104,7 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
     parentLayoutPath,
     rowIndex,
     exportData,
-}: IDashboardWidgetProps): JSX.Element {
+}: IDashboardWidgetProps): ReactElement {
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
 
     if (!isDashboardWidget(widget)) {

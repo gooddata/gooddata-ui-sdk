@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { useIntl } from "react-intl";
@@ -9,7 +9,7 @@ import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 
 export const AS_TABLE_MENU_BUTTON_ID = "AS_TABLE_MENU_BUTTON_ID";
 
-export const ShowAsTableButton = (props: IShowAsTableButtonProps): JSX.Element | null => {
+export const ShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement | null => {
     const { widget, onClick, isWidgetAsTable } = props;
     const intl = useIntl();
 

@@ -1,5 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { ReactElement, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 
@@ -17,13 +17,13 @@ export interface IInvertableSelectItemRenderOnlyProps {
  */
 export interface IInvertableSelectItem {
     title?: string;
-    icon?: JSX.Element;
+    icon?: ReactElement;
     isSelected?: boolean;
     onMouseOut?: () => void;
     onMouseOver?: () => void;
     onOnly?: () => void;
     onClick?: () => void;
-    renderOnly?: (props: IInvertableSelectItemRenderOnlyProps) => JSX.Element;
+    renderOnly?: (props: IInvertableSelectItemRenderOnlyProps) => ReactElement;
     isDisabled?: boolean;
 }
 

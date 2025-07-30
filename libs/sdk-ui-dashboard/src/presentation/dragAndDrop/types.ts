@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
@@ -457,7 +457,7 @@ export type CustomDashboardInsightListItemComponent =
  * @internal
  */
 export type IWrapCreatePanelItemWithDragProps = {
-    children: JSX.Element;
+    children: ReactElement;
     dragItem: DraggableItem;
     hideDefaultPreview?: boolean;
     disabled?: boolean;
@@ -468,7 +468,7 @@ export type IWrapCreatePanelItemWithDragProps = {
  * @internal
  */
 export type IWrapCreatePanelItemWithDragInnerProps = {
-    children: JSX.Element;
+    children: ReactElement;
     dragItem: DraggableItem;
     hideDefaultPreview?: boolean;
     disabled?: boolean;
@@ -486,7 +486,7 @@ export type IWrapCreatePanelItemWithDragComponent = React.ComponentType<IWrapCre
  * @internal
  */
 export interface IWrapInsightListItemWithDragProps {
-    children: JSX.Element;
+    children: ReactElement;
     insight: IInsight;
     onDragStart?: (item: DraggableItem) => void;
 }

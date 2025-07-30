@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { createRef } from "react";
+import React, { ReactElement, createRef } from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
 
@@ -559,7 +559,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         this.updateListeners("remove", props);
     };
 
-    private renderMask = (): false | JSX.Element => {
+    private renderMask = (): false | ReactElement => {
         const styles = {
             zIndex: this.context ? this.context.getZIndex(this.id) : null,
         };

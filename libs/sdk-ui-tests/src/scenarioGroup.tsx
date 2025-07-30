@@ -292,7 +292,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
  * Start defining scenarios for a component that is realized using the provided React component..
  *
  * @param chart - chart name
- * @param component - chart renderer, a function that transforms chart props to a JSX.Element
+ * @param component - chart renderer, a function that transforms chart props to a ReactElement
  */
 export function scenariosFor<T extends VisProps>(
     chart: string,

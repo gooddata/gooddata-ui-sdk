@@ -1,5 +1,5 @@
-// (C) 2007-2021 GoodData Corporation
-import React, { PureComponent } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { PureComponent, ReactElement } from "react";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -70,7 +70,7 @@ export class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectL
         this.props.onOnly(this.props.source);
     };
 
-    protected renderOnly(): JSX.Element {
+    protected renderOnly(): ReactElement {
         return (
             <span className="gd-list-item-only" onClick={this.handleOnly}>
                 <FormattedMessage id="gs.list.only" />
@@ -78,7 +78,7 @@ export class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectL
         );
     }
 
-    render(): JSX.Element {
+    render(): ReactElement {
         return (
             <div
                 className={this.getClassNames()}

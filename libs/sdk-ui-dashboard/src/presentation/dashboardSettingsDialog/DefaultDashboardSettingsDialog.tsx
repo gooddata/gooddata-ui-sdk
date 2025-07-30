@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, ReactElement } from "react";
 import { useIntl, FormattedMessage } from "react-intl";
 import {
     Bubble,
@@ -29,7 +29,7 @@ import { useDialogData } from "./useDialogData.js";
 /**
  * @alpha
  */
-export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogProps): JSX.Element | null => {
+export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogProps): ReactElement | null => {
     const { isVisible, onApply, onCancel /*, onError*/ } = props;
 
     const intl = useIntl();

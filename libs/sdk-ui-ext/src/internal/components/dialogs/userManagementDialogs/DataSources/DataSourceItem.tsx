@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import React, { ReactElement } from "react";
 import cx from "classnames";
 import { Icon } from "@gooddata/sdk-ui-kit";
 
@@ -24,7 +24,7 @@ interface IGranularGranteeUserGroupItemProps {
     subjectType: DataSourcePermissionSubject;
     onChange: (grantee: IGrantedDataSource) => void;
     onDelete: (grantee: IGrantedDataSource) => void;
-    renderDataSourceIcon: (dataSource: IGrantedDataSource) => JSX.Element;
+    renderDataSourceIcon: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
 export const DataSourceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({

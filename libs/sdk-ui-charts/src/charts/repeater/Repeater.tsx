@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import React, { ReactElement } from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IAttribute, IAttributeOrMeasure, IBucket, INullableFilter } from "@gooddata/sdk-model";
 import {
@@ -76,7 +76,7 @@ const WrappedRepeater = withContexts(RenderRepeater);
 /**
  * @beta
  */
-export const Repeater = (props: IRepeaterProps): JSX.Element => {
+export const Repeater = (props: IRepeaterProps): ReactElement => {
     const [attribute, columns, viewBy, filters] = useResolveValuesWithPlaceholders(
         [props.attribute, props.columns, props.viewBy, props.filters],
         props.placeholdersResolutionContext,
@@ -85,7 +85,7 @@ export const Repeater = (props: IRepeaterProps): JSX.Element => {
     return <WrappedRepeater {...props} {...{ attribute, columns, viewBy, filters }} />;
 };
 
-export function RenderRepeater(props: IRepeaterProps): JSX.Element {
+export function RenderRepeater(props: IRepeaterProps): ReactElement {
     return (
         <IntlWrapper locale={props.locale}>
             <IntlTranslationsProvider>

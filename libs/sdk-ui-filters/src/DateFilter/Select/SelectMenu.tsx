@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import cx from "classnames";
 import { ControllerStateAndHelpers } from "downshift";
 import { SelectOption } from "./SelectOption.js";
@@ -27,7 +27,7 @@ export const SelectMenu = <V extends {}>({
     getMenuProps,
     className,
     optionClassName,
-}: ISelectMenuProps<V>): JSX.Element => {
+}: ISelectMenuProps<V>): ReactElement => {
     const selectableOptions = getSelectableItems(items);
 
     return (

@@ -787,5 +787,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Gegevens (.xlsx)",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Slide Deck (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Waarschuwing:</strong> Voor geplande export is ten minste één bijlage vereist - selecteer een optie om door te gaan.",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "Fout: Geen bijlagen geselecteerd - selecteer ten minste één bijlage om een export te plannen."
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Fout: Geen bijlagen geselecteerd - selecteer ten minste één bijlage om een export te plannen.",
+    "filterBar.invalidFilterSelection": "Selecteer geldige waarden voor deze filters om wijzigingen toe te passen: {names}"
 }

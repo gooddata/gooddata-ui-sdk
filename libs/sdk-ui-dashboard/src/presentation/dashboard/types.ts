@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ComponentType } from "react";
+import React, { ComponentType, ReactElement } from "react";
 import { ReactReduxContextValue } from "react-redux";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IDashboard, ITheme, IWorkspacePermissions } from "@gooddata/sdk-model";
@@ -779,7 +779,7 @@ export interface IDashboardExtensionProps
  * @public
  */
 export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensionProps {
-    children?: JSX.Element | ((dashboard: any) => JSX.Element);
+    children?: ReactElement | ((dashboard: any) => ReactElement);
     /**
      * Override the persisted dashboard. This is mainly useful for internal use cases.
      * @internal

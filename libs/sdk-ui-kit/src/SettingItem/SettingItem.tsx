@@ -1,6 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import React, { ReactElement } from "react";
 import cx from "classnames";
 
 import { ActionType, ISettingItem } from "./typings.js";
@@ -17,7 +17,7 @@ const getActionElement = (
     value: string | boolean,
     isDisableAction: boolean,
     onActionCallback: () => void,
-): JSX.Element => {
+): ReactElement => {
     switch (actionType) {
         case "LinkButton":
             return (

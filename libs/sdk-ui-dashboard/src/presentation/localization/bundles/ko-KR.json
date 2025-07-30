@@ -788,5 +788,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "데이터(.xlsx)",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "슬라이드 데크(.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>경고:</strong> 예약된 내보내기에는 최소 하나의 첨부 파일이 필요합니다. 계속하려면 옵션을 선택하세요.",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "오류: 첨부 파일이 선택되지 않았습니다 — 내보내기를 예약하려면 적어도 하나의 첨부 파일을 선택하십시오."
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "오류: 첨부 파일이 선택되지 않았습니다 — 내보내기를 예약하려면 적어도 하나의 첨부 파일을 선택하십시오.",
+    "filterBar.invalidFilterSelection": "변경 사항을 적용하려면, 이 필터에 대해 유효한 값을 선택하십시오: {names}"
 }

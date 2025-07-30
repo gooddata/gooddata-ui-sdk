@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import noop from "lodash/noop.js";
 import { ContentRect } from "react-measure";
 import {
@@ -24,7 +24,7 @@ export interface IPushpinCategoryLegendProps {
     locale?: string;
     position?: PositionType;
     responsive?: boolean | "autoPositionWithPopup";
-    customComponent?: JSX.Element | null;
+    customComponent?: ReactElement | null;
     customComponentName?: string;
     sizeLegendName?: string;
     maxRows?: number;
@@ -34,7 +34,7 @@ export interface IPushpinCategoryLegendProps {
     onItemClick?(item: IPushpinCategoryLegendItem): void;
 }
 
-export default function PushpinCategoryLegend(props: IPushpinCategoryLegendProps): JSX.Element {
+export default function PushpinCategoryLegend(props: IPushpinCategoryLegendProps): ReactElement {
     const { contentRect, hasSizeLegend, isFluidLegend, renderPopUp, isSizeLegendVisible = true } = props;
 
     if (renderPopUp) {
@@ -53,7 +53,7 @@ export default function PushpinCategoryLegend(props: IPushpinCategoryLegendProps
 function renderFluidCategoryLegend(
     props: IPushpinCategoryLegendProps,
     contentRect: ContentRect,
-): JSX.Element {
+): ReactElement {
     const { categoryItems, onItemClick } = props;
 
     const legendProps = {
@@ -71,7 +71,7 @@ function renderStaticCategoryLegend(
     props: IPushpinCategoryLegendProps,
     contentRect: ContentRect,
     hasSizeLegend: boolean,
-): JSX.Element {
+): ReactElement {
     const { categoryItems = [], position = "top", height, format, locale, onItemClick, responsive } = props;
 
     // For Geo Pushpin with position left/right
@@ -98,7 +98,7 @@ function renderStaticCategoryLegend(
     return <StaticLegend {...legendProps} containerHeight={usedHeight} />;
 }
 
-function GeoPopUpLegend(props: IPushpinCategoryLegendProps): JSX.Element {
+function GeoPopUpLegend(props: IPushpinCategoryLegendProps): ReactElement {
     const {
         containerId,
         categoryItems = [],

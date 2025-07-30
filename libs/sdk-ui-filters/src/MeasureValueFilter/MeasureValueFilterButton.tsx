@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import cx from "classnames";
 
 interface IMeasureValueButtonProps {
@@ -8,7 +8,7 @@ interface IMeasureValueButtonProps {
     onClick: () => void;
 }
 
-const DropdownButton = ({ isActive, buttonTitle, onClick }: IMeasureValueButtonProps): JSX.Element => {
+const DropdownButton = ({ isActive, buttonTitle, onClick }: IMeasureValueButtonProps): ReactElement => {
     const className = cx(
         "gd-mvf-dropdown-button",
         "s-mvf-dropdown-button",

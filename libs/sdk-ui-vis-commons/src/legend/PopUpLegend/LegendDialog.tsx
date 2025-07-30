@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import cx from "classnames";
 import {
     ZoomAwareOverlay,
@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints.js";
 
-const LegendDialogWrapper: React.FC<{ children: (isMobile: boolean) => JSX.Element }> = ({ children }) => {
+const LegendDialogWrapper: React.FC<{ children: (isMobile: boolean) => ReactElement }> = ({ children }) => {
     const isMobile = useMediaQuery("<sm");
     return children(isMobile);
 };

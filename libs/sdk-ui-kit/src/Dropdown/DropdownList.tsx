@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useState, useEffect } from "react";
+import React, { ReactElement, useCallback, useState, useEffect } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Input } from "../Form/index.js";
@@ -97,7 +97,7 @@ const defaultNoData = injectIntl(
  *
  * 2. `UiPagedVirtualised` — Preferred implementation that uses our `UiPagedVirtualList` component
  */
-export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
+export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement {
     const {
         title,
         className = "",

@@ -787,5 +787,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Dati (.xlsx)",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Slide Deck (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Attenzione:</strong> Le esportazioni pianificate richiedono almeno un allegato: selezionare un'opzione per continuare.",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "Errore: Nessun allegato selezionato - selezionare almeno un allegato per pianificare un'esportazione."
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Errore: Nessun allegato selezionato - selezionare almeno un allegato per pianificare un'esportazione.",
+    "filterBar.invalidFilterSelection": "Per applicare le modifiche, selezionare i valori validi per questi filtri: {names}"
 }

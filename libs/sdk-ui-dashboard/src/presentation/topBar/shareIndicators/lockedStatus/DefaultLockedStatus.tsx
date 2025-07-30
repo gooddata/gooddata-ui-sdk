@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 
 import { ILockedStatusProps } from "./types.js";
 import {
@@ -13,7 +13,7 @@ import { LockedStatusIndicator } from "./LockedStatusIndicator.js";
  * @alpha
  */
 
-export const DefaultLockedStatus: React.FC<ILockedStatusProps> = (props): JSX.Element | null => {
+export const DefaultLockedStatus: React.FC<ILockedStatusProps> = (props): ReactElement | null => {
     const settings = useDashboardSelector(selectSettings);
     const canManageAnalyticalDashboard = useDashboardSelector(selectCanManageAnalyticalDashboard);
     if (!settings.enableNewAnalyticalDashboardsNavigation || !canManageAnalyticalDashboard) {

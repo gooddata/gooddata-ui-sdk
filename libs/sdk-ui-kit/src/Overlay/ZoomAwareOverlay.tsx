@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import { Overlay } from "./Overlay.js";
 import { ZoomProvider } from "../ZoomContext/ZoomContext.js";
 import { IOverlayProps } from "./typings.js";
@@ -12,7 +12,7 @@ import { IOverlayProps } from "./typings.js";
  */
 export const ZoomAwareOverlay = <T extends HTMLElement = HTMLElement>(
     props: IOverlayProps<T>,
-): JSX.Element => {
+): ReactElement => {
     return (
         <ZoomProvider>
             <Overlay<T> {...props} />

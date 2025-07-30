@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { StaticLegend } from "../StaticLegend.js";
@@ -22,7 +22,7 @@ export interface IPopUpLegendProps {
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     containerId: string;
 
-    customComponent?: JSX.Element | null;
+    customComponent?: ReactElement | null;
     customComponentName?: string;
 }
 

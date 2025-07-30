@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 
 import { HeadlinePaginationRenderer } from "./HeadlinePaginationRenderer.js";
 
@@ -7,8 +7,8 @@ import { HeadlinePaginationRenderer } from "./HeadlinePaginationRenderer.js";
  * @internal
  */
 export interface IHeadlinePaginationProps {
-    renderSecondaryItem: () => JSX.Element;
-    renderTertiaryItem: () => JSX.Element;
+    renderSecondaryItem: () => ReactElement;
+    renderTertiaryItem: () => ReactElement;
     accessibilityConfig?: {
         nextAriaLabel?: string;
         previousAriaLabel?: string;

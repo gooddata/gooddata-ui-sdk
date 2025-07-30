@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 import cx from "classnames";
 import {
     IUiMenuInteractiveItemProps,
@@ -18,7 +18,7 @@ import { useIntl } from "react-intl";
 import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
 
 export type FocusableItemData = {
-    icon?: JSX.Element | string;
+    icon?: ReactElement | string;
     className?: string;
     tooltip?: string | React.ReactNode;
     onClick?: (event: React.MouseEvent) => void;

@@ -1,4 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import { ReactElement } from "react";
 import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import { IRenderListItemProps } from "@gooddata/sdk-ui-kit";
 import { IWrapInsightListItemWithDragComponent } from "../dragAndDrop/types.js";
@@ -11,7 +12,7 @@ export interface IInsightListProps {
     height?: number;
     width?: number;
     searchAutofocus?: boolean;
-    renderItem?: (props: IRenderListItemProps<IInsight>) => JSX.Element;
+    renderItem?: (props: IRenderListItemProps<IInsight>) => ReactElement;
     selectedRef?: ObjRef;
     onSelect?: (insight: IInsight) => void;
     enableDescriptions?: boolean;

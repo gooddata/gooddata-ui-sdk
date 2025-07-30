@@ -1,7 +1,7 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { useIntl } from "react-intl";
-import React, { useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
 import { IGrantedDataSource, DataSourcePermissionSubject } from "../types.js";
@@ -19,7 +19,7 @@ export interface IAddDataSourceProps {
     onSubmit: (workspaces: IGrantedDataSource[]) => void;
     onCancel: () => void;
     onClose: () => void;
-    renderDataSourceIcon: (dataSource: IGrantedDataSource) => JSX.Element;
+    renderDataSourceIcon: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
 export const AddDataSource: React.FC<IAddDataSourceProps> = ({

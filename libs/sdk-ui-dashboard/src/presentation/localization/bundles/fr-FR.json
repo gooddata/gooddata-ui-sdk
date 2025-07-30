@@ -787,5 +787,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Données (.xlsx)",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Diaporama (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Avertissement</strong> : Les exportations programmées nécessitent au moins une pièce jointe - sélectionnez une option pour continuer.",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "Erreur : Aucune pièce jointe sélectionnée - sélectionnez au moins une pièce jointe pour planifier une exportation."
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Erreur : Aucune pièce jointe sélectionnée - sélectionnez au moins une pièce jointe pour planifier une exportation.",
+    "filterBar.invalidFilterSelection": "Pour appliquer les modifications, sélectionnez des valeurs valides pour ces filtres: {names}"
 }

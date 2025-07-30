@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { useMemo, ReactElement } from "react";
 import { ShareDialog, IShareDialogLabels } from "@gooddata/sdk-ui-kit";
 import { IShareDialogProps } from "./types.js";
 import { useIntl } from "react-intl";
@@ -8,7 +8,7 @@ import { useDashboardSelector, selectLocale } from "../../model/index.js";
 /**
  * @alpha
  */
-export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null => {
+export const DefaultShareDialog = (props: IShareDialogProps): ReactElement | null => {
     const {
         workspace,
         backend,

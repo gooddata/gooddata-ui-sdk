@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { ExportDialogProvider } from "../../dialogs/index.js";
 import { TopBar, useTopBarProps } from "../../topBar/index.js";
@@ -54,7 +54,7 @@ const CancelEditDialogWrapper = () => {
 
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body
-export const DashboardHeader = (): JSX.Element => {
+export const DashboardHeader = (): ReactElement => {
     return (
         <>
             <ToastMessages />

@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import React, { ReactElement } from "react";
 import { IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { AddDataSource } from "./DataSources/AddDataSource.js";
@@ -20,7 +20,7 @@ export interface IAddDataSourceToSubjectsProps extends IWithTelemetryProps {
     organizationId: string;
     onSuccess: () => void;
     onClose: () => void;
-    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
 const AddDataSourceToSubjectsComponent: React.FC<IAddDataSourceToSubjectsProps> = ({

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
+import React, { ReactElement } from "react";
 import { ArrowOffsets } from "../Bubble/index.js";
 import { IAlignPoint } from "../typings/positioning.js";
 import { IButtonAccessibilityConfig } from "../Button/typings.js";
@@ -79,10 +79,10 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     hideSubmitButton?: boolean;
     warning?: string | React.ReactElement;
     showProgressIndicator?: boolean;
-    headerLeftButtonRenderer?: () => JSX.Element;
-    footerLeftRenderer?: () => JSX.Element;
+    headerLeftButtonRenderer?: () => ReactElement;
+    footerLeftRenderer?: () => ReactElement;
     dialogHeaderClassName?: string;
-    titleRightIconRenderer?: () => JSX.Element;
+    titleRightIconRenderer?: () => ReactElement;
     headline?: string;
     initialFocus?: React.RefObject<HTMLElement> | string;
     returnFocusTo?: React.RefObject<HTMLElement> | string;

@@ -787,5 +787,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Daten (.xlsx)",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Slide Deck (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Warnung:</strong> Geplante Exporte erfordern mindestens einen Anhang — wählen Sie eine Option, um fortzufahren.",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "Fehler: Keine Anlagen ausgewählt — Wählen Sie mindestens eine Anlage aus, um einen Export zu planen."
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Fehler: Keine Anlagen ausgewählt — Wählen Sie mindestens eine Anlage aus, um einen Export zu planen.",
+    "filterBar.invalidFilterSelection": "Um Änderungen anzuwenden, wählen Sie gültige Werte für diese Filter aus: {names}"
 }

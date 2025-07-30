@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import React from "react";
+// (C) 2021-2025 GoodData Corporation
+import React, { ReactElement } from "react";
 import {
     components as ReactSelectComponents,
     InputProps,
@@ -19,11 +19,11 @@ import {
 } from "./types.js";
 import { getGranteeItemTestId } from "./utils.js";
 
-export const EmptyRenderer = (): JSX.Element => {
+export const EmptyRenderer = (): ReactElement => {
     return null;
 };
 
-export const LoadingMessageRenderer = (): JSX.Element => {
+export const LoadingMessageRenderer = (): ReactElement => {
     return (
         <div className="gd-share-dialog-loading-mask-container">
             <LoadingMask size="small" />
@@ -31,7 +31,7 @@ export const LoadingMessageRenderer = (): JSX.Element => {
     );
 };
 
-export const NoOptionsMessageRenderer = (props: NoticeProps): JSX.Element => {
+export const NoOptionsMessageRenderer = (props: NoticeProps): ReactElement => {
     return (
         <div className="s-gd-share-dialog-no-option" aria-label="Share dialog no match">
             <ReactSelectComponents.NoOptionsMessage {...props} />
@@ -39,7 +39,7 @@ export const NoOptionsMessageRenderer = (props: NoticeProps): JSX.Element => {
     );
 };
 
-export const MenuListRendered = (props: MenuListProps<ISelectOption, false>): JSX.Element => {
+export const MenuListRendered = (props: MenuListProps<ISelectOption, false>): ReactElement => {
     return (
         <ReactSelectComponents.MenuList {...props}>
             <div className="s-gd-share-dialog-menu" aria-label="Share dialog menu list">
@@ -49,7 +49,7 @@ export const MenuListRendered = (props: MenuListProps<ISelectOption, false>): JS
     );
 };
 
-export const InputRendered = (props: InputProps): JSX.Element => {
+export const InputRendered = (props: InputProps): ReactElement => {
     return (
         <div className="gd-share-dialog-input s-gd-share-dialog-input">
             <ReactSelectComponents.Input {...props} />
@@ -57,7 +57,7 @@ export const InputRendered = (props: InputProps): JSX.Element => {
     );
 };
 
-const OptionContentRenderer = (item: ISelectOption): JSX.Element => {
+const OptionContentRenderer = (item: ISelectOption): ReactElement => {
     if (isGranteeUser(item.value)) {
         return (
             <>
@@ -69,7 +69,7 @@ const OptionContentRenderer = (item: ISelectOption): JSX.Element => {
     return <> {item.label} </>;
 };
 
-export const ErrorOptionRenderer = (errorOption: ISelectErrorOption): JSX.Element => {
+export const ErrorOptionRenderer = (errorOption: ISelectErrorOption): ReactElement => {
     return (
         <div
             className={`gd-share-dialog-option-error s-gd-share-dialog-option-error`}
@@ -80,7 +80,7 @@ export const ErrorOptionRenderer = (errorOption: ISelectErrorOption): JSX.Elemen
     );
 };
 
-export const OptionRenderer = (props: OptionProps<ISelectOption, false>): JSX.Element => {
+export const OptionRenderer = (props: OptionProps<ISelectOption, false>): ReactElement => {
     const { className, cx, isFocused, innerRef, innerProps, data } = props;
 
     if (isSelectErrorOption(data)) {
@@ -108,7 +108,7 @@ export const OptionRenderer = (props: OptionProps<ISelectOption, false>): JSX.El
     );
 };
 
-export const GroupHeadingRenderer = (props: GroupHeadingProps): JSX.Element => {
+export const GroupHeadingRenderer = (props: GroupHeadingProps): ReactElement => {
     const { label } = props.data;
     return (
         <div className={"gd-share-dialog-select-group-heading"}>

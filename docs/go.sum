@@ -10,3 +10,5 @@ github.com/gooddata/gooddata-docs-theme v0.0.0-20250129122538-80db631526db h1:/Y
 github.com/gooddata/gooddata-docs-theme v0.0.0-20250129122538-80db631526db/go.mod h1:VVNP6Cmo+vC37RD3T/YHjyU/QdqftGY5z4G513LYyrA=
 github.com/gooddata/gooddata-docs-theme v0.0.0-20250218135411-9b695c2f96fb h1:BwV4BkG0UTF15qMO3q4X+qhtReGTnGkFqe8KMnwcDAs=
 github.com/gooddata/gooddata-docs-theme v0.0.0-20250218135411-9b695c2f96fb/go.mod h1:VVNP6Cmo+vC37RD3T/YHjyU/QdqftGY5z4G513LYyrA=
+github.com/gooddata/gooddata-docs-theme v0.0.0-20250729102440-7a7e8c25d60b h1:Tsi2R9UmdkJpEhdBPN870ybDU06RfEN2Hbq4+BiOzMA=
+github.com/gooddata/gooddata-docs-theme v0.0.0-20250729102440-7a7e8c25d60b/go.mod h1:VVNP6Cmo+vC37RD3T/YHjyU/QdqftGY5z4G513LYyrA=

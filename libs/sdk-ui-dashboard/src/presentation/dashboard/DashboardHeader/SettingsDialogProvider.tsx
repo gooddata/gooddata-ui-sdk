@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
@@ -60,7 +60,7 @@ const useShareDialogDashboardHeader = () => {
 /**
  * @internal
  */
-export const SettingsDialogProvider = (): JSX.Element | null => {
+export const SettingsDialogProvider = (): ReactElement | null => {
     const {
         backend,
         workspace,

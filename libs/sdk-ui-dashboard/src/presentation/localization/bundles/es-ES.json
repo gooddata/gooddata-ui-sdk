@@ -787,5 +787,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Datos (.xlsx)",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Diapositivas (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Advertencia:</strong> Las exportaciones programadas requieren al menos un archivo adjunto - seleccione una opción para continuar.",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "Error: No hay archivos adjuntos seleccionados - seleccione al menos un archivo adjunto para programar una exportación."
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Error: No hay archivos adjuntos seleccionados - seleccione al menos un archivo adjunto para programar una exportación.",
+    "filterBar.invalidFilterSelection": "Para aplicar los cambios, seleccione valores válidos para estos filtros: {names}"
 }

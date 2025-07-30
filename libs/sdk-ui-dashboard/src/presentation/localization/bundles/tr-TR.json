@@ -788,5 +788,6 @@
     "scheduledEmail.attachmentFormat.dashboard.formattedXLSX": "Veri (.xlsx)",
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Sunum Dosyası (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Uyarı:</strong> Zamanlanmış dışa aktarımlar en az bir ek gerektirir — devam etmek için bir seçenek seçin.",
-    "scheduledEmail.attachments.error.noAttachmentsSelected": "Hata: Hiçbir ek seçilmedi — bir dışa aktarma planlamak için en az bir ek seçin."
+    "scheduledEmail.attachments.error.noAttachmentsSelected": "Hata: Hiçbir ek seçilmedi — bir dışa aktarma planlamak için en az bir ek seçin.",
+    "filterBar.invalidFilterSelection": "Değişiklikleri uygulamak için bu filtreler için geçerli değerleri seçin: {names}"
 }
