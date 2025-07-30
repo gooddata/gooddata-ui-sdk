@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
-import { AgGridReactProps } from "ag-grid-react";
 import { themeBalham } from "ag-grid-enterprise";
 import merge from "lodash/merge.js";
+import { AgGridProps } from "../types/agGrid.js";
 
 /**
  * Separator used for pivoted values.
@@ -18,18 +18,15 @@ export const AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR = "|";
  */
 export const AG_GRID_DEFAULT_CACHE_BLOCK_SIZE = 100;
 
-const THEME_PROPS: AgGridReactProps = {
+const THEME_PROPS: AgGridProps = {
     theme: themeBalham,
 };
 
-const ROW_GROUPING_PROPS: AgGridReactProps = {
+const ROW_GROUPING_PROPS: AgGridProps = {
     groupDisplayType: "multipleColumns",
 };
 
-const SIZING_PROPS: AgGridReactProps = {
-    autoSizeStrategy: {
-        type: "fitCellContents",
-    },
+const SIZING_PROPS: AgGridProps = {
     defaultColDef: {
         resizable: true,
         autoHeight: true,
@@ -37,14 +34,7 @@ const SIZING_PROPS: AgGridReactProps = {
     },
 };
 
-const TEXT_WRAPPING_PROPS: AgGridReactProps = {
-    defaultColDef: {
-        wrapText: true,
-        wrapHeaderText: true,
-    },
-};
-
-const CELL_SELECTION_PROPS: AgGridReactProps = {
+const CELL_SELECTION_PROPS: AgGridProps = {
     cellSelection: {
         handle: {
             mode: "range",
@@ -52,22 +42,22 @@ const CELL_SELECTION_PROPS: AgGridReactProps = {
     },
 };
 
-const AGGREGATION_PROPS: AgGridReactProps = {
+const AGGREGATION_PROPS: AgGridProps = {
     suppressAggFuncInHeader: true,
 };
 
-const PAGING_PROPS: AgGridReactProps = {
+const PAGING_PROPS: AgGridProps = {
     cacheBlockSize: AG_GRID_DEFAULT_CACHE_BLOCK_SIZE,
 };
 
-const SORTING_PROPS: AgGridReactProps = {
+const SORTING_PROPS: AgGridProps = {
     defaultColDef: {
         sortable: true,
         sortingOrder: ["desc", "asc", null],
     },
 };
 
-const HEADER_PROPS: AgGridReactProps = {
+const STYLING_PROPS: AgGridProps = {
     defaultColGroupDef: {
         headerClass: "gd-header-cell",
     },
@@ -76,15 +66,14 @@ const HEADER_PROPS: AgGridReactProps = {
 /**
  * @internal
  */
-export const AG_GRID_DEFAULT_PROPS: AgGridReactProps = merge(
+export const AG_GRID_DEFAULT_PROPS: AgGridProps = merge(
     {},
     THEME_PROPS,
     ROW_GROUPING_PROPS,
     SIZING_PROPS,
     CELL_SELECTION_PROPS,
-    TEXT_WRAPPING_PROPS,
     AGGREGATION_PROPS,
     PAGING_PROPS,
     SORTING_PROPS,
-    HEADER_PROPS,
+    STYLING_PROPS,
 );

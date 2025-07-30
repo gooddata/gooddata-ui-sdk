@@ -14,7 +14,7 @@ import {
 export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("drilling")
     .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
-    .withDefaultTestTypes("api")
+    // .withDefaultTestTypes("api")
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("with drill on all row atributes", {
         ...PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols,

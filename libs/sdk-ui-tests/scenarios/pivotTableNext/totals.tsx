@@ -15,7 +15,7 @@ import {
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
     PivotTableWighTwoMeasureAndSingleRowColAttr,
-    // getCommonPivotTableSizingConfig,
+    getCommonPivotTableSizingConfig,
 } from "./base.js";
 
 export const PivotTableWithTwoMeasuresAndTotals = {
@@ -24,7 +24,7 @@ export const PivotTableWithTwoMeasuresAndTotals = {
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
         newTotal("sum", ReferenceMd.Won, ReferenceMd.Product.Name),
     ],
-    // config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name]),
+    config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name]),
 };
 
 export const PivotTableWithTwoMeasuresGrandTotalsAndSubtotals = {
@@ -40,7 +40,7 @@ export const PivotTableWithTwoMeasuresGrandTotalsAndSubtotals = {
         newTotal("med", ReferenceMd.Won, ReferenceMd.Department.Default),
         // newTotal("nat", ReferenceMd.Won, ReferenceMd.Department.Default),
     ],
-    // config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
+    config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
 };
 
 export const PivotTableWithTwoMeasuresColumnGrandTotalsAndSubtotals = {
@@ -53,7 +53,7 @@ export const PivotTableWithTwoMeasuresColumnGrandTotalsAndSubtotals = {
         newTotal("med", ReferenceMd.Amount, ReferenceMd.Region.Default),
         newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
     ],
-    // config: getCommonPivotTableSizingConfig(),
+    config: getCommonPivotTableSizingConfig(),
 };
 
 export const PivotTableWithTwoMeasuresRowColumnGrandTotalsAndSubtotals = {
@@ -73,19 +73,19 @@ export const PivotTableWithTwoMeasuresRowColumnGrandTotalsAndSubtotals = {
         newTotal("med", ReferenceMd.Amount, ReferenceMd.Region.Default),
         newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
     ],
-    // config: getCommonPivotTableSizingConfig(),
+    config: getCommonPivotTableSizingConfig(),
 };
 
 export const PivotTableWithSingleMeasureAndGrandTotal = {
     ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
     totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name)],
-    // config: getCommonPivotTableSizingConfig(),
+    config: getCommonPivotTableSizingConfig(),
 };
 
 export const PivotTableWithSingleMeasureAndColumnGrandTotal = {
     ...PivotTableWighSingleMeasureAndSingleRowColAttr,
     totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory)],
-    // config: getCommonPivotTableSizingConfig(),
+    config: getCommonPivotTableSizingConfig(),
 };
 
 export const PivotTableWithSingleMeasureAndRowColumnGrandTotal = {
@@ -94,13 +94,13 @@ export const PivotTableWithSingleMeasureAndRowColumnGrandTotal = {
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.SalesRep.Default),
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
     ],
-    // config: getCommonPivotTableSizingConfig(),
+    config: getCommonPivotTableSizingConfig(),
 };
 
 const totalsForRows = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "rows")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
-    .withDefaultTestTypes("api")
+    // .withDefaultTestTypes("api")
     .addScenario("single measure and single grand total", PivotTableWithSingleMeasureAndGrandTotal)
     .addScenario("single measure and multiple grand totals", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
@@ -109,6 +109,7 @@ const totalsForRows = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pivot
             newTotal("min", ReferenceMd.Amount, ReferenceMd.Product.Name),
             newTotal("max", ReferenceMd.Amount, ReferenceMd.Product.Name),
         ],
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario(
         "two measures and single grand total for one",
@@ -164,10 +165,10 @@ const totalsForRows = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pivot
 const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "columns")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
-    .withDefaultTestTypes("api")
+    // .withDefaultTestTypes("api")
     .addScenario("single measure and single column grand total", {
         ...PivotTableWithSingleMeasureAndColumnGrandTotal,
-        // config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Default]),
+        config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Default]),
     })
     .addScenario("single measure and multiple column grand totals", {
         ...PivotTableWighSingleMeasureAndSingleRowColAttr,
@@ -176,13 +177,13 @@ const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pi
             newTotal("min", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("max", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
         ],
-        // config: getCommonPivotTableSizingConfig(),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and single column grand total for one", {
         ...PivotTableWighTwoMeasureAndSingleRowColAttr,
         totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory)],
         filters: [newNegativeAttributeFilter(ReferenceMd.ForecastCategory, ["Include"])],
-        // config: getCommonPivotTableSizingConfig(),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and single column grand total for each", {
         ...PivotTableWighTwoMeasureAndSingleRowColAttr,
@@ -190,7 +191,7 @@ const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pi
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("max", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
         ],
-        // config: getCommonPivotTableSizingConfig(),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and multiple column grand totals for each", {
         ...PivotTableWighTwoMeasureAndSingleRowColAttr,
@@ -199,12 +200,12 @@ const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pi
             newTotal("min", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("max", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
         ],
-        // config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Default]),
+        config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Default]),
     })
     .addScenario("two measures and one column subtotal", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
         totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default)],
-        // config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
+        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
     })
     .addScenario("two measures and multiple column subtotals", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
@@ -214,19 +215,19 @@ const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pi
             newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
         ],
         filters: [newPositiveAttributeFilter(ReferenceMd.Region.Default, ["West Coast"])],
-        // config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
+        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
     })
     .addScenario("two measures and column grand totals and multiple subtotals", {
         ...PivotTableWithTwoMeasuresColumnGrandTotalsAndSubtotals,
         filters: [newPositiveAttributeFilter(ReferenceMd.Region.Default, ["West Coast"])],
-        // config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
+        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
     })
     .addScenario("two measures and column single grand total sorted by second attribute", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
         totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory)],
         sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
         filters: [newPositiveAttributeFilter(ReferenceMd.Region.Default, ["West Coast"])],
-        // config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
+        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
     })
     .addScenario(
         "two measures and single column grand total and single subtotal sorted by second attribute",
@@ -241,17 +242,17 @@ const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pi
             ],
             sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
             filters: [newPositiveAttributeFilter(ReferenceMd.Region.Default, ["West Coast"])],
-            // config: getCommonPivotTableSizingConfig([
-            //     ReferenceMd.Product.Name,
-            //     ReferenceMd.Department.Default,
-            // ]),
+            config: getCommonPivotTableSizingConfig([
+                ReferenceMd.Product.Name,
+                ReferenceMd.Department.Default,
+            ]),
         },
     );
 
 const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "rows & columns")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
-    .withDefaultTestTypes("api")
+    // .withDefaultTestTypes("api")
     .addScenario(
         "single measure and single column/row grand total",
         PivotTableWithSingleMeasureAndRowColumnGrandTotal,
@@ -264,7 +265,7 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNe
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("min", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
         ],
-        // config: getCommonPivotTableSizingConfig(),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and single column/row grand total for one", {
         ...PivotTableWighTwoMeasureAndSingleRowColAttr,
@@ -272,7 +273,7 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNe
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.SalesRep.Default),
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
         ],
-        // config: getCommonPivotTableSizingConfig(),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and single column/row grand total for each", {
         ...PivotTableWighTwoMeasureAndSingleRowColAttr,
@@ -282,7 +283,7 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNe
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("max", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
         ],
-        // config: getCommonPivotTableSizingConfig(),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and multiple column/row grand totals for each", {
         ...PivotTableWighTwoMeasureAndSingleRowColAttr,
@@ -294,7 +295,7 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNe
             newTotal("min", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("max", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
         ],
-        // config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Default]),
+        config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Default]),
     })
     .addScenario("two measures and one column/row subtotal", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
@@ -302,7 +303,7 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNe
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
         ],
-        // config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
+        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
     })
     .addScenario("two measures and multiple column/row subtotals", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
@@ -314,11 +315,11 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNe
             newTotal("med", ReferenceMd.Amount, ReferenceMd.Region.Default),
             newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
         ],
-        // config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
+        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
     })
     .addScenario("two measures and column/row grand totals and multiple subtotals", {
         ...PivotTableWithTwoMeasuresRowColumnGrandTotalsAndSubtotals,
-        // config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
+        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
     });
 
 export default [totalsForRows, totalsForColumns, totalsForRowsAndColumns];

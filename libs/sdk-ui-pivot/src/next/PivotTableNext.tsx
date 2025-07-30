@@ -1,30 +1,24 @@
 // (C) 2025 GoodData Corporation
-import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 import React, { useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
+import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 import { ModuleRegistry, AllEnterpriseModule } from "ag-grid-enterprise";
 import isEqual from "lodash/isEqual.js";
+import flow from "lodash/flow.js";
 import { ErrorComponent } from "./components/ErrorComponent.js";
 import { LoadingComponent } from "./components/LoadingComponent.js";
-import {
-    ICorePivotTableInnerNextProps,
-    ICorePivotTableNextProps,
-    IPivotTableNextProps,
-} from "./types/public.js";
-import { useInitExecution, useInitExecutionResult } from "./hooks/useInitExecution.js";
-import { useServerSideRowModel } from "./hooks/useServerSideRowModel.js";
-import { useDrilling } from "./hooks/useDrilling.js";
-import { useSorting } from "./hooks/useSorting.js";
-import {
-    getIsPivotMode,
-    getMeasureGroupDimension,
-    getExecutionProps,
-    getColumnHeadersPosition,
-} from "./mapProps/props.js";
-import { mapDimensionsToColDefs } from "./mapProps/mapDimensionsToColDefs.js";
+import { IPivotTableNextProps } from "./types/public.js";
+import { ICorePivotTableNextProps, IInitialExecutionData } from "./types/internal.js";
+import { useInitExecution, useInitExecutionResult } from "./features/dataLoading/useInitExecution.js";
+import { useServerSideRowModelProps } from "./features/dataLoading/useServerSideRowModelProps.js";
+import { useDrillingProps } from "./features/drilling/useDrillingProps.js";
+import { useSortingProps } from "./features/sorting/useSortingProps.js";
+import { TableMetadataProvider } from "./context/TableMetadataContext.js";
 import { AG_GRID_DEFAULT_PROPS } from "./constants/agGrid.js";
-import { PAGE_SIZE } from "./constants/internal.js";
-import { TableMetadataProvider, useTableMetadata } from "./context/TableMetadataContext.js";
+import { useColumnSizingProps } from "./features/columnSizing/useColumnSizingProps.js";
+import { useTextWrappingProps } from "./features/textWrapping/useTextWrappingProps.js";
+import { PivotTablePropsProvider, usePivotTableProps } from "./context/PivotTablePropsContext.js";
+import { dataViewToColumnDefs } from "./features/dataLoading/dataViewToColumnDefs.js";
 
 /**
  * Simple wrapper for the core pivot table component that creates execution based on provided props.
@@ -35,31 +29,23 @@ import { TableMetadataProvider, useTableMetadata } from "./context/TableMetadata
 export function PivotTableNext(props: IPivotTableNextProps) {
     const execution = useInitExecution(props);
 
-    return <CorePivotTableNext {...props} execution={execution} />;
+    return <PivotTableNextImplementation {...props} execution={execution} />;
 }
 
-function CorePivotTableNext(props: ICorePivotTableNextProps) {
-    const { execution, onLoadingChanged, pushData, onExportReady, pageSize = PAGE_SIZE } = props;
-    const measureGroupDimension = getMeasureGroupDimension(props);
-    const columnHeadersPosition = getColumnHeadersPosition(props);
-
-    const {
-        result: executionResult,
-        status,
-        error,
-    } = useInitExecutionResult(
-        execution,
-        {
-            onLoadingChanged,
-            pushData,
-            onExportReady,
-        },
-        {
-            measureGroupDimension,
-            columnHeadersPosition,
-            pageSize,
-        },
+function PivotTableNextImplementation(props: ICorePivotTableNextProps) {
+    return (
+        <PivotTablePropsProvider {...props}>
+            <TableMetadataProvider>
+                <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+                    <PivotTableNextLoading />
+                </ThemeContextProvider>
+            </TableMetadataProvider>
+        </PivotTablePropsProvider>
     );
+}
+
+function PivotTableNextLoading() {
+    const { result, status, error } = useInitExecutionResult();
 
     if (status === "error") {
         return <ErrorComponent error={error} />;
@@ -68,17 +54,12 @@ function CorePivotTableNext(props: ICorePivotTableNextProps) {
     if (status === "pending" || status === "loading") {
         return <LoadingComponent />;
     }
+    const { initialExecutionResult, initialDataView } = result;
 
-    return (
-        <TableMetadataProvider>
-            <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-                <RenderAgGrid {...props} executionResult={executionResult} />
-            </ThemeContextProvider>
-        </TableMetadataProvider>
-    );
+    return <RenderAgGrid initialExecutionResult={initialExecutionResult} initialDataView={initialDataView} />;
 }
 
-function RenderAgGrid(props: ICorePivotTableInnerNextProps) {
+function RenderAgGrid(initialExecutionData: IInitialExecutionData) {
     useMemo(() => {
         ModuleRegistry.registerModules([
             // TODO: replace with used modules only (to decrease bundle size)
@@ -86,38 +67,54 @@ function RenderAgGrid(props: ICorePivotTableInnerNextProps) {
         ]);
     }, []);
 
-    const { executionResult, pushData, drillableItems, onDrill } = props;
-    const serverSideRowModelProps = useServerSideRowModel({ ...props, executionResult });
-    const measureGroupDimension = getMeasureGroupDimension(props);
-    const { sortBy, rows, measures } = getExecutionProps(props);
-    const sortingHandlers = useSorting({ pushData, rows, measures });
-    const drillingHandlers = useDrilling({ drillableItems, onDrill });
-    const { currentDataView } = useTableMetadata();
+    const props = usePivotTableProps();
+    const { sortBy, config, drillableItems } = props;
+    const {
+        columnHeadersPosition,
+        columnSizing: { columnWidths },
+    } = config;
+    const { initialDataView } = initialExecutionData;
 
-    const columnDefs =
-        currentDataView && executionResult?.dimensions
-            ? mapDimensionsToColDefs(
-                  executionResult.dimensions,
-                  measureGroupDimension,
-                  sortBy,
-                  drillableItems,
-                  currentDataView,
-              )
-            : [];
+    const { columnDefs, isPivoted, columnDefinitionByColId } = useMemo(() => {
+        return dataViewToColumnDefs(
+            initialDataView,
+            columnHeadersPosition,
+            columnWidths,
+            sortBy,
+            drillableItems,
+        );
+    }, [initialDataView, columnHeadersPosition, columnWidths, sortBy, drillableItems]);
 
-    const isPivotMode = getIsPivotMode(props);
+    const enhanceWithSorting = useSortingProps(columnDefinitionByColId);
+    const enhanceWithDrilling = useDrillingProps();
+    const enhanceWithTextWrapping = useTextWrappingProps();
+    const enhanceWithColumnSizing = useColumnSizingProps();
+    const enhanceWithServerSideRowModel = useServerSideRowModelProps(
+        initialExecutionData,
+        columnDefinitionByColId,
+    );
+
+    const agGridReactProps = useMemo(
+        () =>
+            flow(
+                enhanceWithServerSideRowModel,
+                enhanceWithColumnSizing,
+                enhanceWithSorting,
+                enhanceWithDrilling,
+                enhanceWithTextWrapping,
+            )(AG_GRID_DEFAULT_PROPS),
+        [
+            enhanceWithServerSideRowModel,
+            enhanceWithColumnSizing,
+            enhanceWithSorting,
+            enhanceWithDrilling,
+            enhanceWithTextWrapping,
+        ],
+    );
 
     return (
         <div className="gd-pivot-table-next">
-            <AgGridReact
-                {...AG_GRID_DEFAULT_PROPS}
-                {...serverSideRowModelProps}
-                columnDefs={columnDefs}
-                pivotMode={isPivotMode}
-                onSortChanged={sortingHandlers.onSortChanged}
-                onCellClicked={drillingHandlers.onCellClicked}
-                onCellKeyDown={drillingHandlers.onCellKeyDown}
-            />
+            <AgGridReact {...agGridReactProps} columnDefs={columnDefs} pivotMode={isPivoted} />
         </div>
     );
 }
@@ -125,9 +122,9 @@ function RenderAgGrid(props: ICorePivotTableInnerNextProps) {
 /**
  * Memoized wrapper for the AgGridReact component that needs to be provided with prepared execution.
  *
- * @alpha
+ * @internal
  */
-const MemoizedCorePivotTableNext = React.memo(CorePivotTableNext, (prevProps, nextProps) => {
+export const CorePivotTableNext = React.memo(PivotTableNextImplementation, (prevProps, nextProps) => {
     // More specific comparison to avoid unnecessary re-renders
     const executionChanged = prevProps.execution.fingerprint() !== nextProps.execution.fingerprint();
     const configChanged = !isEqual(prevProps.config, nextProps.config);
@@ -153,5 +150,3 @@ const MemoizedCorePivotTableNext = React.memo(CorePivotTableNext, (prevProps, ne
         themeChanged
     );
 });
-
-export { MemoizedCorePivotTableNext as CorePivotTableNext };

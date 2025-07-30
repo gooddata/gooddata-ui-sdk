@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
-import { IAnalyticalBackend, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IFilter, IMeasure, ISortItem, ITheme, ITotal } from "@gooddata/sdk-model";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IVisualizationCallbacks, ExplicitDrill, IVisualizationProps } from "@gooddata/sdk-ui";
+import { IAttribute, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
+import { IColumnSizing } from "./sizing.js";
 
 /**
  * Whether to display measures in columns or rows (transposed).
@@ -19,17 +20,22 @@ export type MeasureGroupDimension = "columns" | "rows";
  */
 export type ColumnHeadersPosition = "left" | "top";
 
+export interface ITextWrapping {
+    /**
+     * Whether to wrap text in cells.
+     */
+    wrapText?: boolean;
+
+    /**
+     * Whether to wrap text in column headers.
+     */
+    wrapHeaderText?: boolean;
+}
+
 /**
  * @alpha
  */
 export type PivotTableNextConfig = {
-    /**
-     * Whether to preload all data first, or lazy load them on-demand.
-     *
-     * Default Value: false
-     */
-    preloadAllData?: boolean;
-
     /**
      * Whether to display measures in columns or rows (transposed).
      *
@@ -47,6 +53,16 @@ export type PivotTableNextConfig = {
      * Default value: "left"
      */
     columnHeadersPosition?: ColumnHeadersPosition;
+
+    /**
+     * Customize column sizing strategy.
+     */
+    columnSizing?: IColumnSizing;
+
+    /**
+     * Configure text wrapping.
+     */
+    textWrapping?: ITextWrapping;
 };
 
 /**
@@ -110,19 +126,4 @@ export interface IPivotTableNextProps extends IVisualizationProps, IVisualizatio
      * Default is 100.
      */
     pageSize?: number;
-}
-
-/**
- * @alpha
- */
-export interface ICorePivotTableNextProps extends IPivotTableNextProps {
-    execution: IPreparedExecution;
-    theme?: ITheme;
-}
-
-/**
- * @alpha
- */
-export interface ICorePivotTableInnerNextProps extends ICorePivotTableNextProps {
-    executionResult: IExecutionResult;
 }
