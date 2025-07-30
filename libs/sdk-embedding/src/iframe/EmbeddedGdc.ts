@@ -1,7 +1,12 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ILocalIdentifierQualifier, ObjQualifier, RankingFilterOperator } from "./legacyTypes.js";
 
-import { DashboardDateFilterConfigMode, DashboardAttributeFilterConfigMode } from "@gooddata/sdk-model";
+import {
+    DashboardDateFilterConfigMode,
+    DashboardAttributeFilterConfigMode,
+    IUpperBoundedFilter,
+    ILowerBoundedFilter,
+} from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
 /**
@@ -81,6 +86,7 @@ export interface IRelativeDateFilter {
         granularity: string;
         from: number;
         to: number;
+        boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     };
     /**
      * Configures the visibility mode of the date filter.

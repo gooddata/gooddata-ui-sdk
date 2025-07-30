@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import isNumber from "lodash/isNumber.js";
 import isString from "lodash/isString.js";
@@ -23,7 +23,7 @@ import {
     isRemoveDateFilter,
     isRemoveRankingFilter,
 } from "../iframe/index.js";
-import { ObjRef, idRef } from "@gooddata/sdk-model";
+import { ObjRef, idRef, IUpperBoundedFilter, ILowerBoundedFilter } from "@gooddata/sdk-model";
 
 export const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
 
@@ -44,6 +44,7 @@ export interface ITransformedDateFilterItem {
     granularity?: string;
     from: string | number;
     to: string | number;
+    boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     datasetUri?: string;
     datasetIdentifier?: string;
     localIdentifier?: string; // to support multiple date filters
@@ -248,7 +249,7 @@ function transformDateFilterItem(dateFilterItem: DateFilterItem): ITransformedDa
         };
     } else {
         const {
-            relativeDateFilter: { granularity, dataSet, from, to },
+            relativeDateFilter: { granularity, dataSet, from, to, boundedFilter },
             localIdentifier,
         } = dateFilterItem;
         const { uri: datasetUri, identifier: datasetIdentifier } = getObjectUriIdentifier(dataSet);
@@ -258,6 +259,7 @@ function transformDateFilterItem(dateFilterItem: DateFilterItem): ITransformedDa
             granularity,
             datasetUri,
             datasetIdentifier,
+            ...(boundedFilter ? { boundedFilter } : {}),
             ...(localIdentifier ? { localIdentifier } : {}),
         };
     }

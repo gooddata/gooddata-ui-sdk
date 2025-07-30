@@ -59,29 +59,25 @@ function customToId(title: string, exportName: string) {
     return `${kebabTitle}--${kebabExport}`;
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
-export async function toBackstopJson(): Promise<string> {
-    const storybookMain = (
-        (await import("../../.storybook/main.cjs" as any)) as { default: { stories: string[] } }
-    ).default;
-    const storiesGlob = storybookMain.stories;
+interface IStoryInfo {
+    storyId: string;
+    storyKind: string;
+    storyName: string;
+    scenarioName?: string;
+    scenarioConfig: IBackstopScenarioConfig | {} | undefined;
+}
 
-    // because we are in stories/_infra, instead of .storybook
-    storiesGlob[0] = path.join("../", storiesGlob[0]);
+async function processStoryFile(file: string): Promise<IStoryInfo[]> {
+    const absPath = path.resolve(path.join("stories/_infra", file));
 
-    const files = await fg(storiesGlob, { cwd: path.resolve(path.join(__dirname)) });
-    const stories = [];
-
-    for (const file of files) {
-        const absPath = path.resolve(path.join("stories/_infra", file));
-
+    try {
         const storiesFromFile: Record<string, { parameters: IParameters; name: string; title: string }> =
             await import(absPath);
 
         const defaultStory = storiesFromFile.default;
         if (!defaultStory) {
-            console.log("No default story, skipping file");
-            continue;
+            console.log(`No default story, skipping file: ${file}`);
+            return [];
         }
 
         const fileStories = Object.entries(storiesFromFile)
@@ -122,8 +118,45 @@ export async function toBackstopJson(): Promise<string> {
             })
             .flat();
 
-        stories.push(...fileStories);
+        return fileStories;
+    } catch (error) {
+        console.error(`Error processing story file ${file}:`, error);
+        return [];
     }
+}
+
+// eslint-disable-next-line sonarjs/cognitive-complexity
+export async function toBackstopJson(): Promise<string> {
+    const storybookMain = (
+        (await import("../../.storybook/main.js" as any)) as { default: { stories: string[] } }
+    ).default;
+    const storiesGlob = storybookMain.stories;
+
+    // because we are in stories/_infra, instead of .storybook
+    storiesGlob[0] = path.join("../", storiesGlob[0]);
+
+    const files = await fg(storiesGlob, { cwd: path.resolve(path.join(__dirname)) });
+    console.log(`Processing ${files.length} story files...`);
+
+    // Process files in parallel with controlled concurrency to avoid overwhelming the system
+    const concurrency = 10; // Process 10 files at a time
+    const stories: IStoryInfo[] = [];
+
+    for (let i = 0; i < files.length; i += concurrency) {
+        const batch = files.slice(i, i + concurrency);
+        console.log(
+            `Processing batch ${Math.floor(i / concurrency) + 1}/${Math.ceil(files.length / concurrency)} (${batch.length} files)`,
+        );
+
+        const batchPromises = batch.map((file) => processStoryFile(file));
+        const batchResults = await Promise.all(batchPromises);
+
+        for (const fileStories of batchResults) {
+            stories.push(...fileStories);
+        }
+    }
+
+    console.log(`Processed ${stories.length} stories total`);
 
     return JSON.stringify(
         stories.sort((x, y): number => {
