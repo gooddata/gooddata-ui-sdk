@@ -913,14 +913,15 @@ export function relativeDateFilterValues(
     includeDataSet = false,
 ): IRelativeDateFilterValues {
     invariant(filter, "filter must be specified");
+    const boundedFilter = isRelativeBoundedDateFilter(filter)
+        ? filter.relativeDateFilter.boundedFilter
+        : undefined;
 
     return {
         from: filter.relativeDateFilter.from,
         to: filter.relativeDateFilter.to,
         granularity: filter.relativeDateFilter.granularity,
-        ...(isRelativeBoundedDateFilter(filter)
-            ? { boundedFilter: filter.relativeDateFilter.boundedFilter }
-            : {}),
+        ...(boundedFilter ? { boundedFilter } : {}),
         ...(includeDataSet ? { dataSet: filter.relativeDateFilter.dataSet } : {}),
     };
 }

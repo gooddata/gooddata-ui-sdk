@@ -7,6 +7,8 @@
 import { DashboardAttributeFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { ILowerBoundedFilter } from '@gooddata/sdk-model';
+import { IUpperBoundedFilter } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 
 // @public (undocumented)
@@ -893,6 +895,7 @@ export interface IRelativeDateFilter {
         granularity: string;
         from: number;
         to: number;
+        boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     };
 }
 

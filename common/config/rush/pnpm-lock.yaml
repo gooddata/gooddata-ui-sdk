@@ -4606,6 +4606,9 @@ importers:
       vite:
         specifier: ^5.4.3
         version: 5.4.3(@types/node@22.16.4)(sass@1.69.5)
+      vite-node:
+        specifier: ^3.2.4
+        version: 3.2.4(@types/node@22.16.4)(sass@1.69.5)
       vite-plugin-static-copy:
         specifier: ^3.1.1
         version: 3.1.1(vite@5.4.3)

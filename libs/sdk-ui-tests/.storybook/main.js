@@ -1,8 +1,10 @@
-const path = require("path");
-const { mergeConfig } = require("vite");
-const { viteStaticCopy } = require("vite-plugin-static-copy");
+// (C) 2025 GoodData Corporation
 
-module.exports = {
+import { resolve } from "path";
+import { mergeConfig } from "vite";
+import { viteStaticCopy } from "vite-plugin-static-copy";
+
+export default {
     stories: ["../stories/**/*.stories.@(ts|tsx)"],
     features: {
         addons: true,
@@ -19,16 +21,14 @@ module.exports = {
             resolve: {
                 alias: {
                     // fixes internal exports from sdk-ui-ext
-                    "@gooddata/sdk-ui-ext/internal": path.resolve(
+                    "@gooddata/sdk-ui-ext/internal": resolve(
                         "./node_modules/@gooddata/sdk-ui-ext/esm/internal",
                     ),
                 },
             },
             server: {
                 fs: {
-                    allow: [
-                        path.resolve(__dirname, "../../../"),
-                    ],
+                    allow: [resolve(__dirname, "../../../")],
                 },
             },
             plugins: [
@@ -49,9 +49,9 @@ module.exports = {
                 sourcemap: true,
             },
             define: {
-                'process.env': process.env,
-                'process': {}
-            }
+                "process.env": process.env,
+                process: {},
+            },
         });
     },
 };
