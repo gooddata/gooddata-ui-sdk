@@ -131,6 +131,36 @@ newRelativeDateFilter("<date-dataset-identifier>", "GDC.time.month", -11, 0);
 newRelativeDateFilter("<date-dataset-identifier>", "GDC.time.quarter", -1, -1);
 ```
 
+**To-Date period examples**
+
+The following examples show how to create "to-date" filters, which include data from the first day of the current period up to today:
+
+**Year-to-Date (YTD):**
+
+```javascript
+newRelativeDateFilter("<date-dataset-identifier>", "GDC.time.year", 0, 0);
+```
+
+**Quarter-to-Date (QTD):**
+
+```javascript
+newRelativeDateFilter("<date-dataset-identifier>", "GDC.time.quarter", 0, 0);
+```
+
+**Month-to-Date (MTD):**
+
+```javascript
+newRelativeDateFilter("<date-dataset-identifier>", "GDC.time.month", 0, 0);
+```
+
+**Week-to-Date (WTD):**
+
+```javascript
+newRelativeDateFilter("<date-dataset-identifier>", "GDC.time.week_us", 0, 0);
+```
+
+For example, when using MTD on July 21, 2025, the filter includes data from July 1, 2025, through July 21, 2025.
+
 ## Filter by a measure value
 
 You can filter a visualization by the value of a measure. You can filter only the measures that are present in the visualization, on the granularity defined by the attributes in the visualization.
