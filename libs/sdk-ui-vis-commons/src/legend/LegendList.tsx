@@ -16,32 +16,56 @@ export const LegendSeparator = (): ReactElement => (
     <div className="legend-separator" aria-label="Legend separator" />
 );
 
+const LegendListItem = React.memo(function LegendListItem({
+    index,
+    item,
+    enableBorderRadius,
+    width,
+    onItemClick,
+}: {
+    index: number;
+    item: ISeriesItem;
+    enableBorderRadius: boolean | ItemBorderRadiusPredicate | undefined;
+    width?: number;
+    onItemClick: (item: ISeriesItem) => void;
+}) {
+    const { type, labelKey, data } = item;
+    const borderRadius = shouldItemHaveBorderRadius(item, enableBorderRadius);
+
+    if (type === LEGEND_AXIS_INDICATOR) {
+        return <LegendAxisIndicator key={index} labelKey={labelKey} data={data} width={width} />;
+    } else if (type === LEGEND_SEPARATOR) {
+        return <LegendSeparator key={index} />;
+    } else {
+        return (
+            <LegendItem
+                key={index}
+                index={index}
+                enableBorderRadius={borderRadius}
+                item={item}
+                width={width}
+                onItemClick={onItemClick}
+            />
+        );
+    }
+});
+
 export const LegendList = React.memo(function LegendList({
     series,
     enableBorderRadius,
     onItemClick,
     width,
 }: ILegendListProps) {
-    return series.map((item, index) => {
-        const { type, labelKey, data } = item;
-        const borderRadius = shouldItemHaveBorderRadius(item, enableBorderRadius);
-
-        if (type === LEGEND_AXIS_INDICATOR) {
-            return <LegendAxisIndicator key={index} labelKey={labelKey} data={data} width={width} />;
-        } else if (type === LEGEND_SEPARATOR) {
-            return <LegendSeparator key={index} />;
-        } else {
-            return (
-                <LegendItem
-                    key={index}
-                    enableBorderRadius={borderRadius}
-                    item={item}
-                    width={width}
-                    onItemClick={onItemClick}
-                />
-            );
-        }
-    });
+    return series.map((item, index) => (
+        <LegendListItem
+            key={index}
+            index={index}
+            item={item}
+            enableBorderRadius={enableBorderRadius}
+            width={width}
+            onItemClick={onItemClick}
+        />
+    ));
 });
 
 function shouldItemHaveBorderRadius(

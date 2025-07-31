@@ -6,12 +6,13 @@ import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { ISeriesItem } from "./types.js";
-import { LegendSeriesContextStore } from "./context.js";
+import { LegendSeriesContextStore, useItemVisibility } from "./context.js";
 
 const DEFAULT_DISABLED_COLOR = "#CCCCCC";
 
 interface ILegendItemProps {
     item: ISeriesItem;
+    index: number;
     width?: number;
     enableBorderRadius?: boolean;
     onItemClick: (item: ISeriesItem) => void;
@@ -20,6 +21,7 @@ interface ILegendItemProps {
 
 const LegendItem: React.FC<ILegendItemProps> = ({
     item,
+    index,
     width,
     enableBorderRadius = false,
     onItemClick,
@@ -30,6 +32,7 @@ const LegendItem: React.FC<ILegendItemProps> = ({
         isFocused: ctx.focusedItem === item,
         id: ctx.makeItemId(item),
     }));
+    const { registerItem } = useItemVisibility();
 
     const disabledColor = theme?.palette?.complementary?.c5 ?? DEFAULT_DISABLED_COLOR;
 
@@ -51,10 +54,23 @@ const LegendItem: React.FC<ILegendItemProps> = ({
         return onItemClick(item);
     };
 
+    const refCallback = React.useCallback(
+        (element: HTMLButtonElement | null) => {
+            if (element) {
+                registerItem(index, element);
+            } else {
+                // Element is unmounted, unregister it
+                registerItem(index, null);
+            }
+        },
+        [index, registerItem],
+    );
+
     const legendItemId = useIdPrefixed("legend-item");
 
     return (
         <button
+            ref={refCallback}
             data-testid={"legend-item"}
             role={"switch"}
             aria-describedby={descriptionId}

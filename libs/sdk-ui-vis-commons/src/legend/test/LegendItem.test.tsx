@@ -3,7 +3,7 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import LegendItem from "../LegendItem.js";
 import { describe, it, expect, vi, beforeEach, MockInstance } from "vitest";
-import { LegendSeriesContextStore } from "../context.js";
+import { LegendSeriesContextStore, VisibilityContext } from "../context.js";
 import { ISeriesItem } from "../types.js";
 
 describe("LegendItem", () => {
@@ -25,10 +25,19 @@ describe("LegendItem", () => {
         onItemClick = vi.fn();
     });
 
+    // Mock visibility context value for testing
+    const mockVisibilityContextValue = {
+        registerItem: vi.fn(),
+        isVisible: vi.fn().mockReturnValue(true),
+        visibleItems: new Set([0, 1, 2, 3, 4, 5]),
+    };
+
     function createComponent(props: any = {}, contextValue = mockContextValue) {
         return render(
             <LegendSeriesContextStore value={contextValue}>
-                <LegendItem onItemClick={onItemClick} {...props} />
+                <VisibilityContext.Provider value={mockVisibilityContextValue}>
+                    <LegendItem onItemClick={onItemClick} {...props} />
+                </VisibilityContext.Provider>
             </LegendSeriesContextStore>,
         );
     }
