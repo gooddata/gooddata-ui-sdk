@@ -201,6 +201,38 @@ The relative period defines which granularities (e.g., days, weeks, months) are 
                 "localIdentifier": "relative_last_30_days",
                 "name": "Last 30 days",
                 "visible": true
+            },
+            {
+                "from": 0,
+                "to": 0,
+                "granularity": "GDC.time.year",
+                "localIdentifier": "year_to_date",
+                "name": "Year-to-Date (YTD)",
+                "visible": true
+            },
+            {
+                "from": 0,
+                "to": 0,
+                "granularity": "GDC.time.quarter",
+                "localIdentifier": "quarter_to_date",
+                "name": "Quarter-to-Date (QTD)",
+                "visible": true
+            },
+            {
+                "from": 0,
+                "to": 0,
+                "granularity": "GDC.time.month",
+                "localIdentifier": "month_to_date",
+                "name": "Month-to-Date (MTD)",
+                "visible": true
+            },
+            {
+                "from": 0,
+                "to": 0,
+                "granularity": "GDC.time.week_us",
+                "localIdentifier": "week_to_date",
+                "name": "Week-to-Date (WTD)",
+                "visible": true
             }
             // Add more presets as needed
         ],
@@ -211,12 +243,23 @@ The relative period defines which granularities (e.g., days, weeks, months) are 
 
 ### Adding Predefined Periods
 
-You can customize the relativePresets section to define periods like "Last 10 days" or "Last month." Each preset includes:
+You can customize the relativePresets section to define periods like "Last 10 days," "Last month," or "to-date" periods.
+
+**To-Date Periods**: These are predefined periods that include data from the first day of the current period up to today. The available to-date periods are:
+- **Year-to-Date (YTD)**: Data from January 1st of the current year through today
+- **Quarter-to-Date (QTD)**: Data from the first day of the current quarter through today  
+- **Month-to-Date (MTD)**: Data from the first day of the current month through today
+- **Week-to-Date (WTD)**: Data from the first day of the current week through today
+
+For example, if today is July 21, 2025, then MTD includes data from July 1, 2025, through July 21, 2025.
+
+Each preset includes:
 
 -   Granularity: Defines the time unit (e.g., day, week, month).
--   From/To: Relative to today (0 represents today).Examples:
+-   From/To: Relative to today (0 represents today). Examples:
     -   Last 3 days: from: -2, to: 0
     -   This year: from: 0, to: 0
+    -   Month-to-Date: from: 0, to: 0 (with month granularity)
 -   Local Identifier: A unique name for the filter.
 -   Name: The display name on the dashboard.
 -   Visible: Controls if the filter is shown.
@@ -233,6 +276,49 @@ You can customize the relativePresets section to define periods like "Last 10 da
     "visible": true
 }
 ```
+
+**Examples: To-Date Predefined Periods**
+
+The following examples show how to configure the new "to-date" predefined periods, which include data from the first day of the current period up to today:
+
+```json
+[
+    {
+        "from": 0,
+        "to": 0,
+        "granularity": "GDC.time.year",
+        "localIdentifier": "year_to_date",
+        "name": "Year-to-Date (YTD)",
+        "visible": true
+    },
+    {
+        "from": 0,
+        "to": 0,
+        "granularity": "GDC.time.quarter",
+        "localIdentifier": "quarter_to_date",
+        "name": "Quarter-to-Date (QTD)",
+        "visible": true
+    },
+    {
+        "from": 0,
+        "to": 0,
+        "granularity": "GDC.time.month",
+        "localIdentifier": "month_to_date",
+        "name": "Month-to-Date (MTD)",
+        "visible": true
+    },
+    {
+        "from": 0,
+        "to": 0,
+        "granularity": "GDC.time.week_us",
+        "localIdentifier": "week_to_date",
+        "name": "Week-to-Date (WTD)",
+        "visible": true
+    }
+]
+```
+
+For example, when MTD is selected on July 21, 2025, it includes data from July 1, 2025, through July 21, 2025.
 
 **Removing Granularities**
 
