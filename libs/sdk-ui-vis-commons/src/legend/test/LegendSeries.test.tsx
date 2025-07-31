@@ -7,6 +7,18 @@ import { ISeriesItem } from "../types.js";
 import { IntlProvider } from "react-intl";
 import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
 
+// Mock the visibility detection hook to bypass registration issues
+vi.mock("../visibilityDetection.js", () => ({
+    useVisibilityDetection: () => ({
+        viewportRef: { current: null },
+        contextValue: {
+            registerItem: () => {}, // No-op in tests
+            isVisible: () => true, // All items are visible in tests
+            visibleItems: new Set([0, 1, 2]), // Reasonable range for tests
+        },
+    }),
+}));
+
 describe("LegendSeries", () => {
     // Define locale and messages
     const DefaultLocale = "en-US";

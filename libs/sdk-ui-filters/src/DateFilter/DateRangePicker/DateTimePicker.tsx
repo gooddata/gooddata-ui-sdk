@@ -19,6 +19,7 @@ interface IDateTimePickerOwnProps {
     time: ITime;
     dateInputLabel: string;
     timeInputLabel: string;
+    dateTimeLegendLabel: string;
     onDateChange: (date: Date | undefined, shouldSubmitForm?: boolean) => void;
     onTimeChange: (time: ITime | undefined, shouldSubmitForm?: boolean) => void;
     onDayClick: () => void;
@@ -43,6 +44,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
             time,
             dateInputLabel,
             timeInputLabel,
+            dateTimeLegendLabel,
             onDateChange,
             onTimeChange,
             onDayClick,
@@ -80,6 +82,9 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
         return (
             <div className={cx(className, { "gd-date-range-row": isTimeEnabled })}>
                 <fieldset>
+                    <legend className="sr-only">
+                        {isTimeEnabled ? dateTimeLegendLabel : dateInputLabel}
+                    </legend>
                     <DateInput
                         ref={ref}
                         value={date}

@@ -31,6 +31,7 @@ import {
     isRangeCondition,
     isRankingFilter,
     IRankingFilter,
+    isRelativeBoundedDateFilterBody,
 } from "../filter/index.js";
 import {
     isMeasureDefinition,
@@ -205,11 +206,15 @@ const convertAbsoluteDateFilter: Converter<IAbsoluteDateFilter> = ({
     return `newAbsoluteDateFilter(${[stringifyObjRef(dataSet), ...restArgs].join(ARRAY_JOINER)})`;
 };
 
-const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({
-    relativeDateFilter: { dataSet, granularity, from, to, localIdentifier },
-}) => {
+const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({ relativeDateFilter }) => {
+    const { dataSet, granularity, from, to, localIdentifier } = relativeDateFilter;
+    const boundedFilter = isRelativeBoundedDateFilterBody(relativeDateFilter)
+        ? relativeDateFilter.boundedFilter
+        : undefined;
     // cannot use lodash compact, that would remove 0 values which we want to keep here
-    const restArgs = [granularity, from, to, localIdentifier].filter((item) => !isNil(item)).map(stringify);
+    const restArgs = [granularity, from, to, localIdentifier, boundedFilter]
+        .filter((item) => !isNil(item))
+        .map(stringify);
     return `newRelativeDateFilter(${[stringifyObjRef(dataSet), ...restArgs].join(ARRAY_JOINER)})`;
 };
 

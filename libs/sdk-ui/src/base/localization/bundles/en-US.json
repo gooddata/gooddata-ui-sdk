@@ -879,6 +879,10 @@
         "value": "Start time",
         "comment": "Displayed as label of input where user enters a time that marks the start of date range."
     },
+    "filters.staticPeriod.dateTimeFrom": {
+        "value": "Start date and time",
+        "comment": "Hidden but read by a screen reader as legend of inputs where user enters date and time that marks the start of date range."
+    },
     "filters.staticPeriod.dateTo": {
         "value": "End date",
         "comment": "Displayed as label of input where user enters a date that marks the end of date range."
@@ -886,6 +890,10 @@
     "filters.staticPeriod.timeTo": {
         "value": "End time",
         "comment": "Displayed as label of input where user enters a time that marks the end of date range."
+    },
+    "filters.staticPeriod.dateTimeTo": {
+        "value": "End date and time",
+        "comment": "Hidden but read by a screen reader as legend of inputs where user enters date and time that marks the end of date range."
     },
     "filters.staticPeriod.dateFormatHint": {
         "value": "Use date format {format}.",

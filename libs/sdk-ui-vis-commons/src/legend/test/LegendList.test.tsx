@@ -6,7 +6,7 @@ import { withIntl } from "@gooddata/sdk-ui";
 import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "../helpers.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { ISeriesItem } from "../types.js";
-import { LegendSeriesContextStore } from "../context.js";
+import { LegendSeriesContextStore, VisibilityContext } from "../context.js";
 
 describe("LegendList", () => {
     let onItemClick: ReturnType<typeof vi.fn>;
@@ -29,11 +29,20 @@ describe("LegendList", () => {
             descriptionId: "test-description-id",
         };
 
+        // Mock visibility context value for testing
+        const mockVisibilityContextValue = {
+            registerItem: vi.fn(),
+            isVisible: vi.fn().mockReturnValue(true),
+            visibleItems: new Set([0, 1, 2, 3, 4, 5]),
+        };
+
         const Wrapped = withIntl(LegendList);
 
         return render(
             <LegendSeriesContextStore value={mockContextValue}>
-                <Wrapped {...props} />
+                <VisibilityContext.Provider value={mockVisibilityContextValue}>
+                    <Wrapped {...props} />
+                </VisibilityContext.Provider>
             </LegendSeriesContextStore>,
         );
     }
