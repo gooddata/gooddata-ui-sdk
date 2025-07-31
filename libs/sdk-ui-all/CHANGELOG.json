@@ -2,6 +2,18 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.37.0",
+            "tag": "@gooddata/sdk-ui-all_v10.37.0",
+            "date": "Thu, 31 Jul 2025 07:50:16 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Fix focusing of hidden legend items"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.36.0",
             "tag": "@gooddata/sdk-ui-all_v10.36.0",
             "date": "Tue, 29 Jul 2025 13:43:27 GMT",
