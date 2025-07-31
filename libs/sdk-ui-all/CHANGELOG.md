@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Tue, 29 Jul 2025 13:43:27 GMT and should not be manually modified.
+This log was last generated on Thu, 31 Jul 2025 07:50:16 GMT and should not be manually modified.
+
+## 10.37.0
+
+Thu, 31 Jul 2025 07:50:16 GMT
+
+### Updates
+
+- Fix focusing of hidden legend items
 
 ## 10.36.0
 
