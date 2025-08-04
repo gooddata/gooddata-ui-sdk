@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
 
@@ -22,6 +22,7 @@ vi.mock("mapbox-gl", async () => ({
         Map: vi.fn(() => ({
             addControl: vi.fn(),
             on: vi.fn(),
+            off: vi.fn(),
             remove: vi.fn(),
         })),
         Popup: vi.fn(),

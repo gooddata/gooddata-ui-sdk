@@ -100,7 +100,6 @@ export const PivotTableWithSingleMeasureAndRowColumnGrandTotal = {
 const totalsForRows = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "rows")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
-    // .withDefaultTestTypes("api")
     .addScenario("single measure and single grand total", PivotTableWithSingleMeasureAndGrandTotal)
     .addScenario("single measure and multiple grand totals", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,

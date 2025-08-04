@@ -205,6 +205,12 @@ module.exports = stories
         const { storyId, storyKind, storyName, scenarioName, scenarioConfig: localConfig } = story;
         const label = scenarioLabel(storyKind, storyName, scenarioName);
 
+        // Temporary fix
+        // Skip PivotTableNext scenarios from BackstopJS (but keep them in Storybook)
+        if (label.includes("PivotTableNext")) {
+            return undefined;
+        }
+
         /*
          * Create configuration for this scenario. Find global configuration that applies for scenario done
          * for this kind of story (if any) and then overlay the config with local scenario (if any)

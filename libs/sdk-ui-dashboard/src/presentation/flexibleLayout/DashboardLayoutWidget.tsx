@@ -215,7 +215,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             rowIndex={rowIndex}
         >
             <div
-                ref={dragRef}
+                ref={isInEditMode ? dragRef : undefined}
                 className={cx([
                     "dashboard-widget-draggable-wrapper",
                     {

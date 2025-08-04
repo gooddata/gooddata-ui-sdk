@@ -1,11 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 import * as React from "react";
+import { forwardRef, memo, useCallback } from "react";
 import cx from "classnames";
 import { IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
 
 interface ITextareaOwnProps {
-    hasError: boolean;
-    hasWarning: boolean;
+    hasError?: boolean;
+    hasWarning?: boolean;
     errorId?: string;
     maxlength?: number;
     id?: string;
@@ -20,66 +21,64 @@ interface ITextareaOwnProps {
     accessibilityConfig?: IAccessibilityConfigBase;
 }
 
-interface ITextareaState {
-    rows: number;
-}
-
 export type ITextareaProps = ITextareaOwnProps;
 
-export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState> {
-    public static defaultProps = {
-        hasError: false,
-        hasWarning: false,
-    };
-
-    constructor(props: ITextareaProps) {
-        super(props);
-    }
-
-    public render() {
-        const {
-            id,
+export const Textarea = memo(
+    forwardRef<HTMLTextAreaElement, ITextareaProps>(function Textarea(
+        {
+            hasError = false,
+            hasWarning = false,
             maxlength,
+            id,
             placeholder,
-            accessibilityConfig,
             value,
             rows,
-            autocomplete,
-            validationError,
+            onChange,
             onFocus,
-        } = this.props;
+            onBlur,
+            validationError,
+            autocomplete,
+            accessibilityConfig,
+        },
+        ref,
+    ) {
+        const getTextareaClassNames = useCallback(() => {
+            return cx("gd-input-field", {
+                "has-error": hasError,
+                "has-warning": hasWarning,
+            });
+        }, [hasError, hasWarning]);
+
+        const handleChange = useCallback(
+            (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+                onChange(e.target.value);
+            },
+            [onChange],
+        );
+
+        const handleBlur = useCallback(
+            (e: React.FocusEvent<HTMLTextAreaElement>) => {
+                onBlur?.(e.target.value);
+            },
+            [onBlur],
+        );
 
         return (
             <textarea
+                ref={ref}
                 id={id}
-                className={this.getTextareaClassNames()}
+                className={getTextareaClassNames()}
                 maxLength={maxlength}
                 placeholder={placeholder}
                 value={value}
                 rows={rows}
-                onChange={this.onChange}
+                onChange={handleChange}
                 autoComplete={autocomplete}
                 onFocus={onFocus}
-                onBlur={this.onBlur}
+                onBlur={handleBlur}
                 aria-describedby={validationError ? accessibilityConfig?.ariaDescribedBy : undefined}
                 aria-labelledby={accessibilityConfig?.ariaLabelledBy}
             />
         );
-    }
-
-    private getTextareaClassNames = (): string => {
-        const { hasError, hasWarning } = this.props;
-        return cx("gd-input-field", {
-            "has-error": hasError,
-            "has-warning": hasWarning,
-        });
-    };
-
-    private onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-        this.props.onChange(e.target.value);
-    };
-
-    private onBlur = (e: React.FocusEvent<HTMLTextAreaElement>): void => {
-        this.props.onBlur?.(e.target.value);
-    };
-}
+    }),
+);

@@ -11,6 +11,7 @@
     overflow-x: hidden;
     width: 100%;
     min-width: 200px;
+    padding: 6px 0;
 
     @media #{variables.$small-only} {
         // !important to override inline style from maxWidth prop
@@ -72,6 +73,7 @@
 
         &--isCompact {
             font-size: 12px;
+            padding: 5px 10px;
         }
     }
 

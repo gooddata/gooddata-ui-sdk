@@ -27,6 +27,16 @@
             text-align: right;
         }
 
+        &--total {
+            font-weight: bold;
+            background-color: gd.$total-background-color;
+        }
+
+        &--subtotal {
+            font-weight: bold;
+            background-color: gd.$subtotal-background-color;
+        }
+
         &.ag-column-first {
             border-left: none;
             border-top: none;
@@ -67,6 +77,31 @@
 
         &--null {
             color: gd.$null-value-color;
+        }
+
+        &--total {
+            font-weight: bold;
+            color: gd.$total-value-color;
+            background-color: gd.$total-background-color;
+        }
+
+        &--subtotal {
+            font-weight: bold;
+            color: gd.$total-value-color;
+            background-color: gd.$subtotal-background-color;
+        }
+
+        &--overall-total {
+            font-weight: bold;
+            color: gd.$total-value-color;
+            background-color: gd.$overall-total-background-color;
+        }
+
+        &--total-header {
+            font-weight: bold;
+            color: gd.$total-value-color;
+            background-color: gd.$total-background-color;
+            text-align: left;
         }
 
         &.ag-column-first {

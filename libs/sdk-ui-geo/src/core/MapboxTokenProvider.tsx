@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useContext } from "react";
 import { invariant } from "ts-invariant";
 import { IGeoConfig } from "../GeoChart.js";
@@ -28,20 +28,14 @@ export const MapboxTokenProvider: React.FC<{ token: string; children?: React.Rea
 export function withMapboxToken<T extends { config?: IGeoConfig }>(
     InnerComponent: React.ComponentType<T>,
 ): React.ComponentType<T> {
-    return class MapboxTokenHOC extends React.Component<T> {
-        static contextType = MapboxTokenContext;
-        declare context: React.ContextType<typeof MapboxTokenContext>;
+    return function MapboxTokenHOC(props: T) {
+        const { mapboxToken } = useContext(MapboxTokenContext);
 
-        public render() {
-            const { mapboxToken } = this.context;
-            const props = this.props;
-
-            return (
-                <>
-                    <InnerComponent {...props} config={enrichMapboxToken(props.config, mapboxToken)} />
-                </>
-            );
-        }
+        return (
+            <>
+                <InnerComponent {...props} config={enrichMapboxToken(props.config, mapboxToken)} />
+            </>
+        );
     };
 }
 

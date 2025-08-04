@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { ErrorComponent } from "@gooddata/sdk-ui";
 
 type GlobalErrorProps = {
@@ -14,15 +14,16 @@ type GlobalErrorProps = {
     buttonsBefore?: React.ReactNode;
 };
 
-const GlobalErrorComponent: React.FC<GlobalErrorProps & WrappedComponentProps> = ({
+export function GlobalError({
     errorMessage,
     errorDescription,
     errorDetails,
     buttonsBefore,
     clearing,
     clearError,
-    intl,
-}) => {
+}: GlobalErrorProps) {
+    const intl = useIntl();
+
     const [showMore, setShowMore] = React.useState(false);
     const hasShowMoreButton = Boolean(errorDetails && !showMore);
 
@@ -62,6 +63,4 @@ const GlobalErrorComponent: React.FC<GlobalErrorProps & WrappedComponentProps> =
             ) : null}
         </div>
     );
-};
-
-export const GlobalError = injectIntl(GlobalErrorComponent);
+}

@@ -7,6 +7,7 @@ import { IAccessibilityConfigBase } from "../typings/accessibility.js";
  */
 export interface IDropdownButtonAccessibilityConfig {
     isExpanded?: boolean;
+    popupType?: React.AriaAttributes["aria-haspopup"];
     popupId?: string;
 }
 

@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
-import { PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
+import { IColumnSizing, PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
 import isEmpty from "lodash/isEmpty.js";
 
 export function pivotTableNextConfigFromInsight(insight: IInsightDefinition): PivotTableNextConfig {
@@ -9,9 +9,15 @@ export function pivotTableNextConfigFromInsight(insight: IInsightDefinition): Pi
     const metricsPositionProp = !isEmpty(measureGroupDimension) ? { measureGroupDimension } : {};
     const columnHeadersPosition = insightProperties(insight)?.controls?.columnHeadersPosition;
     const columnHeadersPositionProp = !isEmpty(columnHeadersPosition) ? { columnHeadersPosition } : {};
+    const columnSizing: IColumnSizing = {
+        columnWidths: insightProperties(insight)?.controls?.columnWidths,
+        defaultWidth: "autoresizeAll",
+        growToFit: true,
+    };
 
     return {
         ...metricsPositionProp,
         ...columnHeadersPositionProp,
+        columnSizing,
     };
 }

@@ -2,7 +2,8 @@
 export { PivotTableNext } from "./PivotTableNext.js";
 export type { IPivotTableNextProps, PivotTableNextConfig } from "./types/public.js";
 
-export { CorePivotTableNext } from "./PivotTableNext.js";
+// Pluggable Visualization
+export { CorePivotTableNext } from "./PivotTableNextPluggable.js";
 export type { ICorePivotTableNextProps } from "./types/internal.js";
 
 export type {
@@ -33,7 +34,7 @@ export type {
     ITotalColumnLocatorBody,
     IWeakMeasureColumnWidthItem,
     IWeakMeasureColumnWidthItemBody,
-} from "./types/sizing.js";
+} from "./types/resizing.js";
 export {
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
@@ -52,4 +53,4 @@ export {
     newWidthForAllMeasureColumns,
     newWidthForAttributeColumn,
     setNewWidthForSelectedColumns,
-} from "./types/sizing.js";
+} from "./types/resizing.js";

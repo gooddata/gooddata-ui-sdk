@@ -1907,6 +1907,10 @@
         "value": "Reset all filters",
         "comment": "The tooltip of the reset button in the filter bar"
     },
+    "filter.resetButton.ariaLabel": {
+        "value": "Reset filters to default",
+        "comment": "The aria-label of the reset button in the filter bar"
+    },
     "filter.crossFilterResetButton.tooltip": {
         "value": "Reset cross filters",
         "comment": "The tooltip of the reset button in the filter bar"

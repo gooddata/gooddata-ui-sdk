@@ -691,11 +691,11 @@ export const selectPreloadedAttributesWithReferences: DashboardSelector<
  */
 export const selectNamesOfFiltersWithInvalidSelection: DashboardSelector<string[]> = createSelector(
     selectFiltersWithInvalidSelection,
-    selectPreloadedAttributesWithReferences,
+    selectAttributeFilterDisplayForms,
     selectFilterContextAttributeFilters,
-    (invalidFilterIds, attributesWithReferences, attributeFilters): string[] => {
-        // If attributesWithReferences is undefined, return empty array
-        if (!attributesWithReferences) {
+    (invalidFilterIds, attributeFilterDisplayForms, attributeFilters): string[] => {
+        // If attributeFilterDisplayForms is undefined, return empty array
+        if (!attributeFilterDisplayForms) {
             return [];
         }
 
@@ -706,16 +706,16 @@ export const selectNamesOfFiltersWithInvalidSelection: DashboardSelector<string[
                 invalidFilterIds.includes(filter.attributeFilter.localIdentifier),
         );
 
-        // For each invalid filter, find the attribute name from attributesWithReferences
+        // For each invalid filter, find the attribute name from attributeFilterDisplayForms
         const attributeNames = invalidFilters.map((filter) => {
             const displayFormRef = filter.attributeFilter.displayForm;
 
             // Find the attribute that contains this display form
-            const attributeWithReferences = attributesWithReferences.find((item) =>
-                item.attribute.displayForms.some((df) => areObjRefsEqual(df.ref, displayFormRef)),
+            const attributeWithReferences = attributeFilterDisplayForms.find((item) =>
+                areObjRefsEqual(item.ref, displayFormRef),
             );
 
-            return attributeWithReferences?.attribute.title ?? "";
+            return attributeWithReferences?.title ?? "";
         });
 
         // Filter out empty strings and remove duplicates

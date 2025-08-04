@@ -41,7 +41,6 @@ export const DashboardItem = React.forwardRef<HTMLDivElement, IDashboardItemProp
                         "dash-item-height": !enableFlexibleLayout,
                     },
                 )}
-                tabIndex={0}
                 ref={ref}
                 role="figure"
                 aria-describedby={description ? itemFigureId : undefined}

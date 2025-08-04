@@ -1681,12 +1681,16 @@ export interface IDropdownButtonAccessibilityConfig {
     isExpanded?: boolean;
     // (undocumented)
     popupId?: string;
+    // (undocumented)
+    popupType?: React_2.AriaAttributes["aria-haspopup"];
 }
 
 // @internal (undocumented)
 export interface IDropdownButtonProps {
     // (undocumented)
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: IAccessibilityConfigBase & {
+        popupType?: React_2.AriaAttributes["aria-haspopup"];
+    };
     // (undocumented)
     buttonRef?: React_2.MutableRefObject<HTMLElement>;
     // (undocumented)

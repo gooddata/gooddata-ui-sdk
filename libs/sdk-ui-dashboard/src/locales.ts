@@ -71,6 +71,7 @@ export const messages = defineMessages({
     dateFilterDropdownConfigurationHeader: { id: "dateFilterDropdown.configuration" },
     dateFilterDropdownConfigurationSaveText: { id: "dateFilterDropdown.save" },
     dateFilterDropdownConfigurationCancelText: { id: "gs.list.cancel" },
+    filterResetButtonAriaLabel: { id: "filter.resetButton.ariaLabel" },
     filterResetButtonTooltip: { id: "filter.resetButton.tooltip" },
     crossFilterResetButtonTooltip: { id: "filter.crossFilterResetButton.tooltip" },
     filterAddValuesLimit: { id: "attributesDropdown.valuesLimiting.addLink" },

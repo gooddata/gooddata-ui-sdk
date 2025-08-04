@@ -52,12 +52,13 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
         ariaLabel,
         ariaLabelledBy,
         ariaDescribedBy,
+        popupType,
         role = "button",
     } = accessibilityConfig ?? {};
 
     const ariaDropdownProps = {
         ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
-        ...(popupId ? { "aria-haspopup": !!popupId } : {}),
+        ...(popupId ? { "aria-haspopup": popupType ?? !!popupId } : {}),
         ...(isExpanded !== undefined ? { "aria-expanded": isExpanded } : {}),
     };
 

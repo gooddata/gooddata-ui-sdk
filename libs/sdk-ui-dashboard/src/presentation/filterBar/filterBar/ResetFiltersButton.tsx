@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
@@ -29,8 +29,12 @@ export const ResetFiltersButton: React.FC = () => {
     return (
         <div className="dash-filters-reset">
             <BubbleHoverTrigger>
-                <button className="gd-button-link button-filter-bar-reset" onClick={resetFilters}>
-                    <Icon.Reset className="gd-icon-reset" width={20} height={20} />
+                <button
+                    className="gd-button-link button-filter-bar-reset"
+                    onClick={resetFilters}
+                    aria-label={intl.formatMessage(messages.filterResetButtonAriaLabel)}
+                >
+                    <Icon.Reset className="gd-icon-reset" width={20} height={20} ariaHidden />
                 </button>
                 <Bubble alignPoints={alignPoints}>
                     <span>{bubbleText}</span>

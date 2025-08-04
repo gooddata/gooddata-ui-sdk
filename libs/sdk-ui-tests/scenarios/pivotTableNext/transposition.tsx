@@ -25,7 +25,6 @@ import { action } from "storybook/internal/actions";
 export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("transposition")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
-    // .withDefaultTestTypes("api")
     .withDefaultBackendSettings({
         enablePivotTableTransposition: true,
         enableColumnHeadersPosition: true,

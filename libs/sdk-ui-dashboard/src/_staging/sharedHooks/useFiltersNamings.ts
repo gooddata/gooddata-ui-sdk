@@ -32,6 +32,7 @@ import {
 } from "../../model/index.js";
 import { useCommonDateFilterTitle } from "./useCommonDateFilterTitle.js";
 import { useDateFiltersTitles } from "./useDateFiltersTitles.js";
+import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters.js";
 
 export type FilterNaming = {
     type: "attributeFilter" | "dateFilter";
@@ -98,7 +99,7 @@ export function useFiltersNamings(filtersToDisplay: FilterContextItem[]): (Filte
              */
             const dateFilterOptionInfo = matchDateFilterToDateFilterOptionWithPreference(
                 filter,
-                defaultDateFilterConfig,
+                convertDateFilterConfigToDateFilterOptions(defaultDateFilterConfig),
                 undefined,
             );
             const dateFilterOption = DateFilterHelpers.applyExcludeCurrentPeriod(

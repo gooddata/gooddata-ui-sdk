@@ -1255,6 +1255,9 @@ export interface IResultMetaMethods {
 // @public
 export function isAnyPlaceholder<T>(obj: unknown): obj is AnyPlaceholder<T>;
 
+// @alpha
+export function isAttributeColumnDefinition(columnDefinition: unknown): columnDefinition is ITableAttributeColumnDefinition;
+
 // @public
 export function isBadRequest(obj: unknown): obj is BadRequestSdkError;
 
@@ -1308,11 +1311,20 @@ export function isGeoTokenMissing(obj: unknown): obj is GeoTokenMissingSdkError;
 // @public
 export function isGoodDataSdkError(obj: unknown): obj is GoodDataSdkError;
 
+// @alpha
+export function isGrandTotalColumnDefinition(columnDefinition: unknown): columnDefinition is ITableGrandTotalColumnDefinition;
+
 // @public
 export function isHeaderPredicate(obj: unknown): obj is IHeaderPredicate;
 
 // @public
 export const isLocale: (locale: unknown) => locale is ILocale;
+
+// @alpha
+export function isMeasureGroupHeaderColumnDefinition(columnDefinition: unknown): columnDefinition is ITableMeasureGroupHeaderColumnDefinition;
+
+// @alpha
+export function isMeasureGroupValueColumnDefinition(columnDefinition: unknown): columnDefinition is ITableMeasureGroupValueColumnDefinition;
 
 // @public
 export function isNegativeValues(obj: unknown): obj is NegativeValuesSdkError;
@@ -1332,46 +1344,68 @@ export function isProtectedReport(obj: unknown): obj is ProtectedReportSdkError;
 // @internal (undocumented)
 export function isSomeHeaderPredicateMatched(drillablePredicates: IHeaderPredicate[], header: IMappingHeader, dv: DataViewFacade): boolean;
 
+// @alpha
+export function isSubtotalColumnDefinition(columnDefinition: unknown): columnDefinition is ITableSubtotalColumnDefinition;
+
+// @alpha
+export function isTableAttributeHeaderValue(obj: unknown): obj is ITableAttributeHeaderValue;
+
+// @alpha
+export function isTableGrandTotalHeaderValue(obj: unknown): obj is ITableGrandTotalHeaderValue;
+
+// @alpha
+export function isTableGrandTotalMeasureValue(obj: unknown): obj is ITableGrandTotalMeasureValue;
+
+// @alpha
+export function isTableGrandTotalSubtotalMeasureValue(obj: unknown): obj is ITableGrandTotalSubtotalMeasureValue;
+
+// @alpha
+export function isTableMeasureHeaderValue(obj: unknown): obj is ITableMeasureHeaderValue;
+
+// @alpha
+export function isTableMeasureValue(obj: unknown): obj is ITableMeasureValue;
+
+// @alpha
+export function isTableOverallTotalMeasureValue(obj: unknown): obj is ITableOverallTotalMeasureValue;
+
+// @alpha
+export function isTableSubtotalMeasureValue(obj: unknown): obj is ITableSubtotalMeasureValue;
+
+// @alpha
+export function isTableTotalHeaderValue(obj: unknown): obj is ITableTotalHeaderValue;
+
 // @public
 export function isUnauthorized(obj: unknown): obj is UnauthorizedSdkError;
 
 // @public
 export function isUnknownSdkError(obj: unknown): obj is UnexpectedSdkError;
 
-// @alpha (undocumented)
+// @alpha
+export function isValueColumnDefinition(columnDefinition: unknown): columnDefinition is ITableValueColumnDefinition;
+
+// @alpha
 export interface ITableAttributeColumnDefinition {
-    // (undocumented)
     attributeDescriptor: IAttributeDescriptor;
-    // (undocumented)
     columnIndex: number;
-    // (undocumented)
     rowHeaderIndex: number;
-    // (undocumented)
     type: "attribute";
 }
 
-// @alpha (undocumented)
+// @alpha
 export interface ITableAttributeHeaderValue {
-    // (undocumented)
     columnDefinition: ITableAttributeColumnDefinition;
-    // (undocumented)
     columnIndex: number;
-    // (undocumented)
     formattedValue: string | null;
-    // (undocumented)
-    rowDefinition: ITableRowDefinition;
-    // (undocumented)
+    rowDefinition: ITableValueRowDefinition | ITableSubtotalRowDefinition;
     rowIndex: number;
-    // (undocumented)
     type: "attributeHeader";
-    // (undocumented)
     value: IResultAttributeHeader;
 }
 
-// @alpha (undocumented)
+// @alpha
 export type ITableColumnDefinition = ITableAttributeColumnDefinition | ITableValueColumnDefinition | ITableMeasureGroupHeaderColumnDefinition | ITableMeasureGroupValueColumnDefinition | ITableSubtotalColumnDefinition | ITableGrandTotalColumnDefinition;
 
-// @alpha (undocumented)
+// @alpha
 export type ITableData = {
     columnDefinitions: ITableColumnDefinition[];
     rowDefinitions: ITableRowDefinition[];
@@ -1400,7 +1434,7 @@ export interface ITableDataAttributeTotalScope {
     type: "attributeTotalScope";
 }
 
-// @alpha (undocumented)
+// @alpha
 export type ITableDataHeaderScope = ITableDataAttributeScope | ITableDataAttributeTotalScope | ITableDataMeasureScope | ITableDataMeasureTotalScope | ITableDataMeasureGroupScope;
 
 // @alpha (undocumented)
@@ -1431,64 +1465,49 @@ export interface ITableDataMeasureTotalScope {
     type: "measureTotalScope";
 }
 
-// @alpha (undocumented)
+// @alpha
 export type ITableDataValue = ITableAttributeHeaderValue | ITableMeasureHeaderValue | ITableTotalHeaderValue | ITableMeasureValue | ITableSubtotalMeasureValue | ITableGrandTotalHeaderValue | ITableGrandTotalMeasureValue | ITableGrandTotalSubtotalMeasureValue | ITableOverallTotalMeasureValue;
 
-// @alpha (undocumented)
-export interface ITableGrandTotalColumnDefinition {
-    // (undocumented)
-    columnHeaderIndex: number;
-    // (undocumented)
-    columnIndex: number;
-    // (undocumented)
-    columnScope: ITableDataHeaderScope[];
-    // (undocumented)
+// @alpha
+export type ITableGrandTotalColumnDefinition = {
     type: "grandTotal";
-}
-
-// @alpha (undocumented)
-export interface ITableGrandTotalHeaderValue {
-    // (undocumented)
-    columnDefinition: ITableColumnDefinition;
-    // (undocumented)
     columnIndex: number;
-    // (undocumented)
+    columnHeaderIndex: number;
+    columnScope: ITableDataHeaderScope[];
+} & (/**
+* Handles case, when pivoting and measures are in rows.
+*/ {
+    isEmpty: false;
+    isTransposed: true;
+    totalHeader: IResultTotalHeader;
+    attributeDescriptor: IAttributeDescriptor;
+} | /**
+* Handles standard pivoting case without transposition.
+*/ {
+    isEmpty: false;
+    isTransposed: false;
+    totalHeader: IResultTotalHeader;
+    measureDescriptor: IMeasureDescriptor;
+});
+
+// @alpha
+export interface ITableGrandTotalHeaderValue {
+    columnDefinition: ITableAttributeColumnDefinition | ITableMeasureGroupHeaderColumnDefinition;
+    columnIndex: number;
     formattedValue: string | null;
-    // (undocumented)
-    grandTotalInfo?: {
-        type: TotalType;
-        measure: IMeasureDescriptor;
-        attribute: IAttributeDescriptor;
-    };
-    // (undocumented)
-    rowDefinition: ITableRowDefinition;
-    // (undocumented)
+    rowDefinition: ITableGrandTotalRowDefinition;
     rowIndex: number;
-    // (undocumented)
     type: "grandTotalHeader";
 }
 
-// @alpha (undocumented)
+// @alpha
 export interface ITableGrandTotalMeasureValue {
-    // (undocumented)
-    columnDefinition: ITableColumnDefinition;
-    // (undocumented)
+    columnDefinition: ITableValueColumnDefinition | ITableGrandTotalColumnDefinition | ITableMeasureGroupValueColumnDefinition;
     columnIndex: number;
-    // (undocumented)
     formattedValue: string | null;
-    // (undocumented)
-    grandTotalInfo?: {
-        type: TotalType;
-        measure: IMeasureDescriptor;
-        attribute: IAttributeDescriptor;
-    };
-    // (undocumented)
-    rowDefinition: ITableRowDefinition;
-    // (undocumented)
+    rowDefinition: ITableValueRowDefinition | ITableGrandTotalRowDefinition;
     rowIndex: number;
-    // (undocumented)
     type: "grandTotalValue";
-    // (undocumented)
     value: DataValue;
 }
 
@@ -1508,142 +1527,100 @@ export interface ITableGrandTotalRowDefinition {
     type: "grandTotal";
 }
 
-// @alpha (undocumented)
+// @alpha
 export interface ITableGrandTotalSubtotalMeasureValue {
-    // (undocumented)
-    columnDefinition: ITableColumnDefinition;
-    // (undocumented)
+    columnDefinition: ITableSubtotalColumnDefinition | ITableGrandTotalColumnDefinition;
     columnIndex: number;
-    // (undocumented)
     formattedValue: string | null;
-    // (undocumented)
-    grandTotalInfo?: {
-        type: TotalType;
-        measure: IMeasureDescriptor;
-        attribute: IAttributeDescriptor;
-    };
-    // (undocumented)
-    rowDefinition: ITableRowDefinition;
-    // (undocumented)
+    rowDefinition: ITableSubtotalRowDefinition | ITableGrandTotalRowDefinition;
     rowIndex: number;
-    // (undocumented)
     type: "grandTotalSubtotalValue";
-    // (undocumented)
     value: DataValue;
 }
 
-// @alpha (undocumented)
+// @alpha
 export interface ITableMeasureGroupHeaderColumnDefinition {
-    // (undocumented)
     attributeDescriptors: IAttributeDescriptor[];
-    // (undocumented)
     columnIndex: number;
-    // (undocumented)
     measureGroupDescriptor: IMeasureGroupDescriptor;
-    // (undocumented)
     type: "measureGroupHeader";
 }
 
-// @alpha (undocumented)
+// @alpha
 export interface ITableMeasureGroupValueColumnDefinition {
-    // (undocumented)
     columnIndex: number;
-    // (undocumented)
     measureGroupDescriptor: IMeasureGroupDescriptor;
-    // (undocumented)
     type: "measureGroupValue";
 }
 
-// @alpha (undocumented)
+// @alpha
 export interface ITableMeasureHeaderValue {
-    // (undocumented)
-    columnDefinition: ITableColumnDefinition;
-    // (undocumented)
+    columnDefinition: ITableMeasureGroupHeaderColumnDefinition;
     columnIndex: number;
-    // (undocumented)
     formattedValue: string | null;
-    // (undocumented)
-    rowDefinition: ITableRowDefinition;
-    // (undocumented)
+    rowDefinition: ITableValueRowDefinition;
     rowIndex: number;
-    // (undocumented)
     type: "measureHeader";
-    // (undocumented)
     value: IResultMeasureHeader;
 }
 
-// @alpha (undocumented)
+// @alpha
 export interface ITableMeasureValue {
-    // (undocumented)
     columnDefinition: ITableValueColumnDefinition | ITableMeasureGroupValueColumnDefinition;
-    // (undocumented)
     columnIndex: number;
-    // (undocumented)
     formattedValue: string | null;
-    // (undocumented)
     rowDefinition: ITableValueRowDefinition | ITableSubtotalRowDefinition;
-    // (undocumented)
     rowIndex: number;
-    // (undocumented)
     type: "value";
-    // (undocumented)
     value: DataValue;
 }
 
-// @alpha (undocumented)
+// @alpha
 export interface ITableOverallTotalMeasureValue {
-    // (undocumented)
     columnDefinition: ITableGrandTotalColumnDefinition;
-    // (undocumented)
     columnIndex: number;
-    // (undocumented)
     formattedValue: string | null;
-    // (undocumented)
-    grandTotalInfo?: {
-        type: TotalType;
-        measure: IMeasureDescriptor;
-        attribute: IAttributeDescriptor;
-    };
-    // (undocumented)
     rowDefinition: ITableGrandTotalRowDefinition;
-    // (undocumented)
     rowIndex: number;
-    // (undocumented)
     type: "overallTotalValue";
-    // (undocumented)
     value: DataValue;
 }
 
-// @alpha (undocumented)
+// @alpha
 export type ITableRowDefinition = ITableValueRowDefinition | ITableSubtotalRowDefinition | ITableGrandTotalRowDefinition;
 
-// @alpha (undocumented)
-export interface ITableSubtotalColumnDefinition {
-    // (undocumented)
-    columnHeaderIndex: number;
-    // (undocumented)
-    columnIndex: number;
-    // (undocumented)
-    columnScope: ITableDataHeaderScope[];
-    // (undocumented)
+// @alpha
+export type ITableSubtotalColumnDefinition = {
     type: "subtotal";
-}
-
-// @alpha (undocumented)
-export interface ITableSubtotalMeasureValue {
-    // (undocumented)
-    columnDefinition: ITableValueColumnDefinition | ITableSubtotalColumnDefinition;
-    // (undocumented)
     columnIndex: number;
-    // (undocumented)
+    columnHeaderIndex: number;
+    columnScope: ITableDataHeaderScope[];
+} & (/**
+* Handles case, when pivoting and measures are in rows.
+*/ {
+    isEmpty: false;
+    isTransposed: true;
+    totalHeader: IResultTotalHeader;
+    attributeDescriptor: IAttributeDescriptor;
+}
+/**
+* Handles standard pivoting case without transposition.
+*/
+| {
+    isEmpty: false;
+    isTransposed: false;
+    totalHeader: IResultTotalHeader;
+    measureDescriptor: IMeasureDescriptor;
+});
+
+// @alpha
+export interface ITableSubtotalMeasureValue {
+    columnDefinition: ITableValueColumnDefinition | ITableSubtotalColumnDefinition;
+    columnIndex: number;
     formattedValue: string | null;
-    // (undocumented)
     rowDefinition: ITableValueRowDefinition | ITableSubtotalRowDefinition;
-    // (undocumented)
     rowIndex: number;
-    // (undocumented)
     type: "subtotalValue";
-    // (undocumented)
     value: DataValue;
 }
 
@@ -1657,35 +1634,49 @@ export interface ITableSubtotalRowDefinition {
     type: "subtotal";
 }
 
-// @alpha (undocumented)
+// @alpha
 export interface ITableTotalHeaderValue {
-    // (undocumented)
-    columnDefinition: ITableColumnDefinition;
-    // (undocumented)
+    columnDefinition: ITableValueColumnDefinition | ITableSubtotalColumnDefinition | ITableMeasureGroupHeaderColumnDefinition | ITableAttributeColumnDefinition;
     columnIndex: number;
-    // (undocumented)
     formattedValue: string | null;
-    // (undocumented)
-    rowDefinition: ITableRowDefinition;
-    // (undocumented)
+    rowDefinition: ITableValueRowDefinition | ITableSubtotalRowDefinition;
     rowIndex: number;
-    // (undocumented)
     type: "totalHeader";
-    // (undocumented)
     value: IResultTotalHeader;
 }
 
-// @alpha (undocumented)
-export interface ITableValueColumnDefinition {
-    // (undocumented)
-    columnHeaderIndex: number;
-    // (undocumented)
-    columnIndex: number;
-    // (undocumented)
-    columnScope: ITableDataHeaderScope[];
-    // (undocumented)
+// @alpha
+export type ITableValueColumnDefinition = {
     type: "value";
+    columnIndex: number;
+    columnHeaderIndex: number;
+    columnScope: ITableDataHeaderScope[];
+} & (/**
+* Handles case, when pivoting and measures are in rows.
+*/ {
+    isEmpty: false;
+    isTransposed: true;
+    attributeHeader: IResultAttributeHeader;
+    attributeDescriptor: IAttributeDescriptor;
 }
+/**
+* Handles standard pivoting case without transposition.
+*/
+| {
+    isEmpty: false;
+    isTransposed: false;
+    measureHeader: IResultMeasureHeader;
+    measureDescriptor: IMeasureDescriptor;
+}
+/**
+* Handles case, when pivoting, but there are no measures.
+*/
+| {
+    isEmpty: true;
+    isTransposed: false;
+    attributeHeader: IResultAttributeHeader;
+    attributeDescriptor: IAttributeDescriptor;
+});
 
 // @alpha (undocumented)
 export interface ITableValueRowDefinition {

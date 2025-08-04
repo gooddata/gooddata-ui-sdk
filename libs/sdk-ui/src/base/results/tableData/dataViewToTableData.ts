@@ -48,6 +48,7 @@ export function dataViewToTableData(dataView: IDataView, config: DataAccessConfi
         descriptorsInfo,
         bucketsInfo,
         measureDimensionInfo,
+        transpositionInfo,
     );
 
     const { hasMeasures } = measureDimensionInfo;

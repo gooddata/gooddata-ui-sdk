@@ -43,6 +43,7 @@ const defaultGranularityFormatPatterns: {
     "GDC.time.day_in_week": "ccc", // Mon-Sun
     "GDC.time.day_in_month": "d", // 1-31
     "GDC.time.day_in_year": "D", // 1-366
+    "GDC.time.day_in_quarter": "D", // 1-92
     "GDC.time.week_us": "w/Y", // 5/2020
     "GDC.time.week_in_year": "w", // 5
     "GDC.time.month": "MMM y", // Jun 2020

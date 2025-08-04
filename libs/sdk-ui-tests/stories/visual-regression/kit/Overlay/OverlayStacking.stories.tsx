@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 import { Overlay, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
-import { injectIntl, FormattedMessage, IntlShape, IntlProvider } from "react-intl";
+import { FormattedMessage, IntlProvider } from "react-intl";
 
 import React, { useState } from "react";
 
 import "../styles/goodstrap.scss";
 
-const OverlayStackingExample: React.FC<{ intl: IntlShape }> = () => {
+function OverlayStackingExample() {
     const [state, setState] = useState(0);
 
     const onButtonClick = () => setState(state + 1);
@@ -52,9 +52,7 @@ const OverlayStackingExample: React.FC<{ intl: IntlShape }> = () => {
             </div>
         </OverlayControllerProvider>
     );
-};
-
-const LocalizedOverlayStackingExample = injectIntl(OverlayStackingExample);
+}
 
 const OverlayStackingExamples: React.FC = () => {
     return (
@@ -66,7 +64,7 @@ const OverlayStackingExamples: React.FC = () => {
             }}
         >
             <div className="library-component screenshot-target" style={{ width: 800, height: 600 }}>
-                <LocalizedOverlayStackingExample />
+                <OverlayStackingExample />
             </div>
         </IntlProvider>
     );

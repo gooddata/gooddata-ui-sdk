@@ -19,25 +19,37 @@ interface ILegendSeriesProps {
     className?: string;
 }
 
+const isFocusableLegendItem = (item: ISeriesItem) =>
+    item.type !== LEGEND_AXIS_INDICATOR && item.type !== LEGEND_SEPARATOR;
+
 export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(function LegendSeries(
     { series, label, style, children, onToggleItem, className },
     ref,
 ) {
     const { formatMessage } = useIntl();
 
-    const focusableSeriesItems = React.useMemo(() => {
-        return series.filter((item) => item.type !== LEGEND_AXIS_INDICATOR && item.type !== LEGEND_SEPARATOR);
-    }, [series]);
-
     const [focusedIndex, setFocusedIndex] = React.useState(0);
     const id = useIdPrefixed("LegendSeries");
 
+    // Create mapping of focusable items to their original indices
+    const focusableIndicesMap = React.useMemo(() => {
+        const map: number[] = [];
+        series.forEach((item, index) => {
+            if (isFocusableLegendItem(item)) {
+                map.push(index);
+            }
+        });
+        return map;
+    }, [series]);
+
     React.useEffect(() => {
-        setFocusedIndex(0);
-    }, [focusableSeriesItems.length]);
+        // Set focus to the first focusable item when series changes
+        const firstFocusableIndex = focusableIndicesMap[0] ?? 0;
+        setFocusedIndex(firstFocusableIndex);
+    }, [focusableIndicesMap]);
 
     const legendContextValue = useLegendSeriesContextValue({
-        series: focusableSeriesItems,
+        series,
         id,
         focusedIndex,
     });
@@ -49,7 +61,7 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
     const keyDownDepsRef = useAutoupdateRef({
         focusedIndex,
         onToggleItem,
-        focusableSeries: focusableSeriesItems,
+        series,
         visibilityContext: visibilityContextValue,
     });
 
@@ -57,35 +69,33 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
         () =>
             makeLinearKeyboardNavigation({
                 onFocusNext: () => {
-                    const { focusableSeries } = keyDownDepsRef.current;
                     const isVisible = visibilityContextValue.isVisible;
                     setFocusedIndex((prevIndex) =>
-                        findNextVisible(prevIndex, focusableSeries.length, isVisible),
+                        findNextVisibleOriginal(prevIndex, focusableIndicesMap, isVisible),
                     );
                 },
                 onFocusPrevious: () => {
-                    const { focusableSeries } = keyDownDepsRef.current;
                     const isVisible = visibilityContextValue.isVisible;
                     setFocusedIndex((prevIndex) =>
-                        findPreviousVisible(prevIndex, focusableSeries.length, isVisible),
+                        findPreviousVisibleOriginal(prevIndex, focusableIndicesMap, isVisible),
                     );
                 },
                 onFocusFirst: () => {
-                    const { focusableSeries } = keyDownDepsRef.current;
                     const isVisible = visibilityContextValue.isVisible;
-                    setFocusedIndex(findFirstVisible(focusableSeries.length, isVisible));
+                    const firstOriginalIndex = findFirstVisibleOriginal(focusableIndicesMap, isVisible);
+                    setFocusedIndex(firstOriginalIndex);
                 },
                 onFocusLast: () => {
-                    const { focusableSeries } = keyDownDepsRef.current;
                     const isVisible = visibilityContextValue.isVisible;
-                    setFocusedIndex(findLastVisible(focusableSeries.length, isVisible));
+                    const lastOriginalIndex = findLastVisibleOriginal(focusableIndicesMap, isVisible);
+                    setFocusedIndex(lastOriginalIndex);
                 },
                 onSelect: () => {
-                    const { onToggleItem, focusedIndex, focusableSeries } = keyDownDepsRef.current;
-                    onToggleItem(focusableSeries[focusedIndex]);
+                    const { onToggleItem, focusedIndex, series } = keyDownDepsRef.current;
+                    onToggleItem(series[focusedIndex]);
                 },
             }),
-        [keyDownDepsRef, visibilityContextValue],
+        [keyDownDepsRef, visibilityContextValue, focusableIndicesMap],
     );
 
     return (
@@ -94,7 +104,7 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
                 <div
                     className={cx("series-wrapper legend-series-wrapper", className)}
                     role={"group"}
-                    aria-activedescendant={makeItemId(focusableSeriesItems[focusedIndex])}
+                    aria-activedescendant={makeItemId(series[focusedIndex])}
                     tabIndex={0}
                     onKeyDown={handleKeyDown}
                     ref={viewportRefCallback}
@@ -122,61 +132,74 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
     );
 });
 
-// Helper functions for finding visible items
-const findFirstVisible = (seriesLength: number, isVisible: (index: number) => boolean) => {
-    for (let i = 0; i < seriesLength; i++) {
-        if (isVisible(i)) {
-            return i;
+// Helper functions for finding visible items using original indices
+const findFirstVisibleOriginal = (focusableIndicesMap: number[], isVisible: (index: number) => boolean) => {
+    for (const originalIndex of focusableIndicesMap) {
+        if (isVisible(originalIndex)) {
+            return originalIndex;
         }
     }
-    return 0;
+    return focusableIndicesMap[0] ?? 0;
 };
 
-const findLastVisible = (seriesLength: number, isVisible: (index: number) => boolean) => {
-    for (let i = seriesLength - 1; i >= 0; i--) {
-        if (isVisible(i)) {
-            return i;
+const findLastVisibleOriginal = (focusableIndicesMap: number[], isVisible: (index: number) => boolean) => {
+    for (let i = focusableIndicesMap.length - 1; i >= 0; i--) {
+        const originalIndex = focusableIndicesMap[i];
+        if (isVisible(originalIndex)) {
+            return originalIndex;
         }
     }
-    return seriesLength - 1;
+    return focusableIndicesMap[focusableIndicesMap.length - 1] ?? 0;
 };
 
-const findNextVisible = (
-    currentIndex: number,
-    seriesLength: number,
+const findNextVisibleOriginal = (
+    currentOriginalIndex: number,
+    focusableIndicesMap: number[],
     isVisible: (index: number) => boolean,
 ) => {
-    let nextIndex = currentIndex + 1;
+    const currentPosition = focusableIndicesMap.indexOf(currentOriginalIndex);
+    if (currentPosition === -1) {
+        return findFirstVisibleOriginal(focusableIndicesMap, isVisible);
+    }
+
+    let nextPosition = currentPosition + 1;
     let attempts = 0;
-    while (attempts < seriesLength) {
-        if (nextIndex >= seriesLength) {
-            nextIndex = 0;
+    while (attempts < focusableIndicesMap.length) {
+        if (nextPosition >= focusableIndicesMap.length) {
+            nextPosition = 0;
         }
-        if (isVisible(nextIndex)) {
-            return nextIndex;
+        const nextOriginalIndex = focusableIndicesMap[nextPosition];
+        if (isVisible(nextOriginalIndex)) {
+            return nextOriginalIndex;
         }
-        nextIndex++;
+        nextPosition++;
         attempts++;
     }
-    return currentIndex;
+    return currentOriginalIndex;
 };
 
-const findPreviousVisible = (
-    currentIndex: number,
-    seriesLength: number,
+const findPreviousVisibleOriginal = (
+    currentOriginalIndex: number,
+    focusableIndicesMap: number[],
     isVisible: (index: number) => boolean,
 ) => {
-    let prevIndex = currentIndex - 1;
+    const currentPosition = focusableIndicesMap.indexOf(currentOriginalIndex);
+    if (currentPosition === -1) {
+        return findLastVisibleOriginal(focusableIndicesMap, isVisible);
+    }
+
+    let prevPosition = currentPosition - 1;
     let attempts = 0;
-    while (attempts < seriesLength) {
-        if (prevIndex < 0) {
-            prevIndex = seriesLength - 1;
+    while (attempts < focusableIndicesMap.length) {
+        if (prevPosition < 0) {
+            prevPosition = focusableIndicesMap.length - 1;
         }
-        if (isVisible(prevIndex)) {
-            return prevIndex;
+        const prevOriginalIndex = focusableIndicesMap[prevPosition];
+        if (isVisible(prevOriginalIndex)) {
+            return prevOriginalIndex;
         }
-        prevIndex--;
+        prevPosition--;
         attempts++;
     }
-    return currentIndex;
+    return currentOriginalIndex;
 };

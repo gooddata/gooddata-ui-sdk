@@ -21,6 +21,7 @@ import {
     selectIsReadOnly,
     selectIsSaveAsNewButtonHidden,
     selectIsShareButtonHidden,
+    selectIsWhiteLabeled,
 } from "../config/configSelectors.js";
 import { selectMenuButtonItemsVisibility } from "../ui/uiSelectors.js";
 import { selectEntitlementExportPdf } from "../entitlements/entitlementsSelectors.js";
@@ -175,6 +176,16 @@ export const selectIsShareGrantVisible: DashboardSelector<boolean> = createSelec
 );
 
 /**
+ *
+ * @internal
+ */
+export const selectIsDashboardShareLinkVisible: DashboardSelector<boolean> = createSelector(
+    selectEnableDashboardShareDialogLink,
+    selectIsWhiteLabeled,
+    (enableDashboardShareDialogLink, isWhiteLabeled) => enableDashboardShareDialogLink && !isWhiteLabeled,
+);
+
+/**
  * @internal
  */
 export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSelector(
@@ -184,6 +195,7 @@ export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSele
     selectIsInEditMode,
     selectIsShareButtonHidden,
     selectEnableDashboardShareDialogLink,
+    selectIsWhiteLabeled,
     (
         hasSharePermissions,
         isCurrentDashboardVisibleInList,
@@ -191,9 +203,10 @@ export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSele
         isInEditMode,
         isShareButtonHidden,
         enableDashboardShareDialogLink,
+        isWhiteLabeled,
     ) =>
         // If dashboardShareDialogLink feature is enabled, show share button regardless of user share permissions
-        (enableDashboardShareDialogLink || hasSharePermissions) &&
+        ((enableDashboardShareDialogLink && !isWhiteLabeled) || hasSharePermissions) &&
         isCurrentDashboardVisibleInList &&
         !isReadOnly &&
         !isInEditMode &&

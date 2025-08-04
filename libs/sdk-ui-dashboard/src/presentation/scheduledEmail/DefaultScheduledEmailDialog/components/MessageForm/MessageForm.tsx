@@ -18,7 +18,7 @@ interface IMessageFormProps {
 
 export const MessageForm: React.FC<IMessageFormProps> = ({ value, onChange }) => {
     const intl = useIntl();
-    const textareaRef = useRef<Textarea | null>(null);
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [messageError, setMessageError] = useState<string | null>(null);
 
     const labelId = useIdPrefixed("label");

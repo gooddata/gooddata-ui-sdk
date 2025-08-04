@@ -26,7 +26,7 @@
         "eslint": "-c .eslintrc.cjs --ext ts src/"
     },
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "tsc -p tsconfig.json",
         "test": "vitest watch",
         "test-once": "vitest run",

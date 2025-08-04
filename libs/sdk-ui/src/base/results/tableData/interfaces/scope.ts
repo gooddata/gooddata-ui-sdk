@@ -9,6 +9,17 @@ import {
 } from "@gooddata/sdk-model";
 
 /**
+ * Union of all possible scope types that identify what a specific row or column represents.
+ *
+ * **Think of scopes as the "address" system for table data:**
+ * - Each row has a `rowScope: ITableDataHeaderScope[]` array
+ * - Each column has a `columnScope: ITableDataHeaderScope[]` array
+ * - These arrays describe the "path" to identify exactly what data belongs in each cell
+ *
+ * When all scopes are regular scopes (attributes and measures) it represents value column or value row.
+ * When scopes are mixed regular and total scopes, it represents subtotal column or subtotal row.
+ * When all scopes are total scopes it represents grand total column or grand total row.
+ *
  * @alpha
  */
 export type ITableDataHeaderScope =

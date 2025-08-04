@@ -138,6 +138,8 @@ export const FilterViews: React.FC = () => {
     });
 
     const triggerId = useIdPrefixed("FilterViewsTrigger");
+    const triggerLabelId = useIdPrefixed("FilterViewsTriggerLabel");
+    const dropdownId = useIdPrefixed("FilterViewsDropdown");
 
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     if (isReadOnly) {
@@ -153,8 +155,16 @@ export const FilterViews: React.FC = () => {
                         onClick={toggleDialog}
                         className={buttonClassNames}
                         isOpen={isDialogOpen}
+                        accessibilityConfig={{
+                            popupType: "dialog",
+                            role: "button",
+                            ariaLabelledBy: triggerLabelId,
+                        }}
+                        dropdownId={dropdownId}
                     >
-                        <DropdownButtonLabel filterViews={filterViews} />
+                        <span id={triggerLabelId}>
+                            <DropdownButtonLabel filterViews={filterViews} />
+                        </span>
                     </DropdownButton>
                     {isDashboardEditMode ? (
                         <div id={triggerId} className="gd-filters-views__panel__divider" />
@@ -166,6 +176,7 @@ export const FilterViews: React.FC = () => {
             {isDialogOpen ? (
                 <UiReturnFocusOnUnmount returnFocusTo={triggerId}>
                     <ConfigurationBubble
+                        id={dropdownId}
                         classNames="gd-filters-views__panel"
                         onClose={closeDialog}
                         closeOnEscape

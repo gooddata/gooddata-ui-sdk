@@ -9056,6 +9056,9 @@ export const selectIsDashboardPrivate: DashboardSelector<boolean>;
 export const selectIsDashboardSaving: DashboardSelector<boolean>;
 
 // @internal (undocumented)
+export const selectIsDashboardShareLinkVisible: DashboardSelector<boolean>;
+
+// @internal (undocumented)
 export const selectIsDeleteDialogOpen: DashboardSelector<boolean>;
 
 // @internal

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { memo, useCallback, useState } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize.js";
@@ -18,35 +18,17 @@ interface IOperatorDropdownOwnProps {
 
 type IOperatorDropdownProps = IOperatorDropdownOwnProps & WrappedComponentProps;
 
-interface IOperatorDropdownState {
-    opened: boolean;
-}
+export const OperatorDropdown = memo(function OperatorDropdown({
+    intl,
+    operator,
+    isDisabled,
+    onSelect,
+}: IOperatorDropdownProps) {
+    const [opened, setOpened] = useState(false);
 
-export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps, IOperatorDropdownState> {
-    public state: IOperatorDropdownState = {
-        opened: false,
-    };
+    const handleOperatorDropdownButtonClick = useCallback(() => setOpened((state) => !state), []);
 
-    public render() {
-        return (
-            <>
-                {this.renderDropdownButton()}
-                {this.state.opened ? (
-                    <OperatorDropdownBody
-                        alignTo={".gd-mvf-operator-dropdown-button"}
-                        onSelect={this.handleOperatorSelected}
-                        selectedOperator={this.props.operator}
-                        onClose={this.closeOperatorDropdown}
-                    />
-                ) : null}
-            </>
-        );
-    }
-
-    private renderDropdownButton() {
-        const { intl, operator, isDisabled } = this.props;
-        const { opened } = this.state;
-
+    const renderDropdownButton = useCallback(() => {
         const operatorTranslationKey = getOperatorTranslationKey(operator);
         const title = capitalize(
             operatorTranslationKey === undefined
@@ -72,23 +54,37 @@ export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps
                 title={title}
                 className={buttonClasses}
                 value={title}
-                onClick={this.handleOperatorDropdownButtonClick}
+                onClick={handleOperatorDropdownButtonClick}
                 iconLeft={`gd-icon-${getOperatorIcon(operator)}`}
                 iconRight={opened ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
                 disabled={isDisabled}
             />
         );
-    }
+    }, [handleOperatorDropdownButtonClick, intl, isDisabled, opened, operator]);
 
-    private handleOperatorSelected = (operator: MeasureValueFilterOperator) => {
-        this.closeOperatorDropdown();
-        this.props.onSelect(operator);
-    };
+    const closeOperatorDropdown = useCallback(() => setOpened(false), []);
 
-    private closeOperatorDropdown = () => this.setState({ opened: false });
+    const handleOperatorSelected = useCallback(
+        (operator: MeasureValueFilterOperator) => {
+            closeOperatorDropdown();
+            onSelect(operator);
+        },
+        [closeOperatorDropdown, onSelect],
+    );
 
-    private handleOperatorDropdownButtonClick = () =>
-        this.setState((state) => ({ ...state, opened: !state.opened }));
-}
+    return (
+        <>
+            {renderDropdownButton()}
+            {opened ? (
+                <OperatorDropdownBody
+                    alignTo={".gd-mvf-operator-dropdown-button"}
+                    onSelect={handleOperatorSelected}
+                    selectedOperator={operator}
+                    onClose={closeOperatorDropdown}
+                />
+            ) : null}
+        </>
+    );
+});
 
 export default injectIntl(OperatorDropdown);

@@ -1,0 +1,42 @@
+// (C) 2025 GoodData Corporation
+import { useMemo } from "react";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { IPivotTableNextProps } from "../../types/public.js";
+import { applyPivotTableDefaultProps } from "../../context/PivotTablePropsContext.js";
+import { createExecutionDef } from "../../features/data/createExecutionDef.js";
+import { ICorePivotTableNextProps } from "../../types/internal.js";
+
+/**
+ * Initializes execution for pivot table.
+ *
+ * @internal
+ */
+export const useInitExecution = (props: IPivotTableNextProps) => {
+    const backend = useBackendStrict(props.backend, "useInitExecution");
+    const workspace = useWorkspaceStrict(props.workspace, "useInitExecution");
+
+    const {
+        columns,
+        rows,
+        measures,
+        filters,
+        sortBy,
+        totals,
+        config: { measureGroupDimension },
+    } = applyPivotTableDefaultProps(props as ICorePivotTableNextProps);
+
+    return useMemo(() => {
+        return backend.workspace(workspace).execution().forDefinition(
+            createExecutionDef({
+                workspace,
+                columns,
+                rows,
+                measures,
+                filters,
+                sortBy,
+                totals,
+                measureGroupDimension,
+            }),
+        );
+    }, [backend, workspace, columns, rows, measures, filters, sortBy, totals, measureGroupDimension]);
+};

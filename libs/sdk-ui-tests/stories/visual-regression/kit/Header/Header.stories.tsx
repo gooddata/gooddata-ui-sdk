@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, ReactElement } from "react";
+import React, { useCallback } from "react";
 // storiesOf removed for CSF migration
 import { withIntl } from "@gooddata/sdk-ui";
 import { action } from "storybook/actions";
@@ -103,77 +103,77 @@ const getPicker = (selectedWorkspace: any) => (
     />
 );
 
-class HeaderExamples extends Component {
-    private onHeaderLogoClick(...args: any[]) {
+function HeaderExamples() {
+    const onHeaderLogoClick = (...args: any[]) => {
         console.log("onHeaderLogoClick", ...args); // eslint-disable-line no-console
-    }
+    };
 
-    private onMenuClick(menuItem: any) {
+    const onMenuClick = (menuItem: any) => {
         console.log("onMenuClick: ", menuItem); // eslint-disable-line no-console
-    }
+    };
 
-    getDarkBranding(): Partial<IAppHeaderProps> {
+    const getDarkBranding = (): Partial<IAppHeaderProps> => {
         return {
             logoTitle: "Fleet Discovery",
             headerColor: "#0d2c6b",
             activeColor: "#e72c2a",
             headerTextColor: "#FFFFFF",
         };
-    }
+    };
 
-    getLightBranding(): Partial<IAppHeaderProps> {
+    const getLightBranding = (): Partial<IAppHeaderProps> => {
         return {
             logoUrl: custom,
             logoTitle: "DataCorp",
             headerColor: "#ffffff",
         };
-    }
+    };
 
-    getSocialTablesBranding(): Partial<IAppHeaderProps> {
+    const getSocialTablesBranding = (): Partial<IAppHeaderProps> => {
         return {
             logoTitle: "SpecialTables",
             headerColor: "#CB5599",
         };
-    }
+    };
 
-    getOptixBranding(): Partial<IAppHeaderProps> {
+    const getOptixBranding = (): Partial<IAppHeaderProps> => {
         return {
             logoUrl: custom,
             logoTitle: "Big Analytics",
             headerColor: "#373D41",
             activeColor: "#FDA32D",
         };
-    }
+    };
 
-    getHeaderMenuSections(): IAppHeaderProps["menuItemsGroups"] {
+    const getHeaderMenuSections = (): IAppHeaderProps["menuItemsGroups"] => {
         return info.headerMenuSections;
-    }
+    };
 
-    getAccountMenuItems(): IAppHeaderProps["accountMenuItems"] {
+    const getAccountMenuItems = (): IAppHeaderProps["accountMenuItems"] => {
         return info.headerAccountItems;
-    }
+    };
 
-    getHelpMenuItems(): IAppHeaderProps["helpMenuItems"] {
+    const getHelpMenuItems = (): IAppHeaderProps["helpMenuItems"] => {
         return info.headerHelpItems;
-    }
+    };
 
-    private getExampleProps(): IAppHeaderProps {
+    const getExampleProps = useCallback((): IAppHeaderProps => {
         return {
-            onLogoClick: this.onHeaderLogoClick,
-            onMenuItemClick: this.onMenuClick,
-            menuItemsGroups: this.getHeaderMenuSections(),
-            accountMenuItems: this.getAccountMenuItems(),
-            helpMenuItems: this.getHelpMenuItems(),
+            onLogoClick: onHeaderLogoClick,
+            onMenuItemClick: onMenuClick,
+            menuItemsGroups: getHeaderMenuSections(),
+            accountMenuItems: getAccountMenuItems(),
+            helpMenuItems: getHelpMenuItems(),
             workspacePicker: null,
             userName: "",
         };
-    }
+    }, [onHeaderLogoClick, onMenuClick]);
 
-    private renderHeaderExample() {
+    const renderHeaderExample = useCallback(() => {
         return (
             <AppHeader
                 className="s-default-header"
-                {...this.getExampleProps()}
+                {...getExampleProps()}
                 logoUrl={gd}
                 logoTitle="GoodData"
                 documentationUrl="https://help.gooddata.com/doc"
@@ -184,13 +184,13 @@ class HeaderExamples extends Component {
                 })}
             />
         );
-    }
+    }, [getExampleProps]);
 
-    renderDarkHeaderExample() {
+    const renderDarkHeaderExample = useCallback(() => {
         return (
             <AppHeader
-                {...this.getExampleProps()}
-                {...this.getDarkBranding()}
+                {...getExampleProps()}
+                {...getDarkBranding()}
                 userName="Jara Cimrman"
                 workspacePicker={getPicker({
                     title: "Lorem ipsum dolor sit amet sin hubas",
@@ -198,13 +198,13 @@ class HeaderExamples extends Component {
                 })}
             />
         );
-    }
+    }, [getExampleProps, getDarkBranding]);
 
-    renderLightHeaderExample() {
+    const renderLightHeaderExample = useCallback(() => {
         return (
             <AppHeader
-                {...this.getExampleProps()}
-                {...this.getLightBranding()}
+                {...getExampleProps()}
+                {...getLightBranding()}
                 userName="Chose Chroustal"
                 workspacePicker={getPicker({
                     title: "Analytics",
@@ -212,13 +212,13 @@ class HeaderExamples extends Component {
                 })}
             />
         );
-    }
+    }, [getExampleProps, getLightBranding]);
 
-    private renderSocialTablesHeaderExample() {
+    const renderSocialTablesHeaderExample = useCallback(() => {
         return (
             <AppHeader
-                {...this.getExampleProps()}
-                {...this.getSocialTablesBranding()}
+                {...getExampleProps()}
+                {...getSocialTablesBranding()}
                 userName="Leonardo Da Vinci"
                 workspacePicker={getPicker({
                     title: "Project",
@@ -226,20 +226,20 @@ class HeaderExamples extends Component {
                 })}
             />
         );
-    }
+    }, [getExampleProps, getSocialTablesBranding]);
 
-    private renderEnergySavvyHeaderExample() {
+    const renderEnergySavvyHeaderExample = useCallback(() => {
         return (
             <AppHeader
-                {...this.getExampleProps()}
+                {...getExampleProps()}
                 userName="Salvador Felipe Jacinto Dalí"
-                {...this.getOptixBranding()}
+                {...getOptixBranding()}
                 workspacePicker={null}
             />
         );
-    }
+    }, [getExampleProps, getOptixBranding]);
 
-    private renderCustomWorkspacePickerExample() {
+    const renderCustomWorkspacePickerExample = useCallback(() => {
         const workspaces = getWorkspaceDescriptors(3);
 
         const newFreemiumWorkspacePickerFooter = (
@@ -258,7 +258,7 @@ class HeaderExamples extends Component {
 
         return (
             <AppHeader
-                {...this.getExampleProps()}
+                {...getExampleProps()}
                 className="s-freemium-header"
                 logoUrl={gd}
                 userName="Freemium user"
@@ -266,59 +266,60 @@ class HeaderExamples extends Component {
                 logoHref="/custom/logo/href"
             />
         );
-    }
+    }, [getExampleProps]);
 
-    private renderBadgesExample(headerColor?: string) {
-        return (
-            <AppHeader
-                {...this.getExampleProps()}
-                logoUrl={gd}
-                logoTitle="GoodData"
-                workspacePicker={null}
-                userName="Short"
-                headerColor={headerColor}
-                badges={[
-                    <HeaderBadge backgroundColor="rgba(20,178,226,0.3)" color="#14B2E2" key="first">
-                        First
-                    </HeaderBadge>,
-                    <HeaderBadge backgroundColor="red" key="second">
-                        Second
-                    </HeaderBadge>,
-                ]}
-            />
-        );
-    }
+    const renderBadgesExample = useCallback(
+        (headerColor?: string) => {
+            return (
+                <AppHeader
+                    {...getExampleProps()}
+                    logoUrl={gd}
+                    logoTitle="GoodData"
+                    workspacePicker={null}
+                    userName="Short"
+                    headerColor={headerColor}
+                    badges={[
+                        <HeaderBadge backgroundColor="rgba(20,178,226,0.3)" color="#14B2E2" key="first">
+                            First
+                        </HeaderBadge>,
+                        <HeaderBadge backgroundColor="red" key="second">
+                            Second
+                        </HeaderBadge>,
+                    ]}
+                />
+            );
+        },
+        [getExampleProps],
+    );
 
-    public render(): ReactElement {
-        return (
-            <div className="library-component screenshot-target">
-                <h4>Header</h4>
-                {this.renderHeaderExample()}
+    return (
+        <div className="library-component screenshot-target">
+            <h4>Header</h4>
+            {renderHeaderExample()}
 
-                <h4>White-labeled headers</h4>
-                {this.renderLightHeaderExample()}
+            <h4>White-labeled headers</h4>
+            {renderLightHeaderExample()}
 
-                <br />
-                {this.renderDarkHeaderExample()}
+            <br />
+            {renderDarkHeaderExample()}
 
-                <br />
-                {this.renderSocialTablesHeaderExample()}
+            <br />
+            {renderSocialTablesHeaderExample()}
 
-                <br />
-                {this.renderEnergySavvyHeaderExample()}
+            <br />
+            {renderEnergySavvyHeaderExample()}
 
-                <br />
-                <h4>Custom workspace picker footer</h4>
-                {this.renderCustomWorkspacePickerExample()}
+            <br />
+            <h4>Custom workspace picker footer</h4>
+            {renderCustomWorkspacePickerExample()}
 
-                <br />
-                <h4>Badges support</h4>
-                {this.renderBadgesExample()}
-                <br />
-                {this.renderBadgesExample("#ffffff")}
-            </div>
-        );
-    }
+            <br />
+            <h4>Badges support</h4>
+            {renderBadgesExample()}
+            <br />
+            {renderBadgesExample("#ffffff")}
+        </div>
+    );
 }
 
 const messages = {

@@ -35,5 +35,9 @@ export function enableDefaultTextWrappingForHeaders(options: AgGridProps): AgGri
             ...options.defaultColDef,
             wrapHeaderText: true,
         },
+        defaultColGroupDef: {
+            ...options.defaultColGroupDef,
+            wrapHeaderText: true,
+        },
     };
 }

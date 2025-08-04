@@ -32,7 +32,7 @@
         "styles"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
         "test": "vitest watch",
@@ -56,9 +56,9 @@
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-pivot\"'"
     },
     "dependencies": {
-        "ag-grid-community": "33.3.2",
-        "ag-grid-enterprise": "33.3.2",
-        "ag-grid-react": "33.3.2",
+        "ag-grid-community": "34.1.0",
+        "ag-grid-enterprise": "34.1.0",
+        "ag-grid-react": "34.1.0",
         "@gooddata/number-formatter": "^1.0.6",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
