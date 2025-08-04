@@ -22,7 +22,7 @@
         "esm/**/*.map"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "bash scripts/build.sh",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "test": "vitest watch",

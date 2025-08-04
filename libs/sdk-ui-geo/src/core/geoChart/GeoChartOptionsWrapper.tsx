@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { invariant } from "ts-invariant";
 import { IGeoData, IValidationResult } from "../../GeoChart.js";
 import { getGeoAttributeHeaderItems, isDataOfReasonableSize } from "./helpers/geoChart/common.js";
@@ -9,7 +9,6 @@ import { DEFAULT_DATA_POINTS_LIMIT } from "./constants/geoChart.js";
 import {
     DataViewFacade,
     ErrorCodes,
-    IErrorDescriptors,
     newErrorMapping,
     ErrorComponent as DefaultErrorComponent,
     LoadingComponent as DefaultLoadingComponent,
@@ -22,52 +21,67 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 import { getColorStrategy } from "./colorStrategy/geoChart.js";
 
-export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps> {
-    private readonly emptyHeaderString: string;
-    private readonly nullHeaderString: string;
-    private readonly errorMap: IErrorDescriptors;
+export function GeoChartOptionsWrapper(props: IGeoChartInnerProps) {
+    const emptyHeaderString = useMemo(
+        () => props.intl.formatMessage({ id: "visualization.emptyValue" }),
+        [props.intl],
+    );
+    const nullHeaderString = useMemo(
+        () => props.intl.formatMessage({ id: "visualization.emptyValue" }), // TODO: RAIL-4360 replace by proper null header string id when available
+        [props.intl],
+    );
+    const errorMap = useMemo(() => newErrorMapping(props.intl), [props.intl]);
 
-    constructor(props: IGeoChartInnerProps) {
-        super(props);
-        this.emptyHeaderString = props.intl.formatMessage({ id: "visualization.emptyValue" });
-        this.nullHeaderString = props.intl.formatMessage({ id: "visualization.emptyValue" }); // TODO: RAIL-4360 replace by proper null header string id when available
-        this.errorMap = newErrorMapping(props.intl);
-    }
+    const validateData = useCallback(
+        (geoData: IGeoData, props: IGeoChartInnerProps): IValidationResult | undefined => {
+            if (!props.dataView) {
+                return;
+            }
+            const { dataView } = props;
+            const limit = props.config?.limit ?? DEFAULT_DATA_POINTS_LIMIT;
+            const dv = DataViewFacade.for(dataView!);
 
-    public render() {
-        const { dataView, error, isLoading } = this.props;
+            return {
+                isDataTooLarge: !isDataOfReasonableSize(dv, geoData, limit),
+            };
+        },
+        [],
+    );
 
-        // if explicitly null, do not default the components to allow them to be disabled
-        const ErrorComponent =
-            this.props.ErrorComponent === null ? null : (this.props.ErrorComponent ?? DefaultErrorComponent);
-        const LoadingComponent =
-            this.props.LoadingComponent === null
-                ? null
-                : (this.props.LoadingComponent ?? DefaultLoadingComponent);
+    const getCategoryLegendItems = useCallback(
+        (colorStrategy: IColorStrategy): IPushpinCategoryLegendItem[] => {
+            return createCategoryLegendItems(colorStrategy, emptyHeaderString, nullHeaderString);
+        },
+        [emptyHeaderString, nullHeaderString],
+    );
 
-        if (error) {
-            const errorProps =
-                this.errorMap[
-                    Object.prototype.hasOwnProperty.call(this.errorMap, error)
-                        ? error
-                        : ErrorCodes.UNKNOWN_ERROR
-                ];
-            return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
-        }
+    const buildGeoChartOptions = useCallback(
+        (geoData: Readonly<IGeoData>, props: IGeoChartInnerProps): IGeoChartInnerOptions => {
+            const { segment } = geoData;
+            const { config: { colors = [], colorPalette = [], colorMapping = [] } = {}, dataView } = props;
 
-        if (isLoading || !dataView) {
-            return LoadingComponent ? <LoadingComponent /> : null;
-        }
+            const dv = DataViewFacade.for(dataView!);
+            const palette = getValidColorPalette(colors, colorPalette);
+            const colorStrategy = getColorStrategy(palette, colorMapping, geoData, dv);
 
-        return this.renderVisualization();
-    }
+            const categoryItems = segment ? getCategoryLegendItems(colorStrategy) : [];
 
-    public renderVisualization(): React.ReactNode {
-        const { dataView, onDataTooLarge } = this.props;
+            return {
+                geoData,
+                categoryItems,
+                colorStrategy,
+                colorPalette: palette,
+            };
+        },
+        [getCategoryLegendItems],
+    );
+
+    const renderVisualization = useCallback(() => {
+        const { dataView, onDataTooLarge } = props;
 
         const dv = DataViewFacade.for(dataView!);
-        const geoData = getGeoData(dv, this.emptyHeaderString, this.nullHeaderString);
-        const validationResult = this.validateData(geoData, this.props);
+        const geoData = getGeoData(dv, emptyHeaderString, nullHeaderString);
+        const validationResult = validateData(geoData, props);
 
         if (validationResult?.isDataTooLarge) {
             invariant(onDataTooLarge, "GeoChart's onDataTooLarge callback is missing.");
@@ -76,7 +90,7 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
             const attributeHeaderItems = getGeoAttributeHeaderItems(dv, geoData);
             const locationData = location !== undefined ? attributeHeaderItems[location.index] : [];
 
-            const limit = this.props.config?.limit ?? DEFAULT_DATA_POINTS_LIMIT;
+            const limit = props.config?.limit ?? DEFAULT_DATA_POINTS_LIMIT;
             const errorMessage = `LocationData limit: ${limit} actual: ${locationData.length}`;
 
             onDataTooLarge(undefined, errorMessage);
@@ -84,47 +98,31 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
             return null;
         }
 
-        const geoChartOptions = this.buildGeoChartOptions(geoData, this.props);
-        return <GeoChartInner {...this.props} geoChartOptions={geoChartOptions} />;
+        const geoChartOptions = buildGeoChartOptions(geoData, props);
+        return <GeoChartInner {...props} geoChartOptions={geoChartOptions} />;
+    }, [buildGeoChartOptions, emptyHeaderString, nullHeaderString, props, validateData]);
+
+    const { dataView, error, isLoading } = props;
+
+    // if explicitly null, do not default the components to allow them to be disabled
+    const ErrorComponent =
+        props.ErrorComponent === null ? null : (props.ErrorComponent ?? DefaultErrorComponent);
+    const LoadingComponent =
+        props.LoadingComponent === null ? null : (props.LoadingComponent ?? DefaultLoadingComponent);
+
+    if (error) {
+        const errorProps =
+            errorMap[
+                Object.prototype.hasOwnProperty.call(errorMap, error) ? error : ErrorCodes.UNKNOWN_ERROR
+            ];
+        return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
     }
 
-    private buildGeoChartOptions = (
-        geoData: Readonly<IGeoData>,
-        props: IGeoChartInnerProps,
-    ): IGeoChartInnerOptions => {
-        const { segment } = geoData;
-        const { config: { colors = [], colorPalette = [], colorMapping = [] } = {}, dataView } = props;
-
-        const dv = DataViewFacade.for(dataView!);
-        const palette = getValidColorPalette(colors, colorPalette);
-        const colorStrategy = getColorStrategy(palette, colorMapping, geoData, dv);
-
-        const categoryItems = segment ? this.getCategoryLegendItems(colorStrategy) : [];
-
-        return {
-            geoData,
-            categoryItems,
-            colorStrategy,
-            colorPalette: palette,
-        };
-    };
-
-    private getCategoryLegendItems(colorStrategy: IColorStrategy): IPushpinCategoryLegendItem[] {
-        return createCategoryLegendItems(colorStrategy, this.emptyHeaderString, this.nullHeaderString);
+    if (isLoading || !dataView) {
+        return LoadingComponent ? <LoadingComponent /> : null;
     }
 
-    private validateData = (geoData: IGeoData, props: IGeoChartInnerProps): IValidationResult | undefined => {
-        if (!props.dataView) {
-            return;
-        }
-        const { dataView } = props;
-        const limit = props.config?.limit ?? DEFAULT_DATA_POINTS_LIMIT;
-        const dv = DataViewFacade.for(dataView!);
-
-        return {
-            isDataTooLarge: !isDataOfReasonableSize(dv, geoData, limit),
-        };
-    };
+    return renderVisualization();
 }
 
 export function createCategoryLegendItems(

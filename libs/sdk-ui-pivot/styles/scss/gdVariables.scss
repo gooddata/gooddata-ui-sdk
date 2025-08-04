@@ -31,17 +31,21 @@ $row-hover-background-color: var(
     var(--gd-palette-complementary-1-from-theme, rgba(109, 118, 128, 0.1))
 );
 
+$total-value-color: var(--gd-table-totalValueColor, kit-variables.$gd-color-dark);
+
 $total-background-color: var(
     --gd-table-totalBackgroundColor,
     var(--gd-palette-complementary-2-from-theme, rgba(176, 190, 202, 0.2))
 );
-
-$total-value-color: var(--gd-table-totalValueColor, kit-variables.$gd-color-dark);
 
 $subtotal-background-color: var(
     --gd-table-subtotalBackgroundColor,
     var(--gd-palette-complementary-1-from-theme, rgba(176, 190, 202, 0.1))
 );
 
+$overall-total-background-color: var(
+    --gd-table-totalBackgroundColor-from-theme,
+    var(--gd-palette-complementary-1-from-theme, rgba(176, 190, 202, 0.4))
+);
+
 $null-value-color: var(--gd-table-nullValueColor, kit-variables.$gd-color-state-blank);
-$loading-icon-color: var(--gd-table-loadingIconColor, kit-variables.$gd-color-state-blank);

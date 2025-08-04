@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
@@ -62,97 +62,35 @@ export interface IGeoChartRendererProps extends WrappedComponentProps {
     onError?: OnError;
 }
 
-class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
-    public static defaultProps: Pick<
-        IGeoChartRendererProps,
-        "config" | "afterRender" | "onZoomChanged" | "onCenterPositionChanged"
-    > = {
-        config: {
-            mapboxToken: "",
-        },
-        afterRender: noop,
-        onZoomChanged: noop,
-        onCenterPositionChanged: noop,
-    };
+const GeoChartRenderer: React.FC<IGeoChartRendererProps> = ({
+    config = { mapboxToken: "" },
+    drillableItems,
+    drillConfig,
+    dataView,
+    geoData,
+    colorStrategy,
+    afterRender = noop,
+    onCenterPositionChanged = noop,
+    onZoomChanged = noop,
+    onError,
+    intl,
+}) => {
+    const chartRef = useRef<HTMLDivElement | null>(null);
+    const chartInstance = useRef<mapboxgl.Map | undefined>();
+    const tooltip = useRef<mapboxgl.Popup | undefined>();
+    const navigationControlButton = useRef<mapboxgl.NavigationControl | null>(null);
+    const prevPropsRef = useRef<IGeoChartRendererProps>();
 
-    private chart: mapboxgl.Map | undefined;
-    private tooltip: mapboxgl.Popup | undefined;
-    private navigationControlButton: mapboxgl.NavigationControl | null;
+    // Set mapbox token on mount and when it changes
+    useEffect(() => {
+        mapboxgl.accessToken = config.mapboxToken;
+    }, [config.mapboxToken]);
 
-    private chartRef: HTMLElement | null;
+    const isViewportFrozen = useCallback((): boolean => {
+        return config?.viewport?.frozen ?? false;
+    }, [config]);
 
-    public constructor(props: IGeoChartRendererProps) {
-        super(props);
-
-        mapboxgl.accessToken = props.config.mapboxToken;
-        this.navigationControlButton = null;
-        this.chartRef = null;
-    }
-
-    public componentDidUpdate(prevProps: IGeoChartRendererProps): void {
-        const {
-            config: { selectedSegmentItems },
-            colorStrategy,
-        } = this.props;
-        const { config: prevConfig, colorStrategy: prevColorStrategy } = prevProps;
-        const { selectedSegmentItems: prevSelectedSegmentItems = [] } = prevConfig || {};
-
-        if (!this.chart) {
-            return;
-        }
-
-        if (prevConfig.mapboxToken !== this.props.config.mapboxToken) {
-            this.removeMap();
-            mapboxgl.accessToken = this.props.config.mapboxToken;
-            this.fullMapInit();
-        }
-
-        // resize map when component is updated
-        // for example: toggle legend, change position of legend
-        this.chart.resize();
-
-        // only update map when style is ready
-        // work around for ticket SD-898
-        // avoid refresh whole map will be fixed in ticket SD-899
-        if (!this.chart.isStyleLoaded()) {
-            return;
-        }
-        const isColorChanged = isColorAssignmentItemChanged(
-            prevColorStrategy.getColorAssignment(),
-            colorStrategy.getColorAssignment(),
-        );
-        const selectedSegmentItemsChanged =
-            selectedSegmentItems && !isEqual(selectedSegmentItems, prevSelectedSegmentItems);
-        if (!isColorChanged && selectedSegmentItemsChanged) {
-            return this.setFilterMap();
-        }
-
-        this.updateMapWithConfig(prevConfig, prevColorStrategy);
-    }
-
-    public componentDidMount(): void {
-        this.fullMapInit();
-    }
-
-    public componentWillUnmount(): void {
-        this.removeMap();
-    }
-
-    public setChartRef = (ref: HTMLElement | null): void => {
-        this.chartRef = ref;
-    };
-
-    private fullMapInit(): void {
-        this.createTooltip();
-        this.createMap();
-        this.createMapControls();
-        this.handleMapEvent();
-        this.updateViewport();
-    }
-
-    private generateLocale() {
-        const { intl } = this.props;
-
+    const generateLocale = useCallback(() => {
         return {
             "ScrollZoomBlocker.CtrlMessage": intl.formatMessage(
                 { id: "geochart.scroll.zoom.blocker" },
@@ -164,129 +102,94 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
             ),
             "TouchPanBlocker.Message": intl.formatMessage({ id: "geochart.touch.pan.blocker" }),
         };
-    }
+    }, [intl]);
 
-    public createMap = (): void => {
-        const { config, geoData } = this.props;
+    const createTooltip = useCallback(() => {
+        tooltip.current = new mapboxgl.Popup(DEFAULT_TOOLTIP_OPTIONS);
+    }, []);
+
+    const createMap = useCallback((): void => {
         const data = geoData.location!.data;
         const { isExportMode = false, cooperativeGestures = true } = config || {};
-        const isViewportFrozen = this.isViewportFrozen();
-        const locale = cooperativeGestures ? this.generateLocale() : {};
+        const isViewportFrozenValue = isViewportFrozen();
+        const locale = cooperativeGestures ? generateLocale() : {};
         const { zoom, center } = getViewportOptions(data, config);
 
-        this.chart = new mapboxgl.Map({
+        chartInstance.current = new mapboxgl.Map({
             ...DEFAULT_MAPBOX_OPTIONS,
-            container: this.chartRef!,
-            // If true, the map’s canvas can be exported to a PNG using map.getCanvas().toDataURL().
+            container: chartRef.current!,
+            // If true, the map's canvas can be exported to a PNG using map.getCanvas().toDataURL().
             // This is false by default as a performance optimization.
-            interactive: !isViewportFrozen,
+            interactive: !isViewportFrozenValue,
             preserveDrawingBuffer: isExportMode,
             ...(center ? { center } : {}),
             ...(zoom ? { zoom } : {}),
             cooperativeGestures,
             locale,
         });
-    };
+    }, [config, geoData, isViewportFrozen, generateLocale]);
 
-    public render() {
-        const {
-            config: { isExportMode = false },
-        } = this.props;
-        const classNames = cx("s-gd-geo-chart-renderer", "mapbox-container", {
-            isExportMode,
-            "s-isExportMode": isExportMode,
-        });
-
-        return <div className={classNames} ref={this.setChartRef} />;
-    }
-
-    private updateMapWithConfig = (prevConfig: IGeoConfig, prevColorStrategy: IColorStrategy): void => {
-        if (this.shouldResetMap(prevConfig, prevColorStrategy)) {
-            // Config for clustering and pushpin size lead to change layer setting
-            // Then calling resetMap here is needed
-            this.resetMap();
+    const removeLayer = useCallback((layerName: string): void => {
+        if (!chartInstance.current) {
+            return;
         }
 
-        this.updatePanAndZoom();
-    };
-
-    private resetMap = (): void => {
-        this.cleanupMap();
-        this.setupMap();
-    };
-
-    private shouldResetMap = (prevConfig: IGeoConfig, prevColorStrategy: IColorStrategy): boolean => {
-        const { colorStrategy, config } = this.props;
-
-        return (
-            isPointsConfigChanged(prevConfig.points, config.points) ||
-            isColorAssignmentItemChanged(
-                prevColorStrategy.getColorAssignment(),
-                colorStrategy.getColorAssignment(),
-            )
-        );
-    };
-
-    private isViewportFrozen = (): boolean => {
-        const { config } = this.props;
-        return config?.viewport?.frozen ?? false;
-    };
-
-    private createMapControls() {
-        invariant(this.chart, "illegal state - creating map controls while map not initialized");
-
-        const isViewportFrozen = this.isViewportFrozen();
-
-        this.chart!.addControl(
-            new mapboxgl.AttributionControl({
-                compact: true,
-            }),
-        );
-
-        if (!isViewportFrozen) {
-            this.addMapControls();
+        if (chartInstance.current.getLayer(layerName)) {
+            chartInstance.current.removeLayer(layerName);
         }
-    }
+    }, []);
 
-    private removeMapControls = (): void => {
-        if (this.navigationControlButton) {
-            this.chart!.removeControl(this.navigationControlButton);
-            this.navigationControlButton = null;
+    const cleanupMap = useCallback((): void => {
+        if (!chartInstance.current) {
+            return;
         }
-    };
 
-    private addMapControls = (): void => {
-        if (!this.navigationControlButton) {
-            this.navigationControlButton = new mapboxgl.NavigationControl({
+        removeLayer(DEFAULT_LAYER_NAME);
+        removeLayer(DEFAULT_CLUSTER_LAYER_NAME);
+        removeLayer(DEFAULT_CLUSTER_LABELS_CONFIG.id);
+        if (chartInstance.current.getSource(DEFAULT_DATA_SOURCE_NAME)) {
+            chartInstance.current.removeSource(DEFAULT_DATA_SOURCE_NAME);
+        }
+    }, [removeLayer]);
+
+    const removeMapControls = useCallback((): void => {
+        if (navigationControlButton.current && chartInstance.current) {
+            chartInstance.current.removeControl(navigationControlButton.current);
+            navigationControlButton.current = null;
+        }
+    }, []);
+
+    const addMapControls = useCallback((): void => {
+        if (!navigationControlButton.current && chartInstance.current) {
+            navigationControlButton.current = new mapboxgl.NavigationControl({
                 showCompass: false,
             });
-            this.chart!.addControl(this.navigationControlButton, "top-right");
+            chartInstance.current.addControl(navigationControlButton.current, "top-right");
         }
-    };
+    }, []);
 
-    private toggleMapControls = (): void => {
-        const isViewportFrozen = this.isViewportFrozen();
-        if (!isViewportFrozen) {
-            this.addMapControls();
+    const toggleMapControls = useCallback((): void => {
+        const isViewportFrozenValue = isViewportFrozen();
+        if (!isViewportFrozenValue) {
+            addMapControls();
         } else {
-            this.removeMapControls();
+            removeMapControls();
         }
-    };
+    }, [isViewportFrozen, addMapControls, removeMapControls]);
 
-    private toggleInteractionEvents = (): void => {
-        const isViewportFrozen = this.isViewportFrozen();
+    const toggleInteractionEvents = useCallback((): void => {
+        const isViewportFrozenValue = isViewportFrozen();
         const chart:
             | { [key in (typeof INTERACTION_EVENTS)[number]]?: { disable?: () => void; enable?: () => void } }
-            | undefined = this.chart;
+            | undefined = chartInstance.current;
         if (chart === undefined) {
             return;
         }
 
-        const action = isViewportFrozen ? "disable" : "enable";
+        const action = isViewportFrozenValue ? "disable" : "enable";
         try {
             INTERACTION_EVENTS.forEach((interactionEvent): void => chart[interactionEvent]?.[action]?.());
         } catch (e) {
-            const { config } = this.props;
             const { isExportMode = false } = config || {};
             const message = `GeoChart: toggle interaction events failed. Error: ${e}`;
             // put as console.error in export mode to get to the exporter logs
@@ -296,83 +199,162 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
                 console.warn(message);
             }
         }
-    };
+    }, [config, isViewportFrozen]);
 
-    private updatePanAndZoom = (): void => {
-        this.toggleMapControls();
-        this.toggleInteractionEvents();
-    };
+    const updatePanAndZoom = useCallback((): void => {
+        toggleMapControls();
+        toggleInteractionEvents();
+    }, [toggleMapControls, toggleInteractionEvents]);
 
-    private updateViewport = (): void => {
-        invariant(this.chart, "illegal state - updating viewport while map not initialized");
+    const updateViewport = useCallback((): void => {
+        invariant(chartInstance.current, "illegal state - updating viewport while map not initialized");
 
-        const { config, geoData } = this.props;
         const data = geoData.location!.data;
         const { bounds } = getViewportOptions(data, config);
 
         if (bounds) {
             try {
-                this.chart.fitBounds(bounds, DEFAULT_MAPBOX_OPTIONS.fitBoundsOptions);
+                chartInstance.current.fitBounds(bounds, DEFAULT_MAPBOX_OPTIONS.fitBoundsOptions);
             } catch (error) {
                 // sometimes fitBounds is called before this.chart.resize() takes all effects and map area is invisible/small which leads to error in mapbox division by 0 -> NaN. Next re-render will fix it.
             }
         }
-    };
+    }, [config, geoData]);
 
-    private setFilterMap = (): void => {
-        invariant(this.chart, "illegal state - setting filter while map not initialized");
+    const setFilterMap = useCallback((): void => {
+        invariant(chartInstance.current, "illegal state - setting filter while map not initialized");
 
-        const {
-            config: { selectedSegmentItems = [] },
-        } = this.props;
+        const { selectedSegmentItems = [] } = config;
 
-        if (this.chart!.getLayer(DEFAULT_LAYER_NAME)) {
-            this.chart!.setFilter(DEFAULT_LAYER_NAME, createPushpinFilter(selectedSegmentItems));
+        if (chartInstance.current!.getLayer(DEFAULT_LAYER_NAME)) {
+            chartInstance.current!.setFilter(DEFAULT_LAYER_NAME, createPushpinFilter(selectedSegmentItems));
         }
-    };
+    }, [config]);
 
-    private handleMapEvent = () => {
-        const { chart } = this;
+    const createMapControls = useCallback(() => {
+        invariant(chartInstance.current, "illegal state - creating map controls while map not initialized");
 
-        invariant(chart, "illegal state - setting map event handlers while map not initialized");
+        const isViewportFrozenValue = isViewportFrozen();
 
-        chart.on("click", DEFAULT_LAYER_NAME, this.handleMapClick);
-        chart.on("idle", this.handleMapIdle);
-        chart.on("load", this.setupMap);
-        chart.on("load", this.adjustChartHeight);
-        chart.on("mouseenter", DEFAULT_LAYER_NAME, this.handlePushpinMouseEnter);
-        chart.on("mouseleave", DEFAULT_LAYER_NAME, this.handlePushpinMouseLeave);
-        chart.on("moveend", this.handlePushpinMoveEnd);
-        chart.on("zoomend", this.handlePushpinZoomEnd);
-        chart.on("error", this.handleMapboxError);
-        chart.on("resize", this.updateViewport);
-    };
+        chartInstance.current!.addControl(
+            new mapboxgl.AttributionControl({
+                compact: true,
+            }),
+        );
 
-    /*
-    Fired after the last frame rendered before the map enters an "idle" state:
-        - No camera transitions are in progress
-        - All currently requested tiles have loaded
-        - All fade/transition animations have completed
-    This is called one time only
-    */
-    private handleMapIdle = (): void => {
-        const {
-            chart,
-            props: { afterRender },
-        } = this;
+        if (!isViewportFrozenValue) {
+            addMapControls();
+        }
+    }, [isViewportFrozen, addMapControls]);
+
+    const handleMapboxError = useCallback(() => {
+        // Every Mapbox error is considered as invalid token error.
+        // If we want to distinguish error types put some filtering here.
+        onError?.(new GeoTokenMissingSdkError());
+    }, [onError]);
+
+    const handleMapClick = useCallback(
+        (e: mapboxgl.EventData) => {
+            const { viewport } = config;
+            const { features, originalEvent } = e;
+            const {
+                geometry: { coordinates },
+                properties,
+            } = features[0];
+
+            // Disable drilling in edit/export mode
+            if (viewport?.frozen) {
+                return;
+            }
+
+            return handleGeoPushpinDrillEvent(
+                drillableItems,
+                drillConfig,
+                DataViewFacade.for(dataView),
+                geoData,
+                properties,
+                coordinates,
+                originalEvent.target,
+            );
+        },
+        [config, drillableItems, drillConfig, dataView, geoData],
+    );
+
+    const handlePushpinMouseEnterCallback = useCallback(
+        (e: mapboxgl.EventData) => {
+            return handlePushpinMouseEnter(
+                e,
+                chartInstance.current!,
+                tooltip.current!,
+                config,
+                drillableItems,
+                intl,
+            );
+        },
+        [config, drillableItems, intl],
+    );
+
+    const handlePushpinMouseLeaveCallback = useCallback(
+        (e: mapboxgl.EventData) => {
+            return handlePushpinMouseLeave(e, chartInstance.current!, tooltip.current!, config);
+        },
+        [config],
+    );
+
+    const handlePushpinMoveEnd = useCallback(
+        (e: mapboxgl.EventData) => {
+            const { target } = e;
+            const { lng, lat } = target.getCenter();
+            const center: IGeoLngLat = { lng, lat };
+            onCenterPositionChanged(center);
+        },
+        [onCenterPositionChanged],
+    );
+
+    const handlePushpinZoomEnd = useCallback(
+        (e: mapboxgl.EventData) => {
+            const { target } = e;
+            const zoom: number = target.getZoom();
+            onZoomChanged(zoom);
+        },
+        [onZoomChanged],
+    );
+
+    const handleMapIdle = useCallback(() => {
+        const chart = chartInstance.current;
         if (!chart) {
             return;
         }
-        chart.off("idle", this.handleMapIdle);
+        chart.off("idle", handleMapIdle);
         afterRender();
-    };
+    }, [afterRender]);
 
-    private setupMap = (): void => {
-        const { chart, handleLayerLoaded, props } = this;
+    const adjustChartHeight = useCallback(() => {
+        const chart = chartInstance.current;
+        const chartRefCurrent = chartRef.current;
+
+        if (!chartRefCurrent || !chart) {
+            return;
+        }
+
+        const chartHeight: number = chartRefCurrent.clientHeight;
+        const parentHeight: number = chartRefCurrent.parentElement?.clientHeight ?? 0;
+        const shouldResize: boolean =
+            chartHeight <= ZOOM_CONTROLS_HEIGHT && ZOOM_CONTROLS_HEIGHT <= parentHeight;
+
+        if (shouldResize) {
+            // set min height to re-position mapbox attribution and zoom control, in case there are too many top legend items
+            // that take all visible height of widget and make geo chart container's height zero
+            chartRefCurrent.style.minHeight = `${parentHeight}px`;
+            chart.resize();
+        }
+    }, []);
+
+    const setupMap = useCallback((): void => {
+        const chart = chartInstance.current;
 
         invariant(chart, "illegal state - setting up map but with no existing map instance");
 
-        const { colorStrategy, config, geoData } = props;
         const { points: { groupNearbyPoints = true } = {}, showLabels = true } = config || {};
 
         const hasClustering: boolean = isClusteringAllowed(geoData, groupNearbyPoints);
@@ -402,151 +384,274 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
             const { layers = [] } = chart.getStyle();
             layers.forEach((layer: mapboxgl.Layer) => {
                 if (layer.id.includes(LAYER_STYLE_LABEL_PREFIX)) {
-                    this.removeLayer(layer.id);
+                    removeLayer(layer.id);
                 }
             });
         }
 
+        // Define the handler inline to avoid ref timing issues
+        const handleDataEvent = () => {
+            if (!chart?.isStyleLoaded()) {
+                return;
+            }
+            chart.off("data", handleDataEvent);
+        };
+
         // keep listening to the data event until the style is loaded
-        chart.on("data", handleLayerLoaded);
-    };
+        chart.on("data", handleDataEvent);
+    }, [config, geoData, colorStrategy, removeLayer]);
 
-    private adjustChartHeight = () => {
-        const { chart, chartRef } = this;
+    const handleMapEvent = useCallback(() => {
+        const chart = chartInstance.current;
 
-        if (!chartRef || !chart) {
+        invariant(chart, "illegal state - setting map event handlers while map not initialized");
+
+        chart.on("click", DEFAULT_LAYER_NAME, handleMapClick);
+        chart.on("idle", handleMapIdle);
+        chart.on("load", setupMap);
+        chart.on("load", adjustChartHeight);
+        chart.on("mouseenter", DEFAULT_LAYER_NAME, handlePushpinMouseEnterCallback);
+        chart.on("mouseleave", DEFAULT_LAYER_NAME, handlePushpinMouseLeaveCallback);
+        chart.on("moveend", handlePushpinMoveEnd);
+        chart.on("zoomend", handlePushpinZoomEnd);
+        chart.on("error", handleMapboxError);
+        chart.on("resize", updateViewport);
+    }, [
+        handleMapClick,
+        handleMapIdle,
+        setupMap,
+        adjustChartHeight,
+        handlePushpinMouseEnterCallback,
+        handlePushpinMouseLeaveCallback,
+        handlePushpinMoveEnd,
+        handlePushpinZoomEnd,
+        handleMapboxError,
+        updateViewport,
+    ]);
+
+    const removeMapEvents = useCallback(() => {
+        const chart = chartInstance.current;
+
+        if (!chart) {
             return;
         }
 
-        const chartHeight: number = chartRef.clientHeight;
-        const parentHeight: number = chartRef.parentElement?.clientHeight ?? 0;
-        const shouldResize: boolean =
-            chartHeight <= ZOOM_CONTROLS_HEIGHT && ZOOM_CONTROLS_HEIGHT <= parentHeight;
+        chart.off("click", DEFAULT_LAYER_NAME, handleMapClick);
+        chart.off("idle", handleMapIdle);
+        chart.off("load", setupMap);
+        chart.off("load", adjustChartHeight);
+        chart.off("mouseenter", DEFAULT_LAYER_NAME, handlePushpinMouseEnterCallback);
+        chart.off("mouseleave", DEFAULT_LAYER_NAME, handlePushpinMouseLeaveCallback);
+        chart.off("moveend", handlePushpinMoveEnd);
+        chart.off("zoomend", handlePushpinZoomEnd);
+        chart.off("error", handleMapboxError);
+        chart.off("resize", updateViewport);
+    }, [
+        handleMapClick,
+        handleMapIdle,
+        setupMap,
+        adjustChartHeight,
+        handlePushpinMouseEnterCallback,
+        handlePushpinMouseLeaveCallback,
+        handlePushpinMoveEnd,
+        handlePushpinZoomEnd,
+        handleMapboxError,
+        updateViewport,
+    ]);
 
-        if (shouldResize) {
-            // set min height to re-position mapbox attribution and zoom control, in case there are too many top legend items
-            // that take all visible height of widget and make geo chart container's height zero
-            chartRef.style.minHeight = `${parentHeight}px`;
-            chart.resize();
-        }
-    };
-
-    private handleLayerLoaded = () => {
-        const { chart } = this;
-
-        if (!chart?.isStyleLoaded()) {
+    const removeMap = useCallback((): void => {
+        if (!chartInstance.current) {
             return;
         }
 
-        chart.off("data", this.handleLayerLoaded);
-    };
+        // Remove event listeners before removing the map
+        removeMapEvents();
 
-    private createTooltip = () => {
-        this.tooltip = new mapboxgl.Popup(DEFAULT_TOOLTIP_OPTIONS);
-    };
-
-    private cleanupMap = (): void => {
-        if (!this.chart) {
-            return;
-        }
-
-        this.removeLayer(DEFAULT_LAYER_NAME);
-        this.removeLayer(DEFAULT_CLUSTER_LAYER_NAME);
-        this.removeLayer(DEFAULT_CLUSTER_LABELS_CONFIG.id);
-        if (this.chart.getSource(DEFAULT_DATA_SOURCE_NAME)) {
-            this.chart.removeSource(DEFAULT_DATA_SOURCE_NAME);
-        }
-    };
-
-    private removeLayer(layerName: string): void {
-        if (!this.chart) {
-            return;
-        }
-
-        if (this.chart.getLayer(layerName)) {
-            this.chart.removeLayer(layerName);
-        }
-    }
-
-    private removeMap = (): void => {
-        if (!this.chart) {
-            return;
-        }
         // try catch to hide the mapbox's error message
         // TypeError: Cannot read property 'off' of undefined
         // mapbox is trying to call its function after deleted
         // https://github.com/mapbox/mapbox-gl-js/blob/master/src/ui/control/navigation_control.js#L118
         try {
-            this.chart.remove();
+            chartInstance.current.remove();
         } catch {
             return;
         }
-    };
+    }, [removeMapEvents]);
 
-    private handlePushpinMoveEnd = (e: mapboxgl.EventData): void => {
-        const { target } = e;
-        const { onCenterPositionChanged } = this.props;
-        const { lng, lat } = target.getCenter();
-        const center: IGeoLngLat = { lng, lat };
-        onCenterPositionChanged(center);
-    };
+    const fullMapInit = useCallback((): void => {
+        createTooltip();
+        createMap();
+        createMapControls();
+        handleMapEvent();
+        updateViewport();
+    }, [createTooltip, createMap, createMapControls, handleMapEvent, updateViewport]);
 
-    private handlePushpinZoomEnd = (e: mapboxgl.EventData): void => {
-        const { target } = e;
-        const { onZoomChanged } = this.props;
-        const zoom: number = target.getZoom();
+    const resetMap = useCallback((): void => {
+        cleanupMap();
+        setupMap();
+    }, [cleanupMap, setupMap]);
 
-        onZoomChanged(zoom);
-    };
+    const shouldResetMap = useCallback(
+        (prevConfig: IGeoConfig, prevColorStrategy: IColorStrategy): boolean => {
+            return (
+                isPointsConfigChanged(prevConfig.points, config.points) ||
+                isColorAssignmentItemChanged(
+                    prevColorStrategy.getColorAssignment(),
+                    colorStrategy.getColorAssignment(),
+                )
+            );
+        },
+        [config, colorStrategy],
+    );
 
-    private handleMapboxError = (): void => {
-        // Every Mapbox error is considered as invalid token error.
-        // If we want to distinguish error types put some filtering here.
-        const { onError } = this.props;
-        onError?.(new GeoTokenMissingSdkError());
-    };
+    const updateMapWithConfig = useCallback(
+        (prevConfig: IGeoConfig, prevColorStrategy: IColorStrategy): void => {
+            if (shouldResetMap(prevConfig, prevColorStrategy)) {
+                // Config for clustering and pushpin size lead to change layer setting
+                // Then calling resetMap here is needed
+                resetMap();
+            }
 
-    private handleMapClick = (e: mapboxgl.EventData): void => {
-        const {
-            config: { viewport },
+            updatePanAndZoom();
+        },
+        [shouldResetMap, resetMap, updatePanAndZoom],
+    );
+
+    // ComponentDidMount effect
+    useEffect(() => {
+        fullMapInit();
+        return () => {
+            removeMap();
+        };
+    }, [fullMapInit, removeMap]);
+
+    // ComponentDidUpdate effect
+    useEffect(() => {
+        if (!prevPropsRef.current) {
+            prevPropsRef.current = {
+                config,
+                drillableItems,
+                drillConfig,
+                dataView,
+                geoData,
+                colorStrategy,
+                afterRender,
+                onCenterPositionChanged,
+                onZoomChanged,
+                onError,
+                intl,
+            };
+            return;
+        }
+
+        const prevProps = prevPropsRef.current;
+        const { selectedSegmentItems } = config;
+        const { config: prevConfig, colorStrategy: prevColorStrategy } = prevProps;
+        const { selectedSegmentItems: prevSelectedSegmentItems = [] } = prevConfig || {};
+
+        if (!chartInstance.current) {
+            prevPropsRef.current = {
+                config,
+                drillableItems,
+                drillConfig,
+                dataView,
+                geoData,
+                colorStrategy,
+                afterRender,
+                onCenterPositionChanged,
+                onZoomChanged,
+                onError,
+                intl,
+            };
+            return;
+        }
+
+        if (prevConfig.mapboxToken !== config.mapboxToken) {
+            removeMap();
+            mapboxgl.accessToken = config.mapboxToken;
+            fullMapInit();
+        }
+
+        // resize map when component is updated
+        // for example: toggle legend, change position of legend
+        chartInstance.current.resize();
+
+        // only update map when style is ready
+        // work around for ticket SD-898
+        // avoid refresh whole map will be fixed in ticket SD-899
+        if (!chartInstance.current.isStyleLoaded()) {
+            prevPropsRef.current = {
+                config,
+                drillableItems,
+                drillConfig,
+                dataView,
+                geoData,
+                colorStrategy,
+                afterRender,
+                onCenterPositionChanged,
+                onZoomChanged,
+                onError,
+                intl,
+            };
+            return;
+        }
+        const isColorChanged = isColorAssignmentItemChanged(
+            prevColorStrategy.getColorAssignment(),
+            colorStrategy.getColorAssignment(),
+        );
+        const selectedSegmentItemsChanged =
+            selectedSegmentItems && !isEqual(selectedSegmentItems, prevSelectedSegmentItems);
+        if (!isColorChanged && selectedSegmentItemsChanged) {
+            setFilterMap();
+            prevPropsRef.current = {
+                config,
+                drillableItems,
+                drillConfig,
+                dataView,
+                geoData,
+                colorStrategy,
+                afterRender,
+                onCenterPositionChanged,
+                onZoomChanged,
+                onError,
+                intl,
+            };
+            return;
+        }
+
+        updateMapWithConfig(prevConfig, prevColorStrategy);
+
+        prevPropsRef.current = {
+            config,
             drillableItems,
             drillConfig,
             dataView,
             geoData,
-        } = this.props;
-        const { features, originalEvent } = e;
-        const {
-            geometry: { coordinates },
-            properties,
-        } = features[0];
+            colorStrategy,
+            afterRender,
+            onCenterPositionChanged,
+            onZoomChanged,
+            onError,
+            intl,
+        };
+    });
 
-        // Disable drilling in edit/export mode
-        if (viewport?.frozen) {
-            return;
-        }
+    const { isExportMode = false } = config;
+    const classNames = cx("s-gd-geo-chart-renderer", "mapbox-container", {
+        isExportMode,
+        "s-isExportMode": isExportMode,
+    });
 
-        return handleGeoPushpinDrillEvent(
-            drillableItems,
-            drillConfig,
-            DataViewFacade.for(dataView),
-            geoData,
-            properties,
-            coordinates,
-            originalEvent.target,
-        );
-    };
+    return <div className={classNames} ref={chartRef} />;
+};
 
-    private handlePushpinMouseEnter = (e: mapboxgl.EventData): void => {
-        const { chart, props, tooltip } = this;
-        const { config, drillableItems, intl } = props;
-        return handlePushpinMouseEnter(e, chart!, tooltip!, config, drillableItems, intl);
-    };
-
-    private handlePushpinMouseLeave = (e: mapboxgl.EventData): void => {
-        const { chart, props, tooltip } = this;
-        const { config } = props;
-        return handlePushpinMouseLeave(e, chart!, tooltip!, config);
-    };
-}
+GeoChartRenderer.defaultProps = {
+    config: {
+        mapboxToken: "",
+    },
+    afterRender: noop,
+    onZoomChanged: noop,
+    onCenterPositionChanged: noop,
+};
 
 export default GeoChartRenderer;

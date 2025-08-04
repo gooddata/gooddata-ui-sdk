@@ -4,6 +4,7 @@ import { ICorePivotTableNextProps } from "../types/internal.js";
 import { PivotTableNextConfig } from "../types/public.js";
 import {
     EMPTY_ATTRIBUTES,
+    EMPTY_COLUMN_WIDTHS,
     EMPTY_DRILLS,
     EMPTY_FILTERS,
     EMPTY_METRICS,
@@ -12,6 +13,7 @@ import {
     EMPTY_TOTALS,
     PAGE_SIZE,
 } from "../constants/internal.js";
+import { IColumnSizing } from "../types/resizing.js";
 
 const PivotTablePropsContext = createContext<ICorePivotTableNextProps | undefined>(undefined);
 
@@ -27,7 +29,17 @@ export function PivotTablePropsProvider({
 
 type WithRequired<T, K extends keyof T> = T & Required<Pick<T, K>>;
 
-type RootPropsWithDefaults =
+type ColumnSizingDefaults = "columnWidths";
+
+type ColumnSizingWithDefaults = WithRequired<IColumnSizing, ColumnSizingDefaults>;
+
+type ConfigDefaults = "measureGroupDimension" | "columnHeadersPosition" | "columnSizing" | "textWrapping";
+
+type ConfigWithDefaults = WithRequired<PivotTableNextConfig, ConfigDefaults> & {
+    columnSizing: ColumnSizingWithDefaults;
+};
+
+type RootPropsDefaults =
     | "rows"
     | "columns"
     | "measures"
@@ -37,14 +49,10 @@ type RootPropsWithDefaults =
     | "pageSize"
     | "drillableItems";
 
-type ConfigPropsWithDefaults =
-    | "measureGroupDimension"
-    | "columnHeadersPosition"
-    | "columnSizing"
-    | "textWrapping";
+type RootPropsWithDefaults = WithRequired<ICorePivotTableNextProps, RootPropsDefaults>;
 
-type PivotTablePropsWithDefaults = WithRequired<ICorePivotTableNextProps, RootPropsWithDefaults> & {
-    config: WithRequired<PivotTableNextConfig, ConfigPropsWithDefaults>;
+type PivotTablePropsWithDefaults = RootPropsWithDefaults & {
+    config: ConfigWithDefaults;
 };
 
 /**
@@ -65,7 +73,10 @@ export function applyPivotTableDefaultProps(props: ICorePivotTableNextProps): Pi
             ...props.config,
             measureGroupDimension: props.config?.measureGroupDimension ?? "columns",
             columnHeadersPosition: props.config?.columnHeadersPosition ?? "top",
-            columnSizing: props.config?.columnSizing ?? EMPTY_OBJECT,
+            columnSizing: {
+                ...(props.config?.columnSizing ?? {}),
+                columnWidths: props.config?.columnSizing?.columnWidths ?? EMPTY_COLUMN_WIDTHS,
+            },
             textWrapping: props.config?.textWrapping ?? EMPTY_OBJECT,
         },
     };

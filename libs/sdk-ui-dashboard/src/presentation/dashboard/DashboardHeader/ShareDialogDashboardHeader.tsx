@@ -16,6 +16,7 @@ import {
     selectFilterContextFilters,
     selectIsShareGrantVisible,
     selectEnableDashboardShareDialogLink,
+    selectIsDashboardShareLinkVisible,
 } from "../../../model/index.js";
 import { ShareDialog, ISharingApplyPayload } from "../../shareDialog/index.js";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -33,10 +34,10 @@ const useShareDialogDashboardHeader = () => {
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
     const isShareGrantHidden = !useDashboardSelector(selectIsShareGrantVisible);
     const isDashboardShareDialogLinkEnabled = useDashboardSelector(selectEnableDashboardShareDialogLink);
+    const showDashboardShareLink = useDashboardSelector(selectIsDashboardShareLinkVisible);
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const applyShareGrantOnSelect = isDashboardShareDialogLinkEnabled;
-    const showDashboardShareLink = isDashboardShareDialogLinkEnabled;
 
     const { run: runChangeSharing, status } = useDashboardCommandProcessing({
         commandCreator: changeSharing,

@@ -392,6 +392,17 @@ export type {
     ITableOverallTotalMeasureValue,
     ITableTotalHeaderValue,
 } from "./results/tableData/interfaces/cells.js";
+export {
+    isTableAttributeHeaderValue,
+    isTableGrandTotalHeaderValue,
+    isTableGrandTotalSubtotalMeasureValue,
+    isTableGrandTotalMeasureValue,
+    isTableSubtotalMeasureValue,
+    isTableMeasureValue,
+    isTableMeasureHeaderValue,
+    isTableOverallTotalMeasureValue,
+    isTableTotalHeaderValue,
+} from "./results/tableData/interfaces/cells.js";
 export type {
     ITableAttributeColumnDefinition,
     ITableValueColumnDefinition,
@@ -400,6 +411,14 @@ export type {
     ITableMeasureGroupValueColumnDefinition,
     ITableColumnDefinition,
     ITableMeasureGroupHeaderColumnDefinition,
+} from "./results/tableData/interfaces/columns.js";
+export {
+    isAttributeColumnDefinition,
+    isValueColumnDefinition,
+    isMeasureGroupHeaderColumnDefinition,
+    isMeasureGroupValueColumnDefinition,
+    isSubtotalColumnDefinition,
+    isGrandTotalColumnDefinition,
 } from "./results/tableData/interfaces/columns.js";
 export type {
     ITableRowDefinition,

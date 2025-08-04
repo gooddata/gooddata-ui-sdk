@@ -23,7 +23,7 @@
         ".storybook"
     ],
     "scripts": {
-        "clean": "rm -rf ci esm dist coverage *.log tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci esm dist coverage *.log tsconfig.tsbuildinfo",
         "build": "tsc -p tsconfig.build.json",
         "test": "vitest watch",
         "test-once": "npm run story-generator && npm run story-extractor && vitest --run",

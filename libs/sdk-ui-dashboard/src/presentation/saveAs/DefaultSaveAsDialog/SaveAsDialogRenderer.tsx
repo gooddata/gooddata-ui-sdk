@@ -1,6 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+// (C) 2020-2025 GoodData Corporation
+import React, { useState, memo, useCallback } from "react";
+import { useIntl } from "react-intl";
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact.js";
 import first from "lodash/first.js";
@@ -8,10 +8,6 @@ import noop from "lodash/noop.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
 import { messages } from "../../../locales.js";
-
-interface ISaveAsNewDashboardDialogState {
-    dashboardTitle: string;
-}
 
 export interface ISaveAsDialogRendererOwnProps {
     dashboardTitle: string;
@@ -29,66 +25,63 @@ export interface ISaveAsDialogRendererOwnProps {
 /**
  * @internal
  */
-export class SaveAsNewDashboardDialog extends React.PureComponent<
-    ISaveAsDialogRendererOwnProps & WrappedComponentProps,
-    ISaveAsNewDashboardDialogState
-> {
-    constructor(props: ISaveAsDialogRendererOwnProps & WrappedComponentProps) {
-        super(props);
-        const defaultDashboardTitle = this.getDefaultDashboardTitle();
+export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog({
+    onCancel = noop,
+    isDashboardLoaded,
+    isDashboardSaving,
+    dashboardTitle: dashboardTitleProp,
+    onSubmit,
+    isInEditMode,
+    isKpiWidgetEnabled,
+    isScheduleEmailsEnabled,
+}: ISaveAsDialogRendererOwnProps) {
+    const intl = useIntl();
 
-        this.state = {
-            dashboardTitle: defaultDashboardTitle,
-        };
-    }
-
-    private getDefaultDashboardTitle(): string {
-        return this.props.intl.formatMessage(
+    const getDefaultDashboardTitle = useCallback(() => {
+        return intl.formatMessage(
             { id: "dialogs.save.as.new.default.title" },
             {
-                title: this.props.dashboardTitle,
+                title: dashboardTitleProp,
             },
         );
-    }
+    }, [dashboardTitleProp, intl]);
 
-    private canCreateDashboard(): boolean {
-        const { isDashboardLoaded, isDashboardSaving } = this.props;
+    const [dashboardTitle, setDashboardTitle] = useState(getDefaultDashboardTitle());
 
+    const canCreateDashboard = useCallback(() => {
         return isDashboardLoaded && !isDashboardSaving;
-    }
+    }, [isDashboardLoaded, isDashboardSaving]);
 
-    handleTitleFocus = (e: any) => {
+    const handleTitleFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
         e.target.select();
+    }, []);
+
+    const handleTitleBlur = useCallback(
+        (e: React.FocusEvent<HTMLInputElement>) => {
+            const newDashboardTitle = e.target.value.trim();
+            setDashboardTitle(newDashboardTitle === "" ? getDefaultDashboardTitle() : newDashboardTitle);
+        },
+        [getDefaultDashboardTitle],
+    );
+
+    const handleTitleChange = (value: string) => {
+        setDashboardTitle(value);
     };
 
-    handleTitleBlur = (e: any) => {
-        const dashboardTitle = e.target.value.trim();
-        this.setState({
-            dashboardTitle: dashboardTitle === "" ? this.getDefaultDashboardTitle() : dashboardTitle,
-        });
-    };
-
-    handleTitleChange = (value: string) => {
-        this.setState({
-            dashboardTitle: value,
-        });
-    };
-
-    onSubmit = (): void => {
-        const title = this.state.dashboardTitle.trim();
-        if (this.canCreateDashboard() && title !== "") {
-            this.props.onSubmit(
+    const onSubmitHandler = useCallback(() => {
+        const title = dashboardTitle.trim();
+        if (canCreateDashboard() && title !== "") {
+            onSubmit(
                 title,
                 true, // switch to the new dashboard
                 // do not reuse the filter context in edit mode, create a new one with the current filter state
                 // otherwise use the original filter context values when creating a copy
-                !this.props.isInEditMode,
+                !isInEditMode,
             );
         }
-    };
+    }, [canCreateDashboard, dashboardTitle, isInEditMode, onSubmit]);
 
-    private getNoteText = (): string => {
-        const { isKpiWidgetEnabled, isScheduleEmailsEnabled, intl } = this.props;
+    const getNoteText = useCallback(() => {
         const messageId = first(
             compact([
                 isKpiWidgetEnabled && isScheduleEmailsEnabled && messages.saveAsNewAlertsAndEmailsMessage.id,
@@ -98,50 +91,41 @@ export class SaveAsNewDashboardDialog extends React.PureComponent<
         );
 
         return messageId ? intl.formatMessage({ id: messageId }) : "";
-    };
+    }, [intl, isKpiWidgetEnabled, isScheduleEmailsEnabled]);
 
-    public render() {
-        const {
-            intl: { formatMessage },
-            onCancel = noop,
-            isDashboardSaving,
-        } = this.props;
-        const { dashboardTitle } = this.state;
+    const noteText = getNoteText();
 
-        const noteText = this.getNoteText();
+    return (
+        <ConfirmDialog
+            onCancel={onCancel}
+            onSubmit={onSubmitHandler}
+            isPositive
+            className="s-dialog save-as-new-dialog"
+            headline={intl.formatMessage({ id: "dialogs.save.as.new.title" })}
+            cancelButtonText={intl.formatMessage({ id: "cancel" })}
+            submitButtonText={intl.formatMessage({ id: "create.dashboard" })}
+            isSubmitDisabled={isDashboardSaving || dashboardTitle.trim() === ""}
+        >
+            <Typography tagName="p" className="dashboard-note">
+                {intl.formatMessage({ id: "dialogs.save.as.new.desc" })}
+            </Typography>
+            <div className="dashboard-title">
+                <Input
+                    autofocus
+                    maxlength={DASHBOARD_TITLE_MAX_LENGTH}
+                    onFocus={handleTitleFocus}
+                    onBlur={handleTitleBlur}
+                    value={dashboardTitle}
+                    placeholder={getDefaultDashboardTitle()}
+                    onChange={handleTitleChange as any}
+                />
+            </div>
+            {noteText ? <Message type="progress">{noteText}</Message> : null}
+        </ConfirmDialog>
+    );
+});
 
-        return (
-            <ConfirmDialog
-                onCancel={onCancel}
-                onSubmit={this.onSubmit}
-                isPositive
-                className="s-dialog save-as-new-dialog"
-                headline={formatMessage({ id: "dialogs.save.as.new.title" })}
-                cancelButtonText={formatMessage({ id: "cancel" })}
-                submitButtonText={formatMessage({ id: "create.dashboard" })}
-                isSubmitDisabled={isDashboardSaving || dashboardTitle.trim() === ""}
-            >
-                <Typography tagName="p" className="dashboard-note">
-                    {formatMessage({ id: "dialogs.save.as.new.desc" })}
-                </Typography>
-                <div className="dashboard-title">
-                    <Input
-                        autofocus
-                        maxlength={DASHBOARD_TITLE_MAX_LENGTH}
-                        onFocus={this.handleTitleFocus}
-                        onBlur={this.handleTitleBlur}
-                        value={dashboardTitle}
-                        placeholder={this.getDefaultDashboardTitle()}
-                        onChange={this.handleTitleChange as any}
-                    />
-                </div>
-                {noteText ? <Message type="progress">{noteText}</Message> : null}
-            </ConfirmDialog>
-        );
-    }
-}
-
-export const SaveAsDialogRendererIntl = injectIntl(SaveAsNewDashboardDialog);
+export const SaveAsDialogRendererIntl = SaveAsNewDashboardDialog;
 
 export const SaveAsDialogRenderer: React.FC<ISaveAsDialogRendererOwnProps> = (props) => (
     <IntlWrapper locale={props.locale}>

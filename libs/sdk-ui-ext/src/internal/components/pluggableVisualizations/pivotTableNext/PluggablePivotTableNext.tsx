@@ -17,7 +17,7 @@ import {
     ISortItem,
 } from "@gooddata/sdk-model";
 import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     CorePivotTableNext,
     ICorePivotTableNextProps,
@@ -49,7 +49,6 @@ import {
     getSupportedPropertiesControls,
     getPivotTableProperties,
 } from "../../../utils/propertiesHelper.js";
-import { sanitizePivotTableConfig } from "./configHelpers.js";
 import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel.js";
 import {
     getPivotTableNextDefaultUiConfig,
@@ -85,6 +84,7 @@ import {
     adaptReferencePointWidthItemsToPivotTable,
 } from "./widthItemsHelpers.js";
 import { removeInvalidTotals } from "./totalsHelpers.js";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 
 const PROPERTIES_AFFECTING_REFERENCE_POINT = ["measureGroupDimension"];
 
@@ -99,10 +99,12 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     private unmountFun: UnmountFunction;
     private readonly settings: ISettings;
     private backendCapabilities: IBackendCapabilities;
+    private environment: VisualizationEnvironment;
 
     constructor(props: IVisConstruct) {
         super(props);
 
+        this.environment = props.environment;
         this.renderFun = props.renderFun;
         this.unmountFun = props.unmountFun;
         this.settings = props.featureFlags ?? {};
@@ -254,8 +256,8 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }
 
-    private getSanitizedConfig(insight: IInsightDefinition, customVisualizationConfig: any) {
-        return sanitizePivotTableConfig(insight, customVisualizationConfig, this.settings);
+    private getSanitizedConfig(_insight: IInsightDefinition, customVisualizationConfig: any) {
+        return customVisualizationConfig;
     }
 
     public getExecution(
@@ -352,11 +354,16 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         const columnHeadersPosition: ColumnHeadersPosition = !isSetColumnHeadersPositionToLeftAllowed(insight)
             ? "top"
             : getColumnHeadersPositionFromProperties(insightProperties(insight));
-
+        const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
         const tableConfig: PivotTableNextConfig = {
             ...customVisualizationConfig,
             measureGroupDimension,
             columnHeadersPosition,
+            columnSizing: {
+                columnWidths: getColumnWidthsFromProperties(insightProperties(insight)),
+                defaultWidth: "autoresizeAll",
+                growToFit,
+            },
         };
 
         const pivotTableProps: ICorePivotTableNextProps = {

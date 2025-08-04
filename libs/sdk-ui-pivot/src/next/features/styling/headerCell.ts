@@ -1,0 +1,30 @@
+// (C) 2025 GoodData Corporation
+import { ColGroupDef, HeaderClassParams } from "ag-grid-enterprise";
+import { AgGridRowData } from "../../types/internal.js";
+import { e } from "./bem.js";
+import { isGrandTotalColumnDefinition, isSubtotalColumnDefinition } from "@gooddata/sdk-ui";
+
+/**
+ * Returns a class name for a header cell.
+ *
+ * @param params - The header class params
+ * @returns A class name for the header cell
+ */
+export const getHeaderCellClassName = (params: HeaderClassParams<AgGridRowData, string | null>) => {
+    const { colDef } = params;
+
+    const isTotal = isGrandTotalColumnDefinition(colDef.context?.columnDefinition);
+    const isTotalGroup = (colDef as ColGroupDef).children?.some((child) =>
+        isGrandTotalColumnDefinition(child.context?.columnDefinition),
+    );
+
+    const isSubtotal = isSubtotalColumnDefinition(colDef.context?.columnDefinition);
+    const isSubtotalGroup = (colDef as ColGroupDef).children?.some((child) =>
+        isSubtotalColumnDefinition(child.context?.columnDefinition),
+    );
+
+    return e("header-cell", {
+        total: isTotal || isTotalGroup,
+        subtotal: isSubtotal || isSubtotalGroup,
+    });
+};

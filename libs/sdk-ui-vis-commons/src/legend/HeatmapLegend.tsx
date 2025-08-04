@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { memo } from "react";
 import { IColorLegendSize, IHeatmapLegendItem, IColorLegendItem } from "./types.js";
 import { ColorLegend } from "./ColorLegend.js";
 
@@ -18,23 +18,27 @@ export interface IHeatmapLegendProps {
 /**
  * @internal
  */
-export class HeatmapLegend extends React.PureComponent<IHeatmapLegendProps> {
-    public render() {
-        const { title, series, format, numericSymbols, size, position } = this.props;
-        const data = series.map((item: IHeatmapLegendItem): IColorLegendItem => {
-            const { range, color } = item;
-            return { range, color };
-        });
+export const HeatmapLegend = memo(function HeatmapLegend({
+    title,
+    series,
+    format,
+    numericSymbols,
+    size,
+    position,
+}: IHeatmapLegendProps) {
+    const data = series.map((item: IHeatmapLegendItem): IColorLegendItem => {
+        const { range, color } = item;
+        return { range, color };
+    });
 
-        return (
-            <ColorLegend
-                data={data}
-                format={format}
-                size={size}
-                numericSymbols={numericSymbols}
-                position={position}
-                title={title}
-            />
-        );
-    }
-}
+    return (
+        <ColorLegend
+            data={data}
+            format={format}
+            size={size}
+            numericSymbols={numericSymbols}
+            position={position}
+            title={title}
+        />
+    );
+});

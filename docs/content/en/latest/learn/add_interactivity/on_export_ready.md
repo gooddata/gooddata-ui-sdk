@@ -12,10 +12,11 @@ The `onExportReady` parameter is available in all visual components except for t
 ## exportConfig
 
 The `exportConfig` object includes the following properties:
-* **format** (optional, string) specifies the format of the exported data. Can be set to `csv` (default) or `xlsx`.
-* **includeFilterContext** (only when `format` is set to `xlsx`; optional, boolean) specifies whether the applied filters should be added (`true`) or should not be added (`false`; default) to the exported XLSX file.
-* **mergeHeaders** (only when `format` is set to `xlsx`; optional, boolean) specifies whether repeating header cells should be merged (`true`; default) or should not be merged (`false`).
-* **title** (optional, string) is the title of the exported data.
+
+- **format** (optional, string) specifies the format of the exported data. Can be set to `csv` (default) or `xlsx`.
+- **includeFilterContext** (only when `format` is set to `xlsx`; optional, boolean) specifies whether the applied filters should be added (`true`) or should not be added (`false`; default) to the exported XLSX file.
+- **mergeHeaders** (only when `format` is set to `xlsx`; optional, boolean) specifies whether repeating header cells should be merged (`true`; default) or should not be merged (`false`).
+- **title** (optional, string) is the title of the exported data.
 
 ## Structure
 
@@ -24,50 +25,46 @@ import { InsightView } from "@gooddata/sdk-ui-ext";
 
 <InsightView
     insight="<visualization-identifier>"
-    onExportReady={(getExportedData) => { /* hold onto function and call to do export as needed */ }}
-/>
+    onExportReady={(getExportedData) => {
+        /* hold onto function and call to do export as needed */
+    }}
+/>;
 ```
 
 ## Example
 
 ```jsx
+import React, { useRef } from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-export class Example extends React.Component {
-    constructor(props) {
-        super(props);
-        this.doExport = this.doExport.bind(this);
-        this.onExportReady = this.onExportReady.bind(this);
-    }
+export function Example() {
+    const getExportedDataRef = useRef(null);
 
-    onExportReady(getExportedData) {
-        this.getExportedData = getExportedData;
-    }
+    const onExportReady = (getExportedData) => {
+        getExportedDataRef.current = getExportedData;
+    };
 
-    async doExport() {
+    const doExport = async () => {
         try {
-            const result = await this.getExportedData({
+            const result = await getExportedDataRef.current({
                 format: "xlsx",
                 includeFilterContext: true,
                 mergeHeaders: true,
-                title: "CustomTitle"
+                title: "CustomTitle",
             });
             console.log("Export successfully: ", result.uri);
         } catch (error) {
             console.log("Export error: ", error);
         }
-    }
+    };
 
-    render() {
-        return (
-            <div style={{ height: 367 }}>
-                <InsightView
-                    insight="<visualization-identifier>"
-                    onExportReady={this.onExportReady}
-                />
-                <button className="button button-secondary" onClick={this.doExport}>Export</button>
-            </div>
-        );
-    }
+    return (
+        <div style={{ height: 367 }}>
+            <InsightView insight="<visualization-identifier>" onExportReady={onExportReady} />
+            <button className="button button-secondary" onClick={doExport}>
+                Export
+            </button>
+        </div>
+    );
 }
 ```

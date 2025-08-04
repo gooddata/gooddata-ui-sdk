@@ -31,7 +31,7 @@
         "bin/**/*.sh"
     ],
     "scripts": {
-        "clean": "rm -rf dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "concurrently \"webpack --mode production\" \"tsc -p tsconfig.json --emitDeclarationOnly\" && npm run api-extractor",
         "build-dev": "webpack --mode development",

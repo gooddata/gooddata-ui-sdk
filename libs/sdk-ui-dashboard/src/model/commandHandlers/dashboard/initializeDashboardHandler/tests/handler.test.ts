@@ -71,26 +71,7 @@ describe("initialize dashboard handler", () => {
         it("should resolve config props that can be obtained from backend", () => {
             const config = selectConfig(Tester.state());
 
-            // Remove boundedFilter from relativePresets if present
-            const configForSnapshot = {
-                ...config,
-                dateFilterConfig: {
-                    ...config.dateFilterConfig,
-                    relativePresets: config.dateFilterConfig.relativePresets?.filter(
-                        (preset) => !preset.boundedFilter,
-                    ),
-                },
-            };
-
-            expect(configForSnapshot).toMatchSnapshot({
-                dateFilterConfig: {
-                    absoluteForm: {
-                        from: expect.any(String),
-                        to: expect.any(String),
-                    },
-                },
-                settings: {},
-            });
+            expect(config).toMatchSnapshot();
         });
 
         it("should resolve permissions if none provided", () => {

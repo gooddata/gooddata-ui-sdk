@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import parse from "date-fns/parse/index.js";
 import identity from "lodash/identity.js";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
@@ -30,6 +30,7 @@ const granularityParsePatterns: { [granularity in DateAttributeGranularity]?: st
     "GDC.time.date": "yyyy-MM-dd", // 2020-01-31
     "GDC.time.day_in_week": "c", // 1-7
     "GDC.time.day_in_month": "dd", // 01-31
+    "GDC.time.day_in_quarter": "DDD", // 01-92 or 001-092
     "GDC.time.day_in_year": "DDD", // 001-366
     "GDC.time.month": "yyyy-MM", // 2020-06
     "GDC.time.month_in_year": "LL", // 01-12

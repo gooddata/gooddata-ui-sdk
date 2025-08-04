@@ -1,5 +1,5 @@
-// (C) 2020-2023 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { useState, useEffect, useRef, memo, useCallback } from "react";
 import isEqual from "lodash/isEqual.js";
 import { injectIntl } from "react-intl";
 
@@ -22,41 +22,104 @@ import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 type IGeoValidatorProps = IGeoChartInnerProps;
 
-interface IGeoValidatorState {
-    isMapboxTokenInvalid: boolean;
-}
+// Helper functions moved outside the component
+const isSameConfig = (config?: IGeoConfig, nextConfig?: IGeoConfig): boolean => {
+    const colorMapping = (config?.colorMapping || []).map(
+        (currentColor: IColorMapping): IColor => currentColor.color,
+    );
+    const nextColorMapping = (nextConfig?.colorMapping || []).map(
+        (newColor: IColorMapping): IColor => newColor.color,
+    );
+    const configProps = {
+        ...config,
+        colorMapping,
+    };
+    const nextConfigProps = {
+        ...nextConfig,
+        colorMapping: nextColorMapping,
+    };
 
-export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): React.ComponentClass<T> {
-    class ValidatorHOCWrapped extends React.Component<T & IGeoValidatorProps, IGeoValidatorState> {
-        private readonly errorMap: IErrorDescriptors;
+    return isEqual(configProps, nextConfigProps);
+};
 
-        private isLocationMissing: boolean = false;
-        private isMapboxTokenMissing: boolean = false;
+const isSameData = (execution?: IPreparedExecution, nextExecution?: IPreparedExecution): boolean => {
+    if (!execution || !nextExecution) {
+        return execution === nextExecution;
+    }
+    return execution.equals(nextExecution);
+};
 
-        constructor(props: T & IGeoValidatorProps) {
-            super(props);
-            this.errorMap = newErrorMapping(props.intl);
-            this.state = {
-                isMapboxTokenInvalid: false,
-            };
-        }
+export function geoValidatorHOC<T>(
+    InnerComponent: React.ComponentClass<T>,
+): React.ComponentType<T & IGeoValidatorProps> {
+    const ValidatorHOCWrapped = memo<T & IGeoValidatorProps>(
+        function ValidatorHOCWrapped(props) {
+            const [isMapboxTokenInvalid, setIsMapboxTokenInvalid] = useState(false);
+            const errorMap = useRef<IErrorDescriptors>(newErrorMapping(props.intl));
+            const prevMapboxTokenRef = useRef<string | undefined>(props.config?.mapboxToken);
 
-        public render() {
-            this.initError();
+            const mapboxToken = props.config?.mapboxToken ?? "";
+            const { execution } = props;
+            const isLocationMissing = !isLocationSet(execution.definition.buckets);
+            const isMapboxTokenMissing = !mapboxToken;
 
-            if (this.state.isMapboxTokenInvalid || this.isMapboxTokenMissing) {
-                return this.renderErrorComponent(ErrorCodes.GEO_MAPBOX_TOKEN_MISSING);
+            const handleError = useCallback(() => {
+                const { onError } = props;
+                if (isLocationMissing) {
+                    onError?.(new GeoLocationMissingSdkError());
+                }
+                if (isMapboxTokenInvalid || isMapboxTokenMissing) {
+                    onError?.(new GeoTokenMissingSdkError());
+                }
+            }, [isLocationMissing, isMapboxTokenInvalid, isMapboxTokenMissing, props]);
+
+            const handleInvalidMapboxToken = useCallback(() => {
+                setIsMapboxTokenInvalid(true);
+            }, []);
+
+            const onError = useCallback(
+                (e: any) => {
+                    if (isGeoTokenMissing(e)) {
+                        handleInvalidMapboxToken();
+                    } else {
+                        props.onError?.(e);
+                    }
+                },
+                [handleInvalidMapboxToken, props],
+            );
+
+            const renderErrorComponent = useCallback(
+                (errorState: string) => {
+                    const ErrorComponent = props.ErrorComponent ?? DefaultErrorComponent;
+                    // in this case, we show "Sorry, we can't display this insight"
+                    const errorProps =
+                        errorMap.current[errorState] || errorMap.current[ErrorCodes.UNKNOWN_ERROR];
+
+                    return <ErrorComponent code={errorState} {...errorProps} />;
+                },
+                [props.ErrorComponent],
+            );
+
+            useEffect(() => {
+                if (prevMapboxTokenRef.current !== props.config?.mapboxToken) {
+                    setIsMapboxTokenInvalid(false);
+                    prevMapboxTokenRef.current = props.config?.mapboxToken;
+                }
+                handleError();
+            }, [handleError, props.config?.mapboxToken]);
+
+            if (isMapboxTokenInvalid || isMapboxTokenMissing) {
+                return renderErrorComponent(ErrorCodes.GEO_MAPBOX_TOKEN_MISSING);
             }
 
-            if (this.isLocationMissing) {
-                return this.renderErrorComponent(ErrorCodes.GEO_LOCATION_MISSING);
+            if (isLocationMissing) {
+                return renderErrorComponent(ErrorCodes.GEO_LOCATION_MISSING);
             }
 
-            return <InnerComponent {...this.props} onError={this.onError} />;
-        }
-
-        public shouldComponentUpdate(nextProps: IGeoValidatorProps, nextState: IGeoValidatorState): boolean {
-            const { config, execution, drillableItems } = this.props;
+            return <InnerComponent {...props} onError={onError} />;
+        },
+        (prevProps, nextProps) => {
+            const { config, execution, drillableItems } = prevProps;
             const {
                 config: nextConfig,
                 execution: nextExecution,
@@ -64,112 +127,25 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
             } = nextProps;
 
             // check if buckets, filters and config are changed
-            const isSameConfig = this.isSameConfig(config, nextConfig);
-            const isSameDataSource = this.isSameData(execution, nextExecution);
+            const isSameConfigResult = isSameConfig(config, nextConfig);
+            const isSameDataSource = isSameData(execution, nextExecution);
             const isSameDrillableItems = isEqual(drillableItems, nextDrillableItems);
 
-            return (
-                !isSameConfig ||
-                !isSameDataSource ||
-                !isSameDrillableItems ||
-                this.state.isMapboxTokenInvalid !== nextState.isMapboxTokenInvalid
-            );
-        }
-
-        public componentDidUpdate(prevProps: IGeoValidatorProps): void {
-            if (prevProps.config?.mapboxToken !== this.props.config?.mapboxToken) {
-                this.setState({
-                    isMapboxTokenInvalid: false,
-                });
-            } else {
-                this.handleError();
-            }
-        }
-
-        public componentDidMount(): void {
-            this.handleError();
-        }
-
-        private initError() {
-            const mapboxToken = this.props.config?.mapboxToken ?? "";
-            const { execution } = this.props;
-
-            this.isLocationMissing = !isLocationSet(execution.definition.buckets);
-            this.isMapboxTokenMissing = !mapboxToken;
-        }
-
-        private handleError() {
-            const { onError } = this.props;
-            if (this.isLocationMissing) {
-                onError?.(new GeoLocationMissingSdkError());
-            }
-            if (this.state.isMapboxTokenInvalid || this.isMapboxTokenMissing) {
-                onError?.(new GeoTokenMissingSdkError());
-            }
-        }
-
-        private handleInvalidMapboxToken() {
-            this.setState({
-                isMapboxTokenInvalid: true,
-            });
-        }
-
-        onError = (e: any) => {
-            if (isGeoTokenMissing(e)) {
-                this.handleInvalidMapboxToken();
-            } else {
-                this.props.onError?.(e);
-            }
-        };
-
-        private renderErrorComponent(errorState: string) {
-            const ErrorComponent = this.props.ErrorComponent ?? DefaultErrorComponent;
-            // in this case, we show "Sorry, we can't display this insight"
-            const errorProps = this.errorMap[errorState] || this.errorMap[ErrorCodes.UNKNOWN_ERROR];
-
-            return <ErrorComponent code={errorState} {...errorProps} />;
-        }
-
-        private isSameConfig(config?: IGeoConfig, nextConfig?: IGeoConfig): boolean {
-            const colorMapping = (config?.colorMapping || []).map(
-                (currentColor: IColorMapping): IColor => currentColor.color,
-            );
-            const nextColorMapping = (nextConfig?.colorMapping || []).map(
-                (newColor: IColorMapping): IColor => newColor.color,
-            );
-            const configProps = {
-                ...config,
-                colorMapping,
-            };
-            const nextConfigProps = {
-                ...nextConfig,
-                colorMapping: nextColorMapping,
-            };
-
-            return isEqual(configProps, nextConfigProps);
-        }
-
-        private isSameData(execution?: IPreparedExecution, nextExecution?: IPreparedExecution): boolean {
-            if (!execution || !nextExecution) {
-                // one of data views is undefined. just test if the other one is also undefined, otherwise
-                // data is definitely different
-                return execution === nextExecution;
-            }
-
-            // we need equals here (not just fingerprint) for cases where measure is moved from one bucket to another
-            return execution.equals(nextExecution);
-        }
-    }
+            // Return true if props are equal (should NOT re-render)
+            // This is the opposite of shouldComponentUpdate
+            return isSameConfigResult && isSameDataSource && isSameDrillableItems;
+        },
+    );
 
     const IntlValidatorHOC = injectIntl<"intl", T & IGeoValidatorProps>(ValidatorHOCWrapped);
 
-    return class ValidatorHOC extends React.Component<T & IGeoValidatorProps> {
-        public render() {
-            return (
-                <IntlWrapper locale={this.props.locale}>
-                    <IntlValidatorHOC {...(this.props as any)} />
-                </IntlWrapper>
-            );
-        }
-    } as any;
+    function ValidatorHOC(props: T & IGeoValidatorProps) {
+        return (
+            <IntlWrapper locale={props.locale}>
+                <IntlValidatorHOC {...(props as any)} />
+            </IntlWrapper>
+        );
+    }
+
+    return ValidatorHOC;
 }

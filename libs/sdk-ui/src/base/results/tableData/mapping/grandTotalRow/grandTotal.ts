@@ -14,22 +14,24 @@ export function mapGrandTotalRowGrandTotalColumn(
     columnDefinition: ITableGrandTotalColumnDefinition,
     options: IMappingOptions,
 ): ITableDataValue {
-    const { rowIndex, rowGrandTotalIndex } = rowDefinition;
+    const { rowIndex, rowGrandTotalIndex, measureDescriptors } = rowDefinition;
     const { columnIndex, columnHeaderIndex, columnScope } = columnDefinition;
-    const { config, overallTotalsData } = options;
+    const { config, overallTotalsData, isTransposed } = options;
 
     const measureScope = columnScope.find(
         (s): s is ITableDataMeasureScope | ITableDataMeasureTotalScope =>
             s.type === "measureTotalScope" || s.type === "measureScope",
     );
 
-    if (!measureScope) {
-        throw new UnexpectedSdkError("mapGrandTotalRowGrandTotalColumn: measure scope expected");
+    const measureDescriptor = isTransposed ? measureDescriptors[0] : measureScope?.descriptor;
+
+    if (!measureDescriptor) {
+        throw new UnexpectedSdkError("mapGrandTotalRowGrandTotalColumn: measure descriptor expected");
     }
 
     const value = overallTotalsData?.[0]?.[rowGrandTotalIndex]?.[columnHeaderIndex] ?? null;
 
-    const formattedValue = config.valueFormatter(value, measureScope.descriptor.measureHeaderItem.format);
+    const formattedValue = config.valueFormatter(value, measureDescriptor.measureHeaderItem.format);
 
     return {
         type: "overallTotalValue",

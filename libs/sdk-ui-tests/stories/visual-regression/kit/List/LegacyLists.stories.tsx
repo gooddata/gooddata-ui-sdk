@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, ReactElement } from "react";
+import React, { useCallback, useState } from "react";
 import noop from "lodash/noop.js";
 import times from "lodash/times.js";
 import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-kit";
@@ -29,22 +29,12 @@ const defaultListProps = {
     width: 210,
 };
 
-interface ILegacyListExamplesState {
-    invertableListSearchString: string;
-    selection: IItem[];
-    isInverted: boolean;
-}
+function LegacyListExamples() {
+    const [invertableListSearchString, setInvertableListSearchString] = useState("");
+    const [selection, setSelection] = useState<IItem[]>(items.slice(0, 2));
+    const [isInverted, setIsInverted] = useState(true);
 
-class LegacyListExamples extends Component<unknown, ILegacyListExamplesState> {
-    public readonly state = {
-        invertableListSearchString: "",
-        selection: items.slice(0, 2),
-        isInverted: true,
-    };
-
-    private renderInvertableList() {
-        const { invertableListSearchString, selection, isInverted } = this.state;
-
+    const renderInvertableList = useCallback(() => {
         const filteredItems = items.filter((item) => {
             return item.title.includes(invertableListSearchString);
         });
@@ -56,25 +46,21 @@ class LegacyListExamples extends Component<unknown, ILegacyListExamplesState> {
                 filteredItemsCount={filteredItems.length}
                 items={filteredItems}
                 onSearch={(str) => {
-                    this.setState({
-                        invertableListSearchString: str,
-                    });
+                    setInvertableListSearchString(str);
                 }}
                 searchString={invertableListSearchString}
                 selection={selection}
                 isInverted={isInverted}
                 onSelect={(selectedElements: IItem[], inverted: boolean) => {
-                    this.setState({
-                        selection: selectedElements,
-                        isInverted: inverted,
-                    });
+                    setSelection(selectedElements);
+                    setIsInverted(inverted);
                 }}
                 tagName="Attribute"
             />
         );
-    }
+    }, [invertableListSearchString, selection, isInverted]);
 
-    private renderInvertableListWithLimitException() {
+    const renderInvertableListWithLimitException = useCallback(() => {
         return (
             <LegacyInvertableList
                 {...defaultListProps}
@@ -83,50 +69,48 @@ class LegacyListExamples extends Component<unknown, ILegacyListExamplesState> {
                 showSearchField={false}
             />
         );
-    }
+    }, []);
 
-    private renderInvertableListInLoadingState() {
+    const renderInvertableListInLoadingState = useCallback(() => {
         return <LegacyInvertableList {...defaultListProps} isLoading showSearchField={false} />;
-    }
+    }, []);
 
-    private renderInvertableListWithNoItemsFound() {
+    const renderInvertableListWithNoItemsFound = useCallback(() => {
         return <LegacyInvertableList {...defaultListProps} filteredItemsCount={0} searchString="xxx" />;
-    }
+    }, []);
 
-    private renderSingleSelectList() {
+    const renderSingleSelectList = useCallback(() => {
         return <LegacySingleSelectList {...defaultListProps} selection={items[0]} />;
-    }
+    }, []);
 
-    public render(): ReactElement {
-        return (
-            <div className="library-component screenshot-target">
-                <div className="list-item-list-example">
-                    <h4>Invertable list (live with local state)</h4>
-                    {this.renderInvertableList()}
-                </div>
-
-                <div className="list-item-list-example">
-                    <h4>Single select list w/o search</h4>
-                    {this.renderSingleSelectList()}
-                </div>
-
-                <div className="list-item-list-example">
-                    <h4>Multi select with limit exception</h4>
-                    {this.renderInvertableListWithLimitException()}
-                </div>
-
-                <div className="list-item-list-example">
-                    <h4>List in loading state</h4>
-                    {this.renderInvertableListInLoadingState()}
-                </div>
-
-                <div className="list-item-list-example">
-                    <h4>List with no items</h4>
-                    {this.renderInvertableListWithNoItemsFound()}
-                </div>
+    return (
+        <div className="library-component screenshot-target">
+            <div className="list-item-list-example">
+                <h4>Invertable list (live with local state)</h4>
+                {renderInvertableList()}
             </div>
-        );
-    }
+
+            <div className="list-item-list-example">
+                <h4>Single select list w/o search</h4>
+                {renderSingleSelectList()}
+            </div>
+
+            <div className="list-item-list-example">
+                <h4>Multi select with limit exception</h4>
+                {renderInvertableListWithLimitException()}
+            </div>
+
+            <div className="list-item-list-example">
+                <h4>List in loading state</h4>
+                {renderInvertableListInLoadingState()}
+            </div>
+
+            <div className="list-item-list-example">
+                <h4>List with no items</h4>
+                {renderInvertableListWithNoItemsFound()}
+            </div>
+        </div>
+    );
 }
 
 // TODO remove this adhoc translations when List components will have own dictionary and dont rely on provided Intl from top

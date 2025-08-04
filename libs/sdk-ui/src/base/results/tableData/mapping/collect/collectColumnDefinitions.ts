@@ -6,6 +6,13 @@ import { IMeasureDimensionInfo } from "./collectMeasureDimensionMeta.js";
 import { IHeadersInfo } from "./collectHeadersInfo.js";
 import { IDescriptorsInfo } from "./collectDescriptorsInfo.js";
 import { IBucketsInfo } from "./collectBucketsInfo.js";
+import { ITranspositionInfo } from "./collectTranspositionInfo.js";
+import {
+    ITableDataAttributeScope,
+    ITableDataAttributeTotalScope,
+    ITableDataMeasureScope,
+    ITableDataMeasureTotalScope,
+} from "../../interfaces/scope.js";
 
 export function collectColumnDefinitions(
     dataView: IDataView,
@@ -13,6 +20,7 @@ export function collectColumnDefinitions(
     descriptorsInfo: IDescriptorsInfo,
     bucketsInfo: IBucketsInfo,
     measureDimensionInfo: IMeasureDimensionInfo,
+    transpositionInfo: ITranspositionInfo,
 ) {
     const [_, columnCount] = dataView.count;
 
@@ -20,6 +28,7 @@ export function collectColumnDefinitions(
     const { hasMeasures, measureDimension, measureGroupDescriptor } = measureDimensionInfo;
     const { columnHeaders } = headersInfo;
     const { descriptorByLocalId } = descriptorsInfo;
+    const { isTransposed } = transpositionInfo;
 
     const rowAttributeDescriptors = rowAttributes?.map(
         (attr) => descriptorByLocalId[attr.attribute.localIdentifier],
@@ -78,26 +87,116 @@ export function collectColumnDefinitions(
             );
 
         if (isColumnGrandTotalScope) {
-            columnDefinitions.push({
-                type: "grandTotal",
-                columnIndex: columnDefinitions.length,
-                columnScope: columnHeader.columnScope,
-                columnHeaderIndex: columnHeader.index - columnCount,
-            });
+            const reversedScope = [...columnHeader.columnScope].reverse();
+            if (isTransposed) {
+                const attributeTotalScope = reversedScope.find(
+                    (scope): scope is ITableDataAttributeTotalScope => scope.type === "attributeTotalScope",
+                );
+                columnDefinitions.push({
+                    type: "grandTotal",
+                    columnIndex: columnDefinitions.length,
+                    columnScope: columnHeader.columnScope,
+                    columnHeaderIndex: columnHeader.index - columnCount,
+                    isTransposed: true,
+                    isEmpty: false,
+                    totalHeader: attributeTotalScope!.header,
+                    attributeDescriptor: attributeTotalScope!.descriptor,
+                });
+            } else {
+                const measureTotalScope = reversedScope.find(
+                    (scope): scope is ITableDataMeasureTotalScope => scope.type === "measureTotalScope",
+                );
+                columnDefinitions.push({
+                    type: "grandTotal",
+                    columnIndex: columnDefinitions.length,
+                    columnScope: columnHeader.columnScope,
+                    columnHeaderIndex: columnHeader.index - columnCount,
+                    isTransposed: false,
+                    isEmpty: false,
+                    totalHeader: measureTotalScope!.header,
+                    measureDescriptor: measureTotalScope!.descriptor,
+                });
+            }
         } else if (isColumnSubtotalScope) {
-            columnDefinitions.push({
-                type: "subtotal",
-                columnIndex: columnDefinitions.length,
-                columnScope: columnHeader.columnScope,
-                columnHeaderIndex: columnHeader.index,
-            });
+            const reversedScope = [...columnHeader.columnScope].reverse();
+            if (isTransposed) {
+                const attributeTotalScope = reversedScope.find(
+                    (scope): scope is ITableDataAttributeTotalScope => scope.type === "attributeTotalScope",
+                );
+                columnDefinitions.push({
+                    type: "subtotal",
+                    columnIndex: columnDefinitions.length,
+                    columnScope: columnHeader.columnScope,
+                    columnHeaderIndex: columnHeader.index,
+                    isTransposed: true,
+                    isEmpty: false,
+                    totalHeader: attributeTotalScope!.header,
+                    attributeDescriptor: attributeTotalScope!.descriptor,
+                });
+            } else {
+                const measureTotalScope = reversedScope.find(
+                    (scope): scope is ITableDataMeasureTotalScope => scope.type === "measureTotalScope",
+                );
+                columnDefinitions.push({
+                    type: "subtotal",
+                    columnIndex: columnDefinitions.length,
+                    columnScope: columnHeader.columnScope,
+                    columnHeaderIndex: columnHeader.index,
+                    isTransposed: false,
+                    isEmpty: false,
+                    totalHeader: measureTotalScope!.header,
+                    measureDescriptor: measureTotalScope!.descriptor,
+                });
+            }
         } else if (isColumnValueScope) {
-            columnDefinitions.push({
-                type: "value",
-                columnIndex: columnDefinitions.length,
-                columnScope: columnHeader.columnScope,
-                columnHeaderIndex: columnHeader.index,
-            });
+            const reversedScope = [...columnHeader.columnScope].reverse();
+            if (isTransposed) {
+                const attributeScope = reversedScope.find(
+                    (scope): scope is ITableDataAttributeScope => scope.type === "attributeScope",
+                );
+                columnDefinitions.push({
+                    type: "value",
+                    columnIndex: columnDefinitions.length,
+                    columnScope: columnHeader.columnScope,
+                    columnHeaderIndex: columnHeader.index,
+                    isTransposed: true,
+                    isEmpty: false,
+                    attributeHeader: attributeScope!.header,
+                    attributeDescriptor: attributeScope!.descriptor,
+                });
+            } else {
+                if (!hasMeasures) {
+                    const attributeScope = reversedScope.find(
+                        (scope): scope is ITableDataAttributeScope => scope.type === "attributeScope",
+                    );
+                    columnDefinitions.push({
+                        type: "value",
+                        columnIndex: columnDefinitions.length,
+                        columnScope: columnHeader.columnScope,
+                        columnHeaderIndex: columnHeader.index,
+                        isEmpty: true,
+                        isTransposed: false,
+                        attributeHeader: attributeScope!.header,
+                        attributeDescriptor: attributeScope!.descriptor,
+                    });
+                } else {
+                    const measureScope = reversedScope.find(
+                        (scope): scope is ITableDataMeasureScope => scope.type === "measureScope",
+                    );
+                    if (measureScope) {
+                        columnDefinitions.push({
+                            type: "value",
+                            columnIndex: columnDefinitions.length,
+                            columnScope: columnHeader.columnScope,
+                            columnHeaderIndex: columnHeader.index,
+                            isTransposed: false,
+                            isEmpty: false,
+                            measureHeader: measureScope!.header,
+                            measureDescriptor: measureScope!.descriptor,
+                        });
+                    }
+                }
+            }
         }
     });
 

@@ -34,7 +34,7 @@
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "tsc -p tsconfig.json && npm run api-extractor",
         "test": "vitest watch",

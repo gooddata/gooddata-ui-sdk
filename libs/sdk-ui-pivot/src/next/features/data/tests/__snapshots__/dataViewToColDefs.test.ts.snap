@@ -1,0 +1,234 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`dataViewToRowData > base > should create col defs for arithmetic measures 1`] = `
+[
+  "a_label.f_product.product.name",
+  "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+  "m_358184a8_9fa7cb9ce4d2947059b490e24a925317",
+  "m_7ff816a7_82e019308ff681db5738ce5040bc533d",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for empty values 1`] = `
+[
+  "a_label.f_product.product.name",
+  "a_f_owner.department_id",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for single column attribute 1`] = `
+[
+  "a_label.f_product.product.name|CompuSci",
+  "a_label.f_product.product.name|Educationly",
+  "a_label.f_product.product.name|Explorer",
+  "a_label.f_product.product.name|Grammar Plus",
+  "a_label.f_product.product.name|PhoenixSoft",
+  "a_label.f_product.product.name|TouchAll",
+  "a_label.f_product.product.name|WonderKid",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for single metric 1`] = `
+[
+  "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for single metric with column attribute 1`] = `
+[
+  "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for single metric with row and column attributes 1`] = `
+[
+  "a_label.f_product.product.name",
+  "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for single metric with row attribute 1`] = `
+[
+  "a_label.f_product.product.name",
+  "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for single metric with two row and one column attributes 1`] = `
+[
+  "a_label.f_product.product.name",
+  "a_f_owner.department_id",
+  "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for single metric with two row and two column attributes 1`] = `
+[
+  "a_label.f_product.product.name",
+  "a_f_owner.department_id",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for single row attribute 1`] = `
+[
+  "a_label.f_product.product.name",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for two measures 1`] = `
+[
+  "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for two measures with column attribute 1`] = `
+[
+  "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+  "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for two measures with row and column attributes 1`] = `
+[
+  "a_label.f_product.product.name",
+  "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+  "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for two measures with three rows and two column attributes 1`] = `
+[
+  "a_label.f_product.product.name",
+  "a_f_owner.department_id",
+  "a_attr.f_owner.salesrep",
+  "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+  "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+  "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+  "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for two measures with two row and one column attributes 1`] = `
+[
+  "a_label.f_product.product.name",
+  "a_f_owner.department_id",
+  "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+  "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+  "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for with attributes without measures 1`] = `
+[
+  "a_attr.f_stage.stagename",
+  "a_f_owner.region_id",
+  "a_f_owner.department_id|Direct Sales",
+  "a_f_owner.department_id|Inside Sales",
+]
+`;
+
+exports[`dataViewToRowData > base > should create col defs for with two same dates 1`] = `
+[
+  "a_dt_oppcreated_timestamp.year",
+  "created.test",
+  "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+]
+`;
+
+exports[`dataViewToRowData > transposition > should create col defs for single measure pivot with both attributes and metrics in rows 1`] = `
+[
+  "a_label.f_product.product.name",
+  "a_f_owner.department_id",
+  "measureGroup_name",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast",
+  "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast",
+]
+`;
+
+exports[`dataViewToRowData > transposition > should create col defs for two measures in rows and column attrs on top 1`] = `
+[
+  "measureGroup_name",
+  "a_f_owner.department_id > a_f_owner.region_id|Direct Sales|East Coast",
+  "a_f_owner.department_id > a_f_owner.region_id|Direct Sales|West Coast",
+  "a_f_owner.department_id > a_f_owner.region_id|Inside Sales|East Coast",
+  "a_f_owner.department_id > a_f_owner.region_id|Inside Sales|West Coast",
+]
+`;
+
+exports[`dataViewToRowData > transposition > should create col defs for two measures in rows and only column attrs on left 1`] = `
+[
+  "a_f_owner.department_id|a_f_owner.region_id",
+  "Direct Sales|East Coast",
+  "Direct Sales|West Coast",
+  "Inside Sales|East Coast",
+  "Inside Sales|West Coast",
+]
+`;
+
+exports[`dataViewToRowData > transposition > should create col defs for two measures with single row attr with metrics in rows 1`] = `
+[
+  "a_label.f_product.product.name",
+  "measureGroup_name",
+  "measureGroup_value",
+]
+`;

@@ -3,6 +3,7 @@ import React, { ReactNode } from "react";
 import cx from "classnames";
 import { Button } from "../Button/Button.js";
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
+import { IButtonAccessibilityConfig } from "../Button/index.js";
 
 /**
  * @internal
@@ -10,7 +11,7 @@ import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 export interface IDropdownButtonProps {
     id?: string;
     className?: string;
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: IAccessibilityConfigBase & { popupType?: React.AriaAttributes["aria-haspopup"] };
 
     value?: ReactNode;
     title?: string;
@@ -48,7 +49,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
     dropdownId,
     buttonRef,
 }) => {
-    const { ariaLabel, ariaLabelledBy, ariaDescribedBy } = accessibilityConfig ?? {};
+    const { ariaLabel, ariaLabelledBy, ariaDescribedBy, popupType, role } = accessibilityConfig ?? {};
 
     const buttonClasses = cx(
         "gd-button-primary",
@@ -62,20 +63,23 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
         className,
     );
 
-    const buttonAccessibilityConfig = dropdownId
-        ? {
-              isExpanded: isOpen,
-              popupId: dropdownId,
-              ariaLabel,
-              ariaLabelledBy,
-              ariaDescribedBy,
-              role: "combobox",
-          }
-        : {
-              ariaLabel,
-              ariaLabelledBy,
-              role: "combobox",
-          };
+    const buttonAccessibilityConfig = (
+        dropdownId
+            ? {
+                  isExpanded: isOpen,
+                  popupId: dropdownId,
+                  ariaLabel,
+                  ariaLabelledBy,
+                  ariaDescribedBy,
+                  role: role ?? "combobox",
+                  popupType,
+              }
+            : {
+                  ariaLabel,
+                  ariaLabelledBy,
+                  role: role ?? "combobox",
+              }
+    ) satisfies IButtonAccessibilityConfig;
 
     return (
         <Button

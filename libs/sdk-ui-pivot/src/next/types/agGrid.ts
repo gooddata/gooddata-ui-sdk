@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import { ColDef, ColGroupDef, GridApi, ICellRendererParams } from "ag-grid-enterprise";
+import { ColDef, ColGroupDef, Column, GridApi, ICellRendererParams } from "ag-grid-enterprise";
 import { AgGridReactProps } from "ag-grid-react";
 import { ITableColumnDefinition } from "@gooddata/sdk-ui";
 import { AgGridRowData } from "./internal.js";
@@ -11,7 +11,9 @@ export type AgGridColumnDefContext = {
 /**
  * @internal
  */
-export type AgGridColumnDef = ColDef<AgGridRowData, string | null> & { context: AgGridColumnDefContext };
+export type AgGridColumnDef = Omit<ColDef<AgGridRowData, string | null>, "context"> & {
+    context: AgGridColumnDefContext;
+};
 
 /**
  * @internal
@@ -37,3 +39,8 @@ export type AgGridProps = AgGridReactProps<AgGridRowData>;
  * @internal
  */
 export type AgGridOnColumnResized = NonNullable<AgGridProps["onColumnResized"]>;
+
+/**
+ * @internal
+ */
+export type AgGridColumn = Column<string | null>;

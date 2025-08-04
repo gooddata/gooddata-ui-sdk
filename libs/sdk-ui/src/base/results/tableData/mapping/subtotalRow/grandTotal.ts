@@ -14,13 +14,13 @@ export function mapSubtotalRowGrandTotalColumn(
     columnDefinition: ITableGrandTotalColumnDefinition,
     options: IMappingOptions,
 ): ITableDataValue {
-    const { rowIndex } = rowDefinition;
+    const { rowIndex, rowScope } = rowDefinition;
     const { columnIndex, columnHeaderIndex, columnScope } = columnDefinition;
-    const { config, columnGrandTotalsData } = options;
+    const { config, columnGrandTotalsData, isTransposed } = options;
 
-    const measureScope = columnScope.find(
-        (s): s is ITableDataMeasureTotalScope => s.type === "measureTotalScope",
-    );
+    const measureScope = isTransposed
+        ? rowScope.find((s): s is ITableDataMeasureTotalScope => s.type === "measureTotalScope")
+        : columnScope.find((s): s is ITableDataMeasureTotalScope => s.type === "measureTotalScope");
 
     if (!measureScope) {
         throw new UnexpectedSdkError("mapSubtotalRowGrandTotalColumn: measure total scope expected");

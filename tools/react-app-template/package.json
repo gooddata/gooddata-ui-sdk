@@ -31,7 +31,7 @@
         "catalogOutput": "src/catalog.ts"
     },
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "build": "webpack --mode production",
         "start": "webpack-cli serve",
         "eslint": "eslint -c .eslintrc.cjs src/",

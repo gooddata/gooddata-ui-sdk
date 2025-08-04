@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { memo, useCallback } from "react";
 import ReactMeasure, { Rect } from "react-measure";
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -48,23 +48,33 @@ export interface ILegendProps {
 /**
  * @internal
  */
-export class Legend extends React.PureComponent<ILegendProps> {
-    public static defaultProps = {
-        responsive: false,
-        legendItemsEnabled: [] as any,
-        height: 0,
-        showFluidLegend: false,
-        isLegendOverHeight: false,
-        enableBorderRadius: false,
-    };
+export const Legend = memo(function Legend({
+    responsive = false,
+    legendItemsEnabled = [] as any,
+    height = 0,
+    showFluidLegend = false,
+    enableBorderRadius = false,
+    series,
+    seriesMapper,
+    onItemClick: onItemClickProp,
+    legendLabel,
+    maximumRows,
+    containerId = "",
+    position,
+    heatmapLegend,
+    contentDimensions,
+    locale,
+    format,
+    validateOverHeight,
+}: ILegendProps) {
+    const onItemClick = useCallback(
+        (item: ISeriesItem) => {
+            onItemClickProp(item);
+        },
+        [onItemClickProp],
+    );
 
-    public onItemClick = (item: ISeriesItem): void => {
-        this.props.onItemClick(item);
-    };
-
-    public getSeries = (): any => {
-        const { series, legendItemsEnabled = [], seriesMapper } = this.props;
-
+    const getSeries = useCallback(() => {
         const seriesWithVisibility = series.map((seriesItem: any) => {
             const isVisible = legendItemsEnabled[seriesItem.legendIndex];
             return {
@@ -78,26 +88,22 @@ export class Legend extends React.PureComponent<ILegendProps> {
         }
 
         return seriesWithVisibility;
-    };
+    }, [legendItemsEnabled, series, seriesMapper]);
 
-    public renderPopUpLegend = (): React.ReactNode => {
-        const { legendLabel, maximumRows, enableBorderRadius, containerId = "" } = this.props;
-
+    const renderPopUpLegend = () => {
         return (
             <PopUpLegend
                 containerId={containerId}
-                series={this.getSeries()}
+                series={getSeries()}
                 maxRows={maximumRows}
                 name={legendLabel}
                 enableBorderRadius={enableBorderRadius}
-                onLegendItemClick={this.onItemClick}
+                onLegendItemClick={onItemClick}
             />
         );
     };
 
-    public renderFluid = (): React.ReactNode => {
-        const { enableBorderRadius } = this.props;
-
+    const renderFluid = () => {
         return (
             <Measure client={true} aria-label="Fluid legend">
                 {({ measureRef, contentRect }: any) => {
@@ -105,9 +111,9 @@ export class Legend extends React.PureComponent<ILegendProps> {
                     return (
                         <div className="viz-fluid-legend-wrap" ref={measureRef}>
                             <FluidLegend
-                                series={this.getSeries()}
+                                series={getSeries()}
                                 enableBorderRadius={enableBorderRadius}
-                                onItemClick={this.onItemClick}
+                                onItemClick={onItemClick}
                                 containerWidth={usedWidth}
                             />
                         </div>
@@ -117,22 +123,20 @@ export class Legend extends React.PureComponent<ILegendProps> {
         );
     };
 
-    public renderStatic = (): React.ReactNode => {
-        const { position, height, enableBorderRadius, responsive, legendLabel: label } = this.props;
-
+    const renderStatic = () => {
         const classNames = cx("viz-static-legend-wrap", `position-${position}`);
 
         const buttonOrientation: ButtonsOrientationType =
             responsive === "autoPositionWithPopup" ? "leftRight" : "upDown";
 
-        const props: IStaticLegendProps = {
+        const propsForStaticLegend: IStaticLegendProps = {
             containerHeight: 0,
-            series: this.getSeries(),
-            onItemClick: this.onItemClick,
+            series: getSeries(),
+            onItemClick: onItemClick,
             position,
             enableBorderRadius,
             buttonOrientation,
-            label,
+            label: legendLabel,
         };
 
         return (
@@ -144,12 +148,12 @@ export class Legend extends React.PureComponent<ILegendProps> {
                     const usedHeight = height || measuredHeight;
 
                     if (!isEmpty(contentRect.client)) {
-                        this.props.validateOverHeight(contentRect.client);
+                        validateOverHeight(contentRect.client);
                     }
 
                     return (
                         <div className={classNames} ref={measureRef}>
-                            <StaticLegend {...props} containerHeight={usedHeight} />
+                            <StaticLegend {...propsForStaticLegend} containerHeight={usedHeight} />
                         </div>
                     );
                 }}
@@ -157,59 +161,56 @@ export class Legend extends React.PureComponent<ILegendProps> {
         );
     };
 
-    public render() {
-        const { contentDimensions, responsive, heatmapLegend, showFluidLegend, maximumRows } = this.props;
+    const renderHeatmapLegend = useCallback(
+        (contentDimensions: { width: number; height: number }): React.ReactNode => {
+            const series = getSeries();
+            const isFluidResponsive = Boolean(responsive && showFluidLegend);
+            const isPopupResponsive =
+                (position === TOP || position === BOTTOM) &&
+                responsive === "autoPositionWithPopup" &&
+                contentDimensions.width &&
+                contentDimensions.width < HEATMAP_LEGEND_WIDTH_BREAKPOINT;
 
-        if (heatmapLegend) {
-            return this.renderHeatmapLegend(contentDimensions);
-        }
+            let size: IColorLegendSize = "large";
+            if (isFluidResponsive) {
+                size = "medium";
+            }
+            if (isPopupResponsive) {
+                size = "small";
+            }
 
-        if (responsive === "autoPositionWithPopup" && maximumRows) {
-            return this.renderPopUpLegend();
-        }
+            return (
+                <IntlWrapper locale={locale}>
+                    <IntlTranslationsProvider>
+                        {(props: ITranslationsComponentProps) => (
+                            <HeatmapLegend
+                                title={legendLabel}
+                                series={series}
+                                format={format}
+                                size={size}
+                                numericSymbols={props.numericSymbols}
+                                position={position}
+                            />
+                        )}
+                    </IntlTranslationsProvider>
+                </IntlWrapper>
+            );
+        },
+        [format, getSeries, legendLabel, locale, position, responsive, showFluidLegend],
+    );
 
-        const isFluidLegend = responsive === true && showFluidLegend;
-        if (isFluidLegend) {
-            return this.renderFluid();
-        }
-
-        return this.renderStatic();
+    if (heatmapLegend) {
+        return renderHeatmapLegend(contentDimensions);
     }
 
-    private renderHeatmapLegend = (contentDimensions: { width: number; height: number }): React.ReactNode => {
-        const { locale, format, responsive, position, legendLabel } = this.props;
-        const { showFluidLegend } = this.props;
-        const series = this.getSeries();
-        const isFluidResponsive = Boolean(responsive === true && showFluidLegend);
-        const isPopupResponsive =
-            (position === TOP || position === BOTTOM) &&
-            responsive === "autoPositionWithPopup" &&
-            contentDimensions.width &&
-            contentDimensions.width < HEATMAP_LEGEND_WIDTH_BREAKPOINT;
+    if (responsive === "autoPositionWithPopup" && maximumRows) {
+        return renderPopUpLegend();
+    }
 
-        let size: IColorLegendSize = "large";
-        if (isFluidResponsive) {
-            size = "medium";
-        }
-        if (isPopupResponsive) {
-            size = "small";
-        }
+    const isFluidLegend = responsive && showFluidLegend;
+    if (isFluidLegend) {
+        return renderFluid();
+    }
 
-        return (
-            <IntlWrapper locale={locale}>
-                <IntlTranslationsProvider>
-                    {(props: ITranslationsComponentProps) => (
-                        <HeatmapLegend
-                            title={legendLabel}
-                            series={series}
-                            format={format}
-                            size={size}
-                            numericSymbols={props.numericSymbols}
-                            position={position}
-                        />
-                    )}
-                </IntlTranslationsProvider>
-            </IntlWrapper>
-        );
-    };
-}
+    return renderStatic();
+});

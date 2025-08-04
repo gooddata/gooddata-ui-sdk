@@ -1,0 +1,863 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`dataViewToRowData > base > should create row data for arithmetic measures 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_label.f_product.product.name": "CompuSci",
+      "m_358184a8_9fa7cb9ce4d2947059b490e24a925317": "17,984,929.77",
+      "m_7ff816a7_82e019308ff681db5738ce5040bc533d": "1.95",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$27,222,899.64",
+      "m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$9,237,969.87",
+    },
+    {
+      "a_label.f_product.product.name": "Educationly",
+      "m_358184a8_9fa7cb9ce4d2947059b490e24a925317": "14,089,288.41",
+      "m_7ff816a7_82e019308ff681db5738ce5040bc533d": "1.59",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$22,946,895.47",
+      "m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$8,857,607.06",
+    },
+    {
+      "a_label.f_product.product.name": "Explorer",
+      "m_358184a8_9fa7cb9ce4d2947059b490e24a925317": "29,348,655.24",
+      "m_7ff816a7_82e019308ff681db5738ce5040bc533d": "3.17",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$38,596,194.86",
+      "m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$9,247,539.62",
+    },
+    {
+      "a_label.f_product.product.name": "Grammar Plus",
+      "m_358184a8_9fa7cb9ce4d2947059b490e24a925317": "4,068,825.71",
+      "m_7ff816a7_82e019308ff681db5738ce5040bc533d": "1.02",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$8,042,031.92",
+      "m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$3,973,206.21",
+    },
+    {
+      "a_label.f_product.product.name": "PhoenixSoft",
+      "m_358184a8_9fa7cb9ce4d2947059b490e24a925317": "6,151,465.72",
+      "m_7ff816a7_82e019308ff681db5738ce5040bc533d": "1.82",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$9,525,857.91",
+      "m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$3,374,392.19",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for empty values 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,618,042.88",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$4,021,328.82",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,701,549.30",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$4,410,258.72",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$16,998.12",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$189,099.26",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$233,620.37",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$499,747.52",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$199,908.86",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$905,327.23",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$51,042.07",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$126,753.10",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$18,000.00",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$156,977.43",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$324,710.20",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,109,331.81",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$335,562.67",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$6,690,298.08",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$413,922.70",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,712,239.15",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$61,693.01",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$15,765.07",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$354,403.39",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$49,974.66",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$437,144.77",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$33,826.28",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$87,510.91",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$86,386.36",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$361,476.90",
+      "a_f_owner.department_id": "Inside Sales",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,621,567.97",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,406,453.66",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,915,470.06",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$3,962,077.30",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$627,304.21",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$176,954.41",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$245,096.79",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$600,367.83",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$770,602.99",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$146,333.20",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$36,746.55",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$117,761.51",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$124,243.02",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$3,792.60",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$134,950.42",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$298,415.72",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "Educationly",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$546,234.79",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,151,059.06",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$391,991.18",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,588,068.52",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$110,144.90",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$226,010.70",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$6,451.53",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$111,307.16",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$421,197.64",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$81,430.06",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$67,995.48",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$13,727.28",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,988.00",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$41,150.93",
+      "a_f_owner.department_id": "Inside Sales",
+      "a_label.f_product.product.name": "Educationly",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,759,859.66",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$4,166,405.93",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,095,977.22",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$4,403,103.19",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$53,792.14",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$707,188.64",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$214,833.71",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,001,196.79",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$14,368.81",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$13,387,810.63",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$398,641.54",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$323,372.36",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$751,477.86",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$321,532.11",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$256,841.59",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$173,255.96",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "Explorer",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for single column attribute 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for single metric 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$116,625,456.54",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for single metric with column attribute 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$28,017,096.42",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$88,608,360.12",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for single metric with row and column attributes 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,099,309.54",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$22,123,590.10",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$6,614,222.47",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$16,332,673.00",
+      "a_label.f_product.product.name": "Educationly",
+    },
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$8,269,682.68",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$30,326,512.18",
+      "a_label.f_product.product.name": "Explorer",
+    },
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,761,931.26",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,280,100.66",
+      "a_label.f_product.product.name": "Grammar Plus",
+    },
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,664,832.40",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$6,861,025.51",
+      "a_label.f_product.product.name": "PhoenixSoft",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for single metric with row attribute 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_label.f_product.product.name": "CompuSci",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$27,222,899.64",
+    },
+    {
+      "a_label.f_product.product.name": "Educationly",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$22,946,895.47",
+    },
+    {
+      "a_label.f_product.product.name": "Explorer",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$38,596,194.86",
+    },
+    {
+      "a_label.f_product.product.name": "Grammar Plus",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$8,042,031.92",
+    },
+    {
+      "a_label.f_product.product.name": "PhoenixSoft",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$9,525,857.91",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for single metric with two row and one column attributes 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_f_owner.department_id": "Direct Sales",
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$4,163,871.80",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$11,418,823.89",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_f_owner.department_id": "Inside Sales",
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$935,437.74",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$10,704,766.21",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_f_owner.department_id": "Direct Sales",
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,475,982.01",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$10,712,156.23",
+      "a_label.f_product.product.name": "Educationly",
+    },
+    {
+      "a_f_owner.department_id": "Inside Sales",
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,138,240.46",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,620,516.77",
+      "a_label.f_product.product.name": "Educationly",
+    },
+    {
+      "a_f_owner.department_id": "Direct Sales",
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,545,792.53",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$24,483,865.61",
+      "a_label.f_product.product.name": "Explorer",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for single metric with two row and two column attributes 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,618,042.88",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$4,021,328.82",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,701,549.30",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$4,410,258.72",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$16,998.12",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$189,099.26",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$233,620.37",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$499,747.52",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$199,908.86",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$905,327.23",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$51,042.07",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$126,753.10",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$18,000.00",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$156,977.43",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$324,710.20",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,109,331.81",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$335,562.67",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$6,690,298.08",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$413,922.70",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,712,239.15",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$61,693.01",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$15,765.07",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$354,403.39",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$49,974.66",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$437,144.77",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$33,826.28",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$87,510.91",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$86,386.36",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$361,476.90",
+      "a_f_owner.department_id": "Inside Sales",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,621,567.97",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,406,453.66",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,915,470.06",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$3,962,077.30",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$627,304.21",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$176,954.41",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$245,096.79",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$600,367.83",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$770,602.99",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$146,333.20",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$36,746.55",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$117,761.51",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$124,243.02",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$3,792.60",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$134,950.42",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$298,415.72",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "Educationly",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$546,234.79",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,151,059.06",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$391,991.18",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,588,068.52",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$110,144.90",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$226,010.70",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$6,451.53",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$111,307.16",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$421,197.64",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$81,430.06",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$67,995.48",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$13,727.28",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,988.00",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$41,150.93",
+      "a_f_owner.department_id": "Inside Sales",
+      "a_label.f_product.product.name": "Educationly",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,759,859.66",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$4,166,405.93",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,095,977.22",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$4,403,103.19",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$53,792.14",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$707,188.64",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$214,833.71",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,001,196.79",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$14,368.81",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$13,387,810.63",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$398,641.54",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$323,372.36",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$751,477.86",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$321,532.11",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$256,841.59",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$173,255.96",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "Explorer",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for single row attribute 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_label.f_product.product.name": "Educationly",
+    },
+    {
+      "a_label.f_product.product.name": "Explorer",
+    },
+    {
+      "a_label.f_product.product.name": "Grammar Plus",
+    },
+    {
+      "a_label.f_product.product.name": "PhoenixSoft",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for two measures 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$116,625,456.54",
+      "m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$38,310,753.45",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for two measures with column attribute 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$28,017,096.42",
+      "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$10,542,759.65",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$88,608,360.12",
+      "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$27,767,993.80",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for two measures with row and column attributes 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,099,309.54",
+      "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$2,115,472.00",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$22,123,590.10",
+      "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$7,122,497.87",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$6,614,222.47",
+      "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$2,307,461.24",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$16,332,673.00",
+      "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$6,550,145.82",
+      "a_label.f_product.product.name": "Educationly",
+    },
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$8,269,682.68",
+      "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$2,749,765.23",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$30,326,512.18",
+      "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$6,497,774.39",
+      "a_label.f_product.product.name": "Explorer",
+    },
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,761,931.26",
+      "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$1,401,561.16",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,280,100.66",
+      "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$2,571,645.05",
+      "a_label.f_product.product.name": "Grammar Plus",
+    },
+    {
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,664,832.40",
+      "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$804,564.30",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$6,861,025.51",
+      "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$2,569,827.89",
+      "a_label.f_product.product.name": "PhoenixSoft",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for two measures with three rows and two column attributes 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_attr.f_owner.salesrep": "Adam Bradley",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$422,324.06",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$77,638.24",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$345,808.08",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$198,167.47",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_attr.f_owner.salesrep": "Alejandro Vabiano",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$217,006.85",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$39,101.77",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$187,435.77",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$27,672.52",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_attr.f_owner.salesrep": "Alexsandr Fyodr",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$395,242.42",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$334,489.90",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$269,313.53",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$134,930.25",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_attr.f_owner.salesrep": "Cory Owens",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$232,724.99",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$74,604.37",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$158,953.66",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$121,932.16",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_attr.f_owner.salesrep": "Dale Perdadtin",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$181,182.94",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$137,488.88",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Exclude|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$240,520.02",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$143,509.53",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "",
+      "a_f_opportunitysnapshot.forecastcategory_id > a_f_owner.region_id|Include|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for two measures with two row and one column attributes 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_f_owner.department_id": "Direct Sales",
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$4,163,871.80",
+      "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$1,701,549.30",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$11,418,823.89",
+      "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$4,410,258.72",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_f_owner.department_id": "Inside Sales",
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$935,437.74",
+      "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$413,922.70",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$10,704,766.21",
+      "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$2,712,239.15",
+      "a_label.f_product.product.name": "CompuSci",
+    },
+    {
+      "a_f_owner.department_id": "Direct Sales",
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,475,982.01",
+      "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$1,915,470.06",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$10,712,156.23",
+      "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$3,962,077.30",
+      "a_label.f_product.product.name": "Educationly",
+    },
+    {
+      "a_f_owner.department_id": "Inside Sales",
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$1,138,240.46",
+      "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$391,991.18",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,620,516.77",
+      "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$2,588,068.52",
+      "a_label.f_product.product.name": "Educationly",
+    },
+    {
+      "a_f_owner.department_id": "Direct Sales",
+      "a_f_owner.region_id|East Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$5,545,792.53",
+      "a_f_owner.region_id|East Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$2,095,977.22",
+      "a_f_owner.region_id|West Coast|m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$24,483,865.61",
+      "a_f_owner.region_id|West Coast|m_e519fa2a_86c3_4e32_8313_0c03062348j3": "$4,403,103.19",
+      "a_label.f_product.product.name": "Explorer",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for with attributes without measures 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_attr.f_stage.stagename": "Interest",
+      "a_f_owner.department_id|Direct Sales": null,
+      "a_f_owner.department_id|Inside Sales": null,
+      "a_f_owner.region_id": "East Coast",
+    },
+    {
+      "a_attr.f_stage.stagename": "Interest",
+      "a_f_owner.department_id|Direct Sales": null,
+      "a_f_owner.department_id|Inside Sales": null,
+      "a_f_owner.region_id": "West Coast",
+    },
+    {
+      "a_attr.f_stage.stagename": "Discovery",
+      "a_f_owner.department_id|Direct Sales": null,
+      "a_f_owner.department_id|Inside Sales": null,
+      "a_f_owner.region_id": "East Coast",
+    },
+    {
+      "a_attr.f_stage.stagename": "Discovery",
+      "a_f_owner.department_id|Direct Sales": null,
+      "a_f_owner.department_id|Inside Sales": null,
+      "a_f_owner.region_id": "West Coast",
+    },
+    {
+      "a_attr.f_stage.stagename": "Short List",
+      "a_f_owner.department_id|Direct Sales": null,
+      "a_f_owner.department_id|Inside Sales": null,
+      "a_f_owner.region_id": "",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > base > should create row data for with two same dates 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_dt_oppcreated_timestamp.year": "2008",
+      "created.test": "2008",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$2,773,426.95",
+    },
+    {
+      "a_dt_oppcreated_timestamp.year": "2009",
+      "created.test": "2009",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$8,656,468.20",
+    },
+    {
+      "a_dt_oppcreated_timestamp.year": "2010",
+      "created.test": "2010",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$29,140,409.09",
+    },
+    {
+      "a_dt_oppcreated_timestamp.year": "2011",
+      "created.test": "2011",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$60,270,072.20",
+    },
+    {
+      "a_dt_oppcreated_timestamp.year": "2012",
+      "created.test": "2012",
+      "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "$15,785,080.10",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > transposition > should create row data for single measure pivot with both attributes and metrics in rows 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast": "$1,618,042.88",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast": "$4,021,328.82",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast": "$1,701,549.30",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast": "$4,410,258.72",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast": "$16,998.12",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast": "$189,099.26",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast": "$233,620.37",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast": "$499,747.52",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast": "$199,908.86",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast": "$905,327.23",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast": "$51,042.07",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast": "$126,753.10",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast": "$18,000.00",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast": "$156,977.43",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast": "$324,710.20",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast": "$1,109,331.81",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "CompuSci",
+      "measureGroup_name": "Amount",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast": "$335,562.67",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast": "$6,690,298.08",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast": "$413,922.70",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast": "$2,712,239.15",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast": "$61,693.01",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast": "$15,765.07",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast": "$354,403.39",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast": "$49,974.66",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast": "$437,144.77",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast": "$33,826.28",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast": "$87,510.91",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast": "$86,386.36",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast": "$361,476.90",
+      "a_f_owner.department_id": "Inside Sales",
+      "a_label.f_product.product.name": "CompuSci",
+      "measureGroup_name": "Amount",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast": "$1,621,567.97",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast": "$5,406,453.66",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast": "$1,915,470.06",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast": "$3,962,077.30",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast": "$627,304.21",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast": "$176,954.41",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast": "$245,096.79",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast": "$600,367.83",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast": "$770,602.99",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast": "$146,333.20",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast": "$36,746.55",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast": "$117,761.51",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast": "$124,243.02",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast": "$3,792.60",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast": "$134,950.42",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast": "$298,415.72",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "Educationly",
+      "measureGroup_name": "Amount",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast": "$546,234.79",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast": "$2,151,059.06",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast": "$391,991.18",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast": "$2,588,068.52",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast": "$110,144.90",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast": "$226,010.70",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast": "$6,451.53",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast": "$111,307.16",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast": "$421,197.64",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast": "$81,430.06",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast": "$67,995.48",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast": "",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast": "$13,727.28",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast": "$1,988.00",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast": "$41,150.93",
+      "a_f_owner.department_id": "Inside Sales",
+      "a_label.f_product.product.name": "Educationly",
+      "measureGroup_name": "Amount",
+    },
+    {
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|East Coast": "$1,759,859.66",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Lost|West Coast": "$4,166,405.93",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|East Coast": "$2,095,977.22",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Closed Won|West Coast": "$4,403,103.19",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|East Coast": "$53,792.14",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Conviction|West Coast": "$707,188.64",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|East Coast": "$214,833.71",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Discovery|West Coast": "$1,001,196.79",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|East Coast": "$14,368.81",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Interest|West Coast": "$13,387,810.63",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|East Coast": "$398,641.54",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Negotiation|West Coast": "$323,372.36",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|East Coast": "$751,477.86",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Risk Assessment|West Coast": "$321,532.11",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|East Coast": "$256,841.59",
+      "a_attr.f_stage.stagename > a_f_owner.region_id|Short List|West Coast": "$173,255.96",
+      "a_f_owner.department_id": "Direct Sales",
+      "a_label.f_product.product.name": "Explorer",
+      "measureGroup_name": "Amount",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > transposition > should create row data for two measures in rows and column attrs on top 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_f_owner.department_id > a_f_owner.region_id|Direct Sales|East Coast": "$21,978,695.46",
+      "a_f_owner.department_id > a_f_owner.region_id|Direct Sales|West Coast": "$58,427,629.50",
+      "a_f_owner.department_id > a_f_owner.region_id|Inside Sales|East Coast": "$6,038,400.96",
+      "a_f_owner.department_id > a_f_owner.region_id|Inside Sales|West Coast": "$30,180,730.62",
+      "measureGroup_name": "Amount",
+    },
+    {
+      "a_f_owner.department_id > a_f_owner.region_id|Direct Sales|East Coast": "$8,384,271.02",
+      "a_f_owner.department_id > a_f_owner.region_id|Direct Sales|West Coast": "$18,120,589.06",
+      "a_f_owner.department_id > a_f_owner.region_id|Inside Sales|East Coast": "$2,158,488.63",
+      "a_f_owner.department_id > a_f_owner.region_id|Inside Sales|West Coast": "$9,647,404.74",
+      "measureGroup_name": "Won",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > transposition > should create row data for two measures in rows and only column attrs on left 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "Direct Sales|East Coast": "$21,978,695.46",
+      "Direct Sales|West Coast": "$58,427,629.50",
+      "Inside Sales|East Coast": "$6,038,400.96",
+      "Inside Sales|West Coast": "$30,180,730.62",
+      "a_f_owner.department_id|a_f_owner.region_id": "Amount",
+    },
+    {
+      "Direct Sales|East Coast": "$8,384,271.02",
+      "Direct Sales|West Coast": "$18,120,589.06",
+      "Inside Sales|East Coast": "$2,158,488.63",
+      "Inside Sales|West Coast": "$9,647,404.74",
+      "a_f_owner.department_id|a_f_owner.region_id": "Won",
+    },
+  ],
+}
+`;
+
+exports[`dataViewToRowData > transposition > should create row data for two measures with single row attr with metrics in rows 1`] = `
+{
+  "grandTotalRowData": [],
+  "rowData": [
+    {
+      "a_label.f_product.product.name": "CompuSci",
+      "measureGroup_name": "Amount",
+      "measureGroup_value": "$27,222,899.64",
+    },
+    {
+      "a_label.f_product.product.name": "CompuSci",
+      "measureGroup_name": "Won",
+      "measureGroup_value": "$9,237,969.87",
+    },
+    {
+      "a_label.f_product.product.name": "Educationly",
+      "measureGroup_name": "Amount",
+      "measureGroup_value": "$22,946,895.47",
+    },
+    {
+      "a_label.f_product.product.name": "Educationly",
+      "measureGroup_name": "Won",
+      "measureGroup_value": "$8,857,607.06",
+    },
+    {
+      "a_label.f_product.product.name": "Explorer",
+      "measureGroup_name": "Amount",
+      "measureGroup_value": "$38,596,194.86",
+    },
+  ],
+}
+`;

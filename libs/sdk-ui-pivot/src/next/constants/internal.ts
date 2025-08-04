@@ -3,23 +3,40 @@
 import { IAttribute, IFilter, IMeasure, ITotal, ISortItem } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
 import { PivotTableNextConfig } from "../types/public.js";
+import { ColumnWidthItem } from "../types/resizing.js";
 
 /**
  * TODO: translate
+ * Text to display in case of attribute header is empty.
  *
  * @internal
  */
 export const ATTRIBUTE_EMPTY_VALUE = "(empty value)";
 
 /**
+ * Text to display in case of measure cell is empty.
+ 
  * @internal
  */
 export const METRIC_EMPTY_VALUE = "–";
 
 /**
+ * Separator used to join pivoting groups (names of all attribute labels displayed in the first header row, when pivoting).
+ * 
+ * **Example:**
+ * ```
+ * |---------------------------------------------------------|
+ * |         | Country > Region                              | <- pivoting group
+ * |         |-----------------------|-----------------------|
+ * |         | USA                   | Canada                | <- country attribute headers
+ * |         |-----------------------|-----------------------|
+ * | Product | East    | West        | East    | West        | <- region attribute headers
+ * |---------|---------|-------------|---------|-------------|
+ * ```
+ 
  * @internal
  */
-export const PIVOT_ATTRIBUTE_COLUMN_GROUP_SEPARATOR = " > ";
+export const PIVOTING_GROUP_SEPARATOR = " > ";
 
 /**
  * @internal
@@ -64,6 +81,15 @@ export const EMPTY_OBJECT = {};
 /**
  * @internal
  */
+export const EMPTY_COLUMN_WIDTHS: ColumnWidthItem[] = [];
+
+/**
+ * Number of columns per page.
+ * We don't support paging from left to right right now, only top to bottom.
+ * This is current execution maximum limit.
+ *
+ * @internal
+ */
 export const COLUMNS_PER_PAGE = 1000;
 
 /**
@@ -74,17 +100,17 @@ export const COLUMNS_PER_PAGE = 1000;
 export const PAGE_SIZE = 100;
 
 /**
- * Unique identifier of the column, used for rendering metric name.
+ * Unique identifier of the column, used for rendering measure headers.
  * This is used only in case of transposition, when metrics are rendered in rows.
  *
  * @internal
  */
-export const METRIC_GROUP_NAME_COL_DEF_ID = "measureGroup_name";
+export const MEASURE_GROUP_HEADER_COL_DEF_ID = "measureGroup_name";
 
 /**
- * Unique identifier of the column, used for rendering metric value.
+ * Unique identifier of the column, used for rendering measure values.
  * This is used only in case of transposition, when metrics are rendered in rows.
  *
  * @internal
  */
-export const METRIC_GROUP_VALUE_COL_DEF_ID = "measureGroup_value";
+export const MEASURE_GROUP_VALUE_COL_DEF_ID = "measureGroup_value";

@@ -41,8 +41,10 @@ export const HeadlinePagination: React.FC<IHeadlinePaginationProps> = ({
                     previousAriaLabel,
                 }}
             />
-            {item === 1 && renderSecondaryItem()}
-            {item === 2 && renderTertiaryItem()}
+            <div aria-live="polite" aria-atomic="true">
+                {item === 1 && renderSecondaryItem()}
+                {item === 2 && renderTertiaryItem()}
+            </div>
         </>
     );
 };

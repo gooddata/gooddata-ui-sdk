@@ -7,6 +7,7 @@ import {
     IAvailableDrillTargets,
 } from "@gooddata/sdk-ui";
 import { IMeasureDescriptor } from "@gooddata/sdk-model";
+import { ColumnHeadersPosition, MeasureGroupDimension } from "../../types/transposition.js";
 
 /**
  * Calculate available drill targets for the pivot table next implementation.
@@ -19,8 +20,8 @@ import { IMeasureDescriptor } from "@gooddata/sdk-model";
  */
 export function getAvailableDrillTargets(
     dv: DataViewFacade,
-    measureGroupDimension: "columns" | "rows",
-    columnHeadersPosition: "left" | "top",
+    measureGroupDimension: MeasureGroupDimension,
+    columnHeadersPosition: ColumnHeadersPosition,
 ): IAvailableDrillTargets {
     const measureDescriptors = dv
         .meta()

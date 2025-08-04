@@ -234,6 +234,7 @@ export {
     selectSlideShowExportVisible,
     selectCanEnterEditModeAndIsLoaded,
     selectIsShareGrantVisible,
+    selectIsDashboardShareLinkVisible,
     selectIsShareButtonVisible,
     selectIsSaveAsNewButtonVisible,
     hasEditDashboardPermission,

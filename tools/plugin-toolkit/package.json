@@ -26,7 +26,7 @@
         "NOTICE"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm build coverage *.log tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm build coverage *.log tsconfig.tsbuildinfo",
         "prepublishOnly": "npm run build",
         "build": "bash scripts/build.sh",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",

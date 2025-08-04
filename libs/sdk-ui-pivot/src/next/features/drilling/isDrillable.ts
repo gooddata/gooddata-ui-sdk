@@ -28,10 +28,17 @@ function getCellDrillHeaders(
     isTransposed: boolean,
 ): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
-    const colId = colDef.colId ?? colDef.field; // TODO: why?
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    const colData = data.meta[colId] as ITableDataValue;
+    const colId = colDef.colId ?? colDef.field;
+
+    if (!colId) {
+        return [];
+    }
+
+    const colData = data.cellDataByColId?.[colId];
+
+    if (!colData) {
+        return [];
+    }
 
     const rowDefinition = colData.rowDefinition;
     const columnDefinition = colData.columnDefinition;

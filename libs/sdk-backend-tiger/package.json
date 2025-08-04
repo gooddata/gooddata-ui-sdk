@@ -21,7 +21,7 @@
         "esm/**/*.map"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "clear-recordings": "rm -rf ./tests/wiremock/recordings/mappings/* ./tests/wiremock/recordings/__files/*",
         "build": "bash scripts/build.sh",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",

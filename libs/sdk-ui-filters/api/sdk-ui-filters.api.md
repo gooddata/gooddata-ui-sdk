@@ -214,17 +214,7 @@ export type CallbackRegistration<T> = (cb: Callback<T>) => Unsubscribe;
 export type Correlation = string;
 
 // @public
-export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFilterState> {
-    constructor(props: IDateFilterProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    static defaultProps: Partial<IDateFilterProps>;
-    // (undocumented)
-    static getDerivedStateFromProps(nextProps: IDateFilterProps, prevState: IDateFilterState): IDateFilterState;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const DateFilter: React_2.NamedExoticComponent<IDateFilterProps>;
 
 // @beta (undocumented)
 export const DateFilterHelpers: {
@@ -765,7 +755,7 @@ export interface IDateFilterButtonProps {
 // @public
 export interface IDateFilterCallbackProps {
     // (undocumented)
-    onApply: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
+    onApply?: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
     // (undocumented)
     onCancel?: () => void;
     // (undocumented)
@@ -788,7 +778,7 @@ export interface IDateFilterOptionsByType {
 // @public
 export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     // (undocumented)
-    availableGranularities: DateFilterGranularity[];
+    availableGranularities?: DateFilterGranularity[];
     // @alpha
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
     // (undocumented)
@@ -857,7 +847,7 @@ export interface IDateFilterStatePropsIntersection {
     // (undocumented)
     excludeCurrentPeriod: boolean;
     // (undocumented)
-    selectedFilterOption: DateFilterOption;
+    selectedFilterOption?: DateFilterOption;
 }
 
 // @beta (undocumented)
@@ -1187,22 +1177,10 @@ export type IWarningMessage = {
 };
 
 // @beta (undocumented)
-export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilterProps, IMeasureValueFilterState> {
-    // (undocumented)
-    static defaultProps: Partial<IMeasureValueFilterProps>;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-    // (undocumented)
-    state: IMeasureValueFilterState;
-}
+export const MeasureValueFilter: React_2.NamedExoticComponent<IMeasureValueFilterProps>;
 
 // @beta (undocumented)
-export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureValueFilterDropdownProps> {
-    // (undocumented)
-    static defaultProps: Pick<IMeasureValueFilterDropdownProps, "displayTreatNullAsZeroOption" | "treatNullAsZeroDefaultValue" | "enableOperatorSelection">;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const MeasureValueFilterDropdown: React_2.NamedExoticComponent<IMeasureValueFilterDropdownProps>;
 
 // @public (undocumented)
 export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter, options: ISingleSelectAttributeFilterHandlerOptions): ISingleSelectAttributeFilterHandler;

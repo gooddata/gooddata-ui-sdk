@@ -2,70 +2,22 @@
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IVisualizationCallbacks, ExplicitDrill, IVisualizationProps } from "@gooddata/sdk-ui";
 import { IAttribute, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
-import { IColumnSizing } from "./sizing.js";
+import { ColumnResizedCallback, PivotTableNextColumnsSizingConfig } from "./resizing.js";
+import { PivotTableNextTranspositionConfig } from "./transposition.js";
+import { PivotTableNextTextWrappingConfig } from "./textWrapping.js";
 
 /**
- * Whether to display measures in columns or rows (transposed).
- *
- * This affects how execution and result of the table is constructed:
- * - "columns" - measures are included in the first dimension (top to bottom).
- * - "rows" - measures are included in the second dimension (left to right).
+ * Configuration for the pivot table.
  *
  * @alpha
  */
-export type MeasureGroupDimension = "columns" | "rows";
+export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
+    PivotTableNextTextWrappingConfig &
+    PivotTableNextColumnsSizingConfig;
 
 /**
- * @alpha
- */
-export type ColumnHeadersPosition = "left" | "top";
-
-export interface ITextWrapping {
-    /**
-     * Whether to wrap text in cells.
-     */
-    wrapText?: boolean;
-
-    /**
-     * Whether to wrap text in column headers.
-     */
-    wrapHeaderText?: boolean;
-}
-
-/**
- * @alpha
- */
-export type PivotTableNextConfig = {
-    /**
-     * Whether to display measures in columns or rows (transposed).
-     *
-     * This affects how execution and result of the table is constructed:
-     * - "columns" - measures are included in the first dimension (top to bottom).
-     * - "rows" - measures are included in the second dimension (left to right).
-     *
-     * Default Value: "columns"
-     */
-    measureGroupDimension?: MeasureGroupDimension;
-
-    /**
-     * Whether to display column headers on the top or left.
-     *
-     * Default value: "left"
-     */
-    columnHeadersPosition?: ColumnHeadersPosition;
-
-    /**
-     * Customize column sizing strategy.
-     */
-    columnSizing?: IColumnSizing;
-
-    /**
-     * Configure text wrapping.
-     */
-    textWrapping?: ITextWrapping;
-};
-
-/**
+ * Props for the pivot table.
+ *
  * @alpha
  */
 export interface IPivotTableNextProps extends IVisualizationProps, IVisualizationCallbacks {
@@ -126,4 +78,11 @@ export interface IPivotTableNextProps extends IVisualizationProps, IVisualizatio
      * Default is 100.
      */
     pageSize?: number;
+
+    /**
+     * Specify function to call when user manually resizes a table column.
+     *
+     * @param columnWidths - new widths for columns
+     */
+    onColumnResized?: ColumnResizedCallback;
 }

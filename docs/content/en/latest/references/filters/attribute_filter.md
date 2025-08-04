@@ -1,10 +1,8 @@
-
 ---
 id: attribute_filter_component
 title: Attribute Filter
 sidebar_label: Attribute Filter
 copyright: (C) 2007-2024 GoodData Corporation
-
 ---
 
 The **Attribute Filter component** is a dropdown that lists attribute values.
@@ -15,8 +13,8 @@ The **Attribute Filter component** is a dropdown that lists attribute values.
 
 You can implement the component using one of the following methods:
 
--   Pass a callback function that receives an updated filter with selected values when a user clicks **Apply**.
--   Use the `connectToPlaceholder` property, where the component automatically handles changes without needing the `onApply` function. Use `onApply` only if you require a specific callback.
+- Pass a callback function that receives an updated filter with selected values when a user clicks **Apply**.
+- Use the `connectToPlaceholder` property, where the component automatically handles changes without needing the `onApply` function. Use `onApply` only if you require a specific callback.
 
 You can also define which attribute values should be selected by default in the filter.
 
@@ -163,6 +161,7 @@ You can automatically select the first available item when the filter is empty b
 ```
 
 **Important Notes for Single Selection Mode:**
+
 - The filter must be a positive filter with at most one selected element
 - If you use parent filters with single selection mode, the backend must support single select dependent filters
 - Single selection mode uses specialized UI components optimized for single-value selection
@@ -179,11 +178,7 @@ import { newRelativeDateFilter } from "@gooddata/sdk-model";
 
 const dateFilter = newRelativeDateFilter("date.dataset", "GDC.time.date", -6, 0); // Last 6 months
 
-<AttributeFilter
-    filter={filter}
-    dependentDateFilters={[dateFilter]}
-    onApply={setFilter}
-/>
+<AttributeFilter filter={filter} dependentDateFilters={[dateFilter]} onApply={setFilter} />;
 ```
 
 #### Controlling Filter Reset Behavior
@@ -220,9 +215,9 @@ export const ValidatedAttributeFilterExample = () => {
         <AttributeFilter
             filter={filter}
             validateElementsBy={[
-                Md.$TotalSales,                    // Validate by measure
-                idRef("fact.sales.amount"),        // Validate by fact
-                Md.Product.Category                // Validate by attribute
+                Md.$TotalSales, // Validate by measure
+                idRef("fact.sales.amount"), // Validate by fact
+                Md.Product.Category, // Validate by attribute
             ]}
             onApply={(updatedFilter) => {
                 console.log("Applying validated filter:", updatedFilter);
@@ -234,6 +229,7 @@ export const ValidatedAttributeFilterExample = () => {
 ```
 
 The `validateElementsBy` property allows you to specify:
+
 - **Metrics/Measures**: Only show attribute elements that have data for these measures
 - **Facts**: Only show attribute elements that are connected to these facts
 - **Attributes**: Only show attribute elements that are related to these attributes
@@ -255,31 +251,47 @@ The `validateElementsBy` property allows you to specify:
 />
 ```
 
+### Mode without Apply Button
+
+In some cases you may want to have filter without an Apply button. This is useful when you want to apply the filter selection immediately, without the need for a user to click the Apply button.
+You can enable the mode without an Apply button by setting the `withoutApply` property to `true`. In this mode, the filter selection is staged for application, and the `onSelect` callback is triggered immediately when the selection changes.
+The `onApply` callback is not called when this mode is enabled.
+
+```jsx
+<AttributeFilter
+    filter={newPositiveAttributeFilter(Md.Product.Name, [])}
+    withoutApply={true}
+    onSelect={setFilter}
+/>
+```
+
 ### Properties
 
-| Name                                         | Required? | Type                                 | Description                                                                                                                                                                                                                                                                                                                                   |
-| :------------------------------------------- | :-------- | :----------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| onApply                                      | false     | OnApplyCallbackType                  | A callback that contains the updated filter when a user confirms the selection.                                                                                                                                                                                                                                                               |
-| onError                                      | false     | (error: GoodDataSdkError) => void;   | A callback triggered when the component encounters an error.                                                                                                                                                                                                                                                                                  |
-| filter                                       | false     | IAttributeFilter                     | The attribute filter definition.                                                                                                                                                                                                                                                                                                              |
-| parentFilters                                | false     | AttributeFiltersOrPlaceholders       | An array of parent attribute filter definitions. GoodData does not yet support this feature.                                                                                                                                                                                                                                                  |
-| connectToPlaceholder                         | false     | IPlaceholder&lt;IAttributeFilter&gt; | The visualization definition placeholder is used to get and set the value of the attribute filter.                                                                                                                                                                                                                                            |
-| parentFilterOverAttribute                    | false     | ParentFilterOverAttributeType        | The reference to the parent filter attribute that reduces the available options or the function that returns this reference for a given parent filter.                                                                                                                                                                                        |
-| backend                                      | false     | IAnalyticalBackend                   | The object with the configuration related to communication with the backend and access to analytical workspaces.                                                                                                                                                                                                                              |
-| workspace                                    | false     | string                               | The workspace ID.                                                                                                                                                                                                                                                                                                                             |
-| locale                                       | false     | ILocale                              | The localization of the component. Defaults to `en-US`.                                                                                                                                                                                                                                                                                       |
-| fullscreenOnMobile                           | false     | boolean                              | If `true`, adjusts the filter to render properly on mobile devices.                                                                                                                                                                                                                                                                           |
-| title                                        | false     | string                               | A custom label to show on the dropdown button.                                                                                                                                                                                                                                                                                                |
-| titleWithSelection                           | false     | string                               | The label displays the attribute title and the applied selection. This option is not applied if the `title` property is set.                                                                                                                                                                                                                  |
-| hiddenElements                               | false     | string[]                             | Specify elements to exclude from the selection list. Currently, elements can only be specified by their URIs. This feature is not yet supported by GoodData.CN and GoodData Cloud.                                                                                                                                                            |
-| staticElements                               | false     | string[]                             | Provide elements to show in the selection list instead of loading them from the backend.                                                                                                                                                                                                                                                      |
-| enableDuplicatedLabelValuesInAttributeFilter | true      | boolean                              | Allows the filter to show duplicated label elements.                                                                                                                                                                                                                                                                                          |
-| displayAsLabel                               | false     | ObjRef                               | Defines the attribute label used for representing elements in the UI. The `filter` property should use the attribute's primary label if `displayAsLabel` is used. This allows defining the selection by the unique elements of the primary label while showing them in the AttributeFilter component using the more readable secondary label. |
-| selectionMode                               | false     | DashboardAttributeFilterSelectionMode | Specifies whether the filter allows single (`"single"`) or multiple (`"multi"`) value selection. For single selection, the filter must be a positive filter with at most one selected element. Defaults to `"multi"`.                                                                                                                        |
-| selectFirst                                 | false     | boolean                              | If `true`, automatically selects the first available element when the selection is empty. Works only with `selectionMode="single"`. Defaults to `false`.                                                                                                                                                                                    |
-| validateElementsBy                          | false     | ObjRef[]                             | Specifies metrics, facts, or attributes used to validate element availability. Only elements compatible with the provided items will be shown. Requires backend support (controlled by `supportsAttributeFilterElementsLimiting` capability). Ignored by backends that don't support this feature.                                        |
-| dependentDateFilters                        | false     | IDashboardDateFilter[]               | Specifies dependent date filters that reduce the available options for the current attribute filter. The filter will show only elements relevant to the specified date ranges.                                                                                                                                                               |
-| resetOnParentFilterChange                   | false     | boolean                              | Controls whether the filter resets its selection when parent filters change. Defaults to `true`. When `false`, the filter maintains its selection even when parent filters change.                                                                                                                                                          |
+| Name                                         | Required? | Type                                  | Description                                                                                                                                                                                                                                                                                                                                   |
+| :------------------------------------------- | :-------- | :------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| onApply                                      | false     | OnApplyCallbackType                   | A callback that contains the updated filter when a user confirms the selection.                                                                                                                                                                                                                                                               |
+| onError                                      | false     | (error: GoodDataSdkError) => void;    | A callback triggered when the component encounters an error.                                                                                                                                                                                                                                                                                  |
+| filter                                       | false     | IAttributeFilter                      | The attribute filter definition.                                                                                                                                                                                                                                                                                                              |
+| parentFilters                                | false     | AttributeFiltersOrPlaceholders        | An array of parent attribute filter definitions. GoodData does not yet support this feature.                                                                                                                                                                                                                                                  |
+| connectToPlaceholder                         | false     | IPlaceholder&lt;IAttributeFilter&gt;  | The visualization definition placeholder is used to get and set the value of the attribute filter.                                                                                                                                                                                                                                            |
+| parentFilterOverAttribute                    | false     | ParentFilterOverAttributeType         | The reference to the parent filter attribute that reduces the available options or the function that returns this reference for a given parent filter.                                                                                                                                                                                        |
+| backend                                      | false     | IAnalyticalBackend                    | The object with the configuration related to communication with the backend and access to analytical workspaces.                                                                                                                                                                                                                              |
+| workspace                                    | false     | string                                | The workspace ID.                                                                                                                                                                                                                                                                                                                             |
+| locale                                       | false     | ILocale                               | The localization of the component. Defaults to `en-US`.                                                                                                                                                                                                                                                                                       |
+| fullscreenOnMobile                           | false     | boolean                               | If `true`, adjusts the filter to render properly on mobile devices.                                                                                                                                                                                                                                                                           |
+| title                                        | false     | string                                | A custom label to show on the dropdown button.                                                                                                                                                                                                                                                                                                |
+| titleWithSelection                           | false     | string                                | The label displays the attribute title and the applied selection. This option is not applied if the `title` property is set.                                                                                                                                                                                                                  |
+| hiddenElements                               | false     | string[]                              | Specify elements to exclude from the selection list. Currently, elements can only be specified by their URIs. This feature is not yet supported by GoodData.CN and GoodData Cloud.                                                                                                                                                            |
+| staticElements                               | false     | string[]                              | Provide elements to show in the selection list instead of loading them from the backend.                                                                                                                                                                                                                                                      |
+| enableDuplicatedLabelValuesInAttributeFilter | true      | boolean                               | Allows the filter to show duplicated label elements.                                                                                                                                                                                                                                                                                          |
+| displayAsLabel                               | false     | ObjRef                                | Defines the attribute label used for representing elements in the UI. The `filter` property should use the attribute's primary label if `displayAsLabel` is used. This allows defining the selection by the unique elements of the primary label while showing them in the AttributeFilter component using the more readable secondary label. |
+| selectionMode                                | false     | DashboardAttributeFilterSelectionMode | Specifies whether the filter allows single (`"single"`) or multiple (`"multi"`) value selection. For single selection, the filter must be a positive filter with at most one selected element. Defaults to `"multi"`.                                                                                                                         |
+| selectFirst                                  | false     | boolean                               | If `true`, automatically selects the first available element when the selection is empty. Works only with `selectionMode="single"`. Defaults to `false`.                                                                                                                                                                                      |
+| validateElementsBy                           | false     | ObjRef[]                              | Specifies metrics, facts, or attributes used to validate element availability. Only elements compatible with the provided items will be shown. Requires backend support (controlled by `supportsAttributeFilterElementsLimiting` capability). Ignored by backends that don't support this feature.                                            |
+| dependentDateFilters                         | false     | IDashboardDateFilter[]                | Specifies dependent date filters that reduce the available options for the current attribute filter. The filter will show only elements relevant to the specified date ranges.                                                                                                                                                                |
+| resetOnParentFilterChange                    | false     | boolean                               | Controls whether the filter resets its selection when parent filters change. Defaults to `true`. When `false`, the filter maintains its selection even when parent filters change.                                                                                                                                                            |
+| withoutApply                                 | false     | boolean                               | This enables filter mode without apply button. If true, it is responsibility of a client, to apply filters when needed. Typically uses onSelect callback to catch filter state. Note, onApply callback is not called when this is true.                                                                                                       |
+| onSelect                                     | false     | OnSelectCallbackType                  | Specify function which will be called when user changes filter working selection. This is the selection that is staged for application. Not applied yet. The function will receive the current specification of the filter, as it was updated by the user.                                                                                    |
 
 **NOTE:** The `uri` property (the URI of the attribute displayForm used in the filter) and the `identifier` property (the identifier of the attribute displayForm used in the filter) are **deprecated**. Do not use them. To define an attribute, use the `filter` property.
 

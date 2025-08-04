@@ -13,7 +13,7 @@ export function mapGrandTotalRowMeasureGroupHeaderColumn(
     columnDefinition: ITableMeasureGroupHeaderColumnDefinition,
     options: IMappingOptions,
 ): ITableDataValue {
-    const { rowIndex, totalType, measureDescriptors, attributeDescriptor } = rowDefinition;
+    const { rowIndex, totalType, measureDescriptors } = rowDefinition;
     const { columnIndex } = columnDefinition;
     const { isTransposed } = options;
 
@@ -33,11 +33,6 @@ export function mapGrandTotalRowMeasureGroupHeaderColumn(
             columnIndex,
             rowDefinition,
             columnDefinition,
-            grandTotalInfo: {
-                type: totalType,
-                measure: measureDescriptor,
-                attribute: attributeDescriptor,
-            },
         };
     }
 
@@ -48,10 +43,5 @@ export function mapGrandTotalRowMeasureGroupHeaderColumn(
         columnIndex,
         rowDefinition,
         columnDefinition,
-        grandTotalInfo: {
-            type: totalType,
-            measure: measureDescriptor,
-            attribute: attributeDescriptor,
-        },
     };
 }

@@ -1,9 +1,10 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
 
 import { IColorPalette } from "@gooddata/sdk-model";
+import { withIntl } from "@gooddata/sdk-ui";
 
 import ComparisonDataItem from "../ComparisonDataItem.js";
 import {
@@ -24,7 +25,8 @@ import { IColorConfig } from "../../../../../../../../interfaces/index.js";
 
 describe("ComparisonDataItem", () => {
     const renderComparisonDataItem = (props: IBaseHeadlineDataItemProps<IComparisonDataItem>) => {
-        return render(<ComparisonDataItem {...props} />);
+        const WrappedComparisonDataItem = withIntl(ComparisonDataItem);
+        return render(<WrappedComparisonDataItem {...props} />);
     };
 
     afterEach(() => {

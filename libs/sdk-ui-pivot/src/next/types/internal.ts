@@ -1,28 +1,27 @@
 // (C) 2025 GoodData Corporation
 
-import { DataViewFacade, ITableColumnDefinition, IVisualizationCallbacks } from "@gooddata/sdk-ui";
+import {
+    DataViewFacade,
+    ITableColumnDefinition,
+    ITableDataValue,
+    IVisualizationCallbacks,
+} from "@gooddata/sdk-ui";
 import { IPivotTableNextProps } from "./public.js";
 import { IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { ITheme } from "@gooddata/sdk-model";
+import { ITheme, DataValue } from "@gooddata/sdk-model";
 
 /**
- * Data transformed to a structure used by ag-grid.
+ * Data transformed to a structure conveniently usable together with ag-grid columnDefs.
  *
- * In case of attribute:
- * - key is attribute local identifier
- * - value is attribute header value
- *
- * In case of measure:
- * - key is measure local identifier
- * - value is measure value
- *
- * In case of pivoting:
- * - key is pivot result field local identifier
- * - value is attribute header value / measure value
+ * - `cellDataByColId` is a dictionary of cell data by colId (see `columnDefinitionToColId` for more details, how colId is calculated).
+ * - `allRowData` is an array of all values in the row, in the order of the columns (used for drilling, where the value order is required).
  *
  * @internal
  */
-export type AgGridRowData = Record<string, string | null>;
+export interface AgGridRowData {
+    cellDataByColId: { [colId: string]: ITableDataValue };
+    allRowData: DataValue[];
+}
 
 /**
  * @internal
@@ -35,15 +34,15 @@ export interface ICorePivotTableNextProps extends IPivotTableNextProps, IVisuali
 /**
  * @internal
  */
-export interface ICorePivotTableInnerNextProps extends ICorePivotTableNextProps, IInitialExecutionData {}
-
-/**
- * @internal
- */
 export interface IInitialExecutionData {
     initialExecutionResult: IExecutionResult;
     initialDataView: DataViewFacade;
 }
+
+/**
+ * @internal
+ */
+export interface ICorePivotTableInnerNextProps extends ICorePivotTableNextProps, IInitialExecutionData {}
 
 /**
  * @internal

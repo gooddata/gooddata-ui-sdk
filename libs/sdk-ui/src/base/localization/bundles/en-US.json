@@ -223,6 +223,14 @@
         "value": "Drilling available. Press Enter or Space to continue.",
         "comment": "Accessibility hint informing users that they can drill into the visualization by pressing Enter or Space. Used by screen readers."
     },
+    "visualizations.headline.comparison.indicator.up": {
+        "value": "up",
+        "comment": "Screen reader text for upward trend arrow in headline comparison. Announced with the value, e.g., 'up 100%'."
+    },
+    "visualizations.headline.comparison.indicator.down": {
+        "value": "down",
+        "comment": "Screen reader text for downward trend arrow in headline comparison. Announced with the value, e.g., 'down 25%'."
+    },
     "visualization.numericValues.k": {
         "value": "k",
         "comment": "Character 'k' stands for metric prefix kilo (1.000)."

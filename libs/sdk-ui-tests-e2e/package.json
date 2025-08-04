@@ -35,7 +35,7 @@
         "eslint": "-c .eslintrc.cjs --ext js,jsx,ts,tsx ./"
     },
     "scripts": {
-        "clean": "rm -rf ci dist esm scenarios/build coverage *.log styles/css",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm scenarios/build coverage *.log styles/css",
         "build": "tsc -p tsconfig.build.json",
         "dev": "bash scripts/build.sh --dev-watch",
         "eslint": "eslint -c .eslintrc.cjs --ext js,jsx,ts,tsx ./",
