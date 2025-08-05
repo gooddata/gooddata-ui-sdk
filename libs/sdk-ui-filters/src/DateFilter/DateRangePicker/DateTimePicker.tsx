@@ -1,7 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import cx from "classnames";
-import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import { TimeInput } from "./TimeInput.js";
 import { DateInput } from "./DateInput.js";
@@ -14,7 +13,7 @@ export interface IDateTimePickerAccessibilityConfig {
     timeInputHintId?: string;
 }
 
-interface IDateTimePickerOwnProps {
+interface DateTimePickerProps {
     date: Date;
     time: ITime;
     dateInputLabel: string;
@@ -35,9 +34,7 @@ interface IDateTimePickerOwnProps {
     withoutApply?: boolean;
 }
 
-export type DateTimePickerComponentProps = IDateTimePickerOwnProps & WrappedComponentProps;
-
-const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePickerComponentProps>(
+export const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>(
     (
         {
             date,
@@ -57,7 +54,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
             inputErrorMessageTexts,
             errors,
             withoutApply,
-        }: DateTimePickerComponentProps,
+        }: DateTimePickerProps,
         ref,
     ) => {
         const { dateAriaLabel, timeAriaLabel, dateInputHintId, timeInputHintId } = accessibilityConfig;
@@ -117,7 +114,4 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
     },
 );
 
-DateTimePickerComponent.displayName = "DateTimePickerComponent";
-
-export const DateTimePicker = injectIntl(DateTimePickerComponent, { forwardRef: true });
 DateTimePicker.displayName = "DateTimePicker";

@@ -50,6 +50,7 @@ export interface IUiTreeViewItem<T> {
     id: string;
     stringTitle: string;
     data: T;
+    url?: string;
     icon?: IconType;
     isDisabled?: boolean;
     tooltip?: string;
@@ -63,15 +64,14 @@ export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<unknown[
     onSelect?: OnStaticSelectFn<Level>;
     ItemComponent?: React.ComponentType<IUiTreeviewItemProps<Level>>;
 }
+
 /**
  * @internal
  */
 export type OnStaticSelectFn<Level> = (
-    item: Level,
-    mods: {
-        type?: "mouse" | "keyboard";
-        newTab?: boolean;
-    },
+    item: IUiTreeViewItem<Level>,
+    mods: IUiTreeViewSelectionMods,
+    event: React.MouseEvent | React.KeyboardEvent,
 ) => void;
 
 /**
@@ -86,12 +86,18 @@ export interface IUiLeveledTreeViewProps<Levels extends any[]> extends IUiTreeVi
  * @internal
  */
 export type OnLeveledSelectFn<Levels extends any[]> = (
-    item: LevelTypesUnion<Levels>,
-    mods: {
-        type?: "mouse" | "keyboard";
-        newTab?: boolean;
-    },
+    item: IUiTreeViewItem<LevelTypesUnion<Levels>>,
+    mods: IUiTreeViewSelectionMods,
+    event: React.MouseEvent | React.KeyboardEvent,
 ) => void;
+
+/**
+ * @internal
+ */
+export interface IUiTreeViewSelectionMods {
+    type?: "mouse" | "keyboard";
+    newTab?: boolean;
+}
 
 /**
  * @internal
@@ -128,7 +134,7 @@ export interface IUiTreeviewContext<Levels extends any[], Level> {
     itemsRef: React.MutableRefObject<UiRefsTree[]>;
     onClose: () => void;
     onSelect: (
-        e: React.MouseEvent | React.KeyboardEvent,
+        event: React.MouseEvent | React.KeyboardEvent,
         path: number[],
         item?: UiStaticTreeView<Level | LevelTypesUnion<Levels>>,
     ) => void;
@@ -142,6 +148,7 @@ export interface IUiTreeviewContext<Levels extends any[], Level> {
  */
 export interface IUiTreeviewItemProps<T> {
     type: "leaf" | "group";
+    childCount: number;
     item: IUiTreeViewItem<T>;
     defaultClassName: string;
     defaultStyle: React.CSSProperties;
@@ -154,6 +161,7 @@ export interface IUiTreeviewItemProps<T> {
 
     onSelect: (e: React.MouseEvent | React.KeyboardEvent) => void;
     onToggle: (e: React.MouseEvent | React.KeyboardEvent, state: boolean) => void;
+    onHover: (e: React.MouseEvent) => void;
 }
 
 /**

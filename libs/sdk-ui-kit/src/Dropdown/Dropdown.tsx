@@ -196,9 +196,17 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
     const toggleDropdown = useCallback(
         (desiredState?: boolean | unknown): void => {
             if (typeof desiredState === "boolean") {
-                onToggle ? onToggle(desiredState) : setIsOpen(desiredState);
+                if (onToggle) {
+                    onToggle(desiredState);
+                } else {
+                    setIsOpen(desiredState);
+                }
             } else {
-                onToggle ? onToggle() : setIsOpen((state) => !state);
+                if (onToggle) {
+                    onToggle();
+                } else {
+                    setIsOpen((state) => !state);
+                }
             }
         },
         [onToggle, setIsOpen],

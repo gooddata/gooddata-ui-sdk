@@ -123,7 +123,9 @@ export class AutomationsQuery implements IAutomationsQuery {
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        !isNil(totalCount) && this.setTotalCount(totalCount);
+                        if (!isNil(totalCount)) {
+                            this.setTotalCount(totalCount);
+                        }
                         return convertAutomationListToAutomations(
                             data,
                             enableAutomationFilterContext,

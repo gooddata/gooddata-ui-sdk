@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo, useCallback } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 import { DropdownBody } from "./DropdownBody.js";
@@ -15,7 +14,7 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
  */
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
-interface IDropdownOwnProps {
+interface IDropdownProps {
     onApply: (operator: string, value: IMeasureValueFilterValue, treatNullValuesAsZero: boolean) => void;
     onCancel: () => void;
     operator?: MeasureValueFilterOperator;
@@ -30,9 +29,7 @@ interface IDropdownOwnProps {
     enableOperatorSelection?: boolean;
 }
 
-type IDropdownProps = WrappedComponentProps & IDropdownOwnProps;
-
-const DropdownWrapped = memo(function DropdownWrapped(props: IDropdownProps) {
+const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
     const {
         operator = "ALL",
         value = {},
@@ -87,9 +84,7 @@ const DropdownWrapped = memo(function DropdownWrapped(props: IDropdownProps) {
     );
 });
 
-export const DropdownWithIntl = injectIntl(DropdownWrapped);
-
-export function Dropdown(props: IDropdownOwnProps) {
+export function Dropdown(props: IDropdownProps) {
     return (
         <IntlWrapper locale={props.locale}>
             <DropdownWithIntl {...props} />

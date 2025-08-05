@@ -270,7 +270,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             visFactory = this.props.visualizationCatalog
                 .forUri(visUri, featureFlags?.enableNewPivotTable ?? false)
                 .getFactory();
-        } catch (e) {
+        } catch {
             console.error(`Error: unsupported visualization type - ${visUri}`);
         }
 

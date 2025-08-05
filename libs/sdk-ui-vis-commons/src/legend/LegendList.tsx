@@ -38,14 +38,16 @@ const LegendListItem = React.memo(function LegendListItem({
         return <LegendSeparator key={index} />;
     } else {
         return (
-            <LegendItem
-                key={index}
-                index={index}
-                enableBorderRadius={borderRadius}
-                item={item}
-                width={width}
-                onItemClick={onItemClick}
-            />
+            <div style={{ display: "contents" }} role="listitem">
+                <LegendItem
+                    key={index}
+                    index={index}
+                    enableBorderRadius={borderRadius}
+                    item={item}
+                    width={width}
+                    onItemClick={onItemClick}
+                />
+            </div>
         );
     }
 });

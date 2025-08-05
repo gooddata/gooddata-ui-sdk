@@ -1,6 +1,6 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-export * from "./typings.js";
+export type * from "./typings.js";
 export type { InputState } from "./Input.js";
 export { Input } from "./Input.js";
 export type { InputPureProps } from "./InputPure.js";

@@ -20,7 +20,7 @@ export function useEndpointCheck(canFullControl: boolean) {
                 count,
                 evaluated: true,
             };
-        } catch (error) {
+        } catch {
             return {
                 count: 0,
                 evaluated: false,

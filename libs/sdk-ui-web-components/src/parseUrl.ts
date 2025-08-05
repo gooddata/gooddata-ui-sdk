@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 /**
  * "none" means programmatic backend setup
@@ -43,7 +43,7 @@ export const parseUrl = (
 
     try {
         url = new URL(scriptUrl);
-    } catch (e) {
+    } catch {
         // Invalid URL provided...
         return { hostname: undefined, workspaceId: undefined, authType: "none" };
     }

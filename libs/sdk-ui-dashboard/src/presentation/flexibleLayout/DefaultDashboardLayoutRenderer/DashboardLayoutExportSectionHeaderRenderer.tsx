@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import React, { useMemo, useState, ReactElement } from "react";
+import isEmpty from "lodash/isEmpty.js";
 
 import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 import { useSectionDescriptionExportData } from "../../export/index.js";
@@ -27,7 +28,8 @@ export function DashboardLayoutExportSectionHeaderRenderer(
 
     const exportData = useSectionDescriptionExportData(props.exportData, loading, error);
 
-    if (!sectionHeader) {
+    //remove empty section headers; avoid in nested containers as this would delete the first child in some cases
+    if (isEmpty(sectionHeader) && !section.index()?.parent) {
         return null;
     }
     return (
@@ -38,12 +40,14 @@ export function DashboardLayoutExportSectionHeaderRenderer(
             // the shared interface with widget
             rowIndex={-1}
         >
-            <DashboardLayoutViewSectionHeader
-                section={section}
-                exportData={exportData}
-                onLoadingChanged={(loading) => setLoading(loading.isLoading)}
-                onError={(error) => setError(!!error)}
-            />
+            {isEmpty(sectionHeader) ? null : (
+                <DashboardLayoutViewSectionHeader
+                    section={section}
+                    exportData={exportData}
+                    onLoadingChanged={(loading) => setLoading(loading.isLoading)}
+                    onError={(error) => setError(!!error)}
+                />
+            )}
         </DashboardLayoutItemViewRenderer>
     );
 }

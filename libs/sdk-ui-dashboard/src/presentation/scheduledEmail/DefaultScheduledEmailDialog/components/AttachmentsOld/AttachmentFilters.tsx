@@ -64,7 +64,9 @@ export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
     const intl = useIntl();
 
     const handleTypeChange = (type: AttachmentFilterType) => {
-        !disabled && setSelectedType(type);
+        if (!disabled) {
+            setSelectedType(type);
+        }
     };
     const isDefaultDisabled = selectedType !== "default" && disabled;
     const defaultFiltersTooltipMessage = isDefaultDisabled

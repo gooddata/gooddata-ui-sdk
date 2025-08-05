@@ -84,7 +84,9 @@ export class NotificationChannelsQuery implements INotificationChannelsQuery {
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        !isNil(totalCount) && this.setTotalCount(totalCount);
+                        if (!isNil(totalCount)) {
+                            this.setTotalCount(totalCount);
+                        }
                         return data.data.flatMap((channel) => {
                             const convertedChannel = convertNotificationChannelFromBackend(channel);
                             if (convertedChannel) {
@@ -129,7 +131,9 @@ export class NotificationChannelsQuery implements INotificationChannelsQuery {
                     .then((res) => res.data)
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        !isNil(totalCount) && this.setTotalCount(totalCount);
+                        if (!isNil(totalCount)) {
+                            this.setTotalCount(totalCount);
+                        }
                         return data.data.flatMap((channel) => {
                             const converted = convertNotificationChannelIdentifierFromBackend(channel);
                             return converted ? [converted] : [];

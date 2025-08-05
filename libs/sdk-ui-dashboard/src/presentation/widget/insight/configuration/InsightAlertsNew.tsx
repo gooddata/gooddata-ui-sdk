@@ -151,7 +151,7 @@ export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
             addSuccess(messages.alertDeleteSuccess);
             setIsDeleteInProgress(false);
             refreshAutomations();
-        } catch (err) {
+        } catch {
             addError(messages.alertDeleteError);
             setIsDeleteInProgress(false);
         }

@@ -27,7 +27,7 @@ const stringifyTime = (time: ITime) =>
     time === undefined ? undefined : `${padTo2Digits(time.hours)}:${padTo2Digits(time.minutes)}`;
 
 const asTime = (time: Moment | undefined): ITime =>
-    time === undefined || !time.isValid() ? undefined : { hours: time.hours(), minutes: time.minutes() };
+    !time?.isValid() ? undefined : { hours: time.hours(), minutes: time.minutes() };
 
 export const TimeInput: React.FC<ITimeInputProps> = ({
     value,

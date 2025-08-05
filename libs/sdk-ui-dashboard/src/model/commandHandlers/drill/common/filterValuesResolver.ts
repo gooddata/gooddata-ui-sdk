@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
@@ -74,7 +74,9 @@ export async function resolveFilterValues(
             invariant(ref, `filter without reference not supported: ${filter}`);
             if (isDateFilter(filter)) {
                 const value = getResolvedFilterValues(resolvedValues, filter, index);
-                value && result.dateFilters.push(value);
+                if (value) {
+                    result.dateFilters.push(value);
+                }
             }
             if (isAttributeFilter(filter)) {
                 const refString = objRefToString(ref);

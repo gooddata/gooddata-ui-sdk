@@ -73,6 +73,7 @@ export function applyFilterContext(
                     granularity: workingFilter.dateFilter.granularity,
                     from: workingFilter.dateFilter.from,
                     to: workingFilter.dateFilter.to,
+                    boundedFilter: workingFilter.dateFilter.boundedFilter,
                 },
             };
 

@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-export * from "./typings.js";
+export type * from "./typings.js";
 export { Overlay } from "./Overlay.js";
 export * from "./ZoomAwareOverlay.js";
 export { FullScreenOverlay } from "./FullScreenOverlay.js";

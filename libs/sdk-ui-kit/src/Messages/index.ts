@@ -1,6 +1,6 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-export * from "./typings.js";
+export type * from "./typings.js";
 export { Messages } from "./Messages.js";
 export { Message } from "./Message.js";
 export { ToastMessages } from "./ToastMessages.js";

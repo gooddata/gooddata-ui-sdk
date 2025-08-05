@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
@@ -52,7 +52,9 @@ export class TigerWorkspaceUsersQuery implements IWorkspaceUsersQuery {
                     }),
                 ).then((res) => {
                     const totalCount = res.data.totalCount;
-                    !isNil(totalCount) && this.setTotalCount(totalCount);
+                    if (!isNil(totalCount)) {
+                        this.setTotalCount(totalCount);
+                    }
                     return res.data.users.map((u) => convertWorkspaceUser(u));
                 });
 

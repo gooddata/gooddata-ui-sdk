@@ -1,0 +1,52 @@
+// (C) 2024-2025 GoodData Corporation
+import * as React from "react";
+import {
+    isSemanticSearchResultItem,
+    type ISemanticSearchRelationship,
+    type ISemanticSearchResultItem,
+} from "@gooddata/sdk-model";
+import { Icon, type IUiTreeviewItemProps } from "@gooddata/sdk-ui-kit";
+
+import { SearchItemDetails } from "./SearchItemDetails.js";
+import { SearchItemIcon } from "./SearchItemIcon.js";
+import { UpdatedDate } from "./UpdateDate.js";
+import { SearchItem } from "../SearchItem.js";
+import { getAriaLabel } from "../utils/getAriaLabel.js";
+import { GroupResultCounter } from "./GroupResultCounter.js";
+
+type Props = IUiTreeviewItemProps<ISemanticSearchResultItem | ISemanticSearchRelationship>;
+
+/**
+ * A single result item in the search results.
+ * @internal
+ */
+export const LeveledSearchTreeViewItemMemo = React.memo(function LeveledSearchTreeViewItem(props: Props) {
+    const { item, type, level, isFocused, isExpanded, childCount, onSelect, onHover } = props;
+    const href = type === "leaf" ? item.url : undefined;
+
+    return (
+        <SearchItem
+            ariaLabel={getAriaLabel(item.data)}
+            level={level}
+            href={href}
+            onClick={onSelect}
+            onHover={onHover}
+            isFocused={isFocused}
+            icon={<SearchItemIcon item={item.data} icon={item.icon} />}
+            details={<SearchItemDetails item={item.data} />}
+            resultCounter={<GroupResultCounter count={childCount} isExpanded={isExpanded} />}
+        >
+            <span className="gd-semantic-search__results-item__text__row">
+                {item.isDisabled ? (
+                    <Icon.Lock className="gd-semantic-search__results-item__text__lock-icon" />
+                ) : null}
+                <span className="gd-semantic-search__results-item__text__ellipsis">{item.stringTitle}</span>
+            </span>
+            <span className="gd-semantic-search__results-item__text__row">
+                {isSemanticSearchResultItem(item.data) && level === 1 && (
+                    <UpdatedDate createdAt={item.data.createdAt} modifiedAt={item.data.modifiedAt} />
+                )}
+            </span>
+        </SearchItem>
+    );
+});

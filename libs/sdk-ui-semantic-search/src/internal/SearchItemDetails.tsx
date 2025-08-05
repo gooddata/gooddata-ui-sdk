@@ -1,0 +1,103 @@
+// (C) 2024-2025 GoodData Corporation
+import {
+    isSemanticSearchResultItem,
+    type ISemanticSearchResultItem,
+    type ISemanticSearchRelationship,
+} from "@gooddata/sdk-model";
+import React, { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { Bubble, BubbleHoverTrigger, EllipsisText, UiIcon, Typography } from "@gooddata/sdk-ui-kit";
+
+/**
+ * Maximum number of lines for the description before ellipsis.
+ */
+const MAX_LINES = 7;
+/**
+ * Align points for the details bubble.
+ */
+const BUBBLE_ALIGN_POINTS = [{ align: "tr tl", offset: { x: 4, y: 4 } }];
+/**
+ * Arrow style for the details bubble.
+ */
+const ARROW_STYLE = { display: "none" };
+
+type Props = {
+    item: ISemanticSearchResultItem | ISemanticSearchRelationship;
+};
+
+/**
+ * Render the details of the item in a bubble.
+ * @internal
+ */
+export function SearchItemDetails({ item }: Props) {
+    const [isHovered, setIsHovered] = useState(false);
+
+    if (!isSemanticSearchResultItem(item)) {
+        return null;
+    }
+
+    return (
+        <div
+            className="gd-semantic-search__results-item__details"
+            onPointerEnter={() => setIsHovered(true)}
+            onPointerLeave={() => setIsHovered(false)}
+        >
+            <BubbleHoverTrigger eventsOnBubble className="gd-semantic-search__bubble_trigger">
+                <UiIcon type="question" size={16} color={isHovered ? "complementary-7" : "complementary-6"} />
+                <Bubble
+                    className="bubble-light gd-semantic-search__bubble"
+                    alignPoints={BUBBLE_ALIGN_POINTS}
+                    arrowStyle={ARROW_STYLE}
+                >
+                    {/* It's OK to have div inline, as this chunk is rendered through portal */}
+                    <div className="gd-semantic-search__results-item__details__contents">
+                        <Typography tagName="h3">{item.title}</Typography>
+                        <Description item={item} />
+                        <FormattedMessage tagName="h4" id="semantic-search.id" />
+                        <Typography tagName={"p"}>{item.id}</Typography>
+                        <Tags item={item} />
+                        <Score item={item} />
+                    </div>
+                </Bubble>
+            </BubbleHoverTrigger>
+        </div>
+    );
+}
+
+/**
+ * Render the tags if there are any.
+ */
+function Tags({ item }: { item: ISemanticSearchResultItem }) {
+    if (item.tags?.some((tag) => tag !== item.title)) {
+        return (
+            <React.Fragment>
+                <FormattedMessage tagName="h4" id="semantic-search.tags" />
+                <Typography tagName="p">{item.tags.join(", ")}</Typography>
+            </React.Fragment>
+        );
+    }
+
+    return null;
+}
+
+/**
+ * Render the description if it is different from the title.
+ */
+function Description({ item }: { item: ISemanticSearchResultItem }) {
+    if (item.description && item.description !== item.title) {
+        return <EllipsisText maxLines={MAX_LINES} text={item.description} />;
+    }
+
+    return null;
+}
+
+function Score({ item }: { item: ISemanticSearchResultItem }) {
+    const score = item.score ? Math.round(Math.min(1, Math.max(0, item.score)) * 100) : 0;
+
+    return (
+        <div className="gd-semantic-search__results-item__details__contents__match">
+            <hr />
+            <FormattedMessage id="semantic-search.match" tagName="h4" values={{ score }} />
+        </div>
+    );
+}

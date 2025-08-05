@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import axios, { AxiosError } from "axios";
 import validateNpmPackageName from "validate-npm-package-name";
 import url from "url";
@@ -93,7 +93,7 @@ export function createHostnameValidator(): InputValidator {
             new url.URL(`${protocol ? "" : "https://"}${input}`);
 
             return true;
-        } catch (e: any) {
+        } catch {
             return InvalidHostnameMessage;
         }
     };

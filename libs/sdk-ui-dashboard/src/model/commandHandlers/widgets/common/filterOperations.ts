@@ -150,7 +150,11 @@ function* replaceFilterSettings(
             widget,
             op.ignoreDateFilters,
         );
-        ignoredFilters ? ignoredFilters.push(...ignoredDateFilters) : (ignoredFilters = ignoredDateFilters);
+        if (ignoredFilters) {
+            ignoredFilters.push(...ignoredDateFilters);
+        } else {
+            ignoredFilters = ignoredDateFilters;
+        }
     }
 
     return {

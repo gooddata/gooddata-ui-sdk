@@ -48,7 +48,7 @@ export type RegexReplacement = {
     apply?: boolean;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FileReplacementSpec extends Record<string, RegexReplacement[] | FileReplacementSpec> {}
 
 export async function replaceInFiles(

@@ -1,10 +1,9 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 import { RankingFilterDropdownBody } from "./RankingFilterDropdownBody.js";
-import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types.js";
 import noop from "lodash/noop.js";
 
@@ -43,9 +42,7 @@ export interface IRankingFilterDropdownProps {
     enableRenamingMeasureToMetric?: boolean;
 }
 
-type RankingFilterDropdownComponentProps = IRankingFilterDropdownProps & WrappedComponentProps;
-
-const RankingFilterDropdownComponent: React.FC<RankingFilterDropdownComponentProps> = ({
+function RankingFilterDropdownComponent({
     measureItems,
     attributeItems,
     filter,
@@ -56,7 +53,7 @@ const RankingFilterDropdownComponent: React.FC<RankingFilterDropdownComponentPro
     onDropDownItemMouseOut,
     customGranularitySelection,
     enableRenamingMeasureToMetric,
-}) => {
+}: IRankingFilterDropdownProps) {
     const [rankingFilter, setRankingFilter] = useState(prepareRankingFilterState(filter));
 
     const handleApply = (rankingFilter: IRankingFilter) => {
@@ -87,15 +84,13 @@ const RankingFilterDropdownComponent: React.FC<RankingFilterDropdownComponentPro
             />
         </Overlay>
     );
-};
-
-const RankingFilterDropdownWithIntl = injectIntl(RankingFilterDropdownComponent);
+}
 
 /**
  * @beta
  */
 export const RankingFilterDropdown: React.FC<IRankingFilterDropdownProps> = (props) => (
     <IntlWrapper locale={props.locale}>
-        <RankingFilterDropdownWithIntl {...props} />
+        <RankingFilterDropdownComponent {...props} />
     </IntlWrapper>
 );

@@ -211,11 +211,25 @@ const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({ relativeDat
     const boundedFilter = isRelativeBoundedDateFilterBody(relativeDateFilter)
         ? relativeDateFilter.boundedFilter
         : undefined;
-    // cannot use lodash compact, that would remove 0 values which we want to keep here
-    const restArgs = [granularity, from, to, localIdentifier, boundedFilter]
-        .filter((item) => !isNil(item))
-        .map(stringify);
-    return `newRelativeDateFilter(${[stringifyObjRef(dataSet), ...restArgs].join(ARRAY_JOINER)})`;
+
+    const requiredArgs = [granularity, from, to].map(stringify);
+
+    const optionalArgs = (() => {
+        if (!isNil(localIdentifier) && !isNil(boundedFilter)) {
+            return [stringify(localIdentifier), stringify(boundedFilter)];
+        }
+
+        if (!isNil(localIdentifier)) {
+            return [stringify(localIdentifier)];
+        }
+        if (!isNil(boundedFilter)) {
+            return ["undefined", stringify(boundedFilter)];
+        }
+
+        return [];
+    })();
+
+    return `newRelativeDateFilter(${[stringifyObjRef(dataSet), ...requiredArgs, ...optionalArgs].join(ARRAY_JOINER)})`;
 };
 
 const convertPositiveAttributeFilter: Converter<IPositiveAttributeFilter> = ({

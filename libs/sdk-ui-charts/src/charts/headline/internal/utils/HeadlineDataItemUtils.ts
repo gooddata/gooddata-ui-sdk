@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { RefObject } from "react";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
@@ -91,7 +91,7 @@ export function formatItemValue<T extends IBaseHeadlineValueItem>(
  *  - otherwise shows 'value%'
  */
 export function formatPercentageValue(item: IHeadlineDataItem): IFormattedHeadlineDataItem {
-    if (!item || item.value === null || isNaN(parseFloat(item.value))) {
+    if (item?.value === null || isNaN(parseFloat(item.value))) {
         return {
             value: DEFAULT_VALUE_WHEN_EMPTY,
             isValueEmpty: true,

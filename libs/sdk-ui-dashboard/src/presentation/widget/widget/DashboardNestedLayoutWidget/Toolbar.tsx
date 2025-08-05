@@ -64,13 +64,15 @@ const ToggleDirectionButton: React.FC<{
                                 dataTestId="nested-layout__button--direction"
                                 onClick={() => {
                                     toggleDropdown();
-                                    isOpen
-                                        ? userInteraction.nestedLayoutInteraction(
-                                              "nestedLayoutDirectionConfigurationClosed",
-                                          )
-                                        : userInteraction.nestedLayoutInteraction(
-                                              "nestedLayoutDirectionConfigurationOpened",
-                                          );
+                                    if (isOpen) {
+                                        userInteraction.nestedLayoutInteraction(
+                                            "nestedLayoutDirectionConfigurationClosed",
+                                        );
+                                    } else {
+                                        userInteraction.nestedLayoutInteraction(
+                                            "nestedLayoutDirectionConfigurationOpened",
+                                        );
+                                    }
                                 }}
                                 ariaAttributes={ariaAttributes}
                                 accessibilityConfig={accessibilityConfig}

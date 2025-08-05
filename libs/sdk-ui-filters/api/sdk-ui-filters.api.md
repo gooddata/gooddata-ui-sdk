@@ -214,7 +214,17 @@ export type CallbackRegistration<T> = (cb: Callback<T>) => Unsubscribe;
 export type Correlation = string;
 
 // @public
-export const DateFilter: React_2.NamedExoticComponent<IDateFilterProps>;
+export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFilterState> {
+    constructor(props: IDateFilterProps);
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    static defaultProps: Partial<IDateFilterProps>;
+    // (undocumented)
+    static getDerivedStateFromProps(nextProps: IDateFilterProps, prevState: IDateFilterState): IDateFilterState;
+    // (undocumented)
+    render(): React_2.JSX.Element;
+}
 
 // @beta (undocumented)
 export const DateFilterHelpers: {
@@ -755,7 +765,7 @@ export interface IDateFilterButtonProps {
 // @public
 export interface IDateFilterCallbackProps {
     // (undocumented)
-    onApply?: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
+    onApply: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
     // (undocumented)
     onCancel?: () => void;
     // (undocumented)
@@ -778,7 +788,7 @@ export interface IDateFilterOptionsByType {
 // @public
 export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     // (undocumented)
-    availableGranularities?: DateFilterGranularity[];
+    availableGranularities: DateFilterGranularity[];
     // @alpha
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
     // (undocumented)
@@ -847,7 +857,7 @@ export interface IDateFilterStatePropsIntersection {
     // (undocumented)
     excludeCurrentPeriod: boolean;
     // (undocumented)
-    selectedFilterOption?: DateFilterOption;
+    selectedFilterOption: DateFilterOption;
 }
 
 // @beta (undocumented)

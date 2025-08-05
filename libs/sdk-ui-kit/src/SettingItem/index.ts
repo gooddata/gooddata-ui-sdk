@@ -1,3 +1,3 @@
-// (C) 2022 GoodData Corporation
-export * from "./typings.js";
+// (C) 2022-2025 GoodData Corporation
+export type * from "./typings.js";
 export { SettingItem } from "./SettingItem.js";

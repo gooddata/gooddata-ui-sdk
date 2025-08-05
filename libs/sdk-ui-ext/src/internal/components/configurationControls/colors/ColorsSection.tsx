@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -62,7 +62,7 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
     private isColoredListVisible() {
         const { colors, hasMeasures, controlsDisabled, isLoading } = this.props;
 
-        return isLoading || (!controlsDisabled && colors && colors.colorPalette && hasMeasures);
+        return isLoading || (!controlsDisabled && colors?.colorPalette && hasMeasures);
     }
 
     private renderResetButton() {

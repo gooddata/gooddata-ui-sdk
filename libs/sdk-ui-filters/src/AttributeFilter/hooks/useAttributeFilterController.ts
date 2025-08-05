@@ -946,7 +946,9 @@ function useCallbacks(
     const onOpen = useCallback(() => {
         if (shouldReloadElements.current) {
             handler.loadInitialElementsPage(RESET_CORRELATION);
-            !handler.isWorkingSelectionEmpty() && handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
+            if (!handler.isWorkingSelectionEmpty()) {
+                handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
+            }
             setShouldReloadElements(false);
         }
     }, [handler, shouldReloadElements, setShouldReloadElements]);

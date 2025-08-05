@@ -91,7 +91,9 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                 return;
             }
             onSelect?.(item, mods ?? {});
-            shouldCloseOnSelect && onClose?.();
+            if (shouldCloseOnSelect) {
+                onClose?.();
+            }
         },
         [onClose, onSelect, shouldCloseOnSelect],
     );

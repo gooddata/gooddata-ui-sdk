@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, useCallback, useState } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import React, { memo, useState } from "react";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize.js";
 import { Button } from "@gooddata/sdk-ui-kit";
@@ -10,25 +10,20 @@ import OperatorDropdownBody from "./OperatorDropdownBody.js";
 import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator.js";
 import { MeasureValueFilterOperator } from "./types.js";
 
-interface IOperatorDropdownOwnProps {
+interface IOperatorDropdownProps {
     onSelect: (operator: MeasureValueFilterOperator) => void;
     operator: MeasureValueFilterOperator;
     isDisabled?: boolean;
 }
 
-type IOperatorDropdownProps = IOperatorDropdownOwnProps & WrappedComponentProps;
+export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorDropdownProps) {
+    const intl = useIntl();
 
-export const OperatorDropdown = memo(function OperatorDropdown({
-    intl,
-    operator,
-    isDisabled,
-    onSelect,
-}: IOperatorDropdownProps) {
     const [opened, setOpened] = useState(false);
 
-    const handleOperatorDropdownButtonClick = useCallback(() => setOpened((state) => !state), []);
+    const renderDropdownButton = () => {
+        const { operator, isDisabled } = props;
 
-    const renderDropdownButton = useCallback(() => {
         const operatorTranslationKey = getOperatorTranslationKey(operator);
         const title = capitalize(
             operatorTranslationKey === undefined
@@ -60,17 +55,16 @@ export const OperatorDropdown = memo(function OperatorDropdown({
                 disabled={isDisabled}
             />
         );
-    }, [handleOperatorDropdownButtonClick, intl, isDisabled, opened, operator]);
+    };
 
-    const closeOperatorDropdown = useCallback(() => setOpened(false), []);
+    const handleOperatorSelected = (operator: MeasureValueFilterOperator) => {
+        closeOperatorDropdown();
+        props.onSelect(operator);
+    };
 
-    const handleOperatorSelected = useCallback(
-        (operator: MeasureValueFilterOperator) => {
-            closeOperatorDropdown();
-            onSelect(operator);
-        },
-        [closeOperatorDropdown, onSelect],
-    );
+    const closeOperatorDropdown = () => setOpened(false);
+
+    const handleOperatorDropdownButtonClick = () => setOpened((state) => !state);
 
     return (
         <>
@@ -79,7 +73,7 @@ export const OperatorDropdown = memo(function OperatorDropdown({
                 <OperatorDropdownBody
                     alignTo={".gd-mvf-operator-dropdown-button"}
                     onSelect={handleOperatorSelected}
-                    selectedOperator={operator}
+                    selectedOperator={props.operator}
                     onClose={closeOperatorDropdown}
                 />
             ) : null}
@@ -87,4 +81,4 @@ export const OperatorDropdown = memo(function OperatorDropdown({
     );
 });
 
-export default injectIntl(OperatorDropdown);
+export default OperatorDropdown;

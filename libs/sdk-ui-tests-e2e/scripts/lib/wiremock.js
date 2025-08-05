@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import fs from "fs";
 
 import axios from "axios";
@@ -43,14 +43,14 @@ export async function wiremockImportMappings(wiremockHost, mappingsFile) {
     let mappings;
     try {
         mappings = fs.readFileSync(mappingsFile);
-    } catch (e) {
+    } catch {
         process.stderr.write(`mappings file not found: ${mappingsFile}\n`);
         return;
     }
     let json = "";
     try {
         json = JSON.parse(mappings);
-    } catch (e) {
+    } catch {
         process.stderr.write(`mappings error: ${mappings}\n`);
         return;
     }

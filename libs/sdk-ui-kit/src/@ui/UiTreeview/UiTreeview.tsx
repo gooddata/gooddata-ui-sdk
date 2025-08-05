@@ -28,6 +28,7 @@ import {
 } from "./utils.js";
 import { UiTreeviewRoot } from "./UiTreeviewRoot.js";
 import { UITreeviewItem } from "./UITreeviewItem.js";
+import { useUiTreeViewEventSubscriber } from "./UiTreeViewEvents.js";
 
 /**
  * An accessible treeview component with static data that can be navigated by keyboard.
@@ -106,24 +107,35 @@ function UiTreeview<Levels extends unknown[], Level>({
     }, [focusedItemNode]);
 
     const onSelectHandle = useCallback(
-        (e: React.MouseEvent | React.KeyboardEvent, path: number[], item?: UiStaticTreeView<Level>) => {
-            if (!item || item.item.isDisabled) {
+        (event: React.MouseEvent | React.KeyboardEvent, path: number[], item?: UiStaticTreeView<Level>) => {
+            const isDisabled = !isDisabledFocusable && item?.item.isDisabled;
+            if (!item || isDisabled) {
                 return;
             }
 
             function doSelect() {
-                if (e.nativeEvent instanceof KeyboardEvent) {
-                    onSelect?.(item.item.data, {
-                        type: "keyboard",
-                        newTab: e.ctrlKey || e.metaKey,
-                    });
+                if (event.nativeEvent instanceof KeyboardEvent) {
+                    onSelect?.(
+                        item.item,
+                        {
+                            type: "keyboard",
+                            newTab: event.ctrlKey || event.metaKey,
+                        },
+                        event,
+                    );
                 } else {
-                    onSelect?.(item.item.data, {
-                        type: "mouse",
-                        newTab: e.ctrlKey || e.metaKey || e.nativeEvent.button === 1,
-                    });
+                    onSelect?.(
+                        item.item,
+                        {
+                            type: "mouse",
+                            newTab: event.ctrlKey || event.metaKey || event.nativeEvent.button === 1,
+                        },
+                        event,
+                    );
                 }
-                shouldCloseOnSelect && onClose?.();
+                if (shouldCloseOnSelect) {
+                    onClose?.();
+                }
             }
 
             switch (selectionMode) {
@@ -138,7 +150,7 @@ function UiTreeview<Levels extends unknown[], Level>({
                     break;
                 case "leafs-only": {
                     // Leaf has no children
-                    if (!item.children) {
+                    if (!item.children || item.children.length === 0) {
                         doSelect();
                         return;
                     }
@@ -152,8 +164,12 @@ function UiTreeview<Levels extends unknown[], Level>({
                 }
             }
         },
-        [getState, onClose, onSelect, selectionMode, shouldCloseOnSelect],
+        [getState, onClose, onSelect, selectionMode, shouldCloseOnSelect, isDisabledFocusable],
     );
+
+    const onHoverHandle = useCallback((path: number[]) => {
+        setFocusedPath(path);
+    }, []);
 
     const contextRef = useAutoupdateRef<IUiTreeviewContext<Levels, Level>>({
         itemsRef,
@@ -248,6 +264,9 @@ function UiTreeview<Levels extends unknown[], Level>({
         ],
     );
 
+    // Handle outside keyboard events in the same way as internal keyboard events
+    useUiTreeViewEventSubscriber("keydown", handleKeyDown);
+
     return (
         <div className={b()} style={{ width, maxWidth, maxHeight }} data-testid={dataTestId}>
             <UiTreeviewRoot
@@ -258,7 +277,8 @@ function UiTreeview<Levels extends unknown[], Level>({
                 {items.map((item, index) => (
                     <UITreeviewItem
                         ItemComponent={ItemComponent}
-                        onSelectHandle={onSelectHandle}
+                        onSelect={onSelectHandle}
+                        onHover={onHoverHandle}
                         getState={getState}
                         focusedItem={focusedItem}
                         selectedItemId={selectedItemId}
