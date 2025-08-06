@@ -150,7 +150,9 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                     id={id}
                     value={repeatTypeItem.title}
                     onClick={() => {
-                        !isOpen && onRepeatDropdownOpen?.();
+                        if (!isOpen) {
+                            onRepeatDropdownOpen?.();
+                        }
                         toggleDropdown();
                     }}
                     dropdownId={dropdownId}

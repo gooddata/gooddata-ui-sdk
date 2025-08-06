@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { IInsightsQuery, IInsightsQueryResult } from "@gooddata/sdk-backend-spi";
@@ -74,7 +74,9 @@ export class InsightsQuery implements IInsightsQuery {
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        !isNil(totalCount) && this.setTotalCount(totalCount);
+                        if (!isNil(totalCount)) {
+                            this.setTotalCount(totalCount);
+                        }
                         return convertVisualizationObjectsToInsights(data);
                     });
 

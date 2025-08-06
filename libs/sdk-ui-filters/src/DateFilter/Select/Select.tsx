@@ -23,7 +23,7 @@ export interface ISelectProps<V> {
 const DEFAULT_ITEMS = [];
 const DEFAULT_STYLES: React.CSSProperties = {};
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export const Select = <V extends {}>({
     onChange = noop,
     value,

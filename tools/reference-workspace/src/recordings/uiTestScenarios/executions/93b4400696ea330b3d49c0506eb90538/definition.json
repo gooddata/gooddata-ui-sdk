@@ -96,7 +96,8 @@
                     }
                 }
             ],
-            "localIdentifier": "columns"
+            "localIdentifier": "columns",
+            "totals": []
         }
     ],
     "dimensions": [
@@ -120,7 +121,10 @@
                 }
             ]
         },
-        { "itemIdentifiers": ["a_attr.f_stage.stagename", "a_f_owner.region_id", "measureGroup"] }
+        {
+            "itemIdentifiers": ["a_attr.f_stage.stagename", "a_f_owner.region_id", "measureGroup"],
+            "totals": []
+        }
     ],
     "filters": [],
     "measures": [

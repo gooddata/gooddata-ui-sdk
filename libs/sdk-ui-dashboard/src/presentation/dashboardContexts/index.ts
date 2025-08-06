@@ -7,4 +7,4 @@ export {
 export { DashboardConfigProvider, useDashboardConfigContext } from "./DashboardConfigContext.js";
 export { ExportDialogContextProvider, useExportDialogContext } from "./ExportDialogContext.js";
 export { useSlideData, useSlideSizeStyle } from "./useSlideData.js";
-export * from "./types.js";
+export type * from "./types.js";

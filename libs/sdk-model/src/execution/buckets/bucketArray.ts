@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     anyBucket,
     AttributeInBucket,
@@ -202,7 +202,7 @@ export function bucketsFindMeasure(
 export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[] {
     invariant(buckets, "buckets must be specified");
 
-    if (!buckets.length || !ids || !ids.length) {
+    if (!buckets.length || !ids?.length) {
         return [];
     }
 

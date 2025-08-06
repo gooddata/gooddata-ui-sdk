@@ -38,7 +38,7 @@ function setParentTickDrillable(
         cursor: "pointer",
         color: styleVariables.gdColorText,
     };
-    if (label && ddPoints && ddPoints.length) {
+    if (label && ddPoints?.length) {
         if (!label.basicStyles) {
             label.basicStyles = { ...label.styles };
         }

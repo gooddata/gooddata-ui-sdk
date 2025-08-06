@@ -1140,7 +1140,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      *
      * @param callback - function to wrap with state guard
      */
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     private stateBoundCallback = <T extends Function>(callback: T): T => {
         const forInternalState = this.internal;
         return ((...args: any) => {

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     GdcMessageEventListener,
     IGdcMessageEventListenerConfig,
@@ -21,7 +21,7 @@ let host: IHost;
 try {
     // eslint-disable-next-line no-restricted-globals
     host = parent; // do not use check `typeof parent` due to IE11 "Access denied error", instead wrap by try/catch
-} catch (e) {
+} catch {
     host = {}; // use mocked host object when running in node (e2e tests)
 }
 

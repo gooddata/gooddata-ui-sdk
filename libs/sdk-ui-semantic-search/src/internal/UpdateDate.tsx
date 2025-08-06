@@ -1,7 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { ListItem } from "../types.js";
-import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import * as React from "react";
 import { getDateTimeConfig } from "@gooddata/sdk-ui-kit";
 import { defineMessages, FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
@@ -15,7 +13,8 @@ const DEFAULT_MD_TIMEZONE = "UTC";
  * @internal
  */
 export type UpdateDateProps = {
-    listItem: ListItem<ISemanticSearchResultItem>;
+    createdAt?: string;
+    modifiedAt?: string;
 };
 
 const messages = defineMessages({
@@ -30,9 +29,9 @@ const messages = defineMessages({
  * the date formatting was one of the bottlenecks.
  * @internal
  */
-export const UpdatedDate = React.memo(function UpdatedDate({ listItem: { item } }: UpdateDateProps) {
+export const UpdatedDate = React.memo(function UpdatedDate({ createdAt, modifiedAt }: UpdateDateProps) {
     const timezone = useMetadataTimezone() ?? DEFAULT_MD_TIMEZONE;
-    const timestamp = item.modifiedAt ?? item.createdAt;
+    const timestamp = modifiedAt ?? createdAt;
 
     if (!timestamp) return null;
 
@@ -51,8 +50,15 @@ export const UpdatedDate = React.memo(function UpdatedDate({ listItem: { item } 
             </span>
         );
     } else if (config.isCurrentYear) {
-        return <FormattedDate value={config.date} day="numeric" month="short" />;
+        return (
+            <span>
+                <FormattedDate value={config.date} day="numeric" month="short" />
+            </span>
+        );
     }
-
-    return <FormattedDate value={config.date} day="numeric" month="short" year="numeric" />;
+    return (
+        <span>
+            <FormattedDate value={config.date} day="numeric" month="short" year="numeric" />
+        </span>
+    );
 });

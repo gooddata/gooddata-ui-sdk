@@ -64,7 +64,7 @@ async function extractMessages(cwd: string, source: string, debug = false): Prom
             extractSourceLocation: true,
         });
         return JSON.parse(results);
-    } catch (e: any) {
+    } catch {
         fail(`Can not extract messages from "${source}".`, true);
         throw new Error(`Can not extract messages from "${source}".`);
     }

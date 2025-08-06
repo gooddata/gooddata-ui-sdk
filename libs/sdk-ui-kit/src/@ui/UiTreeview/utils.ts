@@ -121,7 +121,11 @@ export function findPath<T>(
         if (items[i].item.id === id && isFocusableItem(items[i])) {
             return [i];
         }
-        const childPath = findPath(items[i].children, id, isFocusableItem);
+        const children = items[i].children;
+        if (!children) {
+            return [i];
+        }
+        const childPath = findPath(children, id, isFocusableItem);
         if (childPath) {
             return [i, ...childPath];
         }

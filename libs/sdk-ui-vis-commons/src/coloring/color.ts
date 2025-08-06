@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     IColor,
     IColorPalette,
@@ -125,7 +125,7 @@ export function getColorPaletteFromColors(colors: string[]): IColorPalette {
                 },
             };
         });
-    } catch (_ignored) {
+    } catch {
         return DefaultColorPalette;
     }
 }

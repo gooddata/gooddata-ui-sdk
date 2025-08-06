@@ -150,6 +150,10 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                     )}
                     <button
                         className="gd-attachment-chip-button gd-attachment-chip-delete"
+                        aria-label={intl.formatMessage(
+                            { id: "dialogs.schedule.management.attachments.delete" },
+                            { format: attachment },
+                        )}
                         onClick={() => onDelete(attachment)}
                     >
                         <svg

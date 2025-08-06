@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { IDashboardsQuery, IDashboardsQueryResult } from "@gooddata/sdk-backend-spi";
@@ -76,7 +76,9 @@ export class DashboardsQuery implements IDashboardsQuery {
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        !isNil(totalCount) && this.setTotalCount(totalCount);
+                        if (!isNil(totalCount)) {
+                            this.setTotalCount(totalCount);
+                        }
                         return convertAnalyticalDashboardToListItems(data);
                     });
 

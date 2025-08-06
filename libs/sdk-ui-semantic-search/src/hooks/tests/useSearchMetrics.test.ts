@@ -61,7 +61,7 @@ describe("useSearchMetrics hook", () => {
 
         const { onCloseMetrics, onSearchMetrics } = result.current;
 
-        act(() => onSearchMetrics("test", [{ item }, { item: item2 }]));
+        act(() => onSearchMetrics("test", [item, item2]));
         act(() => onCloseMetrics());
 
         expect(callback).toHaveBeenCalled();
@@ -82,7 +82,7 @@ describe("useSearchMetrics hook", () => {
 
         const { onSelectMetrics, onSearchMetrics } = result.current;
 
-        act(() => onSearchMetrics("test", [{ item }, { item: item2 }]));
+        act(() => onSearchMetrics("test", [item, item2]));
         act(() => onSelectMetrics(item, 0));
 
         expect(callback).toHaveBeenCalled();
@@ -103,7 +103,7 @@ describe("useSearchMetrics hook", () => {
 
         const { onSelectMetrics, onSearchMetrics } = result.current;
 
-        act(() => onSearchMetrics("test", [{ item }, { item: item2 }]));
+        act(() => onSearchMetrics("test", [item, item2]));
         act(() => onSelectMetrics(item, 0));
         act(() => onSelectMetrics(item2, 1));
 
@@ -134,7 +134,7 @@ describe("useSearchMetrics hook", () => {
 
         const { onCloseMetrics, onSelectMetrics, onSearchMetrics } = result.current;
 
-        act(() => onSearchMetrics("test", [{ item }, { item: item2 }]));
+        act(() => onSearchMetrics("test", [item, item2]));
         act(() => onSelectMetrics(item, 0));
         act(() => onCloseMetrics());
 

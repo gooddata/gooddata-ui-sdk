@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-export * from "./types.js";
+export type * from "./types.js";
 export { renderModeAware } from "./renderModeAware.js";

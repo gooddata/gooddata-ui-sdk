@@ -136,7 +136,7 @@ export async function toBackstopJson(): Promise<string> {
     storiesGlob[0] = path.join("../", storiesGlob[0]);
 
     const files = await fg(storiesGlob, { cwd: path.resolve(path.join(__dirname)) });
-    console.log(`Processing ${files.length} story files...`);
+    console.log(`Found ${files.length} story files...`);
 
     // Process files in parallel with controlled concurrency to avoid overwhelming the system
     const concurrency = 10; // Process 10 files at a time
@@ -144,9 +144,6 @@ export async function toBackstopJson(): Promise<string> {
 
     for (let i = 0; i < files.length; i += concurrency) {
         const batch = files.slice(i, i + concurrency);
-        console.log(
-            `Processing batch ${Math.floor(i / concurrency) + 1}/${Math.ceil(files.length / concurrency)} (${batch.length} files)`,
-        );
 
         const batchPromises = batch.map((file) => processStoryFile(file));
         const batchResults = await Promise.all(batchPromises);

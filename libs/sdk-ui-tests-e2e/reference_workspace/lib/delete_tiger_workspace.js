@@ -34,7 +34,7 @@ async function main() {
             log("Deleting TypeScript Tiger children workspace mappings");
             try {
                 fs.unlinkSync(TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG);
-            } catch (e) {
+            } catch {
                 log("Delete TypeScript Tiger children workspace mappings failed");
             }
         }

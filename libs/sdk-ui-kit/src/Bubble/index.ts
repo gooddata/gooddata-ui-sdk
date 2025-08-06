@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-export * from "./typings.js";
+// (C) 2020-2025 GoodData Corporation
+export type * from "./typings.js";
 export type { IBubbleProps, IBubbleState } from "./Bubble.js";
 export { Bubble } from "./Bubble.js";
 export type { IBubbleTriggerProps, IBubbleTriggerState } from "./BubbleTrigger.js";

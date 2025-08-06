@@ -138,7 +138,9 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
             // If there is no submenu, select the item
             if (!item.subItems) {
                 onSelect?.(item);
-                shouldCloseOnSelect && onClose?.();
+                if (shouldCloseOnSelect) {
+                    onClose?.();
+                }
                 return;
             }
 

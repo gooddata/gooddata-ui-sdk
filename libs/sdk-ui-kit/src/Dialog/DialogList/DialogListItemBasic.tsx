@@ -55,11 +55,15 @@ export function DialogListItemBasic({ item, className, onClick, onDelete }: IDia
     );
 
     const handleItemClick = useCallback(() => {
-        !isDisabled && isClickable && onClick?.(item);
+        if (!isDisabled && isClickable) {
+            onClick?.(item);
+        }
     }, [isDisabled, isClickable, item, onClick]);
 
     const handleItemDelete = useCallback(() => {
-        !isDisabled && isDeletable && onDelete?.(item);
+        if (!isDisabled && isDeletable) {
+            onDelete?.(item);
+        }
     }, [isDisabled, isDeletable, item, onDelete]);
 
     return (

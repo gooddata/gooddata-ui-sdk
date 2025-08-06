@@ -391,7 +391,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
          * Prevent default fixes bug BB-332 but prevents in closing other dropdowns (Bug BB-1102)
          * so we want to prevent default only when clicking on outside dates in datepicker
          */
-        if (e.target && classList && classList.contains(DATEPICKER_OUTSIDE_DAY_SELECTOR)) {
+        if (e.target && classList?.contains(DATEPICKER_OUTSIDE_DAY_SELECTOR)) {
             e.preventDefault();
         }
     }

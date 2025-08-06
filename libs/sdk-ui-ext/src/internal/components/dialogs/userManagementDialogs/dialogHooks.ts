@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
@@ -218,17 +218,19 @@ export const useUserGroups = (
 
     // removes admin group from the user if he is its member, update internal array of groups
     const removeAdminGroup = () => {
-        hasBootstrapUserGroup(grantedUserGroups)
-            ? backend
-                  .organization(organizationId)
-                  .users()
-                  .removeUsersFromUserGroups([userId], [bootstrapUserGroupId])
-                  .then(() =>
-                      setGrantedUserGroups(
-                          grantedUserGroups.filter((item) => item.id !== bootstrapUserGroupId),
-                      ),
-                  )
-            : Promise.resolve();
+        if (hasBootstrapUserGroup(grantedUserGroups)) {
+            backend
+                .organization(organizationId)
+                .users()
+                .removeUsersFromUserGroups([userId], [bootstrapUserGroupId])
+                .then(() =>
+                    setGrantedUserGroups(
+                        grantedUserGroups.filter((item) => item.id !== bootstrapUserGroupId),
+                    ),
+                );
+        } else {
+            Promise.resolve();
+        }
     };
 
     // update internal array with user groups after applied changed in groups edit mode

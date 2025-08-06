@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useState, useEffect, useRef, memo, useCallback } from "react";
 import isEqual from "lodash/isEqual.js";
-import { injectIntl } from "react-intl";
 
 import { IGeoChartInnerProps } from "./GeoChartInner.js";
 import { isLocationSet } from "./helpers/geoChart/common.js";
@@ -137,12 +136,10 @@ export function geoValidatorHOC<T>(
         },
     );
 
-    const IntlValidatorHOC = injectIntl<"intl", T & IGeoValidatorProps>(ValidatorHOCWrapped);
-
     function ValidatorHOC(props: T & IGeoValidatorProps) {
         return (
             <IntlWrapper locale={props.locale}>
-                <IntlValidatorHOC {...(props as any)} />
+                <ValidatorHOCWrapped {...(props as any)} />
             </IntlWrapper>
         );
     }

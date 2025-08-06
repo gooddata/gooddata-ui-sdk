@@ -5,29 +5,6 @@ module.exports = {
     extends: ["plugin:prettier/recommended"],
     rules: {
         "no-duplicate-imports": "error",
-        "@typescript-eslint/array-type": "off",
-        "@typescript-eslint/ban-ts-comment": ["error", { "ts-expect-error": "allow-with-description" }],
-        "@typescript-eslint/ban-types": [
-            "error",
-            {
-                types: {
-                    object: false,
-                },
-                extendDefaults: true,
-            },
-        ],
-        "@typescript-eslint/consistent-type-exports": [
-            "error",
-            { fixMixedExportsWithInlineTypeSpecifier: false },
-        ],
-        "@typescript-eslint/explicit-member-accessibility": "off",
-        "@typescript-eslint/interface-name-prefix": "off",
-        "@typescript-eslint/member-ordering": "off",
-        "@typescript-eslint/naming-convention": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-inferrable-types": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
-        "@typescript-eslint/prefer-optional-chain": "error",
         "import/order": "off",
         "no-restricted-imports": [
             "error",
@@ -48,7 +25,60 @@ module.exports = {
         // this rule is in direct conflict with the regexp plugin
         "no-useless-escape": "off",
     },
+    parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: "module",
+    },
     overrides: [
+        {
+            plugins: ["@typescript-eslint"],
+            extends: ["plugin:@typescript-eslint/recommended"],
+            files: ["*.ts", "*.tsx"],
+            rules: {
+                "@typescript-eslint/array-type": "off",
+                "@typescript-eslint/ban-ts-comment": [
+                    "error",
+                    { "ts-expect-error": "allow-with-description" },
+                ],
+                "@typescript-eslint/no-wrapper-object-types": "error",
+                "@typescript-eslint/no-unsafe-function-type": "error",
+                "@typescript-eslint/no-restricted-types": [
+                    "error",
+                    {
+                        types: {
+                            String: {
+                                message: "Use 'string' instead",
+                                fixWith: "string",
+                            },
+                            Number: {
+                                message: "Use 'number' instead",
+                                fixWith: "number",
+                            },
+                            Boolean: {
+                                message: "Use 'boolean' instead",
+                                fixWith: "boolean",
+                            },
+                            Symbol: {
+                                message: "Use 'symbol' instead",
+                                fixWith: "symbol",
+                            },
+                        },
+                    },
+                ],
+                "@typescript-eslint/consistent-type-exports": [
+                    "error",
+                    { fixMixedExportsWithInlineTypeSpecifier: false },
+                ],
+                "@typescript-eslint/explicit-member-accessibility": "off",
+                "@typescript-eslint/interface-name-prefix": "off",
+                "@typescript-eslint/member-ordering": "off",
+                "@typescript-eslint/naming-convention": "off",
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-inferrable-types": "off",
+                "@typescript-eslint/no-non-null-assertion": "off",
+                "@typescript-eslint/prefer-optional-chain": "error",
+            },
+        },
         {
             files: ["*.test.ts", "*.test.tsx", "*.spec.ts"],
             rules: {

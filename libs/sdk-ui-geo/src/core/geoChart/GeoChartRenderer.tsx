@@ -215,7 +215,7 @@ const GeoChartRenderer: React.FC<IGeoChartRendererProps> = ({
         if (bounds) {
             try {
                 chartInstance.current.fitBounds(bounds, DEFAULT_MAPBOX_OPTIONS.fitBoundsOptions);
-            } catch (error) {
+            } catch {
                 // sometimes fitBounds is called before this.chart.resize() takes all effects and map area is invisible/small which leads to error in mapbox division by 0 -> NaN. Next re-render will fix it.
             }
         }

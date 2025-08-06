@@ -57,7 +57,8 @@
                     }
                 }
             ],
-            "localIdentifier": "attribute"
+            "localIdentifier": "attribute",
+            "totals": []
         },
         {
             "items": [
@@ -87,7 +88,7 @@
         }
     ],
     "dimensions": [
-        { "itemIdentifiers": ["a_attr.f_owner.salesrep"] },
+        { "itemIdentifiers": ["a_attr.f_owner.salesrep"], "totals": [] },
         {
             "itemIdentifiers": ["a_f_opportunitysnapshot.forecastcategory_id", "measureGroup"],
             "totals": [

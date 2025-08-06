@@ -350,10 +350,11 @@ describe("UiTreeview", () => {
 
             fireEvent.click(screen.getByText("Parent A Folder A File A1"));
 
-            expect(onSelect).toHaveBeenCalledWith(treeStatic[0].children[0].children[0].item.data, {
-                newTab: false,
-                type: "mouse",
-            });
+            expect(onSelect).toHaveBeenCalledWith(
+                treeStatic[0].children[0].children[0].item,
+                { newTab: false, type: "mouse" },
+                expect.objectContaining({ nativeEvent: expect.any(MouseEvent) }),
+            );
         });
 
         it("should not call onSelect when item is clicked", () => {
@@ -588,10 +589,11 @@ describe("UiTreeview", () => {
             // Select with Enter
             fireEvent.keyDown(listbox, { code: "Enter" });
 
-            expect(onSelect).toHaveBeenCalledWith(treeStatic[0].children[0].item.data, {
-                newTab: false,
-                type: "keyboard",
-            });
+            expect(onSelect).toHaveBeenCalledWith(
+                treeStatic[0].children[0].item,
+                { newTab: false, type: "keyboard" },
+                expect.objectContaining({ nativeEvent: expect.any(KeyboardEvent) }),
+            );
         });
 
         it("should select with Space key", () => {
@@ -606,10 +608,11 @@ describe("UiTreeview", () => {
             // Select with Enter
             fireEvent.keyDown(listbox, { code: "Space" });
 
-            expect(onSelect).toHaveBeenCalledWith(treeStatic[0].children[0].item.data, {
-                newTab: false,
-                type: "keyboard",
-            });
+            expect(onSelect).toHaveBeenCalledWith(
+                treeStatic[0].children[0].item,
+                { newTab: false, type: "keyboard" },
+                expect.objectContaining({ nativeEvent: expect.any(KeyboardEvent) }),
+            );
         });
 
         it("should toggle with Enter key", () => {
@@ -678,10 +681,11 @@ describe("UiTreeview", () => {
             // Click on an item
             fireEvent.click(screen.getByText("Parent A Folder A File A1"));
 
-            expect(onSelect).toHaveBeenCalledWith(treeStatic[0].children[0].children[0].item.data, {
-                newTab: false,
-                type: "mouse",
-            });
+            expect(onSelect).toHaveBeenCalledWith(
+                treeStatic[0].children[0].children[0].item,
+                { newTab: false, type: "mouse" },
+                expect.objectContaining({ nativeEvent: expect.any(MouseEvent) }),
+            );
             expect(onClose).toHaveBeenCalled();
         });
 
@@ -768,8 +772,8 @@ describe("UiTreeview", () => {
             const items = screen.getAllByRole("treeitem");
             expect(items.length).toBe(11);
 
-            // First item should have aria-selected="false" by default
-            expect(items[0]).toHaveAttribute("aria-selected", "false");
+            // First item should have aria-selected="true" by default
+            expect(items[0]).toHaveAttribute("aria-selected", "true");
             expect(items[0]).toHaveAttribute("aria-expanded", "true");
 
             // Disabled item should have aria-disabled="true"
@@ -790,10 +794,11 @@ describe("UiTreeview", () => {
             fireEvent.click(screen.getByText("Parent A Folder A File A1"));
 
             // onSelect should be called
-            expect(onSelect).toHaveBeenCalledWith(treeStatic[0].children[0].children[0].item.data, {
-                newTab: false,
-                type: "mouse",
-            });
+            expect(onSelect).toHaveBeenCalledWith(
+                treeStatic[0].children[0].children[0].item,
+                { newTab: false, type: "mouse" },
+                expect.objectContaining({ nativeEvent: expect.any(MouseEvent) }),
+            );
 
             // onClose should not be called
             expect(onClose).not.toHaveBeenCalled();

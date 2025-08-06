@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, useCallback } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import React, { memo } from "react";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize.js";
 import noop from "lodash/noop.js";
@@ -18,24 +18,20 @@ interface IOperatorDropdownItemOwnProps {
     onClick: (identifier: MeasureValueFilterOperator) => void;
 }
 
-type IOperatorDropdownItemProps = IOperatorDropdownItemOwnProps & WrappedComponentProps;
-
 export const OperatorDropdownItem = memo(function OperatorDropdownItem({
-    intl,
     operator,
     selectedOperator,
     bubbleText = null,
     onClick = noop,
-}: IOperatorDropdownItemProps) {
-    const handleOnClick = useCallback(
-        (e: React.MouseEvent<HTMLDivElement>): void => {
-            onClick(operator);
-            e.preventDefault();
-        },
-        [onClick, operator],
-    );
+}: IOperatorDropdownItemOwnProps) {
+    const intl = useIntl();
 
-    const renderBubble = useCallback((message: string) => {
+    const handleOnClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+        onClick(operator);
+        e.preventDefault();
+    };
+
+    const renderBubble = (message: string) => {
         return (
             <div className="tooltip-bubble">
                 <BubbleHoverTrigger tagName={"div"} showDelay={400} hideDelay={200}>
@@ -46,7 +42,7 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
                 </BubbleHoverTrigger>
             </div>
         );
-    }, []);
+    };
 
     const className = cx(
         "gd-list-item",
@@ -70,4 +66,4 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
     );
 });
 
-export default injectIntl(OperatorDropdownItem);
+export default OperatorDropdownItem;

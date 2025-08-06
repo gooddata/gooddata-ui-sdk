@@ -21,8 +21,8 @@ import { RepeaterColumnResizedCallback } from "./publicTypes.js";
 import { getValidColorPalette, ColorFactory } from "../../highcharts/index.js";
 import { getWindowSize } from "./internal/repeaterAgGridDataSource.js";
 
-export * from "./publicTypes.js";
-export * from "./columnWidths.js";
+export type * from "./publicTypes.js";
+export type * from "./columnWidths.js";
 
 /**
  * @internal

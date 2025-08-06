@@ -30,7 +30,7 @@ export const parseNameFromContentDisposition = (response: Pick<AxiosResponse, "h
 
     try {
         return decodeURIComponent(decoded);
-    } catch (e) {
+    } catch {
         return decoded;
     }
 };

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { IColor, IColorFromPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import cx from "classnames";
@@ -38,12 +38,7 @@ export default class ColorPaletteItem extends React.PureComponent<IColorPaletteI
     }
 
     private scrollSelectedItemIntoParent() {
-        if (
-            this.props.selected &&
-            this.itemRef.current &&
-            this.itemRef.current.parentNode &&
-            this.isItemVisible()
-        ) {
+        if (this.props.selected && this.itemRef.current?.parentNode && this.isItemVisible()) {
             const target = this.itemRef.current;
             target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop - ITEM_MARGIN;
         }

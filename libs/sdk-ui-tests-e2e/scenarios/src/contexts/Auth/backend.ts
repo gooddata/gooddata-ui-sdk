@@ -4,7 +4,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { withCaching, RecommendedCachingConfiguration } from "@gooddata/sdk-backend-base";
 
 export function createBackend(): IAnalyticalBackend {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const tiger = require("@gooddata/sdk-backend-tiger");
     const { default: tigerFactory, TigerTokenAuthProvider } = tiger;
     return withCaching(

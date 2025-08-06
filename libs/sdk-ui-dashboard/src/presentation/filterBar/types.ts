@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
-export * from "./attributeFilter/types.js";
-export * from "./dateFilter/types.js";
-export * from "./filterBar/types.js";
+// (C) 2021-2025 GoodData Corporation
+export type * from "./attributeFilter/types.js";
+export type * from "./dateFilter/types.js";
+export type * from "./filterBar/types.js";

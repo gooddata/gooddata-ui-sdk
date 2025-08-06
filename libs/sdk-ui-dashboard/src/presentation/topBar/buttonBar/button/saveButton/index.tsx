@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 export { DefaultSaveButton, useSaveButtonProps } from "./DefaultSaveButton.js";
 export { SaveButton } from "./SaveButton.js";
-export * from "./types.js";
+export type * from "./types.js";

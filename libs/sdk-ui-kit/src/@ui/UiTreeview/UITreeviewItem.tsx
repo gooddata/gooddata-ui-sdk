@@ -17,11 +17,12 @@ interface UITreeviewItemProps<Levels extends [], Level> {
     selectedItemId?: string;
     itemDataTestId?: string;
     isCompact?: boolean;
-    onSelectHandle: (
-        e: React.MouseEvent | React.KeyboardEvent,
+    onSelect: (
+        event: React.MouseEvent | React.KeyboardEvent,
         path: number[],
         item: UiStaticTreeView<Level | LevelTypesUnion<Levels>>,
     ) => void;
+    onHover: (path: number[]) => void;
     ItemComponent: React.ComponentType<IUiTreeviewItemProps<Level | LevelTypesUnion<Levels>>>;
 }
 
@@ -34,7 +35,8 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
         focusedItem,
         selectedItemId,
         itemDataTestId,
-        onSelectHandle,
+        onSelect,
+        onHover,
         ItemComponent,
         isCompact,
     } = props;
@@ -42,29 +44,33 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
     const [state, setState] = getState(props.path);
     const { item, children } = props.item;
 
+    const childCount = children?.length ?? 0;
     const level = props.path.length;
 
     const isFocused = item === focusedItem.item;
     const isSelected = item.id === selectedItemId;
     const isExpanded = state.expanded;
 
-    const onToggleHandle = useCallback(
-        (e: React.MouseEvent | React.KeyboardEvent, expanded: boolean) => {
+    const handleToggle = useCallback(
+        (event: React.MouseEvent | React.KeyboardEvent, expanded: boolean) => {
             setState({
                 ...state,
                 expanded,
             });
-            e.stopPropagation();
-            e.preventDefault();
+            event.stopPropagation();
+            event.preventDefault();
         },
         [setState, state],
     );
-    const onInnerSelectHandle = useCallback(
-        (e: React.MouseEvent | React.KeyboardEvent) => {
-            onSelectHandle(e, props.path, props.item);
+    const handleSelect = useCallback(
+        (event: React.MouseEvent | React.KeyboardEvent) => {
+            onSelect(event, props.path, props.item);
         },
-        [props.item, props.path, onSelectHandle],
+        [props.item, props.path, onSelect],
     );
+    const handleHover = useCallback(() => {
+        onHover(props.path);
+    }, [props.path, onHover]);
 
     return (
         <div className={e("treeitem")}>
@@ -73,20 +79,22 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
                 data-testid={itemDataTestId}
                 role="treeitem"
                 aria-level={level}
-                aria-expanded={isExpanded ? "true" : "false"}
-                aria-selected={isSelected ? "true" : "false"}
-                aria-disabled={item.isDisabled ? "true" : "false"}
+                aria-expanded={isExpanded}
+                aria-selected={isFocused}
+                aria-disabled={item.isDisabled}
             >
                 <ItemComponent
                     item={item}
-                    type={children?.length ? "group" : "leaf"}
+                    type={childCount ? "group" : "leaf"}
+                    childCount={childCount}
                     isCompact={isCompact}
                     isFocused={isFocused}
                     isSelected={isSelected}
                     isExpanded={isExpanded}
                     level={level}
-                    onSelect={onInnerSelectHandle}
-                    onToggle={onToggleHandle}
+                    onSelect={handleSelect}
+                    onToggle={handleToggle}
+                    onHover={handleHover}
                     defaultStyle={defineVariables(level)}
                     defaultClassName={e("item", {
                         isFocused,
@@ -102,7 +110,8 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
                     {children.map((child, i) => (
                         <UITreeviewItem
                             ItemComponent={ItemComponent}
-                            onSelectHandle={onSelectHandle}
+                            onSelect={onSelect}
+                            onHover={onHover}
                             getState={getState}
                             focusedItem={focusedItem}
                             selectedItemId={selectedItemId}

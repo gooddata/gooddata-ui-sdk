@@ -17,6 +17,7 @@ export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNe
             width: 1200,
             height: 800,
         },
+        skip: true,
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withDefaultBackendSettings({

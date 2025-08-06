@@ -823,6 +823,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableCyclicalToDateFilters,
+            "enableCyclicalToDateFilters",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCyclicalToDateFilters,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableNewPivotTable,
             "enableNewPivotTable",
             "BOOLEAN",

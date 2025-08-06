@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-/* eslint-disable @typescript-eslint/ban-types */
+// (C) 2022-2025 GoodData Corporation
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 
 /**
  * Unique key to identify the attribute element - its uri, value or primaryKey.

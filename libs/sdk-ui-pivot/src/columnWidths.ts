@@ -303,11 +303,7 @@ export function isAttributeColumnWidthItem(obj: unknown): obj is IAttributeColum
  * @public
  */
 export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWidthItem {
-    return (
-        !isEmpty(obj) &&
-        (obj as IMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
-        (obj as IMeasureColumnWidthItem).measureColumnWidthItem.locators !== undefined
-    );
+    return !isEmpty(obj) && (obj as IMeasureColumnWidthItem).measureColumnWidthItem?.locators !== undefined;
 }
 
 /**
@@ -318,8 +314,7 @@ export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWid
 export function isSliceMeasureColumnWidthItem(obj: unknown): obj is ISliceMeasureColumnWidthItem {
     return (
         !isEmpty(obj) &&
-        (obj as ISliceMeasureColumnWidthItem).sliceMeasureColumnWidthItem !== undefined &&
-        (obj as ISliceMeasureColumnWidthItem).sliceMeasureColumnWidthItem.locators !== undefined
+        (obj as ISliceMeasureColumnWidthItem).sliceMeasureColumnWidthItem?.locators !== undefined
     );
 }
 
@@ -331,8 +326,7 @@ export function isSliceMeasureColumnWidthItem(obj: unknown): obj is ISliceMeasur
 export function isMixedValuesColumnWidthItem(obj: unknown): obj is IMixedValuesColumnWidthItem {
     return (
         !isEmpty(obj) &&
-        (obj as IMixedValuesColumnWidthItem).mixedValuesColumnWidthItem !== undefined &&
-        (obj as IMixedValuesColumnWidthItem).mixedValuesColumnWidthItem.locators !== undefined
+        (obj as IMixedValuesColumnWidthItem).mixedValuesColumnWidthItem?.locators !== undefined
     );
 }
 
@@ -357,9 +351,7 @@ export function isAllMeasureColumnWidthItem(obj: unknown): obj is IAllMeasureCol
  */
 export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureColumnWidthItem {
     return (
-        !isEmpty(obj) &&
-        (obj as IWeakMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
-        (obj as IWeakMeasureColumnWidthItem).measureColumnWidthItem.locator !== undefined
+        !isEmpty(obj) && (obj as IWeakMeasureColumnWidthItem).measureColumnWidthItem?.locator !== undefined
     );
 }
 

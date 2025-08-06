@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
     IAvailableLegends,
     IGeoData,
@@ -352,7 +352,7 @@ export function getAvailableLegends(
 function parseGeoPropertyItem(item: string): GeoJSON.GeoJsonProperties {
     try {
         return JSON.parse(item);
-    } catch (e) {
+    } catch {
         return {};
     }
 }

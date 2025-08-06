@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-export * from "./typings.js";
+export type * from "./typings.js";
 export type { IBackButtonProps } from "./BackButton.js";
 export { BackButton } from "./BackButton.js";
 export { ConfirmDialog } from "./ConfirmDialog.js";

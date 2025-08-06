@@ -2,4 +2,4 @@
 
 export { DefaultSettingButton, useSettingButtonProps } from "./DefaultSettingButton.js";
 export { SettingButton } from "./SettingButton.js";
-export * from "./types.js";
+export type * from "./types.js";

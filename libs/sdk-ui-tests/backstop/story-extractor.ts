@@ -22,12 +22,11 @@ import "./mockWindow.js";
         const json = await toBackstop.toBackstopJson();
 
         writeFileSync("./backstop/stories.json", json, "utf-8");
-        console.log("✅ stories.json written");
 
         await server.close();
         process.exit(0);
     } catch (err) {
-        console.error("❌ Failed to generate JSON:", err);
+        console.error("❌ Failed to extract stories to JSON:", err);
         await server.close();
         process.exit(1);
     }
