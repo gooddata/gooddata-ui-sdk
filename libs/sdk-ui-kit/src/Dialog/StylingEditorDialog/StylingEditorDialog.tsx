@@ -90,7 +90,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
             const parsedDefinition = JSON.parse(definitionField);
             const formattedDefinition = JSON.stringify(parsedDefinition, null, 4);
             return nameField !== initialNameField || formattedDefinition !== initialDefinitionField;
-        } catch (e) {
+        } catch {
             // initial state of the fields is presumed to be valid,
             // so if JSON throws error, definition was changed
             return true;
@@ -103,7 +103,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
         try {
             JSON.parse(definitionField);
             return true;
-        } catch (e) {
+        } catch {
             return false;
         }
     }, [definitionField]);

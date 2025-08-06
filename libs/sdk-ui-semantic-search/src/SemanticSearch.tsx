@@ -1,15 +1,23 @@
 // (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
-import { Input, Dropdown } from "@gooddata/sdk-ui-kit";
+import { useIntl } from "react-intl";
+import {
+    Input,
+    Dropdown,
+    LoadingMask,
+    UiStaticTreeview,
+    UiTreeViewEventsProvider,
+    useUiTreeViewEventPublisher,
+    type UiStaticTreeView,
+} from "@gooddata/sdk-ui-kit";
 import { useDebouncedState } from "@gooddata/sdk-ui";
 import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
-import { SearchResultsDropdownList } from "./SearchResultsDropdownList.js";
 import { useSemanticSearch, useElementWidth } from "./hooks/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import classnames from "classnames";
-import { ListItem } from "./types.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
+import { SemanticSearchItem } from "./SemanticSearchItem.js";
 
 /**
  * Semantic search component props.
@@ -74,10 +82,16 @@ export type SemanticSearchProps = {
 const DEBOUNCE = 300;
 
 /**
+ * Loading mask height.
+ */
+const LOADING_HEIGHT = 100;
+
+/**
  * Semantic search component core.
  * @beta
  */
 const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props) => {
+    const intl = useIntl();
     const {
         backend,
         workspace,
@@ -104,11 +118,14 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
         limit,
     });
 
-    // Build list items for rendering
-    const listItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
-        () => searchResults.map((item) => ({ item })),
-        [searchResults],
-    );
+    // Build items for rendering
+    const items: UiStaticTreeView<ISemanticSearchResultItem>[] = searchResults.map((item) => ({
+        item: {
+            id: item.id,
+            stringTitle: item.title,
+            data: item,
+        },
+    }));
 
     // The List component requires explicit width
     const [ref, width] = useElementWidth();
@@ -146,6 +163,8 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
         return <>{children}</>;
     };
 
+    const onKeyDown = useUiTreeViewEventPublisher("keydown");
+
     return (
         <Dropdown
             className={classnames("gd-semantic-search", className)}
@@ -156,18 +175,27 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
                 ".gd-semantic-search__input",
             ]}
             closeOnEscape={false}
-            renderBody={({ isMobile, closeDropdown }) => {
-                if (!searchResults.length && searchStatus !== "loading") {
+            renderBody={({ closeDropdown, isMobile }) => {
+                if (searchStatus === "loading") {
+                    return (
+                        <Wrapper status={searchStatus} closeSearch={closeDropdown}>
+                            <LoadingMask width={isMobile ? "100%" : width} height={LOADING_HEIGHT} />
+                        </Wrapper>
+                    );
+                }
+                if (items.length === 0 || searchStatus !== "success") {
                     return null;
                 }
-
                 return (
                     <Wrapper status={searchStatus} closeSearch={closeDropdown}>
-                        <SearchResultsDropdownList
+                        <UiStaticTreeview
+                            items={items}
                             width={width}
-                            isMobile={isMobile}
-                            searchResults={listItems}
-                            searchLoading={searchStatus === "loading"}
+                            ItemComponent={SemanticSearchItem}
+                            ariaAttributes={{
+                                id: "semantic-search-tree",
+                                "aria-label": intl.formatMessage({ id: "semantic-search.tree" }),
+                            }}
                             onSelect={(item) => {
                                 // Blur and clear the state
                                 const input = inputRef.current?.inputNodeRef?.inputNodeRef;
@@ -178,8 +206,9 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
                                 closeDropdown();
 
                                 // Report the selected item
-                                onSelect(item);
+                                onSelect(item.data);
                             }}
+                            shouldKeyboardActionPreventDefault={false}
                         />
                     </Wrapper>
                 );
@@ -196,6 +225,7 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
                             value={value}
                             onChange={(e) => setValue(String(e))}
                             onFocus={openDropdown}
+                            onKeyDown={onKeyDown}
                         />
                     </div>
                 );
@@ -211,7 +241,9 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
 export const SemanticSearch: React.FC<SemanticSearchProps> = ({ locale, ...coreProps }) => {
     return (
         <IntlWrapper locale={locale}>
-            <SemanticSearchCore {...coreProps} />
+            <UiTreeViewEventsProvider>
+                <SemanticSearchCore {...coreProps} />
+            </UiTreeViewEventsProvider>
         </IntlWrapper>
     );
 };

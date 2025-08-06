@@ -17,9 +17,6 @@ import "./mockWindow.js";
         await server.ssrLoadModule(resolve(__dirname, "../stories/_infra/generateInsightStories"));
         await server.ssrLoadModule(resolve(__dirname, "../stories/_infra/generateScenarioStories"));
 
-        // Call the function exactly as before
-        console.log("✅ stories generated");
-
         await server.close();
         process.exit(0);
     } catch (err) {

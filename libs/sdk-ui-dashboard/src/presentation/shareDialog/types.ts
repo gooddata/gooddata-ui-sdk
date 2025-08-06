@@ -13,7 +13,7 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 /**
  * @alpha
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ISharingApplyPayload extends ISharingDialogApplyPayload {}
 
 /**

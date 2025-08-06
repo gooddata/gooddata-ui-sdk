@@ -14,5 +14,6 @@ services:
         image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/nginxinc/nginx-unprivileged:1.29.0
         volumes:
             - ./dist-storybook:/usr/share/nginx/html:ro
+            - ./stories/nginx.conf:/etc/nginx/nginx.conf:ro
             - ./stories/storybook.conf:/etc/nginx/conf.d/storybook.conf:ro
         user: "$USER_UID:$USER_GID"

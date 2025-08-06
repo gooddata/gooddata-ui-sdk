@@ -93,7 +93,7 @@ jobs:
     needs: [warm-up-cache,build]
     runs-on:
       group: infra1-runners-arc
-      labels: runners-mxa-2xlarge #we need bigger runners
+      labels: runners-rxa-xlarge
     env:
       NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       TARGET_BRANCH: ${{ inputs.target-branch }}

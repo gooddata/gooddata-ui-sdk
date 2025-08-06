@@ -89,7 +89,7 @@
                 }
             ]
         },
-        { "items": [], "localIdentifier": "columns" }
+        { "items": [], "localIdentifier": "columns", "totals": [] }
     ],
     "dimensions": [
         {

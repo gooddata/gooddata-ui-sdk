@@ -272,7 +272,7 @@
                         }
                     ]
                 },
-                { "items": [], "localIdentifier": "columns" }
+                { "items": [], "localIdentifier": "columns", "totals": [] }
             ],
             "dimensions": [
                 {
@@ -305,7 +305,7 @@
                         }
                     ]
                 },
-                { "itemIdentifiers": [] }
+                { "itemIdentifiers": [], "totals": [] }
             ],
             "filters": [],
             "measures": [

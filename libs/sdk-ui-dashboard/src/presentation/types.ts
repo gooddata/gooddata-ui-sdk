@@ -1,11 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 export * from "./dashboard/types.js";
-export * from "./dashboardContexts/types.js";
+export type * from "./dashboardContexts/types.js";
 export * from "./drill/types.js";
-export * from "./filterBar/types.js";
-export * from "./layout/types.js";
-export * from "./scheduledEmail/types.js";
-export * from "./topBar/types.js";
-export * from "./toolbar/types.js";
-export * from "./insightList/types.js";
-export * from "./widget/types.js";
+export type * from "./filterBar/types.js";
+export type * from "./layout/types.js";
+export type * from "./scheduledEmail/types.js";
+export type * from "./topBar/types.js";
+export type * from "./toolbar/types.js";
+export type * from "./insightList/types.js";
+export type * from "./widget/types.js";

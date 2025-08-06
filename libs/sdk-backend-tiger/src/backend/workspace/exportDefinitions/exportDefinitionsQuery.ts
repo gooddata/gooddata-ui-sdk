@@ -117,7 +117,9 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        !isNil(totalCount) && this.setTotalCount(totalCount);
+                        if (!isNil(totalCount)) {
+                            this.setTotalCount(totalCount);
+                        }
                         return data.data.map((ed) =>
                             convertExportDefinitionMdObject(ed, data.included, enableAutomationFilterContext),
                         );

@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useCallback, useState } from "react";
 import { IntlShape } from "react-intl/src/types.js";
 import { IFilterConfigurationProps } from "@gooddata/sdk-ui-filters";
@@ -41,9 +41,12 @@ export const DateFilterConfigurationBody: React.FC<IDateFilterConfigurationProps
 
     const onConfigurationSave = useCallback(() => {
         onSaveButtonClick();
-        capabilities.supportsMultipleDateFilters && onTitleChange();
-        capabilities.supportsHiddenAndLockedFiltersOnUI &&
+        if (capabilities.supportsMultipleDateFilters) {
+            onTitleChange();
+        }
+        if (capabilities.supportsHiddenAndLockedFiltersOnUI) {
             changeConfigMode(selectedMode as DashboardDateFilterConfigMode);
+        }
     }, [
         selectedMode,
         onTitleChange,

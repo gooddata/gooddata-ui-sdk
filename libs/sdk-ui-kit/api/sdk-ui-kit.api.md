@@ -5104,7 +5104,7 @@ export interface IUiTreeviewContext<Levels extends any[], Level> {
     // (undocumented)
     onClose: () => void;
     // (undocumented)
-    onSelect: (e: React_2.MouseEvent | React_2.KeyboardEvent, path: number[], item?: UiStaticTreeView<Level | LevelTypesUnion<Levels>>) => void;
+    onSelect: (event: React_2.MouseEvent | React_2.KeyboardEvent, path: number[], item?: UiStaticTreeView<Level | LevelTypesUnion<Levels>>) => void;
     // (undocumented)
     selectedItemId: string | undefined;
     // (undocumented)
@@ -5125,10 +5125,14 @@ export interface IUiTreeViewItem<T> {
     stringTitle: string;
     // (undocumented)
     tooltip?: string;
+    // (undocumented)
+    url?: string;
 }
 
 // @internal (undocumented)
 export interface IUiTreeviewItemProps<T> {
+    // (undocumented)
+    childCount: number;
     // (undocumented)
     defaultClassName: string;
     // (undocumented)
@@ -5145,6 +5149,8 @@ export interface IUiTreeviewItemProps<T> {
     item: IUiTreeViewItem<T>;
     // (undocumented)
     level: number;
+    // (undocumented)
+    onHover: (e: React_2.MouseEvent) => void;
     // (undocumented)
     onSelect: (e: React_2.MouseEvent | React_2.KeyboardEvent) => void;
     // (undocumented)
@@ -5187,6 +5193,14 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
     shouldKeyboardActionStopPropagation?: boolean;
     // (undocumented)
     width?: number;
+}
+
+// @internal (undocumented)
+export interface IUiTreeViewSelectionMods {
+    // (undocumented)
+    newTab?: boolean;
+    // (undocumented)
+    type?: "mouse" | "keyboard";
 }
 
 // @internal (undocumented)
@@ -5493,19 +5507,13 @@ export function normalizeTime(time?: Date, date?: Date, timeAnchor?: number): Da
 export const NumericInput: React_2.FC<INumericInputProps>;
 
 // @internal (undocumented)
-export type OnLeveledSelectFn<Levels extends any[]> = (item: LevelTypesUnion<Levels>, mods: {
-    type?: "mouse" | "keyboard";
-    newTab?: boolean;
-}) => void;
+export type OnLeveledSelectFn<Levels extends any[]> = (item: IUiTreeViewItem<LevelTypesUnion<Levels>>, mods: IUiTreeViewSelectionMods, event: React_2.MouseEvent | React_2.KeyboardEvent) => void;
 
 // @internal (undocumented)
 export type OnOpenedChange = (params: IOnOpenedChangeParams) => void;
 
 // @internal (undocumented)
-export type OnStaticSelectFn<Level> = (item: Level, mods: {
-    type?: "mouse" | "keyboard";
-    newTab?: boolean;
-}) => void;
+export type OnStaticSelectFn<Level> = (item: IUiTreeViewItem<Level>, mods: IUiTreeViewSelectionMods, event: React_2.MouseEvent | React_2.KeyboardEvent) => void;
 
 // @internal (undocumented)
 export type OpenAction = "click" | "hover";
@@ -6575,6 +6583,17 @@ export type UiTreeViewAddLevel<N extends number> = [...Array<N>, unknown]["lengt
 export type UiTreeviewAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
 
 // @internal (undocumented)
+export type UiTreeViewEvents = {
+    keydown: React_2.KeyboardEvent;
+};
+
+// @internal (undocumented)
+export function UiTreeViewEventsProvider({ children }: React_2.PropsWithChildren): React_2.JSX.Element;
+
+// @internal (undocumented)
+export type UiTreeViewEventType = keyof UiTreeViewEvents;
+
+// @internal (undocumented)
 export type UiTreeViewNode<Levels extends unknown[], Depth extends number = 0> = Levels extends [
 infer Current,
 ...infer Rest
@@ -6695,6 +6714,12 @@ export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLE
 
 // @internal (undocumented)
 export const useUiTabOutHandlerConnectors: <T extends HTMLElement = HTMLElement>(handler?: (event: React_3.KeyboardEvent) => void) => IUiFocusHelperConnectors<T>;
+
+// @internal (undocumented)
+export function useUiTreeViewEventPublisher<T extends UiTreeViewEventType>(eventType: T): (event: UiTreeViewEvents[T]) => void;
+
+// @internal (undocumented)
+export function useUiTreeViewEventSubscriber<T extends UiTreeViewEventType>(eventType: T, handler: (event: UiTreeViewEvents[T]) => void): void;
 
 // @internal
 export const useZoom: () => IZoomContextState;

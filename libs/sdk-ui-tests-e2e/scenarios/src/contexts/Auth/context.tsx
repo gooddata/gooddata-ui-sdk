@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<{ children?: React.ReactNode }> = ({ childre
             try {
                 await backend.authenticate();
                 onLoginSuccess();
-            } catch (err) {
+            } catch {
                 // we do not care about the error in this context
                 onLoginError();
             }

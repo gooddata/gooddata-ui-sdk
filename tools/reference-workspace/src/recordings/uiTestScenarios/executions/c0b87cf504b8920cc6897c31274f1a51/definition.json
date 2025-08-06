@@ -78,7 +78,8 @@
                     }
                 }
             ],
-            "localIdentifier": "attribute"
+            "localIdentifier": "attribute",
+            "totals": []
         },
         {
             "items": [
@@ -134,7 +135,7 @@
         }
     ],
     "dimensions": [
-        { "itemIdentifiers": ["a_label.f_product.product.name", "a_f_owner.department_id"] },
+        { "itemIdentifiers": ["a_label.f_product.product.name", "a_f_owner.department_id"], "totals": [] },
         {
             "itemIdentifiers": [
                 "a_f_opportunitysnapshot.forecastcategory_id",

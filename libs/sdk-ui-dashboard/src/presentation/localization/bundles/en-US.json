@@ -735,6 +735,10 @@
         "value": "Include sheet with export info",
         "comment": "Label of a checkbox field"
     },
+    "dialogs.schedule.management.attachments.delete": {
+        "value": "Delete {format} attachment",
+        "comment": "Button tooltip for deleting an attachment. Keep the {format} placeholder."
+    },
     "dialogs.schedule.management.attachments.filters.title": {
         "value": "Dashboard filters",
         "comment": "Section title for filter settings in scheduled export configuration"

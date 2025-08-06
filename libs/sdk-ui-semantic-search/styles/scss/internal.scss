@@ -46,24 +46,8 @@
     }
 
     &__results-item {
-        &--history &__icon {
-            @include main.icon(17px);
-        }
-
         &__text__lock-icon {
-            width: 14px;
-
-            & svg {
-                width: 14px;
-                height: 14px;
-            }
-        }
-
-        &__text__row:not(:first-child) {
-            :not(:first-child)::before {
-                content: "\2022";
-                padding-right: 5px;
-            }
+            align-self: center;
         }
     }
 }

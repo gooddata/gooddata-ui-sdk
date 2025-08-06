@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { ObjRef } from "../../objRef/index.js";
 import { AttributeDisplayFormType } from "../../ldm/metadata/attributeDisplayForm/index.js";
@@ -524,11 +524,7 @@ export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHe
  * @public
  */
 export function isResultMeasureHeader(obj: unknown): obj is IResultMeasureHeader {
-    return (
-        !isEmpty(obj) &&
-        (obj as IResultMeasureHeader).measureHeaderItem !== undefined &&
-        (obj as IResultMeasureHeader).measureHeaderItem.order !== undefined
-    );
+    return !isEmpty(obj) && (obj as IResultMeasureHeader).measureHeaderItem?.order !== undefined;
 }
 
 /**
@@ -537,11 +533,7 @@ export function isResultMeasureHeader(obj: unknown): obj is IResultMeasureHeader
  * @public
  */
 export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader {
-    return (
-        !isEmpty(obj) &&
-        (obj as IResultTotalHeader).totalHeaderItem !== undefined &&
-        (obj as IResultTotalHeader).totalHeaderItem.type !== undefined
-    );
+    return !isEmpty(obj) && (obj as IResultTotalHeader).totalHeaderItem?.type !== undefined;
 }
 
 //

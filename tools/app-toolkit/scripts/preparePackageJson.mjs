@@ -4,9 +4,37 @@ import * as process from "process";
 import fs from "fs";
 import * as path from "path";
 import fse from "fs-extra";
+import { execSync } from "child_process";
 
 export function readJsonSync(file) {
     return JSON.parse(fse.readFileSync(file, { encoding: "utf-8" }));
+}
+
+function checkVersionExists(packageName, version) {
+    try {
+        // Check if specific version exists on npm
+        execSync(`npm view ${packageName}@${version} version`, {
+            encoding: 'utf-8',
+            stdio: ['pipe', 'pipe', 'pipe']
+        });
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
+function getLatestSdkUiVersion() {
+    try {
+        // Get the latest published version of @gooddata/sdk-ui
+        const result = execSync('npm view @gooddata/sdk-ui version', {
+            encoding: 'utf-8',
+            stdio: ['pipe', 'pipe', 'pipe']
+        });
+        return result.trim();
+    } catch (error) {
+        console.warn('Failed to fetch latest @gooddata/sdk-ui version, falling back to "*"');
+        return "*";
+    }
 }
 
 
@@ -82,11 +110,36 @@ function replaceItems(search, targets) {
     }
 }
 
+function resolveVersionToBase(version) {
+
+    // this happen when we bootstrap app from giga-repo,
+    // we are not publishing alpha packages every commit,
+    // so we are able bootstrap the app with the base/published version of SDK
+    // Check if version has alpha or beta postfix
+    if (version.includes('-alpha.') || version.includes('-beta.')) {
+        // Check if the pre-release version exists on npm
+        if (checkVersionExists('@gooddata/sdk-ui', version)) {
+            // Version exists, use it as-is
+            return version;
+        } else {
+            // Version doesn't exist, fall back to latest published version
+            console.log(`Version ${version} not found on npm, using latest published version`);
+            return getLatestSdkUiVersion();
+        }
+    }
+
+    // Return unchanged if no alpha/beta postfix this happen when we release new version of app-toolkit
+    return version;
+}
+
 function resolveCurrentPackageVersion() {
     //we need current version of app-toolkit
     const parenPackagePath = path.resolve("./", "package.json");
     const parentPackage = readJsonSync(parenPackagePath);
-    return parentPackage.version;
+    // we are not publishing alpha packages every commit, so we are able bootstrap the app with the base/published version of SDK
+    // should work but we are effectively testing just bootstrapping of app content depends on released version of SDK
+    // if content e2e tests failed and we need to fix than publish alpha and app will be bootstrapped with this version
+    return resolveVersionToBase(parentPackage.version);
 }
 
 function updateGDPackageVersion(version, targets) {

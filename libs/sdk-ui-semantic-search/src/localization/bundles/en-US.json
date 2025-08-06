@@ -11,6 +11,10 @@
         "value": "No results found for “{query}”.",
         "comment": "Message shown when semantic search returns no results. The {query} placeholder shows the search term entered by the user."
     },
+    "semantic-search.results.count": {
+        "value": "{count, plural, one {# result} other {# results}}",
+        "comment": "Information about number of search results."
+    },
     "semantic-search.label": {
         "value": "Search dashboards or visualization",
         "comment": "Label for the input box that is used in semantic search."
@@ -34,6 +38,18 @@
     "semantic-search.previous-search": {
         "value": "Previous search",
         "comment": "Area-label for the search history icon."
+    },
+    "semantic-search.tree": {
+        "value": "Semantic search tree",
+        "comment": "ARIA label for the semantic search results tree view component."
+    },
+    "semantic-search.tree.history": {
+        "value": "Semantic search tree history",
+        "comment": "ARIA label for the semantic search history tree view component."
+    },
+    "semantic-search.edit": {
+        "value": "Edit",
+        "comment": "Label for the edit action in semantic search results tree view."
     },
     "semantic-search.date.at": {
         "value": "at",

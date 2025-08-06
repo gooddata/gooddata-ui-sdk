@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { render, fireEvent, act } from "@testing-library/react";
+import { render, fireEvent, act, screen } from "@testing-library/react";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { SemanticSearch } from "../SemanticSearch.js";
 
@@ -49,15 +49,17 @@ describe("SemanticSearch component", () => {
     };
 
     it("should display loading after debounce time", async () => {
-        const { baseElement } = await renderAndType(WITH_DEBOUNCE);
+        await renderAndType(WITH_DEBOUNCE);
 
-        expect(baseElement.querySelector('[aria-label="loading"]')).not.toBe(null);
+        const loader = screen.getByLabelText("loading");
+        expect(loader).toBeVisible();
     });
 
     it("should display results", async () => {
-        const { baseElement } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
+        await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
-        expect(baseElement.querySelectorAll(".gd-semantic-search__results-item").length).toBe(8);
+        const items = screen.getAllByRole("treeitem");
+        expect(items).toHaveLength(8);
     });
 
     it("should let user select item by clicking on it", async () => {
@@ -70,29 +72,32 @@ describe("SemanticSearch component", () => {
     });
 
     it("should auto-select first result", async () => {
-        const { baseElement } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
+        await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
-        const firstItem = baseElement.querySelector(".gd-semantic-search__results-item");
-        expect(firstItem?.className).to.include("gd-semantic-search__results-item--active");
+        const [firstItem] = screen.getAllByRole("treeitem");
+        expect(firstItem).toHaveAttribute("aria-selected", "true");
     });
 
     it("should allow user to select with Enter key", async () => {
-        const { baseElement, callback } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
+        const { callback } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
-        fireEvent.keyDown(baseElement, { key: "Enter" });
+        const input = screen.getByRole("textbox");
+        fireEvent.keyDown(input, { code: "Enter" });
 
         expect(callback).toHaveBeenCalledOnce();
     });
 
     it("should let user navigate with keyboard", async () => {
-        const { baseElement } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
+        await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
+
+        const input = screen.getByRole("textbox");
 
         // down -> down -> up = 2nd item should be selected
-        fireEvent.keyDown(baseElement, { key: "ArrowDown" });
-        fireEvent.keyDown(baseElement, { key: "ArrowDown" });
-        fireEvent.keyDown(baseElement, { key: "ArrowUp" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "ArrowUp" });
 
-        const secondItem = baseElement.querySelectorAll(".gd-semantic-search__results-item")[1];
-        expect(secondItem.className).to.include("gd-semantic-search__results-item--active");
+        const allItems = screen.getAllByRole("treeitem");
+        expect(allItems[1]).toHaveAttribute("aria-selected", "true");
     });
 });

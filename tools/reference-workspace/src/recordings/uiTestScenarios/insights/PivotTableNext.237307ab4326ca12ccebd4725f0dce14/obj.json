@@ -87,7 +87,8 @@
                         }
                     }
                 ],
-                "localIdentifier": "columns"
+                "localIdentifier": "columns",
+                "totals": []
             }
         ],
         "filters": [],

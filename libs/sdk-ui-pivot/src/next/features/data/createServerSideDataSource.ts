@@ -129,10 +129,12 @@ export const createServerSideDataSource = ({
                     initSizingForEmptyData(params.api, rowData);
                     isFirstRequest = false;
                     agGridSetLoading({ isLoading: false }, params.api);
+                    // Without setting pivot cols, tables without any row attributes do not work
+                    setPivotResultColumns(params.api);
                 }
 
                 setCurrentDataView(nextDataView);
-            } catch (err) {
+            } catch {
                 params.fail();
             }
         },

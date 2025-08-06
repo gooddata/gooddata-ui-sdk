@@ -184,16 +184,18 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
 ${exportName}.parameters = ${JSON.stringify(
                 {
                     kind: scenario.name,
-                    screenshot: {
-                        clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
-                        readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
-                        // give specific charts some more time to finish rendering
-                        postInteractionWait: insightVisualizationUrl(insight).includes("table")
-                            ? ShortPostInteractionTimeout
-                            : insightVisualizationUrl(insight).includes("repeater")
-                              ? LongPostInteractionTimeout
-                              : 200,
-                    },
+                    screenshot: group.testConfig.visual.skip
+                        ? undefined
+                        : {
+                              clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
+                              readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
+                              // give specific charts some more time to finish rendering
+                              postInteractionWait: insightVisualizationUrl(insight).includes("table")
+                                  ? ShortPostInteractionTimeout
+                                  : insightVisualizationUrl(insight).includes("repeater")
+                                    ? LongPostInteractionTimeout
+                                    : 200,
+                          },
                 },
                 null,
                 4,

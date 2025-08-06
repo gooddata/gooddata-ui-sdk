@@ -1,19 +1,28 @@
 // (C) 2024-2025 GoodData Corporation
-import * as React from "react";
+import React, { useMemo, useCallback, useEffect } from "react";
 import classnames from "classnames";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
-import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import {
+    GenAIObjectType,
+    ISemanticSearchResultItem,
+    type ISemanticSearchRelationship,
+} from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { Input, LoadingMask, Message, useHeaderSearch } from "@gooddata/sdk-ui-kit";
+import {
+    Input,
+    LoadingMask,
+    Message,
+    useHeaderSearch,
+    UiTreeViewEventsProvider,
+    useUiTreeViewEventPublisher,
+    type OnLeveledSelectFn,
+} from "@gooddata/sdk-ui-kit";
 import { useWorkspaceStrict, useLocalStorage, useDebouncedState } from "@gooddata/sdk-ui";
-import { useSemanticSearch, useElementWidth } from "../hooks/index.js";
-import { ListItem } from "../types.js";
-import { getUIPath } from "../utils/getUIPath.js";
+import { useSemanticSearch } from "../hooks/index.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
-import { SearchList } from "./SearchList.js";
-import { HistoryItem } from "./HistoryItem.js";
-import { AnnotatedResultsItem } from "./AnnotatedResultsItem.js";
 import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
+import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearchTreeView.js";
+import { HistorySearchTreeView } from "./HistorySearchTreeView.js";
 
 /**
  * A time in milliseconds to wait before sending a search request after the user stops typing.
@@ -45,7 +54,7 @@ const LIMIT = 10;
 const THRESHOLD = 0.5;
 
 export type SearchOnSelect = {
-    item: ISemanticSearchResultItem;
+    item: ISemanticSearchResultItem | ISemanticSearchRelationship;
     index: number;
     preventDefault: () => void;
     itemUrl?: string;
@@ -64,7 +73,7 @@ export type SearchOverlayProps = {
     /**
      * A function called when the search request is completed.
      */
-    onSearch?: (query: string, searchResults?: ListItem<ISemanticSearchResultItem>[]) => void;
+    onSearch?: (query: string, searchResults?: ISemanticSearchResultItem[]) => void;
     /**
      * An analytical backend to use for the search. Can be omitted and taken from context.
      */
@@ -147,87 +156,34 @@ const SearchOverlayCore: React.FC<
         limit,
     });
 
-    // Results wrapped into ListItems
-    const searchResultsItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
-        (): ListItem<ISemanticSearchResultItem>[] =>
-            searchResults
-                .filter((item) => {
-                    // Filter out items with similarity score below the threshold
-                    return (item.score ?? 0) >= threshold;
-                })
-                .flatMap((item) => {
-                    // Look up parent items if available
-                    const parentDashboards = relationships.filter(
-                        (rel) =>
-                            rel.targetObjectId === item.id &&
-                            rel.targetObjectType === item.type &&
-                            rel.sourceObjectType === "dashboard",
-                    );
-                    const isLocked = item.workspaceId !== effectiveWorkspace;
-
-                    // The item itself
-                    const listItems: ListItem<ISemanticSearchResultItem>[] = [
-                        {
-                            item,
-                            url: getUIPath(item.type, item.id, effectiveWorkspace),
-                            isLocked,
-                        },
-                    ];
-
-                    // Potentially, the item's parent dashboards
-                    if (parentDashboards.length)
-                        listItems.push(
-                            ...parentDashboards.map((parent) => ({
-                                item,
-                                parentRef: parent,
-                                url: getUIPath(
-                                    "dashboardVisualization",
-                                    parent.sourceObjectId,
-                                    effectiveWorkspace,
-                                    item.id,
-                                ),
-                                isLocked,
-                            })),
-                        );
-
-                    return listItems;
-                }),
-        [searchResults, effectiveWorkspace, relationships, threshold],
-    );
-
-    // Report metrics
-    React.useEffect(() => {
-        onSearch?.(searchTerm, searchResultsItems);
-        // I don't want to report on search string change, only on results
-        // But I do need searchTerm, it will update with results anyway
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [onSearch, searchResultsItems]);
-
     // Search history
     const [searchHistory, setSearchHistory] = useLocalStorage(SEARCH_HISTORY_KEY, SEARCH_HISTORY_EMPTY);
-    const onResultSelect = React.useCallback(
-        (item: ListItem<ISemanticSearchResultItem>, e: MouseEvent | KeyboardEvent) => {
+
+    const onResultSelect: OnLeveledSelectFn<SearchTreeViewLevels> = useCallback(
+        (item, { newTab }, event) => {
             setSearchHistory(
                 [...new Set([searchTerm, ...searchHistory])].slice(0, MAX_SEARCH_HISTORY_LENGTH),
             );
 
-            const newTab = e.ctrlKey || e.metaKey || (e as MouseEvent).button === 1;
+            const itemData = item.data;
+            const itemUrl = item.url;
+            const itemIndex = searchResults.findIndex((result) => result.id === item.id);
 
             // Call the onSelect callback
             onSelect({
-                item: item.item,
-                index: searchResultsItems.indexOf(item),
-                preventDefault: e.preventDefault.bind(e),
-                itemUrl: item.url,
+                item: itemData,
+                index: itemIndex,
+                preventDefault: event.preventDefault.bind(event),
+                itemUrl: itemUrl,
                 newTab,
             });
 
             // If the default was not prevented - simulate browser navigation for keyboard event
-            if (item.url && !e.defaultPrevented && e instanceof KeyboardEvent) {
+            if (itemUrl && !event.defaultPrevented && event.nativeEvent instanceof KeyboardEvent) {
                 if (newTab) {
-                    window.open(item.url, "_blank");
+                    window.open(itemUrl, "_blank");
                 } else {
-                    window.location.href = item.url;
+                    window.location.href = itemUrl;
                 }
             }
 
@@ -236,26 +192,17 @@ const SearchOverlayCore: React.FC<
                 toggleOpen();
             }
         },
-        [searchTerm, searchHistory, onSelect, setSearchHistory, toggleOpen, searchResultsItems],
-    );
-    const onHistorySelect = (item: ListItem<string>) => setImmediate(item.item);
-    const searchHistoryItems: ListItem<string>[] = React.useMemo(
-        () => searchHistory.map((item) => ({ item })),
-        [searchHistory],
+        [searchTerm, searchHistory, onSelect, setSearchHistory, toggleOpen, searchResults],
     );
 
-    React.useEffect(() => {
-        if (searchStatus === "error") {
-            // Report error to the console
-            // UI will display a generic error message
-            console.error(searchError);
-        }
-    }, [searchStatus, searchError]);
+    const inputAccessibilityConfig = useMemo(
+        () => ({ ariaLabel: intl.formatMessage({ id: "semantic-search.label" }) }),
+        [intl],
+    );
 
-    // The List component requires explicit width
-    const [ref, width] = useElementWidth();
+    const onValueChange = useCallback((value: string | number) => setValue(String(value)), [setValue]);
 
-    const onEscKeyPress = React.useCallback(
+    const onEscKeyPress = useCallback(
         (e: React.KeyboardEvent) => {
             if (value.length > 0) {
                 e.stopPropagation();
@@ -264,99 +211,90 @@ const SearchOverlayCore: React.FC<
         [value],
     );
 
-    const Wrapper = ({
-        children,
-        status,
-    }: {
-        children: React.ReactNode;
-        status: "idle" | "loading" | "error" | "success";
-    }) => {
-        const comp = renderFooter?.(
-            { ...props, status, value },
-            {
-                closeSearch: toggleOpen,
-            },
-        );
-        if (comp) {
-            return (
-                <div>
-                    {children}
-                    {comp}
-                </div>
-            );
+    // Send input keydown events to the tree view
+    const onKeyDown = useUiTreeViewEventPublisher("keydown");
+
+    const handleKeyDown = useCallback(
+        (event: React.KeyboardEvent) => {
+            // Ignore the Space key when the input is focused
+            if (event.code === "Space") {
+                return;
+            }
+            onKeyDown(event);
+        },
+        [onKeyDown],
+    );
+
+    // Report metrics
+    useEffect(() => {
+        onSearch?.(searchTerm, searchResults);
+        // I don't want to report on search string change, only on results
+        // But I do need searchTerm, it will update with results anyway
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [onSearch, searchResults]);
+
+    useEffect(() => {
+        if (searchStatus === "error") {
+            // Report error to the console
+            // UI will display a generic error message
+            console.error(searchError);
         }
-        return <>{children}</>;
-    };
+    }, [searchStatus, searchError]);
 
     return (
-        <div ref={ref} className={classnames("gd-semantic-search__overlay", className)}>
+        <div className={classnames("gd-semantic-search__overlay", className)}>
             <Input
                 className="gd-semantic-search__overlay-input"
                 autofocus
                 placeholder={intl.formatMessage({ id: "semantic-search.placeholder" })}
-                accessibilityConfig={{
-                    ariaLabel: intl.formatMessage({ id: "semantic-search.label" }),
-                }}
+                accessibilityConfig={inputAccessibilityConfig}
                 isSearch
                 clearOnEsc
                 value={value}
-                onChange={(e) => setValue(String(e))}
+                onChange={onValueChange}
                 onEscKeyPress={onEscKeyPress}
+                onKeyDown={handleKeyDown}
             />
             {(() => {
                 switch (searchStatus) {
                     case "loading":
-                        return (
-                            <Wrapper status={searchStatus}>
-                                <LoadingMask height={LOADING_HEIGHT} />
-                            </Wrapper>
-                        );
+                        return <LoadingMask height={LOADING_HEIGHT} />;
                     case "error":
                         return (
-                            <Wrapper status={searchStatus}>
-                                <div className="gd-semantic-search__overlay-error">
-                                    <Message type="error">
-                                        <FormattedMessage tagName="strong" id="semantic-search.error.title" />{" "}
-                                        <FormattedMessage id="semantic-search.error.text" />
-                                    </Message>
-                                </div>
-                            </Wrapper>
+                            <div className="gd-semantic-search__overlay-error">
+                                <Message type="error">
+                                    <FormattedMessage tagName="strong" id="semantic-search.error.title" />{" "}
+                                    <FormattedMessage id="semantic-search.error.text" />
+                                </Message>
+                            </div>
                         );
                     case "success":
                         if (!searchResults.length) {
                             return (
-                                <Wrapper status={searchStatus}>
-                                    <div className="gd-semantic-search__overlay-no-results">
-                                        <FormattedMessage
-                                            id="semantic-search.no-results"
-                                            values={{ query: searchTerm }}
-                                        />
-                                    </div>
-                                </Wrapper>
+                                <div className="gd-semantic-search__overlay-no-results">
+                                    <FormattedMessage
+                                        id="semantic-search.no-results"
+                                        values={{ query: searchTerm }}
+                                    />
+                                </div>
                             );
                         }
-
                         return (
-                            <Wrapper status={searchStatus}>
-                                <SearchList
-                                    items={searchResultsItems}
-                                    width={width}
-                                    onSelect={onResultSelect}
-                                    ItemComponent={AnnotatedResultsItem}
-                                />
-                            </Wrapper>
+                            <LeveledSearchTreeView
+                                workspace={effectiveWorkspace}
+                                searchResults={searchResults}
+                                searchRelationships={relationships}
+                                threshold={threshold}
+                                onSelect={onResultSelect}
+                            />
                         );
                     case "idle":
-                        if (searchHistoryItems.length) {
+                        if (searchHistory.length) {
                             return (
-                                <Wrapper status={searchStatus}>
-                                    <SearchList
-                                        items={searchHistoryItems}
-                                        width={width}
-                                        onSelect={onHistorySelect}
-                                        ItemComponent={HistoryItem}
-                                    />
-                                </Wrapper>
+                                <HistorySearchTreeView
+                                    searchHistory={searchHistory}
+                                    onSelect={setImmediate}
+                                />
                             );
                         }
                     // fallthrough
@@ -364,6 +302,7 @@ const SearchOverlayCore: React.FC<
                         return null;
                 }
             })()}
+            {renderFooter?.({ ...props, status: searchStatus, value }, { closeSearch: toggleOpen })}
         </div>
     );
 };
@@ -382,7 +321,9 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ locale, metadataTi
     return (
         <MetadataTimezoneProvider value={metadataTimezone}>
             <IntlWrapper locale={locale}>
-                <SearchOverlayWithIntl {...props} />
+                <UiTreeViewEventsProvider>
+                    <SearchOverlayWithIntl {...props} />
+                </UiTreeViewEventsProvider>
             </IntlWrapper>
         </MetadataTimezoneProvider>
     );

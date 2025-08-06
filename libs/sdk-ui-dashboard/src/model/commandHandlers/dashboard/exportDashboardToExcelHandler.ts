@@ -15,6 +15,7 @@ import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectDashboardRef, selectIsFiltersChanged } from "../../store/meta/metaSelectors.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 
 function exportDashboardToTabular(
     ctx: DashboardContext,
@@ -49,6 +50,8 @@ export function* exportDashboardToExcelHandler(
     const { mergeHeaders, exportInfo, widgetIds, fileName } = cmd.payload;
     const isFilterContextChanged: SagaReturnType<typeof selectIsFiltersChanged> =
         yield select(selectIsFiltersChanged);
+    const filterViews: SagaReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
+    const hasDefaultFilterViewApplied = filterViews.some((filterView) => filterView.isDefault);
     const filterContext: SagaReturnType<typeof selectFilterContextFilters> =
         yield select(selectFilterContextFilters);
     const result: PromiseFnReturnType<typeof exportDashboardToTabular> = yield call(
@@ -59,7 +62,7 @@ export function* exportDashboardToExcelHandler(
         mergeHeaders,
         exportInfo,
         widgetIds,
-        isFilterContextChanged ? filterContext : undefined,
+        isFilterContextChanged || hasDefaultFilterViewApplied ? filterContext : undefined,
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-export * from "./types/index.js";
+// (C) 2022-2025 GoodData Corporation
+export type * from "./types/index.js";
 export type {
     IAttributeFilterHandlerOptions,
     IAttributeFilterHandlerOptionsBase,

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import * as path from "path";
 import * as fs from "fs/promises";
 import identity from "lodash/identity.js";
@@ -70,7 +70,7 @@ async function readJsonFile<T>(filePath: string): Promise<T | null> {
 
     try {
         text = await fs.readFile(filePath, "utf8");
-    } catch (e) {
+    } catch {
         // Don't care if can't read file
         // Does not exist or no rights (expected when reading closer to the root)
         return null;

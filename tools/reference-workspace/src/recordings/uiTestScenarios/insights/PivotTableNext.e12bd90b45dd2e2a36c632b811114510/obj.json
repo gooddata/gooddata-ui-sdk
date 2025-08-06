@@ -32,7 +32,7 @@
                 ],
                 "localIdentifier": "measures"
             },
-            { "items": [], "localIdentifier": "attribute" },
+            { "items": [], "localIdentifier": "attribute", "totals": [] },
             {
                 "items": [
                     {

@@ -7,10 +7,8 @@
 @mixin icon($icon_size) {
     width: $icon_size;
     height: $icon_size;
-    display: flex;
-    align-items: center;
 
-    > svg {
+    svg {
         // dashboard icon needs explicit size
         width: $icon_size;
         height: $icon_size;
@@ -19,13 +17,39 @@
 
 .gd-semantic-search {
     &__results-item {
-        $line-height: 50px;
+        $root: &;
         cursor: pointer;
+        user-select: none;
+        width: 100%;
 
         display: flex;
         flex-direction: row;
         align-items: center;
-        height: $line-height;
+
+        &[data-level="1"] {
+            $item-height: 50px;
+            height: $item-height;
+
+            #{$root}__content {
+                height: calc($item-height - 2px);
+            }
+            #{$root}__icon {
+                @include icon(26px);
+            }
+        }
+
+        &[data-level="2"] {
+            $item-height: 30px;
+            height: $item-height;
+            padding-left: 10px;
+
+            #{$root}__content {
+                height: calc($item-height - 2px);
+            }
+            #{$root}__icon {
+                @include icon(16px);
+            }
+        }
 
         &--active {
             color: kit-variables.$is-focused-color;
@@ -33,14 +57,14 @@
         }
 
         &__content {
+            box-sizing: border-box;
             width: 100%;
-            height: calc($line-height - 2px);
             margin: 1px 0;
             display: flex;
             flex-direction: row;
             align-items: center;
             gap: 1em;
-            padding: 0 1em;
+            padding: 5px 12px;
             text-decoration: none;
 
             &:hover,
@@ -52,14 +76,6 @@
 
             &:focus-visible {
                 outline: revert;
-            }
-        }
-
-        &__icon {
-            @include icon(26px);
-
-            & > span {
-                @include icon(26px);
             }
         }
 
@@ -91,9 +107,18 @@
             }
         }
 
+        &__details-container {
+            display: grid;
+            justify-items: end;
+            height: 100%;
+            font-size: 14px;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
         &__details {
             width: 16px;
             height: 16px;
+            align-self: center;
             align-items: center;
 
             & .gd-ellipsis-text {
@@ -136,6 +161,25 @@
                 font-size: 12px;
             }
         }
+
+        &__counter {
+            display: flex;
+            align-self: end;
+            align-items: center;
+            gap: 5px;
+        }
+
+        &__counter__icon {
+            width: 16px;
+            height: 16px;
+            transition: rotate 0.2s;
+            transform-origin: center;
+            rotate: 0deg;
+
+            &--expanded {
+                rotate: 90deg;
+            }
+        }
     }
 
     &__bubble.bubble.bubble-light {
@@ -150,7 +194,7 @@
         display: flex;
         width: 100%;
         height: 50px;
-        padding: 5px 10px;
+        padding: 5px 12px;
         align-items: center;
         gap: 10px;
         border: 1px solid kit-variables.$gd-color-white;
@@ -190,4 +234,8 @@
             text-underline-position: from-font;
         }
     }
+}
+
+.gd-ui-kit-treeview {
+    margin: 10px 0;
 }

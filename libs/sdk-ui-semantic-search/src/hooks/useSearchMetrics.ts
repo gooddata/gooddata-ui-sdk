@@ -1,8 +1,12 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
-import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
-import { ListItem } from "../types.js";
+import {
+    isSemanticSearchResultItem,
+    type GenAIObjectType,
+    type ISemanticSearchRelationship,
+    type ISemanticSearchResultItem,
+} from "@gooddata/sdk-model";
 
 /**
  * A conclusion of a single search action by the user.
@@ -46,8 +50,8 @@ export type UseSearchMetricsCallback = (metricsData: ISearchMetrics) => void;
 
 export type UseSearchMetricsReturn = {
     onCloseMetrics: () => void;
-    onSelectMetrics: (item: ISemanticSearchResultItem, index?: number) => void;
-    onSearchMetrics: (searchTerm: string, searchResults?: ListItem<ISemanticSearchResultItem>[]) => void;
+    onSelectMetrics: (item: ISemanticSearchResultItem | ISemanticSearchRelationship, index?: number) => void;
+    onSearchMetrics: (searchTerm: string, searchResults?: ISemanticSearchResultItem[]) => void;
 };
 
 type ISearchMetricsRef = {
@@ -102,15 +106,17 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
 
     // Callback will be called when the user selects an item
     const onSelectMetrics = React.useCallback(
-        (item: ISemanticSearchResultItem, index?: number) => {
+        (item: ISemanticSearchResultItem | ISemanticSearchRelationship, index?: number) => {
             // Report the metrics
-            callback?.({
-                ...searchMetricsRef.current.state,
-                selectedItemTitle: item.title,
-                selectedItemType: item.type,
-                selectedItemScore: item.score ?? 0,
-                selectedItemIndex: index ?? null,
-            });
+            if (isSemanticSearchResultItem(item)) {
+                callback?.({
+                    ...searchMetricsRef.current.state,
+                    selectedItemTitle: item.title,
+                    selectedItemType: item.type,
+                    selectedItemScore: item.score ?? 0,
+                    selectedItemIndex: index ?? null,
+                });
+            }
             // Mark the metrics as reported
             // Do not flush the metric data, because user might select several items in sequence
             // e.g. when cmd+click and open it in a new tab
@@ -121,7 +127,7 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
 
     // Callback will be called when the user types in the search input
     const onSearchMetrics = React.useCallback(
-        (searchTerm: string, searchResults?: ListItem<ISemanticSearchResultItem>[]) => {
+        (searchTerm: string, searchResults?: ISemanticSearchResultItem[]) => {
             const { searchCount, lastSearchTerm } = searchMetricsRef.current.state;
 
             // We do not want to count the case when the user continues to type the same search term
@@ -134,7 +140,7 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
                 state: {
                     ...searchMetricsRef.current.state,
                     lastSearchTerm: searchTerm,
-                    lastSearchScores: searchResults?.map((result) => result.item.score ?? 0) ?? [],
+                    lastSearchScores: searchResults?.map((result) => result.score ?? 0) ?? [],
                     searchCount: shouldIncrement ? searchCount + 1 : searchCount,
                 },
                 reported: false,

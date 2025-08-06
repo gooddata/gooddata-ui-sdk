@@ -67,6 +67,7 @@ const SupportedReferenceTypes = ["fact", "metric", "date", "attribute"] as const
 // Utility: Get regex for references
 export function getReferenceRegex(split?: boolean) {
     if (split) {
+        //eslint-disable-next-line regexp/strict
         return new RegExp(`(\\{(?:${SupportedReferenceTypes.join("|")})\\/[.A-Za-z0-9_-]{1,255}\})`, "g");
     }
     return new RegExp(`\\{((?:${SupportedReferenceTypes.join("|")})\\/(?!\\.)[.A-Za-z0-9_-]{1,255})\\}`, "g");

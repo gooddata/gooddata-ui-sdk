@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
-export * from "./cancelButton/types.js";
-export * from "./editButton/types.js";
-export * from "./saveAsButton/types.js";
-export * from "./saveButton/types.js";
-export * from "./shareButton/types.js";
-export * from "./settingButton/types.js";
+export type * from "./cancelButton/types.js";
+export type * from "./editButton/types.js";
+export type * from "./saveAsButton/types.js";
+export type * from "./saveButton/types.js";
+export type * from "./shareButton/types.js";
+export type * from "./settingButton/types.js";

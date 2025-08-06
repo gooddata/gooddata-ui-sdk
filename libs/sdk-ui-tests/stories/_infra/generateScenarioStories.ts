@@ -101,7 +101,7 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
                     null,
                     4,
                 )})();
-${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", screenshot: true };`);
+${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", screenshot: ${group.testConfig.visual.skip ? "undefined" : "true"} };`);
 
                 // we need an additional import
                 helperFileNamedImports.push("groupedStory");
@@ -136,7 +136,7 @@ ${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", scre
         scenario.tags,
     )();
 })();
-${exportName}.parameters = { kind: "${name}", screenshot: true };`);
+${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.visual.skip ? "undefined" : "true"} };`);
                 });
 
                 // we need additional imports

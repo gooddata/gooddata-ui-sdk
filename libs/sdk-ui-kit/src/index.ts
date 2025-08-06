@@ -10,10 +10,10 @@
  */
 export * from "./typings/utilities.js";
 export * from "./typings/positioning.js";
-export * from "./typings/domUtilities.js";
-export * from "./typings/domNative.js";
-export * from "./typings/overlay.js";
-export * from "./typings/accessibility.js";
+export type * from "./typings/domUtilities.js";
+export type * from "./typings/domNative.js";
+export type * from "./typings/overlay.js";
+export type * from "./typings/accessibility.js";
 export * from "./utils/constants.js";
 export * from "./utils/featureFlags.js";
 export * from "./utils/drag.js";
@@ -157,6 +157,13 @@ export type {
     UiListboxAriaAttributes,
 } from "./@ui/UiListbox/types.js";
 export { UiLeveledTreeview, UiStaticTreeview } from "./@ui/UiTreeview/UiTreeview.js";
+export {
+    UiTreeViewEventsProvider,
+    useUiTreeViewEventPublisher,
+    useUiTreeViewEventSubscriber,
+    type UiTreeViewEventType,
+    type UiTreeViewEvents,
+} from "./@ui/UiTreeview/UiTreeViewEvents.js";
 export { DefaultUiTreeViewItemComponent } from "./@ui/UiTreeview/defaults/DefaultUiTreeViewItemComponent.js";
 export type {
     IUiStaticTreeViewProps,
@@ -165,6 +172,7 @@ export type {
     IUiTreeviewItemProps,
     IUiTreeViewProps,
     IUiTreeviewContext,
+    IUiTreeViewSelectionMods,
     OnLeveledSelectFn,
     OnStaticSelectFn,
     UiStaticTreeView,

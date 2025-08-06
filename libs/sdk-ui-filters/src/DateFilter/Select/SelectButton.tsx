@@ -4,7 +4,7 @@ import cx from "classnames";
 import { ISelectItemOption } from "./types.js";
 import { itemToString } from "./utils.js";
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export const SelectButton = <V extends {}>({
     selectedItem = null,
     isOpen,

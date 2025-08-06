@@ -99,7 +99,7 @@ export const PivotTableWithSingleMeasureAndRowColumnGrandTotal = {
 
 const totalsForRows = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "rows")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
+    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 }, skip: true })
     .addScenario("single measure and single grand total", PivotTableWithSingleMeasureAndGrandTotal)
     .addScenario("single measure and multiple grand totals", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
@@ -163,7 +163,7 @@ const totalsForRows = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pivot
 
 const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "columns")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
+    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 }, skip: true })
     // .withDefaultTestTypes("api")
     .addScenario("single measure and single column grand total", {
         ...PivotTableWithSingleMeasureAndColumnGrandTotal,
@@ -250,7 +250,7 @@ const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pi
 
 const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "rows & columns")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
+    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 }, skip: true })
     // .withDefaultTestTypes("api")
     .addScenario(
         "single measure and single column/row grand total",

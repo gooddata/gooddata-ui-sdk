@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { sanitizeUrl } from "@braintree/sanitize-url";
 
 const AboutBlank = "about:blank";
@@ -38,7 +38,7 @@ export function validatePluginUrlIsSane(url: string): string | undefined {
         if (parsedUrl.protocol !== "https:") {
             return `url does not use https`;
         }
-    } catch (e: any) {
+    } catch {
         return "url is malformed";
     }
 
