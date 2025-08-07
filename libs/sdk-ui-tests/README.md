@@ -19,7 +19,7 @@ newer versions of the SDK.
 
 The tests contained in this package can be divided into three distinct groups:
 
--   Public API Regression tests
+- Public API Regression tests
 
     These tests verify that usage of public API of the different visualizations leads to expected
     executions on backend AND to expected invocations of the underlying 3rd party charting library.
@@ -29,7 +29,7 @@ The tests contained in this package can be divided into three distinct groups:
 
     These tests are implemented using vitest & react testing library and are intended to run fairly fast.
 
--   Visual regression tests
+- Visual regression tests
 
     These tests verify that usage of public API of the different visualizations leads to the same
     visualization actually being rendered in the browser.
@@ -65,17 +65,17 @@ different SDK projects.
 This project comes with necessary infrastructure, templates and scripts to automate and hopefully simplify
 most of the mundane tasks:
 
--   `npm run populate-ref` inspects test scenarios and captures execution definitions
-    that can be fed to mock handling tool to capture and store data from live backend
+- `npm run populate-ref` inspects test scenarios and captures execution definitions
+  that can be fed to mock handling tool to capture and store data from live backend
 
--   unified template for Public API regression tests
+- unified template for Public API regression tests
 
--   auto-creation of stories for test scenarios
+- auto-creation of stories for test scenarios
 
--   `npm run story-extractor` does runtime inspection of stories in storybook and builds
-    BackstopJS test scenarios
+- `npm run story-extractor` does runtime inspection of stories in storybook and builds
+  BackstopJS test scenarios
 
--   `npm run backstop-*` runs BackstopJS in docker containers
+- `npm run backstop-*` runs BackstopJS in docker containers
 
 ## Dev guide - how-to use this infrastructure
 
@@ -83,42 +83,42 @@ most of the mundane tasks:
 
 Locate directory of the visualization and then:
 
--   When adding a new scenario that covers different combinations of buckets look at the 'base' scenarios, make
-    sure you are not adding a duplicate scenario. Then code the buckets for this new scenario using objects from
-    the reference workspace.
+- When adding a new scenario that covers different combinations of buckets look at the 'base' scenarios, make
+  sure you are not adding a duplicate scenario. Then code the buckets for this new scenario using objects from
+  the reference workspace.
 
     After this, you need to capture execution definition for this new combination and capture recording of the data.
     See the next topics on how to do this.
 
--   When adding a new scenario that covers different combinations of visualization configuration (chart config, callbacks
-    and then like), that build on top of one of the 'base' scenarios: add them to a separate file within the vis
-    directory and tag them with "vis-config-only" and "mock-no-scenario-meta" tags. These tags will ensure that
-    the mock building infrastructure will not clutter recording index with extra named scenarios leading to the
-    same recording.
+- When adding a new scenario that covers different combinations of visualization configuration (chart config, callbacks
+  and then like), that build on top of one of the 'base' scenarios: add them to a separate file within the vis
+  directory and tag them with "vis-config-only" and "mock-no-scenario-meta" tags. These tags will ensure that
+  the mock building infrastructure will not clutter recording index with extra named scenarios leading to the
+  same recording.
 
--   Newly added scenarios are automatically included in existing api-regression and visual-regression test suites => you
-    are done.
+- Newly added scenarios are automatically included in existing api-regression and visual-regression test suites => you
+  are done.
 
 Note: visual regression tests will fail if you run them before capturing execution definition and data recordings.
 
 ### Adding scenarios and tests for a new visualization
 
--   Scenarios for visualization should be located in per-visualization directory. Scenarios for charts are in the
-    `scenarios/charts` directory and further divided into per-chart-type subdirectories
+- Scenarios for visualization should be located in per-visualization directory. Scenarios for charts are in the
+  `scenarios/charts` directory and further divided into per-chart-type subdirectories
 
--   Scenarios are divided into logical subgroups. The convention is that scenarios that just exercise different
-    combinations of input buckets are stored in `base.tsx` file.
+- Scenarios are divided into logical subgroups. The convention is that scenarios that just exercise different
+  combinations of input buckets are stored in `base.tsx` file.
 
--   Code the scenarios, see existing ones for inspiration
+- Code the scenarios, see existing ones for inspiration
 
--   Make sure the newly added scenarios are re-exported all the way to the main `scenarios` barrel
+- Make sure the newly added scenarios are re-exported all the way to the main `scenarios` barrel
 
--   Add api-regression tests: create per-vis-type test file under `/tests/api-regression`; copy-paste an existing
-    test file, make alterations so that tests run against the new scenarios. Note: these are all parameterized
-    snapshot tests. All the test files are the same with the exception of chart name & type.
+- Add api-regression tests: create per-vis-type test file under `/tests/api-regression`; copy-paste an existing
+  test file, make alterations so that tests run against the new scenarios. Note: these are all parameterized
+  snapshot tests. All the test files are the same with the exception of chart name & type.
 
--   Visual regression tests for all scenarios are created automatically. There are story creators in
-    `stories/visual-regression`.
+- Visual regression tests for all scenarios are created automatically. There are story creators in
+  `stories/visual-regression`.
 
 Note: visual regression tests will fail if you run them before capturing execution definition and data recordings.
 
@@ -151,15 +151,15 @@ NOTE: If `refresh-recordings` causes duplicated keys in **tools/XXX-workspace/sr
 
 When creating new test scenarios, proceed as follows:
 
--   Add new scenarios in sdk-ui-tests, make sure new scenarios are included in barrel exports all the way to the root
-    scenarios index
--   Open terminal in `tools/reference-workspace` project
--   Execute `rush build` => to build the project
--   Execute `rushx clear-recordings` => removes old execution defs
--   Execute `rush populate-ref` => writes new execution defs
--   Execute `rushx refresh-recordings` => captures execution recordings (if needed) and builds
-    the recording index
--   Commit
+- Add new scenarios in sdk-ui-tests, make sure new scenarios are included in barrel exports all the way to the root
+  scenarios index
+- Open terminal in `tools/reference-workspace` project
+- Execute `rush build` => to build the project
+- Execute `rushx clear-recordings` => removes old execution defs
+- Execute `rush populate-ref` => writes new execution defs
+- Execute `rushx refresh-recordings` => captures execution recordings (if needed) and builds
+  the recording index
+- Commit
 
 ## Visual Regression with Storybook and BackstopJS
 
@@ -236,20 +236,20 @@ for optimal performance.
 
 Tests can be triggered as follows:
 
--   Make sure you have run `rush build -t sdk-ui-tests`.
+- Make sure you have run `rush build -t sdk-ui-tests`.
 
--   Run BackstopJS in 'test' mode: `npm run backstop-test`
+- Run BackstopJS in 'test' mode: `npm run backstop-test`
 
     This will create `dist-storybook` directory with build of Storybook & create or update `backstop/stories.json` file.
     This file contains listing of all stories available in storybook.
 
 Additional BackstopJS modes are also available:
 
--   `npm run backstop-approve` - after failed test run, approve the differences and add or overwrite reference screenshots
+- `npm run backstop-approve` - after failed test run, approve the differences and add or overwrite reference screenshots
 
     This is the typical followup step after you add new screenshots
 
--   `npm run backstop-reference` - build storybook and take reference screenshots for all stories
+- `npm run backstop-reference` - build storybook and take reference screenshots for all stories
 
 #### Fine-grained execution
 
@@ -317,34 +317,34 @@ on where exactly the error occurs.
 
 #### Visual regression hints
 
--   After every change call `npm run backstop-prepare` even when you see changes in your running storybook.
--   If you need call screening just for some stories use --filter where regex is applied to name of stories that you can see in running storybook. Example: `npm run backstop-prepare ./backstop/run-backstop.sh test --filter=".*legend responsive.*`
--   If you use [Multiple screenshots](#multiple-screenshots) always use `ScreenshotReadyWrapper`
--   scenarios: BackstopConfig - Scenarios in one story are running form scratch they are not starting where previous ended.
--   Be aware of method overloading `clickSelector: ".s-legend-popup-icon"` - do just one action, vs `clickSelectors: [".s-legend-popup-icon", 200, ".icon-chevron-right"]` do multiple actions/click
-    between click selectors you can define timeout as number
--   Each test run create directory in `output/test` with screens and logs.
--   `npm run backstop-approve` 100% works when in `output/test` directory is just one subdirectory (Delete it before you do final run than approve works well)
--   Each story name should be unique, this is essential since story name for storybook means its id. Its hard to debug and warning about it could be hidden in multiple logs
+- After every change call `npm run backstop-prepare` even when you see changes in your running storybook.
+- If you need call screening just for some stories use --filter where regex is applied to name of stories that you can see in running storybook. Example: `npm run backstop-prepare ./backstop/run-backstop.sh test --filter=".*legend responsive.*`
+- If you use [Multiple screenshots](#multiple-screenshots) always use `ScreenshotReadyWrapper`
+- scenarios: BackstopConfig - Scenarios in one story are running form scratch they are not starting where previous ended.
+- Be aware of method overloading `clickSelector: ".s-legend-popup-icon"` - do just one action, vs `clickSelectors: [".s-legend-popup-icon", 200, ".icon-chevron-right"]` do multiple actions/click
+  between click selectors you can define timeout as number
+- Each test run create directory in `output/test` with screens and logs.
+- `npm run backstop-approve` 100% works when in `output/test` directory is just one subdirectory (Delete it before you do final run than approve works well)
+- Each story name should be unique, this is essential since story name for storybook means its id. Its hard to debug and warning about it could be hidden in multiple logs
 
 #### Test parallelization
 
 It is possible to override default Backstop concurrency settings using environment variables:
 
--   `BACKSTOP_CAPTURE_LIMIT` - will be used to set Backstop's asyncCaptureLimit option; default is 6.
-    When tweaking this, we have found that setting the value to number of (CPU threads - 1 or 2) leads to
-    saturation of cores without flaky-ness.
--   `BACKSTOP_COMPARE_LIMIT` - will be used to set Backstop's asyncCompareLimit option; default is 50
-    When tweaking this, we have found that setting the value to number > 50 makes backstop crash badly at
-    the very end. Since the comparison is done at the end and is pretty fast anyway, tweaking this option
-    is usually not needed.
+- `BACKSTOP_CAPTURE_LIMIT` - will be used to set Backstop's asyncCaptureLimit option; default is 6.
+  When tweaking this, we have found that setting the value to number of (CPU threads - 1 or 2) leads to
+  saturation of cores without flaky-ness.
+- `BACKSTOP_COMPARE_LIMIT` - will be used to set Backstop's asyncCompareLimit option; default is 50
+  When tweaking this, we have found that setting the value to number > 50 makes backstop crash badly at
+  the very end. Since the comparison is done at the end and is pretty fast anyway, tweaking this option
+  is usually not needed.
 
 ## Technical Funny Stuff
 
 This project has several use cases where React component test scenarios have to be processed in node.js environment:
 
--   Capturing execution definitions for visualizations implemented by React components
--   Building BackstopJS configuration for visual regression testing
+- Capturing execution definitions for visualizations implemented by React components
+- Building BackstopJS configuration for visual regression testing
 
 In both of these cases code that is normally interpreted in browsers needs to run on server/workstation.
 
@@ -359,34 +359,34 @@ the current setup offers.
 
 First, here are the safe types of changes in this area:
 
--   Adding new test scenarios and new tests is OK
--   Deleting test scenarios and tests is OK if we deem some scenarios are duplicates and thus
-    not necessary
+- Adding new test scenarios and new tests is OK
+- Deleting test scenarios and tests is OK if we deem some scenarios are duplicates and thus
+  not necessary
 
 #### Minor and patch releases
 
--   Modifying existing test scenarios because they do not compile is not allowed - it indicates
-    breakage of public API
+- Modifying existing test scenarios because they do not compile is not allowed - it indicates
+  breakage of public API
 
--   Modifying existing vitest snapshots for particular scenario must be scrutinized;
-    -   IF the scenario is also tested using visual regression AND the screenshot for the
-        scenario is unchanged, then the update in snapshot is LIKELY OK; evaluate impact
-    -   IF the scenario is also tested using visual regression AND the screenshot for
-        the scenario is also changed, then the update is LIKELY NOT OK (see below)
-    -   IF the scenario is not tested using visual regression, then the impact must be
-        researched and explained in the PR
--   Modifying existing screenshots
-    -   The go-to answer is that this should not happen during minor or patch releases
-    -   The exceptions could be related to technicalities - screenshot of a larger
-        area, date changes etc
+- Modifying existing vitest snapshots for particular scenario must be scrutinized;
+    - IF the scenario is also tested using visual regression AND the screenshot for the
+      scenario is unchanged, then the update in snapshot is LIKELY OK; evaluate impact
+    - IF the scenario is also tested using visual regression AND the screenshot for
+      the scenario is also changed, then the update is LIKELY NOT OK (see below)
+    - IF the scenario is not tested using visual regression, then the impact must be
+      researched and explained in the PR
+- Modifying existing screenshots
+    - The go-to answer is that this should not happen during minor or patch releases
+    - The exceptions could be related to technicalities - screenshot of a larger
+      area, date changes etc
 
 #### Major release
 
--   Modifying existing test scenarios because they do not compile means we have a breaking
-    change and must ensure that this is captured in the migration guide.
+- Modifying existing test scenarios because they do not compile means we have a breaking
+  change and must ensure that this is captured in the migration guide.
 
--   Modifying existing snapshots & screenshots MAY mean we changed behavior of visualization
-    and must ensure that this is captured in the migration guide.
+- Modifying existing snapshots & screenshots MAY mean we changed behavior of visualization
+  and must ensure that this is captured in the migration guide.
 
 ## License
 

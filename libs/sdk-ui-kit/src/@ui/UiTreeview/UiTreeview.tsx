@@ -58,6 +58,7 @@ function UiTreeview<Levels extends unknown[], Level>({
     items,
     selectionMode = "groups-and-leafs",
     expandedMode = "default-expanded",
+    expansionMode = "multiple",
 
     dataTestId,
     itemDataTestId,
@@ -80,10 +81,17 @@ function UiTreeview<Levels extends unknown[], Level>({
 
     ariaAttributes,
 }: IUiStaticTreeViewProps<Level>): React.ReactNode {
-    const itemsRef = useRef<UiRefsTree[]>([]);
-    const getState = itemsState(useState<Record<string, UiStateTreeItem>>({}), {
-        expanded: expandedMode === "default-expanded",
-    });
+    const itemsRef = useRef<UiRefsTree>({});
+
+    const getState = itemsState(
+        useState<Record<string, UiStateTreeItem>>({}),
+        {
+            expanded: expandedMode === "default-expanded",
+        },
+        {
+            expansionMode,
+        },
+    );
 
     const isItemFocusable = useCallback(
         (item?: UiStaticTreeView<Level> | UiStaticTreeView<LevelTypesUnion<Levels>>) => {
@@ -103,7 +111,10 @@ function UiTreeview<Levels extends unknown[], Level>({
     // Scroll focused item into view
     const focusedItemNode = getRefOnFocusedPath(itemsRef.current, focusedPath);
     useEffect(() => {
-        focusedItemNode?.item.scrollIntoView({ block: "nearest" });
+        if (!focusedItemNode?.scrollIntoView) {
+            return;
+        }
+        focusedItemNode.scrollIntoView({ block: "nearest" });
     }, [focusedItemNode]);
 
     const onSelectHandle = useCallback(
@@ -155,11 +166,8 @@ function UiTreeview<Levels extends unknown[], Level>({
                         return;
                     }
                     // Toggle group is leaf-only selection mode
-                    const [state, setState] = getState(path);
-                    setState({
-                        ...state,
-                        expanded: !state.expanded,
-                    });
+                    const [state, { toggle }] = getState(path);
+                    toggle(!state.expanded);
                     break;
                 }
             }
@@ -206,7 +214,7 @@ function UiTreeview<Levels extends unknown[], Level>({
                         });
                     },
                     onEnterLevel: () => {
-                        const [state, setState] = getState(focusedPath);
+                        const [state, { toggle }] = getState(focusedPath);
                         if (!focusedItem.children?.length) {
                             return;
                         }
@@ -215,23 +223,17 @@ function UiTreeview<Levels extends unknown[], Level>({
                                 return getNextPathIndex(items, getState, prevPath, isItemFocusable);
                             });
                         } else {
-                            setState({
-                                ...state,
-                                expanded: true,
-                            });
+                            toggle(true);
                         }
                     },
                     onLeaveLevel: () => {
-                        const [state, setState] = getState(focusedPath);
+                        const [state, { toggle }] = getState(focusedPath);
                         if (!focusedItem.children?.length || !state.expanded) {
                             setFocusedPath((prevPath) => {
                                 return getParentPathIndex(items, getState, prevPath, isItemFocusable);
                             });
                         } else {
-                            setState({
-                                ...state,
-                                expanded: false,
-                            });
+                            toggle(false);
                         }
                     },
                     onSelect: (e) => {
@@ -277,6 +279,7 @@ function UiTreeview<Levels extends unknown[], Level>({
                 {items.map((item, index) => (
                     <UITreeviewItem
                         ItemComponent={ItemComponent}
+                        itemsRef={itemsRef}
                         onSelect={onSelectHandle}
                         onHover={onHoverHandle}
                         getState={getState}

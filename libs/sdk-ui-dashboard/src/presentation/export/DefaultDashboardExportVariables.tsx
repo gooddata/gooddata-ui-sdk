@@ -56,30 +56,32 @@ export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboard
                     ))}
                 </div>
             ) : null}
-            {dateFilters.length > 0 || attributeFilters.length > 0 ? (
-                <div {...exportData?.filters?.root}>
-                    {dateFilters.map((filter, i: number) => (
-                        <div
-                            key={i}
-                            {...exportData?.filters?.dateFilter}
-                            {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
-                        >
-                            <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
-                            <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
-                        </div>
-                    ))}
-                    {attributeFilters.map((filter, i: number) => (
-                        <div
-                            key={i}
-                            {...exportData?.filters?.attributeFilter}
-                            {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
-                        >
-                            <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
-                            <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
-                        </div>
-                    ))}
-                </div>
-            ) : null}
+            <div {...exportData?.filters?.root} {...exportData?.filters?.rootData(isLoading, isError)}>
+                {dateFilters.length > 0 || attributeFilters.length > 0 ? (
+                    <>
+                        {dateFilters.map((filter, i: number) => (
+                            <div
+                                key={i}
+                                {...exportData?.filters?.dateFilter}
+                                {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
+                            >
+                                <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
+                                <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
+                            </div>
+                        ))}
+                        {attributeFilters.map((filter, i: number) => (
+                            <div
+                                key={i}
+                                {...exportData?.filters?.attributeFilter}
+                                {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
+                            >
+                                <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
+                                <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
+                            </div>
+                        ))}
+                    </>
+                ) : null}
+            </div>
             {user?.fullName ? <div {...exportData?.user}>{user.fullName}</div> : null}
             {conf.workspaceDescriptor ? (
                 <div {...exportData?.workspace}>{conf.workspaceDescriptor.title}</div>

@@ -135,6 +135,98 @@ const treeStatic: types.UiStaticTreeView<StaticItem>[] = [
         },
     },
 ];
+const treeStatic1: types.UiStaticTreeView<StaticItem>[] = [
+    {
+        item: {
+            id: "parent-a",
+            stringTitle: "Parent A",
+            icon: "folder",
+            isDisabled: false,
+            data: { id: "da", value: "dA" },
+            tooltip: "Parent A tooltip",
+        },
+        children: [
+            {
+                item: {
+                    id: "parent-a-folder-a",
+                    stringTitle: "Parent A Folder A",
+                    icon: "folder",
+                    isDisabled: false,
+                    data: { id: "dada", value: "dAdA" },
+                },
+                children: [
+                    {
+                        item: {
+                            id: "parent-a-folder-a-file-a",
+                            stringTitle: "Parent A Folder A File A1",
+                            icon: "dashboard",
+                            isDisabled: false,
+                            data: { id: "dadafa", value: "dAdAfA" },
+                        },
+                    },
+                ],
+            },
+            {
+                item: {
+                    id: "parent-a-folder-b",
+                    stringTitle: "Parent A Folder B",
+                    icon: "folder",
+                    isDisabled: false,
+                    data: { id: "dadb", value: "dAdB" },
+                },
+                children: [
+                    {
+                        item: {
+                            id: "parent-a-folder-b-file-a",
+                            stringTitle: "Parent A Folder B File A2",
+                            icon: "visualization",
+                            isDisabled: false,
+                            data: { id: "dadbfa", value: "dAdBfA" },
+                        },
+                    },
+                ],
+            },
+            {
+                item: {
+                    id: "parent-a-file-a",
+                    stringTitle: "Parent A File A3",
+                    icon: "file",
+                    isDisabled: false,
+                    data: { id: "dafa", value: "fAfA" },
+                },
+            },
+            {
+                item: {
+                    id: "parent-a-file-b",
+                    stringTitle: "Parent A File B3",
+                    icon: "file",
+                    isDisabled: true,
+                    data: { id: "dafb", value: "fAfB" },
+                },
+            },
+        ],
+    },
+    {
+        item: {
+            id: "parent-b",
+            stringTitle: "Parent B",
+            icon: "folder",
+            isDisabled: false,
+            data: { id: "db", value: "dB" },
+        },
+        children: [
+            {
+                item: {
+                    id: "parent-b-file-a",
+                    stringTitle: "Parent B File A4",
+                    icon: "filter",
+                    isDisabled: false,
+                    data: { id: "dbfa", value: "dBfA" },
+                },
+            },
+        ],
+    },
+];
 // Mock items for the leveled treeview
 
 // stringTitle: "Parent A"
@@ -252,6 +344,27 @@ describe("UiTreeview", () => {
         return render(
             <UiStaticTreeview
                 items={treeStatic}
+                onSelect={vi.fn()}
+                onClose={vi.fn()}
+                ariaAttributes={defaultAriaAttributes}
+                {...props}
+            />,
+        );
+    };
+
+    const renderStaticTreeView1 = (
+        props: Omit<types.IUiStaticTreeViewProps<StaticItem>, "ariaAttributes" | "items"> = {},
+    ) => {
+        const defaultAriaAttributes = {
+            id: "test-dropdown-list",
+            "aria-label": "test-dropdown-button",
+            "aria-labelledby": "test-dropdown-button",
+            role: "tree" as const,
+        };
+
+        return render(
+            <UiStaticTreeview
+                items={treeStatic1}
                 onSelect={vi.fn()}
                 onClose={vi.fn()}
                 ariaAttributes={defaultAriaAttributes}
@@ -443,6 +556,29 @@ describe("UiTreeview", () => {
             expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
         });
 
+        it("should navigate with keyboard arrows down up in collapsed", () => {
+            renderStaticTreeView1({
+                expandedMode: "default-collapsed",
+            });
+
+            const tree = screen.getByRole("tree");
+
+            // Initial focus is on first item
+            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+
+            // Navigate down
+            fireEvent.keyDown(tree, { code: "ArrowDown" });
+            expect(screen.getByText("Parent B").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            fireEvent.keyDown(tree, { code: "ArrowDown" });
+            expect(screen.getByText("Parent B").closest("div")).toHaveClass(e("item", { isFocused: true }));
+
+            // Navigate up
+            fireEvent.keyDown(tree, { code: "ArrowUp" });
+            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            fireEvent.keyDown(tree, { code: "ArrowUp" });
+            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+        });
+
         it("should navigate with keyboard home, end", () => {
             renderStaticTreeView();
 
@@ -457,6 +593,29 @@ describe("UiTreeview", () => {
 
             // Navigate home
             fireEvent.keyDown(tree, { code: "Home" });
+            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+        });
+
+        it("should navigate with keyboard arrows home end in collapsed", () => {
+            renderStaticTreeView1({
+                expandedMode: "default-collapsed",
+            });
+
+            const tree = screen.getByRole("tree");
+
+            // Initial focus is on first item
+            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+
+            // Navigate down
+            fireEvent.keyDown(tree, { code: "End" });
+            expect(screen.getByText("Parent B").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            fireEvent.keyDown(tree, { code: "End" });
+            expect(screen.getByText("Parent B").closest("div")).toHaveClass(e("item", { isFocused: true }));
+
+            // Navigate up
+            fireEvent.keyDown(tree, { code: "Home" });
+            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            fireEvent.keyDown(tree, { code: "ArrowUp" });
             expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
         });
 
@@ -805,7 +964,7 @@ describe("UiTreeview", () => {
         });
     });
 
-    describe("UiStaticTreeview", () => {
+    describe("UiLeveledTreeview", () => {
         it("should render all items in default expanded mode", () => {
             renderLeveledTreeView();
 

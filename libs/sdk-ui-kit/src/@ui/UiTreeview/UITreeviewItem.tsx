@@ -3,8 +3,8 @@
 import React, { useCallback } from "react";
 
 import { e } from "./treeviewBem.js";
-import type { UiStaticTreeView, LevelTypesUnion, IUiTreeviewItemProps } from "./types.js";
-import { itemsState } from "./utils.js";
+import { UiStaticTreeView, LevelTypesUnion, IUiTreeviewItemProps, UiRefsTree } from "./types.js";
+import { convertPathToKey, itemsState } from "./utils.js";
 
 /**
  * @internal
@@ -24,6 +24,7 @@ interface UITreeviewItemProps<Levels extends [], Level> {
     ) => void;
     onHover: (path: number[]) => void;
     ItemComponent: React.ComponentType<IUiTreeviewItemProps<Level | LevelTypesUnion<Levels>>>;
+    itemsRef: React.MutableRefObject<UiRefsTree>;
 }
 
 /**
@@ -39,9 +40,11 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
         onHover,
         ItemComponent,
         isCompact,
+        itemsRef,
+        path,
     } = props;
 
-    const [state, setState] = getState(props.path);
+    const [state, { toggle }] = getState(props.path);
     const { item, children } = props.item;
 
     const childCount = children?.length ?? 0;
@@ -53,14 +56,11 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
 
     const handleToggle = useCallback(
         (event: React.MouseEvent | React.KeyboardEvent, expanded: boolean) => {
-            setState({
-                ...state,
-                expanded,
-            });
+            toggle(expanded);
             event.stopPropagation();
             event.preventDefault();
         },
-        [setState, state],
+        [toggle],
     );
     const handleSelect = useCallback(
         (event: React.MouseEvent | React.KeyboardEvent) => {
@@ -82,6 +82,9 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
                 aria-expanded={isExpanded}
                 aria-selected={isFocused}
                 aria-disabled={item.isDisabled}
+                ref={(node) => {
+                    itemsRef.current[convertPathToKey(path)] = node;
+                }}
             >
                 <ItemComponent
                     item={item}
@@ -95,14 +98,6 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
                     onSelect={handleSelect}
                     onToggle={handleToggle}
                     onHover={handleHover}
-                    defaultStyle={defineVariables(level)}
-                    defaultClassName={e("item", {
-                        isFocused,
-                        isSelected,
-                        isCompact,
-                        isExpanded,
-                        isDisabled: !!item.isDisabled,
-                    })}
                 />
             </div>
             {children?.length && isExpanded ? (
@@ -110,6 +105,7 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
                     {children.map((child, i) => (
                         <UITreeviewItem
                             ItemComponent={ItemComponent}
+                            itemsRef={itemsRef}
                             onSelect={onSelect}
                             onHover={onHover}
                             getState={getState}
@@ -126,8 +122,4 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
             ) : null}
         </div>
     );
-}
-
-function defineVariables(level: number) {
-    return { "--ui-treeview-item-level": level } as React.CSSProperties;
 }

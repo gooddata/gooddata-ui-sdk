@@ -412,7 +412,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
 export const DefaultUiMenuStaticItem: React_2.MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuStaticItemProps<T>) => React_2.ReactElement)>;
 
 // @internal (undocumented)
-export function DefaultUiTreeViewItemComponent<Level>({ item, type, defaultClassName, defaultStyle, isExpanded, onToggle, onSelect, }: IUiTreeviewItemProps<Level>): React_2.ReactNode;
+export function DefaultUiTreeViewItemComponent<Level>({ item, type, level, isExpanded, isFocused, isSelected, isCompact, onToggle, onSelect, }: IUiTreeviewItemProps<Level>): React_2.ReactNode;
 
 // @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
@@ -5100,7 +5100,7 @@ export interface IUiTreeviewContext<Levels extends any[], Level> {
     // (undocumented)
     items: UiLeveledTreeView<LevelTypesUnion<Levels>>[] | UiStaticTreeView<Level>[];
     // (undocumented)
-    itemsRef: React_2.MutableRefObject<UiRefsTree[]>;
+    itemsRef: React_2.MutableRefObject<UiRefsTree>;
     // (undocumented)
     onClose: () => void;
     // (undocumented)
@@ -5134,10 +5134,6 @@ export interface IUiTreeviewItemProps<T> {
     // (undocumented)
     childCount: number;
     // (undocumented)
-    defaultClassName: string;
-    // (undocumented)
-    defaultStyle: React_2.CSSProperties;
-    // (undocumented)
     isCompact: boolean;
     // (undocumented)
     isExpanded: boolean;
@@ -5167,6 +5163,8 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
     dataTestId?: string;
     // (undocumented)
     expandedMode?: "default-expanded" | "default-collapsed";
+    // (undocumented)
+    expansionMode?: "multiple" | "single";
     // (undocumented)
     isCompact?: boolean;
     // (undocumented)
@@ -6482,10 +6480,7 @@ export interface UiPagedVirtualListSkeletonItemProps {
 }
 
 // @internal (undocumented)
-export type UiRefsTree = {
-    item: HTMLLIElement;
-    children?: UiRefsTree[];
-};
+export type UiRefsTree = Record<string, HTMLDivElement | null>;
 
 // @internal (undocumented)
 export const UiReturnFocusOnUnmount: React_2.FC<IUiReturnFocusOnUnmountOptions & {

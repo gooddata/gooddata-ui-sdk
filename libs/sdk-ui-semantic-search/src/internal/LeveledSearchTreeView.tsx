@@ -7,10 +7,7 @@ import { LeveledSearchTreeViewItemMemo } from "./LeveledSearchTreeViewItem.js";
 import { getItemRelationships, isItemLocked, isRelationshipLocked } from "../utils/searchItem.js";
 import { getUIPath } from "../utils/getUIPath.js";
 
-export type SearchTreeViewLevels = [
-    ISemanticSearchResultItem,
-    ISemanticSearchResultItem | ISemanticSearchRelationship,
-];
+export type SearchTreeViewLevels = [ISemanticSearchResultItem, ISemanticSearchRelationship];
 export type SearchTreeViewItem = UiLeveledTreeView<SearchTreeViewLevels>;
 
 type Props = {
@@ -38,6 +35,7 @@ export function LeveledSearchTreeView(props: Props) {
             }}
             expandedMode="default-collapsed"
             selectionMode="leafs-only"
+            expansionMode="single"
             onSelect={props.onSelect}
             ItemComponent={LeveledSearchTreeViewItemMemo}
             shouldKeyboardActionPreventDefault={false}
@@ -109,7 +107,16 @@ function buildItems(
                         id: item.id,
                         stringTitle: intl.formatMessage({ id: "semantic-search.edit" }),
                         icon: "pencil",
-                        data: item,
+                        data: {
+                            sourceObjectId: item.id,
+                            targetObjectId: item.id,
+                            sourceObjectTitle: item.title,
+                            targetObjectTitle: item.title,
+                            sourceObjectType: item.type,
+                            targetObjectType: item.type,
+                            sourceWorkspaceId: workspace,
+                            targetWorkspaceId: workspace,
+                        },
                         isDisabled,
                         url,
                     },
