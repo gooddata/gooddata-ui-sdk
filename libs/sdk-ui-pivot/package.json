@@ -56,9 +56,9 @@
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-pivot\"'"
     },
     "dependencies": {
-        "ag-grid-community": "34.1.0",
-        "ag-grid-enterprise": "34.1.0",
-        "ag-grid-react": "34.1.0",
+        "ag-grid-community": "34.1.1",
+        "ag-grid-enterprise": "34.1.1",
+        "ag-grid-react": "34.1.1",
         "@gooddata/number-formatter": "^1.0.6",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
