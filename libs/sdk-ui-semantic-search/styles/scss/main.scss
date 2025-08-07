@@ -234,6 +234,15 @@
             text-underline-position: from-font;
         }
     }
+
+    &__message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: kit-variables.$gd-color-state-blank;
+        height: 100px;
+        padding: 0 10px;
+    }
 }
 
 .gd-ui-kit-treeview {
