@@ -232,7 +232,7 @@
     },
     {
       "name": "@gooddata/util",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@lezer/highlight",

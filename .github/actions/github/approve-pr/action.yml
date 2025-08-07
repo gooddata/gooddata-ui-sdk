@@ -1,0 +1,43 @@
+name: 'Approve Pull Request'
+description: 'Approves a pull request with retry logic'
+inputs:
+  pr-number:
+    description: 'Pull request number to approve'
+    required: true
+  github-token:
+    description: 'GitHub token for authentication'
+    required: true
+  timeout-minutes:
+    description: 'Timeout in minutes for retry'
+    required: false
+    default: '30'
+  max-attempts:
+    description: 'Maximum number of retry attempts'
+    required: false
+    default: '3'
+  retry-wait-seconds:
+    description: 'Seconds to wait between retries'
+    required: false
+    default: '10'
+  comment:
+    description: 'Optional comment to include with approval'
+    required: false
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Approve Pull Request
+      uses: nick-fields/retry@v3
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+      with:
+        timeout_minutes: ${{ inputs.timeout-minutes }}
+        max_attempts: ${{ inputs.max-attempts }}
+        retry_on: error
+        retry_wait_seconds: ${{ inputs.retry-wait-seconds }}
+        command: |
+          if [[ -n "${{ inputs.comment }}" ]]; then
+            gh pr review ${{ inputs.pr-number }} --approve --body "${{ inputs.comment }}"
+          else
+            gh pr review ${{ inputs.pr-number }} --approve
+          fi

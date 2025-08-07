@@ -1463,6 +1463,9 @@ importers:
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../sdk-model
+      '@gooddata/util':
+        specifier: workspace:*
+        version: link:../util
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1645,6 +1648,9 @@ importers:
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../sdk-model
+      '@gooddata/util':
+        specifier: workspace:*
+        version: link:../util
       axios:
         specifier: ^1.9.0
         version: 1.9.0
@@ -4906,6 +4912,9 @@ importers:
       '@gooddata/sdk-ui':
         specifier: workspace:*
         version: link:../sdk-ui
+      '@gooddata/util':
+        specifier: workspace:*
+        version: link:../util
       chalk:
         specifier: ^4.1.1
         version: 4.1.2
@@ -6223,6 +6232,9 @@ importers:
       '@formatjs/icu-messageformat-parser':
         specifier: ^2.1.10
         version: 2.11.2
+      '@gooddata/util':
+        specifier: workspace:*
+        version: link:../../libs/util
       chalk:
         specifier: ^4.1.1
         version: 4.1.2

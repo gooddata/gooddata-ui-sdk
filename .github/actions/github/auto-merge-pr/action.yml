@@ -1,0 +1,50 @@
+name: 'Auto-merge Pull Request'
+description: 'Sets auto-merge on a pull request with retry logic'
+inputs:
+  pr-number:
+    description: 'Pull request number to auto-merge'
+    required: true
+  github-token:
+    description: 'GitHub token for authentication'
+    required: true
+  merge-method:
+    description: 'Merge method (merge, squash, rebase)'
+    required: false
+    default: 'merge'
+  timeout-minutes:
+    description: 'Timeout in minutes for retry'
+    required: false
+    default: '30'
+  max-attempts:
+    description: 'Maximum number of retry attempts'
+    required: false
+    default: '3'
+  retry-wait-seconds:
+    description: 'Seconds to wait between retries'
+    required: false
+    default: '10'
+  delete-branch:
+    description: 'Delete the branch after merge'
+    required: false
+    default: 'true'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set Auto-merge
+      uses: nick-fields/retry@v3
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+      with:
+        timeout_minutes: ${{ inputs.timeout-minutes }}
+        max_attempts: ${{ inputs.max-attempts }}
+        retry_on: error
+        retry_wait_seconds: ${{ inputs.retry-wait-seconds }}
+        command: |
+          MERGE_CMD="gh pr merge ${{ inputs.pr-number }} --${{ inputs.merge-method }} --auto"
+          
+          if [[ "${{ inputs.delete-branch }}" == "true" ]]; then
+            MERGE_CMD="${MERGE_CMD} --delete-branch"
+          fi
+          
+          eval ${MERGE_CMD}

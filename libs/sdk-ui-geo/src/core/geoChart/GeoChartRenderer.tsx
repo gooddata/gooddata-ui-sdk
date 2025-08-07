@@ -645,13 +645,4 @@ const GeoChartRenderer: React.FC<IGeoChartRendererProps> = ({
     return <div className={classNames} ref={chartRef} />;
 };
 
-GeoChartRenderer.defaultProps = {
-    config: {
-        mapboxToken: "",
-    },
-    afterRender: noop,
-    onZoomChanged: noop,
-    onCenterPositionChanged: noop,
-};
-
 export default GeoChartRenderer;

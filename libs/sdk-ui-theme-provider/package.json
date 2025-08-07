@@ -45,6 +45,7 @@
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
+        "@gooddata/util": "workspace:*",
         "chalk": "^4.1.1",
         "glob": "^11.0.0",
         "lodash": "^4.17.21",

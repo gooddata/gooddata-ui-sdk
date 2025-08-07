@@ -1,10 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { idRef, IDateFilterConfig } from "@gooddata/sdk-model";
 import { describe, it, expect } from "vitest";
 
 import { validateDateFilterConfig } from "../validation.js";
 
 import { allTime, absoluteForm, year2019, relativeForm, lastMonth } from "./fixtures.js";
+import { suppressConsole } from "@gooddata/util";
 
 describe("validateDateFilterConfig", () => {
     it("should validate valid config", () => {
@@ -90,7 +91,7 @@ describe("validateDateFilterConfig", () => {
         expect(actual).toEqual("NoVisibleOptions");
     });
 
-    it("should not validate config with non-unique localIdentifiers", () => {
+    it("should not validate config with non-unique localIdentifiers", async () => {
         const projectConfig: IDateFilterConfig = {
             ref: idRef("shouldNotValidateConfigWithNonUniqueLocalIdentifiers"),
             allTime: {
@@ -104,7 +105,12 @@ describe("validateDateFilterConfig", () => {
             selectedOption: "FOO",
         };
 
-        const actual = validateDateFilterConfig(projectConfig);
+        const actual = await suppressConsole(
+            () => validateDateFilterConfig(projectConfig),
+            "warn",
+            (message: string) =>
+                message === "There were duplicate localIdentifiers in the date filter config: FOO",
+        );
         expect(actual).toEqual("ConflictingIdentifiers");
     });
 

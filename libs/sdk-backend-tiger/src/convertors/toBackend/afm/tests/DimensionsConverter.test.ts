@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import {
     defWithDimensions,
@@ -15,6 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 import { convertDimensions } from "../DimensionsConverter.js";
 import { describe, expect, it } from "vitest";
+import { suppressConsole, Matcher } from "@gooddata/util";
 
 const SingleDimAttributes = defWithDimensions(emptyDef("test"), newDimension(["localId1", "localId2"]));
 const SingleDimAttributesAndMeasure = defWithDimensions(
@@ -65,17 +66,38 @@ describe("convertDimensions", () => {
     });
 
     it.each(Scenarios)("should correctly convert %s with attribute sorts", (_desc, def) => {
-        const defWithSorts = defWithSorting(def, [newAttributeSort("localId1")]);
+        const id = "localId1";
+        const defWithSorts = defWithSorting(def, [newAttributeSort(id)]);
 
-        expect(convertDimensions(defWithSorts)).toMatchSnapshot();
+        expect(
+            suppressConsole(() => convertDimensions(defWithSorts), "log", [
+                {
+                    type: "exact",
+                    value: `attempting to sort by attribute with localId ${id} but this attribute is not in any dimension.`,
+                },
+            ]),
+        ).toMatchSnapshot();
     });
+
+    const commonWarnOutput: Matcher[] = [
+        {
+            type: "exact",
+            value: "Trying to use measure sort in an execution that does not contain MeasureGroup. Ignoring.",
+        },
+        {
+            type: "exact",
+            value: "Trying to use measure sort in an execution that only contains dimension with MeasureGroup. This is not valid sort. Measure sort is used to sort the non-measure dimension by values from measure dimension. Ignoring",
+        },
+    ];
 
     it.each(Scenarios)(
         "should correctly convert %s with measure sorts without attribute locators",
         (_desc, def) => {
             const defWithSorts = defWithSorting(def, [newMeasureSort("testMeasure")]);
 
-            expect(convertDimensions(defWithSorts)).toMatchSnapshot();
+            expect(
+                suppressConsole(() => convertDimensions(defWithSorts), "warn", commonWarnOutput),
+            ).toMatchSnapshot();
         },
     );
 
@@ -87,7 +109,9 @@ describe("convertDimensions", () => {
             ]);
             const defWithSorts = defWithSorting(def, [measureSort]);
 
-            expect(convertDimensions(defWithSorts)).toMatchSnapshot();
+            expect(
+                suppressConsole(() => convertDimensions(defWithSorts), "warn", commonWarnOutput),
+            ).toMatchSnapshot();
         },
     );
 
@@ -99,7 +123,9 @@ describe("convertDimensions", () => {
             ]);
             const defWithSorts = defWithSorting(def, [measureSort]);
 
-            expect(convertDimensions(defWithSorts)).toMatchSnapshot();
+            expect(
+                suppressConsole(() => convertDimensions(defWithSorts), "warn", commonWarnOutput),
+            ).toMatchSnapshot();
         },
     );
 

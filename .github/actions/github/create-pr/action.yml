@@ -1,0 +1,71 @@
+name: 'Create Pull Request'
+description: 'Creates a pull request using GitHub CLI'
+inputs:
+  title:
+    description: 'Title of the pull request'
+    required: true
+  body:
+    description: 'Body of the pull request'
+    required: true
+  base:
+    description: 'Base branch for the pull request'
+    required: true
+  head:
+    description: 'Head branch for the pull request'
+    required: true
+  github-token:
+    description: 'GitHub token for authentication'
+    required: true
+  draft:
+    description: 'Create the pull request as a draft'
+    required: false
+    default: 'false'
+  labels:
+    description: 'Comma-separated list of labels to add'
+    required: false
+  assignees:
+    description: 'Comma-separated list of assignees'
+    required: false
+  reviewers:
+    description: 'Comma-separated list of reviewers'
+    required: false
+outputs:
+  pr-url:
+    description: 'URL of the created pull request'
+    value: ${{ steps.create.outputs.pr_url }}
+  pr-number:
+    description: 'Number of the created pull request'
+    value: ${{ steps.create.outputs.pr_number }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Create Pull Request
+      id: create
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: |
+        PR_CREATE_CMD="gh pr create --title \"${{ inputs.title }}\" --body \"${{ inputs.body }}\" --base ${{ inputs.base }} --head ${{ inputs.head }}"
+        
+        if [[ "${{ inputs.draft }}" == "true" ]]; then
+          PR_CREATE_CMD="${PR_CREATE_CMD} --draft"
+        fi
+        
+        if [[ -n "${{ inputs.labels }}" ]]; then
+          PR_CREATE_CMD="${PR_CREATE_CMD} --label ${{ inputs.labels }}"
+        fi
+        
+        if [[ -n "${{ inputs.assignees }}" ]]; then
+          PR_CREATE_CMD="${PR_CREATE_CMD} --assignee ${{ inputs.assignees }}"
+        fi
+        
+        if [[ -n "${{ inputs.reviewers }}" ]]; then
+          PR_CREATE_CMD="${PR_CREATE_CMD} --reviewer ${{ inputs.reviewers }}"
+        fi
+        
+        PR_URL=$(eval ${PR_CREATE_CMD})
+        echo "pr_url=${PR_URL}" >> $GITHUB_OUTPUT
+        PR_NUMBER=$(echo $PR_URL | awk -F'/' '{print $NF}')
+        echo "pr_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
+        echo "Created PR: ${PR_URL}" | tee -a $GITHUB_STEP_SUMMARY
