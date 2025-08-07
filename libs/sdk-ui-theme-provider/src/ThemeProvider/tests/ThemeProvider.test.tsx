@@ -1,12 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
-import { act } from "react-dom/test-utils";
+import React, { act } from "react";
 import { render, RenderResult } from "@testing-library/react";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { ITheme } from "@gooddata/sdk-model";
 import { WorkspaceProvider, BackendProvider } from "@gooddata/sdk-ui";
 import cloneDeep from "lodash/cloneDeep.js";
+import { suppressConsole } from "@gooddata/util";
 
 import { ThemeModifier, ThemeProvider } from "../ThemeProvider.js";
 import { withTheme } from "../Context.js";
@@ -15,9 +15,19 @@ import { isDarkTheme } from "../isDarkTheme.js";
 
 const renderComponent = async (component: React.ReactElement): Promise<RenderResult> => {
     let wrappedComponent;
-    await act(async () => {
-        wrappedComponent = render(component);
-    });
+    await suppressConsole(
+        async () =>
+            act(async () => {
+                wrappedComponent = render(component);
+            }),
+        "error",
+        [
+            {
+                type: "startsWith",
+                value: "Warning: The current testing environment is not configured to support act(...)",
+            },
+        ],
+    );
     return wrappedComponent;
 };
 

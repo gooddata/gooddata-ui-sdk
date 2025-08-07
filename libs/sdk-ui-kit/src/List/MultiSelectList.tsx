@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, ReactElement } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
 
@@ -46,86 +46,47 @@ export interface IMultiSelectListProps<T> {
     listClassNames?: string;
 }
 
-class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
-    public render() {
-        const {
-            isMobile,
-            width,
-            height,
-            items,
-            itemHeight,
-            itemsCount,
-            onScrollEnd,
-            renderItem,
-            selectedItems,
-            listClassNames,
-        } = this.props;
+function MultiSelectListCore<T>(props: IMultiSelectListProps<T>) {
+    const {
+        isMobile,
+        width,
+        height,
+        items,
+        itemHeight,
+        itemsCount,
+        onScrollEnd,
+        renderItem,
+        selectedItems,
+        listClassNames,
+        onSelectAll,
+        onSelectNone,
+        isInverted,
+        isSearching,
+        isSelected,
+        filteredItemsCount,
+        selectAllCheckbox,
+        intl,
+        tagName,
+    } = props;
 
-        const classNames = cx("is-multiselect", listClassNames ? listClassNames : "");
+    const getSelectionString = useCallback(
+        (selection: T[]) => {
+            if (!selection.length) {
+                return "";
+            }
+            return selection
+                .map((item: any) => {
+                    if (Object.prototype.hasOwnProperty.call(item, "available") && !item.available) {
+                        return intl.formatMessage({ id: "gs.list.notAvailableAbbreviation" });
+                    }
+                    return item.title || `(${intl.formatMessage({ id: "empty_value" })})`;
+                })
+                .join(", ");
+        },
+        [intl],
+    );
 
-        return (
-            <div className="gd-flex-item-stretch-mobile gd-flex-row-container-mobile">
-                {this.renderActions()}
-                <FlexDimensions
-                    measureHeight={isMobile}
-                    measureWidth={isMobile || !width}
-                    className="gd-flex-item-stretch-mobile"
-                >
-                    <List
-                        className={classNames}
-                        width={width}
-                        height={height}
-                        items={items}
-                        itemHeight={itemHeight}
-                        itemsCount={itemsCount}
-                        renderItem={({ item }) => {
-                            return renderItem({
-                                item,
-                                isSelected: this.props.isSelected
-                                    ? this.props.isSelected(item)
-                                    : selectedItems.some((_item) => _item === item),
-                            });
-                        }}
-                        onScrollEnd={onScrollEnd}
-                        compensateBorder={!isMobile}
-                    />
-                </FlexDimensions>
-                {this.renderStatusBar()}
-            </div>
-        );
-    }
-
-    private onActionCheckboxChange = () => {
-        const { onSelectAll, onSelectNone, isInverted, isSearching } = this.props;
-        if (
-            this.isAllSelected() ||
-            (!isInverted && isSearching && this.isIndefiniteSelection && !this.isEmpty())
-        ) {
-            return onSelectNone();
-        }
-
-        return onSelectAll();
-    };
-
-    private getSelectionString = (selection: T[]) => {
-        const { intl } = this.props;
-
-        if (!selection.length) {
-            return "";
-        }
-        return selection
-            .map((item: any) => {
-                if (Object.prototype.hasOwnProperty.call(item, "available") && !item.available) {
-                    return intl.formatMessage({ id: "gs.list.notAvailableAbbreviation" });
-                }
-                return item.title || `(${intl.formatMessage({ id: "empty_value" })})`;
-            })
-            .join(", ");
-    };
-
-    private isEmpty = () => {
-        const { selectedItems, itemsCount, isInverted, isSearching, items, isSelected } = this.props;
-
+    const isEmpty = useCallback(() => {
         if (selectedItems.length === 0) {
             return !isInverted;
         }
@@ -137,11 +98,9 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
         return (
             (selectedItems.length === 0 && !isInverted) || (selectedItems.length === itemsCount && isInverted)
         );
-    };
+    }, [selectedItems, isInverted, isSearching, items, isSelected, itemsCount]);
 
-    private isIndefiniteSelection = () => {
-        const { selectedItems, isSearching, items, isSelected, filteredItemsCount } = this.props;
-
+    const isIndefiniteSelection = useCallback(() => {
         if (selectedItems.length === 0) {
             return false;
         }
@@ -154,10 +113,9 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
             return selectedItemsCount !== 0 && selectedItemsCount !== filteredItemsCount;
         }
         return true;
-    };
+    }, [selectedItems, isSearching, items, isSelected, filteredItemsCount]);
 
-    private isAllSelected = () => {
-        const { itemsCount, isInverted, isSearching, items, isSelected, selectedItems } = this.props;
+    const isAllSelected = useCallback(() => {
         if (isSearching) {
             const selectedItemsCount = items.filter((item) => isSelected(item)).length;
             const totalItemsCount = items.filter((item) => item !== null).length;
@@ -165,10 +123,17 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
         }
 
         return isInverted ? selectedItems.length === 0 : selectedItems.length === itemsCount;
-    };
+    }, [isInverted, itemsCount, isSearching, items, isSelected, selectedItems]);
 
-    private renderSearchResultsLength = () => {
-        const { itemsCount, isSearching, intl } = this.props;
+    const onActionCheckboxChange = useCallback(() => {
+        if (isAllSelected() || (!isInverted && isSearching && isIndefiniteSelection() && !isEmpty())) {
+            return onSelectNone();
+        }
+
+        return onSelectAll();
+    }, [onSelectAll, onSelectNone, isInverted, isSearching, isAllSelected, isEmpty, isIndefiniteSelection]);
+
+    const renderSearchResultsLength = useCallback(() => {
         if (isSearching && itemsCount > 0) {
             return (
                 <span className="gd-list-actions-selection-size s-list-search-selection-size">
@@ -177,14 +142,12 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
             );
         }
         return null;
-    };
+    }, [isSearching, itemsCount, intl]);
 
-    private renderActions = () => {
-        const { selectAllCheckbox, intl } = this.props;
-
+    const renderActions = useCallback(() => {
         if (selectAllCheckbox) {
             const checkboxClasses = cx("input-checkbox", "gd-checkbox-selection", {
-                "checkbox-indefinite": this.isIndefiniteSelection(),
+                "checkbox-indefinite": isIndefiniteSelection(),
             });
 
             const labelClasses = cx("input-checkbox-label", "s-select-all-checkbox");
@@ -195,8 +158,8 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
                         readOnly={true}
                         type="checkbox"
                         className={checkboxClasses}
-                        checked={!this.isEmpty()}
-                        onChange={this.onActionCheckboxChange}
+                        checked={!isEmpty()}
+                        onChange={onActionCheckboxChange}
                     />
                     <span className="input-label-text">{intl.formatMessage({ id: "gs.list.all" })}</span>
                 </label>
@@ -205,7 +168,7 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
             return (
                 <div className="gd-list-actions gd-list-actions-invertable">
                     {checkbox}
-                    {this.renderSearchResultsLength()}
+                    {renderSearchResultsLength()}
                 </div>
             );
         }
@@ -215,22 +178,29 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
                 <Button
                     className="gd-button-link"
                     tagName="a"
-                    onClick={this.props.onSelectAll}
+                    onClick={onSelectAll}
                     value={intl.formatMessage({ id: "gs.list.selectAll" })}
                 />
                 <Button
                     className="gd-button-link"
                     tagName="a"
-                    onClick={this.props.onSelectNone}
+                    onClick={onSelectNone}
                     value={intl.formatMessage({ id: "gs.list.clear" })}
                 />
             </div>
         );
-    };
+    }, [
+        selectAllCheckbox,
+        isIndefiniteSelection,
+        isEmpty,
+        onActionCheckboxChange,
+        intl,
+        onSelectAll,
+        onSelectNone,
+        renderSearchResultsLength,
+    ]);
 
-    private renderStatusBar = () => {
-        const { selectAllCheckbox, selectedItems, isInverted, tagName, intl } = this.props;
-
+    const renderStatusBar = useCallback(() => {
         if (!selectAllCheckbox) {
             return null;
         }
@@ -244,7 +214,7 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
             </span>
         );
 
-        const selectionItemsStr = this.getSelectionString(selectedItems);
+        const selectionItemsStr = getSelectionString(selectedItems);
 
         const isSelectionEmpty = selectedItems.length === 0;
 
@@ -287,7 +257,46 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
                 {selectionLengthInfo}
             </div>
         );
-    };
+    }, [selectAllCheckbox, tagName, selectedItems, isInverted, intl, getSelectionString]);
+
+    const classNames = useMemo(
+        () => cx("is-multiselect", listClassNames ? listClassNames : ""),
+        [listClassNames],
+    );
+
+    return (
+        <div className="gd-flex-item-stretch-mobile gd-flex-row-container-mobile">
+            {renderActions()}
+            <FlexDimensions
+                measureHeight={isMobile}
+                measureWidth={isMobile || !width}
+                className="gd-flex-item-stretch-mobile"
+            >
+                <List
+                    className={classNames}
+                    width={width}
+                    height={height}
+                    items={items}
+                    itemHeight={itemHeight}
+                    itemsCount={itemsCount}
+                    renderItem={useCallback(
+                        ({ item }) => {
+                            return renderItem({
+                                item,
+                                isSelected: isSelected
+                                    ? isSelected(item)
+                                    : selectedItems.some((_item) => _item === item),
+                            });
+                        },
+                        [renderItem, isSelected, selectedItems],
+                    )}
+                    onScrollEnd={onScrollEnd}
+                    compensateBorder={!isMobile}
+                />
+            </FlexDimensions>
+            {renderStatusBar()}
+        </div>
+    );
 }
 
 /**

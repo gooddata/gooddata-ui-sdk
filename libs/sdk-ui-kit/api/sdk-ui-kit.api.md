@@ -5271,105 +5271,25 @@ export interface IZoomContextState {
 export type LabelSize = "small" | "normal";
 
 // @internal @deprecated (undocumented)
-export const LegacyInvertableList: <T>(props: ILegacyInvertableListProps<T>) => any;
+export function LegacyInvertableList<T>({ className, filteredItemsCount, getItemKey, height, isInverted, isLoading, isLoadingClass: IsLoadingClass, isMobile, itemHeight, items, itemsCount, limitHitWarningClass: LimitHitWarningClass, listItemClass, maxSelectionSize, noItemsFound, noItemsFoundClass: NoItemsFoundClass, onRangeChange, onSearch, onSelect, searchPlaceholder, searchString, selection, showSearchField, smallSearch, tagName, width, actionsAsCheckboxes, selectAllCheckbox, rowItem, isSearchFieldAutoFocused, }: ILegacyInvertableListProps<T>): React_2.JSX.Element;
 
 // @internal @deprecated (undocumented)
-export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
-    constructor(props: ILegacyListProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    static defaultProps: Pick<ILegacyListProps, "className" | "onScroll" | "onScrollStart" | "onSelect" | "width" | "height" | "itemHeight" | "itemHeightGetter" | "compensateBorder" | "scrollToSelected">;
-    // (undocumented)
-    render(): ReactElement;
-}
+export function LegacyList({ className, onScroll, onScrollStart, onSelect, width, height, itemHeight, itemHeightGetter, compensateBorder, scrollToSelected, dataSource, rowItem, }: ILegacyListProps): React_2.JSX.Element;
 
 // @internal @deprecated (undocumented)
-export class LegacyListItem<T> extends Component<ILegacyListItemProps<T>> {
-    // (undocumented)
-    static defaultProps: {
-        item: {};
-    };
-    // (undocumented)
-    render(): ReactElement;
-}
+export function LegacyListItem<T>({ item, listItemClass }: ILegacyListItemProps<T>): ReactElement;
 
 // @internal @deprecated (undocumented)
 export const LegacyMultiSelectList: <T>(props: ILegacyMultiSelectListProps<T>) => any;
 
 // @internal @deprecated (undocumented)
-export class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectListItemProps> {
-    constructor(props: ILegacyMultiSelectListItemProps);
-    // (undocumented)
-    static defaultProps: {
-        isLoading: boolean;
-        onMouseOver: (...args: any[]) => void;
-        onMouseOut: (...args: any[]) => void;
-        onOnly: (...args: any[]) => void;
-        onSelect: (...args: any[]) => void;
-        selected: boolean;
-        source: {};
-    };
-    // (undocumented)
-    protected getClassNames(): string;
-    // (undocumented)
-    protected handleMouseOut: () => void;
-    // (undocumented)
-    protected handleMouseOver: () => void;
-    // (undocumented)
-    protected handleSelect: () => void;
-    // (undocumented)
-    render(): ReactElement;
-    // (undocumented)
-    protected renderOnly(): ReactElement;
-}
+export const LegacyMultiSelectListItem: React_2.NamedExoticComponent<ILegacyMultiSelectListItemProps>;
 
 // @internal @deprecated (undocumented)
-export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectListProps<T>> {
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-        getItemKey: typeof guidFor;
-        items: any[];
-        itemsCount: number;
-        listItemClass: typeof LegacySingleSelectListItem;
-        onItemMouseOut: (...args: any[]) => void;
-        onItemMouseOver: (...args: any[]) => void;
-        onItemMouseEnter: (...args: any[]) => void;
-        onItemMouseLeave: (...args: any[]) => void;
-        onRangeChange: (...args: any[]) => void;
-        onScrollStart: (...args: any[]) => void;
-        onSelect: (...args: any[]) => void;
-        rowItem: React_2.ReactElement;
-        scrollToSelected: boolean;
-        selection: {};
-    };
-    // (undocumented)
-    render(): ReactElement;
-}
+export function LegacySingleSelectList<T>(props: ILegacySingleSelectListProps<T>): ReactElement;
 
 // @internal @deprecated (undocumented)
-export class LegacySingleSelectListItem extends Component<ILegacySingleSelectListItemProps, ILegacySingleSelectListItemState> {
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentDidUpdate(): void;
-    // (undocumented)
-    static defaultProps: {
-        onMouseOver: (...args: any[]) => void;
-        onMouseOut: (...args: any[]) => void;
-    };
-    // (undocumented)
-    node: HTMLSpanElement;
-    // (undocumented)
-    render(): ReactElement;
-    // (undocumented)
-    readonly state: {
-        isOverflowed: boolean;
-    };
-}
+export function LegacySingleSelectListItem({ source, selected, onSelect, onMouseOver, onMouseOut, }: ILegacySingleSelectListItemProps): ReactElement;
 
 // @internal (undocumented)
 export type LevelTypesUnion<Levels extends unknown[]> = Levels[number];
@@ -5487,10 +5407,7 @@ export const MultiSelectList: React_2.FC<WithIntlProps<IMultiSelectListProps<unk
 };
 
 // @internal (undocumented)
-export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps> {
-    // (undocumented)
-    render(): ReactElement;
-}
+export const MultiSelectListItem: React_2.NamedExoticComponent<IMultiSelectListItemProps>;
 
 // @internal (undocumented)
 export type NavigationDirection = "forward" | "backward";

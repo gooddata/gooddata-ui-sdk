@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { PureComponent, ReactElement } from "react";
+import React, { ReactElement, memo, useCallback, useMemo } from "react";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -24,81 +24,67 @@ export interface ILegacyMultiSelectListItemProps {
  * @internal
  * @deprecated This component is deprecated use MultiSelectListItem instead
  */
-export class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectListItemProps> {
-    static defaultProps = {
-        isLoading: false,
-        onMouseOver: noop,
-        onMouseOut: noop,
-        onOnly: noop,
-        onSelect: noop,
-        selected: false,
-        source: {},
-    };
+export const LegacyMultiSelectListItem = memo(function LegacyMultiSelectListItem({
+    onMouseOver = noop,
+    onMouseOut = noop,
+    onOnly = noop,
+    onSelect = noop,
+    selected = false,
+    source = {},
+}: ILegacyMultiSelectListItemProps) {
+    const classNames = useMemo(
+        () =>
+            cx({
+                "gd-list-item": true,
+                [`s-${stringUtils.simplifyText(source.title)}`]: true,
+                "has-only-visible": true,
+                "is-selected": selected,
+            }),
+        [source.title, selected],
+    );
 
-    constructor(props: ILegacyMultiSelectListItemProps) {
-        super(props);
+    const handleSelect = useCallback((): void => {
+        onSelect(source);
+    }, [onSelect, source]);
 
-        this.handleSelect = this.handleSelect.bind(this);
-        this.handleMouseOver = this.handleMouseOver.bind(this);
-        this.handleMouseOut = this.handleMouseOut.bind(this);
-        this.handleOnly = this.handleOnly.bind(this);
-    }
+    const handleMouseOver = useCallback((): void => {
+        onMouseOver(source);
+    }, [onMouseOver, source]);
 
-    protected getClassNames(): string {
-        return cx({
-            "gd-list-item": true,
-            [`s-${stringUtils.simplifyText(this.props.source.title)}`]: true,
-            "has-only-visible": true,
-            "is-selected": this.props.selected,
-        });
-    }
+    const handleMouseOut = useCallback((): void => {
+        onMouseOut(source);
+    }, [onMouseOut, source]);
 
-    protected handleSelect = (): void => {
-        this.props.onSelect(this.props.source);
-    };
+    const handleOnly = useCallback(
+        (ev: React.MouseEvent) => {
+            ev.stopPropagation();
+            onOnly(source);
+        },
+        [onOnly, source],
+    );
 
-    protected handleMouseOver = (): void => {
-        this.props.onMouseOver(this.props.source);
-    };
-
-    protected handleMouseOut = (): void => {
-        this.props.onMouseOut(this.props.source);
-    };
-
-    private handleOnly = (ev: React.MouseEvent) => {
-        ev.stopPropagation();
-        this.props.onOnly(this.props.source);
-    };
-
-    protected renderOnly(): ReactElement {
+    const renderOnly = useCallback((): ReactElement => {
         return (
-            <span className="gd-list-item-only" onClick={this.handleOnly}>
+            <span className="gd-list-item-only" onClick={handleOnly}>
                 <FormattedMessage id="gs.list.only" />
             </span>
         );
-    }
+    }, [handleOnly]);
 
-    render(): ReactElement {
-        return (
-            <div
-                className={this.getClassNames()}
-                onClick={this.handleSelect}
-                onMouseOver={this.handleMouseOver}
-                onMouseOut={this.handleMouseOut}
-            >
-                <label className="input-checkbox-label">
-                    <input
-                        type="checkbox"
-                        className="input-checkbox"
-                        readOnly
-                        checked={this.props.selected}
-                    />
-                    <span className="input-label-text">{this.props.source.title}</span>
-                </label>
-                {this.renderOnly()}
-            </div>
-        );
-    }
-}
+    return (
+        <div
+            className={classNames}
+            onClick={handleSelect}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+        >
+            <label className="input-checkbox-label">
+                <input type="checkbox" className="input-checkbox" readOnly checked={selected} />
+                <span className="input-label-text">{source.title}</span>
+            </label>
+            {renderOnly()}
+        </div>
+    );
+});
 
 export default injectIntl(LegacyMultiSelectListItem);
