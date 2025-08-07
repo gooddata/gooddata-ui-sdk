@@ -11,6 +11,7 @@ import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboard
 import { IDashboardLayoutProps } from "../../../presentation/index.js";
 import { render } from "@testing-library/react";
 import { EMPTY_MUTATIONS } from "./utils.js";
+import { suppressConsole } from "@gooddata/util";
 
 const EmptyDashboard: IDashboard<ExtendedDashboardWidget> = {
     type: "IDashboard",
@@ -82,13 +83,20 @@ describe("layout customizer", () => {
         expect(customizationFn2).toHaveBeenCalledTimes(1);
     });
 
-    it("should ignore errors during transformation", () => {
+    it("should ignore errors during transformation", async () => {
         Customizer.customizeFluidLayout(() => {
             throw Error();
         });
         const transformFn = Customizer.getExistingDashboardTransformFn();
 
-        expect(transformFn(EmptyDashboard)).toEqual(EmptyDashboard);
+        const result = await suppressConsole(() => transformFn(EmptyDashboard), "error", [
+            {
+                type: "startsWith",
+                value: "An error has occurred while transforming fluid dashboard layout. Skipping failed transformation.",
+            },
+        ]);
+
+        expect(result).toEqual(EmptyDashboard);
     });
 
     it("should return undefined if dashboard has no layout", () => {

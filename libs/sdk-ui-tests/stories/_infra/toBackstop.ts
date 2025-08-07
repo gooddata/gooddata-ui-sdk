@@ -72,7 +72,7 @@ async function processStoryFile(file: string): Promise<IStoryInfo[]> {
 
     try {
         const storiesFromFile: Record<string, { parameters: IParameters; name: string; title: string }> =
-            await import(absPath);
+            await import(/* @vite-ignore */ absPath);
 
         const defaultStory = storiesFromFile.default;
         if (!defaultStory) {

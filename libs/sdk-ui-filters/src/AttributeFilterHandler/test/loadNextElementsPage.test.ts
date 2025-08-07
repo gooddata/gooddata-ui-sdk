@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     limitingAttributeFilters,
     limitingDateFilters,
@@ -10,6 +10,7 @@ import * as elements from "../internal/redux/elements/loadElements.js";
 import { BadRequestSdkError } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { suppressConsole } from "@gooddata/util";
 
 describe("AttributeFilterHandler", () => {
     it("loadNextElementsPage() should trigger onLoadNextElementsPageStart() callback", async () => {
@@ -73,7 +74,9 @@ describe("AttributeFilterHandler", () => {
         attributeFilterHandler.onLoadNextElementsPageError(onLoadNextElementsPageError);
         attributeFilterHandler.loadNextElementsPage("error");
 
-        await waitForAsync();
+        await suppressConsole(waitForAsync, "error", [
+            { type: "exact", value: "Error while loading next elements page: Elements error" },
+        ]);
 
         expect(onLoadNextElementsPageError).toHaveBeenCalledTimes(1);
         expect(onLoadNextElementsPageError.mock.calls[0]).toMatchSnapshot("with parameters");
@@ -226,7 +229,10 @@ describe("AttributeFilterHandler", () => {
 
         expect(attributeFilterHandler.getNextElementsPageStatus()).toMatchSnapshot("during the load");
 
-        await waitForAsync();
+        await suppressConsole(waitForAsync, "error", [
+            { type: "includes", value: "Error while loading attribute" },
+            { type: "includes", value: "Error while initializing" },
+        ]);
 
         expect(attributeFilterHandler.getNextElementsPageStatus()).toMatchSnapshot("after the load");
     });
@@ -241,8 +247,9 @@ describe("AttributeFilterHandler", () => {
         vi.spyOn(elements, "loadElements").mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.loadNextElementsPage();
 
-        await waitForAsync();
-
+        await suppressConsole(waitForAsync, "error", [
+            { type: "exact", value: "Error while loading next elements page: Elements error" },
+        ]);
         expect(attributeFilterHandler.getNextElementsPageError()).toMatchSnapshot();
     });
 });
