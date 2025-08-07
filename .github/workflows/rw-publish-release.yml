@@ -149,9 +149,7 @@ jobs:
           GITHUB_USER: ${{ github.actor }}
           NPM_PACKAGE_VERIFIED: ${{ needs.check-npm-package.outputs.verified }}
       - name: Notify to slack
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: ./.github/actions/slack/send-notification
         with:
-          channel-id: "#javascript-notifications"
-          slack-message: ${{ env.RELEASE_MESSAGE }}
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: ${{ env.RELEASE_MESSAGE }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

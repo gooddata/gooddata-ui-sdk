@@ -72,6 +72,7 @@ export interface ISemanticSearchQuery {
 export interface ISemanticSearchResult {
     results: ISemanticSearchResultItem[];
     relationships: ISemanticSearchRelationship[];
+    reasoning?: string;
 }
 
 /**
