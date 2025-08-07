@@ -111,6 +111,7 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
     maxHeight?: number;
     selectionMode?: "groups-and-leafs" | "groups-only" | "leafs-only";
     expandedMode?: "default-expanded" | "default-collapsed";
+    expansionMode?: "multiple" | "single";
 
     onClose?: () => void;
     onUnhandledKeyDown?: (event: React.KeyboardEvent, context: IUiTreeviewContext<Levels, Level>) => void;
@@ -131,7 +132,7 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
  */
 export interface IUiTreeviewContext<Levels extends any[], Level> {
     items: UiLeveledTreeView<LevelTypesUnion<Levels>>[] | UiStaticTreeView<Level>[];
-    itemsRef: React.MutableRefObject<UiRefsTree[]>;
+    itemsRef: React.MutableRefObject<UiRefsTree>;
     onClose: () => void;
     onSelect: (
         event: React.MouseEvent | React.KeyboardEvent,
@@ -150,8 +151,6 @@ export interface IUiTreeviewItemProps<T> {
     type: "leaf" | "group";
     childCount: number;
     item: IUiTreeViewItem<T>;
-    defaultClassName: string;
-    defaultStyle: React.CSSProperties;
 
     isFocused: boolean;
     isExpanded: boolean;
@@ -172,10 +171,7 @@ export type UiTreeviewAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttrib
 /**
  * @internal
  */
-export type UiRefsTree = {
-    item: HTMLLIElement;
-    children?: UiRefsTree[];
-};
+export type UiRefsTree = Record<string, HTMLDivElement | null>;
 /**
  * @internal
  */

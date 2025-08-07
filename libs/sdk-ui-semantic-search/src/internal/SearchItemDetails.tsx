@@ -15,7 +15,10 @@ const MAX_LINES = 7;
 /**
  * Align points for the details bubble.
  */
-const BUBBLE_ALIGN_POINTS = [{ align: "tr tl", offset: { x: 4, y: 4 } }];
+const BUBBLE_ALIGN_POINTS = [
+    { align: "tr tl", offset: { x: 4, y: 4 } },
+    { align: "tl tr", offset: { x: 4, y: 4 } },
+];
 /**
  * Arrow style for the details bubble.
  */

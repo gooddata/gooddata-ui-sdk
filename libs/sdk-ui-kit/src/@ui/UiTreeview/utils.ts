@@ -33,19 +33,10 @@ export function getItemOnFocusedPath<T>(
 /**
  * @internal
  **/
-export function getRefOnFocusedPath(items: UiRefsTree[], focusedPath: number[]): UiRefsTree | undefined {
-    let currentLevel: UiRefsTree[] = items;
-    let currentItem: UiRefsTree | undefined = undefined;
+export function getRefOnFocusedPath(items: UiRefsTree, focusedPath: number[]): HTMLDivElement | undefined {
+    const key = convertPathToKey(focusedPath);
 
-    for (let i = 0; i < focusedPath.length; i++) {
-        const index = focusedPath[i];
-        if (index < currentLevel.length) {
-            currentItem = currentLevel[index];
-            currentLevel = currentItem.children;
-        }
-    }
-
-    return currentItem;
+    return items[key];
 }
 
 type ItemsState = [
@@ -53,12 +44,24 @@ type ItemsState = [
     React.Dispatch<React.SetStateAction<Record<string, UiStateTreeItem> | undefined>>,
 ];
 
-type GetItemState = (path: number[]) => [UiStateTreeItem | undefined, (item: UiStateTreeItem) => void];
+type GetItemState = (path: number[]) => [
+    UiStateTreeItem | undefined,
+    {
+        toggle: (state: boolean) => void;
+        toggleAll: (state: boolean) => void;
+    },
+];
 
 /**
  * @internal
  **/
-export function itemsState(state: ItemsState, defaultItem: UiStateTreeItem): GetItemState {
+export function itemsState(
+    state: ItemsState,
+    defaultItem: UiStateTreeItem,
+    opts: {
+        expansionMode: "multiple" | "single";
+    },
+): GetItemState {
     return (path: number[]) => {
         // Setter
         const setter = (item: UiStateTreeItem) => {
@@ -70,8 +73,31 @@ export function itemsState(state: ItemsState, defaultItem: UiStateTreeItem): Get
         const getter = () => {
             return getItemAtPath(state[0], path, defaultItem);
         };
+        // Toggle
+        const toggle = (state: boolean) => {
+            // Collapse all if only one root open is allowed
+            if (path.length === 1 && opts.expansionMode === "single") {
+                toggleAll(false);
+            }
+            setter({ expanded: state });
+        };
+        // Toggle all
+        const toggleAll = (expanded: boolean) => {
+            state[1]((st) => {
+                const updated = Object.entries(st).map(([key, prop]) => {
+                    return [key, { ...prop, expanded }];
+                });
+                return Object.fromEntries(updated);
+            });
+        };
 
-        return [getter(), setter];
+        return [
+            getter(),
+            {
+                toggle,
+                toggleAll,
+            },
+        ];
     };
 }
 
@@ -144,8 +170,13 @@ export function getPrevPathIndex<T>(
 
     let currentIndex = map.findIndex(([key]) => key === currentKey);
     // Index not found
-    if (currentIndex <= 0) {
-        return convertKeyToPath(map[0][0]);
+    if (currentIndex < 0) {
+        const first = map[0];
+        const [key, item, expanded] = first;
+        if (isFocusableItem(item) && expanded) {
+            return convertKeyToPath(key);
+        }
+        return getNextPathIndex(items, getState, convertKeyToPath(key), isFocusableItem);
     }
 
     // Previous item index
@@ -161,7 +192,12 @@ export function getPrevPathIndex<T>(
         prevItem = map[currentIndex];
     }
 
-    return convertKeyToPath(map[0][0]);
+    const first = map[0];
+    const [key, item, expanded] = first;
+    if (isFocusableItem(item) && expanded) {
+        return convertKeyToPath(key);
+    }
+    return convertKeyToPath(currentKey);
 }
 
 export function getNextPathIndex<T>(
@@ -174,9 +210,15 @@ export function getNextPathIndex<T>(
     const currentKey = convertPathToKey(path);
 
     let currentIndex = map.findIndex(([key]) => key === currentKey);
+    currentIndex = currentIndex === -1 ? map.length : currentIndex;
     // Index not found
-    if (currentIndex < 0 || currentIndex >= map.length - 1) {
-        return convertKeyToPath(map[map.length - 1][0]);
+    if (currentIndex > map.length - 1) {
+        const last = map[map.length - 1];
+        const [key, item, expanded] = last;
+        if (isFocusableItem(item) && expanded) {
+            return convertKeyToPath(key);
+        }
+        return getPrevPathIndex(items, getState, convertKeyToPath(key), isFocusableItem);
     }
 
     // Next item index
@@ -192,7 +234,12 @@ export function getNextPathIndex<T>(
         nextItem = map[currentIndex];
     }
 
-    return convertKeyToPath(map[map.length - 1][0]);
+    const last = map[map.length - 1];
+    const [key, item, expanded] = last;
+    if (isFocusableItem(item) && expanded) {
+        return convertKeyToPath(key);
+    }
+    return convertKeyToPath(currentKey);
 }
 
 export function getParentPathIndex<T>(
@@ -250,10 +297,10 @@ function getItemsPathEntries<T = unknown>(
     return entries;
 }
 
-function convertPathToKey(path: number[]): string {
+export function convertPathToKey(path: number[]): string {
     return path.join("-");
 }
 
-function convertKeyToPath(key: string): number[] {
+export function convertKeyToPath(key: string): number[] {
     return key.split("-").map((s) => parseInt(s, 10));
 }

@@ -230,6 +230,7 @@ const Example = ({ title, children }: { title: string; children: React.ReactNode
 // Default aria attributes for the treeview
 const defaultAriaAttributes = {
     id: "test-treeview",
+    "aria-label": "test treeview",
     "aria-labelledby": "test-treeview-label",
     role: "tree" as const,
 };
@@ -292,17 +293,31 @@ const UiTreeviewExamples = () => (
 function TreeviewItemComponent({
     item,
     type,
-    defaultClassName,
-    defaultStyle,
     isExpanded,
+    isFocused,
+    isSelected,
+    isCompact,
     onToggle,
     onSelect,
 }: IUiTreeviewItemProps<Level1Item | Level2Item>): React.ReactNode {
     if (item.data.level === 1) {
         return (
             <div
-                style={defaultStyle}
-                className={defaultClassName}
+                style={
+                    {
+                        "--ui-treeview-item-level": item.data.level,
+                    } as React.CSSProperties
+                }
+                className={[
+                    "gd-ui-kit-treeview__item",
+                    isFocused ? "gd-ui-kit-treeview__item--isFocused" : "",
+                    isSelected ? "gd-ui-kit-treeview__item--isSelected" : "",
+                    isCompact ? "gd-ui-kit-treeview__item--isCompact" : "",
+                    isExpanded ? "gd-ui-kit-treeview__item--isExpanded" : "",
+                    item.isDisabled ? "gd-ui-kit-treeview__item--isDisabled" : "",
+                ]
+                    .filter(Boolean)
+                    .join(" ")}
                 onClick={item.isDisabled ? undefined : onSelect}
             >
                 {type === "group" ? (
@@ -328,8 +343,23 @@ function TreeviewItemComponent({
     }
     return (
         <div
-            style={{ ...defaultStyle, border: "1px dotted gray", margin: "5px" }}
-            className={defaultClassName}
+            style={
+                {
+                    "--ui-treeview-item-level": item.data.level,
+                    border: "1px dotted gray",
+                    margin: "5px",
+                } as React.CSSProperties
+            }
+            className={[
+                "gd-ui-kit-treeview__item",
+                isFocused ? "gd-ui-kit-treeview__item--isFocused" : "",
+                isSelected ? "gd-ui-kit-treeview__item--isSelected" : "",
+                isCompact ? "gd-ui-kit-treeview__item--isCompact" : "",
+                isExpanded ? "gd-ui-kit-treeview__item--isExpanded" : "",
+                item.isDisabled ? "gd-ui-kit-treeview__item--isDisabled" : "",
+            ]
+                .filter(Boolean)
+                .join(" ")}
             onClick={item.isDisabled ? undefined : onSelect}
         >
             {item.icon ? (

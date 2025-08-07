@@ -61,6 +61,7 @@ export type MetaExportDataAttributes = {
     "data-export-meta-filter-type"?: "date" | "attribute";
     "data-export-meta-filter-mode"?: "readonly" | "hidden" | "active";
     "data-export-meta-filter-status"?: "loading" | "loaded" | "error";
+    "data-export-meta-filters-status"?: "loading" | "loaded" | "error";
     "data-export-meta-image-status"?: "loading" | "loaded" | "error";
     "data-export-palette-key"?: string;
     "data-export-palette-value"?: string;
@@ -84,6 +85,7 @@ export type MetaExportData = {
     };
     filters?: {
         root: MetaExportDataAttributes;
+        rootData: (isLoading: boolean, isError: boolean) => MetaExportDataAttributes;
         dateFilter: MetaExportDataAttributes;
         attributeFilter: MetaExportDataAttributes;
         filter: {

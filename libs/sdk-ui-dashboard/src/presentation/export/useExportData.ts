@@ -214,6 +214,9 @@ export const useMetaExportData = (): MetaExportData | undefined => {
             root: {
                 "data-export-meta-type": "dashboard-filters",
             },
+            rootData: (loading, error) => ({
+                "data-export-meta-filters-status": loading ? "loading" : error ? "error" : "loaded",
+            }),
             dateFilter: {
                 "data-export-meta-type": "dashboard-filter",
                 "data-export-meta-filter-type": "date",
