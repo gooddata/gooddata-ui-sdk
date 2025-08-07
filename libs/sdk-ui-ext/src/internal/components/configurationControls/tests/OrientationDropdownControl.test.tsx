@@ -9,6 +9,7 @@ import OrientationDropdownControl, {
     getAxesByChartOrientation,
 } from "../OrientationDropdownControl.js";
 import { IVisualizationProperties, InternalIntlWrapper } from "../../../../internal/index.js";
+import { suppressConsole } from "@gooddata/util";
 
 describe("Test OrientationDropdownControl", () => {
     const defaultProperties: Partial<IVisualizationProperties> = {
@@ -187,7 +188,18 @@ describe("Test OrientationDropdownControl", () => {
 
             expect(screen.getByText("Vertical")).toBeInTheDocument();
 
-            await act(() => userEvent.click(screen.getByText("Vertical")));
+            await suppressConsole(
+                async () => {
+                    await act(() => userEvent.click(screen.getByText("Vertical")));
+                },
+                "error",
+                [
+                    {
+                        type: "startsWith",
+                        value: "Warning: The current testing environment is not configured to support act(...)",
+                    },
+                ],
+            );
 
             expect(pushData).toHaveBeenCalledOnce();
         });

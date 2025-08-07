@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
@@ -17,7 +17,8 @@ import {
     resolveStringFilter,
 } from "../elementsUtils.js";
 import { AttributeElementsFiltering } from "../types.js";
-import { vi, MockInstance, describe, beforeAll, afterAll, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
+import { suppressConsole } from "@gooddata/util";
 
 describe("elementsUtils", () => {
     const elements: IAttributeElement[] =
@@ -31,15 +32,6 @@ describe("elementsUtils", () => {
         };
         const dateFilter = newRelativeDateFilter(ReferenceMd.DateDatasets.Timeline, "GDC.time.date", -42, 0);
         const measure = ReferenceMd.Amount;
-
-        let consoleWarnMock: MockInstance;
-        beforeAll(() => {
-            consoleWarnMock = vi.spyOn(console, "warn");
-        });
-
-        afterAll(() => {
-            consoleWarnMock.mockRestore();
-        });
 
         it("should throw if a uriRef is used", () => {
             expect(() =>
@@ -119,12 +111,24 @@ describe("elementsUtils", () => {
         ];
 
         it.each(Scenarios)("should filter elements according to %s", (_, config) => {
-            const actual = resolveLimitingItems(
-                config,
-                [attributeFilterLink],
-                [dateFilter],
-                [measure],
-            )(elements);
+            const actual = suppressConsole(
+                () => resolveLimitingItems(config, [attributeFilterLink], [dateFilter], [measure])(elements),
+                "warn",
+                [
+                    {
+                        type: "startsWith",
+                        value: "No measure limiting config found for id:",
+                    },
+                    {
+                        type: "startsWith",
+                        value: "No date filter limiting config found for id:",
+                    },
+                    {
+                        type: "startsWith",
+                        value: "No attribute filter limiting config found for id:",
+                    },
+                ],
+            );
             expect(actual).toEqual([elements[0]]);
         });
     });

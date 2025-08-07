@@ -1,7 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { newTestAttributeFilterHandler } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 import { describe, it, expect, vi } from "vitest";
+import { suppressConsole } from "@gooddata/util";
 
 describe("AttributeFilterHandler", () => {
     it("getAttribute() should return the attribute after successful initialization", async () => {
@@ -62,12 +63,26 @@ describe("AttributeFilterHandler", () => {
         const attributeFilterHandler = newTestAttributeFilterHandler("nonExisting");
 
         attributeFilterHandler.init();
-        await waitForAsync();
+        await suppressConsole(waitForAsync, "error", [
+            {
+                type: "startsWith",
+                value: "Error while loading attribute:",
+            },
+            {
+                type: "startsWith",
+                value: "Error while initializing:",
+            },
+        ]);
 
         attributeFilterHandler.onLoadAttributeError(onLoadAttributeError);
         attributeFilterHandler.loadAttribute("error");
 
-        await waitForAsync();
+        await suppressConsole(waitForAsync, "error", [
+            {
+                type: "startsWith",
+                value: "Error while loading attribute:",
+            },
+        ]);
 
         expect(onLoadAttributeError).toHaveBeenCalledTimes(1);
         expect(onLoadAttributeError.mock.calls[0]).toMatchSnapshot("with parameters");
@@ -129,7 +144,16 @@ describe("AttributeFilterHandler", () => {
 
         expect(attributeFilterHandler.getAttributeStatus()).toMatchSnapshot("during the load");
 
-        await waitForAsync();
+        await suppressConsole(waitForAsync, "error", [
+            {
+                type: "startsWith",
+                value: "Error while loading attribute:",
+            },
+            {
+                type: "startsWith",
+                value: "Error while initializing:",
+            },
+        ]);
 
         expect(attributeFilterHandler.getAttributeStatus()).toMatchSnapshot("after the load");
     });
@@ -139,7 +163,16 @@ describe("AttributeFilterHandler", () => {
 
         attributeFilterHandler.init();
 
-        await waitForAsync();
+        await suppressConsole(waitForAsync, "error", [
+            {
+                type: "startsWith",
+                value: "Error while loading attribute:",
+            },
+            {
+                type: "startsWith",
+                value: "Error while initializing:",
+            },
+        ]);
 
         expect(attributeFilterHandler.getAttributeError()).toMatchSnapshot();
     });

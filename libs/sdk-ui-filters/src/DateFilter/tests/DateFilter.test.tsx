@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     createDateFilter,
     clickDateFilterButton,
@@ -41,6 +41,7 @@ import { AbsoluteForm } from "./AbsoluteForm.js";
 import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
 import { verifyDateFormat } from "../DateFilterCore.js";
 import { describe, it, expect, vi } from "vitest";
+import { suppressConsole } from "@gooddata/util";
 
 describe("DateFilter", () => {
     it("should render without crash", () => {
@@ -473,7 +474,12 @@ describe("DateFilter", () => {
 
         it("should use the default date format MM/dd/yyyy if the input date format is invalid", () => {
             const dateFormat = "ffff";
-            const verifiedDateFormat = verifyDateFormat(dateFormat);
+            const verifiedDateFormat = suppressConsole(() => verifyDateFormat(dateFormat), "warn", [
+                {
+                    type: "exact",
+                    value: `Unsupported date format ${dateFormat}, the default format MM/dd/yyyy is used instead.`,
+                },
+            ]);
             expect(verifiedDateFormat).toEqual(DEFAULT_DATE_FORMAT);
         });
 

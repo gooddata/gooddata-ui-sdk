@@ -3,6 +3,7 @@
 import { LocalesStructure } from "../../schema/localization.js";
 import { getStructureCheck } from "../structure.js";
 import { describe, it, expect } from "vitest";
+import { suppressConsole } from "@gooddata/util";
 
 type Scenario = [string, LocalesStructure, string | null];
 
@@ -59,7 +60,14 @@ describe("validate structure tests", () => {
 
     it.each(scenarios)("validate %s", async (_: any, structure: any, err: any) => {
         if (err) {
-            await expect(getStructureCheck([["en-US.json", structure]])).rejects.toThrowError(err);
+            await expect(
+                suppressConsole(() => getStructureCheck([["en-US.json", structure]]), "error", [
+                    {
+                        type: "startsWith",
+                        value: "✘",
+                    },
+                ]),
+            ).rejects.toThrowError(err);
         } else {
             await expect(getStructureCheck([["en-US.json", structure]])).resolves.not.toThrow();
         }

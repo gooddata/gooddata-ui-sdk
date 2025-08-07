@@ -1,7 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { CSSProperties } from "react";
 import { renderIntoDocumentWithUnmount } from "../../test/utils.js";
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { suppressConsole } from "@gooddata/util";
 
 import { FullScreenOverlay } from "../FullScreenOverlay.js";
 
@@ -13,7 +14,9 @@ describe("FullScreen Overlay", () => {
     let fullScreenOverlay: any;
 
     beforeEach(() => {
-        fullScreenOverlay = renderOverlay({});
+        fullScreenOverlay = suppressConsole(() => renderOverlay({}), "error", [
+            { type: "includes", value: "ReactDOM.render" }, // TODO: Remove this in react 19 upgrade
+        ]);
     });
 
     afterEach(() => {
@@ -22,7 +25,16 @@ describe("FullScreen Overlay", () => {
 
     describe("render", () => {
         it("should set fixed position to overlay", () => {
-            expect(fullScreenOverlay.getOverlayStyles().position).toEqual("fixed");
+            expect(
+                (
+                    suppressConsole(fullScreenOverlay.getOverlayStyles, "error", [
+                        {
+                            type: "includes",
+                            value: "ReactDOM.render", // TODO: Remove this in react 19 upgrade
+                        },
+                    ]) as CSSProperties
+                ).position,
+            ).toEqual("fixed");
         });
 
         it("should set proper styles to body", () => {

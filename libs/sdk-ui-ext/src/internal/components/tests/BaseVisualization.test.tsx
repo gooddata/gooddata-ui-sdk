@@ -6,6 +6,7 @@ import { IDrillableItem } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { suppressConsole } from "@gooddata/util";
 
 import { BaseVisualization, IBaseVisualizationProps } from "../BaseVisualization.js";
 import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization.js";
@@ -27,7 +28,7 @@ import {
 } from "../../interfaces/Visualization.js";
 import * as testMocks from "../../tests/mocks/testMocks.js";
 import { emptyReferencePoint, justViewByReferencePoint } from "../../tests/mocks/referencePointMocks.js";
-import { describe, it, expect, vi, afterEach, afterAll, beforeAll, beforeEach } from "vitest";
+import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
 
 const pluggableVisualizationGetExecutionMock = vi.fn(() => ({}) as IPreparedExecution);
 
@@ -445,12 +446,20 @@ describe("BaseVisualization", () => {
 
     it("should render message in case visualization type is unknown", () => {
         const onLoadingChanged = vi.fn();
-        createComponent({
-            ...defaultProps,
-            insight: testMocks.dummyInsight,
-            visualizationClass: testMocks.dummyUnknownTypeVisualizationClass,
-            onLoadingChanged,
-        });
+        suppressConsole(
+            () =>
+                createComponent({
+                    ...defaultProps,
+                    insight: testMocks.dummyInsight,
+                    visualizationClass: testMocks.dummyUnknownTypeVisualizationClass,
+                    onLoadingChanged,
+                }),
+            ["error", "warn"],
+            [
+                { type: "includes", value: "ReactDOM.render" }, // TODO: Remove this in react 19 upgrade
+                { type: "startsWith", value: "Unknown visualization class: unknown" },
+            ],
+        );
 
         expect(onLoadingChanged).toHaveBeenCalledTimes(1);
         expect(screen.getByText("Sorry, we can't display this visualization")).toBeInTheDocument();
@@ -459,16 +468,6 @@ describe("BaseVisualization", () => {
     describe("getExtendedReferencePoint in componentDidMount", () => {
         let visualizationCatalog: IVisualizationCatalog;
         let getExtendedReferencePointMock = vi.fn();
-        let originalConsoleError: any;
-
-        beforeAll(() => {
-            originalConsoleError = global.console.error;
-            global.console.error = noop;
-        });
-
-        afterAll(() => {
-            global.console.error = originalConsoleError;
-        });
 
         beforeEach(() => {
             getExtendedReferencePointMock = vi.fn();
@@ -488,39 +487,57 @@ describe("BaseVisualization", () => {
         });
 
         it("should not call getExtendedReferencePoint if vis type is unknown", async () => {
-            createComponent({
-                ...defaultProps,
-                visualizationClass: testMocks.dummyUnknownTypeVisualizationClass,
-                visualizationCatalog,
-            });
+            await suppressConsole(
+                async () => {
+                    createComponent({
+                        ...defaultProps,
+                        visualizationClass: testMocks.dummyUnknownTypeVisualizationClass,
+                        visualizationCatalog,
+                    });
 
-            await waitFor(() => {
-                expect(getExtendedReferencePointMock).toHaveBeenCalledTimes(0);
-            });
+                    await waitFor(() => {
+                        expect(getExtendedReferencePointMock).toHaveBeenCalledTimes(0);
+                    });
+                },
+                "warn",
+                [{ type: "startsWith", value: "Unknown visualization class: unknown" }],
+            );
         });
 
         it("should not call getExtendedReferencePoint if referencePoint is not provided", async () => {
-            createComponent({
-                ...defaultProps,
-                referencePoint: null,
-                visualizationCatalog,
-            });
+            await suppressConsole(
+                async () => {
+                    createComponent({
+                        ...defaultProps,
+                        referencePoint: null,
+                        visualizationCatalog,
+                    });
 
-            await waitFor(() => {
-                expect(getExtendedReferencePointMock).toHaveBeenCalledTimes(0);
-            });
+                    await waitFor(() => {
+                        expect(getExtendedReferencePointMock).toHaveBeenCalledTimes(0);
+                    });
+                },
+                "error",
+                [{ type: "exact", value: "Error: unsupported visualization type - local:table" }],
+            );
         });
 
         it("should not call getExtendedReferencePoint if no callback is provided", async () => {
-            createComponent({
-                ...defaultProps,
-                visualizationCatalog,
-                onExtendedReferencePointChanged: null,
-            });
+            await suppressConsole(
+                async () => {
+                    createComponent({
+                        ...defaultProps,
+                        visualizationCatalog,
+                        onExtendedReferencePointChanged: null,
+                    });
 
-            await waitFor(() => {
-                expect(getExtendedReferencePointMock).toHaveBeenCalledTimes(0);
-            });
+                    await waitFor(() => {
+                        expect(getExtendedReferencePointMock).toHaveBeenCalledTimes(0);
+                    });
+                },
+                "error",
+                [{ type: "exact", value: "Error: unsupported visualization type - local:table" }],
+            );
         });
     });
 

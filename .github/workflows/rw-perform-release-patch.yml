@@ -67,9 +67,7 @@ jobs:
             SOURCE_BRANCH: ${{ inputs.source-branch }}
 
         - name: Notify to slack
-          uses: slackapi/slack-github-action@v1.25.0
+          uses: ./.github/actions/slack/send-notification
           with:
-            channel-id: "#javascript-notifications"
-            slack-message: ${{ env.RELEASE_MESSAGE }}
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+            message: ${{ env.RELEASE_MESSAGE }}
+            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

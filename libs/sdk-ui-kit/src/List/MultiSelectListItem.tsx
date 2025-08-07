@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { PureComponent, ReactElement } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 
@@ -20,50 +20,48 @@ export interface IMultiSelectListItemProps {
 /**
  * @internal
  */
-export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps> {
-    public render(): ReactElement {
-        const { title, onClick, onMouseOver, onMouseOut, isSelected } = this.props;
-
-        return (
-            <div
-                className={this.getClassNames()}
-                onClick={onClick}
-                onMouseOver={onMouseOver}
-                onMouseOut={onMouseOut}
-            >
-                <label className="input-checkbox-label">
-                    <input type="checkbox" className="input-checkbox" readOnly={true} checked={isSelected} />
-                    <span className="input-label-text">{title}</span>
-                </label>
-                {this.renderOnly()}
-            </div>
-        );
-    }
-
-    private getClassNames = () => {
-        const { title, isSelected } = this.props;
+export const MultiSelectListItem = memo(function MultiSelectListItem({
+    title,
+    onClick,
+    onMouseOver,
+    onMouseOut,
+    isSelected,
+    onOnly,
+}: IMultiSelectListItemProps) {
+    const classNames = useMemo(() => {
         return cx({
             "gd-list-item": true,
             [`s-${stringUtils.simplifyText(title)}`]: true,
             "has-only-visible": true,
             "is-selected": isSelected,
         });
-    };
+    }, [title, isSelected]);
 
-    private renderOnly = () => {
-        const { onOnly } = this.props;
+    const handleOnlyClick = useCallback(
+        (e: React.MouseEvent) => {
+            e.stopPropagation();
+            if (onOnly) {
+                onOnly();
+            }
+        },
+        [onOnly],
+    );
+
+    const renderOnly = useCallback(() => {
         return (
-            <span
-                className="gd-list-item-only"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    if (onOnly) {
-                        onOnly();
-                    }
-                }}
-            >
+            <span className="gd-list-item-only" onClick={handleOnlyClick}>
                 <FormattedMessage id="gs.list.only" />
             </span>
         );
-    };
-}
+    }, [handleOnlyClick]);
+
+    return (
+        <div className={classNames} onClick={onClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+            <label className="input-checkbox-label">
+                <input type="checkbox" className="input-checkbox" readOnly={true} checked={isSelected} />
+                <span className="input-label-text">{title}</span>
+            </label>
+            {renderOnly()}
+        </div>
+    );
+});

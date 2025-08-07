@@ -6,6 +6,7 @@ import { userEvent } from "@testing-library/user-event";
 import { WrappedDatePicker, DatePickerProps } from "../Datepicker.js";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
+import { suppressConsole } from "@gooddata/util";
 
 const defaultDateFormat = "MM/dd/yyyy";
 
@@ -130,11 +131,21 @@ describe("DatePicker", () => {
             });
 
             it("should show date in provided format", () => {
-                createComponent({
-                    intl: createIntlMock({}, "cs"),
-                    date: parseDate("02/01/2015", defaultDateFormat, new Date()),
-                    dateFormat: "yyyy/MM/dd",
-                });
+                suppressConsole(
+                    () =>
+                        createComponent({
+                            intl: createIntlMock({}, "cs"),
+                            date: parseDate("02/01/2015", defaultDateFormat, new Date()),
+                            dateFormat: "yyyy/MM/dd",
+                        }),
+                    "warn",
+                    [
+                        {
+                            type: "startsWith",
+                            value: "Missing locale strings for cs",
+                        },
+                    ],
+                );
 
                 expect(screen.getByRole("combobox")).toHaveValue("2015/02/01");
             });

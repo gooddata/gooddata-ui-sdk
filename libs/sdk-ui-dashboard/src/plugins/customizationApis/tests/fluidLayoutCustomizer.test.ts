@@ -7,6 +7,7 @@ import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
 import { describe, it, expect, beforeEach } from "vitest";
 import { EMPTY_MUTATIONS } from "./utils.js";
+import { suppressConsole } from "@gooddata/util";
 
 const EmptyLayout: IDashboardLayout<ExtendedDashboardWidget> = {
     type: "IDashboardLayout",
@@ -167,7 +168,12 @@ describe("fluid layout customizer", () => {
             items: [],
         };
 
-        Customizer.addSection(-1, emptySection);
+        suppressConsole(() => Customizer.addSection(-1, emptySection), "warn", [
+            {
+                type: "regex",
+                value: /^Section to add at path .* contains no items.*/,
+            },
+        ]);
 
         const updatedEmptyLayout = Customizer.applyTransformations(EmptyLayout);
         expect(updatedEmptyLayout.sections.length).toEqual(0);
@@ -192,7 +198,12 @@ describe("fluid layout customizer", () => {
             ],
         };
 
-        Customizer.addSection(-1, sectionWithBadItem);
+        suppressConsole(() => Customizer.addSection(-1, sectionWithBadItem), "warn", [
+            {
+                type: "regex",
+                value: /^Section to add at path .* contains items that do not specify any widgets.*/,
+            },
+        ]);
 
         const updatedEmptyLayout = Customizer.applyTransformations(EmptyLayout);
         expect(updatedEmptyLayout.sections.length).toEqual(0);
@@ -240,15 +251,25 @@ describe("fluid layout customizer", () => {
         });
     });
 
-    it("should not add item without widget", () => {
-        Customizer.addItem(0, -1, {
-            type: "IDashboardLayoutItem",
-            size: {
-                xl: {
-                    gridWidth: 6,
+    it("should not add item without widget", async () => {
+        suppressConsole(
+            () =>
+                Customizer.addItem(0, -1, {
+                    type: "IDashboardLayoutItem",
+                    size: {
+                        xl: {
+                            gridWidth: 6,
+                        },
+                    },
+                }),
+            "warn",
+            [
+                {
+                    type: "regex",
+                    value: /^Item to add to path .* does not contain any widget.*/,
                 },
-            },
-        });
+            ],
+        );
 
         const updatedNonEmptyLayout = Customizer.applyTransformations(LayoutWithOneSection);
         expect(updatedNonEmptyLayout.sections[0]).toEqual(LayoutWithOneSection.sections[0]);

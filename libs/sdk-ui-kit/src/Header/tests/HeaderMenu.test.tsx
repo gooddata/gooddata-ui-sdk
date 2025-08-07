@@ -4,6 +4,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { ITranslations, withIntlForTest } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
+import { suppressConsole } from "@gooddata/util";
 
 import { HeaderMenu } from "../HeaderMenu.js";
 import { IHeaderMenuItem } from "../typings.js";
@@ -42,7 +43,12 @@ describe("ReactHeaderMenu", () => {
         const clickSpy = vi.fn();
         render(<Wrapped sections={sections} onMenuItemClick={clickSpy} />);
 
-        await userEvent.click(screen.getByText(mockTranslation.dic));
+        await suppressConsole(() => userEvent.click(screen.getByText(mockTranslation.dic)), "error", [
+            {
+                type: "startsWith",
+                value: "Error: Not implemented: navigation",
+            },
+        ]);
 
         await waitFor(() => expect(clickSpy).toHaveBeenCalledTimes(1));
     });

@@ -132,21 +132,13 @@ interface IDummyRowItemProps {
     scrollToSelected?: boolean;
 }
 
-class DummyRowItem extends React.Component<IDummyRowItemProps> {
-    static defaultProps: Pick<IDummyRowItemProps, "isFirst" | "isLast" | "scrollToSelected"> = {
-        isFirst: false,
-        isLast: false,
-        scrollToSelected: false,
-    };
+function DummyRowItem({ isFirst = false, isLast = false, item }: IDummyRowItemProps) {
+    const className = cx(item?.title, {
+        "is-first": isFirst,
+        "is-last": isLast,
+    });
 
-    render() {
-        const className = cx(this.props.item.title, {
-            "is-first": this.props.isFirst,
-            "is-last": this.props.isLast,
-        });
-
-        return <div className={className}>{this.props.item.title}</div>;
-    }
+    return <div className={className}>{item?.title}</div>;
 }
 
 interface IItemProps {

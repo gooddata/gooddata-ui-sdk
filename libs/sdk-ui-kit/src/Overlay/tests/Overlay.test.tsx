@@ -1,8 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, forwardRef, createRef } from "react";
+import React, { forwardRef, createRef } from "react";
 // eslint-disable-next-line react/no-deprecated
 import ReactDOM, { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
+import { suppressConsole } from "@gooddata/util";
 
 import { Overlay } from "../Overlay.js";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
@@ -12,37 +13,33 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
  */
 
 interface FixedComponentProps {
-    className: string;
-    height: number;
-    left: number;
-    position: string;
-    top: number;
-    width: number;
+    className?: string;
+    height?: number;
+    left?: number;
+    position?: string;
+    top?: number;
+    width?: number;
 }
 
-class FixedComponent extends Component<FixedComponentProps> {
-    static defaultProps = {
-        className: "",
-        height: 0,
-        left: 0,
-        position: "static",
-        top: 0,
-        width: 0,
+function FixedComponent({
+    className = "",
+    height = 0,
+    left = 0,
+    position = "static",
+    top = 0,
+    width = 0,
+}: FixedComponentProps) {
+    const getStyle = (): any => {
+        return {
+            height,
+            left,
+            position,
+            top,
+            width,
+        };
     };
 
-    getStyle(): any {
-        return {
-            height: this.props.height,
-            left: this.props.left,
-            position: this.props.position,
-            top: this.props.top,
-            width: this.props.width,
-        };
-    }
-
-    render() {
-        return <div className={this.props.className} style={this.getStyle()} />;
-    }
+    return <div className={className} style={getStyle()} />;
 }
 
 const ComposedOverlay = forwardRef(function ComposedOverlay(props: any, ref) {
@@ -82,7 +79,12 @@ describe("Overlay", () => {
         const ref = createRef();
 
         // eslint-disable-next-line react/no-deprecated
-        ReactDOM.render(<ComposedOverlay {...props} ref={ref} />, where);
+        suppressConsole(() => ReactDOM.render(<ComposedOverlay {...props} ref={ref} />, where), "error", [
+            {
+                type: "includes",
+                value: "ReactDOM.render", // TODO: Remove this in react 19 upgrade
+            },
+        ]);
 
         return ref;
     }
@@ -142,7 +144,10 @@ describe("Overlay", () => {
                     }),
                 );
 
-                unmountComponentAtNode(div);
+                suppressConsole(() => unmountComponentAtNode(div), "error", [
+                    { type: "includes", value: "ReactDOM.render" },
+                    { type: "includes", value: "unmountComponentAtNode" },
+                ]);
 
                 expect(props.overlay.onClose).toHaveBeenCalledTimes(1);
             });

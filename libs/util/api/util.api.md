@@ -15,7 +15,13 @@ export { arrayUtils }
 function combineGuards<T extends ((x: unknown) => x is unknown)[]>(...guards: T): (x: unknown) => x is GuardType<T[number]>;
 
 // @internal
-function delay(timeout?: number): Promise<void>;
+export type ConsoleFunction = (...data: any[]) => void;
+
+// @internal
+export type ConsoleType = "error" | "warn" | "log" | "debug" | "info";
+
+// @internal
+export function delay(timeout?: number): Promise<void>;
 
 // @internal
 function escapeRegExp(value: string): string;
@@ -31,6 +37,18 @@ interface IShortenTextOptions {
     // (undocumented)
     maxLength?: number;
 }
+
+// @internal
+export type Matcher = {
+    type: "regex";
+    value: RegExp;
+} | {
+    type: "includes" | "exact" | "startsWith";
+    value: string;
+};
+
+// @internal
+export type MatcherFunction = (console: Record<ConsoleType, ConsoleFunction>, type: ConsoleType, message: string) => boolean;
 
 declare namespace objectUtils {
     export {
@@ -63,6 +81,9 @@ function shortenText(value: string, options?: IShortenTextOptions): string;
 // @internal
 function simplifyText(value: string | number | null): string;
 
+// @internal
+export type SpecificMatcherFunction = (message: string) => boolean;
+
 declare namespace stringUtils {
     export {
         shortenText,
@@ -76,12 +97,11 @@ declare namespace stringUtils {
 }
 export { stringUtils }
 
-declare namespace testUtils {
-    export {
-        delay
-    }
-}
-export { testUtils }
+// @internal
+export function suppressConsole<T>(fn: () => T | Promise<T>, type?: ConsoleType | ConsoleType[], matchers?: Matcher[] | SpecificMatcherFunction): T | Promise<T>;
+
+// @internal
+export function suppressConsole<T>(fn: () => T | Promise<T>, matcherFn: MatcherFunction): T | Promise<T>;
 
 declare namespace translationUtils {
     export {

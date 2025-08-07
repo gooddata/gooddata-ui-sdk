@@ -1,9 +1,10 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { newTestAttributeFilterHandler } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 import * as elements from "../internal/redux/elements/loadElements.js";
 import { BadRequestSdkError } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
+import { suppressConsole } from "@gooddata/util";
 
 describe("AttributeFilterHandler", () => {
     it("loadCustomElements() should trigger onLoadCustomElementsStart() callback", async () => {
@@ -49,7 +50,11 @@ describe("AttributeFilterHandler", () => {
         attributeFilterHandler.onLoadCustomElementsError(onLoadCustomElementsError);
         attributeFilterHandler.loadCustomElements({}, "error");
 
-        await waitForAsync();
+        await suppressConsole(
+            waitForAsync,
+            "error",
+            (message: string) => message === "Error while loading custom elements: Elements error",
+        );
 
         expect(onLoadCustomElementsError).toHaveBeenCalledTimes(1);
         expect(onLoadCustomElementsError.mock.calls[0]).toMatchSnapshot("with parameters");
@@ -116,7 +121,11 @@ describe("AttributeFilterHandler", () => {
         vi.spyOn(elements, "loadElements").mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.loadCustomElements({}, "2");
 
-        await waitForAsync();
+        await suppressConsole(
+            waitForAsync,
+            "error",
+            (message: string) => message === "Error while loading custom elements: Elements error",
+        );
 
         expect(onLoadCustomElementsError).toHaveBeenCalledTimes(2);
     });

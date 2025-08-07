@@ -1,9 +1,21 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { newTestAttributeFilterHandler } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 import { describe, it, expect, vi } from "vitest";
+import { Matcher, suppressConsole } from "@gooddata/util";
 
 describe("AttributeFilterHandler", () => {
+    const commonErrorOuptput: Matcher[] = [
+        {
+            type: "startsWith",
+            value: "Error while loading attribute:",
+        },
+        {
+            type: "startsWith",
+            value: "Error while initializing:",
+        },
+    ];
+
     it("init() should trigger onInitStart() callback", async () => {
         const onInitStart = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
@@ -37,7 +49,7 @@ describe("AttributeFilterHandler", () => {
         attributeFilterHandler.onInitError(onInitError);
         attributeFilterHandler.init("error");
 
-        await waitForAsync();
+        await suppressConsole(waitForAsync, "error", commonErrorOuptput);
 
         expect(onInitError).toHaveBeenCalledTimes(1);
         expect(onInitError.mock.calls[0]).toMatchSnapshot("with parameters");
@@ -81,7 +93,7 @@ describe("AttributeFilterHandler", () => {
 
         expect(attributeFilterHandler.getInitStatus()).toMatchSnapshot("during the load");
 
-        await waitForAsync();
+        await suppressConsole(waitForAsync, "error", commonErrorOuptput);
 
         expect(attributeFilterHandler.getInitStatus()).toMatchSnapshot("after the load");
     });
@@ -91,7 +103,7 @@ describe("AttributeFilterHandler", () => {
 
         attributeFilterHandler.init();
 
-        await waitForAsync();
+        await suppressConsole(waitForAsync, "error", commonErrorOuptput);
 
         expect(attributeFilterHandler.getInitError()).toMatchSnapshot();
     });

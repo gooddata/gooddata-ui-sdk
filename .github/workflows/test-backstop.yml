@@ -31,12 +31,11 @@ jobs:
     needs: [e2e-backstop]
     steps:
       - name: Notify to slack
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: ./.github/actions/slack/send-notification
         with:
-          channel-id: "#javascript-notifications"
-          slack-message: "${{env.ICON}} The scheduled backstop tests for *gooddata-ui-sdk* dispatched by *${{env.DISPATCHED_BY}}* finished with result *${{env.TEST_RESULT_BACKSTOP}}*. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>*"
+          message: "${{env.ICON}} The scheduled backstop tests for *gooddata-ui-sdk* dispatched by *${{env.DISPATCHED_BY}}* finished with result *${{env.TEST_RESULT_BACKSTOP}}*. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>*"
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
         env:
           TEST_RESULT_BACKSTOP: ${{ needs.e2e-backstop.result }}
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           ICON: ${{ needs.e2e-backstop.result == 'success' && '✅' || '❌' }}
           DISPATCHED_BY: ${{ github.event_name == 'workflow_dispatch' && github.actor || 'cron scheduler' }}

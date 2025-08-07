@@ -18,6 +18,7 @@ import {
 } from "../../../presentation/index.js";
 import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
 import { EMPTY_MUTATIONS } from "./utils.js";
+import { suppressConsole } from "@gooddata/util";
 
 //
 //
@@ -165,8 +166,16 @@ describe("insight customizer", () => {
 
         it("should override already registered component for a tag", () => {
             Customizer.withTag("tag1", createTestComponent("forTag1a"));
-            Customizer.withTag("tag1", createTestComponent("forTag1b"));
-            Customizer.withTag("tag1", createTestComponent("forTag1c"));
+            suppressConsole(
+                () => Customizer.withTag("tag1", createTestComponent("forTag1b")),
+                "warn",
+                (message: string) => message === "Overriding insight component provider for tag 'tag1'. []",
+            );
+            suppressConsole(
+                () => Customizer.withTag("tag1", createTestComponent("forTag1c")),
+                "warn",
+                (message: string) => message === "Overriding insight component provider for tag 'tag1'. []",
+            );
 
             expect(renderToHtml(Customizer, TestInsightWithBothTags)).toMatchSnapshot();
             expect(mutationContext).toEqual({
@@ -185,7 +194,13 @@ describe("insight customizer", () => {
 
             const consoleSpy = vi.spyOn(logger, "warn");
 
-            customizer.withTag("", createTestComponent("forTag1"));
+            suppressConsole(
+                () => customizer.withTag("", createTestComponent("forTag1")),
+                "warn",
+                (message: string) =>
+                    message ===
+                    "The 'withTag' was called with an empty 'tag' parameter. This is effectively a noop. []",
+            );
 
             expect(consoleSpy).toHaveBeenCalled();
             expect(mutationContext).toEqual({

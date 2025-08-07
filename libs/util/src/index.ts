@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 /**
  * This package contains utility functions used in production or test code of multiple different GoodData.UI packages.
@@ -10,10 +10,10 @@
  */
 
 import * as stringUtils from "./stringUtils.js";
-import * as testUtils from "./testUtils.js";
 import * as translationUtils from "./translationUtils.js";
 import * as arrayUtils from "./arrayUtils.js";
 import * as objectUtils from "./objectUtils.js";
 import * as typesUtils from "./typesUtils.js";
 
-export { stringUtils, testUtils, translationUtils, arrayUtils, objectUtils, typesUtils };
+export * from "./testUtils.js";
+export { stringUtils, translationUtils, arrayUtils, objectUtils, typesUtils };
