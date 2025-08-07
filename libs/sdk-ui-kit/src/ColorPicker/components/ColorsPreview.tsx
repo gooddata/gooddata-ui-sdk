@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { PureComponent, ReactNode } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { memo, ReactNode } from "react";
 import { ColorFormats } from "tinycolor2";
 
 import { getColorStyle } from "../utils.js";
@@ -11,29 +11,19 @@ export interface IColorsPreviewProps {
     draftTextLabel?: string;
 }
 
-export class ColorsPreview extends PureComponent<IColorsPreviewProps> {
-    static defaultProps: Pick<IColorsPreviewProps, "currentTextLabel" | "draftTextLabel"> = {
-        currentTextLabel: "current",
-        draftTextLabel: "new",
-    };
-
-    render(): ReactNode {
-        return (
-            <div className="color-picker-preview">
-                <ColorItem
-                    id="current-color"
-                    hslColor={this.props.currentHslColor}
-                    textLabel={this.props.currentTextLabel}
-                />
-                <ColorItem
-                    id="new-color"
-                    hslColor={this.props.draftHslColor}
-                    textLabel={this.props.draftTextLabel}
-                />
-            </div>
-        );
-    }
-}
+export const ColorsPreview = memo(function ColorsPreview({
+    currentHslColor,
+    draftHslColor,
+    currentTextLabel = "current",
+    draftTextLabel = "new",
+}: IColorsPreviewProps): ReactNode {
+    return (
+        <div className="color-picker-preview">
+            <ColorItem id="current-color" hslColor={currentHslColor} textLabel={currentTextLabel} />
+            <ColorItem id="new-color" hslColor={draftHslColor} textLabel={draftTextLabel} />
+        </div>
+    );
+});
 
 interface IColorItemProps {
     id: string;
@@ -41,17 +31,11 @@ interface IColorItemProps {
     textLabel: string;
 }
 
-class ColorItem extends PureComponent<IColorItemProps> {
-    render(): ReactNode {
-        return (
-            <div className="color-picker-value-wrapper">
-                <div
-                    aria-label={this.props.id}
-                    className={`color-value s-${this.props.id}`}
-                    style={getColorStyle(this.props.hslColor)}
-                />
-                <span>{this.props.textLabel}</span>
-            </div>
-        );
-    }
-}
+const ColorItem = memo(function ColorItem({ id, hslColor, textLabel }: IColorItemProps): ReactNode {
+    return (
+        <div className="color-picker-value-wrapper">
+            <div aria-label={id} className={`color-value s-${id}`} style={getColorStyle(hslColor)} />
+            <span>{textLabel}</span>
+        </div>
+    );
+});

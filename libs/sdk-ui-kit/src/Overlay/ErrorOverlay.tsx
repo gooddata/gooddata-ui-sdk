@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, memo, useMemo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { Button } from "../Button/index.js";
@@ -37,12 +37,19 @@ function ErrorOverlayCore({
 }: IErrorOverlayProps & WrappedComponentProps) {
     const theme = useTheme();
 
-    const IconComponent = icon ?? (
-        <Icon.Leave color={theme?.palette?.primary?.base} className="gd-error-overlay-icon" />
+    const IconComponent = useMemo(
+        () => icon ?? <Icon.Leave color={theme?.palette?.primary?.base} className="gd-error-overlay-icon" />,
+        [icon, theme?.palette?.primary?.base],
     );
-    const titleContent = title ?? intl.formatMessage({ id: "error.overlay.title" });
-    const textContent = text ?? intl.formatMessage({ id: "error.overlay.text" });
-    const buttonValue = buttonTitle ?? intl.formatMessage({ id: "error.overlay.login" });
+    const titleContent = useMemo(
+        () => title ?? intl.formatMessage({ id: "error.overlay.title" }),
+        [title, intl],
+    );
+    const textContent = useMemo(() => text ?? intl.formatMessage({ id: "error.overlay.text" }), [text, intl]);
+    const buttonValue = useMemo(
+        () => buttonTitle ?? intl.formatMessage({ id: "error.overlay.login" }),
+        [buttonTitle, intl],
+    );
 
     return (
         <Overlay
@@ -78,12 +85,10 @@ const ErrorOverlayWithIntl = injectIntl(ErrorOverlayCore);
 /**
  * @internal
  */
-export class ErrorOverlay extends React.PureComponent<IErrorOverlayProps> {
-    public render() {
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <ErrorOverlayWithIntl {...this.props} />
-            </IntlWrapper>
-        );
-    }
-}
+export const ErrorOverlay = memo(function ErrorOverlay(props: IErrorOverlayProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <ErrorOverlayWithIntl {...props} />
+        </IntlWrapper>
+    );
+});
