@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, ReactElement, createRef } from "react";
+import React, { useRef, useEffect, useCallback, useMemo } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
@@ -80,130 +80,131 @@ export const InsightListItemTypeIcon: React.FC<{ type: string }> = ({ type }) =>
 /**
  * @internal
  */
-export class InsightListItemCore extends Component<IInsightListItemProps & WrappedComponentProps> {
-    private shortenedTextRef = createRef<ShortenedText>();
+function InsightListItemCore({
+    title,
+    description,
+    updated,
+    type = VISUALIZATION_TYPE_UNKNOWN,
+    isSelected,
+    isLoading,
+    filters,
+    separators,
+    LoadingComponent,
+    onClick,
+    onDescriptionPanelOpen,
+    showDescriptionPanel = false,
+    useRichText = false,
+    useReferences = false,
+    richTextExecConfig,
+    width,
+    isLocked,
+    onDelete,
+    intl,
+    metadataTimeZone,
+}: IInsightListItemProps & WrappedComponentProps) {
+    const shortenedTextRef = useRef<ShortenedText>(null);
 
-    public render(): ReactElement {
-        const {
-            title,
-            description,
-            updated,
-            type = VISUALIZATION_TYPE_UNKNOWN,
-            isSelected,
-            isLoading,
-            filters,
-            separators,
-            LoadingComponent,
-            onClick,
-            onDescriptionPanelOpen,
-            showDescriptionPanel = false,
-            useRichText = false,
-            useReferences = false,
-            richTextExecConfig,
-        } = this.props;
-
-        const visualizationListItemClassname = cx(
-            "gd-visualizations-list-item",
-            `s-${stringUtils.simplifyText(title)}`,
-            {
-                "is-selected": isSelected,
-            },
-        );
-
-        return (
-            <div className={visualizationListItemClassname} onClick={onClick}>
-                {/* reversed order of items because of hover effect for whole item when hovering over trash bin - css hack with flex-direction: row-reverse; */}
-                {this.renderActions()}
-                {showDescriptionPanel ? (
-                    <div className="gd-visualizations-list-item-description">
-                        <DescriptionPanel
-                            onBubbleOpen={onDescriptionPanelOpen}
-                            title={title}
-                            description={description}
-                            arrowOffsets={this.shouldRenderActions() ? modifiedArrowOffsets : undefined}
-                            useReferences={useReferences}
-                            useRichText={useRichText}
-                            filters={filters}
-                            separators={separators}
-                            LoadingComponent={LoadingComponent}
-                            execConfig={richTextExecConfig}
-                        />
-                    </div>
-                ) : null}
-                <div className="gd-visualizations-list-item-content">
-                    <div className="gd-visualizations-list-item-content-name">
-                        {this.renderLock()}
-                        <ShortenedText
-                            ref={this.shortenedTextRef}
-                            tooltipAlignPoints={tooltipAlignPoints}
-                            displayTooltip={!showDescriptionPanel}
-                        >
-                            {isLoading
-                                ? this.props.intl.formatMessage({ id: "gs.visualizationsList.loading" })
-                                : title}
-                        </ShortenedText>
-                    </div>
-                    <div className="gd-visualizations-list-item-content-date">
-                        {this.renderUpdatedDateTime(updated)}
-                    </div>
-                </div>
-                <InsightListItemTypeIcon type={type} />
-            </div>
-        );
-    }
-
-    public componentDidUpdate(prevProps: IInsightListItemProps & WrappedComponentProps): void {
-        if (prevProps.width !== this.props.width && this.shortenedTextRef.current) {
-            this.shortenedTextRef.current.recomputeShortening();
+    useEffect(() => {
+        if (shortenedTextRef.current) {
+            shortenedTextRef.current.recomputeShortening();
         }
-    }
+    }, [width]);
 
-    public handleClickDelete = (e: React.MouseEvent): void => {
-        e.stopPropagation();
-        const { onDelete } = this.props;
-        if (onDelete) {
-            this.props.onDelete();
-        }
-    };
+    const handleClickDelete = useCallback(
+        (e: React.MouseEvent): void => {
+            e.stopPropagation();
+            if (onDelete) {
+                onDelete();
+            }
+        },
+        [onDelete],
+    );
 
-    private renderLock = () => {
-        if (this.props.isLocked) {
+    const lockElement = useMemo(() => {
+        if (isLocked) {
             return <i className="gd-icon-lock" />;
         }
+        return null;
+    }, [isLocked]);
 
-        return false;
-    };
+    const renderUpdatedDateTime = useCallback(
+        (date: any) => {
+            if (!date) {
+                return false;
+            }
 
-    private renderUpdatedDateTime = (date: any) => {
-        const { type, metadataTimeZone } = this.props;
+            if (type === WIDGET_TYPE_KPI) {
+                return <span />;
+            }
 
-        if (!date) {
-            return false;
-        }
+            const dateTimeConfig = getDateTimeConfig(date, { dateTimezone: metadataTimeZone });
+            return <InsightListItemDate config={dateTimeConfig} />;
+        },
+        [type, metadataTimeZone],
+    );
 
-        if (type === WIDGET_TYPE_KPI) {
-            return <span />;
-        }
+    const shouldRenderActions = !!onDelete;
 
-        const dateTimeConfig = getDateTimeConfig(date, { dateTimezone: metadataTimeZone });
-        return <InsightListItemDate config={dateTimeConfig} />;
-    };
-
-    private shouldRenderActions = () => !!this.props.onDelete;
-
-    private renderActions = () => {
+    const renderActions = useCallback(() => {
         return (
-            this.shouldRenderActions() && (
+            shouldRenderActions && (
                 <div className="gd-visualizations-list-item-actions">
                     <Button
                         className="gd-button-link gd-button-icon-only gd-button-small
                         gd-icon-trash gd-visualizations-list-item-action-delete s-delete-item"
-                        onClick={this.handleClickDelete}
+                        onClick={handleClickDelete}
                     />
                 </div>
             )
         );
-    };
+    }, [shouldRenderActions, handleClickDelete]);
+
+    const visualizationListItemClassname = useMemo(
+        () =>
+            cx("gd-visualizations-list-item", `s-${stringUtils.simplifyText(title)}`, {
+                "is-selected": isSelected,
+            }),
+        [title, isSelected],
+    );
+
+    return (
+        <div className={visualizationListItemClassname} onClick={onClick}>
+            {/* reversed order of items because of hover effect for whole item when hovering over trash bin - css hack with flex-direction: row-reverse; */}
+            {renderActions()}
+            {showDescriptionPanel ? (
+                <div className="gd-visualizations-list-item-description">
+                    <DescriptionPanel
+                        onBubbleOpen={onDescriptionPanelOpen}
+                        title={title}
+                        description={description}
+                        arrowOffsets={shouldRenderActions ? modifiedArrowOffsets : undefined}
+                        useReferences={useReferences}
+                        useRichText={useRichText}
+                        filters={filters}
+                        separators={separators}
+                        LoadingComponent={LoadingComponent}
+                        execConfig={richTextExecConfig}
+                    />
+                </div>
+            ) : null}
+            <div className="gd-visualizations-list-item-content">
+                <div className="gd-visualizations-list-item-content-name">
+                    {lockElement}
+                    <ShortenedText
+                        ref={shortenedTextRef}
+                        tooltipAlignPoints={tooltipAlignPoints}
+                        displayTooltip={!showDescriptionPanel}
+                    >
+                        {isLoading ? intl.formatMessage({ id: "gs.visualizationsList.loading" }) : title}
+                    </ShortenedText>
+                </div>
+                <div className="gd-visualizations-list-item-content-date">
+                    {renderUpdatedDateTime(updated)}
+                </div>
+            </div>
+            <InsightListItemTypeIcon type={type} />
+        </div>
+    );
 }
 
 /**

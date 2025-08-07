@@ -3,6 +3,7 @@ import React, { Component, forwardRef, createRef } from "react";
 // eslint-disable-next-line react/no-deprecated
 import ReactDOM, { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
+import { suppressConsole } from "@gooddata/util";
 
 import { Overlay } from "../Overlay.js";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
@@ -82,7 +83,12 @@ describe("Overlay", () => {
         const ref = createRef();
 
         // eslint-disable-next-line react/no-deprecated
-        ReactDOM.render(<ComposedOverlay {...props} ref={ref} />, where);
+        suppressConsole(() => ReactDOM.render(<ComposedOverlay {...props} ref={ref} />, where), "error", [
+            {
+                type: "includes",
+                value: "ReactDOM.render", // TODO: Remove this in react 19 upgrade
+            },
+        ]);
 
         return ref;
     }
@@ -142,7 +148,10 @@ describe("Overlay", () => {
                     }),
                 );
 
-                unmountComponentAtNode(div);
+                suppressConsole(() => unmountComponentAtNode(div), "error", [
+                    { type: "includes", value: "ReactDOM.render" },
+                    { type: "includes", value: "unmountComponentAtNode" },
+                ]);
 
                 expect(props.overlay.onClose).toHaveBeenCalledTimes(1);
             });

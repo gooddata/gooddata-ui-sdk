@@ -11,6 +11,7 @@ import { getSortModel } from "../sorting/agGridSortingApi.js";
 import { loadDataView } from "./loadDataView.js";
 import { AgGridApi } from "../../types/agGrid.js";
 import { agGridSetLoading } from "./agGridLoadingApi.js";
+import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 
 /**
  * @internal
@@ -54,6 +55,8 @@ export const createServerSideDataSource = ({
 
     let isFirstRequest = true;
     let lastSortBy = sortBy;
+    // Keep track of the current execution result to ensure consistency across getRows calls
+    let currentExecutionResult: IExecutionResult = initialExecutionResult;
 
     /**
      * There is 1 additional request when sorting + pivoting.
@@ -71,17 +74,16 @@ export const createServerSideDataSource = ({
 
     /**
      * Applies updated sort to execution result, if the sort model is changed.
+     * Updates the currentExecutionResult to ensure subsequent calls use the correct execution.
      */
     async function applyChangedSortToExecutionResult(params: IServerSideGetRowsParams<AgGridRowData>) {
-        let effectiveExecutionResult = initialExecutionResult;
-
         // params.request.sortModel is out of sync (empty) with the first getRows request,
         // once fixed in ag-grid, we can replace getSortModel this with it
         const sortModel = getSortModel(params.api);
         const updatedSortBy = sortModelToSortItems(sortModel, columnDefinitionByColId);
 
         if (!isEqual(lastSortBy, updatedSortBy)) {
-            effectiveExecutionResult = await initialExecutionResult
+            currentExecutionResult = await currentExecutionResult
                 .transform()
                 .withSorting(...updatedSortBy)
                 .execute();
@@ -89,7 +91,7 @@ export const createServerSideDataSource = ({
             lastSortBy = updatedSortBy;
         }
 
-        return effectiveExecutionResult;
+        return currentExecutionResult;
     }
 
     return {

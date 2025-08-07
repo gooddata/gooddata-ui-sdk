@@ -3,12 +3,24 @@
 import { DefaultDashboardEventHandling } from "../dashboardEventHandling.js";
 import { DashboardEventHandler, singleEventTypeHandler } from "../../../model/index.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { suppressConsole } from "@gooddata/util";
 
 function assertCorrectHandler(handler: DashboardEventHandler, expectedEvtType: string, handlerFn: any): void {
     // handler function should be kept as is
     expect(handler.handler).toEqual(handlerFn);
     // any errors here mean the facade does not create eval functions correctly
     expect(handler.eval({ type: expectedEvtType } as any)).toBeTruthy();
+}
+
+type MessageType = "removeNonExistingHandler" | "doubleRegistrationSameHandler";
+
+function suppressConsoleCallback(type: MessageType) {
+    const messages: Record<MessageType, string> = {
+        removeNonExistingHandler: "Attempting remove non-existing handler",
+        doubleRegistrationSameHandler: "Attempting double-registration of the same handler",
+    };
+
+    return (message: string) => message === `${messages[type]} [object Object]. Ignoring.`;
 }
 
 describe("dashboard event handling", () => {
@@ -40,7 +52,11 @@ describe("dashboard event handling", () => {
         it("should not do anything if trying to remove non-existing handler", () => {
             const handler = vi.fn();
 
-            Facade.removeEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
+            suppressConsole(
+                () => Facade.removeEventHandler("GDC.DASH/EVT.INITIALIZED", handler),
+                "warn",
+                suppressConsoleCallback("removeNonExistingHandler"),
+            );
             const { eventHandlers } = Facade.getDashboardEventing();
 
             expect(eventHandlers).toEqual([]);
@@ -64,7 +80,11 @@ describe("dashboard event handling", () => {
             const handler = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
-            Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
+            suppressConsole(
+                () => Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler),
+                "warn",
+                suppressConsoleCallback("doubleRegistrationSameHandler"),
+            );
             const { eventHandlers } = Facade.getDashboardEventing();
 
             expect(eventHandlers.length).toEqual(1);
@@ -96,7 +116,11 @@ describe("dashboard event handling", () => {
             const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
-            Facade.removeCustomEventHandler(eventHandler);
+            suppressConsole(
+                () => Facade.removeCustomEventHandler(eventHandler),
+                "warn",
+                suppressConsoleCallback("removeNonExistingHandler"),
+            );
             const { eventHandlers } = Facade.getDashboardEventing();
 
             expect(eventHandlers).toEqual([]);
@@ -107,7 +131,11 @@ describe("dashboard event handling", () => {
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);
-            Facade.addCustomEventHandler(eventHandler);
+            suppressConsole(
+                () => Facade.addCustomEventHandler(eventHandler),
+                "warn",
+                suppressConsoleCallback("doubleRegistrationSameHandler"),
+            );
             const { eventHandlers } = Facade.getDashboardEventing();
 
             expect(eventHandlers.length).toEqual(1);
@@ -171,7 +199,11 @@ describe("dashboard event handling", () => {
         it("should not do anything if trying to remove non-existing handler", () => {
             const handler = vi.fn();
 
-            Facade.removeEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
+            suppressConsole(
+                () => Facade.removeEventHandler("GDC.DASH/EVT.INITIALIZED", handler),
+                "warn",
+                suppressConsoleCallback("removeNonExistingHandler"),
+            );
             expect(unregisterFn).not.toHaveBeenCalled();
         });
 
@@ -189,7 +221,11 @@ describe("dashboard event handling", () => {
             const handler = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
-            Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
+            suppressConsole(
+                () => Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler),
+                "warn",
+                suppressConsoleCallback("doubleRegistrationSameHandler"),
+            );
 
             expect(registerFn).toHaveBeenCalledTimes(1);
         });
@@ -218,7 +254,11 @@ describe("dashboard event handling", () => {
             const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
-            Facade.removeCustomEventHandler(eventHandler);
+            suppressConsole(
+                () => Facade.removeCustomEventHandler(eventHandler),
+                "warn",
+                suppressConsoleCallback("removeNonExistingHandler"),
+            );
             expect(unregisterFn).not.toHaveBeenCalled();
         });
 
@@ -227,7 +267,11 @@ describe("dashboard event handling", () => {
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);
-            Facade.addCustomEventHandler(eventHandler);
+            suppressConsole(
+                () => Facade.addCustomEventHandler(eventHandler),
+                "warn",
+                suppressConsoleCallback("doubleRegistrationSameHandler"),
+            );
 
             expect(registerFn).toHaveBeenCalledTimes(1);
         });

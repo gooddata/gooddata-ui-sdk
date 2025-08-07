@@ -1,10 +1,11 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IInsight, insightTitle, newInsightDefinition } from "@gooddata/sdk-model";
 import { BarChartDescriptor } from "../pluggableVisualizations/barChart/BarChartDescriptor.js";
 import { CatalogViaTypeToClassMap, FullVisualizationCatalog } from "../VisualizationCatalog.js";
 import { recordedInsights } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { describe, it, expect } from "vitest";
+import { Matcher, suppressConsole } from "@gooddata/util";
 
 describe("CatalogViaTypeToClassMap", () => {
     const TestCatalog = new CatalogViaTypeToClassMap({ someType: BarChartDescriptor });
@@ -38,8 +39,19 @@ describe("CatalogViaTypeToClassMap", () => {
         expect(result).toBeTruthy();
     });
 
-    it("indicates no support for insight with unknown visualization class", () => {
-        const result = TestCatalog.forInsight(newInsightDefinition("local:unknownType"));
+    const commonWarnOutput: Matcher[] = [
+        {
+            type: "startsWith",
+            value: "Unknown visualization class: local:unknownType",
+        },
+    ];
+
+    it("indicates no support for insight with unknown visualization class", async () => {
+        const result = await suppressConsole(
+            () => TestCatalog.forInsight(newInsightDefinition("local:unknownType")),
+            "warn",
+            commonWarnOutput,
+        );
 
         expect(result.getMeta()).toEqual({
             documentationUrl: `unknown: local:unknownType`,
@@ -48,8 +60,12 @@ describe("CatalogViaTypeToClassMap", () => {
         });
     });
 
-    it("throws when URI cannot be resolved", () => {
-        const result = TestCatalog.forUri("local:unknownType");
+    it("throws when URI cannot be resolved", async () => {
+        const result = await suppressConsole(
+            () => TestCatalog.forUri("local:unknownType"),
+            "warn",
+            commonWarnOutput,
+        );
 
         expect(result.getMeta()).toEqual({
             documentationUrl: `unknown: local:unknownType`,

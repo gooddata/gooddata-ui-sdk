@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultWidgetCustomizer } from "../widgetCustomizer.js";
@@ -6,6 +6,7 @@ import React from "react";
 import { ICustomWidget } from "../../../model/index.js";
 import { idRef } from "@gooddata/sdk-model";
 import { describe, it, expect, beforeEach } from "vitest";
+import { suppressConsole } from "@gooddata/util";
 
 const TestWidget1: React.FC = () => {
     return <div>Test Widget 1</div>;
@@ -45,7 +46,12 @@ describe("widget customizer", () => {
 
     it("should use last-win when multiple widgets of same type", () => {
         Customizer.addCustomWidget("w1", TestWidget1);
-        Customizer.addCustomWidget("w1", TestWidget2);
+        suppressConsole(
+            () => Customizer.addCustomWidget("w1", TestWidget2),
+            "warn",
+            (message: string) =>
+                message === "Redefining custom widget type w1. Previous definition will be discarded. []",
+        );
 
         const provider = Customizer.getWidgetComponentProvider();
         expect(provider(testWidget("w1"))).toEqual(TestWidget2);
@@ -54,7 +60,12 @@ describe("widget customizer", () => {
     it("should not do any modifications once sealed", () => {
         Customizer.addCustomWidget("w1", TestWidget1);
         Customizer.sealCustomizer();
-        Customizer.addCustomWidget("w1", TestWidget2);
+        suppressConsole(
+            () => Customizer.addCustomWidget("w1", TestWidget2),
+            "warn",
+            (message: string) =>
+                message === "Attempting to add custom widgets outside of plugin registration. Ignoring. []",
+        );
 
         const provider = Customizer.getWidgetComponentProvider();
         expect(provider(testWidget("w1"))).toEqual(TestWidget1);

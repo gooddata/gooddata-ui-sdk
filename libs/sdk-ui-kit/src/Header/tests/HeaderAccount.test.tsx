@@ -5,6 +5,7 @@ import { userEvent } from "@testing-library/user-event";
 import noop from "lodash/noop.js";
 import { withIntlForTest, ITranslations } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
+import { suppressConsole } from "@gooddata/util";
 
 import { HeaderAccount } from "../HeaderAccount.js";
 import { IHeaderMenuItem } from "../typings.js";
@@ -34,7 +35,12 @@ describe("HeaderAccount", () => {
         const clickSpy = vi.fn();
         render(<Wrapper items={menuItems} onMenuItemClick={clickSpy} />);
         await userEvent.click(document.querySelector(".gd-header-account"));
-        await userEvent.click(screen.getByText("Account"));
+        await suppressConsole(() => userEvent.click(screen.getByText("Account")), "error", [
+            {
+                type: "startsWith",
+                value: "Error: Not implemented: navigation",
+            },
+        ]);
 
         await waitFor(() => expect(clickSpy).toHaveBeenCalledTimes(1));
     });
