@@ -20,9 +20,7 @@ jobs:
     needs: [storybook-deploy]
     steps:
       - name: Notify to slack
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: ./.github/actions/slack/send-notification
         with:
-          channel-id: "#javascript-notifications"
-          slack-message: "The Storybook for *gooddata-ui-sdk* has been successfully deployed. :tada:"
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: "The Storybook for *gooddata-ui-sdk* has been successfully deployed. :tada:"
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

@@ -4,6 +4,7 @@ exports[`useSemanticSearch hook > should cancel previous search 1`] = `
 {
   "relationships": [],
   "searchError": "",
+  "searchMessage": "",
   "searchResults": [
     {
       "createdAt": "2023-08-03T13:17:26.923537",
@@ -134,6 +135,7 @@ exports[`useSemanticSearch hook > should return correct results 1`] = `
 {
   "relationships": [],
   "searchError": "",
+  "searchMessage": "",
   "searchResults": [
     {
       "createdAt": "2023-08-03T13:17:26.923537",

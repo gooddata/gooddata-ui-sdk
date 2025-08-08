@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React, { PureComponent, Fragment, ReactNode } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { memo, Fragment, ReactNode, useCallback } from "react";
 import { ColorFormats } from "tinycolor2";
 
 import { getHslFromHexColor, getHexFromHslColor, isHexColorValid } from "../utils.js";
@@ -12,32 +12,30 @@ export interface IHexColorInputProps {
     label?: string;
 }
 
-export class HexColorInput extends PureComponent<IHexColorInputProps> {
-    static defaultProps: Pick<IHexColorInputProps, "label" | "placeholder"> = {
-        placeholder: "",
-        label: "",
-    };
+export const HexColorInput = memo(function HexColorInput(props: IHexColorInputProps): ReactNode {
+    const { initColor, onInputChanged, placeholder = "", label = "" } = props;
 
-    onInputChange = (value: string): void => {
-        if (isHexColorValid(value)) {
-            const newHsl = getHslFromHexColor(value);
-            this.props.onInputChanged(newHsl);
-        }
-    };
+    const onInputChange = useCallback(
+        (value: string): void => {
+            if (isHexColorValid(value)) {
+                const newHsl = getHslFromHexColor(value);
+                onInputChanged(newHsl);
+            }
+        },
+        [onInputChanged],
+    );
 
-    render(): ReactNode {
-        const hexValue = getHexFromHslColor(this.props.initColor);
+    const hexValue = getHexFromHslColor(initColor);
 
-        return (
-            <Fragment>
-                <Input
-                    className="s-color-picker-hex"
-                    value={hexValue}
-                    onChange={this.onInputChange}
-                    placeholder={this.props.placeholder}
-                />
-                <p>{this.props.label}</p>
-            </Fragment>
-        );
-    }
-}
+    return (
+        <Fragment>
+            <Input
+                className="s-color-picker-hex"
+                value={hexValue}
+                onChange={onInputChange}
+                placeholder={placeholder}
+            />
+            <p>{label}</p>
+        </Fragment>
+    );
+});
