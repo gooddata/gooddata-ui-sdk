@@ -27,10 +27,9 @@ jobs:
     needs: [prepare-versions-master]
     steps:
       - name: Inform to slack
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: ./.github/actions/slack/send-notification
         with:
-          channel-id: '#javascript-notifications'
-          slack-message: "The *master* branch of *gooddata-ui-sdk* has been bumped to the next major version, *${{ env.VERSION }}*."
+          message: "The *master* branch of *gooddata-ui-sdk* has been bumped to the next major version, *${{ env.VERSION }}*."
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
         env:
           VERSION: ${{ needs.prepare-versions-master.outputs.version }}
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
