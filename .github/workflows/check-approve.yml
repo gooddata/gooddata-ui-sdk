@@ -49,3 +49,27 @@ jobs:
         with:
           allowed-skips: ${{ toJSON(needs) }}
           jobs: ${{ toJSON(needs) }}
+
+  notify-sync-pr-check-failed:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    if: ${{ always() && needs.ready-to-merge-approved.result == 'failure' && contains(github.event.pull_request.labels.*.name, 'sync') }}
+    needs:
+      - ready-to-merge-approved
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.githubuser }}/gdc-ui
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
+      - name: Notify sync PR check failure
+        uses: ./.github/actions/slack/send-notification
+        with:
+          message: |
+            :warning: Automated sync PR from gdc-ui failed checks in gooddata-ui-sdk
+            
+            PR: #${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}
+            
+            Check the PR: ${{ github.event.pull_request.html_url }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

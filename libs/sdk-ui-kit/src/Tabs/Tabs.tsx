@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { Component, ReactElement } from "react";
+import React, { ReactElement, useState, useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -44,84 +44,87 @@ export interface ITabsState {
 /**
  * @internal
  */
-export class Tabs extends Component<ITabsProps, ITabsState> {
-    static defaultProps = {
-        className: "",
-        onTabSelect: noop,
-        selectedTabId: "",
-        tabs: [] as ITab[],
-    };
+export function Tabs(props: ITabsProps): ReactElement {
+    const {
+        className = "",
+        onTabSelect = noop,
+        selectedTabId: propSelectedTabId = "",
+        tabs = [] as ITab[],
+    } = props;
 
-    constructor(props: ITabsProps) {
-        super(props);
+    const [selectedTabId, setSelectedTabId] = useState<string>(propSelectedTabId || tabs?.[0]?.id);
 
-        this.state = {
-            selectedTabId: props.selectedTabId || props.tabs?.[0]?.id,
-        };
-    }
+    const selectTab = useCallback(
+        (tab: ITab): void => {
+            const newSelectedTabId = tab?.id;
+            const noChange = newSelectedTabId === selectedTabId;
 
-    private selectTab(tab: ITab): void {
-        const selectedTabId = tab?.id;
-        const noChange = selectedTabId === this.state.selectedTabId;
+            if (noChange) {
+                return;
+            }
 
-        if (noChange) {
-            return;
-        }
+            setSelectedTabId(newSelectedTabId);
+            onTabSelect(tab);
+        },
+        [selectedTabId, onTabSelect],
+    );
 
-        this.setState({
-            selectedTabId,
-        });
+    const renderTab = useCallback(
+        (tab: ITab) => {
+            const tabClassName = cx({
+                "is-active": tab.id === selectedTabId,
+                "gd-tab": true,
+                [`s-${stringUtils.simplifyText(tab.id)}`]: true,
+            });
 
-        this.props.onTabSelect(tab);
-    }
+            const handleClick = () => {
+                selectTab(tab);
+            };
 
-    private renderTab(tab: ITab) {
-        const tabClassName = cx({
-            "is-active": tab.id === this.state.selectedTabId,
-            "gd-tab": true,
-            [`s-${stringUtils.simplifyText(tab.id)}`]: true,
-        });
+            const handleKeyDown = (event: React.KeyboardEvent) => {
+                if (isActionKey(event)) {
+                    event.preventDefault();
+                    selectTab(tab);
+                }
+            };
 
-        return (
-            <div
-                aria-label={stringUtils.simplifyText(tab.id)}
-                className={tabClassName}
-                key={tab.id}
-                onClick={() => {
-                    this.selectTab(tab);
-                }}
-                onKeyDown={(event) => {
-                    if (isActionKey(event)) {
-                        event.preventDefault();
-                        this.selectTab(tab);
-                    }
-                }}
-                role="tab"
-                aria-selected={tab.id === this.state.selectedTabId}
-                tabIndex={0}
-            >
-                <span>
-                    {tab.icon ? <i className={tab.icon} /> : null}
-                    {tab.iconOnly ? null : <FormattedMessage id={tab.id} values={tab.values ?? {}} />}
-                </span>
-            </div>
-        );
-    }
+            return (
+                <div
+                    aria-label={stringUtils.simplifyText(tab.id)}
+                    className={tabClassName}
+                    key={tab.id}
+                    onClick={handleClick}
+                    onKeyDown={handleKeyDown}
+                    role="tab"
+                    aria-selected={tab.id === selectedTabId}
+                    tabIndex={0}
+                >
+                    <span>
+                        {tab.icon ? <i className={tab.icon} /> : null}
+                        {tab.iconOnly ? null : <FormattedMessage id={tab.id} values={tab.values ?? {}} />}
+                    </span>
+                </div>
+            );
+        },
+        [selectedTabId, selectTab],
+    );
 
-    private renderTabs() {
-        return this.props.tabs.map(this.renderTab, this);
-    }
+    const renderedTabs = useMemo(() => {
+        return tabs.map(renderTab);
+    }, [tabs, renderTab]);
 
-    public render(): ReactElement {
-        const classNames = cx(this.props.className, {
-            "gd-tabs": true,
-            small: true,
-        });
+    const classNames = useMemo(
+        () =>
+            cx(className, {
+                "gd-tabs": true,
+                small: true,
+            }),
+        [className],
+    );
 
-        return (
-            <div role="tablist" className={classNames}>
-                {this.renderTabs()}
-            </div>
-        );
-    }
+    return (
+        <div role="tablist" className={classNames}>
+            {renderedTabs}
+        </div>
+    );
 }
