@@ -510,10 +510,7 @@ export enum ENUM_KEY_CODE {
 }
 
 // @internal (undocumented)
-export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const ErrorOverlay: React_2.NamedExoticComponent<IErrorOverlayProps>;
 
 // @internal (undocumented)
 export const ExportDialog: React_2.NamedExoticComponent<IExportDialogProps>;
@@ -5786,74 +5783,13 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
 }
 
 // @internal (undocumented)
-export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITextAreaWithSubmitState> {
-    constructor(props: ITextAreaWithSubmitProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-        maxLength: number;
-        rows: number;
-        onCancel: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onEditingStart: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onChange: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        placeholder: string;
-        scrollToEndOnEditingStart: boolean;
-        autofocus: boolean;
-        disabled: boolean;
-    };
-    // (undocumented)
-    edit: (_e?: React_2.MouseEvent<HTMLDivElement>) => void;
-    // (undocumented)
-    isClickOutsideTextarea(clickedTarget: EventTarget): boolean;
-    // (undocumented)
-    isMultiLine(): boolean;
-    // (undocumented)
-    onCancel: () => void;
-    // (undocumented)
-    onChange: (e: React_2.ChangeEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onDocumentClick: (e: MouseEvent) => void;
-    // (undocumented)
-    onKeyDown: (e: React_2.KeyboardEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onSelectStart(e: React_2.MouseEvent): void;
-    // (undocumented)
-    onSubmit: () => void;
-    // (undocumented)
-    removeListeners(): void;
-    // (undocumented)
-    render(): ReactNode;
-    // (undocumented)
-    renderTextarea(style?: {}): ReactNode;
-    // (undocumented)
-    renderTextAreaWithSubmitEdit(): ReactNode;
-    // (undocumented)
-    selectAndFocus: () => void;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps(newProps: ITextAreaWithSubmitProps): void;
-}
+export function TextAreaWithSubmit({ className, maxLength, rows, onCancel, onEditingStart, onChange, placeholder, scrollToEndOnEditingStart, autofocus, disabled, defaultValue, onSubmit: onSubmitProp, }: ITextAreaWithSubmitProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type ThemeColor = "primary" | "warning" | "error" | "complementary-0" | "complementary-1" | "complementary-2" | "complementary-3" | "complementary-4" | "complementary-5" | "complementary-6" | "complementary-7" | "complementary-8" | "complementary-9";
 
 // @internal (undocumented)
-export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const Timepicker: React_2.NamedExoticComponent<ITimepickerOwnProps>;
 
 // @internal (undocumented)
 export const ToastMessageContext: React_2.Context<ToastMessageContextType>;
