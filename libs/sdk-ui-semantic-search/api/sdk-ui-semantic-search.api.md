@@ -36,6 +36,7 @@ export type SemanticSearchHookInput = {
 export type SemanticSearchInputResult = {
     searchStatus: "idle" | "loading" | "error" | "success";
     searchError: string;
+    searchMessage: string;
     searchResults: ISemanticSearchResultItem[];
     relationships: ISemanticSearchRelationship[];
 };

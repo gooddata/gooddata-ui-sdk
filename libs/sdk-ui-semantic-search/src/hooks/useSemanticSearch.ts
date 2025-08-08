@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { useState, useEffect } from "react";
 import { ISemanticSearchResultItem, GenAIObjectType, ISemanticSearchRelationship } from "@gooddata/sdk-model";
@@ -23,6 +23,10 @@ export type SemanticSearchInputResult = {
      */
     searchError: string;
     /**
+     * The message to show to the user that came from the backend.
+     */
+    searchMessage: string;
+    /**
      * The search results.
      */
     searchResults: ISemanticSearchResultItem[];
@@ -35,6 +39,7 @@ export type SemanticSearchInputResult = {
 const DEFAULT_STATE: SemanticSearchInputResult = {
     searchStatus: "idle",
     searchError: "",
+    searchMessage: "",
     searchResults: [],
     relationships: [],
 };
@@ -130,6 +135,7 @@ export const useSemanticSearch = ({
                 setState({
                     searchStatus: "success",
                     searchError: "",
+                    searchMessage: res.reasoning ?? "",
                     searchResults: res.results,
                     relationships: res.relationships,
                 });
@@ -142,6 +148,7 @@ export const useSemanticSearch = ({
                 setState({
                     searchStatus: "error",
                     searchError: errorMessage(e),
+                    searchMessage: "",
                     searchResults: [],
                     relationships: [],
                 });
