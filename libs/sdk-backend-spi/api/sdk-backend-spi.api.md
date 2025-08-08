@@ -1260,6 +1260,8 @@ export interface ISemanticSearchQuery {
 // @beta
 export interface ISemanticSearchResult {
     // (undocumented)
+    reasoning?: string;
+    // (undocumented)
     relationships: ISemanticSearchRelationship[];
     // (undocumented)
     results: ISemanticSearchResultItem[];

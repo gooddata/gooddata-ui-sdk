@@ -16,9 +16,7 @@ jobs:
     steps:
       - name: Inform to slack when post-merge workflows failed
         if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: ./.github/actions/slack/send-notification
         with:
-          channel-id: '#javascript-notifications'
-          slack-message: ":robot_panic: `post-merge github workflows` in `${{ github.event.repository.name }}` encountered an error during execution, check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}|log here>* for further information"
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: ":robot_panic: `post-merge github workflows` in `${{ github.event.repository.name }}` encountered an error during execution, check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}|log here>* for further information"
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
