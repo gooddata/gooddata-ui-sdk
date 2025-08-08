@@ -108,19 +108,7 @@ export type ArrowOffsets = Record<string, ArrowOffset>;
 export function AsyncList<T>(props: IAsyncListProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
-export class AutoSize extends Component<IAutoSizeProps> {
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-    // (undocumented)
-    state: {
-        width: number;
-        height: number;
-    };
-}
+export function AutoSize({ children }: IAutoSizeProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const BackButton: React_2.FC<IBackButtonProps>;
@@ -261,41 +249,26 @@ export const ChartSortingWithIntl: React_2.FC<WithIntlProps<ChartSortingProps>> 
 };
 
 // @internal (undocumented)
-export class Checkbox extends React_2.PureComponent<CheckboxProps> {
-    // (undocumented)
-    static defaultProps: {
-        disabled: boolean;
-        name: string;
-        text: string;
-        title: string;
-        value: boolean;
-        labelSize: string;
-        onChange: (...args: any[]) => void;
-    };
-    // (undocumented)
-    onChange: (e: React_2.ChangeEvent<HTMLInputElement>) => void;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const Checkbox: React_2.NamedExoticComponent<CheckboxProps>;
 
 // @internal (undocumented)
 export interface CheckboxProps {
     // (undocumented)
-    disabled: boolean;
+    disabled?: boolean;
     // (undocumented)
     id?: string;
     // (undocumented)
-    labelSize: LabelSize;
+    labelSize?: LabelSize;
     // (undocumented)
-    name: string;
+    name?: string;
     // (undocumented)
-    onChange: (e: boolean) => void;
+    onChange?: (e: boolean) => void;
     // (undocumented)
-    text: string;
+    text?: string;
     // (undocumented)
-    title: string;
+    title?: string;
     // (undocumented)
-    value: boolean;
+    value?: boolean;
 }
 
 // @internal (undocumented)
@@ -334,10 +307,7 @@ export const ComponentLabelsProvider: React_2.FC<IComponentLabelsProviderProps>;
 export function ComponentTable<TProps extends object>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, cellStyle, }: IComponentTableProps<TProps>): React_2.JSX.Element;
 
 // @internal (undocumented)
-export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
-    // (undocumented)
-    render(): ReactElement;
-}
+export const ConfirmDialog: React_2.NamedExoticComponent<IConfirmDialogBaseProps>;
 
 // @internal (undocumented)
 export const ConfirmDialogBase: React_2.NamedExoticComponent<IConfirmDialogBaseProps>;
@@ -510,10 +480,7 @@ export enum ENUM_KEY_CODE {
 }
 
 // @internal (undocumented)
-export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const ErrorOverlay: React_2.NamedExoticComponent<IErrorOverlayProps>;
 
 // @internal (undocumented)
 export const ExportDialog: React_2.NamedExoticComponent<IExportDialogProps>;
@@ -5733,16 +5700,7 @@ export enum SORT_TARGET_TYPE {
 export function sortDateDatasets<T extends IDateDataset>(dateDatasets: T[], recommendedDate?: T, unrelatedDate?: T): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
-export class Spinner extends PureComponent<ISpinnerProps> {
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-    };
-    // (undocumented)
-    generateSpinnerTicks(): ReactNode[];
-    // (undocumented)
-    render(): ReactNode;
-}
+export const Spinner: React_2.NamedExoticComponent<ISpinnerProps>;
 
 // @internal (undocumented)
 export type SpinnerSize = "large" | "small";
@@ -5772,88 +5730,16 @@ export const SubMenu: React_2.FC<ISubMenuProps>;
 export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
 
 // @internal (undocumented)
-export class Tabs extends Component<ITabsProps, ITabsState> {
-    constructor(props: ITabsProps);
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-        onTabSelect: (...args: any[]) => void;
-        selectedTabId: string;
-        tabs: ITab[];
-    };
-    // (undocumented)
-    render(): ReactElement;
-}
+export function Tabs(props: ITabsProps): ReactElement;
 
 // @internal (undocumented)
-export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITextAreaWithSubmitState> {
-    constructor(props: ITextAreaWithSubmitProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-        maxLength: number;
-        rows: number;
-        onCancel: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onEditingStart: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onChange: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        placeholder: string;
-        scrollToEndOnEditingStart: boolean;
-        autofocus: boolean;
-        disabled: boolean;
-    };
-    // (undocumented)
-    edit: (_e?: React_2.MouseEvent<HTMLDivElement>) => void;
-    // (undocumented)
-    isClickOutsideTextarea(clickedTarget: EventTarget): boolean;
-    // (undocumented)
-    isMultiLine(): boolean;
-    // (undocumented)
-    onCancel: () => void;
-    // (undocumented)
-    onChange: (e: React_2.ChangeEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onDocumentClick: (e: MouseEvent) => void;
-    // (undocumented)
-    onKeyDown: (e: React_2.KeyboardEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onSelectStart(e: React_2.MouseEvent): void;
-    // (undocumented)
-    onSubmit: () => void;
-    // (undocumented)
-    removeListeners(): void;
-    // (undocumented)
-    render(): ReactNode;
-    // (undocumented)
-    renderTextarea(style?: {}): ReactNode;
-    // (undocumented)
-    renderTextAreaWithSubmitEdit(): ReactNode;
-    // (undocumented)
-    selectAndFocus: () => void;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps(newProps: ITextAreaWithSubmitProps): void;
-}
+export function TextAreaWithSubmit({ className, maxLength, rows, onCancel, onEditingStart, onChange, placeholder, scrollToEndOnEditingStart, autofocus, disabled, defaultValue, onSubmit: onSubmitProp, }: ITextAreaWithSubmitProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type ThemeColor = "primary" | "warning" | "error" | "complementary-0" | "complementary-1" | "complementary-2" | "complementary-3" | "complementary-4" | "complementary-5" | "complementary-6" | "complementary-7" | "complementary-8" | "complementary-9";
 
 // @internal (undocumented)
-export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const Timepicker: React_2.NamedExoticComponent<ITimepickerOwnProps>;
 
 // @internal (undocumented)
 export const ToastMessageContext: React_2.Context<ToastMessageContextType>;
