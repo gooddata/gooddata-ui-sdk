@@ -39,10 +39,13 @@ jobs:
         needs: [run-fossa-scan-update-attribution]
         runs-on: [ubuntu-latest]
         steps:
-          - name: Inform to slack when fossa workflows failed
-            uses: slackapi/slack-github-action@v1.25.0
+          - name: Checkout repository
+            uses: actions/checkout@v4
             with:
-                channel-id: "#javascript-notifications"
-                slack-message: ":warning: The FOSSA scan and attribution file creation failed. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>* for further information."
-            env:
-                SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+              repository: ${{ inputs.githubuser }}/gdc-ui
+              token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
+          - name: Inform to slack when fossa workflows failed
+            uses: ./.github/actions/slack/send-notification
+            with:
+                message: ":warning: The FOSSA scan and attribution file creation failed. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>* for further information."
+                slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

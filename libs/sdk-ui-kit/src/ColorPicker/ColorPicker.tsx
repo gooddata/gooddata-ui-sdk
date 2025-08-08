@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { Component } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useState, useCallback } from "react";
 import isEqual from "lodash/isEqual.js";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ColorFormats } from "tinycolor2";
@@ -11,85 +11,68 @@ import { HexColorInput } from "./components/HexColorInput.js";
 import { HueColorPicker } from "./components/HueColorPicker.js";
 import { ColorsPreview } from "./components/ColorsPreview.js";
 import { getRgbFromHslColor, getHslFromRgbColor, isHslColorBlackOrWhite } from "./utils.js";
-import { IColorPickerProps, IColorPickerState } from "./typings.js";
+import { IColorPickerProps } from "./typings.js";
 
-class WrappedColorPicker extends Component<IColorPickerProps & WrappedComponentProps, IColorPickerState> {
-    constructor(props: IColorPickerProps & WrappedComponentProps) {
-        super(props);
+function WrappedColorPicker(props: IColorPickerProps & WrappedComponentProps) {
+    const currentHslColor = getHslFromRgbColor(props.initialRgbColor);
+    const [draftHslColor, setDraftHslColor] = useState<ColorFormats.HSL>(currentHslColor);
 
-        const currentHslColor = getHslFromRgbColor(this.props.initialRgbColor);
+    const onColorSelected = useCallback((selectedColor: ColorFormats.HSL) => {
+        setDraftHslColor(selectedColor);
+    }, []);
 
-        this.state = {
-            draftHslColor: currentHslColor,
-        };
-
-        this.onColorSelected = this.onColorSelected.bind(this);
-        this.onHexInputColorSelected = this.onHexInputColorSelected.bind(this);
-    }
-
-    onColorSelected(selectedColor: ColorFormats.HSL) {
-        this.setState({
-            draftHslColor: selectedColor,
-        });
-    }
-
-    onHexInputColorSelected(selectedColor: ColorFormats.HSL) {
+    const onHexInputColorSelected = useCallback((selectedColor: ColorFormats.HSL) => {
         if (isHslColorBlackOrWhite(selectedColor)) {
-            this.setState({
-                draftHslColor: {
-                    ...selectedColor,
-                    h: this.state.draftHslColor.h,
-                },
-            });
+            setDraftHslColor((prevColor) => ({
+                ...selectedColor,
+                h: prevColor.h,
+            }));
         } else {
-            this.onColorSelected(selectedColor);
+            setDraftHslColor(selectedColor);
         }
-    }
+    }, []);
 
-    render() {
-        const currentHslColor = getHslFromRgbColor(this.props.initialRgbColor);
-        const { intl } = this.props;
+    const handleSubmit = useCallback(() => {
+        props.onSubmit(getRgbFromHslColor(draftHslColor));
+    }, [props, draftHslColor]);
 
-        return (
-            <div className="color-picker-container" aria-label="Color picker">
-                <ColorPickerMatrix
-                    initColor={this.state.draftHslColor}
-                    onColorSelected={this.onColorSelected}
+    const currentHslColorForPreview = getHslFromRgbColor(props.initialRgbColor);
+    const { intl } = props;
+
+    return (
+        <div className="color-picker-container" aria-label="Color picker">
+            <ColorPickerMatrix initColor={draftHslColor} onColorSelected={onColorSelected} />
+            <div className="color-picker-control-wrapper">
+                <HueColorPicker initColor={draftHslColor} onChange={onColorSelected} />
+                <HexColorInput
+                    initColor={draftHslColor}
+                    onInputChanged={onHexInputColorSelected}
+                    placeholder={intl.formatMessage({ id: "gs.color-picker.inputPlaceholder" })}
+                    label={intl.formatMessage({ id: "gs.color-picker.hex" })}
+                    key={`${draftHslColor.h}-${draftHslColor.s}-${draftHslColor.l}`}
                 />
-                <div className="color-picker-control-wrapper">
-                    <HueColorPicker initColor={this.state.draftHslColor} onChange={this.onColorSelected} />
-                    <HexColorInput
-                        initColor={this.state.draftHslColor}
-                        onInputChanged={this.onHexInputColorSelected}
-                        placeholder={intl.formatMessage({ id: "gs.color-picker.inputPlaceholder" })}
-                        label={intl.formatMessage({ id: "gs.color-picker.hex" })}
+                <ColorsPreview
+                    currentHslColor={currentHslColorForPreview}
+                    draftHslColor={draftHslColor}
+                    currentTextLabel={intl.formatMessage({ id: "gs.color-picker.currentColor" })}
+                    draftTextLabel={intl.formatMessage({ id: "gs.color-picker.newColor" })}
+                />
+                <div className="color-picker-buttons-wrapper">
+                    <Button
+                        value={intl.formatMessage({ id: "gs.color-picker.cancelButton" })}
+                        className="gd-button-secondary gd-button color-picker-button"
+                        onClick={props.onCancel}
                     />
-                    <ColorsPreview
-                        currentHslColor={currentHslColor}
-                        draftHslColor={this.state.draftHslColor}
-                        currentTextLabel={intl.formatMessage({ id: "gs.color-picker.currentColor" })}
-                        draftTextLabel={intl.formatMessage({ id: "gs.color-picker.newColor" })}
+                    <Button
+                        value={intl.formatMessage({ id: "gs.color-picker.okButton" })}
+                        disabled={isEqual(props.initialRgbColor, getRgbFromHslColor(draftHslColor))}
+                        className="gd-button-action gd-button color-picker-ok-button"
+                        onClick={handleSubmit}
                     />
-                    <div className="color-picker-buttons-wrapper">
-                        <Button
-                            value={intl.formatMessage({ id: "gs.color-picker.cancelButton" })}
-                            className="gd-button-secondary gd-button color-picker-button"
-                            onClick={this.props.onCancel}
-                        />
-                        <Button
-                            value={intl.formatMessage({ id: "gs.color-picker.okButton" })}
-                            disabled={isEqual(
-                                this.props.initialRgbColor,
-                                getRgbFromHslColor(this.state.draftHslColor),
-                            )}
-                            className="gd-button-action gd-button color-picker-ok-button"
-                            onClick={() => this.props.onSubmit(getRgbFromHslColor(this.state.draftHslColor))}
-                        />
-                    </div>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 /**

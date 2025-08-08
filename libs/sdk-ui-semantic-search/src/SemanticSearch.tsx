@@ -109,7 +109,7 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
     const inputRef = React.useRef<Input>(null);
 
     // Search results
-    const { searchStatus, searchResults, searchError } = useSemanticSearch({
+    const { searchStatus, searchResults, searchMessage, searchError } = useSemanticSearch({
         backend,
         workspace,
         searchTerm,
@@ -185,6 +185,13 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
                 }
                 if (items.length === 0 || searchStatus !== "success") {
                     return null;
+                }
+                if (items.length === 0 && searchMessage) {
+                    return (
+                        <Wrapper status={searchStatus} closeSearch={closeDropdown}>
+                            <div className="gd-semantic-search__message">{searchMessage}</div>
+                        </Wrapper>
+                    );
                 }
                 return (
                     <Wrapper status={searchStatus} closeSearch={closeDropdown}>
