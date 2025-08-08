@@ -146,7 +146,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
 
     // Search results
     const effectiveWorkspace = useWorkspaceStrict(workspace);
-    const { searchStatus, searchResults, searchError, relationships } = useSemanticSearch({
+    const { searchStatus, searchResults, searchError, searchMessage, relationships } = useSemanticSearch({
         backend,
         workspace: effectiveWorkspace,
         searchTerm,
@@ -268,6 +268,11 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                             </div>
                         );
                     case "success":
+                        if (!searchResults.length && searchMessage) {
+                            return (
+                                <div className="gd-semantic-search__overlay-no-results">{searchMessage}</div>
+                            );
+                        }
                         if (!searchResults.length) {
                             return (
                                 <div className="gd-semantic-search__overlay-no-results">

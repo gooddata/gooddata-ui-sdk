@@ -17,6 +17,10 @@ on:
         required: false
         description: "The name of the author"
         type: string
+    outputs:
+      version:
+        description: "The version that was published"
+        value: ${{ jobs.bump-version.outputs.version }}
 
 # limit concurrency to one run per branch at a time
 # so that we can run this from master and a release branch at the same time
@@ -120,24 +124,27 @@ jobs:
       labels: runners-small
     needs: [bump-version, publish-prerelease,setup-params]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.githubuser }}/gdc-ui
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
       - name: Notify to slack with author name
         if: ${{ inputs.author-name != '' }}
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: ./.github/actions/slack/send-notification
         with:
-          channel-id: "#javascript-notifications"
-          slack-message: "The latest *${{env.PRERELEASE}}* version, *gooddata-ui-sdk@${{env.RELEASE_VERSION}}*, has been successfully published on NPM by the github user *${{env.GITHUB_USER}}*. :tada:"
+          message: "The latest *${{env.PRERELEASE}}* version, *gooddata-ui-sdk@${{env.RELEASE_VERSION}}*, has been successfully published on NPM by the github user *${{env.GITHUB_USER}}*. :tada:"
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
         env:
           RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           GITHUB_USER: ${{ inputs.author-name }}
           PRERELEASE: ${{ needs.setup-params.outputs.prerelease-tag }}
       - name: Notify to slack with without author name
         if: ${{ inputs.author-name == '' }}
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: ./.github/actions/slack/send-notification
         with:
-          channel-id: "#javascript-notifications"
-          slack-message: "The latest *${{env.PRERELEASE}}* version, *gooddata-ui-sdk@${{env.RELEASE_VERSION}}*, has been successfully published on NPM. :tada:"
+          message: "The latest *${{env.PRERELEASE}}* version, *gooddata-ui-sdk@${{env.RELEASE_VERSION}}*, has been successfully published on NPM. :tada:"
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
         env:
           RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           PRERELEASE: ${{ needs.setup-params.outputs.prerelease-tag }}

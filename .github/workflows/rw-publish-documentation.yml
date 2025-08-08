@@ -37,12 +37,16 @@ jobs:
         runs-on: [ubuntu-latest]
         needs: [publish-netlify, update-apidocs-version, get-version]
         steps:
-          - name: Notify to slack
-            uses: slackapi/slack-github-action@v1.25.0
+          - name: Checkout repository
+            uses: actions/checkout@v4
             with:
-              channel-id: "#javascript-notifications"
-              slack-message: "The documentation for ui sdk *${{ env.RELEASE_VERSION }}* was successfully released by *${{ env.GITHUB_USER }}*"
+              repository: ${{ inputs.githubuser }}/gdc-ui
+              token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
+          - name: Notify to slack
+            uses: ./.github/actions/slack/send-notification
+            with:
+              message: "The documentation for ui sdk *${{ env.RELEASE_VERSION }}* was successfully released by *${{ env.GITHUB_USER }}*"
+              slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
             env:
               RELEASE_VERSION: ${{ needs.get-version.outputs.version }}
-              SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
               GITHUB_USER: ${{ github.actor }}
