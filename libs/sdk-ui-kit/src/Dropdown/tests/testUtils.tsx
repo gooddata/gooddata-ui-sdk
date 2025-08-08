@@ -6,7 +6,7 @@ export interface IComponentMock<T> {
     id: string;
     selector: string;
     component: (props: T) => ReactElement;
-    componentWithProps: (mapProps: (props: T) => JSX.IntrinsicElements["div"]) => (props: T) => JSX.Element;
+    componentWithProps: (mapProps: (props: T) => JSX.IntrinsicElements["div"]) => (props: T) => ReactElement;
 }
 
 /**

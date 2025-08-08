@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, forwardRef, createRef } from "react";
+import React, { forwardRef, createRef } from "react";
 // eslint-disable-next-line react/no-deprecated
 import ReactDOM, { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
@@ -13,37 +13,33 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
  */
 
 interface FixedComponentProps {
-    className: string;
-    height: number;
-    left: number;
-    position: string;
-    top: number;
-    width: number;
+    className?: string;
+    height?: number;
+    left?: number;
+    position?: string;
+    top?: number;
+    width?: number;
 }
 
-class FixedComponent extends Component<FixedComponentProps> {
-    static defaultProps = {
-        className: "",
-        height: 0,
-        left: 0,
-        position: "static",
-        top: 0,
-        width: 0,
+function FixedComponent({
+    className = "",
+    height = 0,
+    left = 0,
+    position = "static",
+    top = 0,
+    width = 0,
+}: FixedComponentProps) {
+    const getStyle = (): any => {
+        return {
+            height,
+            left,
+            position,
+            top,
+            width,
+        };
     };
 
-    getStyle(): any {
-        return {
-            height: this.props.height,
-            left: this.props.left,
-            position: this.props.position,
-            top: this.props.top,
-            width: this.props.width,
-        };
-    }
-
-    render() {
-        return <div className={this.props.className} style={this.getStyle()} />;
-    }
+    return <div className={className} style={getStyle()} />;
 }
 
 const ComposedOverlay = forwardRef(function ComposedOverlay(props: any, ref) {

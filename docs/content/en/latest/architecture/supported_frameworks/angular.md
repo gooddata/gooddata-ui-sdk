@@ -8,7 +8,7 @@ draft: true
 
 <!-- Bear specific? -->
 
-To be able to use the visual components in your Angular 9+ environment, wrap each component into an Angular component, and then render the React component using `ReactDom.render` inside.
+To be able to use the visual components in your Angular 9+ environment, wrap each component into an Angular component, and then render the React component using React 18's `createRoot` API inside.
 
 Depending on your use case, it might be easier to integrate our [WebComponents library](../../../learn/embed_dashboards/web_components/) with your Angular app.
 
@@ -49,7 +49,7 @@ The following examples are using a single KPI component:
 
 ```javascript
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as ReactDOM from "react-dom/client";
 import * as uuid from "uuid";
 import * as invariant from "invariant";
 
@@ -85,6 +85,7 @@ export class KpiComponent
   @Input() onError?: any;
 
   public rootDomID: string;
+  private root: ReactDOM.Root | null = null;
 
   protected getRootDomNode() {
     const node = document.getElementById(this.rootDomID);
@@ -117,10 +118,10 @@ export class KpiComponent
 
   protected render() {
     if (this.isMounted()) {
-      ReactDOM.render(
-        React.createElement(Kpi, this.getProps()),
-        this.getRootDomNode()
-      );
+      if (!this.root) {
+        this.root = ReactDOM.createRoot(this.getRootDomNode());
+      }
+      this.root.render(React.createElement(Kpi, this.getProps()));
     }
   }
 
@@ -137,8 +138,11 @@ export class KpiComponent
   }
 
   ngOnDestroy() {
-    // Uncomment if Angular issue that ngOnDestroy is called AFTER DOM node removal is resolved
-    // ReactDOM.unmountComponentAtNode(this.getRootDomNode())
+    // React 18: Use root.unmount() instead of ReactDOM.unmountComponentAtNode
+    if (this.root) {
+      this.root.unmount();
+      this.root = null;
+    }
   }
 }
 ```
@@ -200,12 +204,11 @@ If you want to render some charts, do the following:
 
 If you are using the Pivot Table component, import the `pivotTable.css` file into your global styles from `@gooddata/sdk-ui-pivot/styles/css/main.css`. For more details about importing global styles in an Angular app, see the [Angular documentation](https://angular.io/guide/workspace-config#styles-and-scripts-configuration).
 
-{{% alert color="warning" title="Memory Leak"%}}
-When this article was last updated, there was an [outstanding issue in Angular](https://github.com/angular/angular/issues/14252). `ngOnDestroy` is called **after** a DOM node has already been removed. Not calling `ReactDOM.unmountComponentAtNode(this.getRootDomNode())` results in memory leaks.
+{{% alert color="info" title="React 18 Update"%}}
+The code examples have been updated to use React 18's `createRoot` API instead of the deprecated `ReactDOM.render()`.
 {{% /alert %}}
 
-
-Verify whether the issue is present in your version of Angular. If not, uncomment the commented-out line in `ngOnDestroy`.
+The React 18 implementation properly handles component cleanup in `ngOnDestroy` by calling `root.unmount()` when the root exists.
 
 ## Step 4. Use the component.
 
