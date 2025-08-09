@@ -1049,6 +1049,7 @@ export type {
     IAutomationRecipientType,
     IAutomationUserGroupRecipient,
     IAutomationUserRecipient,
+    IAutomationStatus,
     IAutomationExternalRecipient,
     IAutomationUnknownRecipient,
     IAutomationAlert,

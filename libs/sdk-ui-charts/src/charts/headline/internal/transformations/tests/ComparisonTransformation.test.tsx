@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 import { afterEach, describe, vi, it, expect } from "vitest";
 import { render } from "@testing-library/react";
@@ -6,7 +6,7 @@ import { render } from "@testing-library/react";
 import { createIntlMock, ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-import ComparisonTransformation from "../ComparisonTransformation.js";
+import { ComparisonTransformation } from "../ComparisonTransformation.js";
 import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
 import * as useFireDrillEvent from "../useFiredDrillEvent.js";
 import { IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
@@ -35,7 +35,7 @@ describe("ComparisonTransformation", () => {
         ) => {
             const mockOnAfterRender = vi.fn();
             const mockIntl = createIntlMock();
-            const MockBaseHeadline = vi.spyOn(BaseHeadline, "default");
+            const MockBaseHeadline = vi.spyOn(BaseHeadline, "BaseHeadline");
             const mockHandleFiredDrillEvent = vi.fn();
             vi.spyOn(useFireDrillEvent, "useFireDrillEvent").mockReturnValue({
                 handleFiredDrillEvent: mockHandleFiredDrillEvent,

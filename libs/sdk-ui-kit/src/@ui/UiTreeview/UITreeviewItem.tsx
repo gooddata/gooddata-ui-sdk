@@ -1,15 +1,22 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 
 import { e } from "./treeviewBem.js";
-import { UiStaticTreeView, LevelTypesUnion, IUiTreeviewItemProps, UiRefsTree } from "./types.js";
-import { convertPathToKey, itemsState } from "./utils.js";
+import type {
+    UiStaticTreeView,
+    LevelTypesUnion,
+    IUiTreeviewItemProps,
+    UiRefsTree,
+    UiTreeViewItemAriaAttributes,
+} from "./types.js";
+import { convertPathToKey, itemsState, makeItemId } from "./utils.js";
 
 /**
  * @internal
  */
 interface UITreeviewItemProps<Levels extends [], Level> {
+    treeViewId: string;
     path: number[];
     item: UiStaticTreeView<Level | LevelTypesUnion<Levels>>;
     getState: ReturnType<typeof itemsState>;
@@ -17,6 +24,7 @@ interface UITreeviewItemProps<Levels extends [], Level> {
     selectedItemId?: string;
     itemDataTestId?: string;
     isCompact?: boolean;
+    isDisabledFocusable: boolean;
     onSelect: (
         event: React.MouseEvent | React.KeyboardEvent,
         path: number[],
@@ -40,7 +48,9 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
         onHover,
         ItemComponent,
         isCompact,
+        isDisabledFocusable,
         itemsRef,
+        treeViewId,
         path,
     } = props;
 
@@ -50,9 +60,23 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
     const childCount = children?.length ?? 0;
     const level = props.path.length;
 
+    const id = makeItemId(treeViewId, path);
     const isFocused = item === focusedItem.item;
     const isSelected = item.id === selectedItemId;
-    const isExpanded = state.expanded;
+    const isExpanded = childCount > 0 ? state.expanded : undefined;
+    const isDisabled = !isDisabledFocusable && item.isDisabled;
+
+    const ariaAttributes: UiTreeViewItemAriaAttributes = useMemo(
+        () => ({
+            id,
+            role: "treeitem",
+            "aria-level": level,
+            "aria-expanded": isExpanded,
+            "aria-selected": isFocused,
+            "aria-disabled": isDisabled,
+        }),
+        [id, level, isExpanded, isFocused, isDisabled],
+    );
 
     const handleToggle = useCallback(
         (event: React.MouseEvent | React.KeyboardEvent, expanded: boolean) => {
@@ -77,11 +101,6 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
             <div
                 className={e("treeitem__container")}
                 data-testid={itemDataTestId}
-                role="treeitem"
-                aria-level={level}
-                aria-expanded={isExpanded}
-                aria-selected={isFocused}
-                aria-disabled={item.isDisabled}
                 ref={(node) => {
                     itemsRef.current[convertPathToKey(path)] = node;
                 }}
@@ -98,6 +117,7 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
                     onSelect={handleSelect}
                     onToggle={handleToggle}
                     onHover={handleHover}
+                    ariaAttributes={ariaAttributes}
                 />
             </div>
             {children?.length && isExpanded ? (
@@ -113,8 +133,10 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
                             selectedItemId={selectedItemId}
                             itemDataTestId={itemDataTestId}
                             isCompact={isCompact}
+                            isDisabledFocusable={isDisabledFocusable}
                             item={child}
                             key={i}
+                            treeViewId={treeViewId}
                             path={[...props.path, i]}
                         />
                     ))}

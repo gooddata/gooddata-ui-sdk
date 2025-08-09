@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { ComponentType } from "react";
 import { wrapDisplayName } from "@gooddata/sdk-ui";
 
@@ -12,7 +12,7 @@ export const withTitle = <T, H extends IBaseHeadlineTitle>(
         return (
             <>
                 <BaseHeadlineDataItem {...props} />
-                {!shouldHideTitle ? (
+                {shouldHideTitle ? null : (
                     <div
                         className="headline-title-wrapper s-headline-title-wrapper"
                         title={dataItem?.title}
@@ -20,7 +20,7 @@ export const withTitle = <T, H extends IBaseHeadlineTitle>(
                     >
                         {dataItem?.title}
                     </div>
-                ) : null}
+                )}
             </>
         );
     };

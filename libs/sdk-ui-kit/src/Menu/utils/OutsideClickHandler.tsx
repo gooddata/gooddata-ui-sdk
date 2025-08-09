@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { createRef } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useCallback, useEffect, useRef } from "react";
 
 export interface IOutsideClickHandlerProps {
     onOutsideClick: (e: MouseEvent) => void;
@@ -8,59 +8,49 @@ export interface IOutsideClickHandlerProps {
     children?: React.ReactNode;
 }
 
-export class OutsideClickHandler extends React.Component<IOutsideClickHandlerProps> {
-    public static defaultProps = {
-        // Set to true by default so that a `stopPropagation` in the
-        // children will not prevent all outside click handlers from firing
-        useCapture: true,
-    };
+export function OutsideClickHandler({
+    onOutsideClick,
+    toggler,
+    useCapture = true,
+    children,
+}: IOutsideClickHandlerProps) {
+    // Set to true by default so that a `stopPropagation` in the
+    // children will not prevent all outside click handlers from firing
 
-    private wrapperElRef = createRef<HTMLDivElement>();
+    const wrapperElRef = useRef<HTMLDivElement>(null);
 
-    public componentDidUpdate(prevProps: IOutsideClickHandlerProps): void {
-        if (
-            prevProps.onOutsideClick !== this.props.onOutsideClick ||
-            prevProps.useCapture !== this.props.useCapture
-        ) {
-            this.removeListeners();
-            this.addListeners();
-        }
-    }
+    const handleClick = useCallback(
+        (e: MouseEvent) => {
+            if (!wrapperElRef.current) {
+                // In IE11 the wrapperEl is not initialized for some reason.
+                return;
+            }
 
-    public componentDidMount(): void {
-        this.addListeners();
-    }
+            const target = e.target as HTMLElement;
 
-    public componentWillUnmount(): void {
-        this.removeListeners();
-    }
+            if (wrapperElRef.current.contains(target) || toggler?.contains(target)) {
+                return;
+            }
 
-    public render() {
-        return <div ref={this.wrapperElRef}>{this.props.children}</div>;
-    }
+            if (onOutsideClick) {
+                onOutsideClick(e);
+            }
+        },
+        [onOutsideClick, toggler],
+    );
 
-    private handleClick = (e: MouseEvent) => {
-        if (!this.wrapperElRef.current) {
-            // In IE11 the wrapperEl is not initialized for some reason.
-            return;
-        }
+    const addListeners = useCallback(() => {
+        document.addEventListener("mousedown", handleClick, useCapture);
+    }, [handleClick, useCapture]);
 
-        const target = e.target as HTMLElement;
+    const removeListeners = useCallback(() => {
+        document.removeEventListener("mousedown", handleClick, useCapture);
+    }, [handleClick, useCapture]);
 
-        if (this.wrapperElRef.current.contains(target) || this.props.toggler?.contains(target)) {
-            return;
-        }
+    useEffect(() => {
+        addListeners();
+        return removeListeners;
+    }, [onOutsideClick, useCapture, addListeners, removeListeners]);
 
-        if (this.props.onOutsideClick) {
-            this.props.onOutsideClick(e);
-        }
-    };
-
-    private addListeners = () => {
-        document.addEventListener("mousedown", this.handleClick, this.props.useCapture);
-    };
-
-    private removeListeners = () => {
-        document.removeEventListener("mousedown", this.handleClick, this.props.useCapture);
-    };
+    return <div ref={wrapperElRef}>{children}</div>;
 }

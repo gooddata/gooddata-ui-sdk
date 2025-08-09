@@ -1,8 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+import React, { memo, useState, useMemo, useCallback } from "react";
 import keys from "lodash/keys.js";
 import cloneDeep from "lodash/cloneDeep.js";
-import isEqual from "lodash/isEqual.js";
 import isReactEqual from "react-fast-compare";
 import result from "lodash/result.js";
 import noop from "lodash/noop.js";
@@ -91,125 +90,159 @@ export interface IBubbleState {
     optimalAlignPoints: string;
 }
 
+const defaultProps = {
+    alignPoints: [
+        {
+            align: "bl tl",
+        },
+    ],
+    alignTo: "body",
+    arrowOffsets: {},
+    arrowDirections: {},
+    arrowStyle: {},
+    className: "bubble-primary",
+    closeOnOutsideClick: false,
+    closeOnParentScroll: true,
+    closeOnEscape: false,
+    onClose: noop,
+    onMouseEnter: noop,
+    onMouseLeave: noop,
+    overlayClassName: "",
+};
+
 /**
  * @internal
  */
-export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
-    static defaultProps = {
-        alignPoints: [
-            {
-                align: "bl tl",
+export const Bubble = memo(
+    function Bubble(props: IBubbleProps) {
+        const {
+            id,
+            alignPoints: alignPointsProp,
+            alignTo,
+            arrowOffsets: arrowOffsetsProp,
+            arrowDirections: arrowDirectionsProp,
+            arrowStyle: arrowStyleProp,
+            className,
+            closeOnOutsideClick,
+            closeOnParentScroll,
+            closeOnEscape,
+            ignoreClicksOn,
+            ignoreClicksOnByClass,
+            onClose,
+            onMouseEnter,
+            onMouseLeave,
+            onKeyDown,
+            overlayClassName,
+            children,
+            overlayPositionType,
+            ensureVisibility,
+        } = { ...defaultProps, ...props };
+
+        const arrowOffsets = useMemo(
+            () => ({
+                ...arrowOffsetsProp,
+                ...ARROW_OFFSETS,
+            }),
+            [arrowOffsetsProp],
+        );
+
+        const arrowDirections = useMemo(
+            () => ({
+                ...arrowDirectionsProp,
+                ...ARROW_DIRECTIONS,
+            }),
+            [arrowDirectionsProp],
+        );
+
+        const addOffsetToAlignPoints = useCallback(
+            (alignPoints: IAlignPoint[]): IAlignPoint[] => {
+                const arrowOffsetsKeys = keys(arrowOffsets);
+                const getKey = (align: string, re: string) => {
+                    return align.match(re) !== null;
+                };
+
+                return alignPoints.map((item) => {
+                    const key = arrowOffsetsKeys.find(getKey.bind(null, item.align));
+                    const existingOffset = item.offset || { x: 0, y: 0 };
+
+                    return {
+                        ...item,
+                        offset: {
+                            x: existingOffset.x + arrowOffsets[key][0],
+                            y: existingOffset.y + arrowOffsets[key][1],
+                        },
+                    };
+                });
             },
-        ],
-        alignTo: "body",
-        arrowOffsets: {},
-        arrowDirections: {},
-        arrowStyle: {},
-        className: "bubble-primary",
-        closeOnOutsideClick: false,
-        closeOnParentScroll: true,
-        closeOnEscape: false,
-        onClose: noop,
-        onMouseEnter: noop,
-        onMouseLeave: noop,
-        overlayClassName: "",
-    };
+            [arrowOffsets],
+        );
 
-    // identifier for BubbleTrigger
-    static identifier = "Bubble";
-    arrowOffsets: ArrowOffsets;
-    arrowDirections: ArrowDirections;
+        const initialAlignPoints = useMemo(
+            () => addOffsetToAlignPoints(cloneDeep(alignPointsProp)),
+            [addOffsetToAlignPoints, alignPointsProp],
+        );
 
-    constructor(props: IBubbleProps) {
-        super(props);
+        const [alignPoints] = useState(initialAlignPoints);
+        const [optimalAlignPoints, setOptimalAlignPoints] = useState(alignPointsProp[0].align);
 
-        this.arrowOffsets = { ...props.arrowOffsets, ...ARROW_OFFSETS };
-        this.arrowDirections = { ...props.arrowDirections, ...ARROW_DIRECTIONS };
+        const onAlign = useCallback((alignment: IAlignPoint): void => {
+            setOptimalAlignPoints(alignment.align);
+        }, []);
 
-        const alignPoints = this.addOffsetToAlignPoints(cloneDeep(props.alignPoints));
+        const getArrowDirection = useCallback(
+            (alignPoints: string): string => {
+                const key = keys(arrowDirections).find((arrowDirection) => alignPoints.match(arrowDirection));
+                return arrowDirections[key] || "none";
+            },
+            [arrowDirections],
+        );
 
-        this.state = {
-            alignPoints,
-            optimalAlignPoints: props.alignPoints[0].align,
-        };
-    }
+        const getArrowsClassname = useCallback(
+            (alignPoints: string): string => {
+                const myAlignPoint = alignPoints.split(" ")[1];
+                const direction = getArrowDirection(alignPoints);
 
-    shouldComponentUpdate(nextProps: IBubbleProps, nextState: IBubbleState): boolean {
-        const propsChanged = !isReactEqual(this.props, nextProps);
-        const alignmentChanged = !isEqual(this.state.optimalAlignPoints, nextState.optimalAlignPoints);
+                return `arrow-${direction}-direction arrow-${myAlignPoint}`;
+            },
+            [getArrowDirection],
+        );
 
-        return propsChanged || alignmentChanged;
-    }
+        const classNames = useMemo(() => {
+            return cx({
+                [className]: !!className,
+                [getArrowsClassname(optimalAlignPoints)]: true,
+                "gd-bubble": true,
+                bubble: true,
+            });
+        }, [className, getArrowsClassname, optimalAlignPoints]);
 
-    onAlign = (alignment: IAlignPoint): void => {
-        this.setState({ optimalAlignPoints: alignment.align });
-    };
-
-    getClassnames(): string {
-        return cx({
-            [this.props.className]: !!this.props.className,
-            [this.getArrowsClassname(this.state.optimalAlignPoints)]: true,
-            "gd-bubble": true,
-            bubble: true,
-        });
-    }
-
-    getArrowsClassname(alignPoints: string): string {
-        const myAlignPoint = alignPoints.split(" ")[1];
-        const direction = this.getArrowDirection(alignPoints);
-
-        return `arrow-${direction}-direction arrow-${myAlignPoint}`;
-    }
-
-    getArrowDirection(alignPoints: string): string {
-        const key = keys(this.arrowDirections).find((arrowDirection) => alignPoints.match(arrowDirection));
-
-        return this.arrowDirections[key] || "none";
-    }
-
-    addOffsetToAlignPoints(alignPoints: IAlignPoint[]): IAlignPoint[] {
-        const { arrowOffsets } = this;
-        const arrowOffsetsKeys = keys(arrowOffsets);
-        const getKey = (align: string, re: string) => {
-            return align.match(re) !== null;
-        };
-
-        return alignPoints.map((item) => {
-            const key = arrowOffsetsKeys.find(getKey.bind(this, item.align));
-
-            item.offset = item.offset || { x: 0, y: 0 };
-            item.offset.x += arrowOffsets[key][0];
-            item.offset.y += arrowOffsets[key][1];
-
-            return item;
-        }, this);
-    }
-
-    render() {
-        const arrowStyle = result(this.props, "arrowStyle", {});
+        const arrowStyle = useMemo(
+            () => result({ arrowStyle: arrowStyleProp }, "arrowStyle", {}),
+            [arrowStyleProp],
+        );
 
         return (
             <ZoomAwareOverlay
-                id={this.props.id}
-                className={this.props.overlayClassName}
-                alignTo={this.props.alignTo}
-                onAlign={this.onAlign}
-                alignPoints={this.state.alignPoints}
-                closeOnParentScroll={this.props.closeOnParentScroll}
+                id={id}
+                className={overlayClassName}
+                alignTo={alignTo}
+                onAlign={onAlign}
+                alignPoints={alignPoints}
+                closeOnParentScroll={closeOnParentScroll}
                 closeOnMouseDrag
-                closeOnOutsideClick={this.props.closeOnOutsideClick}
-                ignoreClicksOn={this.props.ignoreClicksOn}
-                ignoreClicksOnByClass={this.props.ignoreClicksOnByClass}
-                onClose={this.props.onClose}
-                closeOnEscape={this.props.closeOnEscape}
-                positionType={this.props.overlayPositionType}
-                ensureVisibility={this.props.ensureVisibility}
+                closeOnOutsideClick={closeOnOutsideClick}
+                ignoreClicksOn={ignoreClicksOn}
+                ignoreClicksOnByClass={ignoreClicksOnByClass}
+                onClose={onClose}
+                closeOnEscape={closeOnEscape}
+                positionType={overlayPositionType}
+                ensureVisibility={ensureVisibility}
             >
                 <div
-                    onMouseEnter={this.props.onMouseEnter}
-                    onMouseLeave={this.props.onMouseLeave}
-                    onKeyDown={this.props.onKeyDown}
-                    className={this.getClassnames()}
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}
+                    onKeyDown={onKeyDown}
+                    className={classNames}
                 >
                     <div className="bubble-content">
                         <div className="helper" />
@@ -217,10 +250,16 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
                             <div className="arrow-border" />
                             <div className="arrow" />
                         </div>
-                        <div className="content">{this.props.children}</div>
+                        <div className="content">{children}</div>
                     </div>
                 </div>
             </ZoomAwareOverlay>
         );
-    }
-}
+    },
+    (prevProps, nextProps) => {
+        return isReactEqual(prevProps, nextProps);
+    },
+);
+
+// identifier for BubbleTrigger
+(Bubble as any).identifier = "Bubble";

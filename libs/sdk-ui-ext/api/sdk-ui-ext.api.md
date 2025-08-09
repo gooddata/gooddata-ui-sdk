@@ -84,7 +84,7 @@ export type AutomationColumnDefinition = {
 };
 
 // @internal
-export const Automations: ({ backend, workspace, locale, selectedColumnDefinitions, maxHeight, pageSize, type, }: IAutomationsProps) => React_2.JSX.Element;
+export const Automations: ({ backend, workspace, locale, selectedColumnDefinitions, maxHeight, pageSize, type, dashboardUrlBuilder, automationUrlBuilder, widgetUrlBuilder, }: IAutomationsProps) => React_2.JSX.Element;
 
 // @internal
 export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName | AlertAutomationsColumnName;
@@ -98,7 +98,7 @@ export { ChartInlineVisualizationType }
 export function clearInsightViewCaches(): void;
 
 // @internal
-export type CommonAutomationsColumnName = "id" | "name" | "dashboard" | "state" | "recipients" | "lastSent" | "createdBy" | "createdAt" | "notificationChannel" | "workspace" | "menu";
+export type CommonAutomationsColumnName = "id" | "title" | "dashboard" | "recipients" | "lastRun" | "lastRunStatus" | "createdBy" | "createdAt" | "notificationChannel" | "workspace" | "menu";
 
 // @internal (undocumented)
 export const COMPARISON_OPERATORS: {
@@ -311,7 +311,11 @@ export interface IAttributeHierarchyDialogProps {
 // @internal (undocumented)
 export interface IAutomationsProps {
     // (undocumented)
+    automationUrlBuilder?: IAutomationUrlBuilder;
+    // (undocumented)
     backend?: IAnalyticalBackend;
+    // (undocumented)
+    dashboardUrlBuilder?: IDashboardUrlBuilder;
     // (undocumented)
     locale?: string;
     // (undocumented)
@@ -323,7 +327,15 @@ export interface IAutomationsProps {
     // (undocumented)
     type?: AutomationsType;
     // (undocumented)
+    widgetUrlBuilder?: IWidgetUrlBuilder;
+    // (undocumented)
     workspace?: string;
+}
+
+// @internal (undocumented)
+export interface IAutomationUrlBuilder {
+    // (undocumented)
+    (workspaceId: string, dashboardId: string, automationId: string): string;
 }
 
 // @internal (undocumented)
@@ -334,6 +346,12 @@ export interface ICreateUserGroupDialogProps extends IWithTelemetryProps {
     onSuccess: () => void;
     // (undocumented)
     organizationId: string;
+}
+
+// @internal (undocumented)
+export interface IDashboardUrlBuilder {
+    // (undocumented)
+    (workspaceId: string, dashboardId: string): string;
 }
 
 // @internal (undocumented)
@@ -764,6 +782,12 @@ export interface IVisualizationSizeInfo {
 }
 
 // @internal (undocumented)
+export interface IWidgetUrlBuilder {
+    // (undocumented)
+    (workspaceId: string, dashboardId: string, widgetId: string): string;
+}
+
+// @internal (undocumented)
 export interface IWithTelemetryProps {
     // (undocumented)
     onEvent: TrackEventCallback;
@@ -819,7 +843,7 @@ export interface Root {
 }
 
 // @internal
-export type ScheduleAutomationsColumnName = "source" | "frequency" | "nextRun" | "lastRunStatus" | "attachments";
+export type ScheduleAutomationsColumnName = "source" | "frequency" | "nextRun" | "attachments";
 
 // @internal (undocumented)
 export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted" | "group-deleted" | "user-deleted" | "group-created" | "user-detail-updated" | "group-detail-updated" | "groups-added-to-single-user" | "groups-added-to-multiple-users" | "users-added-to-single-group" | "users-added-to-multiple-groups" | "permission-added-to-single-user" | "permission-added-to-single-group" | "permission-added-to-multiple-users" | "permission-added-to-multiple-groups" | "user-permission-changed-to-hierarchy" | "user-permission-changed-to-single-workspace" | "group-permission-changed-to-hierarchy" | "group-permission-changed-to-single-workspace" | "user-permission-changed-to-view" | "group-permission-changed-to-view" | "user-permission-changed-to-view-save-views" | "group-permission-changed-to-view-save-views" | "user-permission-changed-to-view-export" | "group-permission-changed-to-view-export" | "user-permission-changed-to-view-export-save-views" | "group-permission-changed-to-view-export-save-views" | "user-permission-changed-to-analyze" | "group-permission-changed-to-analyze" | "user-permission-changed-to-analyze-export" | "group-permission-changed-to-analyze-export" | "user-permission-changed-to-manage" | "group-permission-changed-to-manage" | "user-data-source-permission-changed-to-use" | "group-data-source-permission-changed-to-use" | "user-data-source-permission-changed-to-manage" | "group-data-source-permission-changed-to-manage" | "user-role-changed-to-admin" | "user-role-changed-to-member";

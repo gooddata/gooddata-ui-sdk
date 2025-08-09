@@ -215,6 +215,7 @@ export type {
     ValidateLLMEndpointResponse,
     ResolvedLlmEndpoint,
     ResolvedLlmEndpoints,
+    ChatHistoryRequestResponseStateEnum,
 } from "./generated/afm-rest-api/api.js";
 export {
     AfmObjectIdentifierAttributeIdentifierTypeEnum as AfmModelObjectIdentifierAttributeIdentifierTypeEnum,

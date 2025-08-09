@@ -5,10 +5,12 @@ import { useIntl } from "react-intl";
 import { UiAsyncTableFilter, UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 import { useFilterOptions } from "./FilterOptionsContext.js";
 import { messages } from "../messages.js";
-
-export const ALL_DASHBOARDS_FILTER_VALUE = "__ALL_DASHBOARDS__";
-export const ALL_RECIPIENTS_FILTER_VALUE = "__ALL_RECIPIENTS__";
-export const ALL_CREATED_BY_FILTER_VALUE = "__ALL_CREATED_BY__";
+import { useUser } from "../UserContext.js";
+import {
+    ALL_DASHBOARDS_FILTER_VALUE,
+    ALL_RECIPIENTS_FILTER_VALUE,
+    ALL_CREATED_BY_FILTER_VALUE,
+} from "../constants.js";
 
 //generic filter hook
 
@@ -80,7 +82,8 @@ const useDashboardFilter = () => {
 const useRecipientsFilter = () => {
     const intl = useIntl();
 
-    const { workspaceUsers, isCurrentUser } = useFilterOptions();
+    const { workspaceUsers } = useFilterOptions();
+    const { isCurrentUser } = useUser();
 
     const options = useMemo(() => {
         return workspaceUsers.map((item) => ({
@@ -102,7 +105,8 @@ const useRecipientsFilter = () => {
 const useCreatedByFilter = () => {
     const intl = useIntl();
 
-    const { workspaceUsers, isCurrentUser } = useFilterOptions();
+    const { workspaceUsers } = useFilterOptions();
+    const { isCurrentUser } = useUser();
 
     const createdByFilterOptions = useMemo(() => {
         return workspaceUsers.map((item) => ({

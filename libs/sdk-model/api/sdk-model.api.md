@@ -355,7 +355,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT";
 
 // @public
 export type DataValue = null | string | number;
@@ -1006,9 +1006,16 @@ export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase
 // @alpha (undocumented)
 export interface IAutomationMetadataObjectBase {
     alert?: IAutomationAlert;
-    dashboard?: Identifier;
+    dashboard?: {
+        id?: Identifier;
+        title?: string;
+    };
     details?: IAutomationDetails;
     exportDefinitions?: IExportDefinitionMetadataObject[];
+    lastRun?: {
+        status?: IAutomationStatus;
+        executedAt?: string;
+    };
     metadata?: {
         widget?: string;
         filters?: string[];
@@ -1052,6 +1059,9 @@ export interface IAutomationSchedule {
     firstRun?: string;
     timezone?: string;
 }
+
+// @alpha (undocumented)
+export type IAutomationStatus = "SUCCESS" | "FAILED";
 
 // @alpha (undocumented)
 export interface IAutomationUnknownRecipient extends Omit<IAutomationUserRecipient, "type"> {
@@ -2080,6 +2090,7 @@ export interface IGenAIVisualization {
     metrics: IGenAIVisualizationMetric[];
     savedVisualizationId?: string;
     saving?: boolean;
+    statusReportPending?: boolean;
     suggestions?: IGenAISuggestion[];
     title: string;
     visualizationType: GenAIVisualizationType;

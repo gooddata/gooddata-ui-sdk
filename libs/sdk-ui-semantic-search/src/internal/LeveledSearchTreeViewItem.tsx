@@ -5,7 +5,7 @@ import {
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
 } from "@gooddata/sdk-model";
-import { Icon, type IUiTreeviewItemProps } from "@gooddata/sdk-ui-kit";
+import { UiIcon, type IUiTreeviewItemProps } from "@gooddata/sdk-ui-kit";
 
 import { SearchItemDetails } from "./SearchItemDetails.js";
 import { SearchItemIcon } from "./SearchItemIcon.js";
@@ -21,12 +21,15 @@ type Props = IUiTreeviewItemProps<ISemanticSearchResultItem | ISemanticSearchRel
  * @internal
  */
 export const LeveledSearchTreeViewItemMemo = React.memo(function LeveledSearchTreeViewItem(props: Props) {
-    const { item, type, level, isFocused, isExpanded, childCount, onSelect, onHover } = props;
+    const { item, type, level, isFocused, isExpanded, childCount, onSelect, onHover, ariaAttributes } = props;
     const href = type === "leaf" ? item.url : undefined;
 
     return (
         <SearchItem
-            ariaLabel={getAriaLabel(item.data)}
+            ariaAttributes={{
+                ...ariaAttributes,
+                "aria-label": getAriaLabel(item.data),
+            }}
             level={level}
             href={href}
             onClick={onSelect}
@@ -38,7 +41,7 @@ export const LeveledSearchTreeViewItemMemo = React.memo(function LeveledSearchTr
         >
             <span className="gd-semantic-search__results-item__text__row">
                 {item.isDisabled ? (
-                    <Icon.Lock className="gd-semantic-search__results-item__text__lock-icon" />
+                    <UiIcon type="lock" color="complementary-7" size={16} ariaHidden={true} />
                 ) : null}
                 <span className="gd-semantic-search__results-item__text__ellipsis">{item.stringTitle}</span>
             </span>

@@ -43,7 +43,10 @@ export const interactionsToMessages = (interactions: IGenAIChatInteraction[]): M
     });
 };
 
-export const processContents = (item: IGenAIChatEvaluation | IGenAIChatInteraction): Contents[] => {
+export const processContents = (
+    item: IGenAIChatEvaluation | IGenAIChatInteraction,
+    arrived?: boolean,
+): Contents[] => {
     const contents: Contents[] = [];
 
     if (item.routing?.reasoning) {
@@ -62,7 +65,14 @@ export const processContents = (item: IGenAIChatEvaluation | IGenAIChatInteracti
         contents.push(
             makeVisualizationContents(
                 item.createdVisualizations.reasoning,
-                item.createdVisualizations.objects,
+                item.createdVisualizations.objects.map((obj) => ({
+                    ...obj,
+                    ...(arrived
+                        ? {
+                              statusReportPending: true,
+                          }
+                        : {}),
+                })),
             ),
         );
     }

@@ -24,6 +24,7 @@ import {
     ValidationContext,
     IWorkspaceAutomationService,
     IGetAutomationsOptions,
+    IGetAutomationsQueryOptions,
     IGetAutomationOptions,
     IAutomationsQuery,
     IAutomationsQueryResult,
@@ -1313,8 +1314,12 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
         cache.queries.clear();
     }
 
-    getAutomationsQuery(): IAutomationsQuery {
-        return new CachedAutomationsQueryFactory(super.getAutomationsQuery(), this.ctx, this.workspace);
+    getAutomationsQuery(options?: IGetAutomationsQueryOptions): IAutomationsQuery {
+        return new CachedAutomationsQueryFactory(
+            super.getAutomationsQuery(options),
+            this.ctx,
+            this.workspace,
+        );
     }
 }
 

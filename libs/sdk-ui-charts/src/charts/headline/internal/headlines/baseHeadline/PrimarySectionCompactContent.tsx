@@ -1,7 +1,7 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { CSSProperties, useMemo } from "react";
 
-import PrimarySectionContent from "./PrimarySectionContent.js";
+import { PrimarySectionContent } from "./PrimarySectionContent.js";
 import { calculateHeadlineHeightFontSize } from "@gooddata/sdk-ui-vis-commons";
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
@@ -11,7 +11,7 @@ interface IPrimarySectionCompactContentProps {
     isOnlyPrimaryItem: boolean;
 }
 
-const PrimarySectionCompactContent: React.FC<IPrimarySectionCompactContentProps> = ({
+export const PrimarySectionCompactContent: React.FC<IPrimarySectionCompactContentProps> = ({
     primaryItem,
     isOnlyPrimaryItem,
 }) => {
@@ -30,5 +30,3 @@ const PrimarySectionCompactContent: React.FC<IPrimarySectionCompactContentProps>
         <PrimarySectionContent primaryItem={primaryItem} customStyle={customStyle} />
     ) : null;
 };
-
-export default PrimarySectionCompactContent;

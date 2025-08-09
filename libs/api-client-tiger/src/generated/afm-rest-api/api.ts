@@ -1013,6 +1013,12 @@ export interface ChatHistoryRequest {
      * @memberof ChatHistoryRequest
      */
     savedVisualization?: SavedVisualization;
+    /**
+     * Response state indicating the outcome of the AI interaction.
+     * @type {string}
+     * @memberof ChatHistoryRequest
+     */
+    responseState?: ChatHistoryRequestResponseStateEnum;
 }
 
 export const ChatHistoryRequestUserFeedbackEnum = {
@@ -1023,6 +1029,18 @@ export const ChatHistoryRequestUserFeedbackEnum = {
 
 export type ChatHistoryRequestUserFeedbackEnum =
     (typeof ChatHistoryRequestUserFeedbackEnum)[keyof typeof ChatHistoryRequestUserFeedbackEnum];
+export const ChatHistoryRequestResponseStateEnum = {
+    SUCCESSFUL: "SUCCESSFUL",
+    UNEXPECTED_ERROR: "UNEXPECTED_ERROR",
+    NOT_FOUND_ATTRIBUTES: "NOT_FOUND_ATTRIBUTES",
+    TOO_MANY_DATA_POINTS: "TOO_MANY_DATA_POINTS",
+    NO_DATA: "NO_DATA",
+    NO_RESULTS: "NO_RESULTS",
+    OUT_OF_TOPIC: "OUT_OF_TOPIC",
+} as const;
+
+export type ChatHistoryRequestResponseStateEnum =
+    (typeof ChatHistoryRequestResponseStateEnum)[keyof typeof ChatHistoryRequestResponseStateEnum];
 
 /**
  *

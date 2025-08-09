@@ -40,7 +40,6 @@ export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTabl
 const useAsyncTableToolbar = <T extends { id: string }>({
     filters,
     bulkActions,
-    scrollToStart,
     selectedItemIds,
     setSelectedItemIds,
     totalItemsCount,
@@ -82,11 +81,11 @@ const useAsyncTableToolbar = <T extends { id: string }>({
             <>
                 <div className={e("toolbar-label")}>{intl.formatMessage(messages.filterLabel)}</div>
                 {filters.map((filter) => (
-                    <UiAsyncTableFilter key={filter.label} scrollToStart={scrollToStart} {...filter} />
+                    <UiAsyncTableFilter key={filter.label} {...filter} />
                 ))}
             </>
         ) : null;
-    }, [filters, scrollToStart, intl]);
+    }, [filters, intl]);
 
     const renderSearch = useCallback(() => {
         const placeholder = intl.formatMessage(messages.titleSearchPlaceholder);

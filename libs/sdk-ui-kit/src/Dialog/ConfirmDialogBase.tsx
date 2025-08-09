@@ -108,6 +108,7 @@ export const ConfirmDialogBase = React.memo<IConfirmDialogBaseProps>(function Co
                             className={submitButtonClasses}
                             value={submitButtonText}
                             disabled={isSubmitDisabled}
+                            describedByFromValidation
                         />
                         {submitButtonTooltipText ? (
                             <Bubble

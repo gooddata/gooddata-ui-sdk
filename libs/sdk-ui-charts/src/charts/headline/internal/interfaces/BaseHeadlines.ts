@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { HeadlineElementType } from "@gooddata/sdk-ui";
 import { IHeadlineDataItem } from "./Headlines.js";
 import { ComponentType, RefObject } from "react";
@@ -67,4 +67,6 @@ export interface IBaseHeadlineData {
 export interface IBaseHeadlineDataItemProps<T> {
     dataItem: T;
     evaluationType: EvaluationType;
+    onValueOverflow?: (isOverflowing: boolean) => void;
+    measurementTrigger?: number; // Used to trigger remeasurement
 }

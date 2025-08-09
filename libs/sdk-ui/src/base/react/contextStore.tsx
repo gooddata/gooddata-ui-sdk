@@ -85,6 +85,7 @@ export const createContextStore = <T,>(name: string): IContextStore<T> => {
 
         return <Context.Provider value={store}>{children}</Context.Provider>;
     };
+    Provider.displayName = `ContextStoreProvider(${name})`;
 
     const useContextStoreOptional = <SelectorResult,>(
         selector: (state: T) => SelectorResult = (state) => state as unknown as SelectorResult,
@@ -106,7 +107,7 @@ export const createContextStore = <T,>(name: string): IContextStore<T> => {
                 const prevSelectedState = selector(prevState);
 
                 if (!equalityFn(newSelectedState, prevSelectedState)) {
-                    setSelectedState(newSelectedState);
+                    setSelectedState(() => newSelectedState);
                 }
             });
         }, [selector, equalityFn, store]);

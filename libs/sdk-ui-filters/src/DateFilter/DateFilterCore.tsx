@@ -7,7 +7,12 @@ import format from "date-fns/format/index.js";
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
 import { Dropdown, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces/index.js";
-import { IntlWrapper } from "@gooddata/sdk-ui";
+import {
+    createInvalidNode,
+    IntlWrapper,
+    useValidationContextValue,
+    ValidationContextStore,
+} from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants/index.js";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized.js";
 import { DateFilterBody } from "./DateFilterBody/DateFilterBody.js";
@@ -116,6 +121,8 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     const dateFilterContainerRef = useRef<HTMLDivElement>(null);
     const dateFilterBodyRef = useRef<HTMLDivElement>(null);
 
+    const validationContextValue = useValidationContextValue(createInvalidNode({ id: "DateFilter" }));
+
     const filteredFilterOptions = useMemo(() => {
         return flow(filterVisibleDateFilterOptions, sanitizePresetIntervals)(filterOptions);
     }, [filterOptions]);
@@ -165,105 +172,111 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
 
     return (
         <IntlWrapper locale={locale || "en-US"}>
-            <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
-                {(isMobile) => {
-                    const dateFilterButton = (
-                        isOpen: boolean = false,
-                        buttonRef: React.MutableRefObject<HTMLElement | null> = null,
-                        dropdownId: string = "",
-                        toggleDropdown = noop,
-                    ) => (
-                        <DateFilterButtonLocalized
-                            disabled={disabled}
-                            isMobile={isMobile}
-                            isOpen={isOpen}
-                            dateFilterOption={applyExcludeCurrentPeriod(
-                                withoutApply ? lastValidSelectedFilterOption : originalSelectedFilterOption,
-                                withoutApply ? lastValidExcludeCurrentPeriod : originalExcludeCurrentPeriod,
-                            )}
-                            dateFormat={adjustDateFormatForDisplay(
-                                verifiedDateFormat,
-                                isTimeForAbsoluteRangeEnabled,
-                            )}
-                            customFilterName={customFilterName}
-                            customIcon={customIcon}
-                            onClick={toggleDropdown}
-                            ButtonComponent={ButtonComponent}
-                            buttonRef={buttonRef}
-                            dropdownId={dropdownId}
-                        />
-                    );
-                    return (
-                        <Dropdown
-                            openOnInit={openOnInit}
-                            closeOnParentScroll={true}
-                            closeOnMouseDrag={true}
-                            closeOnOutsideClick={true}
-                            enableEventPropagation={true}
-                            autofocusOnOpen
-                            initialFocus={DATE_FILTER_SELECTED_LIST_ITEM_ID}
-                            alignPoints={[
-                                { align: "bl tl" },
-                                { align: "tr tl" },
-                                { align: "br tr", offset: { x: -11 } },
-                                { align: "tr tl", offset: { x: 0, y: -100 } },
-                                { align: "tr tl", offset: { x: 0, y: -50 } },
-                            ]}
-                            onOpenStateChanged={handleOpenStateChanged}
-                            overlayPositionType={overlayPositionType}
-                            renderButton={({ isOpen, buttonRef, dropdownId, toggleDropdown }) => (
-                                <span onClick={disabled ? noop : toggleDropdown}>
-                                    {dateFilterButton(isOpen, buttonRef, dropdownId, toggleDropdown)}
-                                </span>
-                            )}
-                            ignoreClicksOnByClass={[
-                                ".s-do-not-close-dropdown-on-click",
-                                ".rdp-day", // absolute range picker calendar items
-                            ]}
-                            renderBody={({ closeDropdown, ariaAttributes }) => {
-                                return isConfigurationOpen ? (
-                                    <FilterConfigurationComponent
-                                        onSaveButtonClick={closeConfiguration}
-                                        onCancelButtonClick={cancelConfiguration}
-                                    />
-                                ) : (
-                                    // Dropdown component uses React.Children.map and adds special props to this component
-                                    // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
-                                    <div
-                                        role="dialog"
-                                        className="gd-extended-date-filter-container"
-                                        id={ariaAttributes.id}
-                                        ref={dateFilterContainerRef}
-                                        onKeyDown={(e) => handleKeyDown(e, closeDropdown)}
-                                    >
-                                        <DateFilterBody
-                                            {...dropdownBodyProps}
-                                            selectedFilterOption={selectedFilterOption}
-                                            excludeCurrentPeriod={excludeCurrentPeriod}
-                                            showHeaderMessage={showDropDownHeaderMessage}
-                                            onApplyClick={onApplyClick}
-                                            onCancelClick={onCancelClick}
-                                            filterOptions={filteredFilterOptions}
-                                            isMobile={isMobile}
-                                            closeDropdown={closeDropdown}
-                                            dateFilterButton={dateFilterButton()}
-                                            dateFormat={verifiedDateFormat}
-                                            isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
-                                            weekStart={weekStart}
-                                            isConfigurationEnabled={
-                                                FilterConfigurationComponent !== undefined
-                                            }
-                                            onConfigurationClick={openConfiguration}
-                                            withoutApply={withoutApply}
-                                            ref={dateFilterBodyRef}
+            <ValidationContextStore value={validationContextValue}>
+                <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
+                    {(isMobile) => {
+                        const dateFilterButton = (
+                            isOpen: boolean = false,
+                            buttonRef: React.MutableRefObject<HTMLElement | null> = null,
+                            dropdownId: string = "",
+                            toggleDropdown = noop,
+                        ) => (
+                            <DateFilterButtonLocalized
+                                disabled={disabled}
+                                isMobile={isMobile}
+                                isOpen={isOpen}
+                                dateFilterOption={applyExcludeCurrentPeriod(
+                                    withoutApply
+                                        ? lastValidSelectedFilterOption
+                                        : originalSelectedFilterOption,
+                                    withoutApply
+                                        ? lastValidExcludeCurrentPeriod
+                                        : originalExcludeCurrentPeriod,
+                                )}
+                                dateFormat={adjustDateFormatForDisplay(
+                                    verifiedDateFormat,
+                                    isTimeForAbsoluteRangeEnabled,
+                                )}
+                                customFilterName={customFilterName}
+                                customIcon={customIcon}
+                                onClick={toggleDropdown}
+                                ButtonComponent={ButtonComponent}
+                                buttonRef={buttonRef}
+                                dropdownId={dropdownId}
+                            />
+                        );
+                        return (
+                            <Dropdown
+                                openOnInit={openOnInit}
+                                closeOnParentScroll={true}
+                                closeOnMouseDrag={true}
+                                closeOnOutsideClick={true}
+                                enableEventPropagation={true}
+                                autofocusOnOpen
+                                initialFocus={DATE_FILTER_SELECTED_LIST_ITEM_ID}
+                                alignPoints={[
+                                    { align: "bl tl" },
+                                    { align: "tr tl" },
+                                    { align: "br tr", offset: { x: -11 } },
+                                    { align: "tr tl", offset: { x: 0, y: -100 } },
+                                    { align: "tr tl", offset: { x: 0, y: -50 } },
+                                ]}
+                                onOpenStateChanged={handleOpenStateChanged}
+                                overlayPositionType={overlayPositionType}
+                                renderButton={({ isOpen, buttonRef, dropdownId, toggleDropdown }) => (
+                                    <span onClick={disabled ? noop : toggleDropdown}>
+                                        {dateFilterButton(isOpen, buttonRef, dropdownId, toggleDropdown)}
+                                    </span>
+                                )}
+                                ignoreClicksOnByClass={[
+                                    ".s-do-not-close-dropdown-on-click",
+                                    ".rdp-day", // absolute range picker calendar items
+                                ]}
+                                renderBody={({ closeDropdown, ariaAttributes }) => {
+                                    return isConfigurationOpen ? (
+                                        <FilterConfigurationComponent
+                                            onSaveButtonClick={closeConfiguration}
+                                            onCancelButtonClick={cancelConfiguration}
                                         />
-                                    </div>
-                                );
-                            }}
-                        />
-                    );
-                }}
-            </MediaQuery>
+                                    ) : (
+                                        // Dropdown component uses React.Children.map and adds special props to this component
+                                        // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
+                                        <div
+                                            role="dialog"
+                                            className="gd-extended-date-filter-container"
+                                            id={ariaAttributes.id}
+                                            ref={dateFilterContainerRef}
+                                            onKeyDown={(e) => handleKeyDown(e, closeDropdown)}
+                                        >
+                                            <DateFilterBody
+                                                {...dropdownBodyProps}
+                                                selectedFilterOption={selectedFilterOption}
+                                                excludeCurrentPeriod={excludeCurrentPeriod}
+                                                showHeaderMessage={showDropDownHeaderMessage}
+                                                onApplyClick={onApplyClick}
+                                                onCancelClick={onCancelClick}
+                                                filterOptions={filteredFilterOptions}
+                                                isMobile={isMobile}
+                                                closeDropdown={closeDropdown}
+                                                dateFilterButton={dateFilterButton()}
+                                                dateFormat={verifiedDateFormat}
+                                                isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
+                                                weekStart={weekStart}
+                                                isConfigurationEnabled={
+                                                    FilterConfigurationComponent !== undefined
+                                                }
+                                                onConfigurationClick={openConfiguration}
+                                                withoutApply={withoutApply}
+                                                ref={dateFilterBodyRef}
+                                            />
+                                        </div>
+                                    );
+                                }}
+                            />
+                        );
+                    }}
+                </MediaQuery>
+            </ValidationContextStore>
         </IntlWrapper>
     );
 };

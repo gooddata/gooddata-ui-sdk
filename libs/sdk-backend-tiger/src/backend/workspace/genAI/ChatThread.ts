@@ -87,6 +87,21 @@ export class ChatThreadService implements IChatThread {
         });
     }
 
+    async saveRenderVisualisationStatus(
+        chatHistoryInteractionId: string,
+        responseState: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS",
+    ): Promise<void> {
+        await this.authCall((client) => {
+            return client.genAI.aiChatHistory({
+                workspaceId: this.workspaceId,
+                chatHistoryRequest: {
+                    chatHistoryInteractionId,
+                    responseState,
+                },
+            });
+        });
+    }
+
     query(userMessage: string): IChatThreadQuery {
         return new ChatThreadQuery(this.authCall, {
             workspaceId: this.workspaceId,

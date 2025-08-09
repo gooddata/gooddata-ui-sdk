@@ -1,17 +1,26 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { CSSProperties } from "react";
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
 import { IBaseHeadlineValueItem } from "../../../../interfaces/BaseHeadlines.js";
 import { useBaseHeadlineDataItem } from "../useBaseHeadlineDataItem.js";
+import { ComparisonIndicatorAriaLabelFactory } from "./ComparisonIndicator.js";
 
 interface IComparisonValueProps {
     dataItem: IBaseHeadlineValueItem;
     comparisonStyle: CSSProperties;
     isSubItem?: boolean;
+    indicatorAriaLabelFactory?: ComparisonIndicatorAriaLabelFactory;
 }
 
-const ComparisonValue: React.FC<IComparisonValueProps> = ({ dataItem, comparisonStyle, isSubItem }) => {
+export const ComparisonValue: React.FC<IComparisonValueProps> = ({
+    dataItem,
+    comparisonStyle,
+    isSubItem,
+    indicatorAriaLabelFactory,
+}) => {
+    const intl = useIntl();
     const { formattedItem } = useBaseHeadlineDataItem(dataItem);
     const style: CSSProperties = {
         ...(formattedItem?.cssStyle || {}),
@@ -27,10 +36,12 @@ const ComparisonValue: React.FC<IComparisonValueProps> = ({ dataItem, comparison
     );
 
     return (
-        <div style={style} className={valueClassNames}>
+        <div
+            style={style}
+            className={valueClassNames}
+            aria-label={indicatorAriaLabelFactory?.(intl, formattedItem?.value)}
+        >
             {isSubItem ? `(${formattedItem?.value})` : formattedItem?.value}
         </div>
     );
 };
-
-export default ComparisonValue;

@@ -33,6 +33,10 @@ export class DummyGenAIChatThread implements IChatThread {
         _interactionId: string,
         _feedback: GenAIChatInteractionUserFeedback,
     ): Promise<void> {}
+    async saveRenderVisualisationStatus(
+        _interactionId: string,
+        _status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS",
+    ): Promise<void> {}
     query(_userMessage: string): IChatThreadQuery {
         return new DummyGenAIChatQueryBuilder();
     }

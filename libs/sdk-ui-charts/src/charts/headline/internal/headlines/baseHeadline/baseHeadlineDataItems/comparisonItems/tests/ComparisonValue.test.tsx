@@ -1,20 +1,22 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { CSSProperties } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
-import ComparisonValue from "../ComparisonValue.js";
+import { ComparisonValue } from "../ComparisonValue.js";
 import { IBaseHeadlineValueItem } from "../../../../../interfaces/BaseHeadlines.js";
 import { mockUseBaseHeadline } from "../../../tests/BaseHeadlineMock.js";
 import { TEST_DATA_ITEM, TEST_RENDER_VALUE_SPECS } from "../../../../../tests/TestData.fixtures.js";
+import { withIntl } from "@gooddata/sdk-ui";
 
-describe("ComparisonDataItem", () => {
+describe("ComparisonValue", () => {
     const renderComparisonDataItem = (props: {
         dataItem: IBaseHeadlineValueItem;
         comparisonStyle: CSSProperties;
         isSubItem?: boolean;
     }) => {
-        return render(<ComparisonValue {...props} />);
+        const Component = withIntl(ComparisonValue);
+        return render(<Component {...props} />);
     };
 
     beforeEach(() => {

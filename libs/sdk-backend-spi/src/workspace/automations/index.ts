@@ -37,6 +37,21 @@ export interface IGetAutomationsOptions {
 }
 
 /**
+ * Configuration options for loading automation metadata objects with query.
+ *
+ * @alpha
+ */
+export interface IGetAutomationsQueryOptions {
+    /**
+     * Specify if automationResult should be included in the response.
+     *
+     * @remarks
+     * Defaults to false.
+     */
+    includeAutomationResult?: boolean;
+}
+
+/**
  * Configuration options for loading automation metadata object.
  *
  * @alpha
@@ -62,9 +77,10 @@ export interface IWorkspaceAutomationService {
     /**
      * List automations
      *
+     * @param options - specify additional options
      * @returns methods for querying automations
      */
-    getAutomationsQuery(): IAutomationsQuery;
+    getAutomationsQuery(options?: IGetAutomationsQueryOptions): IAutomationsQuery;
 
     /**
      * Get all automations

@@ -23,6 +23,7 @@ import {
     GoodDataSdkError,
     isNoDataSdkError,
     OnError,
+    OnExportReady,
     OnLoadingChanged,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
@@ -34,6 +35,7 @@ import {
     RootState,
     newMessageAction,
     visualizationErrorAction,
+    saveVisualisationRenderStatusAction,
     copyToClipboardAction,
     colorPaletteSelector,
 } from "../../../store/index.js";
@@ -196,6 +198,16 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
         }
     };
 
+    const handleSuccess = () => {
+        dispatch(
+            saveVisualisationRenderStatusAction({
+                visualizationId: visualization.id,
+                assistantMessageId: messageId,
+                status: "SUCCESSFUL",
+            }),
+        );
+    };
+
     const handleSdkError = (error: GoodDataSdkError) => {
         // Ignore NO_DATA error, we still want an option to save the visualization
         if (!isNoDataSdkError(error)) {
@@ -207,6 +219,37 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                 errorMessage: error.getMessage(),
             }),
         );
+
+        switch (error.seType) {
+            case "NO_DATA":
+                dispatch(
+                    saveVisualisationRenderStatusAction({
+                        visualizationId: visualization.id,
+                        assistantMessageId: messageId,
+                        status: "NO_DATA",
+                    }),
+                );
+                break;
+            case "DATA_TOO_LARGE_TO_COMPUTE":
+            case "DATA_TOO_LARGE_TO_DISPLAY":
+                dispatch(
+                    saveVisualisationRenderStatusAction({
+                        visualizationId: visualization.id,
+                        assistantMessageId: messageId,
+                        status: "TOO_MANY_DATA_POINTS",
+                    }),
+                );
+                break;
+            default:
+                dispatch(
+                    saveVisualisationRenderStatusAction({
+                        visualizationId: visualization.id,
+                        assistantMessageId: messageId,
+                        status: "UNEXPECTED_ERROR",
+                    }),
+                );
+                break;
+        }
     };
 
     const handleLoadingChanged: OnLoadingChanged = ({ isLoading }) => {
@@ -325,6 +368,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                             colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
+                                            handleSuccess,
                                         );
                                     case "COLUMN":
                                         return renderColumnChart(
@@ -335,6 +379,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                             colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
+                                            handleSuccess,
                                         );
                                     case "LINE":
                                         return renderLineChart(
@@ -345,6 +390,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                             colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
+                                            handleSuccess,
                                         );
                                     case "PIE":
                                         return renderPieChart(
@@ -355,6 +401,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                             colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
+                                            handleSuccess,
                                         );
                                     case "TABLE":
                                         return renderTable(
@@ -364,6 +411,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                             filters,
                                             handleSdkError,
                                             handleLoadingChanged,
+                                            handleSuccess,
                                         );
                                     case "HEADLINE":
                                         return renderHeadline(
@@ -374,6 +422,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                             colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
+                                            handleSuccess,
                                         );
                                     default:
                                         return assertNever(visualization.visualizationType);
@@ -439,6 +488,7 @@ const renderBarChart = (
     colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
+    onSuccess: OnExportReady,
 ) => (
     <BarChart
         locale={locale}
@@ -456,6 +506,7 @@ const renderBarChart = (
         filters={filters}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
+        onExportReady={onSuccess}
     />
 );
 
@@ -467,6 +518,7 @@ const renderColumnChart = (
     colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
+    onSuccess: OnExportReady,
 ) => (
     <ColumnChart
         locale={locale}
@@ -484,6 +536,7 @@ const renderColumnChart = (
         filters={filters}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
+        onExportReady={onSuccess}
     />
 );
 
@@ -495,6 +548,7 @@ const renderLineChart = (
     colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
+    onSuccess: OnExportReady,
 ) => (
     <LineChart
         locale={locale}
@@ -510,6 +564,7 @@ const renderLineChart = (
         }}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
+        onExportReady={onSuccess}
     />
 );
 
@@ -521,6 +576,7 @@ const renderPieChart = (
     colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
+    onSuccess: OnExportReady,
 ) => (
     <PieChart
         locale={locale}
@@ -534,6 +590,7 @@ const renderPieChart = (
         }}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
+        onExportReady={onSuccess}
     />
 );
 
@@ -544,6 +601,7 @@ const renderTable = (
     filters: IFilter[],
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
+    onSuccess: OnExportReady,
 ) => (
     <PivotTable
         locale={locale}
@@ -552,6 +610,7 @@ const renderTable = (
         filters={filters}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
+        onExportReady={onSuccess}
     />
 );
 
@@ -563,6 +622,7 @@ const renderHeadline = (
     colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
+    onSuccess: OnExportReady,
 ) => (
     <Headline
         locale={locale}
@@ -576,6 +636,7 @@ const renderHeadline = (
         }}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
+        onExportReady={onSuccess}
     />
 );
 

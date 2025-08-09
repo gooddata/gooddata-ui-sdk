@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
     convertDrillableItemsToPredicates,
@@ -9,7 +9,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
-import BaseHeadlineDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
+import { BaseHeadlineDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
 import {
     createHeadlineDataItem,
     getExecutionData,

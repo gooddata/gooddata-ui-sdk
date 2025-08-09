@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { act, renderHook } from "@testing-library/react";
@@ -27,6 +27,7 @@ describe("useSemanticSearch hook", () => {
 
         expect(result.current).toEqual({
             searchStatus: "loading",
+            searchMessage: "",
             searchResults: [],
             searchError: "",
             relationships: [],
@@ -55,6 +56,7 @@ describe("useSemanticSearch hook", () => {
 
         expect(result.current).toEqual({
             searchStatus: "loading",
+            searchMessage: "",
             searchResults: [],
             searchError: "",
             relationships: [],
@@ -70,6 +72,7 @@ describe("useSemanticSearch hook", () => {
         expect(result.current).toEqual({
             searchStatus: "loading",
             searchResults: [],
+            searchMessage: "",
             searchError: "",
             relationships: [],
         });

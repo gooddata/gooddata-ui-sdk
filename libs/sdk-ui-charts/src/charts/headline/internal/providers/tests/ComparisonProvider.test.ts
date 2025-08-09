@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 import {
     TEST_BUCKETS,
@@ -9,7 +9,7 @@ import {
     TEST_SORT_ITEMS,
 } from "./TestData.fixtures.js";
 import { CalculateAs, CalculationType, IComparison } from "../../../../../interfaces/index.js";
-import ComparisonProvider from "../ComparisonProvider.js";
+import { ComparisonProvider } from "../ComparisonProvider.js";
 
 describe("ComparisonProvider", () => {
     const newProvider = (comparison: IComparison) => {

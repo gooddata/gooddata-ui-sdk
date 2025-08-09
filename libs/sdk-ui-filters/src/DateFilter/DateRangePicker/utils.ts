@@ -65,8 +65,6 @@ export const parseDate = (str: string, dateFormat: string): Date | undefined => 
     }
 };
 
-export const buildAriaDescribedByValue = (values: string[]) => values.filter((value) => !!value).join(" ");
-
 export const isValidDate = (date: Date | undefined): boolean => {
     return date !== undefined && !isNaN(date.getTime());
 };

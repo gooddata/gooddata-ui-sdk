@@ -1,7 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { AutomationType, IAutomationsQuery, IAutomationsQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    AutomationType,
+    IAutomationsQuery,
+    IAutomationsQueryResult,
+    IGetAutomationsQueryOptions,
+} from "@gooddata/sdk-backend-spi";
 import { EntitiesApiGetAllEntitiesAutomationsRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { convertAutomationListToAutomations } from "../../../convertors/fromBackend/AutomationConverter.js";
@@ -25,6 +30,7 @@ export class AutomationsQuery implements IAutomationsQuery {
     constructor(
         public readonly authCall: TigerAuthenticatedCallGuard,
         private requestParameters: EntitiesApiGetAllEntitiesAutomationsRequest,
+        private options?: IGetAutomationsQueryOptions,
     ) {}
 
     private setTotalCount = (value?: number) => {
@@ -92,6 +98,10 @@ export class AutomationsQuery implements IAutomationsQuery {
                 const metaIncludeObj =
                     this.totalCount === undefined ? { metaInclude: ["page" as const] } : {};
 
+                const includeAutomationResult = this.options?.includeAutomationResult
+                    ? ["automationResult" as const]
+                    : [];
+
                 const filterObj = this.constructFilter();
 
                 const userSettings = await getSettingsForCurrentUser(
@@ -114,6 +124,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                             "recipients",
                             "exportDefinitions",
                             "analyticalDashboard",
+                            ...includeAutomationResult,
                         ],
                         origin: "NATIVE", // ensures that no inherited automations are returned
                         size: limit,

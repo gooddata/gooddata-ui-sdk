@@ -7,6 +7,7 @@ import {
     IGetAutomationsOptions,
     IWorkspaceAutomationService,
     IAutomationsQuery,
+    IGetAutomationsQueryOptions,
 } from "@gooddata/sdk-backend-spi";
 
 import { convertAutomation as convertAutomationFromBackend } from "../../../convertors/fromBackend/AutomationConverter.js";
@@ -51,10 +52,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         });
     };
 
-    public getAutomationsQuery = (): IAutomationsQuery => {
-        return new AutomationsQuery(this.authCall, {
-            workspaceId: this.workspaceId,
-        });
+    public getAutomationsQuery = (options?: IGetAutomationsQueryOptions): IAutomationsQuery => {
+        return new AutomationsQuery(this.authCall, { workspaceId: this.workspaceId }, options);
     };
 
     public getAutomation = async (

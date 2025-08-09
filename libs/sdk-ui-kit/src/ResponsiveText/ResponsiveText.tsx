@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce.js";
 import isNumber from "lodash/isNumber.js";
@@ -17,6 +17,7 @@ export interface IResponsiveTextProps {
         removeEventListener: Window["removeEventListener"];
     };
     children?: React.ReactNode;
+    minFontSize?: number;
 }
 
 /**
@@ -29,6 +30,7 @@ export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
     children,
     windowResizeRefreshDelay = 50,
     window: windowInstance = window,
+    minFontSize,
 }) => {
     const [fontSize, setFontSize] = useState<number | null>(null);
     const containerRef = useRef<HTMLDivElement>();
@@ -47,7 +49,8 @@ export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
 
             const ratio = Math.round(width) / scrollWidth;
             const size = Math.floor(currentFontSize * ratio);
-            setFontSize(size);
+
+            setFontSize(minFontSize ? Math.max(size, minFontSize) : size);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

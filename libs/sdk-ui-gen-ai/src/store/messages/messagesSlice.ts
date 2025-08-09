@@ -307,6 +307,35 @@ const messagesSlice = createSlice({
                 visualization.savedVisualizationId = payload.savedVisualizationId;
             }
         },
+        saveVisualisationRenderStatusAction: (
+            state,
+            _action: PayloadAction<{
+                visualizationId: string;
+                assistantMessageId: string;
+                status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS";
+            }>,
+        ) => state,
+        saveVisualisationRenderStatusSuccessAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                visualizationId: string;
+                assistantMessageId: string;
+                status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS";
+            }>,
+        ) => {
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+
+            const visualization = assistantMessage.content
+                .filter(isVisualizationContents)
+                .flatMap((content) => content.createdVisualizations)
+                .find((content) => content.id === payload.visualizationId);
+
+            if (visualization) {
+                delete visualization.statusReportPending;
+            }
+        },
         visualizationErrorAction: (
             state,
             _action: PayloadAction<{
@@ -336,6 +365,8 @@ export const {
     saveVisualizationAction,
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
+    saveVisualisationRenderStatusAction,
+    saveVisualisationRenderStatusSuccessAction,
     visualizationErrorAction,
 
     /**

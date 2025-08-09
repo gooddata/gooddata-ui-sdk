@@ -4,11 +4,9 @@ import { AutomationType, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     IAutomationMetadataObject,
     IListedDashboard,
-    IUser,
     IWorkspaceUser,
     SortDirection,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * @internal
@@ -21,6 +19,30 @@ export interface IAutomationsProps {
     maxHeight?: number;
     pageSize?: number;
     type?: AutomationsType;
+    dashboardUrlBuilder?: IDashboardUrlBuilder;
+    automationUrlBuilder?: IAutomationUrlBuilder;
+    widgetUrlBuilder?: IWidgetUrlBuilder;
+}
+
+/**
+ * @internal
+ */
+export interface IDashboardUrlBuilder {
+    (workspaceId: string, dashboardId: string): string;
+}
+
+/**
+ * @internal
+ */
+export interface IAutomationUrlBuilder {
+    (workspaceId: string, dashboardId: string, automationId: string): string;
+}
+
+/**
+ * @internal
+ */
+export interface IWidgetUrlBuilder {
+    (workspaceId: string, dashboardId: string, widgetId: string): string;
 }
 
 /**
@@ -34,11 +56,11 @@ export type AutomationsType = Extract<AutomationType, "alert" | "schedule">;
  */
 export type CommonAutomationsColumnName =
     | "id"
-    | "name"
+    | "title"
     | "dashboard"
-    | "state"
     | "recipients"
-    | "lastSent"
+    | "lastRun"
+    | "lastRunStatus"
     | "createdBy"
     | "createdAt"
     | "notificationChannel"
@@ -49,12 +71,7 @@ export type CommonAutomationsColumnName =
  * Schedule-specific automation column names
  * @internal
  */
-export type ScheduleAutomationsColumnName =
-    | "source"
-    | "frequency"
-    | "nextRun"
-    | "lastRunStatus"
-    | "attachments";
+export type ScheduleAutomationsColumnName = "source" | "frequency" | "nextRun" | "attachments";
 
 /**
  * Alert-specific automation column names
@@ -91,15 +108,18 @@ export interface IAutomationsCoreProps {
     selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
     maxHeight: number;
     pageSize: number;
+    dashboardUrlBuilder: IDashboardUrlBuilder;
+    automationUrlBuilder: IAutomationUrlBuilder;
+    widgetUrlBuilder: IWidgetUrlBuilder;
 }
 
 export interface FilterOptionsContextValue {
-    currentUser: IUser | null;
     workspaceUsers: IWorkspaceUser[];
     dashboards: IListedDashboard[];
-    dashboardsError: GoodDataSdkError | null;
-    currentUserError: GoodDataSdkError | null;
-    workspaceUsersError: GoodDataSdkError | null;
+}
+
+export interface UserContextValue {
+    canManageAutomation: (automation: IAutomationMetadataObject) => boolean;
     isCurrentUser: (userLogin: string) => boolean;
 }
 
@@ -113,4 +133,7 @@ export interface IAutomationsState {
     sortBy: keyof IAutomationMetadataObject;
     sortDirection: SortDirection;
     invalidationId: number;
+    scrollToIndex?: number;
 }
+
+export type CellValueType = "text" | "date" | "number";

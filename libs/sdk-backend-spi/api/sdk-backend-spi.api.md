@@ -433,6 +433,7 @@ export interface IChatThread {
     }): Promise<IChatThreadHistory>;
     query(userMessage: string): IChatThreadQuery;
     reset(): Promise<void>;
+    saveRenderVisualisationStatus(interactionId: string, status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS"): Promise<void>;
     saveUserFeedback(interactionId: string, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
     saveUserVisualisation(interactionId: string, visualization: GenAIChatInteractionUserVisualisation): Promise<void>;
 }
@@ -862,6 +863,11 @@ export interface IGetAutomationsOptions {
 }
 
 // @alpha
+export interface IGetAutomationsQueryOptions {
+    includeAutomationResult?: boolean;
+}
+
+// @alpha
 export interface IGetDashboardOptions {
     exportId?: string;
     exportType?: "visual" | "slides";
@@ -1260,6 +1266,8 @@ export interface ISemanticSearchQuery {
 // @beta
 export interface ISemanticSearchResult {
     // (undocumented)
+    reasoning?: string;
+    // (undocumented)
     relationships: ISemanticSearchRelationship[];
     // (undocumented)
     results: ISemanticSearchResultItem[];
@@ -1376,7 +1384,7 @@ export interface IWorkspaceAutomationService {
     deleteAutomation(id: string): Promise<void>;
     getAutomation(id: string, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
     getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]>;
-    getAutomationsQuery(): IAutomationsQuery;
+    getAutomationsQuery(options?: IGetAutomationsQueryOptions): IAutomationsQuery;
     unsubscribeAutomation(id: string): Promise<void>;
     updateAutomation(automation: IAutomationMetadataObject, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
 }

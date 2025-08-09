@@ -21,9 +21,11 @@ export function DefaultUiTreeViewItemComponent<Level>({
     isCompact,
     onToggle,
     onSelect,
+    ariaAttributes,
 }: IUiTreeviewItemProps<Level>): React.ReactNode {
     return (
         <div
+            {...ariaAttributes}
             style={defineVariables(level)}
             className={e("item", {
                 isFocused,

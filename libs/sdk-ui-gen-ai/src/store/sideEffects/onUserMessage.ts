@@ -97,7 +97,7 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
                     evaluateMessageStreamingAction({
                         assistantMessageId: message.localId,
                         interactionId: value.chatHistoryInteractionId,
-                        contents: processContents(value),
+                        contents: processContents(value, true),
                     }),
                 );
             }

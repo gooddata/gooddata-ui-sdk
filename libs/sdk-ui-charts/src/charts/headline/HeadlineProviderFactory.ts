@@ -1,12 +1,14 @@
-// (C) 2023 GoodData Corporation
-import { bucketMeasure, bucketMeasures, bucketsFind, IBucket, IMeasure } from "@gooddata/sdk-model";
-import { IChartConfig, IComparison } from "../../interfaces/index.js";
-import MultiMeasuresProvider from "./internal/providers/MultiMeasuresProvider.js";
-import ComparisonProvider from "./internal/providers/ComparisonProvider.js";
-import { BucketNames } from "@gooddata/sdk-ui";
+// (C) 2023-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { bucketMeasure, bucketMeasures, bucketsFind, IBucket, IMeasure } from "@gooddata/sdk-model";
+
+import { IChartConfig, IComparison } from "../../interfaces/index.js";
+
+import { MultiMeasuresProvider } from "./internal/providers/MultiMeasuresProvider.js";
+import { ComparisonProvider } from "./internal/providers/ComparisonProvider.js";
 import { IHeadlineProvider } from "./HeadlineProvider.js";
-import LegacyProvider from "./internal/providers/LegacyProvider.js";
+import { LegacyProvider } from "./internal/providers/LegacyProvider.js";
 
 enum HeadlineType {
     MULTI_MEASURES,

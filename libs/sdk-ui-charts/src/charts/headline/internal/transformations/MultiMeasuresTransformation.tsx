@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import React, { useMemo } from "react";
-import BaseHeadline from "../headlines/baseHeadline/BaseHeadline.js";
+import { BaseHeadline } from "../headlines/baseHeadline/BaseHeadline.js";
 import { getBaseHeadlineData } from "../utils/BaseHeadlineTransformationUtils.js";
 import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { useFireDrillEvent } from "./useFiredDrillEvent.js";
@@ -10,7 +10,7 @@ import { useFireDrillEvent } from "./useFiredDrillEvent.js";
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
-const MultiMeasuresTransformation: React.FC<IHeadlineTransformationProps> = ({
+export const MultiMeasuresTransformation: React.FC<IHeadlineTransformationProps> = ({
     dataView,
     drillableItems,
     config,
@@ -30,5 +30,3 @@ const MultiMeasuresTransformation: React.FC<IHeadlineTransformationProps> = ({
         />
     );
 };
-
-export default MultiMeasuresTransformation;

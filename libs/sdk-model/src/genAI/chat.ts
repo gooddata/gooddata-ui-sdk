@@ -129,6 +129,10 @@ export interface IGenAIVisualization {
      * A flag indicating if visualization is being saved right now
      */
     saving?: boolean;
+    /**
+     * A flag indicating if visualization status waiting for report
+     */
+    statusReportPending?: boolean;
 }
 
 /**

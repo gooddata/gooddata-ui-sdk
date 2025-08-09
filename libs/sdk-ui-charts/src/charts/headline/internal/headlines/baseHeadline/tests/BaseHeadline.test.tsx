@@ -2,7 +2,7 @@
 import React from "react";
 import { afterAll, beforeEach, describe, expect, it, MockInstance, vi } from "vitest";
 import { render } from "@testing-library/react";
-import BaseHeadline from "../BaseHeadline.js";
+import { BaseHeadline } from "../BaseHeadline.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import * as PrimarySection from "../PrimarySection.js";
@@ -52,8 +52,8 @@ describe("BaseHeadline", () => {
     };
 
     beforeEach(() => {
-        MockPrimarySection = vi.spyOn(PrimarySection, "default");
-        MockCompareSection = vi.spyOn(CompareSection, "default");
+        MockPrimarySection = vi.spyOn(PrimarySection, "PrimarySection");
+        MockCompareSection = vi.spyOn(CompareSection, "CompareSection");
     });
 
     afterAll(() => {

@@ -8,15 +8,15 @@ import { useId, isEnterKey, isArrowKey } from "@gooddata/sdk-ui-kit";
 import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
 
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody.js";
-import {
-    buildAriaDescribedByValue,
-    parseDate,
-    formatDate,
-    isValidDate,
-    getPlatformStringFromDate,
-} from "./utils.js";
+import { parseDate, formatDate, isValidDate, getPlatformStringFromDate } from "./utils.js";
 import { InputErrorMessage } from "./InputErrorMessage.js";
 import { IInputAccessibilityConfig, IDateInputErrorMessageTexts } from "./types.js";
+import {
+    createInvalidDatapoint,
+    createInvalidNode,
+    useValidationContextValue,
+    ValidationContextStore,
+} from "@gooddata/sdk-ui";
 
 export interface IDateInputProps {
     value: Date;
@@ -36,7 +36,7 @@ export interface IDateInputProps {
 type ErrorCause = "empty" | "invalid" | undefined;
 
 const getErrorMessage = (
-    errorCause: ErrorCause,
+    errorCause: ErrorCause | undefined | null,
     isDateOrderError: boolean,
     messages: IDateInputErrorMessageTexts,
 ) => {
@@ -71,10 +71,23 @@ const useDateInput = ({
     withoutApply = false,
 }: DateInputHookProps) => {
     const [inputValue, setInputValue] = useState<string>(formatDate(value, dateFormat));
-    const [errorCause, setErrorCause] = useState<ErrorCause>(undefined);
 
-    const hasError = errorCause !== undefined || isDateOrderError;
-    const errorMessage = getErrorMessage(errorCause, isDateOrderError, errorMessageTexts);
+    const validationContextValue = useValidationContextValue(createInvalidNode({ id: "DateInput" }));
+    const { isValid, setInvalidDatapoints } = validationContextValue;
+
+    const setError = React.useCallback(
+        (error: ErrorCause | null) => {
+            const message = getErrorMessage(error, isDateOrderError, errorMessageTexts);
+
+            setInvalidDatapoints(() => [
+                message &&
+                    createInvalidDatapoint({
+                        message,
+                    }),
+            ]);
+        },
+        [errorMessageTexts, isDateOrderError, setInvalidDatapoints],
+    );
 
     useEffect(() => {
         const newValue = formatDate(value, dateFormat);
@@ -82,9 +95,9 @@ const useDateInput = ({
         // This preserves invalid user input so they can correct it
         if (newValue !== undefined) {
             setInputValue(newValue);
-            setErrorCause(undefined);
+            setError(null);
         }
-    }, [value, dateFormat]);
+    }, [value, dateFormat, setError]);
 
     const onDateInputChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
@@ -94,31 +107,31 @@ const useDateInput = ({
             const newDate = parseDate(newValue, dateFormat);
 
             // commit changed value when time is valid but only once, then it is reported again only on blur
-            if (isValidDate(newDate) && hasError) {
-                setErrorCause(undefined);
+            if (isValidDate(newDate) && !isValid) {
+                setError(null);
                 onChange(newDate);
             }
         },
-        [dateFormat, onChange, hasError],
+        [dateFormat, isValid, setError, onChange],
     );
 
     const onSubmitValue = useCallback(
         (shouldSubmitForm: boolean) => {
             if (isEmpty(inputValue)) {
-                setErrorCause("empty");
+                setError("empty");
                 onChange(undefined, shouldSubmitForm);
                 return;
             }
             const date = parseDate(inputValue, dateFormat);
             if (date === undefined) {
-                setErrorCause("invalid");
+                setError("invalid");
                 onChange(undefined, shouldSubmitForm);
                 return;
             }
-            setErrorCause(null);
+            setError(null);
             onChange(date, shouldSubmitForm);
         },
-        [dateFormat, inputValue, onChange],
+        [dateFormat, inputValue, onChange, setError],
     );
 
     const onDateInputBlur = useCallback(() => onSubmitValue(false), [onSubmitValue]);
@@ -129,9 +142,9 @@ const useDateInput = ({
             const selectedDate = convertPlatformDateStringToDate(value);
             const isValid = isValidDate(selectedDate);
             onChange(isValid ? selectedDate : undefined);
-            setErrorCause(isValid ? undefined : "empty");
+            setError(isValid ? null : "empty");
         },
-        [onChange],
+        [onChange, setError],
     );
 
     const onDateInputKeyDown = useCallback(
@@ -149,11 +162,11 @@ const useDateInput = ({
 
     return {
         inputValue,
-        errorMessage,
         onDateInputChange,
         onMobileDateChange,
         onDateInputBlur,
         onDateInputKeyDown,
+        validationContextValue,
     };
 };
 
@@ -177,7 +190,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
     ) => {
         const {
             inputValue,
-            errorMessage,
+            validationContextValue,
             onDateInputChange,
             onDateInputKeyDown,
             onMobileDateChange,
@@ -193,16 +206,16 @@ export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
         });
 
         const inputLabelId = useId();
-        const inputErrorId = useId();
+
+        const { isValid, getInvalidDatapoints } = validationContextValue;
+        const invalidDatapoint = getInvalidDatapoints().at(0);
+        const inputErrorId = invalidDatapoint?.id ?? "";
 
         const ariaProps: React.InputHTMLAttributes<HTMLInputElement> = {
             "aria-label": accessibilityConfig.ariaLabel,
             "aria-labelledby": inputLabelId,
-            "aria-describedby": buildAriaDescribedByValue([
-                accessibilityConfig.inputHintId,
-                errorMessage ? inputErrorId : undefined,
-            ]),
-            ...(errorMessage ? { "aria-invalid": true } : {}),
+            "aria-describedby": isValid ? accessibilityConfig.inputHintId : inputErrorId,
+            ...(isValid ? {} : { "aria-invalid": true }),
         };
 
         const MobileInput = (
@@ -213,8 +226,8 @@ export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
                     "gd-date-range-picker-input",
                     "gd-date-range-picker-input-native",
                     {
-                        "gd-date-range-picker-input-error": !!errorMessage,
-                        "has-error": !!errorMessage,
+                        "gd-date-range-picker-input-error": !isValid,
+                        "has-error": !isValid,
                     },
                 )}
                 onChange={onMobileDateChange}
@@ -226,8 +239,8 @@ export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
         const DesktopInput = (
             <div
                 className={cx("gd-date-range-picker-input", {
-                    "gd-date-range-picker-input-error": !!errorMessage,
-                    "has-error": !!errorMessage,
+                    "gd-date-range-picker-input-error": !isValid,
+                    "has-error": !isValid,
                 })}
             >
                 <span className="gd-icon-calendar" />
@@ -246,11 +259,17 @@ export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
         );
 
         return (
-            <div className={cx("gd-date-range-column", { "gd-date-range-column--with-time": isTimeEnabled })}>
-                <label id={inputLabelId}>{inputLabel}</label>
-                {isMobile ? MobileInput : DesktopInput}
-                <InputErrorMessage descriptionId={inputErrorId} errorText={errorMessage} />
-            </div>
+            <ValidationContextStore value={validationContextValue}>
+                <div
+                    className={cx("gd-date-range-column", {
+                        "gd-date-range-column--with-time": isTimeEnabled,
+                    })}
+                >
+                    <label id={inputLabelId}>{inputLabel}</label>
+                    {isMobile ? MobileInput : DesktopInput}
+                    <InputErrorMessage descriptionId={inputErrorId} errorText={invalidDatapoint?.message} />
+                </div>
+            </ValidationContextStore>
         );
     },
 );

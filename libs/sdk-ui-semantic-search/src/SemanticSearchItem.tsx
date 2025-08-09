@@ -15,10 +15,13 @@ type Props = IUiTreeviewItemProps<ISemanticSearchResultItem>;
  * @internal
  */
 export function SemanticSearchItem(props: Props) {
-    const { item, level, isFocused, onSelect, onHover } = props;
+    const { item, level, isFocused, onSelect, onHover, ariaAttributes } = props;
     return (
         <SearchItem
-            ariaLabel={getAriaLabel(item.data)}
+            ariaAttributes={{
+                ...ariaAttributes,
+                "aria-label": getAriaLabel(item.data),
+            }}
             level={level}
             onClick={onSelect}
             onHover={onHover}

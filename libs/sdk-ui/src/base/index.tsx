@@ -160,6 +160,28 @@ export type {
 } from "./react/contextStore.js";
 
 export {
+    ValidationContextStore,
+    useValidationContextValue,
+} from "./react/validation/ValidationContextStore.js";
+export {
+    createInvalidDatapoint,
+    createInvalidNode,
+    getUpdatedInvalidTree,
+    getInvalidNodeAtPath,
+    getInvalidDatapointsInTree,
+    validationSeverity,
+} from "./react/validation/utils.js";
+export type {
+    IInvalidDatapoint,
+    IValidationSeverity,
+    IValidationContextValue,
+    IInvalidNodePath,
+    IInvalidNodeAtPath,
+    IInvalidNode,
+    IUnionPaths,
+} from "./react/validation/types.js";
+
+export {
     resolveUseCancelablePromisesError,
     resolveUseCancelablePromisesStatus,
 } from "./react/useCancelablePromiseUtils.js";

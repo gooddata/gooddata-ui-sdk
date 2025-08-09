@@ -224,12 +224,12 @@
         "comment": "Accessibility hint informing users that they can drill into the visualization by pressing Enter or Space. Used by screen readers."
     },
     "visualizations.headline.comparison.indicator.up": {
-        "value": "up",
-        "comment": "Screen reader text for upward trend arrow in headline comparison. Announced with the value, e.g., 'up 100%'."
+        "value": "up {value}",
+        "comment": "Screen reader text for upward trend arrow in headline comparison. Announced with the value, e.g., 'up 100%'. Do not translate placeholder {value}. It will be replaced with a value in the real time."
     },
     "visualizations.headline.comparison.indicator.down": {
-        "value": "down",
-        "comment": "Screen reader text for downward trend arrow in headline comparison. Announced with the value, e.g., 'down 25%'."
+        "value": "down {value}",
+        "comment": "Screen reader text for downward trend arrow in headline comparison. Announced with the value, e.g., 'down 25%'. Do not translate placeholder {value}. It will be replaced with a value in the real time."
     },
     "visualization.numericValues.k": {
         "value": "k",
@@ -2914,6 +2914,10 @@
     "recurrence.datetime.format.help": {
         "value": "Format: {dateFormat}",
         "comment": "Input field tooltip. Example: Format: YYYY-MM-DD"
+    },
+    "recurrence.datetime.timezone.help": {
+        "value": "{timezone} timezone",
+        "comment": "Additional description for timepicker. Should include the timezone value and specify that it's a timezone."
     },
     "recurrence.datetime.empty.error": {
         "value": "Error: Required field — enter a valid date to continue.",

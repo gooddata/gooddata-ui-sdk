@@ -1,0 +1,24 @@
+name: 'Send Slack Notification'
+description: 'Sends a notification to Slack'
+inputs:
+  message:
+    description: 'The message to send to Slack (supports Slack markdown)'
+    required: true
+  channel:
+    description: 'The Slack channel to send the message to'
+    required: false
+    default: '#javascript-notifications'
+  slack-bot-token:
+    description: 'Slack bot token for authentication'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Send Slack message
+      uses: slackapi/slack-github-action@v1.27.1
+      with:
+        channel-id: ${{ inputs.channel }}
+        slack-message: ${{ inputs.message }}
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack-bot-token }}

@@ -69,6 +69,8 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
     const renderMenuIcon = useCallback(
         (renderMenu: (item: T) => React.ReactNode, item: T) => {
             const label = intl.formatMessage(messages.moreActions);
+            const menu = renderMenu(item);
+            const isDisabled = !menu;
             return (
                 <Dropdown
                     renderButton={({ toggleDropdown, isOpen }) => (
@@ -79,13 +81,14 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                             variant="table"
                             onClick={() => toggleDropdown()}
                             isActive={isOpen}
+                            isDisabled={isDisabled}
                             accessibilityConfig={{
                                 ariaLabel: label,
                             }}
                         />
                     )}
                     alignPoints={[{ align: "br tr" }]}
-                    renderBody={() => renderMenu(item)}
+                    renderBody={() => menu}
                 />
             );
         },

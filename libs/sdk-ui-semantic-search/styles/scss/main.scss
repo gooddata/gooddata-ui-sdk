@@ -92,6 +92,7 @@
             &__row {
                 display: flex;
                 flex-direction: row;
+                align-items: center;
                 gap: 5px;
             }
 
@@ -233,6 +234,15 @@
             text-underline-offset: auto;
             text-underline-position: from-font;
         }
+    }
+
+    &__message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: kit-variables.$gd-color-state-blank;
+        height: 100px;
+        padding: 0 10px;
     }
 }
 

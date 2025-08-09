@@ -11,18 +11,23 @@ export type SearchTreeViewLevels = [ISemanticSearchResultItem, ISemanticSearchRe
 export type SearchTreeViewItem = UiLeveledTreeView<SearchTreeViewLevels>;
 
 type Props = {
+    id: string;
     workspace: string;
     searchResults: ISemanticSearchResultItem[];
     searchRelationships: ISemanticSearchRelationship[];
+    canManage?: boolean;
+    canAnalyze?: boolean;
+    canFullControl?: boolean;
     threshold?: number;
     onSelect: OnLeveledSelectFn<SearchTreeViewLevels>;
+    onFocus: (nodeId: string) => void;
 };
 
 /**
  * A tree view component for semantic search results.
  * @internal
  */
-export function LeveledSearchTreeView(props: Props) {
+export function LeveledSearchTreeView({ id, onSelect, onFocus, ...props }: Props) {
     const intl = useIntl();
     const items = buildItems(props, intl);
     return (
@@ -30,13 +35,15 @@ export function LeveledSearchTreeView(props: Props) {
             items={items}
             maxHeight={500}
             ariaAttributes={{
-                id: "leveled-semantic-search-tree",
+                id,
+                tabIndex: -1,
                 "aria-label": intl.formatMessage({ id: "semantic-search.tree" }),
             }}
             expandedMode="default-collapsed"
             selectionMode="leafs-only"
             expansionMode="single"
-            onSelect={props.onSelect}
+            onSelect={onSelect}
+            onFocus={onFocus}
             ItemComponent={LeveledSearchTreeViewItemMemo}
             shouldKeyboardActionPreventDefault={false}
             isDisabledFocusable // For displaying locked items
@@ -49,10 +56,21 @@ type BuildItemsProps = {
     searchResults: ISemanticSearchResultItem[];
     searchRelationships: ISemanticSearchRelationship[];
     threshold?: number;
+    canManage?: boolean;
+    canAnalyze?: boolean;
+    canFullControl?: boolean;
 };
 
 function buildItems(
-    { workspace, searchResults, searchRelationships, threshold = 0.8 }: BuildItemsProps,
+    {
+        workspace,
+        searchResults,
+        searchRelationships,
+        threshold = 0.8,
+        canFullControl,
+        canManage,
+        canAnalyze,
+    }: BuildItemsProps,
     intl: IntlShape,
 ): SearchTreeViewItem[] {
     return searchResults
@@ -101,7 +119,7 @@ function buildItems(
             });
 
             // Add artificial "Edit" action item when there are relationships to display
-            if (children.length > 0) {
+            if (children.length > 0 && (canFullControl || canManage || canAnalyze)) {
                 children.push({
                     item: {
                         id: item.id,

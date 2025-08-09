@@ -11,8 +11,11 @@ import {
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
     ArithmeticMeasureOperatorEnum,
-    JsonApiAutomationInAttributesExternalRecipients,
-    JsonApiAutomationInAttributesAlert,
+    JsonApiAutomationOutAttributesExternalRecipients,
+    JsonApiAutomationOutAttributesAlert,
+    JsonApiAnalyticalDashboardOutWithLinks,
+    JsonApiAutomationResultOutAttributes,
+    JsonApiAutomationOutRelationships,
 } from "@gooddata/api-client-tiger";
 import {
     IAlertComparisonOperator,
@@ -63,7 +66,7 @@ function convertRecipient(
 }
 
 function convertExternalRecipient(
-    external: JsonApiAutomationInAttributesExternalRecipients,
+    external: JsonApiAutomationOutAttributesExternalRecipients,
 ): IAutomationRecipient {
     return {
         id: external.email,
@@ -72,6 +75,41 @@ function convertExternalRecipient(
         email: external.email,
     };
 }
+
+const convertDashboard = (
+    relationships?: JsonApiAutomationOutRelationships,
+    included?: JsonApiAutomationOutIncludes[],
+) => {
+    const id = relationships?.analyticalDashboard?.data?.id;
+    const title = (
+        included?.find(
+            (i) => i.type === "analyticalDashboard" && i.id === id,
+        ) as JsonApiAnalyticalDashboardOutWithLinks
+    )?.attributes?.title;
+
+    return {
+        id: id,
+        title: title,
+    };
+};
+
+const convertAutomationResult = (
+    relationships?: JsonApiAutomationOutRelationships,
+    included?: JsonApiAutomationOutIncludes[],
+) => {
+    const automationResultData = relationships?.automationResult?.data;
+    if (!automationResultData || automationResultData.length === 0) {
+        return undefined;
+    }
+
+    // Take the last item from the data array
+    const lastAutomationResult = automationResultData[automationResultData.length - 1];
+    const automationResult = included?.find(
+        (i) => i.type === "automationResult" && i.id === lastAutomationResult?.id,
+    );
+
+    return automationResult?.attributes as JsonApiAutomationResultOutAttributes;
+};
 
 export function convertAutomation(
     automation: JsonApiAutomationOutWithLinks,
@@ -153,7 +191,9 @@ export function convertAutomation(
         ...(externalRecipients?.map((r) => convertExternalRecipient(r)) ?? []),
     ];
 
-    const dashboard = relationships?.analyticalDashboard?.data?.id;
+    const dashboard = convertDashboard(relationships, included);
+
+    const automationResult = convertAutomationResult(relationships, included);
 
     const convertedAlert = convertAlert(alert, state);
 
@@ -190,6 +230,7 @@ export function convertAutomation(
         notificationChannel,
         createdBy: convertUserIdentifier(createdBy, included),
         updatedBy: convertUserIdentifier(modifiedBy, included),
+        lastRun: automationResult,
         created: createdAt,
         updated: modifiedAt,
         dashboard,
@@ -216,7 +257,7 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiAutomationInAttributesAlert | undefined,
+    alert: JsonApiAutomationOutAttributesAlert | undefined,
     state: JsonApiAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {
