@@ -26,11 +26,15 @@ jobs:
     runs-on: [ubuntu-latest]
     needs: [prepare-versions-master]
     steps:
-      - name: Inform to slack
-        uses: slackapi/slack-github-action@v1.25.0
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          channel-id: '#javascript-notifications'
-          slack-message: "The *master* branch of *gooddata-ui-sdk* has been bumped to the next major version, *${{ env.VERSION }}*."
+          repository: ${{ inputs.githubuser }}/gdc-ui
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
+      - name: Inform to slack
+        uses: ./.github/actions/slack/send-notification
+        with:
+          message: "The *master* branch of *gooddata-ui-sdk* has been bumped to the next major version, *${{ env.VERSION }}*."
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
         env:
           VERSION: ${{ needs.prepare-versions-master.outputs.version }}
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

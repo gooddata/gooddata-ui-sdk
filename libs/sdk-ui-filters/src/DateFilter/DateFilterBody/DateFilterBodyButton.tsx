@@ -25,6 +25,7 @@ export function DateFilterBodyButton({
             className={className}
             disabled={disabled}
             onClick={onClick}
+            describedByFromValidation
         />
     );
 }

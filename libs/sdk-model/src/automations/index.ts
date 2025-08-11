@@ -46,6 +46,21 @@ export interface IAutomationMetadataObjectBase {
     alert?: IAutomationAlert;
 
     /**
+     * Last run of the automation.
+     */
+    lastRun?: {
+        /**
+         * Status of the last run.
+         */
+        status?: IAutomationStatus;
+
+        /**
+         * Timestamp of the last run.
+         */
+        executedAt?: string;
+    };
+
+    /**
      * Target notificationChannel that automation will trigger.
      * String with webhook (notificationChannel) id.
      */
@@ -69,7 +84,16 @@ export interface IAutomationMetadataObjectBase {
     /**
      * Dashboard that automation is related to.
      */
-    dashboard?: Identifier;
+    dashboard?: {
+        /**
+         * Dashboard id.
+         */
+        id?: Identifier;
+        /**
+         * Dashboard title.
+         */
+        title?: string;
+    };
 
     /**
      * Additional metadata of the automation.
@@ -177,6 +201,11 @@ export interface IAutomationSchedule {
  * @alpha
  */
 export type IAutomationRecipientType = "user" | "userGroup" | "externalUser";
+
+/**
+ * @alpha
+ */
+export type IAutomationStatus = "SUCCESS" | "FAILED";
 
 /**
  * @alpha

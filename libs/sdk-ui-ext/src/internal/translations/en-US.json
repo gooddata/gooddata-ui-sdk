@@ -1703,6 +1703,14 @@
         "value": "Dashboard",
         "comment": "Column header for dashboard in the automations table"
     },
+    "automations.column.widget": {
+        "value": "Widget",
+        "comment": "Column header for widget in the automations table"
+    },
+    "automations.column.attachments": {
+        "value": "Attachments",
+        "comment": "Column header for attachments in the automations table"
+    },
     "automations.column.recipients": {
         "value": "Recipients",
         "comment": "Column header for recipients in the automations table"

@@ -152,10 +152,14 @@ jobs:
       runs-on: [ubuntu-latest]
       needs: [publish-netlify, update-apidocs-version, publish-release]
       steps:
-        - name: Notify to slack
-          uses: slackapi/slack-github-action@v1.25.0
+        - name: Checkout repository
+          uses: actions/checkout@v4
           with:
-              channel-id: ${{ matrix.channels }}
-              slack-message: "The release of *gooddata-ui-sdk@${{ needs.publish-release.outputs.version }}*, has been successful. :tada:"
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+            repository: ${{ inputs.githubuser }}/gdc-ui
+            token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
+        - name: Notify to slack
+          uses: ./.github/actions/slack/send-notification
+          with:
+              channel: ${{ matrix.channels }}
+              message: "The release of *gooddata-ui-sdk@${{ needs.publish-release.outputs.version }}*, has been successful. :tada:"
+              slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

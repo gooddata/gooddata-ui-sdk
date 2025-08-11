@@ -265,6 +265,7 @@ export type {
     IWorkspaceAutomationService,
     IGetAutomationOptions,
     IGetAutomationsOptions,
+    IGetAutomationsQueryOptions,
     AutomationType,
     IAutomationsQuery,
     IAutomationsQueryResult,

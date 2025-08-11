@@ -91,7 +91,7 @@ export function useNotificationsFilterDetail(notification: IAlertNotification) {
                     })
                     .filter(Boolean) as ObjRef[];
 
-                const dashboardId = automation?.dashboard;
+                const dashboardId = automation?.dashboard?.id;
 
                 const dashboardPromise = dashboardId
                     ? fetchDashboard(backend, notification.workspaceId, dashboardId)

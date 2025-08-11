@@ -331,16 +331,15 @@ const treeLeveled: types.UiLeveledTreeView<[Level1Item, Level2Item]>[] = [
 ];
 
 describe("UiTreeview", () => {
+    const defaultAriaAttributes: types.UiTreeViewAriaAttributes = {
+        id: "test-treeview",
+        "aria-label": "test-treeview-label",
+        "aria-labelledby": "test-treeview-labelledby",
+    };
+
     const renderStaticTreeView = (
         props: Omit<types.IUiStaticTreeViewProps<StaticItem>, "ariaAttributes" | "items"> = {},
     ) => {
-        const defaultAriaAttributes = {
-            id: "test-dropdown-list",
-            "aria-label": "test-dropdown-button",
-            "aria-labelledby": "test-dropdown-button",
-            role: "tree" as const,
-        };
-
         return render(
             <UiStaticTreeview
                 items={treeStatic}
@@ -355,13 +354,6 @@ describe("UiTreeview", () => {
     const renderStaticTreeView1 = (
         props: Omit<types.IUiStaticTreeViewProps<StaticItem>, "ariaAttributes" | "items"> = {},
     ) => {
-        const defaultAriaAttributes = {
-            id: "test-dropdown-list",
-            "aria-label": "test-dropdown-button",
-            "aria-labelledby": "test-dropdown-button",
-            role: "tree" as const,
-        };
-
         return render(
             <UiStaticTreeview
                 items={treeStatic1}
@@ -376,13 +368,6 @@ describe("UiTreeview", () => {
     const renderLeveledTreeView = (
         props: Omit<types.IUiLeveledTreeViewProps<[Level1Item, Level2Item]>, "ariaAttributes" | "items"> = {},
     ) => {
-        const defaultAriaAttributes = {
-            id: "test-dropdown-list",
-            "aria-label": "test-dropdown-button",
-            "aria-labelledby": "test-dropdown-button",
-            role: "tree" as const,
-        };
-
         return render(
             <UiLeveledTreeview
                 items={treeLeveled}
@@ -435,26 +420,16 @@ describe("UiTreeview", () => {
             const selectedItemDiv = screen
                 .getByText("Parent A Folder A File A1")
                 .closest(`[role="treeitem"]`);
-            const selectedItemDivContent = screen
-                .getByText("Parent A Folder A File A1")
-                .closest(`[role="treeitem"]`)
-                .querySelector("div");
 
             expect(selectedItemDiv).toHaveAttribute("aria-selected", "true");
-            expect(selectedItemDivContent).toHaveClass(e("item", { isSelected: true }));
         });
 
         it("should mark disabled item", () => {
             renderStaticTreeView();
 
             const selectedItemDiv = screen.getByText("File A5").closest(`[role="treeitem"]`);
-            const selectedItemDivContent = screen
-                .getByText("File A5")
-                .closest(`[role="treeitem"]`)
-                .querySelector("div");
 
             expect(selectedItemDiv).toHaveAttribute("aria-disabled", "true");
-            expect(selectedItemDivContent).toHaveClass(e("item", { isDisabled: true }));
         });
 
         it("should call onSelect when item is clicked", () => {
@@ -819,17 +794,15 @@ describe("UiTreeview", () => {
             const tree = screen.getByRole("tree");
 
             // Initial focus is on first item
-            expect(tree).toHaveAttribute(
-                "aria-activedescendant",
-                expect.stringContaining(treeStatic[0].item.id),
-            );
+            expect(tree).toHaveAttribute("aria-activedescendant", `test-treeview/0`);
 
             // Navigate down
             fireEvent.keyDown(tree, { code: "ArrowDown" });
-            expect(tree).toHaveAttribute(
-                "aria-activedescendant",
-                expect.stringContaining(treeStatic[0].children[0].item.id),
-            );
+            expect(tree).toHaveAttribute("aria-activedescendant", `test-treeview/0-0`);
+
+            // Navigate down
+            fireEvent.keyDown(tree, { code: "ArrowDown" });
+            expect(tree).toHaveAttribute("aria-activedescendant", `test-treeview/0-0-0`);
         });
 
         it("should call onClose after selection", () => {
@@ -923,8 +896,9 @@ describe("UiTreeview", () => {
             const tree = screen.getByRole("tree");
 
             // Check that tree has proper ARIA attributes
-            expect(tree).toHaveAttribute("id", "test-dropdown-list");
-            expect(tree).toHaveAttribute("aria-labelledby", "test-dropdown-button");
+            expect(tree).toHaveAttribute("id", "test-treeview");
+            expect(tree).toHaveAttribute("aria-label", "test-treeview-label");
+            expect(tree).toHaveAttribute("aria-labelledby", "test-treeview-labelledby");
             expect(tree).toHaveAttribute("role", "tree");
 
             // Check that items have proper ARIA attributes

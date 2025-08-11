@@ -9,7 +9,8 @@ export interface IAccessibilityConfigBase {
     ariaDescribedBy?: React.AriaAttributes["aria-describedby"];
     role?: React.HTMLAttributes<HTMLElement>["role"];
     ariaExpanded?: React.AriaAttributes["aria-expanded"];
-    ariaControls?: string;
+    ariaControls?: React.AriaAttributes["aria-controls"];
+    ariaActiveDescendant?: React.AriaAttributes["aria-activedescendant"];
 }
 
 /**

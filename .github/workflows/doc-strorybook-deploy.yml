@@ -19,10 +19,13 @@ jobs:
     runs-on: [ubuntu-latest]
     needs: [storybook-deploy]
     steps:
-      - name: Notify to slack
-        uses: slackapi/slack-github-action@v1.25.0
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          channel-id: "#javascript-notifications"
-          slack-message: "The Storybook for *gooddata-ui-sdk* has been successfully deployed. :tada:"
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          repository: ${{ inputs.githubuser }}/gdc-ui
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
+      - name: Notify to slack
+        uses: ./.github/actions/slack/send-notification
+        with:
+          message: "The Storybook for *gooddata-ui-sdk* has been successfully deployed. :tada:"
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

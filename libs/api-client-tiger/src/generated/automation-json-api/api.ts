@@ -1370,6 +1370,12 @@ export interface AutomationDashboardDateFilterDateFilter {
     attribute?: AutomationIdentifierRef;
     /**
      *
+     * @type {AutomationRelativeBoundedDateFilter}
+     * @memberof AutomationDashboardDateFilterDateFilter
+     */
+    boundedFilter?: AutomationRelativeBoundedDateFilter;
+    /**
+     *
      * @type {string}
      * @memberof AutomationDashboardDateFilterDateFilter
      */
@@ -1781,6 +1787,7 @@ export const AutomationIdentifierRefIdentifierTypeEnum = {
     USER_DATA_FILTER: "userDataFilter",
     EXPORT_DEFINITION: "exportDefinition",
     AUTOMATION: "automation",
+    AUTOMATION_RESULT: "automationResult",
     PROMPT: "prompt",
     VISUALIZATION_OBJECT: "visualizationObject",
     FILTER_CONTEXT: "filterContext",
@@ -2725,6 +2732,61 @@ export const AutomationRelativeOperatorEnum = {
 
 export type AutomationRelativeOperatorEnum =
     (typeof AutomationRelativeOperatorEnum)[keyof typeof AutomationRelativeOperatorEnum];
+
+/**
+ *
+ * @export
+ * @interface AutomationRelativeBoundedDateFilter
+ */
+export interface AutomationRelativeBoundedDateFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationRelativeBoundedDateFilter
+     */
+    granularity: AutomationRelativeBoundedDateFilterGranularityEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof AutomationRelativeBoundedDateFilter
+     */
+    from?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof AutomationRelativeBoundedDateFilter
+     */
+    to?: number;
+}
+
+export const AutomationRelativeBoundedDateFilterGranularityEnum = {
+    ALL_TIME_GRANULARITY: "ALL_TIME_GRANULARITY",
+    GDC_TIME_YEAR: "GDC.time.year",
+    GDC_TIME_WEEK_US: "GDC.time.week_us",
+    GDC_TIME_WEEK_IN_YEAR: "GDC.time.week_in_year",
+    GDC_TIME_WEEK_IN_QUARTER: "GDC.time.week_in_quarter",
+    GDC_TIME_WEEK: "GDC.time.week",
+    GDC_TIME_EUWEEK_IN_YEAR: "GDC.time.euweek_in_year",
+    GDC_TIME_EUWEEK_IN_QUARTER: "GDC.time.euweek_in_quarter",
+    GDC_TIME_QUARTER: "GDC.time.quarter",
+    GDC_TIME_QUARTER_IN_YEAR: "GDC.time.quarter_in_year",
+    GDC_TIME_MONTH: "GDC.time.month",
+    GDC_TIME_MONTH_IN_QUARTER: "GDC.time.month_in_quarter",
+    GDC_TIME_MONTH_IN_YEAR: "GDC.time.month_in_year",
+    GDC_TIME_DAY_IN_YEAR: "GDC.time.day_in_year",
+    GDC_TIME_DAY_IN_QUARTER: "GDC.time.day_in_quarter",
+    GDC_TIME_DAY_IN_MONTH: "GDC.time.day_in_month",
+    GDC_TIME_DAY_IN_WEEK: "GDC.time.day_in_week",
+    GDC_TIME_DAY_IN_EUWEEK: "GDC.time.day_in_euweek",
+    GDC_TIME_DATE: "GDC.time.date",
+    GDC_TIME_HOUR: "GDC.time.hour",
+    GDC_TIME_HOUR_IN_DAY: "GDC.time.hour_in_day",
+    GDC_TIME_MINUTE: "GDC.time.minute",
+    GDC_TIME_MINUTE_IN_HOUR: "GDC.time.minute_in_hour",
+} as const;
+
+export type AutomationRelativeBoundedDateFilterGranularityEnum =
+    (typeof AutomationRelativeBoundedDateFilterGranularityEnum)[keyof typeof AutomationRelativeBoundedDateFilterGranularityEnum];
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.

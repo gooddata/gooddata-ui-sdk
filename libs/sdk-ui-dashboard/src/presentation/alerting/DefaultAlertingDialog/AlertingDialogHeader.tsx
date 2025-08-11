@@ -1,14 +1,11 @@
 // (C) 2025 GoodData Corporation
-import React, { useState, useCallback, forwardRef } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import React, { useCallback, forwardRef } from "react";
+import { useIntl } from "react-intl";
 import cx from "classnames";
-import { Bubble, BubbleHoverTrigger, Button, Icon, useId } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Button, Icon, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { createInvalidDatapoint, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 
 const TITLE_MAX_LENGTH = 255;
-
-enum ScheduleEmailTitleErrorType {
-    LONG_VALUE = "LONG_VALUE",
-}
 
 interface IAlertingDialogHeaderProps {
     title: string;
@@ -20,65 +17,72 @@ interface IAlertingDialogHeaderProps {
 export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialogHeaderProps>((props, ref) => {
     const { title, onChange, onCancel, placeholder } = props;
 
-    const intl = useIntl();
-    const [titleError, setTitleError] = useState<string | null>(null);
+    const { formatMessage } = useIntl();
 
-    const errorId = `${useId()}-error`;
-
-    const errorMessage = intl.formatMessage(
-        { id: "dialogs.alert.error.too_long" },
-        { value: TITLE_MAX_LENGTH },
+    const validationContextValue = useValidationContextValue(
+        createInvalidNode({ id: "AlertingDialogHeader" }),
     );
+    const { isValid, getInvalidDatapoints, setInvalidDatapoints } = validationContextValue;
+    const invalidDatapoint = getInvalidDatapoints().at(0);
+
+    const errorId = useIdPrefixed("error");
+
+    const setHasError = React.useCallback(
+        (hasError: boolean) => {
+            if (!hasError) {
+                setInvalidDatapoints(() => []);
+                return;
+            }
+
+            setInvalidDatapoints(() => [
+                createInvalidDatapoint({
+                    id: errorId,
+                    message: formatMessage(
+                        { id: "dialogs.alert.error.too_long" },
+                        { value: TITLE_MAX_LENGTH },
+                    ),
+                }),
+            ]);
+        },
+        [errorId, formatMessage, setInvalidDatapoints],
+    );
+
+    const isValueValid = useCallback((value: string) => {
+        return value.length <= TITLE_MAX_LENGTH;
+    }, []);
 
     const dialogHeaderClasses = cx(
         "gd-notifications-channels-dialog-title",
         "s-gd-notifications-channels-dialog-title",
         {
             placeholder: title === "",
-            "has-error": titleError,
+            "has-error": !isValid,
         },
     );
 
     const inputHeaderClasses = cx("gd-input-field", {
-        "has-error": titleError,
+        "has-error": !isValid,
     });
-
-    const validate = useCallback((value: string) => {
-        if (value.length > TITLE_MAX_LENGTH) {
-            return ScheduleEmailTitleErrorType.LONG_VALUE;
-        }
-
-        return null;
-    }, []);
 
     const handleOnChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             const { value } = e.target;
-            const validationResult = validate(value);
+            const validationResult = isValueValid(value);
 
-            if (titleError) {
-                if (validationResult) {
-                    setTitleError(errorMessage);
-                } else {
-                    setTitleError(null);
-                }
+            if (!isValid) {
+                setHasError(!validationResult);
             }
 
-            onChange(value, !validationResult);
+            onChange(value, validationResult);
         },
-        [titleError, validate, errorMessage, onChange],
+        [isValueValid, isValid, onChange, setHasError],
     );
 
     const handleBlur = useCallback(
         (e: React.FocusEvent<HTMLInputElement>) => {
-            const validationResult = validate(e.target.value);
-            if (validationResult) {
-                setTitleError(errorMessage);
-            } else {
-                setTitleError(null);
-            }
+            setHasError(!isValueValid(e.target.value));
         },
-        [errorMessage, validate],
+        [isValueValid, setHasError],
     );
 
     return (
@@ -87,7 +91,7 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
                 className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-alert-dialog-back-button"
                 onClick={onCancel}
                 accessibilityConfig={{
-                    ariaLabel: intl.formatMessage({ id: "dialogs.alert.backLabel" }),
+                    ariaLabel: formatMessage({ id: "dialogs.alert.backLabel" }),
                 }}
             />
 
@@ -103,13 +107,15 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
                         placeholder={placeholder}
                         onChange={handleOnChange}
                         autoComplete="off"
-                        aria-describedby={titleError ? errorId : undefined}
-                        aria-label={intl.formatMessage({
+                        aria-describedby={isValid ? undefined : errorId}
+                        aria-label={formatMessage({
                             id: "dialogs.alert.accessibility.label.title",
                         })}
                     />
-                    {titleError ? (
+                    {invalidDatapoint ? (
                         <span id={errorId} className="gd-notifications-channels-dialog-error-icon">
+                            <div className={"sr-only"}>{invalidDatapoint.message}</div>
+
                             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                                 <Icon.Error width={18} height={18} />
                                 <Bubble
@@ -117,7 +123,7 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
                                     arrowOffsets={{ "cr cl": [11, -5] }}
                                     alignPoints={[{ align: "cr cl" }]}
                                 >
-                                    <FormattedMessage id={titleError} />
+                                    {invalidDatapoint.message}
                                 </Bubble>
                             </BubbleHoverTrigger>
                         </span>

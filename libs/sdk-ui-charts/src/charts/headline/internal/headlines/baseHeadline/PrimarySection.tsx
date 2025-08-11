@@ -1,8 +1,8 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
-import PrimarySectionContent from "./PrimarySectionContent.js";
-import PrimarySectionCompactContent from "./PrimarySectionCompactContent.js";
+import { PrimarySectionContent } from "./PrimarySectionContent.js";
+import { PrimarySectionCompactContent } from "./PrimarySectionCompactContent.js";
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
@@ -11,7 +11,7 @@ interface IPrimarySectionProps {
     isOnlyPrimaryItem: boolean;
 }
 
-const PrimarySection: React.FC<IPrimarySectionProps> = ({ primaryItem, isOnlyPrimaryItem }) => {
+export const PrimarySection: React.FC<IPrimarySectionProps> = ({ primaryItem, isOnlyPrimaryItem }) => {
     const { config } = useBaseHeadline();
 
     return (
@@ -27,5 +27,3 @@ const PrimarySection: React.FC<IPrimarySectionProps> = ({ primaryItem, isOnlyPri
         </div>
     );
 };
-
-export default PrimarySection;

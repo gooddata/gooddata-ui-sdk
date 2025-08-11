@@ -5,8 +5,8 @@ import type { UiRefsTree, UiStateTreeItem, UiStaticTreeView } from "./types.js";
 /**
  * @internal
  **/
-export function makeItemId(treeviewId: string, item?: UiStaticTreeView<unknown>) {
-    return item ? `item-${treeviewId}-${item.item.id}` : undefined;
+export function makeItemId(treeViewId: string, path: number[]) {
+    return `${treeViewId}/${convertPathToKey(path)}`;
 }
 
 /**

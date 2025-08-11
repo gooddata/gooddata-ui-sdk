@@ -714,6 +714,7 @@ export const TestDefinitionRequestTypeEnum = {
     FLEXCONNECT: "FLEXCONNECT",
     STARROCKS: "STARROCKS",
     ATHENA: "ATHENA",
+    MONGODB: "MONGODB",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =

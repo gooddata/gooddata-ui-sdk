@@ -6,7 +6,7 @@ import { render } from "@testing-library/react";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
-import ComparisonDataItem from "../ComparisonDataItem.js";
+import { ComparisonDataItem } from "../ComparisonDataItem.js";
 import {
     IBaseHeadlineDataItemProps,
     EvaluationType,

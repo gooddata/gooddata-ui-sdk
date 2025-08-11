@@ -5,6 +5,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { UserMessage } from "../../model.js";
+
 import { MessageContents } from "./MessageContents.js";
 
 type UserMessageProps = {
@@ -14,6 +15,7 @@ type UserMessageProps = {
 
 export const UserMessageComponent: React.FC<UserMessageProps> = ({ message, isLast }) => {
     const intl = useIntl();
+
     const classNames = cx(
         "gd-gen-ai-chat__messages__message",
         "gd-gen-ai-chat__messages__message--user",

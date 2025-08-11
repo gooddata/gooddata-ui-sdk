@@ -1,7 +1,6 @@
 // (C) 2025 GoodData Corporation
-import { IconType } from "../@types/icon.js";
-import { IDropdownBodyRenderProps } from "../../Dropdown/index.js";
-import React from "react";
+import type { IconType } from "../@types/icon.js";
+import type React from "react";
 
 /**
  * @internal
@@ -105,7 +104,6 @@ export interface IUiTreeViewSelectionMods {
 export interface IUiTreeViewProps<Levels extends any[], Level> {
     dataTestId?: string;
     itemDataTestId?: string;
-
     width?: number;
     maxWidth?: number;
     maxHeight?: number;
@@ -113,6 +111,7 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
     expandedMode?: "default-expanded" | "default-collapsed";
     expansionMode?: "multiple" | "single";
 
+    onFocus?: (nodeId: string) => void;
     onClose?: () => void;
     onUnhandledKeyDown?: (event: React.KeyboardEvent, context: IUiTreeviewContext<Levels, Level>) => void;
 
@@ -124,7 +123,7 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
     isDisabledFocusable?: boolean;
     isCompact?: boolean;
 
-    ariaAttributes: UiTreeviewAriaAttributes;
+    ariaAttributes: UiTreeViewAriaAttributes;
 }
 
 /**
@@ -157,6 +156,7 @@ export interface IUiTreeviewItemProps<T> {
     isSelected: boolean;
     isCompact: boolean;
     level: number;
+    ariaAttributes: UiTreeViewItemAriaAttributes;
 
     onSelect: (e: React.MouseEvent | React.KeyboardEvent) => void;
     onToggle: (e: React.MouseEvent | React.KeyboardEvent, state: boolean) => void;
@@ -166,7 +166,21 @@ export interface IUiTreeviewItemProps<T> {
 /**
  * @internal
  */
-export type UiTreeviewAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
+export type UiTreeViewAriaAttributes = Pick<React.AriaAttributes, "aria-label" | "aria-labelledby"> & {
+    id: string;
+    tabIndex?: number;
+};
+
+/**
+ * @internal
+ */
+export type UiTreeViewItemAriaAttributes = Pick<
+    React.AriaAttributes,
+    "aria-level" | "aria-expanded" | "aria-selected" | "aria-disabled"
+> & {
+    id: string;
+    role: "treeitem";
+};
 
 /**
  * @internal

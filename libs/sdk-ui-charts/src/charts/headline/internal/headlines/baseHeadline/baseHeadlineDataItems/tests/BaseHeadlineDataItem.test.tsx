@@ -3,7 +3,7 @@ import React from "react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
-import BaseHeadlineDataItem from "../BaseHeadlineDataItem.js";
+import { BaseHeadlineDataItem } from "../BaseHeadlineDataItem.js";
 import { IBaseHeadlineDataItemProps, EvaluationType } from "../../../../interfaces/BaseHeadlines.js";
 import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
 import {

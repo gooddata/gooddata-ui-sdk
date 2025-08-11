@@ -6,13 +6,16 @@ import classnames from "classnames";
 export type SearchItemProps = {
     className?: string;
     children: React.ReactNode;
-    ariaLabel: string;
     level: number;
     icon: React.ReactNode;
     details?: React.ReactNode;
     resultCounter?: React.ReactNode;
     href?: string;
     isFocused?: boolean;
+    ariaAttributes: React.AriaAttributes & {
+        id: string;
+        role: React.AriaRole;
+    };
     onClick: (event: React.MouseEvent) => void;
     onHover: (event: React.MouseEvent) => void;
 };
@@ -24,13 +27,13 @@ export type SearchItemProps = {
 export const SearchItem = ({
     className,
     children,
-    ariaLabel,
     level,
     isFocused,
     icon,
     details,
     resultCounter,
     href,
+    ariaAttributes,
     onClick,
     onHover,
 }: SearchItemProps) => {
@@ -42,6 +45,7 @@ export const SearchItem = ({
     };
 
     const Tag = href ? "a" : "div";
+    const tabIndex = href ? -1 : undefined;
     const wrapperClassName = classnames(className, {
         "gd-semantic-search__results-item": true,
         "gd-semantic-search__results-item--active": isFocused,
@@ -50,8 +54,9 @@ export const SearchItem = ({
     return (
         <div className={wrapperClassName} data-level={level}>
             <Tag
-                aria-label={ariaLabel}
+                {...ariaAttributes}
                 href={href}
+                tabIndex={tabIndex}
                 className="gd-semantic-search__results-item__content"
                 onClick={handleClick}
                 onAuxClick={handleClick}

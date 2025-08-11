@@ -25,6 +25,7 @@ import {
     getNextPathIndex,
     getPrevPathIndex,
     itemsState,
+    makeItemId,
 } from "./utils.js";
 import { UiTreeviewRoot } from "./UiTreeviewRoot.js";
 import { UITreeviewItem } from "./UITreeviewItem.js";
@@ -66,6 +67,7 @@ function UiTreeview<Levels extends unknown[], Level>({
     maxWidth,
     maxHeight,
     onSelect,
+    onFocus,
     onClose,
     onUnhandledKeyDown = noop,
 
@@ -81,6 +83,7 @@ function UiTreeview<Levels extends unknown[], Level>({
 
     ariaAttributes,
 }: IUiStaticTreeViewProps<Level>): React.ReactNode {
+    const treeViewId = ariaAttributes.id;
     const itemsRef = useRef<UiRefsTree>({});
 
     const getState = itemsState(
@@ -116,6 +119,11 @@ function UiTreeview<Levels extends unknown[], Level>({
         }
         focusedItemNode.scrollIntoView({ block: "nearest" });
     }, [focusedItemNode]);
+
+    // Notify parent about focus change
+    useEffect(() => {
+        onFocus?.(makeItemId(treeViewId, focusedPath));
+    }, [treeViewId, focusedPath, onFocus]);
 
     const onSelectHandle = useCallback(
         (event: React.MouseEvent | React.KeyboardEvent, path: number[], item?: UiStaticTreeView<Level>) => {
@@ -271,11 +279,7 @@ function UiTreeview<Levels extends unknown[], Level>({
 
     return (
         <div className={b()} style={{ width, maxWidth, maxHeight }} data-testid={dataTestId}>
-            <UiTreeviewRoot
-                handleKeyDown={handleKeyDown}
-                ariaAttributes={ariaAttributes}
-                focusedItem={focusedItem}
-            >
+            <UiTreeviewRoot handleKeyDown={handleKeyDown} ariaAttributes={ariaAttributes} path={focusedPath}>
                 {items.map((item, index) => (
                     <UITreeviewItem
                         ItemComponent={ItemComponent}
@@ -287,8 +291,10 @@ function UiTreeview<Levels extends unknown[], Level>({
                         selectedItemId={selectedItemId}
                         itemDataTestId={itemDataTestId}
                         isCompact={isCompact}
+                        isDisabledFocusable={isDisabledFocusable}
                         item={item}
                         key={index}
+                        treeViewId={treeViewId}
                         path={[index]}
                     />
                 ))}

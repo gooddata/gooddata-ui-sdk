@@ -3,7 +3,7 @@
 import React from "react";
 
 import { e } from "./treeviewBem.js";
-import type { UiStaticTreeView, UiTreeviewAriaAttributes } from "./types.js";
+import type { UiTreeViewAriaAttributes } from "./types.js";
 import { makeItemId } from "./utils.js";
 
 /**
@@ -11,24 +11,24 @@ import { makeItemId } from "./utils.js";
  */
 interface UiTreeviewRootProps {
     children?: React.ReactNode;
-    focusedItem?: UiStaticTreeView<unknown>;
+    path?: number[];
     handleKeyDown: (event: React.KeyboardEvent) => void;
-    ariaAttributes: UiTreeviewAriaAttributes;
+    ariaAttributes: UiTreeViewAriaAttributes;
 }
 
 /**
  * @internal
  */
 export function UiTreeviewRoot(props: UiTreeviewRootProps) {
-    const { handleKeyDown, children, ariaAttributes, focusedItem } = props;
+    const { handleKeyDown, children, ariaAttributes, path } = props;
     return (
         <div
+            {...ariaAttributes}
             className={e("root")}
-            tabIndex={0}
+            tabIndex={ariaAttributes.tabIndex ?? 0}
             onKeyDown={handleKeyDown}
             role="tree"
-            aria-activedescendant={makeItemId(ariaAttributes.id, focusedItem)}
-            {...ariaAttributes}
+            aria-activedescendant={makeItemId(ariaAttributes.id, path)}
         >
             {children}
         </div>

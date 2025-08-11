@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
 import isNil from "lodash/isNil.js";
 import isNumber from "lodash/isNumber.js";
@@ -30,8 +30,8 @@ import {
 import { getExecutionData, IHeadlineExecutionData } from "./HeadlineTransformationUtils.js";
 import { getCalculationValuesDefault, getComparisonFormat, IDefaultLabelKeys } from "../../headlineHelper.js";
 import { createBaseHeadlineItem } from "./BaseHeadlineTransformationUtils.js";
-import ComparisonDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataItem.js";
-import ComparisonDataWithSubItem from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataWithSubItem.js";
+import { ComparisonDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataItem.js";
+import { ComparisonDataWithSubItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataWithSubItem.js";
 
 export function getComparisonBaseHeadlineData(
     dataView: IDataView,

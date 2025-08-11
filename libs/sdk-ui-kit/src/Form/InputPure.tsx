@@ -15,27 +15,27 @@ import { UiIconButton } from "../@ui/UiIconButton/UiIconButton.js";
  */
 
 export interface InputPureProps extends IDomNativeProps {
-    className: string;
-    clearOnEsc: boolean;
-    disabled: boolean;
-    hasError: boolean;
-    hasWarning: boolean;
-    isSearch: boolean;
-    isSmall: boolean;
-    maxlength: number;
-    onChange: (value: string | number, e?: React.ChangeEvent<HTMLInputElement>) => void;
+    className?: string;
+    clearOnEsc?: boolean;
+    disabled?: boolean;
+    hasError?: boolean;
+    hasWarning?: boolean;
+    isSearch?: boolean;
+    isSmall?: boolean;
+    maxlength?: number;
+    onChange?: (value: string | number, e?: React.ChangeEvent<HTMLInputElement>) => void;
     onKeyDown?: (e: React.KeyboardEvent) => void;
-    onEscKeyPress: (e: React.KeyboardEvent) => void;
-    onEnterKeyPress: () => void;
-    onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-    onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
-    placeholder: string;
-    prefix: string;
-    readonly: boolean;
-    suffix: string;
-    label: React.ReactNode;
-    labelPositionTop: boolean;
-    value: string | number;
+    onEscKeyPress?: (e: React.KeyboardEvent) => void;
+    onEnterKeyPress?: () => void;
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+    placeholder?: string;
+    prefix?: string;
+    readonly?: boolean;
+    suffix?: string;
+    label?: React.ReactNode;
+    labelPositionTop?: boolean;
+    value?: string | number;
     id?: string;
     name?: string;
     type?: string;
@@ -257,9 +257,13 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                     placeholder={placeholder}
                     readOnly={readonly}
                     value={value}
+                    role={accessibilityConfig?.role}
                     aria-label={accessibilityConfig?.ariaLabel ?? undefined}
                     aria-describedby={accessibilityConfig?.ariaDescribedBy}
                     aria-labelledby={accessibilityConfig?.ariaLabelledBy}
+                    aria-expanded={accessibilityConfig?.ariaExpanded}
+                    aria-controls={accessibilityConfig?.ariaControls}
+                    aria-activedescendant={accessibilityConfig?.ariaActiveDescendant}
                     aria-readonly={readonly || undefined}
                     autoComplete={isSearch ? "off" : autocomplete}
                 />

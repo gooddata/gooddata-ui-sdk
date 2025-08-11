@@ -28,6 +28,7 @@ export type DataSourceType =
     | "ATHENA"
     | "SINGLESTORE"
     | "MOTHERDUCK"
+    | "MONGODB"
     | "FLEXCONNECT";
 
 /**

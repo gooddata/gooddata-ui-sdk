@@ -20,6 +20,7 @@ import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorDescriptor } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IContextStore as IContextStore_2 } from '../contextStore.js';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
@@ -212,6 +213,24 @@ export function createExportFunction(result: IExecutionResult, exportTitle?: str
 
 // @internal (undocumented)
 export function createIntlMock(customMessages?: {}, locale?: string): IntlShape;
+
+// @internal (undocumented)
+export const createInvalidDatapoint: (input?: Partial<IInvalidDatapoint>) => {
+    id: string;
+    severity: IValidationSeverity;
+    message: string;
+};
+
+// @internal (undocumented)
+export function createInvalidNode(): IInvalidNode<Record<string, never>>;
+
+// @internal (undocumented)
+export function createInvalidNode<T extends Record<string, IInvalidNode<any>>>(input: Partial<IInvalidNode<T>> & {
+    children: T;
+}): IInvalidNode<T>;
+
+// @internal (undocumented)
+export function createInvalidNode<T extends Record<string, IInvalidNode<any>> = Record<string, never>>(input?: Partial<IInvalidNode<T>>): IInvalidNode<T>;
 
 // @public
 export function createNumberJsFormatter(separators?: ISeparators): ValueFormatter;
@@ -465,6 +484,12 @@ export function getIntersectionPartAfter(intersection: IDrillEventIntersectionEl
 // @internal
 export function getIntl(locale?: ILocale): IntlShape;
 
+// @internal (undocumented)
+export const getInvalidDatapointsInTree: <T extends IInvalidNode<any>>(rootNode: T) => IInvalidDatapoint[];
+
+// @internal (undocumented)
+export const getInvalidNodeAtPath: <T extends IInvalidNode<any>, P extends IInvalidNodePath<T>>(node: T, path?: P) => IInvalidNodeAtPath<T, P>;
+
 // @internal
 export function getMappingHeaderFormattedName(header: IMappingHeader | IResultMeasureHeader): string | undefined | null;
 
@@ -488,6 +513,9 @@ export function getTotalInfo(attributeHeaders: IResultAttributeHeader[]): {
 
 // @internal
 export function getTranslation(translationId: string | MessageDescriptor, locale: ILocale, values?: {}): string;
+
+// @internal (undocumented)
+export const getUpdatedInvalidTree: <T extends IInvalidNode<any>, P extends IInvalidNodePath<T>>(rootNode: T, updater: (node: IInvalidNodeAtPath<T, P>) => IInvalidNodeAtPath<T, P>, path?: P) => T;
 
 // @internal (undocumented)
 export function getVisualizationType(type: ChartType): ChartType;
@@ -1045,6 +1073,28 @@ export interface IIntlWrapperProps {
     // (undocumented)
     locale?: string;
 }
+
+// @internal (undocumented)
+export type IInvalidDatapoint = {
+    id: string;
+    severity: IValidationSeverity;
+    message: string;
+};
+
+// @internal (undocumented)
+export type IInvalidNode<Children extends Record<string, IInvalidNode<any>> = Record<string, IInvalidNode<any>>> = {
+    id: string;
+    invalidDatapoints: IInvalidDatapoint[];
+    children: Children;
+};
+
+// @internal (undocumented)
+export type IInvalidNodeAtPath<T extends IInvalidNode, Path extends IInvalidNodePath<T>> = Path extends [] ? T : Path extends [infer K, ...infer Rest] ? K extends keyof T["children"] ? T["children"][K] extends IInvalidNode ? Rest extends IInvalidNodePath<T["children"][K]> ? IInvalidNodeAtPath<T["children"][K], Rest> : never : T["children"][K] : never : never;
+
+// @internal (undocumented)
+export type IInvalidNodePath<T extends IInvalidNode> = [] | (T["children"] extends never ? never : {
+    [K in keyof T["children"]]: [K] | [K, ...IInvalidNodePath<T["children"][K]>];
+}[keyof T["children"]] | [keyof T["children"]] | IUnionPaths<T>);
 
 // @public
 export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
@@ -1729,6 +1779,11 @@ export interface ITranslationsProviderOwnProps {
 // @internal (undocumented)
 export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
 
+// @internal
+export type IUnionPaths<T extends IInvalidNode> = T["children"] extends never ? never : {
+    [K in keyof T["children"]]: T["children"][K]["children"] extends never ? never : [K, keyof T["children"][K]["children"]] | [K, ...IUnionPaths<T["children"][K]>];
+}[keyof T["children"]];
+
 // @public
 export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any, any>> = (resolutionContext: ComposedPlaceholderResolutionContext<T>) => PlaceholderResolvedValue<T>;
 
@@ -1777,6 +1832,21 @@ export type IUsePlaceholderHook<T extends IPlaceholder<any>> = () => [
 PlaceholderValue<T> | undefined,
 (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
 ];
+
+// @internal (undocumented)
+export type IValidationContextValue<T extends IInvalidNode> = {
+    rootNode: T;
+    setInvalidDatapoints: <P extends IInvalidNodePath<T>>(setter: (currentNode: IInvalidNodeAtPath<T, P>) => Array<IInvalidDatapoint | undefined | null | false>, path?: P) => void;
+    getInvalidDatapoints: <P extends IInvalidNodePath<T>>(args?: {
+        path?: P;
+        recursive?: boolean;
+    }) => IInvalidDatapoint[];
+    isValid: boolean;
+    registerChild: (child: IInvalidNode) => () => void;
+};
+
+// @internal (undocumented)
+export type IValidationSeverity = "error" | "warning" | "info";
 
 // @public
 export interface IVisualizationCallbacks {
@@ -2204,11 +2274,20 @@ export function useResolveValuesWithPlaceholders<T extends any[], C>(values: [..
 // @public
 export function useResolveValueWithPlaceholders<T, C>(value: T, resolutionContext?: C): PlaceholderResolvedValue<T>;
 
+// @internal (undocumented)
+export const useValidationContextValue: <T extends IInvalidNode>(initialValue: T) => IValidationContextValue<T>;
+
 // @public
 export const useWorkspace: (workspace?: string) => string | undefined;
 
 // @public
 export const useWorkspaceStrict: (workspace?: string, context?: string) => string;
+
+// @internal (undocumented)
+export const ValidationContextStore: IContextStore_2<IValidationContextValue<any>>;
+
+// @internal (undocumented)
+export const validationSeverity: ["info", "warning", "error"];
 
 // @public (undocumented)
 export type ValueFormatter = (value: DataValue, format: string) => string;
@@ -2277,7 +2356,7 @@ export function withContexts<T extends {
 }>(Chart: React.ComponentType<T>): React.ComponentType<T>;
 
 // @internal
-export function withEntireDataView<T extends IDataVisualizationProps>(InnerComponent: React_2.ComponentClass<T & ILoadingInjectedProps>): React_2.ComponentClass<T>;
+export function withEntireDataView<T extends IDataVisualizationProps>(InnerComponent: React_2.ComponentType<T & ILoadingInjectedProps>): React_2.ComponentType<T>;
 
 // @internal
 export function withExecution<T>(params: IWithExecution<T>): (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => React.ComponentClass<T, any>;

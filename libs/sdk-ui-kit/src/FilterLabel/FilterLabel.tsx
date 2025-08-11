@@ -1,120 +1,94 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { ReactNode, createRef, RefObject } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { ReactNode, useRef, useState, useEffect, memo, useCallback, useMemo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
-import { IFilterLabelProps, IFilterLabelState } from "./typings.js";
+import { IFilterLabelProps } from "./typings.js";
 
-class WrappedFilterLabel extends React.PureComponent<
-    IFilterLabelProps & WrappedComponentProps,
-    IFilterLabelState
-> {
-    static defaultProps: Pick<IFilterLabelProps, "isAllSelected" | "isDate" | "selection" | "noData"> = {
-        isAllSelected: false,
-        isDate: false,
-        selection: "",
-        noData: false,
-    };
-    private readonly labelRef: RefObject<HTMLSpanElement>;
+function WrappedFilterLabel(props: IFilterLabelProps & WrappedComponentProps): ReactNode {
+    const {
+        isAllSelected = false,
+        isDate = false,
+        selection = "",
+        noData = false,
+        selectionSize,
+        intl,
+        title,
+    } = props;
 
-    constructor(props: IFilterLabelProps & WrappedComponentProps) {
-        super(props);
+    const [hasEllipsis, setHasEllipsis] = useState<boolean>(false);
+    const labelRef = useRef<HTMLSpanElement>(null);
 
-        this.state = { hasEllipsis: false };
-        this.labelRef = createRef<HTMLSpanElement>();
-    }
+    const checkEllipsis = useCallback((): void => {
+        if (!labelRef.current) return;
 
-    componentDidMount(): void {
-        this.checkEllipsis();
-    }
-
-    componentDidUpdate(): void {
-        this.checkEllipsis();
-    }
-
-    getIsDate(): boolean {
-        return this.props.isDate;
-    }
-
-    isAllSelected(): boolean {
-        return this.props.isAllSelected;
-    }
-
-    checkEllipsis(): void {
-        const { offsetWidth, scrollWidth } = this.labelRef.current;
+        const { offsetWidth, scrollWidth } = labelRef.current;
         // for some reason, IE11 returns offsetWidth = scrollWidth - 1 even when there is no ellipsis
-        const hasEllipsis = offsetWidth < scrollWidth - 1;
-        if (hasEllipsis !== this.state.hasEllipsis) {
-            this.setState({ hasEllipsis });
+        const newHasEllipsis = offsetWidth < scrollWidth - 1;
+        if (newHasEllipsis !== hasEllipsis) {
+            setHasEllipsis(newHasEllipsis);
         }
-    }
+    }, [hasEllipsis]);
 
-    renderSelectionLabel(content: ReactNode): ReactNode {
+    useEffect(() => {
+        checkEllipsis();
+    }, [checkEllipsis]);
+
+    const renderSelectionLabel = useCallback((content: ReactNode): ReactNode => {
         return <span className="count s-total-count">{content}</span>;
-    }
+    }, []);
 
-    renderSelection(): ReactNode {
-        if (!this.getIsDate() && !this.props.noData) {
-            const { selectionSize, intl } = this.props;
-
-            if (this.isAllSelected()) {
-                return this.renderSelectionLabel(intl.formatMessage({ id: "gs.filterLabel.all" }));
+    const renderSelection = useMemo((): ReactNode => {
+        if (!isDate && !noData) {
+            if (isAllSelected) {
+                return renderSelectionLabel(intl.formatMessage({ id: "gs.filterLabel.all" }));
             }
 
             if (selectionSize === 0) {
-                return this.renderSelectionLabel(intl.formatMessage({ id: "gs.filterLabel.none" }));
+                return renderSelectionLabel(intl.formatMessage({ id: "gs.filterLabel.none" }));
             }
 
-            if (this.state.hasEllipsis && selectionSize > 0) {
-                return this.renderSelectionLabel(`(${selectionSize})`);
+            if (hasEllipsis && selectionSize > 0) {
+                return renderSelectionLabel(`(${selectionSize})`);
             }
         }
 
         return false;
-    }
+    }, [isDate, noData, isAllSelected, selectionSize, hasEllipsis, renderSelectionLabel, intl]);
 
-    renderTitle(): ReactNode {
+    const renderTitle = useMemo((): ReactNode => {
         return [
-            <span className="filter-label-title" key="title" title={this.props.title}>
-                {this.props.title}
+            <span className="filter-label-title" key="title" title={title}>
+                {title}
             </span>,
-            this.isAllSelected() && !this.getIsDate() && !this.props.noData ? (
-                <span key="title-colon">: </span>
-            ) : (
-                false
-            ),
+            isAllSelected && !isDate && !noData ? <span key="title-colon">: </span> : false,
         ];
-    }
+    }, [title, isAllSelected, isDate, noData]);
 
-    renderSelectedElements(): ReactNode {
-        if (!this.props.selection || this.isAllSelected()) {
+    const renderSelectedElements = useMemo((): ReactNode => {
+        if (!selection || isAllSelected) {
             return false;
         }
 
         return [
             <span key="selection-colon">: </span>,
             <span className="filter-label-selection" key="selection">
-                {this.props.selection}
+                {selection}
             </span>,
         ];
-    }
+    }, [selection, isAllSelected]);
 
-    render(): ReactNode {
-        return (
-            <div
-                role="attribute-filter-label"
-                className="adi-attribute-filter-label s-attribute-filter-label"
-            >
-                <span className="label" ref={this.labelRef}>
-                    {this.renderTitle()}
-                    {this.renderSelectedElements()}
-                </span>
-                {this.renderSelection()}
-            </div>
-        );
-    }
+    return (
+        <div role="attribute-filter-label" className="adi-attribute-filter-label s-attribute-filter-label">
+            <span className="label" ref={labelRef}>
+                {renderTitle}
+                {renderSelectedElements}
+            </span>
+            {renderSelection}
+        </div>
+    );
 }
 
 /**
  * @internal
  */
-export const FilterLabel = injectIntl(WrappedFilterLabel);
+export const FilterLabel = injectIntl(memo(WrappedFilterLabel));

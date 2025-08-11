@@ -1,6 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { IAutomationsState } from "./types.js";
+import {
+    IAutomationsState,
+    CellValueType,
+    IDashboardUrlBuilder,
+    IAutomationUrlBuilder,
+    IWidgetUrlBuilder,
+} from "./types.js";
+import { UiIconProps } from "@gooddata/sdk-ui-kit";
 
 export const COMPARISON_OPERATOR_LESS_THAN = "LESS_THAN";
 export const COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO";
@@ -44,6 +51,12 @@ export const ARITHMETIC_OPERATORS = {
 export const DEFAULT_MAX_HEIGHT = 500;
 export const DEFAULT_PAGE_SIZE = 20;
 
+export const ALL_DASHBOARDS_FILTER_VALUE = "__ALL_DASHBOARDS__";
+export const ALL_RECIPIENTS_FILTER_VALUE = "__ALL_RECIPIENTS__";
+export const ALL_CREATED_BY_FILTER_VALUE = "__ALL_CREATED_BY__";
+
+const DEFAULT_GENERAL_COLUMN_WIDTH = 225;
+
 /**
  * @internal
  */
@@ -51,12 +64,23 @@ export const DEFAULT_COLUMN_WIDTHS = {
     ID: 100,
     NAME: 280,
     DASHBOARD: 250,
-    RECIPIENTS: 225,
-    LAST_SENT: 225,
-    STATE: 225,
-    CREATED_BY: 225,
-    CREATED_AT: 225,
-    NOTIFICATION_CHANNEL: 225,
+    RECIPIENTS: DEFAULT_GENERAL_COLUMN_WIDTH,
+    LAST_SENT: DEFAULT_GENERAL_COLUMN_WIDTH,
+    STATE: DEFAULT_GENERAL_COLUMN_WIDTH,
+    CREATED_BY: DEFAULT_GENERAL_COLUMN_WIDTH,
+    CREATED_AT: DEFAULT_GENERAL_COLUMN_WIDTH,
+    NOTIFICATION_CHANNEL: DEFAULT_GENERAL_COLUMN_WIDTH,
+    WIDGET: DEFAULT_GENERAL_COLUMN_WIDTH,
+    ATTACHMENTS: DEFAULT_GENERAL_COLUMN_WIDTH,
+} as const;
+
+/**
+ * @internal
+ */
+export const EMPTY_CELL_VALUES: Record<CellValueType, string> = {
+    text: "",
+    date: "",
+    number: "",
 } as const;
 
 export const AutomationsDefaultState: IAutomationsState = {
@@ -70,3 +94,64 @@ export const AutomationsDefaultState: IAutomationsState = {
     sortDirection: "asc",
     invalidationId: 0,
 };
+
+export const defaultDashboardUrlBuilder: IDashboardUrlBuilder = (
+    workspaceId: string,
+    dashboardId: string,
+) => {
+    if (!workspaceId || !dashboardId) {
+        return "";
+    }
+    return `/dashboards/#/workspace/${workspaceId}/dashboard/${dashboardId}`;
+};
+
+export const defaultAutomationUrlBuilder: IAutomationUrlBuilder = (
+    workspaceId: string,
+    dashboardId: string,
+    automationId: string,
+) => {
+    if (!workspaceId || !dashboardId || !automationId) {
+        return "";
+    }
+    return `${defaultDashboardUrlBuilder(workspaceId, dashboardId)}?automationId=${automationId}&openAutomationOnLoad=true`;
+};
+
+export const defaultWidgetUrlBuilder: IWidgetUrlBuilder = (
+    workspaceId: string,
+    dashboardId: string,
+    widgetId: string,
+) => {
+    if (!workspaceId || !dashboardId || !widgetId) {
+        return "";
+    }
+    return `${defaultDashboardUrlBuilder(workspaceId, dashboardId)}?widgetId=${widgetId}`;
+};
+
+export const AUTOMATION_ICON_CONFIGS: Record<string, UiIconProps> = {
+    schedule: {
+        type: "clock",
+        color: "complementary-6",
+        size: 14,
+        backgroundSize: 27,
+        backgroundColor: "complementary-2",
+        backgroundType: "fill",
+    },
+    alert: {
+        type: "alert",
+        color: "complementary-6",
+        size: 14,
+        backgroundSize: 27,
+        backgroundColor: "complementary-2",
+        backgroundType: "fill",
+    },
+    SUCCESS: {
+        type: "checkCircle",
+        color: "success",
+        size: 14,
+    },
+    FAILED: {
+        type: "crossCircle",
+        color: "error",
+        size: 14,
+    },
+} as const;

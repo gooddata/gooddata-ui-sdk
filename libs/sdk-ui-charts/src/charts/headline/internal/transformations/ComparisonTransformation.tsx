@@ -3,13 +3,13 @@ import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
-import BaseHeadline from "../headlines/baseHeadline/BaseHeadline.js";
+import { BaseHeadline } from "../headlines/baseHeadline/BaseHeadline.js";
 import { useFireDrillEvent } from "./useFiredDrillEvent.js";
 import { getComparisonBaseHeadlineData } from "../utils/ComparisonTransformationUtils.js";
 import { IChartConfig } from "../../../../interfaces/index.js";
 import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 
-const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = ({
+export const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = ({
     dataView,
     drillableItems,
     config,
@@ -42,5 +42,3 @@ const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = ({
         />
     );
 };
-
-export default ComparisonTransformation;

@@ -40,4 +40,5 @@ export interface IButtonProps {
     intent?: "action" | "positive" | "negative";
     size?: "small" | "medium" | "large";
     accessibilityConfig?: IButtonAccessibilityConfig;
+    describedByFromValidation?: boolean;
 }

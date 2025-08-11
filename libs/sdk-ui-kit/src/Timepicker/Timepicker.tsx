@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { memo, useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import moment from "moment";
 import { translationUtils } from "@gooddata/util";
@@ -16,7 +16,6 @@ import { SingleSelectListItem } from "../List/index.js";
 
 const DEFAULT_WIDTH = 199;
 const MINUTES_IN_HOUR = 60;
-const MAX_VISIBLE_ITEMS_COUNT = 10;
 const MAX_HEIGHT = 140;
 
 export { normalizeTime, formatTime };
@@ -28,6 +27,7 @@ export interface ITimepickerOwnProps {
     time: Date | null;
     className?: string;
     ariaLabelledBy?: string;
+    ariaDescribedBy?: string;
     maxVisibleItemsCount?: number;
     onChange?: (selectedTime: Date) => void;
     overlayPositionType?: OverlayPositionType;
@@ -41,140 +41,140 @@ export interface ITimepickerOwnProps {
 
 export type TimePickerProps = ITimepickerOwnProps & WrappedComponentProps;
 
-interface ITimePickerState {
-    dropdownWidth: number;
-    selectedTime: Date;
-}
+export const WrappedTimepicker = memo(function WrappedTimepicker({
+    time = new Date(),
+    className = "",
+    ariaLabelledBy,
+    ariaDescribedBy,
+    onChange = noop,
+    overlayPositionType,
+    overlayZIndex = 0,
+    skipNormalizeTime = false,
+    timeAnchor = TIME_ANCHOR,
+    timeFormat = undefined,
+    closeOnParentScroll,
+    intl,
+}: TimePickerProps) {
+    const dropdownRef = useRef<HTMLDivElement>();
 
-export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITimePickerState> {
-    public dropdownRef = React.createRef<HTMLDivElement>();
+    const updateLocaleForMoment = useCallback(() => {
+        moment.locale(translationUtils.sanitizeLocaleForMoment(intl.locale));
+    }, [intl.locale]);
 
-    public static defaultProps = {
-        className: "",
-        maxVisibleItemsCount: MAX_VISIBLE_ITEMS_COUNT,
-        time: new Date(),
-        onChange: noop,
-        overlayZIndex: 0,
-        skipNormalizeTime: false,
-        timeAnchor: TIME_ANCHOR,
-        timeFormat: undefined,
-    };
+    updateLocaleForMoment();
 
-    constructor(props: TimePickerProps) {
-        super(props);
+    const initialTime = time || new Date();
+    const [dropdownWidth, setDropdownWidth] = useState(DEFAULT_WIDTH);
+    const [selectedTime, setSelectedTime] = useState<Date>(
+        skipNormalizeTime ? initialTime : normalizeTime(initialTime, undefined, timeAnchor),
+    );
 
-        this.updateLocaleForMoment();
+    useEffect(() => {
+        const updatedTime = time || new Date();
+        const newSelectedTime = skipNormalizeTime
+            ? updatedTime
+            : normalizeTime(updatedTime, undefined, timeAnchor);
 
-        const time = props.time || new Date();
-        this.state = {
-            dropdownWidth: DEFAULT_WIDTH,
-            selectedTime: props.skipNormalizeTime
-                ? time
-                : normalizeTime(time, undefined, this.props.timeAnchor),
-        };
-    }
-
-    public UNSAFE_componentWillReceiveProps(newProps: TimePickerProps): void {
-        if (newProps.time !== this.props.time) {
-            const updatedTime = newProps.time || new Date();
-            this.setState({
-                selectedTime: this.props.skipNormalizeTime
-                    ? updatedTime
-                    : normalizeTime(updatedTime, undefined, this.props.timeAnchor),
-            });
+        if (newSelectedTime.getTime() !== selectedTime.getTime()) {
+            setSelectedTime(newSelectedTime);
         }
-    }
+    }, [time, skipNormalizeTime, timeAnchor, selectedTime]);
 
-    public componentDidMount(): void {
-        this.updateDropdownWidth();
-    }
+    const updateDropdownWidth = useCallback(() => {
+        const { width } = dropdownRef.current.getBoundingClientRect();
+        setDropdownWidth(width);
+    }, []);
 
-    private getComponentClasses() {
-        return `gd-datepicker ${this.props.className} gd-datepicker-input gd-timepicker`;
-    }
+    useEffect(() => {
+        updateDropdownWidth();
+    }, [updateDropdownWidth]);
 
-    private getTimeItems = (selectedTime: SelectedTime) => {
-        let currentItem;
-        const items = [];
+    const getComponentClasses = useCallback(() => {
+        return `gd-datepicker ${className} gd-datepicker-input gd-timepicker`;
+    }, [className]);
 
-        const { h: hours, m: minutes } = selectedTime;
+    const getTimeItems = useCallback(
+        (selectedTime: SelectedTime) => {
+            let currentItem;
+            const items = [];
 
-        for (let h = 0; h < HOURS_IN_DAY; h += 1) {
-            for (let m = 0; m < MINUTES_IN_HOUR; m += this.props.timeAnchor) {
-                const item = {
-                    h,
-                    m,
-                    title: formatTime(h, m, this.props.timeFormat),
-                };
-                items.push(item);
-                if (h === hours && m === minutes) {
-                    currentItem = item;
+            const { h: hours, m: minutes } = selectedTime;
+
+            for (let h = 0; h < HOURS_IN_DAY; h += 1) {
+                for (let m = 0; m < MINUTES_IN_HOUR; m += timeAnchor) {
+                    const item = {
+                        h,
+                        m,
+                        title: formatTime(h, m, timeFormat),
+                    };
+                    items.push(item);
+                    if (h === hours && m === minutes) {
+                        currentItem = item;
+                    }
                 }
             }
-        }
 
-        return { items, currentItem };
-    };
+            return { items, currentItem };
+        },
+        [timeAnchor, timeFormat],
+    );
 
-    private updateDropdownWidth = () => {
-        const { width } = this.dropdownRef.current.getBoundingClientRect();
-        this.setState({ dropdownWidth: width });
-    };
+    const handleTimeChanged = useCallback(
+        (newlySelectedTime: SelectedTime) => {
+            if (!newlySelectedTime) {
+                return;
+            }
 
-    private updateLocaleForMoment() {
-        moment.locale(translationUtils.sanitizeLocaleForMoment(this.props.intl.locale));
-    }
+            const { h, m } = newlySelectedTime;
+            const newSelectedTime = updateTime(h, m);
 
-    private handleTimeChanged = (newlySelectedTime: SelectedTime) => {
-        if (!newlySelectedTime) {
-            return;
-        }
+            setSelectedTime(newSelectedTime);
+            onChange(newSelectedTime);
+        },
+        [onChange],
+    );
 
-        const { h, m } = newlySelectedTime;
-        const selectedTime = updateTime(h, m);
-
-        this.setState({ selectedTime }, () => this.props.onChange(selectedTime));
-    };
-
-    public render() {
-        const { ariaLabelledBy, overlayPositionType, overlayZIndex, intl, closeOnParentScroll } = this.props;
-        const { dropdownWidth, selectedTime } = this.state;
-        const time = {
+    const timeObj = useMemo(
+        () => ({
             h: selectedTime.getHours(),
             m: selectedTime.getMinutes(),
-        };
-        const { items, currentItem } = this.getTimeItems(time);
-        const accessibilityDropdownButtonLabel = intl.formatMessage({ id: "timePicker.accessibility.label" });
+        }),
+        [selectedTime],
+    );
+    const { items, currentItem } = useMemo(() => getTimeItems(timeObj), [getTimeItems, timeObj]);
+    const accessibilityDropdownButtonLabel = intl.formatMessage({ id: "timePicker.accessibility.label" });
 
-        return (
-            <div className={this.getComponentClasses()} ref={this.dropdownRef}>
-                <Dropdown
-                    closeOnParentScroll={closeOnParentScroll}
-                    overlayPositionType={overlayPositionType}
-                    alignPoints={[
-                        {
-                            align: "bl tl",
-                        },
-                        {
-                            align: "tl bl",
-                        },
-                    ]}
-                    autofocusOnOpen={true}
-                    renderButton={({ openDropdown, isOpen, dropdownId, buttonRef }) => (
-                        <DropdownButton
-                            accessibilityConfig={{
-                                ariaLabelledBy,
-                                ariaLabel: accessibilityDropdownButtonLabel,
-                            }}
-                            value={formatTime(time.h, time.m, this.props.timeFormat)}
-                            isOpen={isOpen}
-                            dropdownId={dropdownId}
-                            onClick={openDropdown}
-                            iconLeft="gd-icon-timer"
-                            buttonRef={buttonRef}
-                        />
-                    )}
-                    renderBody={({ closeDropdown, ariaAttributes }) => {
+    return (
+        <div className={getComponentClasses()} ref={dropdownRef}>
+            <Dropdown
+                closeOnParentScroll={closeOnParentScroll}
+                overlayPositionType={overlayPositionType}
+                alignPoints={[
+                    {
+                        align: "bl tl",
+                    },
+                    {
+                        align: "tl bl",
+                    },
+                ]}
+                autofocusOnOpen={true}
+                renderButton={({ openDropdown, isOpen, dropdownId, buttonRef }) => (
+                    <DropdownButton
+                        accessibilityConfig={{
+                            ariaLabelledBy,
+                            ariaDescribedBy,
+                            ariaLabel: accessibilityDropdownButtonLabel,
+                        }}
+                        value={formatTime(timeObj.h, timeObj.m, timeFormat)}
+                        isOpen={isOpen}
+                        dropdownId={dropdownId}
+                        onClick={openDropdown}
+                        iconLeft="gd-icon-timer"
+                        buttonRef={buttonRef}
+                    />
+                )}
+                renderBody={useCallback(
+                    ({ closeDropdown, ariaAttributes }) => {
                         const listboxItems = items.map((item) => ({
                             type: "interactive" as const,
                             id: `${item.h}-${item.m}`,
@@ -200,7 +200,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                                 maxHeight={MAX_HEIGHT}
                                 selectedItemId={currentItem ? `${currentItem.h}-${currentItem.m}` : undefined}
                                 onSelect={(item) => {
-                                    this.handleTimeChanged(item.data);
+                                    handleTimeChanged(item.data);
                                 }}
                                 onClose={closeDropdown}
                                 onUnhandledKeyDown={handleKeyDown}
@@ -218,25 +218,24 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                                 }}
                             />
                         );
-                    }}
-                    overlayZIndex={overlayZIndex}
-                />
-            </div>
-        );
-    }
-}
+                    },
+                    [items, handleTimeChanged, currentItem, dropdownWidth],
+                )}
+                overlayZIndex={overlayZIndex}
+            />
+        </div>
+    );
+});
 
 const TimePickerWithIntl = injectIntl(WrappedTimepicker);
 
 /**
  * @internal
  */
-export class Timepicker extends React.PureComponent<ITimepickerOwnProps> {
-    public render() {
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <TimePickerWithIntl {...this.props} />
-            </IntlWrapper>
-        );
-    }
-}
+export const Timepicker = React.memo(function Timepicker(props: ITimepickerOwnProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <TimePickerWithIntl {...props} />
+        </IntlWrapper>
+    );
+});

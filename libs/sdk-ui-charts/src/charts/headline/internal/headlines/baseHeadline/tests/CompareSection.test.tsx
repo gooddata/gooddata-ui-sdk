@@ -5,7 +5,7 @@ import { render } from "@testing-library/react";
 
 import { IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
-import CompareSection from "../CompareSection.js";
+import { CompareSection } from "../CompareSection.js";
 import * as CompareSectionItem from "../CompareSectionItem.js";
 import {
     HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR,
@@ -35,7 +35,7 @@ describe("CompareSection", () => {
     };
 
     beforeEach(() => {
-        MockCompareItem = vi.spyOn(CompareSectionItem, "default");
+        MockCompareItem = vi.spyOn(CompareSectionItem, "CompareSectionItem");
         mockUseBaseHeadline();
     });
 

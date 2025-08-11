@@ -5,6 +5,10 @@
         {
             "operationName": "build",
             "outputFolderNames": ["esm", "dist-storybook"]
+        },
+        {
+            "operationName": "validate-ci",
+            "outputFolderNames": []
         }
     ]
 }

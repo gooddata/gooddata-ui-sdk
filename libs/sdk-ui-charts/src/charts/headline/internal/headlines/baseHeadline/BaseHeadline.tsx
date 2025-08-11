@@ -6,8 +6,8 @@ import ReactMeasure, { MeasuredComponentProps } from "react-measure";
 import { HeadlineElementType } from "@gooddata/sdk-ui";
 
 import { IChartConfig } from "../../../../../interfaces/index.js";
-import PrimarySection from "./PrimarySection.js";
-import CompareSection from "./CompareSection.js";
+import { PrimarySection } from "./PrimarySection.js";
+import { CompareSection } from "./CompareSection.js";
 import { HeadlineFiredDrillEvent } from "../../interfaces/DrillEvents.js";
 import { BaseHeadlineContext } from "./BaseHeadlineContext.js";
 import { IBaseHeadlineData } from "../../interfaces/BaseHeadlines.js";
@@ -23,7 +23,7 @@ interface IHeadlineProps {
     onAfterRender?: () => void;
 }
 
-const BaseHeadline: React.FC<IHeadlineProps> = ({ data, config, onDrill, onAfterRender }) => {
+export const BaseHeadline: React.FC<IHeadlineProps> = ({ data, config, onDrill, onAfterRender }) => {
     const { primaryItem, secondaryItem, tertiaryItem } = data;
 
     const afterRenderCalled = useRef(false);
@@ -93,5 +93,3 @@ const BaseHeadline: React.FC<IHeadlineProps> = ({ data, config, onDrill, onAfter
         </Measure>
     );
 };
-
-export default BaseHeadline;

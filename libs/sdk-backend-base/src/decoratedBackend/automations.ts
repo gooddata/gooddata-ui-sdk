@@ -7,6 +7,7 @@ import {
     IAutomationsQuery,
     AutomationType,
     IAutomationsQueryResult,
+    IGetAutomationsQueryOptions,
 } from "@gooddata/sdk-backend-spi";
 import { IAutomationMetadataObjectDefinition, IAutomationMetadataObject } from "@gooddata/sdk-model";
 
@@ -76,8 +77,8 @@ export abstract class DecoratedWorkspaceAutomationsService implements IWorkspace
         return this.decorated.getAutomations(options);
     }
 
-    getAutomationsQuery(): IAutomationsQuery {
-        return this.decorated.getAutomationsQuery();
+    getAutomationsQuery(options?: IGetAutomationsQueryOptions): IAutomationsQuery {
+        return this.decorated.getAutomationsQuery(options);
     }
 
     updateAutomation(

@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { Component, createRef } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import throttle from "lodash/throttle.js";
 import { elementRegion } from "../utils/domUtilities.js";
 
@@ -21,41 +21,39 @@ export interface IAutoSizeProps {
 /**
  * @internal
  */
-export class AutoSize extends Component<IAutoSizeProps> {
-    public state = {
+export function AutoSize({ children }: IAutoSizeProps) {
+    const [state, setState] = useState({
         width: 0,
         height: 0,
-    };
+    });
 
-    private updateSize = () => {
-        const { width, height } = elementRegion(this.wrapperRef.current);
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
-        this.setState({
+    const updateSize = useCallback(() => {
+        const { width, height } = elementRegion(wrapperRef.current);
+
+        setState({
             width,
             height,
         });
-    };
+    }, []);
 
-    private throttledUpdateSize = throttle(this.updateSize, 250, { leading: false });
-    private wrapperRef = createRef<HTMLDivElement>();
+    const throttledUpdateSize = useMemo(() => throttle(updateSize, 250, { leading: false }), [updateSize]);
 
-    public render() {
-        const { children } = this.props;
-        const { width, height } = this.state;
-        return (
-            <div ref={this.wrapperRef} style={{ height: "100%", width: "100%" }}>
-                {children({ width, height })}
-            </div>
-        );
-    }
+    useEffect(() => {
+        window.addEventListener("resize", throttledUpdateSize);
+        throttledUpdateSize();
 
-    public componentDidMount(): void {
-        window.addEventListener("resize", this.throttledUpdateSize);
-        this.throttledUpdateSize();
-    }
+        return () => {
+            throttledUpdateSize.cancel();
+            window.removeEventListener("resize", throttledUpdateSize);
+        };
+    }, [throttledUpdateSize]);
 
-    public componentWillUnmount(): void {
-        this.throttledUpdateSize.cancel();
-        window.removeEventListener("resize", this.throttledUpdateSize);
-    }
+    const { width, height } = state;
+    return (
+        <div ref={wrapperRef} style={{ height: "100%", width: "100%" }}>
+            {children({ width, height })}
+        </div>
+    );
 }

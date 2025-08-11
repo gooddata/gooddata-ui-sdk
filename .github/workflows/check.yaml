@@ -11,42 +11,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
-  dismiss-approvals:
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      contents: read
-    steps:
-      - name: Dismiss Approvals
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const prNumber = context.payload.pull_request.number;
-
-            // Get all reviews on the pull request
-            const reviews = await github.rest.pulls.listReviews({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: prNumber,
-            });
-
-            // Iterate over reviews and dismiss approvals
-            for (const review of reviews.data) {
-              if (review.state === "APPROVED") {
-                await github.rest.pulls.dismissReview({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: prNumber,
-                  review_id: review.id,
-                  message: "Approval dismissed automatically due to PR update.",
-                });
-                console.log(`Dismissed approval from ${review.user.login}`);
-              }
-            }
-        env:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-
   check-sync-label:
     permissions:
       contents: read

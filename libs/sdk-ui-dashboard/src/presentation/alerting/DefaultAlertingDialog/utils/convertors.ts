@@ -55,7 +55,7 @@ export function createDefaultAlert(
         type: "automation",
         title: "",
         notificationChannel: notificationChannelId,
-        dashboard: dashboardId,
+        dashboard: dashboardId ? { id: dashboardId } : undefined,
         alert: {
             trigger,
             condition,

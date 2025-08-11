@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-//Obtained from substrabting the widget title and paddings/margins of visualization.
+//Obtained from subtracting the widget title and paddings/margins of visualization.
 const MINIMUM_HEIGHT_FOR_PAGINATION = 160;
 
 /**
@@ -78,6 +78,7 @@ export const shouldRenderPagination = (
     width: number,
     height: number,
 ): boolean => {
-    const paged = height <= MINIMUM_HEIGHT_FOR_PAGINATION;
-    return enableCompactSize && paged && width < SMALL_COMPARE_SECTION_THRESHOLD;
+    const isSmallHeight = height <= MINIMUM_HEIGHT_FOR_PAGINATION;
+    const isSmallWidth = width < SMALL_COMPARE_SECTION_THRESHOLD;
+    return enableCompactSize && isSmallWidth && isSmallHeight;
 };

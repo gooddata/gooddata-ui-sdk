@@ -51,7 +51,13 @@ import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js"
 
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 
-import { convertError } from "@gooddata/sdk-ui";
+import {
+    convertError,
+    createInvalidDatapoint,
+    createInvalidNode,
+    useValidationContextValue,
+    ValidationContextStore,
+} from "@gooddata/sdk-ui";
 import { getDescription, getValueSuffix } from "./utils/getters.js";
 import { isChangeOrDifferenceOperator } from "./utils/guards.js";
 import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
@@ -199,7 +205,15 @@ export function AlertingDialogRenderer({
         }
     };
 
-    const errorMessage = validationErrorMessage;
+    const validationContextValue = useValidationContextValue(createInvalidNode({ id: "AlertingDialog" }));
+    const { setInvalidDatapoints, getInvalidDatapoints } = validationContextValue;
+    const invalidDatapoint = getInvalidDatapoints().at(0);
+
+    React.useEffect(() => {
+        setInvalidDatapoints(() => [
+            !!validationErrorMessage && createInvalidDatapoint({ message: validationErrorMessage }),
+        ]);
+    }, [validationErrorMessage, setInvalidDatapoints]);
 
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.alerting.footer.title.short" }).id
@@ -229,238 +243,245 @@ export function AlertingDialogRenderer({
                 ensureVisibility={true}
             >
                 <OverlayControllerProvider overlayController={overlayController}>
-                    <ConfirmDialogBase
-                        className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog"
-                        isPositive={true}
-                        cancelButtonText={intl.formatMessage({ id: "cancel" })}
-                        submitButtonText={
-                            alertToEdit
-                                ? intl.formatMessage({ id: `save` })
-                                : intl.formatMessage({ id: `create` })
-                        }
-                        accessibilityConfig={{
-                            closeButton: {
-                                ariaLabel: intl.formatMessage({ id: "dialogs.alert.closeLabel" }),
-                            },
-                            titleElementId,
-                        }}
-                        showProgressIndicator={isSavingAlert}
-                        footerLeftRenderer={() => (
-                            <AlertingDialogFooter
-                                isWhiteLabeled={isWhiteLabeled}
-                                helpTextId={helpTextId}
-                                alertToEdit={alertToEdit}
-                                isSavingAlert={isSavingAlert}
-                                onDeleteClick={() =>
-                                    setAlertToDelete(alertToEdit as IAutomationMetadataObject)
-                                }
-                            />
-                        )}
-                        isSubmitDisabled={isSubmitDisabled || isSavingAlert || isExecutionTimestampMode}
-                        submitButtonTooltipText={
-                            isExecutionTimestampMode
-                                ? intl.formatMessage({
-                                      id: "dialogs.alert.save.executionTimestampMode",
-                                  })
-                                : undefined
-                        }
-                        initialFocus={dialogTitleRef}
-                        submitOnEnterKey={false}
-                        onCancel={onCancel}
-                        onSubmit={handleSaveAlert}
-                        headline={undefined}
-                        headerLeftButtonRenderer={() => (
-                            <AlertingDialogHeader
-                                title={editedAutomation.title ?? ""}
-                                onChange={onTitleChange}
-                                onCancel={onCancel}
-                                placeholder={intl.formatMessage({
-                                    id: "dialogs.alert.title.placeholder",
-                                })}
-                                ref={dialogTitleRef}
-                            />
-                        )}
-                    >
-                        <h2 className={"sr-only"} id={titleElementId}>
-                            {intl.formatMessage({ id: "dialogs.alert.accessibility.label.title" })}
-                        </h2>
-                        <ScrollablePanel
-                            className={cx("gd-notifications-channel-dialog-content-wrapper", {
-                                "gd-notification-channel-dialog-with-automation-filters":
-                                    enableAutomationFilterContext,
-                            })}
+                    <ValidationContextStore value={validationContextValue}>
+                        <ConfirmDialogBase
+                            className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog"
+                            isPositive={true}
+                            cancelButtonText={intl.formatMessage({ id: "cancel" })}
+                            submitButtonText={
+                                alertToEdit
+                                    ? intl.formatMessage({ id: `save` })
+                                    : intl.formatMessage({ id: `create` })
+                            }
+                            accessibilityConfig={{
+                                closeButton: {
+                                    ariaLabel: intl.formatMessage({ id: "dialogs.alert.closeLabel" }),
+                                },
+                                titleElementId,
+                            }}
+                            showProgressIndicator={isSavingAlert}
+                            footerLeftRenderer={() => (
+                                <AlertingDialogFooter
+                                    isWhiteLabeled={isWhiteLabeled}
+                                    helpTextId={helpTextId}
+                                    alertToEdit={alertToEdit}
+                                    isSavingAlert={isSavingAlert}
+                                    onDeleteClick={() =>
+                                        setAlertToDelete(alertToEdit as IAutomationMetadataObject)
+                                    }
+                                />
+                            )}
+                            isSubmitDisabled={isSubmitDisabled || isSavingAlert || isExecutionTimestampMode}
+                            submitButtonTooltipText={
+                                isExecutionTimestampMode
+                                    ? intl.formatMessage({
+                                          id: "dialogs.alert.save.executionTimestampMode",
+                                      })
+                                    : undefined
+                            }
+                            initialFocus={dialogTitleRef}
+                            submitOnEnterKey={false}
+                            onCancel={onCancel}
+                            onSubmit={handleSaveAlert}
+                            headline={undefined}
+                            headerLeftButtonRenderer={() => (
+                                <AlertingDialogHeader
+                                    title={editedAutomation.title ?? ""}
+                                    onChange={onTitleChange}
+                                    onCancel={onCancel}
+                                    placeholder={intl.formatMessage({
+                                        id: "dialogs.alert.title.placeholder",
+                                    })}
+                                    ref={dialogTitleRef}
+                                />
+                            )}
                         >
-                            <div className="gd-divider-with-margin" />
-                            {enableAutomationFilterContext ? (
-                                <>
-                                    <AutomationFiltersSelect
-                                        availableFilters={availableFilters}
-                                        selectedFilters={editedAutomationFilters}
-                                        onFiltersChange={onFiltersChange}
-                                        storeFilters={true}
-                                        onStoreFiltersChange={() => {}}
-                                        isDashboardAutomation={false}
-                                        overlayPositionType={OVERLAY_POSITION_TYPE}
-                                    />
-                                    <ContentDivider className="gd-divider-with-margin" />
-                                </>
-                            ) : null}
-                            <FormFieldGroup label={<FormattedMessage id="insightAlert.config.when" />}>
-                                <FormField label="Metric" htmlFor="alert.measure">
-                                    <AlertMeasureSelect
-                                        selectedMeasure={selectedMeasure}
-                                        onMeasureChange={onMeasureChange}
-                                        measures={supportedMeasures}
-                                        overlayPositionType={OVERLAY_POSITION_TYPE}
-                                        id="alert.measure"
-                                        closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                    />
-                                </FormField>
-                                {Boolean(canManageAttributes) &&
-                                    supportedAttributes.filter((a) => a.type === "attribute").length > 0 && (
+                            <h2 className={"sr-only"} id={titleElementId}>
+                                {intl.formatMessage({ id: "dialogs.alert.accessibility.label.title" })}
+                            </h2>
+                            <ScrollablePanel
+                                className={cx("gd-notifications-channel-dialog-content-wrapper", {
+                                    "gd-notification-channel-dialog-with-automation-filters":
+                                        enableAutomationFilterContext,
+                                })}
+                            >
+                                <div className="gd-divider-with-margin" />
+                                {enableAutomationFilterContext ? (
+                                    <>
+                                        <AutomationFiltersSelect
+                                            availableFilters={availableFilters}
+                                            selectedFilters={editedAutomationFilters}
+                                            onFiltersChange={onFiltersChange}
+                                            storeFilters={true}
+                                            onStoreFiltersChange={() => {}}
+                                            isDashboardAutomation={false}
+                                            overlayPositionType={OVERLAY_POSITION_TYPE}
+                                        />
+                                        <ContentDivider className="gd-divider-with-margin" />
+                                    </>
+                                ) : null}
+                                <FormFieldGroup label={<FormattedMessage id="insightAlert.config.when" />}>
+                                    <FormField label="Metric" htmlFor="alert.measure">
+                                        <AlertMeasureSelect
+                                            selectedMeasure={selectedMeasure}
+                                            onMeasureChange={onMeasureChange}
+                                            measures={supportedMeasures}
+                                            overlayPositionType={OVERLAY_POSITION_TYPE}
+                                            id="alert.measure"
+                                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                        />
+                                    </FormField>
+                                    {Boolean(canManageAttributes) &&
+                                        supportedAttributes.filter((a) => a.type === "attribute").length >
+                                            0 && (
+                                            <FormField
+                                                label={<FormattedMessage id="insightAlert.config.for" />}
+                                                htmlFor="alert.attribute"
+                                            >
+                                                <AlertAttributeSelect
+                                                    id="alert.attribute"
+                                                    selectedAttribute={selectedAttribute}
+                                                    selectedValue={selectedValue}
+                                                    onAttributeChange={onAttributeChange}
+                                                    attributes={supportedAttributes}
+                                                    catalogAttributes={catalogAttributes}
+                                                    catalogDateDatasets={catalogDateDatasets}
+                                                    getAttributeValues={getAttributeValues}
+                                                    isResultLoading={isResultLoading}
+                                                    showLabel={false}
+                                                    closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                                />
+                                            </FormField>
+                                        )}
+                                    <FormField
+                                        label={<FormattedMessage id="insightAlert.config.condition" />}
+                                        htmlFor="alert.condition"
+                                    >
+                                        <AlertComparisonOperatorSelect
+                                            id="alert.condition"
+                                            measure={selectedMeasure}
+                                            selectedComparisonOperator={selectedComparisonOperator}
+                                            selectedRelativeOperator={selectedRelativeOperator}
+                                            onComparisonOperatorChange={onComparisonOperatorChange}
+                                            onRelativeOperatorChange={onRelativeOperatorChange}
+                                            overlayPositionType={OVERLAY_POSITION_TYPE}
+                                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                        />
+                                    </FormField>
+                                    <FormField
+                                        label={<FormattedMessage id="insightAlert.config.threshold" />}
+                                        htmlFor="alert.value"
+                                    >
+                                        <Input
+                                            id="alert.value"
+                                            className="gd-edit-alert__value-input s-alert-value-input"
+                                            isSmall
+                                            value={value}
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                            type="number"
+                                            suffix={getValueSuffix(editedAutomation?.alert)}
+                                        />
+                                    </FormField>
+                                    {isChangeOrDifferenceOperator(editedAutomation?.alert) && (
                                         <FormField
-                                            label={<FormattedMessage id="insightAlert.config.for" />}
-                                            htmlFor="alert.attribute"
+                                            label={<FormattedMessage id="insightAlert.config.comparison" />}
+                                            htmlFor="alert.comparison"
                                         >
-                                            <AlertAttributeSelect
-                                                id="alert.attribute"
-                                                selectedAttribute={selectedAttribute}
-                                                selectedValue={selectedValue}
-                                                onAttributeChange={onAttributeChange}
-                                                attributes={supportedAttributes}
-                                                catalogAttributes={catalogAttributes}
-                                                catalogDateDatasets={catalogDateDatasets}
-                                                getAttributeValues={getAttributeValues}
-                                                isResultLoading={isResultLoading}
-                                                showLabel={false}
+                                            <AlertComparisonPeriodSelect
+                                                id="alert.comparison"
+                                                measure={selectedMeasure}
+                                                alert={editedAutomation as IAutomationMetadataObject}
+                                                selectedComparison={selectedComparator?.comparator}
+                                                onComparisonChange={(comparisonType) => {
+                                                    onComparisonTypeChange(
+                                                        selectedMeasure!,
+                                                        selectedRelativeOperator,
+                                                        comparisonType,
+                                                    );
+                                                }}
+                                                overlayPositionType={OVERLAY_POSITION_TYPE}
+                                                canManageComparison={canManageComparison}
                                                 closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                             />
                                         </FormField>
                                     )}
-                                <FormField
-                                    label={<FormattedMessage id="insightAlert.config.condition" />}
-                                    htmlFor="alert.condition"
-                                >
-                                    <AlertComparisonOperatorSelect
-                                        id="alert.condition"
-                                        measure={selectedMeasure}
-                                        selectedComparisonOperator={selectedComparisonOperator}
-                                        selectedRelativeOperator={selectedRelativeOperator}
-                                        onComparisonOperatorChange={onComparisonOperatorChange}
-                                        onRelativeOperatorChange={onRelativeOperatorChange}
-                                        overlayPositionType={OVERLAY_POSITION_TYPE}
-                                        closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                    />
-                                </FormField>
-                                <FormField
-                                    label={<FormattedMessage id="insightAlert.config.threshold" />}
-                                    htmlFor="alert.value"
-                                >
-                                    <Input
-                                        id="alert.value"
-                                        className="gd-edit-alert__value-input s-alert-value-input"
-                                        isSmall
-                                        value={value}
-                                        onChange={onChange}
-                                        onBlur={onBlur}
-                                        type="number"
-                                        suffix={getValueSuffix(editedAutomation?.alert)}
-                                    />
-                                </FormField>
-                                {isChangeOrDifferenceOperator(editedAutomation?.alert) && (
+                                </FormFieldGroup>
+                                <ContentDivider className="gd-divider-with-margin" />
+                                <FormFieldGroup label={<FormattedMessage id="insightAlert.config.do" />}>
+                                    {notificationChannels.length > 1 && (
+                                        <FormField
+                                            label={<FormattedMessage id="insightAlert.config.action" />}
+                                            htmlFor="alert.destination"
+                                        >
+                                            <AlertDestinationSelect
+                                                id="alert.destination"
+                                                selectedDestination={editedAutomation.notificationChannel!}
+                                                onDestinationChange={onDestinationChange}
+                                                destinations={notificationChannels}
+                                                overlayPositionType={OVERLAY_POSITION_TYPE}
+                                                closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                            />
+                                        </FormField>
+                                    )}
                                     <FormField
-                                        label={<FormattedMessage id="insightAlert.config.comparison" />}
-                                        htmlFor="alert.comparison"
+                                        label={<FormattedMessage id="insightAlert.config.trigger" />}
+                                        htmlFor="alert.trigger"
                                     >
-                                        <AlertComparisonPeriodSelect
-                                            id="alert.comparison"
-                                            measure={selectedMeasure}
-                                            alert={editedAutomation as IAutomationMetadataObject}
-                                            selectedComparison={selectedComparator?.comparator}
-                                            onComparisonChange={(comparisonType) => {
-                                                onComparisonTypeChange(
-                                                    selectedMeasure!,
-                                                    selectedRelativeOperator,
-                                                    comparisonType,
-                                                );
-                                            }}
-                                            overlayPositionType={OVERLAY_POSITION_TYPE}
-                                            canManageComparison={canManageComparison}
-                                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                        />
-                                    </FormField>
-                                )}
-                            </FormFieldGroup>
-                            <ContentDivider className="gd-divider-with-margin" />
-                            <FormFieldGroup label={<FormattedMessage id="insightAlert.config.do" />}>
-                                {notificationChannels.length > 1 && (
-                                    <FormField
-                                        label={<FormattedMessage id="insightAlert.config.action" />}
-                                        htmlFor="alert.destination"
-                                    >
-                                        <AlertDestinationSelect
-                                            id="alert.destination"
-                                            selectedDestination={editedAutomation.notificationChannel!}
-                                            onDestinationChange={onDestinationChange}
-                                            destinations={notificationChannels}
+                                        <AlertTriggerModeSelect
+                                            id="alert.trigger"
+                                            selectedTriggerMode={
+                                                editedAutomation?.alert?.trigger.mode ?? "ALWAYS"
+                                            }
+                                            onTriggerModeChange={onTriggerModeChange}
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
                                             closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                         />
                                     </FormField>
-                                )}
-                                <FormField
-                                    label={<FormattedMessage id="insightAlert.config.trigger" />}
-                                    htmlFor="alert.trigger"
-                                >
-                                    <AlertTriggerModeSelect
-                                        id="alert.trigger"
-                                        selectedTriggerMode={
-                                            editedAutomation?.alert?.trigger.mode ?? "ALWAYS"
-                                        }
-                                        onTriggerModeChange={onTriggerModeChange}
-                                        overlayPositionType={OVERLAY_POSITION_TYPE}
-                                        closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                    />
-                                </FormField>
-                                <FormField
-                                    label={<FormattedMessage id="insightAlert.config.recipients" />}
-                                    htmlFor="alert.recipients"
-                                    fullWidth
-                                >
-                                    <RecipientsSelect
-                                        id="alert.recipients"
-                                        loggedUser={defaultUser}
-                                        users={users}
-                                        usersError={usersError}
-                                        value={editedAutomation.recipients ?? []}
-                                        originalValue={originalAutomation.recipients || []}
-                                        onChange={onRecipientsChange}
-                                        allowEmptySelection
-                                        allowOnlyLoggedUserRecipients={allowOnlyLoggedUserRecipients}
-                                        allowExternalRecipients={allowExternalRecipients}
-                                        maxRecipients={maxAutomationsRecipients}
-                                        notificationChannels={notificationChannels}
-                                        notificationChannelId={editedAutomation.notificationChannel}
-                                        showLabel={false}
-                                        externalRecipientOverride={externalRecipientOverride}
-                                    />
-                                </FormField>
-                            </FormFieldGroup>
-                            {warningMessage ? (
-                                <Message type="warning" className="gd-notifications-channels-dialog-error">
-                                    {warningMessage}
-                                </Message>
-                            ) : null}
-                            {errorMessage ? (
-                                <Message
-                                    type="error"
-                                    className="gd-notifications-channels-dialog-error gd-notifications-channels-dialog-error-scrollable"
-                                >
-                                    {errorMessage}
-                                </Message>
-                            ) : null}
-                        </ScrollablePanel>
-                    </ConfirmDialogBase>
+                                    <FormField
+                                        label={<FormattedMessage id="insightAlert.config.recipients" />}
+                                        htmlFor="alert.recipients"
+                                        fullWidth
+                                    >
+                                        <RecipientsSelect
+                                            id="alert.recipients"
+                                            loggedUser={defaultUser}
+                                            users={users}
+                                            usersError={usersError}
+                                            value={editedAutomation.recipients ?? []}
+                                            originalValue={originalAutomation.recipients || []}
+                                            onChange={onRecipientsChange}
+                                            allowEmptySelection
+                                            allowOnlyLoggedUserRecipients={allowOnlyLoggedUserRecipients}
+                                            allowExternalRecipients={allowExternalRecipients}
+                                            maxRecipients={maxAutomationsRecipients}
+                                            notificationChannels={notificationChannels}
+                                            notificationChannelId={editedAutomation.notificationChannel}
+                                            showLabel={false}
+                                            externalRecipientOverride={externalRecipientOverride}
+                                        />
+                                    </FormField>
+                                </FormFieldGroup>
+                                {warningMessage ? (
+                                    <Message
+                                        type="warning"
+                                        className="gd-notifications-channels-dialog-error"
+                                    >
+                                        {warningMessage}
+                                    </Message>
+                                ) : null}
+                                {invalidDatapoint ? (
+                                    <Message
+                                        type="error"
+                                        id={invalidDatapoint.id}
+                                        className="gd-notifications-channels-dialog-error gd-notifications-channels-dialog-error-scrollable"
+                                    >
+                                        {invalidDatapoint.message}
+                                    </Message>
+                                ) : null}
+                            </ScrollablePanel>
+                        </ConfirmDialogBase>
+                    </ValidationContextStore>
                 </OverlayControllerProvider>
             </Overlay>
             {alertToDelete ? (

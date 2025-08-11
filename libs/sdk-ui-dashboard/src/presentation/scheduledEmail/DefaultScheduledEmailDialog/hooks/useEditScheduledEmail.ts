@@ -845,7 +845,7 @@ function newAutomationMetadataObjectDefinition({
         exportDefinitions: [{ ...exportDefinition }],
         recipients: [recipient],
         notificationChannel,
-        dashboard: dashboardId,
+        dashboard: dashboardId ? { id: dashboardId } : undefined,
         ...metadataObj,
     };
 

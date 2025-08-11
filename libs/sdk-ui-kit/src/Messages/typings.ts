@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { IntlShape } from "react-intl";
 
@@ -44,6 +44,7 @@ export interface IMessage extends IMessageDefinition {
  * @internal
  */
 export interface IMessageProps {
+    id?: string;
     className?: string;
     onClose?(e: React.MouseEvent): void;
     type: MessageType;
