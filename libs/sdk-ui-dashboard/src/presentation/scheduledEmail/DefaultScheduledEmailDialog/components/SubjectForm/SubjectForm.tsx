@@ -1,16 +1,18 @@
 // (C) 2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { Input, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 import { IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../../../presentation/constants/index.js";
 import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
+import {
+    createInvalidDatapoint,
+    createInvalidNode,
+    useValidationContextValue,
+    ValidationContextStore,
+} from "@gooddata/sdk-ui";
 
 const MAX_SUBJECT_LENGTH = 255;
-
-enum ScheduleEmailSubjectErrorType {
-    LONG_VALUE = "LONG_VALUE",
-}
 
 interface ISubjectFormProps {
     dashboardTitle: string;
@@ -27,89 +29,97 @@ export const SubjectForm: React.FC<ISubjectFormProps> = ({
     onChange,
     onKeyDownSubmit,
 }) => {
-    const intl = useIntl();
-    const [subjectError, setSubjectError] = useState<string | null>(null);
+    const { formatMessage } = useIntl();
 
     const labelId = useIdPrefixed("label");
     const errorId = useIdPrefixed("error");
 
-    const errorMessage = intl.formatMessage(
-        { id: "dialogs.schedule.error.too_long" },
-        { value: MAX_SUBJECT_LENGTH },
+    const validationContextValue = useValidationContextValue(createInvalidNode({ id: "SubjectForm" }));
+    const { setInvalidDatapoints, getInvalidDatapoints, isValid } = validationContextValue;
+    const invalidDatapoint = getInvalidDatapoints().at(0);
+
+    const setHasError = React.useCallback(
+        (hasError: boolean) => {
+            if (!hasError) {
+                setInvalidDatapoints(() => []);
+                return;
+            }
+
+            setInvalidDatapoints(() => [
+                createInvalidDatapoint({
+                    id: errorId,
+                    message: formatMessage(
+                        { id: "dialogs.schedule.error.too_long" },
+                        { value: MAX_SUBJECT_LENGTH },
+                    ),
+                }),
+            ]);
+        },
+        [errorId, formatMessage, setInvalidDatapoints],
     );
 
-    const validate = useCallback((value: string) => {
-        if (value.length > MAX_SUBJECT_LENGTH) {
-            return ScheduleEmailSubjectErrorType.LONG_VALUE;
-        }
-        return null;
+    const isValueValid = useCallback((value: string) => {
+        return value.length <= MAX_SUBJECT_LENGTH;
     }, []);
 
     const handleOnChange = useCallback(
         (value: string) => {
-            const validationResult = validate(value);
+            const validationResult = isValueValid(value);
 
-            if (subjectError) {
-                if (validationResult) {
-                    setSubjectError(errorMessage);
-                } else {
-                    setSubjectError(null);
-                }
+            if (!isValid) {
+                setHasError(!validationResult);
             }
-            onChange(value, !validationResult);
+            onChange(value, validationResult);
         },
-        [subjectError, validate, errorMessage, onChange],
+        [isValueValid, isValid, onChange, setHasError],
     );
 
     const handleOnBlur = useCallback(
         (e: React.FocusEvent<HTMLInputElement>) => {
-            const validationResult = validate(e.target.value);
-            if (validationResult) {
-                setSubjectError(errorMessage);
-            } else {
-                setSubjectError(null);
-            }
+            setHasError(!isValueValid(e.target.value));
         },
-        [errorMessage, validate],
+        [isValueValid, setHasError],
     );
 
     return (
-        <ErrorWrapper
-            errorId={errorId}
-            errorMessage={subjectError}
-            label={intl.formatMessage({ id: "dialogs.schedule.email.subject.label" })}
-            labelId={labelId}
-            className="gd-input-component gd-notifications-channels-dialog-subject s-gd-notifications-channels-dialog-subject"
-            labelWrapperClassName="gd-notifications-channels-dialog-subject-wrapper"
-            errorClassName="gd-notifications-channels-dialog-subject-error"
-        >
-            <Input
-                id={labelId}
-                hasError={!!subjectError}
-                maxlength={300}
-                type="text"
-                placeholder={
-                    dashboardTitle.length > DASHBOARD_TITLE_MAX_LENGTH
-                        ? dashboardTitle.substring(0, DASHBOARD_TITLE_MAX_LENGTH)
-                        : dashboardTitle
-                }
-                value={editedAutomation.details?.subject ?? ""}
-                onChange={
-                    // as any, the value will indeed always be string
-                    // TODO improve typings of Input in ui-kit to have properly typed the onChange related to the input type
-                    handleOnChange as any
-                }
-                onEnterKeyPress={() => {
-                    if (!isSubmitDisabled) {
-                        onKeyDownSubmit();
+        <ValidationContextStore value={validationContextValue}>
+            <ErrorWrapper
+                errorId={errorId}
+                errorMessage={invalidDatapoint?.message ?? null}
+                label={formatMessage({ id: "dialogs.schedule.email.subject.label" })}
+                labelId={labelId}
+                className="gd-input-component gd-notifications-channels-dialog-subject s-gd-notifications-channels-dialog-subject"
+                labelWrapperClassName="gd-notifications-channels-dialog-subject-wrapper"
+                errorClassName="gd-notifications-channels-dialog-subject-error"
+            >
+                <Input
+                    id={labelId}
+                    hasError={!isValid}
+                    maxlength={300}
+                    type="text"
+                    placeholder={
+                        dashboardTitle.length > DASHBOARD_TITLE_MAX_LENGTH
+                            ? dashboardTitle.substring(0, DASHBOARD_TITLE_MAX_LENGTH)
+                            : dashboardTitle
                     }
-                }}
-                autocomplete="off"
-                onBlur={handleOnBlur}
-                accessibilityConfig={{
-                    ariaDescribedBy: subjectError ? errorId : undefined,
-                }}
-            />
-        </ErrorWrapper>
+                    value={editedAutomation.details?.subject ?? ""}
+                    onChange={
+                        // as any, the value will indeed always be string
+                        // TODO improve typings of Input in ui-kit to have properly typed the onChange related to the input type
+                        handleOnChange as any
+                    }
+                    onEnterKeyPress={() => {
+                        if (!isSubmitDisabled) {
+                            onKeyDownSubmit();
+                        }
+                    }}
+                    autocomplete="off"
+                    onBlur={handleOnBlur}
+                    accessibilityConfig={{
+                        ariaDescribedBy: isValid ? undefined : errorId,
+                    }}
+                />
+            </ErrorWrapper>
+        </ValidationContextStore>
     );
 };

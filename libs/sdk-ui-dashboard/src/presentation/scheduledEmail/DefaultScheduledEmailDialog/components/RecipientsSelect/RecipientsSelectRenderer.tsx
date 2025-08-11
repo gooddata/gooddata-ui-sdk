@@ -41,7 +41,13 @@ import cx from "classnames";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/index.js";
 import { isEmail } from "../../../utils/validate.js";
 import { matchRecipient } from "../../../utils/users.js";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import {
+    createInvalidDatapoint,
+    createInvalidNode,
+    GoodDataSdkError,
+    useValidationContextValue,
+    ValidationContextStore,
+} from "@gooddata/sdk-ui";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;
@@ -172,19 +178,6 @@ interface IRecipientsSelectRendererState {
     focusedRecipientIndex: number;
 }
 
-interface RenderInputErrorParams {
-    authorOnlyError?: boolean;
-    invalidExternalError?: boolean;
-    invalidUnknownError?: boolean;
-    maxRecipientsError?: boolean;
-    minRecipientsError?: boolean;
-    missingEmailError?: boolean;
-    invalidRecipientsValues: string;
-    missingEmailRecipientsValues: string;
-    maxRecipients: number | undefined;
-    usersError: GoodDataSdkError | undefined;
-}
-
 export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     props: IRecipientsSelectRendererProps,
 ) {
@@ -254,6 +247,9 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         [isEmailChannel],
     );
 
+    const validationContextValue = useValidationContextValue(createInvalidNode({ id: "RecipientsSelect" }));
+    const { isValid, setInvalidDatapoints, getInvalidDatapoints } = validationContextValue;
+
     const evaluateErrors = useCallback(() => {
         const maxRecipientsError = maxRecipients !== undefined && value.length > maxRecipients;
         const minRecipientsError = state.minRecipientsError;
@@ -300,66 +296,6 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         loggedUser?.id,
         getHasEmail,
     ]);
-
-    const renderInputError = useCallback(
-        ({
-            authorOnlyError,
-            invalidExternalError,
-            invalidUnknownError,
-            maxRecipientsError,
-            minRecipientsError,
-            missingEmailError,
-            invalidRecipientsValues,
-            missingEmailRecipientsValues,
-            maxRecipients,
-            usersError,
-        }: RenderInputErrorParams): React.ReactElement | null => {
-            return (
-                <div id="gd-recipients-field-error" className="gd-recipients-field-error">
-                    {authorOnlyError ? (
-                        <div className="gd-recipients-field-error-item">
-                            <FormattedMessage id="dialogs.schedule.email.user.invalid.onlyYou" />
-                        </div>
-                    ) : null}
-                    {invalidExternalError || invalidUnknownError ? (
-                        <div className="gd-recipients-field-error-item">
-                            <FormattedMessage
-                                id="dialogs.schedule.email.user.invalid.external"
-                                values={{ recipients: invalidRecipientsValues }}
-                            />
-                        </div>
-                    ) : null}
-                    {maxRecipientsError ? (
-                        <div className="gd-recipients-field-error-item">
-                            <FormattedMessage
-                                id="dialogs.schedule.email.max.recipients"
-                                values={{ maxRecipients }}
-                            />
-                        </div>
-                    ) : null}
-                    {minRecipientsError ? (
-                        <div className="gd-recipients-field-error-item">
-                            <FormattedMessage id="dialogs.schedule.email.min.recipients" />
-                        </div>
-                    ) : null}
-                    {missingEmailError ? (
-                        <div className="gd-recipients-field-error-item">
-                            <FormattedMessage
-                                id="dialogs.schedule.email.user.missing.email"
-                                values={{ recipients: missingEmailRecipientsValues }}
-                            />
-                        </div>
-                    ) : null}
-                    {usersError ? (
-                        <div className="gd-recipients-field-error-item">
-                            <FormattedMessage id="dialogs.schedule.email.usersLoad.error" />
-                        </div>
-                    ) : null}
-                </div>
-            );
-        },
-        [],
-    );
 
     const renderEmptyContainer = useCallback((): React.ReactElement | null => {
         return null;
@@ -697,11 +633,15 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
 
             return (
                 <div className="gd-recipient-input s-gd-recipient-input">
-                    <Input {...props} />
+                    <Input
+                        {...props}
+                        aria-invalid={!isValid}
+                        aria-describedby={isValid ? undefined : "gd-recipients-field-error"}
+                    />
                 </div>
             );
         },
-        [isMulti, id, renderEmptyContainer],
+        [isMulti, id, isValid, renderEmptyContainer],
     );
 
     const handleKeyboardRecipientRemove = useCallback(
@@ -890,93 +830,134 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         minRecipientsError,
         invalidExternalError,
         invalidUnknownError,
-        someRecipientsMissingEmail,
         authorOnlyError,
         missingEmailError,
         invalidRecipientsValues,
         missingEmailRecipientsValues,
     } = evaluateErrors();
 
-    const showInputError =
-        maxRecipientsError ||
-        minRecipientsError ||
-        invalidExternalError ||
-        invalidUnknownError ||
-        someRecipientsMissingEmail ||
-        !!usersError ||
-        authorOnlyError ||
-        missingEmailError;
+    React.useEffect(() => {
+        setInvalidDatapoints(() => [
+            authorOnlyError &&
+                createInvalidDatapoint({
+                    message: intl.formatMessage({ id: "dialogs.schedule.email.user.invalid.onlyYou" }),
+                }),
+            (invalidExternalError || invalidUnknownError) &&
+                createInvalidDatapoint({
+                    message: intl.formatMessage(
+                        { id: "dialogs.schedule.email.user.invalid.external" },
+                        { recipients: invalidRecipientsValues },
+                    ),
+                }),
+            maxRecipientsError &&
+                createInvalidDatapoint({
+                    message: intl.formatMessage(
+                        { id: "dialogs.schedule.email.max.recipients" },
+                        { maxRecipients },
+                    ),
+                }),
+            minRecipientsError &&
+                createInvalidDatapoint({
+                    message: intl.formatMessage({ id: "dialogs.schedule.email.min.recipients" }),
+                }),
+            missingEmailError &&
+                createInvalidDatapoint({
+                    message: intl.formatMessage(
+                        { id: "dialogs.schedule.email.user.missing.email" },
+                        { recipients: missingEmailRecipientsValues },
+                    ),
+                }),
+            usersError &&
+                createInvalidDatapoint({
+                    message: intl.formatMessage({ id: "dialogs.schedule.email.usersLoad.error" }),
+                }),
+        ]);
+    }, [
+        authorOnlyError,
+        intl,
+        invalidExternalError,
+        invalidRecipientsValues,
+        invalidUnknownError,
+        maxRecipients,
+        maxRecipientsError,
+        minRecipientsError,
+        missingEmailError,
+        missingEmailRecipientsValues,
+        setInvalidDatapoints,
+        usersError,
+    ]);
 
     const someExternalRecipients = value.some((v) => v.type === "externalUser");
     const renderExternalRecipientsNote = someExternalRecipients && !externalRecipientOverride;
 
     return (
-        <div
-            className={cx(
-                "gd-input-component gd-recipients-field s-gd-notifications-channels-dialog-recipients",
-                className,
-            )}
-        >
-            {showLabel ? (
-                <label htmlFor={id} className="gd-label">
-                    <FormattedMessage id="dialogs.schedule.email.recipients.label" />
-                </label>
-            ) : null}
-            <div ref={recipientRef} className="gd-input s-gd-recipients-value">
-                <ReactSelect
-                    tabSelectsValue={false}
-                    id={id}
-                    className={cx("gd-recipients-container", {
-                        "gd-input-component--invalid": showInputError,
-                    })}
-                    classNamePrefix="gd-recipients"
-                    components={creatableSelectComponent}
-                    formatOptionLabel={renderOptionLabel}
-                    filterOption={(opt, value) => {
-                        return matchRecipient(opt.data, value);
-                    }}
-                    isClearable={false}
-                    isDisabled={!isMulti}
-                    isMulti={isMulti}
-                    onChange={
-                        // using as any as it would be too tricky to type properly
-                        handleOnChange as any
-                    }
-                    onInputChange={onSearch}
-                    onMenuOpen={onMenuOpen}
-                    onMenuClose={() => setState((prev) => ({ ...prev, menuOpen: false }))}
-                    onKeyDown={handleKeyDown}
-                    options={options}
-                    onBlur={onBlur}
-                    value={value}
-                    getOptionValue={(o) => o.id}
-                    getOptionLabel={(o) => o.name ?? o.id}
-                    aria-describedby={showInputError ? "gd-recipients-field-error" : undefined}
-                    aria-invalid={showInputError}
-                />
-                {showInputError ? (
-                    renderInputError({
-                        authorOnlyError,
-                        invalidExternalError,
-                        invalidUnknownError,
-                        maxRecipientsError,
-                        minRecipientsError,
-                        missingEmailError,
-                        invalidRecipientsValues,
-                        missingEmailRecipientsValues,
-                        maxRecipients,
-                        usersError,
-                    })
-                ) : renderExternalRecipientsNote ? (
-                    <div className="gd-recipients-field-note">
-                        <FormattedMessage id="dialogs.schedule.email.recipients.note" />
-                    </div>
-                ) : allowOnlyLoggedUserRecipients ? (
-                    <div className="gd-recipients-field-note">
-                        <FormattedMessage id="dialogs.schedule.email.destinationWarning" />
-                    </div>
+        <ValidationContextStore value={validationContextValue}>
+            <div
+                className={cx(
+                    "gd-input-component gd-recipients-field s-gd-notifications-channels-dialog-recipients",
+                    className,
+                )}
+            >
+                {showLabel ? (
+                    <label htmlFor={id} className="gd-label">
+                        <FormattedMessage id="dialogs.schedule.email.recipients.label" />
+                    </label>
                 ) : null}
+                <div ref={recipientRef} className="gd-input s-gd-recipients-value">
+                    <ReactSelect
+                        tabSelectsValue={false}
+                        id={id}
+                        className={cx("gd-recipients-container", {
+                            "gd-input-component--invalid": !isValid,
+                        })}
+                        classNamePrefix="gd-recipients"
+                        components={creatableSelectComponent}
+                        formatOptionLabel={renderOptionLabel}
+                        filterOption={(opt, value) => {
+                            return matchRecipient(opt.data, value);
+                        }}
+                        isClearable={false}
+                        isDisabled={!isMulti}
+                        isMulti={isMulti}
+                        onChange={
+                            // using as any as it would be too tricky to type properly
+                            handleOnChange as any
+                        }
+                        onInputChange={onSearch}
+                        onMenuOpen={onMenuOpen}
+                        onMenuClose={() => setState((prev) => ({ ...prev, menuOpen: false }))}
+                        onKeyDown={handleKeyDown}
+                        options={options}
+                        onBlur={onBlur}
+                        value={value}
+                        getOptionValue={(o) => o.id}
+                        getOptionLabel={(o) => o.name ?? o.id}
+                        aria-describedby={isValid ? undefined : "gd-recipients-field-error"}
+                        aria-invalid={!isValid}
+                    />
+                    {!isValid ? (
+                        <div id="gd-recipients-field-error" className="gd-recipients-field-error">
+                            {getInvalidDatapoints().map((invalidDatapoint) => (
+                                <div
+                                    key={invalidDatapoint.id}
+                                    id={invalidDatapoint.id}
+                                    className="gd-recipients-field-error-item"
+                                >
+                                    {invalidDatapoint.message}
+                                </div>
+                            ))}
+                        </div>
+                    ) : renderExternalRecipientsNote ? (
+                        <div className="gd-recipients-field-note">
+                            <FormattedMessage id="dialogs.schedule.email.recipients.note" />
+                        </div>
+                    ) : allowOnlyLoggedUserRecipients ? (
+                        <div className="gd-recipients-field-note">
+                            <FormattedMessage id="dialogs.schedule.email.destinationWarning" />
+                        </div>
+                    ) : null}
+                </div>
             </div>
-        </div>
+        </ValidationContextStore>
     );
 });

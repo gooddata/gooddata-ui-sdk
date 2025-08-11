@@ -5,15 +5,17 @@ import { useIntl } from "react-intl";
 import { HistorySearchTreeViewItem } from "./HistorySearchTreeViewItem.js";
 
 type Props = {
+    id: string;
     searchHistory: string[];
     onSelect: (value: string) => void;
+    onFocus: (nodeId: string) => void;
 };
 
 /**
  * A tree view component for history search results.
  * @internal
  */
-export function HistorySearchTreeView({ searchHistory, onSelect }: Props) {
+export function HistorySearchTreeView({ id, searchHistory, onSelect, onFocus }: Props) {
     const intl = useIntl();
     const items = buildItems(searchHistory);
 
@@ -28,10 +30,12 @@ export function HistorySearchTreeView({ searchHistory, onSelect }: Props) {
         <UiStaticTreeview
             items={items}
             ariaAttributes={{
-                id: "semantic-search-tree-history",
+                id,
+                tabIndex: -1,
                 "aria-label": intl.formatMessage({ id: "semantic-search.tree.history" }),
             }}
             onSelect={handleSelect}
+            onFocus={onFocus}
             ItemComponent={HistorySearchTreeViewItem}
             shouldKeyboardActionPreventDefault={false}
         />
@@ -40,9 +44,9 @@ export function HistorySearchTreeView({ searchHistory, onSelect }: Props) {
 
 function buildItems(searchHistory: string[]): UiStaticTreeView<string>[] {
     return searchHistory.map(
-        (value): UiStaticTreeView<string> => ({
+        (value, idx): UiStaticTreeView<string> => ({
             item: {
-                id: value,
+                id: String(idx),
                 stringTitle: value,
                 data: value,
             },

@@ -10,6 +10,7 @@ export interface UiAsyncTableProps<T extends { id: string }> {
     totalItemsCount?: number;
     columns: Array<UiAsyncTableColumn<T>>;
     onItemClick?: (item: T) => void;
+    scrollToIndex?: number;
 
     //default: add up all column widths
     width?: number;
@@ -55,6 +56,7 @@ export interface UiAsyncTableColumn<T> {
     key?: keyof T;
     label?: string;
     width?: number;
+    //if renderMenu is provided, but returns falsy value, the menu will be disabled
     renderMenu?: (item: T) => React.ReactNode;
     renderButton?: (item: T) => React.ReactNode;
     renderRoleIcon?: (item: T) => React.ReactNode;
@@ -146,16 +148,11 @@ export type UiAsyncTableCheckboxProps = {
 export interface UiAsyncTableToolbarProps<T extends { id: string }> {
     filters?: Array<UiAsyncTableFilter>;
     bulkActions?: Array<UiAsyncTableBulkAction>;
-    scrollToStart: () => void;
     selectedItemIds: Array<string>;
     setSelectedItemIds: (items: Array<string>) => void;
     totalItemsCount: number;
     items: Array<T>;
     onSearch?: (search: string) => void;
-}
-
-export interface UiAsyncTableFilterProps extends UiAsyncTableFilter {
-    scrollToStart: () => void;
 }
 
 export type UiAsyncTableDropdownItemProps = {

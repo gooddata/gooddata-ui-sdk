@@ -1,13 +1,19 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import cx from "classnames";
 import { WeekStart } from "@gooddata/sdk-model";
 import { Datepicker } from "../Datepicker/index.js";
 import { Timepicker, normalizeTime } from "../Timepicker/index.js";
 import { DEFAULT_DROPDOWN_ZINDEX, TIME_ANCHOR } from "./constants.js";
-import { defineMessages, FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { parseDate } from "../Datepicker/Datepicker.js";
+import {
+    createInvalidDatapoint,
+    createInvalidNode,
+    useValidationContextValue,
+    ValidationContextStore,
+} from "@gooddata/sdk-ui";
 import { useIdPrefixed } from "../utils/useId.js";
 
 interface IDateTimeProps {
@@ -42,23 +48,32 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
         onKeyDownSubmit,
     } = props;
 
-    const [errorDate, setErrorDate] = useState<string | null>(null);
+    const { formatMessage } = useIntl();
 
-    const errorId = useIdPrefixed("error");
+    const dateFormatId = useIdPrefixed("label");
+    const timezoneId = useIdPrefixed("timezone");
+
+    const validationContextValue = useValidationContextValue(createInvalidNode({ id: "DateTime" }));
+    const { setInvalidDatapoints, isValid } = validationContextValue;
+    const invalidDatapoints = validationContextValue.getInvalidDatapoints();
 
     const validate = useCallback(
         (selectedDate: string) => {
             const parsedDate = parseDate(selectedDate, dateFormat);
 
             if (selectedDate.length === 0) {
-                setErrorDate(errorMessages.empty.id);
+                setInvalidDatapoints(() => [
+                    createInvalidDatapoint({ message: formatMessage(errorMessages.empty) }),
+                ]);
             } else if (!parsedDate) {
-                setErrorDate(errorMessages.wrongFormat.id);
+                setInvalidDatapoints(() => [
+                    createInvalidDatapoint({ message: formatMessage(errorMessages.wrongFormat) }),
+                ]);
             } else {
-                setErrorDate(null);
+                setInvalidDatapoints(() => []);
             }
         },
-        [dateFormat],
+        [dateFormat, formatMessage, setInvalidDatapoints],
     );
 
     const handleDateChange = useCallback(
@@ -78,11 +93,11 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
 
     const handleDateValidate = useCallback(
         (value: string) => {
-            if (errorDate) {
+            if (!isValid) {
                 validate(value);
             }
         },
-        [errorDate, validate],
+        [isValid, validate],
     );
 
     const handleTimeChange = useCallback(
@@ -99,55 +114,74 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
     };
 
     const datePickerClassNames = cx("gd-recurrence-form-datetime-date s-recurrence-form-datetime-date", {
-        "has-error": errorDate,
+        "has-error": !isValid,
     });
 
     return (
-        <div className="gd-recurrence-form-datetime s-recurrence-form-datetime gd-input-component">
-            <div className="gd-label">{label}</div>
-            <div className="gd-recurrence-form-datetime-inner">
-                <div className="gd-recurrence-form-date">
-                    <Datepicker
-                        className={datePickerClassNames}
-                        date={date}
-                        dateFormat={dateFormat}
-                        locale={locale}
-                        placeholder={dateFormat}
-                        onChange={handleDateChange}
-                        onValidateInput={handleDateValidate}
-                        onBlur={handleDateBlur}
-                        weekStart={weekStart}
-                        accessibilityConfig={{
-                            ariaDescribedBy: errorDate ? errorId : undefined,
-                        }}
-                        onDateInputKeyDown={handleOnDateInputKeyDown}
+        <ValidationContextStore value={validationContextValue}>
+            <div className="gd-recurrence-form-datetime s-recurrence-form-datetime gd-input-component">
+                <div className="gd-label">{label}</div>
+                <div className="gd-recurrence-form-datetime-inner">
+                    <div className="gd-recurrence-form-date">
+                        <Datepicker
+                            className={datePickerClassNames}
+                            date={date}
+                            dateFormat={dateFormat}
+                            locale={locale}
+                            placeholder={dateFormat}
+                            onChange={handleDateChange}
+                            onValidateInput={handleDateValidate}
+                            onBlur={handleDateBlur}
+                            weekStart={weekStart}
+                            accessibilityConfig={{
+                                ariaDescribedBy: isValid
+                                    ? dateFormatId
+                                    : invalidDatapoints.map((d) => d.id).join(" "),
+                            }}
+                            onDateInputKeyDown={handleOnDateInputKeyDown}
+                        />
+                        {isValid ? (
+                            <span className="gd-recurrence-form-datetime-help" id={dateFormatId}>
+                                <FormattedMessage
+                                    id="recurrence.datetime.format.help"
+                                    values={{ dateFormat }}
+                                />
+                            </span>
+                        ) : (
+                            <>
+                                {invalidDatapoints.map((datapoint) => (
+                                    <span
+                                        key={datapoint.id}
+                                        id={datapoint.id}
+                                        className="gd-recurrence-form-datetime-error-message"
+                                    >
+                                        {datapoint.message}
+                                    </span>
+                                ))}
+                            </>
+                        )}
+                    </div>
+                    <Timepicker
+                        className="gd-recurrence-form-datetime-time s-recurrence-form-datetime-time"
+                        time={date}
+                        onChange={handleTimeChange}
+                        overlayPositionType="sameAsTarget"
+                        overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
+                        timeAnchor={TIME_ANCHOR}
+                        timeFormat={timeFormat}
+                        closeOnParentScroll={closeOnParentScroll}
+                        ariaDescribedBy={timezone ? timezoneId : undefined}
                     />
-                    {errorDate ? (
-                        <span id={errorId} className="gd-recurrence-form-datetime-error-message">
-                            <FormattedMessage id={errorDate} values={{ dateFormat }} />
-                        </span>
-                    ) : (
-                        <span className="gd-recurrence-form-datetime-help">
-                            <FormattedMessage id="recurrence.datetime.format.help" values={{ dateFormat }} />
-                        </span>
-                    )}
                 </div>
-                <Timepicker
-                    className="gd-recurrence-form-datetime-time s-recurrence-form-datetime-time"
-                    time={date}
-                    onChange={handleTimeChange}
-                    overlayPositionType="sameAsTarget"
-                    overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
-                    timeAnchor={TIME_ANCHOR}
-                    timeFormat={timeFormat}
-                    closeOnParentScroll={closeOnParentScroll}
-                />
+                {timezone ? (
+                    <div className="gd-recurrence-form-datetime-timezone s-recurrence-form-datetime-timezone">
+                        <div className={"sr-only"} id={timezoneId}>
+                            <FormattedMessage id="recurrence.datetime.timezone.help" values={{ timezone }} />
+                        </div>
+                        {timezone}
+                    </div>
+                ) : null}
             </div>
-            {timezone ? (
-                <div className="gd-recurrence-form-datetime-timezone s-recurrence-form-datetime-timezone">
-                    {timezone}
-                </div>
-            ) : null}
-        </div>
+        </ValidationContextStore>
     );
 };

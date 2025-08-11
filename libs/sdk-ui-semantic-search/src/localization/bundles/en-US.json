@@ -36,8 +36,8 @@
         "comment": "Label showing match percentage in search results. The {score} placeholder displays the relevance score as a number."
     },
     "semantic-search.previous-search": {
-        "value": "Previous search",
-        "comment": "Area-label for the search history icon."
+        "value": "Previous search: {query}",
+        "comment": "ARIA label for the search history item."
     },
     "semantic-search.tree": {
         "value": "Semantic search tree",

@@ -9,14 +9,20 @@ import { useIntl } from "react-intl";
  * @internal
  */
 export function HistorySearchTreeViewItem(props: IUiTreeviewItemProps<string>) {
-    const { item, isFocused, level, onSelect, onHover } = props;
+    const { item, isFocused, level, onSelect, onHover, ariaAttributes } = props;
     const theme = useTheme();
     const intl = useIntl();
-    const ariaLabel = intl.formatMessage({ id: "semantic-search.previous-search" });
+    const ariaLabel = intl.formatMessage(
+        { id: "semantic-search.previous-search" },
+        { query: item.stringTitle },
+    );
 
     return (
         <SearchItem
-            ariaLabel={ariaLabel}
+            ariaAttributes={{
+                ...ariaAttributes,
+                "aria-label": ariaLabel,
+            }}
             level={level}
             onClick={onSelect}
             onHover={onHover}

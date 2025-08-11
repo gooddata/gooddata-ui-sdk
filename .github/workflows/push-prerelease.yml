@@ -26,7 +26,7 @@ jobs:
               repo: context.repo.repo,
             });
 
-            return pullRequests?.data[0]?.labels?.every((it) => it.name !== 'skip publish');
+            return pullRequests?.data[0]?.labels?.some((it) => it.name === 'publish');
           result-encoding: string
       - uses: actions/github-script@v7
         id: author
@@ -60,3 +60,53 @@ jobs:
     with:
       source-branch:  ${{ needs.pull-request-info.outputs.branch-name }}
       author-name: ${{ needs.pull-request-info.outputs.author }}
+
+  check-new-alpha:
+    needs: [publish-pre-release]
+    name: Check if new alpha version
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    outputs:
+      is-new-alpha: ${{ steps.check-version.outputs.is-new-alpha }}
+      version: ${{ steps.check-version.outputs.version }}
+    steps:
+      - name: Check if version is new alpha
+        id: check-version
+        run: |
+          VERSION="${{ needs.publish-pre-release.outputs.version }}"
+          echo "Version: $VERSION"
+          
+          # Check if version ends with -alpha.X where X is not 0
+          if [[ $VERSION =~ -alpha\.([0-9]+)$ ]]; then
+            ALPHA_NUMBER="${BASH_REMATCH[1]}"
+            echo "Alpha number: $ALPHA_NUMBER"
+            
+            if [[ $ALPHA_NUMBER != "0" ]]; then
+              echo "This is a new alpha version (not .0)"
+              echo "is-new-alpha=true" >> $GITHUB_OUTPUT
+            else
+              echo "This is the first alpha version (.0)"
+              echo "is-new-alpha=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "Not an alpha version"
+            echo "is-new-alpha=false" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  trigger-gdc-ui-backport:
+    needs: [check-new-alpha, pull-request-info]
+    name: Trigger gdc-ui backport
+    if: ${{ needs.check-new-alpha.outputs.is-new-alpha == 'true' }}
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - name: Trigger sdk-backport in gdc-ui
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+          repository: gooddata/gdc-ui
+          event-type: sdk-alpha-published

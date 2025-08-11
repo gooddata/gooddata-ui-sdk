@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 
@@ -10,8 +10,13 @@ import { IBaseHeadlineDataItemProps } from "../../../interfaces/BaseHeadlines.js
 import { useBaseHeadlineDataItem } from "./useBaseHeadlineDataItem.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
+import { useOutOfBoundsDetection } from "./useOutOfBoundsDetection.js";
 
-const BaseHeadlineDataItem: React.FC<IBaseHeadlineDataItemProps<IHeadlineDataItem>> = ({ dataItem }) => {
+const BaseHeadlineDataItemComponent: React.FC<IBaseHeadlineDataItemProps<IHeadlineDataItem>> = ({
+    dataItem,
+    onValueOverflow,
+    measurementTrigger,
+}) => {
     const { config } = useBaseHeadline();
     const { formattedItem } = useBaseHeadlineDataItem(dataItem);
 
@@ -20,13 +25,19 @@ const BaseHeadlineDataItem: React.FC<IBaseHeadlineDataItemProps<IHeadlineDataIte
         "headline-link-style-underline s-headline-link-style-underline": !config?.disableDrillUnderline,
     });
 
+    const { containerRef } = useOutOfBoundsDetection(onValueOverflow, measurementTrigger);
+
     return (
-        <div className="headline-value-wrapper s-headline-value-wrapper" style={formattedItem.cssStyle}>
-            <ResponsiveText>
+        <div
+            ref={containerRef}
+            className="headline-value-wrapper s-headline-value-wrapper"
+            style={formattedItem.cssStyle}
+        >
+            <ResponsiveText minFontSize={10}>
                 <div className={valueClassNames}>{formattedItem.value}</div>
             </ResponsiveText>
         </div>
     );
 };
 
-export default withDrillable(withTitle(BaseHeadlineDataItem));
+export const BaseHeadlineDataItem = withDrillable(withTitle(BaseHeadlineDataItemComponent));

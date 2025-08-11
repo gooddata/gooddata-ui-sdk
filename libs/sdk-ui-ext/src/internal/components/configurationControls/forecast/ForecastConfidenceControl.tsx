@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import DropdownControl from "../DropdownControl.js";
@@ -16,27 +16,25 @@ export interface IForecastConfidenceControl {
     pushData: (data: any) => any;
 }
 
-class ForecastConfidenceControl extends React.PureComponent<
-    IForecastConfidenceControl & WrappedComponentProps
-> {
-    public render() {
-        return (
-            <DropdownControl
-                value={this.props.value}
-                valuePath="forecast.confidence"
-                labelText={messages.forecastConfidence.id}
-                disabled={this.props.disabled}
-                properties={this.props.properties}
-                pushData={this.props.pushData}
-                items={this.generateDropdownItems()}
-                showDisabledMessage={this.props.showDisabledMessage}
-            />
-        );
-    }
+const ForecastConfidenceControl = memo(function ForecastConfidenceControl(
+    props: IForecastConfidenceControl & WrappedComponentProps,
+) {
+    const generateDropdownItems = () => {
+        return getTranslatedDropdownItems(confidenceDropdownItems, props.intl);
+    };
 
-    private generateDropdownItems() {
-        return getTranslatedDropdownItems(confidenceDropdownItems, this.props.intl);
-    }
-}
+    return (
+        <DropdownControl
+            value={props.value}
+            valuePath="forecast.confidence"
+            labelText={messages.forecastConfidence.id}
+            disabled={props.disabled}
+            properties={props.properties}
+            pushData={props.pushData}
+            items={generateDropdownItems()}
+            showDisabledMessage={props.showDisabledMessage}
+        />
+    );
+});
 
 export default injectIntl(ForecastConfidenceControl);

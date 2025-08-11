@@ -8,7 +8,6 @@ import { useId, isEnterKey, isArrowKey } from "@gooddata/sdk-ui-kit";
 import { TIME_FORMAT } from "../constants/Platform.js";
 
 import { InputErrorMessage } from "./InputErrorMessage.js";
-import { buildAriaDescribedByValue } from "./utils.js";
 import { IInputAccessibilityConfig, ITime } from "./types.js";
 
 export interface ITimeInputProps {
@@ -107,10 +106,7 @@ export const TimeInput: React.FC<ITimeInputProps> = ({
                     onKeyDown={onTimeInputKeyDown}
                     value={stringValue}
                     aria-labelledby={inputLabelId}
-                    aria-describedby={buildAriaDescribedByValue([
-                        accessibilityConfig.inputHintId,
-                        errorText ? inputErrorId : undefined,
-                    ])}
+                    aria-describedby={errorText ? inputErrorId : accessibilityConfig.inputHintId}
                     {...(errorText ? { "aria-invalid": true } : {})}
                 />
             </span>

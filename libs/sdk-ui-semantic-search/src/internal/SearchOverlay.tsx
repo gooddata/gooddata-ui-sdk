@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo, useCallback, useEffect } from "react";
+import React, { useMemo, useCallback, useEffect, useState, useRef, useId } from "react";
 import classnames from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -16,6 +16,7 @@ import {
     UiTreeViewEventsProvider,
     useUiTreeViewEventPublisher,
     type OnLeveledSelectFn,
+    type IAccessibilityConfigBase,
 } from "@gooddata/sdk-ui-kit";
 import { useWorkspaceStrict, useLocalStorage, useDebouncedState } from "@gooddata/sdk-ui";
 import { useSemanticSearch } from "../hooks/index.js";
@@ -111,6 +112,18 @@ export type SearchOverlayProps = {
      */
     metadataTimezone?: string;
     /**
+     * Can manage objects
+     */
+    canManage?: boolean;
+    /**
+     * Can analyze objects
+     */
+    canAnalyze?: boolean;
+    /**
+     * Can full controls
+     */
+    canFullControl?: boolean;
+    /**
      * A function to render the footer of the search overlay.
      */
     renderFooter?: (
@@ -132,21 +145,33 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
         workspace,
         objectTypes,
         deepSearch,
+        canManage,
+        canFullControl,
+        canAnalyze,
         limit = LIMIT,
         className,
         threshold = THRESHOLD,
         renderFooter,
     } = props;
 
+    const canEdit = canFullControl || canManage || canAnalyze;
+
     const intl = useIntl();
     const { toggleOpen } = useHeaderSearch();
 
     // Input value handling
+    const inputRef = useRef<Input>(null);
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
+    const isModified = value.length > 0;
+    const id = useId();
+    const inputId = `semantic-search/${id}/input`;
+    const treeViewId = `semantic-search/${id}/treeview`;
+
+    const [activeNodeId, setActiveNodeId] = useState<string>();
 
     // Search results
     const effectiveWorkspace = useWorkspaceStrict(workspace);
-    const { searchStatus, searchResults, searchError, relationships } = useSemanticSearch({
+    const { searchStatus, searchResults, searchError, searchMessage, relationships } = useSemanticSearch({
         backend,
         workspace: effectiveWorkspace,
         searchTerm,
@@ -158,7 +183,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
     // Search history
     const [searchHistory, setSearchHistory] = useLocalStorage(SEARCH_HISTORY_KEY, SEARCH_HISTORY_EMPTY);
 
-    const onResultSelect: OnLeveledSelectFn<SearchTreeViewLevels> = useCallback(
+    const handleLeveledSelect: OnLeveledSelectFn<SearchTreeViewLevels> = useCallback(
         (item, { newTab }, event) => {
             setSearchHistory(
                 [...new Set([searchTerm, ...searchHistory])].slice(0, MAX_SEARCH_HISTORY_LENGTH),
@@ -190,24 +215,46 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
             if (!newTab) {
                 toggleOpen();
             }
+
+            // Force prevent default on end of runtime
+            if (event.nativeEvent instanceof KeyboardEvent) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
         },
         [searchTerm, searchHistory, onSelect, setSearchHistory, toggleOpen, searchResults],
     );
 
+    const handleHistorySelect = useCallback(
+        (value: string) => {
+            setImmediate(value);
+            // The input element is loosing focus after the selection,
+            // therefore it needs to be focused explicitly.
+            inputRef.current?.inputNodeRef.inputNodeRef.focus();
+        },
+        [setImmediate],
+    );
+
     const inputAccessibilityConfig = useMemo(
-        () => ({ ariaLabel: intl.formatMessage({ id: "semantic-search.label" }) }),
-        [intl],
+        (): IAccessibilityConfigBase => ({
+            role: "combobox",
+            ariaLabel: intl.formatMessage({ id: "semantic-search.label" }),
+            ariaControls: treeViewId,
+            ariaExpanded: true, // Always expanded
+            ariaActiveDescendant: activeNodeId,
+        }),
+        [intl, activeNodeId, treeViewId],
     );
 
     const onValueChange = useCallback((value: string | number) => setValue(String(value)), [setValue]);
 
     const onEscKeyPress = useCallback(
-        (e: React.KeyboardEvent) => {
-            if (value.length > 0) {
-                e.stopPropagation();
+        (event: React.KeyboardEvent) => {
+            if (isModified) {
+                event.stopPropagation();
             }
         },
-        [value],
+        [isModified],
     );
 
     // Send input keydown events to the tree view
@@ -243,7 +290,10 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
     return (
         <div className={classnames("gd-semantic-search__overlay", className)}>
             <Input
+                ref={inputRef}
                 className="gd-semantic-search__overlay-input"
+                id={inputId}
+                type="search"
                 autofocus
                 placeholder={intl.formatMessage({ id: "semantic-search.placeholder" })}
                 accessibilityConfig={inputAccessibilityConfig}
@@ -268,6 +318,11 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                             </div>
                         );
                     case "success":
+                        if (!searchResults.length && searchMessage) {
+                            return (
+                                <div className="gd-semantic-search__overlay-no-results">{searchMessage}</div>
+                            );
+                        }
                         if (!searchResults.length) {
                             return (
                                 <div className="gd-semantic-search__overlay-no-results">
@@ -280,19 +335,24 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                         }
                         return (
                             <LeveledSearchTreeView
+                                id={treeViewId}
                                 workspace={effectiveWorkspace}
                                 searchResults={searchResults}
                                 searchRelationships={relationships}
                                 threshold={threshold}
-                                onSelect={onResultSelect}
+                                onSelect={handleLeveledSelect}
+                                onFocus={setActiveNodeId}
+                                canEdit={canEdit}
                             />
                         );
                     case "idle":
                         if (searchHistory.length) {
                             return (
                                 <HistorySearchTreeView
+                                    id={treeViewId}
                                     searchHistory={searchHistory}
-                                    onSelect={setImmediate}
+                                    onSelect={handleHistorySelect}
+                                    onFocus={setActiveNodeId}
                                 />
                             );
                         }

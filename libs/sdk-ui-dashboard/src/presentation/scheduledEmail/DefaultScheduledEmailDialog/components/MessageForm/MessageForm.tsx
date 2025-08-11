@@ -1,15 +1,17 @@
 // (C) 2025 GoodData Corporation
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useCallback } from "react";
 import { Textarea } from "../Textarea.js";
 import { useIntl } from "react-intl";
 import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import {
+    createInvalidNode,
+    createInvalidDatapoint,
+    useValidationContextValue,
+    ValidationContextStore,
+} from "@gooddata/sdk-ui";
 
 const MAX_MESSAGE_LENGTH = 10000;
-
-enum ScheduleEmailMessageErrorType {
-    LONG_VALUE = "LONG_VALUE",
-}
 
 interface IMessageFormProps {
     value: string;
@@ -17,84 +19,92 @@ interface IMessageFormProps {
 }
 
 export const MessageForm: React.FC<IMessageFormProps> = ({ value, onChange }) => {
-    const intl = useIntl();
+    const { formatMessage } = useIntl();
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-    const [messageError, setMessageError] = useState<string | null>(null);
+
+    const validationContextValue = useValidationContextValue(createInvalidNode({ id: "MessageForm" }));
+    const { setInvalidDatapoints, getInvalidDatapoints, isValid } = validationContextValue;
+    const invalidDatapoint = getInvalidDatapoints().at(0);
 
     const labelId = useIdPrefixed("label");
     const errorId = useIdPrefixed("error");
 
-    const errorMessage = intl.formatMessage(
-        { id: "dialogs.schedule.error.too_long" },
-        { value: MAX_MESSAGE_LENGTH },
+    const setHasError = React.useCallback(
+        (hasError: boolean) => {
+            if (!hasError) {
+                setInvalidDatapoints(() => []);
+                return;
+            }
+
+            setInvalidDatapoints(() => [
+                createInvalidDatapoint({
+                    id: errorId,
+                    message: formatMessage(
+                        { id: "dialogs.schedule.error.too_long" },
+                        { value: MAX_MESSAGE_LENGTH },
+                    ),
+                }),
+            ]);
+        },
+        [errorId, formatMessage, setInvalidDatapoints],
     );
 
     const handleFocus = useCallback((event: React.FocusEvent<HTMLTextAreaElement>) => {
         event.target.select(); // Selects all text on focus
     }, []);
 
-    const validate = useCallback((value: string) => {
-        if (value.length > MAX_MESSAGE_LENGTH) {
-            return ScheduleEmailMessageErrorType.LONG_VALUE;
-        }
-        return null;
+    const isValueValid = useCallback((value: string) => {
+        return value.length <= MAX_MESSAGE_LENGTH;
     }, []);
 
     const handleOnTitleChange = useCallback(
         (value: string) => {
-            const validationResult = validate(value);
-            if (messageError) {
-                if (validationResult) {
-                    setMessageError(errorMessage);
-                } else {
-                    setMessageError(null);
-                }
+            const validationResult = isValueValid(value);
+            if (!isValid) {
+                setHasError(!validationResult);
             }
-            onChange(value, !validationResult);
+            onChange(value, validationResult);
         },
-        [messageError, validate, errorMessage, onChange],
+        [isValueValid, isValid, onChange, setHasError],
     );
 
     const handleOnBlur = useCallback(
         (value: string) => {
-            const validationResult = validate(value);
-            if (validationResult) {
-                setMessageError(errorMessage);
-            } else {
-                setMessageError(null);
-            }
+            setHasError(!isValueValid(value));
         },
-        [errorMessage, validate],
+        [setHasError, isValueValid],
     );
 
     return (
-        <ErrorWrapper
-            errorId={errorId}
-            errorMessage={messageError}
-            label={intl.formatMessage({ id: "dialogs.schedule.email.message.label" })}
-            labelId={labelId}
-            className="gd-input-component gd-textarea-component gd-notifications-channels-dialog-message s-gd-notifications-channels-dialog-message"
-            labelWrapperClassName="gd-notifications-channels-dialog-message-content"
-            errorClassName="gd-notifications-channels-dialog-message-error"
-        >
-            <Textarea
-                id={labelId}
-                ref={textareaRef}
-                autocomplete="off"
-                placeholder={intl.formatMessage({
-                    id: "dialogs.schedule.email.message.placeholder",
-                })}
-                rows={3}
-                onChange={handleOnTitleChange}
-                value={value}
-                onFocus={handleFocus}
-                onBlur={handleOnBlur}
-                validationError={messageError}
-                hasError={!!messageError}
-                accessibilityConfig={{
-                    ariaDescribedBy: messageError ? errorId : undefined,
-                }}
-            />
-        </ErrorWrapper>
+        <ValidationContextStore value={validationContextValue}>
+            <ErrorWrapper
+                errorId={errorId}
+                errorMessage={invalidDatapoint?.message ?? null}
+                label={formatMessage({ id: "dialogs.schedule.email.message.label" })}
+                labelId={labelId}
+                className="gd-input-component gd-textarea-component gd-notifications-channels-dialog-message s-gd-notifications-channels-dialog-message"
+                labelWrapperClassName="gd-notifications-channels-dialog-message-content"
+                errorClassName="gd-notifications-channels-dialog-message-error"
+            >
+                <Textarea
+                    id={labelId}
+                    ref={textareaRef}
+                    autocomplete="off"
+                    placeholder={formatMessage({
+                        id: "dialogs.schedule.email.message.placeholder",
+                    })}
+                    rows={3}
+                    onChange={handleOnTitleChange}
+                    value={value}
+                    onFocus={handleFocus}
+                    onBlur={handleOnBlur}
+                    validationError={invalidDatapoint?.message ?? null}
+                    hasError={!isValid}
+                    accessibilityConfig={{
+                        ariaDescribedBy: isValid ? undefined : errorId,
+                    }}
+                />
+            </ErrorWrapper>
+        </ValidationContextStore>
     );
 };

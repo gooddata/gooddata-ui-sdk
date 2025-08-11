@@ -1,9 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
 
-import ComparisonDataWithSubItem from "../ComparisonDataWithSubItem.js";
+import { ComparisonDataWithSubItem } from "../ComparisonDataWithSubItem.js";
 import { EvaluationType, IComparisonDataWithSubItem } from "../../../../../interfaces/BaseHeadlines.js";
 import {
     COMPARISON_HEADLINE_VALUE_SELECTOR,
@@ -14,6 +14,7 @@ import {
 } from "../../../../../tests/TestData.fixtures.js";
 import { IColorConfig } from "../../../../../../../../interfaces/index.js";
 import { IColorPalette } from "@gooddata/sdk-model";
+import { withIntl } from "@gooddata/sdk-ui";
 import { mockUseBaseHeadline } from "../../../tests/BaseHeadlineMock.js";
 import * as useComparisonDataItem from "../useComparisonDataItem.js";
 import * as ComparisonValue from "../ComparisonValue.js";
@@ -35,7 +36,8 @@ describe("ComparisonDataWithSubItem", () => {
             ...params,
         };
 
-        return render(<ComparisonDataWithSubItem {...props} />);
+        const Component = withIntl(ComparisonDataWithSubItem);
+        return render(<Component {...props} />);
     };
 
     it("Should render value and sub-value based on comparison-value component", () => {
@@ -47,7 +49,7 @@ describe("ComparisonDataWithSubItem", () => {
             },
         });
 
-        const MockComparisonValue = vi.spyOn(ComparisonValue, "default");
+        const MockComparisonValue = vi.spyOn(ComparisonValue, "ComparisonValue");
         renderComparisonDataItem();
 
         expect(MockComparisonValue).toHaveBeenCalledTimes(2);
@@ -132,6 +134,7 @@ describe("ComparisonDataWithSubItem", () => {
         vi.spyOn(useComparisonDataItem, "useComparisonDataItem").mockReturnValue({
             style: {},
             indicator: MockIndicator,
+            indicatorAriaLabelFactory: vi.fn(),
         });
 
         renderComparisonDataItem();

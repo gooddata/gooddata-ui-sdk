@@ -55,6 +55,7 @@ export function mapTypeToKey(
         case "ENABLE_SLIDES_EXPORT":
         case "JWT_JIT_PROVISIONING":
         case "ATTACHMENT_LINK_TTL":
+        case "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE":
         case undefined:
             return fallback;
         default:

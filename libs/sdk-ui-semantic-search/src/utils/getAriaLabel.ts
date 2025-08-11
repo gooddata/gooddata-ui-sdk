@@ -21,7 +21,7 @@ export function getItemAriaLabel(item: ISemanticSearchResultItem): string {
 }
 
 export function getRelationshipAriaLabel(item: ISemanticSearchRelationship): string {
-    return `${item.sourceObjectTitle}, ${item.targetObjectType}`;
+    return `${item.sourceObjectTitle}, ${item.sourceObjectType}`;
 }
 
 function getTypeLabel(item: ISemanticSearchResultItem): string {

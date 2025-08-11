@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 import { afterEach, describe, vi, it, expect } from "vitest";
 import { render } from "@testing-library/react";
@@ -6,7 +6,7 @@ import { render } from "@testing-library/react";
 import { ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-import MultiMeasuresTransformation from "../MultiMeasuresTransformation.js";
+import { MultiMeasuresTransformation } from "../MultiMeasuresTransformation.js";
 import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
 import * as useFireDrillEvent from "../useFiredDrillEvent.js";
 import { getBaseHeadlineData } from "../../utils/BaseHeadlineTransformationUtils.js";
@@ -28,7 +28,7 @@ describe("MultiMeasuresTransformation", () => {
         "Should render transformation based on base-headline '%s' correctly",
         (_test: string, recorded: ScenarioRecording, drillableItems: ExplicitDrill[] = []) => {
             const mockOnAfterRender = vi.fn();
-            const MockBaseHeadline = vi.spyOn(BaseHeadline, "default");
+            const MockBaseHeadline = vi.spyOn(BaseHeadline, "BaseHeadline");
             const mockHandleFiredDrillEvent = vi.fn();
             vi.spyOn(useFireDrillEvent, "useFireDrillEvent").mockReturnValue({
                 handleFiredDrillEvent: mockHandleFiredDrillEvent,

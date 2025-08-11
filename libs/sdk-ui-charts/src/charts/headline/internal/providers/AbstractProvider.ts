@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import clone from "lodash/clone.js";
 
@@ -11,7 +11,7 @@ import {
     IHeadlineTransformationProps,
 } from "../../HeadlineProvider.js";
 
-abstract class AbstractProvider implements IHeadlineProvider {
+export abstract class AbstractProvider implements IHeadlineProvider {
     public createExecution(
         executionFactory: IExecutionFactory,
         params: ICreateExecutionParams,
@@ -39,5 +39,3 @@ abstract class AbstractProvider implements IHeadlineProvider {
         return originalBuckets;
     }
 }
-
-export default AbstractProvider;

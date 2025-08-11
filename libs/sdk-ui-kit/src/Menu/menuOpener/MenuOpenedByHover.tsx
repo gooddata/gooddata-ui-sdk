@@ -1,59 +1,70 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useEffect, useRef, useCallback } from "react";
 
 import { MenuPosition } from "../positioning/MenuPosition.js";
 
 import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 
-export class MenuOpenedByHover extends React.Component<IMenuOpenedBySharedProps> {
-    private static openCloseDelayMs = 200;
+export function MenuOpenedByHover({
+    onOpenedChange,
+    toggler,
+    togglerWrapperClassName,
+    opened,
+    topLevelMenu,
+    alignment,
+    spacing,
+    offset,
+    portalTarget,
+    children,
+}: IMenuOpenedBySharedProps) {
+    const openCloseDelayMs = 200;
 
-    private timerCloseDelay: number | null = null;
+    const timerCloseDelay = useRef<number | null>(null);
 
-    public componentWillUnmount(): void {
-        this.clearCloseDelayTimer();
-    }
-
-    public render() {
-        return (
-            <MenuPosition
-                toggler={
-                    <div onMouseEnter={this.hoverStart} onMouseLeave={this.hoverEnd}>
-                        {this.props.toggler}
-                    </div>
-                }
-                togglerWrapperClassName={this.props.togglerWrapperClassName}
-                opened={this.props.opened}
-                topLevelMenu={this.props.topLevelMenu}
-                alignment={this.props.alignment}
-                spacing={this.props.spacing}
-                offset={this.props.offset}
-                portalTarget={this.props.portalTarget}
-            >
-                <div onMouseEnter={this.hoverStart} onMouseLeave={this.hoverEnd}>
-                    {this.props.children}
-                </div>
-            </MenuPosition>
-        );
-    }
-
-    private clearCloseDelayTimer = (): void => {
-        if (this.timerCloseDelay) {
-            window.clearTimeout(this.timerCloseDelay);
+    const clearCloseDelayTimer = useCallback((): void => {
+        if (timerCloseDelay.current) {
+            window.clearTimeout(timerCloseDelay.current);
         }
-    };
+    }, []);
 
-    private hoverStart = (): void => {
-        this.clearCloseDelayTimer();
-        this.timerCloseDelay = window.setTimeout(() => {
-            this.props.onOpenedChange({ opened: true, source: "HOVER_TIMEOUT" });
-        }, MenuOpenedByHover.openCloseDelayMs);
-    };
+    useEffect(() => {
+        return () => {
+            clearCloseDelayTimer();
+        };
+    }, [clearCloseDelayTimer]);
 
-    private hoverEnd = (): void => {
-        this.clearCloseDelayTimer();
-        this.timerCloseDelay = window.setTimeout(() => {
-            this.props.onOpenedChange({ opened: false, source: "HOVER_TIMEOUT" });
-        }, MenuOpenedByHover.openCloseDelayMs);
-    };
+    const hoverStart = useCallback((): void => {
+        clearCloseDelayTimer();
+        timerCloseDelay.current = window.setTimeout(() => {
+            onOpenedChange({ opened: true, source: "HOVER_TIMEOUT" });
+        }, openCloseDelayMs);
+    }, [clearCloseDelayTimer, onOpenedChange]);
+
+    const hoverEnd = useCallback((): void => {
+        clearCloseDelayTimer();
+        timerCloseDelay.current = window.setTimeout(() => {
+            onOpenedChange({ opened: false, source: "HOVER_TIMEOUT" });
+        }, openCloseDelayMs);
+    }, [clearCloseDelayTimer, onOpenedChange]);
+
+    return (
+        <MenuPosition
+            toggler={
+                <div onMouseEnter={hoverStart} onMouseLeave={hoverEnd}>
+                    {toggler}
+                </div>
+            }
+            togglerWrapperClassName={togglerWrapperClassName}
+            opened={opened}
+            topLevelMenu={topLevelMenu}
+            alignment={alignment}
+            spacing={spacing}
+            offset={offset}
+            portalTarget={portalTarget}
+        >
+            <div onMouseEnter={hoverStart} onMouseLeave={hoverEnd}>
+                {children}
+            </div>
+        </MenuPosition>
+    );
 }

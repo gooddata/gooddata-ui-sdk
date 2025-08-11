@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
 import {
@@ -16,14 +16,14 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
-import AbstractProvider from "./AbstractProvider.js";
-import ComparisonTransformation from "../transformations/ComparisonTransformation.js";
+import { AbstractProvider } from "./AbstractProvider.js";
+import { ComparisonTransformation } from "../transformations/ComparisonTransformation.js";
 import { CalculateAs, IComparison } from "../../../../interfaces/index.js";
 import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 
 const ARITHMETIC_BUCKET_IDENTIFIER = "comparison_virtual_arithmetic_bucket";
 
-class ComparisonProvider extends AbstractProvider {
+export class ComparisonProvider extends AbstractProvider {
     private readonly comparison: IComparison;
 
     constructor(comparison: IComparison) {
@@ -96,5 +96,3 @@ class ComparisonProvider extends AbstractProvider {
         }
     }
 }
-
-export default ComparisonProvider;

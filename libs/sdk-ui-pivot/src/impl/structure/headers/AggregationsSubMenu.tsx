@@ -28,74 +28,67 @@ export interface IAggregationsSubMenuProps {
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
 }
 
-export default class AggregationsSubMenu extends React.Component<IAggregationsSubMenuProps> {
-    public static defaultProps: Pick<IAggregationsSubMenuProps, "isMenuOpened"> = {
-        isMenuOpened: false,
-    };
+export default function AggregationsSubMenu({
+    intl,
+    totalType,
+    toggler,
+    isMenuOpened = false,
+    rowAttributeDescriptors,
+    columnAttributeDescriptors,
+    measureLocalIdentifiers,
+    columnTotals,
+    rowTotals,
+    showColumnsSubMenu,
+    onAggregationSelect,
+}: IAggregationsSubMenuProps) {
+    const menuOpenedProp = isMenuOpened ? { opened: true } : {};
 
-    public render() {
-        const {
-            toggler,
-            isMenuOpened,
-            rowAttributeDescriptors,
-            columnAttributeDescriptors,
-            intl,
-            measureLocalIdentifiers,
-            totalType,
-            columnTotals,
-            rowTotals,
-            showColumnsSubMenu,
-            onAggregationSelect,
-        } = this.props;
-        const menuOpenedProp = isMenuOpened ? { opened: true } : {};
+    const shouldRenderSeparator =
+        tableHasRowAttributes(rowAttributeDescriptors) &&
+        tableHasColumnAttributes(columnAttributeDescriptors) &&
+        showColumnsSubMenu;
 
-        const shouldRenderSeparator =
-            tableHasRowAttributes(rowAttributeDescriptors) &&
-            tableHasColumnAttributes(columnAttributeDescriptors) &&
-            showColumnsSubMenu;
-
-        return (
-            <SubMenu toggler={toggler} offset={MENU_HEADER_OFFSET} {...menuOpenedProp}>
-                <ItemsWrapper>
-                    <div className="gd-aggregation-submenu s-table-header-submenu-content">
-                        {tableHasRowAttributes(rowAttributeDescriptors) ? (
-                            <AggregationsSubMenuItems
-                                intl={intl}
-                                attributeDescriptors={rowAttributeDescriptors}
-                                measureLocalIdentifiers={measureLocalIdentifiers}
-                                totalType={totalType}
-                                totals={columnTotals}
-                                isColumn={true}
-                                icon={<RowsHeaderIcon />}
-                                headerText={intl.formatMessage({
-                                    id: "visualizations.menu.aggregations.rows",
-                                })}
-                                onAggregationSelect={onAggregationSelect}
-                            />
-                        ) : null}
-                        <div
-                            className={cx("s-table-header-submenu-rows-separator", {
-                                "gd-aggregation-submenu-rows-separator": shouldRenderSeparator,
+    return (
+        <SubMenu toggler={toggler} offset={MENU_HEADER_OFFSET} {...menuOpenedProp}>
+            <ItemsWrapper>
+                <div className="gd-aggregation-submenu s-table-header-submenu-content">
+                    {tableHasRowAttributes(rowAttributeDescriptors) ? (
+                        <AggregationsSubMenuItems
+                            intl={intl}
+                            attributeDescriptors={rowAttributeDescriptors}
+                            measureLocalIdentifiers={measureLocalIdentifiers}
+                            totalType={totalType}
+                            totals={columnTotals}
+                            isColumn={true}
+                            icon={<RowsHeaderIcon />}
+                            headerText={intl.formatMessage({
+                                id: "visualizations.menu.aggregations.rows",
                             })}
+                            onAggregationSelect={onAggregationSelect}
                         />
-                        {tableHasColumnAttributes(columnAttributeDescriptors) && showColumnsSubMenu ? (
-                            <AggregationsSubMenuItems
-                                intl={intl}
-                                attributeDescriptors={columnAttributeDescriptors}
-                                measureLocalIdentifiers={measureLocalIdentifiers}
-                                totalType={totalType}
-                                totals={rowTotals}
-                                isColumn={false}
-                                icon={<ColumnsHeaderIcon />}
-                                headerText={intl.formatMessage({
-                                    id: "visualizations.menu.aggregations.columns",
-                                })}
-                                onAggregationSelect={onAggregationSelect}
-                            />
-                        ) : null}
-                    </div>
-                </ItemsWrapper>
-            </SubMenu>
-        );
-    }
+                    ) : null}
+                    <div
+                        className={cx("s-table-header-submenu-rows-separator", {
+                            "gd-aggregation-submenu-rows-separator": shouldRenderSeparator,
+                        })}
+                    />
+                    {tableHasColumnAttributes(columnAttributeDescriptors) && showColumnsSubMenu ? (
+                        <AggregationsSubMenuItems
+                            intl={intl}
+                            attributeDescriptors={columnAttributeDescriptors}
+                            measureLocalIdentifiers={measureLocalIdentifiers}
+                            totalType={totalType}
+                            totals={rowTotals}
+                            isColumn={false}
+                            icon={<ColumnsHeaderIcon />}
+                            headerText={intl.formatMessage({
+                                id: "visualizations.menu.aggregations.columns",
+                            })}
+                            onAggregationSelect={onAggregationSelect}
+                        />
+                    ) : null}
+                </div>
+            </ItemsWrapper>
+        </SubMenu>
+    );
 }

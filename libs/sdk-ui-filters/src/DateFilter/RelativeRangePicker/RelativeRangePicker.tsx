@@ -19,6 +19,12 @@ import { IAccessibilityConfigBase, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { DynamicSelectItem } from "../DynamicSelect/types.js";
 import { itemToString } from "../Select/utils.js";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
+import {
+    createInvalidDatapoint,
+    createInvalidNode,
+    IInvalidDatapoint,
+    useValidationContextValue,
+} from "@gooddata/sdk-ui";
 
 enum RelativeRangePickerErrorType {
     INVALID_VALUE = "INVALID_VALUE",
@@ -89,7 +95,7 @@ interface IRelativeRangePickerSelectProps {
     label: string;
     value: number | undefined;
     inputValue: string;
-    error: string | null;
+    error: IInvalidDatapoint | null;
     onChange: (value: number | undefined) => void;
     onInputChange: (value: string) => void;
     onBlur: () => void;
@@ -117,14 +123,13 @@ const RelativeRangePickerSelect = React.memo((props: IRelativeRangePickerSelectP
     } = props;
 
     const labelId = useIdPrefixed("label");
-    const errorId = useIdPrefixed("error");
 
     return (
         <SelectWrapper
             label={label}
             labelId={labelId}
-            errorMessage={error}
-            errorId={errorId}
+            errorMessage={error?.message}
+            errorId={error?.id ?? ""}
             className={wrapperClassName}
         >
             <RelativeRangeDynamicSelect
@@ -141,7 +146,7 @@ const RelativeRangePickerSelect = React.memo((props: IRelativeRangePickerSelectP
                 })}
                 accessibilityConfig={{
                     labelId,
-                    ...(error && { descriptionId: errorId }),
+                    ...(error && { descriptionId: error.id }),
                 }}
             />
         </SelectWrapper>
@@ -159,13 +164,39 @@ export function RelativeRangePicker({
 }: IRelativeRangePickerProps) {
     const intl = useIntl();
 
+    const validationContextValue = useValidationContextValue(
+        createInvalidNode({
+            id: "RelativeRangePicker",
+            children: {
+                from: createInvalidNode({ id: "from" }),
+                to: createInvalidNode({ id: "to" }),
+            },
+        }),
+    );
+    const { setInvalidDatapoints, getInvalidDatapoints } = validationContextValue;
+    const fromError = getInvalidDatapoints({ path: ["from"] }).at(0) ?? null;
+    const toError = getInvalidDatapoints({ path: ["to"] }).at(0) ?? null;
+
+    const setError = useCallback(
+        (section: "from" | "to", error: string | null) => {
+            setInvalidDatapoints(
+                () => [
+                    !!error &&
+                        createInvalidDatapoint({
+                            message: error,
+                        }),
+                ],
+                [section],
+            );
+        },
+        [setInvalidDatapoints],
+    );
+
     const getItems = useMemo(
         () => getItemsFactory(selectedFilterOption.granularity, isMobile, intl),
         [selectedFilterOption.granularity, isMobile, intl],
     );
 
-    const [fromError, setFromError] = useState<string | null>(null);
-    const [toError, setToError] = useState<string | null>(null);
     const [fromInputValue, setFromInputValue] = useState<string>(
         getInputValueFromValue(
             selectedFilterOption.from,
@@ -195,10 +226,10 @@ export function RelativeRangePicker({
             onSelectedFilterOptionChange({ ...selectedFilterOption, from });
             if (from !== undefined) {
                 setFromInputValue(getInputValueFromValue(from, getItems(from?.toString())));
-                setFromError(null);
+                setError("from", null);
             }
         },
-        [selectedFilterOption, onSelectedFilterOptionChange, getItems],
+        [onSelectedFilterOptionChange, selectedFilterOption, getItems, setError],
     );
 
     const handleToChange = useCallback(
@@ -206,10 +237,10 @@ export function RelativeRangePicker({
             onSelectedFilterOptionChange({ ...selectedFilterOption, to });
             if (to !== undefined) {
                 setToInputValue(getInputValueFromValue(to, getItems(to?.toString())));
-                setToError(null);
+                setError("to", null);
             }
         },
-        [selectedFilterOption, onSelectedFilterOptionChange, getItems],
+        [onSelectedFilterOptionChange, selectedFilterOption, getItems, setError],
     );
 
     const validator = useCallback(
@@ -236,7 +267,7 @@ export function RelativeRangePicker({
                 // Store the error but don't show it yet
                 handleFromChange(undefined);
             } else {
-                setFromError(null);
+                setError("from", null);
                 const items = getItems(value);
                 const matchingItem = findRelativeDateFilterOptionByLabel(items, value);
                 if (matchingItem) {
@@ -244,7 +275,7 @@ export function RelativeRangePicker({
                 }
             }
         },
-        [validator, handleFromChange, getItems],
+        [validator, handleFromChange, setError, getItems],
     );
 
     const handleToInputChange = useCallback(
@@ -256,7 +287,7 @@ export function RelativeRangePicker({
                 // Store the error but don't show it yet
                 handleToChange(undefined);
             } else {
-                setToError(null);
+                setError("to", null);
                 const items = getItems(value);
                 const matchingItem = findRelativeDateFilterOptionByLabel(items, value);
                 if (matchingItem) {
@@ -264,7 +295,7 @@ export function RelativeRangePicker({
                 }
             }
         },
-        [validator, handleToChange, getItems],
+        [validator, handleToChange, setError, getItems],
     );
 
     const handleFromBlur = useCallback((): void => {
@@ -272,34 +303,34 @@ export function RelativeRangePicker({
         if (validationResult) {
             switch (validationResult) {
                 case RelativeRangePickerErrorType.INVALID_VALUE:
-                    setFromError(intl.formatMessage({ id: "filters.relative.from.invalid.value" }));
+                    setError("from", intl.formatMessage({ id: "filters.relative.from.invalid.value" }));
                     break;
                 case RelativeRangePickerErrorType.EMPTY_VALUE:
-                    setFromError(intl.formatMessage({ id: "filters.relative.from.empty.value" }));
+                    setError("from", intl.formatMessage({ id: "filters.relative.from.empty.value" }));
                     break;
             }
             handleFromChange(undefined);
         } else {
-            setFromError(null);
+            setError("from", null);
         }
-    }, [validator, fromInputValue, intl, handleFromChange]);
+    }, [validator, fromInputValue, handleFromChange, setError, intl]);
 
     const handleToBlur = useCallback((): void => {
         const validationResult = validator(toInputValue);
         if (validationResult) {
             switch (validationResult) {
                 case RelativeRangePickerErrorType.INVALID_VALUE:
-                    setToError(intl.formatMessage({ id: "filters.relative.to.invalid.value" }));
+                    setError("to", intl.formatMessage({ id: "filters.relative.to.invalid.value" }));
                     break;
                 case RelativeRangePickerErrorType.EMPTY_VALUE:
-                    setToError(intl.formatMessage({ id: "filters.relative.to.empty.value" }));
+                    setError("to", intl.formatMessage({ id: "filters.relative.to.empty.value" }));
                     break;
             }
             handleToChange(undefined);
         } else {
-            setToError(null);
+            setError("to", null);
         }
-    }, [validator, toInputValue, intl, handleToChange]);
+    }, [validator, toInputValue, handleToChange, setError, intl]);
 
     return (
         <div

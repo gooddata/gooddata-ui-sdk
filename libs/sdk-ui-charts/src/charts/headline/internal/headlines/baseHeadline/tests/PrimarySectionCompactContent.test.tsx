@@ -4,7 +4,7 @@ import { afterAll, beforeEach, describe, expect, it, MockInstance, vi } from "vi
 import { render } from "@testing-library/react";
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
-import PrimarySectionCompactContent from "../PrimarySectionCompactContent.js";
+import { PrimarySectionCompactContent } from "../PrimarySectionCompactContent.js";
 import * as PrimarySectionContent from "../PrimarySectionContent.js";
 
 describe("PrimarySectionCompactContent", () => {
@@ -19,7 +19,7 @@ describe("PrimarySectionCompactContent", () => {
     };
 
     beforeEach(() => {
-        MockContent = vi.spyOn(PrimarySectionContent, "default");
+        MockContent = vi.spyOn(PrimarySectionContent, "PrimarySectionContent");
     });
 
     afterAll(() => {

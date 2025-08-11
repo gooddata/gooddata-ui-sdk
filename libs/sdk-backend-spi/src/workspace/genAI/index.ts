@@ -72,6 +72,7 @@ export interface ISemanticSearchQuery {
 export interface ISemanticSearchResult {
     results: ISemanticSearchResultItem[];
     relationships: ISemanticSearchRelationship[];
+    reasoning?: string;
 }
 
 /**
@@ -97,6 +98,14 @@ export interface IChatThread {
     saveUserVisualisation(
         interactionId: string,
         visualization: GenAIChatInteractionUserVisualisation,
+    ): Promise<void>;
+
+    /**
+     * Save render visualisation status for the interaction.
+     */
+    saveRenderVisualisationStatus(
+        interactionId: string,
+        status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS",
     ): Promise<void>;
     /**
      * Add a user message to the chat thread.

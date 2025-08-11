@@ -5,6 +5,10 @@
         {
             "operationName": "build",
             "outputFolderNames": ["esm", "styles/css", "styles/internal/css"]
+        },
+        {
+            "operationName": "validate-ci",
+            "outputFolderNames": []
         }
     ]
 }

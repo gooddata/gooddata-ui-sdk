@@ -22,7 +22,7 @@ export function GroupResultCounter({ count, isExpanded }: Props) {
                     isExpanded && "gd-semantic-search__results-item__counter__icon--expanded",
                 )}
             >
-                <UiIcon type="navigateRight" size={16} color="complementary-6" />
+                <UiIcon type="navigateRight" size={16} color="complementary-6" ariaHidden={true} />
             </div>
         </div>
     );

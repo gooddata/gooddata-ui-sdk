@@ -970,7 +970,8 @@
                             "MOTHERDUCK",
                             "FLEXCONNECT",
                             "STARROCKS",
-                            "ATHENA"
+                            "ATHENA",
+                            "MONGODB"
                         ]
                     },
                     "url": {

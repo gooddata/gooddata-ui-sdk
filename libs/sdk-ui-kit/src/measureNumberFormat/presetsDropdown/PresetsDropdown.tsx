@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { memo, useCallback, useMemo } from "react";
 import { WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 
@@ -22,54 +22,60 @@ interface IMeasureNumberFormatDropdownOwnProps {
 
 type IMeasureNumberFormatDropdownProps = IMeasureNumberFormatDropdownOwnProps & WrappedComponentProps;
 
-export class PresetsDropdown extends React.PureComponent<IMeasureNumberFormatDropdownProps> {
-    public static defaultProps: Pick<IMeasureNumberFormatDropdownProps, "positioning"> = {
-        positioning: [
-            { snapPoints: { parent: SnapPoint.BottomLeft, child: SnapPoint.TopLeft } },
-            { snapPoints: { parent: SnapPoint.TopLeft, child: SnapPoint.BottomLeft } },
-        ],
-    };
+export const PresetsDropdown = memo(function PresetsDropdown(props: IMeasureNumberFormatDropdownProps) {
+    const {
+        presets,
+        anchorEl,
+        onClose,
+        positioning = defaultPositioning,
+        selectedPreset,
+        separators,
+        onSelect,
+        customPreset,
+    } = props;
 
-    public render() {
-        const { presets, anchorEl, onClose, positioning } = this.props;
+    const renderPresetOption = useCallback(
+        (preset: IFormatPreset, index?: number) => {
+            const isPresetItemSelected =
+                selectedPreset && preset.localIdentifier === selectedPreset.localIdentifier;
 
-        return (
-            <Overlay
-                closeOnOutsideClick={true}
-                closeOnParentScroll={true}
-                closeOnMouseDrag={true}
-                alignTo={anchorEl}
-                alignPoints={positioningToAlignPoints(positioning!)} // positioning is declared in defaultProps so it is always defined
-                onClose={onClose}
-            >
-                <div className="gd-dropdown overlay">
-                    <div className="gd-measure-number-format-dropdown-body s-measure-number-format-dropdown-body">
-                        {presets.map((preset, index) => this.renderPresetOption(preset, index))}
-                        {this.renderCustomFormatItem()}
-                    </div>
+            return (
+                <PresetsDropdownItem
+                    key={`${preset.localIdentifier}_${index}`} // eliminate possible collision with hardcoded options
+                    preset={preset}
+                    separators={separators}
+                    onClick={onSelect}
+                    isSelected={isPresetItemSelected}
+                />
+            );
+        },
+        [selectedPreset, separators, onSelect],
+    );
+
+    const renderCustomFormatItem = useCallback(() => {
+        return renderPresetOption(customPreset, presets.length);
+    }, [renderPresetOption, customPreset, presets.length]);
+
+    return (
+        <Overlay
+            closeOnOutsideClick={true}
+            closeOnParentScroll={true}
+            closeOnMouseDrag={true}
+            alignTo={anchorEl}
+            alignPoints={useMemo(() => positioningToAlignPoints(positioning!), [positioning])} // positioning is declared in defaultProps so it is always defined
+            onClose={onClose}
+        >
+            <div className="gd-dropdown overlay">
+                <div className="gd-measure-number-format-dropdown-body s-measure-number-format-dropdown-body">
+                    {presets.map((preset, index) => renderPresetOption(preset, index))}
+                    {renderCustomFormatItem()}
                 </div>
-            </Overlay>
-        );
-    }
+            </div>
+        </Overlay>
+    );
+});
 
-    private renderPresetOption(preset: IFormatPreset, index?: number) {
-        const { selectedPreset, separators, onSelect } = this.props;
-        const isPresetItemSelected =
-            selectedPreset && preset.localIdentifier === selectedPreset.localIdentifier;
-
-        return (
-            <PresetsDropdownItem
-                key={`${preset.localIdentifier}_${index}`} // eliminate possible collision with hardcoded options
-                preset={preset}
-                separators={separators}
-                onClick={onSelect}
-                isSelected={isPresetItemSelected}
-            />
-        );
-    }
-
-    private renderCustomFormatItem() {
-        const { customPreset, presets } = this.props;
-        return this.renderPresetOption(customPreset, presets.length);
-    }
-}
+const defaultPositioning: IPositioning[] = [
+    { snapPoints: { parent: SnapPoint.BottomLeft, child: SnapPoint.TopLeft } },
+    { snapPoints: { parent: SnapPoint.TopLeft, child: SnapPoint.BottomLeft } },
+];

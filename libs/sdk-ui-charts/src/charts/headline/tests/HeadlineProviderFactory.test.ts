@@ -1,13 +1,13 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { IBucket, IMeasure, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces/index.js";
 import { createHeadlineProvider } from "../HeadlineProviderFactory.js";
-import ComparisonProvider from "../internal/providers/ComparisonProvider.js";
-import MultiMeasuresProvider from "../internal/providers/MultiMeasuresProvider.js";
-import LegacyProvider from "../internal/providers/LegacyProvider.js";
+import { ComparisonProvider } from "../internal/providers/ComparisonProvider.js";
+import { MultiMeasuresProvider } from "../internal/providers/MultiMeasuresProvider.js";
+import { LegacyProvider } from "../internal/providers/LegacyProvider.js";
 
 describe("HeadlineProviderFactory", () => {
     describe("createHeadlineProvider", () => {

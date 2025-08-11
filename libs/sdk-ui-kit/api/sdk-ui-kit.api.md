@@ -108,19 +108,7 @@ export type ArrowOffsets = Record<string, ArrowOffset>;
 export function AsyncList<T>(props: IAsyncListProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
-export class AutoSize extends Component<IAutoSizeProps> {
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-    // (undocumented)
-    state: {
-        width: number;
-        height: number;
-    };
-}
+export function AutoSize({ children }: IAutoSizeProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const BackButton: React_2.FC<IBackButtonProps>;
@@ -144,47 +132,7 @@ export function bemFactory<TPrefix extends string>(block: `${TPrefix}-${string}`
 };
 
 // @internal (undocumented)
-export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
-    constructor(props: IBubbleProps);
-    // (undocumented)
-    addOffsetToAlignPoints(alignPoints: IAlignPoint[]): IAlignPoint[];
-    // (undocumented)
-    arrowDirections: ArrowDirections;
-    // (undocumented)
-    arrowOffsets: ArrowOffsets;
-    // (undocumented)
-    static defaultProps: {
-        alignPoints: {
-            align: string;
-        }[];
-        alignTo: string;
-        arrowOffsets: {};
-        arrowDirections: {};
-        arrowStyle: {};
-        className: string;
-        closeOnOutsideClick: boolean;
-        closeOnParentScroll: boolean;
-        closeOnEscape: boolean;
-        onClose: (...args: any[]) => void;
-        onMouseEnter: (...args: any[]) => void;
-        onMouseLeave: (...args: any[]) => void;
-        overlayClassName: string;
-    };
-    // (undocumented)
-    getArrowDirection(alignPoints: string): string;
-    // (undocumented)
-    getArrowsClassname(alignPoints: string): string;
-    // (undocumented)
-    getClassnames(): string;
-    // (undocumented)
-    static identifier: string;
-    // (undocumented)
-    onAlign: (alignment: IAlignPoint) => void;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-    // (undocumented)
-    shouldComponentUpdate(nextProps: IBubbleProps, nextState: IBubbleState): boolean;
-}
+export const Bubble: React_2.NamedExoticComponent<IBubbleProps>;
 
 // @internal (undocumented)
 export class BubbleFocusTrigger extends BubbleTrigger<BubbleFocusTriggerProps> {
@@ -261,41 +209,26 @@ export const ChartSortingWithIntl: React_2.FC<WithIntlProps<ChartSortingProps>> 
 };
 
 // @internal (undocumented)
-export class Checkbox extends React_2.PureComponent<CheckboxProps> {
-    // (undocumented)
-    static defaultProps: {
-        disabled: boolean;
-        name: string;
-        text: string;
-        title: string;
-        value: boolean;
-        labelSize: string;
-        onChange: (...args: any[]) => void;
-    };
-    // (undocumented)
-    onChange: (e: React_2.ChangeEvent<HTMLInputElement>) => void;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const Checkbox: React_2.NamedExoticComponent<CheckboxProps>;
 
 // @internal (undocumented)
 export interface CheckboxProps {
     // (undocumented)
-    disabled: boolean;
+    disabled?: boolean;
     // (undocumented)
     id?: string;
     // (undocumented)
-    labelSize: LabelSize;
+    labelSize?: LabelSize;
     // (undocumented)
-    name: string;
+    name?: string;
     // (undocumented)
-    onChange: (e: boolean) => void;
+    onChange?: (e: boolean) => void;
     // (undocumented)
-    text: string;
+    text?: string;
     // (undocumented)
-    title: string;
+    title?: string;
     // (undocumented)
-    value: boolean;
+    value?: boolean;
 }
 
 // @internal (undocumented)
@@ -334,10 +267,7 @@ export const ComponentLabelsProvider: React_2.FC<IComponentLabelsProviderProps>;
 export function ComponentTable<TProps extends object>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, cellStyle, }: IComponentTableProps<TProps>): React_2.JSX.Element;
 
 // @internal (undocumented)
-export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
-    // (undocumented)
-    render(): ReactElement;
-}
+export const ConfirmDialog: React_2.NamedExoticComponent<IConfirmDialogBaseProps>;
 
 // @internal (undocumented)
 export const ConfirmDialogBase: React_2.NamedExoticComponent<IConfirmDialogBaseProps>;
@@ -412,7 +342,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
 export const DefaultUiMenuStaticItem: React_2.MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuStaticItemProps<T>) => React_2.ReactElement)>;
 
 // @internal (undocumented)
-export function DefaultUiTreeViewItemComponent<Level>({ item, type, level, isExpanded, isFocused, isSelected, isCompact, onToggle, onSelect, }: IUiTreeviewItemProps<Level>): React_2.ReactNode;
+export function DefaultUiTreeViewItemComponent<Level>({ item, type, level, isExpanded, isFocused, isSelected, isCompact, onToggle, onSelect, ariaAttributes, }: IUiTreeviewItemProps<Level>): React_2.ReactNode;
 
 // @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
@@ -510,10 +440,7 @@ export enum ENUM_KEY_CODE {
 }
 
 // @internal (undocumented)
-export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const ErrorOverlay: React_2.NamedExoticComponent<IErrorOverlayProps>;
 
 // @internal (undocumented)
 export const ExportDialog: React_2.NamedExoticComponent<IExportDialogProps>;
@@ -786,7 +713,9 @@ export const Hyperlink: React_2.FC<IHyperlinkProps>;
 // @internal (undocumented)
 export interface IAccessibilityConfigBase {
     // (undocumented)
-    ariaControls?: string;
+    ariaActiveDescendant?: React.AriaAttributes["aria-activedescendant"];
+    // (undocumented)
+    ariaControls?: React.AriaAttributes["aria-controls"];
     // (undocumented)
     ariaDescribedBy?: React.AriaAttributes["aria-describedby"];
     // (undocumented)
@@ -1159,6 +1088,8 @@ export interface IButtonProps {
     dataId?: string;
     // (undocumented)
     dataTestId?: string;
+    // (undocumented)
+    describedByFromValidation?: boolean;
     // (undocumented)
     disabled?: boolean;
     // (undocumented)
@@ -3296,6 +3227,8 @@ export interface IMessageProps {
     // (undocumented)
     contrast?: boolean;
     // (undocumented)
+    id?: string;
+    // (undocumented)
     intensive?: boolean;
     // (undocumented)
     onClose?(e: React.MouseEvent): void;
@@ -3525,15 +3458,15 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     autocomplete?: string;
     // (undocumented)
-    className: string;
+    className?: string;
     // (undocumented)
-    clearOnEsc: boolean;
+    clearOnEsc?: boolean;
     // (undocumented)
-    disabled: boolean;
+    disabled?: boolean;
     // (undocumented)
-    hasError: boolean;
+    hasError?: boolean;
     // (undocumented)
-    hasWarning: boolean;
+    hasWarning?: boolean;
     // (undocumented)
     iconButton?: IconType;
     // (undocumented)
@@ -3541,45 +3474,45 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     id?: string;
     // (undocumented)
-    isSearch: boolean;
+    isSearch?: boolean;
     // (undocumented)
-    isSmall: boolean;
+    isSmall?: boolean;
     // (undocumented)
-    label: React_2.ReactNode;
+    label?: React_2.ReactNode;
     // (undocumented)
-    labelPositionTop: boolean;
+    labelPositionTop?: boolean;
     // (undocumented)
-    maxlength: number;
+    maxlength?: number;
     // (undocumented)
     name?: string;
     // (undocumented)
-    onBlur: (e: React_2.FocusEvent<HTMLInputElement>) => void;
+    onBlur?: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
-    onChange: (value: string | number, e?: React_2.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (value: string | number, e?: React_2.ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
-    onEnterKeyPress: () => void;
+    onEnterKeyPress?: () => void;
     // (undocumented)
-    onEscKeyPress: (e: React_2.KeyboardEvent) => void;
+    onEscKeyPress?: (e: React_2.KeyboardEvent) => void;
     // (undocumented)
-    onFocus: (e: React_2.FocusEvent<HTMLInputElement>) => void;
+    onFocus?: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
     onIconButtonClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
     // (undocumented)
     onKeyDown?: (e: React_2.KeyboardEvent) => void;
     // (undocumented)
-    placeholder: string;
+    placeholder?: string;
     // (undocumented)
-    prefix: string;
+    prefix?: string;
     // (undocumented)
-    readonly: boolean;
+    readonly?: boolean;
     // (undocumented)
     required?: boolean;
     // (undocumented)
-    suffix: string;
+    suffix?: string;
     // (undocumented)
     type?: string;
     // (undocumented)
-    value: string | number;
+    value?: string | number;
 }
 
 // @internal (undocumented)
@@ -3971,6 +3904,8 @@ export interface IResponsiveConfig {
 export interface IResponsiveTextProps {
     // (undocumented)
     children?: React_2.ReactNode;
+    // (undocumented)
+    minFontSize?: number;
     // (undocumented)
     tagClassName?: string;
     // (undocumented)
@@ -4711,6 +4646,8 @@ export interface ITextAreaWithSubmitState {
 // @internal (undocumented)
 export interface ITimepickerOwnProps {
     // (undocumented)
+    ariaDescribedBy?: string;
+    // (undocumented)
     ariaLabelledBy?: string;
     // (undocumented)
     className?: string;
@@ -5132,6 +5069,8 @@ export interface IUiTreeViewItem<T> {
 // @internal (undocumented)
 export interface IUiTreeviewItemProps<T> {
     // (undocumented)
+    ariaAttributes: UiTreeViewItemAriaAttributes;
+    // (undocumented)
     childCount: number;
     // (undocumented)
     isCompact: boolean;
@@ -5158,7 +5097,7 @@ export interface IUiTreeviewItemProps<T> {
 // @internal (undocumented)
 export interface IUiTreeViewProps<Levels extends any[], Level> {
     // (undocumented)
-    ariaAttributes: UiTreeviewAriaAttributes;
+    ariaAttributes: UiTreeViewAriaAttributes;
     // (undocumented)
     dataTestId?: string;
     // (undocumented)
@@ -5177,6 +5116,8 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
     maxWidth?: number;
     // (undocumented)
     onClose?: () => void;
+    // (undocumented)
+    onFocus?: (nodeId: string) => void;
     // (undocumented)
     onUnhandledKeyDown?: (event: React_2.KeyboardEvent, context: IUiTreeviewContext<Levels, Level>) => void;
     // (undocumented)
@@ -5733,16 +5674,7 @@ export enum SORT_TARGET_TYPE {
 export function sortDateDatasets<T extends IDateDataset>(dateDatasets: T[], recommendedDate?: T, unrelatedDate?: T): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
-export class Spinner extends PureComponent<ISpinnerProps> {
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-    };
-    // (undocumented)
-    generateSpinnerTicks(): ReactNode[];
-    // (undocumented)
-    render(): ReactNode;
-}
+export const Spinner: React_2.NamedExoticComponent<ISpinnerProps>;
 
 // @internal (undocumented)
 export type SpinnerSize = "large" | "small";
@@ -5772,88 +5704,16 @@ export const SubMenu: React_2.FC<ISubMenuProps>;
 export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
 
 // @internal (undocumented)
-export class Tabs extends Component<ITabsProps, ITabsState> {
-    constructor(props: ITabsProps);
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-        onTabSelect: (...args: any[]) => void;
-        selectedTabId: string;
-        tabs: ITab[];
-    };
-    // (undocumented)
-    render(): ReactElement;
-}
+export function Tabs(props: ITabsProps): ReactElement;
 
 // @internal (undocumented)
-export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITextAreaWithSubmitState> {
-    constructor(props: ITextAreaWithSubmitProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-        maxLength: number;
-        rows: number;
-        onCancel: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onEditingStart: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onChange: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        placeholder: string;
-        scrollToEndOnEditingStart: boolean;
-        autofocus: boolean;
-        disabled: boolean;
-    };
-    // (undocumented)
-    edit: (_e?: React_2.MouseEvent<HTMLDivElement>) => void;
-    // (undocumented)
-    isClickOutsideTextarea(clickedTarget: EventTarget): boolean;
-    // (undocumented)
-    isMultiLine(): boolean;
-    // (undocumented)
-    onCancel: () => void;
-    // (undocumented)
-    onChange: (e: React_2.ChangeEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onDocumentClick: (e: MouseEvent) => void;
-    // (undocumented)
-    onKeyDown: (e: React_2.KeyboardEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onSelectStart(e: React_2.MouseEvent): void;
-    // (undocumented)
-    onSubmit: () => void;
-    // (undocumented)
-    removeListeners(): void;
-    // (undocumented)
-    render(): ReactNode;
-    // (undocumented)
-    renderTextarea(style?: {}): ReactNode;
-    // (undocumented)
-    renderTextAreaWithSubmitEdit(): ReactNode;
-    // (undocumented)
-    selectAndFocus: () => void;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps(newProps: ITextAreaWithSubmitProps): void;
-}
+export function TextAreaWithSubmit({ className, maxLength, rows, onCancel, onEditingStart, onChange, placeholder, scrollToEndOnEditingStart, autofocus, disabled, defaultValue, onSubmit: onSubmitProp, }: ITextAreaWithSubmitProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export type ThemeColor = "primary" | "warning" | "error" | "complementary-0" | "complementary-1" | "complementary-2" | "complementary-3" | "complementary-4" | "complementary-5" | "complementary-6" | "complementary-7" | "complementary-8" | "complementary-9";
+export type ThemeColor = "primary" | "success" | "warning" | "error" | "complementary-0" | "complementary-1" | "complementary-2" | "complementary-3" | "complementary-4" | "complementary-5" | "complementary-6" | "complementary-7" | "complementary-8" | "complementary-9";
 
 // @internal (undocumented)
-export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const Timepicker: React_2.NamedExoticComponent<ITimepickerOwnProps>;
 
 // @internal (undocumented)
 export const ToastMessageContext: React_2.Context<ToastMessageContextType>;
@@ -6010,6 +5870,8 @@ export interface UiAsyncTableProps<T extends {
     renderHeader?: () => React.ReactNode;
     // (undocumented)
     renderItem?: (item: T) => React.ReactNode;
+    // (undocumented)
+    scrollToIndex?: number;
     // (undocumented)
     selectedItemIds?: Array<string>;
     // (undocumented)
@@ -6492,7 +6354,10 @@ export interface UiTooltipProps {
 export type UiTreeViewAddLevel<N extends number> = [...Array<N>, unknown]["length"];
 
 // @internal (undocumented)
-export type UiTreeviewAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
+export type UiTreeViewAriaAttributes = Pick<React_2.AriaAttributes, "aria-label" | "aria-labelledby"> & {
+    id: string;
+    tabIndex?: number;
+};
 
 // @internal (undocumented)
 export type UiTreeViewEvents = {
@@ -6504,6 +6369,12 @@ export function UiTreeViewEventsProvider({ children }: React_2.PropsWithChildren
 
 // @internal (undocumented)
 export type UiTreeViewEventType = keyof UiTreeViewEvents;
+
+// @internal (undocumented)
+export type UiTreeViewItemAriaAttributes = Pick<React_2.AriaAttributes, "aria-level" | "aria-expanded" | "aria-selected" | "aria-disabled"> & {
+    id: string;
+    role: "treeitem";
+};
 
 // @internal (undocumented)
 export type UiTreeViewNode<Levels extends unknown[], Depth extends number = 0> = Levels extends [

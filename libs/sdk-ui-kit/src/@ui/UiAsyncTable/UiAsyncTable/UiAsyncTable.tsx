@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { UiPagedVirtualList } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { UiAsyncTableRow } from "./UiAsyncTableRow.js";
 import { b } from "../asyncTableBem.js";
@@ -14,8 +14,7 @@ import { UiAsyncTableProps } from "../types.js";
 import { getColumnWidth } from "./utils.js";
 
 function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
-    const { width, scrollToIndex, itemHeight, renderHeader, renderItem, shouldLoadNextPage, scrollToStart } =
-        useAsyncTable<T>(props);
+    const { width, itemHeight, renderHeader, renderItem, shouldLoadNextPage } = useAsyncTable<T>(props);
 
     const {
         filters,
@@ -28,6 +27,7 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
         maxHeight = 400,
         skeletonItemsCount = 0,
         columns,
+        scrollToIndex,
         loadNextPage,
         setSelectedItemIds,
         onSearch,
@@ -38,7 +38,6 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
             <UiAsyncTableToolbar<T>
                 filters={filters}
                 bulkActions={bulkActions}
-                scrollToStart={scrollToStart}
                 selectedItemIds={selectedItemIds}
                 setSelectedItemIds={setSelectedItemIds}
                 totalItemsCount={totalItemsCount}
@@ -78,7 +77,6 @@ const useAsyncTable = <T extends { id: string }>({
     renderItem: renderItemProp,
     renderHeader: renderHeaderProp,
     bulkActions,
-    isLoading,
     onSort,
     width: widthProp,
     sortBy,
@@ -88,24 +86,11 @@ const useAsyncTable = <T extends { id: string }>({
     smallHeader,
     onItemClick,
 }: UiAsyncTableProps<T>) => {
-    const [scrollToIndex, setScrollToIndex] = useState<number | undefined>(undefined);
-
-    useEffect(() => {
-        if (!isLoading) {
-            setScrollToIndex(undefined);
-        }
-    }, [isLoading]);
-
-    const scrollToStart = useCallback(() => {
-        setScrollToIndex(0);
-    }, []);
-
     const handleColumnClick = useCallback(
         (key?: keyof T) => {
-            scrollToStart();
             onSort?.(key);
         },
-        [onSort, scrollToStart],
+        [onSort],
     );
 
     const onItemSelect = useCallback(
@@ -198,12 +183,10 @@ const useAsyncTable = <T extends { id: string }>({
 
     return {
         width,
-        scrollToIndex,
         itemHeight,
         renderHeader,
         renderItem,
         shouldLoadNextPage,
-        scrollToStart,
         onItemSelect,
         isItemSelected,
     };

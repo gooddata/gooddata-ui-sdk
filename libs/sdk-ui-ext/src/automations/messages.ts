@@ -63,6 +63,12 @@ export const messages = defineMessages({
     columnDashboard: {
         id: "automations.column.dashboard",
     },
+    columnWidget: {
+        id: "automations.column.widget",
+    },
+    columnAttachments: {
+        id: "automations.column.attachments",
+    },
     columnRecipients: {
         id: "automations.column.recipients",
     },

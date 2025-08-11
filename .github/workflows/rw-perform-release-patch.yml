@@ -59,6 +59,11 @@ jobs:
       runs-on: [ubuntu-latest]
       needs: [add-release-tag, prepare-variables]
       steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+          with:
+            repository: ${{ inputs.githubuser }}/gdc-ui
+            token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
         - name: Set up message
           id: set-up-message
           run: |
@@ -67,9 +72,7 @@ jobs:
             SOURCE_BRANCH: ${{ inputs.source-branch }}
 
         - name: Notify to slack
-          uses: slackapi/slack-github-action@v1.25.0
+          uses: ./.github/actions/slack/send-notification
           with:
-            channel-id: "#javascript-notifications"
-            slack-message: ${{ env.RELEASE_MESSAGE }}
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+            message: ${{ env.RELEASE_MESSAGE }}
+            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

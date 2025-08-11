@@ -4,6 +4,7 @@ import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop.js";
 import { IButtonProps } from "./typings.js";
+import { ValidationContextStore } from "@gooddata/sdk-ui";
 
 const getGeneratedTestId = (effectiveValue: React.ReactNode, title: string, ariaLabel: string) => {
     if (effectiveValue && typeof effectiveValue === "string") {
@@ -26,6 +27,7 @@ const Icon: React.FC<{ icon: string | undefined }> = ({ icon }) => {
 export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Button(
     {
         className,
+        describedByFromValidation: isDescribedByFromValidation = false,
         disabled = false,
         onClick = noop,
         tabIndex = 0,
@@ -51,7 +53,7 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
         popupId,
         ariaLabel,
         ariaLabelledBy,
-        ariaDescribedBy,
+        ariaDescribedBy: ariaDescribedByFromConfig,
         popupType,
         role = "button",
     } = accessibilityConfig ?? {};
@@ -71,6 +73,16 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
         },
         [disabled, onClick],
     );
+
+    const describedByFromValidation = ValidationContextStore.useContextStoreOptional((ctx) =>
+        ctx
+            .getInvalidDatapoints({ recursive: true })
+            .map((datapoint) => datapoint.id)
+            .join(" "),
+    );
+    const ariaDescribedBy = isDescribedByFromValidation
+        ? `${describedByFromValidation ?? ""} ${ariaDescribedByFromConfig ?? ""}`
+        : ariaDescribedByFromConfig;
 
     const effectiveValue = React.useMemo(() => value ?? children, [children, value]);
     const testId = dataTestId ? dataTestId : getGeneratedTestId(effectiveValue, title, ariaLabel);

@@ -2,7 +2,7 @@
 
 import { Middleware, PayloadAction } from "@reduxjs/toolkit";
 
-import { newMessageAction } from "../messages/messagesSlice.js";
+import { loadThreadAction, newMessageAction } from "../messages/messagesSlice.js";
 
 export const queueMiddleware: Middleware = (storeAPI) => {
     const actionQueue: PayloadAction<unknown>[] = [];
@@ -36,6 +36,10 @@ export const queueMiddleware: Middleware = (storeAPI) => {
         const state = storeAPI.getState();
         const action = a as PayloadAction<unknown>;
 
+        // Ignore loadThreadAction if the thread is being cleared
+        if (action?.type === loadThreadAction.type && state.messages.asyncProcess === "clearing") {
+            return undefined;
+        }
         // If it's newMessageAction and asyncProcess is active, queue it
         if (action?.type === newMessageAction.type && state.messages.asyncProcess) {
             actionQueue.push(action);
