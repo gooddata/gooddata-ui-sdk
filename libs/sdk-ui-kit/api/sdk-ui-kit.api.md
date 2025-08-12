@@ -5835,6 +5835,8 @@ export interface UiAsyncTableFilterOption {
     // (undocumented)
     label?: string;
     // (undocumented)
+    secondaryLabel?: string;
+    // (undocumented)
     value: string;
 }
 

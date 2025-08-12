@@ -398,7 +398,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSeamlessIdpSwitch: false,
     enablePreAggregationDatasets: false,
     enableToDateFilters: true,
-    enableCyclicalToDateFilters: false,
+    enableCyclicalToDateFilters: true,
     enableNewPivotTable: false,
     enableCentralizedAutomationManagement: false,
 };

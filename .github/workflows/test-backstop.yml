@@ -33,7 +33,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: ${{ inputs.githubuser }}/gdc-ui
           token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
       - name: Notify to slack
         uses: ./.github/actions/slack/send-notification

@@ -8,7 +8,9 @@ import { useAutomationFilters } from "./filters/useAutomationFilters.js";
 import { getDefaultColumnDefinitions } from "./utils.js";
 import { IAutomationsCoreProps, IAutomationsState } from "./types.js";
 import { AutomationsDefaultState } from "./constants.js";
-import { useDeleteAutomation } from "./actions/useDeleteAutomation.js";
+import { useAutomationActions } from "./actions/useAutomationActions.js";
+import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
+import { useAutomationBulkActions } from "./actions/useAutomationBulkActions.js";
 
 export const useAutomationsState = ({
     type,
@@ -26,11 +28,23 @@ export const useAutomationsState = ({
 
     const backend = useBackend();
     const workspace = useWorkspace();
-    const { isDeleting, deleteAutomation } = useDeleteAutomation();
+    const {
+        isLoading: isActionLoading,
+        deleteAutomation,
+        bulkDeleteAutomations,
+        unsubscribeFromAutomation,
+        bulkUnsubscribeFromAutomations,
+    } = useAutomationActions();
+    const bulkActions: UiAsyncTableBulkAction[] = useAutomationBulkActions({
+        selected: state.automations.filter((a) => state.selectedIds.includes(a.id)),
+        bulkDeleteAutomations,
+        bulkUnsubscribeFromAutomations,
+    });
     const { columns, includeAutomationResult } = useAutomationColumns({
         type,
         columnDefinitions,
         deleteAutomation,
+        unsubscribeFromAutomation,
         dashboardUrlBuilder,
         automationUrlBuilder,
         widgetUrlBuilder,
@@ -44,7 +58,7 @@ export const useAutomationsState = ({
         createdByFilterQuery,
     } = useAutomationFilters();
 
-    const { status, error } = useCancelablePromise(
+    const { status: dataLoadingStatus, error } = useCancelablePromise(
         {
             promise: async () => {
                 return backend
@@ -80,7 +94,6 @@ export const useAutomationsState = ({
                     ...state,
                     totalItemsCount: 0,
                     hasNextPage: false,
-                    automations: [],
                 });
             },
         },
@@ -95,10 +108,10 @@ export const useAutomationsState = ({
     }, [state.hasNextPage, state.totalItemsCount, state.automations.length, pageSize]);
 
     const isLoading = useMemo(() => {
-        return status === "loading" || status === "pending" || isDeleting;
-    }, [status, isDeleting]);
+        return dataLoadingStatus === "loading" || isActionLoading || state.isChainedActionInProgress;
+    }, [dataLoadingStatus, isActionLoading, state.isChainedActionInProgress]);
 
-    const resetState = useCallback((fetchItems?: boolean) => {
+    const resetState = useCallback(() => {
         setState((state) => ({
             ...state,
             automations: [],
@@ -106,13 +119,14 @@ export const useAutomationsState = ({
             totalItemsCount: 0,
             selectedIds: [],
             scrollToIndex: 0,
-            page: fetchItems ? 0 : state.page,
-            invalidationId: fetchItems ? state.invalidationId + 1 : state.invalidationId,
+            isChainedActionInProgress: false,
+            page: 0,
+            invalidationId: state.invalidationId + 1,
         }));
     }, []);
 
     useEffect(() => {
-        resetState(true);
+        resetState();
     }, [
         state.search,
         state.sortBy,
@@ -125,13 +139,19 @@ export const useAutomationsState = ({
     ]);
 
     useEffect(() => {
-        if (isDeleting) {
+        if (isActionLoading) {
+            setState((state) => ({
+                ...state,
+                automations: [],
+                hasNextPage: true,
+                scrollToIndex: 0,
+                isChainedActionInProgress: true,
+            }));
+        }
+        if (!isActionLoading) {
             resetState();
         }
-        if (!isDeleting) {
-            resetState(true);
-        }
-    }, [isDeleting, resetState]);
+    }, [isActionLoading, resetState]);
 
     useEffect(() => {
         if (!isLoading) {
@@ -194,6 +214,7 @@ export const useAutomationsState = ({
         error,
         skeletonItemsCount,
         columns,
+        bulkActions,
         handleSort,
         loadNextPage,
         setSearch,
