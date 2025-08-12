@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 
@@ -83,7 +83,11 @@ export class DateFilter {
     }
 
     openAndSelectDateFilterByName(dateFilterName: string): this {
-        this.open().getElement(".gd-filter-list-item").contains(dateFilterName).scrollIntoView().click();
+        this.open()
+            .getElement(".gd-filter-list-item")
+            .contains(new RegExp(`^${dateFilterName}$`))
+            .scrollIntoView()
+            .click();
         return this;
     }
 

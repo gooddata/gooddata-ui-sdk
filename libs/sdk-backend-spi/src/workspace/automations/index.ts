@@ -140,6 +140,27 @@ export interface IWorkspaceAutomationService {
      * @returns Promise resolved when the automation is deleted.
      */
     deleteAutomation(id: string): Promise<void>;
+
+    /**
+     * Delete automations
+     *
+     * Deletes multiple automations identified by their IDs.
+     *
+     * @param ids - IDs of the automations to delete
+     * @returns Promise resolved when the automations are deleted.
+     */
+    deleteAutomations(ids: string[]): Promise<void>;
+
+    /**
+     * Unsubscribe from automations
+     *
+     * Unsubscribes current user from multiple automations identified by their IDs.
+     * If no IDs are provided, the backend may unsubscribe from all automations in the workspace.
+     *
+     * @param ids - IDs of the automations to unsubscribe from
+     * @returns Promise resolved when the user is unsubscribed.
+     */
+    unsubscribeAutomations(ids: string[]): Promise<void>;
 }
 
 /**

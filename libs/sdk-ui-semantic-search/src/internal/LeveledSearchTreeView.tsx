@@ -139,5 +139,13 @@ function buildItems(
                 },
                 children,
             };
+        })
+        .filter((item) => {
+            //NOTE: This is a workaround for a permissions, if user has only view permission on the dashboard
+            // and we found object that is not dashboard has no relationships, we don't want to show it
+            if (!canEdit && item.item.data.type !== "dashboard") {
+                return (item.children?.length ?? 0) > 0;
+            }
+            return true;
         });
 }

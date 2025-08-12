@@ -52,6 +52,7 @@ export function UiAsyncTableFilter({ label, options, selected, onItemClick }: Ui
                             renderItem={({ item }) => (
                                 <UiAsyncTableDropdownItem
                                     label={item.label ?? String(item.value)}
+                                    secondaryLabel={item.secondaryLabel}
                                     onSelect={() => onSelect(item, closeDropdown)}
                                     isSelected={item.value === selected.value}
                                 />

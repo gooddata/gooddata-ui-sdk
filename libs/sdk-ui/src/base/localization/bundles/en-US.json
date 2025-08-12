@@ -2982,5 +2982,29 @@
     "table.emptyState.tryAdjustingFilters": {
         "value": "Check the spelling or adjust filters.",
         "comment": "Suggestion text shown when no items match the current filters or search"
+    },
+    "messages.accessibility.noMessages": {
+        "value": "No messages",
+        "comment": "Accessibility label for the empty state of the message list. Used by screen readers."
+    },
+    "messages.accessibility.partial.error": {
+        "value": "{count, plural, one {# error} other {# errors}}",
+        "comment": "Accessibility label for the number of errors in the message list. Used by screen readers."
+    },
+    "messages.accessibility.partial.warning": {
+        "value": "{count, plural, one {# warning} other {# warnings}}",
+        "comment": "Accessibility label for the number of warnings in the message list. Used by screen readers."
+    },
+    "messages.accessibility.partial.success": {
+        "value": "{count, plural, one {# success} other {# successes}}",
+        "comment": "Accessibility label for the number of successes in the message list. Used by screen readers."
+    },
+    "messages.accessibility.partial.progress": {
+        "value": "{count, plural, one {# progress} other {# progresses}}",
+        "comment": "Accessibility label for the number of progress indicators in the message list. Used by screen readers."
+    },
+    "messages.accessibility.label": {
+        "value": "{count, plural, one {# message} other {# messages}}: {partial}",
+        "comment": "Accessibility label for the message list. Used by screen readers."
     }
 }

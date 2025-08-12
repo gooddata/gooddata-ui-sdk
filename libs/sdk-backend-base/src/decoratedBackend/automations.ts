@@ -69,6 +69,10 @@ export abstract class DecoratedWorkspaceAutomationsService implements IWorkspace
         return this.decorated.deleteAutomation(id);
     }
 
+    deleteAutomations(ids: string[]): Promise<void> {
+        return this.decorated.deleteAutomations(ids);
+    }
+
     getAutomation(id: string, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject> {
         return this.decorated.getAutomation(id, options);
     }
@@ -90,5 +94,9 @@ export abstract class DecoratedWorkspaceAutomationsService implements IWorkspace
 
     unsubscribeAutomation(id: string): Promise<void> {
         return this.decorated.unsubscribeAutomation(id);
+    }
+
+    unsubscribeAutomations(ids: string[]): Promise<void> {
+        return this.decorated.unsubscribeAutomations(ids);
     }
 }

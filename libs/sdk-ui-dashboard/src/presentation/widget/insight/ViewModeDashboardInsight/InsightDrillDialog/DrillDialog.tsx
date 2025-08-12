@@ -18,7 +18,8 @@ import { PoweredByGDLogo } from "./PoweredByGDLogo.js";
 import { DrillDialogExportDropdown } from "./DrillDialogExportDropdown.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 
-export interface DrillDialogProps extends Pick<IDialogBaseProps, "initialFocus" | "returnFocusTo"> {
+export interface DrillDialogProps
+    extends Pick<IDialogBaseProps, "initialFocus" | "returnFocusTo" | "focusCheckFn"> {
     insightTitle: string;
     breadcrumbs: string[];
     onCloseDialog: () => void;
@@ -78,6 +79,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     isShowAsTableVisible,
     isWidgetAsTable,
     onShowAsTable,
+    focusCheckFn,
 }) => {
     const settings = useDashboardSelector(selectSettings);
     const canExport = useDashboardSelector(selectCanExportTabular);
@@ -104,6 +106,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
             returnFocusTo={returnFocusTo}
             returnFocusAfterClose
             shouldCloseOnEscape={true}
+            focusCheckFn={focusCheckFn}
         >
             <div
                 className={cx("gd-dialog-header gd-dialog-header-with-border gd-drill-modal-dialog-header", {

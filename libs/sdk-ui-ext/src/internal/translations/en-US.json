@@ -1742,5 +1742,9 @@
     "automations.menu.delete": {
         "value": "Delete",
         "comment": "Menu item for deleting an automation"
+    },
+    "automations.menu.unsubscribe": {
+        "value": "Unsubscribe",
+        "comment": "Menu item for unsubscribing from an automation"
     }
 }

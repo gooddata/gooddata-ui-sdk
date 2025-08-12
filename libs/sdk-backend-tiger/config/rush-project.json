@@ -5,6 +5,14 @@
         {
             "operationName": "build",
             "outputFolderNames": ["esm"]
+        },
+        {
+            "operationName": "validate-ci",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "test-once",
+            "outputFolderNames": []
         }
     ]
 }

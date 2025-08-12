@@ -2,7 +2,7 @@
 import { AnalyticalBackendErrorTypes, isAnalyticalBackendError } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
-import React, { createContext } from "react";
+import React, { createContext, useMemo } from "react";
 
 import { useWorkspacePermissions } from "./useWorkspacePermissions.js";
 import { emptyWorkspacePermissions } from "./utils.js";
@@ -21,6 +21,7 @@ export const PermissionsProvider: React.FC<React.PropsWithChildren> = ({ childre
     const workspace = useWorkspaceStrict();
     const intl = useIntl();
     const { result, loading, error } = useWorkspacePermissions(workspace);
+    const value = useMemo(() => ({ permissions: result, loading }), [loading, result]);
 
     if (isAnalyticalBackendError(error) && error.abeType === AnalyticalBackendErrorTypes.UNEXPECTED) {
         return <GlobalError errorDetails={error.message} />;
@@ -35,9 +36,5 @@ export const PermissionsProvider: React.FC<React.PropsWithChildren> = ({ childre
         );
     }
 
-    return (
-        <PermissionsContext.Provider value={{ permissions: result, loading }}>
-            {children}
-        </PermissionsContext.Provider>
-    );
+    return <PermissionsContext.Provider value={value}>{children}</PermissionsContext.Provider>;
 };

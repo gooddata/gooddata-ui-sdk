@@ -5,16 +5,21 @@ import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { render, fireEvent, act, screen } from "@testing-library/react";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { SemanticSearch } from "../SemanticSearch.js";
+import * as perms from "../permissions/utils.js";
 
 const backend = dummyBackend();
 
 describe("SemanticSearch component", () => {
     beforeEach(() => {
         vi.useFakeTimers();
+        vi.spyOn(perms, "emptyWorkspacePermissions").mockImplementation(() => ({
+            canManageProject: true,
+        }));
     });
 
     afterEach(() => {
         vi.useRealTimers();
+        vi.restoreAllMocks();
     });
 
     const DEBOUNCE_TIME = 300;

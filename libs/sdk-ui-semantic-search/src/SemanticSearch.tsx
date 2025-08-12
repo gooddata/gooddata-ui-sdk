@@ -21,6 +21,7 @@ import classnames from "classnames";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { SemanticSearchTreeView } from "./SemanticSearchTreeView.js";
 import { useSearchKeyboard } from "./hooks/usSearchKeyboard.js";
+import { PermissionsProvider, usePermissions } from "./permissions/index.js";
 
 /**
  * Semantic search component props.
@@ -118,6 +119,7 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
     } = props;
     const intl = useIntl();
     const effectiveWorkspace = useWorkspaceStrict(workspace);
+    const { loading, permissions } = usePermissions();
 
     // Input value handling
     const inputRef = useRef<Input>(null);
@@ -198,6 +200,11 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
                 <div>
                     {(() => {
                         const responsiveWidth = isMobile ? undefined : width;
+
+                        if (loading) {
+                            return <LoadingMask width={responsiveWidth} height={LOADING_HEIGHT} />;
+                        }
+
                         switch (searchStatus) {
                             case "loading":
                                 return <LoadingMask width={responsiveWidth} height={LOADING_HEIGHT} />;
@@ -228,6 +235,11 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
                                             onSelect(item.data);
                                         }}
                                         onFocus={setActiveNodeId}
+                                        canEdit={
+                                            permissions.canManageProject ??
+                                            permissions.canCreateVisualization ??
+                                            false
+                                        }
                                     />
                                 );
                             case "idle":
@@ -251,9 +263,11 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
 export const SemanticSearch: React.FC<SemanticSearchProps> = ({ locale, ...coreProps }) => {
     return (
         <IntlWrapper locale={locale}>
-            <UiTreeViewEventsProvider>
-                <SemanticSearchCore {...coreProps} />
-            </UiTreeViewEventsProvider>
+            <PermissionsProvider backend={coreProps.backend} workspace={coreProps.workspace}>
+                <UiTreeViewEventsProvider>
+                    <SemanticSearchCore {...coreProps} />
+                </UiTreeViewEventsProvider>
+            </PermissionsProvider>
         </IntlWrapper>
     );
 };
