@@ -21,11 +21,34 @@ jobs:
         id: check-sync-label
         with:
           script: |
-            const pullRequests = await github.rest.repos.listPullRequestsAssociatedWithCommit({
-              commit_sha: '${{ inputs.commit-sha }}',
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            });
+            let pullRequests;
+            let retries = 3;
+            let lastError;
+            
+            // Retry logic for flaky GitHub API
+            while (retries > 0) {
+              try {
+                pullRequests = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                  commit_sha: '${{ inputs.commit-sha }}',
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                });
+                break; // Success, exit retry loop
+              } catch (error) {
+                lastError = error;
+                retries--;
+                if (retries > 0) {
+                  console.log(`GitHub API call failed, retrying... (${retries} retries left)`);
+                  await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds before retry
+                }
+              }
+            }
+            
+            if (!pullRequests) {
+              console.error('Failed to fetch pull requests after all retries:', lastError);
+              core.setFailed(`GitHub API error: ${lastError.message || 'Failed to fetch pull requests'}`);
+              return;
+            }
 
             const pr = pullRequests?.data[0];
             if (!pr) {
