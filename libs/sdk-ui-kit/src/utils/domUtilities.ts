@@ -176,16 +176,42 @@ const focusableElementsSelector = [
 
 const isNotNegativeTabIndex = (element: HTMLElement) => !element.tabIndex || element.tabIndex >= 0;
 
+const isVisible = (element: HTMLElement, includeHidden: boolean = false) => {
+    // checkVisibility if available (modern browsers)
+    if ("checkVisibility" in element) {
+        const options = includeHidden
+            ? {
+                  // does only basic visibility check
+              }
+            : {
+                  opacityProperty: true,
+                  visibilityProperty: true,
+              };
+
+        return element.checkVisibility({
+            ...options,
+        });
+    }
+    // offsetParent (hacky fallback for older browsers)
+    // offset parent is not defined if some ancestor is hidden
+    return (element as any).offsetParent !== null;
+};
+
+const isFocusable = (element: HTMLElement, includeHidden: boolean = false) => {
+    return isNotNegativeTabIndex(element) && isVisible(element, includeHidden);
+};
 /**
  * @internal
  * Returns the focusable elements of the given element
  * @param element - the element to get the focusable elements from
  * @returns an object containing the focusable elements, the first focusable element, and the last focusable element
  */
-export const getFocusableElements = (element?: HTMLElement | null) => {
+export const getFocusableElements = (element?: HTMLElement | null, includeHidden: boolean = false) => {
     const focusableElements = Array.from(
         element?.querySelectorAll<HTMLElement>(focusableElementsSelector) ?? [],
-    ).filter(isNotNegativeTabIndex);
+    ).filter((element) => {
+        return isFocusable(element, includeHidden);
+    });
     const firstElement = focusableElements?.[0];
     const lastElement = focusableElements?.[focusableElements.length - 1];
     return { focusableElements, firstElement, lastElement };
@@ -196,6 +222,6 @@ export const getFocusableElements = (element?: HTMLElement | null) => {
  * @param element - the element to test for focusability
  * @returns whether or not the supplied element is focusable
  */
-export const isElementFocusable = (element?: HTMLElement | null) => {
-    return element?.matches(focusableElementsSelector) && isNotNegativeTabIndex(element);
+export const isElementFocusable = (element?: HTMLElement | null, includeHidden: boolean = false) => {
+    return element?.matches(focusableElementsSelector) && isFocusable(element, includeHidden);
 };

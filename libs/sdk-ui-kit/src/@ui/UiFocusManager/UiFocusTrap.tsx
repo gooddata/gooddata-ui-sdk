@@ -8,9 +8,9 @@ import { IUiFocusHelperConnectors, NavigationDirection } from "./types.js";
 /**
  * @internal
  */
-export const useUiFocusTrapConnectors = <
-    T extends HTMLElement = HTMLElement,
->(): IUiFocusHelperConnectors<T> => {
+export const useUiFocusTrapConnectors = <T extends HTMLElement = HTMLElement>(
+    focusCheckFn: (element: HTMLElement) => boolean,
+): IUiFocusHelperConnectors<T> => {
     const [element, setElement] = React.useState<null | HTMLElement>(null);
 
     const handleMoveFocus = React.useCallback(
@@ -21,9 +21,10 @@ export const useUiFocusTrapConnectors = <
                 getNextFocusableElement(document.activeElement as HTMLElement, focusableElements, direction),
                 focusableElements,
                 direction,
+                focusCheckFn,
             );
         },
-        [element],
+        [element, focusCheckFn],
     );
 
     const handleKeyDown = React.useMemo(
@@ -47,8 +48,11 @@ export const useUiFocusTrapConnectors = <
 /**
  * @internal
  */
-export const UiFocusTrap: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const connectors = useUiFocusTrapConnectors<HTMLDivElement>();
+export const UiFocusTrap: React.FC<{
+    children: React.ReactNode;
+    focusCheckFn?: (element: HTMLElement) => boolean;
+}> = ({ children, focusCheckFn }) => {
+    const connectors = useUiFocusTrapConnectors<HTMLDivElement>(focusCheckFn);
 
     return (
         <div style={{ display: "contents" }} {...connectors}>

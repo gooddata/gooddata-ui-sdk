@@ -11,6 +11,7 @@ import {
     ALL_RECIPIENTS_FILTER_VALUE,
     ALL_CREATED_BY_FILTER_VALUE,
 } from "../constants.js";
+import { formatWorkspaceUserFilterOptions } from "../format.js";
 
 //generic filter hook
 
@@ -83,14 +84,12 @@ const useRecipientsFilter = () => {
     const intl = useIntl();
 
     const { workspaceUsers } = useFilterOptions();
-    const { isCurrentUser } = useUser();
+    const { isCurrentUserByLogin } = useUser();
 
-    const options = useMemo(() => {
-        return workspaceUsers.map((item) => ({
-            value: item.uri,
-            label: isCurrentUser(item.login) ? intl.formatMessage(messages.currentUser) : item.fullName,
-        }));
-    }, [workspaceUsers, intl, isCurrentUser]);
+    const options = useMemo(
+        () => formatWorkspaceUserFilterOptions(workspaceUsers, isCurrentUserByLogin, intl),
+        [workspaceUsers, intl, isCurrentUserByLogin],
+    );
 
     const { filter: recipientsFilter, filterQuery: recipientsFilterQuery } = useAutomationFilter(
         options,
@@ -106,14 +105,12 @@ const useCreatedByFilter = () => {
     const intl = useIntl();
 
     const { workspaceUsers } = useFilterOptions();
-    const { isCurrentUser } = useUser();
+    const { isCurrentUserByLogin } = useUser();
 
-    const createdByFilterOptions = useMemo(() => {
-        return workspaceUsers.map((item) => ({
-            value: item.uri,
-            label: isCurrentUser(item.login) ? intl.formatMessage(messages.currentUser) : item.fullName,
-        }));
-    }, [workspaceUsers, intl, isCurrentUser]);
+    const createdByFilterOptions = useMemo(
+        () => formatWorkspaceUserFilterOptions(workspaceUsers, isCurrentUserByLogin, intl),
+        [workspaceUsers, intl, isCurrentUserByLogin],
+    );
 
     const { filter: createdByFilter, filterQuery: createdByFilterQuery } = useAutomationFilter(
         createdByFilterOptions,

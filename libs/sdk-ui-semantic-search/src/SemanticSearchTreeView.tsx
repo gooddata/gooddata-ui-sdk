@@ -15,6 +15,7 @@ type Props = {
     searchRelationships: ISemanticSearchRelationship[];
     width?: number;
     threshold?: number;
+    canEdit?: boolean;
     onSelect: OnLeveledSelectFn<SearchTreeViewLevels>;
     onFocus: (nodeId: string) => void;
 };
@@ -52,12 +53,14 @@ type BuildItemsProps = {
     searchResults: ISemanticSearchResultItem[];
     searchRelationships: ISemanticSearchRelationship[];
     threshold?: number;
+    canEdit?: boolean;
 };
 
 function buildItems({
     searchResults,
     searchRelationships,
     threshold = 0.8,
+    canEdit = false,
 }: BuildItemsProps): SearchTreeViewItem[] {
     return searchResults
         .filter((item) => {
@@ -92,5 +95,13 @@ function buildItems({
                     };
                 }),
             };
+        })
+        .filter((item) => {
+            //NOTE: This is a workaround for a permissions, if user has only view permission on the dashboard
+            // and we found object that is not dashboard has no relationships, we don't want to show it
+            if (!canEdit && item.item.data.type !== "dashboard") {
+                return (item.children?.length ?? 0) > 0;
+            }
+            return true;
         });
 }

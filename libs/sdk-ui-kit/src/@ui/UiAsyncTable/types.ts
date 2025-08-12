@@ -87,6 +87,7 @@ export interface UiAsyncTableFilter {
 export interface UiAsyncTableFilterOption {
     value: string;
     label?: string;
+    secondaryLabel?: string;
 }
 
 /**
@@ -157,6 +158,7 @@ export interface UiAsyncTableToolbarProps<T extends { id: string }> {
 
 export type UiAsyncTableDropdownItemProps = {
     label: string;
+    secondaryLabel?: string;
     onSelect: () => void;
     isSelected?: boolean;
 };

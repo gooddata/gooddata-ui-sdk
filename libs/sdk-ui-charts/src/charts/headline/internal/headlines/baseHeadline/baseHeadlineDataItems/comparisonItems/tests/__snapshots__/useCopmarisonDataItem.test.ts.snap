@@ -3,7 +3,7 @@
 exports[`useComparisonDataItem > Should snapshot correctly when evaluation type is equals 1`] = `
 {
   "indicator": null,
-  "indicatorAriaLabelFactory": [Function],
+  "comparisonAriaLabelFactory": [Function],
   "style": {
     "color": "rgb(3,3,3)",
   },
@@ -13,7 +13,7 @@ exports[`useComparisonDataItem > Should snapshot correctly when evaluation type 
 exports[`useComparisonDataItem > Should snapshot correctly when evaluation type is negative 1`] = `
 {
   "indicator": [Function],
-  "indicatorAriaLabelFactory": [Function],
+  "comparisonAriaLabelFactory": [Function],
   "style": {
     "color": "rgb(1,1,1)",
   },
@@ -23,7 +23,7 @@ exports[`useComparisonDataItem > Should snapshot correctly when evaluation type 
 exports[`useComparisonDataItem > Should snapshot correctly when evaluation type is null 1`] = `
 {
   "indicator": undefined,
-  "indicatorAriaLabelFactory": undefined,
+  "comparisonAriaLabelFactory": undefined,
   "style": {},
 }
 `;
@@ -31,7 +31,7 @@ exports[`useComparisonDataItem > Should snapshot correctly when evaluation type 
 exports[`useComparisonDataItem > Should snapshot correctly when evaluation type is positive 1`] = `
 {
   "indicator": [Function],
-  "indicatorAriaLabelFactory": [Function],
+  "comparisonAriaLabelFactory": [Function],
   "style": {
     "color": "rgb(5,5,5)",
   },

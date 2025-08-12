@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
 
@@ -35,7 +35,7 @@ describe("useComparisonDataItem", () => {
             config: DEFAULT_CONFIG,
         });
 
-        const { result } = renderHook(() => useComparisonDataItem(evaluationType));
+        const { result } = renderHook(() => useComparisonDataItem(evaluationType, undefined));
         expect(result.current).toMatchSnapshot();
     });
 
@@ -50,7 +50,7 @@ describe("useComparisonDataItem", () => {
             },
         });
 
-        const { result } = renderHook(() => useComparisonDataItem(EvaluationType.POSITIVE_VALUE));
+        const { result } = renderHook(() => useComparisonDataItem(EvaluationType.POSITIVE_VALUE, undefined));
         expect(result.current.indicator).toBeFalsy();
     });
 });

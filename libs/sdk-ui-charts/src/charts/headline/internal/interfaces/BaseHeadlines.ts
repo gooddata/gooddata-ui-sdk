@@ -1,8 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
-import { HeadlineElementType } from "@gooddata/sdk-ui";
-import { IHeadlineDataItem } from "./Headlines.js";
 import { ComponentType, RefObject } from "react";
+import isEmpty from "lodash/isEmpty.js";
+import { HeadlineElementType } from "@gooddata/sdk-ui";
+
 import { IComparison } from "../../../../interfaces/index.js";
+
+import { IHeadlineDataItem } from "./Headlines.js";
 
 export const COMPARISON_DEFAULT_OBJECT: IComparison = {
     enabled: true,
@@ -56,7 +59,15 @@ export interface IComparisonDataWithSubItem extends IBaseHeadlineTitle {
     subItem: IBaseHeadlineValueItem;
 }
 
-export type BaseHeadlineItemAccepted = IHeadlineDataItem | IComparisonDataItem | IComparisonDataWithSubItem;
+export type ComparisonDataItem = IComparisonDataItem | IComparisonDataWithSubItem;
+
+export function isComparisonDataWithSubItem(
+    dataItem: ComparisonDataItem,
+): dataItem is IComparisonDataWithSubItem {
+    return !isEmpty(dataItem) && (dataItem as IComparisonDataWithSubItem).subItem !== undefined;
+}
+
+export type BaseHeadlineItemAccepted = IHeadlineDataItem | ComparisonDataItem;
 
 export interface IBaseHeadlineData {
     primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;

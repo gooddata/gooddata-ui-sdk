@@ -8,6 +8,7 @@ interface IDateFilterBodyButtonProps {
     messageId: string;
     className: string;
     disabled?: boolean;
+    describedByFromValidation?: boolean;
 }
 
 export function DateFilterBodyButton({
@@ -15,6 +16,7 @@ export function DateFilterBodyButton({
     className,
     disabled,
     onClick,
+    describedByFromValidation,
 }: IDateFilterBodyButtonProps) {
     const intl = useIntl();
 
@@ -25,7 +27,7 @@ export function DateFilterBodyButton({
             className={className}
             disabled={disabled}
             onClick={onClick}
-            describedByFromValidation
+            describedByFromValidation={describedByFromValidation}
         />
     );
 }

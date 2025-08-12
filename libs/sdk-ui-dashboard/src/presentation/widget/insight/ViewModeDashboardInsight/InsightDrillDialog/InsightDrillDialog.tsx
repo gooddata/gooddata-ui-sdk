@@ -19,6 +19,7 @@ import {
     RichText,
     UiIcon,
     useMediaQuery,
+    isNotDocumentFocused,
 } from "@gooddata/sdk-ui-kit";
 import { ILocale, OnLoadingChanged } from "@gooddata/sdk-ui";
 import cx from "classnames";
@@ -205,6 +206,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): ReactElement
                         isShowAsTableVisible={isShowAsTableVisible}
                         isWidgetAsTable={isWidgetAsTable}
                         onShowAsTable={toggleWidgetAsTable}
+                        focusCheckFn={isNotDocumentFocused}
                     >
                         <WithDrillSelect
                             widgetRef={widget.ref}

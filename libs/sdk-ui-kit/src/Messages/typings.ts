@@ -59,6 +59,10 @@ export interface IMessageProps {
 export interface IMessagesProps {
     messages: Array<IMessage>;
     onMessageClose?(id: string): void;
+    /**
+     * Whether to mark the container as a region for accessibility purposes.
+     */
+    regionEnabled?: boolean;
 }
 
 /**

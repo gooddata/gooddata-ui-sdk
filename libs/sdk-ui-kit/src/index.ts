@@ -131,6 +131,8 @@ export {
     resolveRef,
     getNextFocusableElement,
     focusAndEnsureReachableElement,
+    defaultFocusCheckFn,
+    isNotDocumentFocused,
 } from "./@ui/UiFocusManager/utils.js";
 export type { IUiFocusHelperConnectors, NavigationDirection } from "./@ui/UiFocusManager/types.js";
 export { UiLink } from "./@ui/UiLink/UiLink.js";

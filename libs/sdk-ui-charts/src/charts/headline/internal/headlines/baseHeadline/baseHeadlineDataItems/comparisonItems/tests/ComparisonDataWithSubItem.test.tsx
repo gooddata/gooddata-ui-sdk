@@ -134,7 +134,7 @@ describe("ComparisonDataWithSubItem", () => {
         vi.spyOn(useComparisonDataItem, "useComparisonDataItem").mockReturnValue({
             style: {},
             indicator: MockIndicator,
-            indicatorAriaLabelFactory: vi.fn(),
+            comparisonAriaLabelFactory: vi.fn(),
         });
 
         renderComparisonDataItem();

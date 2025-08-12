@@ -59,6 +59,7 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
 
     const iconClassName = cx(
         "dash-item-action-description",
+        "dash-item-action-placeholder",
         {
             "dash-item-action-description-active": isOpen,
         },

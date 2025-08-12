@@ -1382,10 +1382,12 @@ export interface IWorkspaceAttributesService {
 export interface IWorkspaceAutomationService {
     createAutomation(automation: IAutomationMetadataObjectDefinition, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
     deleteAutomation(id: string): Promise<void>;
+    deleteAutomations(ids: string[]): Promise<void>;
     getAutomation(id: string, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
     getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]>;
     getAutomationsQuery(options?: IGetAutomationsQueryOptions): IAutomationsQuery;
     unsubscribeAutomation(id: string): Promise<void>;
+    unsubscribeAutomations(ids: string[]): Promise<void>;
     updateAutomation(automation: IAutomationMetadataObject, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
 }
 

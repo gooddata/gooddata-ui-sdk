@@ -238,6 +238,7 @@ export const DateFilterBody = React.forwardRef<HTMLDivElement, IDateFilterBodyPr
                                 onApplyClick();
                                 closeDropdown();
                             }}
+                            describedByFromValidation
                         />
                     )}
                 </div>

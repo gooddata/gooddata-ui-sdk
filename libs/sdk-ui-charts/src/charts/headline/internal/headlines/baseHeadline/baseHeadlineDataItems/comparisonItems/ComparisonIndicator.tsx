@@ -1,10 +1,27 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React from "react";
-import { IntlShape } from "react-intl";
+import { defineMessages, MessageDescriptor } from "react-intl";
 
 import { EvaluationType } from "../../../../interfaces/BaseHeadlines.js";
-import { DataValue } from "@gooddata/sdk-model";
+
+const messages = defineMessages({
+    singleValuePositiveChange: {
+        id: "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange",
+    },
+    singleValueNegativeChange: {
+        id: "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange",
+    },
+    twoValuesPositiveChange: {
+        id: "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange",
+    },
+    twoValuesNegativeChange: {
+        id: "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange",
+    },
+    twoValues: {
+        id: "visualizations.headline.comparison.ariaLabel.twoValues",
+    },
+});
 
 const ComparisonIndicatorUp: React.FC = () => {
     return (
@@ -28,22 +45,18 @@ export const ComparisonIndicators: Record<EvaluationType, React.ComponentType> =
     [EvaluationType.EQUALS_VALUE]: null,
 };
 
-export type ComparisonIndicatorAriaLabelFactory = (intl: IntlShape, value: DataValue) => string;
-
-export const ComparisonIndicatorsAriaLabels: Record<EvaluationType, ComparisonIndicatorAriaLabelFactory> = {
-    [EvaluationType.POSITIVE_VALUE]: (intl: IntlShape, value: DataValue) =>
-        intl.formatMessage(
-            {
-                id: "visualizations.headline.comparison.indicator.up",
-            },
-            { value },
-        ),
-    [EvaluationType.NEGATIVE_VALUE]: (intl: IntlShape, value: DataValue) =>
-        intl.formatMessage(
-            {
-                id: "visualizations.headline.comparison.indicator.down",
-            },
-            { value },
-        ),
-    [EvaluationType.EQUALS_VALUE]: () => null,
+export const getComparisonAriaLabelMessage = (
+    evaluationType: EvaluationType | undefined,
+    hasSecondaryValue: boolean,
+): MessageDescriptor | null => {
+    if (evaluationType === undefined && hasSecondaryValue) {
+        return messages.twoValues;
+    }
+    if (evaluationType === EvaluationType.POSITIVE_VALUE) {
+        return hasSecondaryValue ? messages.twoValuesPositiveChange : messages.singleValuePositiveChange;
+    }
+    if (evaluationType === EvaluationType.NEGATIVE_VALUE) {
+        return hasSecondaryValue ? messages.twoValuesNegativeChange : messages.singleValueNegativeChange;
+    }
+    return null;
 };

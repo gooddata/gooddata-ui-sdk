@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { IAutomationMetadataObject, IUser } from "@gooddata/sdk-model";
+import React, { createContext, useContext, useState, ReactNode, useCallback } from "react";
+import { IAutomationMetadataObject, isAutomationUserGroupRecipient, IUser } from "@gooddata/sdk-model";
 import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
 import { invariant } from "ts-invariant";
 import { UserContextValue } from "./types.js";
@@ -22,7 +22,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     useCancelablePromise(
         {
             promise: async () => {
-                return backend.currentUser().getUser();
+                return backend.currentUser().getUserWithDetails();
             },
             onSuccess: (result) => {
                 setCurrentUser(result);
@@ -49,22 +49,52 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         [backend],
     );
 
-    const isCurrentUser = (userLogin: string): boolean => {
-        if (!currentUser?.login) {
-            return false;
-        }
+    // Compare by login since current user doesn't have id property,
+    // login is the only property that is guaranteed to be unique for current user
+    const isCurrentUserByLogin = useCallback(
+        (userLogin: string): boolean => {
+            if (!currentUser?.login) {
+                return false;
+            }
+            return currentUser.login === userLogin;
+        },
+        [currentUser?.login],
+    );
 
-        // Compare by login since both current user and workspace users have this property
-        return currentUser.login === userLogin;
-    };
+    // Compare by email since recipient object doesn't have login property,
+    // some recipients are only identified by email,
+    // so current user and recipients can only be matched by email
+    const isCurrentUserByEmail = useCallback(
+        (userEmail?: string): boolean => {
+            if (!currentUser?.email) {
+                return false;
+            }
+            return currentUser.email === userEmail;
+        },
+        [currentUser?.email],
+    );
 
-    const canManageAutomation = (automation: IAutomationMetadataObject): boolean => {
-        return canManageWorkspace || isCurrentUser(automation.createdBy?.login);
-    };
+    const canManageAutomation = useCallback(
+        (automation: IAutomationMetadataObject): boolean => {
+            return canManageWorkspace || isCurrentUserByLogin(automation.createdBy?.login);
+        },
+        [canManageWorkspace, isCurrentUserByLogin],
+    );
+
+    const isSubscribedToAutomation = useCallback(
+        (automation: IAutomationMetadataObject): boolean => {
+            return automation.recipients.some((user) => {
+                const email = isAutomationUserGroupRecipient(user) ? null : user.email;
+                return isCurrentUserByEmail(email);
+            });
+        },
+        [isCurrentUserByEmail],
+    );
 
     const contextValue: UserContextValue = {
         canManageAutomation,
-        isCurrentUser,
+        isCurrentUserByLogin,
+        isSubscribedToAutomation,
     };
 
     return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;

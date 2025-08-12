@@ -133,11 +133,19 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
                 {anchor}
             </div>
 
+            {/* Accessibility: make the tooltip accessible to screen readers */}
+            <span className="sr-only" id={id}>
+                {isOpen
+                    ? typeof content === "function"
+                        ? content({ onClose: handleClose })
+                        : content
+                    : null}
+            </span>
+
             {isOpen ? (
                 <FloatingPortal>
                     <ConditionalScopedThemeProvider>
                         <div
-                            id={id}
                             className={b({ width: width === "auto" ? "auto" : false, variant })}
                             ref={refs.setFloating}
                             style={{
