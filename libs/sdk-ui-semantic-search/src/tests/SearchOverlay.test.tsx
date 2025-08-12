@@ -46,7 +46,7 @@ describe("SearchOverlay", () => {
     });
 
     it("sets aria-activedescendant when navigating with keyboard", async () => {
-        render(<SearchOverlay backend={backend} workspace="test" onSelect={vi.fn()} />);
+        render(<SearchOverlay backend={backend} workspace="test" canFullControl={true} onSelect={vi.fn()} />);
 
         const input = screen.getByRole("combobox");
         const treeViewId = input.getAttribute("aria-controls")!;

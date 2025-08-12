@@ -27,7 +27,7 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
     // If the element is outside of the viewport, calling focus() will not work.
     // This can happen for example with floating elements, that are repositioned after they mount
     React.useEffect(() => {
-        const elementToFocus = getElementToFocus(element, initialFocus);
+        const elementToFocus = getElementToFocus(element, initialFocus, true);
 
         if (!elementToFocus) {
             return undefined;
@@ -64,13 +64,14 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
 function getElementToFocus(
     element: HTMLElement | null | undefined,
     initialFocus?: string | React.RefObject<HTMLElement>,
+    includeHidden?: boolean,
 ) {
     const initialFocusElement = resolveRef(initialFocus);
     const elementToCheck = initialFocusElement ?? element;
 
-    return isElementFocusable(elementToCheck)
+    return isElementFocusable(elementToCheck, includeHidden)
         ? elementToCheck
-        : getFocusableElements(elementToCheck).firstElement;
+        : getFocusableElements(elementToCheck, includeHidden).firstElement;
 }
 
 /**

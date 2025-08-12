@@ -2,23 +2,31 @@
 {{ $.Scratch.Set "docLabel" "Version " }}
 {{ $.Scratch.Set "activeVersion" .Site.Params.version }}
 {{ $curPage := .Page.Section }}
+{{ $allVersions := .Site.Params.versions }}
+
 {{/* find version matching the current page */}}
-{{ range .Site.Params.versions }}
+{{ range $allVersions }}
   {{ if eq $curPage .dirpath }}
 	{{ $.Scratch.Add "docLabel" (printf "(%s)" .version) }}
     {{ $.Scratch.Set "activeVersion" .version }}
   {{ end }}
 {{ end }}
+
+{{ if not (eq .Params.versionPicker false) }}
+{{/* Render the version selector dropdown */}}
 <a class="nav-link dropdown-toggle text-decoration-none" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	{{ printf "%s" ($.Scratch.Get "docLabel") }}
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-	{{ range .Site.Params.versions }}
-	<a
-		class="dropdown-item{{ if eq ( $.Scratch.Get "activeVersion" ) ( printf "%s" .version ) }} active{{ end }}"
-		href="{{ cond (gt (len (findRE "^http(s)?://" .url)) 0) .url (relURL .url) }}"
-	>
-		{{ .version }}
-	</a>
+	{{ $lastFourVersions := first 4 $allVersions }}
+	{{ range $lastFourVersions }}
+		<a
+			class="dropdown-item{{ if eq ( $.Scratch.Get "activeVersion" ) ( printf "%s" .version ) }} active{{ end }}"
+			href="{{ cond (gt (len (findRE "^http(s)?://" .url)) 0) .url (relURL .url) }}"
+		>
+			{{ .version }}
+		</a>
 	{{ end }}
+	<div class="dropdown-divider"></div>
 </div>
+{{ end }}

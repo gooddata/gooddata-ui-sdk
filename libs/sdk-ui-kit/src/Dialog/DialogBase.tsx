@@ -5,6 +5,7 @@ import { IDialogBaseProps } from "./typings.js";
 import { DialogCloseButton } from "./DialogCloseButton.js";
 import { isElementSubmitButton, isElementTextInput } from "../utils/domUtilities.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
+import { defaultFocusCheckFn } from "../@ui/UiFocusManager/utils.js";
 
 const checkKeyHandler = (event: React.KeyboardEvent, key: string, handler?: () => void): void => {
     if (event.key !== key || !handler) {
@@ -36,6 +37,7 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
     shouldCloseOnEscape = false,
     returnFocusAfterClose = false,
     isModal = true,
+    focusCheckFn = defaultFocusCheckFn,
 }) {
     const handleKeyDown = React.useCallback<React.KeyboardEventHandler<HTMLDivElement>>(
         (event) => {
@@ -62,6 +64,7 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
             enableFocusTrap={isModal}
             enableAutofocus={!!isModal && autofocusOnOpen ? { initialFocus } : false}
             enableReturnFocusOnUnmount={!!isModal && returnFocusAfterClose ? { returnFocusTo } : false}
+            focusCheckFn={focusCheckFn}
         >
             <div
                 onKeyDown={handleKeyDown}

@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useComparisonDataItem > Should snapshot correctly when evaluation type is equals 1`] = `
+{
+  "comparisonAriaLabelFactory": [Function],
+  "indicator": null,
+  "style": {
+    "color": "rgb(3,3,3)",
+  },
+}
+`;
+
+exports[`useComparisonDataItem > Should snapshot correctly when evaluation type is negative 1`] = `
+{
+  "comparisonAriaLabelFactory": [Function],
+  "indicator": [Function],
+  "style": {
+    "color": "rgb(1,1,1)",
+  },
+}
+`;
+
+exports[`useComparisonDataItem > Should snapshot correctly when evaluation type is null 1`] = `
+{
+  "comparisonAriaLabelFactory": [Function],
+  "indicator": undefined,
+  "style": {},
+}
+`;
+
+exports[`useComparisonDataItem > Should snapshot correctly when evaluation type is positive 1`] = `
+{
+  "comparisonAriaLabelFactory": [Function],
+  "indicator": [Function],
+  "style": {
+    "color": "rgb(5,5,5)",
+  },
+}
+`;

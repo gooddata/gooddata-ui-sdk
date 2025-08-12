@@ -306,6 +306,9 @@ export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
 // @internal
 export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
 
+// @internal (undocumented)
+export const defaultFocusCheckFn: (element: HTMLElement) => boolean;
+
 // @internal
 export const defaultThemeMetadataObject: IThemeDefinition;
 
@@ -484,7 +487,7 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
 }
 
 // @internal
-export const focusAndEnsureReachableElement: (initialElement: HTMLElement | undefined, focusableElements: HTMLElement[], direction: NavigationDirection) => void;
+export const focusAndEnsureReachableElement: (initialElement: HTMLElement | undefined, focusableElements: HTMLElement[], direction: NavigationDirection, focusCheckFn?: (element: HTMLElement) => boolean) => void;
 
 // @internal (undocumented)
 export type FormatMessageParams = Parameters<IntlShape["formatMessage"]>;
@@ -554,7 +557,7 @@ export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions
 export const getDefaultEmbedTypeOptions: (embedType: EmbedType) => EmbedOptionsType;
 
 // @internal
-export const getFocusableElements: (element?: HTMLElement | null) => {
+export const getFocusableElements: (element?: HTMLElement | null, includeHidden?: boolean) => {
     focusableElements: HTMLElement[];
     firstElement: HTMLElement;
     lastElement: HTMLElement;
@@ -1433,6 +1436,7 @@ export interface IDialogBaseProps {
     containerClassName?: string;
     // (undocumented)
     displayCloseButton?: boolean;
+    focusCheckFn?: (element: HTMLElement) => boolean;
     // (undocumented)
     initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
@@ -3242,6 +3246,7 @@ export interface IMessagesProps {
     messages: Array<IMessage>;
     // (undocumented)
     onMessageClose?(id: string): void;
+    regionEnabled?: boolean;
 }
 
 // @internal (undocumented)
@@ -4034,7 +4039,7 @@ export interface IScrollGradientProps {
 export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
 
 // @internal (undocumented)
-export const isElementFocusable: (element?: HTMLElement | null) => boolean;
+export const isElementFocusable: (element?: HTMLElement | null, includeHidden?: boolean) => boolean;
 
 // @internal (undocumented)
 export type isElementInvisibleType = (element: HTMLElement, container: HTMLElement) => boolean;
@@ -4407,6 +4412,9 @@ export interface ISnapPoints {
 }
 
 // @internal (undocumented)
+export const isNotDocumentFocused: () => boolean;
+
+// @internal (undocumented)
 export interface ISortTypeItem {
     // (undocumented)
     id: SORT_TARGET_TYPE;
@@ -4737,6 +4745,7 @@ export type IUiFocusManagerProps = {
     enableFocusTrap?: boolean;
     enableReturnFocusOnUnmount?: boolean | IUiReturnFocusOnUnmountOptions;
     tabOutHandler?: (event: React_2.KeyboardEvent) => void;
+    focusCheckFn?: (element: HTMLElement) => boolean;
     children: React_2.ReactNode;
 };
 
@@ -5835,6 +5844,8 @@ export interface UiAsyncTableFilterOption {
     // (undocumented)
     label?: string;
     // (undocumented)
+    secondaryLabel?: string;
+    // (undocumented)
     value: string;
 }
 
@@ -6025,6 +6036,7 @@ export const UiFocusManager: React_2.FC<IUiFocusManagerProps>;
 // @internal (undocumented)
 export const UiFocusTrap: React_3.FC<{
     children: React_3.ReactNode;
+    focusCheckFn?: (element: HTMLElement) => boolean;
 }>;
 
 // @internal (undocumented)
@@ -6060,6 +6072,8 @@ export interface UiIconButtonPublicProps {
     onKeyDown?: (e: React_2.KeyboardEvent<HTMLButtonElement>) => void;
     // (undocumented)
     size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
+    // (undocumented)
+    tabIndex?: number;
     // (undocumented)
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTable;
 }
@@ -6488,10 +6502,10 @@ export interface UseToastMessageType {
 export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>({ refocusKey, initialFocus, }?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
-export const useUiFocusManagerConnectors: <T extends HTMLElement = HTMLElement>({ enableFocusTrap, enableAutofocus, enableReturnFocusOnUnmount, tabOutHandler, }: Omit<IUiFocusManagerProps, "children">) => IUiFocusHelperConnectors<T>;
+export const useUiFocusManagerConnectors: <T extends HTMLElement = HTMLElement>({ enableFocusTrap, enableAutofocus, enableReturnFocusOnUnmount, tabOutHandler, focusCheckFn, }: Omit<IUiFocusManagerProps, "children">) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
-export const useUiFocusTrapConnectors: <T extends HTMLElement = HTMLElement>() => IUiFocusHelperConnectors<T>;
+export const useUiFocusTrapConnectors: <T extends HTMLElement = HTMLElement>(focusCheckFn: (element: HTMLElement) => boolean) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
 export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLElement>({ returnFocusTo, }?: IUiReturnFocusOnUnmountOptions) => IUiFocusHelperConnectors<T>;

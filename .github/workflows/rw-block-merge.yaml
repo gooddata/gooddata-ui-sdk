@@ -34,9 +34,8 @@ jobs:
             }
 
             const hasSync = pr.labels?.some((label) => label.name === 'sync');
-            const isYenkins = pr.user?.login === 'yenkins';
             
-            if (!hasSync && !isYenkins) {
+            if (!hasSync) {
               const errorMessage = `❌ Pull request #${pr.number} cannot be merged.
 
               🚫 MERGE BLOCKED: Only automated PRs generated from GDC-UI are allowed to be merged.

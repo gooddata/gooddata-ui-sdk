@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { IColorPalette } from "@gooddata/sdk-model";
 import { getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 
@@ -12,7 +12,7 @@ import {
 
 export const getComparisonColor = (
     colorConfig: IColorConfig,
-    evaluationType: EvaluationType,
+    evaluationType: EvaluationType | undefined,
     colorPalette: IColorPalette = DEFAULT_COMPARISON_PALETTE,
 ) => {
     if (colorConfig?.disabled || !evaluationType) {
@@ -25,7 +25,10 @@ export const getComparisonColor = (
     return rgbColor && getRgbStringFromRGB(rgbColor);
 };
 
-const getProvidedColorByEvaluationType = (colorConfig: IColorConfig, evaluationType: EvaluationType) => {
+const getProvidedColorByEvaluationType = (
+    colorConfig: IColorConfig,
+    evaluationType: EvaluationType | undefined,
+) => {
     switch (evaluationType) {
         case EvaluationType.POSITIVE_VALUE:
             return {

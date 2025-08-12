@@ -52,7 +52,6 @@ export const ShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement 
         <UiTooltip
             id={showAsTableTooltipId}
             triggerBy={["hover", "focus"]}
-            hoverCloseDelay={0}
             arrowPlacement="top-start"
             content={title}
             anchor={
@@ -64,10 +63,9 @@ export const ShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement 
                     onKeyDown={onKeyDown}
                     role="button"
                     tabIndex={0}
-                    aria-label={title}
                 >
                     <div className={asTableIconClasses}>
-                        <UiIcon size={18} type={iconType} color="complementary-7" />
+                        <UiIcon ariaHidden={true} size={18} type={iconType} color="complementary-7" />
                     </div>
                 </div>
             }

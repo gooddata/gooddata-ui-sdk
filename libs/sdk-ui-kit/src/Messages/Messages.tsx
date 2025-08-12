@@ -7,11 +7,18 @@ import cx from "classnames";
 import { Message } from "./Message.js";
 import { IMessage, IMessagesProps } from "./typings.js";
 import { Overlay } from "../Overlay/index.js";
+import { useIntl } from "react-intl";
 
 /**
  * @internal
  */
-export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClose = noop }) => {
+export const Messages: React.FC<IMessagesProps> = ({
+    messages = [],
+    onMessageClose = noop,
+    regionEnabled = false,
+}) => {
+    const label = useMessagesLabel(messages);
+
     const [expandedMessageIds, setExpandedMessageIds] = useState<string[]>([]);
 
     const handleMessageClose = useCallback(
@@ -24,7 +31,11 @@ export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClo
 
     return (
         <Overlay>
-            <div className="gd-messages">
+            <div
+                className="gd-messages"
+                role={regionEnabled ? "region" : undefined}
+                aria-label={regionEnabled ? label : undefined}
+            >
                 {messages.map((message) => {
                     const { id, component: Component, type, contrast, intensive } = message;
                     const isExpanded = expandedMessageIds.includes(message.id);
@@ -65,6 +76,49 @@ export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClo
         </Overlay>
     );
 };
+
+function useMessagesLabel(messages: IMessage[]) {
+    const { formatMessage } = useIntl();
+
+    const numTotal = messages.length;
+    const numErrors = messages.filter((message) => message.type === "error").length;
+    const numWarnings = messages.filter((message) => message.type === "warning").length;
+    const numSuccess = messages.filter((message) => message.type === "success").length;
+    const numProgress = messages.filter((message) => message.type === "progress").length;
+
+    if (numTotal === 0) {
+        return formatMessage({ id: "messages.accessibility.noMessages" });
+    }
+
+    const errorMessage = formatMessage({ id: "messages.accessibility.partial.error" }, { count: numErrors });
+    const warningMessage = formatMessage(
+        { id: "messages.accessibility.partial.warning" },
+        { count: numWarnings },
+    );
+    const successMessage = formatMessage(
+        { id: "messages.accessibility.partial.success" },
+        { count: numSuccess },
+    );
+    const progressMessage = formatMessage(
+        { id: "messages.accessibility.partial.progress" },
+        { count: numProgress },
+    );
+
+    return formatMessage(
+        { id: "messages.accessibility.label" },
+        {
+            count: numTotal,
+            partial: [
+                numErrors && errorMessage,
+                numWarnings && warningMessage,
+                numSuccess && successMessage,
+                numProgress && progressMessage,
+            ]
+                .filter(Boolean)
+                .join(", "),
+        },
+    );
+}
 
 type MessageWithShowMoreProps = {
     message: IMessage;
@@ -127,7 +181,7 @@ type MessageElementProps = {
     type: "div" | "span";
 };
 
-const MessageElement: React.FC<MessageElementProps> = ({ message, type }) => {
+export const MessageElement: React.FC<MessageElementProps> = ({ message, type }) => {
     const { text, node } = message;
     const Component = type;
 

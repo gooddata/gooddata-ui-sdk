@@ -4,9 +4,15 @@ import React from "react";
 import { e } from "../asyncTableBem.js";
 import { UiAsyncTableDropdownItemProps } from "../types.js";
 
-const UiAsyncTableDropdownItem = ({ label, onSelect, isSelected }: UiAsyncTableDropdownItemProps) => (
+const UiAsyncTableDropdownItem = ({
+    label,
+    secondaryLabel,
+    onSelect,
+    isSelected,
+}: UiAsyncTableDropdownItemProps) => (
     <div className={e("dropdown-item", { selected: isSelected })} onClick={onSelect}>
-        {label}
+        <div className={e("dropdown-item-label-primary")}>{label}</div>
+        {secondaryLabel && <div className={e("dropdown-item-label-secondary")}>{secondaryLabel}</div>}
     </div>
 );
 

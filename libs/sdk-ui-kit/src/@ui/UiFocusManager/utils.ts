@@ -10,6 +10,20 @@ export const resolveRef = (ref: string | React.RefObject<HTMLElement> | undefine
 };
 
 /**
+ * @internal
+ */
+export const defaultFocusCheckFn = (element: HTMLElement) => {
+    return document.activeElement === element;
+};
+
+/**
+ * @internal
+ */
+export const isNotDocumentFocused = () => {
+    return document.activeElement !== document.body;
+};
+
+/**
  * Attempts to find a truly focusable element by trying subsequent elements in the focusable elements collection
  * This is useful when some elements are focusable but not reachable (e.g., out of viewport or disabled)
  *
@@ -19,6 +33,7 @@ export const focusAndEnsureReachableElement = (
     initialElement: HTMLElement | undefined,
     focusableElements: HTMLElement[],
     direction: NavigationDirection,
+    focusCheckFn: (element: HTMLElement) => boolean = defaultFocusCheckFn,
 ): void => {
     const initialElementIndex = initialElement ? focusableElements.indexOf(initialElement) : -1;
     let currentElement: HTMLElement | undefined = initialElement;
@@ -30,7 +45,7 @@ export const focusAndEnsureReachableElement = (
     for (let attempt = 0; attempt < focusableElements.length && currentElement !== undefined; attempt++) {
         currentElement.focus();
 
-        if (currentElement === document.activeElement) {
+        if (focusCheckFn(currentElement)) {
             return;
         }
 

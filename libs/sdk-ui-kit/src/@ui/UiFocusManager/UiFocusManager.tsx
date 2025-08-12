@@ -18,6 +18,7 @@ export type IUiFocusManagerProps = {
     enableFocusTrap?: boolean;
     enableReturnFocusOnUnmount?: boolean | IUiReturnFocusOnUnmountOptions;
     tabOutHandler?: (event: React.KeyboardEvent) => void;
+    focusCheckFn?: (element: HTMLElement) => boolean; // TODO INE make it optional
     children: React.ReactNode;
 };
 
@@ -42,12 +43,13 @@ export const useUiFocusManagerConnectors = <T extends HTMLElement = HTMLElement>
     enableAutofocus,
     enableReturnFocusOnUnmount,
     tabOutHandler,
+    focusCheckFn,
 }: Omit<IUiFocusManagerProps, "children">): IUiFocusHelperConnectors<T> => {
     const autofocusOptions = typeof enableAutofocus === "object" ? enableAutofocus : {};
     const returnFocusOnUnmountOptions =
         typeof enableReturnFocusOnUnmount === "object" ? enableReturnFocusOnUnmount : {};
 
-    const focusTrapConnectors = useUiFocusTrapConnectors();
+    const focusTrapConnectors = useUiFocusTrapConnectors(focusCheckFn);
     const tabOutConnectors = useUiTabOutHandlerConnectors(tabOutHandler);
     const autofocusConnectors = useUiAutofocusConnectors(autofocusOptions);
     const returnFocusConnectors = useUiReturnFocusOnUnmountConnectors(returnFocusOnUnmountOptions);

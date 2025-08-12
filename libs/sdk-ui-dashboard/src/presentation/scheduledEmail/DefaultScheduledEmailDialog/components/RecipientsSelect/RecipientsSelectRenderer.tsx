@@ -906,7 +906,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                 <div ref={recipientRef} className="gd-input s-gd-recipients-value">
                     <ReactSelect
                         tabSelectsValue={false}
-                        id={id}
+                        inputId={id}
                         className={cx("gd-recipients-container", {
                             "gd-input-component--invalid": !isValid,
                         })}

@@ -49,7 +49,7 @@ export const ARITHMETIC_OPERATORS = {
 } as const;
 
 export const DEFAULT_MAX_HEIGHT = 500;
-export const DEFAULT_PAGE_SIZE = 20;
+export const DEFAULT_PAGE_SIZE = 30;
 
 export const ALL_DASHBOARDS_FILTER_VALUE = "__ALL_DASHBOARDS__";
 export const ALL_RECIPIENTS_FILTER_VALUE = "__ALL_RECIPIENTS__";
@@ -93,6 +93,7 @@ export const AutomationsDefaultState: IAutomationsState = {
     sortBy: "title",
     sortDirection: "asc",
     invalidationId: 0,
+    isChainedActionInProgress: false,
 };
 
 export const defaultDashboardUrlBuilder: IDashboardUrlBuilder = (

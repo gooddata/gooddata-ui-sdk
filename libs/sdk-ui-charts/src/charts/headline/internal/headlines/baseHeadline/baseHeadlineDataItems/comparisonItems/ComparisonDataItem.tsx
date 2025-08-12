@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-
+import { useIntl } from "react-intl";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
 import { IBaseHeadlineDataItemProps, IComparisonDataItem } from "../../../../interfaces/BaseHeadlines.js";
@@ -15,22 +15,22 @@ const ComparisonDataItemComponent: React.FC<IBaseHeadlineDataItemProps<IComparis
     onValueOverflow,
     measurementTrigger,
 }) => {
+    const intl = useIntl();
     const {
         style,
         indicator: ComparisonIndicator,
-        indicatorAriaLabelFactory,
-    } = useComparisonDataItem(evaluationType);
+        comparisonAriaLabelFactory,
+    } = useComparisonDataItem(evaluationType, dataItem);
     const { containerRef } = useOutOfBoundsDetection(onValueOverflow, measurementTrigger);
     return (
         <div ref={containerRef} style={style} className="headline-value-wrapper s-headline-value-wrapper">
             <ResponsiveText minFontSize={10}>
-                <div className="comparison-headline-value-wrapper s-comparison-headline-value-wrapper">
+                <div
+                    className="comparison-headline-value-wrapper s-comparison-headline-value-wrapper"
+                    aria-label={comparisonAriaLabelFactory?.(intl)}
+                >
                     {ComparisonIndicator ? <ComparisonIndicator /> : null}
-                    <ComparisonValue
-                        dataItem={dataItem}
-                        comparisonStyle={style}
-                        indicatorAriaLabelFactory={indicatorAriaLabelFactory}
-                    />
+                    <ComparisonValue dataItem={dataItem} comparisonStyle={style} />
                 </div>
             </ResponsiveText>
         </div>

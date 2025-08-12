@@ -81,7 +81,7 @@ export const RelativeDateFilterFormSection: React.FC<IAllTimeFilterSectionProps>
             event.preventDefault();
             event.stopPropagation();
 
-            const focusableElementsSelector = 'button:not(:disabled):not([aria-disabled="true"])';
+            const focusableElementsSelector = "button:not(:disabled)";
             const focusableElements =
                 relatideDateFilterItem.current?.querySelectorAll<HTMLElement>(focusableElementsSelector) ??
                 [];
@@ -139,6 +139,7 @@ export const RelativeDateFilterFormSection: React.FC<IAllTimeFilterSectionProps>
                                             }),
                                             ariaDescribedBy: relativeDateFilterTooltipId,
                                         }}
+                                        tabIndex={-2}
                                     />
                                 }
                                 triggerBy={["hover", "focus"]}
